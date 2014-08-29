@@ -79,4 +79,4 @@ header {background:transparent url("../img/bg-header-promo.jpg") no-repeat 0 0;b
 .h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
 .h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
-.h-b-c-bhg {display:block;float:right;width:80px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-medium;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.7px;margin-top:29px;}
+.h-b-c-bhg {display:block;float:right;width:80px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-medium;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
