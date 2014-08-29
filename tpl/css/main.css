@@ -1,9 +1,25 @@
 /* ==========================================================================
+                            @Font-face styles
+   ========================================================================== */
+@font-face {
+    font-family: 'Handbook-regular';
+    src: url('../fonts/PFHandbookPro-Regular.ttf');
+}
+@font-face {
+    font-family: 'Handbook-medium';
+    src: url('../fonts/PFHandbookPro-Medium.ttf');
+}
+@font-face {
+    font-family: 'Handbook-bold';
+    src: url('../fonts/PFHandbookPro-Bold.ttf');
+}
+
+/* ==========================================================================
    HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
    ========================================================================== */
 
 html,button,input,select,textarea {}
-body {line-height:1;}
+body {line-height:1;background-color:#fff;font-family: Handbook-regular;color:#404040;}
 
 ::-moz-selection {background: #b3d4fc;text-shadow: none;}
 
@@ -22,3 +38,45 @@ a:hover {}
                             Author's custom styles
    ========================================================================== */
 .b-cl-block {clear:both;line-height:0;margin:0;padding:0;display:block;}
+
+/* ==========================================================================
+                            Promo-header styles
+   ========================================================================== */
+
+header {background:transparent url("../img/bg-header-promo.jpg") no-repeat 0 0;background-size: 100%;overflow:hidden;}
+.h-t {background-color:rgba(255, 228, 0, 0.9);padding:30px 0 0 0;}
+.h-t-tcb {width:940px;margin:auto;height:156px;}
+.h-t-tcb-l {width:238px;height:60px;float:left;}
+.h-t-tcb-t {font:18px/19px Handbook-regular;margin-left:390px;width:410px;}
+.h-t-tcb-sb {float:right;overflow:hidden;width:90px;height:90px;position:relative;zoom:1;}
+.h-t-tcb-sb-fb, .h-t-tcb-sb-vk, .h-t-tcb-sb-gp, .h-t-tcb-sb-tw {display:block;width:40px;height:40px;background-image:url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;position:absolute;}
+.h-t-tcb-sb-fb {background-position:0 0;left:0;top:0;}
+.h-t-tcb-sb-vk {background-position:-50px 0;right:0;top:0;}
+.h-t-tcb-sb-gp {background-position:0px -50px;left:0;bottom:0;}
+.h-t-tcb-sb-tw {background-position:-50px -50px;bottom:0;right:0;}
+
+.h-t-mcb {overflow:hidden;width:940px;margin:auto;}
+.h-t-mcb-l {float:left;}
+.h-t-mcb-l-wm {margin:0 0 20px 0;}
+.h-t-mcb-l-wm_b {font:normal 30px/1 Handbook-bold;color:#2f2f2f;display:block;margin-bottom:4px;}
+.h-t-mcb-l-wm_span {font:25px/1 Handbook-regular;display:block;text-transform:uppercase;letter-spacing:1px;}
+.h-t-mcb-r {float:right;overflow:hidden;}
+.h-t-mcb-r-n {float:left;width:125px;font:25px/30px Handbook-regular;text-transform:uppercase;padding-top:39px;letter-spacing:1px;}
+.h-t-mcb-r-i {float:left;font:129px/1 Handbook-bold;color:#000;padding-top:19px;letter-spacing:-2px;}
+
+.h-t-bcb {overflow:hidden;width:940px;margin:auto;padding-bottom:50px;}
+.h-t-bcb-l {float:left;font:18px/19px Handbook-regular;max-width:600px;padding-top:23px;}
+.h-t-bcb-r {float:right;padding-top:16px;}
+.h-t-bcb-r-b {display:block;border:1px solid #000;width:299px;height:48px;font:normal 17px/48px Handbook-bold;color:#2f2f2f;text-align:center;text-decoration:none;text-transform: uppercase;letter-spacing:1px;}
+
+.h-b {background-color:rgba(255, 228, 0, 0.9);height:110px;margin:90px 0 40px;}
+.h-b-c {width:940px;margin:auto;}
+.h-b-c-tb {float:left;width:380px;}
+.h-b-c-tb-l {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
+.h-b-c-tb-r {font:47px/1 Handbook-bold;color:#2f2f2f;margin-top:32px;text-transform:uppercase;}
+.h-b-c-tb-r_i {position:relative;top:-5px;font-style: normal;}
+.h-b-c-lg {min-width:440px;overflow:hidden;}
+.h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
+.h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
+.h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
+.h-b-c-bhg {display:block;float:right;width:80px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-medium;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.7px;margin-top:29px;}
