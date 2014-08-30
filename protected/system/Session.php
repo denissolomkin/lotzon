@@ -60,7 +60,7 @@ class Session
         return $default;
     }
 
-    public function unset($key)
+    public function delete($key)
     {
         unset($_SESSION[$key]);
 

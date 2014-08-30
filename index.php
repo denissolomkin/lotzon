@@ -9,4 +9,5 @@ require_once dirname(__FILE__) . '/pathes.php';
 require_once PATH_APPLICATION . 'Application.php';
 
 // load configs
-Application::import(PATH_CONFIGS . '*.php');
+Application::import(PATH_SYSTEM . '*');
+Application::import(PATH_CONFIGS . '*');
