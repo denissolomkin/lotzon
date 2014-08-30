@@ -2,19 +2,10 @@
 
 class Application 
 {
-    public static $_initiated = false;
 
-    public static function init()
+    public static function import($path)
     {
-        if (!self::$_initiated) {
-            
-            self::loadClasses();
-            self::$_initiated = true;
-
-            return true;
-        }
-
-        return false;
+        self::loadClasses($path);
     }
 
     private static function loadClasses($base = PATH_APPLICATION)
