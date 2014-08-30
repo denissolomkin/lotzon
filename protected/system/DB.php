@@ -2,5 +2,5 @@
 
 class DB extends PDO
 {
-
+    
 }
