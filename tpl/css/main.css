@@ -112,3 +112,30 @@ header {background:transparent url("../img/bg-header-promo.jpg") no-repeat 0 0;b
 .h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
 .h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
 .h-b-c-bhg {display:block;float:right;width:80px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-medium;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
+.h-b-c-bhg_span {position:relative;left:2px;}
+
+
+/* ==========================================================================
+                            Promo-article styles
+   ========================================================================== */
+article {width: 940px;margin:auto;margin-bottom:300px;}
+.a-tb {margin-top:50px;overflow:hidden;zoom:1;}
+.a-tb-tl {width:120px;margin-right:40px;font:19px/20px Handbook-regular;text-transform:uppercase;float:left;padding-top:7px;}
+.a-tb-dr {width:525px;float:left;font:18px/19px Handbook-regular;padding-top:7px;}
+.a-tb-bt {display:block;float:right;text-decoration:none;border:1px solid #000;width:218px;height:48px;text-align:center;font:17px/48px Handbook-medium;text-transform:uppercase;color:#000;letter-spacing:1px;}
+
+.a-tbl {overflow:hidden;padding:100px 0;position:relative;}
+.a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}
+.a-tbl .l_ul .n_li {overflow:hidden;margin-bottom:40px;}
+.a-tbl .l_ul .n_li:last-child {margin:0;}
+.a-tbl .l_ul .n_li .n {width:70px;height:70px;background-color:#ffe719;float:left;text-align:center;font:47px/70px Handbook-bold;color:#000;}
+.a-tbl .l_ul .n_li .t {margin:-5px 0 0 91px;font:18px/19px Handbook-regular;}
+.a-tbl .r_ul {margin:0 0 0 470px;padding:0;list-style:none;}
+.a-tbl .r_ul .r_li {margin-bottom:30px;overflow:hidden;}
+.a-tbl .r_ul .r_li:last-child {margin-bottom:0;}
+.a-tbl .r_ul .r_li.rl-b {margin-bottom:40px;}
+.a-tbl .r_ul .r_li .i_ul {margin:0;padding:0;list-style:none;width:343px;float:left;}
+.a-tbl .r_ul .r_li .i_ul .i_li {width:40px;height:40px;border-radius:50%;background-color:#fffad1;float:left;margin-left:10px;}
+.a-tbl .r_ul .r_li .i_ul .a_li {background-color:#ffe719;}
+.a-tbl .r_ul .r_li .ri-e {color:#2f2f2f;font:30px/1 Handbook-bold;text-transform:uppercase;letter-spacing:-1px;padding-top:7px;}
+.a-tbl ._a-b-b {display:block;width:80px;height:40px;position:absolute;right:0px;bottom:30px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;}
