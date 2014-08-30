@@ -13,6 +13,13 @@ class Session
             self::$_instances[$name]->setInstanceName($name);
             self::$_instances[$name]->start();
 
+            if (empty($_SESSION['__flash__count'])) {
+                $_SESSION['__flash__'] = array();    
+            } else {
+                $_SESSION['__flash__count']--;
+            }
+            
+
         }
 
         return self::$_instances[$name];
@@ -63,7 +70,6 @@ class Session
     public function delete($key)
     {
         unset($_SESSION[$key]);
-
         return $this;
     }
 
@@ -75,4 +81,21 @@ class Session
 
         return true;
     }
+
+    public function setFlash($key, $value) 
+    {
+        $_SESSION['__flash__'][$key] = $value;
+        $_SESSION['__flash__count'] = 1;
+
+        return $this;
+    }
+
+    public function getFlash($key, $default = null)
+    {
+        if (isset($_SESSION['__flash__'][$key])) {
+            return $_SESSION['__flash__'][$key];    
+        }
+        return $default;
+    }
+
 }

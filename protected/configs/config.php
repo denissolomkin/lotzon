@@ -28,3 +28,15 @@ try {
 
 // init database connection
 DB::Connect('default', Config::instance()->dbConnectionProperties);
+
+Config::instance()->privateResources =  array(
+    '/private/login/' => array(
+        'get' => 'controllers\admin\Login:index',
+        'post' => 'controllers\admin\Login:auth'
+    ),
+    '/private/logout/' => 'controllers\admin\Login:logout',
+    '/private/game/' => array(
+        'get' => 'controllers\admin\Game:index',
+    ),
+    '/private/' => 'controllers\admin\Game:index',
+);

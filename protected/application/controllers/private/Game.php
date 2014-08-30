@@ -1,0 +1,23 @@
+<?php
+namespace controllers\admin;
+use \Session, \Application, \EntityException;
+
+Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
+
+class Game extends \PrivateArea
+{
+    public function init()
+    {
+        parent::init();
+    }
+
+    public function indexAction()
+    {
+        $this->init();
+        $this->render('admin/game', array(
+            'layout' => 'admin/layout.php',
+            'title'  => 'Game settings',
+        ));
+    }
+
+}

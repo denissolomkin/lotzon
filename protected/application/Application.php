@@ -22,3 +22,8 @@ class Application
         }
     }
 }
+
+class ApplicationException extends Exception 
+{
+    
+}
