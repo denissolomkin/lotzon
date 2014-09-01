@@ -20,6 +20,10 @@ class Login extends \PrivateArea
      */
     public function indexAction() 
     {
+        if (Session::connect()->get(Admin::SESSION_VAR) instanceof Admin) {
+            $this->redirect('/private');
+        }
+        
         $formdata = array();
         if ($formdata['error'] = Session::connect()->getFlash('autherror')) 
         {
@@ -55,7 +59,12 @@ class Login extends \PrivateArea
 
         // success login
         $admin->setLastLogin(time());
-        $admin->setLastLoginIp(ip2long($this->request()->getIp()));
+        $admin->setLastLoginIp($this->request()->getIp());
+        // clear password
+        $admin->setPassword(null);
+
+        $admin->update();
+
         $this->redirect(Session::connect()->get('_redirectAfterLogin', '/private'));
     }
 

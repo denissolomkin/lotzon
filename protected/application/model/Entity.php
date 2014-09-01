@@ -56,7 +56,7 @@ abstract class Entity
 
     public function update()
     {   
-        $this->validate('udpate');
+        $this->validate('update');
         try {
             $model = $this->getModelClass();
             $model::instance()->update($this);

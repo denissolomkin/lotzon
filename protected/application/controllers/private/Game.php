@@ -6,6 +6,8 @@ Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
 class Game extends \PrivateArea
 {
+    public $activeMenu = 'game';
+
     public function init()
     {
         parent::init();
@@ -13,10 +15,10 @@ class Game extends \PrivateArea
 
     public function indexAction()
     {
-        $this->init();
         $this->render('admin/game', array(
             'layout' => 'admin/layout.php',
             'title'  => 'Game settings',
+            'activeMenu' => $this->activeMenu,
         ));
     }
 

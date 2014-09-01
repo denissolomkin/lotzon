@@ -30,13 +30,22 @@ try {
 DB::Connect('default', Config::instance()->dbConnectionProperties);
 
 Config::instance()->privateResources =  array(
+    '/private/' => 'controllers\admin\Game:index',
     '/private/login/' => array(
-        'get' => 'controllers\admin\Login:index',
+        'get'  => 'controllers\admin\Login:index',
         'post' => 'controllers\admin\Login:auth'
     ),
     '/private/logout/' => 'controllers\admin\Login:logout',
     '/private/game/' => array(
         'get' => 'controllers\admin\Game:index',
     ),
-    '/private/' => 'controllers\admin\Game:index',
+    '/private/admins/' => array(
+        'get'   => 'controllers\admin\Admins:index',
+        'post'  => 'controllers\admin\Admins:create',
+    ),
+    '/private/admins/:login' => array(
+        'get'    => 'controllers\admin\Admins:details',
+        'put'    => 'controllers\admin\Admins:update',
+        'delete' => 'controllers\admin\Admins:delete',
+    ),
 );

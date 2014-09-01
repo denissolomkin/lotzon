@@ -16,4 +16,11 @@ class AdminModel extends Model
     {
         return __CLASS__;
     }
+
+    public static function getList()
+    {
+        $admins = self::instance()->getProcessor()->getList();
+
+        return $admins;
+    }
 }
