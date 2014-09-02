@@ -22,4 +22,9 @@ class Game extends \PrivateArea
         ));
     }
 
+    public function saveAction()
+    {
+        die(json_encode(array('status' => 1, 'message' => 'Some critical error occured')));
+    }
+
 }

@@ -37,7 +37,8 @@ Config::instance()->privateResources =  array(
     ),
     '/private/logout/' => 'controllers\admin\Login:logout',
     '/private/game/' => array(
-        'get' => 'controllers\admin\Game:index',
+        'get'  => 'controllers\admin\Game:index',
+        'post' => 'controllers\admin\Game:save',
     ),
     '/private/admins/' => array(
         'get'   => 'controllers\admin\Admins:index',
