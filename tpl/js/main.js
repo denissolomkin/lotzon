@@ -10,4 +10,25 @@ $(function(){
         var point = $('#slide'+toSlide).offset().top;
         $('html, body').animate({scrollTop : point},900, 'easeInOutQuint');
     });
+    $('.go-play').on('click', function(){
+        $('#login-block').css('display','block');
+        setTimeout(function(){
+            $('#login-block').css('opacity','1');
+        },1)
+    });
+    $('#lb-close').on('click', function(){
+        $('#login-block').css('opacity','0');
+        setTimeout(function(){
+            $('#login-block').css('display','none');
+        },500)
+    });
+    $('#login-block').click(function(event) {
+
+        if ($(event.target).closest("#cl-check").length) return;
+        $('#login-block').css('opacity','0');
+        setTimeout(function(){
+            $('#login-block').css('display','none');
+        },500)
+        event.stopPropagation();
+    });
 })
