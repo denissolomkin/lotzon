@@ -186,7 +186,7 @@
         });
 
         var button = $(this);
-        button.remove('span');
+        button.find('span').remove();
         button.parent().find('alert').remove();
 
         $.ajax({
@@ -299,7 +299,7 @@
                 $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.prizes[currentCountry][ballsCount].currency == 'money');
             } else {
                 $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val("0");
-                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', false);
+                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', ballsCount > 3 ? true : false);
             }
         });  
 
