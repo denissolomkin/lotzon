@@ -391,31 +391,55 @@
                                         LOGIN POPUP
         ========================================================================== -->
 
-        <div class="login-popup" id="login-block">
+        <div class="login-popup error" id="login-block">
             <div class="lp-b">
                 <div class="pu-b-c" id="lb-close"></div>
                 <form name="register">
-                    <div class="b-m" id="cl-check">
+                    <div class="b-m login" id="cl-check">
                         <!-- add class "registration" or "login" -->
-                        <div class="t-b registration">
-                            <a href="" class="tb_a-l">вход</a>
-                            <a href="" class="tb_a-r">регистрация</a>
+                        <div class="t-b">
+                            <a href="javascript:void(0)" class="tb_a-l swap-form">вход</a>
+                            <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
                         </div>
-                        <div class="ib-l">
-                            <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                        <!-- REGISTRATION FORM -->
+                        <div id="reg-form">
+                            <div class="ib-l">
+                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                            </div>
+                            <div class="ib-p">
+                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
+                            </div>
+                            <div class="ch-b">
+                                <input type="checkbox" id="rulcheck" hidden />
+                                <label for="rulcheck">Я ознакомился и согласен<br/>с <a href="">правилами игры</a></label>
+                            </div>
+                            <div class="s-b">
+                                <input type="submit" class="sb_but" value="зарегистрироваться и Играть" />
+                            </div>
                         </div>
-                        <div class="ib-p">
-                            <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
-                        </div>
-                        <div class="ch-b">
-                            <input type="radio" id="rulcheck" hidden />
-                            <label for="rulcheck">Я ознакомился и согласен с <a href="">правилами игры</a></label>
-                        </div>
-                        <div class="s-b">
-                            <input type="submit" class="sb_but" value="Играть" />
+
+                        <div id="login-form">
+                            <div class="ib-l">
+                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                            </div>
+                            <div class="ib-p">
+                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
+                            </div>
+                            <div class="ch-b">
+                                <input type="checkbox" id="remcheck" hidden />
+                                <label for="remcheck">Запомнить<br/>меня</a></label>
+                            </div>
+                            <div class="s-b">
+                                <input type="submit" class="sb_but" value="Играть" />
+                            </div>
+                            <div class="e-b">
+                                <div class="e-t">Указанный email не зарегистрированили указан неверный пароль</div>
+                                <a href="javascript:void(0)" class="r-p">Сбросить пароль</a>
+                            </div>
                         </div>
                     </div>
                 </form>
+                <!-- REGISTRATION FORM -->
             </div>
         </div>
 
