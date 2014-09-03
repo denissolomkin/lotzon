@@ -31,7 +31,7 @@
         <!-- For iPhone: -->
         <link rel="apple-touch-icon-precomposed" href="">
 
-        <script src="js/modernizr.js"></script>
+        <script src="js/lib/modernizr.js"></script>
         <script src="js/lib/jquery.min.js"></script>
         <script src="js/lib/jquery-ui.min.js"></script>
 
@@ -75,7 +75,7 @@
                         <div class="h-t-bcb">
                             <div class="h-t-bcb-l">Каждый день у нас новые победители, которые выигрывают денежные и другие призы. Участие в розыгрыше всегда будет бесплатным. Присоединяйтесь.</div>
                             <div class="h-t-bcb-r">
-                                <a href="" class="h-t-bcb-r-b">Играть</a>
+                                <a href="javascript:void(0)" class="h-t-bcb-r-b go-play">Играть</a>
                             </div>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                             <div class="a-tb">
                                 <div class="a-tb-tl">Механика игры</div>
                                 <div class="a-tb-dr">Играть легко и просто! А главное абсолютно бесплатно. Убедитесь в этом сами, ознакомившись с правилами игры представленными ниже.</div>
-                                <a href="" class="a-tb-bt">Играть</a>
+                                <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
                             </div>
                         </div>
                     </div>
@@ -277,7 +277,7 @@
                             <div class="a-tb">
                                 <div class="a-tb-tl">отзывы игроков</div>
                                 <div class="a-tb-dr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.</div>
-                                <a href="" class="a-tb-bt">Играть</a>
+                                <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
                             </div>
                         </div>
                     </div>
@@ -352,13 +352,6 @@
                 </div>
                 <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
             </section>
-
-
-
-
-
-
-
         </article>
         <footer id="slide4" class="display-slide">
             <div class="f-c-b">
@@ -391,6 +384,64 @@
                 <a href="javascript:void(0)" class="b-g-t to-slide" data-slide="1">К началу</a>
             </div>
         </footer>
+
+
+
+        <!-- ==========================================================================
+                                        LOGIN POPUP
+        ========================================================================== -->
+
+        <div class="login-popup error" id="login-block">
+            <div class="lp-b">
+                <div class="pu-b-c" id="lb-close"></div>
+                <form name="register">
+                    <div class="b-m login" id="cl-check">
+                        <!-- add class "registration" or "login" -->
+                        <div class="t-b">
+                            <a href="javascript:void(0)" class="tb_a-l swap-form">вход</a>
+                            <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
+                        </div>
+                        <!-- REGISTRATION FORM -->
+                        <div id="reg-form">
+                            <div class="ib-l">
+                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                            </div>
+                            <div class="ib-p">
+                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
+                            </div>
+                            <div class="ch-b">
+                                <input type="checkbox" id="rulcheck" hidden />
+                                <label for="rulcheck">Я ознакомился и согласен<br/>с <a href="">правилами игры</a></label>
+                            </div>
+                            <div class="s-b">
+                                <input type="submit" class="sb_but" value="зарегистрироваться и Играть" />
+                            </div>
+                        </div>
+
+                        <div id="login-form">
+                            <div class="ib-l">
+                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                            </div>
+                            <div class="ib-p">
+                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
+                            </div>
+                            <div class="ch-b">
+                                <input type="checkbox" id="remcheck" hidden />
+                                <label for="remcheck">Запомнить<br/>меня</a></label>
+                            </div>
+                            <div class="s-b">
+                                <input type="submit" class="sb_but" value="Играть" />
+                            </div>
+                            <div class="e-b">
+                                <div class="e-t">Указанный email не зарегистрированили указан неверный пароль</div>
+                                <a href="javascript:void(0)" class="r-p">Сбросить пароль</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- REGISTRATION FORM -->
+            </div>
+        </div>
 
 
         <script src="js/main.js"></script>
