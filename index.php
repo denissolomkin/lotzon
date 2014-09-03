@@ -23,6 +23,7 @@ $dispatcher = new \SlimController\Slim(array(
     'controller.template_suffix' => 'php',
 ));
 
+
 $dispatcher->addRoutes(Config::instance()->privateResources);
 
 $dispatcher->run();

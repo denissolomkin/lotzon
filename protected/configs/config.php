@@ -18,6 +18,7 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
+Config::instance()->langs = array('ua', 'ru', 'en');
 
 // init memcache connection
 try {
@@ -39,6 +40,9 @@ Config::instance()->privateResources =  array(
     '/private/game/' => array(
         'get'  => 'controllers\admin\Game:index',
         'post' => 'controllers\admin\Game:save',
+    ),
+    '/private/game/addcountry' => array(
+        'post' => 'controllers\admin\Game:addcountry',
     ),
     '/private/admins/' => array(
         'get'   => 'controllers\admin\Admins:index',

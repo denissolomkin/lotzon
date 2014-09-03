@@ -9,7 +9,7 @@
         <div class="form-group">
             <label class="control-label" for="sum">Cумма розыгрыша</label>
             <div class="input-group">
-                <input type="text" name="sum" value="10000" placeholder="Сумма розыгрыша" class="form-control" />
+                <input type="text" name="sum" value="0" placeholder="Сумма розыгрыша" class="form-control" />
                 <span class="input-group-addon">
                     <input type="checkbox" name="jackpot" value="1" class="form-control" data-toggle="tooltip" data-placement="auto" title="JackPot!" />
                 </span>
@@ -30,15 +30,14 @@
                 <div class="input-group pull-right" data-balls="<?=$i?>">
                     <input type="text" class="form-control input-sm" value="0"> 
                     <span class="input-group-addon">
-                        <input type="checkbox">
+                        <input type="checkbox" <?=($i > 3 ? 'checked' : '')?>>
                     </span>
                 </div>
             </div>
         </div>  
         <? } ?>
-        <div class="row-fluid">&nbsp;</div>
     </div>
-
+    
     <!-- scnd column -->
     <div class="col-md-4" id="lotteries">
         <div class="form-group">
@@ -58,6 +57,18 @@
         </div>
     </div>
 </div>
+<div class="row-fluid">
+    <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button>
+        <span class="pull-right">&nbsp;</span>
+        <div class="btn-group pull-right">
+            <? foreach ($supportedCountries as $country) { ?>
+                <button type="button" class="btn btn-sm btn-default<?=($country->getCountryCode() == 'UA' ? ' active' : '') ?>" data-cc="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></button>
+            <? } ?>
+        </div>
+    </div>
+</div>
+
 <div class="row-fluid">&nbsp;</div>
 <div class="col-md-4 col-md-offset-8">
     <button class="btn btn-success save-button"> Cохранить</button>
@@ -81,7 +92,39 @@
         </div>
     </div>
 </div>
+
+<div class="add-country-template" style="display:none">
+    <form class="form form-inline pull-right">
+        <div class="form-group">
+            <label class="sr-only"></label>
+            <input class="input input-sm form-control col-md-1" name="cc" placeholder="Код страны" style="width:90px;">
+        </div>
+        <div class="form-group">
+            <label class="sr-only"></label>
+            <input class="input input-sm form-control col-md-1" name="title" placeholder="Название" style="width:90px;">
+        </div>
+        <div class="form-group">
+            <label class="sr-only"></label>
+            <select class="input input-sm form-control col-md-1" name="lang" placeholder="Язык">
+                <? foreach (Config::instance()->langs as $lang) { ?>
+                    <option value="<?=$lang?>"><?=$lang?></option>
+                <? } ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span></button>
+            <button type="button" class="btn btn-sm btn-danger" style="margin-right:5px;"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </form>
+</div>
 <script>
+    var gameSettings = {
+        lotteryTotal : {},
+        isJackpot    : {},
+        prizes       : {},
+        lotteries    : [],
+    };
+
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
     });
@@ -176,5 +219,90 @@
                 button.parent().prepend($('<alert class="alert alert-danger">Unexpected server error</alert>'))
            }
         });
+    });
+
+    $('.add-country').on('click', function() {
+        var button = $(this);
+        button.hide();
+
+        var template = $('.add-country-template').html();
+        button.parent().append($(template));
+
+        button.parent().find('form').find('.btn-danger').on('click', function() {            
+            $(this).parents('form').remove();
+
+            button.show();
+        });
+
+        button.parent().find('form').find('.btn-success').on('click', function() {            
+            var countryData = {}
+            var form = $(this).parents('form');
+
+            countryData.cc = form.find('input[name="cc"]').val();
+            countryData.title = form.find('input[name="title"]').val();
+            countryData.lang = form.find('select[name="lang"]').val();
+
+            $.ajax({
+                url: "/private/game/addcountry",
+                method: 'POST',
+                data: countryData,
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        form.remove();
+                        button.parent().find('.btn-group').append($('<button type="button" class="btn btn-sm btn-default" data-cc="' + countryData.cc + '">' + countryData.title + '</button>'));
+
+                        button.show();        
+                    } else {
+                        alert(data.message);
+                    }
+                    
+                }, 
+                error: function() {
+                    alert('Unexpected server error');
+                }
+            });
+
+        });
+    });
+
+    $('[data-cc]').on('click', function() {
+        var prevCountry = $('[data-cc].active').data('cc');
+        var currentCountry = $(this).data('cc');
+
+        $('[data-cc]').removeClass('active');
+        $(this).addClass('active');
+
+        // save pervious country data
+        gameSettings.lotteryTotal[prevCountry] = $('input[name="sum"]').val();
+        gameSettings.isJackpot[prevCountry] = $('input[name="jackpot"]:checked').length;
+
+        gameSettings.prizes[prevCountry] = {};
+        $([1,2,3,4,5,6]).each(function(id, ballsCount) {
+            var won = $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val();
+            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? 'money' : 'points';
+
+            gameSettings.prizes[prevCountry][ballsCount] = {
+                'summ' : won,
+                'currency' : currency
+            }
+        });
+
+        // rebuild form values to current country data
+        $('input[name="sum"]').val(gameSettings.lotteryTotal[currentCountry] || "0");
+        $('input[name="jackpot"]').prop('checked', gameSettings.isJackpot[currentCountry] ? true : false);
+        
+        $([1,2,3,4,5,6]).each(function(id, ballsCount) {
+            if (gameSettings.prizes[currentCountry] != undefined) {
+                $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val(gameSettings.prizes[currentCountry][ballsCount].summ);
+                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.prizes[currentCountry][ballsCount].currency == 'money');
+            } else {
+                $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val("0");
+                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', false);
+            }
+        });  
+
+        console.log(gameSettings);      
     });
 </script>

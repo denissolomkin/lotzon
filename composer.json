@@ -1,0 +1,6 @@
+{
+  "require": {
+    "slimcontroller/slimcontroller": "dev-master",
+    "petebrowne/slim-layout-view": "0.3.*"
+  }
+}
