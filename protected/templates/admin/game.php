@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row-fluid">
-        <h2>Настройки розыгрыша</h2>
+        <h2>Настройки розыгрышей</h2>
         <hr />
     </div>
     <div class="row-fluid">&nbsp;</div>
@@ -9,9 +9,9 @@
         <div class="form-group">
             <label class="control-label" for="sum">Cумма розыгрыша</label>
             <div class="input-group">
-                <input type="text" name="sum" value="0" placeholder="Сумма розыгрыша" class="form-control" />
+                <input type="text" name="sum" value="<?=$settings->getTotalWinSum('UA')['sum']?>" placeholder="Сумма розыгрыша" class="form-control" />
                 <span class="input-group-addon">
-                    <input type="checkbox" name="jackpot" value="1" class="form-control" data-toggle="tooltip" data-placement="auto" title="JackPot!" />
+                    <input type="checkbox" name="jackpot" class="form-control" data-toggle="tooltip" data-placement="auto" title="JackPot!" <?=($settings->getTotalWinSum('UA')['isJackpot'] ? 'checked' : '')?> />
                 </span>
             </div>
         </div>
@@ -28,9 +28,9 @@
             </div>
             <div class="col-md-8">
                 <div class="input-group pull-right" data-balls="<?=$i?>">
-                    <input type="text" class="form-control input-sm" value="0"> 
+                    <input type="text" class="form-control input-sm" value="<?=$settings->getPrizes('UA')[$i]['sum']?>"> 
                     <span class="input-group-addon">
-                        <input type="checkbox" <?=($i > 3 ? 'checked' : '')?>>
+                        <input type="checkbox" <?=($settings->getPrizes('UA')[$i]['currency'] == GameSettings::CURRENCY_MONEY || $i > 3 ? 'checked' : '')?>>
                     </span>
                 </div>
             </div>
@@ -40,21 +40,34 @@
     
     <!-- scnd column -->
     <div class="col-md-4" id="lotteries">
-        <div class="form-group">
-            <label class="control-label">Количество и время розыгрышей</label>
-            <div class="form-inline">
-                <div class="col-md-1">
-                    <h4>#1</h4>
-                </div>
-                <div class="col-md-11">
-                    <div class="input-group">
-                        <span class="input-group-addon">@</span>
-                        <input type="text" class="form-control col-md-3" placeholder="Часы:Минуты">
+        <? $i = 1; ?>
+        <? $cnt = count($settings->getGameTimes()); ?>
+        <? foreach ($settings->getGameTimes() as $time) { ?>
+            <div class="form-group">
+                <? if ($i == 1) { ?>
+                    <label class="control-label">Количество и время розыгрышей</label>
+                <? } else { ?>
+                    <label class="control-label">&nbsp;</label>
+                <? } ?>
+                <div class="form-inline">
+                    <div class="col-md-1">
+                        <h4>#<?=$i?></h4>
                     </div>
-                    <button class="btn btn-success add-button"><span class="glyphicon glyphicon-plus"></span></button>
+                    <div class="col-md-11">
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control col-md-3" placeholder="Часы:Минуты" value="<?=date('H:i', $time)?>">
+                        </div>
+                        
+                        <button class="btn btn-success add-button" <?=($i < $cnt ? 'style="display:none"' : '')?>><span class="glyphicon glyphicon-plus"></span></button>
+                        <? if ($i > 1) { ?>
+                            <button class="btn btn-danger remove-button"><span class="glyphicon glyphicon-remove"></span></button>
+                        <? } ?>
+                    </div>    
                 </div>
             </div>
-        </div>
+        <? $i++;
+        } ?>
     </div>
 </div>
 <div class="row-fluid">
@@ -63,7 +76,7 @@
         <span class="pull-right">&nbsp;</span>
         <div class="btn-group pull-right">
             <? foreach ($supportedCountries as $country) { ?>
-                <button type="button" class="btn btn-sm btn-default<?=($country->getCountryCode() == 'UA' ? ' active' : '') ?>" data-cc="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></button>
+                <button type="button" class="btn btn-sm country btn-default<?=($country->getCountryCode() == 'UA' ? ' active' : '') ?>" data-cc="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></button>
             <? } ?>
         </div>
     </div>
@@ -117,19 +130,33 @@
         </div>
     </form>
 </div>
+<? 
+$ajaxedSettings = array(
+    'lotteryTotal' => array(),
+    'isJackpot'    => array(),
+    'prizes'       => array(),
+    'lotteries'    => array(),
+); 
+
+foreach ($settings->getTotalWinSum() as $country => $data) {
+    $ajaxedSettings['lotteryTotal'][$country] = $data['sum'];
+    $ajaxedSettings['isJackpot'][$country]  = (int)$data['isJackpot'];
+}
+
+foreach ($settings->getPrizes() as $country => $prize) {
+    $ajaxedSettings['prizes'][$country] = $prize;
+}
+
+?>
 <script>
-    var gameSettings = {
-        lotteryTotal : {},
-        isJackpot    : {},
-        prizes       : {},
-        lotteries    : [],
-    };
+    var gameSettings = eval(<?=json_encode($ajaxedSettings)?>);
 
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
+        $('.add-button').on('click', addLotteryInput);
+        $('.remove-button').on('click', removeLotteryInput);
     });
 
-    $('.add-button').on('click', addLotteryInput);
 
     function addLotteryInput() {
         var template = $('#lottery-time-template').html();
@@ -162,26 +189,26 @@
     }
 
     $(".save-button").on('click', function() {
-        var submitData = {}
+        var country = $('.country.active').data('cc');
 
-        submitData.lotteryTotal = $('input[name="sum"]').val();
-        submitData.isJackpot = $('input[name="jackpot"]:checked').length;
+        gameSettings.lotteryTotal[country] = $('input[name="sum"]').val();
+        gameSettings.isJackpot[country] = $('input[name="jackpot"]:checked').length;
 
-        submitData.prizes = [];
+        gameSettings.prizes[country] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             var won = $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val();
-            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? 'money' : 'points';
+            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? 'money' : 'point';
 
-            submitData.prizes[ballsCount] = {
-                'summ' : won,
+            gameSettings.prizes[country][ballsCount] = {
+                'sum' : won,
                 'currency' : currency
             }
         });
 
-        submitData.lotteries = [];
+        gameSettings.lotteries = [];
         $('#lotteries').find("input").each(function(id, input) {
             if ($(input).val()) {
-                submitData.lotteries.push($(input).val());
+                gameSettings.lotteries.push($(input).val());
             }
         });
 
@@ -192,7 +219,7 @@
         $.ajax({
             url: "/private/game/",
             method: 'POST',
-
+            data: gameSettings,
             async: true,
             dataType: 'json',
             success: function(data) {
@@ -281,10 +308,10 @@
         gameSettings.prizes[prevCountry] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             var won = $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val();
-            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? 'money' : 'points';
+            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? '<?=GameSettings::CURRENCY_MONEY?>' : '<?=GameSettings::CURRENCY_POINT?>';
 
             gameSettings.prizes[prevCountry][ballsCount] = {
-                'summ' : won,
+                'sum' : won,
                 'currency' : currency
             }
         });
@@ -295,14 +322,12 @@
         
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             if (gameSettings.prizes[currentCountry] != undefined) {
-                $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val(gameSettings.prizes[currentCountry][ballsCount].summ);
-                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.prizes[currentCountry][ballsCount].currency == 'money');
+                $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val(gameSettings.prizes[currentCountry][ballsCount].sum);
+                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.prizes[currentCountry][ballsCount].currency == '<?=GameSettings::CURRENCY_MONEY?>');
             } else {
                 $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val("0");
                 $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', ballsCount > 3 ? true : false);
             }
         });  
-
-        console.log(gameSettings);      
     });
 </script>
