@@ -22,13 +22,13 @@ abstract class Model
 
     public static function instance() 
     {
-        if (is_null(self::$_instance)) {
+        if (empty(self::$_instance[static::myClassName()])) {
             $className = static::myClassName();
-            self::$_instance = new $className;
-            self::$_instance->init();
+            self::$_instance[static::myClassName()] = new $className;
+            self::$_instance[static::myClassName()]->init();
         }
 
-        return self::$_instance;
+        return self::$_instance[static::myClassName()];
     }
 
     protected static function myClassName() 
@@ -41,7 +41,7 @@ abstract class Model
 
     }
 
-    public function setProcessor(IProcessor $processor) 
+    public function setProcessor($processor) 
     {
         $this->_processor = $processor;
     }
