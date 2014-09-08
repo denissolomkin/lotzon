@@ -353,24 +353,28 @@
                 <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
             </section>
         </article>
+
+        <!--  ct-on -->
         <footer id="slide4" class="display-slide">
             <div class="f-c-b">
                 <div class="a-dt-b">
                     <div class="a-dt_tr">
                         <div class="t_td">
                             <div class="f-tl-b">
-                                <div class="tl-tl">нашипартнеры</div>
+                                <div class="tl-tl">наши партнеры</div>
                                 <div class="tl-tt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.</div>
-                                <a href="" class="tl-bt">связаться с нами</a>
+                                <a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a>
                             </div>
                         </div>
                     </div>
                     <div class="a-dt_tr">
                         <div class="m_td">
+
+
                             <div class="fb-f-b">
                                 <form name="feed-back-form">
                                     <div class="m-b">
-                                        <textarea class="i-b_ta" placeholder="Сообщение"></textarea>
+                                        <textarea id="cti" class="i-b_ta" placeholder="Сообщение" value="" maxlength="600"></textarea>
                                     </div>
                                     <div class="m-m-b">
                                         <input type="email" name="mail" class="mmb_input" placeholder="Ваш email" />
@@ -378,6 +382,30 @@
                                     <input type="submit" value="Отправить" class="fb-f-s" />
                                 </form>
                             </div>
+
+                            <ul class="fb-p-b">
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/buduvaiser.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/cincert-ua.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/forf.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/nokia.png" /></a></li>
+
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/ray-ban.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/buduvaiser.png" /></a></li>
+
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/forf.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/ray-ban.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/nokia.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/cincert-ua.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/ray-ban.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
+
+                            </ul>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -766,5 +794,11 @@
 
 
         <script src="js/main.js"></script>
+    <script>
+        $(function(){
+            var _userAgent = navigator.userAgent.indexOf('Windows')
+            console.log(_userAgent);
+        });
+    </script>
     </body>
 </html>

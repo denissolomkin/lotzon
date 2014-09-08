@@ -40,9 +40,42 @@ $(function(){
             },500)
 
         }
-
-
-        //event.stopPropagation();
     });
+
+
+
+    // Contact form functional //
+    $('#cf-ab').on('click', function(){
+        if(!$(this).hasClass('ct-on')){
+            $(this).addClass('ct-on');
+            $('.fb-p-b').css('left',5000);
+            setTimeout(function(){
+                $('.fb-p-b, .fb-f-b').addClass('ct-on');
+                setTimeout(function(){
+                    $('.fb-f-b').css('left',0);
+                }, 50);
+            }, 300);
+        }else{
+            $(this).removeClass('ct-on');
+            $('.fb-f-b').css('left',-5000);
+            setTimeout(function(){
+                $('.fb-p-b, .fb-f-b').removeClass('ct-on');
+                setTimeout(function(){
+                    $('.fb-p-b').css('left',0);
+                }, 50);
+            }, 300);
+        }
+
+
+    });
+
+    $('#cti').val('');
+    $('#cti').on('keyup', function(){
+        $(this).height($(this).get(0).scrollHeight);
+        var $this = $(this);
+        $this.height(1);
+        $this.height(this.scrollHeight);
+    });
+
 
 })
