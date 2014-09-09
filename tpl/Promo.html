@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js gt-ie9"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -389,22 +389,17 @@
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/cincert-ua.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/forf.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/nokia.png" /></a></li>
-
-                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/ray-ban.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/buduvaiser.png" /></a></li>
-
-                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/forf.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/ray-ban.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/nokia.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/cincert-ua.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/forf.png" /></a></li>
+                                <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/nokia.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/ray-ban.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="img/partner-expl/adidas.png" /></a></li>
-
                             </ul>
-
-
 
                         </div>
                     </div>
@@ -796,8 +791,26 @@
         <script src="js/main.js"></script>
     <script>
         $(function(){
-            var _userAgent = navigator.userAgent.indexOf('Windows')
-            console.log(_userAgent);
+            var ios;
+            var mac = navigator.userAgent.indexOf('Mac OS');
+            if(mac > -1)ios = true;
+            var ie = (function(){
+                var ua= navigator.userAgent, tem,
+                        M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+                if(/trident/i.test(M[1])){
+                    tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+                    return 'MSIE '+(tem[1] || '');
+                }
+                if(M[1]=== 'Chrome'){
+                    tem= ua.match(/\bOPR\/(\d+)/)
+                    if(tem!= null) return 'Opera '+tem[1];
+                }
+                M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+                if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+                return M.join(' ');
+            })();
+            ie = ie.toLowerCase();
+            if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
         });
     </script>
     </body>

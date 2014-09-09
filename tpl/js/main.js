@@ -54,7 +54,7 @@ $(function(){
                 setTimeout(function(){
                     $('.fb-f-b').css('left',0);
                 }, 50);
-            }, 300);
+            }, 200);
         }else{
             $(this).removeClass('ct-on');
             $('.fb-f-b').css('left',-5000);
@@ -63,7 +63,7 @@ $(function(){
                 setTimeout(function(){
                     $('.fb-p-b').css('left',0);
                 }, 50);
-            }, 300);
+            }, 200);
         }
 
 
