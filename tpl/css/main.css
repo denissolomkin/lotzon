@@ -92,6 +92,7 @@ header {width:1280px;max-height:135px;margin:auto;}
 .pw-gm-rt .ct .tl {font:12px/14px Handbook-medium;color:#000;text-transform:uppercase;margin-bottom:10px;}
 .pw-gm-rt .ct .rt-bk {margin:0;padding:0;overflow:hidden;list-style:none;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17.5px/35px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;float:left;}
+.font-fix .pw-gm-rt .ct .rt-bk .rt-bk_li {line-height:38px;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li:last-child {margin-right:0;}
 
 
