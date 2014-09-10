@@ -53,4 +53,11 @@ Config::instance()->privateResources =  array(
         'put'    => 'controllers\admin\Admins:update',
         'delete' => 'controllers\admin\Admins:delete',
     ),
+    '/private/texts/' => array(
+        'get'    => 'controllers\admin\Texts:index',
+        'post'   => 'controllers\admin\Texts:save',
+    ),
+    '/private/texts/:identifier' => array(
+        'delete'    => 'controllers\admin\Texts:delete',
+    ),
 );

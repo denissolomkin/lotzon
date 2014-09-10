@@ -20,15 +20,15 @@
         <div class="row">
             <div class="col-md-4">
                 <? for ($j = 1; $j <= $i; ++$j) { ?>
-                    <span style="color: #428BCA;font-size:20pt;">&bull;</span>
+                    <span style="color: #428BCA;font-size:21pt;">&bull;</span>
                 <? } ?>
                 <? for ($z = $j; $z <= 6; ++$z) { ?>
-                    <span style="color: #CCCCCC;font-size:20pt;">&bull;</span>
+                    <span style="color: #CCCCCC;font-size:21pt;">&bull;</span>
                 <? } ?>
             </div>
             <div class="col-md-8">
                 <div class="input-group pull-right" data-balls="<?=$i?>">
-                    <input type="text" class="form-control input-sm" value="<?=$settings->getPrizes('UA')[$i]['sum']?>"> 
+                    <input type="text" class="form-control input-md" value="<?=$settings->getPrizes('UA')[$i]['sum']?>"> 
                     <span class="input-group-addon">
                         <input type="checkbox" <?=($settings->getPrizes('UA')[$i]['currency'] == GameSettings::CURRENCY_MONEY || $i > 3 ? 'checked' : '')?>>
                     </span>
@@ -39,7 +39,7 @@
     </div>
     
     <!-- scnd column -->
-    <div class="col-md-4" id="lotteries">
+    <div class="col-md-5" id="lotteries">
         <? $i = 1; ?>
         <? $cnt = count($settings->getGameTimes()); ?>
         <? foreach ($settings->getGameTimes() as $time) { ?>
@@ -70,20 +70,21 @@
         } ?>
     </div>
 </div>
+<div class="row-fluid">&nbsp;</div>
 <div class="row-fluid">
     <div class="col-md-6">
-        <button type="button" class="btn btn-sm btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button>
+        <button type="button" class="btn btn-md btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button>
         <span class="pull-right">&nbsp;</span>
         <div class="btn-group pull-right">
             <? foreach ($supportedCountries as $country) { ?>
-                <button type="button" class="btn btn-sm country btn-default<?=($country->getCountryCode() == 'UA' ? ' active' : '') ?>" data-cc="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></button>
+                <button type="button" class="btn btn-md country btn-default<?=($country->getCountryCode() == 'UA' ? ' active' : '') ?>" data-cc="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></button>
             <? } ?>
         </div>
     </div>
 </div>
 
 <div class="row-fluid">&nbsp;</div>
-<div class="col-md-4 col-md-offset-8">
+<div class="col-md-3 col-md-offset-9">
     <button class="btn btn-success save-button"> Cохранить</button>
 </div>
 
@@ -107,28 +108,30 @@
 </div>
 
 <div class="add-country-template" style="display:none">
-    <form class="form form-inline pull-right">
-        <div class="form-group">
-            <label class="sr-only"></label>
-            <input class="input input-sm form-control col-md-1" name="cc" placeholder="Код страны" style="width:90px;">
-        </div>
-        <div class="form-group">
-            <label class="sr-only"></label>
-            <input class="input input-sm form-control col-md-1" name="title" placeholder="Название" style="width:90px;">
-        </div>
-        <div class="form-group">
-            <label class="sr-only"></label>
-            <select class="input input-sm form-control col-md-1" name="lang" placeholder="Язык">
-                <? foreach (Config::instance()->langs as $lang) { ?>
-                    <option value="<?=$lang?>"><?=$lang?></option>
-                <? } ?>
-            </select>
-        </div>
-        <div class="form-group">
-            <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span></button>
-            <button type="button" class="btn btn-sm btn-danger" style="margin-right:5px;"><span class="glyphicon glyphicon-remove"></span></button>
-        </div>
-    </form>
+    <div class="row-fluid">
+        <form class="form form-inline pull-right">
+            <div class="form-group">
+                <label class="sr-only"></label>
+                <input class="input input-md form-control col-md-1" name="cc" placeholder="Код страны" style="width:90px;">
+            </div>
+            <div class="form-group">
+                <label class="sr-only"></label>
+                <input class="input input-md form-control col-md-1" name="title" placeholder="Название" style="width:90px;">
+            </div>
+            <div class="form-group">
+                <label class="sr-only"></label>
+                <select class="input input-md form-control col-md-1" name="lang" placeholder="Язык">
+                    <? foreach (Config::instance()->langs as $lang) { ?>
+                        <option value="<?=$lang?>"><?=$lang?></option>
+                    <? } ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-md btn-success"><span class="glyphicon glyphicon-ok"></span></button>
+                <button type="button" class="btn btn-md btn-danger" style="margin-right:5px;"><span class="glyphicon glyphicon-remove"></span></button>
+            </div>
+        </form>
+    </div>
 </div>
 <? 
 $ajaxedSettings = array(
@@ -278,7 +281,7 @@ foreach ($settings->getPrizes() as $country => $prize) {
                 success: function(data) {
                     if (data.status == 1) {
                         form.remove();
-                        button.parent().find('.btn-group').append($('<button type="button" class="btn btn-sm btn-default" data-cc="' + countryData.cc + '">' + countryData.title + '</button>'));
+                        button.parent().find('.btn-group').append($('<button type="button" class="btn btn-md btn-default" data-cc="' + countryData.cc + '">' + countryData.title + '</button>'));
 
                         button.show();        
                     } else {

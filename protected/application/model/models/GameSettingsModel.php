@@ -2,6 +2,7 @@
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameSettingsCacheProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/GameSettingsDBProcessor.php');
 
 class GameSettingsModel extends Model
 {
@@ -9,7 +10,7 @@ class GameSettingsModel extends Model
     {
         parent::init();
 
-        $this->setProcessor(new GameSettingsCacheProcessor());
+        $this->setProcessor(Config::instance()->cacheEnabled ? new GameSettingsCacheProcessor() : new GameSettingsDBProcessor());
     }
 
     public static function myClassName()

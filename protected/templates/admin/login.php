@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Private area login page</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   </head>
-  <body style="background:url(/theme/admin/img/login-bg.png)">
+  <body>
     <div class="container-fluid">
         <div class="row-fluid" style="position:absolute; top:40%; left:40%; z-index:1">
         <? if (!empty($formdata['error'])) { ?>
@@ -31,9 +30,7 @@
         </form>
         </div>
     </div>
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

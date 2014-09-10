@@ -1,8 +1,0 @@
-CREATE TABLE `SupportedCountries` (
-  `CountryCode` varchar(2) NOT NULL DEFAULT '',
-  `Title` varchar(30) NOT NULL DEFAULT '',
-  `Enabled` tinyint(1) NOT NULL DEFAULT '1',
-  `Lang` varchar(2) NOT NULL DEFAULT 'ru'
-  `Position` INT(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (Position, CountryCode)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
