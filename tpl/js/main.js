@@ -83,8 +83,22 @@ $(function(){
         $('.tb-tabs_li').removeClass('now');
         $(this).addClass('now');
         var tn = $(this).attr('data-ticket');
-        var st = tn * 750;
+        var st = tn * 750-750;
         $('.tb-sl-scroller').css('transform' , 'translate('+-st+'px, 0)')
     });
-
+    $('.loto-tl_li').on('click', function(){
+        if(!$(this).hasClass('select')){
+            var lim = $(this).closest('ul').find('.select').length;
+            var sel = 6 - lim - 1;
+            if(lim < 6){
+                $(this).addClass('select');
+                $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+            }
+        }else{
+            var lim = $(this).closest('ul').find('.select').length;
+            var sel = 6 - lim + 1;
+            $(this).removeClass('select');
+            $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+        }
+    });
 })
