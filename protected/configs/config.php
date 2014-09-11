@@ -1,6 +1,8 @@
 <?php
 
 Config::instance()->cacheEnabled = true;
+Config::instance()->newsCacheCount = 18;
+
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
@@ -19,6 +21,7 @@ Config::instance()->cacheConnectionProperties = array(
 );
 
 Config::instance()->langs = array('ua', 'ru', 'en');
+Config::instance()->defaultLang = 'ru';
 
 // init memcache connection
 try {
@@ -59,5 +62,15 @@ Config::instance()->privateResources =  array(
     ),
     '/private/texts/:identifier' => array(
         'delete'    => 'controllers\admin\Texts:delete',
+    ),
+    '/private/news/' => array(
+        'get'    => 'controllers\admin\News:index',
+    ),
+    '/private/news/:lang' => array(
+        'get'    => 'controllers\admin\News:index',
+        'post'   => 'controllers\admin\News:save',
+    ),
+    '/private/news/:identifier' => array(
+        'delete'    => 'controllers\admin\News:delete',
     ),
 );

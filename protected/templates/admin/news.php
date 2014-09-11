@@ -2,10 +2,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="confirmLabel">Удаление текста</h4>
+                <h4 class="modal-title" id="confirmLabel">Удаление новости</h4>
             </div>
             <div class="modal-body">
-                <p>Удаление текста может привести к ошибкам на паблике сайта</p>
                 <p>Уверены ?</p>
             </div>
             <div class="modal-footer">
@@ -15,37 +14,42 @@
         </div>
     </div>
 </div>
-
-<div class="container-fluid">
+<div class="container-fluid">    
     <div class="row-fluid">
-        <h2>Список текстов на сайте</h2>
+        <h2>Список новостей</h2>
         <hr />
     </div>
     <div class="row-fluid">
-        <button class="btn btn-md btn-success pull-right"  onclick="document.location.href='#addForm';"><i class="glyphicon glyphicon-plus"></i> Добавить</button>
+        <div class="btn-group">
+            <? foreach (Config::instance()->langs as $lang) { ?>
+                <button onclick="document.location.href='/private/news/<?=$lang?>'" type="button" class="btn btn-md lang btn-default<?=($pageLang == $lang ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
+            <? } ?>
+        </div>
+        <button class="btn btn-md btn-success pull-right"  onclick="document.location.href='/private/news/<?=$pageLang?>#addForm';"><i class="glyphicon glyphicon-plus"></i> Добавить</button>
     </div>
-    <div class="row-fluid">&nbsp;</div>
     <div class="row-fluid">&nbsp;</div>
     <div class="row-fluid">
         <table class="table table-striped">
             <thead>
-                <th>Идентификатор</th>
+                <th>#ID</th>
+                <th>Заголовок</th>
                 <th>Текст</th>
+                <th>Дата создания</th>
                 <th>Options</th>
             </thead>
             <tbody>
-                <? foreach ($list as $id => $text) { ?>
+                <? foreach ($list as $news) { ?>
                     <tr>
-                        <td><strong class="identifier"><?=$id?></strong></td>
-                        <td><?=(mb_substr(strip_tags($text['ru']->getText()), 0, 255) . '...')?></td>
+                        <td class="id"><?=$news->getId()?></td>
+                        <td class="title"><strong><?=$news->getTitle()?></strong></td>
+                        <td width="50%"><?=(mb_substr(strip_tags($news->getText()), 0, 256) . '...')?></td>
+                        <td><?=date('d.m.Y', $news->getDate())?></td>
                         <td>
                             <button class="btn btn-md edit-text btn-warning"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;
                             <button class="btn btn-md remove-text btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
                         </td>
-                        <td style="display:none">
-                        <? foreach ($text as $lang => $text) { ?>
-                            <div data-lang="<?=$text->getLang()?>"><?=$text->getText()?></div>
-                        <? } ?>
+                        <td class="fulltext" style="display:none">
+                            <?=$news->getText()?>
                         </td>
                     </tr>
                 <? } ?>
@@ -53,7 +57,7 @@
         </table>
     </div>  
     <div class="row-fluid">
-        <h2>Добавить текст</h2>
+        <h2>Добавить новость</h2>
         <hr />
     </div>    
     <div class="row-fluid" id="errorForm" style="display:none">
@@ -64,8 +68,8 @@
     <div class="row-fluid" id="addForm">
         <form class="form">
             <div class="form-group">
-                <label class="control-label">Идентификатор</label>
-                <input type="text" name="id" value="" placeholder="Идентификатор" class="form-control" />
+                <label class="control-label">Заголовок</label>
+                <input type="text" name="title" value="" placeholder="Заголовок" class="form-control" />
             </div>
             <div class="form-group">
                 <label class="control-label">Текст</label>
@@ -75,21 +79,18 @@
     </div>
 
     <div class="row-fluid">
-        <div class="btn-group">
-            <? $fst = true; ?>
-            <? foreach (Config::instance()->langs as $lang) { ?>
-                <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
-            <? $fst = false;} ?>
-        </div>
-        <button class="btn btn-md btn-success save pull-right" style="margin-left:10px;"> Сохранить</button>
+        <button class="btn btn-md btn-success save pull-right"> Сохранить</button>
     </div>
+    <div class="row-fluid">&nbsp;</div>
+    <div class="row-fluid">&nbsp;</div>
     <div class="row-fluid">&nbsp;</div>
 </div>
 
 <script>
     var currentEdit = {
-        identifier : '',
-        text : {},
+        id: '',
+        title : '',
+        text : '',       
     };
 
     $(document).ready(function() {
@@ -105,45 +106,28 @@
         $('#text').code('');
     });
 
-    $('.lang').on('click', function() {
-        var prevLang = $('.lang.active').data('lang');
-        var currentLang = $(this).data('lang');
-
-        currentEdit.text[prevLang] = $('#text').code();
-
-        $('.lang').removeClass('active');
-        $(this).addClass('active');
-
-        if (currentEdit.text[currentLang]) {
-            $('#text').code(currentEdit.text[currentLang]);
-        } else {
-            $('#text').code('');
-        }
-    });
-
     $('.save').on('click', function() {
-        var currentLang = $('.lang.active').data('lang');
         var text = $('#text').code();
 
-        currentEdit.text[currentLang] = text;
+        currentEdit.text = text;
 
         $("#errorForm").hide();
         $(this).find('.glyphicon').remove();
 
-        if (!$('input[name="id"]').val()) {
-            showError('Identifier can\'t be empty');
+        if (!$('input[name="title"]').val()) {
+            showError('Title can\'t be empty');
 
             return false;
         }
-        currentEdit.identifier = $('input[name="id"]').val();
-        if (!currentEdit.text[currentLang]) {
+        currentEdit.title = $('input[name="title"]').val();
+        if (!currentEdit.text) {
             showError('Text can\'t be empty');
 
             return false;
         }
         
         $.ajax({
-            url: "/private/texts/",
+            url: "/private/news/<?=$pageLang?>",
             method: 'POST',
             data: currentEdit,
             async: true,
@@ -154,7 +138,6 @@
                 } else {
                     showError(data.message);
                 }
-                
             }, 
             error: function() {
                 showError('Unexpected server error');
@@ -163,24 +146,23 @@
     });
 
     $('.edit-text').on('click', function() {
-        currentEdit.identifier = $(this).parents('tr').find('.identifier').text();
-        $(this).parents('tr').find('[data-lang]').each(function(id, obj) {
-            currentEdit.text[$(obj).data('lang')] = $(obj).html();
-        });
+        currentEdit.id = $(this).parents('tr').find('td.id').text();
+        currentEdit.text = $(this).parents('tr').find('td.fulltext').html();
+        currentEdit.title = $(this).parents('tr').find('td.title').text();
 
-        $('#addForm').find('input[name="id"]').val(currentEdit.identifier);
-        $('#text').code(currentEdit.text[$('.lang.active').data('lang')]);
+        $('#addForm').find('input[name="title"]').val(currentEdit.title);
+        $('#text').code(currentEdit.text);
 
         document.location.href = '#addForm';
     });
 
     $('.remove-text').on('click', function() {
         var row = $(this).parents('tr')
-        var identifier = row.find('.identifier').text();
+        var identifier = row.find('td.id').text();
         $('#deleteConfirm').modal();
         $('#deleteConfirm').find('.btn-danger').off('click').on('click', function() {
              $.ajax({
-                url: "/private/texts/" + identifier,
+                url: "/private/news/" + identifier,
                 method: 'DELETE',
                 data: {},
                 async: true,
