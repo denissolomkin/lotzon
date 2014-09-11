@@ -78,4 +78,13 @@ $(function(){
     });
 
 
+    // Tickets sliders functional //
+    $('.tb-tabs_li').on('click', function(){
+        $('.tb-tabs_li').removeClass('now');
+        $(this).addClass('now');
+        var tn = $(this).attr('data-ticket');
+        var st = tn * 750;
+        $('.tb-sl-scroller').css('transform' , 'translate('+-st+'px, 0)')
+    });
+
 })

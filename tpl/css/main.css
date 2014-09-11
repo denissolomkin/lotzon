@@ -108,12 +108,13 @@ nav.top-nav {width:1280px;height:70px;background-color:#f2efed;background:transp
 .tn-tr-bk {float:right;margin-right:40px;width:250px;}
 .tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-medium;color:#404040;text-transform:uppercase;margin-top:23px;}
 .tn-tr-bk .tn-tr {font:36px/1 Handbook-bold;color:#2f2f2f;float:right;margin-top:18px;}
+.font-fix .tn-tr-bk .tn-tr {margin-top:20px;}
 
 
 /* ==========================================================================
                             Section wings styles
    ========================================================================== */
-article {width:1280px;margin:auto;}
+article {width:1280px;margin:auto;background:url("../img/bg-.page-body.jpg") no-repeat 0 0;background-size: cover;}
 article .wings {}
 .wings .lbs {width:130px;text-align:right;float:left;}
 .wings .lbs .bz1 {margin-bottom:45px;}
@@ -123,9 +124,36 @@ article .wings {}
 .wings .rbs {width:320px;float:right;}
 .wings .w-ct {width:750px;margin-left:170px;}
 
-.tickets {padding-top:35px;}
+.tickets {padding-top:25px;}
 .tickets .tb-tabs {list-style:none;margin:0;padding:0;font-size:0;}
-.tickets .tb-tabs .tb-tabs_li {display:inline-block;width:120px;height:30px;margin-right:20px;background-color:#909090;font:15px/30px Handbook-bold;text-align:center;border-radius:5px 5px 0 0;color:#e0eaeb;text-transform:uppercase;cursor:pointer;vertical-align:bottom;}
-.tickets .tb-tabs .tb-tabs_li.now {background-color:#b2d0d4;height:40px;line-height:40px;position:relative;top:-10px;}
+.tickets .tb-tabs .tb-tabs_li {display:inline-block;width:120px;height:30px;margin-right:20px;background-color:#909090;font:15px/30px Handbook-bold;text-align:center;border-radius:5px 5px 0 0;text-transform:uppercase;cursor:pointer;vertical-align:bottom;}
+.font-fix .tickets .tb-tabs .tb-tabs_li {line-height:32px;}
+.tickets .tb-tabs .tb-tabs_li > a {color:#e0eaeb;text-decoration:none;}
+.tickets .tb-tabs .tb-tabs_li.now {height:40px;line-height:40px;position:relative;top:1px;background:transparent;width:122px;margin-right:18px;overflow:hidden;background-color:#b2d0d4;box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4);}
+.tickets .tb-tabs .tb-tabs_li.now > a {display:block;width:120px;border-radius:5px 5px 0 0;box-shadow:2px 2px 1px 0 rgba(0, 0, 0, 0.4);color:#4c4c4c;}
+
+.tb-slides {background-color:#b2d0d4;box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4), 2px 2px 1px 0 rgba(0, 0, 0, 0.4);overflow:hidden;}
+.tb-slides .tb-sl-scroller {height:420px;overflow:hidden;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
+.tb-slides .tb-slide {width:750px;float:left;}
+.tb-slides .tb-slide .tb-loto-tl {list-style:none;margin:40px 0 0 40px;padding:0;font-size:0;}
+.tb-slides .tb-slide .loto-tl_li {width:40px;height:40px;display:inline-block;border-radius:50%;box-shadow:inset 1px 2px 1px 0 rgba(0, 0, 0, 0.4), 0px 2px 1px 0 rgba(255, 255, 255, 0.6);background-color:#e9f2f4;font:15px/42px Handbook-bold;color:#8f8e8e;text-align:center;margin:0 30px 20px 0;cursor:pointer;}
+.font-fix .tb-slides .tb-slide .loto-tl_li {line-height:46px;}
+.tb-slides .tb-slide .loto-tl_li.select {background-color:#ffe400;color:#4c4c4c;}
+.tb-slides .tb-slide .bm-pl {}
+.tb-fs-tl {list-style:none;margin:0 0 0 40px;padding:10px 0 0 0;float:left;}
+.tb-fs-tl .loto-tl_li {font-size:20px!important;color:#4c4c4c!important;margin:0 27px 0 0!important;}
+.font-fix .tb-fs-tl .loto-tl_li {line-height:48px;}
+.tb-slides .tb-slide .bm-pl .tb-st-bk {float:right;padding:10px 40px 30px 0;}
+.tb-slides .tb-slide .bm-pl .tb-st-bk .sm-but {float:right;width:170px;height:40px;border-radius:40px;font:15px/42px Handbook-bold;color:#8f8e8e;text-align:center;background-color:#d0e2e4;text-transform:uppercase;box-shadow:inset 1px 2px 1px 0 rgba(0, 0, 0, 0.4), 0 2px 1px 0 rgba(255, 255, 255, 0.6);margin-left:20px;letter-spacing:1px;cursor:pointer;}
+.font-fix .tb-slides .tb-slide .bm-pl .tb-st-bk .sm-but {line-height:46px;}
+.tb-slides .tb-slide .bm-pl .tb-st-bk .tb-ifo {font:15px/1 Handbook-bold;color:#e7f6f7;float:right;text-transform:uppercase;padding-top:13px;letter-spacing:1px;}
+.font-fix .tb-slides .tb-slide .bm-pl .tb-st-bk .tb-ifo {padding-top:15px;}
+.tb-slides .tb-slide .bm-pl .tb-st-bk .tb-ifo > b {color:#4c4c4c;}
 
 
