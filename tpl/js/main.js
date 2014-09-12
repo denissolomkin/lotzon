@@ -101,4 +101,20 @@ $(function(){
             $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
         }
     });
+
+    // Prizes sliders functional //
+    $('.pz-nav .pz-nav_li').on('click', function(){
+        $('.pz-nav .pz-nav_li').removeClass('now');
+        $(this).addClass('now');
+    });
+
+    $('.pz-more-bt').on('click', function(){
+        if($(this).attr('data-status') == 'close'){
+            $('.pz-cg.more').show(300);
+            $(this).html('спрятать').attr('data-status','open');
+        }else{
+            $('.pz-cg.more').hide(300);
+            $(this).html('загрузить еще').attr('data-status','close');
+        }
+    });
 })
