@@ -78,13 +78,57 @@ $(function(){
     });
 
 
+    // Navigations scroll functional //
+
+    $('.tn-mbk_li').on('click', function(){
+        var pn = $(this).attr('data-href');
+        var pnPos = $('.'+pn).offset().top - 100;
+        if(pn == 'tickets')pnPos = 0;
+        $('html, body').animate({scrollTop : pnPos},900, 'easeInOutQuint');
+    });
+
+
+    var navPos = $('nav.top-nav').offset().top;
+    var tikets = $('.tickets').offset().top;
+    var prizes = $('.prizes').offset().top;
+    if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#tickets-but').addClass('now');
+    }else if($(document).scrollTop() > (prizes - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#prizes-but').addClass('now');
+    }
+    if($(document).scrollTop() > navPos){
+        $('nav.top-nav').addClass('fixed');
+    }else{
+        $('nav.top-nav').removeClass('fixed');
+    }
+    $(document).on('scroll', function(){
+        tikets = $('.tickets').offset().top;
+        prizes = $('.prizes').offset().top;
+        if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#tickets-but').addClass('now');
+        }else if($(document).scrollTop() > (prizes - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#prizes-but').addClass('now');
+        }
+
+        if($(document).scrollTop() > navPos){
+            $('nav.top-nav').addClass('fixed');
+        }else{
+            $('nav.top-nav').removeClass('fixed');
+        }
+    });
+
     // Tickets sliders functional //
     $('.tb-tabs_li').on('click', function(){
         $('.tb-tabs_li').removeClass('now');
         $(this).addClass('now');
         var tn = $(this).attr('data-ticket');
-        var st = tn * 750-750;
-        $('.tb-sl-scroller').css('transform' , 'translate('+-st+'px, 0)')
+        var st = $('#tb-slide'+tn);
+        $('.tb-slides .tb-slide').hide();
+        st.show();
     });
     $('.loto-tl_li').on('click', function(){
         if(!$(this).hasClass('select')){

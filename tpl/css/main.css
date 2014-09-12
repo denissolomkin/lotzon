@@ -80,7 +80,7 @@ a:hover {}
 /* ==========================================================================
                             Header styles
    ========================================================================== */
-header {width:1280px;max-height:135px;margin:auto;}
+header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 .hr-br {width:960px;float:left;}
 .hr-io-bk {float:right;width:320px;height:135px;background-color:#fee518;}
 #hr-io-slider {height:100px;}
@@ -90,8 +90,8 @@ header {width:1280px;max-height:135px;margin:auto;}
 .slick-dots li.slick-active button {background-color:#000;}
 .pw-gm-rt .ct {padding:16px 0 0 30px;}
 .pw-gm-rt .ct .tl {font:12px/14px Handbook-medium;color:#000;text-transform:uppercase;margin-bottom:10px;}
-.pw-gm-rt .ct .rt-bk {margin:0;padding:0;overflow:hidden;list-style:none;}
-.pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17.5px/35px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;float:left;}
+.pw-gm-rt .ct .rt-bk {margin:0;padding:0;list-style:none;font-size:0;}
+.pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17.5px/35px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;display:inline-block;}
 .font-fix .pw-gm-rt .ct .rt-bk .rt-bk_li {line-height:38px;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li:last-child {margin-right:0;}
 
@@ -99,9 +99,17 @@ header {width:1280px;max-height:135px;margin:auto;}
 /* ==========================================================================
                             Navigation styles
    ========================================================================== */
-nav.top-nav {width:1280px;height:70px;background-color:#f2efed;background:transparent url("../img/game-block-footer-logo.png") no-repeat 28px 21px;margin:auto;}
+nav.top-nav {width:100%;margin-bottom:-70px;}
+nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
+.tn-box {width:1280px;height:70px;margin:auto;background:#f2efed url("../img/game-block-footer-logo.png") no-repeat 28px 21px;}
 .tn-mbk {list-style:none;margin:0px 0 0 200px;padding:5px 0 0 0;overflow:hidden;float:left;}
-.tn-mbk .tn-mbk_li {float:left;padding:0 30px;height:60px;font:15px/60px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);}
+.tn-mbk .tn-mbk_li {float:left;padding:0 30px;height:60px;font:15px/60px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
+    -webkit-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -moz-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -ms-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -o-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
 .tn-mbk .tn-mbk_li.now {background-color:#ffe400;}
 .tn-mbk .tn-mbk_li.now > a {cursor:default;}
 .tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;}
@@ -114,7 +122,7 @@ nav.top-nav {width:1280px;height:70px;background-color:#f2efed;background:transp
 /* ==========================================================================
                             Section wings styles
    ========================================================================== */
-article {width:1280px;margin:auto;background:url("../img/bg-.page-body.jpg") no-repeat 0 0;background-size: cover;}
+article {width:1280px;margin:70px auto 0 auto;background:url("../img/bg-.page-body.jpg") no-repeat 0 0;background-size: cover;}
 article .wings {}
 .wings .lbs {width:130px;text-align:right;float:left;}
 .wings .lbs .bz1 {margin-bottom:45px;}
@@ -140,7 +148,8 @@ article .wings {}
     -o-transition: all 500ms cubic-bezier(0.86, 0, 0.07, 1);;
     transition: all 500ms cubic-bezier(0.86, 0, 0.07, 1);;
 }
-.tb-slides .tb-slide {width:750px;float:left;}
+.tb-slides .tb-slide {width:750px;display:none;}
+.tb-slides .tb-slide:first-child {display:block;}
 .tb-slides .tb-slide .tb-loto-tl {list-style:none;margin:40px 0 0 40px;padding:0;font-size:0;}
 .tb-slides .tb-slide .loto-tl_li {width:40px;height:40px;display:inline-block;border-radius:50%;box-shadow:inset 1px 2px 1px 0 rgba(0, 0, 0, 0.4), 0px 2px 1px 0 rgba(255, 255, 255, 0.6);background-color:#e9f2f4;font:15px/42px Handbook-bold;color:#8f8e8e;text-align:center;margin:0 30px 20px 0;cursor:pointer;
     -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
