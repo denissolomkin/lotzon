@@ -25,13 +25,25 @@ class News extends PrivateArea
         }
         $page = $this->request()->get('page', 1);
 
-        $list = NewsModel::instance()->getList($lang, self::NEWS_PER_PAGE, $page == 1 ? 0 : self::NEWS_PER_PAGE * $page);
+        $list = NewsModel::instance()->getList($lang, self::NEWS_PER_PAGE, $page == 1 ? 0 : self::NEWS_PER_PAGE * $page - self::NEWS_PER_PAGE);
+        $rowsCount = NewsModel::instance()->getCount($lang);
+
+        $pager = array(
+            'page' => $page,
+            'rows' => $rowsCount,
+            'per_page' => self::NEWS_PER_PAGE,
+            'pages' => 0,
+        );
+
+        $pager['pages'] = ceil($pager['rows'] / $pager['per_page']);
+
         $this->render('admin/news', array(
             'title'      => 'Новости',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
             'pageLang'   => $lang,
+            'pager'      => $pager,
         ));
     }
 

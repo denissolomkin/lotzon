@@ -56,6 +56,15 @@
             </tbody>
         </table>
     </div>  
+    <? if ($pager['pages'] > 1) {?>
+        <div class="row-fluid">
+            <div class="btn-group">
+                <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
+                    <button onclick="document.location.href='/private/news/<?=$pageLang?>?page=<?=$i?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                <? } ?>
+            </div>
+        </div>
+    <? } ?> 
     <div class="row-fluid">
         <h2>Добавить новость</h2>
         <hr />

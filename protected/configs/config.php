@@ -73,4 +73,7 @@ Config::instance()->privateResources =  array(
     '/private/news/:identifier' => array(
         'delete'    => 'controllers\admin\News:delete',
     ),
+    '/private/shop/' => array(
+        'get'    => 'controllers\admin\Shop:index',
+    ),
 );

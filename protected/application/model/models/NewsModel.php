@@ -21,4 +21,8 @@ class NewsModel extends Model
     public function getList($lang, $limit = null, $offset = null) {
         return $this->getProcessor()->getList($lang, $limit, $offset);
     }
+
+    public function getCount($lang) {
+        return $this->getProcessor()->getCount($lang);
+    } 
 }

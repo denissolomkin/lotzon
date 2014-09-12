@@ -95,4 +95,19 @@ class NewsDBProcessor implements IProcessor
         return $news;
     }
 
+    public function getCount($lang) {
+        $sql = "SELECT COUNT(*) FROM `News` WHERE `Lang` = :lang";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':lang' => $lang,
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to proccess storage query", 500);   
+        }
+
+        return $sth->fetchColumn(0);  
+    } 
+
 }

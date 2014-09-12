@@ -31,7 +31,7 @@
             <li<?=($activeMenu == 'texts' ? ' class="active"' : '')?>><a href="/private/texts">Тексты</a></li>
             <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news">Новости</a></li>
             <li><a href="/private/banners">Баннеры</a></li>
-            <li><a href="/private/items">Товары</a></li>
+            <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop">Товары</a></li>
             <li><a href="/private/monetisation">Запросы вывода средств</a></li>
             <li><a href="/private/stats">Статистика</a></li>
             <li><a href="/private/ogames">Онлайн игры</a></li>

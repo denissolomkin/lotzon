@@ -68,4 +68,8 @@ class NewsCacheProcessor extends BaseCacheProcessor implements IProcessor
         return $list;
     }
 
+    public function getCount($lang) {
+        return $this->getBackendProcessor()->getCount($lang);
+    } 
+
 }
