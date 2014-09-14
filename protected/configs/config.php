@@ -76,4 +76,10 @@ Config::instance()->privateResources =  array(
     '/private/shop/' => array(
         'get'    => 'controllers\admin\Shop:index',
     ),
+    '/private/shop/category/:id' => array(
+        'get'    => 'controllers\admin\Shop:index',
+    ),
+    '/private/shop/addCategory/' => array(
+        'post'    => 'controllers\admin\Shop:addCategory',
+    ),
 );

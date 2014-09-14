@@ -6,10 +6,14 @@
 
     <div class="row-fluid form-inline">
         <div class="btn-group">
-            <button class="btn btn-md btn-default active">Популярные</button>
-            <button class="btn btn-md btn-default">Продтовары</button>
-            <button class="btn btn-md btn-default">Техника</button>
-            <button class="btn btn-md btn-default">Услуги</button>
+
+            <? $fst = true; foreach ($shop as $category) { 
+                if (!$currentCategory && $fst) {
+                    $currentCategory = $category->getId();
+                }
+                ?>
+                <button onclick="document.location.href='/private/shop/category/<?=$category->getId()?>'" class="btn btn-md btn-default<?=($currentCategory == $category->getId() ? ' active' : '')?>"><?=$category->getName()?></button>    
+            <? $fst = false;} ?>
         </div> 
         <button class="btn btn-md btn-success add-category"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
@@ -63,11 +67,47 @@
     {
         var input = $('<input class="form-control input-md" value="" style="width:200px;" placeholder="Название категории">');
         var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
+        var button = $(this);
+
         input.insertBefore($(this));
         cnlButton.insertAfter($(this));
 
         $(this).find('i').removeClass('glyphicon-plus').addClass('glyphicon-ok');
 
-        $(this).off('click');
+        $(this).off('click').on('click', function() {
+            var catName = input.val();
+
+            if (!catName) {
+                return false;
+            }
+
+            $.ajax({
+                url: "/private/shop/addCategory",
+                method: 'POST',
+                data: {
+                    name: catName,
+                },
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        document.location.href = '/private/shop/category/' + data.data.categoryId;
+                    } else {
+                        alert(data.message);
+                    }
+                }, 
+                error: function() {
+                    alert('Unexpected server error');
+               }
+            });
+        });
+
+        cnlButton.on('click', function() {
+            input.remove();
+            $(this).remove();
+
+            button.find('i').removeClass('glyphicon-ok').addClass('glyphicon-plus');
+            button.off('click').on('click', showAddCategoryInput);
+        })
     }
 </script>
