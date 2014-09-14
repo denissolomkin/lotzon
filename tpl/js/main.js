@@ -92,4 +92,65 @@ $(function(){
             $(this).html('загрузить еще').attr('data-status','close');
         }
     });
+
+
+    // Info block functional //
+    $('.n-add-but').on('click', function(){
+        var newsBlock = $('.news');
+        if(!newsBlock.hasClass('b-ha')){
+            var cash = $('#news-cash').html();
+            newsBlock.addClass('b-ha');
+            $('.n-items').append('<div class="n-ic-bk"></div>');
+            $('.n-ic-bk').append(cash).show(500);
+            setTimeout(function(){
+                $('.n-add-but').html('спрятать');
+            }, 500);
+        }else{
+            $('.n-ic-bk').hide(500);
+            setTimeout(function(){
+                $('.n-ic-bk').remove();
+                $('.n-add-but').html('загрузить еще');
+                newsBlock.removeClass('b-ha');
+            }, 500);
+
+        };
+    });
+
+    $('.r-add-but').on('click', function(){
+        var rulesBlock = $('.rules');
+        if(!rulesBlock.hasClass('b-ha')){
+            rulesBlock.addClass('b-ha');
+            $('.rules .faq').show(500);
+            setTimeout(function(){
+                $('.r-add-but').html('спрятать');
+            }, 500);
+        }else{
+            $('.rules .faq').hide(500);
+            setTimeout(function(){
+                $('.r-add-but').html('загрузить еще');
+                rulesBlock.removeClass('b-ha');
+            }, 500);
+        };
+
+
+        if(!newsBlock.hasClass('b-ha')){
+            var cash = $('#news-cash').html();
+            newsBlock.addClass('b-ha');
+            $('.n-items').append('<div class="n-ic-bk"></div>');
+            $('.n-ic-bk').append(cash).show(500);
+            setTimeout(function(){
+                $('.n-add-but').html('спрятать');
+            }, 500);
+        }else{
+            $('.n-ic-bk').hide(500);
+            setTimeout(function(){
+                $('.n-ic-bk').remove();
+                $('.n-add-but').html('загрузить еще');
+                newsBlock.removeClass('b-ha');
+            }, 500);
+
+        };
+    });
+
+
 })
