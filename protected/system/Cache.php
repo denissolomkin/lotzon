@@ -1,4 +1,10 @@
 <?php
+if (!class_exists('Memcache')) {
+    class Memcache {
+        public function pconnect() {}
+        public function connect() {}
+    }
+}
 class Cache extends Memcache
 {
     /**

@@ -100,5 +100,5 @@ Config::instance()->privateResources =  array(
 );
 
 Config::instance()->publicResources = array(
-    '/' => 'controllers\public\Index:index',
-),
+    '/' => 'controllers\production\Index:index',
+);

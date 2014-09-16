@@ -25,5 +25,6 @@ $dispatcher = new \SlimController\Slim(array(
 
 
 $dispatcher->addRoutes(Config::instance()->privateResources);
+$dispatcher->addRoutes(Config::instance()->publicResources);
 
 $dispatcher->run();

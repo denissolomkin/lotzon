@@ -11,7 +11,7 @@
             <div class="input-group">
                 <input type="text" name="sum" value="<?=$settings->getTotalWinSum('UA')['sum']?>" placeholder="Сумма розыгрыша" class="form-control" />
                 <span class="input-group-addon">
-                    <input type="checkbox" name="jackpot" class="form-control" data-toggle="tooltip" data-placement="auto" title="JackPot!" <?=($settings->getTotalWinSum('UA')['isJackpot'] ? 'checked' : '')?> />
+                    <input type="checkbox" name="jackpot" data-toggle="tooltip" data-placement="auto" title="JackPot!" <?=($settings->getTotalWinSum('UA')['isJackpot'] ? 'checked' : '')?> />
                 </span>
             </div>
         </div>
