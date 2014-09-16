@@ -21,7 +21,7 @@ class ShopCacheProcessor extends BaseCacheProcessor
     }
 
     public function deleteCategory(ShopCategory $category) {
-        $this->getBackendProcessor()->updateCategory($category);
+        $this->getBackendProcessor()->deleteCategory($category);
 
         $this->recacheShop();
         return true;

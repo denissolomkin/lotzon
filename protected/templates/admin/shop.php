@@ -1,3 +1,19 @@
+<div class="modal fade" id="deleteConfirm" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Удаление новости</h4>
+            </div>
+            <div class="modal-body">
+                <p>Уверены ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-danger">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row-fluid">
         <h2>Товары</h2>
@@ -18,47 +34,55 @@
         <button class="btn btn-md btn-success add-category"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
     <div class="row-fluid">&nbsp;</div>
-    <div class="col-md-2">
-        <div class="thumbnail">
-            <img src="http://hilding-anders.ru/assets/i/jensen_mpb.jpg" alt="...">
-            <div class="caption clearfix">
-                <h4>Название товара</h4>
-                <span>4000/&infin;</span>
-                <div class="btn-group pull-right">
-                    <button class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-edit"></i></button>
-                    <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-eye-close"></i></button>
-                    <button class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i></button>
-                </div>
-            </div>            
-        </div>
-    </div>
-    <div class="col-md-2">
+
+    <? foreach ($shop[$currentCategory]->getItems() as $item) { ?>
+        <div class="col-md-2">
+            <div class="thumbnail" data-id="<?=$item->getId()?>">
+                <img src="/filestorage/shop/<?=$item->getImage()?>" alt="...">
+                <div class="caption clearfix">
+                    <h4><?=$item->getTitle()?></h4>
+                    <span><?=$item->getPrice()?>/<?=($item->getQuantity() ? $item->getQuantity() : "&infin;")?></span>
+                    <div class="btn-group pull-right">
+                        <!-- button class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-eye-close"></i></button -->
+                        <button class="btn btn-danger btn-sm item-remove"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </div>            
+            </div>
+        </div>    
+    <? } ?>
+    
+    <!--div class="col-md-2">
         <div class="thumbnail">
             <img src="http://hilding-anders.ru/assets/i/jensen_mpb.jpg" alt="...">
             <div class="caption">
                 <input type="text" name="title" class="form-control input-sm" placeholder="Название товара" value="Норм товар" />
                 <div class="form-inline" style="margin-top:10px;">
                     <input style="width:40%" type="text" name="price" class="form-control input-sm" value="4000" /> / 
-                    <input style="width:30%" type="text" name="price" class="form-control input-sm" value="100" />
+                    <input style="width:30%" type="text" name="quantity" class="form-control input-sm" value="100" />
                     <button class="btn btn-sm btn-success pull-right"><i class="glyphicon glyphicon-ok"></i>
                 </div>
             </div>            
         </div>
-    </div>
+    </div-->
     <div class="col-md-2">
         <div class="thumbnail">
-            <img src="/theme/admin/img/photo-icon-plus.png" alt="...">
+            <img src="/theme/admin/img/photo-icon-plus.png" class="upload" alt="click to upload" style="cursor:pointer;">
             <div class="caption">
                 <input type="text" name="title" class="form-control input-sm" placeholder="Название товара" value="" />
                 <div class="form-inline" style="margin-top:10px;">
                     <input style="width:40%" type="text" name="price" class="form-control input-sm" value="" placeholder="Цена" /> / 
-                    <input style="width:30%" type="text" name="price" class="form-control input-sm" value="" placeholder="К-во" />
-                    <button class="btn btn-sm btn-success pull-right"><i class="glyphicon glyphicon-ok"></i>
+                    <input style="width:30%" type="text" name="quantity" class="form-control input-sm" value="" placeholder="К-во" />
+                    <button class="btn btn-sm btn-success pull-right save"><i class="glyphicon glyphicon-ok"></i>
                 </div>
             </div>            
         </div>
     </div>
 </div>
+<div class="container-fluid">
+    <button class="btn btn-md btn-danger pull-right remove-category"><i class="glyphicon glyphicon-remove"></i> Удалить категорию</button>
+</div>
+<script src="/theme/admin/lib/jquery.damnUploader.min.js"></script>
 
 <script type="text/javascript">
     $('.add-category').on('click', showAddCategoryInput);
@@ -110,4 +134,143 @@
             button.off('click').on('click', showAddCategoryInput);
         })
     }
+
+    var currentItem = {
+        categoryId: '<?=$currentCategory?>',
+        itemId: 0,
+        image: '',
+        title: '',
+        price: 0,
+        quantity: 0,
+    };
+
+    $('.upload').on('click', initUpload);
+
+    function initUpload() {
+
+        // create form
+        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
+        //$(button).parents('.photoalbum-box').prepend(form);
+
+        var input = form.find('input[type="file"]').damnUploader({
+            url: '/private/shop/uploadPhoto',
+            fieldName: 'image',
+            data: currentItem,
+            dataType: 'json',
+        });
+
+        var image = $(this);
+
+        input.off('du.add').on('du.add', function(e) {
+            
+            e.uploadItem.completeCallback = function(succ, data, status) {
+                image.attr('src', data.imageWebPath);
+
+                currentItem.image = data.imageName;
+            }; 
+
+            e.uploadItem.progressCallback = function(perc) {}
+
+            e.uploadItem.addPostData('categoryId', currentItem.categoryId);
+            e.uploadItem.addPostData('itemId', currentItem.itemId);
+            e.uploadItem.upload();
+        });
+
+        form.find('input[type="file"]').click();        
+    }
+
+    $('.save').on('click', function() {
+        var form = $(this).parents('.thumbnail');
+
+        currentItem.title = $(form).find('input[name="title"]').val();
+        currentItem.price = $(form).find('input[name="price"]').val();
+        currentItem.quantity = $(form).find('input[name="quantity"]').val();
+
+        if (!currentItem.title) {
+            alert('Название товара!');
+
+            return false;
+        }
+
+        if (!currentItem.price) {
+            alert('Цена!');
+
+            return false;
+        }
+
+        if (!currentItem.image) {
+            alert('Картинка!');
+
+            return false;
+        }
+
+        $.ajax({
+            url: "/private/shop/item",
+            method: 'POST',
+            data: currentItem,
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    document.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            }, 
+            error: function() {
+                alert('Unexpected server error');
+           }
+        });
+    })
+
+    $('.item-remove').on('click', function() {
+        var id = $(this).parents('.thumbnail').data('id');
+
+        $.ajax({
+            url: "/private/shop/item",
+            method: 'DELETE',
+            data: {
+                'itemId' : id,
+            },
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    document.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            }, 
+            error: function() {
+                alert('Unexpected server error');
+           }
+        });
+    });
+
+    $('.remove-category').on('click', function() {
+        $('#deleteConfirm').modal();
+        $('#deleteConfirm').find('.btn-danger').off('click').on('click', function() {
+             $.ajax({
+                url: "/private/shop/deleteCategory",
+                method: 'DELETE',
+                data: {
+                    categoryId: '<?=$currentCategory?>',
+                },
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        $('#deleteConfirm').modal('hide')
+                        document.location.href = '/private/shop';
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function() {
+                    alert('Unexpected server error');
+               }
+            });
+        });
+    });
+
 </script>

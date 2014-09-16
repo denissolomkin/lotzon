@@ -67,7 +67,7 @@ class ShopCategory extends Entity
 
     public function delete()
     {
-        $this->validate('create');
+        $this->validate('delete');
         try {
             $model = $this->getModelClass();
             $model::instance()->deleteCategory($this);

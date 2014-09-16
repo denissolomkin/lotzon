@@ -137,8 +137,9 @@ class ShopDBProcessor
                  ->setImage($row['Image'])
                  ->setCategory($categories[$row['CategoryId']]);
 
-            $categories[$row['CategoryId']]->addItem($item);
-
+            if ($item->getId()) {
+                $categories[$row['CategoryId']]->addItem($item);    
+            }
         }
 
         return $categories;

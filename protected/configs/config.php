@@ -82,4 +82,23 @@ Config::instance()->privateResources =  array(
     '/private/shop/addCategory/' => array(
         'post'    => 'controllers\admin\Shop:addCategory',
     ),
+    '/private/shop/deleteCategory/' => array(
+        'delete'    => 'controllers\admin\Shop:deleteCategory',
+    ),
+    '/private/shop/uploadPhoto' => array(
+        'post'    => 'controllers\admin\Shop:uploadPhoto',
+    ),
+    '/private/shop/item' => array(
+        'post'    => 'controllers\admin\Shop:addItem',
+        'delete'  => 'controllers\admin\Shop:deleteItem',
+    ),
+    '/private/users'        => 'controllers\admin\ComingSoon:index',
+    '/private/banners'      => 'controllers\admin\ComingSoon:index',
+    '/private/monetisation' => 'controllers\admin\ComingSoon:index',
+    '/private/ogames'       => 'controllers\admin\ComingSoon:index',
+    '/private/stats'       => 'controllers\admin\ComingSoon:index',
 );
+
+Config::instance()->publicResources = array(
+    '/' => 'controllers\public\Index:index',
+),

@@ -25,7 +25,7 @@ class ShopModel extends Model
 
     public function deleteCategory($category)
     {
-        return $this->getProcessor()->createCategory($category);
+        return $this->getProcessor()->deleteCategory($category);
     }
 
     public function createItem($item)
