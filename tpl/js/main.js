@@ -64,18 +64,36 @@ $(function(){
     $('.loto-tl_li').on('click', function(){
         if(!$(this).hasClass('select')){
             var lim = $(this).closest('ul').find('.select').length;
-            var sel = 6 - lim - 1;
+            var sel = 5 - lim;
             if(lim < 6){
                 $(this).addClass('select');
                 $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+                if(lim == 5){
+                    $(this).closest('.tb-slide').find('.tb-ifo').hide();
+                    $(this).closest('.tb-slide').find('.sm-but').addClass('on');
+                }
             }
         }else{
             var lim = $(this).closest('ul').find('.select').length;
             var sel = 6 - lim + 1;
             $(this).removeClass('select');
             $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+            $(this).closest('.tb-slide').find('.tb-ifo').show();
+            $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
         }
     });
+    $('.sm-but').on('click', function(){
+        if($(this).hasClass('on')){
+            $(this).closest('.bm-pl').find('.tb-fs-tl').remove();
+            $(this).closest('.tb-slide').addClass('done');
+            $(this).closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
+            if($('.tb-slides .done').length == 5){
+                $('.tb-tabs, .tb-slides').remove();
+                $('.atd-bk').show();
+            }
+        }
+    });
+
 
     // Prizes sliders functional //
     $('.pz-nav .pz-nav_li').on('click', function(){
