@@ -1,6 +1,9 @@
 $(function(){
 
-    // Navigations scroll functional //
+
+    /* ==========================================================================
+                    Navigations scroll functional
+     ========================================================================== */
 
     $('.tn-mbk_li').on('click', function(){
         var pn = $(this).attr('data-href');
@@ -14,16 +17,25 @@ $(function(){
     var tikets = $('.tickets').offset().top;
     var prizes = $('.prizes').offset().top;
     var news = $('.news').offset().top;
+    var rules = $('.rules').offset().top;
+    var profile = $('.profile').offset().top;
     if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#tickets-but').addClass('now');
     }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#prizes-but').addClass('now');
-    }else if($(document).scrollTop() > (news - 300)){
+    }else if($(document).scrollTop() > (news - 300) && $(document).scrollTop() < (rules - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#news-but').addClass('now');
+    }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#rules-but').addClass('now');
+    }else if($(document).scrollTop() > (profile - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#profile-but').addClass('now');
     }
+
     if($(document).scrollTop() > navPos){
         $('nav.top-nav').addClass('fixed');
     }else{
@@ -33,16 +45,24 @@ $(function(){
         tikets = $('.tickets').offset().top;
         prizes = $('.prizes').offset().top;
         news = $('.news').offset().top;
+        rules = $('.rules').offset().top;
+        profile = $('.profile').offset().top;
         if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#tickets-but').addClass('now');
         }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#prizes-but').addClass('now');
-        }else if($(document).scrollTop() > (news - 300)){
+        }else if($(document).scrollTop() > (news - 300) && $(document).scrollTop() < (rules - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#news-but').addClass('now');
-        };
+        }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile -300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#rules-but').addClass('now');
+        }else if($(document).scrollTop() > (profile - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#profile-but').addClass('now');
+        }
 
 
         if($(document).scrollTop() > navPos){
@@ -52,7 +72,10 @@ $(function(){
         }
     });
 
-    // Tickets sliders functional //
+
+    /* ==========================================================================
+                            Tickets sliders functional
+     ========================================================================== */
     $('.tb-tabs_li').on('click', function(){
         $('.tb-tabs_li').removeClass('now');
         $(this).addClass('now');
@@ -95,7 +118,10 @@ $(function(){
     });
 
 
-    // Prizes sliders functional //
+
+    /* ==========================================================================
+                        Prizes sliders functional
+     ========================================================================== */
     $('.pz-nav .pz-nav_li').on('click', function(){
         $('.pz-nav .pz-nav_li').removeClass('now');
         $(this).addClass('now');
@@ -112,7 +138,10 @@ $(function(){
     });
 
 
-    // Info block functional //
+
+    /* ==========================================================================
+                                Info block functional
+     ========================================================================== */
     $('.n-add-but').on('click', function(){
         var newsBlock = $('.news');
         if(!newsBlock.hasClass('b-ha')){
@@ -170,5 +199,43 @@ $(function(){
         };
     });
 
+
+    /* ==========================================================================
+                        Profile block functional
+     ========================================================================== */
+    $('.pi-inp-bk input').on('focus', function(){
+        $(this).closest('.pi-inp-bk').addClass('focus')
+        if($(this).attr('name') == 'date')$(this).attr('type','date');
+    });
+
+    $('.pi-inp-bk input').on('blur', function(){
+        $(this).closest('.pi-inp-bk').removeClass('focus')
+        if($(this).attr('name') == 'date')$(this).attr('type','text');
+    });
+
+    $('.fc-nrch-bk li').on('click', function(){
+        if(!$(this).hasClass('on')){
+            $('.fc-nrch-bk li').removeClass('on');
+            var n = $(this).find('span').text();
+            $('.fc-nbs-bk li.dis').each(function(){
+                if($(this).text() == n)$(this).removeClass('dis');
+            })
+            $(this).find('span').text('');
+            $(this).addClass('on');
+            $('.fc-nbs-bk').show();
+        }else{
+            $(this).removeClass('on');
+            $('.fc-nbs-bk').hide();
+        }
+    });
+    $('.fc-nbs-bk li').on('click', function(){
+        if(!$(this).hasClass('dis')){
+            var n = $(this).text();
+            $('.fc-nrch-bk li.on span').text(n);
+            $(this).addClass('dis');
+            $('.fc-nbs-bk').hide();
+            $('.fc-nrch-bk li.on').removeClass('on');
+        }
+    });
 
 })
