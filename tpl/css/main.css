@@ -314,6 +314,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-ph > img {max-width:160px;max-height:160px;}
 .profile-info .pi-et-bk {margin-left:200px;overflow:hidden;}
 .profile-info .pi-et-bk .pi-inp-bk {height:29px;border-bottom:1px solid #e3e3e3;margin-bottom:30px;position:relative;}
+.profile-info .pi-et-bk .pi-inp-bk.focus {border-bottom:1px solid #000;}
 .profile-info .pi-et-bk .pi-inp-bk:last-child {margin-bottom:0;}
 
 .profile-info .pi-et-bk .pi-inp-bk > input {border:none;background:transparent;height:29px;width:250px;font:18px/29px Handbook-regular;color:#000;outline:none;}
@@ -337,7 +338,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-et-bk .fc-bk .fc-nbs-bk > ul > li.dis {opacity:0.3;cursor:default;}
 .profile-info .pi-et-bk .fc-bk .fc-tl {width:100px;float:left;font:12px/15px Handbook-bold;color:#000;text-transform:uppercase;margin-top:6px;}
 .font-fix .profile-info .pi-et-bk .fc-bk .fc-tl {margin-top:7px;}
-.profile-info .pi-et-bk .fc-bk .fc-nrch-bk {list-style:none;margin:0 0 0 100px;padding:0;}
+.profile-info .pi-et-bk .fc-bk .fc-nrch-bk {list-style:none;margin:0 0 0 100px;padding:0;width:290px;}
 .profile-info .pi-et-bk .fc-bk .fc-nrch-bk > li {width:38px;height:38px;border:1px solid #000;border-radius:50%;text-align:center;font:15px/38px Handbook-bold;color:#2d2d2d;float:left;margin-right:10px;cursor:pointer;position:relative;}
 .font-fix .profile-info .pi-et-bk .fc-bk .fc-nrch-bk > li {line-height:41px;}
 .profile-info .pi-et-bk .fc-bk .fc-nrch-bk > li.on {background-color:#b2d0d4;}
@@ -409,7 +410,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .if-bk .fm-bk .inp-bk > input:-ms-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .profile-bonuses .if-bk .fm-bk .if-bt {text-align:center;width:118px;height:28px;border:1px solid #000;font:12px/28px Handbook-bold;text-transform:uppercase;color:#000;float:right;cursor:pointer;}
 .font-fix .profile-bonuses .if-bk .fm-bk .if-bt {line-height:30px;}
-.profile-bonuses .sn-bt-bk {clear:both;margin-top:40px;overflow:hidden;}
+.profile-bonuses .sn-bt-bk {clear:both;margin-top:40px;overflow:hidden;width:600px;}
 .profile-bonuses .sn-bt-bk > div {width:118px;height:28px;border-width:1px;border-style:solid;font:12px/28px Handbook-bold;text-transform:uppercase;cursor:pointer;float:left;margin-right:40px;}
 .font-fix .profile-bonuses .sn-bt-bk > div {line-height:30px;}
 .profile-bonuses .sn-bt-bk > div:last-child {margin-right:0;}
