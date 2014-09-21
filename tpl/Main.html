@@ -864,9 +864,9 @@
                     <div class="p-cnt">
                         <aside>
                             <ul>
-                                <li class="ul_li now">информация</li>
-                                <li class="ul_li">история розыгрышей</li>
-                                <li class="ul_li">бонусы</li>
+                                <li class="ul_li now" data-link="profile-info">информация</li>
+                                <li class="ul_li" data-link="profile-history">история розыгрышей</li>
+                                <li class="ul_li" data-link="profile-bonuses">бонусы</li>
                             </ul>
                             <div class="p-stat-bk">
                                 <div class="gm-st"><b>235</b>игр сыграно</div>
@@ -881,128 +881,368 @@
                             </div>
                         </aside>
 
-                        <section class="_section profile-info">
-                            <form name="profile">
-                                <div class="pi-ph"><img src="img/preview/profile-photo.jpg" /></div>
-                                <div class="pi-et-bk">
-                                    <div class="pi-inp-bk">
-                                        <div class="ph">Ник</div>
-                                        <input maxlength="40" type="text" name="nick" />
-                                    </div>
-                                    <div class="pi-inp-bk">
-                                        <div class="ph">Фамилия</div>
-                                        <input maxlength="40" type="text" name="nick" />
-                                    </div>
-                                    <div class="pi-inp-bk">
-                                        <div class="ph">Имя</div>
-                                        <input maxlength="40" type="text" name="nick" />
-                                    </div>
-                                    <div class="pi-inp-bk">
-                                        <div class="ph">Отчество</div>
-                                        <input maxlength="40" type="text" name="nick" />
-                                    </div>
-                                    <div class="pi-inp-bk td">
-                                        <div class="ph">Телефон</div>
-                                        <input maxlength="40" placeholder="Телефон" type="tel" name="nick" />
-                                    </div>
-                                    <div class="pi-inp-bk td">
-                                        <div class="ph">Дата рождения</div>
-                                        <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="date" />
-                                    </div>
-                                    <div class="fc-bk">
-                                        <div class="fc-nbs-bk">
-                                            <ul>
-                                                <li>1</li>
-                                                <li>2</li>
-                                                <li>3</li>
-                                                <li>4</li>
-                                                <li>5</li>
-                                                <li>6</li>
-                                                <li>7</li>
-                                                <li>8</li>
-                                                <li>9</li>
-                                                <li>10</li>
-                                                <li>11</li>
-                                                <li>12</li>
-                                                <li>13</li>
-                                                <li>14</li>
-                                                <li>15</li>
-                                                <li>16</li>
-                                                <li>17</li>
-                                                <li>18</li>
-                                                <li>19</li>
-                                                <li>20</li>
-                                                <li>21</li>
-                                                <li>22</li>
-                                                <li>23</li>
-                                                <li>24</li>
-                                                <li>25</li>
-                                                <li>26</li>
-                                                <li>27</li>
-                                                <li>28</li>
-                                                <li>29</li>
-                                                <li>30</li>
-                                                <li>31</li>
-                                                <li>32</li>
-                                                <li>33</li>
-                                                <li>34</li>
-                                                <li>35</li>
-                                                <li>36</li>
-                                                <li>37</li>
-                                                <li>38</li>
-                                                <li>39</li>
-                                                <li>40</li>
-                                                <li>41</li>
-                                                <li>42</li>
-                                                <li>43</li>
-                                                <li>44</li>
-                                                <li>45</li>
-                                                <li>46</li>
-                                                <li>47</li>
-                                                <li>48</li>
-                                                <li>49</li>
+                        <div class="sp-cnt">
+                            <section class="_section profile-info">
+                                <form name="profile">
+                                    <div class="pi-ph"><img src="img/preview/profile-photo.jpg" /></div>
+                                    <div class="pi-et-bk">
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Ник</div>
+                                            <input maxlength="40" type="text" name="nick" />
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Фамилия</div>
+                                            <input maxlength="40" type="text" name="nick" />
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Имя</div>
+                                            <input maxlength="40" type="text" name="nick" />
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Отчество</div>
+                                            <input maxlength="40" type="text" name="nick" />
+                                        </div>
+                                        <div class="pi-inp-bk td">
+                                            <div class="ph">Телефон</div>
+                                            <input maxlength="40" placeholder="Телефон" type="tel" name="nick" />
+                                        </div>
+                                        <div class="pi-inp-bk td">
+                                            <div class="ph">Дата рождения</div>
+                                            <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="date" />
+                                        </div>
+                                        <div class="fc-bk">
+                                            <div class="fc-nbs-bk">
+                                                <ul>
+                                                    <li>1</li>
+                                                    <li>2</li>
+                                                    <li>3</li>
+                                                    <li>4</li>
+                                                    <li>5</li>
+                                                    <li>6</li>
+                                                    <li>7</li>
+                                                    <li>8</li>
+                                                    <li>9</li>
+                                                    <li>10</li>
+                                                    <li>11</li>
+                                                    <li>12</li>
+                                                    <li>13</li>
+                                                    <li>14</li>
+                                                    <li>15</li>
+                                                    <li>16</li>
+                                                    <li>17</li>
+                                                    <li>18</li>
+                                                    <li>19</li>
+                                                    <li>20</li>
+                                                    <li>21</li>
+                                                    <li>22</li>
+                                                    <li>23</li>
+                                                    <li>24</li>
+                                                    <li>25</li>
+                                                    <li>26</li>
+                                                    <li>27</li>
+                                                    <li>28</li>
+                                                    <li>29</li>
+                                                    <li>30</li>
+                                                    <li>31</li>
+                                                    <li>32</li>
+                                                    <li>33</li>
+                                                    <li>34</li>
+                                                    <li>35</li>
+                                                    <li>36</li>
+                                                    <li>37</li>
+                                                    <li>38</li>
+                                                    <li>39</li>
+                                                    <li>40</li>
+                                                    <li>41</li>
+                                                    <li>42</li>
+                                                    <li>43</li>
+                                                    <li>44</li>
+                                                    <li>45</li>
+                                                    <li>46</li>
+                                                    <li>47</li>
+                                                    <li>48</li>
+                                                    <li>49</li>
+                                                </ul>
+                                            </div>
+                                            <div class="fc-tl">любимая комбинация</div>
+                                            <ul class="fc-nrch-bk">
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
                                             </ul>
                                         </div>
-                                        <div class="fc-tl">любимая комбинация</div>
-                                        <ul class="fc-nrch-bk">
-                                            <li>
-                                                <i></i>
-                                                <span></span>
-                                            </li>
-                                            <li>
-                                                <i></i>
-                                                <span></span>
-                                            </li>
-                                            <li>
-                                                <i></i>
-                                                <span></span>
-                                            </li>
-                                            <li>
-                                                <i></i>
-                                                <span></span>
-                                            </li>
-                                            <li>
-                                                <i></i>
-                                                <span></span>
-                                            </li>
-                                            <li>
-                                                <i></i>
-                                                <span></span>
-                                            </li>
+                                    </div>
+                                    <div class="save-bk">
+                                        <div class="sb-ch-td">
+                                            <input type="checkbox" id="rulcheck" hidden />
+                                            <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
+                                        </div>
+                                        <div class="sb-ch-td">
+                                            <div class="but">сохранить</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
+
+
+                            <section class="_section profile-history">
+                                <ul class="ph-fr-bk">
+                                    <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
+                                    <li class="bt-all sel"><a href="javascript:void(0)">все</a></li>
+                                </ul>
+                                <div class="ht-tl-bk">
+                                    <div class="dt-tl">дата<br/>розыгрыша</div>
+                                    <div class="wc-tl">выигрышная<br/>комбинация</div>
+                                    <div class="nw-tl">количество<br/>победителей</div>
+                                </div>
+                                <ul class="ht-bk">
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
                                         </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li class="w">5</li>
+                                            <li>18</li>
+                                            <li class="w">33</li>
+                                            <li>6</li>
+                                            <li class="w">41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li class="w">5</li>
+                                            <li>18</li>
+                                            <li class="w">33</li>
+                                            <li>6</li>
+                                            <li class="w">41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!-- КЭШ ДЛЯ ТАБЛИЦЫ РЕЗУЛЬТАТОВ (ПРОСТО ДЛЯ ПРИМЕРА ФУНКЦИОНАЛА !!!!!!) -->
+                                <ul id="results-cash" style="display:none;">
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li class="w">5</li>
+                                            <li>18</li>
+                                            <li class="w">33</li>
+                                            <li>6</li>
+                                            <li class="w">41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li class="w">5</li>
+                                            <li>18</li>
+                                            <li class="w">33</li>
+                                            <li>6</li>
+                                            <li class="w">41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
+                                <div class="mr-bt">загрузить еще</div>
+
+                                <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
+                                <div class="mr-cl-bt-bl">
+                                    <div class="cl">свернуть</div>
+                                    <div class="mr">загрузить еще</div>
+                                </div>
+                            </section>
+
+                            <section class="_section profile-bonuses">
+                                <div class="pb-txt">Вы можете получить дополнительные баллы бла-бла-бла. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</div>
+                                <div class="if-bk">
+                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов</div>
+                                    <div class="fm-bk">
+                                        <div class="inp-bk">
+                                            <input type="email" placeholder="Email друга" />
+                                        </div>
+                                        <div class="if-bt">пригласить</div>
                                     </div>
                                 </div>
-                                <div class="save-bk">
-                                    <div class="sb-ch-td">
-                                        <input type="checkbox" id="rulcheck" hidden />
-                                        <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
-                                    </div>
-                                    <div class="sb-ch-td">
-                                        <div class="but">сохранить</div>
+                                <div class="sn-bt-bk">
+                                    <div class="fb"><span>пригласить</span></div>
+                                    <div class="vk"><span>пригласить</span></div>
+                                    <div class="gp"><span>пригласить</span></div>
+                                    <div class="tw"><span>пригласить</span></div>
+                                </div>
+                                <div class="rp-bk">
+                                    <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
+                                    <div class="rp-sl-bk">
+                                        <a href="javascript:void(0)" class="tw"></a>
+                                        <a href="javascript:void(0)" class="gp"></a>
+                                        <a href="javascript:void(0)" class="vk"></a>
+                                        <a href="javascript:void(0)" class="fb"></a>
                                     </div>
                                 </div>
-                            </form>
-                        </section>
+                            </section>
+                        </div>
+
+
 
 
                         <div class="b-cl-block"></div>

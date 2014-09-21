@@ -203,6 +203,18 @@ $(function(){
     /* ==========================================================================
                         Profile block functional
      ========================================================================== */
+
+    // PROFILE INFORMATIONS //
+
+    $('.profile aside li').on('click', function(){
+        var link = $(this).attr('data-link');
+        $('.profile aside li').removeClass('now');
+        $(this).addClass('now');
+        $('.profile ._section').hide();
+        console.log($('.'+link));
+        $('.'+link).show();
+    });
+
     $('.pi-inp-bk input').on('focus', function(){
         $(this).closest('.pi-inp-bk').addClass('focus')
         if($(this).attr('name') == 'date')$(this).attr('type','date');
@@ -236,6 +248,21 @@ $(function(){
             $('.fc-nbs-bk').hide();
             $('.fc-nrch-bk li.on').removeClass('on');
         }
+    });
+
+    // PROFILE HISTORY //
+    $('.profile-history .mr-bt, .profile-history .mr').on('click', function(){
+        var cash = $('#results-cash').html();
+        $('.ht-bk').append(cash);
+        $('.ht-bk').append(cash);
+        $('.mr-bt').hide();
+        $('.mr-cl-bt-bl').show();
+    });
+    $('.profile-history .cl').on('click', function(){
+        var cash = $('#results-cash').html();
+        $('.ht-bk').html(cash);
+        $('.mr-bt').show();
+        $('.mr-cl-bt-bl').hide();
     });
 
 })
