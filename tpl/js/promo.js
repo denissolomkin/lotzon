@@ -40,10 +40,10 @@ $(function(){
         }
     });
 
-    $('#login-form input').on('focus', function(){
+    $('#login-block .m_input').on('focus', function(){
         $(this).parent().addClass('focus');
     });
-    $('#login-form input').on('blur', function(){
+    $('#login-block .m_input').on('blur', function(){
         $(this).parent().removeClass('focus');
     });
 

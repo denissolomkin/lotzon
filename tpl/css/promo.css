@@ -247,6 +247,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 #login-form {padding-top:43px;}
 #pass-rec-form .ib-l {margin-bottom:60px;}
 .login-popup .lp-b .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font:18px/29px Handbook-italic;display:none;}
+.font-fix .login-popup .lp-b .ph {line-height:32px;}
 .login-popup .lp-b .focus .ph {display:block;}
 .login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
@@ -267,11 +268,15 @@ input:-ms-input-placeholder {color:#8d7d00;}
 #login-form input[type="checkbox"] + label a:hover {text-decoration: underline;}
 #login-form input[type="checkbox"] + label:before {content: "";display:block;height:18px;width:18px;position:absolute;left:0;top:2px;border:1px solid #000;}
 #login-form input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:4px;}
+.font-fix #login-form input[type="checkbox"] + label:before {top:0;}
+.font-fix #login-form input[type="checkbox"]:checked + label:after {top:2px;}
 #reg-form input[type="checkbox"] + label {font:13px/20px Handbook-regular;cursor: pointer;position: relative;color:#000;display:inline-block;padding-left:30px;}
 #reg-form input[type="checkbox"] + label a {font:13px/11px Handbook-bold;text-decoration:none;color:#000;}
 #reg-form input[type="checkbox"] + label a:hover {text-decoration: underline;}
 #reg-form input[type="checkbox"] + label:before {content: "";display:block;height:18px;width:18px;position:absolute;left:0;top:0px;border:1px solid #000;}
 #reg-form input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:2px;}
+.font-fix #reg-form input[type="checkbox"] + label:before {top:-1px;}
+.font-fix #reg-form input[type="checkbox"]:checked + label:after {top:1px;}
 
 
 
