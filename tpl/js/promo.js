@@ -24,14 +24,12 @@ $(function(){
     });
     $('#login-block').click(function(event) {
         if ($(event.target).closest("#cl-check").length){
-            if($(event.target).hasClass('tb_a-l') && $(event.target).closest('#cl-check').hasClass('registration')){
-                $('#cl-check').toggleClass('registration login')
-            }else if($(event.target).hasClass('tb_a-r') && $(event.target).closest('#cl-check').hasClass('login')){
-                $('#cl-check').toggleClass('login registration')
+            if($(event.target).hasClass('tb_a-l') && !$(event.target).closest('#cl-check').hasClass('login')){
+                $('#cl-check').removeAttr('class').addClass('b-m login');
+            }else if($(event.target).hasClass('tb_a-r') && !$(event.target).closest('#cl-check').hasClass('registration')){
+                $('#cl-check').removeAttr('class').addClass('b-m registration');
             }else if($(event.target).hasClass('r-p')){
-                $('.login .m_input').val('');
-                $(this).removeClass('error');
-            }
+                $('#cl-check').toggleClass('login rec-pass');            }
             return;
         }else{
             $('#login-block').css('opacity','0');
@@ -40,6 +38,13 @@ $(function(){
             },500)
 
         }
+    });
+
+    $('#login-form input').on('focus', function(){
+        $(this).parent().addClass('focus');
+    });
+    $('#login-form input').on('blur', function(){
+        $(this).parent().removeClass('focus');
     });
 
 

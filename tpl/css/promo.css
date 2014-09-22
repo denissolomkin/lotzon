@@ -218,7 +218,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 /* ==========================================================================
                             Promo-login-popup styles
    ========================================================================== */
-.login-popup {width:100%;height:100%;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.8);opacity:0;display:none;
+.login-popup {width:100%;height:100%;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.8);opacity:0;display:none;overflow-x:hidden;overflow-y:auto;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
@@ -227,44 +227,69 @@ input:-ms-input-placeholder {color:#8d7d00;}
 }
 .login-popup.active-block {opacity:1;display:block;}
 .login-popup .lp-b {width:460px;background-color:#ffe400;margin:100px auto;position:relative;}
-.login-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:-48px;right:0;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
-.login-popup .lp-b .b-m {padding:36px 60px 50px 60px;}
+.login-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:0px;right:-50px;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
+.login-popup .lp-b .b-m {padding:40px 60px 60px 60px;}
+.login-popup .rf-txt {font:13px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
+#reg-form .ch-b {margin:30px 0;text-align:center;}
 .login-popup .lp-b .b-m .t-b {overflow:hidden;}
-.login-popup .t-b .tb_a-l, .login-popup .t-b .tb_a-r {display:block;font:17px/1 Handbook-bold;text-transform:uppercase;text-decoration:none;color:#000;letter-spacing:1px;}
+.login-popup .t-b .tb_a-l, .login-popup .t-b .tb_a-r {display:block;font:24px/1 Handbook-bold;text-transform:uppercase;text-decoration:none;color:#000;letter-spacing:1px;}
 .login-popup .t-b .tb_a-l {float:left;}
-.login-popup .t-b .tb_a-r {float:right;}
+.login-popup .t-b .tb_a-r {float:right;opacity:0.3;}
+.login-popup .registration .t-b .tb_a-l {opacity:0.3;}
+.login-popup .rec-pass .tb_a-l, .login-popup .rec-pass .tb_a-r {opacity:0.3;}
+.login-popup .rec-pass .tb_a-l:hover, .login-popup .rec-pass .tb_a-r:hover {text-decoration:underline;}
 .login-popup .registration .t-b .tb_a-l:hover {text-decoration:underline;}
-.login-popup .registration .t-b .tb_a-r {opacity:0.5;cursor:text;}
-.login-popup .login .t-b .tb_a-l {opacity:0.5;cursor:text;}
+.login-popup .registration .t-b .tb_a-r {opacity:1;cursor:text;}
+.login-popup .login .t-b .tb_a-l {opacity:1;cursor:text;}
 .login-popup .login .t-b .tb_a-r:hover {text-decoration:underline;}
-.login-popup .lp-b .ib-l {margin:53px 0 18px 0;height:32px;}
-.login-popup .lp-b .ib-p {}
-.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;border-bottom:1px solid #000;height:31px;font:18px/29px Handbook-italic;color:#2d2d2d;width:100%;text-align: center;}
-.login-popup .lp-b .b-m .ch-b {padding:48px 0 50px 160px;}
+.login-popup .lp-b .ib-l {height:31px;position:relative;border-bottom:1px solid #b29f00;color:#000;}
+.login-popup .lp-b .ib-l.focus {border-bottom:1px solid #000;}
+#login-form {padding-top:43px;}
+#pass-rec-form .ib-l {margin-bottom:60px;}
+.login-popup .lp-b .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font:18px/29px Handbook-italic;display:none;}
+.login-popup .lp-b .focus .ph {display:block;}
+.login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
+.login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
+.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-italic;width:250px;}
+.login-popup .lp-b .ch-b-bk {overflow:hidden;padding:34px 0 25px 0;position:relative;}
+.login-popup .lp-b .ch-b-bk .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;top:5px;left:0;display:none;}
+.login-popup .lp-b .ch-b-bk .ch-b {float:left;}
+.login-popup .lp-b .ch-b-bk .r-p {float:right;font:13px/1 Handbook-bold;color:#000;text-decoration:none;margin-top:5px;}
+.login-popup .lp-b .ch-b-bk .r-p:hover {text-decoration:underline;}
+
+
 
 
 .login-popup input[type="checkbox"] {display:none;}
 
-.login-popup input[type="checkbox"] + label {font:13px/11px Handbook-regular;cursor: pointer;position: relative;color:#000;display:block;padding-left:30px;}
-.login-popup input[type="checkbox"] + label a {font:13px/11px Handbook-bold;text-decoration:none;color:#000;}
-.login-popup input[type="checkbox"] + label a:hover {text-decoration: underline;}
-input[type="checkbox"] + label:before {content: "";display:block;height:18px;width:18px;position:absolute;left:0;top:2px;border:1px solid #000;}
-input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:4px;}
-.login-popup.error .registration input[type="checkbox"] + label, .login-popup.error .registration input[type="checkbox"] + label a {color:#b32121;}
-.login-popup.error .registration input[type="checkbox"] + label:before {border:1px solid #b32121;}
-input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:4px;}
+#login-form input[type="checkbox"] + label {font:13px/11px Handbook-regular;cursor: pointer;position: relative;color:#000;display:block;padding-left:30px;}
+#login-form input[type="checkbox"] + label a {font:13px/11px Handbook-bold;text-decoration:none;color:#000;}
+#login-form input[type="checkbox"] + label a:hover {text-decoration: underline;}
+#login-form input[type="checkbox"] + label:before {content: "";display:block;height:18px;width:18px;position:absolute;left:0;top:2px;border:1px solid #000;}
+#login-form input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:4px;}
+#reg-form input[type="checkbox"] + label {font:13px/20px Handbook-regular;cursor: pointer;position: relative;color:#000;display:inline-block;padding-left:30px;}
+#reg-form input[type="checkbox"] + label a {font:13px/11px Handbook-bold;text-decoration:none;color:#000;}
+#reg-form input[type="checkbox"] + label a:hover {text-decoration: underline;}
+#reg-form input[type="checkbox"] + label:before {content: "";display:block;height:18px;width:18px;position:absolute;left:0;top:0px;border:1px solid #000;}
+#reg-form input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:2px;}
+
+
+
 .login-popup .lp-b .s-b {}
-.login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #000;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;}
-.login-popup .login .e-b {overflow:hidden;zoom:1;margin-top:25px;display:none;}
-.login-popup .login .e-b .e-t {float:left;width:220px;font:15px/14px Handbook-regular;color:#b32121;}
-.login-popup .login .e-b .r-p {float:right;width:80px;font:15px/14px Handbook-bold;color:#000;text-decoration:none;}
-.login-popup .login .e-b .r-p:hover {text-decoration:underline;}
+.login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
+.login-popup .lp-b .s-b .sb_but:hover {border-color:#000;color:#000;}
+
+
+.error .ib-l, .error .ib-p {color:#c51e1e!important;}
+.error .ph, .error .ch-b-bk .e-t {display:block!important;}
 .login-popup.error .login .e-b {display:block;}
 
 .registration #reg-form {display:block;}
-.registration #login-form {display:none;}
-.login #reg-form {display:none;}
+.registration #login-form, .registration #pass-rec-form {display:none;}
+.login #reg-form, .login #pass-rec-form {display:none;}
 .login #login-form {display:block;}
+.rec-pass #pass-rec-form {display:block;}
+.rec-pass #login-form, .rec-pass #reg-form {display:none;}
 
 
 /* ==========================================================================

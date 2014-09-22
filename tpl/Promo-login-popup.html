@@ -414,9 +414,10 @@
                                         LOGIN POPUP
         ========================================================================== -->
 
-        <div class="login-popup" id="login-block">
+        <div class="login-popup error" id="login-block">
             <div class="lp-b">
                 <div class="pu-b-c" id="lb-close"></div>
+                <form name="register">
                     <div class="b-m login" id="cl-check">
                         <!-- add class "registration" or "login" -->
                         <div class="t-b">
@@ -424,62 +425,44 @@
                             <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
                         </div>
                         <!-- REGISTRATION FORM -->
-                        <form name="register">
-                            <div id="reg-form">
-                                <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан пароль, который вам понадобиться ввести при входе в слдующий раз</div>
-                                <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
-                                </div>
+                        <div id="reg-form">
+                            <div class="ib-l">
+                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                            </div>
+                            <div class="ib-p">
+                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
+                            </div>
+                            <div class="ch-b">
+                                <input type="checkbox" id="rulcheck" hidden />
+                                <label for="rulcheck">Я ознакомился и согласен<br/>с <a href="">правилами игры</a></label>
+                            </div>
+                            <div class="s-b">
+                                <input type="submit" class="sb_but" value="зарегистрироваться и Играть" />
+                            </div>
+                        </div>
 
-                                <div class="ch-b">
-                                    <input type="checkbox" id="rulcheck" hidden />
-                                    <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)">правилами игры</a></label>
-                                </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but" value="Играть" />
-                                </div>
+                        <div id="login-form">
+                            <div class="ib-l">
+                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
                             </div>
-                        </form>
-                        <!-- LOGIN FORM -->
-                        <form name="login" onsubmit="$('#login-form').addClass('error');return false">
-                            <div id="login-form">
-                                <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
-                                </div>
-                                <div class="ib-p">
-                                    <div class="ph">Пароль</div>
-                                    <input type="password" class="m_input" name="login"  placeholder="Пароль" />
-                                </div>
-                                <div class="ch-b-bk">
-                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
-                                    <div class="ch-b">
-                                        <input type="checkbox" id="remcheck" hidden />
-                                        <label for="remcheck">Запомнить<br/>меня</a></label>
-                                    </div>
-                                    <a href="javascript:void(0)" id="rec-pass" class="r-p">Я забыл пароль</a>
-                                </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but" value="Играть" />
-                                </div>
+                            <div class="ib-p">
+                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
                             </div>
-                        </form>
-
-                        <!-- REPASSWORD FORM -->
-                        <form name="register">
-                            <div id="pass-rec-form">
-                                <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан новый пароль, который позволит войти в профиль через форму входа.</div>
-                                <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
-                                </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but" value="Играть" />
-                                </div>
+                            <div class="ch-b">
+                                <input type="checkbox" id="remcheck" hidden />
+                                <label for="remcheck">Запомнить<br/>меня</a></label>
                             </div>
-                        </form>
+                            <div class="s-b">
+                                <input type="submit" class="sb_but" value="Играть" />
+                            </div>
+                            <div class="e-b">
+                                <div class="e-t">Указанный email не зарегистрированили указан неверный пароль</div>
+                                <a href="javascript:void(0)" class="r-p">Сбросить пароль</a>
+                            </div>
+                        </div>
                     </div>
+                </form>
+                <!-- REGISTRATION FORM -->
             </div>
         </div>
 
