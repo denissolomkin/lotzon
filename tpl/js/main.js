@@ -127,14 +127,18 @@ $(function(){
         $(this).addClass('now');
     });
 
-    $('.pz-more-bt').on('click', function(){
-        if($(this).attr('data-status') == 'close'){
-            $('.pz-cg.more').show(300);
-            $(this).html('спрятать').attr('data-status','open');
-        }else{
-            $('.pz-cg.more').hide(300);
-            $(this).html('загрузить еще').attr('data-status','close');
-        }
+    $('.pz-more-bt, .mr-cl-bt-bk .mr').on('click', function(){
+        var cash = $('#pz-cg-cash').html();
+        $('.prizes .pz-cg').append(cash);
+        if($(this).hasClass('pz-more-bt'))$(this).hide();
+        $('.prizes .mr-cl-bt-bk').show();
+    });
+
+    $('.mr-cl-bt-bk .cl').on('click', function(){
+        var cash = $('#pz-cg-cash').html();
+        $('.prizes .pz-cg').html(cash);
+        $(this).closest('.mr-cl-bt-bk').hide();
+        $('.pz-more-bt').show();
     });
 
 
