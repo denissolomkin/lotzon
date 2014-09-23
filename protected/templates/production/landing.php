@@ -34,8 +34,8 @@
         <script src="/tpl/js/lib/modernizr.js"></script>
         <script src="/tpl/js/lib/jquery.min.js"></script>
         <script src="/tpl/js/lib/jquery-ui.min.js"></script>
-        <script src="/tpl/js/lib/countdown.min.js"></script>
-
+        <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
+        <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
 
     </head>
     <body>
@@ -44,14 +44,14 @@
                 <div class="t-tr">
                     <div class="t-tr_td">
                         <div class="h-t-tcb">
-                            <div class="h-t-tcb-l"><a href=""><img src="/tpl/img/promo-header-logo.png" width="238" height="60" /></a></div>
+                            <div class="h-t-tcb-l"><a href="/"><img src="/tpl/img/promo-header-logo.png" width="238" height="60" /></a></div>
                             <div class="h-t-tcb-sb">
                                 <a href="" class="h-t-tcb-sb-fb"></a>
                                 <a href="" class="h-t-tcb-sb-vk"></a>
                                 <a href="" class="h-t-tcb-sb-gp"></a>
                                 <a href="" class="h-t-tcb-sb-tw"></a>
                             </div>
-                            <div class="h-t-tcb-t">Lotzon — необычный проект, сутью которого бесплатная игра, участники которой могут стать обладателями денежных участники которой могут стать обладателями денежных и других ценных призов участники которой могут стать обладателями денежных и других ценных</div>
+                            <div class="h-t-tcb-t"><?=$staticTexts['promo-top'][$lang]->getText()?></div>
                         </div>
                     </div>
                 </div>
@@ -60,21 +60,21 @@
                         <div class="h-t-mcb">
                             <div class="h-t-mcb-l">
                                 <div class="h-t-mcb-l-wm">
-                                    <b class="h-t-mcb-l-wm_b">430</b>
+                                    <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
                                     <span class="h-t-mcb-l-wm_span">Победителей</span>
                                 </div>
                                 <div class="h-t-mcb-l-wm">
-                                    <b class="h-t-mcb-l-wm_b">100 500</b>
+                                    <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
                                     <span class="h-t-mcb-l-wm_span">участников</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i">3 525 321</div>
+                                <div class="h-t-mcb-r-i"><?=number_format($gameInfo['win'], 0, '.', ' ')?></div>
                             </div>
                         </div>
                         <div class="h-t-bcb">
-                            <div class="h-t-bcb-l">Каждый день у нас новые победители, которые выигрывают денежные и другие призы. Участие в розыгрыше всегда будет бесплатным. Присоединяйтесь.</div>
+                            <div class="h-t-bcb-l"><?=$staticTexts['promo-top-2'][$lang]->getText()?></div>
                             <div class="h-t-bcb-r">
                                 <a href="javascript:void(0)" class="h-t-bcb-r-b go-play">Играть</a>
                             </div>
@@ -87,18 +87,18 @@
                             <div class="h-b-c">
                                 <div class="h-b-c-tb">
                                     <div class="h-b-c-tb-l">До следующего розыгрыша осталось</div>
-                                    <div class="h-b-c-tb-r">11<i class="h-b-c-tb-r_i">:</i>43<i class="h-b-c-tb-r_i">:</i>59</div>
+                                    <div id="countdownHolder" class="h-b-c-tb-r"></div>
                                 </div>
                                 <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть<br/> и выигрывать</span></a>
                                 <div class="h-b-c-lg">
-                                    <div class="h-b-c-lg-t">последний<br/>розыгрыш 24.08.2014</div>
+                                    <div class="h-b-c-lg-t">последний<br/>розыгрыш <?=date('d.m.Y')?></div>
                                     <ul class="h-b-c-lg_ul">
-                                        <li class="h-b-c-lg_ul_li">2</li>
-                                        <li class="h-b-c-lg_ul_li">14</li>
-                                        <li class="h-b-c-lg_ul_li">36</li>
-                                        <li class="h-b-c-lg_ul_li">6</li>
-                                        <li class="h-b-c-lg_ul_li">11</li>
-                                        <li class="h-b-c-lg_ul_li">39</li>
+                                        <li class="h-b-c-lg_ul_li">0</li>
+                                        <li class="h-b-c-lg_ul_li">0</li>
+                                        <li class="h-b-c-lg_ul_li">0</li>
+                                        <li class="h-b-c-lg_ul_li">0</li>
+                                        <li class="h-b-c-lg_ul_li">0</li>
+                                        <li class="h-b-c-lg_ul_li">0</li>
                                     </ul>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                         <div class="t_td">
                             <div class="a-tb">
                                 <div class="a-tb-tl">Механика игры</div>
-                                <div class="a-tb-dr">Играть легко и просто! А главное абсолютно бесплатно. Убедитесь в этом сами, ознакомившись с правилами игры представленными ниже.</div>
+                                <div class="a-tb-dr"><?=$staticTexts['promo-game-mechanic'][$lang]->getText()?></div>
                                 <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
                             </div>
                         </div>
@@ -182,88 +182,35 @@
                                 <ul class="l_ul">
                                     <li class="n_li">
                                         <div class="n">1</div>
-                                        <div class="t">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoreet eu nulla vel. Aenean ipsum lorem.</div>
+                                        <div class="t"><?=$staticTexts['promo-game-mechanic-1'][$lang]->getText()?></div>
                                     </li>
                                     <li class="n_li">
                                         <div class="n">2</div>
-                                        <div class="t">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoreet eu nulla vel. Aenean ipsum lorem.</div>
+                                        <div class="t"><?=$staticTexts['promo-game-mechanic-2'][$lang]->getText()?></div>
                                     </li>
                                     <li class="n_li">
                                         <div class="n">3</div>
-                                        <div class="t">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoreet eu nulla vel. Aenean ipsum lorem.</div>
+                                        <div class="t"><?=$staticTexts['promo-game-mechanic-3'][$lang]->getText()?></div>
                                     </li>
                                     <li class="n_li">
                                         <div class="n">4</div>
-                                        <div class="t">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoreet eu nulla vel. Aenean ipsum lorem.</div>
+                                        <div class="t"><?=$staticTexts['promo-game-mechanic-4'][$lang]->getText()?></div>
                                     </li>
                                 </ul>
                                 <ul class="r_ul">
-                                    <li class="r_li">
-                                        <ul class="i_ul">
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                        </ul>
-                                        <div class="ri-e">15 000 грн</div>
-                                    </li>
-                                    <li class="r_li">
-                                        <ul class="i_ul">
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li"></li>
-                                        </ul>
-                                        <div class="ri-e">200 грн</div>
-                                    </li>
-                                    <li class="r_li">
-                                        <ul class="i_ul">
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                        </ul>
-                                        <div class="ri-e">40 грн</div>
-                                    </li>
-                                    <li class="r_li rl-b">
-                                        <ul class="i_ul">
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                        </ul>
-                                        <div class="ri-e">10 грн</div>
-                                    </li>
-                                    <li class="r_li">
-                                        <ul class="i_ul">
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                        </ul>
-                                        <div class="ri-e">50 баллов</div>
-                                    </li>
-                                    <li class="r_li">
-                                        <ul class="i_ul">
-                                            <li class="i_li a_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                            <li class="i_li"></li>
-                                        </ul>
-                                        <div class="ri-e">20 баллов</div>
-                                    </li>
+                                    <? for ($i = 6; $i >= 1; --$i) { ?>
+                                        <li class="r_li">
+                                            <ul class="i_ul">
+                                                 <? for ($j = 1; $j <= $i; ++$j) { ?>
+                                                    <li class="i_li a_li"></li>
+                                                <? } ?>
+                                                <? for ($z = $j; $z <= 6; ++$z) { ?>
+                                                    <li class="i_li"></li>
+                                                <? } ?>
+                                            </ul>
+                                        <div class="ri-e"><?=$gameInfo['lotteryWins'][$i]['sum']?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                    </li>    
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
@@ -277,7 +224,7 @@
                         <div class="t_td">
                             <div class="a-tb">
                                 <div class="a-tb-tl">отзывы игроков</div>
-                                <div class="a-tb-dr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.</div>
+                                <div class="a-tb-dr"><?=$staticTexts['promo-comments'][$lang]->getText()?></div>
                                 <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
                             </div>
                         </div>
@@ -363,7 +310,7 @@
                         <div class="t_td">
                             <div class="f-tl-b">
                                 <div class="tl-tl">наши партнеры</div>
-                                <div class="tl-tt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.</div>
+                                <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
                                 <a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a>
                             </div>
                         </div>
@@ -415,55 +362,85 @@
                                         LOGIN POPUP
         ========================================================================== -->
 
-        <div class="login-popup error" id="login-block">
+        <div class="login-popup" id="login-block">
             <div class="lp-b">
                 <div class="pu-b-c" id="lb-close"></div>
-                <form name="register">
                     <div class="b-m login" id="cl-check">
+                        <div class="rules-bk">
+                            <div class="rb-cs-bt"></div>
+                            <div class="rb-pg">
+                                <h2>правила<br/>игры</h2>
+                                <h3>1. Предоставление ограниченной пользовательской лицензии</h3>
+                                <p>В случае вашего согласия и при  условии постоянного соблюдения вами данного Лицензионного соглашения компания Blizzard настоящим предоставляет, а вы настоящим принимаете ограниченную, отзывную, не подлежащую передаче другим лицам, неисключительную лицензию (а) на установку Игры на одном или более компьютерах, находящихся в вашей полноправной собственности или под вашим законным контролем; (b) на пользование Игрой посредством Услуги исключительно в некоммерческих развлекательных целях, которое регулируется условиями, определенными ниже в Разделе 2.3; (с) для бесплатного создания и свободного распространения копий Игры среди других потенциальных пользователей в целях ее исключительного использования посредством Услуги. Любое использование Игры регулируется Лицензионным соглашением и Условиями пользования, которые конечный пользователь обязуется принять перед началом Игры. В случае противоречий между условиями настоящего Соглашения и Условиями пользования, настоящее Соглашение имеет преимущественную силу над Условиями пользования.</p>
+                                <h3>2. Дополнительные ограничения лицензии</h3>
+                                <p>В отношении лицензии, предоставленной вам в соответствии с Разделом 1, действуют ограничения, предусмотренные Разделами 1 и 2 настоящего Соглашения (совместно именуемые «Ограничения лицензии»). Любое использование Игры в нарушение Ограничений лицензии будет рассматриваться как нарушение авторских прав компании </p>
+                                <h3>3. Использование Служб</h3>
+                                <p>Вы должны соблюдать все правила, с которыми вам будет предложено ознакомиться при использовании Служб.<br><br>Не используйте Службы ненадлежащим образом. В частности, не пытайтесь вмешаться в их работу или получить к ним доступ в обход стандартного интерфейса и наших инструкций. Используйте Службы только в соответствии с нормами законодательства, включая применимые нормативные акты и правила относительно экспорта и реэкспорта. Если вы будете нарушать данные условия и правила или если мы заподозрим вас в этом, мы можем приостановить или полностью закрыть вам доступ к Службам.<br><br>При работе со Службами вам не предоставляются права на интеллектуальную собственность ни на сами Службы, ни на связанное с ними содержание. Последнее вы можете использовать только в том случае, если у вас есть разрешение его владельца или если такая возможность обеспечивается законодательством. Настоящие условия не предоставляют вам прав на использование каких-либо элементов брендинга или логотипов наших Служб. Вы не должны удалять, скрывать или изменять юридические уведомления, отображаемые на страницах Служб.<br><br>В Службах может быть представлено содержание, созданное и/или загруженное третьими лицами. Последние несут за него полную ответственность. Иногда мы проверяем содержание на предмет соответствия законодательству и нашим правилам. В случае выявления серьезных нарушений мы можем удалить или заблокировать его. Однако это не означает, что мы в обязательном порядке проверяем все материалы.<br><br>Если вы используете наши Службы, мы можем присылать вам уведомления, сообщения от администратора и другие информационные материалы. В отдельных случаях вы можете при необходимости отказаться от их получения.<br><br>Некоторые из наших сервисов можно использовать на мобильных устройствах. Однако если вы за рулем, это может отвлечь вас и привести к нарушению правил дорожного движения, поэтому соблюдайте осторожность.</p>
+                            </div>
+                        </div>
+
                         <!-- add class "registration" or "login" -->
                         <div class="t-b">
                             <a href="javascript:void(0)" class="tb_a-l swap-form">вход</a>
                             <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
                         </div>
                         <!-- REGISTRATION FORM -->
-                        <div id="reg-form">
-                            <div class="ib-l">
-                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
-                            </div>
-                            <div class="ib-p">
-                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
-                            </div>
-                            <div class="ch-b">
-                                <input type="checkbox" id="rulcheck" hidden />
-                                <label for="rulcheck">Я ознакомился и согласен<br/>с <a href="">правилами игры</a></label>
-                            </div>
-                            <div class="s-b">
-                                <input type="submit" class="sb_but" value="зарегистрироваться и Играть" />
-                            </div>
-                        </div>
+                        <form name="register">
+                            <div id="reg-form">
+                                <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан пароль, который вам понадобиться ввести при входе в слдующий раз</div>
+                                <div class="ib-l">
+                                    <div class="ph">Ваш email</div>
+                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                </div>
 
-                        <div id="login-form">
-                            <div class="ib-l">
-                                <input type="email" class="m_input" name="login" placeholder="Укажите email" />
+                                <div class="ch-b">
+                                    <input type="checkbox" id="rulcheck" hidden />
+                                    <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами игры</a></label>
+                                </div>
+                                <div class="s-b">
+                                    <input type="submit" class="sb_but" value="Играть" />
+                                </div>
                             </div>
-                            <div class="ib-p">
-                                <input type="password" class="m_input" name="login"  placeholder="Укажите пароль" />
+                        </form>
+                        <!-- LOGIN FORM -->
+                        <form name="login" onsubmit="$('#login-form').addClass('error');return false">
+                            <div id="login-form">
+                                <div class="ib-l">
+                                    <div class="ph">Ваш email</div>
+                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                </div>
+                                <div class="ib-p">
+                                    <div class="ph">Пароль</div>
+                                    <input type="password" class="m_input" name="login"  placeholder="Пароль" />
+                                </div>
+                                <div class="ch-b-bk">
+                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                    <div class="ch-b">
+                                        <input type="checkbox" id="remcheck" hidden />
+                                        <label for="remcheck">Запомнить<br/>меня</a></label>
+                                    </div>
+                                    <a href="javascript:void(0)" id="rec-pass" class="r-p">Я забыл пароль</a>
+                                </div>
+                                <div class="s-b">
+                                    <input type="submit" class="sb_but" value="Играть" />
+                                </div>
                             </div>
-                            <div class="ch-b">
-                                <input type="checkbox" id="remcheck" hidden />
-                                <label for="remcheck">Запомнить<br/>меня</a></label>
+                        </form>
+
+                        <!-- REPASSWORD FORM -->
+                        <form name="register">
+                            <div id="pass-rec-form">
+                                <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан новый пароль, который позволит войти в профиль через форму входа.</div>
+                                <div class="ib-l">
+                                    <div class="ph">Ваш email</div>
+                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                </div>
+                                <div class="s-b">
+                                    <input type="submit" class="sb_but" value="Играть" />
+                                </div>
                             </div>
-                            <div class="s-b">
-                                <input type="submit" class="sb_but" value="Играть" />
-                            </div>
-                            <div class="e-b">
-                                <div class="e-t">Указанный email не зарегистрированили указан неверный пароль</div>
-                                <a href="javascript:void(0)" class="r-p">Сбросить пароль</a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
-                <!-- REGISTRATION FORM -->
             </div>
         </div>
 
@@ -812,6 +789,13 @@
             })();
             ie = ie.toLowerCase();
             if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
+
+            // countdown
+            $("#countdownHolder").countdown({
+                until: (<?=($gameInfo['nextLottery'])?> + new Date().getTimezoneOffset() * 60), 
+                format: 'HMS', 
+                layout: '{hnn}<i class="h-b-c-tb-r_i">:</i>{mnn}<i class="h-b-c-tb-r_i">:</i>{snn}'}
+            );
         });
     </script>
     </body>

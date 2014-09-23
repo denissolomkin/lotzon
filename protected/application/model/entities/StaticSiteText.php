@@ -52,7 +52,7 @@ class StaticSiteText extends Entity
     {
         if ($from == 'DB') {
             $this->setId($data['Id'])
-                 ->setLang($data['Lang'])
+                 ->setLang(strtoupper($data['Lang']))
                  ->setText($data['Text']);
         }
 

@@ -20,8 +20,13 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-Config::instance()->langs = array('ua', 'ru', 'en');
-Config::instance()->defaultLang = 'ru';
+Config::instance()->langs = array('UA', 'RU', 'EN');
+Config::instance()->defaultLang = 'UA';
+Config::instance()->langCurrencies = array(
+    'UA' => 'грн',
+    'RU' => 'руб',
+    'EN' => 'usd',
+);
 
 // init memcache connection
 try {

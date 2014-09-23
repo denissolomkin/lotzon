@@ -88,4 +88,4 @@ $(function(){
         $this.height(this.scrollHeight);
     });
 
-})
+});

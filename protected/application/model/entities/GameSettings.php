@@ -84,7 +84,18 @@ class GameSettings
         // sort dates asc
         sort($this->_gameTimes, SORT_NUMERIC);
         if ($nearest) {
-            return array_shift($this->_gameTimes);
+            $now = strtotime(date('H:i'), 0);
+            $nearest = 0;
+            foreach ($this->_gameTimes as $time) {
+                if ($time > $now) {
+                    $nearest = $time;
+                    break;
+                }
+            }
+            if (!$nearest) {
+                $nearest = array_shift($this->_gameTimes) + 86400;
+            }
+            return $nearest;
         }
 
         return $this->_gameTimes;
