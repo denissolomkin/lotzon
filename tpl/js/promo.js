@@ -29,15 +29,21 @@ $(function(){
             }else if($(event.target).hasClass('tb_a-r') && !$(event.target).closest('#cl-check').hasClass('registration')){
                 $('#cl-check').removeAttr('class').addClass('b-m registration');
             }else if($(event.target).hasClass('r-p')){
-                $('#cl-check').toggleClass('login rec-pass');            }
-            return;
-        }else{
-            $('#login-block').css('opacity','0');
-            setTimeout(function(){
-                $('#login-block').css('display','none');
-            },500)
+                $('#cl-check').toggleClass('login rec-pass');
+            }else if($(event.target).hasClass('rs-sw')){
+                $('.login-popup .lp-b').css('transform','translate(-560px, 0)');
+                $('.rules-bk').css('display' , 'block');
+            }else if($(event.target).hasClass('rs-sw')){
 
-        }
+            }else if($(event.target).hasClass('rb-cs-bt')) {
+                $('.login-popup .lp-b, .rules-bk').removeAttr('style');
+            }
+            }else{
+                $('#login-block').css('opacity','0');
+                setTimeout(function(){
+                    $('#login-block').css('display','none');
+                },500)
+            }
     });
 
     $('#login-block .m_input').on('focus', function(){

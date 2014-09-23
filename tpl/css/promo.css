@@ -225,10 +225,25 @@ input:-ms-input-placeholder {color:#8d7d00;}
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
 }
+
+.rules-bk {width:620px;position:absolute;background-color:#fff;top:0;right:-640px;display:none;}
+.rules-bk .rb-cs-bt {width:30px;height:30px;background:url("../img/bg-but-close-rules.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
+.rules-bk .rb-pg {padding:35px 60px;color:#000;}
+.rules-bk .rb-pg > h2 {margin:0 0 60px 0;padding:0;font:19px/20px Handbook-bold;text-transform:uppercase;}
+.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-bold;text-transform:uppercase;}
+.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-regular;}
+.rules-bk .rb-pg > p:last-child {margin:0;}
+
 .login-popup.active-block {opacity:1;display:block;}
-.login-popup .lp-b {width:460px;background-color:#ffe400;margin:100px auto;position:relative;}
+.login-popup .lp-b {width:460px;background-color:#ffe400;margin:100px auto;position:relative;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
 .login-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:0px;right:-50px;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
-.login-popup .lp-b .b-m {padding:40px 60px 60px 60px;}
+.login-popup .lp-b .b-m {padding:40px 60px 60px 60px;position:relative;}
 .login-popup .rf-txt {font:13px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
 #reg-form .ch-b {margin:30px 0;text-align:center;}
 .login-popup .lp-b .b-m .t-b {overflow:hidden;}
