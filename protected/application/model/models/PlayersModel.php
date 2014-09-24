@@ -1,0 +1,25 @@
+<?php
+
+Application::import(PATH_APPLICATION . 'model/Model.php');
+Application::import(PATH_APPLICATION . 'model/entities/Player.php');
+Application::import(PATH_APPLICATION . 'model/processors/PlayersDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/PlayersCacheProcessor.php');
+
+
+class PlayersModel extends Model
+{
+    public function init()
+    {
+        $this->setProcessor(Config::instance()->cacheEnabled ? new PlayersCacheProcessor() : new PlayersDBProcessor());
+    }
+
+    public static function myClassName()
+    {
+        return __CLASS__;
+    }
+
+    public function getPlayersCount()
+    {
+        return $this->getProcessor()->getPlayersCount();
+    }
+}

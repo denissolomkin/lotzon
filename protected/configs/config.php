@@ -106,4 +106,7 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/players/register/' => array(
+        'post'  => 'controllers\production\Players:register',
+    ),
 );

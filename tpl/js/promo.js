@@ -44,6 +44,8 @@ $(function(){
                     $('#login-block').css('display','none');
                 },500)
             }
+
+            console.log("test");
     });
 
     $('#login-block .m_input').on('focus', function(){
@@ -87,5 +89,25 @@ $(function(){
         $this.height(1);
         $this.height(this.scrollHeight);
     });
+
+    // registration handler
+    $('#login-block form[name="register"]').on('submit', function(e) {
+        var email = $(this).find('input[name="login"]').val();
+        if (!email) {
+            $(this).addClass('error');
+        }
+        var rulesAgree = $(this).find("#rulcheck:checked").length ? 1 : 0;
+        registerPlayer({'email':email, 'agree':rulesAgree}, function(data){
+            console.log("success");            
+            console.log(data);            
+        }, function(data){
+            console.log("fail");
+            console.log($(this));            
+        }, function(data) {
+            console.log("error");
+            console.log($(this));            
+        })
+        return false;
+    })
 
 });

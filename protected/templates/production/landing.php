@@ -765,7 +765,7 @@
             </div>
         </div>
 
-
+        <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/promo.js"></script>
     <script>
         $(function(){
