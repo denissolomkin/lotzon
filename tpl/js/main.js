@@ -269,4 +269,63 @@ $(function(){
         $('.mr-cl-bt-bl').hide();
     });
 
+
+    /* ==========================================================================
+                    Cash popup functional
+     ========================================================================== */
+    $('.csh-ch-bk .m_input').on('focus', function(){
+        $(this).parent().addClass('focus');
+    });
+    $('.csh-ch-bk .m_input').on('blur', function(){
+        $(this).parent().removeClass('focus');
+    });
+    $('.csh-ch-bk .f_input').hover(
+        function(){
+            if(!$('.inp-fl-bt').hasClass('check'))$('.inp-fl-bt').addClass('hover');
+        },
+        function(){
+            $('.inp-fl-bt').removeClass('hover');
+        }
+    )
+    $('.csh-ch-bk .f_input').on('change', function(){
+        $('.inp-fl-bt').addClass('check').html('заменить');
+    });
+
+    $('input[name="cash"]').on('change', function(){
+        var id = $(this).attr('id');
+        $('.csh-ch-bk .form').hide();
+        $('.csh-ch-bk .'+id).show();
+    });
+    $(".form .m_input").keydown(function(e){
+        if($(this).attr('data-type') == 'number'){
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                    // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+            }else if($(this).attr('data-type') == 'phone'){
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                    // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105) && e.keyCode != 61 && e.keyCode != 107) {
+                e.preventDefault();
+            }
+        };
+    });
+
 })

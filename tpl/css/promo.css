@@ -213,6 +213,10 @@ input::-webkit-input-placeholder {color:#8d7d00;}
 input:-moz-placeholder {color:#8d7d00;}
 input::-moz-placeholder {color:#8d7d00;}
 input:-ms-input-placeholder {color:#8d7d00;}
+.focus input::-webkit-input-placeholder {opacity:0;}
+.focus input:-moz-placeholder {opacity:0;}
+.focus input::-moz-placeholder {opacity:0;}
+.focus input:-ms-input-placeholder {opacity:0;}
 
 
 /* ==========================================================================

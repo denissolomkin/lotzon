@@ -73,6 +73,14 @@ input[type="checkbox"] + label:before {content: "";display:block;height:18px;wid
 input[type="checkbox"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:4px;}
 .font-fix input[type="checkbox"]:checked + label:after {top:2px;}
 
+input[type="radio"] + label {font:13px/11px Handbook-regular;cursor: pointer;position: relative;color:#000;display:block;padding-left:30px;}
+input[type="radio"] + label a {font:13px/11px Handbook-bold;text-decoration:none;color:#000;}
+input[type="radio"] + label a:hover {text-decoration: underline;}
+input[type="radio"] + label:before {content: "";display:block;height:18px;width:18px;position:absolute;left:0;top:2px;border:1px solid #000;}
+.font-fix input[type="radio"] + label:before {top:0;}
+input[type="radio"]:checked + label:after {content: "";display:block;width:16px;height:16px;background-color:#000;position:absolute;left:2px;top:4px;}
+.font-fix input[type="radio"]:checked + label:after {top:2px;}
+
 
 
 /* ==========================================================================
@@ -241,7 +249,7 @@ article .wings {}
     -o-transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.prizes .pz-more-bt:hover {background-color:#b2d0d4;}
+/*.prizes .pz-more-bt:hover {background-color:#b2d0d4;}*/
 .font-fix .prizes .pz-more-bt {line-height:42px;}
 .prizes .mr-cl-bt-bk {margin:0 40px;overflow:hidden;display:none;}
 .prizes .mr-cl-bt-bk  > div {height:38px;border: 1px solid #b2d0d4;text-align:center;font:15px/38px Handbook-bold;color:#4c4c4c;cursor:pointer;background-color:transparent;text-transform:uppercase;;
@@ -251,7 +259,7 @@ article .wings {}
     -o-transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.prizes .mr-cl-bt-bk  > div:hover {background-color:#b2d0d4;}
+/*.prizes .mr-cl-bt-bk  > div:hover {background-color:#b2d0d4;}*/
 .prizes .mr-cl-bt-bk .cl {float:left;width: 208px;}
 .prizes .mr-cl-bt-bk .mr {float:right;width:438px;}
 
@@ -284,7 +292,7 @@ article .infos {padding:40px 20px 0 20px;}
     -o-transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.rules .r-add-but:hover {background-color:#b2d0d4;}
+/*.rules .r-add-but:hover {background-color:#b2d0d4;}*/
 .font-fix .rules .r-add-but {line-height:41px;}
 
 .infos .i-rbk {width:630px;float:right;}
@@ -303,7 +311,7 @@ article .infos {padding:40px 20px 0 20px;}
     -o-transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.news .n-add-but:hover {background-color:#b2d0d4;}
+/*.news .n-add-but:hover {background-color:#b2d0d4;}*/
 .font-fix .rules .n-add-but {line-height:41px;}
 
 
@@ -359,6 +367,10 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-et-bk .pi-inp-bk > input:-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .profile-info .pi-et-bk .pi-inp-bk > input::-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .profile-info .pi-et-bk .pi-inp-bk > input:-ms-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
+.profile-info .pi-et-bk .pi-inp-bk.focus > input::-webkit-input-placeholder {opacity:0;}
+.profile-info .pi-et-bk .pi-inp-bk.focus > input:-moz-placeholder {opacity:0;}
+.profile-info .pi-et-bk .pi-inp-bk.focus > input::-moz-placeholder {opacity:0;}
+.profile-info .pi-et-bk .pi-inp-bk.focus > input:-ms-input-placeholder {opacity:0;}
 
 .profile-info .pi-et-bk .pi-inp-bk .ph {height:29px;font:18px/29px Handbook-italic;color:#d2d2d2;position:absolute;top:0;right:0px;}
 .font-fix .profile-info .pi-et-bk .pi-inp-bk .ph {line-height:32px;}
@@ -472,7 +484,7 @@ article .infos {padding:40px 20px 0 20px;}
 .bl-pp-bk {position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.8);z-index:1000;display:table;overflow-x:hidden;overflow-y:auto;}
 .wt-pp-bk {position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(178, 208, 212, 0.93);z-index:1000;overflow-x:hidden;overflow-y:auto;}
 .bl-pp_table {display:table;width:100%;height:100%;}
-.bl-pp_table .bl-pp_td {display:table-cell;vertical-align:middle;}
+.bl-pp_td {display:table-cell;vertical-align:middle;}
 .bl-pp-bk .pr-mg {background-color:#fff;width:460px;height:200px;margin:auto;position: relative;}
 .cs {width:30px;height:30px;background:url("../img/bg-but-close-rules.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
 .bl-pp-bk .pr-mg .padd {padding:35px 30px 0 30px;}
@@ -490,4 +502,50 @@ article .infos {padding:40px 20px 0 20px;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li .tl .ph >img {width:50px;height:50px;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li .tl .nm {display:table-cell;vertical-align:middle;padding-left:20px;font:15px/1 Handbook-bold;color:#4f4f4f;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li:hover .tl .nm {color:#000;}
+
+.csh-ch-bk {background-color:#ffe400;position:relative;width:460px;margin:50px auto;}
+.csh-ch-bk .cl-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;background:url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
+.csh-ch-bk .padd {padding:0 30px;}
+.csh-ch-bk .padd .csh-ch-txt {font:18px/19px Handbook-regular;color:#000;padding:35px 0 0 0;}
+.csh-ch-bk .padd .csh-ch-lst {margin:0;padding:35px 0 45px 25px;list-style:none;}
+.csh-ch-bk .padd .csh-ch-lst > li {margin-bottom:20px;height:20px;}
+.csh-ch-bk .padd .csh-ch-lst > li:last-child {margin-bottom:0;}
+.csh-ch-bk .padd .csh-ch-lst > li > label {font:18px/18px Handbook-regular;}
+.csh-ch-bk .padd .csh-ch-lst > li > label:before {top:0px;}
+.csh-ch-bk .padd .csh-ch-lst > li > label:after {top:2px;}
+.csh-ch-bk .padd .form {overflow:hidden;display:none;}
+.csh-ch-bk .padd .cards {}
+
+.csh-ch-bk .padd .form .inp-bk {height:31px;position:relative;border-bottom:1px solid #b29f00;color:#000;margin-bottom:18px;}
+.csh-ch-bk .padd .form .inp-bk.last {margin-bottom:0;}
+.csh-ch-bk .padd .form .inp-bk.focus {border-bottom:1px solid #000;}
+.csh-ch-bk .padd .form .inp-bk .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font:18px/29px Handbook-italic;display:none;}
+.font-fix .csh-ch-bk .padd .form .inp-bk  .ph {line-height:32px;}
+.csh-ch-bk .padd .form .inp-bk.focus .ph {display:block;}
+.csh-ch-bk .padd .form .inp-bk .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-italic;width:300px;}
+.csh-ch-bk .padd .form .inp-fl-bk {position:relative;margin-top:40px;}
+.csh-ch-bk .padd .form .inp-fl-bk .inp-fl-txt {font:15px/1 Handbook-regular;color:#000;width:180px;}
+.csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt {width:218px;height:28px;border:1px solid #000;text-align:center;font:12px/28px Handbook-bold;text-transform:uppercase;position:absolute;top:0;right:0;overflow:hidden;}
+.csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt.hover, .csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt.check {background-color:#000;color:#ffe400;}
+.csh-ch-bk .padd .form .inp-fl-bk .f_input {width:220px;height:30px;position:absolute;top:0;right:0;opacity:0;}
+.csh-ch-bk .padd .form .s-b {margin:50px 0 40px 0;}
+.csh-ch-bk .padd .form .s-b .sb_but {width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
+.csh-ch-bk .padd .form .s-b .sb_but:hover {border-color:#000;color:#000;}
+.csh-ch-bk .padd .form .purse-ch-bk {overflow:hidden;margin-bottom:30px;}
+.csh-ch-bk .padd .form .purse-ch-bk .ps-ch-tl {width:155px;float:left;font:18px/20px Handbook-regular;color:#000;}
+.csh-ch-bk .padd .form .purse-ch-bk .ps-r {float:left;width:90px;}
+.csh-ch-bk .padd .form .purse-ch-bk .ps-u {float:left;width:90px;}
+.csh-ch-bk .padd .form .purse-ch-bk .ps-b {float:left;width:auto;}
+.csh-ch-bk .padd .form .purse-ch-bk > div > label {font:18px/20px Handbook-regular;color:#000;}
+.csh-ch-bk .padd .form .purse-ch-bk > div > label:before {top:0;}
+.csh-ch-bk .padd .form .purse-ch-bk > div > label:after {top:2px;}
+
+.csh-ch-bk input.m_input::-webkit-input-placeholder {color:#000;opacity:0.5;letter-spacing:-0.5px;}
+.csh-ch-bk input.m_input:-moz-placeholder {color:#000;opacity:0.5;letter-spacing:-0.5px;}
+.csh-ch-bk input.m_input::-moz-placeholder {color:#000;opacity:0.5;letter-spacing:-0.5px;}
+.csh-ch-bk input.m_input:-ms-input-placeholder {color:#000;opacity:0.5;letter-spacing:-0.5px;}
+.csh-ch-bk .focus input.m_input::-webkit-input-placeholder {opacity:0;}
+.csh-ch-bk .focus input.m_input:-moz-placeholder {opacity:0;}
+.csh-ch-bk .focus input.m_input::-moz-placeholder {opacity:0;}
+.csh-ch-bk .focus input.m_input:-ms-input-placeholder {opacity:0;}
 
