@@ -293,6 +293,7 @@ $(function(){
 
     $('input[name="cash"]').on('change', function(){
         var id = $(this).attr('id');
+        $('#csh-ch-txt').hide();
         $('.csh-ch-bk .form').hide();
         $('.csh-ch-bk .'+id).show();
     });

@@ -249,7 +249,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:0px;right:-50px;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
 .login-popup .lp-b .b-m {padding:40px 60px 60px 60px;position:relative;}
 .login-popup .rf-txt {font:13px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
-#reg-form .ch-b {margin:30px 0;text-align:center;}
+#reg-form .ch-b {padding:30px 0;text-align:center;position:relative;}
 .login-popup .lp-b .b-m .t-b {overflow:hidden;}
 .login-popup .t-b .tb_a-l, .login-popup .t-b .tb_a-r {display:block;font:24px/1 Handbook-bold;text-transform:uppercase;text-decoration:none;color:#000;letter-spacing:1px;}
 .login-popup .t-b .tb_a-l {float:left;}
@@ -272,7 +272,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-italic;width:250px;}
 .login-popup .lp-b .ch-b-bk {overflow:hidden;padding:34px 0 25px 0;position:relative;}
-.login-popup .lp-b .ch-b-bk .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;top:5px;left:0;display:none;}
+.login-popup .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;top:5px;left:0;display:none;}
 .login-popup .lp-b .ch-b-bk .ch-b {float:left;}
 .login-popup .lp-b .ch-b-bk .r-p {float:right;font:13px/1 Handbook-bold;color:#000;text-decoration:none;margin-top:5px;}
 .login-popup .lp-b .ch-b-bk .r-p:hover {text-decoration:underline;}
@@ -304,8 +304,8 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .lp-b .s-b .sb_but:hover {border-color:#000;color:#000;}
 
 
-.error .ib-l, .error .ib-p {color:#c51e1e!important;}
-.error .ph, .error .ch-b-bk .e-t {display:block!important;}
+.error .ib-l, .error .ib-p {color:#c51e1e!important;border-color:#c51e1e!important;}
+.error .ph, .error .e-t {display:block!important;}
 .login-popup.error .login .e-b {display:block;}
 
 .registration #reg-form {display:block;}
