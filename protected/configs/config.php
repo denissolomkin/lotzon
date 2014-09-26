@@ -38,6 +38,16 @@ try {
 // init database connection
 DB::Connect('default', Config::instance()->dbConnectionProperties);
 
+Config::instance()->errorMessages = array(
+    'AGREE_WITH_RULES' => 'Вы должны ознакомится с правилами',
+    'EMPTY_EMAIL'      => 'Введите email',
+    'INVALID_EMAIL'    => 'Неверный email',
+    'REG_LOGIN_EXISTS' => 'Этот email уже зарегистрирован',
+    'EMPTY_PASSWORD'   => 'Введите пароль',
+    'PLAYER_NOT_FOUND' => 'Учетная запись не найдена',
+    'INVALID_PASSWORD' => 'Неверный пароль',
+);
+
 Config::instance()->privateResources =  array(
     '/private/' => 'controllers\admin\Game:index',
     '/private/login/' => array(
@@ -101,7 +111,7 @@ Config::instance()->privateResources =  array(
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
     '/private/monetisation' => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
-    '/private/stats'       => 'controllers\admin\ComingSoon:index',
+    '/private/stats'        => 'controllers\admin\ComingSoon:index',
 );
 
 Config::instance()->publicResources = array(
@@ -109,4 +119,13 @@ Config::instance()->publicResources = array(
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
     ),
+    '/players/login/' => array(
+        'post'  => 'controllers\production\Players:login',
+    ),
+    '/players/logout/' => 'controllers\production\Players:logout',
+    '/players/update/' => array(
+        'post'  => 'controllers\production\Players:update',
+    ),
 );
+
+Config::instance()->defaultSenderEmail = 'ravanger@kntele.com';

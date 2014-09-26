@@ -11,6 +11,7 @@ require_once PATH_APPLICATION . 'Application.php';
 require 'vendor/autoload.php';
 
 // load configs
+Application::import(PATH_SYSTEM . 'Config.php');
 Application::import(PATH_SYSTEM . '*');
 Application::import(PATH_CONFIGS . '*');
 Application::import(PATH_CONTROLLERS . '*');

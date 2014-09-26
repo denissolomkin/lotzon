@@ -9,6 +9,10 @@ class AjaxController extends \SlimController\SlimController {
 
     public function ajaxResponse(array $data, $status = 1, $message = 'OK')
     {
+        if (!empty(Config::instance()->errorMessages[$message]))
+        {
+            $message = Config::instance()->errorMessages[$message];
+        }
         $response = array(
             'status'    => $status,
             'message'   => $message,

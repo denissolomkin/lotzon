@@ -28,15 +28,18 @@ class PlayersDBProcessor implements IProcessor
 
     public function update(Entity $player)
     {   
-        $sql = "UPDATE `Players` SET  `Password` = :passwd, `Salt` = :salt, `DateLogined` = :dl, `Country` = :cc, `Nicname` = :nic, `Name` = :name, `Surname` = ':surname', `SecondName` = :secname, `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar WHERE `Id` = :id OR `Email` = :email";
+        $sql = "UPDATE `Players` SET  
+                    `DateLogined` = :dl, `Country` = :cc, 
+                    `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, 
+                    `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar 
+                WHERE `Id` = :id OR `Email` = :email";
 
         try {
-            DB::Connect()->prepare($sql)->execute(array(
-                ':passwd' => $player->getPassword(),
-                ':salt'   => $player->getSalt(),
-                ':dl'     => $player->getDateLogined(),
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':dl'     => $player->getDateLastLogin(),
                 ':cc'     => $player->getCountry(),
-                ':nic'    => $player->getNic(),
+                ':nic'    => $player->getNicname(),
                 ':name'   => $player->getName(),
                 ':surname'  => $player->getSurname(),
                 ':secname'  => $player->getSecondName(),
@@ -80,5 +83,18 @@ class PlayersDBProcessor implements IProcessor
     public function delete(Entity $player)
     { 
         return true;
+    }
+
+    public function getAllPlayersCount()
+    {
+        $sql = "SELECT COUNT(*) as `counter`  FROM `Players`";
+
+        try {
+            $res = DB::Connect()->query($sql);
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);      
+        }
+
+        return $res->fetchColumn(0);
     }
 }

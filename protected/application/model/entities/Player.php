@@ -4,6 +4,8 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Player extends Entity
 {
+    const IDENTITY = "player_session";
+
     private $_id         = 0;
     private $_email      = '';
     private $_password   = '';
@@ -22,9 +24,11 @@ class Player extends Entity
     private $_dateLastLogin  = '';
     private $_country        = '';
 
+    private $_generatedPassword = '';
+
     public function init()
     {
-        $this->setModelClass('UsersModel');
+        $this->setModelClass('PlayersModel');
     }
 
     public function setId($id)
@@ -142,9 +146,15 @@ class Player extends Entity
         return $this;
     }
 
-    public function getBirthday()
+    public function getBirthday($format = null)
     {
-        return $this->_birthday;
+        $date = $this->_birthday;
+        
+        if (!is_null($format)) {
+            $date = date($format, $this->_birthday);
+        }
+
+        return $date;
     }  
 
     public function setDateRegistered($dateRegistered)
@@ -205,6 +215,154 @@ class Player extends Entity
     public function getAvatar()
     {
         return $this->_avatar;
+    }
+
+    public function generatePassword()
+    {
+        $an = array(
+            0 => "abcdefghijklmnopqrstuwxyz",
+            1 => "ABCDEFGHIJKLMNOPQRSTUWXYZ",
+            2 => "0123456789",
+        );
+        $pass = substr(str_shuffle($an[0]), 0, 6);
+        $pass .= substr(str_shuffle($an[1]), 0, 6);
+        $pass .= substr(str_shuffle($an[2]), 0, 4);
+
+        $this->_generatedPassword = str_shuffle($pass);
+        return $this->_generatedPassword;
     }  
+
+    public function compilePassword($password)
+    {
+        if (!$this->getSalt()) 
+        {
+            $this->setSalt(uniqid());
+        }
+        
+        return md5($this->getSalt() . sha1($password));
+    }
+
+    public function validate($action, $params = array())
+    {
+        switch ($action) {
+            case 'create':
+                $this->validEmail();
+                try {
+                    $this->fetch();
+                    throw new EntityException('REG_LOGIN_EXISTS', 500);
+                } catch (EntityException $e) {
+                    if ($e->getCode() != 404) {
+                        throw new EntityException($e->getMessage(), 500);
+                    }
+                }
+            break;
+            case 'fetch' :
+                $this->validEmail();
+            break;
+            case 'login' :
+                $this->validEmail();
+                if (empty($params['password'])) {
+                    throw new EntityException('EMPTY_PASSWORD', 400);
+                }
+            break;
+            case 'update' :
+                $this->validEmail();
+
+                $this->setNicName(trim(htmlspecialchars(strip_tags($this->getNicName()))));
+                $this->setName(trim(htmlspecialchars(strip_tags($this->getName()))));
+                $this->setSurname(trim(htmlspecialchars(strip_tags($this->getSurname()))));
+                $this->setSecondName(trim(htmlspecialchars(strip_tags($this->getSecondName()))));
+
+                if ($this->getPhone() && !preg_match('/^[+0-9\- ()]*$/', $this->getPhone())) {
+                    throw new EntityException("INVALID_PHONE_FORMAT", 400);
+                }
+            break;
+            
+            default:
+                # code...
+            break;
+        }
+
+        return true;
+    }
+
+    protected function validEmail($throwException = true)
+    {
+
+        if (!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL)) {
+            if ($throwException) {
+                throw new EntityException('INVALID_EMAIL', 500);
+            }
+        } 
+
+        return true;
+    }
+
+    public function create()
+    {
+        $this->setPassword($this->compilePassword($this->generatePassword()));
+
+        parent::create();
+
+        Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzone.com', 'player_registration', array(
+            'login' => $this->getEmail(),
+            'password'  => $this->_generatedPassword,
+        ));
+        $this->login($this->_generatedPassword);
+
+        return $this;
+
+    }
+
+    public function login($password)
+    {
+        $this->validate('login', array(
+            'password' => $password,
+        ));
+
+        try {
+            $this->fetch();
+        } catch (EntityException $e) {
+            if ($e->getCode() == 404) {
+                throw new EntityException("PLAYER_NOT_FOUND", 404);
+            } else {
+                throw new EntityException("INTERNAL_ERROR", 500);
+            }
+        }
+        if ($this->getPassword() !== $this->compilePassword($password)) {
+            throw new EntityException("INVALID_PASSWORD", 403);
+        }
+
+        Session::connect()->set(Player::IDENTITY, $this);
+
+        $this->setDateLastLogin(time());
+        try {
+            $this->update();    
+        } catch (Exception $e) {}
+        
+        return $this;
+    }
+
+    public function formatFrom($from, $data) 
+    {
+        if ($from == 'DB') {
+            $this->setId($data['Id'])
+                 ->setEmail($data['Email'])
+                 ->setPassword($data['Password'])
+                 ->setSalt($data['Salt'])
+                 ->setNicName($data['Nicname'])
+                 ->setName($data['Name'])
+                 ->setSurname($data['Surname'])
+                 ->setSecondName($data['SecondName'])
+                 ->setPhone($data['Phone'])
+                 ->setBirthday($data['Birthday'])
+                 ->setDateRegistered($data['DateRegistered'])
+                 ->setDateLastLogin($data['DateLogined'])
+                 ->setCountry($data['Country'])
+                 ->setAvatar($data['Avatar']);
+        }
+
+        return $this;
+    }
 
 }

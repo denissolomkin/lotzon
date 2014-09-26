@@ -48,7 +48,7 @@ abstract class Entity
             $model = $this->getModelClass();
             $model::instance()->create($this);
         }  catch (ModelException $e) {
-            throw new EntityException($e->getCode(), $e->getMessage());
+            throw new EntityException($e->getMessage(), $e->getCode());
         }
 
         return $this;
@@ -61,7 +61,7 @@ abstract class Entity
             $model = $this->getModelClass();
             $model::instance()->update($this);
         }  catch (ModelException $e) {
-            throw new EntityException($e->getCode(), $e->getMessage());
+            throw new EntityException($e->getMessage(), $e->getCode());
         }
 
         return $this;
@@ -74,7 +74,7 @@ abstract class Entity
             $model = $this->getModelClass();
             $model::instance()->delete($this);
         }  catch (ModelException $e) {
-            throw new EntityException($e->getCode(), $e->getMessage());
+            throw new EntityException($e->getMessage(), $e->getCode());
         }
 
         return null;        

@@ -75,7 +75,7 @@ class Session
 
     public function close()
     {
-        session_destroy($this->getId());
+        session_destroy();
 
         unset(self::$_instances[$this->getInstanceName()]);
 

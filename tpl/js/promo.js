@@ -92,21 +92,32 @@ $(function(){
 
     // registration handler
     $('#login-block form[name="register"]').on('submit', function(e) {
-        var email = $(this).find('input[name="login"]').val();
-        if (!email) {
-            $(this).addClass('error');
-        }
-        var rulesAgree = $(this).find("#rulcheck:checked").length ? 1 : 0;
+        var form = $(this);
+        var email = form.find('input[name="login"]').val();
+        
+        var rulesAgree = form.find("#rulcheck:checked").length ? 1 : 0;
         registerPlayer({'email':email, 'agree':rulesAgree}, function(data){
-            console.log("success");            
-            console.log(data);            
+            document.location.href = "/";
         }, function(data){
-            console.log("fail");
-            console.log($(this));            
-        }, function(data) {
-            console.log("error");
-            console.log($(this));            
-        })
+            $("#reg-form").addClass('error');
+            form.find('.e-t').text(data.message);
+        }, function(data) {});
+
+        return false;
+    });
+    // login handler
+    $('#login-block form[name="login"]').on('submit', function(e) {
+        var form = $(this);
+        var email = form.find('input[name="login"]').val();
+        var pwd   = form.find('input[name="password"]').val();
+        var remember = form.find("#remcheck:checked").length ? 1 : 0;        
+        loginPlayer({'email':email, 'password':pwd, 'remember':remember}, function(data){
+            document.location.href = "/";
+        }, function(data){
+            $("#login-form").addClass('error');
+            form.find('.e-t').text(data.message);
+        }, function(data) {});
+
         return false;
     })
 

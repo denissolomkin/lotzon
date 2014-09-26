@@ -122,10 +122,6 @@ $(function(){
     /* ==========================================================================
                         Prizes sliders functional
      ========================================================================== */
-    $('.pz-nav .pz-nav_li').on('click', function(){
-        $('.pz-nav .pz-nav_li').removeClass('now');
-        $(this).addClass('now');
-    });
 
     $('.pz-more-bt, .mr-cl-bt-bk .mr').on('click', function(){
         var cash = $('#pz-cg-cash').html();
@@ -139,6 +135,15 @@ $(function(){
         $('.prizes .pz-cg').html(cash);
         $(this).closest('.mr-cl-bt-bk').hide();
         $('.pz-more-bt').show();
+    });
+
+    $('.shop-category').on('click', function() {
+        $('.shop-category').removeClass('now');
+        $(this).addClass('now');
+
+        $('.shop-category-items').hide();
+        console.log($(this).data('id'));
+        $('.shop-category-items[data-category="' + $(this).data('id') + '"]').show();
     });
 
 
@@ -269,6 +274,28 @@ $(function(){
         $('.mr-cl-bt-bl').hide();
     });
 
+    $('form[name="profile"]').on('submit', function() {
+        var form = $(this);
+        var playerData = {};
+
+        form.find('input').each(function(id, input) {
+            playerData[$(input).attr('name')] = $(input).val();
+        });
+        playerData.email=$("#profile_email").text();
+        updatePlayerProfile(playerData,
+            function(data) {
+
+            }, 
+            function(data) {
+
+            },
+            function (data) {
+
+            }
+        );
+        return false;
+    });
+
 
     /* ==========================================================================
                     Cash popup functional
@@ -328,5 +355,5 @@ $(function(){
             }
         };
     });
-
+    
 })

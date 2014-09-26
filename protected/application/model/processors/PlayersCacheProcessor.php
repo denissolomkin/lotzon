@@ -12,21 +12,19 @@ class PlayersCacheProcessor extends BaseCacheProcessor implements IProcessor
 
     public function init()
     {
-        $this->setBackendProcessor(new ShopDBProcessor());
+        $this->setBackendProcessor(new PlayersDBProcessor());
     }
 
     public function create(Entity $player)
     {
         $player = $this->getBackendProcessor()->create($player);
-
-        $this->cachePlayer($player);
-
+        $this->incrementPlayersCountCache();
         return $player;
     }
 
     protected function cachePlayer(Player $player)
     {
-        if (!Cache::init()->set($key, $this->playerCacheKey($player))) {
+        if (!Cache::init()->set($this->playerCacheKey($player), $player)) {
             throw new ModelException("Unable to cache storage data", 500);
         }
 
@@ -43,8 +41,11 @@ class PlayersCacheProcessor extends BaseCacheProcessor implements IProcessor
 
     public function fetch(Entity $player)
     {
-        if (!($player = Cache::init()->get($this->playerCacheKey($player)))) {
+        $cache = Cache::init()->get($this->playerCacheKey($player));
+        if (!$cache) {
             $player = $this->getBackendProcessor()->fetch($player);
+        } else {
+            $player = $cache;
         }
 
         return $player;
@@ -53,13 +54,44 @@ class PlayersCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function delete(Entity $player) 
     {
         if ($this->getBackendProcessor()->delete($player)) {
-            !Cache::init()->delete($player);
+            Cache::init()->delete($player);
+            $this->decrementPlayersCacheCount();
         }
-
+        $this->decrementPlayersCacheCount();
         return true;
     }
 
     protected function playerCacheKey(Player $player) {
         return sprintf(self::PLAYER_CACHE_KEY, $player->getEmail());
+    }
+
+    public function incrementPlayersCountCache()
+    {
+        if (!($count = Cache::init()->increment(self::PLAYERS_COUNT_CACHE_KEY))) {
+            $count = $this->getBackendProcessor()->getAllPlayersCount();
+            Cache::init()->set(self::PLAYERS_COUNT_CACHE_KEY, $count);
+        }
+
+        return $count;
+    }
+
+    public function decrementPlayersCacheCount()
+    {
+        if (!($count = Cache::init()->decrement(self::PLAYERS_COUNT_CACHE_KEY))) {
+            $count = $this->getBackendProcessor()->getAllPlayersCount();
+            Cache::init()->set(self::PLAYERS_COUNT_CACHE_KEY, $count);
+        }
+
+        return $count;
+    }
+
+    public function getPlayersCount()
+    {
+        if (!($count = Cache::init()->get(self::PLAYERS_COUNT_CACHE_KEY))) {
+            $count = $this->getBackendProcessor()->getAllPlayersCount();
+            Cache::init()->set(self::PLAYERS_COUNT_CACHE_KEY, $count);
+        }        
+
+        return $count;
     }
 }

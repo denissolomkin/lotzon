@@ -18,9 +18,9 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        <link rel="stylesheet" href="css/normalize.css" />
-        <link rel="stylesheet" href="css/slick.css" />
-        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="/tpl/css/normalize.css" />
+        <link rel="stylesheet" href="/tpl/css/slick.css" />
+        <link rel="stylesheet" href="/tpl/css/main.css" />
 
         <link rel="icon" href="" type="image/png" />
         <link rel="shortcut icon" href="" type="'image/x-icon"/>
@@ -32,78 +32,21 @@
         <!-- For iPhone: -->
         <link rel="apple-touch-icon-precomposed" href="">
 
-        <script src="js/lib/modernizr.js"></script>
-        <script src="js/lib/jquery.min.js"></script>
-        <script src="js/lib/jquery-ui.min.js"></script>
-        <script src="js/lib/slick.min.js"></script>
+        <script src="/tpl/js/lib/modernizr.js"></script>
+        <script src="/tpl/js/lib/jquery.min.js"></script>
+        <script src="/tpl/js/lib/jquery-ui.min.js"></script>
+        <script src="/tpl/js/lib/slick.min.js"></script>
+        <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
+        <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
 
 
     </head>
     <body>
-
-    <!--=========================================================================
-                            PRIZES POPUP CODE
-    ==========================================================================-->
-
-    <div class="bl-pp-bk">
-        <div class="bl-pp_td">
-            <div class="pr-mg">
-                <div class="cs"></div>
-                <div class="padd">
-                    <div class="txt">Вы в любой момент можете обменять набранные балыв разделе «Призы» выбрав юла-бла-бла.</div>
-                    <a class="go-pzs" href="javascript:void(0)">Перейти в раздел</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="wrap">
 
+
         <header>
-            <div class="hr-br"><img src="img/preview/hedaer-banner.jpg" width="960" height="135" /></div>
+            <div class="hr-br"><img src="/tpl/img/preview/hedaer-banner.jpg" width="960" height="135" /></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -162,7 +105,7 @@
                 </ul>
                 <div class="tn-tr-bk">
                     <div class="tn-tr-tt">До следующего розыгрыша осталось</div>
-                    <div class="tn-tr">11:43:59</div>
+                    <div id="countdownHolder" class="tn-tr"></div>
                 </div>
             </div>
         </nav>
@@ -173,14 +116,14 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-                    <div class="bz1"><img src="img/preview/wings-banner-left1.jpg" width="110" height="600" /></div>
-                    <div class="bz2"><img src="img/preview/wings-banner-left2.jpg" width="110" height="600" /></div>
-                    <div class="bz3"><img src="img/preview/wings-banner-left3.jpg" width="110" height="170" /></div>
+                    <div class="bz1"><img src="/tpl/img/preview/wings-banner-left1.jpg" width="110" height="600" /></div>
+                    <div class="bz2"><img src="/tpl/img/preview/wings-banner-left2.jpg" width="110" height="600" /></div>
+                    <div class="bz3"><img src="/tpl/img/preview/wings-banner-left3.jpg" width="110" height="170" /></div>
                 </aside>
                 <aside class="rbs">
-                    <div class="bz1"><img src="img/preview/wings-banner-right1.png" width="300" height="600" /></div>
-                    <div class="bz2"><img src="img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
-                    <div class="bz3"><img src="img/preview/wings-banner-right3.jpg" width="300" height="175" /></div>
+                    <div class="bz1"><img src="/tpl/img/preview/wings-banner-right1.png" width="300" height="600" /></div>
+                    <div class="bz2"><img src="/tpl/img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
+                    <div class="bz3"><img src="/tpl/img/preview/wings-banner-right3.jpg" width="300" height="175" /></div>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -247,7 +190,7 @@
                                 <div class="bm-pl">
                                     <ul class="tb-fs-tl">
                                         <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="img/ticket-heart-but.png" width="16" height="14"></li>
+                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
                                     </ul>
                                     <div class="tb-st-bk">
                                         <div class="sm-but">подтвердить</div>
@@ -311,7 +254,7 @@
                                 <div class="bm-pl">
                                     <ul class="tb-fs-tl">
                                         <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="img/ticket-heart-but.png" width="16" height="14"></li>
+                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
                                     </ul>
                                     <div class="tb-st-bk">
                                         <div class="sm-but">подтвердить</div>
@@ -375,7 +318,7 @@
                                 <div class="bm-pl">
                                     <ul class="tb-fs-tl">
                                         <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="img/ticket-heart-but.png" width="16" height="14"></li>
+                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
                                     </ul>
                                     <div class="tb-st-bk">
                                         <div class="sm-but">подтвердить</div>
@@ -439,7 +382,7 @@
                                 <div class="bm-pl">
                                     <ul class="tb-fs-tl">
                                         <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="img/ticket-heart-but.png" width="16" height="14"></li>
+                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
                                     </ul>
                                     <div class="tb-st-bk">
                                         <div class="sm-but">подтвердить</div>
@@ -503,7 +446,7 @@
                                 <div class="bm-pl">
                                     <ul class="tb-fs-tl">
                                         <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="img/ticket-heart-but.png" width="16" height="14"></li>
+                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
                                     </ul>
                                     <div class="tb-st-bk">
                                         <div class="sm-but">подтвердить</div>
@@ -584,77 +527,40 @@
                             <div class="pbk-pi">на счету <b>3 460</b> баллов</div>
                         </div>
                         <div class="pbk-ct">
-                            <div class="ptt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.</div>
+                            <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
                             <ul class="pz-nav">
-                                <li class="pz-nav_li now">популярные</li>
-                                <li class="pz-nav_li">продтовары</li>
-                                <li class="pz-nav_li">спорттовары</li>
-                                <li class="pz-nav_li">техника</li>
-                                <li class="pz-nav_li">услуги</li>
+                                <? $fst = true; ?>
+                                <? foreach ($shop as $category) {?>
+                                    <li data-id="<?=$category->getId()?>" class="shop-category pz-nav_li<?=($fst ? " now" : "");?>"><?=$category->getName()?></li>    
+                                    <? $fst = false; ?>
+                                <? } ?>                                
                             </ul>
-                            <ul class="pz-cg">
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-1.jpg" /></div>
-                                    <div class="im-tl">Кружка-термоз</div>
-                                    <div class="im-bn">
-                                        <b>90</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-2.jpg" /></div>
-                                    <div class="im-tl">Набор для пинг понга</div>
-                                    <div class="im-bn">
-                                        <b>130</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="pz-lim">
-                                        <span>ограниченное количество</span>
-                                        <b>10 шт</b>
-                                    </div>
-                                    <div class="im-ph"><img src="img/preview/catalog-img-3.jpg" /></div>
-                                    <div class="im-tl">Часы Flip Clock</div>
-                                    <div class="im-bn">
-                                        <b>450</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-4.jpg" /></div>
-                                    <div class="im-tl">Плеер iPod Shuffle</div>
-                                    <div class="im-bn">
-                                        <b>1000</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="pz-lim">
-                                        <span>ограниченное количество</span>
-                                        <b>10 шт</b>
-                                    </div>
-                                    <div class="im-ph"><img src="img/preview/catalog-img-5.jpg" /></div>
-                                    <div class="im-tl">Планшет Lenovo</div>
-                                    <div class="im-bn">
-                                        <b>1500</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-6.jpg" /></div>
-                                    <div class="im-tl">Киерный стол</div>
-                                    <div class="im-bn">
-                                        <b>100500</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                            </ul>
-
+                            <? $fst = true; ?>
+                            <? foreach ($shop as $category) { ?>
+                                <ul class="shop-category-items pz-cg" data-category="<?=$category->getId()?>"  <?=(!$fst ? 'style="display:none"':'')?>>
+                                <? foreach ($category->getItems() as $item) { ?>
+                                    <li class="pz-cg_li">
+                                        <? if ($item->getQuantity()) {?>
+                                            <div class="pz-lim">
+                                                <span>ограниченное количество</span>
+                                                <b><?=$item->getQuantity()?> шт</b>
+                                            </div>
+                                        <? } ?>
+                                        <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
+                                        <div class="im-tl"><?=$item->getTitle()?></div>
+                                        <div class="im-bn">
+                                            <b><?=$item->getPrice()?></b>
+                                            <span>обменять на баллов</span>
+                                        </div>
+                                    </li>
+                                <? } ?>
+                                </ul>
+                                <? $fst = false; ?>
+                            <? } ?>
                             <!-- блок с кэшом, чисто для примера кнопки "еще" -->
                             <ul id="pz-cg-cash" style="display:none;">
                                 <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-1.jpg" /></div>
+                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-1.jpg" /></div>
                                     <div class="im-tl">Кружка-термоз</div>
                                     <div class="im-bn">
                                         <b>90</b>
@@ -662,7 +568,7 @@
                                     </div>
                                 </li>
                                 <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-2.jpg" /></div>
+                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-2.jpg" /></div>
                                     <div class="im-tl">Набор для пинг понга</div>
                                     <div class="im-bn">
                                         <b>130</b>
@@ -674,7 +580,7 @@
                                         <span>ограниченное количество</span>
                                         <b>10 шт</b>
                                     </div>
-                                    <div class="im-ph"><img src="img/preview/catalog-img-3.jpg" /></div>
+                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-3.jpg" /></div>
                                     <div class="im-tl">Часы Flip Clock</div>
                                     <div class="im-bn">
                                         <b>450</b>
@@ -682,7 +588,7 @@
                                     </div>
                                 </li>
                                 <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-4.jpg" /></div>
+                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-4.jpg" /></div>
                                     <div class="im-tl">Плеер iPod Shuffle</div>
                                     <div class="im-bn">
                                         <b>1000</b>
@@ -694,7 +600,7 @@
                                         <span>ограниченное количество</span>
                                         <b>10 шт</b>
                                     </div>
-                                    <div class="im-ph"><img src="img/preview/catalog-img-5.jpg" /></div>
+                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-5.jpg" /></div>
                                     <div class="im-tl">Планшет Lenovo</div>
                                     <div class="im-bn">
                                         <b>1500</b>
@@ -702,7 +608,7 @@
                                     </div>
                                 </li>
                                 <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="img/preview/catalog-img-6.jpg" /></div>
+                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-6.jpg" /></div>
                                     <div class="im-tl">Киерный стол</div>
                                     <div class="im-bn">
                                         <b>100500</b>
@@ -736,107 +642,28 @@
                             <div class="win-tbl">
                                 <div class="c-l">
                                     <div class="wt-t">
-                                        <p>Выиграть в этой игре очень просто! Угадывайте цифры и получайте вознаграждения в виде денег и баллов. Баллы можно накопить и обменять на ценные призы.</p>
-                                        <p>Вам необходимо всего лишь подключить интуицию и выбрать 6 цифр из 49.</p>
-                                        <p>Розыгрыш проводится ежедневно. Осталось проследить за его результатами и обрад оваться своему выигрышу!</p>
-                                        <p>Выигранные деньги и баллы плюсуются в личном кабинете. Денежные призы легко обналичить, а баллы обменять на призы.</p>
+                                        <?=$staticTexts['main-rules'][$lang]->getText()?>
                                     </div>
-                                </div>
+                                </div>                               
                                 <ul class="c-r">
-                                    <li class="c-r_li">
-                                        <ul class="tb">
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                        </ul>
-                                        <div class="tb-t">15 000 грн</div>
-                                    </li>
-                                    <li class="c-r_li">
-                                        <ul class="tb">
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li"></li>
-                                        </ul>
-                                        <div class="tb-t">200 грн</div>
-                                    </li>
-                                    <li class="c-r_li">
-                                        <ul class="tb">
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                        </ul>
-                                        <div class="tb-t">10 грн</div>
-                                    </li>
-                                    <li class="c-r_li">
-                                        <ul class="tb">
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                        </ul>
-                                        <div class="tb-t">40 баллов</div>
-                                    </li>
-                                    <li class="c-r_li">
-                                        <ul class="tb">
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                        </ul>
-                                        <div class="tb-t">25 баллов</div>
-                                    </li>
-                                    <li class="c-r_li">
-                                        <ul class="tb">
-                                            <li class="tb_li ch"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                            <li class="tb_li"></li>
-                                        </ul>
-                                        <div class="tb-t">10 баллов</div>
-                                    </li>
+                                    <? for ($i = 6; $i >= 1; --$i) { ?>
+                                        <li class="c-r_li">
+                                            <ul class="tb">
+                                                 <? for ($j = 1; $j <= $i; ++$j) { ?>
+                                                    <li class="tb_li ch"></li>
+                                                <? } ?>
+                                                <? for ($z = $j; $z <= 6; ++$z) { ?>
+                                                    <li class="tb_li"></li>
+                                                <? } ?>
+                                            </ul>
+                                            <div class="tb-t"><?=$gameInfo['lotteryWins'][$i]['sum']?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                        </li>    
+                                    <? } ?>
                                 </ul>
                                 <div class="b-cl-block"></div>
                             </div>
                             <ul class="faq">
-                                <li class="faq_li">
-                                    <h3>Почему мы не наебем</h3>
-                                    <p>Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</p>
-                                </li>
-                                <li class="faq_li">
-                                    <h3>Как лучше выводить бабло</h3>
-                                    <p>Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!<br><br>• Приват 24,<br>• QIWI,<br>• Visa/MasterCard,<br>• WebMoney.</p>
-                                </li>
-                                <li class="faq_li">
-                                    <h3>Кто на самом деле разрушил башни Всемирного торгового центра</h3>
-                                    <p>Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</p>
-                                </li>
-                                <li class="faq_li">
-                                    <h3>Почему пираты Сомали не выступили продюссерами фильма «Пираты карибскогоморя», что в свою очередь повлияло на название картины и ее выход в прокат</h3>
-                                    <p>Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</p>
-                                </li>
-                                <li class="faq_li">
-                                    <h3>Когда Михаэль Шумахер выйдет из комы</h3>
-                                    <p>Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</p>
-                                </li>
-                                <li class="faq_li">
-                                    <h3>Как и зачем Алиса пробралась в Зазеркалье</h3>
-                                    <p>Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. <br/><br/> Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте! Не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</p>
-                                </li>
+                                <?=$staticTexts['main-faq'][$lang]->getText()?>
                             </ul>
                             <div class="r-add-but">загрузить еще</div>
                         </div>
@@ -849,31 +676,12 @@
                             <div class="sbk-tl">новости</div>
                         </div>
                         <div class="n-items">
-                            <div class="n-item">
-                                <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-                                <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-                            </div>
-                            <div class="n-item">
-                                <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-                                <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-                            </div>
-                            <div class="n-item">
-                                <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-                                <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-                            </div>
-                            <div class="n-item">
-                                <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-                                <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-                            </div>
-                            <div class="n-item">
-                                <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-                                <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-                            </div>
-                            <div class="n-item">
-                                <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-                                <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-                            </div>
-                        </div>
+                            <? foreach ($news as $newsItem) { ?>
+                                <div class="n-item">
+                                    <div class="n-i-tl"><?=$newsItem->getTitle()?> • <?=date('d.m.Y', $newsItem->getDate())?></div>
+                                    <div class="n-i-txt"><?=$newsItem->getText()?></div>
+                                </div>
+                            <? } ?>
                         <div class="n-add-but">загрузить еще</div>
                         <div class="b-cl-block"></div>
                     </section>
@@ -882,7 +690,7 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <img src="img/banner2.jpg" width="970" height="135" />
+                <img src="/tpl/img/banner2.jpg" width="970" height="135" />
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
@@ -891,8 +699,8 @@
                 <div class="p-bk">
                     <div class="p-tl-bk">
                         <div class="p-tl-nm">кабинет</div>
-                        <div class="p-exit-bt">выйти</div>
-                        <div class="p-tl-ml">Carbonbasedlifeform@gmail.com</div>
+                        <div class="p-exit-bt" onclick="document.location.href='/players/logout';">выйти</div>
+                        <div class="p-tl-ml" id="profile_email"><?=$player->getEmail()?></div>
                     </div>
                     <div class="p-cnt">
                         <aside>
@@ -917,31 +725,31 @@
                         <div class="sp-cnt">
                             <section class="_section profile-info">
                                 <form name="profile">
-                                    <div class="pi-ph"><img src="img/preview/profile-photo.jpg" /></div>
+                                    <div class="pi-ph"><img src="/tpl/img/preview/profile-photo.jpg" /></div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
                                             <div class="ph">Ник</div>
-                                            <input maxlength="40" type="text" name="nick" />
+                                            <input maxlength="40" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Фамилия</div>
-                                            <input maxlength="40" type="text" name="nick" />
+                                            <input maxlength="40" type="text" name="surname" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Имя</div>
-                                            <input maxlength="40" type="text" name="nick" />
+                                            <input maxlength="40" type="text" name="name" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Отчество</div>
-                                            <input maxlength="40" type="text" name="nick" />
+                                            <input maxlength="40" type="text" name="secondname" value="<?=$player->getSecondName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Телефон</div>
-                                            <input maxlength="40" placeholder="Телефон" type="tel" name="nick" />
+                                            <input maxlength="40" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Дата рождения</div>
-                                            <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="date" />
+                                            <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -1032,7 +840,7 @@
                                             <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
                                         </div>
                                         <div class="sb-ch-td">
-                                            <div class="but">сохранить</div>
+                                            <div class="but" onclick="$(this).parents('form').submit(); return false;">сохранить</div>
                                         </div>
                                     </div>
                                 </form>
@@ -1274,14 +1082,10 @@
                                 </div>
                             </section>
                         </div>
-
-
-
-
                         <div class="b-cl-block"></div>
                     </div>
                 </div>
-                <div class="pr-br"><img src="img/banner-profile.jpg" width="300" height="665" /></div>
+                <div class="pr-br"><img src="/tpl/img/banner-profile.jpg" width="300" height="665" /></div>
                 <div class="b-cl-block"></div>
             </section>
         </article>
@@ -1294,8 +1098,8 @@
         arrows : false
     });
 </script>
-
-        <script src="js/main.js"></script>
+        <script src="/tpl/js/backend.js"></script>
+        <script src="/tpl/js/main.js"></script>
     <script>
         $(function(){
             var ios;
@@ -1318,6 +1122,12 @@
             })();
             ie = ie.toLowerCase();
             if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
+
+            $("#countdownHolder").countdown({
+                until: (<?=($gameInfo['nextLottery'])?> + new Date().getTimezoneOffset() * 60), 
+                format: 'HMS', 
+                layout: '{hnn}:{mnn}:{snn}'}
+            );
         });
     </script>
 
