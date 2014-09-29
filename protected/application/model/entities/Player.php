@@ -20,6 +20,9 @@ class Player extends Entity
     private $_phone      = '';
     private $_birthday   = '';
 
+    private $_favoriteCombination = array();
+    private $_visible             = false;
+
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_country        = '';
@@ -217,6 +220,30 @@ class Player extends Entity
         return $this->_avatar;
     }
 
+    public function setVisibility($v)
+    {
+        $this->_visible = $v;
+
+        return $this;
+    }
+
+    public function getVisibility()
+    {
+        return  $this->_visible;
+    }
+
+    public function setFavoriteCombination(array $combination)
+    {
+        $this->_favoriteCombination = $combination;
+
+        return $this;
+    }
+
+    public function getFavoriteCombination()
+    {
+        return $this->_favoriteCombination;
+    }
+
     public function generatePassword()
     {
         $an = array(
@@ -359,7 +386,9 @@ class Player extends Entity
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
                  ->setCountry($data['Country'])
-                 ->setAvatar($data['Avatar']);
+                 ->setAvatar($data['Avatar'])
+                 ->setVisibility((boolean)$data['Visible'])
+                 ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array());
         }
 
         return $this;
