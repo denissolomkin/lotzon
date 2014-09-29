@@ -147,6 +147,17 @@ $(function(){
     });
 
 
+    $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
+        $('.pz-ifo-bk').hide();
+        $('.pz-fm-bk').show();
+    });
+
+    $('.pz-fm-bk .pz-ifo-bt').on('click', function(){
+        $('.pz-fm-bk').hide();
+        $('.pz-rt-bk').show();
+    });
+
+
 
     /* ==========================================================================
                                 Info block functional
@@ -260,6 +271,12 @@ $(function(){
     });
 
     // PROFILE HISTORY //
+
+    $('.ph-fr-bk li').on('click', function(){
+        $(this).closest('ul.ph-fr-bk').find('li').removeClass('sel');
+        $(this).addClass('sel');
+    });
+
     $('.profile-history .mr-bt, .profile-history .mr').on('click', function(){
         var cash = $('#results-cash').html();
         $('.ht-bk').append(cash);
@@ -324,7 +341,7 @@ $(function(){
         $('.csh-ch-bk .form').hide();
         $('.csh-ch-bk .'+id).show();
     });
-    $(".form .m_input").keydown(function(e){
+    $("input").keydown(function(e){
         if($(this).attr('data-type') == 'number'){
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
