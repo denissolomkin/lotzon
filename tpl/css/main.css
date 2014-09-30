@@ -119,9 +119,9 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
    ========================================================================== */
 nav.top-nav {width:100%;margin-bottom:-70px;}
 nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
-.tn-box {width:1280px;height:70px;margin:auto;background:#f2efed url("../img/game-block-footer-logo.png") no-repeat 28px 21px;}
-.tn-mbk {list-style:none;margin:0px 0 0 200px;padding:5px 0 0 0;overflow:hidden;float:left;}
-.tn-mbk .tn-mbk_li {float:left;padding:0 30px;height:60px;font:15px/60px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
+.tn-box {width:1280px;height:55px;margin:auto;background:#f2efed url("../img/game-block-footer-logo.png") no-repeat 28px 13px;}
+.tn-mbk {list-style:none;margin:0px 0 0 170px;padding:5px 0 0 0;overflow:hidden;float:left;}
+.tn-mbk .tn-mbk_li {float:left;padding:0 30px;height:45px;font:15px/45px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
     -webkit-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -moz-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -ms-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -132,9 +132,9 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-mbk .tn-mbk_li.now > a {cursor:default;}
 .tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;}
 .tn-tr-bk {float:right;margin-right:40px;width:250px;}
-.tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-medium;color:#404040;text-transform:uppercase;margin-top:23px;}
-.tn-tr-bk .tn-tr {font:36px/1 Handbook-bold;color:#2f2f2f;float:right;margin-top:18px;}
-.font-fix .tn-tr-bk .tn-tr {margin-top:20px;}
+.tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-medium;color:#404040;text-transform:uppercase;margin-top:14px;}
+.tn-tr-bk .tn-tr {font:36px/1 Handbook-bold;color:#2f2f2f;float:right;margin-top:9px;}
+.font-fix .tn-tr-bk .tn-tr {margin-top:11px;}
 
 
 /* ==========================================================================
