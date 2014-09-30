@@ -65,6 +65,8 @@ textarea {resize: vertical;}
 a {}
 a:hover {}
 
+p {margin:0;}
+
 
 /* ==========================================================================
                             Author's custom styles
@@ -136,10 +138,11 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 
 
 
-.a-tb {overflow:hidden;zoom:1;}
-.a-tb-tl {width:120px;margin-right:40px;font:19px/20px Handbook-regular;text-transform:uppercase;float:left;padding-top:7px;}
-.a-tb-dr {width:525px;float:left;font:18px/19px Handbook-regular;padding-top:7px;}
-.a-tb-bt {display:block;float:right;text-decoration:none;border:1px solid #000;width:218px;height:48px;text-align:center;font:17px/48px Handbook-medium;text-transform:uppercase;color:#000;letter-spacing:1px;}
+.a-tb {overflow:hidden;zoom:1;display:table;width:100%;height:100%;}
+.a-tb-tl {width:160px;font:19px/20px Handbook-regular;text-transform:uppercase;display:table-cell;vertical-align:middle;}
+.a-tb-dr {width:525px;font:18px/19px Handbook-regular;display:table-cell;vertical-align:middle;}
+.a-tb-tr {display:table-cell;vertical-align:middle;text-align:right;}
+.a-tb-bt {display:block;text-decoration:none;border:1px solid #000;width:218px;height:48px;text-align:center;font:17px/48px Handbook-medium;text-transform:uppercase;color:#000;letter-spacing:1px;margin-left:auto;}
 
 .a-tbl {overflow:hidden;position:relative;}
 .a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}

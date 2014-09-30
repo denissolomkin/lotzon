@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 Config::instance()->cacheEnabled = true;
 Config::instance()->newsCacheCount = 18;

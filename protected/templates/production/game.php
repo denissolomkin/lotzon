@@ -102,6 +102,7 @@
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
                     <li id="profile-but" data-href="profile"  class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
                     <li class="tn-mbk_li">игры</li>
+                    <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
                     <div class="tn-tr-tt">До следующего розыгрыша осталось</div>
@@ -129,11 +130,11 @@
                     <section class="tickets">
                         <? if (count($tickets) < 5) { ?>
                             <ul class="tb-tabs">
-                                <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)">#1</a></li>
-                                <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)">#2</a></li>
-                                <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)">#3</a></li>
-                                <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)">#4</a></li>
-                                <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)">#5</a></li>
+                                <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)"><span>Билет </span>#1</a></li>
+                                <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)"><span>Билет </span>#2</a></li>
+                                <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)"><span>Билет </span>#3</a></li>
+                                <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)"><span>Билет </span>#4</a></li>
+                                <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)"><span>Билет </span>#5</a></li>
                             </ul>
                             <div class="tb-slides">
                                 <? for ($i = 1; $i <= 5; ++$i) { ?>
@@ -382,9 +383,9 @@
                     <div class="p-cnt">
                         <aside>
                             <ul>
-                                <li class="ul_li now" data-link="profile-info">информация</li>
-                                <li class="ul_li" data-link="profile-history">история розыгрышей</li>
+                                <li class="ul_li now" data-link="profile-history">история розыгрышей</li>
                                 <li class="ul_li" data-link="profile-bonuses">бонусы</li>
+                                <li class="ul_li" data-link="profile-info">информация</li>
                             </ul>
                             <div class="p-stat-bk">
                                 <div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div>
@@ -400,75 +401,6 @@
                         </aside>
 
                         <div class="sp-cnt">
-                            <section class="_section profile-info">
-                                <form name="profile">
-                                    <div class="pi-ph"><img src="/tpl/img/preview/profile-photo.jpg" /></div>
-                                    <div class="pi-et-bk">
-                                        <div class="pi-inp-bk">
-                                            <div class="ph">Ник</div>
-                                            <input maxlength="40" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
-                                        </div>
-                                        <div class="pi-inp-bk">
-                                            <div class="ph">Фамилия</div>
-                                            <input maxlength="40" type="text" name="surname" value="<?=$player->getSurname()?>"/>
-                                        </div>
-                                        <div class="pi-inp-bk">
-                                            <div class="ph">Имя</div>
-                                            <input maxlength="40" type="text" name="name" value="<?=$player->getName()?>"/>
-                                        </div>
-                                        <div class="pi-inp-bk">
-                                            <div class="ph">Отчество</div>
-                                            <input maxlength="40" type="text" name="secondname" value="<?=$player->getSecondName()?>"/>
-                                        </div>
-                                        <div class="pi-inp-bk td">
-                                            <div class="ph">Телефон</div>
-                                            <input maxlength="40" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
-                                        </div>
-                                        <div class="pi-inp-bk td">
-                                            <div class="ph">Дата рождения</div>
-                                            <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
-                                        </div>
-                                        <div class="fc-bk">
-                                            <div class="fc-nbs-bk">
-                                                <ul>
-                                                    <? for ($i = 1; $i <= 49; ++$i) { ?>
-                                                        <li<?=(in_array($i, $player->getFavoriteCombination()) ? ' class="dis"' : '')?>><?=$i?></li>
-                                                    <? } ?>
-                                                </ul>
-                                            </div>
-                                            <div class="fc-tl">любимая комбинация</div>
-                                            <ul class="fc-nrch-bk">
-                                                <? if (count($player->getFavoriteCombination())) { ?>
-                                                    <? foreach ($player->getFavoriteCombination() as $num) { ?>
-                                                        <li>
-                                                            <i></i>
-                                                            <span><?=$num?></span>
-                                                        </li>    
-                                                    <? } ?>
-                                                <? } else { ?>
-                                                    <? for ($i = 1; $i <= 6; ++$i) { ?>
-                                                        <li>
-                                                            <i></i>
-                                                            <span></span>
-                                                        </li>    
-                                                    <? } ?>
-                                                <? } ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="save-bk">
-                                        <div class="sb-ch-td">
-                                            <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
-                                            <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
-                                        </div>
-                                        <div class="sb-ch-td">
-                                            <div class="but" onclick="$(this).parents('form').submit(); return false;">сохранить</div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </section>
-
-
                             <section class="_section profile-history">
                                 <ul class="ph-fr-bk">
                                     <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
@@ -499,11 +431,11 @@
                                         <div class="dt">22.08.2014</div>
                                         <ul class="ht-ct">
                                             <li>10</li>
-                                            <li class="w">5</li>
+                                            <li>5</li>
                                             <li>18</li>
-                                            <li class="w">33</li>
+                                            <li>33</li>
                                             <li>6</li>
-                                            <li class="w">41</li>
+                                            <li>41</li>
                                         </ul>
                                         <div class="nw">155</div>
                                         <div class="aw-bt">
@@ -544,11 +476,11 @@
                                         <div class="dt">22.08.2014</div>
                                         <ul class="ht-ct">
                                             <li>10</li>
-                                            <li class="w">5</li>
+                                            <li>5</li>
                                             <li>18</li>
-                                            <li class="w">33</li>
+                                            <li>33</li>
                                             <li>6</li>
-                                            <li class="w">41</li>
+                                            <li>41</li>
                                         </ul>
                                         <div class="nw">155</div>
                                         <div class="aw-bt">
@@ -593,11 +525,11 @@
                                         <div class="dt">22.08.2014</div>
                                         <ul class="ht-ct">
                                             <li>10</li>
-                                            <li class="w">5</li>
+                                            <li>5</li>
                                             <li>18</li>
-                                            <li class="w">33</li>
+                                            <li>33</li>
                                             <li>6</li>
-                                            <li class="w">41</li>
+                                            <li>41</li>
                                         </ul>
                                         <div class="nw">155</div>
                                         <div class="aw-bt">
@@ -638,11 +570,11 @@
                                         <div class="dt">22.08.2014</div>
                                         <ul class="ht-ct">
                                             <li>10</li>
-                                            <li class="w">5</li>
+                                            <li>5</li>
                                             <li>18</li>
-                                            <li class="w">33</li>
+                                            <li>33</li>
                                             <li>6</li>
-                                            <li class="w">41</li>
+                                            <li>41</li>
                                         </ul>
                                         <div class="nw">155</div>
                                         <div class="aw-bt">
@@ -703,6 +635,132 @@
                                     </div>
                                 </div>
                             </section>
+
+                            <section class="_section profile-info">
+                                <form name="profile">
+                                    <!-- ЕСЛИ ФОТКА ЕСТЬ, ТО К КЛАССУ "pi-ph" ДОБАВЛЯКМ КЛАСС "true" -->
+                                    <div class="pi-ph">
+                                        <i></i>
+                                    </div>
+                                    <div class="pi-et-bk">
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Ник</div>
+                                            <input maxlength="40" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Фамилия</div>
+                                            <input maxlength="40" type="text" name="surname" value="<?=$player->getSurname()?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Имя</div>
+                                            <input maxlength="40" type="text" name="name" value="<?=$player->getName()?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk td">
+                                            <div class="ph">Телефон</div>
+                                            <input maxlength="40" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk td">
+                                            <div class="ph">Дата рождения</div>
+                                            <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Пароль</div>
+                                            <input maxlength="40" placeholder="йа твой пароль" type="password" name="password"  />
+                                        </div>
+                                        <div class="fc-bk">
+                                            <div class="fc-nbs-bk">
+                                                <ul>
+                                                    <li>1</li>
+                                                    <li>2</li>
+                                                    <li>3</li>
+                                                    <li>4</li>
+                                                    <li>5</li>
+                                                    <li>6</li>
+                                                    <li>7</li>
+                                                    <li>8</li>
+                                                    <li>9</li>
+                                                    <li>10</li>
+                                                    <li>11</li>
+                                                    <li>12</li>
+                                                    <li>13</li>
+                                                    <li>14</li>
+                                                    <li>15</li>
+                                                    <li>16</li>
+                                                    <li>17</li>
+                                                    <li>18</li>
+                                                    <li>19</li>
+                                                    <li>20</li>
+                                                    <li>21</li>
+                                                    <li>22</li>
+                                                    <li>23</li>
+                                                    <li>24</li>
+                                                    <li>25</li>
+                                                    <li>26</li>
+                                                    <li>27</li>
+                                                    <li>28</li>
+                                                    <li>29</li>
+                                                    <li>30</li>
+                                                    <li>31</li>
+                                                    <li>32</li>
+                                                    <li>33</li>
+                                                    <li>34</li>
+                                                    <li>35</li>
+                                                    <li>36</li>
+                                                    <li>37</li>
+                                                    <li>38</li>
+                                                    <li>39</li>
+                                                    <li>40</li>
+                                                    <li>41</li>
+                                                    <li>42</li>
+                                                    <li>43</li>
+                                                    <li>44</li>
+                                                    <li>45</li>
+                                                    <li>46</li>
+                                                    <li>47</li>
+                                                    <li>48</li>
+                                                    <li>49</li>
+                                                </ul>
+                                            </div>
+                                            <div class="fc-tl">любимая комбинация</div>
+                                            <ul class="fc-nrch-bk">
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                                <li>
+                                                    <i></i>
+                                                    <span></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="save-bk">
+                                        <div class="sb-ch-td">
+                                            <input type="checkbox" id="rulcheck" hidden />
+                                            <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
+                                        </div>
+                                        <div class="sb-ch-td">
+                                            <div class="but" onclick="$(this).parents('form').submit(); return false;">сохранить</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
                         </div>
                         <div class="b-cl-block"></div>
                     </div>
@@ -723,11 +781,6 @@
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
     <script>
-        var playerFavorite = [];
-        <? foreach ($player->getFavoriteCombination() as $num) { ?>
-        playerFavorite.push(<?=$num?>);
-        <? } ?>
-
         $(function(){
             var ios;
             var mac = navigator.userAgent.indexOf('Mac OS');
@@ -751,7 +804,7 @@
             if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
 
             $("#countdownHolder").countdown({
-                until: (<?=($gameInfo['nextLottery'])?>), 
+                until: (<?=($gameInfo['nextLottery'])?> + new Date().getTimezoneOffset() * 60), 
                 format: 'HMS', 
                 layout: '{hnn}:{mnn}:{snn}'}
             );

@@ -172,7 +172,9 @@
                             <div class="a-tb">
                                 <div class="a-tb-tl">Механика игры</div>
                                 <div class="a-tb-dr"><?=$staticTexts['promo-game-mechanic'][$lang]->getText()?></div>
-                                <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
+                                <div class="a-tb-tr">
+                                    <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -225,7 +227,9 @@
                             <div class="a-tb">
                                 <div class="a-tb-tl">отзывы игроков</div>
                                 <div class="a-tb-dr"><?=$staticTexts['promo-comments'][$lang]->getText()?></div>
-                                <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
+                                <div class="a-tb-tr">
+                                    <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
+                                </div>
                             </div>
                         </div>
                     </div>

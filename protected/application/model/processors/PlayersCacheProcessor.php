@@ -78,7 +78,7 @@ class PlayersCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function decrementPlayersCacheCount()
     {
         if (!($count = Cache::init()->decrement(self::PLAYERS_COUNT_CACHE_KEY))) {
-            $count = $this->getBackendProcessor()->getAllPlayersCount();
+            $count = $this->getBackendProcessor()->getPlayersCount();
             Cache::init()->set(self::PLAYERS_COUNT_CACHE_KEY, $count);
         }
 

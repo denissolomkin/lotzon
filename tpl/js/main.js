@@ -77,12 +77,15 @@ $(function(){
                             Tickets sliders functional
      ========================================================================== */
     $('.tb-tabs_li').on('click', function(){
-        $('.tb-tabs_li').removeClass('now');
-        $(this).addClass('now');
         var tn = $(this).attr('data-ticket');
         var st = $('#tb-slide'+tn);
-        $('.tb-slides .tb-slide').hide();
-        st.show();
+        $('.tb-tabs_li').removeClass('now').find('span').hide();
+        $(this).addClass('now').find('span').show();
+        $('.tb-slides .tb-slide').fadeOut(300);
+        setTimeout(function(){
+            st.fadeIn(300);
+        }, 300);
+
     });
     var filledTickets = [];
     $('.loto-tl_li').on('click', function() {
@@ -109,6 +112,13 @@ $(function(){
                 $(this).closest('.tb-slide').find('.tb-ifo').show();
                 $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
             }
+        }else{
+            var lim = $(this).closest('ul').find('.select').length;
+            var sel = 6 - lim + 1;
+            $(this).removeClass('select');
+            $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+            $(this).closest('.tb-slide').find('.tb-ifo').show();
+            $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
         }
     });
     var ticketCache = [];
@@ -214,6 +224,10 @@ $(function(){
 
             }, function(){}, function(){});
             
+            $(this).closest('.bm-pl').find('.tb-fs-tl').remove();
+            $(this).closest('section.tickets').find('li.now').addClass('done');
+            $(this).closest('.tb-slide').addClass('done');
+            $(this).closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
             if($('.tb-slides .done').length == 5){
                 $('.tb-tabs, .tb-slides').remove();
                 
