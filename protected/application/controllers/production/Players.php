@@ -91,7 +91,14 @@ class Players extends \AjaxController
                    ->setSurName($this->request()->post('surname'))
                    ->setSecondName($this->request()->post('secondname'))
                    ->setPhone($this->request()->post('phone'))
-                   ->setBirthday(strtotime($this->request()->post('bd')));
+                   ->setBirthday(strtotime($this->request()->post('bd')))
+                   ->setVisibility($this->request()->post('visible', false));
+                $favs = $this->request()->post('favs', array());
+
+                if (count($favs) == 6) {
+                    $player->setFavoriteCombination($favs);
+                } 
+
                 $player->update();
 
                 Session::connect()->set(Player::IDENTITY, $player);

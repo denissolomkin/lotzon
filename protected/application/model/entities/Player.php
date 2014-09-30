@@ -29,6 +29,10 @@ class Player extends Entity
 
     private $_generatedPassword = '';
 
+    private $_points      = 0;
+    private $_money       = 0;
+    private $_gamesPlayed = 0;
+
     public function init()
     {
         $this->setModelClass('PlayersModel');
@@ -241,8 +245,47 @@ class Player extends Entity
 
     public function getFavoriteCombination()
     {
+        if (!is_array($this->_favoriteCombination)) {
+            return array();
+        }
         return $this->_favoriteCombination;
     }
+
+    public function setPoints($points)
+    {
+        $this->_points = $points;
+
+        return $this;
+    }
+
+    public function getPoints()
+    {
+        return $this->_points;
+    }  
+
+    public function setMoney($money)
+    {
+        $this->_money = $money;
+
+        return $this;
+    }
+
+    public function getMoney()
+    {
+        return $this->_money;
+    }
+
+    public function setGamesPlayed($gamesPlayed)
+    {
+        $this->_gamesPlayed = $gamesPlayed;
+
+        return $this;
+    }
+
+    public function getGamesPlayed()
+    {
+        return $this->_gamesPlayed;
+    }  
 
     public function generatePassword()
     {
@@ -388,7 +431,10 @@ class Player extends Entity
                  ->setCountry($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setVisibility((boolean)$data['Visible'])
-                 ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array());
+                 ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
+                 ->setPoints($data['Points'])
+                 ->setMoney($data['Money'])
+                 ->setGamesPlayed($data['GamesPlayed']);
         }
 
         return $this;

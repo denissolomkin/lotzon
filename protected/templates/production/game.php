@@ -135,326 +135,31 @@
                             <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)">#5</a></li>
                         </ul>
                         <div class="tb-slides">
-                            <div class="tb-slide" id="tb-slide1">
-                                <ul class="tb-loto-tl">
-                                    <li class="loto-tl_li">1</li>
-                                    <li class="loto-tl_li">2</li>
-                                    <li class="loto-tl_li">3</li>
-                                    <li class="loto-tl_li">4</li>
-                                    <li class="loto-tl_li">5</li>
-                                    <li class="loto-tl_li">6</li>
-                                    <li class="loto-tl_li">7</li>
-                                    <li class="loto-tl_li">8</li>
-                                    <li class="loto-tl_li">9</li>
-                                    <li class="loto-tl_li">10</li>
-                                    <li class="loto-tl_li">11</li>
-                                    <li class="loto-tl_li">12</li>
-                                    <li class="loto-tl_li">13</li>
-                                    <li class="loto-tl_li">14</li>
-                                    <li class="loto-tl_li">15</li>
-                                    <li class="loto-tl_li">16</li>
-                                    <li class="loto-tl_li">17</li>
-                                    <li class="loto-tl_li">18</li>
-                                    <li class="loto-tl_li">19</li>
-                                    <li class="loto-tl_li">20</li>
-                                    <li class="loto-tl_li">21</li>
-                                    <li class="loto-tl_li">22</li>
-                                    <li class="loto-tl_li">23</li>
-                                    <li class="loto-tl_li">24</li>
-                                    <li class="loto-tl_li">25</li>
-                                    <li class="loto-tl_li">26</li>
-                                    <li class="loto-tl_li">27</li>
-                                    <li class="loto-tl_li">28</li>
-                                    <li class="loto-tl_li">29</li>
-                                    <li class="loto-tl_li">30</li>
-                                    <li class="loto-tl_li">31</li>
-                                    <li class="loto-tl_li">32</li>
-                                    <li class="loto-tl_li">33</li>
-                                    <li class="loto-tl_li">34</li>
-                                    <li class="loto-tl_li">35</li>
-                                    <li class="loto-tl_li">36</li>
-                                    <li class="loto-tl_li">37</li>
-                                    <li class="loto-tl_li">38</li>
-                                    <li class="loto-tl_li">39</li>
-                                    <li class="loto-tl_li">40</li>
-                                    <li class="loto-tl_li">41</li>
-                                    <li class="loto-tl_li">42</li>
-                                    <li class="loto-tl_li">43</li>
-                                    <li class="loto-tl_li">44</li>
-                                    <li class="loto-tl_li">45</li>
-                                    <li class="loto-tl_li">46</li>
-                                    <li class="loto-tl_li">47</li>
-                                    <li class="loto-tl_li">48</li>
-                                    <li class="loto-tl_li">49</li>
-                                </ul>
-                                <div class="bm-pl">
-                                    <ul class="tb-fs-tl">
-                                        <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
+                            <? for ($i = 1; $i <= 5; ++$i) { ?>
+                                <?  $nums = array();
+                                if (count($tickets)) {
+                                    $ticket = array_shift($tickets);
+                                    $nums = $ticket->getCombination();
+                                } ?>
+                                <div class="tb-slide" id="tb-slide<?=$i?>">
+                                    <ul class="tb-loto-tl">
+                                        <? for ($j = 1; $j <= 49; ++$j) { ?>                                            
+                                            <li class="loto-tl_li loto-<?=$j?><?=(count($nums) && in_array($j, $nums) ? ' select' : '')?>"><?=$j?></li>
+                                        <? } ?>
                                     </ul>
-                                    <div class="tb-st-bk">
-                                        <div class="sm-but">подтвердить</div>
-                                        <div class="tb-ifo">еще <b>6</b> номера</div>
+                                    <div class="bm-pl">
+                                        <ul class="tb-fs-tl">
+                                            <li class="loto-tl_li ticket-random">A</li>
+                                            <li class="loto-tl_li heart ticket-favorite"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
+                                        </ul>
+                                        <div class="tb-st-bk">
+                                            <div class="sm-but add-ticket">подтвердить</div>
+                                            <div class="tb-ifo">еще <b>6</b> номера</div>
+                                        </div>
+                                        <div class="b-cl-block"></div>
                                     </div>
-                                    <div class="b-cl-block"></div>
                                 </div>
-                            </div>
-                            <div class="tb-slide" id="tb-slide2">
-                                <ul class="tb-loto-tl">
-                                    <li class="loto-tl_li">1</li>
-                                    <li class="loto-tl_li">2</li>
-                                    <li class="loto-tl_li">3</li>
-                                    <li class="loto-tl_li">4</li>
-                                    <li class="loto-tl_li">5</li>
-                                    <li class="loto-tl_li">6</li>
-                                    <li class="loto-tl_li">7</li>
-                                    <li class="loto-tl_li">8</li>
-                                    <li class="loto-tl_li">9</li>
-                                    <li class="loto-tl_li">10</li>
-                                    <li class="loto-tl_li">11</li>
-                                    <li class="loto-tl_li">12</li>
-                                    <li class="loto-tl_li">13</li>
-                                    <li class="loto-tl_li">14</li>
-                                    <li class="loto-tl_li">15</li>
-                                    <li class="loto-tl_li">16</li>
-                                    <li class="loto-tl_li">17</li>
-                                    <li class="loto-tl_li">18</li>
-                                    <li class="loto-tl_li">19</li>
-                                    <li class="loto-tl_li">20</li>
-                                    <li class="loto-tl_li">21</li>
-                                    <li class="loto-tl_li">22</li>
-                                    <li class="loto-tl_li">23</li>
-                                    <li class="loto-tl_li">24</li>
-                                    <li class="loto-tl_li">25</li>
-                                    <li class="loto-tl_li">26</li>
-                                    <li class="loto-tl_li">27</li>
-                                    <li class="loto-tl_li">28</li>
-                                    <li class="loto-tl_li">29</li>
-                                    <li class="loto-tl_li">30</li>
-                                    <li class="loto-tl_li">31</li>
-                                    <li class="loto-tl_li">32</li>
-                                    <li class="loto-tl_li">33</li>
-                                    <li class="loto-tl_li">34</li>
-                                    <li class="loto-tl_li">35</li>
-                                    <li class="loto-tl_li">36</li>
-                                    <li class="loto-tl_li">37</li>
-                                    <li class="loto-tl_li">38</li>
-                                    <li class="loto-tl_li">39</li>
-                                    <li class="loto-tl_li">40</li>
-                                    <li class="loto-tl_li">41</li>
-                                    <li class="loto-tl_li">42</li>
-                                    <li class="loto-tl_li">43</li>
-                                    <li class="loto-tl_li">44</li>
-                                    <li class="loto-tl_li">45</li>
-                                    <li class="loto-tl_li">46</li>
-                                    <li class="loto-tl_li">47</li>
-                                    <li class="loto-tl_li">48</li>
-                                    <li class="loto-tl_li">49</li>
-                                </ul>
-                                <div class="bm-pl">
-                                    <ul class="tb-fs-tl">
-                                        <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
-                                    </ul>
-                                    <div class="tb-st-bk">
-                                        <div class="sm-but">подтвердить</div>
-                                        <div class="tb-ifo">еще <b>6</b> номера</div>
-                                    </div>
-                                    <div class="b-cl-block"></div>
-                                </div>
-                            </div>
-                            <div class="tb-slide" id="tb-slide3">
-                                <ul class="tb-loto-tl">
-                                    <li class="loto-tl_li">1</li>
-                                    <li class="loto-tl_li">2</li>
-                                    <li class="loto-tl_li">3</li>
-                                    <li class="loto-tl_li">4</li>
-                                    <li class="loto-tl_li">5</li>
-                                    <li class="loto-tl_li">6</li>
-                                    <li class="loto-tl_li">7</li>
-                                    <li class="loto-tl_li">8</li>
-                                    <li class="loto-tl_li">9</li>
-                                    <li class="loto-tl_li">10</li>
-                                    <li class="loto-tl_li">11</li>
-                                    <li class="loto-tl_li">12</li>
-                                    <li class="loto-tl_li">13</li>
-                                    <li class="loto-tl_li">14</li>
-                                    <li class="loto-tl_li">15</li>
-                                    <li class="loto-tl_li">16</li>
-                                    <li class="loto-tl_li">17</li>
-                                    <li class="loto-tl_li">18</li>
-                                    <li class="loto-tl_li">19</li>
-                                    <li class="loto-tl_li">20</li>
-                                    <li class="loto-tl_li">21</li>
-                                    <li class="loto-tl_li">22</li>
-                                    <li class="loto-tl_li">23</li>
-                                    <li class="loto-tl_li">24</li>
-                                    <li class="loto-tl_li">25</li>
-                                    <li class="loto-tl_li">26</li>
-                                    <li class="loto-tl_li">27</li>
-                                    <li class="loto-tl_li">28</li>
-                                    <li class="loto-tl_li">29</li>
-                                    <li class="loto-tl_li">30</li>
-                                    <li class="loto-tl_li">31</li>
-                                    <li class="loto-tl_li">32</li>
-                                    <li class="loto-tl_li">33</li>
-                                    <li class="loto-tl_li">34</li>
-                                    <li class="loto-tl_li">35</li>
-                                    <li class="loto-tl_li">36</li>
-                                    <li class="loto-tl_li">37</li>
-                                    <li class="loto-tl_li">38</li>
-                                    <li class="loto-tl_li">39</li>
-                                    <li class="loto-tl_li">40</li>
-                                    <li class="loto-tl_li">41</li>
-                                    <li class="loto-tl_li">42</li>
-                                    <li class="loto-tl_li">43</li>
-                                    <li class="loto-tl_li">44</li>
-                                    <li class="loto-tl_li">45</li>
-                                    <li class="loto-tl_li">46</li>
-                                    <li class="loto-tl_li">47</li>
-                                    <li class="loto-tl_li">48</li>
-                                    <li class="loto-tl_li">49</li>
-                                </ul>
-                                <div class="bm-pl">
-                                    <ul class="tb-fs-tl">
-                                        <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
-                                    </ul>
-                                    <div class="tb-st-bk">
-                                        <div class="sm-but">подтвердить</div>
-                                        <div class="tb-ifo">еще <b>6</b> номера</div>
-                                    </div>
-                                    <div class="b-cl-block"></div>
-                                </div>
-                            </div>
-                            <div class="tb-slide" id="tb-slide4">
-                                <ul class="tb-loto-tl">
-                                    <li class="loto-tl_li">1</li>
-                                    <li class="loto-tl_li">2</li>
-                                    <li class="loto-tl_li">3</li>
-                                    <li class="loto-tl_li">4</li>
-                                    <li class="loto-tl_li">5</li>
-                                    <li class="loto-tl_li">6</li>
-                                    <li class="loto-tl_li">7</li>
-                                    <li class="loto-tl_li">8</li>
-                                    <li class="loto-tl_li">9</li>
-                                    <li class="loto-tl_li">10</li>
-                                    <li class="loto-tl_li">11</li>
-                                    <li class="loto-tl_li">12</li>
-                                    <li class="loto-tl_li">13</li>
-                                    <li class="loto-tl_li">14</li>
-                                    <li class="loto-tl_li">15</li>
-                                    <li class="loto-tl_li">16</li>
-                                    <li class="loto-tl_li">17</li>
-                                    <li class="loto-tl_li">18</li>
-                                    <li class="loto-tl_li">19</li>
-                                    <li class="loto-tl_li">20</li>
-                                    <li class="loto-tl_li">21</li>
-                                    <li class="loto-tl_li">22</li>
-                                    <li class="loto-tl_li">23</li>
-                                    <li class="loto-tl_li">24</li>
-                                    <li class="loto-tl_li">25</li>
-                                    <li class="loto-tl_li">26</li>
-                                    <li class="loto-tl_li">27</li>
-                                    <li class="loto-tl_li">28</li>
-                                    <li class="loto-tl_li">29</li>
-                                    <li class="loto-tl_li">30</li>
-                                    <li class="loto-tl_li">31</li>
-                                    <li class="loto-tl_li">32</li>
-                                    <li class="loto-tl_li">33</li>
-                                    <li class="loto-tl_li">34</li>
-                                    <li class="loto-tl_li">35</li>
-                                    <li class="loto-tl_li">36</li>
-                                    <li class="loto-tl_li">37</li>
-                                    <li class="loto-tl_li">38</li>
-                                    <li class="loto-tl_li">39</li>
-                                    <li class="loto-tl_li">40</li>
-                                    <li class="loto-tl_li">41</li>
-                                    <li class="loto-tl_li">42</li>
-                                    <li class="loto-tl_li">43</li>
-                                    <li class="loto-tl_li">44</li>
-                                    <li class="loto-tl_li">45</li>
-                                    <li class="loto-tl_li">46</li>
-                                    <li class="loto-tl_li">47</li>
-                                    <li class="loto-tl_li">48</li>
-                                    <li class="loto-tl_li">49</li>
-                                </ul>
-                                <div class="bm-pl">
-                                    <ul class="tb-fs-tl">
-                                        <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
-                                    </ul>
-                                    <div class="tb-st-bk">
-                                        <div class="sm-but">подтвердить</div>
-                                        <div class="tb-ifo">еще <b>6</b> номера</div>
-                                    </div>
-                                    <div class="b-cl-block"></div>
-                                </div>
-                            </div>
-                            <div class="tb-slide" id="tb-slide5">
-                                <ul class="tb-loto-tl">
-                                    <li class="loto-tl_li">1</li>
-                                    <li class="loto-tl_li">2</li>
-                                    <li class="loto-tl_li">3</li>
-                                    <li class="loto-tl_li">4</li>
-                                    <li class="loto-tl_li">5</li>
-                                    <li class="loto-tl_li">6</li>
-                                    <li class="loto-tl_li">7</li>
-                                    <li class="loto-tl_li">8</li>
-                                    <li class="loto-tl_li">9</li>
-                                    <li class="loto-tl_li">10</li>
-                                    <li class="loto-tl_li">11</li>
-                                    <li class="loto-tl_li">12</li>
-                                    <li class="loto-tl_li">13</li>
-                                    <li class="loto-tl_li">14</li>
-                                    <li class="loto-tl_li">15</li>
-                                    <li class="loto-tl_li">16</li>
-                                    <li class="loto-tl_li">17</li>
-                                    <li class="loto-tl_li">18</li>
-                                    <li class="loto-tl_li">19</li>
-                                    <li class="loto-tl_li">20</li>
-                                    <li class="loto-tl_li">21</li>
-                                    <li class="loto-tl_li">22</li>
-                                    <li class="loto-tl_li">23</li>
-                                    <li class="loto-tl_li">24</li>
-                                    <li class="loto-tl_li">25</li>
-                                    <li class="loto-tl_li">26</li>
-                                    <li class="loto-tl_li">27</li>
-                                    <li class="loto-tl_li">28</li>
-                                    <li class="loto-tl_li">29</li>
-                                    <li class="loto-tl_li">30</li>
-                                    <li class="loto-tl_li">31</li>
-                                    <li class="loto-tl_li">32</li>
-                                    <li class="loto-tl_li">33</li>
-                                    <li class="loto-tl_li">34</li>
-                                    <li class="loto-tl_li">35</li>
-                                    <li class="loto-tl_li">36</li>
-                                    <li class="loto-tl_li">37</li>
-                                    <li class="loto-tl_li">38</li>
-                                    <li class="loto-tl_li">39</li>
-                                    <li class="loto-tl_li">40</li>
-                                    <li class="loto-tl_li">41</li>
-                                    <li class="loto-tl_li">42</li>
-                                    <li class="loto-tl_li">43</li>
-                                    <li class="loto-tl_li">44</li>
-                                    <li class="loto-tl_li">45</li>
-                                    <li class="loto-tl_li">46</li>
-                                    <li class="loto-tl_li">47</li>
-                                    <li class="loto-tl_li">48</li>
-                                    <li class="loto-tl_li">49</li>
-                                </ul>
-                                <div class="bm-pl">
-                                    <ul class="tb-fs-tl">
-                                        <li class="loto-tl_li">A</li>
-                                        <li class="loto-tl_li heart"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
-                                    </ul>
-                                    <div class="tb-st-bk">
-                                        <div class="sm-but">подтвердить</div>
-                                        <div class="tb-ifo">еще <b>6</b> номера</div>
-                                    </div>
-                                    <div class="b-cl-block"></div>
-                                </div>
-                            </div>
+                            <? } ?>
                         </div>
                         <div class="atd-bk">
                             <ul class="yr-tb">
@@ -524,7 +229,7 @@
                     <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
-                            <div class="pbk-pi">на счету <b>3 460</b> баллов</div>
+                            <div class="pbk-pi">на счету <b><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
                         </div>
                         <div class="pbk-ct">
                             <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
@@ -710,13 +415,13 @@
                                 <li class="ul_li" data-link="profile-bonuses">бонусы</li>
                             </ul>
                             <div class="p-stat-bk">
-                                <div class="gm-st"><b>235</b>игр сыграно</div>
+                                <div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div>
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b>4 600</b>баллов на счету</div>
+                                    <div class="ifo"><b><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
                                     <div class="bt">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b>800</b>гривен на счету</div>
+                                    <div class="ifo"><b><?=number_format($player->getMoney(), 0, '.', ' ')?></b>гривен на счету</div>
                                     <div class="bt">вывести</div>
                                 </div>
                             </div>
@@ -754,89 +459,34 @@
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
                                                 <ul>
-                                                    <li>1</li>
-                                                    <li>2</li>
-                                                    <li>3</li>
-                                                    <li>4</li>
-                                                    <li>5</li>
-                                                    <li>6</li>
-                                                    <li>7</li>
-                                                    <li>8</li>
-                                                    <li>9</li>
-                                                    <li>10</li>
-                                                    <li>11</li>
-                                                    <li>12</li>
-                                                    <li>13</li>
-                                                    <li>14</li>
-                                                    <li>15</li>
-                                                    <li>16</li>
-                                                    <li>17</li>
-                                                    <li>18</li>
-                                                    <li>19</li>
-                                                    <li>20</li>
-                                                    <li>21</li>
-                                                    <li>22</li>
-                                                    <li>23</li>
-                                                    <li>24</li>
-                                                    <li>25</li>
-                                                    <li>26</li>
-                                                    <li>27</li>
-                                                    <li>28</li>
-                                                    <li>29</li>
-                                                    <li>30</li>
-                                                    <li>31</li>
-                                                    <li>32</li>
-                                                    <li>33</li>
-                                                    <li>34</li>
-                                                    <li>35</li>
-                                                    <li>36</li>
-                                                    <li>37</li>
-                                                    <li>38</li>
-                                                    <li>39</li>
-                                                    <li>40</li>
-                                                    <li>41</li>
-                                                    <li>42</li>
-                                                    <li>43</li>
-                                                    <li>44</li>
-                                                    <li>45</li>
-                                                    <li>46</li>
-                                                    <li>47</li>
-                                                    <li>48</li>
-                                                    <li>49</li>
+                                                    <? for ($i = 1; $i <= 49; ++$i) { ?>
+                                                        <li<?=(in_array($i, $player->getFavoriteCombination()) ? ' class="dis"' : '')?>><?=$i?></li>
+                                                    <? } ?>
                                                 </ul>
                                             </div>
                                             <div class="fc-tl">любимая комбинация</div>
                                             <ul class="fc-nrch-bk">
-                                                <li>
-                                                    <i></i>
-                                                    <span></span>
-                                                </li>
-                                                <li>
-                                                    <i></i>
-                                                    <span></span>
-                                                </li>
-                                                <li>
-                                                    <i></i>
-                                                    <span></span>
-                                                </li>
-                                                <li>
-                                                    <i></i>
-                                                    <span></span>
-                                                </li>
-                                                <li>
-                                                    <i></i>
-                                                    <span></span>
-                                                </li>
-                                                <li>
-                                                    <i></i>
-                                                    <span></span>
-                                                </li>
+                                                <? if (count($player->getFavoriteCombination())) { ?>
+                                                    <? foreach ($player->getFavoriteCombination() as $num) { ?>
+                                                        <li>
+                                                            <i></i>
+                                                            <span><?=$num?></span>
+                                                        </li>    
+                                                    <? } ?>
+                                                <? } else { ?>
+                                                    <? for ($i = 1; $i <= 6; ++$i) { ?>
+                                                        <li>
+                                                            <i></i>
+                                                            <span></span>
+                                                        </li>    
+                                                    <? } ?>
+                                                <? } ?>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="save-bk">
                                         <div class="sb-ch-td">
-                                            <input type="checkbox" id="rulcheck" hidden />
+                                            <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
                                             <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
                                         </div>
                                         <div class="sb-ch-td">
@@ -1101,6 +751,11 @@
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
     <script>
+        var playerFavorite = [];
+        <? foreach ($player->getFavoriteCombination() as $num) { ?>
+        playerFavorite.push(<?=$num?>);
+        <? } ?>
+
         $(function(){
             var ios;
             var mac = navigator.userAgent.indexOf('Mac OS');
@@ -1124,7 +779,7 @@
             if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
 
             $("#countdownHolder").countdown({
-                until: (<?=($gameInfo['nextLottery'])?> + new Date().getTimezoneOffset() * 60), 
+                until: (<?=($gameInfo['nextLottery'])?>), 
                 format: 'HMS', 
                 layout: '{hnn}:{mnn}:{snn}'}
             );
