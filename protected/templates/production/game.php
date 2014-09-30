@@ -127,104 +127,76 @@
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
-                        <ul class="tb-tabs">
-                            <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)">#1</a></li>
-                            <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)">#2</a></li>
-                            <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)">#3</a></li>
-                            <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)">#4</a></li>
-                            <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)">#5</a></li>
-                        </ul>
-                        <div class="tb-slides">
-                            <? for ($i = 1; $i <= 5; ++$i) { ?>
-                                <?  $nums = array();
-                                if (count($tickets)) {
-                                    $ticket = array_shift($tickets);
-                                    $nums = $ticket->getCombination();
-                                } ?>
-                                <div class="tb-slide" id="tb-slide<?=$i?>">
-                                    <ul class="tb-loto-tl">
-                                        <? for ($j = 1; $j <= 49; ++$j) { ?>                                            
-                                            <li class="loto-tl_li loto-<?=$j?><?=(count($nums) && in_array($j, $nums) ? ' select' : '')?>"><?=$j?></li>
-                                        <? } ?>
-                                    </ul>
-                                    <div class="bm-pl">
-                                        <ul class="tb-fs-tl">
-                                            <li class="loto-tl_li ticket-random">A</li>
-                                            <li class="loto-tl_li heart ticket-favorite"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
-                                        </ul>
-                                        <div class="tb-st-bk">
-                                            <div class="sm-but add-ticket">подтвердить</div>
-                                            <div class="tb-ifo">еще <b>6</b> номера</div>
-                                        </div>
-                                        <div class="b-cl-block"></div>
-                                    </div>
-                                </div>
-                            <? } ?>
-                        </div>
-                        <div class="atd-bk">
-                            <ul class="yr-tb">
-                                <li class="yr-tt">
-                                    <div class="yr-tt-tn">Билет #1</div>
-                                    <ul class="yr-tt-tr">
-                                        <li class="yr-tt-tr_li">3</li>
-                                        <li class="yr-tt-tr_li">32</li>
-                                        <li class="yr-tt-tr_li">41</li>
-                                        <li class="yr-tt-tr_li">16</li>
-                                        <li class="yr-tt-tr_li">8</li>
-                                        <li class="yr-tt-tr_li">6</li>
-                                    </ul>
-                                </li>
-                                <li class="yr-tt">
-                                    <div class="yr-tt-tn">Билет #2</div>
-                                    <ul class="yr-tt-tr">
-                                        <li class="yr-tt-tr_li">3</li>
-                                        <li class="yr-tt-tr_li">32</li>
-                                        <li class="yr-tt-tr_li">41</li>
-                                        <li class="yr-tt-tr_li">16</li>
-                                        <li class="yr-tt-tr_li">8</li>
-                                        <li class="yr-tt-tr_li">6</li>
-                                    </ul>
-                                </li>
-                                <li class="yr-tt">
-                                    <div class="yr-tt-tn">Билет #3</div>
-                                    <ul class="yr-tt-tr">
-                                        <li class="yr-tt-tr_li">3</li>
-                                        <li class="yr-tt-tr_li">32</li>
-                                        <li class="yr-tt-tr_li">41</li>
-                                        <li class="yr-tt-tr_li">16</li>
-                                        <li class="yr-tt-tr_li">8</li>
-                                        <li class="yr-tt-tr_li">6</li>
-                                    </ul>
-
-                                </li>
-                                <li class="yr-tt">
-                                    <div class="yr-tt-tn">Билет #4</div>
-                                    <ul class="yr-tt-tr">
-                                        <li class="yr-tt-tr_li">3</li>
-                                        <li class="yr-tt-tr_li">32</li>
-                                        <li class="yr-tt-tr_li">41</li>
-                                        <li class="yr-tt-tr_li">16</li>
-                                        <li class="yr-tt-tr_li">8</li>
-                                        <li class="yr-tt-tr_li">6</li>
-                                    </ul>
-                                </li>
-                                <li class="yr-tt">
-                                    <div class="yr-tt-tn">Билет #5</div>
-                                    <ul class="yr-tt-tr">
-                                        <li class="yr-tt-tr_li">3</li>
-                                        <li class="yr-tt-tr_li">32</li>
-                                        <li class="yr-tt-tr_li">41</li>
-                                        <li class="yr-tt-tr_li">16</li>
-                                        <li class="yr-tt-tr_li">8</li>
-                                        <li class="yr-tt-tr_li">6</li>
-                                    </ul>
-                                </li>
+                        <? if (count($tickets) < 5) { ?>
+                            <ul class="tb-tabs">
+                                <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)">#1</a></li>
+                                <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)">#2</a></li>
+                                <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)">#3</a></li>
+                                <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)">#4</a></li>
+                                <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)">#5</a></li>
                             </ul>
-                            <div class="atd-txt-bk">
-                                <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
-                                <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero gna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree.Lorem ipsum dolor sit amet, consectetur adipiscing elit. </div>
+                            <div class="tb-slides">
+                                <? for ($i = 1; $i <= 5; ++$i) { ?>
+                                    <?  $nums = array();
+                                    if (count($tickets)) {
+                                        $ticket = array_shift($tickets);
+                                        $nums = $ticket->getCombination();
+                                    } ?>
+                                    <div class="tb-slide" id="tb-slide<?=$i?>">
+                                        <ul class="tb-loto-tl">
+                                            <? for ($j = 1; $j <= 49; ++$j) { ?>                                            
+                                                <li class="loto-tl_li loto-<?=$j?><?=(count($nums) && in_array($j, $nums) ? ' select' : '')?>"><?=$j?></li>
+                                            <? } ?>
+                                        </ul>
+                                        <div class="bm-pl">
+                                            <? if (count($nums) != 6) { ?>
+                                            <ul class="tb-fs-tl">
+                                                <li class="loto-tl_li ticket-random">A</li>
+                                                <li class="loto-tl_li heart ticket-favorite"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
+                                            </ul>
+                                            <? } ?>
+                                            <div class="tb-st-bk">
+                                                <? if (count($nums) == 6) { ?>
+                                                    <div class="tb-st-done">подвержден и принят к розыгрышу</div>
+                                                <? } else { ?>
+                                                    <div class="sm-but add-ticket">подтвердить</div>
+                                                    <div class="tb-ifo">еще <b><?=(6 - count($nums))?></b> номера</div>
+                                                <? } ?>
+                                            </div>
+                                            <div class="b-cl-block"></div>
+                                        </div>
+                                    </div>
+                                <? } ?>
                             </div>
-                        </div>
+                            <div class="atd-bk">
+                                
+                                <div class="atd-txt-bk">
+                                    <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
+                                    <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
+                                </div>
+                            </div>                            
+                        <? } else { ?>
+                            <div class="atd-bk" style="display:block">                                
+                                <ul class="yr-tb">
+                                    <? for ($i = 1; $i <= 5; ++$i) { ?>
+                                        <? $ticket = array_shift($tickets);
+                                           $nums = $ticket->getCombination(); ?>
+                                        <li class="yr-tt">
+                                            <div class="yr-tt-tn">Билет #<?=$i?></div>
+                                            <ul class="yr-tt-tr">
+                                                <? foreach ($nums as $num) { ?>
+                                                    <li class="yr-tt-tr_li"><?=$num?></li>
+                                                <? } ?>
+                                            </ul>
+                                        </li>    
+                                    <? } ?>                            
+                                </ul>
+                                <div class="atd-txt-bk">
+                                    <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
+                                    <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
+                                </div>
+                            </div>
+                        <? } ?>
                     </section>
                     <section class="prizes">
                         <div class="sbk-tl-bk">

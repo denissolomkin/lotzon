@@ -84,7 +84,11 @@ $(function(){
         $('.tb-slides .tb-slide').hide();
         st.show();
     });
-    $('.loto-tl_li').on('click', function(){
+    var filledTickets = [];
+    $('.loto-tl_li').on('click', function() {
+        if ($(this).parents('.tb-slide').find('.tb-loto-tl li.select').length == 6) {
+            return;
+        }
         if (!$(this).hasClass('ticket-random') && !$(this).hasClass('ticket-favorite')) {
             if(!$(this).hasClass('select')){
                 var lim = $(this).closest('ul').find('.select').length;
@@ -109,22 +113,34 @@ $(function(){
     });
     var ticketCache = [];
     $('.ticket-random').on('click', function() {
-        if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+        if (!$(this).hasClass('select')) {
+            if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+                $(this).parents('.tb-slide').find('li.select').removeClass('select');
+            }
+            ticketCache = [];
+            for (var i = 1; i <= 6; ++i) {
+                ticketCache.push(randomCachedNum());
+            }        
+            var button = $(this);
+            $(ticketCache).each(function(id, num) {
+                button.parents('.tb-slide').find('.loto-' + num).addClass('select');    
+            });
+            
+            $(this).addClass('select');
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
+            $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+        } else {
             $(this).parents('.tb-slide').find('li.select').removeClass('select');
         }
-        ticketCache = [];
-        for (var i = 1; i <= 6; ++i) {
-            ticketCache.push(randomCachedNum());
-        }        
-        var button = $(this);
-        $(ticketCache).each(function(id, num) {
-            button.parents('.tb-slide').find('.loto-' + num).addClass('select');    
-        });
-        
-        $(this).addClass('select');
-        $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
-        $(this).parents('.tb-slide').find('.sm-but').addClass('on');
-        
+        if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
+            $(this).parents('.tb-slide').find('.tb-ifo').show();
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);    
+            $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
+        } else {
+
+            $(this).parents('.tb-slide').find('.tb-ifo').hide();
+            $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
+        }
     });    
     function randomCachedNum() {
         var rand = Math.floor((Math.random() * 49) + 1); 
@@ -136,17 +152,31 @@ $(function(){
         return rand;
     }
     $('.ticket-favorite').on('click', function() {
-        if ($(this).parents('.tb-slide').find('li.select').length > 0) {
-            $(this).parents('.tb-slide').find('li.select').removeClass('select');
-        }
-        if (playerFavorite.length) {
-            for (var i = 0; i <= 5; ++i) {
-                $(this).parents('.tb-slide').find('.loto-' + playerFavorite[i]).addClass('select');
+        if (!$(this).hasClass('select')) {
+            if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+                $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
-            $(this).addClass('select');
-            $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
-            $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+            if (playerFavorite.length) {
+                for (var i = 0; i <= 5; ++i) {
+                    $(this).parents('.tb-slide').find('.loto-' + playerFavorite[i]).addClass('select');
+                }
+                $(this).addClass('select');
+                $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
+                $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+            }
+        } else {
+            $(this).parents('.tb-slide').find('li.select').removeClass('select');   
+        }        
+        if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
+            $(this).parents('.tb-slide').find('.tb-ifo').show();
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);    
+            $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
+        } else {
+
+            $(this).parents('.tb-slide').find('.tb-ifo').hide();
+            $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
         }
+        
     });
 
     $('.add-ticket').on('click', function(){
@@ -162,11 +192,31 @@ $(function(){
                 button.closest('.bm-pl').find('.tb-fs-tl').remove();
                 button.closest('.tb-slide').addClass('done');
                 button.closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
+                button.closest('.tb-slide').find('.ticket-random').off('click');
+                button.closest('.tb-slide').find('.ticket-favorite').off('click');
+                button.closest('.tb-slide').find('.loto-tl_li').off('click');
+                filledTickets.push(combination);
+                console.log(filledTickets.length);
+                if (filledTickets.length == 5) {
+                    $('.tb-tabs, .tb-slides').remove();
+                    var html = '<ul class="yr-tb">';
+                    $(filledTickets).each(function(id, ticket) {
+                        html += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (id + 1) + '</div><ul class="yr-tt-tr">';
+                        $(ticket).each(function(tid, num) {
+                            html += '<li class="yr-tt-tr_li">' + num + '</li>';
+                        });
+                        html += '</ul></li>';
+                    });
+                    html += '</ul>';
+                    $('.atd-bk').prepend($(html));
+                    $('.atd-bk').show();
+                }
+
             }, function(){}, function(){});
             
             if($('.tb-slides .done').length == 5){
                 $('.tb-tabs, .tb-slides').remove();
-                $('.atd-bk').show();
+                
             }
         }
     });
