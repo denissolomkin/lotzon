@@ -85,7 +85,7 @@ class PlayersDBProcessor implements IProcessor
         return true;
     }
 
-    public function getAllPlayersCount()
+    public function getPlayersCount()
     {
         $sql = "SELECT COUNT(*) as `counter`  FROM `Players`";
 

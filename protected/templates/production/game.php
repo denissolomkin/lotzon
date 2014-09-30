@@ -102,6 +102,7 @@
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
                     <li id="profile-but" data-href="profile"  class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
                     <li class="tn-mbk_li">игры</li>
+                    <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
                     <div class="tn-tr-tt">До следующего розыгрыша осталось</div>
@@ -128,11 +129,11 @@
                 <div class="w-ct">
                     <section class="tickets">
                         <ul class="tb-tabs">
-                            <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)">#1</a></li>
-                            <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)">#2</a></li>
-                            <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)">#3</a></li>
-                            <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)">#4</a></li>
-                            <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)">#5</a></li>
+                            <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)"><span>Билет </span>#1</a></li>
+                            <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)"><span>Билет </span>#2</a></li>
+                            <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)"><span>Билет </span>#3</a></li>
+                            <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)"><span>Билет </span>#4</a></li>
+                            <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)"><span>Билет </span>#5</a></li>
                         </ul>
                         <div class="tb-slides">
                             <div class="tb-slide" id="tb-slide1">
@@ -705,9 +706,9 @@
                     <div class="p-cnt">
                         <aside>
                             <ul>
-                                <li class="ul_li now" data-link="profile-info">информация</li>
-                                <li class="ul_li" data-link="profile-history">история розыгрышей</li>
+                                <li class="ul_li now" data-link="profile-history">история розыгрышей</li>
                                 <li class="ul_li" data-link="profile-bonuses">бонусы</li>
+                                <li class="ul_li" data-link="profile-info">информация</li>
                             </ul>
                             <div class="p-stat-bk">
                                 <div class="gm-st"><b>235</b>игр сыграно</div>
@@ -723,9 +724,247 @@
                         </aside>
 
                         <div class="sp-cnt">
+                            <section class="_section profile-history">
+                                <ul class="ph-fr-bk">
+                                    <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
+                                    <li class="bt-all sel"><a href="javascript:void(0)">все</a></li>
+                                </ul>
+                                <div class="ht-tl-bk">
+                                    <div class="dt-tl">дата<br/>розыгрыша</div>
+                                    <div class="wc-tl">выигрышная<br/>комбинация</div>
+                                    <div class="nw-tl">количество<br/>победителей</div>
+                                </div>
+                                <ul class="ht-bk">
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!-- КЭШ ДЛЯ ТАБЛИЦЫ РЕЗУЛЬТАТОВ (ПРОСТО ДЛЯ ПРИМЕРА ФУНКЦИОНАЛА !!!!!!) -->
+                                <ul id="results-cash" style="display:none;">
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li class="win">
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dt">22.08.2014</div>
+                                        <ul class="ht-ct">
+                                            <li>10</li>
+                                            <li>5</li>
+                                            <li>18</li>
+                                            <li>33</li>
+                                            <li>6</li>
+                                            <li>41</li>
+                                        </ul>
+                                        <div class="nw">155</div>
+                                        <div class="aw-bt">
+                                            <a href="javascript:void(0)"></a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
+                                <div class="mr-bt">загрузить еще</div>
+
+                                <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
+                                <div class="mr-cl-bt-bl">
+                                    <div class="cl">свернуть</div>
+                                    <div class="mr">загрузить еще</div>
+                                </div>
+                            </section>
+
+                            <section class="_section profile-bonuses">
+                                <div class="pb-txt">Вы можете получить дополнительные баллы бла-бла-бла. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</div>
+                                <div class="if-bk">
+                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов</div>
+                                    <div class="fm-bk">
+                                        <div class="inp-bk">
+                                            <input type="email" placeholder="Email друга" />
+                                        </div>
+                                        <div class="if-bt">пригласить</div>
+                                    </div>
+                                </div>
+                                <div class="sn-bt-bk">
+                                    <div class="fb"><span>пригласить</span></div>
+                                    <div class="vk"><span>пригласить</span></div>
+                                    <div class="gp"><span>пригласить</span></div>
+                                    <div class="tw"><span>пригласить</span></div>
+                                </div>
+                                <div class="rp-bk">
+                                    <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
+                                    <div class="rp-sl-bk">
+                                        <a href="javascript:void(0)" class="tw"></a>
+                                        <a href="javascript:void(0)" class="gp"></a>
+                                        <a href="javascript:void(0)" class="vk"></a>
+                                        <a href="javascript:void(0)" class="fb"></a>
+                                    </div>
+                                </div>
+                            </section>
+
                             <section class="_section profile-info">
                                 <form name="profile">
-                                    <div class="pi-ph"><img src="/tpl/img/preview/profile-photo.jpg" /></div>
+                                    <!-- ЕСЛИ ФОТКА ЕСТЬ, ТО К КЛАССУ "pi-ph" ДОБАВЛЯКМ КЛАСС "true" -->
+                                    <div class="pi-ph">
+                                        <i></i>
+                                    </div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
                                             <div class="ph">Ник</div>
@@ -739,10 +978,6 @@
                                             <div class="ph">Имя</div>
                                             <input maxlength="40" type="text" name="name" value="<?=$player->getName()?>"/>
                                         </div>
-                                        <div class="pi-inp-bk">
-                                            <div class="ph">Отчество</div>
-                                            <input maxlength="40" type="text" name="secondname" value="<?=$player->getSecondName()?>"/>
-                                        </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Телефон</div>
                                             <input maxlength="40" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
@@ -750,6 +985,10 @@
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Дата рождения</div>
                                             <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph">Пароль</div>
+                                            <input maxlength="40" placeholder="йа твой пароль" type="password" name="password"  />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -844,242 +1083,6 @@
                                         </div>
                                     </div>
                                 </form>
-                            </section>
-
-
-                            <section class="_section profile-history">
-                                <ul class="ph-fr-bk">
-                                    <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
-                                    <li class="bt-all sel"><a href="javascript:void(0)">все</a></li>
-                                </ul>
-                                <div class="ht-tl-bk">
-                                    <div class="dt-tl">дата<br/>розыгрыша</div>
-                                    <div class="wc-tl">выигрышная<br/>комбинация</div>
-                                    <div class="nw-tl">количество<br/>победителей</div>
-                                </div>
-                                <ul class="ht-bk">
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li class="w">5</li>
-                                            <li>18</li>
-                                            <li class="w">33</li>
-                                            <li>6</li>
-                                            <li class="w">41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li class="w">5</li>
-                                            <li>18</li>
-                                            <li class="w">33</li>
-                                            <li>6</li>
-                                            <li class="w">41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                <!-- КЭШ ДЛЯ ТАБЛИЦЫ РЕЗУЛЬТАТОВ (ПРОСТО ДЛЯ ПРИМЕРА ФУНКЦИОНАЛА !!!!!!) -->
-                                <ul id="results-cash" style="display:none;">
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li class="w">5</li>
-                                            <li>18</li>
-                                            <li class="w">33</li>
-                                            <li>6</li>
-                                            <li class="w">41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li class="w">5</li>
-                                            <li>18</li>
-                                            <li class="w">33</li>
-                                            <li>6</li>
-                                            <li class="w">41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
-                                <div class="mr-bt">загрузить еще</div>
-
-                                <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
-                                <div class="mr-cl-bt-bl">
-                                    <div class="cl">свернуть</div>
-                                    <div class="mr">загрузить еще</div>
-                                </div>
-                            </section>
-
-                            <section class="_section profile-bonuses">
-                                <div class="pb-txt">Вы можете получить дополнительные баллы бла-бла-бла. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</div>
-                                <div class="if-bk">
-                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов</div>
-                                    <div class="fm-bk">
-                                        <div class="inp-bk">
-                                            <input type="email" placeholder="Email друга" />
-                                        </div>
-                                        <div class="if-bt">пригласить</div>
-                                    </div>
-                                </div>
-                                <div class="sn-bt-bk">
-                                    <div class="fb"><span>пригласить</span></div>
-                                    <div class="vk"><span>пригласить</span></div>
-                                    <div class="gp"><span>пригласить</span></div>
-                                    <div class="tw"><span>пригласить</span></div>
-                                </div>
-                                <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
-                                    <div class="rp-sl-bk">
-                                        <a href="javascript:void(0)" class="tw"></a>
-                                        <a href="javascript:void(0)" class="gp"></a>
-                                        <a href="javascript:void(0)" class="vk"></a>
-                                        <a href="javascript:void(0)" class="fb"></a>
-                                    </div>
-                                </div>
                             </section>
                         </div>
                         <div class="b-cl-block"></div>

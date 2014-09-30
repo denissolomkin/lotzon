@@ -77,12 +77,15 @@ $(function(){
                             Tickets sliders functional
      ========================================================================== */
     $('.tb-tabs_li').on('click', function(){
-        $('.tb-tabs_li').removeClass('now');
-        $(this).addClass('now');
         var tn = $(this).attr('data-ticket');
         var st = $('#tb-slide'+tn);
-        $('.tb-slides .tb-slide').hide();
-        st.show();
+        $('.tb-tabs_li').removeClass('now').find('span').hide();
+        $(this).addClass('now').find('span').show();
+        $('.tb-slides .tb-slide').fadeOut(300);
+        setTimeout(function(){
+            st.fadeIn(300);
+        }, 300);
+
     });
     $('.loto-tl_li').on('click', function(){
         if(!$(this).hasClass('select')){
@@ -108,6 +111,7 @@ $(function(){
     $('.sm-but').on('click', function(){
         if($(this).hasClass('on')){
             $(this).closest('.bm-pl').find('.tb-fs-tl').remove();
+            $(this).closest('section.tickets').find('li.now').addClass('done');
             $(this).closest('.tb-slide').addClass('done');
             $(this).closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
             if($('.tb-slides .done').length == 5){
