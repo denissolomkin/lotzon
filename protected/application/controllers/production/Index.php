@@ -2,10 +2,12 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
+use \TicketsModel;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
+Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
 
 
 class Index extends \SlimController\SlimController 
@@ -42,6 +44,8 @@ class Index extends \SlimController\SlimController
         $shop = ShopModel::instance()->loadShop();
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
 
+        $tickets     = TicketsModel::instance()->getPlayerUnplayedTickets(Session::connect()->get(Player::IDENTITY));
+
         $this->render('production/game', array(
             'gameInfo'    => $gameInfo,
             'shop'        => $shop,
@@ -50,6 +54,7 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->promoLang],
             'news'        => $news,
             'player'      => Session::connect()->get(Player::IDENTITY),
+            'tickets'     => $tickets,
             'layout'      => false,
         ));
     }
@@ -66,13 +71,13 @@ class Index extends \SlimController\SlimController
             'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
         );
 
-        $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
+        $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();        
 
         $this->render('production/landing', array(
             'gameInfo'    => $gameInfo,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,
-            'currency'    => Config::instance()->langCurrencies[$this->promoLang],
+            'currency'    => Config::instance()->langCurrencies[$this->promoLang],            
             'layout'      => false,
         ));
     }

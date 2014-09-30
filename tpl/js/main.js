@@ -98,6 +98,13 @@ $(function(){
                     $(this).closest('.tb-slide').find('.tb-ifo').hide();
                     $(this).closest('.tb-slide').find('.sm-but').addClass('on');
                 }
+            }else{
+                var lim = $(this).closest('ul').find('.select').length;
+                var sel = 6 - lim + 1;
+                $(this).removeClass('select');
+                $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+                $(this).closest('.tb-slide').find('.tb-ifo').show();
+                $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
             }
         }else{
             var lim = $(this).closest('ul').find('.select').length;
@@ -108,8 +115,63 @@ $(function(){
             $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
         }
     });
-    $('.sm-but').on('click', function(){
+    var ticketCache = [];
+    $('.ticket-random').on('click', function() {
+        if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+            $(this).parents('.tb-slide').find('li.select').removeClass('select');
+        }
+        ticketCache = [];
+        for (var i = 1; i <= 6; ++i) {
+            ticketCache.push(randomCachedNum());
+        }        
+        var button = $(this);
+        $(ticketCache).each(function(id, num) {
+            button.parents('.tb-slide').find('.loto-' + num).addClass('select');    
+        });
+        
+        $(this).addClass('select');
+        $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
+        $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+        
+    });    
+    function randomCachedNum() {
+        var rand = Math.floor((Math.random() * 49) + 1); 
+        $(ticketCache).each(function(id, num) {
+            if (num == rand) {
+                rand = randomCachedNum();
+            }
+        });
+        return rand;
+    }
+    $('.ticket-favorite').on('click', function() {
+        if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+            $(this).parents('.tb-slide').find('li.select').removeClass('select');
+        }
+        if (playerFavorite.length) {
+            for (var i = 0; i <= 5; ++i) {
+                $(this).parents('.tb-slide').find('.loto-' + playerFavorite[i]).addClass('select');
+            }
+            $(this).addClass('select');
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
+            $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+        }
+    });
+
+    $('.add-ticket').on('click', function(){
         if($(this).hasClass('on')){
+            var combination = [];
+            $(this).parents('.tb-slide').find('li.select').each(function(id, li) {
+                if (!$(li).hasClass('ticket-favorite') && !$(li).hasClass('ticket-random')) {
+                    combination.push($(li).text());
+                }
+            });
+            var button = $(this);
+            addTicket(combination, function() {
+                button.closest('.bm-pl').find('.tb-fs-tl').remove();
+                button.closest('.tb-slide').addClass('done');
+                button.closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
+            }, function(){}, function(){});
+            
             $(this).closest('.bm-pl').find('.tb-fs-tl').remove();
             $(this).closest('section.tickets').find('li.now').addClass('done');
             $(this).closest('.tb-slide').addClass('done');
@@ -303,6 +365,12 @@ $(function(){
             playerData[$(input).attr('name')] = $(input).val();
         });
         playerData.email=$("#profile_email").text();
+        // favorite
+        playerData.favs = [];
+        $(".fc-nbs-bk").find('li.dis').each(function(id, li) {
+            playerData.favs.push($(li).text());
+        });
+        playerData.visible = form.find('input[name="visible"]:checked').length ? 1 : 0;
         updatePlayerProfile(playerData,
             function(data) {
 

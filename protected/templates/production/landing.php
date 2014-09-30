@@ -792,7 +792,7 @@
 
             // countdown
             $("#countdownHolder").countdown({
-                until: (<?=($gameInfo['nextLottery'])?> + new Date().getTimezoneOffset() * 60), 
+                until: (<?=($gameInfo['nextLottery'])?>), 
                 format: 'HMS', 
                 layout: '{hnn}<i class="h-b-c-tb-r_i">:</i>{mnn}<i class="h-b-c-tb-r_i">:</i>{snn}'}
             );

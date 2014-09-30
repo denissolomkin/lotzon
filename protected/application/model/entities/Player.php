@@ -20,11 +20,18 @@ class Player extends Entity
     private $_phone      = '';
     private $_birthday   = '';
 
+    private $_favoriteCombination = array();
+    private $_visible             = false;
+
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_country        = '';
 
     private $_generatedPassword = '';
+
+    private $_points      = 0;
+    private $_money       = 0;
+    private $_gamesPlayed = 0;
 
     public function init()
     {
@@ -217,6 +224,69 @@ class Player extends Entity
         return $this->_avatar;
     }
 
+    public function setVisibility($v)
+    {
+        $this->_visible = $v;
+
+        return $this;
+    }
+
+    public function getVisibility()
+    {
+        return  $this->_visible;
+    }
+
+    public function setFavoriteCombination(array $combination)
+    {
+        $this->_favoriteCombination = $combination;
+
+        return $this;
+    }
+
+    public function getFavoriteCombination()
+    {
+        if (!is_array($this->_favoriteCombination)) {
+            return array();
+        }
+        return $this->_favoriteCombination;
+    }
+
+    public function setPoints($points)
+    {
+        $this->_points = $points;
+
+        return $this;
+    }
+
+    public function getPoints()
+    {
+        return $this->_points;
+    }  
+
+    public function setMoney($money)
+    {
+        $this->_money = $money;
+
+        return $this;
+    }
+
+    public function getMoney()
+    {
+        return $this->_money;
+    }
+
+    public function setGamesPlayed($gamesPlayed)
+    {
+        $this->_gamesPlayed = $gamesPlayed;
+
+        return $this;
+    }
+
+    public function getGamesPlayed()
+    {
+        return $this->_gamesPlayed;
+    }  
+
     public function generatePassword()
     {
         $an = array(
@@ -359,7 +429,12 @@ class Player extends Entity
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
                  ->setCountry($data['Country'])
-                 ->setAvatar($data['Avatar']);
+                 ->setAvatar($data['Avatar'])
+                 ->setVisibility((boolean)$data['Visible'])
+                 ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
+                 ->setPoints($data['Points'])
+                 ->setMoney($data['Money'])
+                 ->setGamesPlayed($data['GamesPlayed']);
         }
 
         return $this;

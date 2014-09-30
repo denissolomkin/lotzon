@@ -2,6 +2,17 @@
 
 class AjaxController extends \SlimController\SlimController {
 
+    public function __construct(\Slim\Slim &$app)
+    {
+        parent::__construct($app);
+        $this->init();
+    }
+
+    public function init()
+    {
+
+    }
+
     public function validRequest()
     {
         return $this->request()->isAjax();

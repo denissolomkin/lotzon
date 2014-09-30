@@ -60,3 +60,26 @@ function updatePlayerProfile(playerData, successFunction, failFunction, errorFun
        }
     });
 }
+
+function addTicket(combination, successFunction, failFunction, errorFunction) 
+{
+    $.ajax({
+        url: "/game/ticket/",
+        method: 'POST',
+        data: {
+            'combination' : combination,   
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call(combination, data);
+            } else {
+                failFunction.call(combination, data);
+            }
+        },
+        error: function() {
+            errorFunction.call(combination, data);
+       }
+    });   
+}
