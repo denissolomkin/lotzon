@@ -148,8 +148,9 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}
 .a-tbl .l_ul .n_li {overflow:hidden;margin-bottom:40px;}
 .a-tbl .l_ul .n_li:last-child {margin:0;}
-.a-tbl .l_ul .n_li .n {width:70px;height:70px;background-color:#ffe719;float:left;text-align:center;font:47px/70px Handbook-bold;color:#000;}
-.a-tbl .l_ul .n_li .t {margin:-5px 45px 0 91px;font:18px/19px Handbook-regular;}
+.a-tbl .l_ul .n_li .n {width:70px;height:70px;background-color:#ffe719;float:left;text-align:center;font:47px/70px Handbook-bold;color:#000;margin-top:5px;}
+.font-fix .a-tbl .l_ul .n_li .n {margin-top:2px;}
+.a-tbl .l_ul .n_li .t {margin:0px 45px 0 91px;font:18px/19px Handbook-regular;}
 .a-tbl .r_ul {margin:0 0 0 470px;padding:0;list-style:none;}
 .a-tbl .r_ul .r_li {margin-bottom:30px;overflow:hidden;}
 .a-tbl .r_ul .r_li:last-child {margin-bottom:0;}
