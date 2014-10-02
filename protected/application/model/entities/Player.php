@@ -327,7 +327,7 @@ class Player extends Entity
                 }
             break;
             case 'fetch' :
-                $this->validEmail();
+                $this->getId() || $this->validEmail();
             break;
             case 'login' :
                 $this->validEmail();
@@ -382,6 +382,24 @@ class Player extends Entity
 
         return $this;
 
+    }
+
+    public function addMoney($quantity) {
+        //@TODO process transaction
+        
+        $this->setMoney($this->getMoney() + $quantity);
+        $this->update();
+
+        return $this;
+    }
+
+    public function addPoints($quantity) {
+        //@TODO process transaction
+        
+        $this->setPoints($this->getPoints() + $quantity);
+        $this->update();
+
+        return $this;
     }
 
     public function login($password)

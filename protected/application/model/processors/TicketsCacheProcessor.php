@@ -58,4 +58,9 @@ class TicketsCacheProcessor extends BaseCacheProcessor implements IProcessor
 
         return $tickets;
     }
+
+    public function getAllUnplayedTickets()
+    {
+        return $this->getBackendProcessor()->getAllUnplayedTickets();
+    }
 }

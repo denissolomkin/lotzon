@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel;
+use \TicketsModel, \LotteriesModel;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -14,6 +14,7 @@ class Index extends \SlimController\SlimController
 {
     const NEWS_PER_PAGE = 6;
     const SHOP_PER_PAGE = 6;
+    const LOTTERIES_PER_PAGE = 6;
 
     public $promoLang = '';
 
@@ -30,7 +31,10 @@ class Index extends \SlimController\SlimController
 
     protected function game()
     {
+        Session::connect()->get(Player::IDENTITY)->fetch();
+
         $gameSettings = GameSettingsModel::instance()->loadSettings();
+        $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
@@ -56,6 +60,7 @@ class Index extends \SlimController\SlimController
             'player'      => Session::connect()->get(Player::IDENTITY),
             'tickets'     => $tickets,
             'layout'      => false,
+            'lotteries'   => $lotteries,
         ));
     }
 
