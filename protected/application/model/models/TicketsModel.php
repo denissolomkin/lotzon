@@ -36,4 +36,9 @@ class TicketsModel extends Model
 
         return $tickets;
     }
+
+    public function getAllUnplayedTickets()
+    {
+        return $this->getProcessor()->getAllUnplayedTickets();
+    }
 }

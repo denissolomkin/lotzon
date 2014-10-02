@@ -412,190 +412,20 @@
                                     <div class="nw-tl">количество<br/>победителей</div>
                                 </div>
                                 <ul class="ht-bk">
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                <!-- КЭШ ДЛЯ ТАБЛИЦЫ РЕЗУЛЬТАТОВ (ПРОСТО ДЛЯ ПРИМЕРА ФУНКЦИОНАЛА !!!!!!) -->
-                                <ul id="results-cash" style="display:none;">
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li class="win">
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dt">22.08.2014</div>
-                                        <ul class="ht-ct">
-                                            <li>10</li>
-                                            <li>5</li>
-                                            <li>18</li>
-                                            <li>33</li>
-                                            <li>6</li>
-                                            <li>41</li>
-                                        </ul>
-                                        <div class="nw">155</div>
-                                        <div class="aw-bt">
-                                            <a href="javascript:void(0)"></a>
-                                        </div>
-                                    </li>
+                                    <? foreach ($lotteries as $lottery) { ?>
+                                        <li class="lot-container">
+                                            <div class="dt"><?=$lottery->getDate('d.m.Y')?></div>
+                                            <ul class="ht-ct">
+                                                <? foreach ($lottery->getCombination() as $num) { ?>
+                                                    <li><?=$num?></li>
+                                                <? } ?>
+                                            </ul>
+                                            <div class="nw"><?=$lottery->getWinnersCount()?></div>
+                                            <div class="aw-bt">
+                                                <a href="javascript:void(0)"></a>
+                                            </div>
+                                        </li>
+                                    <? } ?>
                                 </ul>
 
                                 <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
@@ -716,7 +546,7 @@
         </article>
 
     </div>
-
+<? include('popups.php') ?>
 <script>
     $('#hr-io-slider').slick({
         dots: true,
@@ -753,7 +583,7 @@
             if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
 
             $("#countdownHolder").countdown({
-                until: (<?=($gameInfo['nextLottery'])?> + new Date().getTimezoneOffset() * 60), 
+                until: (<?=($gameInfo['nextLottery'])?>), 
                 format: 'HMS', 
                 layout: '{hnn}:{mnn}:{snn}'}
             );

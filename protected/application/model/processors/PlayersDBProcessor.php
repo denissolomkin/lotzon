@@ -31,7 +31,8 @@ class PlayersDBProcessor implements IProcessor
         $sql = "UPDATE `Players` SET  
                     `DateLogined` = :dl, `Country` = :cc, 
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, 
-                    `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav
+                    `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
+                    `Money` = :money, `Points`  = :points, `GamesPlayed` = :gp
                 WHERE `Id` = :id OR `Email` = :email";
 
         try {
@@ -50,9 +51,12 @@ class PlayersDBProcessor implements IProcessor
                 ':email'    => $player->getEmail(),
                 ':vis'      => (int)$player->getVisibility(),
                 ':fav'      => is_array($player->getFavoriteCombination()) ? serialize($player->getFavoriteCombination()) : '',
+                ':money'    => $player->getMoney(),
+                ':points'   => $player->getPoints(),
+                ':gp'       => $player->getGamesPlayed(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);   
         }
 
         return $player;

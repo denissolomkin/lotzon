@@ -83,3 +83,23 @@ function addTicket(combination, successFunction, failFunction, errorFunction)
        }
     });   
 }
+
+function loadLotteries(offset, successFunction, failFunction, errorFunction)
+{
+    $.ajax({
+        url: "/content/lotteries?offset="+offset,
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });   
+}

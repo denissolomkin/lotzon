@@ -34,7 +34,7 @@ class PlayersCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function update(Entity $player) {
         $player = $this->getBackendProcessor()->update($player);
 
-        $this->cachePlayer($player);
+        $this->cachePlayer($player->fetch());
 
         return $player;
     }
