@@ -395,7 +395,7 @@
                                 </div>
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b><?=number_format($player->getMoney(), 0, '.', ' ')?></b>гривен на счету</div>
-                                    <div class="bt">вывести</div>
+                                    <div class="bt" id="cash-output">вывести</div>
                                 </div>
                             </div>
                         </aside>
@@ -580,7 +580,7 @@
                 return M.join(' ');
             })();
             ie = ie.toLowerCase();
-            if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
+            //if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
 
             $("#countdownHolder").countdown({
                 until: (<?=($gameInfo['nextLottery'])?>), 

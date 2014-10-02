@@ -3,44 +3,44 @@
    ========================================================================== */
 @font-face {
     font-family: 'Handbook-regular';
-    src: url('../fonts/PFHandbookPro-Regular/PFHandbookPro-Regular.eot');
-    src: url('../fonts/PFHandbookPro-Regular/PFHandbookPro-Regular.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/PFHandbookPro-Regular/PFHandbookPro-Regular.woff') format('woff'),
-    url('../fonts/PFHandbookPro-Regular/PFHandbookPro-Regular.ttf') format('truetype'),
-    url('../fonts/PFHandbookPro-Regular/PFHandbookPro-Regular.svg#Handbook-regular') format('svg');
+    src: url('../fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.eot');
+    src: url('../fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.woff') format('woff'),
+    url('../fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.ttf') format('truetype'),
+    url('../fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.svg#Handbook-regular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Handbook-bold';
-    src: url('../fonts/PFHandbookPro-Bold/PFHandbookPro-Bold.eot');
-    src: url('../fonts/PFHandbookPro-Bold/PFHandbookPro-Bold.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/PFHandbookPro-Bold/PFHandbookPro-Bold.woff') format('woff'),
-    url('../fonts/PFHandbookPro-Bold/PFHandbookPro-Bold.ttf') format('truetype'),
-    url('../fonts/PFHandbookPro-Bold/PFHandbookPro-Bold.svg#Handbook-bold') format('svg');
+    src: url('../fonts/PFHandbookPro-Bold/pfhandbookpro-bold-webfont.eot');
+    src: url('../fonts/PFHandbookPro-Bold/pfhandbookpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/PFHandbookPro-Bold/pfhandbookpro-bold-webfont.woff') format('woff'),
+    url('../fonts/PFHandbookPro-Bold/pfhandbookpro-bold-webfont.ttf') format('truetype'),
+    url('../fonts/PFHandbookPro-Bold/pfhandbookpro-bold-webfont.svg#Handbook-bold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Handbook-medium';
-    src: url('../fonts/PFHandbookPro-Medium/PFHandbookPro-Medium.eot');
-    src: url('../fonts/PFHandbookPro-Medium/PFHandbookPro-Medium.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/PFHandbookPro-Medium/PFHandbookPro-Medium.woff') format('woff'),
-    url('../fonts/PFHandbookPro-Medium/PFHandbookPro-Medium.ttf') format('truetype'),
-    url('../fonts/PFHandbookPro-Medium/PFHandbookPro-Medium.svg#Handbook-medium') format('svg');
+    src: url('../fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot');
+    src: url('../fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.woff') format('woff'),
+    url('../fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.ttf') format('truetype'),
+    url('../fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.svg#Handbook-medium') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Handbook-italic';
-    src: url('../fonts/PFHandbookPro-Italic/PFHandbookPro-Italic.eot');
-    src: url('../fonts/PFHandbookPro-Italic/PFHandbookPro-Italic.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/PFHandbookPro-Italic/PFHandbookPro-Italic.woff') format('woff'),
-    url('../fonts/PFHandbookPro-Italic/PFHandbookPro-Italic.ttf') format('truetype'),
-    url('../fonts/PFHandbookPro-Italic/PFHandbookPro-Italic.svg#Handbook-italic') format('svg');
+    src: url('../fonts/PFHandbookPro-Italic/pfhandbookpro-italic-webfont.eot');
+    src: url('../fonts/PFHandbookPro-Italic/pfhandbookpro-italic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/PFHandbookPro-Italic/pfhandbookpro-italic-webfont.woff') format('woff'),
+    url('../fonts/PFHandbookPro-Italic/pfhandbookpro-italic-webfont.ttf') format('truetype'),
+    url('../fonts/PFHandbookPro-Italic/pfhandbookpro-italic-webfont.svg#Handbook-italic') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -107,7 +107,7 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 .slick-dots li button {background:transparent;width:10px;height:10px;border:1px solid #000;border-radius:50%;display:inline-block;padding:0;}
 .slick-dots li.slick-active button {background-color:#000;}
 .pw-gm-rt .ct {padding:16px 0 0 30px;}
-.pw-gm-rt .ct .tl {font:12px/14px Handbook-medium;color:#000;text-transform:uppercase;margin-bottom:10px;}
+.pw-gm-rt .ct .tl {font:12px/14px Handbook-bold;color:#000;text-transform:uppercase;margin-bottom:10px;}
 .pw-gm-rt .ct .rt-bk {margin:0;padding:0;list-style:none;font-size:0;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17.5px/35px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;display:inline-block;}
 .font-fix .pw-gm-rt .ct .rt-bk .rt-bk_li {line-height:38px;}
@@ -128,6 +128,8 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
     -o-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+.tn-mbk .tn-mbk_li:hover {background-color:#f7eb8e;}
+.tn-mbk .tn-mbk_li:hover > a {color:#988c31;}
 .tn-mbk .tn-mbk_li.now {background-color:#ffe400;}
 .tn-mbk .tn-mbk_li.now > a {cursor:default;}
 .tn-mbk .tn-mbk_li.exit > a {color:#c51e1e;opacity:0.8;}
@@ -135,7 +137,7 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-mbk .tn-mbk_li.exit:hover > a {color:#fff;}
 .tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;}
 .tn-tr-bk {float:right;margin-right:40px;width:250px;}
-.tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-medium;color:#404040;text-transform:uppercase;margin-top:14px;}
+.tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-bold;color:#404040;text-transform:uppercase;margin-top:14px;}
 .tn-tr-bk .tn-tr {font:36px/1 Handbook-bold;color:#2f2f2f;float:right;margin-top:9px;}
 .font-fix .tn-tr-bk .tn-tr {margin-top:11px;}
 
@@ -223,7 +225,7 @@ article .wings {}
 
 
 .prizes {box-shadow:2px 2px 1px 0 rgba(0, 0, 0, 0.4);background-color:#fff;}
-.prizes .pbk-pi {float:right;margin-right:40px;font:15px/50px Handbook-medium;text-transform:uppercase;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);color:#000;}
+.prizes .pbk-pi {float:right;margin-right:40px;font:15px/50px Handbook-bold;text-transform:uppercase;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);color:#000;}
 .prizes .pbk-pi > b {font:20px/50px Handbook-bold;}
 .font-fix .prizes .pbk-pi, .font-fix .prizes .pbk-pi > b {line-height:54px;}
 .prizes .sbk-tl {float:left;}
@@ -243,7 +245,7 @@ article .wings {}
 .font-fix .prizes .pz-nav .pz-nav_li {line-height:42px;}
 .prizes .pz-nav .pz-nav_li.now {background-color:#b2d0d4;}
 .prizes .pz-cg {list-style:none;margin:0 0px 0 40px;padding:0;overflow:hidden;}
-.prizes .pz-cg .pz-cg_li {width:210px;float:left;margin:0 20px 40px 0;position:relative;}
+.prizes .pz-cg .pz-cg_li {width:210px;float:left;margin:0 20px 40px 0;position:relative;cursor:pointer;}
 .prizes .pz-cg .pz-cg_li .pz-lim {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize-limit.png") no-repeat 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-lim > span {display:block;font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:14px 9px 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-lim > b {display:block;font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:20px 9px 0 0;}
@@ -255,7 +257,7 @@ article .wings {}
 .prizes .pz-cg .pz-cg_li:hover .im-bn {background-color:#000;color:#ffe400;}
 .prizes .pz-cg .pz-cg_li .im-bn > b {display:block;margin:5px 10px 0 20px;float:left;font:30px/1 Handbook-bold;}
 .font-fix .prizes .pz-cg .pz-cg_li .im-bn > b {margin-top:7px;}
-.prizes .pz-cg .pz-cg_li .im-bn > span {display:block;float:left;font:11px/1 Handbook-medium;margin-top:9px;width:70px;text-transform:uppercase;}
+.prizes .pz-cg .pz-cg_li .im-bn > span {display:block;float:left;font:11px/1 Handbook-bold;margin-top:9px;width:70px;text-transform:uppercase;}
 .font-fix .prizes .pz-cg .pz-cg_li .im-bn > span {margin-top:10px;}
 .prizes .pz-more-bt {height:38px;border: 1px solid #b2d0d4;text-align:center;font:15px/38px Handbook-bold;color:#4c4c4c;cursor:pointer;background-color:transparent;text-transform:uppercase;margin:0 40px;
     -webkit-transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -525,6 +527,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 /* ==========================================================================
                             POPUPs styles
    ========================================================================== */
+.popup {display:none;}
 .bl-pp-bk {position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.8);z-index:1000;overflow-x:hidden;overflow-y:auto;}
 .gr-pp-bk {position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.6);z-index:1000;overflow-x:hidden;overflow-y:auto;}
 .wt-pp-bk {position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(178, 208, 212, 0.93);z-index:1000;overflow-x:hidden;overflow-y:auto;}
@@ -565,7 +568,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk .yr-tb {list-style:none;padding:30px 0 50px 250px;margin:0;}
 
 
-.wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:0 0 0 20px;padding:0 0 0 30px;}
+.wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:20px 0 0 20px;padding:0 0 0 30px;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li {width:240px;height:70px;float:left;cursor:pointer;margin:0 30px 10px 0;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li.you {background-color:#b2d0d4;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li .tl {display:table;width:210px;height:50px;margin:10px 10px 10px 20px;}

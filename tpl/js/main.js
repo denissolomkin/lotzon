@@ -1,5 +1,17 @@
 $(function(){
 
+    /* ==========================================================================
+                        Popups shoe/hide functional
+     ========================================================================== */
+    $('.popup .cs').on('click', function(){
+        $('.popup').fadeOut(200);
+    });
+    $('.popup').click(function(event) {
+        if (!$(event.target).closest(".pop-box").length){
+            $('.popup').fadeOut(200);
+        };
+    });
+
 
     /* ==========================================================================
                     Navigations scroll functional
@@ -264,6 +276,10 @@ $(function(){
         $('.shop-category-items[data-category="' + $(this).data('id') + '"]').show();
     });
 
+    $('.shop-category-items li').on('click', function(){
+        $('#shop-items-popup').fadeIn(200);
+    });
+
 
     $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
         $('.pz-ifo-bk').hide();
@@ -339,6 +355,11 @@ $(function(){
     /* ==========================================================================
                         Profile block functional
      ========================================================================== */
+
+    // CASE OUTPUT POPUP //
+    $('#cash-output').on('click', function(){
+        $('#cash-output-popup').fadeIn(200);
+    });
 
     // PROFILE INFORMATIONS //
 
@@ -460,6 +481,10 @@ $(function(){
             }
         );
         return false;
+    });
+
+    $('.profile-history .ht-bk .aw-bt').on('click', function(){
+        $('#profile-history').fadeIn(200);
     });
 
 

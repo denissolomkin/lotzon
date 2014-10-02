@@ -788,7 +788,7 @@
                 return M.join(' ');
             })();
             ie = ie.toLowerCase();
-            if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
+            //if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
 
             // countdown
             $("#countdownHolder").countdown({
