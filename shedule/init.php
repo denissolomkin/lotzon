@@ -3,9 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (PHP_SAPI != 'cli') {
+/*if (PHP_SAPI != 'cli') {
     die ('forbidden');
-} 
+}*/
 
 // load pathes 
 require_once dirname(__FILE__) . '/../pathes.php';

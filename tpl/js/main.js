@@ -395,9 +395,11 @@ $(function(){
 
     $('.profile-history .mr-bt, .profile-history .mr').on('click', function(){
         var button = $(this);
+        button.hide();
         var offset = button.parents('.profile-history').find('.ht-bk').find('li.lot-container').length;
         loadLotteries(offset, function(data) {
-            button.hide();
+            
+            $('.mr-cl-bt-bl').show();
             if (!data.res.keepShowButton) {
                 $('mr-cl-bt-bl').find('.mr').hide();
             }
@@ -412,12 +414,10 @@ $(function(){
                     html += '</ul><div class="nw">' + lottery.winnersCount + '</div><div class="aw-bt"><a href="javascript:void(0)"></a></div></li>';
                 };
 
-                button.parents('.profile-history').find('.ht-bk').append(html);
+                button.parents('.profile-history').find('.ht-bk').append(html);                
             }
             
         }, function(){}, function(){});
-
-        $('.mr-cl-bt-bl').show();
     });
     $('.profile-history .cl').on('click', function(){
         var counter = 0;
