@@ -379,6 +379,9 @@ input:-ms-input-placeholder {color:#8d7d00;}
 #game-process .g-oc-b {list-style:none;margin:0;padding:0;overflow:hidden;height:103px;}
 #game-process .g-oc-b .g-oc_li.goc-tm {margin-right:30px;float:left;font:50px/100px Handbook-bold; background:transparent url("../img/bg-bame-number.png") no-repeat center;color:#8f8e8e;overflow:hidden;position:relative;box-shadow:0 2px 1px 0 rgba(255,255,255,0.6);}
 #game-process .g-oc-b .g-oc_li.goc-tm .goc_li-nb {background-color:#ffe400;width:100px;height:100px;border-radius:50%;text-align:center;letter-spacing:-2px;position:absolute;left:0;top:0;z-index:1;
+
+}
+#game-process .g-oc-b .g-oc_li .goc_li-nb {
     -webkit-transition: all 1250ms ease;
     -moz-transition: all 1250ms ease;
     -ms-transition: all 1250ms ease;
@@ -390,7 +393,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
     -ms-transform:rotate(-90deg) translate(-50px, -100px);
     transform:rotate(-90deg) translate(-50px, -100px);
 }
-#game-process .g-oc-b .g-oc_li.goc-tm .goc_li-nb.goc-nb-act {-moz-transform:rotate(0) translateX(0) translateY(0);
+#game-process .g-oc-b .g-oc_li .goc_li-nb.goc-nb-act {-moz-transform:rotate(0) translateX(0) translateY(0);
     -webkit-transform:rotate(0) translateX(0) translateY(0);
     -o-transform:rotate(0) translateX(0) translateY(0);
     -ms-transform:rotate(0) translateX(0) translateY(0);
