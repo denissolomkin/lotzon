@@ -17,7 +17,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li').on('click', function(){
+    $('.tn-mbk_li, #exchange').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 100;
         if(pn == 'tickets')pnPos = 0;
@@ -360,6 +360,10 @@ $(function(){
     $('#cash-output').on('click', function(){
         $('#cash-output-popup').fadeIn(200);
     });
+
+
+
+
 
     // PROFILE INFORMATIONS //
 

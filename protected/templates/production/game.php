@@ -51,28 +51,20 @@
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">прошлый розыгрыш<br/>22.08.2014</div>
-                            <ul class="rt-bk">
-                                <li class="rt-bk_li">2</li>
-                                <li class="rt-bk_li">32</li>
-                                <li class="rt-bk_li">8</li>
-                                <li class="rt-bk_li">16</li>
-                                <li class="rt-bk_li">21</li>
-                                <li class="rt-bk_li">14</li>
-                            </ul>
+                            <div class="tl">участников<br/>за все время</div>
+                            <b class="n">1 234 964</b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">прошлый розыгрыш<br/>22.08.2014</div>
-                            <ul class="rt-bk">
-                                <li class="rt-bk_li">1</li>
-                                <li class="rt-bk_li">0</li>
-                                <li class="rt-bk_li">0</li>
-                                <li class="rt-bk_li">5</li>
-                                <li class="rt-bk_li">0</li>
-                                <li class="rt-bk_li">0</li>
-                            </ul>
+                            <div class="tl">общая сумма выигрышей в гривнах<br/>выплаченных за все время</div>
+                            <b class="n">12 430 231</b>
+                        </div>
+                    </div>
+                    <div class="pw-gm-rt">
+                        <div class="ct">
+                            <div class="tl">Победителей<br/>за все время</div>
+                            <b class="n">430 231</b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -391,7 +383,7 @@
                                 <div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div>
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
-                                    <div class="bt">обменять</div>
+                                    <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b><?=number_format($player->getMoney(), 0, '.', ' ')?></b>гривен на счету</div>
@@ -468,13 +460,22 @@
 
                             <section class="_section profile-info">
                                 <form name="profile">
-                                    <!-- ЕСЛИ ФОТКА ЕСТЬ, ТО К КЛАССУ "pi-ph" ДОБАВЛЯКМ КЛАСС "true" -->
-                                    <div class="pi-ph">
-                                        <i></i>
+                                    <div class="pi-lt">
+                                        <!-- ЕСЛИ ФОТКА ЕСТЬ, ТО К КЛАССУ "pi-ph" ДОБАВЛЯКМ КЛАСС "true" -->
+                                        <div class="pi-ph">
+                                            <i></i>
+                                        </div>
+                                        <div class="pi-cs-bk">
+                                            <div class="txt">Привязать соцсеть и получить бонус 40 баллов.</div>
+                                            <div class="cs-int-bt fb int"></div>
+                                            <div class="cs-int-bt vk"></div>
+                                            <div class="cs-int-bt gp"></div>
+                                            <div class="cs-int-bt tw"></div>
+                                        </div>
                                     </div>
                                     <div class="pi-et-bk">
-                                        <div class="pi-inp-bk">
-                                            <div class="ph">Ник</div>
+                                        <div class="pi-inp-bk error">
+                                            <div class="ph">Такой ник уже занят</div>
                                             <input maxlength="40" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
