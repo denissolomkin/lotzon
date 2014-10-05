@@ -277,6 +277,9 @@ $(function(){
     });
 
     $('.shop-category-items li').on('click', function(){
+        $('#shop-items-popup').find('.item-preview').attr('src', $(this).find('.im-ph img').attr('src'));
+        $('#shop-items-popup').find('.item-title').text($(this).find('.im-tl').text());
+        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());
         $('#shop-items-popup').fadeIn(200);
     });
 

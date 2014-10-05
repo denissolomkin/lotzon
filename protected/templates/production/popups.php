@@ -9,27 +9,27 @@
                 <!-- Prize info block -->
                 <div class="pz-ifo-bk">
                     <div class="pz-ph">
-                        <img src="img/preview/catalog-img-6.jpg" />
+                        <img class="item-preview" src="img/preview/catalog-img-6.jpg" />
                     </div>
                     <div class="pz-tl-bk">
-                        <div class="pz-tl">Кикерный стол</div>
-                        <div class="pz-ps"><b>2000</b> баллов</div>
-                        <div class="px-des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. </div>
+                        <div class="pz-tl item-title">Кикерный стол</div>
+                        <div class="pz-ps"><b class="item-price">2000</b> баллов</div>
+                        <div class="px-des"><?=$staticTexts['prizes-popup-text'][$lang]->getText()?> </div>
                         <div class="pz-ifo-bt">обменять</div>
                     </div>
                 </div>
 
                 <!-- Prize info block -->
                 <div class="pz-fm-bk">
-                    <div class="fm-txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. enean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </div>
+                    <div class="fm-txt"><?=$staticTexts['prizes-order-popup'][$lang]->getText()?></div>
                     <div class="fm-inps-bk">
                         <div class="pi-inp-bk">
                             <div class="ph">Фамилия</div>
-                            <input type="text" name="surname">
+                            <input type="text" name="surname" value="<?=$player->getSurname();?>">
                         </div>
                         <div class="pi-inp-bk">
                             <div class="ph">Имя</div>
-                            <input type="text" name="name">
+                            <input type="text" name="name" value="<?=$player->getName();?>">
                         </div>
                         <div class="pi-inp-bk">
                             <div class="ph">Область</div>
@@ -45,14 +45,14 @@
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Телефон</div>
-                            <input type="tel" name="nick" data-type="phone" placeholder="Телефон" maxlength="40">
+                            <input type="tel" name="nick" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон" maxlength="40">
                         </div>
                     </div>
                     <div class="pz-ifo-bt">получить приз</div>
                 </div>
 
                 <!-- Prize report block -->
-                <div class="pz-rt-bk">Обмен будет произведен в течение суток. Приз будет выслан по указанному адресу, бла-бла-бла.</div>
+                <div class="pz-rt-bk"><?=$staticTexts['prizes-popup-success'][$lang]->getText()?></div>
             </section>
         </div>
     </div>
@@ -151,19 +151,19 @@
                 <ul class="ws-lt">
                     <li>
                         <div class="tl">
-                            <div class="ph"><img src="img/comment-photo-2.jpg" /></div>
+                            <div class="ph"><img src="/tpl/img/comment-photo-2.jpg" /></div>
                             <div class="nm">Наум Коробочко</div>
                         </div>
                     </li>
                     <li>
                         <div class="tl">
-                            <div class="ph"><img src="img/comment-photo-3.jpg" /></div>
+                            <div class="ph"><img src="/tpl/img/comment-photo-3.jpg" /></div>
                             <div class="nm">Александер Шпиц</div>
                         </div>
                     </li>
                     <li class="you">
                         <div class="tl">
-                            <div class="ph"><img src="img/comment-photo-5.jpg" /></div>
+                            <div class="ph"><img src="/tpl/img/comment-photo-5.jpg" /></div>
                             <div class="nm">Антон Семеневич Шпак</div>
                         </div>
                     </li>
