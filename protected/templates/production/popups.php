@@ -490,3 +490,97 @@
     </div>
 </div>
 
+
+
+<!--=========================================================================
+                            PRIZES POPUP CODE
+==========================================================================-->
+<div class="wt-pp-bk popup" id="shop-items-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="cash-history pop-box">
+                <div class="cs"></div>
+                <div class="padd">
+
+                    <!-- BONUSES BLOCK -->
+                    <div id="bonuses-h">
+                        <div class="ttl-bk">
+                            <div class="nm">баллы</div>
+                            <div class="if">4 600 <i>баллов<br/>на счету</i></div>
+                            <div class="bt">
+                                <div class="if-bt">обменять</div>
+                            </div>
+                        </div>
+                        <div class="tb">
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">+10</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">-210</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">+150</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Лотерея шанс (выигрыш iPhone)</span></div>
+                                <div class="if td">-410</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">+10</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                        </div>
+                        <div class="pz-more-bt">загрузить еще</div>
+                    </div>
+
+                    <!-- BONUSES BLOCK -->
+                    <div id="cash-h">
+                        <div class="ttl-bk">
+                            <div class="nm">деньги</div>
+                            <div class="if">4 600 <i>гривен<br/>на счету</i></div>
+                            <div class="bt">
+                                <div class="if-bt">вывести</div>
+                            </div>
+                        </div>
+                        <div class="tb">
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">+10</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Обмен на приз: часы Seiko </span></div>
+                                <div class="if td">+30</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">-110</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">+10</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                            <div class="rw">
+                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
+                                <div class="if td">+10</div>
+                                <div class="dt td"><span>29.09.2014</span></div>
+                            </div>
+                        </div>
+                        <div class="pz-more-bt">загрузить еще</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
