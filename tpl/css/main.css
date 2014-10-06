@@ -753,7 +753,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 #game-won {background:url("../img/bg-game-popup-win.jpg") no-repeat 0 0 ;display:none;position:relative;margin:auto;}
 #game-itself.b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
 #game-itself .g-oc-b {list-style:none;margin:0;padding:0;overflow:hidden;height:103px;}
-#game-itself .g-oc-b .g-oc_li {width:100px;height:100px;background-color:#ffe400;border-radius:50%;margin-right:30px;float:left;font:50px/100px Handbook-bold;color:#8f8e8e;text-align:center;letter-spacing:-2px;box-shadow:inset 2px 2px 1px 0px rgba(20, 20, 20, 0.4), 0 2px 1px 0 rgba(255,255,255,0.6);}
+#game-itself .g-oc-b .g-oc_li {width:100px;height:100px;background-color:#ffe400;border-radius:50%;margin-right:30px;float:left;font:50px/100px Handbook-bold;color:#8f8e8e;text-align:center;letter-spacing:-2px;box-shadow:inset 2px 2px 1px 0px rgba(20, 20, 20, 0.4), 0 2px 1px 0 rgba(255,255,255,0.6);z-index:10;}
 .font-fix #game-itself .g-oc-b .g-oc_li {line-height:110px;}
 #game-itself .g-oc-b .g-oc_li .g-oc_span {display:inline-block;position:relative;left:-2px;}
 #game-itself .gw-c-b {margin:57px 100px 0 0;}
