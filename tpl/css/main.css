@@ -531,13 +531,71 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-br-bk {width:300px;height:600px;float:left;}
 .chance .ch-lot-bk {width:900px;float:right;height:600px;background-color:#fff;}
 .chance .ch-lot-bk .ch-bk {padding:0 40px 45px 40px;}
-.chance .ch-lot-bk .ch-bk .ch-txt {font:18px/19px Handbook-regular;color:#000;padding:30px 0 40px 0;}
+.chance .ch-lot-bk .ch-bk .ch-txt {font:18px/19px Handbook-regular;color:#000;padding:30px 0 48px 0;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl {display:table;width:100%;}
-.chance .ch-lot-bk .ch-bk .ch-gm-tbl .td {display:table-cell;width:33%;}
+.chance .ch-lot-bk .ch-bk .ch-gm-tbl .td {display:table-cell;width:33%;vertical-align:top;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl .td.l {text-align:left;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl .td.c {text-align:center;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl .td.r {text-align:right;}
-.chance .ch-lot-bk .ch-bk .gm-3x3 {list-style:none;margin:0;padding:0;width:240px;}
+.chance .ch-lot-bk .ch-bk .gm-bk {list-style:none;margin:0;padding:0;width:240px;height:240px;overflow:hidden;}
+.chance .ch-lot-bk .ch-bk .gm-bk > li {background:url("../img/bg-chanse-game-x.png") no-repeat 0 0 / 100% 100%;border:1px solid #9a9a9a;float:left;}
+.chance .ch-lot-bk .ch-bk .gm-bk > li.l {background: url("../img/bg-chanse-game-lot.png") no-repeat 0 0 / 100% 100%;border-color:#ffe400;}
+.chance .ch-lot-bk .ch-bk .gm-3x3 > li {width:72px;height:72px;margin:0 9px 9px 0;}
+.chance .ch-lot-bk .ch-bk .gm-3x3 > li:nth-child(3n+3) {margin-right:0;}
+.chance .ch-lot-bk .ch-bk .gm-4x4 {margin:auto;}
+.chance .ch-lot-bk .ch-bk .gm-4x4 > li {width:52px;height:52px;margin:0 8px 8px 0;}
+.chance .ch-lot-bk .ch-bk .gm-4x4 > li:nth-child(4n+4) {margin-right:0;}
+.chance .ch-lot-bk .ch-bk .gm-5x5 {margin:0 0 0 auto;}
+.chance .ch-lot-bk .ch-bk .gm-5x5 > li {width:42px;height:42px;margin:0 5px 5px 0;}
+.chance .ch-lot-bk .ch-bk .gm-5x5 > li:nth-child(5n+5) {margin-right:0;}
+.chance .ch-lot-bk .gm-if-bk {padding:13px 0 26px 0;overflow:hidden;color:#000;width:240px;text-align:left;}
+.chance .ch-lot-bk .ch-bk .td.c .gm-if-bk {margin:auto;}
+.chance .ch-lot-bk .ch-bk .td.r .gm-if-bk {margin-left:auto;}
+.chance .ch-lot-bk .gm-if-bk .l {float:left;font:20px/1 Handbook-bold;text-transform:uppercase;margin-left:10px;}
+.chance .ch-lot-bk .gm-if-bk .r {float:right;font:11px/1 Handbook-bold;text-transform:uppercase;margin-right:10px;text-align:center;}
+.chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;}
+.chance .ch-lot-bk .ch-bk .gm-bt {width:240px;height:50px;text-align:center;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;}
+.chance .ch-lot-bk .ch-bk .gm-bt:hover {background-color:#000;color:#fff;}
+.chance .ch-lot-bk .ch-bk .td.c .gm-bt {margin:auto;}
+.chance .ch-lot-bk .ch-bk .td.r .gm-bt {margin-left:auto;}
+
+.game-bk {padding:25px 40px 0 40px;overflow:hidden;}
+.game-bk .l-bk {width:300px;float:left;display:table;height:490px;}
+.game-bk .l-bk .rw-t {display:table-row;height:83px;}
+.game-bk .l-bk .bk-bt {height:34px;vertical-align:middle;padding-left:20px;background:url("../img/but-arrow-left.png") no-repeat left center;font:12px/15px Handbook-bold;color:#383838;text-transform:uppercase;float:left;cursor:pointer;margin-top:10px;}
+.game-bk .l-bk .bk-bt > span {display:inline-block;}
+.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk {width:300px;display:table-row;padding:0;height:69px;}
+.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk > .l, .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk > .r {margin:0;}
+.chance .ch-lot-bk .game-bk .l-bk .l-bk-txt {font:18px/19px Handbook-regular;color:#000;display:table-row;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b {display:table-row;height:150px;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .tb {display:table;width:100%;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .tb .td {display:table-cell;width:33%;height:150px;vertical-align:middle;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .tb .td > img {width:100px;transform:scale(0.6);opacity:0.4;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition:all 200ms ease;
+}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .tb .td.l {text-align:left;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .tb .td.c {text-align:center;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .tb .td.r {text-align:right;}
+.chance .ch-lot-bk .game-bk .l-bk .rw-b .td.sel > img {transform:scale(1);opacity:1;}
+
+.chance .ch-lot-bk .game-bk .gm-tb-bk {position:relative;float:right;width:490px;height:490px;overflow:hidden;}
+.chance .ch-lot-bk .game-bk .gm-tb {list-style:none;margin:0;padding:0;}
+.chance .ch-lot-bk .game-bk .gm-tb > li {float:left;border:1px solid #b2d0d4;text-align:center;background:url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;}
+.chance .ch-lot-bk .game-bk .gm-tb > li.won {border-color:#ffe400;background-image: url("../img/bg-chanse-game-lot.png");}
+.chance .ch-lot-bk .game-bk .gm-tb > li.los {border-color:#707070;background-image: url("../img/bg-chanse-game-x.png");}
+
+.chance .ch-lot-bk .game-bk .gm-tb.g-3x3 > li {width:148px;height:148px;margin:0 20px 20px 0;}
+.chance .ch-lot-bk .game-bk .gm-tb.g-3x3 > li:nth-child(3n+3) {margin-right:0;}
+
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb {position:absolute;top:0;left:0;width:490px;height:490px;display:table;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.play {background-color:rgba(255, 255, 255, 0.5);}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .td {display:table-cell;vertical-align:middle;text-align:center;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .bt {height:50px;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;display:inline-block;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.play .bt {width:110px;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .bt:hover {background-color:#000;color:#fff;}
 
 
 /* ==========================================================================
