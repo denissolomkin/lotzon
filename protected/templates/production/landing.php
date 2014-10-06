@@ -44,7 +44,7 @@
                 <div class="t-tr">
                     <div class="t-tr_td">
                         <div class="h-t-tcb">
-                            <div class="h-t-tcb-l"><a href="/"><img src="/tpl/img/promo-header-logo.png" width="238" height="60" /></a></div>
+                            <div class="h-t-tcb-l"><a href="/"><img src="/tpl/img/Lotzon-Logo.svg" width="238" height="60" /></a></div>
                             <div class="h-t-tcb-sb">
                                 <a href="" class="h-t-tcb-sb-fb"></a>
                                 <a href="" class="h-t-tcb-sb-vk"></a>
