@@ -33,14 +33,15 @@ class Index extends \SlimController\SlimController
     {
         Session::connect()->get(Player::IDENTITY)->fetch();
 
-        $gameSettings = GameSettingsModel::instance()->loadSettings();
-        $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
+        $gameSettings          = GameSettingsModel::instance()->loadSettings();
+        $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
+        $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => 0,
             'win'          => 0,
-            'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time() + 10, // add 10 seconds to fill pause on lottery result generation
             'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
         );
 
@@ -48,7 +49,7 @@ class Index extends \SlimController\SlimController
         $shop = ShopModel::instance()->loadShop();
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
 
-        $tickets     = TicketsModel::instance()->getPlayerUnplayedTickets(Session::connect()->get(Player::IDENTITY));
+        $tickets = TicketsModel::instance()->getPlayerUnplayedTickets(Session::connect()->get(Player::IDENTITY));
 
         $this->render('production/game', array(
             'gameInfo'    => $gameInfo,
@@ -61,6 +62,7 @@ class Index extends \SlimController\SlimController
             'tickets'     => $tickets,
             'layout'      => false,
             'lotteries'   => $lotteries,
+            'playerPlayedLotteries' => $playerPlayedLotteries,
         ));
     }
 

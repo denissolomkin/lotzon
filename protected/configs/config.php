@@ -129,7 +129,10 @@ Config::instance()->publicResources = array(
     '/game/ticket/' => array(
         'post'  => 'controllers\production\Game:createTicket',
     ),
-    '/content/lotteries/' => 'controllers\production\ContentController:lotteries'
+    '/game/lastLottery/'  => 'controllers\production\Game:lastLottery',
+    '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
+    '/content/shop/'      => 'controllers\production\ContentController:shop',
+    '/content/news/'      => 'controllers\production\ContentController:news'
 );
 
 Config::instance()->defaultSenderEmail = 'ravanger@kntele.com';

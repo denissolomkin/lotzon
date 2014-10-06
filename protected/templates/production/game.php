@@ -52,32 +52,31 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">участников<br/>за все время</div>
-                            <b class="n">1 234 964</b>
+                            <b class="n"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">общая сумма выигрышей в гривнах<br/>выплаченных за все время</div>
-                            <b class="n">12 430 231</b>
+                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Победителей<br/>за все время</div>
-                            <b class="n">430 231</b>
+                            <b class="n"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">прошлый розыгрыш<br/>22.08.2014</div>
-                            <ul class="rt-bk">
-                                <li class="rt-bk_li">22</li>
-                                <li class="rt-bk_li">11</li>
-                                <li class="rt-bk_li">23</li>
-                                <li class="rt-bk_li">13</li>
-                                <li class="rt-bk_li">24</li>
-                                <li class="rt-bk_li">15</li>
-                            </ul>
+                            <? foreach ($lotteries as $lottery) { ?>
+                                <div class="tl">прошлый розыгрыш<br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <ul class="rt-bk">
+                                    <? foreach ($lottery->getCombination() as $num) { ?>
+                                        <li class="rt-bk_li"><?=$num?></li>
+                                    <? } ?>
+                                </ul>
+                            <? break; } ?>
                         </div>
                     </div>
                 </div>
@@ -122,11 +121,18 @@
                     <section class="tickets">
                         <? if (count($tickets) < 5) { ?>
                             <ul class="tb-tabs">
-                                <li class="tb-tabs_li now" data-ticket="1"><a href="javascript:void(0)"><span>Билет </span>#1</a></li>
-                                <li class="tb-tabs_li" data-ticket="2"><a href="javascript:void(0)"><span>Билет </span>#2</a></li>
-                                <li class="tb-tabs_li" data-ticket="3"><a href="javascript:void(0)"><span>Билет </span>#3</a></li>
-                                <li class="tb-tabs_li"  data-ticket="4"><a href="javascript:void(0)"><span>Билет </span>#4</a></li>
-                                <li class="tb-tabs_li" data-ticket="5"><a href="javascript:void(0)"><span>Билет </span>#5</a></li>
+                            <? $fst = true; 
+                               $ttickets = $tickets;
+                            ?>
+                            <? for ($i = 1; $i <= 5; ++$i) { ?>
+                                <?  $nums = array();
+                                if (count($ttickets)) {
+                                    $ticket = array_shift($ttickets);
+                                    $nums = $ticket->getCombination();
+                                } ?>
+                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span>Билет </span>#<?=$i?></a></li>
+                                <? $fst = false; ?>
+                            <? } ?>
                             </ul>
                             <div class="tb-slides">
                                 <? for ($i = 1; $i <= 5; ++$i) { ?>
@@ -208,7 +214,12 @@
                             <? $fst = true; ?>
                             <? foreach ($shop as $category) { ?>
                                 <ul class="shop-category-items pz-cg" data-category="<?=$category->getId()?>"  <?=(!$fst ? 'style="display:none"':'')?>>
+                                <? $pager = controllers\production\Index::SHOP_PER_PAGE ?>
+                                <? $i = 0 ?>
                                 <? foreach ($category->getItems() as $item) { ?>
+                                    <? if ($i == $pager) { 
+                                        break;
+                                    } ?>
                                     <li class="pz-cg_li">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
@@ -223,69 +234,11 @@
                                             <span>обменять на баллов</span>
                                         </div>
                                     </li>
+                                    <? $i++; ?>
                                 <? } ?>
                                 </ul>
                                 <? $fst = false; ?>
                             <? } ?>
-                            <!-- блок с кэшом, чисто для примера кнопки "еще" -->
-                            <ul id="pz-cg-cash" style="display:none;">
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-1.jpg" /></div>
-                                    <div class="im-tl">Кружка-термоз</div>
-                                    <div class="im-bn">
-                                        <b>90</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-2.jpg" /></div>
-                                    <div class="im-tl">Набор для пинг понга</div>
-                                    <div class="im-bn">
-                                        <b>130</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="pz-lim">
-                                        <span>ограниченное количество</span>
-                                        <b>10 шт</b>
-                                    </div>
-                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-3.jpg" /></div>
-                                    <div class="im-tl">Часы Flip Clock</div>
-                                    <div class="im-bn">
-                                        <b>450</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-4.jpg" /></div>
-                                    <div class="im-tl">Плеер iPod Shuffle</div>
-                                    <div class="im-bn">
-                                        <b>1000</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="pz-lim">
-                                        <span>ограниченное количество</span>
-                                        <b>10 шт</b>
-                                    </div>
-                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-5.jpg" /></div>
-                                    <div class="im-tl">Планшет Lenovo</div>
-                                    <div class="im-bn">
-                                        <b>1500</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                                <li class="pz-cg_li">
-                                    <div class="im-ph"><img src="/tpl/img/preview/catalog-img-6.jpg" /></div>
-                                    <div class="im-tl">Киерный стол</div>
-                                    <div class="im-bn">
-                                        <b>100500</b>
-                                        <span>обменять на баллов</span>
-                                    </div>
-                                </li>
-                            </ul>
                             <div class="pz-more-bt">загрузить еще</div>
                             <div class="mr-cl-bt-bk">
                                 <div class="cl">свернуть</div>
@@ -405,7 +358,7 @@
                                 </div>
                                 <ul class="ht-bk">
                                     <? foreach ($lotteries as $lottery) { ?>
-                                        <li class="lot-container">
+                                        <li class="lot-container <?=(isset($playerPlayedLotteries[$lottery->getId()]) ? "win" : "")?>">
                                             <div class="dt"><?=$lottery->getDate('d.m.Y')?></div>
                                             <ul class="ht-ct">
                                                 <? foreach ($lottery->getCombination() as $num) { ?>
@@ -585,9 +538,9 @@
 
             $("#countdownHolder").countdown({
                 until: (<?=($gameInfo['nextLottery'])?>), 
-                format: 'HMS', 
-                layout: '{hnn}:{mnn}:{snn}'}
-            );
+                layout: '{hnn}:{mnn}:{snn}',
+                onExpiry: showGameProccessPopup
+            });
         });
     </script>
 

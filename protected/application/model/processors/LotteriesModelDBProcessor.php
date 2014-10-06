@@ -86,4 +86,59 @@ class LotteriesModelDBProcessor implements IProcessor
 
         return $lotteries;
     }
+
+    public function getLastPlayedLottery()
+    {
+        $currentMinute = strtotime(date("H:i"));
+        $sql = "SELECT * FROM `Lotteries` WHERE `Date` >= :curminute LIMIT 1";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':curminute' => $currentMinute,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $lotteryData = $sth->fetch();
+        
+        $lottery = new Lottery();
+        $lottery->formatFrom('DB', $lotteryData);
+
+        return $lottery;
+    }
+
+    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0) 
+    {
+        $sql = "SELECT `lt`.* FROM `PlayerLotteryWins` AS `plt`
+                LEFT JOIN `Lotteries` AS `lt` ON `plt`.`LotteryId` = `lt`.`Id`
+                WHERE `plt`.`PlayerId` = :plid AND `lt`.`Ready` = 1 ORDER BY `lt`.`Date` DESC";
+
+        if (!empty($limit)) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        if (!empty($offset)) {
+            $sql .= " OFFSET " . (int)$offset;   
+        }
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ", 500);
+        }
+
+        $lotteriesData = $sth->fetchAll();
+        $lotteries = array();
+
+        foreach ($lotteriesData as $data) {
+            $lottery = new Lottery();
+            $lottery->formatFrom('DB', $data);
+
+            $lotteries[$lottery->getId()] = $lottery;
+        }
+
+        return $lotteries;
+    }
 }

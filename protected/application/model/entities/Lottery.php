@@ -140,6 +140,7 @@ class Lottery extends Entity
             $this->setId($data['Id'])
                  ->setDate($data['Date'])
                  ->setCombination(@unserialize($data['Combination']))
+                 ->setReady($data['Ready'])
                  ->setWinnersCount($data['WinnersCount'])
                  ->setMoneyTotal($data['MoneyTotal'])
                  ->setPointsTotal($data['PointsTotal']);

@@ -21,7 +21,8 @@ class Players extends \AjaxController
             }
             $player = new Player();
             $player->setEmail($email);
-
+            $player->setCountry(Config::instance()->defaultLang);
+            
             try {   
                 $player->create();
             } catch (EntityException $e) {

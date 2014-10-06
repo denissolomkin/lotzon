@@ -365,78 +365,12 @@
             <section class="gpc-pad">
                 <a href="javascript:void(0)" class="b-c-p"></a>
                 <ul class="g-oc-b">
-                    <li class="g-oc_li"><span class="g-oc_span">12</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">32</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">4</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">48</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">15</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">6</span></li>
                 </ul>
                 <div class="gw-c-b">
                     <div class="yr-b">
                         <ul class="yr-tb">
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #1</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li won">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li won">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">50 баллов</div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #2</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li won">32</li>
-                                    <li class="yr-tt-tr_li won">41</li>
-                                    <li class="yr-tt-tr_li won">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">10 грн </div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #3</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc"></div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #4</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc"></div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #5</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc"></div>
-                            </li>
                         </ul>
-                        <div class="yr-b-fb">Вы всегда можете вывести деньги на странице своего профиля и обменять баллы на странице призов. Бла бла бла.</div>
+                        <div class="yr-b-fb"><?=$staticTexts['game-popup-win'][$lang]->getText()?></div>
                     </div>
                     <div class="yr-s-i">
                         <div class="sb">
@@ -451,11 +385,11 @@
                         </div>
                         <div class="yr-yw-b">
                             <div class="cb">
-                                <div class="yw-t">баллов<br>на счету<b>230</b></div>
+                                <div class="yw-t">баллов<br>на счету<b class="player-points"></b></div>
                                 <a href="" class="yw-b">обменять</a>
                             </div>
                             <div class="mb">
-                                <div class="yw-t">денег<br>на счету<b>2430</b></div>
+                                <div class="yw-t">денег<br>на счету<b class="player-money"></b></div>
                                 <a href="" class="yw-b">вывести</a>
                             </div>
                         </div>
@@ -472,80 +406,15 @@
             <section class="gpc-pad">
                 <a href="javascript:void(0)" class="b-c-p"></a>
                 <ul class="g-oc-b">
-                    <li class="g-oc_li"><span class="g-oc_span">12</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">32</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">4</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">48</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">15</span></li>
-                    <li class="g-oc_li"><span class="g-oc_span">6</span></li>
                 </ul>
                 <div class="gw-c-b">
                     <div class="yr-b">
-                        <ul class="yr-tb">
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #1</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #2</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #3</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #4</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #5</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
+                        <ul class="yr-tb">                            
                         </ul>
                         <div class="yr-b-fb"></div>
                     </div>
                     <div class="yr-s-i">
-                        <span>Не повезло, ты лузер, но не расстраивайся, в следующий раз получится бла бла бла.</span>
-                        <b>Полезный совет:</b>
-                        Комбинации, которые могут встречаться в билетах бла-бла-бла. Которые встречаются в билетах бла-бла-бла. А что если комбинации, которые могут встречаться в билетах бла-бла-бла.
-                        Комбинации, бла-бла-бла. Которые встречаются в билетах бла-бла-бла. А что если комбинации, которые могут встречаться в билетах бла-бла-бла. Комбинации, которые могут встречаться в билетах бла-бла-бла. Которые встречаются в билетах бла-бла-бла. А что если комбинации, которые бла-бла. Комбинации, которые могут встречаться. Которые встречаются в билетах бла-бла-бла. А что если комбинации, которые могут встречаться в билетах бла-бла-бла. Комбинации, бла-бла-бла. Которые встречаются в билетах бла-бла-бла. А что если комбинации, которые могут встречаться в билетах бла-бла-бла. Комбинации, которые могут встречаться бла-бла-бла.
+                        <?=$staticTexts['game-popup-fail'][$lang]->getText()?>
                     </div>
                     <div class="b-cl-block"></div>
                 </div>
@@ -562,101 +431,44 @@
                 <ul class="g-oc-b">
                     <li class="g-oc_li goc-tm">
                         <div class="goc_li-nb">
-                            <span class="g-oc_span">12</span>
+                            <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
                     </li>
                     <li class="g-oc_li goc-tm">
                         <div class="goc_li-nb">
-                            <span class="g-oc_span">6</span>
+                            <span class="g-oc_span unfilled"></span>
+                        </div>
+                        <div class="goc_li-sh "></div>
+                    </li>
+                    <li class="g-oc_li goc-tm">
+                        <div class="goc_li-nb">
+                            <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
                     </li>
                     <li class="g-oc_li goc-tm">
                         <div class="goc_li-nb">
-                            <span class="g-oc_span">18</span>
+                            <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
                     </li>
                     <li class="g-oc_li goc-tm">
                         <div class="goc_li-nb">
-                            <span class="g-oc_span">31</span>
+                            <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
                     </li>
                     <li class="g-oc_li goc-tm">
                         <div class="goc_li-nb">
-                            <span class="g-oc_span">5</span>
-                        </div>
-                        <div class="goc_li-sh"></div>
-                    </li>
-                    <li class="g-oc_li goc-tm">
-                        <div class="goc_li-nb">
-                            <span class="g-oc_span">15</span>
+                            <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
                     </li>
                 </ul>
                 <div class="gw-c-b">
                     <div class="yr-b">
-                        <ul class="yr-tb">
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #1</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #2</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #3</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #4</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #5</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <ul class="yr-tb"></ul>
                         <div class="yr-b-fb"></div>
                     </div>
                     <div class="b-cl-block"></div>

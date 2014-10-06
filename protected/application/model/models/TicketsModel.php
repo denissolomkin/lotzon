@@ -41,4 +41,9 @@ class TicketsModel extends Model
     {
         return $this->getProcessor()->getAllUnplayedTickets();
     }
+
+    public function getPlayerLotteryTickets($lotteryId, $playerId)
+    {
+        return $this->getProcessor()->getPlayerLotteryTickets($lotteryId, $playerId);
+    }
 }

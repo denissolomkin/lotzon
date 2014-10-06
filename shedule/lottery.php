@@ -39,6 +39,7 @@ if (timeToRunLottery()) {
     $playersPlayed  = array();
     $playersWon     = array();
     $playersWonTickets = array();
+    $playerPrizes   = array();
 
     // get players tickets    
     $tickets = TicketsModel::instance()->getAllUnplayedTickets();
@@ -101,8 +102,12 @@ if (timeToRunLottery()) {
     // update players data
     foreach ($playersPlayed as $player) {
         $player->setGamesPlayed($player->getGamesPlayed() + 1);
-        if (in_array($player->getId(), $playersWon)) {
+        if (in_array($player->getId(), $playersWon)) {            
             $moneyToAdd = $pointsToAdd = 0;
+            $playerPrizes[$player->getId()] = array(
+                'money' => 0,
+                'points' => 0,
+            );
             foreach ($playersWonTickets[$player->getId()] as $ticketData) {
                 if ($gamePrizes[$ticketData['win']]['currency'] == GameSettings::CURRENCY_MONEY) {
                     $moneyToAdd += $gamePrizes[$ticketData['win']]['sum'];
@@ -111,10 +116,12 @@ if (timeToRunLottery()) {
                 }
             }
             if ($moneyToAdd > 0)  {
+                $playerPrizes[$player->getId()]['money'] = $moneyToAdd;
                 $player->addMoney($moneyToAdd);
             }
 
             if ($pointsToAdd > 0) {
+                $playerPrizes[$player->getId()]['points'] = $pointsToAdd;
                 $player->addPoints($pointsToAdd);
             }
         }
@@ -125,6 +132,20 @@ if (timeToRunLottery()) {
     DB::Connect()->prepare("UPDATE `LotteryTickets` SET `LotteryId` = :li WHERE `LotteryId` = 0")->execute(array(
         ':li'   => $lottery->getId(),
     ));
+
+    foreach ($playersPlayed as $player) {
+        $sql = "INSERT INTO `PlayerLotteryWins` (`LotteryId`, `PlayerId`, `Date`, `MoneyWin`, `PointsWin`) VALUES (:lotid, :plid, :date, :mw, :pw)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':lotid' => $lottery->getId(),
+                ':plid'  => $player->getId(),
+                ':date'  => $lottery->getDate(),
+                ':mw'    => @$playerPrizes[$player->getId()]['money'] ?: 0,
+                ':pw'    => @$playerPrizes[$player->getId()]['points'] ?: 0,
+            ));
+        } catch (PDOException $e) {}
+    }
 
     $lottery->publish();
 
@@ -138,9 +159,7 @@ if (timeToRunLottery()) {
     exit;
 }
 
-function timeToRunLottery()
-{
-    global $gameSettings;
+function timeToRunLottery() {     return true;     global $gameSettings;
 
     $currentTime = strtotime(date('H:i'), 0);
 
