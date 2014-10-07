@@ -159,7 +159,8 @@ if (timeToRunLottery()) {
     exit;
 }
 
-function timeToRunLottery() {     return true;     global $gameSettings;
+function timeToRunLottery() {
+    global $gameSettings;
 
     $currentTime = strtotime(date('H:i'), 0);
 
