@@ -9,7 +9,7 @@
                 <!-- Prize info block -->
                 <div class="pz-ifo-bk">
                     <div class="pz-ph">
-                        <img class="item-preview" src="img/preview/catalog-img-6.jpg" />
+                        <img class="item-preview" src="/tpl/img/preview/catalog-img-6.jpg" />
                     </div>
                     <div class="pz-tl-bk">
                         <div class="pz-tl item-title">Кикерный стол</div>
@@ -87,7 +87,7 @@
                         <i class="ar-l"></i>
                         <i class="ar-r"></i>
                         <div class="wr-pf-ph">
-                            <img src="img/preview/profile-photo.jpg" />
+                            <img src="/tpl/img/preview/profile-photo.jpg" />
                         </div>
                         <ul class="yr-tb">
                             <li class="yr-tt">

@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '1234',
+    'password' => '',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -30,7 +30,9 @@ Config::instance()->langCurrencies = array(
 
 // init memcache connection
 try {
-    Cache::init('default', Config::instance()->cacheConnectionProperties);    
+    if (Config::instance()->cacheEnabled) {
+        Cache::init('default', Config::instance()->cacheConnectionProperties);        
+    }
 } catch (CacheException $e) {
     Config::instance()->cacheEnabled = false;
 }
@@ -135,4 +137,4 @@ Config::instance()->publicResources = array(
     '/content/news/'      => 'controllers\production\ContentController:news'
 );
 
-Config::instance()->defaultSenderEmail = 'ravanger@kntele.com';
+Config::instance()->defaultSenderEmail = 'info@lotzon.com';

@@ -122,7 +122,7 @@
         },
         "time": "2014-04-16 03:41:49",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-0": {
                 "SlimController": "src/"

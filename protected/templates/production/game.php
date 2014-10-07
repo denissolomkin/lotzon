@@ -502,7 +502,7 @@
                                 CHANCE BLOCK
         ======================================================================-->
         <section class="chance">
-        <div class="ch-br-bk"><img src="img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
+        <div class="ch-br-bk"><img src="/tpl/img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl">игры</div>
@@ -605,13 +605,13 @@
                 <div class="rw-b">
                     <div class="tb">
                         <div class="td l sel">
-                            <img src="img/preview/catalog-img-5.jpg" />
+                            <img src="/tpl/img/preview/catalog-img-5.jpg" />
                         </div>
                         <div class="td c">
-                            <img src="img/preview/catalog-img-3.jpg" />
+                            <img src="/tpl/img/preview/catalog-img-3.jpg" />
                         </div>
                         <div class="td r">
-                            <img src="img/preview/catalog-img-2.jpg" />
+                            <img src="/tpl/img/preview/catalog-img-2.jpg" />
                         </div>
                     </div>
                 </div>
@@ -622,7 +622,7 @@
                 <div class="msg-tb won" style="display:none;">
                     <div class="td">
                         <div class="pz-ph">
-                            <img src="img/preview/catalog-img-5.jpg" />
+                            <img src="/tpl/img/preview/catalog-img-5.jpg" />
                         </div>
                         <div class="tl">
                             <span>Выигрыш</span>
@@ -739,7 +739,7 @@
         ======================================================================-->
         <footer>
             <section class="fr-br-bk">
-                <img src="img/footer-banner.jpg" width="1280" height="135" />
+                <img src="/tpl/img/footer-banner.jpg" width="1280" height="135" />
             </section>
             <div class="fr-cnt-bk">
                 <a href="" class="ts-lk">Пользовательское соглашение</a>
