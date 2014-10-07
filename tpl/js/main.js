@@ -1,5 +1,11 @@
 $(function(){
-
+    /* ==========================================================================
+                        Header slider functional
+     ========================================================================== */
+    $('#hr-io-slider').slick({
+        dots: true,
+        arrows : false
+    });
     /* ==========================================================================
                         Popups shoe/hide functional
      ========================================================================== */
@@ -19,7 +25,7 @@ $(function(){
 
     $('.tn-mbk_li, #exchange').on('click', function(){
         var pn = $(this).attr('data-href');
-        var pnPos = $('.'+pn).offset().top - 100;
+        var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
         $('html, body').animate({scrollTop : pnPos},900, 'easeInOutQuint');
     });
@@ -31,6 +37,7 @@ $(function(){
     var news = $('.news').offset().top;
     var rules = $('.rules').offset().top;
     var profile = $('.profile').offset().top;
+    var chance = $('.chance').offset().top;
     if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#tickets-but').addClass('now');
@@ -43,9 +50,12 @@ $(function(){
     }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#rules-but').addClass('now');
-    }else if($(document).scrollTop() > (profile - 300)){
+    }else if($(document).scrollTop() > (profile - 300) && $(document).scrollTop() < (chance - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#profile-but').addClass('now');
+    }else if($(document).scrollTop() > (chance - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#chance-but').addClass('now');
     }
 
     if($(document).scrollTop() > navPos){
@@ -71,9 +81,12 @@ $(function(){
         }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile -300)){
             $('.tn-mbk_li').removeClass('now');
             $('#rules-but').addClass('now');
-        }else if($(document).scrollTop() > (profile - 300)){
+        }else if($(document).scrollTop() > (profile - 300) && $(document).scrollTop() < (chance - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#profile-but').addClass('now');
+        }else if($(document).scrollTop() > (chance - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#chance-but').addClass('now');
         }
 
 
@@ -109,12 +122,12 @@ $(function(){
             ticketCache = [];
             for (var i = 1; i <= 6; ++i) {
                 ticketCache.push(randomCachedNum());
-            }        
+            }
             var button = $(this);
             $(ticketCache).each(function(id, num) {
-                button.parents('.tb-slide').find('.loto-' + num).addClass('select');    
+                button.parents('.tb-slide').find('.loto-' + num).addClass('select');
             });
-            
+
             $(this).addClass('select');
             $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
             $(this).parents('.tb-slide').find('.sm-but').addClass('on');
@@ -123,16 +136,16 @@ $(function(){
         }
         if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
             $(this).parents('.tb-slide').find('.tb-ifo').show();
-            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);    
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);
             $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
         } else {
 
             $(this).parents('.tb-slide').find('.tb-ifo').hide();
             $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
         }
-    });    
+    });
     function randomCachedNum() {
-        var rand = Math.floor((Math.random() * 49) + 1); 
+        var rand = Math.floor((Math.random() * 49) + 1);
         $(ticketCache).each(function(id, num) {
             if (num == rand) {
                 rand = randomCachedNum();
@@ -154,28 +167,28 @@ $(function(){
                 $(this).parents('.tb-slide').find('.sm-but').addClass('on');
             }
         } else {
-            $(this).parents('.tb-slide').find('li.select').removeClass('select');   
-        }        
+            $(this).parents('.tb-slide').find('li.select').removeClass('select');
+        }
         if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
             $(this).parents('.tb-slide').find('.tb-ifo').show();
-            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);    
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);
             $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
         } else {
 
             $(this).parents('.tb-slide').find('.tb-ifo').hide();
             $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
         }
-        
+
     });
 
     $('.tb-loto-tl li.loto-tl_li').on('click', function() {
         if ($(this).parents('.tb-slide').find('.tb-loto-tl li.select').length == 6) {
             if (!$(this).hasClass('select')) {
-                return;    
+                return;
             }
-            
+
         }
-        if (!$(this).hasClass('ticket-random') && !$(this).hasClass('ticket-favorite')) {    
+        if (!$(this).hasClass('ticket-random') && !$(this).hasClass('ticket-favorite')) {
             if(!$(this).hasClass('select')){
                 var lim = $(this).closest('ul').find('.select').length;
                 var sel = 5 - lim;
@@ -239,14 +252,14 @@ $(function(){
                 }
 
             }, function(){}, function(){});
-            
+
             $(this).closest('.bm-pl').find('.tb-fs-tl').remove();
             $(this).closest('section.tickets').find('li.now').addClass('done');
             $(this).closest('.tb-slide').addClass('done');
             $(this).closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
             if($('.tb-slides .done').length == 5){
                 $('.tb-tabs, .tb-slides').remove();
-                
+
             }
         }
     });
@@ -260,7 +273,7 @@ $(function(){
     $('.pz-more-bt, .mr-cl-bt-bk .mr').on('click', function(){
         loadShop($('.shop-category.now').data('id'), $('.shop-category-items:visible .pz-cg_li').length, function(data) {
             if (data.res.items.length) {
-                var html = '';    
+                var html = '';
                 $(data.res.items).each(function(id, item) {
                     html += '<li class="pz-cg_li">';
                     if (item.quantity > 0) {
@@ -424,6 +437,11 @@ $(function(){
         if($(this).attr('name') == 'date')$(this).attr('type','text');
     });
 
+
+
+    //if (!$(event.target).closest(".pop-box").length){
+      //  $('.popup').fadeOut(200);
+    //};
     $('.fc-nrch-bk li').on('click', function(){
         if(!$(this).hasClass('on')){
             $('.fc-nrch-bk li').removeClass('on');
@@ -433,10 +451,10 @@ $(function(){
             })
             $(this).find('span').text('');
             $(this).addClass('on');
-            $('.fc-nbs-bk').show();
+            $('.fc-nbs-bk').fadeIn(200);
         }else{
             $(this).removeClass('on');
-            $('.fc-nbs-bk').hide();
+            $('.fc-nbs-bk').fadeOut(200);
         }
     });
     $('.fc-nbs-bk li').on('click', function(){
@@ -466,7 +484,7 @@ $(function(){
     $('.bt-all').on('click', function() {
         onlyMineLotteryResults = false;
         $(this).parents('.profile-history').find('.ht-bk').find('li.lot-container').remove();
-        loadLotteries(0, onlyMineLotteryResults, processLotteryResults, function(){}, function(){}); 
+        loadLotteries(0, onlyMineLotteryResults, processLotteryResults, function(){}, function(){});
     })
 
     function processLotteryResults (data) {
@@ -474,10 +492,10 @@ $(function(){
             $('.mr-cl-bt-bl').show();
             if (!data.res.keepShowButton) {
                 $('mr-cl-bt-bl').find('.mr').hide();
-            }    
+            }
         }
         var html = '';
-        if (data.res.lotteries) {            
+        if (data.res.lotteries) {
             for (var i in data.res.lotteries) {
                 var lottery = data.res.lotteries[i];
                 html += '<li class="lot-container'+(onlyMineLotteryResults ? " win" : '')+'"><div class="dt">' + lottery.date + '</div><ul class="ht-ct">';
@@ -487,7 +505,7 @@ $(function(){
                 html += '</ul><div class="nw">' + lottery.winnersCount + '</div><div class="aw-bt"><a href="javascript:void(0)"></a></div></li>';
             };
 
-            $('.profile-history').find('.ht-bk').append(html);                
+            $('.profile-history').find('.ht-bk').append(html);
         }
     }
 
@@ -531,7 +549,7 @@ $(function(){
         updatePlayerProfile(playerData,
             function(data) {
 
-            }, 
+            },
             function(data) {
 
             },
@@ -605,7 +623,7 @@ $(function(){
             }
         };
     });
-    
+
 });
 function showGameProccessPopup(){
     $("#game-won").hide();
@@ -632,14 +650,14 @@ function showFailPopup(data)
         }
         ticketsHtml += '</ul></li>';
     }
-    $("#game-end").find('.yr-tb').html(ticketsHtml);   
+    $("#game-end").find('.yr-tb').html(ticketsHtml);
     var lotteryHtml = '';
 
     $(data.res.lottery.combination).each(function(id, num) {
         lotteryHtml += '<li class="g-oc_li"><span class="g-oc_span">' + num + '</span></li>';
     });
 
-    $("#game-end").find('.g-oc-b').html(lotteryHtml);   
+    $("#game-end").find('.g-oc-b').html(lotteryHtml);
 }
 
 function showWinPopup(data)
@@ -662,7 +680,7 @@ function showWinPopup(data)
         }
         ticketsHtml += '</li>';
     }
-    $("#game-won").find('.yr-tb').html(ticketsHtml);   
+    $("#game-won").find('.yr-tb').html(ticketsHtml);
     var lotteryHtml = '';
 
     $(data.res.lottery.combination).each(function(id, num) {
@@ -670,7 +688,7 @@ function showWinPopup(data)
         $("#game-won").find('li[data-num="' + num + '"]').addClass('won')
     });
 
-    $("#game-won").find('.g-oc-b').html(lotteryHtml);   
+    $("#game-won").find('.g-oc-b').html(lotteryHtml);
     $("#game-won").find('.player-points').text(data.res.player.points);
     $("#game-won").find('.player-money').text(data.res.player.money);
 }
@@ -684,7 +702,7 @@ function proccessResult()
             }
         } else {
             if (!data.res.tickets.length) {
-                $("#game-itself").hide();                
+                $("#game-itself").hide();
             }
             var ticketsHtml = '';
             for (var i = 0; i < 5; ++i) {
@@ -709,11 +727,11 @@ function proccessResult()
                         showWinPopup(data);
                     } else {
                         showFailPopup(data);
-                    }                    
+                    }
                 } else {
                     ball = combination.shift();
                     var spn = $("#game-process .g-oc_span.unfilled:first");
-                    
+
                     spn.text(ball);
                     var li = spn.parents('.g-oc_li');
                     li.find('.goc_li-nb').addClass('goc-nb-act');

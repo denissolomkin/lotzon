@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="h-t-mcb-l-wm">
                                     <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
-                                    <span class="h-t-mcb-l-wm_span">участников</span>
+                                    <span class="h-t-mcb-l-wm_span">у ч а с т н и к о в</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
@@ -170,7 +170,7 @@
                     <div class="a-dt_tr">
                         <div class="t_td">
                             <div class="a-tb">
-                                <div class="a-tb-tl">Механика игры</div>
+                                <div class="a-tb-tl">Механика<br/>игры</div>
                                 <div class="a-tb-dr"><?=$staticTexts['promo-game-mechanic'][$lang]->getText()?></div>
                                 <div class="a-tb-tr">
                                     <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
@@ -225,7 +225,7 @@
                     <div class="a-dt_tr">
                         <div class="t_td">
                             <div class="a-tb">
-                                <div class="a-tb-tl">отзывы игроков</div>
+                                <div class="a-tb-tl">отзывы<br/>игроков</div>
                                 <div class="a-tb-dr"><?=$staticTexts['promo-comments'][$lang]->getText()?></div>
                                 <div class="a-tb-tr">
                                     <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
@@ -310,6 +310,7 @@
         <footer id="slide4" class="display-slide">
             <div class="f-c-b">
                 <div class="a-dt-b">
+
                     <div class="a-dt_tr">
                         <div class="t_td">
                             <div class="f-tl-b">
@@ -329,7 +330,7 @@
                                         <textarea id="cti" class="i-b_ta" placeholder="Сообщение" value="" maxlength="600"></textarea>
                                     </div>
                                     <div class="m-m-b">
-                                        <input type="email" name="mail" class="mmb_input" placeholder="Ваш email" />
+                                        <input autocomplete="off" spellcheck="false" type="email" name="mail" class="mmb_input" placeholder="Ваш email" />
                                     </div>
                                     <input type="submit" value="Отправить" class="fb-f-s" />
                                 </form>
@@ -369,7 +370,7 @@
         <div class="login-popup" id="login-block">
             <div class="lp-b">
                 <div class="pu-b-c" id="lb-close"></div>
-                    <div class="b-m login" id="cl-check">
+                    <div class="b-m registration" id="cl-check">
                         <div class="rules-bk">
                             <div class="rb-cs-bt"></div>
                             <div class="rb-pg">
@@ -389,7 +390,7 @@
                                 <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан пароль, который вам понадобиться ввести при входе в слдующий раз</div>
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
-                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
                                 </div>
 
                                 <div class="ch-b">
@@ -407,11 +408,11 @@
                             <div id="login-form">
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
-                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
                                 </div>
                                 <div class="ib-p">
                                     <div class="ph">Пароль</div>
-                                    <input type="password" class="m_input" name="password"  placeholder="Пароль" />
+                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
                                 </div>
                                 <div class="ch-b-bk">
                                     <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
@@ -433,7 +434,7 @@
                                 <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан новый пароль, который позволит войти в профиль через форму входа.</div>
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
-                                    <input type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
                                 </div>
                                 <div class="s-b">
                                     <input type="submit" class="sb_but" value="Играть" />
