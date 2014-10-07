@@ -589,13 +589,27 @@ article .infos {padding:40px 20px 0 20px;}
 
 .chance .ch-lot-bk .game-bk .gm-tb.g-3x3 > li {width:148px;height:148px;margin:0 20px 20px 0;}
 .chance .ch-lot-bk .game-bk .gm-tb.g-3x3 > li:nth-child(3n+3) {margin-right:0;}
+.chance .ch-lot-bk .game-bk .gm-tb.g-4x4 > li {width:108px;height:108px;margin:0 16px 16px 0;}
+.chance .ch-lot-bk .game-bk .gm-tb.g-4x4 > li:nth-child(4n+4) {margin-right:0;}
+.chance .ch-lot-bk .game-bk .gm-tb.g-5x5 > li {width:88px;height:88px;margin:0 10px 10px 0;}
+.chance .ch-lot-bk .game-bk .gm-tb.g-5x5 > li:nth-child(5n+5) {margin-right:0;}
 
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb {position:absolute;top:0;left:0;width:490px;height:490px;display:table;}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.play {background-color:rgba(255, 255, 255, 0.5);}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.los {background-color:rgba(255, 255, 255, 0.7);}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won {background-color:rgba(255, 255, 255, 1);}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .td {display:table-cell;vertical-align:middle;text-align:center;}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .bt {height:50px;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;display:inline-block;}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.play .bt {width:110px;}
-.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .bt:hover {background-color:#000;color:#fff;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb .bt:hover {background-color:#000!important;color:#fff;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.los .los-msg {width:270px;background-color:#fff;font:15px/20px Handbook-bold;color:#a13b3b;padding:30px 0;margin:0 auto 20px auto;text-align:center;text-transform:uppercase;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.los .bt {width:270px;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .pz-ph {margin:0 auto 30px auto;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .pz-ph > img {width:210px;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .tl {color:#000;text-align:left;width:210px;margin:0 auto 65px auto;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .tl > span {font:20px/1 Handbook-regular;display:block;margin-bottom:8px;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .tl > b {font:25px/1 Handbook-bold;display:block;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .bt {width:208px;height:48px;border:1px solid #000;background-color:#fff;}
 
 
 /* ==========================================================================

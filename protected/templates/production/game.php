@@ -497,6 +497,261 @@
                 <div class="pr-br"><img src="/tpl/img/banner-profile.jpg" width="300" height="665" /></div>
                 <div class="b-cl-block"></div>
             </section>
+
+        <!--=====================================================================
+                                CHANCE BLOCK
+        ======================================================================-->
+        <section class="chance">
+        <div class="ch-br-bk"><img src="img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
+        <div class="ch-lot-bk">
+        <div class="sbk-tl-bk">
+        <div class="sbk-tl">игры</div>
+
+        <!-- CHASNE PREVIEW -->
+        <div class="ch-bk">
+            <div class="ch-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <div class="ch-gm-tbl">
+                <div class="td l">
+                    <ul class="gm-3x3 gm-bk">
+                        <li class="l"></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div class="gm-if-bk">
+                        <div class="l">Название<br/>этой игры</div>
+                        <div class="r"><b>600</b>баллов</div>
+                    </div>
+                    <div class="gm-bt">играть</div>
+                </div>
+                <div class="td c">
+                    <ul class="gm-4x4 gm-bk">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                        <li class="l"></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div class="gm-if-bk">
+                        <div class="l">Название<br/>этой игры</div>
+                        <div class="r"><b>600</b>баллов</div>
+                    </div>
+                    <div class="gm-bt">играть</div>
+                </div>
+                <div class="td r">
+                    <ul class="gm-5x5 gm-bk">
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li class="l"></li>
+                    </ul>
+                    <div class="gm-if-bk">
+                        <div class="l">Название<br/>этой игры</div>
+                        <div class="r"><b>600</b>баллов</div>
+                    </div>
+                    <div class="gm-bt">играть</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHASNE GAME -->
+        <div class="game-bk" style="display:none;">
+            <div class="l-bk">
+                <div class="rw-t">
+                    <div class="bk-bt"><spn>назад<br/>к другим играм</spn></div>
+                </div>
+                <div class="gm-if-bk">
+                    <div class="l">Название<br/>этой игры</div>
+                    <div class="r"><b>600</b>баллов</div>
+                </div>
+                <div class="l-bk-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
+                <div class="rw-b">
+                    <div class="tb">
+                        <div class="td l sel">
+                            <img src="img/preview/catalog-img-5.jpg" />
+                        </div>
+                        <div class="td c">
+                            <img src="img/preview/catalog-img-3.jpg" />
+                        </div>
+                        <div class="td r">
+                            <img src="img/preview/catalog-img-2.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gm-tb-bk">
+
+                <!-- Блок "ВЫИГРАЛ" -->
+                <div class="msg-tb won" style="display:none;">
+                    <div class="td">
+                        <div class="pz-ph">
+                            <img src="img/preview/catalog-img-5.jpg" />
+                        </div>
+                        <div class="tl">
+                            <span>Выигрыш</span>
+                            <b>Планшет Lenovo</b>
+                        </div>
+                        <div class="bt">получить</div>
+                    </div>
+                </div>
+
+                <!-- Кнопка "Играть" -->
+                <div class="msg-tb play">
+                    <div class="td">
+                        <div class="bt">играть</div>
+                    </div>
+                </div>
+
+                <!-- Кнопка "Проиграл, играть еще" -->
+                <div class="msg-tb los" style="display:none;">
+                    <div class="td">
+                        <div class="los-msg">В этот раз вы<br/>не выиграли</div>
+                        <div class="bt">играть еще раз за 600 баллов</div>
+                    </div>
+                </div>
+
+                <!-- Кнопка "Выиграл, играть еще" -->
+                <div class="msg-tb los" style="display:none;">
+                    <div class="td">
+                        <div class="bt">играть еще раз за 600 баллов</div>
+                    </div>
+                </div>
+
+                <!-- GAME 3x3 -->
+                <ul class="gm-tb g-3x3">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li class="won"></li>
+                    <li class="los"></li>
+                </ul>
+                <!-- END GAME 3x3 -->
+
+                <!-- GAME 4x4 -->
+                <ul class="gm-tb g-4x4" style="display:none;">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li class="won"></li>
+                    <li class="los"></li>
+                </ul>
+                <!-- END GAME 4x4 -->
+
+                <!-- GAME 5x5 -->
+                <ul class="gm-tb g-5x5" style="display:none;">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li class="won"></li>
+                    <li class="los"></li>
+                </ul>
+                <!-- END GAME 5x5 -->
+            </div>
+        </div>
+        </div>
+        </div>
+        </section>
+        <script>
+            $('.ch-gm-tbl .gm-bt').click(function(){
+                $(this).closest('.ch-bk').fadeOut(200);
+                setTimeout(function(){
+                    $('.game-bk').fadeIn(200);
+                }, 200);
+            });
+        </script>
+
+
+
+        <!--=====================================================================
+                                FOOTER BLOCK
+        ======================================================================-->
+        <footer>
+            <section class="fr-br-bk">
+                <img src="img/footer-banner.jpg" width="1280" height="135" />
+            </section>
+            <div class="fr-cnt-bk">
+                <a href="" class="ts-lk">Пользовательское соглашение</a>
+                <div class="ct-bk">
+                    <a href="" class="ct-sl fb"></a>
+                    <a href="" class="ct-sl vk"></a>
+                    <a href="" class="ct-sl gp"></a>
+                    <a href="" class="ct-sl tw"></a>
+                    <a href="mailto:play@lotzon.com" class="mail">play@lotzon.com</a>
+                </div>
+            </div>
+        </footer>
         </article>
 
     </div>
