@@ -1238,13 +1238,13 @@
                         <div class="sbk-tl">игры</div>
 
                         <!-- CHASNE PREVIEW -->
-                        <div class="ch-bk" style="display:none;">
+                        <div class="ch-bk">
                             <div class="ch-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
                             <div class="ch-gm-tbl">
                                 <div class="td l">
                                     <ul class="gm-3x3 gm-bk">
                                         <li class="l"></li>
-                                        <li></li>
+                                        <li class="l"></li>
                                         <li></li>
                                         <li></li>
                                         <li class="l"></li>
@@ -1319,10 +1319,10 @@
                                     <div class="gm-bt">играть</div>
                                 </div>
                             </div>
-                        </div style>
+                        </div>
 
                         <!-- CHASNE GAME -->
-                        <div class="game-bk">
+                        <div class="game-bk" style="display:none;">
                             <div class="l-bk">
                                 <div class="rw-t">
                                     <div class="bk-bt"><spn>назад<br/>к другим играм</spn></div>
@@ -1347,9 +1347,40 @@
                                 </div>
                             </div>
                             <div class="gm-tb-bk">
+
+                                <!-- Блок "ВЫИГРАЛ" -->
+                                <div class="msg-tb won" style="display:none;">
+                                    <div class="td">
+                                        <div class="pz-ph">
+                                            <img src="img/preview/catalog-img-5.jpg" />
+                                        </div>
+                                        <div class="tl">
+                                            <span>Выигрыш</span>
+                                            <b>Планшет Lenovo</b>
+                                        </div>
+                                        <div class="bt">получить</div>
+                                    </div>
+                                </div>
+
+                                <!-- Кнопка "Играть" -->
                                 <div class="msg-tb play">
                                     <div class="td">
                                         <div class="bt">играть</div>
+                                    </div>
+                                </div>
+
+                                <!-- Кнопка "Проиграл, играть еще" -->
+                                <div class="msg-tb los" style="display:none;">
+                                    <div class="td">
+                                        <div class="los-msg">В этот раз вы<br/>не выиграли</div>
+                                        <div class="bt">играть еще раз за 600 баллов</div>
+                                    </div>
+                                </div>
+
+                                <!-- Кнопка "Выиграл, играть еще" -->
+                                <div class="msg-tb los" style="display:none;">
+                                    <div class="td">
+                                        <div class="bt">играть еще раз за 600 баллов</div>
                                     </div>
                                 </div>
 
@@ -1366,11 +1397,73 @@
                                     <li class="los"></li>
                                 </ul>
                                 <!-- END GAME 3x3 -->
+
+                                <!-- GAME 4x4 -->
+                                <ul class="gm-tb g-4x4" style="display:none;">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li class="won"></li>
+                                    <li class="los"></li>
+                                </ul>
+                                <!-- END GAME 4x4 -->
+
+                                <!-- GAME 5x5 -->
+                                <ul class="gm-tb g-5x5" style="display:none;">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li class="won"></li>
+                                    <li class="los"></li>
+                                </ul>
+                                <!-- END GAME 5x5 -->
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            <script>
+                $('.ch-gm-tbl .gm-bt').click(function(){
+                    $(this).closest('.ch-bk').fadeOut(200);
+                    setTimeout(function(){
+                        $('.game-bk').fadeIn(200);
+                    }, 200);
+                });
+            </script>
+
+
+
         <!--=====================================================================
                                 FOOTER BLOCK
         ======================================================================-->
