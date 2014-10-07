@@ -1,4 +1,10 @@
 <?php    
+
+if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '193.239.152.37', '188.231.153.219', '212.90.61.122', '192.168.100.153', '212.42.94.154'))) {
+    header("Location: /index.html");
+
+    exit;
+}
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
