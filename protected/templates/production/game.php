@@ -602,7 +602,7 @@
         <div class="game-bk" style="display:none;">
             <div class="l-bk">
                 <div class="rw-t">
-                    <div class="bk-bt"><spn>назад<br/>к другим играм</spn></div>
+                    <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
                 </div>
                 <div class="gm-if-bk">
                     <div class="l">Название<br/>этой игры</div>
