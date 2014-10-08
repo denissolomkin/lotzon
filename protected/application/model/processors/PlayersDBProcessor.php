@@ -81,6 +81,7 @@ class PlayersDBProcessor implements IProcessor
         }
 
         $data = $sth->fetch();
+
         $player->formatFrom('DB', $data);
 
         return $player;
@@ -98,9 +99,38 @@ class PlayersDBProcessor implements IProcessor
         try {
             $res = DB::Connect()->query($sql);
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);      
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $res->fetchColumn(0);
+    }
+
+    public function getList($limit = 0, $offset = 0) 
+    {
+        $sql = "SELECT * FROM `Players`";
+
+        if ($limit) {
+            $sql .= ' LIMIT ' . (int)$limit;
+        }
+        if ($offset) {
+            $sql .= ' OFFSET ' . (int)$offset;
+        }
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        $players = array();
+        foreach ($res->fetchAll() as $playerData) {
+            $player = new Player();
+            $player->formatFrom('DB', $playerData);   
+
+            $players[] = $player;
+        }
+
+        return $players;
     }
 }

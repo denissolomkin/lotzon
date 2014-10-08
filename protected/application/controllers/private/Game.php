@@ -40,13 +40,16 @@ class Game extends \PrivateArea
 
             $settings = new GameSettings();
 
-            $totalSum = $this->request()->post('lotteryTotal', array());
-            $jackpots = $this->request()->post('isJackpot', array());
+            $totalSum = $this->request()->post('lotteryTotal', 0);
+            $jackpot = $this->request()->post('isJackpot', 0);
             $prizes = $this->request()->post('prizes', array());
             $lotteries = $this->request()->post('lotteries', array());
+            $coeficients = $this->request()->post('countryCoefficients', array());
 
-            foreach ($totalSum as $country => $sum) {
-                $settings->setTotalWinSum($country, $sum, (boolean)$jackpots[$country]);
+            $settings->setTotalWinSum($totalSum);
+            $settings->setJackpot($jackpot);
+            foreach ($coeficients as $country => $coof) {
+                $settings->setCountryCoefficient($country, $coof);
             }
 
             foreach ($prizes as $country => $prize) {

@@ -78,6 +78,19 @@ class ShopCategory extends Entity
         return $this;
     }
 
+    public function update() 
+    {
+        $this->validate('update');
+        try {
+            $model = $this->getModelClass();
+            $model::instance()->updateCategory($this);
+        }  catch (ModelException $e) {
+            throw new EntityException($e->getCode(), $e->getMessage());
+        }
+
+        return $this;
+    }
+
     public function validate($action, $params = array()) 
     {
         switch($action) {
@@ -90,6 +103,14 @@ class ShopCategory extends Entity
             case 'delete' :
                 if (!$this->getId()) {
                     throw new EntityException("Category id required", 400);   
+                }
+            break;
+            case 'update' :
+                if (!$this->getId()) {
+                    throw new EntityException("EMPTY_CATEGORY_ID", 400);
+                }
+                if ($this->getName()) {
+                    $this->setName(htmlspecialchars(strip_tags($this->getName())));  
                 }
             break;
             default :

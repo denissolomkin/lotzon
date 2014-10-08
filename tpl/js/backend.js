@@ -164,3 +164,24 @@ function loadNews(offset, successFunction, failFunction, errorFunction) {
        }
     });      
 }
+
+function createItemOrder(order, successFunction, failFunction, errorFunction) 
+{
+    $.ajax({
+        url: "/order/item/",
+        method: 'POST',
+        data: order,
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call(order, data);
+            } else {
+                failFunction.call(order, data);
+            }
+        },
+        error: function() {
+            errorFunction.call(order, data);
+       }
+    });   
+}

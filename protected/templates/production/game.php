@@ -220,7 +220,7 @@
                                     <? if ($i == $pager) { 
                                         break;
                                     } ?>
-                                    <li class="pz-cg_li">
+                                    <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
                                                 <span>ограниченное количество</span>

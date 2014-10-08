@@ -37,22 +37,22 @@
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Город / Село / Поселок</div>
-                            <input type="text" name="nick" placeholder="Город / Село / Поселок">
+                            <input type="text" name="city" placeholder="Город / Село / Поселок">
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Адрес</div>
-                            <input type="text" name="nick" placeholder="Адрес" maxlength="40">
+                            <input type="text" name="addr" placeholder="Адрес" maxlength="40">
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Телефон</div>
-                            <input type="tel" name="nick" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон" maxlength="40">
+                            <input type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон" maxlength="40">
                         </div>
                     </div>
                     <div class="pz-ifo-bt">получить приз</div>
                 </div>
 
                 <!-- Prize report block -->
-                <div class="pz-rt-bk"><?=$staticTexts['prizes-popup-success'][$lang]->getText()?></div>
+                <div class="pz-rt-bk" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>"></div>
             </section>
         </div>
     </div>

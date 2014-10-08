@@ -141,4 +141,28 @@ class LotteriesModelDBProcessor implements IProcessor
 
         return $lotteries;
     }
+
+    public function getPlayerHistory($playerId, $limit, $offset) 
+    {
+        $sql = "SELECT * FROM `PlayerLotteryWins` WHERE `PlayerId` = :plid ORDER BY `Date` DESC";
+
+        if (!empty($limit)) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        if (!empty($offset)) {
+            $sql .= " OFFSET " . (int)$offset;   
+        }
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ", 500);
+        }
+
+        $lotteriesData = $sth->fetchAll();
+
+        return $lotteriesData;
+    }
 }

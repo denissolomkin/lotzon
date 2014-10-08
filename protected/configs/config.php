@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '',
+    'password' => '1234',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -99,6 +99,9 @@ Config::instance()->privateResources =  array(
     '/private/shop/addCategory/' => array(
         'post'    => 'controllers\admin\Shop:addCategory',
     ),
+    '/private/shop/renameCategory/' => array(
+        'post'    => 'controllers\admin\Shop:renameCategory',
+    ),
     '/private/shop/deleteCategory/' => array(
         'delete'    => 'controllers\admin\Shop:deleteCategory',
     ),
@@ -109,7 +112,11 @@ Config::instance()->privateResources =  array(
         'post'    => 'controllers\admin\Shop:addItem',
         'delete'  => 'controllers\admin\Shop:deleteItem',
     ),
-    '/private/users'        => 'controllers\admin\ComingSoon:index',
+    '/private/shop/updateItem/' => array(
+        'post'    => 'controllers\admin\Shop:updateItem',
+    ),
+    '/private/users'        => 'controllers\admin\Users:index',
+    '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
     '/private/monetisation' => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
@@ -134,7 +141,8 @@ Config::instance()->publicResources = array(
     '/game/lastLottery/'  => 'controllers\production\Game:lastLottery',
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
-    '/content/news/'      => 'controllers\production\ContentController:news'
+    '/content/news/'      => 'controllers\production\ContentController:news',
+    '/order/item/'        => 'controllers\production\OrdersController:orderItem'
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';

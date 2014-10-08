@@ -28,10 +28,11 @@
                     $currentCategory = $category->getId();
                 }
                 ?>
-                <button onclick="document.location.href='/private/shop/category/<?=$category->getId()?>'" class="btn btn-md btn-default<?=($currentCategory == $category->getId() ? ' active' : '')?>"><?=$category->getName()?></button>    
+                <button onclick="document.location.href='/private/shop/category/<?=$category->getId()?>'" class="btn btn-md category-btn btn-default<?=($currentCategory == $category->getId() ? ' active' : '')?>"><?=$category->getName()?></button>    
             <? $fst = false;} ?>
         </div> 
         <button class="btn btn-md btn-success add-category"><i class="glyphicon glyphicon-plus"></i></button>
+        <button class="btn btn-md btn-warning rename-category">Переименовать</button>
     </div>
     <div class="row-fluid">&nbsp;</div>
 
@@ -39,12 +40,12 @@
         <div class="col-md-2">
             <div class="thumbnail" data-id="<?=$item->getId()?>">
                 <img src="/filestorage/shop/<?=$item->getImage()?>" alt="...">
-                <div class="caption clearfix">
+                <div class="caption clearfix" data-title="<?=$item->getTitle()?>" data-price="<?=$item->getPrice()?>" data-quantity="<?=$item->getQuantity()?>">
                     <h4><?=$item->getTitle()?></h4>
                     <span><?=$item->getPrice()?>/<?=($item->getQuantity() ? $item->getQuantity() : "&infin;")?></span>
                     <div class="btn-group pull-right">
-                        <!-- button class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-eye-close"></i></button -->
+                        <button class="btn btn-warning btn-sm item-edit"><i class="glyphicon glyphicon-edit"></i></button>
+                        <!-- button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-eye-close"></i></button -->
                         <button class="btn btn-danger btn-sm item-remove"><i class="glyphicon glyphicon-remove"></i></button>
                     </div>
                 </div>            
@@ -72,7 +73,7 @@
                 <input type="text" name="title" class="form-control input-sm" placeholder="Название товара" value="" />
                 <div class="form-inline" style="margin-top:10px;">
                     <input style="width:40%" type="text" name="price" class="form-control input-sm" value="" placeholder="Цена" /> / 
-                    <input style="width:30%" type="text" name="quantity" class="form-control input-sm" value="" placeholder="К-во" />
+                    <input style="width:25%" type="text" name="quantity" class="form-control input-sm" value="" placeholder="К-во" />
                     <button class="btn btn-sm btn-success pull-right save"><i class="glyphicon glyphicon-ok"></i>
                 </div>
             </div>            
@@ -134,6 +135,47 @@
             button.off('click').on('click', showAddCategoryInput);
         })
     }
+    $('.rename-category').on('click', function() {
+        var input = $('<input class="form-control input-md" value="'+$('.category-btn.active').text()+'" style="width:200px;" placeholder="Название категории">');
+        var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
+        var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
+        var button = $(this);
+
+        input.insertBefore(button);
+        sccButton.insertBefore(button);
+        cnlButton.insertBefore(button);
+        button.hide();
+
+        cnlButton.on('click', function() {
+            input.remove();
+            sccButton.remove();
+            cnlButton.remove();
+            button.show();
+        });
+
+        sccButton.on('click', function() {
+            $.ajax({
+            url: "/private/shop/renameCategory",
+            method: 'POST',
+            data: {
+                newName: input.val(),
+                categoryId: '<?=$currentCategory?>',
+            },
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    document.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            }, 
+            error: function() {
+                alert('Unexpected server error');
+           }
+        });
+        });
+    });
 
     var currentItem = {
         categoryId: '<?=$currentCategory?>',
@@ -272,5 +314,40 @@
             });
         });
     });
+
+    $('.item-edit').on('click', function() {
+        var title = $(this).parents('.caption').data('title');
+        var price =  $(this).parents('.caption').data('price');
+        var quantity = $(this).parents('.caption').data('quantity');
+        var form = $('<input type="text" name="title" class="form-control input-sm" placeholder="Название товара" value="'+title+'" /><div class="form-inline" style="margin-top:10px;"><input style="width:35%" type="text" name="price" class="form-control input-sm" value="'+price+'" /> / <input style="width:30%" type="text" name="quantity" class="form-control input-sm" value="'+quantity+'" /><button class="btn btn-sm btn-success pull-right update-item"><i class="glyphicon glyphicon-ok"></i></div>');
+        $(this).parents('.caption').removeClass('clearfix').html(form);
+
+        form.find('.update-item').on('click', function() {
+            var data = {
+                id: $(this).parents('.thumbnail').data('id'),
+                title: $(this).parents('.caption').find('input[name="title"]').val(),
+                price: $(this).parents('.caption').find('input[name="price"]').val(),
+                quantity: $(this).parents('.caption').find('input[name="quantity"]').val(),
+            }
+            
+            $.ajax({
+                url: "/private/shop/updateItem",
+                method: 'POST',
+                data: data,
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        document.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function() {
+                    alert('Unexpected server error');
+               }
+            });
+        });
+    })
 
 </script>

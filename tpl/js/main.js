@@ -1,3 +1,4 @@
+var currentShowedItem = 0;
 $(function(){
 
     /* ==========================================================================
@@ -305,10 +306,15 @@ $(function(){
     $('.shop-category-items li').on('click', showItemDetails);
 
     function showItemDetails() {
+        currentShowedItem = $(this).data('itemId');
+
         $('#shop-items-popup').find('.item-preview').attr('src', $(this).find('.im-ph img').attr('src'));
         $('#shop-items-popup').find('.item-title').text($(this).find('.im-tl').text());
-        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());
+        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());        
         $('#shop-items-popup').fadeIn(200);
+        $('.pz-ifo-bk').show();
+        $('.pz-fm-bk').hide();
+        $('.pz-rt-bk').hide();
     }
 
 
@@ -318,8 +324,29 @@ $(function(){
     });
 
     $('.pz-fm-bk .pz-ifo-bt').on('click', function(){
-        $('.pz-fm-bk').hide();
-        $('.pz-rt-bk').show();
+        form = $(this).parent().find('.fm-inps-bk');
+        var order = {
+            itemId: currentShowedItem,
+            name: form.find('input[name="name"]').val(),
+            surname: form.find('input[name="surname"]').val(),
+            phone: form.find('input[name="phone"]').val(),
+            region: form.find('input[name="region"]').val(),
+            city: form.find('input[name="city"]').val(),
+            addr: form.find('input[name="addr"]').val(),
+        }
+
+        createItemOrder(order, function(data){
+            $('.pz-fm-bk').hide();
+
+            var text = $('.pz-rt-bk').data('default');
+            $('.pz-rt-bk').text(text).show();
+        }, function(data){
+            if (data.message == 'INSUFFICIENT_FUNDS') {
+                $('.pz-fm-bk').hide();
+                $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();    
+            }
+        }, function(){})
+
     });
 
     /* ==========================================================================
