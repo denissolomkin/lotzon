@@ -148,7 +148,7 @@ class Shop extends PrivateArea
         $image = $image->crop("center", "center", ShopItem::IMAGE_WIDTH, ShopItem::IMAGE_HEIGHT);
         
         $imageName = uniqid() . ".jpg";
-        $image->saveToFile(PATH_FILESTORAGE .  'shop/' . $imageName, 80);
+        $image->saveToFile(PATH_FILESTORAGE .  'shop/' . $imageName, 100);
 
         $data = array(
             'imageName' => $imageName,
@@ -156,5 +156,63 @@ class Shop extends PrivateArea
         );
 
         die(json_encode($data));
+    }
+
+    public function renameCategoryAction()
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            $categoryId = $this->request()->post('categoryId');
+            $newName    = $this->request()->post('newName');
+
+            $category = new ShopCategory();
+
+            $category->setId($categoryId);
+            $category->setName($newName);
+
+            try {
+                $category->update();
+            } catch (\EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
+    public function updateItemAction()
+    {
+        if ($this->request()->isAjax()) {
+             $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            $item = new ShopItem();
+            
+            $item->setId($this->request()->post('id'))
+                 ->setTitle($this->request()->post('title'))
+                 ->setPrice($this->request()->post('price'))
+                 ->setQuantity($this->request()->post('quantity'));
+
+            try {
+                $item->update();
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        } 
+
+        $this->redirect('/private/');   
     }
 }

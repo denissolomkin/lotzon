@@ -51,13 +51,13 @@
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">участников<br/>за все время</div>
+                            <div class="tl">всего<br/>участников</div>
                             <b class="n"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">общая сумма выигрышей в гривнах<br/>выплаченных за все время</div>
+                            <div class="tl">общая сумма выигранных денег<br/>за все время</div>
                             <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?></b>
                         </div>
                     </div>
@@ -91,8 +91,8 @@
                     <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="javascript:void(0)">призы</a></li>
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="javascript:void(0)">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
-                    <li id="profile-but" data-href="profile"  class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
-                    <li class="tn-mbk_li">игры</li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">игры</a></li>
                     <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
@@ -121,7 +121,7 @@
                     <section class="tickets">
                         <? if (count($tickets) < 5) { ?>
                             <ul class="tb-tabs">
-                            <? $fst = true; 
+                            <? $fst = true;
                                $ttickets = $tickets;
                             ?>
                             <? for ($i = 1; $i <= 5; ++$i) { ?>
@@ -143,7 +143,7 @@
                                     } ?>
                                     <div class="tb-slide" id="tb-slide<?=$i?>">
                                         <ul class="tb-loto-tl">
-                                            <? for ($j = 1; $j <= 49; ++$j) { ?>                                            
+                                            <? for ($j = 1; $j <= 49; ++$j) { ?>
                                                 <li class="loto-tl_li loto-<?=$j?><?=(count($nums) && in_array($j, $nums) ? ' select' : '')?>"><?=$j?></li>
                                             <? } ?>
                                         </ul>
@@ -168,14 +168,14 @@
                                 <? } ?>
                             </div>
                             <div class="atd-bk">
-                                
+
                                 <div class="atd-txt-bk">
                                     <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
-                            </div>                            
+                            </div>
                         <? } else { ?>
-                            <div class="atd-bk" style="display:block">                                
+                            <div class="atd-bk" style="display:block">
                                 <ul class="yr-tb">
                                     <? for ($i = 1; $i <= 5; ++$i) { ?>
                                         <? $ticket = array_shift($tickets);
@@ -187,8 +187,8 @@
                                                     <li class="yr-tt-tr_li"><?=$num?></li>
                                                 <? } ?>
                                             </ul>
-                                        </li>    
-                                    <? } ?>                            
+                                        </li>
+                                    <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
                                     <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
@@ -207,9 +207,9 @@
                             <ul class="pz-nav">
                                 <? $fst = true; ?>
                                 <? foreach ($shop as $category) {?>
-                                    <li data-id="<?=$category->getId()?>" class="shop-category pz-nav_li<?=($fst ? " now" : "");?>"><?=$category->getName()?></li>    
+                                    <li data-id="<?=$category->getId()?>" class="shop-category pz-nav_li<?=($fst ? " now" : "");?>"><?=$category->getName()?></li>
                                     <? $fst = false; ?>
-                                <? } ?>                                
+                                <? } ?>
                             </ul>
                             <? $fst = true; ?>
                             <? foreach ($shop as $category) { ?>
@@ -217,10 +217,10 @@
                                 <? $pager = controllers\production\Index::SHOP_PER_PAGE ?>
                                 <? $i = 0 ?>
                                 <? foreach ($category->getItems() as $item) { ?>
-                                    <? if ($i == $pager) { 
+                                    <? if ($i == $pager) {
                                         break;
                                     } ?>
-                                    <li class="pz-cg_li">
+                                    <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
                                                 <span>ограниченное количество</span>
@@ -267,7 +267,7 @@
                                     <div class="wt-t">
                                         <?=$staticTexts['main-rules'][$lang]->getText()?>
                                     </div>
-                                </div>                               
+                                </div>
                                 <ul class="c-r">
                                     <? for ($i = 6; $i >= 1; --$i) { ?>
                                         <li class="c-r_li">
@@ -280,7 +280,7 @@
                                                 <? } ?>
                                             </ul>
                                             <div class="tb-t"><?=$gameInfo['lotteryWins'][$i]['sum']?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
-                                        </li>    
+                                        </li>
                                     <? } ?>
                                 </ul>
                                 <div class="b-cl-block"></div>
@@ -318,7 +318,7 @@
         <!--=====================================================================
                                 PROFILE BLOCK
         ======================================================================-->
-            <section class="profile" style="margin-bottom:150px;">
+            <section class="profile">
                 <div class="p-bk">
                     <div class="p-tl-bk">
                         <div class="p-tl-nm">кабинет</div>
@@ -333,7 +333,7 @@
                                 <li class="ul_li" data-link="profile-info">информация</li>
                             </ul>
                             <div class="p-stat-bk">
-                                <div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div>
+                                <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
@@ -342,6 +342,13 @@
                                     <div class="ifo"><b><?=number_format($player->getMoney(), 0, '.', ' ')?></b>гривен на счету</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
+                                <div class="st-hy-bt"><span>история транзакций</span></div>
+                                <script>
+                                    //КНОПКА ВЫЗОВА ИСТОРИИ ТРАНЗАКЦИЙ
+                                    $('.st-hy-bt').on('click', function(){
+                                        $('#ta-his-popup').fadeIn(200);
+                                    });
+                                </script>
                             </div>
                         </aside>
 
@@ -389,7 +396,7 @@
                                     <div class="if-tl">Пригласить друга в проект и получить 10 баллов</div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
-                                            <input type="email" placeholder="Email друга" />
+                                            <input type="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
                                         </div>
                                         <div class="if-bt">пригласить</div>
                                     </div>
@@ -429,27 +436,27 @@
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk error">
                                             <div class="ph">Такой ник уже занят</div>
-                                            <input maxlength="40" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
+                                            <input autocomplete="off" spellcheck="false" maxlength="40" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Фамилия</div>
-                                            <input maxlength="40" type="text" name="surname" value="<?=$player->getSurname()?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="40" type="text" name="surname" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Имя</div>
-                                            <input maxlength="40" type="text" name="name" value="<?=$player->getName()?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="40" type="text" name="name" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Телефон</div>
-                                            <input maxlength="40" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="40" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Дата рождения</div>
-                                            <input maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="40" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Пароль</div>
-                                            <input maxlength="40" placeholder="йа твой пароль" type="password" name="password"  />
+                                            <input autocomplete="off" spellcheck="false" maxlength="40" placeholder="йа твой пароль" type="password" name="password"  />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -466,14 +473,14 @@
                                                         <li>
                                                             <i></i>
                                                             <span><?=$num?></span>
-                                                        </li>    
+                                                        </li>
                                                     <? } ?>
                                                 <? } else { ?>
                                                     <? for ($i = 1; $i <= 6; ++$i) { ?>
                                                         <li>
                                                             <i></i>
                                                             <span></span>
-                                                        </li>    
+                                                        </li>
                                                     <? } ?>
                                                 <? } ?>
                                             </ul>
@@ -755,15 +762,10 @@
         </article>
 
     </div>
-<? include('popups.php') ?>
-<script>
-    $('#hr-io-slider').slick({
-        dots: true,
-        arrows : false
-    });
-</script>
+
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
+        <? include('popups.php') ?>
     <script>
         var playerFavorite = [];
         <? foreach ($player->getFavoriteCombination() as $num) { ?>
@@ -792,8 +794,8 @@
             //if(ios || ie == 'msie 11' || ie == 'msie 10' || ie == 'msie 9')$('html').addClass('font-fix');
 
             $("#countdownHolder").countdown({
-                until: (<?=($gameInfo['nextLottery'])?>), 
-                layout: '{hnn}:{mnn}:{snn}',
+                until: (<?=($gameInfo['nextLottery'])?>),
+                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}',
                 onExpiry: showGameProccessPopup
             });
         });

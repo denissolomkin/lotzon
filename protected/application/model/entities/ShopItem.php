@@ -3,8 +3,8 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class ShopItem extends Entity 
 {
-    const IMAGE_WIDTH = 231;
-    const IMAGE_HEIGHT = 231;
+    const IMAGE_WIDTH = 230;
+    const IMAGE_HEIGHT = 230;
 
     private $_id       = 0;
     private $_category = null;
@@ -118,7 +118,7 @@ class ShopItem extends Entity
 
     public function update()
     {
-        $this->validate('udpate');
+        $this->validate('update');
         try {
             $model = $this->getModelClass();
             $model::instance()->updateItem($this);
@@ -142,6 +142,19 @@ class ShopItem extends Entity
         return true;
     }
 
+    public function fetch()
+    {
+        $this->validate('fetch');
+        try {
+            $model = $this->getModelClass();
+            $model::instance()->fetchItem($this);
+        }  catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+        }
+    
+        return $this;        
+    }
+
     public function validate($action, $params = array()) 
     {
         switch($action) {
@@ -155,16 +168,15 @@ class ShopItem extends Entity
                 if (!$this->getPrice()) {
                     throw new EntityException("Price can't be empty", 1);
                 }
-                if (!$this->getImage()) {
-                    $this->setVisibility(false);
-                }
-                if (!$this->getCategory()->getId()) {
-                    throw new EntityException("invalid category link", 400);
-                }
             break;
             case 'delete' :
                 if (!$this->getId()) {
                     throw new EntityException("Category id required", 400);   
+                }
+            break;
+            case 'fetch' :
+                if (!$this->getId()) {
+                    throw new EntityException("EMPTY_ITEM_ID", 400);
                 }
             break;
             default :

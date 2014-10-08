@@ -22,4 +22,9 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->getPlayersCount();
     }
+
+    public function getList($limit = 0, $offset = 0)
+    {
+        return $this->getProcessor()->getList($limit, $offset);
+    }
 }

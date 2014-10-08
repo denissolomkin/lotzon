@@ -7,8 +7,10 @@ class GameSettings
 
     private $_model = null;
 
+    private $_countryCoefficients = array();
     private $_countryPrizes = array();
-    private $_countryTotals = array();
+    private $_total = 0;
+    private $_jackpot = false;
     private $_gameTimes = array(); 
 
     public function __construct() 
@@ -17,12 +19,37 @@ class GameSettings
     }
 
 
-    public function setTotalWinSum($country, $sum, $jackpot = false)
+    public function setTotalWinSum($sum)
     {
-        $this->_countryTotals[$country]['sum'] = $sum;
-        $this->_countryTotals[$country]['isJackpot'] = $jackpot;
+        $this->_total = $sum;
 
         return $this;
+    }
+
+    public function getTotalWinSum()
+    {   
+        return $this->_total;
+    }
+
+    public function setJackpot($jackpot)
+    {
+        $this->_jackpot = $jackpot;
+    }
+
+    public function getJackpot()
+    {
+        return $this->_jackpot;
+    }
+
+    public function setCountryCoefficient($country, $coof) {
+        $this->_countryCoefficients[$country] = $coof;
+
+        return $this;
+    }
+
+    public function getCountryCoefficient($country)
+    {
+        return @$this->_countryCoefficients[$country];
     }
 
     public function setPrizes($country, array $prizes)
@@ -50,15 +77,6 @@ class GameSettings
         }
 
         return $this;
-    }
-
-    public function getTotalWinSum($country = null)
-    {   
-        if (!empty($country)) {
-            return !empty($this->_countryTotals[$country]) ? $this->_countryTotals[$country] : array();
-        }
-
-        return $this->_countryTotals;
     }
 
     public function getPrizes($country = null)

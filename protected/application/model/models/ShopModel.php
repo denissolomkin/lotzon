@@ -23,6 +23,10 @@ class ShopModel extends Model
         return $this->getProcessor()->createCategory($category);
     }
 
+    public function updateCategory($category) {
+        return $this->getProcessor()->updateCategory($category);   
+    }
+
     public function deleteCategory($category)
     {
         return $this->getProcessor()->deleteCategory($category);
@@ -41,6 +45,11 @@ class ShopModel extends Model
     public function updateItem($item) 
     {
         return $this->getProcessor()->updateItem($item);   
+    }
+
+    public function fetchItem($item)
+    {
+        return $this->getProcessor()->fetchItem($item);      
     }
 
     public function loadShop()

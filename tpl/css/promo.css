@@ -122,7 +122,7 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 .h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
 .h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
-.h-b-c-bhg {display:block;float:right;width:80px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-bold;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
+.h-b-c-bhg {display:block;float:right;width:85px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-bold;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
 .h-b-c-bhg_span {position:relative;left:2px;}
 
 
@@ -305,7 +305,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 
 .login-popup .lp-b .s-b {}
 .login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
-.login-popup .lp-b .s-b .sb_but:hover {border-color:#000;color:#000;}
+.login-popup .lp-b .s-b .sb_but:hover {border-color:#000;background-color:#000;color:#ffe400;}
 
 
 .error .ib-l, .error .ib-p {color:#c51e1e!important;border-color:#c51e1e!important;}
