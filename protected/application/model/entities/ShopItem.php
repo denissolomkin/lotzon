@@ -3,8 +3,8 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class ShopItem extends Entity 
 {
-    const IMAGE_WIDTH = 230;
-    const IMAGE_HEIGHT = 230;
+    const IMAGE_WIDTH = 210;
+    const IMAGE_HEIGHT = 210;
 
     private $_id       = 0;
     private $_category = null;

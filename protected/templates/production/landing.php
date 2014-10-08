@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="h-t-mcb-l-wm">
                                     <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
-                                    <span class="h-t-mcb-l-wm_span">у ч а с т н и к о в</span>
+                                    <span class="h-t-mcb-l-wm_span">УЧАСТHИКОВ</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
