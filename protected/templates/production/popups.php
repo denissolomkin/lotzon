@@ -14,38 +14,38 @@
                     <div class="pz-tl-bk">
                         <div class="pz-tl item-title">Кикерный стол</div>
                         <div class="pz-ps"><b class="item-price">2000</b> баллов</div>
-                        <div class="px-des"><?=$staticTexts['prizes-popup-text'][$lang]->getText()?> </div>
+                        <div class="px-des"><?=$staticTexts['prizes-popup-text'][$lang]->getText();?> </div>
                         <div class="pz-ifo-bt">обменять</div>
                     </div>
                 </div>
 
                 <!-- Prize info block -->
                 <div class="pz-fm-bk">
-                    <div class="fm-txt"><?=$staticTexts['prizes-order-popup'][$lang]->getText()?></div>
+                    <div class="fm-txt"><?=$staticTexts['prizes-order-popup'][$lang]->getText();?></div>
                     <div class="fm-inps-bk">
                         <div class="pi-inp-bk">
                             <div class="ph">Фамилия</div>
-                            <input type="text" name="surname" value="<?=$player->getSurname();?>">
+                            <input autocomplete="off" spellcheck="false" type="text" name="surname" value="<?=$player->getSurname();?>">
                         </div>
                         <div class="pi-inp-bk">
                             <div class="ph">Имя</div>
-                            <input type="text" name="name" value="<?=$player->getName();?>">
+                            <input autocomplete="off" spellcheck="false" type="text" name="name" value="<?=$player->getName();?>">
                         </div>
                         <div class="pi-inp-bk">
                             <div class="ph">Область</div>
-                            <input type="text" name="region">
+                            <input autocomplete="off" spellcheck="false" type="text" name="region">
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Город / Село / Поселок</div>
-                            <input type="text" name="city" placeholder="Город / Село / Поселок">
+                            <input autocomplete="off" spellcheck="false" type="text" name="city" placeholder="Город / Село / Поселок">
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Адрес</div>
-                            <input type="text" name="addr" placeholder="Адрес" maxlength="40">
+                            <input autocomplete="off" spellcheck="false" type="text" name="addr" placeholder="Адрес" maxlength="40">
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Телефон</div>
-                            <input type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон" maxlength="40">
+                            <input autocomplete="off" spellcheck="false" type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон" maxlength="40">
                         </div>
                     </div>
                     <div class="pz-ifo-bt">получить приз</div>
@@ -217,15 +217,15 @@
                         <form>
                             <div class="inp-bk">
                                 <div class="ph">Номер</div>
-                                <input type="text" placeholder="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
                             </div>
                             <div class="inp-bk">
                                 <div class="ph">Имя Фамилия</div>
-                                <input type="text" placeholder="Имя Фамилия (латиницей)" name="name" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия (латиницей)" name="name" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
                             </div>
                             <div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -242,11 +242,11 @@
                         <form>
                             <div class="inp-bk">
                                 <div class="ph">Номер телефона</div>
-                                <input type="tel" placeholder="Номер телефона в международном формате" name="phone" data-type="phone" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="Номер телефона в международном формате" name="phone" data-type="phone" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
                             </div>
                             <div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -279,11 +279,11 @@
                             </div>
                             <div class="inp-bk">
                                 <div class="ph">Номер кошелька</div>
-                                <input type="text" placeholder="Номер кошелька" name="card-number" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер кошелька" name="card-number" data-type="number" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
                             </div>
                             <div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -300,19 +300,19 @@
                         <form>
                             <div class="inp-bk">
                                 <div class="ph">Номер счета</div>
-                                <input type="text" placeholder="Номер счета" name="card-number" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер счета" name="card-number" data-type="number" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input type="text" placeholder="Сумма" data-type="number" name="summ" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" name="summ" class="m_input">
                             </div>
                             <div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
-                                <input type="file" class="f_input" name="file" />
+                                <input autocomplete="off" spellcheck="false" type="file" class="f_input" name="file" />
                             </div>
                             <div class="s-b">
-                                <input type="submit" value="вывести" class="sb_but">
+                                <input autocomplete="off" spellcheck="false" type="submit" value="вывести" class="sb_but">
                             </div>
                         </form>
                     </section>
@@ -322,15 +322,15 @@
                         <form>
                             <div class="inp-bk">
                                 <div class="ph">Номер карты</div>
-                                <input type="text" placeholder="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
                             </div>
                             <div class="inp-bk">
                                 <div class="ph">Имя Фамилия</div>
-                                <input type="text" placeholder="Имя Фамилия" name="name" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия" name="name" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input type="text" placeholder="Сумма" data-type="number" name="summ" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" name="summ" class="m_input">
                             </div>
                             <div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -493,9 +493,9 @@
 
 
 <!--=========================================================================
-                            PRIZES POPUP CODE
+                            TRANSACTIONS HISTORY POPUP CODE
 ==========================================================================-->
-<div class="wt-pp-bk popup" id="shop-items-popup">
+<div class="wt-pp-bk popup" id="ta-his-popup">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="cash-history pop-box">
