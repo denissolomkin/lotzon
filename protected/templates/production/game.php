@@ -500,9 +500,6 @@
                 </div>
                 <div class="pr-br"><img src="/tpl/img/banner-profile.jpg" width="300" height="665" /></div>
                 <div class="b-cl-block"></div>
-            </section>            
-            <section class="banner100">
-                <img src="/tpl/img/banner2.jpg" width="970" height="135" />
             </section>
         <!--=====================================================================
                                 CHANCE BLOCK
