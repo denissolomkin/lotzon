@@ -133,7 +133,7 @@ article {width: 940px;margin:auto;}
 article #slide2, article #slide3 {position:relative;}
 article .a-dt-b, footer .a-dt-b {display:table;width:100%;height:100%;}
 article .a-dt-b .a-dt_tr, footer .a-dt-b .a-dt_tr {display:table-row;}
-article .a-dt-b .a-dt_tr .t_td, footer .a-dt-b .a-dt_tr .t_td {display:table-cell;height:100px;width:100%;vertical-align:bottom;}
+article .a-dt-b .a-dt_tr .t_td, footer .a-dt-b .a-dt_tr .t_td {display:table;height:100px;width:100%;vertical-align:bottom;}
 article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-cell;width:100%;vertical-align:middle;}
 
 
@@ -146,11 +146,12 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 
 .a-tbl {overflow:hidden;position:relative;}
 .a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}
-.a-tbl .l_ul .n_li {overflow:hidden;margin-bottom:40px;}
+.a-tbl .l_ul .n_li {margin-bottom:40px;display:table;width:100%;}
 .a-tbl .l_ul .n_li:last-child {margin:0;}
-.a-tbl .l_ul .n_li .n {width:70px;height:70px;background-color:#ffe719;float:left;text-align:center;font:47px/70px Handbook-bold;color:#000;margin-top:5px;}
+.a-tbl .l_ul .n_li .n {width:70px;display:table-cell;vertical-align:middle;}
+.a-tbl .l_ul .n_li .n > b {width:70px;height:70px;background-color:#ffe719;text-align:center;font:47px/70px Handbook-bold;color:#000;display:inline-block;}
 .font-fix .a-tbl .l_ul .n_li .n {margin-top:2px;}
-.a-tbl .l_ul .n_li .t {margin:0px 45px 0 91px;font:18px/19px Handbook-regular;}
+.a-tbl .l_ul .n_li .t {padding:0px 45px 0 20px;font:18px/19px Handbook-regular;display:table-cell;vertical-align:middle;}
 .a-tbl .r_ul {margin:0 0 0 470px;padding:0;list-style:none;}
 .a-tbl .r_ul .r_li {margin-bottom:30px;overflow:hidden;}
 .a-tbl .r_ul .r_li:last-child {margin-bottom:0;}
@@ -180,10 +181,11 @@ article #slide3 ._a-b-b {display:block;width:80px;height:40px;position:absolute;
    ========================================================================== */
 footer {background-color:#ffe400;overflow:hidden;}
 footer .f-c-b {width:940px;margin:auto;height:100%;position:relative;zoom:1;}
-footer .f-c-b .f-tl-b {overflow:hidden;}
-footer .f-c-b .f-tl-b .tl-tl {width:120px;margin-right:41px;font:19px/20px Handbook-regular;text-transform:uppercase;float:left;padding-top:7px;}
-footer .f-c-b .f-tl-b .tl-tt {float:left;font: 18px/19px Handbook-regular;padding-top:7px;width:525px;}
-footer .f-c-b .f-tl-b .tl-bt {color:#000;display:block;float:right;font:17px/50px Handbook-bold;height:48px;letter-spacing:1px;text-align:center;text-decoration:none;text-transform:uppercase;width:218px;border:1px solid #000;}
+footer .f-c-b .f-tl-b {overflow:hidden;display:table-row;}
+footer .f-c-b .f-tl-b .tl-tl {width:120px;margin-right:41px;font:19px/20px Handbook-regular;text-transform:uppercase;padding-top:7px;display:table-cell;vertical-align:bottom;}
+footer .f-c-b .f-tl-b .tl-tt {font: 18px/19px Handbook-regular;width:525px;display:table-cell;vertical-align:bottom;}
+footer .f-c-b .f-tl-b .tl-tr {font: 18px/19px Handbook-regular;display:table-cell;text-align:right;vertical-align:bottom;}
+footer .f-c-b .f-tl-b .tl-bt {color:#000;display:block;font:17px/50px Handbook-bold;height:48px;letter-spacing:1px;text-align:center;text-decoration:none;text-transform:uppercase;width:218px;border:1px solid #000;margin:0 0 0 auto;}
 footer .f-c-b .f-tl-b .tl-bt.ct-on {color:#ffe400;border:none;width:220px;height:50px;background-color:#000;}
 footer .fb-f-b {margin:-2% auto 0 auto;width:620px;position:relative;display:none;left:-5000px;
     -webkit-transition: all 200ms cubic-bezier(0.785, 0.135, 0.15, 0.86);;
@@ -332,7 +334,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 #game-won {background:url("../img/bg-game-popup-win.jpg") no-repeat 0 0 ;width:100%;height:100%;display:none;}
 .g-pup-cnt .b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
 .g-pup-cnt .g-oc-b {list-style:none;margin:0;padding:0;overflow:hidden;height:103px;}
-.g-pup-cnt .g-oc-b .g-oc_li {width:100px;height:100px;background-color:#ffe400;border-radius:50%;margin-right:30px;float:left;font:50px/100px Handbook-bold;color:#8f8e8e;text-align:center;letter-spacing:-2px;box-shadow:inset 2px 2px 1px 0px rgba(20, 20, 20, 0.4), 0 2px 1px 0 rgba(255,255,255,0.6);z-index:10;}
+.g-pup-cnt .g-oc-b .g-oc_li {width:105px;height:105px;margin-right:25px;float:left;font:50px/100px Handbook-bold;color:#8f8e8e;text-align:center;letter-spacing:-2px;position:relative;overflow:hidden;}
 .font-fix .g-pup-cnt .g-oc-b .g-oc_li {line-height:110px;}
 .g-pup-cnt .g-oc-b .g-oc_li .g-oc_span {display:inline-block;position:relative;left:-2px;}
 .g-pup-cnt .gw-c-b {margin:57px 100px 0 0;}
@@ -377,22 +379,19 @@ input:-ms-input-placeholder {color:#8d7d00;}
 #game-process .gp-bz {position:absolute;top:10px;right:20px;max-width:300px;max-height:685px;}
 
 #game-process .g-oc-b {list-style:none;margin:0;padding:0;overflow:hidden;height:103px;}
-#game-process .g-oc-b .g-oc_li.goc-tm {margin-right:30px;float:left;font:50px/100px Handbook-bold; background:transparent url("../img/bg-bame-number.png") no-repeat center;color:#8f8e8e;overflow:hidden;position:relative;box-shadow:0 2px 1px 0 rgba(255,255,255,0.6);}
-#game-process .g-oc-b .g-oc_li.goc-tm .goc_li-nb {background-color:#ffe400;width:100px;height:100px;border-radius:50%;text-align:center;letter-spacing:-2px;position:absolute;left:0;top:0;z-index:1;
-
-}
-#game-process .g-oc-b .g-oc_li .goc_li-nb {
+/*#game-process .g-oc-b .g-oc_li.goc-tm {margin-right:30px;float:left;font:50px/100px Handbook-bold; background:transparent url("../img/bg-bame-number.png") no-repeat center;color:#8f8e8e;overflow:hidden;position:relative;box-shadow:0 2px 1px 0 rgba(255,255,255,0.6);}*/
+#game-process .g-oc-b .g-oc_li .goc_li-nb {background-color:#ffe400;width:100px;height:100px;border-radius:50%;text-align:center;letter-spacing:-2px;position:absolute;left:0;top:0;z-index:2;
     -webkit-transition: all 1250ms ease;
     -moz-transition: all 1250ms ease;
     -ms-transition: all 1250ms ease;
     -o-transition: all 1250ms ease;
     transition: all 1250ms ease;
-    -moz-transform:rotate(-90deg) translate(-50px, -100px);
-    -webkit-transform:rotate(-90deg) translate(-50px, -100px);
-    -o-transform:rotate(-90deg) translate(-50px, -100px);
-    -ms-transform:rotate(-90deg) translate(-50px, -100px);
-    transform:rotate(-90deg) translate(-50px, -100px);
+    -webkit-transform:rotate(-90deg) translate(-20px, -21px);
+    -o-transform:rotate(-90deg) translate(-20px, -21px);
+    -ms-transform:rotate(-90deg) translate(-20px, -21px);
+    transform:rotate(-90deg) translate(-20px, -21px);
 }
+
 #game-process .g-oc-b .g-oc_li .goc_li-nb.goc-nb-act {-moz-transform:rotate(0) translateX(0) translateY(0);
     -webkit-transform:rotate(0) translateX(0) translateY(0);
     -o-transform:rotate(0) translateX(0) translateY(0);
@@ -400,6 +399,9 @@ input:-ms-input-placeholder {color:#8d7d00;}
     transform:rotate(0) translate(0, 0);
 }
 
-#game-process .g-oc-b .g-oc_li.goc-tm .goc_li-sh {display:block;width:100px;height:100px;border-radius:50%;box-shadow:inset 2px 2px 1px 0px rgba(20, 20, 20, 0.4);position:absolute;top: 0;left:0;z-index:5;}
-#game-process .g-oc-b .g-oc_li .goc_li-sh {display:none;}
+#game-process .g-oc-b .g-oc_li .goc_li-sh2 {width:105px;height:105px;position:absolute;top: 0;left:0;z-index:3;background:url("../img/bg-gis-1.png") no-repeat 0 0;}
+#game-process .g-oc-b .g-oc_li .goc_li-sh {width:105px;height:105px;position:absolute;top: 0;left:0;z-index:1;background:url("../img/bg-bame-number.png") no-repeat 0 0;}
+
+
+
 #game-process .g-oc-b .g-oc_li .g-oc_span {display:inline-block;position:relative;left:-2px;}

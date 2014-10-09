@@ -429,41 +429,47 @@
                 <div class="gp-bz"><img src="/tpl/img/banner.jpg" width="300" height="685" /></div>
 
                 <ul class="g-oc-b">
-                    <li class="g-oc_li goc-tm">
+                    <li class="g-oc_li">
                         <div class="goc_li-nb">
                             <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
+                        <div class="goc_li-sh2"></div>
                     </li>
-                    <li class="g-oc_li goc-tm">
+                    <li class="g-oc_li">
                         <div class="goc_li-nb">
                             <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh "></div>
+                        <div class="goc_li-sh2"></div>
                     </li>
-                    <li class="g-oc_li goc-tm">
+                    <li class="g-oc_li">
                         <div class="goc_li-nb">
                             <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
+                        <div class="goc_li-sh2"></div>
                     </li>
-                    <li class="g-oc_li goc-tm">
+                    <li class="g-oc_li">
                         <div class="goc_li-nb">
                             <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
+                        <div class="goc_li-sh2"></div>
                     </li>
-                    <li class="g-oc_li goc-tm">
+                    <li class="g-oc_li">
                         <div class="goc_li-nb">
                             <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
+                        <div class="goc_li-sh2"></div>
                     </li>
-                    <li class="g-oc_li goc-tm">
+                    <li class="g-oc_li">
                         <div class="goc_li-nb">
                             <span class="g-oc_span unfilled"></span>
                         </div>
                         <div class="goc_li-sh"></div>
+                        <div class="goc_li-sh2"></div>
                     </li>
                 </ul>
                 <div class="gw-c-b">

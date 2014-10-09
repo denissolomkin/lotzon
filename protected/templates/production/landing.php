@@ -183,19 +183,19 @@
                             <div class="a-tbl">
                                 <ul class="l_ul">
                                     <li class="n_li">
-                                        <div class="n">1</div>
+                                        <div class="n"><b>1</b></div>
                                         <div class="t"><?=$staticTexts['promo-game-mechanic-1'][$lang]->getText()?></div>
                                     </li>
                                     <li class="n_li">
-                                        <div class="n">2</div>
+                                        <div class="n"><b>2</b></div>
                                         <div class="t"><?=$staticTexts['promo-game-mechanic-2'][$lang]->getText()?></div>
                                     </li>
                                     <li class="n_li">
-                                        <div class="n">3</div>
+                                        <div class="n"><b>3</b></div>
                                         <div class="t"><?=$staticTexts['promo-game-mechanic-3'][$lang]->getText()?></div>
                                     </li>
                                     <li class="n_li">
-                                        <div class="n">4</div>
+                                        <div class="n"><b>4</b></div>
                                         <div class="t"><?=$staticTexts['promo-game-mechanic-4'][$lang]->getText()?></div>
                                     </li>
                                 </ul>
@@ -316,7 +316,7 @@
                             <div class="f-tl-b">
                                 <div class="tl-tl">наши партнеры</div>
                                 <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
-                                <a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a>
+                                <div class="tl-tr"><a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a></div>
                             </div>
                         </div>
                     </div>

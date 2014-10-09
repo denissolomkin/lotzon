@@ -345,7 +345,7 @@ $(function(){
             phone: form.find('input[name="phone"]').val(),
             region: form.find('input[name="region"]').val(),
             city: form.find('input[name="city"]').val(),
-            addr: form.find('input[name="addr"]').val(),
+            addr: form.find('input[name="addr"]').val()
         }
 
         createItemOrder(order, function(data){
@@ -469,6 +469,15 @@ $(function(){
     //if (!$(event.target).closest(".pop-box").length){
       //  $('.popup').fadeOut(200);
     //};
+
+    $('section.profile .p-bk').on('click', function(event){
+        if (!$(event.target).closest(".fc-nrch-bk").length && !$(event.target).closest(".fc-nbs-bk").length){
+            $(".fc-nbs-bk").fadeOut(200);
+            $('.fc-nrch-bk li').removeClass('on');
+
+        };
+    })
+
     $('.fc-nrch-bk li').on('click', function(){
         if(!$(this).hasClass('on')){
             $('.fc-nrch-bk li').removeClass('on');
@@ -489,7 +498,7 @@ $(function(){
             var n = $(this).text();
             $('.fc-nrch-bk li.on span').text(n);
             $(this).addClass('dis');
-            $('.fc-nbs-bk').hide();
+            $('.fc-nbs-bk').fadeOut(200);
             $('.fc-nrch-bk li.on').removeClass('on');
         }
     });
@@ -764,9 +773,6 @@ function proccessResult()
                     li.find('.goc_li-nb').addClass('goc-nb-act');
                     spn.removeClass('unfilled');
                     $("#game-process").find('li[data-num="' + ball + '"]').addClass('won')
-                    setTimeout(function(){
-                        li.removeClass('goc-tm');
-                    }, 1000);
                 }
             }, 1000);
         }

@@ -18,7 +18,7 @@ class PlayersDBProcessor implements IProcessor
                 ':cc'       => $player->getCountry(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);            
+            throw new ModelException("Error processing storage query", 500);
         }
 
         $player->setId(DB::Connect()->lastInsertId());
