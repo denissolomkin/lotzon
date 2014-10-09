@@ -70,7 +70,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <? foreach ($lotteries as $lottery) { ?>
-                                <div class="tl">прошлый розыгрыш<br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <div class="tl">розыгрыш от<br/><?=date('d.m.Y', $lottery->getDate())?></div>
                                 <ul class="rt-bk">
                                     <? foreach ($lottery->getCombination() as $num) { ?>
                                         <li class="rt-bk_li"><?=$num?></li>
@@ -92,7 +92,7 @@
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="javascript:void(0)">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
                     <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">игры</a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">Шансы</a></li>
                     <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
@@ -151,7 +151,13 @@
                                             <? if (count($nums) != 6) { ?>
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">A</li>
-                                                <li class="loto-tl_li heart ticket-favorite"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
+                                                <li class="loto-tl_li heart ticket-favorite false">
+                                                    <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
+                                                    <div class="after">
+                                                        <b>любимая комбинация</b>
+                                                        <span>Настраивается в <i>профиле</i></span>
+                                                    </div>
+                                                </li>
                                             </ul>
                                             <? } ?>
                                             <div class="tb-st-bk">
@@ -170,7 +176,7 @@
                             <div class="atd-bk">
 
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
+                                    <div class="ttl">все 5 билетов подверждены и приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
                             </div>
@@ -191,7 +197,7 @@
                                     <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
+                                    <div class="ttl">все 5 билетов подверждены и приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
                             </div>
@@ -279,7 +285,7 @@
                                                     <li class="tb_li"></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="tb-t"><?=$gameInfo['lotteryWins'][$i]['sum']?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                            <div class="tb-t"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -468,20 +474,11 @@
                                             </div>
                                             <div class="fc-tl">любимая комбинация</div>
                                             <ul class="fc-nrch-bk">
-                                                <? if (count($player->getFavoriteCombination())) { ?>
-                                                    <? foreach ($player->getFavoriteCombination() as $num) { ?>
-                                                        <li>
-                                                            <i></i>
-                                                            <span><?=$num?></span>
-                                                        </li>
-                                                    <? } ?>
-                                                <? } else { ?>
-                                                    <? for ($i = 1; $i <= 6; ++$i) { ?>
-                                                        <li>
-                                                            <i></i>
-                                                            <span></span>
-                                                        </li>
-                                                    <? } ?>
+                                                <? for ($i=0; $i<6;++$i) {?>
+                                                    <li>
+                                                        <i></i>
+                                                        <span><?=(isset($player->getFavoriteCombination()[$i]) ? $player->getFavoriteCombination()[$i] : '')?></span>
+                                                    </li>
                                                 <? } ?>
                                             </ul>
                                         </div>
@@ -503,8 +500,10 @@
                 </div>
                 <div class="pr-br"><img src="/tpl/img/banner-profile.jpg" width="300" height="665" /></div>
                 <div class="b-cl-block"></div>
+            </section>            
+            <section class="banner100">
+                <img src="/tpl/img/banner2.jpg" width="970" height="135" />
             </section>
-
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
@@ -512,7 +511,7 @@
         <div class="ch-br-bk"><img src="/tpl/img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
-        <div class="sbk-tl">игры</div>
+        <div class="sbk-tl">шансы</div>
 
         <!-- CHASNE PREVIEW -->
         <div class="ch-bk">
@@ -534,7 +533,7 @@
                         <div class="l">Название<br/>этой игры</div>
                         <div class="r"><b>600</b>баллов</div>
                     </div>
-                    <div class="gm-bt">играть</div>
+                    <div class="gm-bt">подробнее</div>
                 </div>
                 <div class="td c">
                     <ul class="gm-4x4 gm-bk">
@@ -559,7 +558,7 @@
                         <div class="l">Название<br/>этой игры</div>
                         <div class="r"><b>600</b>баллов</div>
                     </div>
-                    <div class="gm-bt">играть</div>
+                    <div class="gm-bt">подробнее</div>
                 </div>
                 <div class="td r">
                     <ul class="gm-5x5 gm-bk">
@@ -593,7 +592,7 @@
                         <div class="l">Название<br/>этой игры</div>
                         <div class="r"><b>600</b>баллов</div>
                     </div>
-                    <div class="gm-bt">играть</div>
+                    <div class="gm-bt">подробнее</div>
                 </div>
             </div>
         </div>
@@ -749,7 +748,7 @@
                 <img src="/tpl/img/footer-banner.jpg" width="1280" height="135" />
             </section>
             <div class="fr-cnt-bk">
-                <a href="" class="ts-lk">Пользовательское соглашение</a>
+                <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Пользовательское соглашение</a>
                 <div class="ct-bk">
                     <a href="" class="ct-sl fb"></a>
                     <a href="" class="ct-sl vk"></a>

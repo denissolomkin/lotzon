@@ -370,6 +370,7 @@
                     <div class="yr-b">
                         <ul class="yr-tb">
                         </ul>
+                        <div class="gw-sep"></div>
                         <div class="yr-b-fb"><?=$staticTexts['game-popup-win'][$lang]->getText()?></div>
                     </div>
                     <div class="yr-s-i">
@@ -590,3 +591,23 @@
         </div>
     </div>
 </div>
+
+
+<!--=========================================================================
+                            CASH POPUP CODE
+==========================================================================-->
+
+<div class="bl-pp-bk popup" id="terms">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="rules-bk">
+                <div class="cs"></div>
+                <div class="rb-pg">
+                    <h2>правила<br/>игры</h2>
+                    <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
