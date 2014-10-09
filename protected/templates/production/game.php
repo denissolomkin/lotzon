@@ -230,7 +230,7 @@
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
                                         <div class="im-tl"><?=$item->getTitle()?></div>
                                         <div class="im-bn">
-                                            <b><?=$item->getPrice()?></b>
+                                            <b><?=number_format($item->getPrice(), 0, '.', ' ')?></b>
                                             <span>обменять на баллов</span>
                                         </div>
                                     </li>
