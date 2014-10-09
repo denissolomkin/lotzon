@@ -96,9 +96,7 @@ class Players extends \AjaxController
                    ->setVisibility($this->request()->post('visible', false));
                 $favs = $this->request()->post('favs', array());
 
-                if (count($favs) == 6) {
-                    $player->setFavoriteCombination($favs);
-                } 
+                $player->setFavoriteCombination($favs);
 
                 $player->update();
 

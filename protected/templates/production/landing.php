@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="h-t-mcb-l-wm">
                                     <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
-                                    <span class="h-t-mcb-l-wm_span">УЧАСТHИКОВ</span>
+                                    <span class="h-t-mcb-l-wm_span">участников</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
@@ -91,7 +91,7 @@
                                 </div>
                                 <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть<br/> и выигрывать</span></a>
                                 <div class="h-b-c-lg">
-                                    <div class="h-b-c-lg-t">последний<br/>розыгрыш <?=date('d.m.Y')?></div>
+                                    <div class="h-b-c-lg-t">розыгрыш от <?=date('d.m.Y')?></div>
                                     <ul class="h-b-c-lg_ul">
                                         <li class="h-b-c-lg_ul_li">0</li>
                                         <li class="h-b-c-lg_ul_li">0</li>
@@ -210,7 +210,7 @@
                                                     <li class="i_li"></li>
                                                 <? } ?>
                                             </ul>
-                                        <div class="ri-e"><?=$gameInfo['lotteryWins'][$i]['sum']?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                        <div class="ri-e"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                     </li>    
                                     <? } ?>
                                 </ul>
@@ -374,7 +374,7 @@
                         <div class="rules-bk">
                             <div class="rb-cs-bt"></div>
                             <div class="rb-pg">
-                                <h2>правила<br/>игры</h2>
+                                <h2>правила<br/>участия</h2>
                                 <?=$staticTexts['promo-login-rules'][$lang]->getText()?>                                
                             </div>
                         </div>
@@ -396,7 +396,7 @@
                                 <div class="ch-b">
                                     <div class="e-t"></div>
                                     <input type="checkbox" id="rulcheck" hidden />
-                                    <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами игры</a></label>
+                                    <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
                                 </div>
                                 <div class="s-b">
                                     <input type="submit" class="sb_but" value="Играть" />

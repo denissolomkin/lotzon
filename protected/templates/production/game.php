@@ -70,7 +70,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <? foreach ($lotteries as $lottery) { ?>
-                                <div class="tl">прошлый розыгрыш<br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <div class="tl">розыгрыш от<br/><?=date('d.m.Y', $lottery->getDate())?></div>
                                 <ul class="rt-bk">
                                     <? foreach ($lottery->getCombination() as $num) { ?>
                                         <li class="rt-bk_li"><?=$num?></li>
@@ -170,7 +170,7 @@
                             <div class="atd-bk">
 
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
+                                    <div class="ttl">все 5 билетов подверждены и приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                                     <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подвержденыи приняты к розыгрышу</div>
+                                    <div class="ttl">все 5 билетов подверждены и приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
                             </div>
@@ -279,7 +279,7 @@
                                                     <li class="tb_li"></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="tb-t"><?=$gameInfo['lotteryWins'][$i]['sum']?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                            <div class="tb-t"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -468,20 +468,11 @@
                                             </div>
                                             <div class="fc-tl">любимая комбинация</div>
                                             <ul class="fc-nrch-bk">
-                                                <? if (count($player->getFavoriteCombination())) { ?>
-                                                    <? foreach ($player->getFavoriteCombination() as $num) { ?>
-                                                        <li>
-                                                            <i></i>
-                                                            <span><?=$num?></span>
-                                                        </li>
-                                                    <? } ?>
-                                                <? } else { ?>
-                                                    <? for ($i = 1; $i <= 6; ++$i) { ?>
-                                                        <li>
-                                                            <i></i>
-                                                            <span></span>
-                                                        </li>
-                                                    <? } ?>
+                                                <? for ($i=0; $i<6;++$i) {?>
+                                                    <li>
+                                                        <i></i>
+                                                        <span><?=(isset($player->getFavoriteCombination()[$i]) ? $player->getFavoriteCombination()[$i] : '')?></span>
+                                                    </li>
                                                 <? } ?>
                                             </ul>
                                         </div>
@@ -503,8 +494,10 @@
                 </div>
                 <div class="pr-br"><img src="/tpl/img/banner-profile.jpg" width="300" height="665" /></div>
                 <div class="b-cl-block"></div>
+            </section>            
+            <section class="banner100">
+                <img src="/tpl/img/banner2.jpg" width="970" height="135" />
             </section>
-
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
@@ -534,7 +527,7 @@
                         <div class="l">Название<br/>этой игры</div>
                         <div class="r"><b>600</b>баллов</div>
                     </div>
-                    <div class="gm-bt">играть</div>
+                    <div class="gm-bt">подробнее</div>
                 </div>
                 <div class="td c">
                     <ul class="gm-4x4 gm-bk">
@@ -559,7 +552,7 @@
                         <div class="l">Название<br/>этой игры</div>
                         <div class="r"><b>600</b>баллов</div>
                     </div>
-                    <div class="gm-bt">играть</div>
+                    <div class="gm-bt">подробнее</div>
                 </div>
                 <div class="td r">
                     <ul class="gm-5x5 gm-bk">
@@ -593,7 +586,7 @@
                         <div class="l">Название<br/>этой игры</div>
                         <div class="r"><b>600</b>баллов</div>
                     </div>
-                    <div class="gm-bt">играть</div>
+                    <div class="gm-bt">подробнее</div>
                 </div>
             </div>
         </div>

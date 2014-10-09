@@ -49,7 +49,7 @@ class ShopModel extends Model
 
     public function fetchItem($item)
     {
-        return $this->getProcessor()->fetchItem($item);      
+        return $this->getProcessor()->fetchItem($item);
     }
 
     public function loadShop()

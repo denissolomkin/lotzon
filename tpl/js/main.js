@@ -236,7 +236,6 @@ $(function(){
                 button.closest('.tb-slide').find('.ticket-favorite').off('click');
                 button.closest('.tb-slide').find('.loto-tl_li').off('click');
                 filledTickets.push(combination);
-                console.log(filledTickets.length);
                 if (filledTickets.length == 5) {
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';
@@ -450,7 +449,6 @@ $(function(){
         $('.profile aside li').removeClass('now');
         $(this).addClass('now');
         $('.profile ._section').hide();
-        console.log($('.'+link));
         $('.'+link).show();
     });
 
@@ -534,7 +532,7 @@ $(function(){
         if (data.res.lotteries) {
             for (var i in data.res.lotteries) {
                 var lottery = data.res.lotteries[i];
-                html += '<li class="lot-container'+(onlyMineLotteryResults ? " win" : '')+'"><div class="dt">' + lottery.date + '</div><ul class="ht-ct">';
+                html += '<li class="lot-container'+(onlyMineLotteryResults || lottery.iPlayed ? " win" : '')+'"><div class="dt">' + lottery.date + '</div><ul class="ht-ct">';
                 $(lottery.combination).each(function(d, num) {
                     html += '<li>' + num + '</li>';
                 });
@@ -774,7 +772,7 @@ function proccessResult()
                     spn.removeClass('unfilled');
                     $("#game-process").find('li[data-num="' + ball + '"]').addClass('won')
                 }
-            }, 1000);
+            }, 5000);
         }
     }, function(){}, function(){});
 }
