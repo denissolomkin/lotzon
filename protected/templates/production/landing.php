@@ -167,7 +167,7 @@
         <article>
             <section id="slide2" class="display-slide">
                 <div class="a-dt-b">
-                    <div class="a-dt_tr">
+                    <div class="a-dt_tr top">
                         <div class="t_td">
                             <div class="a-tb">
                                 <div class="a-tb-tl">Механика<br/>игры</div>
@@ -222,7 +222,7 @@
             </section>
             <section id="slide3" class="display-slide">
                 <div class="a-dt-b">
-                    <div class="a-dt_tr">
+                    <div class="a-dt_tr top">
                         <div class="t_td">
                             <div class="a-tb">
                                 <div class="a-tb-tl">отзывы<br/>игроков</div>
