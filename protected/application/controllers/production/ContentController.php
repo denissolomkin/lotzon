@@ -24,8 +24,15 @@ class ContentController extends \AjaxController
         $offset = $this->request()->get('offset');
         $onlyMine = $this->request()->get('onlyMine', false);
         try {
+
             if (!$onlyMine) {
-                $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(Index::LOTTERIES_PER_PAGE, $offset);    
+                $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(Index::LOTTERIES_PER_PAGE, $offset);
+                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId());
+                foreach ($playerLotteries as $lottery) {
+                    if (isset($lotteries[$lottery->getId()])) {
+                        $lotteries[$lottery->getId()]->playerPlayed = true;
+                    }
+                }
             } else {
                 $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId(), Index::LOTTERIES_PER_PAGE, $offset);    
             }
@@ -44,6 +51,7 @@ class ContentController extends \AjaxController
                     'date'         => $lottery->getDate('d.m.Y'),
                     'combination'  => $lottery->getCombination(),
                     'winnersCount' => $lottery->getWinnersCount(),
+                    'iPlayed'      => $lottery->playerPlayed,
                 );
             }
         }

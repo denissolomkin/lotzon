@@ -12,6 +12,8 @@ class Lottery extends Entity
 
     private $_ready = false;
 
+    public $playerPlayed = false;
+
 
     public function init()
     {
