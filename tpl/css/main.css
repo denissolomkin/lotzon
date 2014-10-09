@@ -188,14 +188,20 @@ article .wings {}
 .tb-slides .tb-slide {width:750px;display:none;}
 .tb-slides .tb-slide:first-child {display:block;}
 .tb-slides .tb-slide .tb-loto-tl {list-style:none;margin:40px 0 0 40px;padding:0;font-size:0;}
-.tb-slides .tb-slide .loto-tl_li {width:40px;height:40px;float:left;border-radius:50%;box-shadow:inset 1px 2px 1px 0 rgba(0, 0, 0, 0.4), 0px 2px 1px 0 rgba(255, 255, 255, 0.6);background-color:#e9f2f4;font:17px/42px Handbook-bold;color:#8f8e8e;text-align:center;margin:0 30px 20px 0;cursor:pointer;
+.tb-slides .tb-slide .loto-tl_li {width:40px;height:40px;float:left;border-radius:50%;box-shadow:inset 1px 2px 1px 0 rgba(0, 0, 0, 0.4), 0px 2px 1px 0 rgba(255, 255, 255, 0.6);background-color:#e9f2f4;font:17px/42px Handbook-bold;color:#8f8e8e;text-align:center;margin:0 30px 20px 0;cursor:pointer;position:relative;
     -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.font-fix .tb-slides .tb-slide .loto-tl_li {line-height:46px;}
+.tb-slides .tb-slide .ticket-random:hover:after {content:"случайное автозаполнение";display:block;white-space:nowrap;position:absolute;top:14px;left:140px;color:#4c4c4c;font:15px/1 Handbook-bold;text-transform:uppercase;}
+.tb-slides .tb-slide .ticket-favorite .after {display:none;position:absolute;top:10px;left:70px;color:#4c4c4c;font:15px/1 Handbook-bold;text-align:left;display:none;}
+.tb-slides .tb-slide .ticket-favorite.false:hover .after {display:block;}
+.tb-slides .tb-slide .ticket-favorite .after > b {white-space:nowrap;display:block;text-transform:uppercase;}
+.tb-slides .tb-slide .ticket-favorite .after > span {white-space:nowrap;display:block;color:#fff;font:15px/1 Handbook-regular;}
+.tb-slides .tb-slide .ticket-favorite .after > span > i {color:#c51e1e;font:normal 15px/1 Handbook-regular;}
+
 .tb-slides .tb-slide .loto-tl_li.select {background-color:#ffe400;color:#4c4c4c;}
 .tb-slides .tb-slide .bm-pl {}
 .tb-fs-tl {list-style:none;margin:0 0 0 40px;padding:10px 0 0 0;float:left;}
@@ -834,6 +840,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .gpc-pad {padding:61px 0 0 170px;}
 
 #game-won, #game-end, #game-process {height:720px;width:1280px;}
+#game-won .b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
 
 #game-won {background:url("../img/bg-game-popup-win.jpg") no-repeat 0 0 ;display:none;position:relative;margin:auto;}
 #game-itself.b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
@@ -846,6 +853,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 #game-won .gw-c-b .yr-b {float:left;width:620px;}
 #game-end .gw-c-b .yr-b {float:left;width:560px;}
 .yr-tb {list-style:none;margin:0;padding:0;}
+#game-won .gw-sep {height:50px;}
 .yr-tb .yr-tt {margin-bottom:28px;overflow:hidden;zoom:1;font:15px/1 Handbook-bold;text-transform:uppercase;padding-bottom:2px;}
 .yr-tb .yr-tt:last-child {margin-bottom:0;}
 .yr-tb .yr-tt .yr-tt-tn {color:#4c4c4c;float:left;width:90px;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);padding:13px 0 0 0;}
@@ -856,7 +864,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .font-fix .yr-tb .yr-tt .yr-tt-tr .yr-tt-tr_li.won {line-height:42px;}
 .yr-tb .yr-tt .yr-tt-tr .yr-tt-tr_li:last-child {margin:0;}
 .yr-tb .yr-tt .yr-tt-tc {margin-left:20px;float:left;padding-top:13px;}
-#game-won .yr-b .yr-b-fb {font:13px/15px Handbook-regular;background:transparent url("../img/game-block-footer-logo.png") no-repeat left center;padding:0 0 0 140px;margin-top:50px;}
+#game-won .yr-b .yr-b-fb {font:13px/15px Handbook-regular;background:transparent url("../img/game-block-footer-logo.png") no-repeat left center;padding:5px 0 8px 140px;display:table-cell;vertical-align:middle;}
 #game-end .yr-b .yr-b-fb, #game-process .yr-b .yr-b-fb {background:transparent url("../img/game-block-footer-logo.png") no-repeat left center;margin-top:50px;width:102px;height:28px;}
 #game-won .gw-c-b .yr-s-i {float:right;width:280px;margin-top:175px;}
 #game-end .gw-c-b .yr-s-i {float:left;width:450px;font:18px/20px Handbook-regular;margin-top:-5px;}
@@ -907,3 +915,15 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 #game-process .g-oc-b .g-oc_li .goc_li-sh2 {width:105px;height:105px;position:absolute;top: 0;left:0;z-index:3;background:url("../img/bg-gis-1.png") no-repeat 0 0;}
 #game-process .g-oc-b .g-oc_li .goc_li-sh {width:105px;height:105px;position:absolute;top: 0;left:0;z-index:1;background:url("../img/bg-bame-number.png") no-repeat 0 0;}
 #game-process .g-oc-b .g-oc_li .g-oc_span {display:inline-block;position:relative;left:-2px;}
+
+
+/* ==========================================================================
+                            Terms-popup styles
+   ========================================================================== */
+.rules-bk {width:620px;position:relative;background-color:#fff;margin:auto;}
+.rules-bk .rb-cs-bt {width:30px;height:30px;background:url("../img/bg-but-close-rules.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
+.rules-bk .rb-pg {padding:35px 60px;color:#000;}
+.rules-bk .rb-pg > h2 {margin:0 0 60px 0;padding:0;font:19px/20px Handbook-bold;text-transform:uppercase;}
+.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-bold;text-transform:uppercase;}
+.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-regular;}
+.rules-bk .rb-pg > p:last-child {margin:0;}

@@ -92,7 +92,7 @@
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="javascript:void(0)">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
                     <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">игры</a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">Шансы</a></li>
                     <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
@@ -151,7 +151,13 @@
                                             <? if (count($nums) != 6) { ?>
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">A</li>
-                                                <li class="loto-tl_li heart ticket-favorite"><img src="/tpl/img/ticket-heart-but.png" width="16" height="14"></li>
+                                                <li class="loto-tl_li heart ticket-favorite false">
+                                                    <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
+                                                    <div class="after">
+                                                        <b>любимая комбинация</b>
+                                                        <span>Настраивается в <i>профиле</i></span>
+                                                    </div>
+                                                </li>
                                             </ul>
                                             <? } ?>
                                             <div class="tb-st-bk">
@@ -505,7 +511,7 @@
         <div class="ch-br-bk"><img src="/tpl/img/preview/wings-banner-right2.jpg" width="300" height="600" /></div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
-        <div class="sbk-tl">игры</div>
+        <div class="sbk-tl">шансы</div>
 
         <!-- CHASNE PREVIEW -->
         <div class="ch-bk">
@@ -742,7 +748,7 @@
                 <img src="/tpl/img/footer-banner.jpg" width="1280" height="135" />
             </section>
             <div class="fr-cnt-bk">
-                <a href="" class="ts-lk">Пользовательское соглашение</a>
+                <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Пользовательское соглашение</a>
                 <div class="ct-bk">
                     <a href="" class="ct-sl fb"></a>
                     <a href="" class="ct-sl vk"></a>
