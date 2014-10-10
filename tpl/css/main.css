@@ -293,6 +293,7 @@ article .infos {padding:40px 20px 0 20px;}
 .infos .i-lbk {width:570px;float:left;}
 .infos .i-lbk .i-v-bk {width:100%;height:320px;margin-bottom:40px;}
 .rules {background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);height:400px;}
+.rules b {font-family:Handbook-bold!important;}
 .rules .rules-ct {padding:27px 40px 0 40px;overflow:hidden;}
 .rules .rules-ct .win-tbl {}
 .rules .rules-ct .win-tbl .c-l {width:280px;float:left;margin-right:20px;}
