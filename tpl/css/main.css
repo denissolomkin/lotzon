@@ -196,8 +196,8 @@ article .wings {}
     transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .tb-slides .tb-slide .ticket-random:hover:after {content:"случайное автозаполнение";display:block;white-space:nowrap;position:absolute;top:14px;left:140px;color:#4c4c4c;font:15px/1 Handbook-bold;text-transform:uppercase;}
-.tb-slides .tb-slide .ticket-favorite .after {display:none;position:absolute;top:10px;left:70px;color:#4c4c4c;font:15px/1 Handbook-bold;text-align:left;display:none;}
-.tb-slides .tb-slide .ticket-favorite.false:hover .after {display:block;}
+.tb-slides .tb-slide .ticket-favorite .after {display:none;position:absolute;top:8px;left:40px;color:#4c4c4c;font:15px/1 Handbook-bold;text-align:left;display:none;padding-left:30px;}
+
 .tb-slides .tb-slide .ticket-favorite .after > b {white-space:nowrap;display:block;text-transform:uppercase;}
 .tb-slides .tb-slide .ticket-favorite .after > span {white-space:nowrap;display:block;color:#fff;font:15px/1 Handbook-regular;}
 .tb-slides .tb-slide .ticket-favorite .after > span > i {color:#c51e1e;font:normal 15px/1 Handbook-regular;}

@@ -151,9 +151,9 @@
                                             <? if (count($nums) != 6) { ?>
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">A</li>
-                                                <li class="loto-tl_li heart ticket-favorite false">
+                                                <li class="loto-tl_li heart ticket-favorite">
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
-                                                    <div class="after">
+                                                    <div class="after" data-href="profile">
                                                         <b>любимая комбинация</b>
                                                         <span>Настраивается в <i>профиле</i></span>
                                                     </div>
