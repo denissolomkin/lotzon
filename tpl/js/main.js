@@ -166,6 +166,12 @@ $(function(){
                 $(this).addClass('select');
                 $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
                 $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+            }else{
+                if($(this).find('.after:hidden').length){
+                    $(this).find('.after').show();
+                }else{
+                    $(this).find('.after').hide();
+                }
             }
         } else {
             $(this).parents('.tb-slide').find('li.select').removeClass('select');
@@ -181,15 +187,6 @@ $(function(){
         }
 
     });
-
-    $('.ticket-favorite').hover(
-        function(){
-            $(this).find('.after').show();
-        },
-        function(){
-            $(this).find('.after').hide();
-        }
-    );
 
     $('.ticket-favorite .after').on('click', function(){
         $('.profile .ul_li[data-link="profile-info"]').click();
