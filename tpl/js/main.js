@@ -24,7 +24,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, #exchange').on('click', function(){
+    $('.tn-mbk_li, #exchange, .ticket-favorite .after').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
@@ -166,6 +166,12 @@ $(function(){
                 $(this).addClass('select');
                 $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
                 $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+            }else{
+                if($(this).find('.after:hidden').length){
+                    $(this).find('.after').show();
+                }else{
+                    $(this).find('.after').hide();
+                }
             }
         } else {
             $(this).parents('.tb-slide').find('li.select').removeClass('select');
@@ -180,6 +186,10 @@ $(function(){
             $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
         }
 
+    });
+
+    $('.ticket-favorite .after').on('click', function(){
+        $('.profile .ul_li[data-link="profile-info"]').click();
     });
 
     $('.tb-loto-tl li.loto-tl_li').on('click', function() {
