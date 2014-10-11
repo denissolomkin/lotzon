@@ -122,18 +122,19 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 .h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
 .h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
-.h-b-c-bhg {display:block;float:right;width:85px;height:55px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-bold;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
+.h-b-c-bhg {display:block;float:right;width:67px;height:40px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-bold;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
 .h-b-c-bhg_span {position:relative;left:2px;}
 
 
 /* ==========================================================================
                             Promo-article styles
    ========================================================================== */
-article {width: 940px;margin:auto;}
+article {}
 article #slide2, article #slide3 {position:relative;}
-article .a-dt-b, footer .a-dt-b {display:table;width:100%;height:100%;}
+article #slide2 {border-bottom: 1px solid #efefef;}
+article .a-dt-b, footer .a-dt-b {display:table;width:940px;height:100%;margin:auto;position:relative;}
 article .a-dt-b .a-dt_tr, footer .a-dt-b .a-dt_tr {display:table-row;}
-article .a-dt-b .a-dt_tr.top {height:100px;}
+article .a-dt-b .a-dt_tr.top, footer .a-dt-b .a-dt_tr.top {height:100px;}
 article .a-dt-b .a-dt_tr .t_td, footer .a-dt-b .a-dt_tr .t_td {display:table;height:100px;width:100%;vertical-align:bottom;}
 article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-cell;width:100%;vertical-align:middle;}
 
@@ -229,14 +230,11 @@ input:-ms-input-placeholder {color:#8d7d00;}
 /* ==========================================================================
                             Promo-login-popup styles
    ========================================================================== */
-.login-popup {width:100%;height:100%;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.8);opacity:0;display:none;overflow-x:hidden;overflow-y:auto;
-    -webkit-transition: all 500ms ease;
-    -moz-transition: all 500ms ease;
-    -ms-transition: all 500ms ease;
-    -o-transition: all 500ms ease;
-    transition: all 500ms ease;
-}
-
+.popup {display:none;}
+.login-popup {width:100%;height:100%;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.8);overflow:auto;}
+.login-popup .lb-table {display:table;width:100%;height:100%;}
+.login-popup .lb-tr {display:table-row;}
+.login-popup .lb-tr .lb-td {display:table-cell;vertical-align:middle;overflow:auto;}
 .rules-bk {width:620px;position:absolute;background-color:#fff;top:0;right:-640px;display:none;}
 .rules-bk .rb-cs-bt {width:30px;height:30px;background:url("../img/bg-but-close-rules.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
 .rules-bk .rb-pg {padding:35px 60px;color:#000;}
@@ -246,7 +244,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .rules-bk .rb-pg > p:last-child {margin:0;}
 
 .login-popup.active-block {opacity:1;display:block;}
-.login-popup .lp-b {width:460px;background-color:#ffe400;margin:100px auto;position:relative;
+.login-popup .lp-b {width:460px;background-color:#ffe400;margin:auto;position:relative;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
@@ -262,6 +260,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .t-b .tb_a-l {float:left;}
 .login-popup .t-b .tb_a-r {float:right;opacity:0.3;}
 .login-popup .registration .t-b .tb_a-l {opacity:0.3;}
+.login-popup .rec-txt .t-b .tb_a-l, .login-popup .rec-txt .t-b .tb_a-r {opacity:0.3;}
 .login-popup .rec-pass .tb_a-l, .login-popup .rec-pass .tb_a-r {opacity:0.3;}
 .login-popup .rec-pass .tb_a-l:hover, .login-popup .rec-pass .tb_a-r:hover {text-decoration:underline;}
 .login-popup .registration .t-b .tb_a-l:hover {text-decoration:underline;}
@@ -283,6 +282,8 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .lp-b .ch-b-bk .ch-b {float:left;}
 .login-popup .lp-b .ch-b-bk .r-p {float:right;font:13px/1 Handbook-bold;color:#000;text-decoration:none;margin-top:5px;}
 .login-popup .lp-b .ch-b-bk .r-p:hover {text-decoration:underline;}
+#pass-rec-txt {font:18px/1 Handbook-regular;color:#000;margin:100px 0;text-align:center;display:none;}
+.login-popup .rec-txt {display:block;}
 
 
 
@@ -307,7 +308,9 @@ input:-ms-input-placeholder {color:#8d7d00;}
 
 
 .login-popup .lp-b .s-b {}
-.login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
+.login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #000;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#000;}
+.login-popup .lp-b .s-b .sb_but.disabled {opacity:0.4;}
+.login-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}
 .login-popup .lp-b .s-b .sb_but:hover {border-color:#000;background-color:#000;color:#ffe400;}
 
 
@@ -321,6 +324,8 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login #login-form {display:block;}
 .rec-pass #pass-rec-form {display:block;}
 .rec-pass #login-form, .rec-pass #reg-form {display:none;}
+.rec-txt #login-form, .rec-txt #reg-form, .rec-txt #pass-rec-form {display:none;}
+.rec-txt #pass-rec-txt {display:block;}
 
 
 /* ==========================================================================

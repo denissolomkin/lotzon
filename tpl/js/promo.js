@@ -11,16 +11,10 @@ $(function(){
         $('html, body').animate({scrollTop : point},900, 'easeInOutQuint');
     });
     $('.go-play').on('click', function(){
-        $('#login-block').css('display','block');
-        setTimeout(function(){
-            $('#login-block').css('opacity','1');
-        },1)
+        $('#login-block').fadeIn(200);
     });
     $('#lb-close').on('click', function(){
-        $('#login-block').css('opacity','0');
-        setTimeout(function(){
-            $('#login-block').css('display','none');
-        },500)
+        $('#login-block').fadeOut(200);
     });
     $('#login-block').click(function(event) {
         if ($(event.target).closest("#cl-check").length){
@@ -37,15 +31,26 @@ $(function(){
 
             }else if($(event.target).hasClass('rb-cs-bt')) {
                 $('.login-popup .lp-b, .rules-bk').removeAttr('style');
+            }else if($(event.target).hasClass('rb-cs-bt')) {
+                $('.login-popup .lp-b, .rules-bk').removeAttr('style');
             }
-            }else{
-                $('#login-block').css('opacity','0');
-                setTimeout(function(){
-                    $('#login-block').css('display','none');
-                },500)
-            }
+        }else{
+            $('#login-block').fadeOut(200);
+        }
+    });
 
-            console.log("test");
+    $('.login-popup .m_input').on('keyup', function(){
+        var val = $.trim($(this).val().length);
+        if(val > 0){
+            $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
+        }else{
+            $(this).closest('form').find('.sb_but').addClass('disabled').prop('disabled', true);
+        }
+    });
+
+    $('form[name="rec-pass"]').submit(function(event){
+        $('#cl-check').removeAttr('class').addClass('b-m rec-txt');
+        event.preventDefault();
     });
 
     $('#login-block .m_input').on('focus', function(){

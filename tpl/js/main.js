@@ -24,7 +24,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, #exchange, .ticket-favorite .after').on('click', function(){
+    $('.tn-mbk_li, #exchange, .ticket-favorite .after i').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
@@ -168,9 +168,9 @@ $(function(){
                 $(this).parents('.tb-slide').find('.sm-but').addClass('on');
             }else{
                 if($(this).find('.after:hidden').length){
-                    $(this).find('.after').show();
+                    $(this).find('.after').fadeIn(200);
                 }else{
-                    $(this).find('.after').hide();
+                    $(this).find('.after').fadeOut(200);
                 }
             }
         } else {
@@ -188,7 +188,7 @@ $(function(){
 
     });
 
-    $('.ticket-favorite .after').on('click', function(){
+    $('.ticket-favorite .after i').on('click', function(){
         $('.profile .ul_li[data-link="profile-info"]').click();
     });
 
@@ -472,6 +472,11 @@ $(function(){
         if($(this).attr('name') == 'date')$(this).attr('type','text');
     });
 
+    $('.pi-inp-bk input').on('keydown', function(){
+        var w = $(this).closest('.pi-inp-bk').width() - $(this).closest('.pi-inp-bk').find('.ph').width() - 15;
+        $(this).width(w);
+    });
+
 
 
     //if (!$(event.target).closest(".pop-box").length){
@@ -697,7 +702,7 @@ function showFailPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul></li>';
     }
@@ -723,10 +728,10 @@ function showWinPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul>';
-        if (data.res.ticketWins[i] != 0) {
+        if (data.res.ticketWins[i] && data.res.ticketWins[i] != 0) {
             ticketsHtml += '<div class="yr-tt-tc">' + data.res.ticketWins[i] + '</div>'
         }
         ticketsHtml += '</li>';
@@ -763,7 +768,7 @@ function proccessResult()
                         ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
                     });
                 } else {
-                    ticketsHtml += "<li>Не заполнен.</li>"
+                    ticketsHtml += "<li class='null'>Не заполнен</li>"
                 }
                 ticketsHtml += '</ul></li>';
             }

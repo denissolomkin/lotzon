@@ -102,7 +102,7 @@
             </div>
         </nav>
 
-        <article style="padding-bottom:50px;">
+        <article>
         <!--=====================================================================
                                 TIKETS & PRIZES BLOCK
         ======================================================================-->
@@ -153,9 +153,9 @@
                                                 <li class="loto-tl_li ticket-random">A</li>
                                                 <li class="loto-tl_li heart ticket-favorite">
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
-                                                    <div class="after" data-href="profile">
+                                                    <div class="after">
                                                         <b>любимая комбинация</b>
-                                                        <span>Настраивается в <i>профиле</i></span>
+                                                        <span>Настраивается в <i data-href="profile">профиле</i></span>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -442,19 +442,19 @@
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk error">
                                             <div class="ph">Такой ник уже занят</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="30" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
+                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Фамилия</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="30" type="text" name="surname" value="<?=$player->getSurname()?>"/>
+                                            <input autocomplete="off" spellcheck="false" type="text" name="surname" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Имя</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="30" type="text" name="name" value="<?=$player->getName()?>"/>
+                                            <input autocomplete="off" spellcheck="false" type="text" name="name" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Телефон</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="30" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
+                                            <input autocomplete="off" spellcheck="false" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph">Дата рождения</div>
@@ -462,7 +462,7 @@
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph">Пароль</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="30" placeholder="йа твой пароль" type="password" name="password"  />
+                                            <input autocomplete="off" spellcheck="false" placeholder="йа твой пароль" type="password" name="password"  />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -734,12 +734,10 @@
                 }, 200);
             });
         </script>
-
-
-
+        </article>
         <!--=====================================================================
-                                FOOTER BLOCK
-        ======================================================================-->
+                                    FOOTER BLOCK
+            ======================================================================-->
         <footer>
             <section class="fr-br-bk">
                 <img src="/tpl/img/footer-banner.jpg" width="1280" height="135" />
@@ -755,7 +753,6 @@
                 </div>
             </div>
         </footer>
-        </article>
 
     </div>
 

@@ -41,11 +41,11 @@
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Адрес</div>
-                            <input autocomplete="off" spellcheck="false" type="text" name="addr" placeholder="Адрес" maxlength="40">
+                            <input autocomplete="off" spellcheck="false" type="text" name="addr" placeholder="Адрес">
                         </div>
                         <div class="pi-inp-bk td">
                             <div class="ph">Телефон</div>
-                            <input autocomplete="off" spellcheck="false" type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон" maxlength="40">
+                            <input autocomplete="off" spellcheck="false" type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон">
                         </div>
                     </div>
                     <div class="pz-ifo-bt">получить приз</div>
@@ -100,6 +100,7 @@
                                     <li class="yr-tt-tr_li won">8</li>
                                     <li class="yr-tt-tr_li">6</li>
                                 </ul>
+                                <div class="yr-tt-tc">50 баллов</div>
                             </li>
                             <li class="yr-tt">
                                 <div class="yr-tt-tn">Билет #2</div>
@@ -111,6 +112,7 @@
                                     <li class="yr-tt-tr_li">8</li>
                                     <li class="yr-tt-tr_li">6</li>
                                 </ul>
+                                <div class="yr-tt-tc">50 баллов</div>
                             </li>
                             <li class="yr-tt">
                                 <div class="yr-tt-tn">Билет #3</div>
@@ -122,6 +124,7 @@
                                     <li class="yr-tt-tr_li">8</li>
                                     <li class="yr-tt-tr_li">6</li>
                                 </ul>
+                                <div class="yr-tt-tc">50 баллов</div>
                             </li>
                             <li class="yr-tt">
                                 <div class="yr-tt-tn">Билет #4</div>
@@ -133,6 +136,7 @@
                                     <li class="yr-tt-tr_li">8</li>
                                     <li class="yr-tt-tr_li">6</li>
                                 </ul>
+                                <div class="yr-tt-tc">50 баллов</div>
                             </li>
                             <li class="yr-tt">
                                 <div class="yr-tt-tn">Билет #5</div>
@@ -144,6 +148,7 @@
                                     <li class="yr-tt-tr_li">8</li>
                                     <li class="yr-tt-tr_li">6</li>
                                 </ul>
+                                <div class="yr-tt-tc">50 баллов</div>
                             </li>
                         </ul>
                     </div>
@@ -363,7 +368,7 @@
         <!-- WON BLOCK -->
         <div id="game-won" class="pop-box">
             <section class="gpc-pad">
-                <a href="javascript:void(0)" class="b-c-p"></a>
+                <a href="javascript:void(0)" class="b-c-p cs"></a>
                 <ul class="g-oc-b">
                 </ul>
                 <div class="gw-c-b">
