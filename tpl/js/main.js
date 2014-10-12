@@ -233,9 +233,10 @@ $(function(){
                 button.closest('.bm-pl').find('.tb-fs-tl').remove();
                 button.closest('.tb-slide').addClass('done');
                 button.closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
-                button.closest('.tb-slide').find('.ticket-random').off('click');
-                button.closest('.tb-slide').find('.ticket-favorite').off('click');
-                button.closest('.tb-slide').find('.loto-tl_li').off('click');
+                $('.tb-slide.done').find('.loto-tl_li').off('click');
+                $('.tb-slide.done').find('.ticket-random').off('click');
+                $('.tb-slide.done').find('.ticket-favorite').off('click');
+                
                 filledTickets.push(combination);
                 if (filledTickets.length == 5) {
                     $('.tb-tabs, .tb-slides').remove();
@@ -407,7 +408,7 @@ $(function(){
      ========================================================================== */
     $('.n-add-but, .n-mr-cl-bt-bk .mr').on('click', function(){
         var newsBlock = $('.news');
-        loadNews($(this).parent().find('.n-item').length, function(data) {
+        loadNews(newsBlock.find('.n-item').length, function(data) {
             if (data.res.news.length) {
                 newsBlock.addClass('b-ha');
                 var html = '';
@@ -418,6 +419,9 @@ $(function(){
 
                 $('.n-items').height($('.n-items .h-ch').height());
                 $('.n-add-but').hide();
+                if (!data.res.keepButtonShow) {
+                    $('.n-mr-cl-bt-bk .mr').hide();
+                }
                 newsBlock.find('.n-mr-cl-bt-bk').show();
             }
         }, function() {}, function() {});
@@ -431,6 +435,7 @@ $(function(){
             }
         });
         $('.n-items').removeAttr('style');
+        $('.n-mr-cl-bt-bk .mr').show();
         $(this).closest('.n-mr-cl-bt-bk').hide();
         $('.n-add-but').show();
         newsBlock.removeClass('b-ha');

@@ -118,9 +118,8 @@ class ContentController extends \AjaxController
                 'text'  => $newsItem->getText(),
             );
         }
-
         if (count($news) >= Index::NEWS_PER_PAGE) {
-            $response['keepButtonShow'] = true;
+            $responseData['keepButtonShow'] = true;
         }
 
         $this->ajaxResponse($responseData);
