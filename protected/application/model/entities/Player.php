@@ -6,6 +6,9 @@ class Player extends Entity
 {
     const IDENTITY = "player_session";
 
+    const AVATAR_WIDTH  = 160;
+    const AVATAR_HEIGHT = 160;
+
     private $_id         = 0;
     private $_email      = '';
     private $_password   = '';
@@ -339,6 +342,7 @@ class Player extends Entity
                 $this->validEmail();
 
                 $this->setNicName(trim(htmlspecialchars(strip_tags($this->getNicName()))));
+                $this->checkNickname();
                 $this->setName(trim(htmlspecialchars(strip_tags($this->getName()))));
                 $this->setSurname(trim(htmlspecialchars(strip_tags($this->getSurname()))));
                 $this->setSecondName(trim(htmlspecialchars(strip_tags($this->getSecondName()))));
@@ -351,6 +355,36 @@ class Player extends Entity
             default:
                 # code...
             break;
+        }
+
+        return true;
+    }
+
+    public function saveAvatar() 
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->saveAvatar($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;   
+    }
+
+    protected function checkNickname()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->checkNickname($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 403) {
+                throw new EntityException("NICKNAME_BUSY", 400);    
+            }
+            throw new EntityException($e->getMessage(), $e->getCode());
+            
         }
 
         return true;
@@ -429,6 +463,22 @@ class Player extends Entity
         } catch (Exception $e) {}
         
         return $this;
+    }
+
+    public function changePassword($password) 
+    {
+        $this->setSalt("");
+        $this->setPassword($this->compilePassword($password));
+
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->changePassword($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;   
     }
 
     public function formatFrom($from, $data) 

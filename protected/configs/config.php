@@ -135,6 +135,10 @@ Config::instance()->publicResources = array(
     '/players/update/' => array(
         'post'  => 'controllers\production\Players:update',
     ),
+    '/players/updateAvatar' => array(
+        'post'  => 'controllers\production\Players:saveAvatar',
+        'delete' => 'controllers\production\Players:removeAvatar',
+    ),
     '/game/ticket/' => array(
         'post'  => 'controllers\production\Game:createTicket',
     ),
@@ -142,7 +146,10 @@ Config::instance()->publicResources = array(
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
     '/content/news/'      => 'controllers\production\ContentController:news',
-    '/order/item/'        => 'controllers\production\OrdersController:orderItem'
+    '/order/item/'        => 'controllers\production\OrdersController:orderItem',
+    '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
+    '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
+    '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';

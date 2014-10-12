@@ -39,7 +39,9 @@ if (timeToRunLottery()) {
     $playersPlayed  = array();
     $playersWon     = array();
     $playersWonTickets = array();
+    $playersWonMoney = array();
     $playerPrizes   = array();
+    $ticketsWon = array();
 
     // get players tickets    
     $tickets = TicketsModel::instance()->getAllUnplayedTickets();
@@ -75,6 +77,9 @@ if (timeToRunLottery()) {
                 // save some statistic
                 if ($gamePrizes[$numwins]['currency'] == GameSettings::CURRENCY_MONEY) {
                     $moneyWonTotal += $gamePrizes[$numwins]['sum'];
+                    if (!in_array($ticket->getPlayerId(), $playersWonMoney)) {
+                        $playersWonMoney[] = $ticket->getPlayerId();
+                    }
                 } else {
                     $pointsWonTotal += $gamePrizes[$numwins]['sum'];
                 }
@@ -85,7 +90,7 @@ if (timeToRunLottery()) {
     // create lottery instance;
     $lottery = new Lottery();
     $lottery->setCombination($lotteryCombination)
-            ->setWinnersCount(count($playersWon))
+            ->setWinnersCount(count($playersWonMoney))
             ->setMoneyTotal($moneyWonTotal)
             ->setPointsTotal($pointsWonTotal);
 
@@ -126,6 +131,16 @@ if (timeToRunLottery()) {
             }
         }
         $player->update();
+    }
+    // update tickets wins
+    foreach ($playersWonTickets as $playerId => $playerData) {
+        foreach ($playerData as $ticketId => $data) {
+            DB::Connect()->prepare("UPDATE `LotteryTickets` SET `TicketWin` = :tw, `TicketWinCurrency` = :twc WHERE `Id` = :tid")->execute(array(
+                ':tw' => $gamePrizes[$data['win']]['sum'],
+                ':twc' => $gamePrizes[$data['win']]['currency'],
+                ':tid' => $ticketId,
+            ));
+        }
     }
 
     // mark player lottery tickets as played

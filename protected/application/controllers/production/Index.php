@@ -47,7 +47,7 @@ class Index extends \SlimController\SlimController
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
-        $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
+        $news = NewsModel::instance()->getList($this->promoLang);
 
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets(Session::connect()->get(Player::IDENTITY));
 

@@ -61,12 +61,13 @@ function updatePlayerProfile(playerData, successFunction, failFunction, errorFun
     });
 }
 
-function addTicket(combination, successFunction, failFunction, errorFunction) 
+function addTicket(tickNum, combination, successFunction, failFunction, errorFunction) 
 {
     $.ajax({
         url: "/game/ticket/",
         method: 'POST',
         data: {
+            'tnum' : tickNum,
             'combination' : combination,   
         },
         async: true,
@@ -184,4 +185,48 @@ function createItemOrder(order, successFunction, failFunction, errorFunction)
             errorFunction.call(order, data);
        }
     });   
+}
+
+function loadLotteryDetails(lotteryId, deps, successFunction, failFunction, errorFunction) {
+    var url = "/content/lottery/" + lotteryId;
+    if (deps == 'next') {
+        url = "/content/lottery/next/" + lotteryId;
+    } else if (deps == 'prev') {
+        url = "/content/lottery/prev/" + lotteryId;
+    }
+    $.ajax({
+        url: url,
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });   
+}
+
+function removePlayerAvatar(successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: '/players/updateAvatar',
+        method: 'DELETE',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
 }

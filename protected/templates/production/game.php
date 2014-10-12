@@ -122,13 +122,14 @@
                         <? if (count($tickets) < 5) { ?>
                             <ul class="tb-tabs">
                             <? $fst = true;
-                               $ttickets = $tickets;
                             ?>
                             <? for ($i = 1; $i <= 5; ++$i) { ?>
                                 <?  $nums = array();
-                                if (count($ttickets)) {
-                                    $ticket = array_shift($ttickets);
-                                    $nums = $ticket->getCombination();
+                                if (count($tickets)) {
+                                    if (isset($tickets[$i])) {
+                                        $ticket = $tickets[$i];
+                                        $nums = $ticket->getCombination();    
+                                    }
                                 } ?>
                                 <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span>Билет </span>#<?=$i?></a></li>
                                 <? $fst = false; ?>
@@ -138,10 +139,12 @@
                                 <? for ($i = 1; $i <= 5; ++$i) { ?>
                                     <?  $nums = array();
                                     if (count($tickets)) {
-                                        $ticket = array_shift($tickets);
-                                        $nums = $ticket->getCombination();
+                                        if (isset($tickets[$i])) {
+                                            $ticket = $tickets[$i];
+                                            $nums = $ticket->getCombination();    
+                                        }
                                     } ?>
-                                    <div class="tb-slide" id="tb-slide<?=$i?>">
+                                    <div class="tb-slide" id="tb-slide<?=$i?>" data-ticket="<?=$i?>">
                                         <ul class="tb-loto-tl">
                                             <? for ($j = 1; $j <= 49; ++$j) { ?>
                                                 <li class="loto-tl_li loto-<?=$j?><?=(count($nums) && in_array($j, $nums) ? ' select' : '')?>"><?=$j?></li>
@@ -203,7 +206,7 @@
                             </div>
                         <? } ?>
                     </section>
-                    <section class="prizes">
+                    <section class="prizes" id="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
                             <div class="pbk-pi">на счету <b><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
@@ -218,10 +221,14 @@
                                 <? } ?>
                             </ul>
                             <? $fst = true; ?>
+                            <? $showMoreButton = false; ?>
                             <? foreach ($shop as $category) { ?>
+                                <? if ($fst && count($category->getItems()) > controllers\production\Index::SHOP_PER_PAGE) {
+                                    $showMoreButton = true;
+                                } ?>
                                 <ul class="shop-category-items pz-cg" data-category="<?=$category->getId()?>"  <?=(!$fst ? 'style="display:none"':'')?>>
                                 <? $pager = controllers\production\Index::SHOP_PER_PAGE ?>
-                                <? $i = 0 ?>
+                                <? $i = 0; ?>
                                 <? foreach ($category->getItems() as $item) { ?>
                                     <? if ($i == $pager) {
                                         break;
@@ -245,7 +252,7 @@
                                 </ul>
                                 <? $fst = false; ?>
                             <? } ?>
-                            <div class="pz-more-bt">загрузить еще</div>
+                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">загрузить еще</div>
                             <div class="mr-cl-bt-bk">
                                 <div class="cl">свернуть</div>
                                 <div class="mr">загрузить еще</div>
@@ -379,9 +386,11 @@
                                                 <? } ?>
                                             </ul>
                                             <div class="nw"><?=$lottery->getWinnersCount()?></div>
-                                            <div class="aw-bt">
-                                                <a href="javascript:void(0)"></a>
-                                            </div>
+                                            <? if ($lottery->getWinnersCount() > 0) { ?>
+                                                <div class="aw-bt" data-lotid="<?=$lottery->getId()?>">
+                                                    <a href="javascript:void(0)"></a>
+                                                </div>
+                                            <? } ?>
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -428,9 +437,12 @@
                                 <form name="profile">
                                     <div class="pi-lt">
                                         <!-- ЕСЛИ ФОТКА ЕСТЬ, ТО К КЛАССУ "pi-ph" ДОБАВЛЯКМ КЛАСС "true" -->
-                                        <div class="pi-ph">
+                                        <div class="pi-ph <?=$player->getAvatar() ? 'true' : ''?>">
                                             <i></i>
-                                        </div>
+                                            <? if ($player->getAvatar()) {?>
+                                                <img src="/filestorage/avatars/<?=ceil($player->getId() / 100)?>/<?=$player->getAvatar()?>">
+                                            <? } ?>
+                                        </div>  
                                         <div class="pi-cs-bk">
                                             <div class="txt">Привязать соцсеть и получить бонус 40 баллов.</div>
                                             <div class="cs-int-bt fb int"></div>
@@ -440,29 +452,29 @@
                                         </div>
                                     </div>
                                     <div class="pi-et-bk">
-                                        <div class="pi-inp-bk error">
-                                            <div class="ph">Такой ник уже занят</div>
+                                        <div class="pi-inp-bk">
+                                            <div class="ph" data-default="Никнейм">Никнейм</div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph">Фамилия</div>
+                                            <div class="ph" data-default="Фамилия">Фамилия</div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="surname" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph">Имя</div>
+                                            <div class="ph" data-default="Имя">Имя</div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="name" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph">Телефон</div>
+                                            <div class="ph" data-default="Телефон">Телефон</div>
                                             <input autocomplete="off" spellcheck="false" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph">Дата рождения</div>
+                                            <div class="ph" data-default="Дата рождения">Дата рождения</div>
                                             <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph">Пароль</div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="йа твой пароль" type="password" name="password"  />
+                                            <div class="ph" data-default="Пароль">Пароль</div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" name="password"  />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -755,12 +767,15 @@
         </footer>
 
     </div>
-
+        <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
         <? include('popups.php') ?>
     <script>
         var playerFavorite = [];
+        var playerPoints   = <?=$player->getPoints()?>;
+        var playerMoney   = <?=$player->getMoney()?>;
+
         <? foreach ($player->getFavoriteCombination() as $num) { ?>
         playerFavorite.push(<?=$num?>);
         <? } ?>
@@ -791,57 +806,12 @@
                 layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}',
                 onExpiry: showGameProccessPopup
             });
+
+            if (document.location.hash == "#money") {
+                $("#cash-output").click();
+                location.hash = "";
+            } 
         });
     </script>
-
-
-    <div id="news-cash" style="display:none;">
-        <div class="n-item">
-        <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-        <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-    </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div><div class="n-item">
-        <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-        <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-    </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div>
-        <div class="n-item">
-            <div class="n-i-tl">Запуск платформы • 16.04.2014</div>
-            <div class="n-i-txt">Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — <a href="">заходите в наш магазин, выбирайте!</a></div>
-        </div></div>
     </body>
 </html>

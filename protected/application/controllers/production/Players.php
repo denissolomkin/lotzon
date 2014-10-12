@@ -1,10 +1,11 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session;
+use \Application, \Config, \Player, \EntityException, \Session, \WideImage;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
+Application::import(PATH_PROTECTED . 'external/wi/WideImage.php');
 
 class Players extends \AjaxController
 {
@@ -87,6 +88,9 @@ class Players extends \AjaxController
             $player = Session::connect()->get(Player::IDENTITY);
 
             try {
+                if ($this->request()->post('bd') && !strtotime($this->request()->post('bd'))) {
+                    throw new EntityException("INVALID_DATE_FORMAT", 400);
+                }
                 $player->setNicname($this->request()->post('nick'))
                    ->setName($this->request()->post('name'))
                    ->setSurName($this->request()->post('surname'))
@@ -104,8 +108,58 @@ class Players extends \AjaxController
             } catch (EntityException $e){
                 $this->ajaxResponse(array(), 0, $e->getMessage());                   
             }
+            if ($pwd = $this->request()->post('password')) {
+                Session::connect()->get(Player::IDENTITY)->changePassword($pwd);
+            }
             $this->ajaxResponse(array());
         }
         $this->redirect('/');   
+    }
+
+    public function saveAvatarAction()
+    {
+
+        if (!Session::connect()->get(Player::IDENTITY)) {
+            $this->ajaxResponse(array(), 0, 'FRAUD');
+        }
+
+        try {
+            $image = WideImage::loadFromUpload('image');
+            $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+            $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+        
+            $imageName = uniqid() . ".jpg";
+            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil(Session::connect()->get(Player::IDENTITY)->getId() / 100)) . '/';
+
+            if (!is_dir($saveFolder)) {
+                mkdir($saveFolder, 0777);
+            }
+
+            $image->saveToFile($saveFolder . $imageName, 100);
+            // remove old one
+            if (Session::connect()->get(Player::IDENTITY)->getAvatar()) {
+                @unlink($saveFolder . Session::connect()->get(Player::IDENTITY)->getAvatar());
+            };
+            $data = array(
+                'imageName' => $imageName,
+                'imageWebPath' => '/filestorage/avatars/' . (ceil(Session::connect()->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
+            );
+
+            Session::connect()->get(Player::IDENTITY)->setAvatar($imageName)->saveAvatar();
+
+            $this->ajaxResponse($data);    
+        } catch (\Exception $e) {
+            $this->ajaxResponse(array(), 0, 'INVALID');
+        }
+    }
+
+    public function removeAvatarAction()
+    {
+        if (Session::connect()->get(Player::IDENTITY)->getAvatar()) {
+            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil(Session::connect()->get(Player::IDENTITY)->getId() / 100)) . '/' . Session::connect()->get(Player::IDENTITY)->getAvatar());
+        }
+        Session::connect()->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
+
+        $this->ajaxResponse(array());
     }
 }

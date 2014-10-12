@@ -4,16 +4,57 @@ class LotteryTicket extends Entity
 {
     private $_id = 0;
 
+    private $_ticketNum   = 1;
     private $_playerId    = 0;
     private $_lotteryId   = 0;
     private $_combination = array();
 
     private $_dateCreated = null;
 
+    private $_ticketWin = 0;
+    private $_ticketWinCurrency = GameSettings::CURRENCY_POINT;
+
     public function init()
     {
         $this->setModelClass('TicketsModel');
     }
+
+    public function getTicketNum()
+    {
+        return $this->_ticketNum;
+    }
+
+    public function setTicketNum($num)
+    {
+        $this->_ticketNum = $num;
+
+        return $this;
+    }
+
+    public function getTicketWin()
+    {
+        return $this->_ticketWin;
+    }
+
+    public function setTicketWin($Win)
+    {
+        $this->_ticketWin = $Win;
+
+        return $this;
+    }
+
+    public function getTicketWinCurrency()
+    {
+        return $this->_ticketWinCurrency;
+    }
+
+    public function setTicketWinCurrency($currency)
+    {
+        $this->_ticketWinCurrency = $currency;
+
+        return $this;
+    }
+
 
     public function setId($id)
     {
@@ -114,6 +155,9 @@ class LotteryTicket extends Entity
     public function formatFrom($from, $data) {
         if ($from == 'DB') {
             $this->setId($data['Id'])
+                 ->setTicketNum($data['TicketNum'])
+                 ->setTicketWin($data['TicketWin'])
+                 ->setTicketWinCurrency($data['TicketWinCurrency'])
                  ->setPlayerId($data['PlayerId'])
                  ->setLotteryId($data['LotteryId'])
                  ->setDateCreated($data['DateCreated'])

@@ -5,13 +5,14 @@ class TicketsDBProcessor implements IProcessor
 {
     public function create(Entity $ticket)
     {
-        $sql = "INSERT INTO `LotteryTickets` (`PlayerId`, `Combination`, `DateCreated`) VALUES (:playerid, :combination, :dc)";
+        $sql = "INSERT INTO `LotteryTickets` (`PlayerId`, `Combination`, `DateCreated`, `TicketNum`) VALUES (:playerid, :combination, :dc, :tn)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':playerid'    => $ticket->getPlayerId(),
                 ':combination' => @serialize($ticket->getCombination()),
                 ':dc'          => time(),
+                ':tn'          => $ticket->getTicketNum(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -57,7 +58,7 @@ class TicketsDBProcessor implements IProcessor
             $ticket = new LotteryTicket();
 
             $ticket->formatFrom('DB', $ticketData);
-            $tickets[$ticket->getId()] = $ticket;
+            $tickets[$ticket->getTicketNum()] = $ticket;
         }
 
         return $tickets;

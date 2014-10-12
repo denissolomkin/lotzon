@@ -24,7 +24,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, #exchange, .ticket-favorite .after i').on('click', function(){
+    $('.tn-mbk_li, #exchange').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
@@ -166,12 +166,6 @@ $(function(){
                 $(this).addClass('select');
                 $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
                 $(this).parents('.tb-slide').find('.sm-but').addClass('on');
-            }else{
-                if($(this).find('.after:hidden').length){
-                    $(this).find('.after').fadeIn(200);
-                }else{
-                    $(this).find('.after').fadeOut(200);
-                }
             }
         } else {
             $(this).parents('.tb-slide').find('li.select').removeClass('select');
@@ -186,10 +180,6 @@ $(function(){
             $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
         }
 
-    });
-
-    $('.ticket-favorite .after i').on('click', function(){
-        $('.profile .ul_li[data-link="profile-info"]').click();
     });
 
     $('.tb-loto-tl li.loto-tl_li').on('click', function() {
@@ -238,7 +228,8 @@ $(function(){
                 }
             });
             var button = $(this);
-            addTicket(combination, function() {
+            var tickNum = $(this).parents('.tb-slide').data('ticket');
+            addTicket(tickNum,combination, function() {
                 button.closest('.bm-pl').find('.tb-fs-tl').remove();
                 button.closest('.tb-slide').addClass('done');
                 button.closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
@@ -281,6 +272,7 @@ $(function(){
      ========================================================================== */
 
     $('.pz-more-bt, .mr-cl-bt-bk .mr').on('click', function(){
+        var button = $(this);
         loadShop($('.shop-category.now').data('id'), $('.shop-category-items:visible .pz-cg_li').length, function(data) {
             if (data.res.items.length) {
                 var html = '';
@@ -295,6 +287,9 @@ $(function(){
                 //reinit listeners
                 $('.shop-category-items li').off('click').on('click', showItemDetails);
             }
+            if(button.hasClass('pz-more-bt'))button.hide();
+            $('.prizes .mr-cl-bt-bk').show();
+
             if (!data.res.keepButtonShow) {
                 $(".mr-cl-bt-bk .mr").hide();
                 $(".pz-more-bt").hide();
@@ -302,9 +297,6 @@ $(function(){
                 $(".mr-cl-bt-bk .mr").show();
             }
         }, function() {}, function() {});
-
-        if($(this).hasClass('pz-more-bt'))$(this).hide();
-        $('.prizes .mr-cl-bt-bk').show();
     });
 
     $('.mr-cl-bt-bk .cl').on('click', function(){
@@ -320,9 +312,21 @@ $(function(){
     $('.shop-category').on('click', function() {
         $('.shop-category').removeClass('now');
         $(this).addClass('now');
+        var catButt = $(this);
 
         $('.shop-category-items').hide();
-        $('.shop-category-items[data-category="' + $(this).data('id') + '"]').show();
+        $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').show();
+        if ($('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').length < 6) {
+            $('.pz-more-bt').hide();
+            $('.mr-cl-bt-bk').hide();
+        } else {
+            $('.pz-more-bt').show();
+            $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').each(function(id, item) {
+                if (id >= 6) {
+                    $(item).remove();
+                }
+            });
+        }
     });
 
     $('.shop-category-items li').on('click', showItemDetails);
@@ -341,8 +345,15 @@ $(function(){
 
 
     $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
-        $('.pz-ifo-bk').hide();
-        $('.pz-fm-bk').show();
+        var price =  parseInt($('#shop-items-popup').find('.item-price').text().replace(/\s*/g, ""));
+        console.log(price);
+        if (price > playerPoints) {
+            $('.pz-ifo-bk').hide();
+            $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();
+        } else {
+            $('.pz-ifo-bk').hide();
+            $('.pz-fm-bk').show();
+        }
     });
 
     $('.pz-fm-bk .pz-ifo-bt').on('click', function(){
@@ -367,6 +378,26 @@ $(function(){
                 $('.pz-fm-bk').hide();
                 $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();    
             }
+            switch (data.message) {
+                case 'ORDER_INVALID_NAME' :
+                    form.find('input[name="name"]').parent().addClass('error');                    
+                break;
+                case 'ORDER_INVALID_SURNAME' :
+                    form.find('input[name="surname"]').parent().addClass('error');                    
+                break;
+                case 'ORDER_INVALID_PHONE' :
+                case 'INVALID_PHONE_FORMAT' :
+                    form.find('input[name="phone"]').parent().addClass('error');                    
+                break;
+                case 'ORDER_INVALID_CITY' :
+                    form.find('input[name="city"]').parent().addClass('error');                    
+                break; 
+                case 'ORDER_INVALID_ADRESS' :
+                    form.find('input[name="addr"]').parent().addClass('error');                    
+                break;  
+                case 'ORDER_INVALID_CITY' :
+                    form.find('input[name="city"]').parent().addClass('error');                   
+                break;             }
         }, function(){})
 
     });
@@ -472,11 +503,6 @@ $(function(){
         if($(this).attr('name') == 'date')$(this).attr('type','text');
     });
 
-    $('.pi-inp-bk input').on('keydown', function(){
-        var w = $(this).closest('.pi-inp-bk').width() - $(this).closest('.pi-inp-bk').find('.ph').width() - 15;
-        $(this).width(w);
-    });
-
 
 
     //if (!$(event.target).closest(".pop-box").length){
@@ -551,10 +577,16 @@ $(function(){
                 $(lottery.combination).each(function(d, num) {
                     html += '<li>' + num + '</li>';
                 });
-                html += '</ul><div class="nw">' + lottery.winnersCount + '</div><div class="aw-bt"><a href="javascript:void(0)"></a></div></li>';
-            };
+                html += '</ul><div class="nw">' + lottery.winnersCount + '</div>';
+                if (lottery.winnersCount > 0) {
+                    html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
+                }
+                html += '</li>';
+            };  
 
             $('.profile-history').find('.ht-bk').append(html);
+
+            $('.profile-history .ht-bk .aw-bt').off('click').on('click', showLotteryDetails);
         }
     }
 
@@ -583,6 +615,11 @@ $(function(){
         var form = $(this);
         var playerData = {};
 
+        form.find('.pi-inp-bk').removeClass('error');
+        form.find('.ph').each(function(id, ph){
+            $(ph).text($(ph).data('default'));
+        });
+
         form.find('input').each(function(id, input) {
             playerData[$(input).attr('name')] = $(input).val();
         });
@@ -600,7 +637,20 @@ $(function(){
 
             },
             function(data) {
-
+                switch (data.message) {
+                    case 'NICKNAME_BUSY' :
+                        form.find('input[name="nick"]').parent().addClass('error');
+                        form.find('input[name="nick"]').parent().find('.ph').text('Ник уже занят');
+                    break;
+                    case 'INVALID_PHONE_FORMAT' :
+                        form.find('input[name="phone"]').parent().addClass('error');
+                        form.find('input[name="phone"]').parent().find('.ph').text('Неверный формат');
+                    break;
+                    case 'INVALID_DATE_FORMAT' :
+                        form.find('input[name="bd"]').parent().addClass('error');
+                        form.find('input[name="bd"]').parent().find('.ph').text('Неверный формат даты');
+                    break;
+                }
             },
             function (data) {
 
@@ -608,11 +658,126 @@ $(function(){
         );
         return false;
     });
+    $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
+        e.stopPropagation();
 
-    $('.profile-history .ht-bk .aw-bt').on('click', function(){
-        $('#profile-history').fadeIn(200);
+        removePlayerAvatar(function(data) {
+            $('form[name="profile"]').find('.pi-ph').find('img').remove();
+            $('form[name="profile"]').find('.pi-ph').removeClass('true');
+        }, function() {}, function() {});
     });
+    $('form[name="profile"]').find('.pi-ph').on('click', function(){
+        // create form
+        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
 
+        var input = form.find('input[type="file"]').damnUploader({
+            url: '/players/updateAvatar',
+            fieldName: 'image',
+            dataType: 'json',
+        });
+
+        var image = $('<img></img>');
+        var holder = $(this);
+        if (holder.find('img').length) {
+            image = holder.find('img');
+        }
+
+        input.off('du.add').on('du.add', function(e) {
+            
+            e.uploadItem.completeCallback = function(succ, data, status) {
+                image.attr('src', data.res.imageWebPath);
+
+                holder.addClass('true');
+                holder.append(image);
+
+                $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
+                    e.stopPropagation();
+
+                    removePlayerAvatar(function(data) {
+                        $('form[name="profile"]').find('.pi-ph').find('img').remove();
+                        $('form[name="profile"]').find('.pi-ph').removeClass('true');
+                    }, function() {}, function() {});
+                });
+            }; 
+
+            e.uploadItem.progressCallback = function(perc) {}
+            e.uploadItem.upload();
+        });
+
+        form.find('input[type="file"]').click();    
+    })
+    $('.profile-history .ht-bk .aw-bt').on('click', showLotteryDetails);
+
+    function nextLotteryDetails() {
+        loadLotteryDetails($('#profile-history').data('lotid'), 'next', function(data) {
+            renderLotteryDetails(data)
+        }, function() {
+            $('#profile-history').hide();
+        }, function(){});
+    }
+
+    function prevLotteryDetails() {
+        loadLotteryDetails($('#profile-history').data('lotid'), 'prev', function(data) {
+            renderLotteryDetails(data)
+        }, function() {
+            $('#profile-history').hide();
+        }, function(){});
+    }
+
+    function showLotteryDetails() {
+        loadLotteryDetails($(this).data('lotid'), 'current',function(data) {
+            renderLotteryDetails(data)
+        }, function() {
+            $('#profile-history').hide();
+        }, function(){});
+    }
+
+    function renderLotteryDetails(data) {
+        $('#profile-history').data('lotid', data.res.lottery.id);
+        $('#profile-history').find('.ws-dt').text(data.res.lottery.date);
+        var combHtml = winnerHtml = '';
+        $(data.res.lottery.combination).each(function(id, num){
+            combHtml += '<li class="yr-tt-tr_li">' + num + '</li>';
+        });
+        $('#profile-history').find('.loto-holder').html(combHtml);
+        $(data.res.winners).each(function(id, winner){
+            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="/tpl/img/comment-photo-2.jpg" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+        });
+        $('#profile-history').find('.ws-lt').html(winnerHtml);
+        $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
+            e.stopPropagation();
+            $('#profile-history').find('.ws-lt').find('li').removeClass('you');
+            $('#profile-history').find('.wr-pf-ph img').attr('src', $(this).find('.ph img').attr('src'));
+            var tickets = data.res.tickets[$(this).data('id')];
+            var ticketsHtml = '';
+            for (var i=1; i<=5; ++i) {
+                ticketsHtml += '<li class="yr-tt">';
+                
+                ticketsHtml += '<div class="yr-tt-tn">Билет #'+i+'</div><ul class="yr-tt-tr">';
+
+                if (tickets[i]) {
+                    $(tickets[i].combination).each(function(id, num){
+                        ticketsHtml += '<li class="yr-tt-tr_li" data-num="'+num+'">' + num + '</li>';
+                    });
+                    ticketsHtml += '</ul><div class="yr-tt-tc">' + tickets[i].win + '</div>';
+                } else {
+                    ticketsHtml += '<li>не заполнен</li></ul>';
+                }
+                
+                ticketsHtml += '</li>';
+            }
+            $('#profile-history').find('.yr-tb').html(ticketsHtml);
+            $(data.res.lottery.combination).each(function(id, num){
+                $('#profile-history').find('.yr-tb').find('li[data-num="'+num+'"]').addClass('won');
+            });
+            $(this).addClass('you');
+        });
+        $('#profile-history').find('.ws-lt').find('li:first').click();
+        $('#profile-history').fadeIn(200); 
+
+        $('#profile-history .ar-r').off('click').on('click', nextLotteryDetails);
+        $('#profile-history .ar-l').off('click').on('click', prevLotteryDetails);
+    }
 
     /* ==========================================================================
                     Cash popup functional
@@ -702,7 +867,7 @@ function showFailPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li class='null'>Не заполнен</li>"
+            ticketsHtml += "<li>Не заполнен.</li>"
         }
         ticketsHtml += '</ul></li>';
     }
@@ -721,14 +886,14 @@ function showWinPopup(data)
     $("#game-process").hide();
     $("#game-won").show();
     var ticketsHtml = '';
-    for (var i = 0; i < 5; ++i) {
-        ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #'+ (i+1) + '</div><ul class="yr-tt-tr">';
+    for (var i = 1; i <= 5; ++i) {
+        ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #'+ (i) + '</div><ul class="yr-tt-tr">';
         if (data.res.tickets[i]) {
             $(data.res.tickets[i]).each(function(id, num) {
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li class='null'>Не заполнен</li>"
+            ticketsHtml += "<li>Не заполнен.</li>"
         }
         ticketsHtml += '</ul>';
         if (data.res.ticketWins[i] && data.res.ticketWins[i] != 0) {
@@ -757,18 +922,18 @@ function proccessResult()
                 window.setTimeout(proccessResult, data.res.wait);
             }
         } else {
-            if (!data.res.tickets.length) {
+            if (!data.res.tickets) {
                 $("#game-itself").hide();
             }
             var ticketsHtml = '';
-            for (var i = 0; i < 5; ++i) {
-                ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #'+ (i+1) + '</div><ul class="yr-tt-tr">';
+            for (var i = 1; i <= 5; ++i) {
+                ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #'+ (i) + '</div><ul class="yr-tt-tr">';
                 if (data.res.tickets[i]) {
                     $(data.res.tickets[i]).each(function(id, num) {
                         ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
                     });
                 } else {
-                    ticketsHtml += "<li class='null'>Не заполнен</li>"
+                    ticketsHtml += "<li>Не заполнен.</li>"
                 }
                 ticketsHtml += '</ul></li>';
             }
@@ -776,23 +941,24 @@ function proccessResult()
             var ball = '';
             var combination = $(data.res.lottery.combination).get();
             var lotInterval = window.setInterval(function() {
+                ball = combination.shift();
+                var spn = $("#game-process .g-oc_span.unfilled:first");
+
+                spn.text(ball);
+                var li = spn.parents('.g-oc_li');
+                li.find('.goc_li-nb').addClass('goc-nb-act');
+                spn.removeClass('unfilled');
+                $("#game-process").find('li[data-num="' + ball + '"]').addClass('won')
 
                 if (!combination.length) {
                     window.clearInterval(lotInterval);
-                    if (data.res.player.win) {
-                        showWinPopup(data);
-                    } else {
-                        showFailPopup(data);
-                    }
-                } else {
-                    ball = combination.shift();
-                    var spn = $("#game-process .g-oc_span.unfilled:first");
-
-                    spn.text(ball);
-                    var li = spn.parents('.g-oc_li');
-                    li.find('.goc_li-nb').addClass('goc-nb-act');
-                    spn.removeClass('unfilled');
-                    $("#game-process").find('li[data-num="' + ball + '"]').addClass('won')
+                    window.setTimeout(function() {
+                        if (data.res.player.win) {
+                            showWinPopup(data);
+                        } else {
+                            showFailPopup(data);
+                        }
+                    }, 1200);
                 }
             }, 5000);
         }

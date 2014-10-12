@@ -73,13 +73,7 @@
                         <time class="ws-dt">22.08.2014</time>
                         <div class="yr-tt">
                             <div class="yr-tt-tn">лототрон</div>
-                            <ul class="yr-tt-tr">
-                                <li class="yr-tt-tr_li">3</li>
-                                <li class="yr-tt-tr_li">32</li>
-                                <li class="yr-tt-tr_li">41</li>
-                                <li class="yr-tt-tr_li">16</li>
-                                <li class="yr-tt-tr_li">8</li>
-                                <li class="yr-tt-tr_li">6</li>
+                            <ul class="yr-tt-tr loto-holder">
                             </ul>
                         </div>
                     </div>
@@ -89,89 +83,11 @@
                         <div class="wr-pf-ph">
                             <img src="/tpl/img/preview/profile-photo.jpg" />
                         </div>
-                        <ul class="yr-tb">
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #1</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li won">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li won">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">50 баллов</div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #2</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li won">32</li>
-                                    <li class="yr-tt-tr_li won">41</li>
-                                    <li class="yr-tt-tr_li won">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">50 баллов</div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #3</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">50 баллов</div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #4</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">50 баллов</div>
-                            </li>
-                            <li class="yr-tt">
-                                <div class="yr-tt-tn">Билет #5</div>
-                                <ul class="yr-tt-tr">
-                                    <li class="yr-tt-tr_li">3</li>
-                                    <li class="yr-tt-tr_li">32</li>
-                                    <li class="yr-tt-tr_li">41</li>
-                                    <li class="yr-tt-tr_li">16</li>
-                                    <li class="yr-tt-tr_li">8</li>
-                                    <li class="yr-tt-tr_li">6</li>
-                                </ul>
-                                <div class="yr-tt-tc">50 баллов</div>
-                            </li>
+                        <ul class="yr-tb">                            
                         </ul>
                     </div>
                 </section>
                 <ul class="ws-lt">
-                    <li>
-                        <div class="tl">
-                            <div class="ph"><img src="/tpl/img/comment-photo-2.jpg" /></div>
-                            <div class="nm">Наум Коробочко</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="tl">
-                            <div class="ph"><img src="/tpl/img/comment-photo-3.jpg" /></div>
-                            <div class="nm">Александер Шпиц</div>
-                        </div>
-                    </li>
-                    <li class="you">
-                        <div class="tl">
-                            <div class="ph"><img src="/tpl/img/comment-photo-5.jpg" /></div>
-                            <div class="nm">Антон Семеневич Шпак</div>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -368,7 +284,7 @@
         <!-- WON BLOCK -->
         <div id="game-won" class="pop-box">
             <section class="gpc-pad">
-                <a href="javascript:void(0)" class="b-c-p cs"></a>
+                <a href="javascript:void(0)" class="b-c-p cs" onclick="document.location.reload();"></a>
                 <ul class="g-oc-b">
                 </ul>
                 <div class="gw-c-b">
@@ -392,11 +308,11 @@
                         <div class="yr-yw-b">
                             <div class="cb">
                                 <div class="yw-t">баллов<br>на счету<b class="player-points"></b></div>
-                                <a href="" class="yw-b">обменять</a>
+                                <a href="javascript:void(0);" onclick="location.hash='prizes';location.reload();" class="yw-b">обменять</a>
                             </div>
                             <div class="mb">
                                 <div class="yw-t">денег<br>на счету<b class="player-money"></b></div>
-                                <a href="" class="yw-b">вывести</a>
+                                <a href="javascript:void(0);" onclick="location.hash='money';location.reload();" class="yw-b">вывести</a>
                             </div>
                         </div>
                     </div>

@@ -27,4 +27,19 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->getList($limit, $offset);
     }
+
+    public function checkNickname(Entity $player) 
+    {
+        return $this->getProcessor()->checkNickname($player);   
+    }
+
+    public function saveAvatar(Entity $player) 
+    {
+        return $this->getProcessor()->saveAvatar($player);   
+    }
+
+    public function changePassword(Entity $player) 
+    {
+        return $this->getProcessor()->changePassword($player);      
+    }
 }

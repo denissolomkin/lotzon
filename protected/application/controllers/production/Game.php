@@ -26,6 +26,7 @@ class Game extends \AjaxController
         $ticket = new LotteryTicket();
         $ticket->setPlayerId(Session::connect()->get(Player::IDENTITY)->getId());
         $ticket->setCombination($this->request()->post('combination'));
+        $ticket->setTicketNum($this->request()->post('tnum'));
 
         try {
             $ticket->create();            
@@ -61,7 +62,7 @@ class Game extends \AjaxController
             $data['ticketWins'] = array();
 
             foreach ($tickets as $ticket) {
-                $data['tickets'][] = $ticket->getCombination();
+                $data['tickets'][$ticket->getTicketNum()] = $ticket->getCombination();
                 $shoots = 0;
                 foreach ($lottery->getCombination() as $lotteryNum) {
                     foreach ($ticket->getCombination() as $num) {
@@ -74,9 +75,9 @@ class Game extends \AjaxController
                     $data['player']['win']  = true;
                     $prize = $gameSettings->getPrizes(Session::connect()->get(Player::IDENTITY)->getCountry())[$shoots];
                     if ($prize['currency'] == GameSettings::CURRENCY_POINT) {
-                        $data['ticketWins'][] = $prize['sum'] . " баллов";
+                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " баллов";
                     } else {
-                        $data['ticketWins'][] = $prize['sum'] . " " . Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()];
+                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " " . Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()];
                     }
                 } else {
                     $data['ticketWins'][] = 0;
@@ -86,7 +87,7 @@ class Game extends \AjaxController
         } else {
             $this->ajaxResponse(array(
                 'content' => false,
-                'wait' => 1000,
+                'wait' => 5000,
             ));
         }
         $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
