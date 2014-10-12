@@ -803,6 +803,8 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .prize-info .pz-fm-bk .fm-inps-bk {margin-bottom:60px;}
 
 .prize-info .pz-fm-bk .pi-inp-bk {height:29px;border-bottom:1px solid #e3e3e3;margin-bottom:20px;position:relative;}
+.prize-info .pz-fm-bk .pi-inp-bk.error {border-color:#c51e1e!important;color:#c51e1e!important;}
+.prize-info .pz-fm-bk .pi-inp-bk.error > input, .prize-info .pz-fm-bk .pi-inp-bk.error .ph {color:#c51e1e!important;}
 .prize-info .pz-fm-bk .pi-inp-bk.focus {border-bottom:1px solid #000;}
 .prize-info .pz-fm-bk .pi-inp-bk:last-child {margin-bottom:0;}
 
