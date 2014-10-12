@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="h-t-mcb-l-wm">
                                     <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
-                                    <span class="h-t-mcb-l-wm_span">участников</span>
+                                    <span class="h-t-mcb-l-wm_span">участhиков</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
@@ -245,8 +245,8 @@
                             </div>
                         </div>
                     </div>
+                    <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
                 </div>
-                <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
             </section>
         </article>
 

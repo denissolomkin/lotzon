@@ -39,6 +39,8 @@ $(function(){
         }
     });
 
+
+
     $('.login-popup .m_input').on('keyup', function(){
         var val = $.trim($(this).val().length);
         if(val > 0){
@@ -99,17 +101,27 @@ $(function(){
     $('#login-block form[name="register"]').on('submit', function(e) {
         var form = $(this);
         var email = form.find('input[name="login"]').val();
-        
-        var rulesAgree = form.find("#rulcheck:checked").length ? 1 : 0;
-        registerPlayer({'email':email, 'agree':rulesAgree}, function(data){
-            document.location.href = "/";
-        }, function(data){
-            $("#reg-form").addClass('error');
-            form.find('.e-t').text(data.message);
-        }, function(data) {});
+        var rulesAgree = form.find('#rulcheck').prop('checked') ? 1 : 0;
 
+        if(rulesAgree == 0){
+            $("#reg-form").addClass('rul-error');
+            form.find('.e-t').text('Вы должны ознкомиться с правилами');
+        }else{
+            registerPlayer({'email':email, 'agree':rulesAgree}, function(data){
+                document.location.href = "/";
+            }, function(data){
+                $("#reg-form").addClass('error');
+                form.find('.e-t').text(data.message);
+            }, function(data) {});
+        }
         return false;
     });
+    $('#rulcheck').on('change', function(){
+        if($(this).prop('checked')){
+            $("#reg-form").removeClass('rul-error');
+        }
+    });
+
     // login handler
     $('#login-block form[name="login"]').on('submit', function(e) {
         var form = $(this);

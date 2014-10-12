@@ -405,32 +405,35 @@ $(function(){
     /* ==========================================================================
                                 Info block functional
      ========================================================================== */
-    $('.n-add-but').on('click', function(){
+    $('.n-add-but, .n-mr-cl-bt-bk .mr').on('click', function(){
         var newsBlock = $('.news');
-        var button = $(this);
-        if(!newsBlock.hasClass('b-ha')){
-            loadNews($(this).parent().find('.n-item').length, function(data) {
-                if (data.res.news.length) {
-                    var html = '';
-                    $(data.res.news).each(function(id, news) {
-                        html += '<div class="n-item"><div class="n-i-tl">'+news.title+' • '+news.date+'</div><div class="n-i-txt">'+news.text+'</div></div>';
-                    });
-                    $(html).insertBefore(button);
-                    $('.n-items').append('<div class="n-ic-bk"></div>');
-                    newsBlock.addClass('b-ha');
-                    $('.n-add-but').html('спрятать');
-                }
-            }, function() {}, function() {});
-        } else {
-            $('.n-items').find('.n-item').each(function(id, news){
-                if (id >= 6) {
-                    $(news).remove();
-                }
-            });
-            $('.n-ic-bk').remove();
-            $('.n-add-but').html('загрузить еще');
-            newsBlock.removeClass('b-ha');
-        }
+        loadNews($(this).parent().find('.n-item').length, function(data) {
+            if (data.res.news.length) {
+                newsBlock.addClass('b-ha');
+                var html = '';
+                $(data.res.news).each(function(id, news) {
+                    html += '<div class="n-item"><div class="n-i-tl">'+news.title+' • '+news.date+'</div><div class="n-i-txt">'+news.text+'</div></div>';
+                });
+                $('.n-items .h-ch').append(html);
+
+                $('.n-items').height($('.n-items .h-ch').height());
+                $('.n-add-but').hide();
+                newsBlock.find('.n-mr-cl-bt-bk').show();
+            }
+        }, function() {}, function() {});
+    });
+
+    $('.n-mr-cl-bt-bk .cl').on('click', function(){
+        var newsBlock = $('.news');
+        $('.n-items').find('.n-item').each(function(id, news){
+            if (id >= 6) {
+                $(news).remove();
+            }
+        });
+        $('.n-items').removeAttr('style');
+        $(this).closest('.n-mr-cl-bt-bk').hide();
+        $('.n-add-but').show();
+        newsBlock.removeClass('b-ha');
     });
 
     $('.r-add-but').on('click', function(){

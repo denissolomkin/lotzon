@@ -312,14 +312,20 @@
                             <div class="sbk-tl">новости</div>
                         </div>
                         <div class="n-items">
-                            <? foreach ($news as $newsItem) { ?>
-                                <div class="n-item">
-                                    <div class="n-i-tl"><?=$newsItem->getTitle()?> • <?=date('d.m.Y', $newsItem->getDate())?></div>
-                                    <div class="n-i-txt"><?=$newsItem->getText()?></div>
-                                </div>
-                            <? } ?>
+                            <div class="h-ch">
+                                <? foreach ($news as $newsItem) { ?>
+                                    <div class="n-item">
+                                        <div class="n-i-tl"><?=$newsItem->getTitle()?> • <?=date('d.m.Y', $newsItem->getDate())?></div>
+                                        <div class="n-i-txt"><?=$newsItem->getText()?></div>
+                                    </div>
+                                <? } ?>
+                            </div>
+                         </div>
                         <div class="n-add-but">загрузить еще</div>
-                        <div class="b-cl-block"></div>
+                        <div class="n-mr-cl-bt-bk">
+                            <div class="cl">свернуть</div>
+                            <div class="mr">загрузить еще</div>
+                        </div>
                     </section>
                 </div>
 
