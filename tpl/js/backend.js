@@ -230,3 +230,36 @@ function removePlayerAvatar(successFunction, failFunction, errorFunction) {
        }
     });
 }
+
+function addEmailInvite(email, successFunction, failFunction, errorFunction)
+{
+    $.ajax({
+        url: "/invites/email",
+        method: 'POST',
+        data: {
+            'email' : email,
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });   
+}
+
+window.setInterval(function() {
+    $.ajax({
+        url: "/players/ping",
+        method: 'GET',
+        async: true,
+        success: function(data) {},
+        error: function() {}
+    });   
+}, 60 * 1000);

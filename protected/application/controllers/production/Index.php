@@ -25,6 +25,7 @@ class Index extends \SlimController\SlimController
             $this->landing();    
         } else {
             $this->game();
+            Session::connect()->get(Player::IDENTITY)->markOnline();
         }
         
     }

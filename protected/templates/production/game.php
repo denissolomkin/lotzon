@@ -91,7 +91,7 @@
                     <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="javascript:void(0)">призы</a></li>
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="javascript:void(0)">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="javascript:void(0)">профиль</a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="javascript:void(0)">кабинет</a></li>
                     <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">Шансы</a></li>
                     <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
@@ -412,23 +412,23 @@
                             </section>
 
                             <section class="_section profile-bonuses">
-                                <div class="pb-txt">Вы можете получить дополнительные баллы бла-бла-бла. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте приглянувшийся товар и делайте заказ! Через короткое время курьерская служба доставит его вам. Для того, чтобы сделать покупку, не нужно выходить из дому — заходите в наш магазин, выбирайте!</div>
+                                <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов</div>
+                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов <br/> (еще <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений доступно на этой неделе)</div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
-                                            <input type="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
+                                            <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
                                         </div>
                                         <div class="if-bt">пригласить</div>
                                     </div>
                                 </div>
-                                <div class="sn-bt-bk">
+                                <!--div class="sn-bt-bk">
                                     <div class="fb"><span>пригласить</span></div>
                                     <div class="vk"><span>пригласить</span></div>
                                     <div class="gp"><span>пригласить</span></div>
                                     <div class="tw"><span>пригласить</span></div>
-                                </div>
-                                <div class="rp-bk">
+                                </div-->
+                                <!-- div class="rp-bk">
                                     <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
                                     <div class="rp-sl-bk">
                                         <a href="javascript:void(0)" class="tw"></a>
@@ -436,7 +436,7 @@
                                         <a href="javascript:void(0)" class="vk"></a>
                                         <a href="javascript:void(0)" class="fb"></a>
                                     </div>
-                                </div>
+                                </div -->
                             </section>
 
                             <section class="_section profile-info">
@@ -449,13 +449,13 @@
                                                 <img src="/filestorage/avatars/<?=ceil($player->getId() / 100)?>/<?=$player->getAvatar()?>">
                                             <? } ?>
                                         </div>  
-                                        <div class="pi-cs-bk">
+                                        <!--div class="pi-cs-bk">
                                             <div class="txt">Привязать соцсеть и получить бонус 40 баллов.</div>
                                             <div class="cs-int-bt fb int"></div>
                                             <div class="cs-int-bt vk"></div>
                                             <div class="cs-int-bt gp"></div>
                                             <div class="cs-int-bt tw"></div>
-                                        </div>
+                                        </div -->
                                     </div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">

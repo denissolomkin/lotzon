@@ -139,6 +139,7 @@ Config::instance()->publicResources = array(
         'post'  => 'controllers\production\Players:saveAvatar',
         'delete' => 'controllers\production\Players:removeAvatar',
     ),
+    '/players/ping' => 'controllers\production\Players:ping',
     '/game/ticket/' => array(
         'post'  => 'controllers\production\Game:createTicket',
     ),
@@ -150,6 +151,10 @@ Config::instance()->publicResources = array(
     '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
     '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
     '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
+
+    '/invites/email' => 'controllers\production\InvitesController:emailInvite',
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';
+
+Config::instance()->playerOfflineTimeout = 5 * 60;

@@ -10,7 +10,7 @@ class AjaxController extends \SlimController\SlimController {
 
     public function init()
     {
-
+        
     }
 
     public function validRequest()

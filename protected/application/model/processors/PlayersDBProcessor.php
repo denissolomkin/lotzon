@@ -189,4 +189,39 @@ class PlayersDBProcessor implements IProcessor
 
         return $player;
     }
+
+    public function decrementInvitesCount(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `InvitesCount` = :ic WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':ic'  => $player->getInvitesCount(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;   
+    }
+
+    public function markOnline(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':onl'  => (int)$player->isOnline(),
+                ':onlt'  =>  (int)$player->getOnlineTime(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;   
+    }
 }

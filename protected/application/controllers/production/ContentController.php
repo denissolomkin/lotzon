@@ -154,7 +154,7 @@ class ContentController extends \AjaxController
                 'name'    => $player->getName(),
                 'surname' => $player->getSurname(),
                 'nick'    => $player->getNicName(),
-                'avatar'  => $player->getAvatar(),
+                'avatar'  => $player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '',
             );
             $langs[$player->getId()] = $player->getCountry();
             if (!in_array($langs[$player->getId()], Config::instance()->langs)) {

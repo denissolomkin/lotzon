@@ -42,4 +42,14 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->changePassword($player);      
     }
+
+    public function decrementInvitesCount(Entity $player) 
+    {
+        return $this->getProcessor()->decrementInvitesCount($player);      
+    }
+
+    public function markOnline(Entity $player)
+    {
+        return $this->getProcessor()->markOnline($player);   
+    }
 }

@@ -16,6 +16,7 @@ class Game extends \AjaxController
             if (!Session::connect()->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }    
+            Session::connect()->get(Player::IDENTITY)->markOnline();
         }
     }
 

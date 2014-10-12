@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \WideImage;
+use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -23,11 +23,21 @@ class Players extends \AjaxController
             $player = new Player();
             $player->setEmail($email);
             $player->setCountry(Config::instance()->defaultLang);
+            $player->setVisibility(true);
             
             try {   
                 $player->create();
             } catch (EntityException $e) {
                 $this->ajaxResponse(array(), 0, $e->getMessage());
+            }
+            // check invites
+            if ($invite = EmailInvites::instance()->getInvite($player->getEmail()))
+            {
+                // add bonuses to inviter and delete invite
+                try {
+                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST);
+                    $invite->delete();    
+                } catch (EntityException $e) {}
             }
 
             $this->ajaxResponse(array(
@@ -55,7 +65,7 @@ class Players extends \AjaxController
             $player->setEmail($email);
 
             try {   
-                $player->login($password);
+                $player->login($password)->markOnline();
             } catch (EntityException $e) {
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
@@ -161,5 +171,12 @@ class Players extends \AjaxController
         Session::connect()->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
 
         $this->ajaxResponse(array());
+    }
+
+    public function pingAction()
+    {
+        Session::connect()->get(Player::IDENTITY)->markOnline();
+
+        $this->ajaxResponse(array());   
     }
 }

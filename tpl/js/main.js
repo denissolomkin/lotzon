@@ -266,6 +266,17 @@ $(function(){
         }
     });
 
+    $(".if-bt").on('click', function() {
+        var email = $(this).parent().find('input[name="email"]').val();
+        var button = $(this);
+        addEmailInvite(email, function(data){
+            button.parents('.if-bk').find('.invites-count').text(data.res.invitesCount);
+            button.parent().find('input[name="email"]').val("");
+        }, function(data){
+            alert(data.message);
+        }, function(){})
+    });
+
 
 
     /* ==========================================================================
@@ -572,9 +583,11 @@ $(function(){
 
     function processLotteryResults (data) {
         if (data.res.offset > 0) {
-            $('.mr-cl-bt-bl').show();
-            if (!data.res.keepShowButton) {
-                $('mr-cl-bt-bl').find('.mr').hide();
+            $('.mr-cl-bt-bl').show();           
+            if (!data.res.keepButtonShow) {               
+                $('.mr-cl-bt-bl').find('.mr').hide();
+            } else {               
+                $('.mr-cl-bt-bl').find('.mr').show();
             }
         }
         var html = '';
@@ -749,7 +762,7 @@ $(function(){
         });
         $('#profile-history').find('.loto-holder').html(combHtml);
         $(data.res.winners).each(function(id, winner){
-            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="/tpl/img/comment-photo-2.jpg" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : 'default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
         $('#profile-history').find('.ws-lt').html(winnerHtml);
         $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {

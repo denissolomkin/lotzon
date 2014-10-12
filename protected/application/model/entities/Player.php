@@ -36,6 +36,10 @@ class Player extends Entity
     private $_money       = 0;
     private $_gamesPlayed = 0;
 
+    private $_invitesCount = 0;
+    private $_online     = 0;
+    private $_onlineTime = 0;
+
     public function init()
     {
         $this->setModelClass('PlayersModel');
@@ -290,6 +294,56 @@ class Player extends Entity
         return $this->_gamesPlayed;
     }  
 
+    public function getInvitesCount()
+    {
+        return $this->_invitesCount;
+    }
+
+    public function setInvitesCount($ic)
+    {
+        $this->_invitesCount = $ic;
+
+        return $this;
+    }
+
+    public function setOnlineTime($time) 
+    {
+        $this->_onlineTime  = time();
+
+        return $this;
+    }
+
+    public function getOnlineTime()
+    {
+        return $this->_onlineTime;
+    }
+
+    public function setOnline($online)
+    {
+        $this->_online = $online;
+
+        return $this;
+    }
+
+    public function isOnline()
+    {
+        return $this->_online;
+    }
+
+    public function decrementInvitesCount()
+    {
+        $this->setInvitesCount($this->getInvitesCount() - 1);
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->decrementInvitesCount($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;
+    }
+
     public function generatePassword()
     {
         $an = array(
@@ -481,6 +535,20 @@ class Player extends Entity
         return $this;   
     }
 
+    public function markOnline()
+    {
+        $this->setOnline(true)
+             ->setOnlineTime(time());
+
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->markOnline($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+    }
+
     public function formatFrom($from, $data) 
     {
         if ($from == 'DB') {
@@ -502,7 +570,10 @@ class Player extends Entity
                  ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
                  ->setPoints($data['Points'])
                  ->setMoney($data['Money'])
-                 ->setGamesPlayed($data['GamesPlayed']);
+                 ->setGamesPlayed($data['GamesPlayed'])
+                 ->setInvitesCount($data['InvitesCount'])
+                 ->setOnline($data['Online'])
+                 ->setOnlineTime($data['OnlineTime']);
         }
 
         return $this;
