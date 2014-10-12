@@ -115,6 +115,14 @@ Config::instance()->privateResources =  array(
     '/private/shop/updateItem/' => array(
         'post'    => 'controllers\admin\Shop:updateItem',
     ),
+    '/private/chances' => array(
+        'get' => 'controllers\admin\MomentalChances:index',
+        'post' => 'controllers\admin\MomentalChances:save',
+    ),
+    '/private/seo' => array(
+        'get' => 'controllers\admin\SEO:index',
+        'post' => 'controllers\admin\SEO:save',
+    ),
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',

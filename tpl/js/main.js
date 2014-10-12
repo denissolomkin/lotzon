@@ -370,6 +370,7 @@ $(function(){
 
     $('.pz-fm-bk .pz-ifo-bt').on('click', function(){
         form = $(this).parent().find('.fm-inps-bk');
+        form.find('.pi-inp-bk').removeClass('error');
         var order = {
             itemId: currentShowedItem,
             name: form.find('input[name="name"]').val(),
@@ -393,23 +394,26 @@ $(function(){
             switch (data.message) {
                 case 'ORDER_INVALID_NAME' :
                     form.find('input[name="name"]').parent().addClass('error');                    
+                    form.find('input[name="name"]').focus();
                 break;
                 case 'ORDER_INVALID_SURNAME' :
                     form.find('input[name="surname"]').parent().addClass('error');                    
+                    form.find('input[name="surname"]').focus();
                 break;
                 case 'ORDER_INVALID_PHONE' :
                 case 'INVALID_PHONE_FORMAT' :
                     form.find('input[name="phone"]').parent().addClass('error');                    
+                    form.find('input[name="phone"]').focus();
                 break;
                 case 'ORDER_INVALID_CITY' :
                     form.find('input[name="city"]').parent().addClass('error');                    
+                    form.find('input[name="city"]').focus();
                 break; 
                 case 'ORDER_INVALID_ADRESS' :
                     form.find('input[name="addr"]').parent().addClass('error');                    
-                break;  
-                case 'ORDER_INVALID_CITY' :
-                    form.find('input[name="city"]').parent().addClass('error');                   
-                break;             }
+                    form.find('input[name="addr"]').focus();
+                break; 
+            }
         }, function(){})
 
     });

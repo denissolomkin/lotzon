@@ -6,9 +6,9 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="keywords" content="" />
+        <title><?=$seo['title']?></title>
+        <meta name="description" content="<?=$seo['desc']?>">
+        <meta name="keywords" content="<?=$seo['kw']?>" />
         <meta name="robots" content="all" />
         <meta name="publisher" content="" />
         <meta http-equiv="reply-to" content="" />
