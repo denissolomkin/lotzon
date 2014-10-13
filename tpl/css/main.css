@@ -198,7 +198,7 @@ article .wings {}
 .tb-slides .tb-slide .ticket-random:hover:after {content:"случайное автозаполнение";display:block;white-space:nowrap;position:absolute;top:14px;left:140px;color:#4c4c4c;font:15px/1 Handbook-bold;text-transform:uppercase;}
 .tb-slides .tb-slide .ticket-favorite .after {display:none;position:absolute;top:8px;left:40px;color:#4c4c4c;font:15px/1 Handbook-bold;text-align:left;display:none;padding-left:30px;}
 
-.tb-slides .tb-slide .ticket-favorite .after > b {white-space:nowrap;display:block;text-transform:uppercase;}
+.tb-slides .tb-slide .ticket-favorite .after > b {white-space:nowrap;display:block;text-transform:uppercase;font-weight:normal;}
 .tb-slides .tb-slide .ticket-favorite .after > span {white-space:nowrap;display:block;color:#fff;font:15px/1 Handbook-regular;}
 .tb-slides .tb-slide .ticket-favorite .after > span > i {color:#c51e1e;font:normal 15px/1 Handbook-regular;}
 .tb-slides .tb-slide .ticket-favorite .after > span > i:hover {text-decoration:underline;}
@@ -416,6 +416,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-lt {width:160px;float:left;}
 .profile-info .pi-ph {width:160px;height:160px;position:relative;background:url("../img/bg-nophoto.png") no-repeat 0 0;cursor:pointer;}
 .profile-info .pi-ph > i {display:block;width:30px;height:30px;position:absolute;top:10px;right:10px;background:transparent url("../img/bg-add-photo.png") no-repeat 0 0;}
+.profile-info .pi-ph.true {background:none;}
 .profile-info .pi-ph.true > i {background:transparent url("../img/bg-but-close-rules.png") no-repeat 0 0;}
 .profile-info .pi-ph > img {max-width:160px;max-height:160px;}
 .profile-info .pi-lt .pi-cs-bk {margin-top:28px;}
