@@ -34,13 +34,39 @@ if (timeToRunLottery()) {
         $winner = array_rand($tickets);
         $lotteryCombination = $tickets[$winner]->getCombination(); 
     } else {
-        // generate unique lottery random nums
-        $lotteryCombination = array();
-        while (count($lotteryCombination) < $_ballsCount ) {
-            $rand = mt_rand(1, $_variantsCount);
+        $lotteryCombinations = array();
+        for ($i = 0; $i < Config::instance()->generatorNumTries; ++$i) {
+            $combination = array();
 
-            if (!in_array($rand, $lotteryCombination)) {
-                $lotteryCombination[] = $rand;
+            while (count($combination) < $_ballsCount ) {
+                $rand = mt_rand(1, $_variantsCount);
+
+                if (!in_array($rand, $combination)) {
+                    $combination[] = $rand;
+                }
+            }
+            $lotteryCombinations[] = $combination;
+        }
+
+        // get most better combination
+        $maxWin = 0;
+        $lotteryCombination = array();
+        foreach ($lotteryCombinations as $id => $combination) {
+            $combinationWin = 0;
+            foreach ($combination as $combinationNum) {
+                foreach ($tickets as $ticket) {
+                    foreach ($ticket->getCombination() as $ticketNum) {
+                        if ($combinationNum == $ticketNum) {
+                            $combinationWin++;
+                        }
+                    }
+                }
+            }
+
+            if ($combinationWin > $maxWin) {
+                $maxWin = $combinationWin;
+
+                $lotteryCombination = $lotteryCombinations[$id];
             }
         }
     }
@@ -185,8 +211,6 @@ if (timeToRunLottery()) {
 
 function timeToRunLottery() {
     global $gameSettings;
-
-    return true;
 
     $currentTime = strtotime(date('H:i'), 0);
 
