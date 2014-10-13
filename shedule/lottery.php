@@ -29,9 +29,10 @@ if (timeToRunLottery()) {
     $lotteryCombination = array();
 
     // if need to play jackpot
+    
     if ($gameSettings->getJackpot()) {
         $winner = array_rand($tickets);
-        $lotteryCombination = $tickets[$winner->getCombination()]; 
+        $lotteryCombination = $tickets[$winner]->getCombination(); 
     } else {
         // generate unique lottery random nums
         $lotteryCombination = array();
@@ -184,6 +185,8 @@ if (timeToRunLottery()) {
 
 function timeToRunLottery() {
     global $gameSettings;
+
+    return true;
 
     $currentTime = strtotime(date('H:i'), 0);
 
