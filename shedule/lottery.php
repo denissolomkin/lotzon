@@ -24,13 +24,23 @@ if (isLocked()) {
 if (timeToRunLottery()) {
     setLock();
 
-    // generate unique lottery random nums
+    // get players tickets    
+    $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     $lotteryCombination = array();
-    while (count($lotteryCombination) < $_ballsCount ) {
-        $rand = mt_rand(1, $_variantsCount);
 
-        if (!in_array($rand, $lotteryCombination)) {
-            $lotteryCombination[] = $rand;
+    // if need to play jackpot
+    if ($gameSettings->getJackpot()) {
+        $winner = array_rand($tickets);
+        $lotteryCombination = $tickets[$winner->getCombination()]; 
+    } else {
+        // generate unique lottery random nums
+        $lotteryCombination = array();
+        while (count($lotteryCombination) < $_ballsCount ) {
+            $rand = mt_rand(1, $_variantsCount);
+
+            if (!in_array($rand, $lotteryCombination)) {
+                $lotteryCombination[] = $rand;
+            }
         }
     }
 
@@ -43,8 +53,6 @@ if (timeToRunLottery()) {
     $playerPrizes   = array();
     $ticketsWon = array();
 
-    // get players tickets    
-    $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     if (count($tickets)) {
         foreach ($tickets as $ticket) {
             // add player
