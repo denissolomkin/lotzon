@@ -33,11 +33,10 @@ class Players extends \AjaxController
             // check invites
             $invite = false;
             try {
-                $invite = EmailInvites::instance()->getInvite($player->getEmail())
+                $invite = EmailInvites::instance()->getInvite($player->getEmail());
             } catch (ModelException $e) {}
             
-            if ($invite)
-            {
+            if ($invite) {
                 // add bonuses to inviter and delete invite
                 try {
                     $invite->getInviter()->addPoints(EmailInvite::INVITE_COST);
