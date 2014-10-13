@@ -197,7 +197,7 @@ class LotteriesModelDBProcessor implements IProcessor
             // get winners
             $sql = "SELECT `p`.* FROM `PlayerLotteryWins` AS `plw` 
                     LEFT JOIN `Players` AS `p` ON `p`.`Id` = `plw`.`PlayerId`
-                    WHERE `p`.`Visible` = 1 AND `plw`.`LotteryId` = :lotid AND `plw`.`MoneyWin` > 0";
+                    WHERE `plw`.`LotteryId` = :lotid AND `plw`.`MoneyWin` > 0";
 
             try {
                 $sth = DB::Connect()->prepare($sql);
@@ -206,9 +206,9 @@ class LotteriesModelDBProcessor implements IProcessor
                 ));
 
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query " . $e->getMessage(), 500);              
+                throw new ModelException("Error processing storage query ", 500);              
             }
-            $playersids = array();
+
             if ($sth->rowCount()) {
                 $playersData = $sth->fetchAll();
 
@@ -217,19 +217,19 @@ class LotteriesModelDBProcessor implements IProcessor
                     $player->formatFrom('DB', $playerData);
 
                     $returnData['winners'][] = $player;
-                    $playersids[] = $player->getId();
                 }
             }
             // get lottery tikets
-            $sql = "SELECT * FROM `LotteryTickets` WHERE `LotteryId` = :lotid AND `PlayerId` IN (%s)";
+            $sql = "SELECT * FROM `LotteryTickets` WHERE `LotteryId` = :lotid AND `PlayerId` = :plid";
 
             try {
-                $sth = DB::Connect()->prepare(sprintf($sql, join(',', $playersids)));
+                $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(
                     ':lotid' => $lottery->getId(),
+                    ':plid'  => Session::connect()->get(Player::IDENTITY)->getId(),
                 ));
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
+                throw new ModelException("Error processing storage query ", 500);
             }
 
             if ($sth->rowCount()) {
