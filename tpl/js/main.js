@@ -794,6 +794,7 @@ $(function(){
 
         $('#profile-history').find('.ws-lt').html(winnerHtml);
         if (yourId) {
+            $('#profile-history').find('.ws-pf-rt-bk').show();
             $('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
             var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
@@ -817,6 +818,8 @@ $(function(){
             $(data.res.lottery.combination).each(function(id, num){
                 $('#profile-history').find('.yr-tb').find('li[data-num="'+num+'"]').addClass('won');
             });
+        } else {
+            $('#profile-history').find('.ws-pf-rt-bk').hide();
         }
         $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
             e.stopPropagation();
