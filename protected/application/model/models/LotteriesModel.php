@@ -42,4 +42,13 @@ class LotteriesModel extends Model
         return $this->getProcessor()->getPlayerHistory($playerId, $limit, $offset);   
     }
 
+    public function getLotteryDetails($lotteryId)
+    {
+        return $this->getProcessor()->getLotteryDetails($lotteryId);
+    }
+
+    public function getDependentLottery($lotteryId, $dependancy) 
+    {
+        return $this->getProcessor()->getDependentLottery($lotteryId, $dependancy);
+    }
 }

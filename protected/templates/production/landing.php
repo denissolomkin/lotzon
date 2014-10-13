@@ -6,9 +6,9 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="keywords" content="" />
+        <title><?=$seo['title']?></title>
+        <meta name="description" content="<?=$seo['desc']?>">
+        <meta name="keywords" content="<?=$seo['kw']?>" />
         <meta name="robots" content="all" />
         <meta name="publisher" content="" />
         <meta http-equiv="reply-to" content="" />
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="h-t-mcb-l-wm">
                                     <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
-                                    <span class="h-t-mcb-l-wm_span">участников</span>
+                                    <span class="h-t-mcb-l-wm_span">участhиков</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
@@ -89,7 +89,7 @@
                                     <div class="h-b-c-tb-l">До следующего розыгрыша осталось</div>
                                     <div id="countdownHolder" class="h-b-c-tb-r"></div>
                                 </div>
-                                <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть<br/> и выигрывать</span></a>
+                                <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть</span></a>
                                 <div class="h-b-c-lg">
                                     <div class="h-b-c-lg-t">розыгрыш от <?=date('d.m.Y')?></div>
                                     <ul class="h-b-c-lg_ul">
@@ -106,62 +106,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <!--div class="h-t">
-                <div class="h-t-tcb">
-                    <div class="h-t-tcb-l"><a href=""><img src="img/promo-header-logo.png" width="238" height="60" /></a></div>
-                    <div class="h-t-tcb-sb">
-                        <a href="" class="h-t-tcb-sb-fb"></a>
-                        <a href="" class="h-t-tcb-sb-vk"></a>
-                        <a href="" class="h-t-tcb-sb-gp"></a>
-                        <a href="" class="h-t-tcb-sb-tw"></a>
-                    </div>
-                    <div class="h-t-tcb-t">Lotzon — необычный проект, сутью которого бесплатная игра, участники которой могут стать обладателями денежных участники которой могут стать обладателями денежных и других ценных призов участники которой могут стать обладателями денежных и других ценных</div>
-                </div>
-                <div class="h-t-mcb">
-                    <div class="h-t-mcb-l">
-                        <div class="h-t-mcb-l-wm">
-                            <b class="h-t-mcb-l-wm_b">430</b>
-                            <span class="h-t-mcb-l-wm_span">Победителей</span>
-                        </div>
-                        <div class="h-t-mcb-l-wm">
-                            <b class="h-t-mcb-l-wm_b">100 500</b>
-                            <span class="h-t-mcb-l-wm_span">участников</span>
-                        </div>
-                    </div>
-                    <div class="h-t-mcb-r">
-                        <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                        <div class="h-t-mcb-r-i">3 525 321</div>
-                    </div>
-                </div>
-                <div class="h-t-bcb">
-                    <div class="h-t-bcb-l">Каждый день у нас новые победители, которые выигрывают денежные и другие призы. Участие в розыгрыше всегда будет бесплатным. Присоединяйтесь.</div>
-                    <div class="h-t-bcb-r">
-                        <a href="" class="h-t-bcb-r-b">Играть</a>
-                    </div>
-                </div>
-            </div>
-            <div class="h-b">
-                <div class="h-b-c">
-                    <div class="h-b-c-tb">
-                        <div class="h-b-c-tb-l">До следующего розыгрыша осталось</div>
-                        <div class="h-b-c-tb-r">11<i class="h-b-c-tb-r_i">:</i>43<i class="h-b-c-tb-r_i">:</i>59</div>
-                    </div>
-                    <a href="" class="h-b-c-bhg"><span class="h-b-c-bhg_span">как играть<br/> и выигрывать</span></a>
-                    <div class="h-b-c-lg">
-                        <div class="h-b-c-lg-t">последний<br/>розыгрыш 24.08.2014</div>
-                        <ul class="h-b-c-lg_ul">
-                            <li class="h-b-c-lg_ul_li">2</li>
-                            <li class="h-b-c-lg_ul_li">14</li>
-                            <li class="h-b-c-lg_ul_li">36</li>
-                            <li class="h-b-c-lg_ul_li">6</li>
-                            <li class="h-b-c-lg_ul_li">11</li>
-                            <li class="h-b-c-lg_ul_li">39</li>
-                        </ul>
-                    </div>
-                </div>
-            </div-->
         </header>
 
         <article>
@@ -211,14 +155,14 @@
                                                 <? } ?>
                                             </ul>
                                         <div class="ri-e"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
-                                    </li>    
+                                    </li>
                                     <? } ?>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="3"></a>
                 </div>
-                <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="3"></a>
             </section>
             <section id="slide3" class="display-slide">
                 <div class="a-dt-b">
@@ -301,8 +245,8 @@
                             </div>
                         </div>
                     </div>
+                    <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
                 </div>
-                <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
             </section>
         </article>
 
@@ -310,8 +254,7 @@
         <footer id="slide4" class="display-slide">
             <div class="f-c-b">
                 <div class="a-dt-b">
-
-                    <div class="a-dt_tr">
+                    <div class="a-dt_tr top">
                         <div class="t_td">
                             <div class="f-tl-b">
                                 <div class="tl-tl">наши партнеры</div>
@@ -367,81 +310,88 @@
                                         LOGIN POPUP
         ========================================================================== -->
 
-        <div class="login-popup" id="login-block">
-            <div class="lp-b">
-                <div class="pu-b-c" id="lb-close"></div>
-                    <div class="b-m registration" id="cl-check">
-                        <div class="rules-bk">
-                            <div class="rb-cs-bt"></div>
-                            <div class="rb-pg">
-                                <h2>правила<br/>участия</h2>
-                                <?=$staticTexts['promo-login-rules'][$lang]->getText()?>                                
-                            </div>
-                        </div>
-
-                        <!-- add class "registration" or "login" -->
-                        <div class="t-b">
-                            <a href="javascript:void(0)" class="tb_a-l swap-form">вход</a>
-                            <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
-                        </div>
-                        <!-- REGISTRATION FORM -->
-                        <form name="register">
-                            <div id="reg-form">
-                                <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан пароль, который вам понадобиться ввести при входе в слдующий раз</div>
-                                <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
-                                </div>
-
-                                <div class="ch-b">
-                                    <div class="e-t"></div>
-                                    <input type="checkbox" id="rulcheck" hidden />
-                                    <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
-                                </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but" value="Играть" />
-                                </div>
-                            </div>
-                        </form>
-                        <!-- LOGIN FORM -->
-                        <form name="login">
-                            <div id="login-form">
-                                <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
-                                </div>
-                                <div class="ib-p">
-                                    <div class="ph">Пароль</div>
-                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
-                                </div>
-                                <div class="ch-b-bk">
-                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
-                                    <div class="ch-b">
-                                        <input type="checkbox" id="remcheck" hidden />
-                                        <label for="remcheck">Запомнить<br/>меня</a></label>
+        <div class="login-popup popup" id="login-block">
+            <div class="lb-table">
+                <div class="lb-tr">
+                    <div class="lb-td">
+                        <div class="lp-b">
+                            <div class="pu-b-c" id="lb-close"></div>
+                            <div class="b-m registration" id="cl-check">
+                                <div class="rules-bk">
+                                    <div class="rb-cs-bt"></div>
+                                    <div class="rb-pg">
+                                        <h2>правила<br/>участия</h2>
+                                        <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
                                     </div>
-                                    <a href="javascript:void(0)" id="rec-pass" class="r-p">Я забыл пароль</a>
                                 </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but" value="Играть" />
-                                </div>
-                            </div>
-                        </form>
 
-                        <!-- REPASSWORD FORM -->
-                        <form name="register">
-                            <div id="pass-rec-form">
-                                <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан новый пароль, который позволит войти в профиль через форму входа.</div>
-                                <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                <!-- add class "registration" or "login" -->
+                                <div class="t-b">
+                                    <a href="javascript:void(0)" class="tb_a-l swap-form">вход</a>
+                                    <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
                                 </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but" value="Играть" />
-                                </div>
+                                <!-- REGISTRATION FORM -->
+                                <form name="register">
+                                    <div id="reg-form">
+                                        <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан пароль, который вам понадобиться ввести при входе в слдующий раз</div>
+                                        <div class="ib-l">
+                                            <div class="ph">Ваш email</div>
+                                            <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                        </div>
+
+                                        <div class="ch-b">
+                                            <div class="e-t"></div>
+                                            <input type="checkbox" id="rulcheck" hidden />
+                                            <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
+                                        </div>
+                                        <div class="s-b">
+                                            <input type="submit" disabled class="sb_but disabled" value="Играть" />
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- LOGIN FORM -->
+                                <form name="login">
+                                    <div id="login-form">
+                                        <div class="ib-l">
+                                            <div class="ph">Ваш email</div>
+                                            <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                        </div>
+                                        <div class="ib-p">
+                                            <div class="ph">Пароль</div>
+                                            <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
+                                        </div>
+                                        <div class="ch-b-bk">
+                                            <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                            <div class="ch-b">
+                                                <input type="checkbox" id="remcheck" hidden />
+                                                <label for="remcheck">Запомнить<br/>меня</a></label>
+                                            </div>
+                                            <a href="javascript:void(0)" id="rec-pass" class="r-p">Я забыл пароль</a>
+                                        </div>
+                                        <div class="s-b">
+                                            <input type="submit" class="sb_but disabled" disabled value="Играть" />
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- REPASSWORD FORM -->
+                                <form name="rec-pass">
+                                    <div id="pass-rec-form">
+                                        <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан новый пароль, который позволит войти в профиль через форму входа.</div>
+                                        <div class="ib-l">
+                                            <div class="ph">Ваш email</div>
+                                            <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                        </div>
+                                        <div class="s-b">
+                                            <input type="submit" class="sb_but disabled" disabled value="Отправить пароль" />
+                                        </div>
+                                    </div>
+                                    <div id="pass-rec-txt">Новый пароль выслан на указанный email. </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
 

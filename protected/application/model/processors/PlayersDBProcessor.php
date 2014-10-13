@@ -133,4 +133,95 @@ class PlayersDBProcessor implements IProcessor
 
         return $players;
     }
+
+    public function checkNickname(Entity $player) 
+    {
+        $sql = "SELECT * FROM `Players` WHERE `Nicname` = :nic AND `Id` != :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':nic'  => $player->getNicname(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        if ($sth->rowCount()) {
+            throw new ModelException('NICKNAME_BUSY', 403);
+        }
+
+        return true;
+    }
+
+    public function saveAvatar(Entity $player) 
+    {
+        $sql = "UPDATE `Players` SET `Avatar` = :av WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':av'  => $player->getAvatar(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return true;
+    }
+
+    public function changePassword(Entity $player) 
+    {
+        $sql = "UPDATE `Players` SET `Password` = :pw, `Salt` = :salt WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':pw'  => $player->getPassword(),
+                ':salt'  => $player->getSalt(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;
+    }
+
+    public function decrementInvitesCount(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `InvitesCount` = :ic WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':ic'  => $player->getInvitesCount(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;   
+    }
+
+    public function markOnline(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':onl'  => (int)$player->isOnline(),
+                ':onlt'  =>  (int)$player->getOnlineTime(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;   
+    }
 }

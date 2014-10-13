@@ -115,6 +115,14 @@ Config::instance()->privateResources =  array(
     '/private/shop/updateItem/' => array(
         'post'    => 'controllers\admin\Shop:updateItem',
     ),
+    '/private/chances' => array(
+        'get' => 'controllers\admin\MomentalChances:index',
+        'post' => 'controllers\admin\MomentalChances:save',
+    ),
+    '/private/seo' => array(
+        'get' => 'controllers\admin\SEO:index',
+        'post' => 'controllers\admin\SEO:save',
+    ),
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
@@ -135,6 +143,11 @@ Config::instance()->publicResources = array(
     '/players/update/' => array(
         'post'  => 'controllers\production\Players:update',
     ),
+    '/players/updateAvatar' => array(
+        'post'  => 'controllers\production\Players:saveAvatar',
+        'delete' => 'controllers\production\Players:removeAvatar',
+    ),
+    '/players/ping' => 'controllers\production\Players:ping',
     '/game/ticket/' => array(
         'post'  => 'controllers\production\Game:createTicket',
     ),
@@ -142,7 +155,14 @@ Config::instance()->publicResources = array(
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
     '/content/news/'      => 'controllers\production\ContentController:news',
-    '/order/item/'        => 'controllers\production\OrdersController:orderItem'
+    '/order/item/'        => 'controllers\production\OrdersController:orderItem',
+    '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
+    '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
+    '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
+
+    '/invites/email' => 'controllers\production\InvitesController:emailInvite',
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';
+Config::instance()->playerOfflineTimeout = 5 * 60;
+

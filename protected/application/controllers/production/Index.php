@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel;
+use \TicketsModel, \LotteriesModel, \SEOModel;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -25,12 +25,14 @@ class Index extends \SlimController\SlimController
             $this->landing();    
         } else {
             $this->game();
+            Session::connect()->get(Player::IDENTITY)->markOnline();
         }
         
     }
 
     protected function game()
     {
+        $seo = SEOModel::instance()->getSEOSettings();
         Session::connect()->get(Player::IDENTITY)->fetch();
 
         $gameSettings          = GameSettingsModel::instance()->loadSettings();
@@ -63,11 +65,13 @@ class Index extends \SlimController\SlimController
             'layout'      => false,
             'lotteries'   => $lotteries,
             'playerPlayedLotteries' => $playerPlayedLotteries,
+            'seo' => $seo,
         ));
     }
 
     protected function landing()
     {
+        $seo = SEOModel::instance()->getSEOSettings();
         $gameSettings = GameSettingsModel::instance()->loadSettings();
 
         $gameInfo = array(
@@ -86,6 +90,7 @@ class Index extends \SlimController\SlimController
             'lang'        => $this->promoLang,
             'currency'    => Config::instance()->langCurrencies[$this->promoLang],            
             'layout'      => false,
+            'seo' => $seo,
         ));
     }
 }

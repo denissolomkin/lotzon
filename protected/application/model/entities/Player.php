@@ -6,6 +6,9 @@ class Player extends Entity
 {
     const IDENTITY = "player_session";
 
+    const AVATAR_WIDTH  = 160;
+    const AVATAR_HEIGHT = 160;
+
     private $_id         = 0;
     private $_email      = '';
     private $_password   = '';
@@ -32,6 +35,10 @@ class Player extends Entity
     private $_points      = 0;
     private $_money       = 0;
     private $_gamesPlayed = 0;
+
+    private $_invitesCount = 0;
+    private $_online     = 0;
+    private $_onlineTime = 0;
 
     public function init()
     {
@@ -287,6 +294,56 @@ class Player extends Entity
         return $this->_gamesPlayed;
     }  
 
+    public function getInvitesCount()
+    {
+        return $this->_invitesCount;
+    }
+
+    public function setInvitesCount($ic)
+    {
+        $this->_invitesCount = $ic;
+
+        return $this;
+    }
+
+    public function setOnlineTime($time) 
+    {
+        $this->_onlineTime  = time();
+
+        return $this;
+    }
+
+    public function getOnlineTime()
+    {
+        return $this->_onlineTime;
+    }
+
+    public function setOnline($online)
+    {
+        $this->_online = $online;
+
+        return $this;
+    }
+
+    public function isOnline()
+    {
+        return $this->_online;
+    }
+
+    public function decrementInvitesCount()
+    {
+        $this->setInvitesCount($this->getInvitesCount() - 1);
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->decrementInvitesCount($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;
+    }
+
     public function generatePassword()
     {
         $an = array(
@@ -339,6 +396,7 @@ class Player extends Entity
                 $this->validEmail();
 
                 $this->setNicName(trim(htmlspecialchars(strip_tags($this->getNicName()))));
+                $this->checkNickname();
                 $this->setName(trim(htmlspecialchars(strip_tags($this->getName()))));
                 $this->setSurname(trim(htmlspecialchars(strip_tags($this->getSurname()))));
                 $this->setSecondName(trim(htmlspecialchars(strip_tags($this->getSecondName()))));
@@ -351,6 +409,36 @@ class Player extends Entity
             default:
                 # code...
             break;
+        }
+
+        return true;
+    }
+
+    public function saveAvatar() 
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->saveAvatar($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;   
+    }
+
+    protected function checkNickname()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->checkNickname($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 403) {
+                throw new EntityException("NICKNAME_BUSY", 400);    
+            }
+            throw new EntityException($e->getMessage(), $e->getCode());
+            
         }
 
         return true;
@@ -431,6 +519,36 @@ class Player extends Entity
         return $this;
     }
 
+    public function changePassword($password) 
+    {
+        $this->setSalt("");
+        $this->setPassword($this->compilePassword($password));
+
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->changePassword($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;   
+    }
+
+    public function markOnline()
+    {
+        $this->setOnline(true)
+             ->setOnlineTime(time());
+
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->markOnline($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+    }
+
     public function formatFrom($from, $data) 
     {
         if ($from == 'DB') {
@@ -452,7 +570,10 @@ class Player extends Entity
                  ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
                  ->setPoints($data['Points'])
                  ->setMoney($data['Money'])
-                 ->setGamesPlayed($data['GamesPlayed']);
+                 ->setGamesPlayed($data['GamesPlayed'])
+                 ->setInvitesCount($data['InvitesCount'])
+                 ->setOnline($data['Online'])
+                 ->setOnlineTime($data['OnlineTime']);
         }
 
         return $this;

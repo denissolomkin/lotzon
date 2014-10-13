@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel;
+use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -86,7 +86,7 @@ class ContentController extends \AjaxController
             $items[] = array(
                 'id'       => $item->getId(),
                 'title'    => $item->getTitle(),
-                'price'    => $item->getPrice(),
+                'price'    => number_format($item->getPrice(), 0, '.', ' '),
                 'quantity' => $item->getQuantity(),
                 'img'      => $item->getImage(),
             );
@@ -118,11 +118,95 @@ class ContentController extends \AjaxController
                 'text'  => $newsItem->getText(),
             );
         }
-
         if (count($news) >= Index::NEWS_PER_PAGE) {
-            $response['keepButtonShow'] = true;
+            $responseData['keepButtonShow'] = true;
         }
 
         $this->ajaxResponse($responseData);
+    }
+
+    public function lotteryDetailsAction($lotteryId)
+    {   
+        if (!$lotteryId) {
+            $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
+        }
+        try {
+            $lotteryDetails = LotteriesModel::instance()->getLotteryDetails($lotteryId);
+        } catch (ModelException $e) {
+
+            $this->ajaxResponse(array(), 0, $e->getCode() . ':INTERNAL_ERROR');            
+        }
+
+        $responseData = array(
+            'lottery' => array(
+                'id'  => $lotteryDetails['lottery']->getId(),
+                'combination'  => $lotteryDetails['lottery']->getCombination(),
+                'date'  => $lotteryDetails['lottery']->getDate('d.m.Y'),
+            ),
+            'winners' => array(),
+            'tickets' => array(),
+        );
+
+        $langs = array();
+        foreach ($lotteryDetails['winners'] as $player) {
+            $responseData['winners'][] = array(
+                'id'      => $player->getId(),
+                'name'    => $player->getName(),
+                'surname' => $player->getSurname(),
+                'nick'    => $player->getNicName(),
+                'avatar'  => $player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '',
+            );
+            $langs[$player->getId()] = $player->getCountry();
+            if (!in_array($langs[$player->getId()], Config::instance()->langs)) {
+                $langs[$player->getId()] = Config::instance()->defaultLang;
+            }
+        }
+
+        foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
+            $response['tickets'][$playerId] = array();
+            foreach ($ticketData as $ticket) {
+                $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
+                    'combination' => $ticket->getCombination(),
+                    'win' => $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$langs[$playerId]]),
+                );
+            }
+        }
+
+        $this->ajaxResponse($responseData);
+    }
+
+    public function nextLotteryDetailsAction($lotteryId)
+    {
+        if (!$lotteryId) {
+            $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
+        }
+        try {
+            $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'next');    
+        } catch (ModelException $e) {
+            $this->ajaxResponse(array(),0, 'NOT_FOUND');    
+        }
+        
+
+        if ($nextLottery) {
+            return $this->lotteryDetailsAction($nextLottery->getId());    
+        }
+        $this->ajaxResponse(array(),0, 'NOT_FOUND');
+    }
+
+    public function prevLotteryDetailsAction($lotteryId)
+    {        
+        if (!$lotteryId) {
+            $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
+        }
+        try {
+            $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'prev');            
+        } catch (ModelException $e) {
+            $this->ajaxResponse(array(),0, 'NOT_FOUND');    
+        }
+
+        if ($nextLottery) {
+            return $this->lotteryDetailsAction($nextLottery->getId());    
+        }
+        $this->ajaxResponse(array(),0, 'NOT_FOUND');
     }
 }
