@@ -784,15 +784,18 @@ $(function(){
             combHtml += '<li class="yr-tt-tr_li">' + num + '</li>';
         });
         $('#profile-history').find('.loto-holder').html(combHtml);
+        var yourId = '';
         $(data.res.winners).each(function(id, winner){
-            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            if (winner.you) {
+                yourId = winner.id;
+            }
+            winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
+
         $('#profile-history').find('.ws-lt').html(winnerHtml);
-        $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
-            e.stopPropagation();
-            $('#profile-history').find('.ws-lt').find('li').removeClass('you');
-            $('#profile-history').find('.wr-pf-ph img').attr('src', $(this).find('.ph img').attr('src'));
-            var tickets = data.res.tickets[$(this).data('id')];
+        if (yourId) {
+            $('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
+            var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
                 ticketsHtml += '<li class="yr-tt">';
@@ -814,7 +817,9 @@ $(function(){
             $(data.res.lottery.combination).each(function(id, num){
                 $('#profile-history').find('.yr-tb').find('li[data-num="'+num+'"]').addClass('won');
             });
-            $(this).addClass('you');
+        }
+        $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
+            e.stopPropagation();
         });
         $('#profile-history').find('.ws-lt').find('li:first').click();
         $('#profile-history').fadeIn(200); 

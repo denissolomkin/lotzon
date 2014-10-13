@@ -151,10 +151,11 @@ class ContentController extends \AjaxController
         foreach ($lotteryDetails['winners'] as $player) {
             $responseData['winners'][] = array(
                 'id'      => $player->getId(),
-                'name'    => $player->getName(),
-                'surname' => $player->getSurname(),
-                'nick'    => $player->getNicName(),
-                'avatar'  => $player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '',
+                'name'    => $player->getVisibility() ? $player->getName() : '',
+                'surname' => $player->getVisibility() ? $player->getSurname() : '',
+                'nick'    => $player->getVisibility() ? $player->getNicName() : 'id'.$player->getId(),
+                'avatar'  => $player->getVisibility() ? ($player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '') : '',
+                'you'     => $player->getId() == Session::connect()->get(Player::IDENTITY)->getId(),
             );
             $langs[$player->getId()] = $player->getCountry();
             if (!in_array($langs[$player->getId()], Config::instance()->langs)) {
