@@ -23,6 +23,12 @@ class PlayersDBProcessor implements IProcessor
 
         $player->setId(DB::Connect()->lastInsertId());
 
+        try {
+            DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('id', `Id`) WHERE `Id` = :id")->execute(array(
+                ':id' => $player->getId(),
+            ));
+        } catch (PDOException $e){}
+
         return $player;
     }
 
