@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite;
+use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -31,8 +31,12 @@ class Players extends \AjaxController
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
             // check invites
-            if ($invite = EmailInvites::instance()->getInvite($player->getEmail()))
-            {
+            $invite = false;
+            try {
+                $invite = EmailInvites::instance()->getInvite($player->getEmail());
+            } catch (ModelException $e) {}
+            
+            if ($invite) {
                 // add bonuses to inviter and delete invite
                 try {
                     $invite->getInviter()->addPoints(EmailInvite::INVITE_COST);
@@ -175,8 +179,10 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
-        Session::connect()->get(Player::IDENTITY)->markOnline();
-
+        if (Session::connect()->get(Player::IDENTITY)) {
+            Session::connect()->get(Player::IDENTITY)->markOnline();    
+        }
+        
         $this->ajaxResponse(array());   
     }
 }

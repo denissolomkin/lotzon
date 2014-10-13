@@ -114,12 +114,12 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 
 .h-b {background-color:rgba(255, 228, 0, 0.9);height:110px;margin:90px 0 0 0;}
 .h-b-c {width:940px;margin:auto;}
-.h-b-c-tb {float:left;width:380px;}
+.h-b-c-tb {float:left;width:465px;}
 .h-b-c-tb-l {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-tb-r {font:47px/1 Handbook-bold;color:#2f2f2f;margin-top:32px;text-transform:uppercase;}
 .h-b-c-tb-r_i {position:relative;top:-5px;font-style: normal;}
-.h-b-c-lg {min-width:440px;overflow:hidden;}
-.h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
+.h-b-c-lg {overflow:hidden;}
+.h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:120px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
 .h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
 .h-b-c-bhg {display:block;float:right;width:67px;height:40px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;font: 12px/14px Handbook-bold;color:#404040;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;margin-top:29px;}
@@ -133,7 +133,7 @@ article {}
 article #slide2, article #slide3 {position:relative;}
 article #slide2 {border-bottom: 1px solid #efefef;}
 article .a-dt-b, footer .a-dt-b {display:table;width:940px;height:100%;margin:auto;position:relative;}
-article .a-dt-b .a-dt_tr, footer .a-dt-b .a-dt_tr {display:table-row;}
+article .a-dt-b .a-dt_tr, footer .a-dt-b .a-dt_tr {display:table-row;height:100%;}
 article .a-dt-b .a-dt_tr.top, footer .a-dt-b .a-dt_tr.top {height:100px;}
 article .a-dt-b .a-dt_tr .t_td, footer .a-dt-b .a-dt_tr .t_td {display:table;height:100px;width:100%;vertical-align:bottom;}
 article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-cell;width:100%;vertical-align:middle;}

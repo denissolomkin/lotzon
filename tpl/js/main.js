@@ -24,7 +24,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, #exchange').on('click', function(){
+    $('.tn-mbk_li, #exchange, .ticket-favorite .after i').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
@@ -117,6 +117,12 @@ $(function(){
     var ticketCache = [];
     $('.ticket-random').on('click', function(e) {
         if (!$(this).hasClass('select')) {
+            var after = $(this).find('.after');
+            after.fadeIn(300);
+            setTimeout(function(){
+                after.fadeOut(300);
+            }, 2000);
+            if($('.ticket-favorite .after:visible').length)$('.ticket-favorite .after').fadeOut(150);
             if ($(this).parents('.tb-slide').find('li.select').length > 0) {
                 $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
@@ -156,6 +162,7 @@ $(function(){
     }
     $('.ticket-favorite').on('click', function() {
         if (!$(this).hasClass('select')) {
+            if($('.ticket-random .after:visible').length)$('.ticket-random .after').fadeOut(150);
             if ($(this).parents('.tb-slide').find('li.select').length > 0) {
                 $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
@@ -166,7 +173,13 @@ $(function(){
                 $(this).addClass('select');
                 $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
                 $(this).parents('.tb-slide').find('.sm-but').addClass('on');
-            }
+            }else{
+                if($(this).find('.after:hidden').length){
+                    $(this).find('.after').fadeIn(200);
+                }else{
+                    $(this).find('.after').fadeOut(200);
+                }
+             }
         } else {
             $(this).parents('.tb-slide').find('li.select').removeClass('select');
         }
@@ -179,15 +192,21 @@ $(function(){
             $(this).parents('.tb-slide').find('.tb-ifo').hide();
             $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
         }
+    });
 
+    $('.ticket-favorite .after i').on('click', function(){
+        $('.profile .ul_li[data-link="profile-info"]').click();
     });
 
     $('.tb-loto-tl li.loto-tl_li').on('click', function() {
+        $('.ticket-favorite .after:visible').fadeOut(300);
+        if ($('.tb-tabs_li[data-ticket="' + $(this).parents('.tb-slide').data('ticket') + '"]').hasClass('done')) {
+            return;
+        }
         if ($(this).parents('.tb-slide').find('.tb-loto-tl li.select').length == 6) {
             if (!$(this).hasClass('select')) {
                 return;
             }
-
         }
         if (!$(this).hasClass('ticket-random') && !$(this).hasClass('ticket-favorite')) {
             if(!$(this).hasClass('select')){
@@ -325,12 +344,12 @@ $(function(){
         $('.shop-category').removeClass('now');
         $(this).addClass('now');
         var catButt = $(this);
+        $('.mr-cl-bt-bk').hide();
 
         $('.shop-category-items').hide();
         $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').show();
         if ($('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').length < 6) {
             $('.pz-more-bt').hide();
-            $('.mr-cl-bt-bk').hide();
         } else {
             $('.pz-more-bt').show();
             $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').each(function(id, item) {
@@ -892,7 +911,7 @@ function showFailPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul></li>';
     }
@@ -918,7 +937,7 @@ function showWinPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul>';
         if (data.res.ticketWins[i] && data.res.ticketWins[i] != 0) {
@@ -958,7 +977,7 @@ function proccessResult()
                         ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
                     });
                 } else {
-                    ticketsHtml += "<li>Не заполнен.</li>"
+                    ticketsHtml += "<li class='null'>Не заполнен</li>"
                 }
                 ticketsHtml += '</ul></li>';
             }
