@@ -87,12 +87,12 @@
         <nav class="top-nav">
             <div class="tn-box">
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="javascript:void(0)">лото</a></li>
-                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="javascript:void(0)">призы</a></li>
-                    <li id="news-but" data-href="news" class="tn-mbk_li"><a href="javascript:void(0)">новости</a></li>
-                    <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="javascript:void(0)">правила</a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="javascript:void(0)">кабинет</a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="javascript:void(0)">Шансы</a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">лото</a></li>
+                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
+                    <li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li>
+                    <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет</a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Шансы</a></li>
                     <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
