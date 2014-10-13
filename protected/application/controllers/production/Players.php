@@ -179,8 +179,10 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
-        Session::connect()->get(Player::IDENTITY)->markOnline();
-
+        if (Session::connect()->get(Player::IDENTITY)) {
+            Session::connect()->get(Player::IDENTITY)->markOnline();    
+        }
+        
         $this->ajaxResponse(array());   
     }
 }
