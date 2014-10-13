@@ -134,7 +134,7 @@ class ContentController extends \AjaxController
             $lotteryDetails = LotteriesModel::instance()->getLotteryDetails($lotteryId);
         } catch (ModelException $e) {
 
-            $this->ajaxResponse(array(), 0, $e->getCode() . ':INTERNAL_ERROR');            
+            $this->ajaxResponse(array(), 0, $e->getCode() . ':INTERNAL_ERROR' . $e->getMessage());            
         }
 
         $responseData = array(

@@ -182,7 +182,7 @@ class LotteriesModelDBProcessor implements IProcessor
                 ':lotid' => (int)$lotteryId,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ", 500);
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
 
         $lotteryData = $sth->fetch();
@@ -229,7 +229,7 @@ class LotteriesModelDBProcessor implements IProcessor
                     ':lotid' => $lottery->getId(),
                 ));
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query ", 500);
+                throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
             }
 
             if ($sth->rowCount()) {
