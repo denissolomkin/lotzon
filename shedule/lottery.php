@@ -24,13 +24,50 @@ if (isLocked()) {
 if (timeToRunLottery()) {
     setLock();
 
-    // generate unique lottery random nums
+    // get players tickets    
+    $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     $lotteryCombination = array();
-    while (count($lotteryCombination) < $_ballsCount ) {
-        $rand = mt_rand(1, $_variantsCount);
 
-        if (!in_array($rand, $lotteryCombination)) {
-            $lotteryCombination[] = $rand;
+    // if need to play jackpot
+    
+    if ($gameSettings->getJackpot()) {
+        $winner = array_rand($tickets);
+        $lotteryCombination = $tickets[$winner]->getCombination(); 
+    } else {
+        $lotteryCombinations = array();
+        for ($i = 0; $i < Config::instance()->generatorNumTries; ++$i) {
+            $combination = array();
+
+            while (count($combination) < $_ballsCount ) {
+                $rand = mt_rand(1, $_variantsCount);
+
+                if (!in_array($rand, $combination)) {
+                    $combination[] = $rand;
+                }
+            }
+            $lotteryCombinations[] = $combination;
+        }
+
+        // get most better combination
+        $maxWin = 0;
+        $lotteryCombination = array();
+        foreach ($lotteryCombinations as $id => $combination) {
+            $combinationWin = 0;
+            foreach ($combination as $combinationNum) {
+                foreach ($tickets as $ticket) {
+                    foreach ($ticket->getCombination() as $ticketNum) {
+                        if ($combinationNum == $ticketNum) {
+                            $combinationWin++;
+                        }
+                    }
+                }
+            }
+
+            if ($combinationWin > $maxWin) {
+                $maxWin = $combinationWin;
+
+                $lotteryCombination = $lotteryCombinations[$id];
+            }
         }
     }
 
@@ -43,8 +80,6 @@ if (timeToRunLottery()) {
     $playerPrizes   = array();
     $ticketsWon = array();
 
-    // get players tickets    
-    $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     if (count($tickets)) {
         foreach ($tickets as $ticket) {
             // add player

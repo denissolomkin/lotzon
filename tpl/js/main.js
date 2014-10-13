@@ -117,6 +117,12 @@ $(function(){
     var ticketCache = [];
     $('.ticket-random').on('click', function(e) {
         if (!$(this).hasClass('select')) {
+            var after = $(this).find('.after');
+            after.fadeIn(300);
+            setTimeout(function(){
+                after.fadeOut(300);
+            }, 2000);
+            if($('.ticket-favorite .after:visible').length)$('.ticket-favorite .after').fadeOut(150);
             if ($(this).parents('.tb-slide').find('li.select').length > 0) {
                 $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
@@ -156,6 +162,7 @@ $(function(){
     }
     $('.ticket-favorite').on('click', function() {
         if (!$(this).hasClass('select')) {
+            if($('.ticket-random .after:visible').length)$('.ticket-random .after').fadeOut(150);
             if ($(this).parents('.tb-slide').find('li.select').length > 0) {
                 $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
@@ -192,6 +199,7 @@ $(function(){
     });
 
     $('.tb-loto-tl li.loto-tl_li').on('click', function() {
+        $('.ticket-favorite .after:visible').fadeOut(300);
         if ($('.tb-tabs_li[data-ticket="' + $(this).parents('.tb-slide').data('ticket') + '"]').hasClass('done')) {
             return;
         }
@@ -777,7 +785,7 @@ $(function(){
         });
         $('#profile-history').find('.loto-holder').html(combHtml);
         $(data.res.winners).each(function(id, winner){
-            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : 'default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
         $('#profile-history').find('.ws-lt').html(winnerHtml);
         $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
@@ -903,7 +911,7 @@ function showFailPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul></li>';
     }
@@ -929,7 +937,7 @@ function showWinPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul>';
         if (data.res.ticketWins[i] && data.res.ticketWins[i] != 0) {
@@ -969,7 +977,7 @@ function proccessResult()
                         ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
                     });
                 } else {
-                    ticketsHtml += "<li>Не заполнен.</li>"
+                    ticketsHtml += "<li class='null'>Не заполнен</li>"
                 }
                 ticketsHtml += '</ul></li>';
             }
