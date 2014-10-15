@@ -185,10 +185,15 @@ class ChanceGame extends Entity
         $path[] = $cell;
         
         while (count($path) != 3) {
-            if (!($pathCell = $this->followPath($path[count($path) - 1], $gameField, $path, true))) {
-                $path[] = $this->followPath($path[count($path) - 1], $gameField, $path, true);    
+            if ($pathCell = $this->followPath($path[count($path) - 1], $gameField, $path, mt_rand(0,100) < 30)) {
+                $path[] = $pathCell;                
             } else {
-                $path[] = $pathCell;
+                $pathCell = $this->followPath($path[count($path) - 1], $gameField, $path, mt_rand(0,100) < 30);
+                if (!$pathCell) {
+                    $path = array($cell);    
+                } else {
+                    $path[] = $pathCell;    
+                }
             }
         }
 
@@ -224,7 +229,6 @@ class ChanceGame extends Entity
                 } else {
                     $path[] = $pathCell;    
                 }
-                
             }
         }
         
