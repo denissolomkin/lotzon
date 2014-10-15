@@ -1017,4 +1017,55 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
+$('.ch-gm-tbl .gm-bt').click(function(){
+    var gi = $(this).data('game');
+    // hide all games;
+    $('.game-bk .gm-tb').hide();
+    $('.game-bk .rw-b .tb').hide();
+    $('.game-bk .play').show();
+    $('.game-bk li').removeClass('won').removeClass('los');
+    // show current game
+    $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
+    $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
+    
+    $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
+    $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
+    $('.ch-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.game-bk').fadeIn(200);
+    }, 200);
+    $('.game-bk .play .bt').off('click').on('click', function() {
+        var btn = $(this);
+        $.ajax({
+            url: "/chance/build/" + gi,
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    btn.parents('.play').hide();
+                    for (var i in data.res.field) {
+                        for (var j in data.res.field[i]) {
+                            if (data.res.field[i][j] == 1) {
+                                $('.game-bk .gm-tb li[data-coord="'+(i + 'x' + j)+'"]').addClass('won');
+                            }
+                            
+                        }
+                    }
+                } else {
+                    
+                }
+            }, 
+            error: function() {
+                
+           }
+        });
+    })
+});
 
+$('.game-bk .bk-bt').on('click', function() {
+    $('.game-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ch-bk').fadeIn(200);
+    }, 200); 
+});

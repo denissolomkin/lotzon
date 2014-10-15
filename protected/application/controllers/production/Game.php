@@ -2,6 +2,7 @@
 
 namespace controllers\production;
 use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \TicketsModel, \GameSettings, \GameSettingsModel;
+use \ChanceGamesModel;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -92,5 +93,17 @@ class Game extends \AjaxController
             ));
         }
         $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
+    }
+
+    public function startChanceGameAction($identifier)
+    {
+        $games = ChanceGamesModel::instance()->getGamesSettings();
+        if ($games[$identifier]) {
+            $gameField = $games[$identifier]->generateGame();
+
+            $this->ajaxResponse(array('field' => $gameField));
+        } else {
+            $this->ajaxResponse(array(), 0, 'INVALID_GAME');
+        }
     }
 }

@@ -2,12 +2,13 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
 Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
+Application::import(PATH_APPLICATION . '/model/models/ChanceGamesModel.php');
 
 
 class Index extends \SlimController\SlimController 
@@ -38,6 +39,7 @@ class Index extends \SlimController\SlimController
         $gameSettings          = GameSettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
+        $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
@@ -66,6 +68,7 @@ class Index extends \SlimController\SlimController
             'lotteries'   => $lotteries,
             'playerPlayedLotteries' => $playerPlayedLotteries,
             'seo' => $seo,
+            'chanceGames'  => $chanceGames,
         ));
     }
 
