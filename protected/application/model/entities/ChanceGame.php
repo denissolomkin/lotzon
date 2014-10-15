@@ -210,18 +210,24 @@ class ChanceGame extends Entity
             }
         }
         // get random cell
-        $cell = array(mt_rand(2,3), mt_rand(2,3));
+        $cell = array(mt_rand(1,4), mt_rand(1,4));
         // add cell to path
         $path[] = $cell;
         
         while (count($path) != 3) {
-            if (!($pathCell = $this->followPath($path[count($path) - 1], $gameField, $path, false))) {
-                $path[] = $this->followPath($path[count($path) - 1], $gameField, $path, false);    
+            if ($pathCell = $this->followPath($path[count($path) - 1], $gameField, $path, false)) {
+                $path[] = $pathCell;                
             } else {
-                $path[] = $pathCell;
+                $pathCell = $this->followPath($path[count($path) - 1], $gameField, $path, false);
+                if (!$pathCell) {
+                    $path = array($cell);    
+                } else {
+                    $path[] = $pathCell;    
+                }
+                
             }
         }
-
+        
         // add path to gameField
         $fst = true;
         foreach ($path as $step => $pathCell) {
