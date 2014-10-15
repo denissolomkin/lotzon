@@ -5,7 +5,7 @@ require_once('init.php');
 Application::import(PATH_APPLICATION . '/model/entities/ChanceGame.php');
 
 $game = new ChanceGame();
-$game->setIdentifier('55');
+$game->setIdentifier('33');
 
 visualise($game->generateGame());
 

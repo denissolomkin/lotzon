@@ -46,7 +46,7 @@
 
 
         <header>
-            <div class="hr-br"><img src="/tpl/img/baners/Plug-960х135.png" width="960" height="135" /></div>
+            <div class="hr-br"><a href="http://www.musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/baners/Musiclife-960x135.jpg" width="960" height="135" /></a></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
