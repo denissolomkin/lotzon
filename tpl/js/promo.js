@@ -50,6 +50,18 @@ $(function(){
         }
     });
 
+    $('.login-popup form').on('mousemove', function(){
+        //var val = $.trim($(this).find('input').val().length);
+        $(this).closest('form').find('.m_input').each(function(){
+            var val = $.trim($(this).val().length);
+            if(val > 0){
+                $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
+            }else{
+                $(this).closest('form').find('.sb_but').addClass('disabled').prop('disabled', true);
+            }
+        });
+    });
+
     $('form[name="rec-pass"]').submit(function(event){
         $('#cl-check').removeAttr('class').addClass('b-m rec-txt');
         event.preventDefault();
