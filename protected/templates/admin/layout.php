@@ -34,7 +34,7 @@
             <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop">Товары</a></li>
             <li><a href="/private/monetisation">Запросы вывода средств</a></li>
             <!--li><a href="/private/stats">Статистика</a></li-->
-            <li <?=($activeMenu == 'chances' ? ' class="active"' : '')?>><a href="/private/chances">Моментальные шансы</a></li>
+            <li <?=($activeMenu == 'chances' ? ' class="active"' : '')?>><a href="/private/chances">Шансы</a></li>
             <li <?=($activeMenu == 'seo' ? ' class="active"' : '')?>><a href="/private/seo">SEO</a></li>
             <!--li><a href="/private/ogames">Онлайн игры</a></li-->
             <li class="pull-right"><a class="glyphicon glyphicon-off" href="/private/logout"></a></li>

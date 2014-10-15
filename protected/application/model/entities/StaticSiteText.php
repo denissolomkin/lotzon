@@ -75,8 +75,6 @@ class StaticSiteText extends Entity
                 if (!$this->getLang() || !in_array($this->getLang(), Config::instance()->langs)) {
                     throw new EntityException("Invalid lang", 400);      
                 }
-
-                $this->setText(strip_tags($this->getText(), '<p><a><ul><li><ol><span><br>'));
             break;
             
             case 'delete':

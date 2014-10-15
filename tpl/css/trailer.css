@@ -75,11 +75,59 @@ a:hover {}
 
 main {display:table;width:100%;height:100%;margin:0;padding:0;background:rgba(255, 228, 0, 0.9);}
 main article {display:table-cell;vertical-align:middle;text-align:center;}
-main article .opening {font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:35px 0 0 0;}
+main article .opening {font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:32px 0 38px 0;}
 main article .timer {color:#000;}
 main article .timer > span {font:80px/1 Handbook-bold;color:#000;display:inline-block;position:relative;}
-main article .timer > span:before {content: "Дней";display:block;position:absolute;left:0;top:80px;font:14px/1 Handbook-bold;text-transform:uppercase;}
-main article .timer > i {font:60px/1 Handbook-bold;color:#000;display:inline-block;}
+main article .timer > span:before {display:block;position:absolute;left:0;top:86px;font:14px/1 Handbook-bold;text-transform:uppercase;text-align:center;width:100%;}
+main article .timer > span.d:before {content: "Дней";}
+main article .timer > span.a:before {content: "Часов";}
+main article .timer > span.m:before {content: "Минут";}
+main article .timer > span.s:before {content: "Секунд";}
+main article .timer > i {font:60px/1 Handbook-bold;color:#000;display:inline-block;margin:0 10px;position:relative;top:-13px;}
+main article .txt-box {margin-top:64px;}
+main article .txt-box .text {font:16px/18px Handbook-regular;color:#000;text-align:left;width:620px;margin:auto;}
+main article .form {width:620px;margin:33px auto 0 auto;text-align:left;overflow:hidden;height:50px;}
+main article .form .pi-inp-bk {height:45px;border-bottom:1px solid #ad9c0d;position:relative;width:410px;float:left;padding-top:4px;}
+main article .form .pi-inp-bk > input {border:none;background:transparent;height:45px;width:350px;font:18px/45px Handbook-regular;color:#000;outline:none;}
+main article .form .pi-inp-bk.td > input {}
+main article .form .pi-inp-bk > input::-webkit-input-placeholder {font:18px/45px Handbook-italic;color:#ad9c0d;opacity:1;}
+main article .form .pi-inp-bk > input:-moz-placeholder {font:18px/45px Handbook-italic;color:#ad9c0d;opacity:1;}
+main article .form .pi-inp-bk > input::-moz-placeholder {font:18px/45px Handbook-italic;color:#ad9c0d;opacity:1;}
+main article .form .pi-inp-bk > input:-ms-input-placeholder {font:18px/45px Handbook-italic;color:#ad9c0d;opacity:1;}
+main article .form .pi-inp-bk.focus > input::-webkit-input-placeholder {opacity:0;}
+main article .form .pi-inp-bk.focus > input:-moz-placeholder {opacity:0;}
+main article .form .pi-inp-bk.focus > input::-moz-placeholder {opacity:0;}
+main article .form .pi-inp-bk.focus > input:-ms-input-placeholder {opacity:0;}
+
+main article .form .pi-inp-bk .ph {height:45px;font:24px/45px Handbook-italic;color:#d2d2d2;position:absolute;top:4px;right:0px;}
+
+main article .form .pi-inp-bk.td .ph {display:none;}
+
+main article .form .pi-inp-bk.focus .ph {color:#000;display:block;}
+
+main article .form .pi-inp-bk.error {border-color:#c51e1e;color:#c51e1e;}
+main article .form .pi-inp-bk.error > input, .profile-info .pi-et-bk .pi-inp-bk.error .ph {color:#c51e1e;}
+
+main article .form .submit {border: 1px solid #000;color:#2f2f2f;font: 17px/48px Handbook-bold;height:48px;letter-spacing:1px;text-align:center;text-decoration:none;text-transform: uppercase;width:177px;float:right;cursor:pointer;}
+main article .form .submit:hover {background-color:#000;color:#fbe215;}
+main article .form .msg {display:none;height:50px;}
+main article .form .msg .txt {display:table-cell;height:50px;vertical-align:middle;font: 18px/19px Handbook-regular;}
+
+main article .form.done {}
+main article .form.done .pi-inp-bk, main article .form.done .submit, main article .form.error .pi-inp-bk, main article .form.error .submit {display:none;}
+main article .form.done .msg , main article .form.error .msg {display:block;}
+main article .form.error .msg .txt {color:#c51e1e;}
+
+main article .social {margin:55px auto 0 auto;font: 18px/19px Handbook-regular;}
+main article .social .title {margin-bottom:25px;}
+main article .social .links {width:220px;margin:auto;overflow:hidden;}
+main article .social .links > a {display:block;width:38px;height:38px;background-image:url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;border:1px solid #000;float:left;margin-right:20px;}
+main article .social .links > a:last-child {margin-right:0px;}
+main article .social .links > a:hover {background-image:url("../img/bg-trailer-social-buts-hover.png");background-color:#000;}
+main article .social .links .fb {background-position:-1px -1px;left:0;top:0;}
+main article .social .links .vk {background-position:-51px -1px;right:0;top:0;}
+main article .social .links .gp {background-position:-1px -51px;left:0;bottom:0;}
+main article .social .links .tw {background-position:-51px -51px;bottom:0;right:0;}
 
 
 

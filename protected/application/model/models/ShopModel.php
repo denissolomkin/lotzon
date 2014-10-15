@@ -77,5 +77,10 @@ class ShopModel extends Model
         throw new ModelException("Direct manupilation disabled", 500);
     }
 
+    public function getAllItems($excludeQuantibleItems = true)
+    {
+        return $this->getProcessor()->getAllItems($excludeQuantibleItems);
+    }
+
 
 }
