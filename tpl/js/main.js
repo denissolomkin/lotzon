@@ -117,6 +117,12 @@ $(function(){
     var ticketCache = [];
     $('.ticket-random').on('click', function(e) {
         if (!$(this).hasClass('select')) {
+            var after = $(this).find('.after');
+            after.fadeIn(300);
+            setTimeout(function(){
+                after.fadeOut(300);
+            }, 2000);
+            if($('.ticket-favorite .after:visible').length)$('.ticket-favorite .after').fadeOut(150);
             if ($(this).parents('.tb-slide').find('li.select').length > 0) {
                 $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
@@ -156,6 +162,7 @@ $(function(){
     }
     $('.ticket-favorite').on('click', function() {
         if (!$(this).hasClass('select')) {
+            if($('.ticket-random .after:visible').length)$('.ticket-random .after').fadeOut(150);
             if ($(this).parents('.tb-slide').find('li.select').length > 0) {
                 $(this).parents('.tb-slide').find('li.select').removeClass('select');
             }
@@ -192,6 +199,7 @@ $(function(){
     });
 
     $('.tb-loto-tl li.loto-tl_li').on('click', function() {
+        $('.ticket-favorite .after:visible').fadeOut(300);
         if ($('.tb-tabs_li[data-ticket="' + $(this).parents('.tb-slide').data('ticket') + '"]').hasClass('done')) {
             return;
         }
@@ -776,15 +784,19 @@ $(function(){
             combHtml += '<li class="yr-tt-tr_li">' + num + '</li>';
         });
         $('#profile-history').find('.loto-holder').html(combHtml);
+        var yourId = '';
         $(data.res.winners).each(function(id, winner){
-            winnerHtml += '<li data-id="'+winner.id+'"><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : 'default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            if (winner.you) {
+                yourId = winner.id;
+            }
+            winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
+
         $('#profile-history').find('.ws-lt').html(winnerHtml);
-        $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
-            e.stopPropagation();
-            $('#profile-history').find('.ws-lt').find('li').removeClass('you');
-            $('#profile-history').find('.wr-pf-ph img').attr('src', $(this).find('.ph img').attr('src'));
-            var tickets = data.res.tickets[$(this).data('id')];
+        if (yourId) {
+            $('#profile-history').find('.ws-pf-rt-bk').show();
+            $('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
+            var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
                 ticketsHtml += '<li class="yr-tt">';
@@ -806,7 +818,11 @@ $(function(){
             $(data.res.lottery.combination).each(function(id, num){
                 $('#profile-history').find('.yr-tb').find('li[data-num="'+num+'"]').addClass('won');
             });
-            $(this).addClass('you');
+        } else {
+            $('#profile-history').find('.ws-pf-rt-bk').hide();
+        }
+        $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
+            e.stopPropagation();
         });
         $('#profile-history').find('.ws-lt').find('li:first').click();
         $('#profile-history').fadeIn(200); 
@@ -903,7 +919,7 @@ function showFailPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul></li>';
     }
@@ -929,7 +945,7 @@ function showWinPopup(data)
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
             });
         } else {
-            ticketsHtml += "<li>Не заполнен.</li>"
+            ticketsHtml += "<li class='null'>Не заполнен</li>"
         }
         ticketsHtml += '</ul>';
         if (data.res.ticketWins[i] && data.res.ticketWins[i] != 0) {
@@ -969,7 +985,7 @@ function proccessResult()
                         ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
                     });
                 } else {
-                    ticketsHtml += "<li>Не заполнен.</li>"
+                    ticketsHtml += "<li class='null'>Не заполнен</li>"
                 }
                 ticketsHtml += '</ul></li>';
             }
@@ -1001,4 +1017,55 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
+$('.ch-gm-tbl .gm-bt').click(function(){
+    var gi = $(this).data('game');
+    // hide all games;
+    $('.game-bk .gm-tb').hide();
+    $('.game-bk .rw-b .tb').hide();
+    $('.game-bk .play').show();
+    $('.game-bk li').removeClass('won').removeClass('los');
+    // show current game
+    $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
+    $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
+    
+    $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
+    $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
+    $('.ch-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.game-bk').fadeIn(200);
+    }, 200);
+    $('.game-bk .play .bt').off('click').on('click', function() {
+        var btn = $(this);
+        $.ajax({
+            url: "/chance/build/" + gi,
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    btn.parents('.play').hide();
+                    for (var i in data.res.field) {
+                        for (var j in data.res.field[i]) {
+                            if (data.res.field[i][j] == 1) {
+                                $('.game-bk .gm-tb li[data-coord="'+(i + 'x' + j)+'"]').addClass('won');
+                            }
+                            
+                        }
+                    }
+                } else {
+                    
+                }
+            }, 
+            error: function() {
+                
+           }
+        });
+    })
+});
 
+$('.game-bk .bk-bt').on('click', function() {
+    $('.game-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ch-bk').fadeIn(200);
+    }, 200); 
+});

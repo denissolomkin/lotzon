@@ -161,8 +161,12 @@ Config::instance()->publicResources = array(
     '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
 
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
+    '/chance/build/:identifier' => array(
+        'get' => 'controllers\production\Game:startChanceGame',
+    ),
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';
 
 Config::instance()->playerOfflineTimeout = 5 * 60;
+Config::instance()->generatorNumTries = 500;

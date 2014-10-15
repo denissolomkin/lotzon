@@ -1,176 +1,57 @@
+-- MySQL dump 10.13  Distrib 5.5.37, for Linux (x86_64)
 --
--- Table structure for table `EmailInvites`
+-- Host: localhost    Database: lotzone
+-- ------------------------------------------------------
+-- Server version	5.5.37
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ChanceGames`
 --
 
-DROP TABLE IF EXISTS `EmailInvites`;
+DROP TABLE IF EXISTS `ChanceGames`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `EmailInvites` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Email` varchar(255) NOT NULL DEFAULT '',
-  `InviterId` int(11) NOT NULL DEFAULT '0',
-  `Date` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `idx_Email` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Table structure for table `Lotteries`
---
-
-DROP TABLE IF EXISTS `Lotteries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Lotteries` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Date` int(11) NOT NULL DEFAULT '0',
-  `Combination` text,
-  `WinnersCount` int(11) NOT NULL DEFAULT '0',
-  `MoneyTotal` int(11) NOT NULL DEFAULT '0',
-  `PointsTotal` int(11) NOT NULL DEFAULT '0',
-  `Ready` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`),
-  KEY `idx_Date` (`Date`)
-) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `LotterySettings`
---
-
-DROP TABLE IF EXISTS `LotterySettings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `LotterySettings` (
-  `BallsCount` tinyint(1) NOT NULL DEFAULT '1',
-  `CountryCode` varchar(2) NOT NULL DEFAULT 'UA',
-  `Prize` int(11) NOT NULL DEFAULT '0',
-  `Currency` enum('POINT','MONEY') NOT NULL DEFAULT 'POINT',
-  `SumTotal` int(11) NOT NULL DEFAULT '0',
-  `JackPot` tinyint(1) NOT NULL DEFAULT '0',
-  `Coefficient` float NOT NULL DEFAULT '0',
-  PRIMARY KEY (`BallsCount`,`CountryCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Table structure for table `LotteryTickets`
---
-
-DROP TABLE IF EXISTS `LotteryTickets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `LotteryTickets` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `LotteryId` int(11) NOT NULL DEFAULT '0',
-  `PlayerId` int(11) NOT NULL DEFAULT '0',
-  `Combination` text NOT NULL,
-  `DateCreated` int(11) NOT NULL DEFAULT '0',
-  `TicketNum` tinyint(1) NOT NULL DEFAULT '1',
-  `TicketWin` int(11) NOT NULL DEFAULT '0',
-  `TicketWinCurrency` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`Id`),
-  KEY `idx_LotteryId` (`LotteryId`),
-  KEY `idx_PlayerId` (`PlayerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `PlayerLotteryWins`
---
-
-DROP TABLE IF EXISTS `PlayerLotteryWins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `PlayerLotteryWins` (
-  `PlayerId` int(11) NOT NULL DEFAULT '0',
-  `LotteryId` int(11) NOT NULL DEFAULT '0',
-  `Date` int(11) NOT NULL DEFAULT '0',
-  `MoneyWin` int(11) NOT NULL DEFAULT '0',
+CREATE TABLE `ChanceGames` (
+  `Identifier` varchar(20) NOT NULL DEFAULT '',
+  `MinFrom` int(11) NOT NULL DEFAULT '0',
+  `MinTo` int(11) NOT NULL DEFAULT '0',
+  `Prizes` varchar(255) NOT NULL DEFAULT '',
+  `GameTitle` varchar(255) NOT NULL DEFAULT '',
+  `GamePrice` varchar(255) NOT NULL DEFAULT '',
   `PointsWin` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`PlayerId`,`LotteryId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Table structure for table `Players`
---
-
-DROP TABLE IF EXISTS `Players`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Players` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Email` varchar(255) NOT NULL DEFAULT '',
-  `Password` varchar(255) NOT NULL DEFAULT '',
-  `Salt` varchar(13) NOT NULL DEFAULT '',
-  `Nicname` varchar(20) NOT NULL DEFAULT '',
-  `Name` varchar(50) NOT NULL DEFAULT '',
-  `Surname` varchar(50) NOT NULL DEFAULT '',
-  `SecondName` varchar(50) NOT NULL DEFAULT '',
-  `Phone` varchar(50) NOT NULL DEFAULT '',
-  `Birthday` int(11) NOT NULL DEFAULT '0',
-  `DateRegistered` int(11) NOT NULL DEFAULT '0',
-  `DateLogined` int(11) NOT NULL DEFAULT '0',
-  `Country` varchar(2) NOT NULL DEFAULT '0',
-  `Avatar` varchar(50) NOT NULL DEFAULT '',
-  `Favorite` varchar(255) NOT NULL DEFAULT '0',
-  `Visible` tinyint(1) NOT NULL DEFAULT '0',
-  `Points` int(11) NOT NULL DEFAULT '0',
-  `Money` int(11) NOT NULL DEFAULT '0',
-  `GamesPlayed` int(11) NOT NULL DEFAULT '0',
-  `InvitesCount` tinyint(1) NOT NULL DEFAULT '10',
-  `Online` tinyint(1) NOT NULL DEFAULT '0',
-  `OnlineTime` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Email_idx` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Table structure for table `SEO`
---
-
-DROP TABLE IF EXISTS `SEO`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SEO` (
-  `Title` varchar(255) NOT NULL DEFAULT '',
-  `Description` text,
-  `Keywords` text,
-  `Identifier` varchar(255) NOT NULL DEFAULT '',
+  `TriesCount` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Identifier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `ShopCategories`
+-- Dumping data for table `ChanceGames`
 --
 
-DROP TABLE IF EXISTS `ShopOrders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ShopOrders` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `PlayerId` int(11) NOT NULL DEFAULT '0',
-  `ItemId` int(11) NOT NULL DEFAULT '0',
-  `DateOrdered` int(11) NOT NULL DEFAULT '0',
-  `DateProcessed` int(11) NOT NULL DEFAULT '0',
-  `AdminProcessed` varchar(255) NOT NULL DEFAULT '',
-  `Status` tinyint(1) NOT NULL DEFAULT '0',
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `Surname` varchar(255) NOT NULL DEFAULT '',
-  `SecondName` varchar(255) NOT NULL DEFAULT '',
-  `Phone` varchar(255) NOT NULL DEFAULT '',
-  `Region` varchar(255) NOT NULL DEFAULT '',
-  `City` varchar(255) NOT NULL DEFAULT '',
-  `Address` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`Id`),
-  KEY `idx_PlayerId` (`PlayerId`),
-  KEY `idx_ItemId` (`ItemId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+LOCK TABLES `ChanceGames` WRITE;
+/*!40000 ALTER TABLE `ChanceGames` DISABLE KEYS */;
+INSERT INTO `ChanceGames` VALUES ('33',0,0,'a:1:{i:0;s:1:\"6\";}','Трешки','800',0,0),('44',0,0,'a:1:{i:0;s:1:\"5\";}','Четверки','900',0,0),('55',0,0,'a:3:{i:0;s:1:\"8\";i:1;s:1:\"9\";i:2;s:2:\"23\";}','Пятерки','1200',0,7),('moment',1,3,'a:0:{}','','0',50000,0);
+/*!40000 ALTER TABLE `ChanceGames` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-10-15  5:26:01

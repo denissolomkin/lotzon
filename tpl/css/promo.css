@@ -118,7 +118,7 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 .h-b-c-tb-l {font:16px/20px Handbook-regular;text-transform:uppercase;width:170px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-tb-r {font:47px/1 Handbook-bold;color:#2f2f2f;margin-top:32px;text-transform:uppercase;}
 .h-b-c-tb-r_i {position:relative;top:-5px;font-style: normal;}
-.h-b-c-lg {min-width:440px;overflow:hidden;}
+.h-b-c-lg {overflow:hidden;}
 .h-b-c-lg-t {font:16px/20px Handbook-regular;text-transform:uppercase;width:120px;float:left;margin-top:35px;letter-spacing:0.5px;}
 .h-b-c-lg_ul {margin:35px 0 0 0;padding:0;list-style:none;}
 .h-b-c-lg_ul_li {width:35px;height:35px;border-radius:50%;background-color:#2f2f2f;text-align:center;font:17px/35px Handbook-bold;color:#ffe400;float:left;margin-right:8px;}
@@ -146,7 +146,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .a-tb-tr {display:table-cell;vertical-align:middle;text-align:right;}
 .a-tb-bt {display:block;text-decoration:none;border:1px solid #000;width:218px;height:48px;text-align:center;font:17px/48px Handbook-bold;text-transform:uppercase;color:#000;letter-spacing:1px;margin-left:auto;}
 
-.a-tbl {overflow:hidden;position:relative;}
+.a-tbl {overflow:hidden;position:relative;margin-top:-7%;}
 .a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}
 .a-tbl .l_ul .n_li {margin-bottom:40px;display:table;width:100%;}
 .a-tbl .l_ul .n_li:last-child {margin:0;}
@@ -155,7 +155,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .font-fix .a-tbl .l_ul .n_li .n {margin-top:2px;}
 .a-tbl .l_ul .n_li .t {padding:0px 45px 0 20px;font:18px/19px Handbook-regular;display:table-cell;vertical-align:middle;}
 .a-tbl .r_ul {margin:0 0 0 470px;padding:0;list-style:none;}
-.a-tbl .r_ul .r_li {margin-bottom:30px;overflow:hidden;}
+.a-tbl .r_ul .r_li {margin-bottom:32px;overflow:hidden;}
 .a-tbl .r_ul .r_li:last-child {margin-bottom:0;}
 .a-tbl .r_ul .r_li.rl-b {margin-bottom:40px;}
 .a-tbl .r_ul .r_li .i_ul {margin:0;padding:0;list-style:none;width:343px;float:left;}
@@ -281,6 +281,10 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-italic;width:250px;}
+.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */
+    height:28px;
+}
 .login-popup .lp-b .ch-b-bk {overflow:hidden;padding:34px 0 25px 0;position:relative;}
 .login-popup .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;top:5px;left:0;display:none;}
 .login-popup .lp-b .ch-b-bk .ch-b {float:left;}

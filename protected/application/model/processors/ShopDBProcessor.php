@@ -190,4 +190,23 @@ class ShopDBProcessor
         }
         return $item;
     }
+
+
+    public function getAllItems($excludeQuantibleItems = true)
+    {   
+        $items = array();
+        $shop = $this->loadShop();
+
+        foreach ($shop as $category) {
+            foreach ($category->getItems() as $item) {
+                if ($excludeQuantibleItems && $item->getQuantity() > 0) {
+                    continue;
+                }
+
+                $items[] = $item;
+            }
+        }
+
+        return $items;
+    }
 }

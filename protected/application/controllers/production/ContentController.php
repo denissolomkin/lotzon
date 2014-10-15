@@ -151,15 +151,12 @@ class ContentController extends \AjaxController
         foreach ($lotteryDetails['winners'] as $player) {
             $responseData['winners'][] = array(
                 'id'      => $player->getId(),
-                'name'    => $player->getName(),
-                'surname' => $player->getSurname(),
-                'nick'    => $player->getNicName(),
-                'avatar'  => $player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '',
+                'name'    => $player->getVisibility() ? $player->getName() : '',
+                'surname' => $player->getVisibility() ? $player->getSurname() : '',
+                'nick'    => $player->getVisibility() ? $player->getNicName() : 'id'.$player->getId(),
+                'avatar'  => $player->getVisibility() ? ($player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '') : '',
+                'you'     => $player->getId() == Session::connect()->get(Player::IDENTITY)->getId(),
             );
-            $langs[$player->getId()] = $player->getCountry();
-            if (!in_array($langs[$player->getId()], Config::instance()->langs)) {
-                $langs[$player->getId()] = Config::instance()->defaultLang;
-            }
         }
 
         foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
@@ -167,7 +164,7 @@ class ContentController extends \AjaxController
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$langs[$playerId]]),
+                    'win' => $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]),
                 );
             }
         }
