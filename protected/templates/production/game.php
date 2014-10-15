@@ -46,7 +46,7 @@
 
 
         <header>
-            <div class="hr-br"><img src="/tpl/img/plugs/960x135.png" width="960" height="135" /></div>
+            <div class="hr-br"><img src="/tpl/img/baners/Plug-960х135.png" width="960" height="135" /></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -108,14 +108,14 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-                    <div class="bz1"><img src="/tpl/img/plugs/110x600.png" width="110" height="600" /></div>
-                    <div class="bz2"><img src="/tpl/img/plugs/110x600.png" width="110" height="600" /></div>
-                    <div class="bz3"><img src="/tpl/img/plugs/110x170.png" width="110" height="170" /></div>
+                    <div class="bz1"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
                 <aside class="rbs">
-                    <div class="bz1"><img src="/tpl/img/plugs/300x600.png" width="300" height="600" /></div>
-                    <div class="bz2"><img src="/tpl/img/plugs/300x600.png" width="300" height="600" /></div>
-                    <div class="bz3"><img src="/tpl/img/plugs/300x175.png" width="300" height="175" /></div>
+                    <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х175.png" width="300" height="175" /></div>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -161,7 +161,7 @@
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
                                                     <div class="after">
                                                         <b>любимая комбинация</b>
-                                                        <span>Настраивается в <i data-href="profile">профиле</i></span>
+                                                        <span>Настраивается в <i data-href="profile">кабинете</i></span>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -335,7 +335,7 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <img src="/tpl/img/plugs/970x135.png" width="970" height="135" />
+                <img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" />
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
@@ -519,14 +519,14 @@
                         <div class="b-cl-block"></div>
                     </div>
                 </div>
-                <div class="pr-br"><img src="/tpl/img/plugs/300x665.png" width="300" height="665" /></div>
+                <div class="pr-br"><img src="/tpl/img/baners/Plug-300х665.png" width="300" height="665" /></div>
                 <div class="b-cl-block"></div>
             </section>
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
         <section class="chance">
-        <div class="ch-br-bk"><img src="/tpl/img/plugs/300x600.png" width="300" height="600" /></div>
+        <div class="ch-br-bk"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl">шансы</div>
@@ -728,8 +728,8 @@
                                     FOOTER BLOCK
             ======================================================================-->
         <footer>
-            <section class="fr-br-bk">
-                <img src="/tpl/img/plugs/1280x135.png" width="1280" height="135" />
+            <section class="fr-br-bk" style="display:none;">
+                <img src="/tpl/img/baners/footer-banner.jpg" width="1280" height="135" />
             </section>
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Пользовательское соглашение</a>

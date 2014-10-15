@@ -146,7 +146,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .a-tb-tr {display:table-cell;vertical-align:middle;text-align:right;}
 .a-tb-bt {display:block;text-decoration:none;border:1px solid #000;width:218px;height:48px;text-align:center;font:17px/48px Handbook-bold;text-transform:uppercase;color:#000;letter-spacing:1px;margin-left:auto;}
 
-.a-tbl {overflow:hidden;position:relative;}
+.a-tbl {overflow:hidden;position:relative;margin-top:-7%;}
 .a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}
 .a-tbl .l_ul .n_li {margin-bottom:40px;display:table;width:100%;}
 .a-tbl .l_ul .n_li:last-child {margin:0;}
@@ -155,7 +155,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .font-fix .a-tbl .l_ul .n_li .n {margin-top:2px;}
 .a-tbl .l_ul .n_li .t {padding:0px 45px 0 20px;font:18px/19px Handbook-regular;display:table-cell;vertical-align:middle;}
 .a-tbl .r_ul {margin:0 0 0 470px;padding:0;list-style:none;}
-.a-tbl .r_ul .r_li {margin-bottom:30px;overflow:hidden;}
+.a-tbl .r_ul .r_li {margin-bottom:32px;overflow:hidden;}
 .a-tbl .r_ul .r_li:last-child {margin-bottom:0;}
 .a-tbl .r_ul .r_li.rl-b {margin-bottom:40px;}
 .a-tbl .r_ul .r_li .i_ul {margin:0;padding:0;list-style:none;width:343px;float:left;}
