@@ -5,7 +5,9 @@ $(function(){
      ========================================================================== */
     $('#hr-io-slider').slick({
         dots: true,
-        arrows : false
+        arrows : false,
+        autoplay : true,
+        autoplaySpeed : 4000
     });
     /* ==========================================================================
                         Popups shoe/hide functional
@@ -535,6 +537,19 @@ $(function(){
         $('.'+link).show();
     });
 
+    $('.profile-info .pi-inp-bk input').on('blur', function(){
+        $('.profile-info .pi-inp-bk input').each(function(){
+            var val = $(this).val();
+            var valid = $(this).attr('data-valid');
+            if(val != valid){
+                $('.profile-info .save-bk .sb-ch-td .but').addClass('save');
+                return false;
+            }else{
+                $('.profile-info .save-bk .sb-ch-td .but').removeClass('save');
+            };
+        });
+    });
+
     $('.pi-inp-bk input').on('focus', function(){
         $(this).closest('.pi-inp-bk').addClass('focus')
         if($(this).attr('name') == 'date')$(this).attr('type','date');
@@ -555,7 +570,16 @@ $(function(){
         if (!$(event.target).closest(".fc-nrch-bk").length && !$(event.target).closest(".fc-nbs-bk").length){
             $(".fc-nbs-bk").fadeOut(200);
             $('.fc-nrch-bk li').removeClass('on');
-
+            $('.fc-nrch-bk li').each(function(){
+                var val = $.trim($(this).find('span').text());
+                var valid = $.trim($(this).find('span').attr('data-valid'));
+                if(val != valid){
+                    $('.profile-info .but').addClass('save');
+                    return false;
+                }else{
+                    $('.profile-info .but').removeClass('save');
+                }
+            });
         };
     })
 
@@ -572,6 +596,16 @@ $(function(){
         }else{
             $(this).removeClass('on');
             $('.fc-nbs-bk').fadeOut(200);
+            $('.fc-nrch-bk li').each(function(){
+                var val = $.trim($(this).find('span').text());
+                var valid = $.trim($(this).find('span').attr('data-valid'));
+                if(val != valid){
+                    $('.profile-info .but').addClass('save');
+                    return false;
+                }else{
+                    $('.profile-info .but').removeClass('save');
+                }
+            });
         }
     });
     $('.fc-nbs-bk li').on('click', function(){
@@ -581,6 +615,15 @@ $(function(){
             $(this).addClass('dis');
             $('.fc-nbs-bk').fadeOut(200);
             $('.fc-nrch-bk li.on').removeClass('on');
+            $('.fc-nrch-bk li').each(function(){
+                var valid = $.trim($(this).find('span').attr('data-valid'));
+                if(n != valid){
+                    $('.profile-info .but').addClass('save');
+                    return false;
+                }else{
+                    $('.profile-info .but').removeClass('save');
+                }
+            });
         }
     });
 
@@ -658,6 +701,12 @@ $(function(){
     $('form[name="profile"]').on('submit', function() {
         var form = $(this);
         var playerData = {};
+
+        form.find('.pi-inp-bk input').each(function(){
+            var val = $(this).val();
+            $(this).attr('data-valid', val);
+        });
+        form.find('.save').removeClass('save');
 
         form.find('.pi-inp-bk').removeClass('error');
         form.find('.ph').each(function(id, ph){
