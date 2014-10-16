@@ -532,7 +532,7 @@
         <div class="sbk-tl">шансы</div>
 
         <!-- CHASNE PREVIEW -->
-        <div class="ch-bk">
+        <div class="ch-bk" style="display:<?=($currentChanceGame ? 'none' : 'block')?>;">
             <div class="ch-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
             <div class="ch-gm-tbl">
                 <div class="td l">
@@ -614,35 +614,35 @@
                 </div>
             </div>
         </div>
-
         <!-- CHASNE GAME -->
-        <div class="game-bk" style="display:none;">
+        <div class="game-bk" style="display:<?=(!$currentChanceGame ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
                     <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
                 </div>
                 <div class="gm-if-bk">
-                    <div class="l">Название<br/>этой игры</div>
-                    <div class="r"><b>600</b>баллов</div>
+                    <div class="l"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
+                    <div class="r"><b><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGamePrice() : '')?></b>баллов</div>
                 </div>
                 <div class="l-bk-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
                 <div class="rw-b">
                     <? foreach (array('33','44','55') as $game) { ?>
-                        <div class="tb" style="display:none" data-game="<?=$game?>">
+                        <? if ($currentChanceGame && $currentChanceGame['id'] != $game) { continue; } ?>
+                        <div class="tb" style="display:<?=(!$currentChanceGame ? 'none' : '')?>" data-game="<?=$game?>">
                             <? $order = array('l', 'c', 'r'); ?>
                             <? foreach ($chanceGames[$game]->loadPrizes() as $prize) { ?>
                                 <div class="td <?=($game == '55' ? array_shift($order) : 'c')?> sel">
                                     <img src="/filestorage/shop/<?=$prize->getImage();?>" />
                                 </div>
                             <? } ?>
-                        </div>    
+                        </div>
                     <? } ?>
                 </div>
             </div>
             <div class="gm-tb-bk">
 
                 <!-- Блок "ВЫИГРАЛ" -->
-                <div class="msg-tb won" style="display:none;">
+                <div class="msg-tb won" style="display:none">
                     <div class="td">
                         <div class="pz-ph">
                             <img src="/tpl/img/preview/catalog-img-5.jpg" />
@@ -656,7 +656,7 @@
                 </div>
 
                 <!-- Кнопка "Играть" -->
-                <div class="msg-tb play">
+                <div class="msg-tb play" <?=($currentChanceGame ? 'style="display:none"' : '')?>>
                     <div class="td">
                         <div class="bt">играть</div>
                     </div>
@@ -666,19 +666,19 @@
                 <div class="msg-tb los" style="display:none;">
                     <div class="td">
                         <div class="los-msg">В этот раз вы<br/>не выиграли</div>
-                        <div class="bt">играть еще раз за 600 баллов</div>
+                        <div class="bt">играть еще раз за <span></span> баллов</div>
                     </div>
                 </div>
 
                 <!-- Кнопка "Выиграл, играть еще" -->
-                <div class="msg-tb los" style="display:none;">
+                <!--div class="msg-tb los" style="display:none;">
                     <div class="td">
                         <div class="bt">играть еще раз за 600 баллов</div>
                     </div>
-                </div>
+                </div-->
 
                 <!-- GAME 3x3 -->
-                <ul class="gm-tb g-3x3" data-game="33">
+                <ul class="gm-tb g-3x3" data-game="33" data-price="<?=$chanceGames['33']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '33' ? 'block' : 'none')?>">
                     <? for($i = 1; $i <=3; ++$i) { ?>
                         <? for($j = 1; $j <=3; ++$j) { ?>
                             <li data-coord="<?=$i?>x<?=$j?>"></li>
@@ -690,7 +690,7 @@
                 <!-- END GAME 3x3 -->
 
                 <!-- GAME 4x4 -->
-                <ul class="gm-tb g-4x4" style="display:none;" data-game="44">
+                <ul class="gm-tb g-4x4" data-game="44" data-price="<?=$chanceGames['44']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '44' ? 'block' : 'none')?>">
                     <? for($i = 1; $i <= 4; ++$i) { ?>
                         <? for($j = 1; $j <= 4; ++$j) { ?>
                             <li data-coord="<?=$i?>x<?=$j?>"></li>
@@ -700,7 +700,7 @@
                 <!-- END GAME 4x4 -->
 
                 <!-- GAME 5x5 -->
-                <ul class="gm-tb g-5x5" style="display:none;" data-game="55">
+                <ul class="gm-tb g-5x5" data-game="55" data-price="<?=$chanceGames['55']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '55' ? 'block' : 'none')?>">
                     <? for($i = 1; $i <= 5; ++$i) { ?>
                         <? for($j = 1; $j <= 5; ++$j) { ?>
                             <li data-coord="<?=$i?>x<?=$j?>"></li>

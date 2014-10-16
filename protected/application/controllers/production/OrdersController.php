@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \ShopItemOrder, \ShopItem;
+use \Application, \Config, \Player, \EntityException, \Session, \ShopItemOrder, \ShopItem, \ChanceGamesModel;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -35,6 +35,16 @@ class OrdersController extends \AjaxController
               ->setRegion($this->request()->post('region'))
               ->setCity($this->request()->post('city'))
               ->setAddress($this->request()->post('addr'));
+
+        if ($this->request()->post('chanceWin')) {
+            try {
+                $chanceWinData = ChanceGamesModel::instance()->getUnorderedChanceWinData($item->getId(), $order->getPlayer());    
+            } catch (ModelException $e) {}
+
+            if ($chanceWinData && $chanceWinData['Id']) {
+                $order->setChanceGameId($chanceWinData['Id']);   
+            }
+        }
 
         try {
             $order->create();

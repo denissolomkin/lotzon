@@ -1,4 +1,5 @@
 var currentShowedItem = 0;
+var winChance = false;
 $(function(){
     /* ==========================================================================
                         Header slider functional
@@ -394,6 +395,7 @@ $(function(){
         form.find('.pi-inp-bk').removeClass('error');
         var order = {
             itemId: currentShowedItem,
+            chanceWin: winChance ? 1 : 0,
             name: form.find('input[name="name"]').val(),
             surname: form.find('input[name="surname"]').val(),
             phone: form.find('input[name="phone"]').val(),
@@ -1103,33 +1105,65 @@ $('.ch-gm-tbl .gm-bt').click(function(){
         $('.game-bk').fadeIn(200);
     }, 200);
     $('.game-bk .play .bt').off('click').on('click', function() {
+        winChance = false;
         var btn = $(this);
-        $.ajax({
-            url: "/chance/build/" + gi,
-            method: 'GET',
-            async: true,
-            dataType: 'json',
-            success: function(data) {
-                if (data.status == 1) {
-                    btn.parents('.play').hide();
-                    for (var i in data.res.field) {
-                        for (var j in data.res.field[i]) {
-                            if (data.res.field[i][j] == 1) {
-                                $('.game-bk .gm-tb li[data-coord="'+(i + 'x' + j)+'"]').addClass('won');
-                            }
-                            
-                        }
-                    }
-                } else {
-                    
-                }
-            }, 
-            error: function() {
-                
-           }
-        });
+        startChanceGame(gi, function(data) {
+            btn.parents('.play').hide();
+        }, function(data) {
+            if (data.message=="INSUFFICIENT_FUNDS") {
+                $('.pz-ifo-bk').hide();
+                $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
+            }
+        }, function() {});
     })
 });
+
+$('li[data-coord]').on('click', function() {
+    var cell = $(this);
+    playChanceGame($(this).parent().data('game'), $(this).data('coord'), function(data) {
+        if (data.res.status == 'win') {
+            winChance = true;
+            $('.msg-tb.won').show();
+            $('.msg-tb.won').find('.pz-ph img').attr('src', '/filestorage/shop/' + data.res.prize.image);
+            $('.msg-tb.won').find('.tl b').text(data.res.prize.title);
+            $('.msg-tb.won').find('.bt').off('click').on('click', function() {
+                currentShowedItem = data.res.prize.id;
+
+                $('.pz-ifo-bk').hide();
+                $('.pz-fm-bk').show();
+                $('.pz-rt-bk').hide();
+
+                $('#shop-items-popup').show();
+                $('#shop-items-popup').find('.cs').off('click').on('click', function() {
+                    location.reload();
+                })
+            });
+
+        } else if (data.res.status == 'loose') {
+            $('.msg-tb.los').find('.bt span').text(cell.parents('.gm-tb').data('price'));
+            $('.msg-tb.los').find('.bt').off('click').on('click', function() {
+                var btn = $(this);
+                startChanceGame(cell.parent().data('game'), function(data) {
+                    btn.parents('.msg-tb').hide();
+                    $('li[data-coord]').removeClass('won').removeClass('los');
+                }, function(data) {
+                    if (data.message=="INSUFFICIENT_FUNDS") {
+                        $('.pz-ifo-bk').hide();
+                        $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
+                    }
+                }, function() {});
+            });
+            $('.msg-tb.los').show();
+        } 
+        if (data.res.cell == 1) {
+            cell.addClass('won');
+        } else {
+            cell.addClass('los');
+        }
+    }, function() {
+
+    }, function() {});
+})
 
 $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);

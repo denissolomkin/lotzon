@@ -6,8 +6,8 @@ class ShopOrdersDBProcessor implements IProcessor
     public function create(Entity $order) 
     {
         $order->setDateOrdered(time());
-        $sql = "INSERT INTO `ShopOrders` (`PlayerId`, `ItemId`, `DateOrdered`, `Name`, `Surname`, `SecondName`, `Phone`, `Region`, `City`, `Address`) VALUES 
-                                         (:plid, :aid, :do, :name, :surname, :secname, :phone, :region, :city, :addr)";
+        $sql = "INSERT INTO `ShopOrders` (`PlayerId`, `ItemId`, `DateOrdered`, `Name`, `Surname`, `SecondName`, `Phone`, `Region`, `City`, `Address`, `ChanceGameId`) VALUES 
+                                         (:plid, :aid, :do, :name, :surname, :secname, :phone, :region, :city, :addr, :cgid)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -21,12 +21,23 @@ class ShopOrdersDBProcessor implements IProcessor
                 ':region'   => $order->getRegion(),
                 ':city'     => $order->getCity(),
                 ':addr'     => $order->getAddress(),  
+                ':cgid'     => $order->getChanceGameId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
 
         $order->setId(DB::Connect()->lastInsertId());
+
+        if ($order->getChanceGameId()) {
+            try {
+                DB::Connect()->prepare("UPDATE `ChanceGameWins` SET `OrderRecieved` = 1 WHERE `Id` = :id")->execute(array(
+                    ':id' => $order->getChanceGameId(),
+                ));    
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query", 500);       
+            }
+        }
 
         return $order;
     } 

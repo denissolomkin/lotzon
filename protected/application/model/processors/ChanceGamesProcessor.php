@@ -54,4 +54,44 @@ class ChanceGamesProcessor
 
         return $games;
     }
+
+    public function logWin($game, $combination, $clicks, $player, $prize) 
+    {
+        $sql = "INSERT INTO `ChanceGameWins` (`GameId`, `Combination`, `Clicks`, `Date`, `PlayerId`, `ItemId`) VALUES (:gid, :comb, :clicks, :date, :plid, :iid)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':gid' => $game->getIdentifier(),
+                ':comb' => serialize($combination),
+                ':clicks' => serialize($clicks),
+                ':date' => time(),
+                ':plid' => $player->getId(),
+                ':iid'  => $prize->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return DB::Connect()->lastInsertId();
+    }
+
+    public function getUnorderedChanceWinData($itemId, $player) {
+        $sql = "SELECT * FROM `ChanceGameWins` WHERE `ItemId` = :iid AND `PlayerId` = :plid AND `OrderRecieved` = 0 ORDER BY `Date` DESC LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':iid' => $itemId,
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);    
+        }
+
+        if ($sth->rowCount()) {
+            return $sth->fetch();
+        }
+
+        return false;
+    }
 }

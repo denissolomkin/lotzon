@@ -254,6 +254,47 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
     });   
 }
 
+function startChanceGame(gi, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/chance/build/" + gi,
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
+function playChanceGame(gi, choose, successFunction, failFunction, errorFunction) {
+    var data = {
+        choose: choose
+    };
+    $.ajax({
+        url: "/chance/play/" + gi,
+        method: 'POST',
+        data: data,
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
+
 window.setInterval(function() {
     $.ajax({
         url: "/players/ping",

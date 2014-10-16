@@ -40,6 +40,7 @@ class Index extends \SlimController\SlimController
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
+        $currentChanceGame     = Session::connect()->get('chanceGame');
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
@@ -69,6 +70,7 @@ class Index extends \SlimController\SlimController
             'playerPlayedLotteries' => $playerPlayedLotteries,
             'seo' => $seo,
             'chanceGames'  => $chanceGames,
+            'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
         ));
     }
 

@@ -99,9 +99,94 @@ class Game extends \AjaxController
     {
         $games = ChanceGamesModel::instance()->getGamesSettings();
         if ($games[$identifier]) {
+            if (Session::connect()->get(Player::IDENTITY)->getPoints() < $games[$identifier]->getGamePrice()) {
+                $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
+            }
             $gameField = $games[$identifier]->generateGame();
+            Session::connect()->set('chanceGame', array(
+                $identifier => array(
+                    'id'     => $identifier,
+                    'start'  => time(),
+                    'field'  => $gameField,
+                    'clicks' => array(), 
+                    'status' => 'process',
+                )
+            ));
+            try {
+                Session::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice());
+            } catch (EntityException $e) {
+                Session::connect()->delete('chanceGame');
+                $this->ajaxResponse($e->getMessage(), $e->getCode());                
+            }
 
-            $this->ajaxResponse(array('field' => $gameField));
+            $this->ajaxResponse(array('id' => $identifier, 'start' => time()));
+        } else {
+            $this->ajaxResponse(array(), 0, 'INVALID_GAME');
+        }
+    }
+
+    public function chanceGamePlayAction($identifier)
+    {
+
+        //$game = &Session::connect()->get('chanceGame');
+        // sorry session class you can be reference ^(
+        $game = &$_SESSION['chanceGame'];
+        if ($game && isset($game[$identifier]) && $game[$identifier]['status'] == 'process') {
+            $playerChoose = $this->request()->post('choose', null);
+            if ($playerChoose) {
+                $playerChoose = explode("x", $playerChoose);
+
+                $field = $game[$identifier]['field'];
+                if (isset($field[$playerChoose[0]][$playerChoose[1]]) && $field[$playerChoose[0]][$playerChoose[1]] == 1) {
+                    $game[$identifier]['clicks'][] = $playerChoose;
+
+                    if ($identifier == '33' || $identifier == '44') {
+                        if (count($game[$identifier]['clicks']) == 3) {
+                            // double check clicks
+                            $status = true;
+                            foreach ($game[$identifier]['clicks'] as $point) {
+                                if ($field[$point[0]][$point[1]] != 1) {
+                                    $status = false;
+                                }    
+                            }
+                            if ($status) {
+                                $game[$identifier]['status'] = 'win';
+                            } else {
+                                $game[$identifier]['status'] = 'loose';
+                            }                            
+                        }
+                    }
+                 } else {
+                    if ($identifier == '33' || $identifier == '44') {
+                        $game[$identifier]['status'] = 'loose';
+                    }
+                }
+                if ($game[$identifier]['status'] == 'loose' || $game[$identifier]['status'] == 'win') {
+                    Session::connect()->delete('chanceGame');
+                }
+                $responseData = array(
+                    'status' => $game[$identifier]['status'],
+                    'cell'   => $field[$playerChoose[0]][$playerChoose[1]],
+                );
+
+                if ($game[$identifier]['status'] == 'win') {
+                    $gameObj = ChanceGamesModel::instance()->getGamesSettings()[$identifier];
+                    $prizes = $gameObj->loadPrizes();
+                    $prize = array_shift($prizes);
+
+                    ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'],Session::connect()->get(Player::IDENTITY), $prize);
+
+                    $responseData['prize'] = array(
+                        'id' => $prize->getId(),
+                        'title' => $prize->getTitle(),
+                        'image' => $prize->getImage(),
+                    );
+                }
+                $this->ajaxResponse($responseData);
+
+            } else {
+                $this->ajaxResponse(array(), 0, 'FRONTEND_ERROR');    
+            }
         } else {
             $this->ajaxResponse(array(), 0, 'INVALID_GAME');
         }
