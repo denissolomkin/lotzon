@@ -493,8 +493,7 @@ article .infos {padding:40px 20px 0 20px;}
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
 }
-.profile-info .save-bk .sb-ch-td .but:hover {background-color:#000;color:#fff;}
-.profile-info .save-bk .sb-ch-td .but.save {box-shadow:0 0 15px 0 rgba(178, 208, 212, 1);border-color:#88a2a5;}
+.profile-info .save-bk .sb-ch-td .but.save, .profile-info .save-bk .sb-ch-td .but:hover {background-color:#000;color:#fff;}
 .font-fix .profile-info .save-bk .sb-ch-td .but {line-height:52px;}
 
 .profile .pr-br {float:right;width:300px;}
