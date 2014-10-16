@@ -714,6 +714,7 @@
         </div>
         </div>
         </div>
+            <div class="b-cl-block"></div>
         </section>
         <script>
             $('.ch-gm-tbl .gm-bt').click(function(){

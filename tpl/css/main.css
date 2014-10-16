@@ -583,9 +583,9 @@ article .infos {padding:40px 20px 0 20px;}
 /* ==========================================================================
                             Section profile styles
    ========================================================================== */
-.chance {margin-top:40px;overflow:hidden;padding:0 20px;}
+.chance {margin-top:40px;padding:0 20px;}
 .chance .ch-br-bk {width:300px;height:600px;float:left;}
-.chance .ch-lot-bk {width:900px;float:right;height:600px;background-color:#fff;}
+.chance .ch-lot-bk {width:900px;float:right;height:600px;background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);}
 .chance .ch-lot-bk .ch-bk {padding:0 40px 45px 40px;}
 .chance .ch-lot-bk .ch-bk .ch-txt {font:18px/19px Handbook-regular;color:#000;padding:30px 0 48px 0;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl {display:table;width:100%;}
