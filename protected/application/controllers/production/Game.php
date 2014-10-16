@@ -182,6 +182,9 @@ class Game extends \AjaxController
                         'image' => $prize->getImage(),
                     );
                 }
+                if ($game[$identifier]['status'] == 'loose') {
+                    $responseData['field'] = $field;
+                }
                 $this->ajaxResponse($responseData);
 
             } else {
