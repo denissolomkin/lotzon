@@ -583,9 +583,9 @@ article .infos {padding:40px 20px 0 20px;}
 /* ==========================================================================
                             Section profile styles
    ========================================================================== */
-.chance {margin-top:40px;overflow:hidden;padding:0 20px;}
+.chance {margin-top:40px;padding:0 20px;}
 .chance .ch-br-bk {width:300px;height:600px;float:left;}
-.chance .ch-lot-bk {width:900px;float:right;height:600px;background-color:#fff;}
+.chance .ch-lot-bk {width:900px;float:right;height:600px;background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);}
 .chance .ch-lot-bk .ch-bk {padding:0 40px 45px 40px;}
 .chance .ch-lot-bk .ch-bk .ch-txt {font:18px/19px Handbook-regular;color:#000;padding:30px 0 48px 0;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl {display:table;width:100%;}
@@ -643,6 +643,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .game-bk .gm-tb > li {float:left;border:1px solid #b2d0d4;text-align:center;background:url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;}
 .chance .ch-lot-bk .game-bk .gm-tb > li.won {border-color:#ffe400;background-image: url("../img/bg-chanse-game-lot.png");}
 .chance .ch-lot-bk .game-bk .gm-tb > li.los {border-color:#707070;background-image: url("../img/bg-chanse-game-x.png");}
+.chance .ch-lot-bk .game-bk .gm-tb > li.true {border-color:#ffe400;background-image: url("../img/bg-chanse-game-lot.png");opacity:0.5;}
 
 .chance .ch-lot-bk .game-bk .gm-tb.g-3x3 > li {width:148px;height:148px;margin:0 20px 20px 0;}
 .chance .ch-lot-bk .game-bk .gm-tb.g-3x3 > li:nth-child(3n+3) {margin-right:0;}

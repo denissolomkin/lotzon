@@ -1140,6 +1140,24 @@ $('li[data-coord]').on('click', function() {
             });
 
         } else if (data.res.status == 'loose') {
+            for (var i in data.res.field) {
+                for (var j in data.res.field[i]) {
+                    if(data.res.field[i][j] == 1) {
+                        $('li[data-coord="' + i + 'x' +j+ '"]').addClass('blink');
+                    }
+                }
+            }
+            var blinkCount = 3;
+            var blinkInterval = window.setInterval(function() {
+                if (blinkCount == 0) {
+                    window.clearInterval(blinkInterval);
+                    $('.msg-tb.los').show();
+                    return;
+                }
+                blinkCount--;
+
+                $('li.blink').toggleClass('true');
+            }, 600);
             $('.msg-tb.los').find('.bt span').text(cell.parents('.gm-tb').data('price'));
             $('.msg-tb.los').find('.bt').off('click').on('click', function() {
                 var btn = $(this);
@@ -1153,7 +1171,6 @@ $('li[data-coord]').on('click', function() {
                     }
                 }, function() {});
             });
-            $('.msg-tb.los').show();
         } 
         if (data.res.cell == 1) {
             cell.addClass('won');
