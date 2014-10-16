@@ -217,10 +217,10 @@ footer .fb-p-b .fb-p-b_li {display:inline-block;width:155px;height:100px;line-he
 .i-b_ta:-moz-placeholder {color:#8d7d00;}
 .i-b_ta::-moz-placeholder {color:#8d7d00;}
 .i-b_ta:-ms-input-placeholder {color:#8d7d00;}
-input::-webkit-input-placeholder {color:#8d7d00;}
-input:-moz-placeholder {color:#8d7d00;}
-input::-moz-placeholder {color:#8d7d00;}
-input:-ms-input-placeholder {color:#8d7d00;}
+input::-webkit-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
+input:-moz-placeholder {color:#8d7d00;font-family:Handbook-italic;}
+input::-moz-placeholder {color:#8d7d00;font-family:Handbook-italic;}
+input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 .focus input::-webkit-input-placeholder {opacity:0;}
 .focus input:-moz-placeholder {opacity:0;}
 .focus input::-moz-placeholder {opacity:0;}
@@ -256,7 +256,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .rf-txt {font:13px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
 #reg-form .ch-b {padding:30px 0;text-align:center;position:relative;}
 #reg-form.rul-error .ch-b {color:#c51e1e;}
-#reg-form.rul-error .e-t {display:block;}
+#reg-form.rul-error .e-t {display:none;}
 #reg-form.rul-error input[type="checkbox"] + label, #reg-form.rul-error input[type="checkbox"] + label > a {color:#c51e1e;}
 #reg-form.rul-error input[type="checkbox"] + label:before {border-color:#c51e1e;}
 .login-popup .lp-b .b-m .t-b {overflow:hidden;}
@@ -280,7 +280,7 @@ input:-ms-input-placeholder {color:#8d7d00;}
 .login-popup .lp-b .focus .ph {display:block;}
 .login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
-.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-italic;width:250px;}
+.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-regular;width:250px;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */
     height:28px;

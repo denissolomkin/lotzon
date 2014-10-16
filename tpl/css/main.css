@@ -114,6 +114,8 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 .font-fix .pw-gm-rt .ct .rt-bk .rt-bk_li {line-height:38px;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li:last-child {margin-right:0;}
 
+.slick-track {background-color:#fee518;}
+
 
 /* ==========================================================================
                             Navigation styles
@@ -297,7 +299,7 @@ article .infos {padding:40px 20px 0 20px;}
 .rules {background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);height:400px;}
 .rules b, .rules strong, {font-family:Handbook-bold!important;}
 .rules .rules-ct {padding:27px 40px 0 40px;overflow:hidden;}
-.rules .rules-ct .win-tbl {}
+.rules .rules-ct .win-tbl {min-height:228px;}
 .rules .rules-ct .win-tbl .c-l {width:280px;float:left;margin-right:20px;}
 .rules .rules-ct .win-tbl .c-l .wt-t {font:15px/17px Handbook-regular;color:#000;}
 .rules .rules-ct .win-tbl .c-l .wt-t > p {margin:0 0 6px 0;}
@@ -603,12 +605,12 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .ch-bk .gm-5x5 {margin:0 0 0 auto;}
 .chance .ch-lot-bk .ch-bk .gm-5x5 > li {width:42px;height:42px;margin:0 5px 5px 0;}
 .chance .ch-lot-bk .ch-bk .gm-5x5 > li:nth-child(5n+5) {margin-right:0;}
-.chance .ch-lot-bk .gm-if-bk {padding:13px 0 26px 0;overflow:hidden;color:#000;width:240px;text-align:left;}
+.chance .ch-lot-bk .gm-if-bk {padding:13px 0 26px 0;overflow:hidden;color:#000;width:240px;text-align:left;display:table;}
 .chance .ch-lot-bk .ch-bk .td.c .gm-if-bk {margin:auto;}
 .chance .ch-lot-bk .ch-bk .td.r .gm-if-bk {margin-left:auto;}
-.chance .ch-lot-bk .gm-if-bk .l {float:left;font:20px/1 Handbook-bold;text-transform:uppercase;margin-left:10px;}
-.chance .ch-lot-bk .gm-if-bk .r {float:right;font:11px/1 Handbook-bold;text-transform:uppercase;margin-right:10px;text-align:center;}
-.chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;}
+.chance .ch-lot-bk .gm-if-bk .l {font:20px/1 Handbook-bold;text-transform:uppercase;padding:0 5px 0 10px;display:table-cell;vertical-align:top;}
+.chance .ch-lot-bk .gm-if-bk .r {font:11px/1 Handbook-bold;text-transform:uppercase;padding:0 10px 0 5px;text-align:center;display:table-cell;vertical-align:top;}
+.chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;margin-top:-2px;}
 .chance .ch-lot-bk .ch-bk .gm-bt {width:240px;height:50px;text-align:center;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;}
 .chance .ch-lot-bk .ch-bk .gm-bt:hover {background-color:#000;color:#fff;}
 .chance .ch-lot-bk .ch-bk .td.c .gm-bt {margin:auto;}

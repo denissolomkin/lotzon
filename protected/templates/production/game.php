@@ -463,27 +463,27 @@
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Никнейм">Никнейм</div>
-                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
+                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Фамилия">Фамилия</div>
-                                            <input autocomplete="off" spellcheck="false" type="text" name="surname" value="<?=$player->getSurname()?>"/>
+                                            <input autocomplete="off" spellcheck="false" type="text" name="surname" data-valid="<?=$player->getSurname()?>" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Имя">Имя</div>
-                                            <input autocomplete="off" spellcheck="false" type="text" name="name" value="<?=$player->getName()?>"/>
+                                            <input autocomplete="off" spellcheck="false" type="text" name="name" data-valid="<?=$player->getName()?>" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="Телефон">Телефон</div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Телефон" type="tel" name="phone" value="<?=$player->getPhone()?>"/>
+                                            <input autocomplete="off" spellcheck="false" placeholder="Телефон" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="Дата рождения">Дата рождения</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Пароль">Пароль</div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" name="password"  />
+                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" name="password" data-valid="" />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -498,7 +498,7 @@
                                                 <? for ($i=0; $i<6;++$i) {?>
                                                     <li>
                                                         <i></i>
-                                                        <span><?=(isset($player->getFavoriteCombination()[$i]) ? $player->getFavoriteCombination()[$i] : '')?></span>
+                                                        <span data-valid="<?=(isset($player->getFavoriteCombination()[$i]) ? $player->getFavoriteCombination()[$i] : '')?>"><?=(isset($player->getFavoriteCombination()[$i]) ? $player->getFavoriteCombination()[$i] : '')?></span>
                                                     </li>
                                                 <? } ?>
                                             </ul>
