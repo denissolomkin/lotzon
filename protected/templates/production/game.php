@@ -622,6 +622,7 @@
                 </div>
                 <div class="gm-if-bk">
                     <div class="tb">
+                        <!-- FIX HERE -->
                         <div class="l"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
                         <div class="r"><b><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGamePrice() : '')?></b>баллов</div>
                     </div>
