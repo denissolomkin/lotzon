@@ -24,6 +24,8 @@ class ShopItemOrder extends Entity
     private $_city       = '';
     private $_addr       = '';
 
+    private $_chanceGameId = 0;
+
     public function init() 
     {
         $this->setModelClass('ShopOrdersModel');
@@ -39,6 +41,18 @@ class ShopItemOrder extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setChanceGameId($chanceGameId)
+    {
+        $this->_chanceGameId = $chanceGameId;
+
+        return $this;
+    }
+
+    public function getChanceGameId()
+    {
+        return $this->_chanceGameId;
     }
 
     public function setItem(ShopItem $item) 
@@ -214,7 +228,7 @@ class ShopItemOrder extends Entity
                     throw new EntityException("ORDER_INVALID_ADRESS", 400);
                 }
 
-                if ($this->getPlayer()->getPoints() < $this->getItem()->getPrice()) {
+                if (!$this->getChanceGameId() && $this->getPlayer()->getPoints() < $this->getItem()->getPrice()) {
                     throw new EntityException("INSUFFICIENT_FUNDS", 400);   
                 }
 

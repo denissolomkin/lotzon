@@ -23,6 +23,15 @@ class ChanceGamesModel extends Model
 
    public function getGamesSettings()
    {
-        return $this->getProcessor()->getGamesSettings();
+      return $this->getProcessor()->getGamesSettings();
    }
+
+   public function logWin($game, $combination, $clicks, $player, $item)
+   {
+    return $this->getProcessor()->logWin($game, $combination, $clicks, $player, $item);
+   }
+
+    public function getUnorderedChanceWinData($itemId, $player) { 
+      return $this->getProcessor()->getUnorderedChanceWinData($itemId, $player);
+    }
 }

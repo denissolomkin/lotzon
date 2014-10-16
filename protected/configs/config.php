@@ -164,6 +164,9 @@ Config::instance()->publicResources = array(
     '/chance/build/:identifier' => array(
         'get' => 'controllers\production\Game:startChanceGame',
     ),
+    '/chance/play/:identifier' => array(
+        'post' => 'controllers\production\Game:chanceGamePlay',
+    ),
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';
