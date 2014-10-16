@@ -99,8 +99,8 @@ input[type="radio"]:checked + label:after {content: "";display:block;width:16px;
                             Header styles
    ========================================================================== */
 header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
-.hr-br {width:960px;float:left;}
-.hr-io-bk {float:right;width:320px;height:135px;background-color:#fee518;}
+.hr-br {width:960px;float:left;overflow:hidden;}
+.hr-io-bk {float:right;width:320px;height:135px;background-color:#fee518;overflow:hidden;}
 #hr-io-slider {height:100px;}
 .slick-dots {font-size:0;margin:0;padding:0;bottom:-30px;}
 .slick-dots li {width:30px;height:30px;vertical-align:middle;line-height:30px;cursor:default;margin:0;}
@@ -493,8 +493,7 @@ article .infos {padding:40px 20px 0 20px;}
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
 }
-.profile-info .save-bk .sb-ch-td .but:hover {background-color:#000;color:#fff;}
-.profile-info .save-bk .sb-ch-td .but.save {box-shadow:0 0 15px 0 rgba(178, 208, 212, 1);border-color:#88a2a5;}
+.profile-info .save-bk .sb-ch-td .but.save, .profile-info .save-bk .sb-ch-td .but:hover {background-color:#000;color:#fff;}
 .font-fix .profile-info .save-bk .sb-ch-td .but {line-height:52px;}
 
 .profile .pr-br {float:right;width:300px;}
@@ -622,7 +621,8 @@ article .infos {padding:40px 20px 0 20px;}
 .game-bk .l-bk .bk-bt {height:34px;vertical-align:middle;padding-left:20px;background:url("../img/but-arrow-left.png") no-repeat left center;font:12px/15px Handbook-bold;color:#383838;text-transform:uppercase;float:left;cursor:pointer;margin-top:10px;}
 .game-bk .l-bk .bk-bt > span {display:inline-block;}
 .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk {width:300px;display:table-row;padding:0;height:69px;}
-.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk > .l, .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk > .r {margin:0;}
+.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk .tb {display:table;width:100%;}
+.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk.gm > .l, .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk.gm > .r {margin:0;}
 .chance .ch-lot-bk .game-bk .l-bk .l-bk-txt {font:18px/19px Handbook-regular;color:#000;display:table-row;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b {display:table-row;height:150px;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b .tb {display:table;width:100%;}

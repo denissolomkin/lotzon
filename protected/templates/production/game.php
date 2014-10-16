@@ -635,7 +635,7 @@
                                     <img src="/filestorage/shop/<?=$prize->getImage();?>" />
                                 </div>
                             <? } ?>
-                        </div>    
+                        </div>
                     <? } ?>
                 </div>
             </div>
