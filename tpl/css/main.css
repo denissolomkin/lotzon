@@ -621,7 +621,8 @@ article .infos {padding:40px 20px 0 20px;}
 .game-bk .l-bk .bk-bt {height:34px;vertical-align:middle;padding-left:20px;background:url("../img/but-arrow-left.png") no-repeat left center;font:12px/15px Handbook-bold;color:#383838;text-transform:uppercase;float:left;cursor:pointer;margin-top:10px;}
 .game-bk .l-bk .bk-bt > span {display:inline-block;}
 .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk {width:300px;display:table-row;padding:0;height:69px;}
-.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk > .l, .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk > .r {margin:0;}
+.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk .tb {display:table;width:100%;}
+.chance .ch-lot-bk .game-bk .l-bk .gm-if-bk.gm > .l, .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk.gm > .r {margin:0;}
 .chance .ch-lot-bk .game-bk .l-bk .l-bk-txt {font:18px/19px Handbook-regular;color:#000;display:table-row;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b {display:table-row;height:150px;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b .tb {display:table;width:100%;}

@@ -622,8 +622,10 @@
                     <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
                 </div>
                 <div class="gm-if-bk">
-                    <div class="l">Название<br/>этой игры</div>
-                    <div class="r"><b>600</b>баллов</div>
+                    <div class="tb">
+                        <div class="l">Название<br/>этой игры</div>
+                        <div class="r"><b>600</b>баллов</div>
+                    </div>
                 </div>
                 <div class="l-bk-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
                 <div class="rw-b">
@@ -635,7 +637,7 @@
                                     <img src="/filestorage/shop/<?=$prize->getImage();?>" />
                                 </div>
                             <? } ?>
-                        </div>    
+                        </div>
                     <? } ?>
                 </div>
             </div>
