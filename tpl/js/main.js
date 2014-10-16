@@ -1093,7 +1093,8 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     $('.game-bk .gm-tb').hide();
     $('.game-bk .rw-b .tb').hide();
     $('.game-bk .play').show();
-    $('.game-bk li').removeClass('won').removeClass('los').removeClass('true').removeClass('blink');
+    $('.game-bk li').removeClass('won').removeClass('los');
+    $('.game-bk li').removeClass('true').removeClass('blink');
     // show current game
     $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
@@ -1164,6 +1165,7 @@ $('li[data-coord]').on('click', function() {
                 startChanceGame(cell.parent().data('game'), function(data) {
                     btn.parents('.msg-tb').hide();
                     $('li[data-coord]').removeClass('won').removeClass('los');
+                    $('li[data-coord]').removeClass('true').removeClass('blink');
                 }, function(data) {
                     if (data.message=="INSUFFICIENT_FUNDS") {
                         $('.pz-ifo-bk').hide();
