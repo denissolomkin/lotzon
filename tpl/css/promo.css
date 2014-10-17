@@ -147,7 +147,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .a-tb-tr {display:table-cell;vertical-align:middle;text-align:right;}
 .a-tb-bt {display:block;text-decoration:none;border:1px solid #000;width:218px;height:48px;text-align:center;font:17px/48px Handbook-bold;text-transform:uppercase;color:#000;letter-spacing:1px;margin-left:auto;}
 
-.a-tbl {overflow:hidden;position:relative;margin-top:-7%;}
+.a-tbl {overflow:hidden;position:relative;margin-top:-9%;}
 .a-tbl .l_ul {margin:0;padding:0;list-style:none;width:470px;float:left;}
 .a-tbl .l_ul .n_li {margin-bottom:40px;display:table;width:100%;}
 .a-tbl .l_ul .n_li:last-child {margin:0;}
@@ -165,7 +165,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .a-tbl .r_ul .r_li .ri-e {color:#2f2f2f;font:30px/1 Handbook-bold;text-transform:uppercase;letter-spacing:-1px;padding-top:7px;}
 article #slide2 ._a-b-b {display:block;width:80px;height:40px;position:absolute;right:0px;bottom:50px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;outline:none;}
 
-.a-cb {position:relative;}
+.a-cb {position:relative;margin-top:-9%;}
 .a-cb .cb-pack {overflow:hidden;}
 .a-cb ._ul-cb-l {list-style:none;margin:0;padding:0;width:470px;float:left;zoom:1;}
 .a-cb ._ul-cb-r {list-style:none;margin:0;padding:0;width:470px;float:left;zoom:1;}
