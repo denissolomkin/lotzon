@@ -21,8 +21,8 @@
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/promo.css" />
 
-        <link rel="icon" href="" type="image/png" />
-        <link rel="shortcut icon" href="" type="'image/x-icon"/>
+        <link rel="icon" href="/tpl/img/favicon.png" type="image/png" />
+        <!--link rel="shortcut icon" href="" type="'image/x-icon"/-->
 
         <!-- For iPhone 4 Retina display: -->
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="">
