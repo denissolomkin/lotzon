@@ -27,7 +27,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, #exchange, .ticket-favorite .after i').on('click', function(){
+    $('.tn-mbk_li, .scrollto, #exchange, .ticket-favorite .after i').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
@@ -483,16 +483,14 @@ $(function(){
         var rulesBlock = $('.rules');
         if(!rulesBlock.hasClass('b-ha')){
             rulesBlock.addClass('b-ha');
-            $('.rules .faq').show(500);
-            setTimeout(function(){
-                $('.r-add-but').html('спрятать');
-            }, 500);
+            $('.rules .faq').show();
+            $('.r-add-but.show').hide();
+            $('.r-add-but.close').show();
         }else{
-            $('.rules .faq').hide(500);
-            setTimeout(function(){
-                $('.r-add-but').html('загрузить еще');
-                rulesBlock.removeClass('b-ha');
-            }, 500);
+            $('.rules .faq').hide();
+            $('.r-add-but.show').show();
+            $('.r-add-but.close').hide();
+            rulesBlock.removeClass('b-ha');
         };
 
 

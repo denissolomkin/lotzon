@@ -257,7 +257,7 @@
                             <? } ?>
                             <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">загрузить еще</div>
                             <div class="mr-cl-bt-bk">
-                                <div class="cl">свернуть</div>
+                                <div class="cl scrollto" data-href="prizes">свернуть</div>
                                 <div class="mr">загрузить еще</div>
                             </div>
                         </div>
@@ -304,7 +304,8 @@
                             <ul class="faq">
                                 <?=$staticTexts['main-faq'][$lang]->getText()?>
                             </ul>
-                            <div class="r-add-but">загрузить еще</div>
+                            <div class="r-add-but show">загрузить еще</div>
+                            <div class="r-add-but close scrollto" data-href="rules" style="display:none;">спрятать</div>
                         </div>
                     </section>
                 </div>
@@ -326,7 +327,7 @@
                          </div>
                         <div class="n-add-but">загрузить еще</div>
                         <div class="n-mr-cl-bt-bk">
-                            <div class="cl">свернуть</div>
+                            <div class="cl scrollto" data-href="news">свернуть</div>
                             <div class="mr">загрузить еще</div>
                         </div>
                     </section>
@@ -409,7 +410,7 @@
 
                                 <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
                                 <div class="mr-cl-bt-bl">
-                                    <div class="cl">свернуть</div>
+                                    <div class="cl scrollto" data-href="profile">свернуть</div>
                                     <div class="mr">загрузить еще</div>
                                 </div>
                             </section>
