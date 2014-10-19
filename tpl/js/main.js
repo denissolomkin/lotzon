@@ -1089,6 +1089,8 @@ function proccessResult()
 
 $('.ch-gm-tbl .gm-bt').click(function(){
     var gi = $(this).data('game');
+    $('.msg-tb.won').hide();
+    $('.msg-tb.los').hide();
     // hide all games;
     $('.game-bk .gm-tb').hide();
     $('.game-bk .rw-b .tb').hide();
@@ -1098,6 +1100,10 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     // show current game
     $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
+
+    if (gi == 55) {
+        $('.game-bk .rw-b .tb[data-game="'+gi+'"]').find('.td').removeClass('sel').first().addClass('sel');
+    }
     
     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
@@ -1105,6 +1111,7 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     window.setTimeout(function(){
         $('.game-bk').fadeIn(200);
     }, 200);
+
     $('.game-bk .play .bt').off('click').on('click', function() {
         winChance = false;
         var btn = $(this);
