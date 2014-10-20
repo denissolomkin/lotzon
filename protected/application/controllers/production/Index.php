@@ -47,7 +47,7 @@ class Index extends \SlimController\SlimController
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => 0,
             'win'          => 0,
-            'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time() + 10, // add 10 seconds to fill pause on lottery result generation
+            'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
         );
 

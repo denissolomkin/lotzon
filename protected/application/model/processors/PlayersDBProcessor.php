@@ -6,7 +6,7 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`) VALUES (:email, :passwd, :salt, :dr, :dl, :cc)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`) VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -16,6 +16,7 @@ class PlayersDBProcessor implements IProcessor
                 ':dr'       => time(),
                 ':dl'       => time(),
                 ':cc'       => $player->getCountry(),
+                ':vis'      => 1,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
