@@ -65,7 +65,8 @@ class CommentsDBProcessor implements IProcessor
                 ->setAvatar($commentData['Avatar'])
                 ->setText($commentData['Text'])
                 ->setLink($commentData['Link'])
-                ->setAuthor($commentData['Author']);    
+                ->setAuthor($commentData['Author'])
+                ->setDate($commentData['Date']);    
         } 
 
         return $comment;
@@ -92,7 +93,8 @@ class CommentsDBProcessor implements IProcessor
                         ->setAvatar($commentData['Avatar'])
                         ->setText($commentData['Text'])
                         ->setLink($commentData['Link'])
-                        ->setAuthor($commentData['Author']);
+                        ->setAuthor($commentData['Author'])
+                        ->setDate($commentData['Date']);
                 $comments[] = $comment;
             }
         }

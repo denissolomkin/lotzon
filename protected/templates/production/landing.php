@@ -187,7 +187,7 @@
                                             <li class="_li-cb">
                                                 <div class="cb-ph"><img src="/filestorage/avatars/comments/<?=$comment->getAvatar();?>" class="ph_img" /></div>
                                                 <div class="cb-ct">
-                                                    <div class="ct-i"><a href="<?=$comment->getLink()?>"><?=$comment->getAuthor()?></a> &bull; <?=date('d.m.Y', $comment->getDate())?>16.04.2014</div>
+                                                    <div class="ct-i"><a href="<?=$comment->getLink()?>"><?=$comment->getAuthor()?></a> &bull; <?=date('d.m.Y', $comment->getDate())?></div>
                                                     <div class="ct-t"><?=$comment->getText()?></div>
                                                 </div>
                                             </li>
@@ -198,7 +198,7 @@
                                             <li class="_li-cb">
                                                 <div class="cb-ph"><img src="/filestorage/avatars/comments/<?=$comment->getAvatar();?>" class="ph_img" /></div>
                                                 <div class="cb-ct">
-                                                    <div class="ct-i"><a href="<?=$comment->getLink()?>"><?=$comment->getAuthor()?></a> &bull; <?=date('d.m.Y', $comment->getDate())?>16.04.2014</div>
+                                                    <div class="ct-i"><a href="<?=$comment->getLink()?>"><?=$comment->getAuthor()?></a> &bull; <?=date('d.m.Y', $comment->getDate())?></div>
                                                     <div class="ct-t"><?=$comment->getText()?></div>
                                                 </div>
                                             </li>
