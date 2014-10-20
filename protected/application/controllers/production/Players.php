@@ -39,7 +39,7 @@ class Players extends \AjaxController
             if ($invite) {
                 // add bonuses to inviter and delete invite
                 try {
-                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST);
+                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $player->getEmail());
                     $invite->delete();    
                 } catch (EntityException $e) {}
             }

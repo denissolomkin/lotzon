@@ -434,78 +434,46 @@
                     <div id="bonuses-h">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
-                            <div class="if">4 600 <i>баллов<br/>на счету</i></div>
+                            <div class="if"><?=number_format($player->getPoints(), 0, '.', ' ')?> <i>баллов<br/>на счету</i></div>
                             <div class="bt">
-                                <div class="if-bt">обменять</div>
+                                <div class="if-bt points-get" onclick="$('#ta-his-popup').hide();$('#exchange').click();">обменять</div>
                             </div>
                         </div>
                         <div class="tb">
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">+10</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">-210</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">+150</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Лотерея шанс (выигрыш iPhone)</span></div>
-                                <div class="if td">-410</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">+10</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
+                            <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
+                                <div class="rw">
+                                    <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
+                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=$transaction->getSum()?></div>
+                                    <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
+                                </div>
+                            <? } ?>
                         </div>
-                        <div class="pz-more-bt">загрузить еще</div>
+                        <? if (count($playerTransactions[GameSettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
+                            <div class="pz-more-bt">загрузить еще</div>
+                        <? } ?>
                     </div>
 
                     <!-- BONUSES BLOCK -->
                     <div id="cash-h">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
-                            <div class="if">4 600 <i>гривен<br/>на счету</i></div>
+                            <div class="if"><?=number_format($player->getMoney(), 0, '.', ' ')?> <i>гривен<br/>на счету</i></div>
                             <div class="bt">
-                                <div class="if-bt">вывести</div>
+                                <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
                             </div>
                         </div>
                         <div class="tb">
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">+10</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Обмен на приз: часы Seiko </span></div>
-                                <div class="if td">+30</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">-110</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">+10</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
-                            <div class="rw">
-                                <div class="nm td"><span>Приглашение друга pavel@mail.ru</span></div>
-                                <div class="if td">+10</div>
-                                <div class="dt td"><span>29.09.2014</span></div>
-                            </div>
+                            <? foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>
+                                <div class="rw">
+                                    <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
+                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=$transaction->getSum()?></div>
+                                    <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
+                                </div>
+                            <? } ?>
                         </div>
-                        <div class="pz-more-bt">загрузить еще</div>
+                        <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
+                            <div class="pz-more-bt">загрузить еще</div>
+                        <? } ?>
                     </div>
                 </div>
             </section>

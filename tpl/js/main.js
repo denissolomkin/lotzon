@@ -288,7 +288,7 @@ $(function(){
         }
     });
 
-    $(".if-bt").on('click', function() {
+    $(".send-invite").on('click', function() {
         var email = $(this).parent().find('input[name="email"]').val();
         var button = $(this);
         addEmailInvite(email, function(data){
@@ -1096,13 +1096,14 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     $('.game-bk li').removeClass('won').removeClass('los');
     $('.game-bk li').removeClass('true').removeClass('blink');
     // show current game
+    
     $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
 
     if (gi == 55) {
         $('.game-bk .rw-b .tb[data-game="'+gi+'"]').find('.td').removeClass('sel').first().addClass('sel');
     }
-    
+    $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
     $('.ch-bk').fadeOut(200);
@@ -1171,6 +1172,7 @@ $('li[data-coord]').on('click', function() {
                     btn.parents('.msg-tb').hide();
                     $('li[data-coord]').removeClass('won').removeClass('los');
                     $('li[data-coord]').removeClass('true').removeClass('blink');
+                    $('.game-bk .rw-b .tb:visible').find('.td').removeClass('sel').first().addClass('sel');
                 }, function(data) {
                     if (data.message=="INSUFFICIENT_FUNDS") {
                         $('.pz-ifo-bk').hide();
@@ -1178,7 +1180,11 @@ $('li[data-coord]').on('click', function() {
                     }
                 }, function() {});
             });
-        } 
+        } else if (data.res.status == 'process') {
+            if (data.res.cell == 0) {
+                $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');
+            }
+        }
         if (data.res.cell == 1) {
             cell.addClass('won');
         } else {
@@ -1187,7 +1193,7 @@ $('li[data-coord]').on('click', function() {
     }, function() {
 
     }, function() {});
-})
+});
 
 $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);

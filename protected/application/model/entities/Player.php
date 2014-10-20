@@ -1,6 +1,7 @@
 <?php
 
 Application::import(PATH_APPLICATION . 'model/Entity.php');
+Application::import(PATH_APPLICATION . 'model/entities/Transaction.php');
 
 class Player extends Entity
 {
@@ -472,20 +473,33 @@ class Player extends Entity
 
     }
 
-    public function addMoney($quantity) {
-        //@TODO process transaction
-        
+    public function addMoney($quantity, $description = '') {
+
         $this->setMoney($this->getMoney() + $quantity);
         $this->update();
 
+        $transaction = new Transaction();
+        $transaction->setPlayerId($this->getId())
+                    ->setSum($quantity)
+                    ->setCurrency(GameSettings::CURRENCY_MONEY)
+                    ->setDescription($description);
+        $transaction->create();
+        
         return $this;
     }
 
-    public function addPoints($quantity) {
+    public function addPoints($quantity, $description = '') {
         //@TODO process transaction
         
         $this->setPoints($this->getPoints() + $quantity);
         $this->update();
+
+        $transaction = new Transaction();
+        $transaction->setPlayerId($this->getId())
+                    ->setSum($quantity)
+                    ->setCurrency(GameSettings::CURRENCY_POINT)
+                    ->setDescription($description);
+        $transaction->create();
 
         return $this;
     }

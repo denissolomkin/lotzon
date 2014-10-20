@@ -423,7 +423,7 @@
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
                                         </div>
-                                        <div class="if-bt">пригласить</div>
+                                        <div class="if-bt send-invite">пригласить</div>
                                     </div>
                                 </div>
                                 <!--div class="sn-bt-bk">
@@ -534,7 +534,7 @@
 
         <!-- CHASNE PREVIEW -->
         <div class="ch-bk" style="display:<?=($currentChanceGame ? 'none' : 'block')?>;">
-            <div class="ch-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
             <div class="ch-gm-tbl">
                 <div class="td l">
                     <ul class="gm-3x3 gm-bk">
@@ -626,6 +626,17 @@
                         <!-- FIX HERE -->
                         <div class="l"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
                         <div class="r"><b><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGamePrice() : '')?></b>баллов</div>
+                    </div>
+                </div>
+                <div style="display:none" id="game-rules">
+                    <div data-game="33">
+                        <?=$staticTexts['chance-game-33'][$lang]->getText()?>
+                    </div>
+                    <div data-game="44">
+                        <?=$staticTexts['chance-game-44'][$lang]->getText()?>
+                    </div>
+                    <div data-game="55">
+                        <?=$staticTexts['chance-game-55'][$lang]->getText()?>
                     </div>
                 </div>
                 <div class="l-bk-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>

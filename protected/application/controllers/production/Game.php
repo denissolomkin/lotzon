@@ -110,10 +110,12 @@ class Game extends \AjaxController
                     'field'  => $gameField,
                     'clicks' => array(), 
                     'status' => 'process',
+                    '55clickcount' => $games[$identifier]->getTriesCount(),
+                    '55failclickcount' => 0,
                 )
             ));
             try {
-                Session::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice());
+                Session::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Лотерея шанс (" . $games[$identifier]->getGameTitle() . ")");
             } catch (EntityException $e) {
                 Session::connect()->delete('chanceGame');
                 $this->ajaxResponse($e->getMessage(), $e->getCode());                
@@ -160,6 +162,15 @@ class Game extends \AjaxController
                     if ($identifier == '33' || $identifier == '44') {
                         $game[$identifier]['status'] = 'loose';
                     }
+                    if ($identifier == '55') {
+
+                        $clicksAccepted = $game[$identifier]['55clickcount'] - 5;
+                        if ($game[$identifier]['55failclickcount'] < $clicksAccepted) {
+                            $game[$identifier]['55failclickcount']++;    
+                        } else {
+                            $game[$identifier]['status'] = 'loose';
+                        }
+                    }
                 }
                 if ($game[$identifier]['status'] == 'loose' || $game[$identifier]['status'] == 'win') {
                     Session::connect()->delete('chanceGame');
@@ -172,7 +183,11 @@ class Game extends \AjaxController
                 if ($game[$identifier]['status'] == 'win') {
                     $gameObj = ChanceGamesModel::instance()->getGamesSettings()[$identifier];
                     $prizes = $gameObj->loadPrizes();
-                    $prize = array_shift($prizes);
+                    if ($identifier == '33' || $identifier == '44') {
+                        $prize = array_shift($prizes);    
+                    } else {
+                        $prize = $prizes[$game[$identifier]['55failclickcount']];
+                    }
 
                     ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'],Session::connect()->get(Player::IDENTITY), $prize);
 
