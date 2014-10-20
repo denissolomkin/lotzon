@@ -157,12 +157,12 @@ if (timeToRunLottery()) {
             }
             if ($moneyToAdd > 0)  {
                 $playerPrizes[$player->getId()]['money'] = $moneyToAdd;
-                $player->addMoney($moneyToAdd);
+                $player->addMoney($moneyToAdd, 'Выигшрыш в лотерее');
             }
 
             if ($pointsToAdd > 0) {
                 $playerPrizes[$player->getId()]['points'] = $pointsToAdd;
-                $player->addPoints($pointsToAdd);
+                $player->addPoints($pointsToAdd, 'Выигшрыш в лотерее');
             }
         }
         $player->update();

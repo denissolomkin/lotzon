@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -16,6 +16,7 @@ class Index extends \SlimController\SlimController
     const NEWS_PER_PAGE = 6;
     const SHOP_PER_PAGE = 6;
     const LOTTERIES_PER_PAGE = 6;
+    const TRANSACTIONS_PER_PAGE = 6;
 
     public $promoLang = '';
 
@@ -50,6 +51,11 @@ class Index extends \SlimController\SlimController
             'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
         );
 
+        $playerTransactions = array(
+            GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory(Session::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+            GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory(Session::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+        );
+
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
@@ -71,6 +77,7 @@ class Index extends \SlimController\SlimController
             'seo' => $seo,
             'chanceGames'  => $chanceGames,
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
+            'playerTransactions' => $playerTransactions,
         ));
     }
 

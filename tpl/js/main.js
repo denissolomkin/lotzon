@@ -27,7 +27,7 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, #exchange, .ticket-favorite .after i').on('click', function(){
+    $('.tn-mbk_li, .scrollto, #exchange, .ticket-favorite .after i').on('click', function(){
         var pn = $(this).attr('data-href');
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
@@ -288,7 +288,7 @@ $(function(){
         }
     });
 
-    $(".if-bt").on('click', function() {
+    $(".send-invite").on('click', function() {
         var email = $(this).parent().find('input[name="email"]').val();
         var button = $(this);
         addEmailInvite(email, function(data){
@@ -483,16 +483,14 @@ $(function(){
         var rulesBlock = $('.rules');
         if(!rulesBlock.hasClass('b-ha')){
             rulesBlock.addClass('b-ha');
-            $('.rules .faq').show(500);
-            setTimeout(function(){
-                $('.r-add-but').html('спрятать');
-            }, 500);
+            $('.rules .faq').show();
+            $('.r-add-but.show').hide();
+            $('.r-add-but.close').show();
         }else{
-            $('.rules .faq').hide(500);
-            setTimeout(function(){
-                $('.r-add-but').html('загрузить еще');
-                rulesBlock.removeClass('b-ha');
-            }, 500);
+            $('.rules .faq').hide();
+            $('.r-add-but.show').show();
+            $('.r-add-but.close').hide();
+            rulesBlock.removeClass('b-ha');
         };
 
 
@@ -1089,6 +1087,8 @@ function proccessResult()
 
 $('.ch-gm-tbl .gm-bt').click(function(){
     var gi = $(this).data('game');
+    $('.msg-tb.won').hide();
+    $('.msg-tb.los').hide();
     // hide all games;
     $('.game-bk .gm-tb').hide();
     $('.game-bk .rw-b .tb').hide();
@@ -1096,15 +1096,21 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     $('.game-bk li').removeClass('won').removeClass('los');
     $('.game-bk li').removeClass('true').removeClass('blink');
     // show current game
+    
     $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
-    
+
+    if (gi == 55) {
+        $('.game-bk .rw-b .tb[data-game="'+gi+'"]').find('.td').removeClass('sel').first().addClass('sel');
+    }
+    $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
     $('.ch-bk').fadeOut(200);
     window.setTimeout(function(){
         $('.game-bk').fadeIn(200);
     }, 200);
+
     $('.game-bk .play .bt').off('click').on('click', function() {
         winChance = false;
         var btn = $(this);
@@ -1166,6 +1172,7 @@ $('li[data-coord]').on('click', function() {
                     btn.parents('.msg-tb').hide();
                     $('li[data-coord]').removeClass('won').removeClass('los');
                     $('li[data-coord]').removeClass('true').removeClass('blink');
+                    $('.game-bk .rw-b .tb:visible').find('.td').removeClass('sel').first().addClass('sel');
                 }, function(data) {
                     if (data.message=="INSUFFICIENT_FUNDS") {
                         $('.pz-ifo-bk').hide();
@@ -1173,7 +1180,11 @@ $('li[data-coord]').on('click', function() {
                     }
                 }, function() {});
             });
-        } 
+        } else if (data.res.status == 'process') {
+            if (data.res.cell == 0) {
+                $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');
+            }
+        }
         if (data.res.cell == 1) {
             cell.addClass('won');
         } else {
@@ -1182,7 +1193,7 @@ $('li[data-coord]').on('click', function() {
     }, function() {
 
     }, function() {});
-})
+});
 
 $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);

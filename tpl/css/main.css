@@ -327,12 +327,7 @@ article .infos {padding:40px 20px 0 20px;}
 
 .infos .i-rbk {width:630px;float:right;}
 .infos .i-rbk .news {background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);overflow:hidden;}
-.infos .i-rbk .news .n-items {padding:0px 40px 0 40px;height:601px;overflow:hidden;position:relative;
-    -moz-transition: height 500ms ease;
-    -ms-transition: height 500ms ease;
-    -o-transition: height 500ms ease;
-    transition: height 500ms ease;
-}
+.infos .i-rbk .news .n-items {padding:0px 40px 0 40px;height:601px;overflow:hidden;position:relative;}
 .infos .i-rbk .news .n-items:after {content:"";display:block;height:50px;width:630px;position:absolute;left:0;bottom:0;
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -652,7 +647,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .game-bk .gm-tb.g-5x5 > li {width:88px;height:88px;margin:0 10px 10px 0;}
 .chance .ch-lot-bk .game-bk .gm-tb.g-5x5 > li:nth-child(5n+5) {margin-right:0;}
 
-.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb {position:absolute;top:0;left:0;width:490px;height:490px;display:table;}
+.chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb {position:absolute;top:0;left:0;width:490px;height:490px;display:table;z-index:10;}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.play {background-color:rgba(255, 255, 255, 0.5);}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.los {background-color:rgba(255, 255, 255, 0.7);}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won {background-color:rgba(255, 255, 255, 1);}

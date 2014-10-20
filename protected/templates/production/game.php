@@ -22,8 +22,8 @@
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
 
-        <link rel="icon" href="" type="image/png" />
-        <link rel="shortcut icon" href="" type="'image/x-icon"/>
+        <link rel="icon" href="/tpl/img/favicon.png" type="image/png" />
+        <!--link rel="shortcut icon" href="" type="'image/x-icon"/-->
 
         <!-- For iPhone 4 Retina display: -->
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="">
@@ -257,7 +257,7 @@
                             <? } ?>
                             <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">загрузить еще</div>
                             <div class="mr-cl-bt-bk">
-                                <div class="cl">свернуть</div>
+                                <div class="cl scrollto" data-href="prizes">свернуть</div>
                                 <div class="mr">загрузить еще</div>
                             </div>
                         </div>
@@ -304,7 +304,8 @@
                             <ul class="faq">
                                 <?=$staticTexts['main-faq'][$lang]->getText()?>
                             </ul>
-                            <div class="r-add-but">загрузить еще</div>
+                            <div class="r-add-but show">загрузить еще</div>
+                            <div class="r-add-but close scrollto" data-href="rules" style="display:none;">спрятать</div>
                         </div>
                     </section>
                 </div>
@@ -326,7 +327,7 @@
                          </div>
                         <div class="n-add-but">загрузить еще</div>
                         <div class="n-mr-cl-bt-bk">
-                            <div class="cl">свернуть</div>
+                            <div class="cl scrollto" data-href="news">свернуть</div>
                             <div class="mr">загрузить еще</div>
                         </div>
                     </section>
@@ -409,7 +410,7 @@
 
                                 <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
                                 <div class="mr-cl-bt-bl">
-                                    <div class="cl">свернуть</div>
+                                    <div class="cl scrollto" data-href="profile">свернуть</div>
                                     <div class="mr">загрузить еще</div>
                                 </div>
                             </section>
@@ -422,7 +423,7 @@
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
                                         </div>
-                                        <div class="if-bt">пригласить</div>
+                                        <div class="if-bt send-invite">пригласить</div>
                                     </div>
                                 </div>
                                 <!--div class="sn-bt-bk">
@@ -533,7 +534,7 @@
 
         <!-- CHASNE PREVIEW -->
         <div class="ch-bk" style="display:<?=($currentChanceGame ? 'none' : 'block')?>;">
-            <div class="ch-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
             <div class="ch-gm-tbl">
                 <div class="td l">
                     <ul class="gm-3x3 gm-bk">
@@ -625,6 +626,17 @@
                         <!-- FIX HERE -->
                         <div class="l"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
                         <div class="r"><b><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGamePrice() : '')?></b>баллов</div>
+                    </div>
+                </div>
+                <div style="display:none" id="game-rules">
+                    <div data-game="33">
+                        <?=$staticTexts['chance-game-33'][$lang]->getText()?>
+                    </div>
+                    <div data-game="44">
+                        <?=$staticTexts['chance-game-44'][$lang]->getText()?>
+                    </div>
+                    <div data-game="55">
+                        <?=$staticTexts['chance-game-55'][$lang]->getText()?>
                     </div>
                 </div>
                 <div class="l-bk-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
