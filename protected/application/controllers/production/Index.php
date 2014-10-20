@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -85,6 +85,7 @@ class Index extends \SlimController\SlimController
     {
         $seo = SEOModel::instance()->getSEOSettings();
         $gameSettings = GameSettingsModel::instance()->loadSettings();
+        $comments = CommentsModel::instance()->getList();
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
@@ -103,6 +104,7 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->promoLang],            
             'layout'      => false,
             'seo' => $seo,
+            'comments'    => $comments,
         ));
     }
 }

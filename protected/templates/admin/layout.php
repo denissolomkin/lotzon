@@ -28,6 +28,7 @@
           <ul class="nav nav-pills" role="tablist">
             <li<?=($activeMenu == 'game' ? ' class="active"' : '')?>><a href="/private/game">Розыгрыши</a></li>
             <li><a href="/private/users">Пользователи</a></li>
+            <li<?=($activeMenu == 'comments' ? ' class="active"' : '')?>><a href="/private/comments">Комментарии</a></li>
             <li<?=($activeMenu == 'texts' ? ' class="active"' : '')?>><a href="/private/texts">Тексты</a></li>
             <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news">Новости</a></li>
             <li><a href="/private/banners">Баннеры</a></li>
