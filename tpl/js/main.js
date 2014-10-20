@@ -520,7 +520,13 @@ $(function(){
 
     // CASE OUTPUT POPUP //
     $('#cash-output').on('click', function(){
-        $('#cash-output-popup').fadeIn(200);
+        if (playerMoney > 10) {
+            $('#cash-output-popup').fadeIn(200);    
+        } else {
+            $('.pz-ifo-bk').hide();
+            $('.pz-rt-bk').text("Недостаточно средств для вывода!").show().parents('#shop-items-popup').show();
+        }
+        
     });
 
 
