@@ -490,7 +490,7 @@
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Пароль">Пароль</div>
-                                            <input type="text" name="plug" style="display: none;"/>
+                                            <input type="text" name="plug" data-valid="" style="display: none;"/>
                                             <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" name="password" data-valid="" />
                                         </div>
                                         <div class="fc-bk">
