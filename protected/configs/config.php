@@ -123,6 +123,13 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\SEO:index',
         'post' => 'controllers\admin\SEO:save',
     ),
+    '/private/comments' => array(
+        'get' => 'controllers\admin\Comments:index',
+        'post' => 'controllers\admin\Comments:save',
+    ),
+    '/private/comments/:id/delete' => array(
+        'get' => 'controllers\admin\Comments:delete',
+    ),
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',

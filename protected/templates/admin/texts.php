@@ -94,13 +94,7 @@
 
     $(document).ready(function() {
         $('#text').summernote({
-            height: 200,
-            toolbar: [
-                //[groupname, [button list]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link']],
-            ],
+            height: 200,           
         });
         $('#text').code('');
     });
