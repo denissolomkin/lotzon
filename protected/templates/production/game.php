@@ -99,7 +99,7 @@
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
                     <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет</a></li>
                     <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Шансы</a></li>
-                    <li class="tn-mbk_li exit"><a href="javascript:void(0)" onclick="document.location.href='/players/logout';">Выйти</a></li>
+                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
                     <div class="tn-tr-tt">До следующего розыгрыша осталось</div>
@@ -351,7 +351,7 @@
                 <div class="p-bk">
                     <div class="p-tl-bk">
                         <div class="p-tl-nm">кабинет</div>
-                        <div class="p-exit-bt" onclick="document.location.href='/players/logout';">выйти</div>
+                        <div class="p-exit-bt">выйти</div>
                         <div class="p-tl-ml" id="profile_email"><?=$player->getEmail()?></div>
                     </div>
                     <div class="p-cnt">

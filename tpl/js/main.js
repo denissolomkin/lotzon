@@ -27,8 +27,9 @@ $(function(){
                     Navigations scroll functional
      ========================================================================== */
 
-    $('.tn-mbk_li, .scrollto, #exchange, .ticket-favorite .after i').on('click', function(){
+    $('.tn-mbk_li, .scrollto, #exchange, .ticket-favorite .after i').on('click', function(event){
         var pn = $(this).attr('data-href');
+        if(pn == 'logout')return false;
         var pnPos = $('.'+pn).offset().top - 65;
         if(pn == 'tickets')pnPos = 0;
         $('html, body').animate({scrollTop : pnPos},900, 'easeInOutQuint');
@@ -99,6 +100,21 @@ $(function(){
         }else{
             $('nav.top-nav').removeClass('fixed');
         }
+    });
+
+    /* ==========================================================================
+                                Logout functional
+     ========================================================================== */
+    $('#logout a, .profile .p-exit-bt').on('click', function(){
+        $('#logout-popup').fadeIn(300);
+    });
+
+    $('#logout-popup .exit').on('click', function(){
+        document.location.href = '/players/logout';
+    });
+
+    $('#logout-popup .back').on('click', function(){
+        $(this).closest('.popup').fadeOut(300);
     });
 
 
