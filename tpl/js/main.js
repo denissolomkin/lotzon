@@ -259,8 +259,15 @@ $(function(){
                 $('.tb-slide.done').find('.ticket-random').off('click');
                 $('.tb-slide.done').find('.ticket-favorite').off('click');
                 
-                filledTickets.push(combination);
-                if (filledTickets.length == 5) {
+                
+                if ($('.tb-tabs .done').length == 5) {
+                    $('.tb-slide').each(function(id, slide) {
+                        var comb = [];
+                        $(slide).find('li.select').each(function(id, num){
+                            comb.push(num);
+                        });
+                        filledTickets.push(combination);
+                    })
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';
                     $(filledTickets).each(function(id, ticket) {

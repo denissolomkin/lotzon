@@ -463,7 +463,7 @@ class Player extends Entity
 
         parent::create();
 
-        Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzone.com', 'player_registration', array(
+        Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
             'password'  => $this->_generatedPassword,
         ));
