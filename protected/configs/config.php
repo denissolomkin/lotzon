@@ -140,8 +140,12 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/stats/promo/' => 'controllers\production\Index:stats',
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
+    ),
+    '/players/resendPassword/' => array(
+        'post'  => 'controllers\production\Players:resendPassword',  
     ),
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',

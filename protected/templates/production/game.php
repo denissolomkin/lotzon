@@ -52,7 +52,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Сумма<br/>Джекпота</div>
-                            <b class="n">100500</b>
+                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -161,7 +161,7 @@
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">
                                                     A
-                                                    <div class="after">случайное автозаполнение</div>
+                                                    <div class="after">автозаполнение</div>
                                                 </li>
                                                 <li class="loto-tl_li heart ticket-favorite">
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
@@ -757,10 +757,10 @@
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Пользовательское соглашение</a>
                 <div class="ct-bk">
-                    <a href="" class="ct-sl fb"></a>
-                    <a href="" class="ct-sl vk"></a>
-                    <a href="" class="ct-sl gp"></a>
-                    <a href="" class="ct-sl tw"></a>
+                    <a href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
+                    <a href="http://vk.com/lotzon" class="ct-sl vk"></a>
+                    <a href="https://plus.google.com/112273863200721967076/about" class="ct-sl gp"></a>
+                    <a href="https://twitter.com/LOTZON_COM" class="ct-sl tw"></a>
                     <a href="mailto:play@lotzon.com" class="mail">play@lotzon.com</a>
                 </div>
             </div>

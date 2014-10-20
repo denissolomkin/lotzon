@@ -63,7 +63,11 @@ $(function(){
     });
 
     $('form[name="rec-pass"]').submit(function(event){
-        $('#cl-check').removeAttr('class').addClass('b-m rec-txt');
+        var email = $(this).find('input[name="login"]').val();
+        resendPassword(email, function() {
+
+            $('#cl-check').removeAttr('class').addClass('b-m rec-txt');
+        },function(){}, function(){});
         event.preventDefault();
     });
 

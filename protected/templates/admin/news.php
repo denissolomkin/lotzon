@@ -105,12 +105,6 @@
     $(document).ready(function() {
         $('#text').summernote({
             height: 200,
-            toolbar: [
-                //[groupname, [button list]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link']],
-            ],
         });
         $('#text').code('');
     });

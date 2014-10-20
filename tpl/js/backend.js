@@ -295,6 +295,49 @@ function playChanceGame(gi, choose, successFunction, failFunction, errorFunction
     });
 }
 
+function getLandingStats(successFunction, failFunction, errorFunction)
+{
+    $.ajax({
+        url: "/stats/promo",
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
+
+function resendPassword(email, successFunction, failFunction, errorFunction) 
+{
+    $.ajax({
+        url: "/players/resendPassword",
+        method: 'POST',
+        data: {
+            email: email
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });   
+}
+
 window.setInterval(function() {
     $.ajax({
         url: "/players/ping",
