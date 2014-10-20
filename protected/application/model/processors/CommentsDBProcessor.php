@@ -4,7 +4,6 @@ class CommentsDBProcessor implements IProcessor
 {
     public function create(Entity $comment) 
     {
-        $comment->setDate(time());
         $sql = "INSERT INTO `Comments` (`Author`, `Link`, `Avatar`, `Text`, `Date`) VALUES (:author, :link, :avatar, :text, :date)";
 
         try {

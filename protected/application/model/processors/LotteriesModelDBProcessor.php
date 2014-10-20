@@ -277,4 +277,30 @@ class LotteriesModelDBProcessor implements IProcessor
 
         return $lottery;
     }
+
+    public function getWinnersCount()
+    {
+        $sql = "SELECT COUNT(DISTINCT PlayerId) FROM PlayerLotteryWins WHERE MoneyWin > 0";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
+    }
+
+    public function getMoneyTotalWin()
+    {
+        $sql = "SELECT SUM(MoneyWin) FROM PlayerLotteryWins";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
+    }
 }

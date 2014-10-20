@@ -46,10 +46,10 @@
                         <div class="h-t-tcb">
                             <div class="h-t-tcb-l"><a href="/"><img src="/tpl/img/Lotzon-Logo.svg" width="238" height="60" /></a></div>
                             <div class="h-t-tcb-sb">
-                                <a href="" class="h-t-tcb-sb-fb"></a>
-                                <a href="" class="h-t-tcb-sb-vk"></a>
-                                <a href="" class="h-t-tcb-sb-gp"></a>
-                                <a href="" class="h-t-tcb-sb-tw"></a>
+                                <a href="https://www.facebook.com/pages/Lotzon/714221388659166" class="h-t-tcb-sb-fb"></a>
+                                <a href="http://vk.com/lotzon" class="h-t-tcb-sb-vk"></a>
+                                <a href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a>
+                                <a href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                             </div>
                             <div class="h-t-tcb-t"><?=$staticTexts['promo-top'][$lang]->getText()?></div>
                         </div>
@@ -60,17 +60,17 @@
                         <div class="h-t-mcb">
                             <div class="h-t-mcb-l">
                                 <div class="h-t-mcb-l-wm">
-                                    <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
+                                    <b class="h-t-mcb-l-wm_b" id="winners"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
                                     <span class="h-t-mcb-l-wm_span">Победителей</span>
                                 </div>
                                 <div class="h-t-mcb-l-wm">
-                                    <b class="h-t-mcb-l-wm_b"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
+                                    <b class="h-t-mcb-l-wm_b" id="participants"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
                                     <span class="h-t-mcb-l-wm_span">участhиков</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i"><?=number_format($gameInfo['win'], 0, '.', ' ')?></div>
+                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 0, '.', ' ')?></div>
                             </div>
                         </div>
                         <div class="h-t-bcb">
@@ -91,14 +91,11 @@
                                 </div>
                                 <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть</span></a>
                                 <div class="h-b-c-lg">
-                                    <div class="h-b-c-lg-t">розыгрыш от <?=date('d.m.Y')?></div>
+                                    <div class="h-b-c-lg-t">розыгрыш от <?=date('d.m.Y', $lastLottery->getDate())?></div>
                                     <ul class="h-b-c-lg_ul">
-                                        <li class="h-b-c-lg_ul_li">0</li>
-                                        <li class="h-b-c-lg_ul_li">0</li>
-                                        <li class="h-b-c-lg_ul_li">0</li>
-                                        <li class="h-b-c-lg_ul_li">0</li>
-                                        <li class="h-b-c-lg_ul_li">0</li>
-                                        <li class="h-b-c-lg_ul_li">0</li>
+                                        <? foreach ($lastLottery->getCombination() as $num) { ?>
+                                            <li class="h-b-c-lg_ul_li"><?=$num?></li>
+                                        <? } ?>
                                     </ul>
                                 </div>
                             </div>
@@ -243,21 +240,14 @@
                             </div>
 
                             <ul class="fb-p-b">
+                                <li class="fb-p-b_li"><a href="http://musiclife.kiev.ua/"><img src="/tpl/img/partner-expl/musiclife.png" /></a></li>
+
                                 <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/adidas.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/buduvaiser.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/cincert-ua.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/forf.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/nokia.png" /></a></li>
                                 <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/ray-ban.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/buduvaiser.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/ray-ban.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/adidas.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/cincert-ua.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/forf.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/nokia.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/adidas.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/ray-ban.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/adidas.png" /></a></li>
                             </ul>
 
                         </div>
@@ -388,6 +378,14 @@
                 format: 'HMS', 
                 layout: '{hnn}<i class="h-b-c-tb-r_i">:</i>{mnn}<i class="h-b-c-tb-r_i">:</i>{snn}'}
             );
+
+            window.setInterval(function() {
+                getLandingStats(function(data) {
+                    $("#participants").text(data.res.participants);
+                    $("#winners").text(data.res.winners);
+                    $("#win").text(data.res.win);
+                }, function() {}, function() {})
+            }, 15000);
         });
     </script>
     </body>

@@ -51,4 +51,14 @@ class LotteriesModel extends Model
     {
         return $this->getProcessor()->getDependentLottery($lotteryId, $dependancy);
     }
+
+    public function getWinnersCount()
+    {
+        return $this->getProcessor()->getWinnersCount();   
+    }
+
+    public function getMoneyTotalWin()
+    {
+        return $this->getProcessor()->getMoneyTotalWin();      
+    }
 }

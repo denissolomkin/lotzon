@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException;
+use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -184,5 +184,27 @@ class Players extends \AjaxController
         }
         
         $this->ajaxResponse(array());   
+    }
+
+    public function resendPasswordAction()
+    {
+        $email = $this->request()->post('email');
+        $player = new Player();
+        $player->setEmail($email);
+        
+        try {
+            $player->fetch();
+            
+            $newPassword = $player->generatePassword();
+            $player->changePassword($newPassword);
+        } catch (EntityException $e) {
+            $this->ajaxResponse(array(), 0, $e->getMessage());
+        }
+
+        Common::sendEmail($player->getEmail(), 'Восстановление пароля на www.lotzon.com', 'player_password', array(
+            'password'  => $newPassword,
+        ));
+
+        $this->ajaxResponse(array());
     }
 }

@@ -17,6 +17,7 @@ class Index extends \SlimController\SlimController
     const SHOP_PER_PAGE = 6;
     const LOTTERIES_PER_PAGE = 6;
     const TRANSACTIONS_PER_PAGE = 6;
+    const COMMENTS_PER_PAGE = 8;
 
     public $promoLang = '';
 
@@ -45,8 +46,8 @@ class Index extends \SlimController\SlimController
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => 0,
-            'win'          => 0,
+            'winners'      => LotteriesModel::instance()->getWinnersCount(),
+            'win'          => LotteriesModel::instance()->getMoneyTotalWin(),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
         );
@@ -89,11 +90,23 @@ class Index extends \SlimController\SlimController
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => 0,
-            'win'          => 0,
+            'winners'      => LotteriesModel::instance()->getWinnersCount(),
+            'win'          => LotteriesModel::instance()->getMoneyTotalWin(),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
         );
+
+        if (count($comments) > self::COMMENTS_PER_PAGE) {
+            $ids = array_rand($comments,self::COMMENTS_PER_PAGE);
+            $stripped = array();
+
+            foreach ($ids as $id) {
+                $stripped[] = $comments[$id];
+            }
+            $comments = $stripped;
+        }
+        $lastLottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
+        $lastLottery = array_shift($lastLottery);
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();        
 
@@ -105,6 +118,22 @@ class Index extends \SlimController\SlimController
             'layout'      => false,
             'seo' => $seo,
             'comments'    => $comments,
+            'lastLottery' => $lastLottery,
         ));
+    }
+
+    public function statsAction()
+    {
+        if ($this->request()->isAjax()) {
+            $info = array(
+                'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
+                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),
+                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' '),
+            );
+
+            die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
+            
+        }
+        $this->redirect('/');
     }
 }

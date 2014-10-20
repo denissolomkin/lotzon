@@ -483,7 +483,7 @@
 
 
 <!--=========================================================================
-                            CASH POPUP CODE
+                            TERMS POPUP CODE
 ==========================================================================-->
 
 <div class="bl-pp-bk popup" id="terms">
@@ -494,6 +494,29 @@
                 <div class="rb-pg">
                     <h2>правила<br/>игры</h2>
                     <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+<!--=========================================================================
+                            LOGOUT POPUP CODE
+==========================================================================-->
+
+<div class="bl-pp-bk popup" id="logout-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="logout-bk pop-box">
+                <div class="cs"></div>
+                <div class="cnt">
+                    <div class="txt">Новы розыгрыш не за горами бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла. Вы уверены, что хотите выйти?</div>
+                    <div class="buts">
+                        <div class="exit">выйти</div>
+                        <div class="back">остаться</div>
+                    </div>
                 </div>
             </section>
         </div>
