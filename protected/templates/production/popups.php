@@ -523,3 +523,32 @@
     </div>
 </div>
 
+
+<!--=========================================================================
+                            MOMENTUM POPUP CODE
+    ==========================================================================-->
+<div class="bl-pp-bk popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="momentum pop-box">
+                <div class="cs"></div>
+                <div class="mm-bk-pg">
+                    <div class="mm-bk-tl">Моментальный шанс</div>
+                    <div class="mm-txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. </div>
+                    <ul class="mm-tbl">
+                        <li class="l">
+                            <p>?</p>
+                        </li>
+                        <li class="c">
+                            <p>?</p>
+                        </li>
+                        <li class="r">
+                            <p>?</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
