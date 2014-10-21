@@ -19,7 +19,7 @@ $(function(){
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
-            if($(event.target).closest(".popup").find('.prize-info .pz-fm-bk:visible').length)return false;
+            //if($(event.target).closest(".popup").find('.prize-info .pz-fm-bk:visible').length)return false;
             $('.popup').fadeOut(200);
         };
     });
@@ -406,7 +406,6 @@ $(function(){
 
     $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
         var price =  parseInt($('#shop-items-popup').find('.item-price').text().replace(/\s*/g, ""));
-        $(this).closest('.pop-box').find('.cs').hide();
         if (price > playerPoints) {
             $('.pz-ifo-bk').hide();
             $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();
