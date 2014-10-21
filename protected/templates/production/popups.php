@@ -68,6 +68,8 @@
         <div class="bl-pp_td">
             <div class="ws-lt-bk">
                 <div class="cs"></div>
+                <i class="ar-l"></i>
+                <i class="ar-r"></i>
                 <section class="ws-pf-rt-bk pop-box">
                     <div class="ws-pf-tl">
                         <time class="ws-dt">22.08.2014</time>
@@ -78,8 +80,6 @@
                         </div>
                     </div>
                     <div class="ws-yr-tks-bk">
-                        <i class="ar-l"></i>
-                        <i class="ar-r"></i>
                         <div class="wr-pf-ph">
                             <img src="/tpl/img/preview/profile-photo.jpg" />
                         </div>
@@ -517,6 +517,35 @@
                         <div class="exit">выйти</div>
                         <div class="back">остаться</div>
                     </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<!--=========================================================================
+                            MOMENTUM POPUP CODE
+    ==========================================================================-->
+<div class="bl-pp-bk popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="momentum pop-box">
+                <div class="cs"></div>
+                <div class="mm-bk-pg">
+                    <div class="mm-bk-tl">Моментальный шанс</div>
+                    <div class="mm-txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. </div>
+                    <ul class="mm-tbl">
+                        <li class="l">
+                            <p>?</p>
+                        </li>
+                        <li class="c">
+                            <p>?</p>
+                        </li>
+                        <li class="r">
+                            <p>?</p>
+                        </li>
+                    </ul>
                 </div>
             </section>
         </div>

@@ -18,6 +18,8 @@ $(function(){
     });
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
+            if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
+            if($(event.target).closest(".popup").find('.prize-info .pz-fm-bk:visible').length)return false;
             $('.popup').fadeOut(200);
         };
     });
@@ -135,6 +137,7 @@ $(function(){
     var filledTickets = [];
     var ticketCache = [];
     $('.ticket-random').on('click', function(e) {
+        if($(e.target).hasClass('after'))return false;
         if (!$(this).hasClass('select')) {
             var after = $(this).find('.after');
             after.fadeIn(300);
@@ -403,7 +406,7 @@ $(function(){
 
     $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
         var price =  parseInt($('#shop-items-popup').find('.item-price').text().replace(/\s*/g, ""));
-        console.log(price);
+        $(this).closest('.pop-box').find('.cs').hide();
         if (price > playerPoints) {
             $('.pz-ifo-bk').hide();
             $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();
@@ -629,6 +632,7 @@ $(function(){
         if(!$(this).hasClass('on')){
             $('.fc-nrch-bk li').removeClass('on');
             var n = $(this).find('span').text();
+            console.log(n);
             $('.fc-nbs-bk li.dis').each(function(){
                 if($(this).text() == n)$(this).removeClass('dis');
             })
@@ -654,6 +658,7 @@ $(function(){
         if(!$(this).hasClass('dis')){
             var n = $(this).text();
             $('.fc-nrch-bk li.on span').text(n);
+            $(this).addClass('dis');
             $('.fc-nbs-bk').fadeOut(200);
             $('.fc-nrch-bk li.on').removeClass('on');
             $('.fc-nrch-bk li').each(function(){
