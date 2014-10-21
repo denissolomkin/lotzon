@@ -450,6 +450,10 @@
                         </div>
                         <? if (count($playerTransactions[GameSettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
                             <div class="pz-more-bt">загрузить еще</div>
+                            <div class="mr-cl-bt-bl">
+                                <div class="cl">свернуть</div>
+                                <div class="mr">загрузить еще</div>
+                            </div>
                         <? } ?>
                     </div>
 
