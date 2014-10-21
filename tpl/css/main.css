@@ -724,9 +724,9 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .font-fix .wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tr .yr-tt-tr_li.won {line-height:43px;}
 .wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tr .yr-tt-tr_li:last-child {margin:0;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk {background:url("../img/bg-winers-list-result.png") repeat-y center;position:relative;}
-.wt-pp-bk .ws-lt-bk .ws-yr-tks-bk > i {display:block;width:30px;height:34px;position:absolute;top:180px;cursor:pointer;}
-.wt-pp-bk .ws-lt-bk .ws-yr-tks-bk > i.ar-l {background:transparent url("../img/but-arrow-left.png") no-repeat center;left:-50px;}
-.wt-pp-bk .ws-lt-bk .ws-yr-tks-bk > i.ar-r {background:transparent url("../img/but-arrow-right.png") no-repeat center;right:-50px;}
+.wt-pp-bk .ws-lt-bk > i {display:block;width:30px;height:34px;position:absolute;top:30%;cursor:pointer;}
+.wt-pp-bk .ws-lt-bk > i.ar-l {background:transparent url("../img/but-arrow-left.png") no-repeat center;left:-50px;}
+.wt-pp-bk .ws-lt-bk > i.ar-r {background:transparent url("../img/but-arrow-right.png") no-repeat center;right:-50px;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk .wr-pf-ph {width:50px;height:50px;position:absolute;top:30px;left:70px;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk .wr-pf-ph > img {width:50px;height:50px;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk .yr-tb {list-style:none;padding:30px 0 50px 250px;margin:0;}

@@ -68,6 +68,8 @@
         <div class="bl-pp_td">
             <div class="ws-lt-bk">
                 <div class="cs"></div>
+                <i class="ar-l"></i>
+                <i class="ar-r"></i>
                 <section class="ws-pf-rt-bk pop-box">
                     <div class="ws-pf-tl">
                         <time class="ws-dt">22.08.2014</time>
@@ -78,8 +80,6 @@
                         </div>
                     </div>
                     <div class="ws-yr-tks-bk">
-                        <i class="ar-l"></i>
-                        <i class="ar-r"></i>
                         <div class="wr-pf-ph">
                             <img src="/tpl/img/preview/profile-photo.jpg" />
                         </div>

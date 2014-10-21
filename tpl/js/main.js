@@ -629,6 +629,7 @@ $(function(){
         if(!$(this).hasClass('on')){
             $('.fc-nrch-bk li').removeClass('on');
             var n = $(this).find('span').text();
+            console.log(n);
             $('.fc-nbs-bk li.dis').each(function(){
                 if($(this).text() == n)$(this).removeClass('dis');
             })
@@ -654,6 +655,7 @@ $(function(){
         if(!$(this).hasClass('dis')){
             var n = $(this).text();
             $('.fc-nrch-bk li.on span').text(n);
+            $(this).addClass('dis');
             $('.fc-nbs-bk').fadeOut(200);
             $('.fc-nrch-bk li.on').removeClass('on');
             $('.fc-nrch-bk li').each(function(){
