@@ -128,7 +128,7 @@ class Index extends \SlimController\SlimController
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
                 'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),
-                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' '),
+                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' ') . ' ' . Config::instance()->langCurrencies[$this->promoLang] . '.',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));

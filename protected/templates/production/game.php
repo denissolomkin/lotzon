@@ -52,7 +52,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Сумма<br/>Джекпота</div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?></b>
+                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?>.</b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -82,7 +82,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">общая сумма выигранных денег<br/>за все время</div>
-                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?></b>
+                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <?=$currency?></b>
                         </div>
                     </div>
                 </div>
