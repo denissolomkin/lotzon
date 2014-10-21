@@ -283,9 +283,9 @@ $(function(){
                     $('.tb-slide').each(function(id, slide) {
                         var comb = [];
                         $(slide).find('li.select').each(function(id, num){
-                            comb.push(num);
+                            comb.push($(num).text());
                         });
-                        filledTickets.push(combination);
+                        filledTickets.push(comb);
                     })
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';

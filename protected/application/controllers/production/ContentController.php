@@ -180,7 +180,8 @@ class ContentController extends \AjaxController
         try {
             $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'next');    
         } catch (ModelException $e) {
-            $this->ajaxResponse(array(),0, 'NOT_FOUND');    
+            // be realllly dirty
+            $nextLottery = LotteriesModel::instance()->getDependentLottery(1000000/*;)*/, 'next');    
         }
         
 
@@ -198,7 +199,8 @@ class ContentController extends \AjaxController
         try {
             $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'prev');            
         } catch (ModelException $e) {
-            $this->ajaxResponse(array(),0, 'NOT_FOUND');    
+            // be dirty
+            $nextLottery = LotteriesModel::instance()->getDependentLottery(0, 'prev');            
         }
 
         if ($nextLottery) {
