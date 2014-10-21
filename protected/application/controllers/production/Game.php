@@ -139,6 +139,20 @@ class Game extends \AjaxController
                 $playerChoose = explode("x", $playerChoose);
 
                 $field = $game[$identifier]['field'];
+                // check already exists click
+                $clicked = false;
+                foreach ($game[$identifier]['clicks'] as $click) {
+                    if ($click[0] == $playerChoose[0] && $click[1] == $playerChoose[1]) {
+                        $clicked = true;
+                        break;
+                    }
+                }
+                if ($clicked) {
+                    $this->ajaxResponse(array(
+                        'status' => 'process',
+                        'cell'   => $field[$playerChoose[0]][$playerChoose[1]],
+                    ));
+                }
                 if (isset($field[$playerChoose[0]][$playerChoose[1]]) && $field[$playerChoose[0]][$playerChoose[1]] == 1) {
                     $game[$identifier]['clicks'][] = $playerChoose;
 
