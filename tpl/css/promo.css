@@ -187,9 +187,9 @@ article #slide3 ._a-b-b {display:block;width:80px;height:40px;position:absolute;
 footer {background-color:#ffe400;overflow:hidden;}
 footer .f-c-b {width:940px;margin:auto;height:100%;position:relative;zoom:1;}
 footer .f-c-b .f-tl-b {overflow:hidden;display:table-row;}
-footer .f-c-b .f-tl-b .tl-tl {width:120px;margin-right:41px;font:19px/20px Handbook-regular;text-transform:uppercase;padding-top:7px;display:table-cell;vertical-align:bottom;}
-footer .f-c-b .f-tl-b .tl-tt {font: 18px/19px Handbook-regular;width:525px;display:table-cell;vertical-align:bottom;}
-footer .f-c-b .f-tl-b .tl-tr {font: 18px/19px Handbook-regular;display:table-cell;text-align:right;vertical-align:bottom;}
+footer .f-c-b .f-tl-b .tl-tl {width:120px;margin-right:41px;font:19px/20px Handbook-regular;text-transform:uppercase;padding-top:7px;display:table-cell;vertical-align:middle;}
+footer .f-c-b .f-tl-b .tl-tt {font: 18px/19px Handbook-regular;width:525px;display:table-cell;vertical-align:middle;}
+footer .f-c-b .f-tl-b .tl-tr {font: 18px/19px Handbook-regular;display:table-cell;text-align:right;vertical-align:middle;}
 footer .f-c-b .f-tl-b .tl-bt {color:#000;display:block;font:17px/50px Handbook-bold;height:48px;letter-spacing:1px;text-align:center;text-decoration:none;text-transform:uppercase;width:218px;border:1px solid #000;margin:0 0 0 auto;}
 footer .f-c-b .f-tl-b .tl-bt.ct-on {color:#ffe400;border:none;width:220px;height:50px;background-color:#000;}
 footer .fb-f-b {margin:-2% auto 0 auto;width:620px;position:relative;display:none;left:-5000px;
