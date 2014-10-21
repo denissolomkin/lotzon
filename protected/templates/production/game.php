@@ -46,7 +46,7 @@
 
 
         <header>
-            <div class="hr-br"><a href="http://www.musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/baners/Musiclife-960x135.jpg" width="960" height="135" /></a></div>
+            <div class="hr-br"><a href="http://www.musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -115,7 +115,7 @@
             <section class="wings">
                 <aside class="lbs">
                     <div class="bz1"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
+                    <div class="bz2"><a href="http://hypermarket.ua/" target="_blank"><img src="/tpl/img/baners/hypermarket.jpg" width="110" height="600" /></a></div>
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
                 <aside class="rbs">
