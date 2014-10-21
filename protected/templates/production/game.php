@@ -351,7 +351,7 @@
                 <div class="p-bk">
                     <div class="p-tl-bk">
                         <div class="p-tl-nm">кабинет</div>
-                        <div class="p-exit-bt">выйти</div>
+                        <!--div class="p-exit-bt">выйти</div-->
                         <div class="p-tl-ml" id="profile_email"><?=$player->getEmail()?></div>
                     </div>
                     <div class="p-cnt">

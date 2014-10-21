@@ -19,7 +19,7 @@ $(function(){
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
-            if($(event.target).closest(".popup").find('.prize-info .pz-fm-bk:visible').length)return false;
+            if($(event.target).closest(".popup").hasClass('chance'))return false;
             $('.popup').fadeOut(200);
         };
     });
@@ -283,9 +283,9 @@ $(function(){
                     $('.tb-slide').each(function(id, slide) {
                         var comb = [];
                         $(slide).find('li.select').each(function(id, num){
-                            comb.push(num);
+                            comb.push($(num).text());
                         });
-                        filledTickets.push(combination);
+                        filledTickets.push(comb);
                     })
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';
@@ -406,7 +406,6 @@ $(function(){
 
     $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
         var price =  parseInt($('#shop-items-popup').find('.item-price').text().replace(/\s*/g, ""));
-        $(this).closest('.pop-box').find('.cs').hide();
         if (price > playerPoints) {
             $('.pz-ifo-bk').hide();
             $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();
@@ -1169,15 +1168,15 @@ $('li[data-coord]').on('click', function() {
             $('.msg-tb.won').find('.tl b').text(data.res.prize.title);
             $('.msg-tb.won').find('.bt').off('click').on('click', function() {
                 currentShowedItem = data.res.prize.id;
-
                 $('.pz-ifo-bk').hide();
                 $('.pz-fm-bk').show();
                 $('.pz-rt-bk').hide();
 
-                $('#shop-items-popup').show();
-                $('#shop-items-popup').find('.cs').off('click').on('click', function() {
+                $('#shop-items-popup').show().addClass('chance');
+                $('#shop-items-popup').find('.cs').hide();
+                /*$('#shop-items-popup').find('.cs').off('click').on('click', function() {
                     location.reload();
-                })
+                })*/
             });
 
         } else if (data.res.status == 'loose') {

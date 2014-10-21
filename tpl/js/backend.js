@@ -177,6 +177,7 @@ function createItemOrder(order, successFunction, failFunction, errorFunction)
         success: function(data) {
             if (data.status == 1) {
                 successFunction.call(order, data);
+                $('#shop-items-popup').removeClass('chance').find('.cs').show();
             } else {
                 failFunction.call(order, data);
             }
