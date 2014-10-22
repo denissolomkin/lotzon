@@ -433,6 +433,9 @@ $(function(){
             $('.pz-fm-bk').hide();
 
             var text = $('.pz-rt-bk').data('default');
+            if($('#shop-items-popup').hasClass('chance')){
+                $('.game-bk .bk-bt').click();
+            }
             $('.pz-rt-bk').text(text).show();
         }, function(data){
             if (data.message == 'INSUFFICIENT_FUNDS') {
