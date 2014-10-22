@@ -189,7 +189,6 @@ class Players extends \AjaxController
             Session::connect()->get(Player::IDENTITY)->markOnline();    
             // check for moment chance
             // if not already played chance game           
-            $resp['crchg'] = Session::connect()->get('chanceGame');
             if (Session::connect()->get('MomentChanseLastDate') && !Session::connect()->get('chanceGame')) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
