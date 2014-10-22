@@ -46,13 +46,13 @@
 
 
         <header>
-            <div class="hr-br"><a href="http://www.musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/baners/Musiclife-960x135.jpg" width="960" height="135" /></a></div>
+            <div class="hr-br"><a href="http://www.musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Сумма<br/>Джекпота</div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?></b>
+                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?>.</b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -82,7 +82,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">общая сумма выигранных денег<br/>за все время</div>
-                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?></b>
+                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <?=$currency?></b>
                         </div>
                     </div>
                 </div>
@@ -114,8 +114,8 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-                    <div class="bz1"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
+                    <div class="bz1"><a href="http://hypermarket.ua/" target="_blank"><img src="/tpl/img/baners/hypermarket.jpg" width="110" height="600" /></a></div>
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>                    
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
                 <aside class="rbs">
@@ -540,7 +540,7 @@
         <div class="sbk-tl">шансы</div>
 
         <!-- CHASNE PREVIEW -->
-        <div class="ch-bk" style="display:<?=($currentChanceGame ? 'none' : 'block')?>;">
+        <div class="ch-bk" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
             <div class="ch-gm-tbl">
                 <div class="td l">

@@ -70,7 +70,7 @@
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 0, '.', ' ')?></div>
+                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <?=$currency?>.</div>
                             </div>
                         </div>
                         <div class="h-t-bcb">
@@ -240,14 +240,9 @@
                             </div>
 
                             <ul class="fb-p-b">
-                                <li class="fb-p-b_li"><a href="http://musiclife.kiev.ua/"><img src="/tpl/img/partner-expl/musiclife.png" /></a></li>
-
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/adidas.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/buduvaiser.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/cincert-ua.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/forf.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/nokia.png" /></a></li>
-                                <li class="fb-p-b_li"><a href=""><img src="/tpl/img/partner-expl/ray-ban.png" /></a></li>
+                                <li class="fb-p-b_li"><a href="http://musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/partner-expl/musiclife.png" /></a></li>
+                                <li class="fb-p-b_li"><a href="http://muzikant.ua/" target="_blank"><img src="/tpl/img/partner-expl/muzikant.ua.png" /></a></li>
+                                <li class="fb-p-b_li"><a href="http://hypermarket.ua/" target="_blank"><img src="/tpl/img/partner-expl/hypermarket.png" /></a></li>
                             </ul>
 
                         </div>

@@ -344,7 +344,21 @@ window.setInterval(function() {
         url: "/players/ping",
         method: 'GET',
         async: true,
-        success: function(data) {},
+        dataType: 'json',
+        success: function(data) {
+            if (data.res && data.res.moment == 1) {
+                $("#mchance").show();
+                $("#mchance").find('li').on('click', function(){
+                    playChanceGame('moment', $(this).data('num'), function(data) {
+                        if (data.res.status == 'win') {
+                            alert('WIN! (Нарисовать бы)');
+                        } else {
+                            alert('Плак, плак, (нарисовать бы)');
+                        }
+                    })
+                });
+            }
+        },
         error: function() {}
     });   
 }, 60 * 1000);

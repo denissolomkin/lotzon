@@ -44,6 +44,10 @@ class Index extends \SlimController\SlimController
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
         $currentChanceGame     = Session::connect()->get('chanceGame');
 
+        //if (!Session::connect()->get('MomentChanseLastDate') || time() - Session::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
+            Session::connect()->set('MomentChanseLastDate', time());
+        //}
+
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount(),
@@ -128,7 +132,7 @@ class Index extends \SlimController\SlimController
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
                 'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),
-                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' '),
+                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' ') . ' ' . Config::instance()->langCurrencies[$this->promoLang] . '.',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
