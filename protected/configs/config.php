@@ -4,9 +4,9 @@ Config::instance()->cacheEnabled = false;
 Config::instance()->newsCacheCount = 18;
 
 Config::instance()->dbConnectionProperties = array(
-    'dsn' => 'mysql:host=localhost;dbname=lotzone',
-    'user' => 'root',
-    'password' => '1234',
+    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
+    'user' => 'lotzone_user',
+    'password' => '63{_Tc252!#UoQq',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -181,6 +181,6 @@ Config::instance()->publicResources = array(
 );
 
 Config::instance()->defaultSenderEmail = 'info@lotzon.com';
-
 Config::instance()->playerOfflineTimeout = 5 * 60;
 Config::instance()->generatorNumTries = 500;
+
