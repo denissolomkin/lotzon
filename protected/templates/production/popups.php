@@ -516,7 +516,7 @@
             <section class="logout-bk pop-box">
                 <div class="cs"></div>
                 <div class="cnt">
-                    <div class="txt">Новы розыгрыш не за горами бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла. Вы уверены, что хотите выйти?</div>
+                    <div class="txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <div class="buts">
                         <div class="exit">выйти</div>
                         <div class="back">остаться</div>
@@ -531,22 +531,22 @@
 <!--=========================================================================
                             MOMENTUM POPUP CODE
     ==========================================================================-->
-<div class="bl-pp-bk popup">
+<div class="bl-pp-bk popup" id="mchance">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="momentum pop-box">
                 <div class="cs"></div>
                 <div class="mm-bk-pg">
                     <div class="mm-bk-tl">Моментальный шанс</div>
-                    <div class="mm-txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. </div>
+                    <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <ul class="mm-tbl">
-                        <li class="l">
+                        <li class="l" data-num="1">
                             <p>?</p>
                         </li>
-                        <li class="c">
+                        <li class="c" data-num="2">
                             <p>?</p>
                         </li>
-                        <li class="r">
+                        <li class="r" data-num="3">
                             <p>?</p>
                         </li>
                     </ul>

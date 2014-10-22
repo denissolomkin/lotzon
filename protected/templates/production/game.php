@@ -540,7 +540,7 @@
         <div class="sbk-tl">шансы</div>
 
         <!-- CHASNE PREVIEW -->
-        <div class="ch-bk" style="display:<?=($currentChanceGame ? 'none' : 'block')?>;">
+        <div class="ch-bk" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
             <div class="ch-gm-tbl">
                 <div class="td l">

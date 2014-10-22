@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common;
+use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \ChanceGamesModel;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -72,6 +72,11 @@ class Players extends \AjaxController
                 $player->login($password)->markOnline();
             } catch (EntityException $e) {
                 $this->ajaxResponse(array(), 0, $e->getMessage());
+            }
+
+            if ($remember) {
+                ini_set('session.gc_maxlifetime', 86400 * 30 * 3);
+                ini_set('session.cookie_lifetime', 86400 * 30 * 3);
             }
 
             $this->ajaxResponse(array());
@@ -179,11 +184,41 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
+        $resp = array();
         if (Session::connect()->get(Player::IDENTITY)) {
             Session::connect()->get(Player::IDENTITY)->markOnline();    
-        }
-        
-        $this->ajaxResponse(array());   
+            // check for moment chance
+            // if not already played chance game           
+            $resp['crchg'] = Session::connect()->get('chanceGame');
+            if (Session::connect()->get('MomentChanseLastDate') && !Session::connect()->get('chanceGame')) {
+                $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
+
+                if (Session::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() && 
+                    Session::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo() * 60 >= time()) {
+                    if (($rnd = mt_rand(0, 100)) <= 30) {
+                        $resp['moment'] = 1;
+                    } else if (Session::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 60) {
+                        // if not fired randomly  - fire at last minut
+                        $resp['moment'] = 1;
+                    }
+                }
+                if (isset($resp['moment']) && $resp['moment']) {
+                    $gameField = $chanceGames['moment']->generateGame();
+                    Session::connect()->set('chanceGame', array(
+                        'moment' => array(
+                            'id'     => 'moment',
+                            'start'  => time(),
+                            'field'  => $gameField,
+                            'clicks' => array(), 
+                            'status' => 'process',
+                        ),
+                    ));
+                    Session::connect()->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
+                }
+            }
+        }   
+
+        $this->ajaxResponse($resp);   
     }
 
     public function resendPasswordAction()
