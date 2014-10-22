@@ -44,6 +44,10 @@ class Index extends \SlimController\SlimController
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
         $currentChanceGame     = Session::connect()->get('chanceGame');
 
+        //if (!Session::connect()->get('MomentChanseLastDate') || time() - Session::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
+            Session::connect()->set('MomentChanseLastDate', time());
+        //}
+
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount(),

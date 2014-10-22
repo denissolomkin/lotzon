@@ -160,7 +160,7 @@ class ChanceGame extends Entity
         $game = array();
         
         $rand = mt_rand(1,3);
-        for ($i = 1; $i<3; ++$i) {
+        for ($i = 1; $i<=3; ++$i) {
             if ($i == $rand) {
                 $game[] = 1;
             } else {
