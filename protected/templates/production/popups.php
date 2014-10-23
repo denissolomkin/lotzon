@@ -540,15 +540,11 @@
                     <div class="mm-bk-tl">Моментальный шанс</div>
                     <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <ul class="mm-tbl">
-                        <li class="l" data-num="1">
-                            <p>?</p>
+                        <li class="los" data-num="1"></li>
+                        <li class="won" data-num="2">
+                            <b>50</b> баллов
                         </li>
-                        <li class="c" data-num="2">
-                            <p>?</p>
-                        </li>
-                        <li class="r" data-num="3">
-                            <p>?</p>
-                        </li>
+                        <li class="" data-num="3"></li>
                     </ul>
                 </div>
             </section>

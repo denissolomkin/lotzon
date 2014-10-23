@@ -126,13 +126,14 @@ $(function(){
     $('.tb-tabs_li').on('click', function(){
         var tn = $(this).attr('data-ticket');
         var st = $('#tb-slide'+tn);
-        $('.tb-tabs_li').removeClass('now').find('span').hide();
-        $(this).addClass('now').find('span').show();
-        $('.tb-slides .tb-slide').fadeOut(300);
-        setTimeout(function(){
-            st.fadeIn(300);
-        }, 300);
-
+        if(!$(this).hasClass('now')){
+            $('.tb-tabs_li').removeClass('now').find('span').hide();
+            $(this).addClass('now').find('span').show();
+            $('.tb-slides .tb-slide').fadeOut(300);
+            setTimeout(function(){
+                st.fadeIn(300);
+            }, 300);
+        }
     });
     var filledTickets = [];
     var ticketCache = [];
@@ -769,8 +770,9 @@ $(function(){
         });
 
         form.find('input').each(function(id, input) {
-            playerData[$(input).attr('name')] = $(input).val();
+            if($(input).attr('name') != 'plug')playerData[$(input).attr('name')] = $(input).val();
         });
+        console.log(playerData);
         playerData.email=$("#profile_email").text();
         // favorite
         playerData.favs = [];
