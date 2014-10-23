@@ -110,7 +110,7 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 .slick-dots li {width:30px;height:30px;vertical-align:middle;line-height:30px;cursor:default;margin:0;}
 .slick-dots li button {background:transparent;width:10px;height:10px;border:1px solid #000;border-radius:50%;display:inline-block;padding:0;}
 .slick-dots li.slick-active button {background-color:#000;}
-.pw-gm-rt .ct {padding:16px 0 0 30px;}
+.pw-gm-rt .ct {padding:16px 0 15px 30px;}
 .pw-gm-rt .ct .tl {font:12px/14px Handbook-bold;color:#000;text-transform:uppercase;margin-bottom:10px;}
 .pw-gm-rt .ct .n {font:56px/34px Handbook-bold;color:#000;letter-spacing:-1px;}
 .pw-gm-rt .ct .rt-bk {margin:0;padding:0;list-style:none;font-size:0;}

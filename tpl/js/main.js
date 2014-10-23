@@ -772,7 +772,6 @@ $(function(){
         form.find('input').each(function(id, input) {
             if($(input).attr('name') != 'plug')playerData[$(input).attr('name')] = $(input).val();
         });
-        console.log(playerData);
         playerData.email=$("#profile_email").text();
         // favorite
         playerData.favs = [];
