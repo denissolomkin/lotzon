@@ -215,7 +215,7 @@
                             </div>
                         <? } ?>
                     </section>
-                    <section class="prizes" id="prizes">
+                    <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
                             <div class="pbk-pi">на счету <b><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
