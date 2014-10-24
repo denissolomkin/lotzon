@@ -273,6 +273,7 @@ $(function(){
             var tickNum = $(this).parents('.tb-slide').data('ticket');
             addTicket(tickNum,combination, function() {
                 button.closest('.bm-pl').find('.tb-fs-tl').remove();
+                $('.tb-tabs_li[data-ticket="'+tickNum+'"]').addClass('done');
                 button.closest('.tb-slide').addClass('done');
                 button.closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
                 $('.tb-slide.done').find('.loto-tl_li').off('click');
@@ -1005,6 +1006,7 @@ $(function(){
 function showGameProccessPopup(){
     $("#game-won").hide();
     $("#game-end").hide();
+    $("#mchance").hide();
     $("#game-process").show();
     $("#game-itself").show();
 

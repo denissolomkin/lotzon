@@ -531,7 +531,7 @@
 <!--=========================================================================
                             MOMENTUM POPUP CODE
     ==========================================================================-->
-<div class="bl-pp-bk popup" id="mchance">
+<div class="bl-pp-bk popup" id="mchance" data-points-win="<b><?=$chanceGames['moment']->getPointsWin()?></b> баллов">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="momentum pop-box">
@@ -540,15 +540,9 @@
                     <div class="mm-bk-tl">Моментальный шанс</div>
                     <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <ul class="mm-tbl">
-                        <li class="" data-num="1">
-                            <b><?=$chanceGames['moment']->getPointsWin()?></b> баллов
-                        </li>
-                        <li class="" data-num="2">
-                            <b><?=$chanceGames['moment']->getPointsWin()?></b> баллов
-                        </li>
-                        <li class="" data-num="3">
-                            <b><?=$chanceGames['moment']->getPointsWin()?></b> баллов
-                        </li>
+                        <li class="" data-num="1"></li>
+                        <li class="" data-num="2"></li>
+                        <li class="" data-num="3"></li>
                     </ul>
                 </div>
             </section>
