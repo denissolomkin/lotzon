@@ -516,7 +516,7 @@
             <section class="logout-bk pop-box">
                 <div class="cs"></div>
                 <div class="cnt">
-                    <div class="txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
+                    <div class="txt"><?=$staticTexts['logout'][$lang]->getText();?></div>
                     <div class="buts">
                         <div class="exit">выйти</div>
                         <div class="back">остаться</div>
@@ -540,11 +540,15 @@
                     <div class="mm-bk-tl">Моментальный шанс</div>
                     <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <ul class="mm-tbl">
-                        <li class="los" data-num="1"></li>
-                        <li class="won" data-num="2">
-                            <b>50</b> баллов
+                        <li class="" data-num="1">
+                            <b><?=$chanceGames['moment']->getPointsWin()?></b> баллов
                         </li>
-                        <li class="" data-num="3"></li>
+                        <li class="" data-num="2">
+                            <b><?=$chanceGames['moment']->getPointsWin()?></b> баллов
+                        </li>
+                        <li class="" data-num="3">
+                            <b><?=$chanceGames['moment']->getPointsWin()?></b> баллов
+                        </li>
                     </ul>
                 </div>
             </section>

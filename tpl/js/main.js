@@ -279,7 +279,6 @@ $(function(){
                 $('.tb-slide.done').find('.ticket-random').off('click');
                 $('.tb-slide.done').find('.ticket-favorite').off('click');
                 
-                
                 if ($('.tb-tabs .done').length == 5) {
                     $('.tb-slide').each(function(id, slide) {
                         var comb = [];
@@ -291,8 +290,9 @@ $(function(){
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';
                     $(filledTickets).each(function(id, ticket) {
+                        console.log(ticket);
                         html += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (id + 1) + '</div><ul class="yr-tt-tr">';
-                        $(ticket).each(function(tid, num) {
+                        $(ticket).each(function(tid, num) {    
                             html += '<li class="yr-tt-tr_li">' + num + '</li>';
                         });
                         html += '</ul></li>';
@@ -302,16 +302,15 @@ $(function(){
                     $('.atd-bk').show();
                 }
 
-            }, function(){}, function(){});
+            }, function(data){
+                if (data.message == 'ALREADY_FILLED') {
+                    button.closest('.bm-pl').find('.tb-fs-tl').remove();
+                    button.closest('section.tickets').find('li.now').addClass('done');
+                    button.closest('.tb-slide').addClass('done');
+                    button.closest('.tb-st-bk').html('<div class="tb-st-done" style="color:red">Этот билет уже был заполнен</div>');
+                }
 
-            $(this).closest('.bm-pl').find('.tb-fs-tl').remove();
-            $(this).closest('section.tickets').find('li.now').addClass('done');
-            $(this).closest('.tb-slide').addClass('done');
-            $(this).closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
-            if($('.tb-slides .done').length == 5){
-                $('.tb-tabs, .tb-slides').remove();
-
-            }
+            }, function(){});
         }
     });
 
@@ -1219,7 +1218,9 @@ $('li[data-coord]').on('click', function() {
             });
         } else if (data.res.status == 'process') {
             if (data.res.cell == 0) {
-                $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');
+                if (!data.res.dublicate) {
+                    $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');    
+                }
             }
         }
         if (data.res.cell == 1) {

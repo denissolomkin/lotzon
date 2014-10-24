@@ -152,6 +152,7 @@ class Game extends \AjaxController
                         $this->ajaxResponse(array(
                             'status' => 'process',
                             'cell'   => $field[$playerChoose[0]][$playerChoose[1]],
+                            'dublicate' => 1,
                         ));
                     }
                     if (isset($field[$playerChoose[0]][$playerChoose[1]]) && $field[$playerChoose[0]][$playerChoose[1]] == 1) {
@@ -174,6 +175,7 @@ class Game extends \AjaxController
                             }
                         }
                      } else {
+                        $game[$identifier]['clicks'][] = $playerChoose;
                         if ($identifier == '33' || $identifier == '44') {
                             $game[$identifier]['status'] = 'loose';
                         }

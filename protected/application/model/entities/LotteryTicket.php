@@ -140,8 +140,12 @@ class LotteryTicket extends Entity
                 }
                 $owner = new Player();
                 $owner->setId($this->getPlayerId());
-                if (count(TicketsModel::instance()->getPlayerUnplayedTickets($owner)) >= 5) {
+                $tiketsAlreadyFilled = TicketsModel::instance()->getPlayerUnplayedTickets($owner);
+                if (count($tiketsAlreadyFilled) >= 5) {
                     throw new EntityException("LIMIT_EXCEEDED", 400);       
+                }
+                if (!empty($tiketsAlreadyFilled[$this->getTicketNum()])) {
+                    throw new EntityException("ALREADY_FILLED", 400);          
                 }
             break;
             default :
