@@ -346,17 +346,22 @@ window.setInterval(function() {
         async: true,
         dataType: 'json',
         success: function(data) {
-            if (data.res && data.res.moment == 1) {
-                $("#mchance").show();
-                $("#mchance").find('li').on('click', function(){
-                    playChanceGame('moment', $(this).data('num'), function(data) {
-                        if (data.res.status == 'win') {
-                            alert('WIN! (Нарисовать бы)');
-                        } else {
-                            alert('Плак, плак, (нарисовать бы)');
-                        }
-                    })
-                });
+            // if main game screen is visible
+            var gw = $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+            if (!gw) {
+                if (data.res && data.res.moment == 1) {
+                    $("#mchance").show();
+                    $("#mchance").find('li').on('click', function(){
+                        var li = $(this);
+                        playChanceGame('moment', $(this).data('num'), function(data) {
+                            if (data.res.status == 'win') {
+                                li.addClass('won');  
+                            } else {
+                                li.addClass('los');
+                            }
+                        })
+                    });
+                }
             }
         },
         error: function() {}

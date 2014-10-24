@@ -424,7 +424,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов <br/> (еще <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений доступно на этой неделе)</div>
+                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов (осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -624,7 +624,7 @@
             </div>
         </div>
         <!-- CHASNE GAME -->
-        <div class="game-bk" style="display:<?=(!$currentChanceGame ? 'none' : 'block')?>;">
+        <div class="game-bk" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
                     <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
@@ -758,11 +758,11 @@
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Пользовательское соглашение</a>
                 <div class="ct-bk">
-                    <a href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
-                    <a href="http://vk.com/lotzon" class="ct-sl vk"></a>
-                    <a href="https://plus.google.com/112273863200721967076/about" class="ct-sl gp"></a>
-                    <a href="https://twitter.com/LOTZON_COM" class="ct-sl tw"></a>
-                    <a href="mailto:play@lotzon.com" class="mail">play@lotzon.com</a>
+                    <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
+                    <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
+                    <a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="ct-sl gp"></a>
+                    <a target="_blank" href="https://twitter.com/LOTZON_COM" class="ct-sl tw"></a>
+                    <a target="_blank" href="mailto:play@lotzon.com" class="mail">play@lotzon.com</a>
                 </div>
             </div>
         </footer>

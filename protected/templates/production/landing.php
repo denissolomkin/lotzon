@@ -46,10 +46,10 @@
                         <div class="h-t-tcb">
                             <div class="h-t-tcb-l"><a href="/"><img src="/tpl/img/Lotzon-Logo.svg" width="238" height="60" /></a></div>
                             <div class="h-t-tcb-sb">
-                                <a href="https://www.facebook.com/pages/Lotzon/714221388659166" class="h-t-tcb-sb-fb"></a>
-                                <a href="http://vk.com/lotzon" class="h-t-tcb-sb-vk"></a>
-                                <a href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a>
-                                <a href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
+                                <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="h-t-tcb-sb-fb"></a>
+                                <a target="_blank" href="http://vk.com/lotzon" class="h-t-tcb-sb-vk"></a>
+                                <a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a>
+                                <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                             </div>
                             <div class="h-t-tcb-t"><?=$staticTexts['promo-top'][$lang]->getText()?></div>
                         </div>
