@@ -22,7 +22,15 @@ class Players extends \AjaxController
             }
             $player = new Player();
             $player->setEmail($email);
-            $player->setCountry(Config::instance()->defaultLang);
+            try {
+                $geoReader =  new Reader(PATH_MMDB_FILE);
+                $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
+                $player->setCountry($country->isoCode);
+
+            } catch (Exception $e) {
+                $player->setCountry(Config::instance()->defaultLang);
+            }
+            
             $player->setVisibility(true);
             
             try {   

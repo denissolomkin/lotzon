@@ -6,6 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'SlimController' => array($vendorDir . '/slimcontroller/slimcontroller/src'),
     'Slim' => array($vendorDir . '/slim/slim', $vendorDir . '/petebrowne/slim-layout-view'),
+    'MaxMind' => array($vendorDir . '/maxmind-db/reader/src'),
+    'JsonSerializable' => array($vendorDir . '/geoip2/geoip2/compat'),
+    'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
+    'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
+    'GeoIp2' => array($vendorDir . '/geoip2/geoip2/src'),
 );

@@ -1,6 +1,7 @@
 {
   "require": {
     "slimcontroller/slimcontroller": "dev-master",
-    "petebrowne/slim-layout-view": "0.3.*"
+    "petebrowne/slim-layout-view": "0.3.*",
+    "geoip2/geoip2": "~2.0"
   }
 }
