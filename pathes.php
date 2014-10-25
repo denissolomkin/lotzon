@@ -17,3 +17,5 @@ define('PATH_CONTROLLERS', PATH_APPLICATION . 'controllers/');
 define('PATH_INTERFACES', PATH_APPLICATION . 'model/interfaces/');
 
 define('PATH_FILESTORAGE', PATH_ROOT . 'filestorage/');
+
+define('PATH_MMDB_FILE', PATH_ROOT . 'mmdb/GeoLite2-Country.mmdb');

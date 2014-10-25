@@ -3,6 +3,7 @@
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
 use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel;
+use GeoIp2\Database\Reader;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -23,7 +24,15 @@ class Index extends \SlimController\SlimController
 
     public function indexAction()
     {
-        $this->promoLang = Config::instance()->defaultLang;
+        try {
+            $geoReader =  new Reader(PATH_MMDB_FILE);
+            $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
+            $this->promoLang  = $country->isoCode;
+
+        } catch (\Exception $e) {
+            $this->promoLang = Config::instance()->defaultLang;
+        }
+        
         if (!Session::connect()->get(Player::IDENTITY)) {
             $this->landing();    
         } else {
