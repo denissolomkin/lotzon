@@ -798,12 +798,14 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .momentum .mm-bk-pg .mm-bk-tl {color:#2f2f2f;font:30px/1 Handbook-bold;margin-bottom:10px;text-transform:uppercase;}
 .momentum .mm-bk-pg .mm-txt {color:#404040;font:18px/19px Handbook-regular;margin-bottom:30px;}
 .momentum .mm-bk-pg .mm-tbl {list-style:none;display:table;width:100%;margin:0;padding:0;}
-.momentum .mm-bk-pg .mm-tbl > li {width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;}
+.momentum .mm-bk-pg .mm-tbl > li {width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;color:transparent;}
 .momentum .mm-bk-pg .mm-tbl > li:last-child {margin:0;}
 
 .momentum .mm-bk-pg .mm-tbl > li.los {border-color:#707070;background-image: url("../img/bg-chanse-game-x.png");}
 .momentum .mm-bk-pg .mm-tbl > li.won {background-color:#ffe400;border-color:#ffe400;background-image:none;font:24px/1 Handbook-medium;color:#000;}
 .momentum .mm-bk-pg .mm-tbl > li.won > b {font:69px/1 Handbook-medium;display:block;margin:10px 0 5px;}
+
+.momentum .mm-bk-pg .mm-tbl > li.true {background-color:#ffe400;border-color:#ffe400;background-image:none;font:24px/1 Handbook-medium;color:#000;opacity:0.5;}
 
 
 
