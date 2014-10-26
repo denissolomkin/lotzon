@@ -2,6 +2,18 @@ var currentShowedItem = 0;
 var winChance = false;
 $(function(){
     /* ==========================================================================
+                        Start Slide functional
+     ========================================================================== */
+    $(document).ready(function(){
+        var hash = window.location.hash;
+        if(hash){
+            var id = hash.split('#')[1];
+            $('.tn-mbk li[data-href='+id+']').click();
+        }
+    });
+
+
+    /* ==========================================================================
                         Header slider functional
      ========================================================================== */
     $('#hr-io-slider').slick({
@@ -896,6 +908,8 @@ $(function(){
             }
             winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
+
+
 
         $('#profile-history').find('.ws-lt').html(winnerHtml);
         if (yourId) {
