@@ -137,10 +137,18 @@ class Index extends \SlimController\SlimController
 
     public function statsAction()
     {
+        try {
+            $geoReader =  new Reader(PATH_MMDB_FILE);
+            $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
+            $this->promoLang  = $country->isoCode;
+
+        } catch (\Exception $e) {
+            $this->promoLang = Config::instance()->defaultLang;
+        }
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
-                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),
+                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),                
                 'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' ') . ' ' . Config::instance()->langCurrencies[$this->promoLang] . '.',
             );
 

@@ -2,6 +2,7 @@
 
 namespace controllers\production;
 use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \ChanceGamesModel;
+use \GeoIp2\Database\Reader;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -27,7 +28,7 @@ class Players extends \AjaxController
                 $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
                 $player->setCountry($country->isoCode);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $player->setCountry(Config::instance()->defaultLang);
             }
             
@@ -197,6 +198,11 @@ class Players extends \AjaxController
             Session::connect()->get(Player::IDENTITY)->markOnline();    
             // check for moment chance
             // if not already played chance game           
+            if (Session::connect()->get('chanceGame')['moment']) {
+                if (Session::connect()->get('chanceGame')['moment']['start'] + 60 * 2 > time()) {
+                    unset($_SESSION['chanceGame']['moment']);
+                }
+            }
             if (Session::connect()->get('MomentChanseLastDate') && !Session::connect()->get('chanceGame')) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 

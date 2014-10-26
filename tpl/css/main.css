@@ -128,7 +128,7 @@ nav.top-nav {width:100%;margin-bottom:-55px;}
 nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-box {width:1280px;height:55px;margin:auto;background:#f2efed url("../img/Lotzon-Logo.svg") no-repeat 15px 15px / auto 24px;}
 .tn-mbk {list-style:none;margin:0px 0 0 170px;padding:5px 0 0 0;overflow:hidden;float:left;}
-.tn-mbk .tn-mbk_li {float:left;padding:0 30px;height:45px;font:15px/45px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
+.tn-mbk .tn-mbk_li {float:left;height:45px;font:15px/45px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
     -webkit-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -moz-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -ms-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -142,7 +142,7 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-mbk .tn-mbk_li.exit > a {color:#c51e1e;opacity:0.8;}
 .tn-mbk .tn-mbk_li.exit:hover {background-color:#c51e1e;}
 .tn-mbk .tn-mbk_li.exit:hover > a {color:#fff;}
-.tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;}
+.tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;padding:0 30px;display:block;}
 .tn-tr-bk {float:right;margin-right:40px;width:250px;}
 .tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-bold;color:#404040;text-transform:uppercase;margin-top:14px;}
 .tn-tr-bk .tn-tr {font:36px/1 Handbook-bold;color:#2f2f2f;float:right;margin-top:9px;}
@@ -611,9 +611,9 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .gm-if-bk {padding:13px 0 26px 0;overflow:hidden;color:#000;width:240px;text-align:left;display:table;}
 .chance .ch-lot-bk .ch-bk .td.c .gm-if-bk {margin:auto;}
 .chance .ch-lot-bk .ch-bk .td.r .gm-if-bk {margin-left:auto;}
-.chance .ch-lot-bk .gm-if-bk .l {font:20px/1 Handbook-bold;text-transform:uppercase;padding:0 5px 0 10px;display:table-cell;vertical-align:top;}
+.chance .ch-lot-bk .gm-if-bk .l {font:20px/1 Handbook-bold;text-transform:uppercase;display:table-cell;vertical-align:top;width:100%;}
 .chance .ch-lot-bk .gm-if-bk .r {font:11px/1 Handbook-bold;text-transform:uppercase;padding:0 10px 0 5px;text-align:center;display:table-cell;vertical-align:top;}
-.chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;margin-top:-2px;}
+.chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;margin-top:-5px;}
 .chance .ch-lot-bk .ch-bk .gm-bt {width:240px;height:50px;text-align:center;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;}
 .chance .ch-lot-bk .ch-bk .gm-bt:hover {background-color:#000;color:#fff;}
 .chance .ch-lot-bk .ch-bk .td.c .gm-bt {margin:auto;}
@@ -738,6 +738,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk .yr-tb {list-style:none;padding:30px 0 50px 250px;margin:0;}
 
 
+.wt-pp-bk .ws-lt-bk > .ws-dt {height:30px;padding:40px 0 0 70px;font:20px/1 Handbook-bold;color: #4c4c4c;display:block;}
 .wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:20px 0 0 20px;padding:0 0 0 30px;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li {width:240px;height:70px;float:left;cursor:pointer;margin:0 30px 10px 0;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li.you {background-color:#b2d0d4;}

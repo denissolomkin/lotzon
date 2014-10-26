@@ -66,7 +66,7 @@
 <div class="wt-pp-bk popup" id="profile-history">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
-            <div class="ws-lt-bk">
+            <div class="ws-lt-bk pop-box">
                 <div class="cs"></div>
                 <i class="ar-l"></i>
                 <i class="ar-r"></i>
@@ -87,6 +87,7 @@
                         </ul>
                     </div>
                 </section>
+                <time class="ws-dt"></time>
                 <ul class="ws-lt">
                 </ul>
             </div>
@@ -348,7 +349,7 @@
         <!-- END BLOCK -->
         <div id="game-process"  class="pop-box">
             <section class="gpc-pad">
-                <div class="gp-bz"><img src="/tpl/img/banner.jpg" width="300" height="685" /></div>
+                <div class="gp-bz"><img src="/tpl/img/baners/Plug-300х665.png" width="300" /></div>
 
                 <ul class="g-oc-b">
                     <li class="g-oc_li">
@@ -476,7 +477,7 @@
                             <? } ?>
                         </div>
                         <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
-                            <div class="pz-more-bt">загрузить еще</div>
+                            <div class="tr-more-bt">загрузить еще</div>
                         <? } ?>
                     </div>
                 </div>
