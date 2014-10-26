@@ -424,7 +424,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов (осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</div>
+                                    <div class="if-tl"><nobr>Пригласить друга в проект и получить 10 баллов</nobr> <nobr>(осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />

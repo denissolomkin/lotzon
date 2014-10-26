@@ -928,7 +928,7 @@ $(function(){
                     });
                     ticketsHtml += '</ul><div class="yr-tt-tc">' + tickets[i].win + '</div>';
                 } else {
-                    ticketsHtml += '<li>не заполнен</li></ul>';
+                    ticketsHtml += '<li class="null">не заполнен</li></ul>';
                 }
                 
                 ticketsHtml += '</li>';

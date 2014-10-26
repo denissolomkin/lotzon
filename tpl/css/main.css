@@ -548,7 +548,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .pb-txt {font:18px/19px Handbook-regular;color:#000;}
 .profile-bonuses .if-bk {margin-top:60px;}
 .font-fix .profile-bonuses .if-bk {margin-top:63px;}
-.profile-bonuses .if-bk .if-tl {font:18px/19px Handbook-regular;color:#000;width:240px;margin-bottom:25px;}
+.profile-bonuses .if-bk .if-tl {font:18px/19px Handbook-regular;color:#000;margin-bottom:25px;}
 .profile-bonuses .if-bk .fm-bk {height:30px;}
 .profile-bonuses .if-bk .fm-bk .inp-bk {width:440px;float:left;height:30px;}
 .profile-bonuses .if-bk .fm-bk .inp-bk > input {width:100%;border:none;height:29px;font:18px/29px Handbook-italic;outline:none;background:transparent;border-bottom:1px solid #e3e3e3;padding:0;}
@@ -722,6 +722,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tn {color:#4c4c4c;float:left;width:90px;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);padding:13px 0 0 0;}
 .font-fix .wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tn {padding-top:14px;}
 .wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tr {list-style:none;margin:0;padding:0;float:left;}
+.wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tr .null {height:40px;line-height:40px;}
 .wt-pp-bk .ws-lt-bk .yr-tt .yr-tt-tr .yr-tt-tr_li {width:38px;height:38px;border:1px solid #2d2d2d;color:#2d2d2d;border-radius:50%;float:left;margin-right:10px;box-shadow: 0 1px 1px 0 rgba(255,255,255,0.3);text-align:center;text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);line-height:38px;}
 .wt-pp-bk .ws-lt-bk .ws-pf-tl .yr-tt .yr-tt-tr .yr-tt-tr_li {width:40px;height:40px;background-color:#ffe400;border:none;box-shadow:inset 1px 1px 0px 0px rgba(20, 20, 20, 0.4), 0 1px 0px 0 rgba(255,255,255,0.6);line-height:40px;}
 .font-fix .wt-pp-bk .ws-lt-bk .ws-pf-tl .yr-tt .yr-tt-tr .yr-tt-tr_li {line-height:43px;}
@@ -815,8 +816,8 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .prize-info .pz-ifo-bk .pz-ph {width:210px;height:210px;margin:60px 0 50px 0;float:left;background-color:#b2d0d4;}
 .prize-info .pz-ifo-bk .pz-ph > img {width:210px;height:210px;}
 .prize-info .pz-ifo-bk .pz-tl-bk {width:250px;float:right;margin:56px 0 50px 0;}
-.prize-info .pz-ifo-bk .pz-tl-bk .pz-tl {color:#2f2f2f;font:20px/1 Handbook-regular;margin-bottom:15px;}
-.prize-info .pz-ifo-bk .pz-tl-bk .pz-ps {color:#2f2f2f;font:30px/1 Handbook-regular;}
+.prize-info .pz-ifo-bk .pz-tl-bk .pz-tl {color:#2f2f2f;font:20px/1 Handbook-regular;}
+.prize-info .pz-ifo-bk .pz-tl-bk .pz-ps {color:#2f2f2f;font:30px/1 Handbook-regular;margin-bottom:15px;}
 .prize-info .pz-ifo-bk .pz-tl-bk .pz-ps > b {font:30px/1 Handbook-bold;}
 .prize-info .pz-ifo-bk .pz-tl-bk .px-des {font:18px/19px Handbook-regular;color:#404040;margin-bottom:25px;}
 .prize-info .pz-ifo-bt {border: 1px solid #000;cursor: pointer;font: 15px/48px Handbook-bold;height: 48px;margin: 0 0 0 auto;text-align: center;text-transform: uppercase;width:auto;}
