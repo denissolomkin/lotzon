@@ -1241,3 +1241,6 @@ $('.game-bk .bk-bt').on('click', function() {
         $('.ch-bk').fadeIn(200);
     }, 200); 
 });
+$('#mchance').find('.cs').on('click', function() {
+    location.reload();
+})
