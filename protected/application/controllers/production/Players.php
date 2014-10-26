@@ -199,7 +199,7 @@ class Players extends \AjaxController
             // check for moment chance
             // if not already played chance game           
             if (Session::connect()->get('chanceGame')['moment']) {
-                if (Session::connect()->get('chanceGame')['moment']['start'] + 60 * 2 > time()) {
+                if (Session::connect()->get('chanceGame')['moment']['start'] + 180 < time()) {
                     unset($_SESSION['chanceGame']['moment']);
                 }
             }

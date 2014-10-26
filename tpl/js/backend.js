@@ -361,9 +361,11 @@ window.setInterval(function() {
                             if (data.res.status == 'win') {
                                 li.html($("#mchance").data('pointsWin'));
                                 li.addClass('won');
-                                $("#mchance").hide();
-                                $('.pz-ifo-bk').hide();
-                                $('.pz-rt-bk').text("Вы выиграли в моментальный шанс!").show().parents('#shop-items-popup').show();          
+                                window.setTimeout(function() {
+                                    $("#mchance").hide();
+                                    $('.pz-ifo-bk').hide();
+                                    $('.pz-rt-bk').text("Выигранные баллы зачислены на счет!").show().parents('#shop-items-popup').show();              
+                                }, 2000)    
                                 window.setTimeout(function() {
                                     location.reload();
                                 }, 4000);
@@ -372,7 +374,7 @@ window.setInterval(function() {
 
                                 for (var i in data.res.field) {                                    
                                     if(data.res.field[i] == 1) {
-                                        var num = i+1;
+                                        var num = parseInt(i)+1;
                                         $('li[data-num="' + num + '"]').addClass('blink');
                                     }
                                 }
@@ -383,7 +385,7 @@ window.setInterval(function() {
                                         window.clearInterval(blinkInterval);
                                         $("#mchance").hide();
                                         $('.pz-ifo-bk').hide();
-                                        $('.pz-rt-bk').text("Вы проиграли!").show().parents('#shop-items-popup').show();
+                                        $('.pz-rt-bk').text("Возможно повезет в следующий раз!").show().parents('#shop-items-popup').show();
 
                                         window.setTimeout(function() {
                                             location.reload();
