@@ -350,14 +350,52 @@ window.setInterval(function() {
             var gw = $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
             if (!gw) {
                 if (data.res && data.res.moment == 1) {
+                    window.setTimeout(function() {
+                        $("#mchance").hide();
+                    }, 3 * 60000);
+                    
                     $("#mchance").show();
                     $("#mchance").find('li').on('click', function(){
                         var li = $(this);
                         playChanceGame('moment', $(this).data('num'), function(data) {
                             if (data.res.status == 'win') {
-                                li.addClass('won');  
+                                li.html($("#mchance").data('pointsWin'));
+                                li.addClass('won');
+                                window.setTimeout(function() {
+                                    $("#mchance").hide();
+                                    $('.pz-ifo-bk').hide();
+                                    $('.pz-rt-bk').text("Выигранные баллы зачислены на счет!").show().parents('#shop-items-popup').show();              
+                                }, 2000)    
+                                window.setTimeout(function() {
+                                    location.reload();
+                                }, 4000);
                             } else {
                                 li.addClass('los');
+
+                                for (var i in data.res.field) {                                    
+                                    if(data.res.field[i] == 1) {
+                                        var num = parseInt(i)+1;
+                                        $('li[data-num="' + num + '"]').addClass('blink');
+                                    }
+                                }
+                                $('li.blink').html($("#mchance").data('pointsWin'));
+                                var blinkCount = 3;
+                                var blinkInterval = window.setInterval(function() {
+                                    if (blinkCount == 0) {
+                                        window.clearInterval(blinkInterval);
+                                        $("#mchance").hide();
+                                        $('.pz-ifo-bk').hide();
+                                        $('.pz-rt-bk').text("Возможно повезет в следующий раз!").show().parents('#shop-items-popup').show();
+
+                                        window.setTimeout(function() {
+                                            location.reload();
+                                        }, 4000);
+                                        return;
+                                    }
+                                    blinkCount--;
+
+                                    $('li.blink').toggleClass('true');
+                                }, 600);
                             }
                         })
                     });

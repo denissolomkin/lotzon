@@ -193,16 +193,16 @@ class LotteriesModelDBProcessor implements IProcessor
         $lottery->formatFrom('DB', $lotteryData);
 
         $winners = array();
-        if ($lottery->getWinnersCount()) {
             // get winners
             $sql = "SELECT `p`.* FROM `PlayerLotteryWins` AS `plw` 
                     LEFT JOIN `Players` AS `p` ON `p`.`Id` = `plw`.`PlayerId`
-                    WHERE `plw`.`LotteryId` = :lotid AND `plw`.`MoneyWin` > 0";
+                    WHERE `plw`.`LotteryId` = :lotid AND (`plw`.`MoneyWin` > 0 OR `plw`.`PlayerId` = :plid)";
 
             try {
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(
                     ':lotid' => $lottery->getId(),
+                    ':plid'  => Session::connect()->get(Player::IDENTITY)->getId(),
                 ));
 
             } catch (PDOException $e) {
@@ -246,7 +246,6 @@ class LotteriesModelDBProcessor implements IProcessor
                 }
 
             }
-        }   
 
         $returnData['lottery'] = $lottery;
 

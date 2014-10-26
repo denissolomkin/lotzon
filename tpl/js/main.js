@@ -344,7 +344,7 @@ $(function(){
                         Prizes sliders functional
      ========================================================================== */
 
-    $('.pz-more-bt, .mr-cl-bt-bk .mr').on('click', function(){
+    $('.prizes .pz-more-bt, .prizes .mr-cl-bt-bk .prizes .mr').on('click', function(){
         var button = $(this);
         loadShop($('.shop-category.now').data('id'), $('.shop-category-items:visible .pz-cg_li').length, function(data) {
             if (data.res.items.length) {
@@ -1255,3 +1255,6 @@ $('.game-bk .bk-bt').on('click', function() {
         $('.ch-bk').fadeIn(200);
     }, 200); 
 });
+$('#mchance').find('.cs').on('click', function() {
+    location.reload();
+})

@@ -477,7 +477,7 @@
                             <? } ?>
                         </div>
                         <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
-                            <div class="pz-more-bt">загрузить еще</div>
+                            <div class="tr-more-bt">загрузить еще</div>
                         <? } ?>
                     </div>
                 </div>
