@@ -164,7 +164,7 @@ class ContentController extends \AjaxController
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]),
+                    'win' => $ticket->getTicketWin() > 0 ? $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]) : 0,
                 );
             }
         }
