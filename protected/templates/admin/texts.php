@@ -37,7 +37,7 @@
                 <? foreach ($list as $id => $text) { ?>
                     <tr>
                         <td><strong class="identifier"><?=$id?></strong></td>
-                        <td><?=(mb_substr(strip_tags(@$text[Config::instance()->defaultLang]->getText()), 0, 255) . '...')?></td>
+                        <td><?=($text[Config::instance()->defaultLang] ? mb_substr(strip_tags(@$text[Config::instance()->defaultLang]->getText()), 0, 255) . '...' : '')?></td>
                         <td>
                             <button class="btn btn-md edit-text btn-warning"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;
                             <button class="btn btn-md remove-text btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
