@@ -83,7 +83,7 @@
                         <div class="wr-pf-ph">
                             <img src="/tpl/img/preview/profile-photo.jpg" />
                         </div>
-                        <ul class="yr-tb">                            
+                        <ul class="yr-tb">
                         </ul>
                     </div>
                 </section>
@@ -332,7 +332,7 @@
                 </ul>
                 <div class="gw-c-b">
                     <div class="yr-b">
-                        <ul class="yr-tb">                            
+                        <ul class="yr-tb">
                         </ul>
                         <div class="yr-b-fb"></div>
                     </div>
@@ -546,6 +546,23 @@
                         <li class="" data-num="3"></li>
                     </ul>
                 </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+<!--=========================================================================
+                            REPORT POPUP CODE
+==========================================================================-->
+<div class="gr-pp-bk popup" id="report-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="report-block pop-box">
+                <div class="cs"></div>
+                <!-- Prize report block -->
+                <div class="txt" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>">a as dasd asd </div>
             </section>
         </div>
     </div>

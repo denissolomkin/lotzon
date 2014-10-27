@@ -855,6 +855,9 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 
 .prize-info .pz-rt-bk {font:18px/19px Handbook-regular;color:#404040;padding:35px 50px 40px 50px;display:none;}
 
+.report-block {width:560px;margin:auto;background-color:#fff;position:relative;z-index:500;}
+.report-block .txt {font:18px/19px Handbook-regular;color:#404040;padding:35px 50px 40px 50px;}
+
 
 
 

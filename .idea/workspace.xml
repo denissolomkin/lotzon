@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8e5fc7ea-a58a-4250-b79c-cb6f4030861f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/css/main.css" afterPath="$PROJECT_DIR$/tpl/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/popups.php" afterPath="$PROJECT_DIR$/protected/templates/production/popups.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="lotzone.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="popups.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="popups.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.9666667" vertical-offset="7195" max-vertical-offset="11739">
-              <caret line="354" column="40" selection-start-line="354" selection-start-column="40" selection-end-line="354" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.55789477" vertical-offset="11241" max-vertical-offset="12096">
+              <caret line="558" column="45" selection-start-line="558" selection-start-column="45" selection-end-line="558" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -47,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpl/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3570595" vertical-offset="16704" max-vertical-offset="21294">
-              <caret line="810" column="37" selection-start-line="810" selection-start-column="37" selection-end-line="810" selection-end-column="37" />
+            <state vertical-scroll-proportion="-11.678572" vertical-offset="17670" max-vertical-offset="21357">
+              <caret line="857" column="91" selection-start-line="857" selection-start-column="91" selection-end-line="857" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -105,10 +107,10 @@
       <list>
         <option value="$PROJECT_DIR$/protected/templates/emails/player_password.php" />
         <option value="$PROJECT_DIR$/protected/templates/emails/player_registration.php" />
-        <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
         <option value="$PROJECT_DIR$/tpl/js/main.js" />
         <option value="$PROJECT_DIR$/protected/templates/production/game.php" />
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
+        <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
       </list>
     </option>
   </component>
@@ -429,14 +431,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9666667" vertical-offset="7195" max-vertical-offset="11739">
-          <caret line="354" column="40" selection-start-line="354" selection-start-column="40" selection-end-line="354" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/templates/production/game.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.7413793" vertical-offset="8692" max-vertical-offset="17304">
@@ -447,8 +441,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tpl/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3570595" vertical-offset="16704" max-vertical-offset="21294">
-          <caret line="810" column="37" selection-start-line="810" selection-start-column="37" selection-end-line="810" selection-end-column="37" />
+        <state vertical-scroll-proportion="-11.678572" vertical-offset="17670" max-vertical-offset="21357">
+          <caret line="857" column="91" selection-start-line="857" selection-start-column="91" selection-end-line="857" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55789477" vertical-offset="11241" max-vertical-offset="12096">
+          <caret line="558" column="45" selection-start-line="558" selection-start-column="45" selection-end-line="558" selection-end-column="45" />
           <folding />
         </state>
       </provider>
