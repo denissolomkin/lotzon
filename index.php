@@ -5,7 +5,7 @@ if (!in_array($_SERVER['REMOTE_ADDR'], array('81.20.200.182','79.139.133.100','9
 
     exit;
 }
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 ini_set('display_errors', 1);
 
 // load pathes 
