@@ -444,7 +444,7 @@
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
-                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=$transaction->getSum()?></div>
+                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : $transaction->getSum())?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
                             <? } ?>

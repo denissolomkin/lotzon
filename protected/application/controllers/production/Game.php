@@ -218,6 +218,17 @@ class Game extends \AjaxController
 
                         ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'],Session::connect()->get(Player::IDENTITY), $prize);
 
+                        try {
+                            $transaction = new \Transaction();
+                            $transaction->setPlayerId(Session::connect()->get(Player::IDENTITY)->getId())
+                                ->setSum(0)
+                                ->setCurrency(GameSettings::CURRENCY_POINT)
+                                ->setDescription("Выигрыш " . $prize->getTitle());
+
+                            $transaction->create();    
+                        } catch (EntityException $e) {}
+                        
+
                         $responseData['prize'] = array(
                             'id' => $prize->getId(),
                             'title' => $prize->getTitle(),
