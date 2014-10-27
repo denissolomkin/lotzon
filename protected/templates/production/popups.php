@@ -432,7 +432,7 @@
                 <div class="padd">
 
                     <!-- BONUSES BLOCK -->
-                    <div id="bonuses-h">
+                    <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
                             <div class="if"><?=number_format($player->getPoints(), 0, '.', ' ')?> <i>баллов<br/>на счету</i></div>
@@ -459,7 +459,7 @@
                     </div>
 
                     <!-- BONUSES BLOCK -->
-                    <div id="cash-h">
+                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
                             <div class="if"><?=number_format($player->getMoney(), 0, '.', ' ')?> <i>гривен<br/>на счету</i></div>
@@ -477,7 +477,11 @@
                             <? } ?>
                         </div>
                         <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
-                            <div class="tr-more-bt">загрузить еще</div>
+                            <div class="pz-more-bt">загрузить еще</div>
+                            <div class="mr-cl-bt-bl">
+                                <div class="cl">свернуть</div>
+                                <div class="mr">загрузить еще</div>
+                            </div>
                         <? } ?>
                     </div>
                 </div>

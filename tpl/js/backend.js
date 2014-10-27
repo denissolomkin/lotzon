@@ -339,6 +339,29 @@ function resendPassword(email, successFunction, failFunction, errorFunction)
     });   
 }
 
+function getTransactions(offset, currency, successFunction, failFunction, errorFunction) 
+{
+    $.ajax({
+        url: "/content/transactions/"+currency +"/",
+        method: 'GET',
+        data: {
+            offset: offset,
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });   
+}
+
 window.setInterval(function() {
     $.ajax({
         url: "/players/ping",
@@ -355,7 +378,7 @@ window.setInterval(function() {
                     }, 3 * 60000);
                     
                     $("#mchance").show();
-                    $("#mchance").find('li').on('click', function(){
+                    $("#mchance").find('li').off('click').on('click', function(){
                         var li = $(this);
                         playChanceGame('moment', $(this).data('num'), function(data) {
                             if (data.res.status == 'win') {

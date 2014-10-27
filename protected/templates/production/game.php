@@ -372,12 +372,6 @@
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>
-                                <script>
-                                    //КНОПКА ВЫЗОВА ИСТОРИИ ТРАНЗАКЦИЙ
-                                    $('.st-hy-bt').on('click', function(){
-                                        $('#ta-his-popup').fadeIn(200);
-                                    });
-                                </script>
                             </div>
                         </aside>
 

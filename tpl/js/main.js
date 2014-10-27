@@ -1257,4 +1257,42 @@ $('.game-bk .bk-bt').on('click', function() {
 });
 $('#mchance').find('.cs').on('click', function() {
     location.reload();
-})
+});
+
+$('.st-hy-bt').on('click', function(){
+    $('#ta-his-popup').fadeIn(200);
+
+    $('#ta-his-popup').find('.pz-more-bt, .mr').off('click').on('click', function() {
+        var currency = $(this).parents('.bblock').data('currency');
+        button = $(this);
+        getTransactions($(this).parents('.bblock').find('.rw').length, currency, function(data) {
+            if (data.res.length) {
+                var html = '';
+                $(data.res).each(function(id, tr) {
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                });
+
+                button.parents('.bblock').find('.tb').append($(html));
+
+                if (button.hasClass('pz-more-bt')) {
+                    button.hide();    
+                }
+                button.parents('.bblock').find('.mr-cl-bt-bl').show();
+
+                if (data.res.length < 6) {
+                    button.parents('.bblock').find('.mr-cl-bt-bl').find('.mr').hide();
+                }
+            }
+        }, function(data) {}, function() {})
+    });
+
+    $('#ta-his-popup').find('.cl').on('click', function() {
+        $(this).parents('.bblock').find('.tb').find('.rw').each(function(id, rw) {
+            if (id > 5) {
+                $(rw).remove();
+            }
+        });
+        $(this).parents('.bblock').find('.mr-cl-bt-bl').hide();
+        $(this).parents('.bblock').find('.pz-more-bt').show();
+    });
+});
