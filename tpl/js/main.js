@@ -391,9 +391,9 @@ $(function(){
         $('.shop-category-items').hide();
         $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').show();
         if ($('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').length < 6) {
-            $('.pz-more-bt').hide();
+            $('.prizes .pz-more-bt').hide();
         } else {
-            $('.pz-more-bt').show();
+            $('.prizes .pz-more-bt').show();
             $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').each(function(id, item) {
                 if (id >= 6) {
                     $(item).remove();
