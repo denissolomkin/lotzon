@@ -170,6 +170,7 @@ Config::instance()->publicResources = array(
     '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
     '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
     '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
+    '/content/transactions/:currency/'  => 'controllers\production\ContentController:transactions',
 
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
     '/chance/build/:identifier' => array(

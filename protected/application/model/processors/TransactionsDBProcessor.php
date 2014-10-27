@@ -60,7 +60,6 @@ class TransactionsDBProcessor implements IProcessor
         if ($offset > 0) {
             $sql .= " OFFSET " . (int) $offset;
         }
-
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
