@@ -356,6 +356,7 @@ window.setInterval(function() {
                         playChanceGame('moment', $(this).data('num'), function(data) {
                             if (data.res.status == 'win') {
                                 li.addClass('won');  
+                                li.html($("#mchance").data('pointsWin'));
                             } else {
                                 li.addClass('los');
                             }
