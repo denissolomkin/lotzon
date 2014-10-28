@@ -11,7 +11,7 @@ class TrailerController extends \AjaxController
     public function indexAction()
     {
         $this->render('production/trailer', array(
-            'countdown' => strtotime("02.11.2014 17:00:00") - time(),
+            'countdown' => strtotime("03.11.2014 10:00:00") - time(),
             'layout' => false,
         ));
     }
