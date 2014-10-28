@@ -29,7 +29,9 @@ $(function(){
                     if (data.message == 'ALREADY_SUBSCRIBED') {
                         $('.txt').text('Упс! Не волнуйтесь, на этот email будет выслано письмо после открытия');
                     } 
-
+                    window.setTimeout(function() {
+                        $('.form').removeClass('error');       
+                    }, 3000);
 
                 }
             }, 
