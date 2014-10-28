@@ -2,6 +2,18 @@ var currentShowedItem = 0;
 var winChance = false;
 $(function(){
     /* ==========================================================================
+                        Start Slide functional
+     ========================================================================== */
+    $(document).ready(function(){
+        var hash = window.location.hash;
+        if(hash){
+            var id = hash.split('#')[1];
+            $('.tn-mbk li[data-href='+id+']').click();
+        }
+    });
+
+
+    /* ==========================================================================
                         Header slider functional
      ========================================================================== */
     $('#hr-io-slider').slick({
@@ -332,7 +344,7 @@ $(function(){
                         Prizes sliders functional
      ========================================================================== */
 
-    $('.pz-more-bt, .mr-cl-bt-bk .mr').on('click', function(){
+    $('.prizes .pz-more-bt, .prizes .mr-cl-bt-bk .prizes .mr').on('click', function(){
         var button = $(this);
         loadShop($('.shop-category.now').data('id'), $('.shop-category-items:visible .pz-cg_li').length, function(data) {
             if (data.res.items.length) {
@@ -379,9 +391,9 @@ $(function(){
         $('.shop-category-items').hide();
         $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').show();
         if ($('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').length < 6) {
-            $('.pz-more-bt').hide();
+            $('.prizes .pz-more-bt').hide();
         } else {
-            $('.pz-more-bt').show();
+            $('.prizes .pz-more-bt').show();
             $('.shop-category-items[data-category="' + $(catButt).data('id') + '"]').find('.pz-cg_li').each(function(id, item) {
                 if (id >= 6) {
                     $(item).remove();
@@ -897,6 +909,8 @@ $(function(){
             winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph"><img src="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" /></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
 
+
+
         $('#profile-history').find('.ws-lt').html(winnerHtml);
         if (yourId) {
             $('#profile-history').find('.ws-pf-rt-bk').show();
@@ -914,7 +928,7 @@ $(function(){
                     });
                     ticketsHtml += '</ul><div class="yr-tt-tc">' + tickets[i].win + '</div>';
                 } else {
-                    ticketsHtml += '<li>не заполнен</li></ul>';
+                    ticketsHtml += '<li class="null">не заполнен</li></ul>';
                 }
                 
                 ticketsHtml += '</li>';
@@ -1240,4 +1254,45 @@ $('.game-bk .bk-bt').on('click', function() {
     window.setTimeout(function(){
         $('.ch-bk').fadeIn(200);
     }, 200); 
+});
+$('#mchance').find('.cs').on('click', function() {
+    location.reload();
+});
+
+$('.st-hy-bt').on('click', function(){
+    $('#ta-his-popup').fadeIn(200);
+
+    $('#ta-his-popup').find('.pz-more-bt, .mr').off('click').on('click', function() {
+        var currency = $(this).parents('.bblock').data('currency');
+        button = $(this);
+        getTransactions($(this).parents('.bblock').find('.rw').length, currency, function(data) {
+            if (data.res.length) {
+                var html = '';
+                $(data.res).each(function(id, tr) {
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                });
+
+                button.parents('.bblock').find('.tb').append($(html));
+
+                if (button.hasClass('pz-more-bt')) {
+                    button.hide();    
+                }
+                button.parents('.bblock').find('.mr-cl-bt-bl').show();
+
+                if (data.res.length < 6) {
+                    button.parents('.bblock').find('.mr-cl-bt-bl').find('.mr').hide();
+                }
+            }
+        }, function(data) {}, function() {})
+    });
+
+    $('#ta-his-popup').find('.cl').on('click', function() {
+        $(this).parents('.bblock').find('.tb').find('.rw').each(function(id, rw) {
+            if (id > 5) {
+                $(rw).remove();
+            }
+        });
+        $(this).parents('.bblock').find('.mr-cl-bt-bl').hide();
+        $(this).parents('.bblock').find('.pz-more-bt').show();
+    });
 });

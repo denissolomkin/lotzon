@@ -66,7 +66,7 @@
 <div class="wt-pp-bk popup" id="profile-history">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
-            <div class="ws-lt-bk">
+            <div class="ws-lt-bk pop-box">
                 <div class="cs"></div>
                 <i class="ar-l"></i>
                 <i class="ar-r"></i>
@@ -83,10 +83,11 @@
                         <div class="wr-pf-ph">
                             <img src="/tpl/img/preview/profile-photo.jpg" />
                         </div>
-                        <ul class="yr-tb">                            
+                        <ul class="yr-tb">
                         </ul>
                     </div>
                 </section>
+                <time class="ws-dt"></time>
                 <ul class="ws-lt">
                 </ul>
             </div>
@@ -331,7 +332,7 @@
                 </ul>
                 <div class="gw-c-b">
                     <div class="yr-b">
-                        <ul class="yr-tb">                            
+                        <ul class="yr-tb">
                         </ul>
                         <div class="yr-b-fb"></div>
                     </div>
@@ -348,7 +349,7 @@
         <!-- END BLOCK -->
         <div id="game-process"  class="pop-box">
             <section class="gpc-pad">
-                <div class="gp-bz"><img src="/tpl/img/banner.jpg" width="300" height="685" /></div>
+                <div class="gp-bz"><img src="/tpl/img/baners/Plug-300х665.png" width="300" /></div>
 
                 <ul class="g-oc-b">
                     <li class="g-oc_li">
@@ -431,7 +432,7 @@
                 <div class="padd">
 
                     <!-- BONUSES BLOCK -->
-                    <div id="bonuses-h">
+                    <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
                             <div class="if"><?=number_format($player->getPoints(), 0, '.', ' ')?> <i>баллов<br/>на счету</i></div>
@@ -443,7 +444,7 @@
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
-                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=$transaction->getSum()?></div>
+                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : $transaction->getSum())?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
                             <? } ?>
@@ -458,7 +459,7 @@
                     </div>
 
                     <!-- BONUSES BLOCK -->
-                    <div id="cash-h">
+                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
                             <div class="if"><?=number_format($player->getMoney(), 0, '.', ' ')?> <i>гривен<br/>на счету</i></div>
@@ -477,6 +478,10 @@
                         </div>
                         <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
                             <div class="pz-more-bt">загрузить еще</div>
+                            <div class="mr-cl-bt-bl">
+                                <div class="cl">свернуть</div>
+                                <div class="mr">загрузить еще</div>
+                            </div>
                         <? } ?>
                     </div>
                 </div>
@@ -545,6 +550,23 @@
                         <li class="" data-num="3"></li>
                     </ul>
                 </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+<!--=========================================================================
+                            REPORT POPUP CODE
+==========================================================================-->
+<div class="gr-pp-bk popup" id="report-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="report-block pop-box">
+                <div class="cs"></div>
+                <!-- Prize report block -->
+                <div class="txt" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>">a as dasd asd </div>
             </section>
         </div>
     </div>

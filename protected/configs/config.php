@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '',
+    'password' => '1234',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -21,7 +21,7 @@ Config::instance()->cacheConnectionProperties = array(
 );
 
 Config::instance()->langs = array('UA', 'RU', 'EN');
-Config::instance()->defaultLang = 'UA';
+Config::instance()->defaultLang = 'RU';
 Config::instance()->langCurrencies = array(
     'UA' => 'грн',
     'RU' => 'руб',
@@ -140,6 +140,7 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/trailer/' => 'controllers\production\TrailerController:index',
     '/stats/promo/' => 'controllers\production\Index:stats',
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
@@ -170,6 +171,7 @@ Config::instance()->publicResources = array(
     '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
     '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
     '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
+    '/content/transactions/:currency/'  => 'controllers\production\ContentController:transactions',
 
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
     '/chance/build/:identifier' => array(

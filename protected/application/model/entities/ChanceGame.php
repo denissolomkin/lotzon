@@ -130,9 +130,10 @@ class ChanceGame extends Entity
         if ($this->getPrizes()) {
             foreach ($this->getPrizes() as $prizeId) {
                 $prize = new ShopItem();
-                $prize->setId($prizeId)->fetch();
-
-                $prizes[$prize->getId()] = $prize;
+                try {
+                    $prize->setId($prizeId)->fetch();    
+                    $prizes[$prize->getId()] = $prize;
+                } catch (EntityException $e) {}
             }
         }
 

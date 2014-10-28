@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException;
+use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \TransactionsModel;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -164,7 +164,7 @@ class ContentController extends \AjaxController
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]),
+                    'win' => $ticket->getTicketWin() > 0 ? $ticket->getTicketWin() . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]) : 0,
                 );
             }
         }
@@ -207,5 +207,27 @@ class ContentController extends \AjaxController
             return $this->lotteryDetailsAction($nextLottery->getId());    
         }
         $this->ajaxResponse(array(),0, 'NOT_FOUND');
+    }
+
+    public function transactionsAction($currency)
+    {
+        $offset = (int)$this->request()->get('offset');
+
+        if ($currency == GameSettings::CURRENCY_POINT) {
+            $transactions = TransactionsModel::instance()->playerPointsHistory(Session::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+        }
+        if ($currency == GameSettings::CURRENCY_MONEY) {
+            $transactions = TransactionsModel::instance()->playerMoneyHistory(Session::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+        }
+        $jsonTransactions = array();
+        foreach ($transactions as $transaction) {
+            $jsonTransactions[] = array(
+                'description' => $transaction->getDescription(),
+                'quantity' => ($transaction->getSum() > 0 ? '+' : '') . ($transaction->getSum() == 0 ? '' : $transaction->getSum()),
+                'date'  => date('d.m.Y', $transaction->getDate()),
+            );
+        }
+
+        $this->ajaxResponse($jsonTransactions);
     }
 }

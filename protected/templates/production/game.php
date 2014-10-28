@@ -372,12 +372,6 @@
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>
-                                <script>
-                                    //КНОПКА ВЫЗОВА ИСТОРИИ ТРАНЗАКЦИЙ
-                                    $('.st-hy-bt').on('click', function(){
-                                        $('#ta-his-popup').fadeIn(200);
-                                    });
-                                </script>
                             </div>
                         </aside>
 
@@ -402,7 +396,7 @@
                                                 <? } ?>
                                             </ul>
                                             <div class="nw"><?=$lottery->getWinnersCount()?></div>
-                                            <? if ($lottery->getWinnersCount() > 0) { ?>
+                                            <? if ($lottery->getWinnersCount() > 0 || isset($playerPlayedLotteries[$lottery->getId()])) { ?>
                                                 <div class="aw-bt" data-lotid="<?=$lottery->getId()?>">
                                                     <a href="javascript:void(0)"></a>
                                                 </div>
@@ -424,7 +418,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl">Пригласить друга в проект и получить 10 баллов (осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</div>
+                                    <div class="if-tl"><nobr>Пригласить друга в проект и получить 10 баллов</nobr> <nobr>(осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
