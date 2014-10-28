@@ -49,17 +49,17 @@
                 
             </div>
             <div class="txt-box">
-                <div class="text">Здесь каждый может выиграть деньги и ценные призы. Участие бесплатное.<br/><br/>Регистрируйтесь сейчас и после запуска проекта на Ваш счет будет зачислено 300 баллов, которые возможно обменивать на призы.</div>
+                <div class="text">Здравствуйте. Мы бесплатная онлайн лотерея. Получайте призы, выигрывайте деньги и конечно же срывайте JackPot.<br/><br/>Пожалуйста оставьте свой email чтобы узнать одним из первых о нашем открытии. Первую тысячу счастливчиков ждет приятный сюрприз. Удачи!</div>
             </div>
             <div class="form">
                 <div class="pi-inp-bk td">
                     <div data-default="Имя" class="ph">Email</div>
-                    <input type="text" placeholder="Email" value="" name="name" spellcheck="false" autocomplete="off">
+                    <input type="text" placeholder="Email" value="" name="email" spellcheck="false" autocomplete="off">
                 </div>
-                <div class="submit">регистрация</div>
+                <div class="submit">отправить</div>
 
                 <div class="msg">
-                    <div class="txt">Мы отправили пароль на указанный email</div>
+                    <div class="txt">Спасибо! Вскоре, мы оповестим Вас об открытии. До встречи!</div>
                 </div>
             </div>
             <div class="social">
@@ -81,4 +81,35 @@ $(".timer").countdown({
     until: <?=$countdown?>,
     layout: '<span class="d">{dnn}</span><i>:</i><span class="a">{hnn}</span><i>:</i><span class="m">{mnn}</span><i>:</i><span class="s">{snn}</span>'
 });
+  
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56113090-1', 'auto');
+ga('send', 'pageview');
+
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter26806191 = new Ya.Metrika({id:26806191,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
 </script>
