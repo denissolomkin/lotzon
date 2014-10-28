@@ -29,7 +29,7 @@ class Index extends \SlimController\SlimController
             $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
             $this->promoLang  = $country->isoCode;
 
-        } catch (\Exception $e) {*/
+        } catch (\Exception $e) {
             $this->promoLang = Config::instance()->defaultLang;
         }
         
