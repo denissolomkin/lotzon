@@ -24,14 +24,14 @@ class Index extends \SlimController\SlimController
 
     public function indexAction()
     {
-       /* try {
+        try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
             $this->promoLang  = $country->isoCode;
 
         } catch (\Exception $e) {*/
             $this->promoLang = Config::instance()->defaultLang;
-        /*}*/
+        }
         
         if (!Session::connect()->get(Player::IDENTITY)) {
             $this->landing();    
@@ -137,14 +137,14 @@ class Index extends \SlimController\SlimController
 
     public function statsAction()
     {
-       /* try {
+        try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
             $this->promoLang  = $country->isoCode;
 
-        } catch (\Exception $e) { */
+        } catch (\Exception $e) { 
             $this->promoLang = Config::instance()->defaultLang;
-        /* } */
+        } 
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
