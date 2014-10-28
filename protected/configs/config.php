@@ -140,7 +140,10 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
-    '/trailer/' => 'controllers\production\TrailerController:index',
+    '/trailer/' => array(
+        'get'   => 'controllers\production\TrailerController:index',
+        'post'  => 'controllers\production\TrailerController:subscribe'
+    ),
     '/stats/promo/' => 'controllers\production\Index:stats',
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
