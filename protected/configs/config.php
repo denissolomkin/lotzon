@@ -135,7 +135,9 @@ Config::instance()->privateResources =  array(
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
     '/private/monetisation' => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
-    '/private/stats'        => 'controllers\admin\ComingSoon:index',
+    '/private/ogames'       => 'controllers\admin\ComingSoon:index',
+    '/private/subscribes'   => 'controllers\admin\Subscribes:index',
+
 );
 
 Config::instance()->publicResources = array(

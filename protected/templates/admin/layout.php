@@ -38,6 +38,7 @@
             <li <?=($activeMenu == 'chances' ? ' class="active"' : '')?>><a href="/private/chances">Шансы</a></li>
             <li <?=($activeMenu == 'seo' ? ' class="active"' : '')?>><a href="/private/seo">SEO</a></li>
             <!--li><a href="/private/ogames">Онлайн игры</a></li-->
+            <li <?=($activeMenu == 'subscribes' ? ' class="active"' : '')?>><a href="/private/subscribes">Заявки</a></li>
             <li class="pull-right"><a class="glyphicon glyphicon-off" href="/private/logout"></a></li>
             <li class="<?=($activeMenu == 'admins' ? ' active ' : '')?>pull-right"><a href="/private/admins">Администраторы</a></li>
           </ul>
