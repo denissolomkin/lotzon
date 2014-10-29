@@ -281,7 +281,7 @@
                                 <!-- REGISTRATION FORM -->
                                 <form name="register">
                                     <div id="reg-form">
-                                        <div class="rf-txt">Укажите ваш email. <b>На него будет выслан пароль,</b><br/>который вам понадобиться ввести при входе в следующий раз.</div>
+                                        <div class="rf-txt">Укажите Ваш email. <b>На него будет выслан пароль,</b> который понадобится ввести при входе в следующий раз.</div>
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>
                                             <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
