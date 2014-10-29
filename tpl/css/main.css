@@ -612,7 +612,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .ch-bk .td.c .gm-if-bk {margin:auto;}
 .chance .ch-lot-bk .ch-bk .td.r .gm-if-bk {margin-left:auto;}
 .chance .ch-lot-bk .gm-if-bk .l {font:20px/1 Handbook-bold;text-transform:uppercase;display:table-cell;vertical-align:top;width:100%;}
-.chance .ch-lot-bk .gm-if-bk .r {font:11px/1 Handbook-bold;text-transform:uppercase;padding:0 10px 0 5px;text-align:center;display:table-cell;vertical-align:top;}
+.chance .ch-lot-bk .gm-if-bk .r {font:11px/1 Handbook-bold;text-transform:uppercase;padding:0 10px 0 5px;text-align:center;display:table-cell;vertical-align:top;height:40px;}
 .chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;margin-top:-5px;}
 .chance .ch-lot-bk .ch-bk .gm-bt {width:240px;height:50px;text-align:center;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;}
 .chance .ch-lot-bk .ch-bk .gm-bt:hover {background-color:#000;color:#fff;}
