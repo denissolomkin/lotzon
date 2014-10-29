@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '',
+    'password' => '1234',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -135,7 +135,9 @@ Config::instance()->privateResources =  array(
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
     '/private/monetisation' => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
-    '/private/stats'        => 'controllers\admin\ComingSoon:index',
+    '/private/ogames'       => 'controllers\admin\ComingSoon:index',
+    '/private/subscribes'   => 'controllers\admin\Subscribes:index',
+
 );
 
 Config::instance()->publicResources = array(
