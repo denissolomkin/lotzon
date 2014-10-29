@@ -6,7 +6,7 @@
     <title></title>
 </head>
 <body style="margin:0;padding:0;">
-    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
         <tr>
             <td height="70" style="padding-left:40px;" bgcolor="#ffe400">
                 <img src="http://lotzon.com/tpl/img/mail-logo.png" width="123" height="23" alt="">
