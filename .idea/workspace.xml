@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5fc7ea-a58a-4250-b79c-cb6f4030861f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/emails/player_password.php" afterPath="$PROJECT_DIR$/protected/templates/emails/player_password.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/emails/player_registration.php" afterPath="$PROJECT_DIR$/protected/templates/emails/player_registration.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/landing.php" afterPath="$PROJECT_DIR$/protected/templates/production/landing.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/css/promo.css" afterPath="$PROJECT_DIR$/tpl/css/promo.css" />
     </list>
     <ignored path="lotzone.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,11 +88,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="player_registration.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="player_registration.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/emails/player_registration.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22202797" vertical-offset="41" max-vertical-offset="1071">
-              <caret line="8" column="82" selection-start-line="8" selection-start-column="82" selection-end-line="8" selection-end-column="82" />
+            <state vertical-scroll-proportion="-22.4" vertical-offset="0" max-vertical-offset="1071">
+              <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="landing.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.46666667" vertical-offset="5544" max-vertical-offset="8883">
+              <caret line="283" column="116" selection-start-line="283" selection-start-column="116" selection-end-line="283" selection-end-column="116" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="promo.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.928572" vertical-offset="5133" max-vertical-offset="9051">
+              <caret line="259" column="67" selection-start-line="259" selection-start-column="67" selection-end-line="259" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -117,6 +137,8 @@
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
         <option value="$PROJECT_DIR$/protected/templates/emails/player_password.php" />
         <option value="$PROJECT_DIR$/protected/templates/emails/player_registration.php" />
+        <option value="$PROJECT_DIR$/tpl/css/promo.css" />
+        <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
       </list>
     </option>
   </component>
@@ -333,7 +355,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -524,8 +546,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/templates/emails/player_registration.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22202797" vertical-offset="41" max-vertical-offset="1071">
-          <caret line="8" column="82" selection-start-line="8" selection-start-column="82" selection-end-line="8" selection-end-column="82" />
+        <state vertical-scroll-proportion="-22.4" vertical-offset="0" max-vertical-offset="1071">
+          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.928572" vertical-offset="5133" max-vertical-offset="9051">
+          <caret line="259" column="67" selection-start-line="259" selection-start-column="67" selection-end-line="259" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46666667" vertical-offset="5544" max-vertical-offset="8883">
+          <caret line="283" column="116" selection-start-line="283" selection-start-column="116" selection-end-line="283" selection-end-column="116" />
           <folding />
         </state>
       </provider>
