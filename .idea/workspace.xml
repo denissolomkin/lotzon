@@ -98,21 +98,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="landing.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="landing.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46666667" vertical-offset="5544" max-vertical-offset="8883">
-              <caret line="283" column="116" selection-start-line="283" selection-start-column="116" selection-end-line="283" selection-end-column="116" />
+            <state vertical-scroll-proportion="-13.3" vertical-offset="5544" max-vertical-offset="8883">
+              <caret line="283" column="40" selection-start-line="283" selection-start-column="40" selection-end-line="283" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="promo.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="promo.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.928572" vertical-offset="5133" max-vertical-offset="9051">
-              <caret line="259" column="67" selection-start-line="259" selection-start-column="67" selection-end-line="259" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.3570595" vertical-offset="5133" max-vertical-offset="9051">
+              <caret line="259" column="33" selection-start-line="259" selection-start-column="33" selection-end-line="259" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -137,8 +137,8 @@
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
         <option value="$PROJECT_DIR$/protected/templates/emails/player_password.php" />
         <option value="$PROJECT_DIR$/protected/templates/emails/player_registration.php" />
-        <option value="$PROJECT_DIR$/tpl/css/promo.css" />
         <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
+        <option value="$PROJECT_DIR$/tpl/css/promo.css" />
       </list>
     </option>
   </component>
@@ -552,18 +552,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.928572" vertical-offset="5133" max-vertical-offset="9051">
-          <caret line="259" column="67" selection-start-line="259" selection-start-column="67" selection-end-line="259" selection-end-column="67" />
+        <state vertical-scroll-proportion="-13.3" vertical-offset="5544" max-vertical-offset="8883">
+          <caret line="283" column="40" selection-start-line="283" selection-start-column="40" selection-end-line="283" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
+    <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46666667" vertical-offset="5544" max-vertical-offset="8883">
-          <caret line="283" column="116" selection-start-line="283" selection-start-column="116" selection-end-line="283" selection-end-column="116" />
+        <state vertical-scroll-proportion="0.3570595" vertical-offset="5133" max-vertical-offset="9051">
+          <caret line="259" column="33" selection-start-line="259" selection-start-column="33" selection-end-line="259" selection-end-column="33" />
           <folding />
         </state>
       </provider>

@@ -256,8 +256,8 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 }
 .login-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:0px;right:-50px;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
 .login-popup .lp-b .b-m {padding:40px 60px 60px 60px;position:relative;}
-.login-popup .rf-txt {font:13px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
-.login-popup .rf-txt > b {font:13px/1 Handbook-bold;color:#c51e1e;}
+.login-popup .rf-txt {font:14px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
+.login-popup .rf-txt > b {font:14px/1 Handbook-bold;color:#c51e1e;}
 #reg-form .ch-b {padding:30px 0;text-align:center;position:relative;}
 #reg-form.rul-error .ch-b {color:#c51e1e;}
 #reg-form.rul-error .e-t {display:none;}
