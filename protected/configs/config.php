@@ -20,11 +20,17 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-Config::instance()->langs = array('UA', 'RU', 'EN');
+Config::instance()->langs = array('UA', 'RU', 'EN', 'BY');
+Config::instance()->countryLangs = array(
+    'UA' => 'UA',
+    'RU' => 'UA',
+    'BY' => 'UA',
+);
 Config::instance()->defaultLang = 'UA';
 Config::instance()->langCurrencies = array(
     'UA' => 'грн',
     'RU' => 'руб',
+    'BY' => 'руб',
     'EN' => 'usd',
 );
 

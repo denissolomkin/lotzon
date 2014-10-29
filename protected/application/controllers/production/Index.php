@@ -21,18 +21,26 @@ class Index extends \SlimController\SlimController
     const COMMENTS_PER_PAGE = 8;
 
     public $promoLang = '';
+    public $country = '';
 
     public function indexAction()
     {
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
-            $this->promoLang  = $country->isoCode;
+            $this->country = $country->isoCode;
+            if (!in_array($country, Config::instance()->langs)) {
+                $country->isoCode = Config::instance()->defaultLang;
+                $this->country = Config::instance()->defaultLang;
+            }
+
+            $this->promoLang  = Config::instance()->countryLangs[$country->isoCode];
 
         } catch (\Exception $e) {
-            $this->promoLang = Config::instance()->defaultLang;
+            $this->country = Config::instance()->defaultLang;
+            $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
         }
-        
+
         if (!Session::connect()->get(Player::IDENTITY)) {
             $this->landing();    
         } else {
@@ -62,7 +70,7 @@ class Index extends \SlimController\SlimController
             'winners'      => LotteriesModel::instance()->getWinnersCount(),
             'win'          => LotteriesModel::instance()->getMoneyTotalWin(),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
+            'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
 
         $playerTransactions = array(
@@ -78,10 +86,11 @@ class Index extends \SlimController\SlimController
 
         $this->render('production/game', array(
             'gameInfo'    => $gameInfo,
+            'country'     => $this->country,
             'shop'        => $shop,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,
-            'currency'    => Config::instance()->langCurrencies[$this->promoLang],
+            'currency'    => Config::instance()->langCurrencies[$this->country],
             'news'        => $news,
             'player'      => Session::connect()->get(Player::IDENTITY),
             'tickets'     => $tickets,
@@ -106,7 +115,7 @@ class Index extends \SlimController\SlimController
             'winners'      => LotteriesModel::instance()->getWinnersCount(),
             'win'          => LotteriesModel::instance()->getMoneyTotalWin(),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            'lotteryWins'  => $gameSettings->getPrizes($this->promoLang),
+            'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
 
         if (count($comments) > self::COMMENTS_PER_PAGE) {
@@ -125,9 +134,10 @@ class Index extends \SlimController\SlimController
 
         $this->render('production/landing', array(
             'gameInfo'    => $gameInfo,
+            'country'     => $this->country,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,
-            'currency'    => Config::instance()->langCurrencies[$this->promoLang],            
+            'currency'    => Config::instance()->langCurrencies[$this->country],            
             'layout'      => false,
             'seo' => $seo,
             'comments'    => $comments,
@@ -137,19 +147,26 @@ class Index extends \SlimController\SlimController
 
     public function statsAction()
     {
-        try {
+       try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
-            $this->promoLang  = $country->isoCode;
+            $this->country = $country->isoCode;
+            if (!in_array($country, Config::instance()->langs)) {
+                $country->isoCode = Config::instance()->defaultLang;
+                $this->country = Config::instance()->defaultLang;
+            }
 
-        } catch (\Exception $e) { 
-            $this->promoLang = Config::instance()->defaultLang;
-        } 
+            $this->promoLang  = Config::instance()->countryLangs[$country->isoCode];
+
+        } catch (\Exception $e) {
+            $this->country = Config::instance()->defaultLang;
+            $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
+        }
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
                 'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),                
-                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' ') . ' ' . Config::instance()->langCurrencies[$this->promoLang] . '.',
+                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' ') . ' ' . Config::instance()->langCurrencies[$this->country] . '.',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
