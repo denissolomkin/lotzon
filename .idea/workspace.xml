@@ -102,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-13.3" vertical-offset="5544" max-vertical-offset="8883">
-              <caret line="283" column="40" selection-start-line="283" selection-start-column="40" selection-end-line="283" selection-end-column="40" />
+              <caret line="283" column="114" selection-start-line="283" selection-start-column="114" selection-end-line="283" selection-end-column="114" />
               <folding />
             </state>
           </provider>
@@ -111,8 +111,8 @@
       <file leaf-file-name="promo.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3570595" vertical-offset="5133" max-vertical-offset="9051">
-              <caret line="259" column="33" selection-start-line="259" selection-start-column="33" selection-end-line="259" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.3325554" vertical-offset="5133" max-vertical-offset="9051">
+              <caret line="258" column="29" selection-start-line="258" selection-start-column="29" selection-end-line="258" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -555,15 +555,15 @@
     <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.3" vertical-offset="5544" max-vertical-offset="8883">
-          <caret line="283" column="40" selection-start-line="283" selection-start-column="40" selection-end-line="283" selection-end-column="40" />
+          <caret line="283" column="114" selection-start-line="283" selection-start-column="114" selection-end-line="283" selection-end-column="114" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3570595" vertical-offset="5133" max-vertical-offset="9051">
-          <caret line="259" column="33" selection-start-line="259" selection-start-column="33" selection-end-line="259" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.3325554" vertical-offset="5133" max-vertical-offset="9051">
+          <caret line="258" column="29" selection-start-line="258" selection-start-column="29" selection-end-line="258" selection-end-column="29" />
           <folding />
         </state>
       </provider>
