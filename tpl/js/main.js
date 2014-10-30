@@ -727,7 +727,7 @@ $(function(){
                     html += '<li>' + num + '</li>';
                 });
                 html += '</ul><div class="nw">' + lottery.winnersCount + '</div>';
-                if (lottery.winnersCount > 0) {
+                if (lottery.winnersCount > 0 || lottery.iPlayed) {
                     html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
                 }
                 html += '</li>';
