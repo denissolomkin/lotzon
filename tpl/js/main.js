@@ -31,6 +31,7 @@ $(function(){
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
+            if($(event.target).closest("#game-itself"))document.location.reload();
             if($(event.target).closest(".popup").hasClass('chance'))return false;
             $('.popup').fadeOut(200);
         };
@@ -88,6 +89,7 @@ $(function(){
         news = $('.news').offset().top;
         rules = $('.rules').offset().top;
         profile = $('.profile').offset().top;
+        chance = $('.chance').offset().top;
         if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#tickets-but').addClass('now');
@@ -332,9 +334,27 @@ $(function(){
         var button = $(this);
         addEmailInvite(email, function(data){
             button.parents('.if-bk').find('.invites-count').text(data.res.invitesCount);
-            button.parent().find('input[name="email"]').val("");
+            button.parent().find('input[name="email"]').hide();
+            button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">Приглашение отправлено</span>');
+            setTimeout(function(){
+                button.parent().find('.it-msg-bk').fadeOut(300);
+                button.parent().find('input[name="email"]').val("");
+                setTimeout(function(){
+                    button.parent().find('.it-msg-bk').remove();
+                    button.parent().find('input[name="email"]').fadeIn(300);
+                }, 300);
+            }, 3000);
         }, function(data){
-            alert(data.message);
+            //alert(data.message);
+            button.parent().find('input[name="email"]').hide();
+            button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">'+data.message+'</span>');
+            setTimeout(function(){
+                button.parent().find('.it-msg-bk').fadeOut(300);
+                setTimeout(function(){
+                    button.parent().find('.it-msg-bk').remove();
+                    button.parent().find('input[name="email"]').fadeIn(300);
+                }, 300);
+            }, 3000);
         }, function(){})
     });
 
@@ -914,6 +934,7 @@ $(function(){
         $('#profile-history').find('.ws-lt').html(winnerHtml);
         if (yourId) {
             $('#profile-history').find('.ws-pf-rt-bk').show();
+            $('#profile-history').find('.ws-dt.ch-hide').hide();
             $('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
             var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
@@ -1015,7 +1036,7 @@ $(function(){
     $('#terms-bt').on('click', function(){
         $('#terms').fadeIn(200);
     });
-
+    $('body').show();
 });
 function showGameProccessPopup(){
     $("#game-won").hide();

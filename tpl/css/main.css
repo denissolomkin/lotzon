@@ -51,7 +51,7 @@
    ========================================================================== */
 
 html,button,input,select,textarea {}
-body {line-height:1;background-color:#f3f3f3;font-family: Handbook-regular;color:#4f4f4f;}
+body {line-height:1;background-color:#f3f3f3;font-family: Handbook-regular;color:#4f4f4f;display:none;}
 
 ::-moz-selection {background: #b3d4fc;text-shadow: none;}
 
@@ -556,6 +556,8 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .if-bk .fm-bk .inp-bk > input:-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .profile-bonuses .if-bk .fm-bk .inp-bk > input::-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .profile-bonuses .if-bk .fm-bk .inp-bk > input:-ms-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
+.profile-bonuses .if-bk .fm-bk .inp-bk .it-msg-bk {height:30px;display:block;font:18px/30px Handbook-italic;}
+.profile-bonuses .if-bk .fm-bk .inp-bk .it-msg-bk.error {color:#c51e1e;}
 .profile-bonuses .if-bk .fm-bk .if-bt {text-align:center;width:118px;height:28px;border:1px solid #000;font:12px/28px Handbook-bold;text-transform:uppercase;color:#000;float:right;cursor:pointer;}
 .profile-bonuses .if-bk .fm-bk .if-bt:hover {border:1px solid #000;color:#fff;background-color:#000;}
 .font-fix .profile-bonuses .if-bk .fm-bk .if-bt {line-height:30px;}
@@ -739,8 +741,8 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .wt-pp-bk .ws-lt-bk .ws-yr-tks-bk .yr-tb {list-style:none;padding:30px 0 50px 250px;margin:0;}
 
 
-.wt-pp-bk .ws-lt-bk > .ws-dt {height:30px;padding:40px 0 0 70px;font:20px/1 Handbook-bold;color: #4c4c4c;display:block;}
-.wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:20px 0 0 20px;padding:0 0 0 30px;}
+.wt-pp-bk .ws-lt-bk > .ws-dt {height:30px;padding:40px 0 0 70px;font:20px/1 Handbook-bold;color: #4c4c4c;display:block;margin-bottom:-30px;}
+.wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:50px 0 0 20px;padding:0 0 0 30px;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li {width:240px;height:70px;float:left;cursor:pointer;margin:0 30px 10px 0;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li.you {background-color:#b2d0d4;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li .tl {display:table;width:210px;height:50px;margin:10px 10px 10px 20px;}
@@ -919,12 +921,12 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
    ========================================================================== */
 
 
-.gpc-pad {padding:61px 0 0 170px;}
+.gpc-pad {padding:61px 0 0 170px;position:relative;}
 
 #game-won, #game-end, #game-process {height:720px;width:1280px;}
 #game-won .b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
 #game-won {background:url("../img/bg-game-popup-win.jpg") no-repeat 0 0 ;display:none;position:relative;margin:auto;}
-#game-itself.b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
+#game-itself .b-c-p {position:absolute;display:block;width:30px;height:31px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;right:30px;top:30px;}
 #game-itself .g-oc-b {list-style:none;margin:0;padding:0;overflow:hidden;height:103px;}
 #game-process .g-oc-b .g-oc_li {width:105px;height:105px;margin-right:25px;float:left;font:50px/100px Handbook-bold;color:#8f8e8e;text-align:center;letter-spacing:-2px;position:relative;overflow:hidden;}
 #game-won .g-oc-b .g-oc_li, #game-end .g-oc-b .g-oc_li {width:100px;height:100px;background-color:#ffe400;border-radius:50%;margin-right:30px;float:left;font:50px/100px Handbook-bold;color:#8f8e8e;text-align:center;letter-spacing:-2px;box-shadow:inset 2px 2px 1px 0px rgba(20, 20, 20, 0.4), 0 2px 1px 0 rgba(255,255,255,0.6);z-index:10;}
