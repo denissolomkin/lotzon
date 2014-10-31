@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \EmailInvites, \EmailInvite;
+use \Application, \Config, \Player, \EntityException, \Session, \EmailInvites, \EmailInvite, \Common;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
