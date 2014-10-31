@@ -17,4 +17,15 @@ class Common
         } 
         return mail($to, $subject, $template, $hs);
     }
+
+    public static function getUserIp() 
+    {
+        // check for proxy
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        // return real ip
+        return $_SERVER['REMOTE_ADDR'];
+    }
 }
