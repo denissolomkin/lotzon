@@ -125,6 +125,7 @@
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
+                        <? $filledTicketsCount = count($tickets); ?>
                         <? if (count($tickets) < 5) { ?>
                             <ul class="tb-tabs">
                             <? $fst = true;
@@ -767,7 +768,7 @@
         <script src="/tpl/js/main.js"></script>
         <? include('popups.php') ?>
     <script>
-        filledTicketsCount = <?=count($tickets);?>;
+        filledTicketsCount = <?=$filledTicketsCount;?>;
         var playerFavorite = [];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;

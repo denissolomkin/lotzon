@@ -4,10 +4,10 @@ require_once('init.php');
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
-Application::import(PATH_APPLICATION . '/model/Entities/Lottery.php');
+Application::import(PATH_APPLICATION . '/model/entities/Lottery.php');
 
 $gameSettings = GameSettingsModel::instance()->loadSettings();
-$gamePrizes   = $gameSettings->getPrizes(Config::instance()->defaultLang);
+$gamePrizes   = $gameSettings->getPrizes();
 
 $lockFile = dirname(__FILE__) . '/lottery.lock';
 $lockTimeout = 60 * 3;
@@ -109,14 +109,18 @@ if (timeToRunLottery()) {
                     'win'    => $numwins,
                 );
 
+                $pcountry = $playersPlayed[$ticket->getPlayerId()]->getCountry();
+                if (!in_array($pcountry, Config::instance()->langs)) {
+                    $pcountry = Config::instance()->defaultLang;
+                }
                 // save some statistic
-                if ($gamePrizes[$numwins]['currency'] == GameSettings::CURRENCY_MONEY) {
-                    $moneyWonTotal += $gamePrizes[$numwins]['sum'];
+                if ($gamePrizes[$pcountry][$numwins]['currency'] == GameSettings::CURRENCY_MONEY) {
+                    $moneyWonTotal += $gamePrizes[$pcountry][$numwins]['sum'];
                     if (!in_array($ticket->getPlayerId(), $playersWonMoney)) {
                         $playersWonMoney[] = $ticket->getPlayerId();
                     }
                 } else {
-                    $pointsWonTotal += $gamePrizes[$numwins]['sum'];
+                    $pointsWonTotal += $gamePrizes[$pcountry][$numwins]['sum'];
                 }
             }
         }
@@ -141,6 +145,10 @@ if (timeToRunLottery()) {
 
     // update players data
     foreach ($playersPlayed as $player) {
+        $pcountry = $player->getCountry();
+        if (!in_array($pcountry, Config::instance()->langs)) {
+            $pcountry = Config::instance()->defaultLang;
+        }
         $player->setGamesPlayed($player->getGamesPlayed() + 1);
         if (in_array($player->getId(), $playersWon)) {            
             $moneyToAdd = $pointsToAdd = 0;
@@ -149,10 +157,10 @@ if (timeToRunLottery()) {
                 'points' => 0,
             );
             foreach ($playersWonTickets[$player->getId()] as $ticketData) {
-                if ($gamePrizes[$ticketData['win']]['currency'] == GameSettings::CURRENCY_MONEY) {
-                    $moneyToAdd += $gamePrizes[$ticketData['win']]['sum'];
+                if ($gamePrizes[$pcountry][$ticketData['win']]['currency'] == GameSettings::CURRENCY_MONEY) {
+                    $moneyToAdd += $gamePrizes[$pcountry][$ticketData['win']]['sum'];
                 } else {
-                    $pointsToAdd += $gamePrizes[$ticketData['win']]['sum'];
+                    $pointsToAdd += $gamePrizes[$pcountry][$ticketData['win']]['sum'];
                 }
             }
             if ($moneyToAdd > 0)  {
@@ -170,9 +178,14 @@ if (timeToRunLottery()) {
     // update tickets wins
     foreach ($playersWonTickets as $playerId => $playerData) {
         foreach ($playerData as $ticketId => $data) {
+            $pcountry = $playersPlayed[$playerId]->getCountry();
+            if (!in_array($pcountry, Config::instance()->langs)) {
+                $pcountry = Config::instance()->defaultLang;
+            }
+
             DB::Connect()->prepare("UPDATE `LotteryTickets` SET `TicketWin` = :tw, `TicketWinCurrency` = :twc WHERE `Id` = :tid")->execute(array(
-                ':tw' => $gamePrizes[$data['win']]['sum'],
-                ':twc' => $gamePrizes[$data['win']]['currency'],
+                ':tw' => $gamePrizes[$pcountry][$data['win']]['sum'],
+                ':twc' => $gamePrizes[$pcountry][$data['win']]['currency'],
                 ':tid' => $ticketId,
             ));
         }
