@@ -34,7 +34,7 @@ class Index extends \SlimController\SlimController
             $country = $geoReader->country(Common::getUserIp())->country;    
             $this->country = $country->isoCode;
 
-            if (!in_array($country, Config::instance()->langs)) {
+            if (!in_array($country->isoCode, Config::instance()->langs)) {
                 $country->isoCode = Config::instance()->defaultLang;
                 $this->country = Config::instance()->defaultLang;
             }
@@ -156,7 +156,7 @@ class Index extends \SlimController\SlimController
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;    
             $this->country = $country->isoCode;
-            if (!in_array($country, Config::instance()->langs)) {
+            if (!in_array($country->isoCode, Config::instance()->langs)) {
                 $country->isoCode = Config::instance()->defaultLang;
                 $this->country = Config::instance()->defaultLang;
             }
