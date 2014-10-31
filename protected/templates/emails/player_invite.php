@@ -9,7 +9,7 @@
     <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff">
         <tr>
             <td height="70" style="padding-left:40px;" bgcolor="#ffe400">
-                <img src="/tpl/img/mail-logo.png" width="102" height="21" alt="">
+                <img src="http://lotzon.com/tpl/img/mail-logo.png" width="123" height="23" alt="">
             </td>
         </tr>
         <tr>
