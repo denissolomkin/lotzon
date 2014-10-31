@@ -490,15 +490,16 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .save-bk {margin-top:60px;display:table;width:100%;}
 .profile-info .save-bk .sb-ch-td {display:table-cell;vert-align:bottom;}
 .profile-info .save-bk .sb-ch-td {vertical-align:bottom;}
-.profile-info .save-bk .sb-ch-td .but {width:128px;height:48px;text-align:center;border:1px solid #000;font:15px/48px Handbook-bold;text-transform:uppercase;margin:0 0 0 auto;cursor:pointer;
+.profile-info .save-bk .sb-ch-td .but {width:128px;height:48px;text-align:center;border:1px solid #000;font:15px/48px Handbook-bold;text-transform:uppercase;margin:0 0 0 auto;cursor:default;opacity:0.35;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
 }
-.profile-info .save-bk .sb-ch-td .but.save, .profile-info .save-bk .sb-ch-td .but:hover {background-color:#000;color:#fff;}
-.font-fix .profile-info .save-bk .sb-ch-td .but {line-height:52px;}
+.profile-info .save-bk .sb-ch-td .but.save {opacity:1;cursor:pointer;}
+.profile-info .save-bk .sb-ch-td .but.save:hover {background-color:#000;color:#fff;}
+
 
 .profile .pr-br {float:right;width:300px;}
 
