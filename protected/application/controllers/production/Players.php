@@ -26,7 +26,7 @@ class Players extends \AjaxController
             
             try {
                 $geoReader =  new Reader(PATH_MMDB_FILE);
-                $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
+                $country = $geoReader->country(Common::getUserIp())->country;    
                 $player->setCountry($country->isoCode);
 
             } catch (\Exception $e) {

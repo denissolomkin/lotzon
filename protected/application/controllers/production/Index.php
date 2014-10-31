@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel, \EmailInvites;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
@@ -31,8 +31,9 @@ class Index extends \SlimController\SlimController
         }
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
-            $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
+            $country = $geoReader->country(Common::getUserIp())->country;    
             $this->country = $country->isoCode;
+
             if (!in_array($country, Config::instance()->langs)) {
                 $country->isoCode = Config::instance()->defaultLang;
                 $this->country = Config::instance()->defaultLang;
@@ -153,7 +154,7 @@ class Index extends \SlimController\SlimController
     {
        try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
-            $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
+            $country = $geoReader->country(Common::getUserIp())->country;    
             $this->country = $country->isoCode;
             if (!in_array($country, Config::instance()->langs)) {
                 $country->isoCode = Config::instance()->defaultLang;
