@@ -87,7 +87,7 @@
                         </ul>
                     </div>
                 </section>
-                <time class="ws-dt"></time>
+                <time class="ws-dt ch-hide"></time>
                 <ul class="ws-lt">
                 </ul>
             </div>
@@ -327,7 +327,7 @@
         <!-- END BLOCK -->
         <div id="game-end" class="pop-box">
             <section class="gpc-pad">
-                <a href="javascript:void(0)" class="b-c-p"></a>
+                <a href="javascript:void(0)" onclick="document.location.reload();" class="b-c-p"></a>
                 <ul class="g-oc-b">
                 </ul>
                 <div class="gw-c-b">

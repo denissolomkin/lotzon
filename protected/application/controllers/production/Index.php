@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel, \EmailInvites;
 use GeoIp2\Database\Reader;
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
@@ -25,6 +25,10 @@ class Index extends \SlimController\SlimController
 
     public function indexAction()
     {
+        // validate invite
+        if ($hash = $this->request()->get('ivh')) {
+            EmailInvites::instance()->getProcessor()->validateHash($hash);
+        }
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country($_SERVER['REMOTE_ADDR'])->country;    
