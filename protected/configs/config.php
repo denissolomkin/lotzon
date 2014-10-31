@@ -193,6 +193,6 @@ Config::instance()->publicResources = array(
     ),
 );
 
-Config::instance()->defaultSenderEmail = 'info@lotzon.com';
+Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
 Config::instance()->generatorNumTries = 5;
