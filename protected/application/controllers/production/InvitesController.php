@@ -28,6 +28,11 @@ class InvitesController extends \AjaxController
         try {
             $invite->create();
             Session::connect()->get(Player::IDENTITY)->decrementInvitesCount();
+
+            Common::sendEmail($invite->getEmail(), 'Приглашение на www.lotzon.com', 'player_invite', array(
+                'ivh'  => $invite->getHash(),
+                'inviter' => $invite->getInviter(),
+            ));
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }

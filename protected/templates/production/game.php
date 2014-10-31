@@ -218,7 +218,7 @@
                     <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
-                            <div class="pbk-pi">на счету <b><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
+                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
                         </div>
                         <div class="pbk-ct">
                             <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
@@ -364,7 +364,7 @@
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
+                                    <div class="ifo"><b class="plPointHolder"><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
@@ -767,6 +767,7 @@
         <script src="/tpl/js/main.js"></script>
         <? include('popups.php') ?>
     <script>
+        filledTicketsCount = <?=count($tickets);?>;
         var playerFavorite = [];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;

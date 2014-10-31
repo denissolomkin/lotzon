@@ -1,5 +1,23 @@
 var currentShowedItem = 0;
 var winChance = false;
+var filledTicketsCount = 0;
+var wactive = true;
+
+$(window).on("blur focus", function (e) {
+
+    var prevType = $(this).data("prevType");
+
+    if (prevType != e.type) { //  reduce double fire issues
+        switch (e.type) {
+            case "blur":
+                wactive = false;
+            case "focus":
+                wactive = true;
+        }
+    }
+
+    $(this).data("prevType", e.type);
+});
 $(function(){
     /* ==========================================================================
                         Start Slide functional
@@ -316,7 +334,7 @@ $(function(){
                     $('.atd-bk').prepend($(html));
                     $('.atd-bk').show();
                 }
-
+                filledTicketsCount++;
             }, function(data){
                 if (data.message == 'ALREADY_FILLED') {
                     button.closest('.bm-pl').find('.tb-fs-tl').remove();
@@ -364,7 +382,7 @@ $(function(){
                         Prizes sliders functional
      ========================================================================== */
 
-    $('.prizes .pz-more-bt, .prizes .mr-cl-bt-bk .prizes .mr').on('click', function(){
+    $('.prizes .pz-more-bt, .prizes .mr-cl-bt-bk .mr').on('click', function(){
         var button = $(this);
         loadShop($('.shop-category.now').data('id'), $('.shop-category-items:visible .pz-cg_li').length, function(data) {
             if (data.res.items.length) {
@@ -1039,13 +1057,18 @@ $(function(){
     $('body').show();
 });
 function showGameProccessPopup(){
-    $("#game-won").hide();
-    $("#game-end").hide();
-    $("#mchance").hide();
-    $("#game-process").show();
-    $("#game-itself").show();
+    if (filledTicketsCount > 0 && wactive) {
+        $("#game-won").hide();
+        $("#game-end").hide();
+        $("#mchance").hide();
+        $("#game-process").show();
+        $("#game-itself").show();
 
-    proccessResult();
+        proccessResult();    
+    } else {
+        location.reload();
+    }
+    
 }
 
 function showFailPopup(data)
@@ -1188,6 +1211,7 @@ $('.ch-gm-tbl .gm-bt').click(function(){
         winChance = false;
         var btn = $(this);
         startChanceGame(gi, function(data) {
+            updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
             btn.parents('.play').hide();
         }, function(data) {
             if (data.message=="INSUFFICIENT_FUNDS") {
@@ -1243,6 +1267,7 @@ $('li[data-coord]').on('click', function() {
                 var btn = $(this);
                 startChanceGame(cell.parent().data('game'), function(data) {
                     btn.parents('.msg-tb').hide();
+                    updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
                     $('li[data-coord]').removeClass('won').removeClass('los');
                     $('li[data-coord]').removeClass('true').removeClass('blink');
                     $('.game-bk .rw-b .tb:visible').find('.td').removeClass('sel').first().addClass('sel');
@@ -1317,3 +1342,8 @@ $('.st-hy-bt').on('click', function(){
         $(this).parents('.bblock').find('.pz-more-bt').show();
     });
 });
+
+function updatePoints(points) {
+    playerPoints = points;
+    $('.plPointHolder').text(playerPoints);
+}

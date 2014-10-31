@@ -7,13 +7,14 @@ class EmailInvitesProcessor implements IProcessor
     public function create(Entity $invite)
     {
         $invite->setDate(time());
-        $sql = "INSERT INTO `EmailInvites` (`Email`, `Date`, `InviterId`) VALUES (:email, :date, :inid)";
+        $sql = "INSERT INTO `EmailInvites` (`Email`, `Date`, `InviterId`, `Hash`) VALUES (:email, :date, :inid, :hash)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':email' => $invite->getEmail(),
                 ':date' => $invite->getDate(),
                 ':inid' => $invite->getInviter()->getId(),
+                ':hash' => $invite->getHash(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
@@ -59,7 +60,9 @@ class EmailInvitesProcessor implements IProcessor
             $invite = new EmailInvite();
             $invite->setId($row['Id'])
                    ->setDate($row['Date'])
-                   ->setEmail($row['Email']);
+                   ->setEmail($row['Email'])
+                   ->setHash($row['Hash'])
+                   ->setValid($row['Valid']);
 
             $inviter = new Player();
 
@@ -81,6 +84,16 @@ class EmailInvitesProcessor implements IProcessor
 
         return false;
     }
+
+    public function validateHash($hash) {
+        $sql = "UPDATE `EmailInvites` SET `Valid` = 1 WHERE `Hash`= :hash";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':hash' => $hash,
+            ));
+        } catch (PDOException $e) {}
+    } 
 
     public function fetch(Entity $invite)
     {

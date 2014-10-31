@@ -8,6 +8,8 @@ class EmailInvite extends Entity
     private $_email = 0;
     private $_date  = 0;
     private $_inviter = null;
+    private $_hash = '';
+    private $_valid  = '';
 
     public function init()
     {
@@ -62,6 +64,30 @@ class EmailInvite extends Entity
         return $this->_inviter;
     }
 
+    public function setHash($hash) 
+    {
+        $this->_hash = $hash;
+
+        return $this;
+    }
+
+    public function getHash() 
+    {
+        return $this->_hash;
+    }
+
+    public function setValid($valid) 
+    {
+        $this->_valid = $valid;
+
+        return $this;
+    }
+
+    public function getValid() 
+    {
+        return $this->_valid;
+    }
+
     public function validate($action, $params = array()) 
     {
         switch ($action) {
@@ -90,6 +116,8 @@ class EmailInvite extends Entity
                         throw new EntityException($e->getMessage(), $e->getCode());
                     }
                 }
+                $this->setHash(md5(uniqid()));
+                $this->setValid(false);
                 try {
                     EmailInvites::instance()->getInvite($this->getEmail());
                     
