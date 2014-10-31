@@ -493,25 +493,6 @@ $(function(){
             $('.r-add-but.close').hide();
             rulesBlock.removeClass('b-ha');
         };
-
-
-        if(!newsBlock.hasClass('b-ha')){
-            var cash = $('#news-cash').html();
-            newsBlock.addClass('b-ha');
-            $('.n-items').append('<div class="n-ic-bk"></div>');
-            $('.n-ic-bk').append(cash).show(500);
-            setTimeout(function(){
-                $('.n-add-but').html('спрятать');
-            }, 500);
-        }else{
-            $('.n-ic-bk').hide(500);
-            setTimeout(function(){
-                $('.n-ic-bk').remove();
-                $('.n-add-but').html('загрузить еще');
-                newsBlock.removeClass('b-ha');
-            }, 500);
-
-        };
     });
 
 
