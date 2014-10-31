@@ -49,7 +49,7 @@ $(function(){
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
-            if($(event.target).closest("#game-itself"))document.location.reload();
+            if($(event.target).closest("#game-itself").length)document.location.reload();
             if($(event.target).closest(".popup").hasClass('chance'))return false;
             $('.popup').fadeOut(200);
         };
