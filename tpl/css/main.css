@@ -139,9 +139,9 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-mbk .tn-mbk_li:hover > a {color:#988c31;}
 .tn-mbk .tn-mbk_li.now {background-color:#ffe400;}
 .tn-mbk .tn-mbk_li.now > a {cursor:default;}
-.tn-mbk .tn-mbk_li.exit > a {color:#c51e1e;opacity:0.8;}
+.tn-mbk .tn-mbk_li.exit > a {color:#ce4847;}
 .tn-mbk .tn-mbk_li.exit:hover {background-color:#c51e1e;}
-.tn-mbk .tn-mbk_li.exit:hover > a {color:#fff;}
+.tn-mbk .tn-mbk_li.exit:hover > a {color:#f3d2d2;}
 .tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;padding:0 30px;display:block;}
 .tn-tr-bk {float:right;margin-right:40px;width:250px;}
 .tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-bold;color:#404040;text-transform:uppercase;margin-top:14px;}

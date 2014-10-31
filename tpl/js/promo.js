@@ -11,6 +11,10 @@ $(function(){
         $('html, body').animate({scrollTop : point},900, 'easeInOutQuint');
     });
     $('.go-play').on('click', function(){
+        $('#login-block .tb_a-r').click();
+        //$('#pass-rec-form').show();
+        //$('#pass-rec-txt').hide();
+        $('#cl-check').removeAttr('class').addClass('b-m registration');
         $('#login-block').fadeIn(200);
     });
     $('#lb-close').on('click', function(){
