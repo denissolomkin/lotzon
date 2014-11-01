@@ -1310,6 +1310,7 @@ $('#mchance').find('.cs').on('click', function() {
 
 $('.st-hy-bt').on('click', function(){
     $('#ta-his-popup').fadeIn(200);
+    $('#ta-his-popup').find('.cl').click();
 
     $('#ta-his-popup').find('.pz-more-bt, .mr').off('click').on('click', function() {
         var currency = $(this).parents('.bblock').data('currency');
