@@ -5,7 +5,7 @@ class Common
     public static function sendEmail($to, $subject, $template, $data = array(), $headers = array())
     {
         $headers[] = "From: Lotzon.com <" . Config::instance()->defaultSenderEmail .">";
-        $headers[] = "Content-type: text/html; charset=utf-8" . Config::instance()->defaultSenderEmail;
+        $headers[] = "Content-type: text/html; charset=utf-8";
         $hs = join("\n", $headers);
 
         if ($template) {
