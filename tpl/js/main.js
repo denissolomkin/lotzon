@@ -332,14 +332,14 @@ $(function(){
         }, function() {}, function() {});
     });
 
-    $('.mr-cl-bt-bk .cl').on('click', function(){
+    $('.prizes .mr-cl-bt-bk .cl').on('click', function(){
         $('.shop-category-items:visible').find('.pz-cg_li').each(function(id, item) {
             if (id >= 6) {
                 $(item).remove();
             }
         })
         $(this).closest('.mr-cl-bt-bk').hide();
-        $('.pz-more-bt').show();
+        $('.prizes .pz-more-bt').show();
     });
 
     $('.shop-category').on('click', function() {
