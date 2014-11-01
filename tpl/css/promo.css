@@ -163,7 +163,7 @@ article .a-dt-b .a-dt_tr .m_td, footer .a-dt-b .a-dt_tr .m_td  {display:table-ce
 .a-tbl .r_ul .r_li .i_ul {margin:0;padding:0;list-style:none;width:343px;float:left;}
 .a-tbl .r_ul .r_li .i_ul .i_li {width:40px;height:40px;border-radius:50%;background-color:#fffad1;float:left;margin-left:10px;}
 .a-tbl .r_ul .r_li .i_ul .a_li {background-color:#ffe719;}
-.a-tbl .r_ul .r_li .ri-e {color:#2f2f2f;font:30px/1 Handbook-bold;text-transform:uppercase;letter-spacing:-1px;padding-top:7px;}
+.a-tbl .r_ul .r_li .ri-e {color:#2f2f2f;font:30px/1 Handbook-bold;letter-spacing:-1px;padding-top:7px;}
 article #slide2 ._a-b-b {display:block;width:80px;height:40px;position:absolute;right:0px;bottom:50px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;outline:none;}
 
 .a-cb {position:relative;margin-top:-9%;}

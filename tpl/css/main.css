@@ -113,6 +113,7 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 .pw-gm-rt .ct {padding:16px 0 15px 30px;}
 .pw-gm-rt .ct .tl {font:12px/14px Handbook-bold;color:#000;text-transform:uppercase;margin-bottom:10px;}
 .pw-gm-rt .ct .n {font:56px/34px Handbook-bold;color:#000;letter-spacing:-1px;}
+.pw-gm-rt .ct .n > span {font-size:40px;}
 .pw-gm-rt .ct .rt-bk {margin:0;padding:0;list-style:none;font-size:0;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17px/34px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;display:inline-block;}
 .font-fix .pw-gm-rt .ct .rt-bk .rt-bk_li {line-height:38px;}
@@ -127,7 +128,8 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 nav.top-nav {width:100%;margin-bottom:-55px;}
 nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-box {width:1280px;height:55px;margin:auto;background:#f2efed url("../img/Lotzon-Logo.svg") no-repeat 15px 15px / auto 24px;}
-.tn-mbk {list-style:none;margin:0px 0 0 170px;padding:5px 0 0 0;overflow:hidden;float:left;}
+#logo-gotop {width:170px;height:55px;float:left;cursor:pointer;}
+.tn-mbk {list-style:none;margin:0px 0 0 0px;padding:5px 0 0 0;overflow:hidden;float:left;}
 .tn-mbk .tn-mbk_li {float:left;height:45px;font:15px/45px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
     -webkit-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -moz-transition: background 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -313,7 +315,7 @@ article .infos {padding:40px 20px 0 20px;}
 .rules .rules-ct .win-tbl .c-r .c-r_li .tb .tb_li {width:15px;height:15px;border-radius:50%;background-color:#c8c8c8;margin-right:5px;float:left;}
 .rules .rules-ct .win-tbl .c-r .c-r_li .tb .tb_li.ch {background-color:#ffe719;}
 .rules .rules-ct .win-tbl .c-r .c-r_li .tb .tb_li:last-child {margin-right:0;}
-.rules .rules-ct .win-tbl .c-r .c-r_li .tb-t {font:12px/1 Handbook-bold;color:#535353;text-transform:uppercase;float:left;letter-spacing:0;margin-top:1px;}
+.rules .rules-ct .win-tbl .c-r .c-r_li .tb-t {font:12px/1 Handbook-bold;color:#535353;float:left;letter-spacing:0;margin-top:1px;}
 .font-fix .rules .rules-ct .win-tbl .c-r .c-r_li .tb-t {margin-top:3px;}
 .rules .rules-ct .faq {list-style:none;margin:38px 0 6px 0;padding:0;display:none;font:15px/17px Handbook-regular;color:#000;}
 .rules .rules-ct .faq .faq_li {margin-bottom:33px;}

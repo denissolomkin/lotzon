@@ -51,8 +51,8 @@
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Джекпот</div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?></b>
+                            <div class="tl">Джекпот<br/><br/></div>
+                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -69,20 +69,20 @@
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">всего<br/>участников</div>
+                            <div class="tl">участников<br/><br/></div>
                             <b class="n"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Победителей<br/>за все время</div>
+                            <div class="tl">Победителей<br/><br/></div>
                             <b class="n"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">общая сумма выигранных денег<br/>за все время</div>
-                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <?=$currency?></b>
+                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                 </div>
@@ -92,6 +92,7 @@
 
         <nav class="top-nav">
             <div class="tn-box">
+                <div id="logo-gotop"></div>
                 <ul class="tn-mbk">
                     <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">лото</a></li>
                     <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
@@ -483,7 +484,7 @@
                                             <div class="ph" data-default="Дата рождения">Дата рождения</div>
                                             <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
-                                        <div class="pi-inp-bk">
+                                        <div class="pi-inp-bk td">
                                             <div class="ph" data-default="Пароль">Пароль</div>
                                             <input type="text" name="plug" data-valid="" style="display: none;"/>
                                             <input type="password" name="plug" data-valid="" style="display: none;"/>
