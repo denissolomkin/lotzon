@@ -3,21 +3,14 @@ var winChance = false;
 var filledTicketsCount = 0;
 var wactive = true;
 
-$(window).on("blur focus", function (e) {
-
-    var prevType = $(this).data("prevType");
-
-    if (prevType != e.type) { //  reduce double fire issues
-        switch (e.type) {
-            case "blur":
-                wactive = false;
-            case "focus":
-                wactive = true;
-        }
-    }
-
-    $(this).data("prevType", e.type);
+$(window).on("blur", function (e) {
+    wactive = false;    
 });
+
+$(window).on("focus", function (e) {
+    wactive = true;
+});
+
 $(function(){
     /* ==========================================================================
                         Start Slide functional
@@ -1070,6 +1063,7 @@ $(function(){
     });
 });
 function showGameProccessPopup(){
+    console.log(wactive);
     if (filledTicketsCount > 0 && wactive) {
         $("#game-won").hide();
         $("#game-end").hide();
