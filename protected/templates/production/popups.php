@@ -462,7 +462,7 @@
                     <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
-                            <div class="if"><?=number_format($player->getMoney(), 0, '.', ' ')?> <i>гривен<br/>на счету</i></div>
+                            <div class="if"><?=number_format($player->getMoney(), 0, '.', ' ')?> <i><?=$country == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
                             <div class="bt">
                                 <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
                             </div>
