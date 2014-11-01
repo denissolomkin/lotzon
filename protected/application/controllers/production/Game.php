@@ -115,7 +115,7 @@ class Game extends \AjaxController
                 )
             ));
             try {
-                Session::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Лотерея шанс (" . $games[$identifier]->getGameTitle() . ")");
+                Session::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Шанс (" . $games[$identifier]->getGameTitle() . ")");
             } catch (EntityException $e) {
                 Session::connect()->delete('chanceGame');
                 $this->ajaxResponse($e->getMessage(), $e->getCode());                
@@ -235,7 +235,7 @@ class Game extends \AjaxController
                             'image' => $prize->getImage(),
                         );
                     } else {
-                        Session::connect()->get(Player::IDENTITY)->addPoints($gameObj->getPointsWin(), "Выигрыш в моментальную лотерею");
+                        Session::connect()->get(Player::IDENTITY)->addPoints($gameObj->getPointsWin(), "Выигрыш в моментальный шанс");
                     }
                 }
                 if ($game[$identifier]['status'] == 'loose') {

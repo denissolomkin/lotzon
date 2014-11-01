@@ -34,7 +34,7 @@
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
-        
+
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -350,7 +350,7 @@
                                 <!-- REPASSWORD FORM -->
                                 <form name="rec-pass">
                                     <div id="pass-rec-form">
-                                        <div class="rf-txt">Укажите ваш электронный ящик. На этот адрес будет выслан новый пароль, который позволит войти в профиль через форму входа.</div>
+                                        <div class="rf-txt">Укажите ваш email. Hа этот адрес будет выслан новый пароль.</div>
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>
                                             <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
