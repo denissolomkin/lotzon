@@ -20,14 +20,13 @@
 
         <!-- Schema.org markup for Google+ -->
         <meta itemprop="name" content="<?=$seo['Title']?>">
-        <meta itemprop="description" content="Здесь реально можно выиграть Jackpot!">
+        <meta itemprop="description" content="Играл, играю и буду играть.">
         <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Twitter Card data -->
         <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
         <meta name="twitter:title" content="<?=$seo['Title']?>">
-        <meta name="twitter:description" content="Здесь реально можно выиграть Jackpot!">
-        <meta name="twitter:creator" content="@author_handle">
+        <meta name="twitter:description" content="Играл, играю и буду играть.">
         <!-- Twitter summary card with large image must be at least 280x150px -->
         <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
@@ -36,7 +35,7 @@
         <meta property="og:type" content="article" />
         <meta property="og:url" content="http://www.lotzon.com/" />
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
-        <meta property="og:description" content="Здесь реально можно выиграть Jackpot!" />
+        <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
         <link rel="stylesheet" href="/tpl/css/normalize.css" />

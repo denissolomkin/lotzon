@@ -20,24 +20,25 @@
 
         <!-- Schema.org markup for Google+ -->
         <meta itemprop="name" content="<?=$seo['Title']?>">
-        <meta itemprop="description" content="Здесь реально можно выиграть Jackpot!">
-        <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg">
+        <meta itemprop="description" content="Играл, играю и буду играть.">
+        <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Twitter Card data -->
-        <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg">
+        <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
         <meta name="twitter:title" content="<?=$seo['Title']?>">
-        <meta name="twitter:description" content="Здесь реально можно выиграть Jackpot!">
-        <meta name="twitter:creator" content="@author_handle">
+        <meta name="twitter:description" content="Играл, играю и буду играть.">
         <!-- Twitter summary card with large image must be at least 280x150px -->
-        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg">
+        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Open Graph data -->
         <meta property="og:title" content="<?=$seo['Title']?>" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="http://www.lotzon.com/" />
-        <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg" />
-        <meta property="og:description" content="Здесь реально можно выиграть Jackpot!" />
+        <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
+        <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
+
+        
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
@@ -101,7 +102,7 @@
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">общая сумма выигранных денег<br/>за все время</div>
+                            <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
                             <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <span><?=$currency?></span></b>
                         </div>
                     </div>
@@ -114,7 +115,7 @@
             <div class="tn-box">
                 <div id="logo-gotop"></div>
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">лото</a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">РОЗЫГРЫШ</a></li>
                     <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
@@ -283,10 +284,10 @@
                                 </ul>
                                 <? $fst = false; ?>
                             <? } ?>
-                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">загрузить еще</div>
+                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">ПОКАЗАТЬ ЕЩЕ</div>
                             <div class="mr-cl-bt-bk">
                                 <div class="cl scrollto" data-href="prizes">свернуть</div>
-                                <div class="mr">загрузить еще</div>
+                                <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
                             </div>
                         </div>
                     </section>
@@ -332,7 +333,7 @@
                             <ul class="faq">
                                 <?=$staticTexts['main-faq'][$lang]->getText()?>
                             </ul>
-                            <div class="r-add-but show">загрузить еще</div>
+                            <div class="r-add-but show">ЧИТАТЬ ДАЛЬШЕ</div>
                             <div class="r-add-but close scrollto" data-href="rules" style="display:none;">спрятать</div>
                         </div>
                     </section>
@@ -353,10 +354,10 @@
                                 <? } ?>
                             </div>
                          </div>
-                        <div class="n-add-but">загрузить еще</div>
+                        <div class="n-add-but">ЧИТАТЬ ЕЩЕ</div>
                         <div class="n-mr-cl-bt-bk">
                             <div class="cl scrollto" data-href="news">свернуть</div>
-                            <div class="mr">загрузить еще</div>
+                            <div class="mr">ЧИТАТЬ ЕЩЕ</div>
                         </div>
                     </section>
                 </div>
@@ -428,12 +429,12 @@
                                 </ul>
 
                                 <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
-                                <div class="mr-bt">загрузить еще</div>
+                                <div class="mr-bt">ПОКАЗАТЬ ЕЩЕ</div>
 
                                 <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
                                 <div class="mr-cl-bt-bl">
                                     <div class="cl scrollto" data-href="profile">свернуть</div>
-                                    <div class="mr">загрузить еще</div>
+                                    <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
                                 </div>
                             </section>
 
@@ -773,7 +774,7 @@
                 <img src="/tpl/img/baners/footer-banner.jpg" width="1280" height="135" />
             </section>
             <div class="fr-cnt-bk">
-                <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Пользовательское соглашение</a>
+                <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Условия участия</a>
                 <div class="ct-bk">
                     <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
                     <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
