@@ -229,7 +229,7 @@ $(function(){
                 button.closest('.bm-pl').find('.tb-fs-tl').remove();
                 $('.tb-tabs_li[data-ticket="'+tickNum+'"]').addClass('done');
                 button.closest('.tb-slide').addClass('done');
-                button.closest('.tb-st-bk').html('<div class="tb-st-done">подвержден и принят к розыгрышу</div>');
+                button.closest('.tb-st-bk').html('<div class="tb-st-done">подтвержден и принят к розыгрышу</div>');
                 $('.tb-slide.done').find('.loto-tl_li').off('click');
                 $('.tb-slide.done').find('.ticket-random').off('click');
                 $('.tb-slide.done').find('.ticket-favorite').off('click');
@@ -255,6 +255,8 @@ $(function(){
                     html += '</ul>';
                     $('.atd-bk').prepend($(html));
                     $('.atd-bk').show();
+                } else {
+                    $('.tb-tabs_li:not(.done)').first().click();                     
                 }
                 filledTicketsCount++;
             }, function(data){

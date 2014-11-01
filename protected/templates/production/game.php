@@ -51,8 +51,8 @@
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Сумма<br/>Джекпота</div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?>.</b>
+                            <div class="tl">Джекпот</div>
+                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <?=$currency?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -175,7 +175,7 @@
                                             <? } ?>
                                             <div class="tb-st-bk">
                                                 <? if (count($nums) == 6) { ?>
-                                                    <div class="tb-st-done">подвержден и принят к розыгрышу</div>
+                                                    <div class="tb-st-done">подтвержден и принят к розыгрышу</div>
                                                 <? } else { ?>
                                                     <div class="sm-but add-ticket">подтвердить</div>
                                                     <div class="tb-ifo">еще <b><?=(6 - count($nums))?></b> номера</div>
@@ -189,7 +189,7 @@
                             <div class="atd-bk">
 
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подверждены и приняты к розыгрышу</div>
+                                    <div class="ttl">все 5 билетов подтверждены и приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
                             </div>
@@ -210,7 +210,7 @@
                                     <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подверждены и приняты к розыгрышу</div>
+                                    <div class="ttl">все 5 билетов подтверждены и приняты к розыгрышу</div>
                                     <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
                                 </div>
                             </div>

@@ -70,7 +70,7 @@
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <?=$currency?>.</div>
+                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <span><?=$currency?></span></div>
                             </div>
                         </div>
                         <div class="h-t-bcb">
@@ -374,13 +374,13 @@
                 layout: '{hnn}<i class="h-b-c-tb-r_i">:</i>{mnn}<i class="h-b-c-tb-r_i">:</i>{snn}'}
             );
 
-            window.setInterval(function() {
+            /*window.setInterval(function() {
                 getLandingStats(function(data) {
                     $("#participants").text(data.res.participants);
                     $("#winners").text(data.res.winners);
                     $("#win").text(data.res.win);
                 }, function() {}, function() {})
-            }, 15000);
+            }, 15000);*/
         });
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
