@@ -373,6 +373,7 @@ window.setInterval(function() {
             var gw = $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
             if (!gw) {
                 if (data.res && data.res.moment == 1) {
+                    $('.popup').hide();
                     window.setTimeout(function() {
                         $("#mchance").hide();
                     }, 3 * 60000);
