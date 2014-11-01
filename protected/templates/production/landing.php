@@ -111,7 +111,7 @@
                     <div class="a-dt_tr top">
                         <div class="t_td">
                             <div class="a-tb">
-                                <div class="a-tb-tl">Механика<br/>игры</div>
+                                <div class="a-tb-tl">МехаHика<br/>игры</div>
                                 <div class="a-tb-dr"><?=$staticTexts['promo-game-mechanic'][$lang]->getText()?></div>
                                 <div class="a-tb-tr">
                                     <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
@@ -217,7 +217,7 @@
                     <div class="a-dt_tr top">
                         <div class="t_td">
                             <div class="f-tl-b">
-                                <div class="tl-tl">наши партнеры</div>
+                                <div class="tl-tl">наши партHеры</div>
                                 <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
                                 <div class="tl-tr"><a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a></div>
                             </div>
