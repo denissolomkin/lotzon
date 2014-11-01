@@ -428,21 +428,21 @@
                                         <div class="if-bt send-invite">пригласить</div>
                                     </div>
                                 </div>
-                                <!--div class="sn-bt-bk">
+                                <div class="sn-bt-bk">
                                     <div class="fb"><span>пригласить</span></div>
                                     <div class="vk"><span>пригласить</span></div>
                                     <div class="gp"><span>пригласить</span></div>
                                     <div class="tw"><span>пригласить</span></div>
-                                </div-->
-                                <!-- div class="rp-bk">
+                                </div>
+                                <div class="rp-bk">
                                     <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
                                     <div class="rp-sl-bk">
                                         <a href="javascript:void(0)" class="tw"></a>
                                         <a href="javascript:void(0)" class="gp"></a>
                                         <a href="javascript:void(0)" class="vk"></a>
-                                        <a href="javascript:void(0)" class="fb"></a>
+                                        <a href="javascript:void(0)" class="fb fb-share"></a>
                                     </div>
-                                </div -->
+                                </div>
                             </section>
 
                             <section class="_section profile-info">
@@ -840,6 +840,22 @@
                 d.addEventListener("DOMContentLoaded", f, false);
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
+
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '586602554796461',
+          xfbml      : true,
+          version    : 'v2.2'
+        });
+        };
+
+        (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
     </script>
     </body>
 </html>
