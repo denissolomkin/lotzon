@@ -433,12 +433,12 @@
                                         <div class="if-bt send-invite">пригласить</div>
                                     </div>
                                 </div>
-                                <div class="sn-bt-bk">
+                                <!--div class="sn-bt-bk">
                                     <div class="fb"><span>пригласить</span></div>
                                     <div class="vk"><span>пригласить</span></div>
                                     <div class="gp"><span>пригласить</span></div>
                                     <div class="tw"><span>пригласить</span></div>
-                                </div>
+                                </div-->
                                 <div class="rp-bk">
                                     <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
                                     <div class="rp-sl-bk">
