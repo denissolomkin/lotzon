@@ -107,6 +107,7 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 .h-t-mcb-r {float:right;overflow:hidden;}
 .h-t-mcb-r-n {float:left;width:125px;font:25px/30px Handbook-regular;text-transform:uppercase;padding-top:39px;letter-spacing:1px;margin-right:30px;}
 .h-t-mcb-r-i {float:left;font:129px/1 Handbook-bold;color:#000;padding-top:15px;letter-spacing:-2px;}
+.h-t-mcb-r-i > span {font-size:80px;}
 
 .h-t-bcb {overflow:hidden;width:940px;margin:auto;padding-bottom:50px;}
 .h-t-bcb-l {float:left;font:18px/19px Handbook-regular;max-width:600px;padding-top:23px;}
