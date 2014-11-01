@@ -63,7 +63,7 @@
     <body>
     <main>
         <article>
-            <div class="logo"><img src="/tpl/img/Lotzon-Logo-small.svg" width="235"></div>
+            <div class="logo"><img src="/tpl/img/Lotzon-Logo-small.svg" width="235" height="63"></div>
             <div class="opening">до открытия</div>
             <div class="timer">
                 

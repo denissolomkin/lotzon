@@ -38,7 +38,7 @@
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
-        
+
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
@@ -780,7 +780,7 @@
                     <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
                     <a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="ct-sl gp"></a>
                     <a target="_blank" href="https://twitter.com/LOTZON_COM" class="ct-sl tw"></a>
-                    <a target="_blank" href="mailto:play@lotzon.com" class="mail">play@lotzon.com</a>
+                    <a target="_blank" href="mailto:info@lotzon.com" class="mail">info@lotzon.com</a>
                 </div>
             </div>
         </footer>
