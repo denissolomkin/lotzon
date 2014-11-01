@@ -18,11 +18,26 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        <meta property="og:url" content="http://samples.ogp.me/136756249803614" /> 
-        <meta property="og:title" content="Chocolate Pecan Pie" />
-        <meta property="og:description" content="This pie is delicious!" /> 
-        <meta property="og:image" content="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/851565_496755187057665_544240989_n.jpg" /> 
+        <!-- Schema.org markup for Google+ -->
+        <meta itemprop="name" content="<?=$seo['Title']?>">
+        <meta itemprop="description" content="Здесь реально можно выиграть Jackpot!">
+        <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg">
 
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg">
+        <meta name="twitter:title" content="<?=$seo['Title']?>">
+        <meta name="twitter:description" content="Здесь реально можно выиграть Jackpot!">
+        <meta name="twitter:creator" content="@author_handle">
+        <!-- Twitter summary card with large image must be at least 280x150px -->
+        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg">
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="<?=$seo['Title']?>" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="http://www.lotzon.com/" />
+        <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg" />
+        <meta property="og:description" content="Здесь реально можно выиграть Jackpot!" />
+        <meta property="article:modified_time" content="<?=date('c', time())?>" />
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
