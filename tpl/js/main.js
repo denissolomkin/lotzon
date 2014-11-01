@@ -524,6 +524,11 @@ $(function(){
         $(this).addClass('now');
         $('.profile ._section').hide();
         $('.'+link).show();
+        if(link == 'profile-info'){
+            $('.pi-inp-bk input').each(function(){                
+                $(this).val($(this).attr('data-valid'))
+            });
+        }
     });
 
     /*
