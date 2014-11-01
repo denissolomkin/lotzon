@@ -1067,6 +1067,7 @@ $(function(){
 function showGameProccessPopup(){
     console.log(wactive);
     if (filledTicketsCount > 0 && wactive) {
+        $('.popup').hide();
         $("#game-won").hide();
         $("#game-end").hide();
         $("#mchance").hide();
