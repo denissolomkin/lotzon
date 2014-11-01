@@ -582,17 +582,18 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .rp-bk .rp-sl-bk {display:table-cell;vertical-align:middle;text-align:right;padding-right:31px;}
 
 
-.yashare-auto-init .b-share__handle {float:right;width:30px;height:30px;display:block;}
-.yashare-auto-init .b-share__handle > span {width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social.png");background-repeat:no-repeat;}
-.yashare-auto-init .b-share__handle:hover > span {background-image:url("../img/bg-profile-repost-social-hover.png");}
-.yashare-auto-init .b-share__handle.b-share-btn__facebook {margin-left:38px;}
-.yashare-auto-init .b-share__handle.b-share-btn__vkontakte {margin-left:40px;}
-.yashare-auto-init .b-share__handle.b-share-btn__gplus {margin-left:40px;}
-.yashare-auto-init .b-share__handle.b-share-btn__twitter {margin-left:38px;}
-.yashare-auto-init .b-share__handle.b-share-btn__facebook > span {background-position:11px 1px;}
-.yashare-auto-init .b-share__handle.b-share-btn__vkontakte > span {background-position:-31px 3px;}
-.yashare-auto-init .b-share__handle.b-share-btn__gplus > span {background-position:-80px 2px;}
-.yashare-auto-init .b-share__handle.b-share-btn__twitter > span {background-position:-122px 3px;}
+.profile .yashare-auto-init .b-share {padding:0!important;}
+.profile .yashare-auto-init .b-share__handle {float:right;width:30px;height:30px;display:block;padding:0!important;}
+.profile .yashare-auto-init .b-share__handle > span {width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social.png");background-repeat:no-repeat;}
+.profile .yashare-auto-init .b-share__handle:hover > span {background-image:url("../img/bg-profile-repost-social-hover.png");}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__facebook {margin-left:38px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__vkontakte {margin-left:40px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__gplus {margin-left:40px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__twitter {margin-left:38px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__facebook > span {background-position:11px 1px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__vkontakte > span {background-position:-31px 3px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__gplus > span {background-position:-80px 2px;}
+.profile .yashare-auto-init .b-share__handle.b-share-btn__twitter > span {background-position:-122px 3px;}
 
 
 .profile-bonuses .rp-bk .rp-sl-bk > a {float:right;width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social.png");background-repeat:no-repeat;}
@@ -974,6 +975,21 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .gw-c-b .yr-s-i .sb {display:table;width:100%;padding:0;margin:0 0 43px 0;}
 .gw-c-b .yr-s-i .sb .sb-i {display:table-cell;vertical-align:middle;width:129px;font:13px/15px Handbook-regular;color:#000;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);}
 .sb-s {display:table-cell;width:1px;background-color:#000;box-shadow: 0 1px 0 0 rgba(255,255,255,0.4);}
+
+
+#game-won .yashare-auto-init .b-share {padding:0!important;}
+#game-won .yashare-auto-init .b-share__handle {width:25px;height:25px;display:block;float:right;margin-left:12px;padding:0!important;}
+#game-won .yashare-auto-init .b-share__handle > span {width:25px;height:25px;display:block;float:right;background-image:url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;}
+#game-won .yashare-auto-init .b-share__handle:hover > span {background-image:url("../img/bg-promo-social-buts-hover.png");}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__facebook {}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__vkontakte {}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__gplus {}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__twitter {}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__facebook > span {background-position:-7px -7px;}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__vkontakte > span {background-position:-57px -7px;}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__gplus > span {background-position:-7px -57px;}
+#game-won .yashare-auto-init .b-share__handle.b-share-btn__twitter > span {background-position:-56px -57px;}
+
 .gw-c-b .yr-s-i .sb .sb-l {display:table-cell;text-align:right;vertical-align:middle;}
 .gw-c-b .yr-s-i .sb .sb-l .sb-l_a {width:25px;height:25px;display:block;float:right;background-image:url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;margin-left:12px;}
 .gw-c-b .yr-s-i .sb .sb-l .sb-l_a:hover {background-image:url("../img/bg-promo-social-buts-hover.png");}

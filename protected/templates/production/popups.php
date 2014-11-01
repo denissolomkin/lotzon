@@ -299,11 +299,12 @@
                         <div class="sb">
                             <div class="sb-i">Поделиться хорошей новостью  с друзьями и получить +10 баллов</div>
                             <div class="sb-s"></div>
-                            <div class="sb-l">
-                                <a href="javascript:void(0)" class="sb-l_a tw"></a>
+                            <div class="sb-l">                                
+                                <!--a href="javascript:void(0)" class="sb-l_a tw"></a>
                                 <a href="javascript:void(0)" class="sb-l_a gp"></a>
                                 <a href="javascript:void(0)" class="sb-l_a vk"></a>
-                                <a href="javascript:void(0)" class="sb-l_a fb"></a>
+                                <a href="javascript:void(0)" class="sb-l_a fb"></a-->
+                                <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus,vkontakte,facebook"></div>
                             </div>
                         </div>
                         <div class="yr-yw-b">
