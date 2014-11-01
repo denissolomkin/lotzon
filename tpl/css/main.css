@@ -580,11 +580,26 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .rp-bk {display:table;width:100%;margin-top:120px;}
 .profile-bonuses .rp-bk .rp-txt {display:table-cell;width:260px;font:18px/19px Handbook-regular;color:#000;}
 .profile-bonuses .rp-bk .rp-sl-bk {display:table-cell;vertical-align:middle;text-align:right;padding-right:31px;}
+
+
+.yashare-auto-init .b-share__handle {float:right;width:30px;height:30px;display:block;}
+.yashare-auto-init .b-share__handle > span {width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social.png");background-repeat:no-repeat;}
+.yashare-auto-init .b-share__handle:hover > span {background-image:url("../img/bg-profile-repost-social-hover.png");}
+.yashare-auto-init .b-share__handle.b-share-btn__facebook {margin-left:38px;}
+.yashare-auto-init .b-share__handle.b-share-btn__vkontakte {margin-left:40px;}
+.yashare-auto-init .b-share__handle.b-share-btn__gplus {margin-left:40px;}
+.yashare-auto-init .b-share__handle.b-share-btn__twitter {margin-left:38px;}
+.yashare-auto-init .b-share__handle.b-share-btn__facebook > span {background-position:11px 1px;}
+.yashare-auto-init .b-share__handle.b-share-btn__vkontakte > span {background-position:-31px 3px;}
+.yashare-auto-init .b-share__handle.b-share-btn__gplus > span {background-position:-80px 2px;}
+.yashare-auto-init .b-share__handle.b-share-btn__twitter > span {background-position:-122px 3px;}
+
+
 .profile-bonuses .rp-bk .rp-sl-bk > a {float:right;width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social.png");background-repeat:no-repeat;}
 .profile-bonuses .rp-bk .rp-sl-bk > a:hover {background-image:url("../img/bg-profile-repost-social-hover.png");}
-.profile-bonuses .rp-bk .rp-sl-bk .tw {background-position:-122px 3px;margin-left:38px;}
-.profile-bonuses .rp-bk .rp-sl-bk .gp {background-position:-80px 2px;margin-left:40px;}
-.profile-bonuses .rp-bk .rp-sl-bk .vk {background-position:-31px 3px;margin-left:40px;}
+.profile-bonuses .rp-bk .rp-sl-bk .tw {background-position:-122px 3px;}
+.profile-bonuses .rp-bk .rp-sl-bk .gp {background-position:-80px 2px;}
+.profile-bonuses .rp-bk .rp-sl-bk .vk {background-position:-31px 3px;}
 .profile-bonuses .rp-bk .rp-sl-bk .fb {background-position:11px 1px;}
 
 
