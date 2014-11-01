@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \DB;
+use \Application, \Config, \DB, \SEOModel;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
