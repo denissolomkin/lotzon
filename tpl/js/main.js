@@ -245,7 +245,6 @@ $(function(){
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';
                     $(filledTickets).each(function(id, ticket) {
-                        console.log(ticket);
                         html += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (id + 1) + '</div><ul class="yr-tt-tr">';
                         $(ticket).each(function(tid, num) {    
                             html += '<li class="yr-tt-tr_li">' + num + '</li>';
@@ -982,8 +981,12 @@ $(function(){
     $('body').show();
 
     /* ==========================================================================
-     Navigations scroll functional
+                        Navigations scroll functional
      ========================================================================== */
+
+     $('#logo-gotop').on('click', function(){
+        $('html, body').animate({scrollTop : 0},900, 'easeInOutQuint');
+     });
 
     $('.tn-mbk_li, .scrollto, #exchange, .ticket-favorite .after i').on('click', function(event){
         var pn = $(this).attr('data-href');
