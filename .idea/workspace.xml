@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5fc7ea-a58a-4250-b79c-cb6f4030861f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/css/main.css" afterPath="$PROJECT_DIR$/tpl/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/js/main.js" afterPath="$PROJECT_DIR$/tpl/js/main.js" />
     </list>
     <ignored path="lotzone.iws" />
@@ -31,8 +30,8 @@
       <file leaf-file-name="popups.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.466666" vertical-offset="6445" max-vertical-offset="12180">
-              <caret line="329" column="45" selection-start-line="329" selection-start-column="45" selection-end-line="329" selection-end-column="45" />
+            <state vertical-scroll-proportion="-13.766666" vertical-offset="10885" max-vertical-offset="12180">
+              <caret line="538" column="39" selection-start-line="538" selection-start-column="32" selection-end-line="538" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -41,31 +40,53 @@
       <file leaf-file-name="game.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/game.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="8482" max-vertical-offset="17829">
-              <caret line="423" column="143" selection-start-line="423" selection-start-column="143" selection-end-line="423" selection-end-column="143" />
-              <folding />
+            <state vertical-scroll-proportion="1.0517242" vertical-offset="5983" max-vertical-offset="17850">
+              <caret line="282" column="20" selection-start-line="282" selection-start-column="20" selection-end-line="282" selection-end-column="20" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpl/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33294392" vertical-offset="4566" max-vertical-offset="21399">
-              <caret line="231" column="292" selection-start-line="231" selection-start-column="292" selection-end-line="231" selection-end-column="292" />
+            <state vertical-scroll-proportion="-12.428572" vertical-offset="10047" max-vertical-offset="21420">
+              <caret line="495" column="35" selection-start-line="495" selection-start-column="35" selection-end-line="495" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tpl/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="602" max-vertical-offset="28476">
-              <caret line="51" column="61" selection-start-line="51" selection-start-column="61" selection-end-line="51" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.43107477" vertical-offset="10005" max-vertical-offset="28518">
+              <caret line="494" column="10" selection-start-line="494" selection-start-column="10" selection-end-line="494" selection-end-column="10" />
               <folding>
-                <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
+                <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="promo.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tpl/js/promo.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.178572" vertical-offset="1143" max-vertical-offset="3507">
+              <caret line="72" column="71" selection-start-line="72" selection-start-column="71" selection-end-line="72" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="backend.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tpl/js/backend.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.5" vertical-offset="6412" max-vertical-offset="9135">
+              <caret line="310" column="13" selection-start-line="310" selection-start-column="13" selection-end-line="310" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,8 +114,8 @@
       <file leaf-file-name="landing.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5544" max-vertical-offset="8883">
-              <caret line="283" column="114" selection-start-line="283" selection-start-column="114" selection-end-line="283" selection-end-column="114" />
+            <state vertical-scroll-proportion="-4.7413793" vertical-offset="5311" max-vertical-offset="8883">
+              <caret line="266" column="70" selection-start-line="266" selection-start-column="62" selection-end-line="266" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -103,8 +124,8 @@
       <file leaf-file-name="promo.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5154" max-vertical-offset="9051">
-              <caret line="259" column="85" selection-start-line="259" selection-start-column="85" selection-end-line="259" selection-end-column="85" />
+            <state vertical-scroll-proportion="-6.928571" vertical-offset="5182" max-vertical-offset="9051">
+              <caret line="256" column="57" selection-start-line="256" selection-start-column="57" selection-end-line="256" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -128,9 +149,11 @@
         <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
         <option value="$PROJECT_DIR$/tpl/css/promo.css" />
         <option value="$PROJECT_DIR$/protected/templates/production/game.php" />
+        <option value="$PROJECT_DIR$/protected/configs/config.php" />
         <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
-        <option value="$PROJECT_DIR$/tpl/js/main.js" />
+        <option value="$PROJECT_DIR$/tpl/js/promo.js" />
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
+        <option value="$PROJECT_DIR$/tpl/js/main.js" />
       </list>
     </option>
   </component>
@@ -290,6 +313,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lotzone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lotzone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protected" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="configs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -409,7 +450,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8482" max-vertical-offset="17808">
           <caret line="423" column="143" selection-start-line="423" selection-start-column="143" selection-end-line="423" selection-end-column="143" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -426,7 +469,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="21362" max-vertical-offset="27804">
           <caret line="1038" column="21" selection-start-line="1038" selection-start-column="21" selection-end-line="1038" selection-end-column="21" />
           <folding>
-            <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
+            <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -475,7 +518,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8566" max-vertical-offset="17808">
           <caret line="421" column="55" selection-start-line="421" selection-start-column="55" selection-end-line="421" selection-end-column="55" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -492,7 +537,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="20106" max-vertical-offset="27363">
           <caret line="971" column="7" selection-start-line="971" selection-start-column="7" selection-end-line="971" selection-end-column="7" />
           <folding>
-            <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
+            <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -541,7 +586,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8566" max-vertical-offset="17808">
           <caret line="421" column="55" selection-start-line="421" selection-start-column="55" selection-end-line="421" selection-end-column="55" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -558,7 +605,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="20106" max-vertical-offset="27363">
           <caret line="971" column="7" selection-start-line="971" selection-start-column="7" selection-end-line="971" selection-end-column="7" />
           <folding>
-            <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
+            <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -607,7 +654,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8692" max-vertical-offset="17304">
           <caret line="427" column="55" selection-start-line="427" selection-start-column="55" selection-end-line="427" selection-end-column="55" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -624,7 +673,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="19308" max-vertical-offset="26586">
           <caret line="933" column="39" selection-start-line="933" selection-start-column="39" selection-end-line="933" selection-end-column="39" />
           <folding>
-            <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
+            <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -666,7 +715,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="5883" max-vertical-offset="26523">
           <caret line="294" column="30" selection-start-line="294" selection-start-column="30" selection-end-line="294" selection-end-column="30" />
           <folding>
-            <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
+            <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -703,53 +752,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
+    <entry file="file://$PROJECT_DIR$/protected/configs/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5544" max-vertical-offset="8883">
-          <caret line="283" column="114" selection-start-line="283" selection-start-column="114" selection-end-line="283" selection-end-column="114" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5154" max-vertical-offset="9051">
-          <caret line="259" column="85" selection-start-line="259" selection-start-column="85" selection-end-line="259" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/game.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="8482" max-vertical-offset="17808">
-          <caret line="423" column="143" selection-start-line="423" selection-start-column="143" selection-end-line="423" selection-end-column="143" />
+        <state vertical-scroll-proportion="0.19377163" vertical-offset="0" max-vertical-offset="4263">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.466666" vertical-offset="6445" max-vertical-offset="12180">
-          <caret line="329" column="45" selection-start-line="329" selection-start-column="45" selection-end-line="329" selection-end-column="45" />
+        <state vertical-scroll-proportion="-13.766666" vertical-offset="10885" max-vertical-offset="12180">
+          <caret line="538" column="39" selection-start-line="538" selection-start-column="32" selection-end-line="538" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tpl/js/main.js">
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="602" max-vertical-offset="28476">
-          <caret line="51" column="61" selection-start-line="51" selection-start-column="61" selection-end-line="51" selection-end-column="61" />
-          <folding>
-            <marker date="1414745695763" expanded="true" signature="11623:11632" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="-4.7413793" vertical-offset="5311" max-vertical-offset="8883">
+          <caret line="266" column="70" selection-start-line="266" selection-start-column="62" selection-end-line="266" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tpl/js/promo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.178572" vertical-offset="1143" max-vertical-offset="3507">
+          <caret line="72" column="71" selection-start-line="72" selection-start-column="71" selection-end-line="72" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tpl/css/promo.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.928571" vertical-offset="5182" max-vertical-offset="9051">
+          <caret line="256" column="57" selection-start-line="256" selection-start-column="57" selection-end-line="256" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tpl/js/backend.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.5" vertical-offset="6412" max-vertical-offset="9135">
+          <caret line="310" column="13" selection-start-line="310" selection-start-column="13" selection-end-line="310" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tpl/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33294392" vertical-offset="4566" max-vertical-offset="21399">
-          <caret line="231" column="292" selection-start-line="231" selection-start-column="292" selection-end-line="231" selection-end-column="292" />
+        <state vertical-scroll-proportion="-12.428572" vertical-offset="10047" max-vertical-offset="21420">
+          <caret line="495" column="35" selection-start-line="495" selection-start-column="35" selection-end-line="495" selection-end-column="35" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/game.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0517242" vertical-offset="5983" max-vertical-offset="17850">
+          <caret line="282" column="20" selection-start-line="282" selection-start-column="20" selection-end-line="282" selection-end-column="20" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tpl/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43107477" vertical-offset="10005" max-vertical-offset="28518">
+          <caret line="494" column="10" selection-start-line="494" selection-start-column="10" selection-end-line="494" selection-end-column="10" />
+          <folding>
+            <marker date="1414771454865" expanded="true" signature="11695:11704" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

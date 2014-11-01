@@ -49,6 +49,7 @@ $(function(){
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
+            if($(event.target).closest("#mchance").length)return false;
             if($(event.target).closest("#game-itself").length)document.location.reload();
             if($(event.target).closest(".popup").hasClass('chance'))return false;
             $('.popup').fadeOut(200);
@@ -492,25 +493,6 @@ $(function(){
             $('.r-add-but.close').hide();
             rulesBlock.removeClass('b-ha');
         };
-
-
-        if(!newsBlock.hasClass('b-ha')){
-            var cash = $('#news-cash').html();
-            newsBlock.addClass('b-ha');
-            $('.n-items').append('<div class="n-ic-bk"></div>');
-            $('.n-ic-bk').append(cash).show(500);
-            setTimeout(function(){
-                $('.n-add-but').html('спрятать');
-            }, 500);
-        }else{
-            $('.n-ic-bk').hide(500);
-            setTimeout(function(){
-                $('.n-ic-bk').remove();
-                $('.n-add-but').html('загрузить еще');
-                newsBlock.removeClass('b-ha');
-            }, 500);
-
-        };
     });
 
 
@@ -543,6 +525,8 @@ $(function(){
         $('.'+link).show();
     });
 
+    /*
+     Функционал валидации формы, пока закаментил, мал ли может захотят вернуть
     $('.profile-info .pi-inp-bk input').on('blur', function(){
         $('.profile-info .pi-inp-bk input').each(function(){
             var val = $(this).val();
@@ -554,11 +538,12 @@ $(function(){
                 $('.profile-info .save-bk .sb-ch-td .but').removeClass('save');
             };
         });
-    });
+    });*/
 
     $('.pi-inp-bk input').on('focus', function(){
         $(this).closest('.pi-inp-bk').addClass('focus')
         if($(this).attr('name') == 'date')$(this).attr('type','date');
+        $('.profile-info .save-bk .sb-ch-td .but').addClass('save');
     });
 
     $('.pi-inp-bk input').on('blur', function(){
@@ -576,8 +561,10 @@ $(function(){
         if (!$(event.target).closest(".fc-nrch-bk").length && !$(event.target).closest(".fc-nbs-bk").length){
             $(".fc-nbs-bk").fadeOut(200);
             $('.fc-nrch-bk li').removeClass('on');
-            var liChack = false;
-            var inputChack = false;
+            /*
+            Функционал валидации формы, пока закаментил, мал ли может захотят вернуть
+             var liChack = false;
+             var inputChack = false;
             $('.fc-nrch-bk li').each(function(){
                 var val = $.trim($(this).find('span').text());
                 var valid = $.trim($(this).find('span').attr('data-valid'));
@@ -599,10 +586,16 @@ $(function(){
             }else{
                 $('.profile-info .save-bk .sb-ch-td .but').removeClass('save');
             }
+             */
         };
-    })
+    });
+
+    $('.profile-info #rulcheck').on('change', function(){
+        $('.profile-info .but').addClass('save');
+    });
 
     $('.fc-nrch-bk li').on('click', function(){
+        $('.profile-info .but').addClass('save');
         if(!$(this).hasClass('on')){
             $('.fc-nrch-bk li').removeClass('on');
             var n = $(this).find('span').text();
@@ -616,6 +609,9 @@ $(function(){
         }else{
             $(this).removeClass('on');
             $('.fc-nbs-bk').fadeOut(200);
+
+            /*
+             Функционал валидации формы, пока закаментил, мал ли может захотят вернуть
             $('.fc-nrch-bk li').each(function(){
                 var val = $.trim($(this).find('span').text());
                 var valid = $.trim($(this).find('span').attr('data-valid'));
@@ -626,6 +622,7 @@ $(function(){
                     $('.profile-info .but').removeClass('save');
                 }
             });
+            */
         }
     });
     $('.fc-nbs-bk li').on('click', function(){
@@ -635,6 +632,9 @@ $(function(){
             $(this).addClass('dis');
             $('.fc-nbs-bk').fadeOut(200);
             $('.fc-nrch-bk li.on').removeClass('on');
+            /*
+            scooterok
+            Функционал валидации формы, пока закаментил, мал ли может захотят вернуть
             $('.fc-nrch-bk li').each(function(){
                 var valid = $.trim($(this).find('span').attr('data-valid'));
                 if($.trim(n) != valid){
@@ -644,7 +644,7 @@ $(function(){
                     $('.profile-info .but').removeClass('save');
                     return false;
                 }
-            });
+            });*/
         }
     });
 
@@ -728,10 +728,12 @@ $(function(){
             $(this).attr('data-valid', val);
         });
 
+        /*
         form.find('.fc-nrch-bk li span').each(function(){
             var val = $.trim($(this).text());
             $(this).attr('data-valid', val);
         });
+        */
 
         form.find('.save').removeClass('save');
 

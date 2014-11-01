@@ -114,7 +114,7 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
 .pw-gm-rt .ct .tl {font:12px/14px Handbook-bold;color:#000;text-transform:uppercase;margin-bottom:10px;}
 .pw-gm-rt .ct .n {font:56px/34px Handbook-bold;color:#000;letter-spacing:-1px;}
 .pw-gm-rt .ct .rt-bk {margin:0;padding:0;list-style:none;font-size:0;}
-.pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17.5px/34px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;display:inline-block;}
+.pw-gm-rt .ct .rt-bk .rt-bk_li {width:35px;height:35px;border-radius:50%;background-color:#000;font:17px/34px Handbook-bold;background-color:#000;color:#fee212;text-align:center;margin-right:8px;display:inline-block;}
 .font-fix .pw-gm-rt .ct .rt-bk .rt-bk_li {line-height:38px;}
 .pw-gm-rt .ct .rt-bk .rt-bk_li:last-child {margin-right:0;}
 
@@ -139,9 +139,9 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
 .tn-mbk .tn-mbk_li:hover > a {color:#988c31;}
 .tn-mbk .tn-mbk_li.now {background-color:#ffe400;}
 .tn-mbk .tn-mbk_li.now > a {cursor:default;}
-.tn-mbk .tn-mbk_li.exit > a {color:#c51e1e;opacity:0.8;}
+.tn-mbk .tn-mbk_li.exit > a {color:#ce4847;}
 .tn-mbk .tn-mbk_li.exit:hover {background-color:#c51e1e;}
-.tn-mbk .tn-mbk_li.exit:hover > a {color:#fff;}
+.tn-mbk .tn-mbk_li.exit:hover > a {color:#f3d2d2;}
 .tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;padding:0 30px;display:block;}
 .tn-tr-bk {float:right;margin-right:40px;width:250px;}
 .tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-bold;color:#404040;text-transform:uppercase;margin-top:14px;}
@@ -490,15 +490,16 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .save-bk {margin-top:60px;display:table;width:100%;}
 .profile-info .save-bk .sb-ch-td {display:table-cell;vert-align:bottom;}
 .profile-info .save-bk .sb-ch-td {vertical-align:bottom;}
-.profile-info .save-bk .sb-ch-td .but {width:128px;height:48px;text-align:center;border:1px solid #000;font:15px/48px Handbook-bold;text-transform:uppercase;margin:0 0 0 auto;cursor:pointer;
+.profile-info .save-bk .sb-ch-td .but {width:128px;height:48px;text-align:center;border:1px solid #000;font:15px/48px Handbook-bold;text-transform:uppercase;margin:0 0 0 auto;cursor:default;opacity:0.35;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
 }
-.profile-info .save-bk .sb-ch-td .but.save, .profile-info .save-bk .sb-ch-td .but:hover {background-color:#000;color:#fff;}
-.font-fix .profile-info .save-bk .sb-ch-td .but {line-height:52px;}
+.profile-info .save-bk .sb-ch-td .but.save {opacity:1;cursor:pointer;}
+.profile-info .save-bk .sb-ch-td .but.save:hover {background-color:#000;color:#fff;}
+
 
 .profile .pr-br {float:right;width:300px;}
 
@@ -895,7 +896,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .cash-history .if-bt {text-align:center;width:138px;height:28px;border:1px solid #000;font:12px/28px Handbook-bold;text-transform:uppercase;color:#000;float:right;cursor:pointer;}
 .cash-history .if-bt:hover {border:1px solid #000;color:#fff;background-color:#000;}
 .cash-history .tb {display:table;width:100%;margin-bottom:40px;}
-.cash-history .tb .rw {display:table-row;font:15px/1 Handbook-regular;color:#000;}
+.cash-history .tb .rw {display:table-row;font:16px/1 Handbook-regular;color:#000;}
 .cash-history .tb .rw:nth-child(2n+1) {background-color:#ececec;}
 .cash-history .tb .rw .td {display:table-cell;vertical-align:middle;height:40px;}
 .cash-history .tb .rw .nm {width:360px;}
