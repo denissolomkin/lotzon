@@ -15,6 +15,27 @@
         <meta name="distribution" content="global" />
         <meta name="revisit-after" content="1 days" />
 
+         <!-- Schema.org markup for Google+ -->
+        <meta itemprop="name" content="<?=$seo['Title']?>">
+        <meta itemprop="description" content="Здесь реально можно выиграть Jackpot!">
+        <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg">
+
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg">
+        <meta name="twitter:title" content="<?=$seo['Title']?>">
+        <meta name="twitter:description" content="Здесь реально можно выиграть Jackpot!">
+        <meta name="twitter:creator" content="@author_handle">
+        <!-- Twitter summary card with large image must be at least 280x150px -->
+        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg">
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="<?=$seo['Title']?>" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="http://www.lotzon.com/" />
+        <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg" />
+        <meta property="og:description" content="Здесь реально можно выиграть Jackpot!" />
+        <meta property="article:modified_time" content="<?=date('c', time())?>" />
+        
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
