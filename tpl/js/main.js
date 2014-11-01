@@ -1367,7 +1367,7 @@ $('.fb-share').on('click', function() {
             method: 'share_open_graph',
             action_type: 'og.likes',
             action_properties: JSON.stringify({
-            object:'https://developers.facebook.com/docs/',
+            object:'http://lotzon.com/',
         })
     }, function(response){});
 });
