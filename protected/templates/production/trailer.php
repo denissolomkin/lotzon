@@ -42,6 +42,7 @@
         <meta property="og:url" content="http://www.lotzon.com/" />
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg" />
         <meta property="og:description" content="Здесь реально можно выиграть Jackpot!" />
+        <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/trailer.css" />
