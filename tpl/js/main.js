@@ -266,9 +266,11 @@ $(function(){
     $(".send-invite").on('click', function() {
         var email = $(this).parent().find('input[name="email"]').val();
         var button = $(this);
+
         addEmailInvite(email, function(data){
+            button.parent().find('.it-msg-bk').remove();
             button.parents('.if-bk').find('.invites-count').text(data.res.invitesCount);
-            button.parent().find('input[name="email"]').hide();
+            button.parent().find('input[name="email"]').hide();            
             button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">Приглашение отправлено</span>');
             setTimeout(function(){
                 button.parent().find('.it-msg-bk').fadeOut(300);
@@ -279,7 +281,7 @@ $(function(){
                 }, 300);
             }, 3000);
         }, function(data){
-            //alert(data.message);
+            button.parent().find('.it-msg-bk').remove();
             button.parent().find('input[name="email"]').hide();
             button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">'+data.message+'</span>');
             setTimeout(function(){
