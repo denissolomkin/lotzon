@@ -69,11 +69,10 @@ class Index extends \SlimController\SlimController
         //if (!Session::connect()->get('MomentChanseLastDate') || time() - Session::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
             Session::connect()->set('MomentChanseLastDate', time());
         //}
-
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount(),
-            'win'          => LotteriesModel::instance()->getMoneyTotalWin(),
+            'win'          => LotteriesModel::instance()->getMoneyTotalWin()  * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -118,7 +117,7 @@ class Index extends \SlimController\SlimController
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount(),
-            'win'          => LotteriesModel::instance()->getMoneyTotalWin(),
+            'win'          => LotteriesModel::instance()->getMoneyTotalWin() * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -171,7 +170,7 @@ class Index extends \SlimController\SlimController
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
                 'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),                
-                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin(), 0, '.', ' ') . ' ' . Config::instance()->langCurrencies[$this->country] . '.',
+                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin()  * $gameSettings->getCountryCoefficient($this->country), 0, '.', ' ') . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));

@@ -374,13 +374,13 @@
                 layout: '{hnn}<i class="h-b-c-tb-r_i">:</i>{mnn}<i class="h-b-c-tb-r_i">:</i>{snn}'}
             );
 
-            /*window.setInterval(function() {
+            window.setInterval(function() {
                 getLandingStats(function(data) {
                     $("#participants").text(data.res.participants);
                     $("#winners").text(data.res.winners);
-                    $("#win").text(data.res.win);
+                    $("#win").html(data.res.win);
                 }, function() {}, function() {})
-            }, 15000);*/
+            }, 15000);
         });
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
