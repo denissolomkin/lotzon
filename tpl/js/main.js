@@ -1363,11 +1363,17 @@ function updatePoints(points) {
 }
 
 $('.fb-share').on('click', function() {
-     FB.ui({
-            method: 'share_open_graph',
-            action_type: 'og.likes',
-            action_properties: JSON.stringify({
-            object:'http://lotzon.com/',
-        })
-    }, function(response){});
+FB.ui(
+  {
+    method: 'share',
+    href: 'http://lotzon.com/',
+  },
+  function(response) {
+    if (response && !response.error_code) {
+      alert('Posting completed.');
+    } else {
+      alert('Error while posting.');
+    }
+  }
+);
 });
