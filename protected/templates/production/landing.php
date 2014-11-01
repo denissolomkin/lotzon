@@ -350,7 +350,7 @@
                                 <!-- REPASSWORD FORM -->
                                 <form name="rec-pass">
                                     <div id="pass-rec-form">
-                                        <div class="rf-txt">Укажите ваш email. Hа этот адрес будет выслан новый пароль.</div>
+                                        <div class="rf-txt">Укажите ваш email. Hа него будет выслан новый пароль.</div>
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>
                                             <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
