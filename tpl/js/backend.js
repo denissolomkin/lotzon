@@ -387,7 +387,7 @@ window.setInterval(function() {
                                 window.setTimeout(function() {
                                     $("#mchance").hide();
                                     $('.pz-ifo-bk').hide();
-                                    $('.pz-rt-bk').text("Выигранные баллы зачислены на счет!").show().parents('#shop-items-popup').show();              
+                                    $('.pz-rt-bk').text("Поздравляем, выигранные баллы зачислены на счет.").show().parents('#shop-items-popup').show();              
                                 }, 2000)    
                                 window.setTimeout(function() {
                                     location.reload();
@@ -408,7 +408,7 @@ window.setInterval(function() {
                                         window.clearInterval(blinkInterval);
                                         $("#mchance").hide();
                                         $('.pz-ifo-bk').hide();
-                                        $('.pz-rt-bk').text("Возможно повезет в следующий раз!").show().parents('#shop-items-popup').show();
+                                        $('.pz-rt-bk').text("Повезет в следующий раз").show().parents('#shop-items-popup').show();
 
                                         window.setTimeout(function() {
                                             location.reload();

@@ -451,10 +451,10 @@
                             <? } ?>
                         </div>
                         <? if (count($playerTransactions[GameSettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
-                            <div class="pz-more-bt">загрузить еще</div>
+                            <div class="pz-more-bt">ПОКАЗАТЬ ЕЩЕ</div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl">свернуть</div>
-                                <div class="mr">загрузить еще</div>
+                                <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
                             </div>
                         <? } ?>
                     </div>
@@ -502,7 +502,7 @@
             <section class="rules-bk">
                 <div class="cs"></div>
                 <div class="rb-pg">
-                    <h2>правила<br/>игры</h2>
+                    <h2>УСЛОВИЯ<br/>УЧАСТИЯ</h2>
                     <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
                 </div>
             </section>
