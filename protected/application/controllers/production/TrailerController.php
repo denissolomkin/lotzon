@@ -10,9 +10,11 @@ class TrailerController extends \AjaxController
 
     public function indexAction()
     {
+        $seo = SEOModel::instance()->getSEOSettings();
         $this->render('production/trailer', array(
             'countdown' => strtotime("03.11.2014 10:00:00") - time(),
             'layout' => false,
+            'seo' => $seo,
         ));
     }
 
