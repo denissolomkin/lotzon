@@ -515,7 +515,7 @@
                                             <div class="ph" data-default="Пароль">Пароль</div>
                                             <input type="text" name="plug" data-valid="" style="display: none;"/>
                                             <input type="password" name="plug" data-valid="" style="display: none;"/>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" name="password" data-valid="" />
+                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" value="*********" name="password" data-valid="" />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">

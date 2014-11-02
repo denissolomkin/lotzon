@@ -17,9 +17,8 @@
         </tr>
         <tr>
             <td style="padding-left:40px;padding-right:40px;font: 12px/17px Arial;color:#000;">
-                <p style="margin:0 0 20px 0;">Здравствуйте!</p>
-                <p style="margin:0 0 20px 0;">Пользователь ТУТ_НАДО_РЕШИТЬ_КАК_ПИСАТЬ пригласил вас в игру.</p>
-                <p style="margin:0 0 40px 0;">Lotzon — уникальный проект бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла- бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-блабла-бла-блабла-бла-бла-бла-бла- бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла.</p>
+                <p style="margin:0 0 20px 0;">Привет!</p>
+                <p style="margin:0 0 20px 0;">Присоеденяйся ко мне и давай вместе играть и выигрывать деньги и призы. Посмотрим кто первый сорвет Jackpot!</p>
             </td>
         </tr>
         <tr>
@@ -30,10 +29,11 @@
         </tr>
         <tr>
             <td style="padding-left:40px;font: 12px/17px Arial;color:#000;">
-                Команда Lotzon<br/>
-                <a style="color:#000;text-decoration:underline;" href="mailto:play@lotzon.com">play@lotzon.com</a>
-                <br/><br/>
-                <a style="color:#000;text-decoration:underline;" href="http://lotzon.com">lotzon.com</a>
+               <? if ($data['inviter']->getName() && $data['inviter']->getSurname()) { ?>
+                    <?=$data['inviter']->getName()?> <?=$data['inviter']->getSurname()?>
+               <? } else {?>
+                    <?=$data['inviter']->getEmail()?>
+               <? } ?>
             </td>
         </tr>
         <tr>
