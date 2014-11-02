@@ -116,10 +116,12 @@
                                 </div>
                                 <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть</span></a>
                                 <div class="h-b-c-lg">
-                                    <div class="h-b-c-lg-t">розыгрыш от <?=date('d.m.Y', $lastLottery->getDate())?></div>
+                                    <div class="h-b-c-lg-t">розыгрыш от <?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
                                     <ul class="h-b-c-lg_ul">
-                                        <? foreach ($lastLottery->getCombination() as $num) { ?>
-                                            <li class="h-b-c-lg_ul_li"><?=$num?></li>
+                                        <? if ($lastLottery) { ?>
+                                            <? foreach ($lastLottery->getCombination() as $num) { ?>
+                                                <li class="h-b-c-lg_ul_li"><?=$num?></li>
+                                            <? } ?>
                                         <? } ?>
                                     </ul>
                                 </div>
