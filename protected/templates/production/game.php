@@ -300,7 +300,7 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <iframe src="https://player.vimeo.com/video/66284150" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <img src="tpl/img/baners/Plug-video.png" width="570" height="320" />
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
