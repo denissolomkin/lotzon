@@ -137,10 +137,13 @@ Config::instance()->privateResources =  array(
     '/private/comments/:id/delete' => array(
         'get' => 'controllers\admin\Comments:delete',
     ),
+    '/private/monetisation' => 'controllers\admin\Monetisation:index',
+    '/private/monetisation/approve/:id' => 'controllers\admin\Monetisation:approve',
+    '/private/monetisation/decline/:id' => 'controllers\admin\Monetisation:decline',
+
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
-    '/private/monetisation' => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',

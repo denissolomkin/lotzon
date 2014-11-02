@@ -244,6 +244,9 @@ class ShopItemOrder extends Entity
             case 'delete' :
 
             break;
+            case 'fetch' :
+
+            break;
             default :
                 throw new EntityException("Object validation fails", 400);                
             break;
@@ -252,4 +255,30 @@ class ShopItemOrder extends Entity
         return $this;
     }
 
+    public function formatFrom($from, $data) 
+    {
+        if ($from == 'DB') {
+            $item = new ShopItem();
+            $player = new Player();
+            $item->setId($data['ItemId']);
+            $player->setId($data['PlayerId']);
+
+            $this->setId($data['Id'])
+                 ->setItem($item->fetch())
+                 ->setPlayer($player->fetch())
+                 ->setDateOrdered($data['DateOrdered'])
+                 ->setDateProcessed($data['DateProcessed'])
+                 ->setStatus($data['Status'])
+                 ->setName($data['Name'])
+                 ->setSurname($data['Surname'])
+                 ->setSecondName($data['SecondName'])
+                 ->setPhone($data['Phone'])
+                 ->setRegion($data['Region'])
+                 ->setCity($data['City'])
+                 ->setAddress($data['Address'])
+                 ->setChanceGameId($data['ChanceGameId']);
+        }
+
+        return $this;
+    }
 }

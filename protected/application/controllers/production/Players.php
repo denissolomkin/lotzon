@@ -54,6 +54,18 @@ class Players extends \AjaxController
                 } catch (EntityException $e) {}
             }
 
+            if ($ref = $this->request()->post('ref', null)) {
+                try {
+                    $refPlayer = new Player();
+                    $refPlayer->setId($ref)->fetch();
+
+                    $refPlayer->addPoints(5, 'Приглашение участника');
+                } catch (EntityException $e) {}
+            }
+
+            if ($player->getId() <= 1000) {
+                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+            }
             $this->ajaxResponse(array(
                 'id' => $player->getId(),
             ));

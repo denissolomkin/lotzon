@@ -304,7 +304,7 @@
                                     <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
                                 </div>
                                 <!-- REGISTRATION FORM -->
-                                <form name="register">
+                                <form name="register" data-ref="<?=$ref?>">
                                     <div id="reg-form">
                                         <div class="rf-txt">Укажите Ваш email. <b>На него будет выслан пароль,</b> который понадобится ввести при входе в следующий раз.</div>
                                         <div class="ib-l">
