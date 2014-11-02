@@ -59,7 +59,7 @@ class Players extends \AjaxController
                     $refPlayer = new Player();
                     $refPlayer->setId($ref)->fetch();
 
-                    $refPlayer->addPoints(5, 'Приглашение участника');
+                    $refPlayer->addPoints(5, 'Регистрация по вашей ссылке');
                 } catch (EntityException $e) {}
             }
 

@@ -441,7 +441,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr>Пригласить друга в проект и получить 10 баллов</nobr> <nobr>(осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</nobr></div>
+                                    <div class="if-tl"><nobr>Пригласить друга +10 баллов</nobr> <nobr>(осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -456,7 +456,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с хорошей новостью и получить 10 баллов <br/> (не более 5 постов на этой неделе)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +10 баллов <br/> (не более 7 постов на этой неделе)</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)" class="tw"></a>
                                         <a href="javascript:void(0)" class="gp"></a>
@@ -467,7 +467,7 @@
                                 </div>
 
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Ваша реферальная ссылка</div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +5 баллов</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
