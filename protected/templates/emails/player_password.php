@@ -27,18 +27,18 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-left:40px;"><a href="http://lotzon.com/" style="display:inline-block;padding:0 28px;background-color:#ffe400;color:#000;text-decoration:none;font:12px/40px Arial;white-space:nowrap;">Перейти на сайт</a></td>
-        </tr>
-        <tr>
-            <td height="200px"></td>
-        </tr>
-        <tr>
             <td style="padding-left:40px;font: 12px/17px Arial;color:#000;">
                 Команда Lotzon<br/>
                 <a style="color:#000;text-decoration:underline;" href="mailto:play@lotzon.com">play@lotzon.com</a>
                 <br/><br/>
                 <a style="color:#000;text-decoration:underline;" href="http://lotzon.com">lotzon.com</a>
             </td>
+        </tr>
+        <tr>
+            <td style="padding-left:40px;padding-top:40px;"><a href="http://lotzon.com/" style="display:inline-block;padding:0 28px;background-color:#ffe400;color:#000;text-decoration:none;font:12px/40px Arial;white-space:nowrap;">Перейти на сайт</a></td>
+        </tr>
+        <tr>
+            <td height="200px"></td>
         </tr>
         <tr>
             <td height="40"></td>
