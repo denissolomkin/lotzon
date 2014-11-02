@@ -59,13 +59,30 @@
         <script src="/tpl/js/lib/slick.min.js"></script>
         <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
+        <script src="/tpl/js/social.js" charset="utf-8"></script>
 
 
     </head>
     <body>
+    <script type="text/javascript">    
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '586602554796461',
+          xfbml      : false,
+          version    : 'v2.1'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+    </script>
     <div class="wrap">
-
-
         <header>
             <div class="hr-br"><a href="http://www.musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a></div>
             <div class="hr-io-bk">
@@ -795,12 +812,13 @@
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
         <? include('popups.php') ?>
+
     <script>
         filledTicketsCount = <?=$filledTicketsCount;?>;
         var playerFavorite = [];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
-
+        
         <? foreach ($player->getFavoriteCombination() as $num) { ?>
         playerFavorite.push(<?=$num?>);
         <? } ?>
@@ -867,7 +885,15 @@
                 d.addEventListener("DOMContentLoaded", f, false);
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
+                window.fbAsyncInit = function() { 
+                    FB.init({
+                            appId      : 'your-app-id',
+                            xfbml      : true,
+                            version    : 'v2.1'
+                        });
+                };
     </script>
     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
     </body>
+
 </html>
