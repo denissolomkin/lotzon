@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <td style="padding-left:40px;padding-right:40px;font: 12px/17px Arial;color:#000;">
-                <p style="margin:0 0 20px 0;">Вы зарегистрировались на www.lotzon.com !</p>
+                <p style="margin:0 0 20px 0;">Вы зарегистрировались на www.lotzon.com</p>
                 <p style="margin:0 0 20px 0;">Личная информация для входа на сайт:</p>
                 <p style="margin:0 0 40px 0;">Email: <?=$data['login']?> </p>
                 <p style="margin:0 0 40px 0;">Пароль: <?=$data['password']?> (может быть изменен в личном кабинете)</p>
