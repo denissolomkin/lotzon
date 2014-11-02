@@ -465,6 +465,11 @@
                                         <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus,vkontakte,facebook"></div>
                                     </div>
                                 </div>
+
+                                <div class="rp-bk">
+                                    <div class="rp-txt">Ваша реферальная ссылка</div>
+                                    <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
+                                </div>
                             </section>
 
                             <section class="_section profile-info">

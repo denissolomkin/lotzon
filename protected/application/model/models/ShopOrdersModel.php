@@ -16,4 +16,9 @@ class ShopOrdersModel extends Model
     {
         return __CLASS__;
     }
+
+    public function getOrdersToProcess()
+    {
+        return $this->getProcessor()->getOrdersToProcess();
+    }
 }

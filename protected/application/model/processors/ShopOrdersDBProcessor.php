@@ -44,7 +44,18 @@ class ShopOrdersDBProcessor implements IProcessor
 
     public function update(Entity $order) 
     {
-        
+        $sql = "UPDATE `ShopOrders` SET `Status` = :status, `DateProcessed` = :dp WHERE `Id` = :id";
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':status' => $order->getStatus(),
+                ':dp'  => $order->getDateProcessed(),
+                ':id'   => $order->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
+        }
+
+        return $order;
     } 
 
     public function delete(Entity $order) 
@@ -54,11 +65,66 @@ class ShopOrdersDBProcessor implements IProcessor
 
     public function fetch(Entity $order) 
     {
-        
+        $sql = "SELECT * FROM `ShopOrders` WHERE `Id` = :id ORDER BY `DateOrdered` DESC";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id' => $order->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);    
+        }
+        $data = $sth->fetch();
+        $order->formatFrom('DB', $data);
+
+        return $order;
     } 
 
     public function process(Entity $order) 
     {
         
     } 
+
+    public function getOrdersToProcess()
+    {
+        $sql = "SELECT * FROM `ShopOrders` WHERE `Status` = :status ORDER BY `DateOrdered` DESC";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':status' => ShopItemOrder::STATUS_ORDERED,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);    
+        }
+
+        $orders = array();
+        if ($sth->rowCount()) {
+            foreach ($sth->fetchAll() as $orderData) {
+                $order = new ShopItemOrder();
+                $order->formatFrom('DB', $orderData);
+
+                $orders[] = $order;
+            }
+        }
+
+        return $orders;
+    }
+
+    public function getOrdersToProcessCount()
+    {
+        $sql = "SELECT COUNT(*) FROM `ShopOrders` WHERE `Status` = :status";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':status' => ShopItemOrder::STATUS_ORDERED,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);    
+        }
+
+        return $sth->fetchColumn(0);
+    }
 }

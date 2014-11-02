@@ -33,7 +33,7 @@
             <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news">Новости</a></li>
             <li><a href="/private/banners">Баннеры</a></li>
             <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop">Товары</a></li>
-            <li><a href="/private/monetisation">Запросы вывода средств</a></li>
+            <li<?=($activeMenu == 'monetisation' ? ' class="active"' : '')?>><a href="/private/monetisation">Запросы <span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?></span></a></li>
             <!--li><a href="/private/stats">Статистика</a></li-->
             <li <?=($activeMenu == 'chances' ? ' class="active"' : '')?>><a href="/private/chances">Шансы</a></li>
             <li <?=($activeMenu == 'seo' ? ' class="active"' : '')?>><a href="/private/seo">SEO</a></li>
