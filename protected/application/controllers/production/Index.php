@@ -31,6 +31,7 @@ class Index extends \SlimController\SlimController
             EmailInvites::instance()->getProcessor()->validateHash($hash);
         }
         $this->ref = $this->request()->get('ref', null);
+
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;    
