@@ -472,16 +472,16 @@
                                     <div class="gp"><span>пригласить</span></div>
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
-                                <div class="rp-bk">
+                                <!-- div class="rp-bk">
                                     <div class="rp-txt">Опубликовать пост с реферальной ссылкой +10 баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)<br/><br/>Регистрация по вашей ссылке +5 баллов</div>
                                     <div class="rp-sl-bk">
-                                        <!--a href="javascript:void(0)" class="tw"></a>
-                                        <a href="javascript:void(0)" class="gp"></a-->
-                                        <!--div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div-->
+                                        <a href="javascript:void(0)" class="tw"></a>
+                                        <a href="javascript:void(0)" class="gp"></a>
+                                        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div>
                                         <a href="javascript:void(0)" class="vk vk-share"></a>
                                         <a href="javascript:void(0)" class="fb fb-share"></a>
                                     </div>
-                                </div>
+                                </div -->
 
                                 <div class="rp-bk">
                                     <div class="rp-txt">Ваша реферальная ссылка</div>
