@@ -26,7 +26,7 @@ Config::instance()->countryLangs = array(
     'RU' => 'UA',
     'BY' => 'UA',
 );
-Config::instance()->defaultLang = 'UA';
+Config::instance()->defaultLang = 'RU';
 Config::instance()->langCurrencies = array(
     'UA' => 'грн',
     'RU' => 'руб',
