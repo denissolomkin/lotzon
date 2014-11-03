@@ -483,10 +483,10 @@
                                     </div>
                                 </div -->
 
-                                <div class="rp-bk">
+                                <!-- div class="rp-bk">
                                     <div class="rp-txt">Ваша реферальная ссылка</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
-                                </div>
+                                </div -->
                             </section>
 
                             <section class="_section profile-info">
