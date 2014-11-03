@@ -2,45 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5fc7ea-a58a-4250-b79c-cb6f4030861f" name="Default" comment="Merge branch 'master' of https://github.com/RevZer0/lotzone&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tpl/js/social.js" />
-      <change type="DELETED" beforePath="D:\www\lotzone\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\.idea\lotzone.iml" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\.idea\scopes\scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\README.md" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\composer.json" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\composer.lock" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\composer.phar" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\db.sql" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\info.php" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Mail.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main-Momentum.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main-cash-history-popup.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main-cash-popup.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main-info-popup.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main-prizes-popup.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main-winres-popup.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Main.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Promo-game-end.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Promo-game-process.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Promo-game-won.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Promo.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Soon.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\www\lotzone\tpl\Trailer.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/application/controllers/production/Index.php" afterPath="$PROJECT_DIR$/protected/application/controllers/production/Index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/application/model/entities/Player.php" afterPath="$PROJECT_DIR$/protected/application/model/entities/Player.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/application/controllers/production/Players.php" afterPath="$PROJECT_DIR$/protected/application/controllers/production/Players.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/application/model/processors/PlayersDBProcessor.php" afterPath="$PROJECT_DIR$/protected/application/model/processors/PlayersDBProcessor.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/application/model/models/PlayersModel.php" afterPath="$PROJECT_DIR$/protected/application/model/models/PlayersModel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/js/backend.js" afterPath="$PROJECT_DIR$/tpl/js/backend.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shedule/clearPlayerInvitesCount.php" afterPath="$PROJECT_DIR$/shedule/clearPlayerInvitesCount.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/configs/config.php" afterPath="$PROJECT_DIR$/protected/configs/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/game.php" afterPath="$PROJECT_DIR$/protected/templates/production/game.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/css/main.css" afterPath="$PROJECT_DIR$/tpl/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/js/main.js" afterPath="$PROJECT_DIR$/tpl/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/popups.php" afterPath="$PROJECT_DIR$/protected/templates/production/popups.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="lotzone.iws" />
@@ -89,12 +51,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="social.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="social.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpl/js/social.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1470">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="1575">
+              <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="popups.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.60655737" vertical-offset="5740" max-vertical-offset="12201">
+              <caret line="298" column="65" selection-start-line="298" selection-start-column="65" selection-end-line="298" selection-end-column="65" />
+              <folding>
+                <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -117,19 +93,6 @@
             <state vertical-scroll-proportion="-5.6" vertical-offset="0" max-vertical-offset="4431">
               <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="promo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tpl/js/promo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1164" max-vertical-offset="3528">
-              <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
-              <folding>
-                <marker date="1414948492206" expanded="true" signature="26:6068" placeholder="{...}" />
-                <marker date="1414948492206" expanded="true" signature="4631:5274" placeholder="{...}" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -189,7 +152,6 @@
       <list>
         <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
         <option value="$PROJECT_DIR$/tpl/css/promo.css" />
-        <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
         <option value="$PROJECT_DIR$/tpl/js/promo.js" />
         <option value="$PROJECT_DIR$/tpl/js/main.js" />
         <option value="$PROJECT_DIR$/protected/configs/config.php" />
@@ -197,6 +159,8 @@
         <option value="$PROJECT_DIR$/protected/templates/emails/player_password.php" />
         <option value="$PROJECT_DIR$/protected/templates/production/game.php" />
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
+        <option value="$PROJECT_DIR$/tpl/js/social.js" />
+        <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
       </list>
     </option>
   </component>
@@ -842,14 +806,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="10906" max-vertical-offset="12201">
-          <caret line="539" column="39" selection-start-line="539" selection-start-column="32" selection-end-line="539" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5878" max-vertical-offset="9450">
@@ -865,8 +821,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1164" max-vertical-offset="3528">
           <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
           <folding>
-            <marker date="1414948492206" expanded="true" signature="26:6068" placeholder="{...}" />
-            <marker date="1414948492206" expanded="true" signature="4631:5274" placeholder="{...}" />
+            <marker date="1414948492206" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1414948492206" expanded="true" signature="-1:-1" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -942,9 +898,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tpl/js/social.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1470">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="1575">
+          <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60655737" vertical-offset="5740" max-vertical-offset="12201">
+          <caret line="298" column="65" selection-start-line="298" selection-start-column="65" selection-end-line="298" selection-end-column="65" />
+          <folding>
+            <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#section#0;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
