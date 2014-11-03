@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5fc7ea-a58a-4250-b79c-cb6f4030861f" name="Default" comment="Merge branch 'master' of https://github.com/RevZer0/lotzone&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/configs/config.php" afterPath="$PROJECT_DIR$/protected/configs/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/game.php" afterPath="$PROJECT_DIR$/protected/templates/production/game.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/landing.php" afterPath="$PROJECT_DIR$/protected/templates/production/landing.php" />
     </list>
     <ignored path="lotzone.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,10 +27,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="game.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="game.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/game.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3329298" vertical-offset="2728" max-vertical-offset="19425">
+            <state vertical-scroll-proportion="-4.7413793" vertical-offset="2728" max-vertical-offset="19425">
               <caret line="143" column="58" selection-start-line="143" selection-start-column="58" selection-end-line="143" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#div#2;n#section#0;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -110,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="landing.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="landing.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.2068965" vertical-offset="5353" max-vertical-offset="9450">
-              <caret line="261" column="55" selection-start-line="261" selection-start-column="55" selection-end-line="261" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.3329298" vertical-offset="2098" max-vertical-offset="9450">
+              <caret line="113" column="76" selection-start-line="113" selection-start-column="76" selection-end-line="113" selection-end-column="76" />
               <folding>
                 <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#div#0;n#footer#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -163,9 +161,9 @@
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
         <option value="$PROJECT_DIR$/tpl/js/social.js" />
         <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
-        <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
         <option value="$PROJECT_DIR$/protected/configs/config.php" />
         <option value="$PROJECT_DIR$/protected/templates/production/game.php" />
+        <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
       </list>
     </option>
   </component>
@@ -917,24 +915,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2068965" vertical-offset="5353" max-vertical-offset="9450">
-          <caret line="261" column="55" selection-start-line="261" selection-start-column="55" selection-end-line="261" selection-end-column="55" />
-          <folding>
-            <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#div#0;n#footer#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/templates/production/game.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3329298" vertical-offset="2728" max-vertical-offset="19425">
+        <state vertical-scroll-proportion="-4.7413793" vertical-offset="2728" max-vertical-offset="19425">
           <caret line="143" column="58" selection-start-line="143" selection-start-column="58" selection-end-line="143" selection-end-column="58" />
           <folding>
             <element signature="n#style#0;n#div#2;n#section#0;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#section#1;n#div#0;n#section#0;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#1;n#section#1;n#div#0;n#section#1;n#article#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/landing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3329298" vertical-offset="2098" max-vertical-offset="9450">
+          <caret line="113" column="76" selection-start-line="113" selection-start-column="76" selection-end-line="113" selection-end-column="76" />
+          <folding>
+            <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#div#0;n#footer#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

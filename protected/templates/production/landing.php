@@ -111,7 +111,7 @@
                         <div class="h-b">
                             <div class="h-b-c">
                                 <div class="h-b-c-tb">
-                                    <div class="h-b-c-tb-l">До следующего розыгрыша осталось</div>
+                                    <div class="h-b-c-tb-l">До розыгрыша<br/>осталось</div>
                                     <div id="countdownHolder" class="h-b-c-tb-r"></div>
                                 </div>
                                 <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть</span></a>
