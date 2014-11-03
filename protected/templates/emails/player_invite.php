@@ -22,10 +22,7 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-left:40px;"><a href="http://lotzon.com/?ivh=<?=$data['ivh']?>" style="display:inline-block;padding:0 28px;background-color:#ffe400;color:#000;text-decoration:none;font:12px/40px Arial;white-space:nowrap;">Принять приглашение</a></td>
-        </tr>
-        <tr>
-            <td height="200px"></td>
+            <td height="40"></td>
         </tr>
         <tr>
             <td style="padding-left:40px;font: 12px/17px Arial;color:#000;">
@@ -35,6 +32,9 @@
                     <?=$data['inviter']->getEmail()?>
                <? } ?>
             </td>
+        </tr>
+        <tr>
+            <td style="padding-left:40px;"><a href="http://lotzon.com/?ivh=<?=$data['ivh']?>" style="display:inline-block;padding:0 28px;background-color:#ffe400;color:#000;text-decoration:none;font:12px/40px Arial;white-space:nowrap;">Принять приглашение</a></td>
         </tr>
         <tr>
             <td height="40"></td>
