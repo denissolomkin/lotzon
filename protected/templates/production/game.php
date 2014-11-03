@@ -477,9 +477,9 @@
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)" class="tw"></a>
                                         <a href="javascript:void(0)" class="gp"></a-->
+                                        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div>
                                         <a href="javascript:void(0)" class="vk vk-share"></a>
                                         <a href="javascript:void(0)" class="fb fb-share"></a>
-                                        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div>
                                     </div>
                                 </div>
 
