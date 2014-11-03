@@ -304,7 +304,7 @@
                                 <a href="javascript:void(0)" class="sb-l_a gp"></a>
                                 <a href="javascript:void(0)" class="sb-l_a vk"></a>
                                 <a href="javascript:void(0)" class="sb-l_a fb"></a-->
-                                <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus,vkontakte,facebook"></div>
+                                <!--div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus,vkontakte,facebook"></div-->
                             </div>
                         </div>
                         <div class="yr-yw-b">
