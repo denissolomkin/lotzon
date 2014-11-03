@@ -277,7 +277,7 @@
                                         GAME POPUP
 ========================================================================== -->
 
-<div class="bl-pp-bk popup" id="game-itself" style="display: block;">
+<div class="bl-pp-bk popup" id="game-itself" style="display: none;">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
 
