@@ -1343,24 +1343,14 @@ $('.st-hy-bt').on('click', function(){
         $(this).parents('.bblock').find('.pz-more-bt').show();
     });
 });
+$('.fb-share').on('click', function() {
+    fbPost(posts.fb);
+});
+$('.vk-share').on('click', function() {
+    vkPost(posts.vk);
+});
 
 function updatePoints(points) {
     playerPoints = points;
     $('.plPointHolder').text(playerPoints);
 }
-
-$('.fb-share').on('click', function() {
-FB.ui(
-  {
-    method: 'share',
-    href: 'http://lotzon.com/',
-  },
-  function(response) {
-    if (response && !response.error_code) {
-      alert('Posting completed.');
-    } else {
-      alert('Error while posting.');
-    }
-  }
-);
-});

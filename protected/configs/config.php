@@ -152,6 +152,7 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/vkproxy/' => 'controllers\production\Index:VKProxy',
     '/trailer/' => array(
         'get'   => 'controllers\production\TrailerController:index',
         'post'  => 'controllers\production\TrailerController:subscribe'
@@ -160,6 +161,7 @@ Config::instance()->publicResources = array(
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
     ),
+
     '/players/resendPassword/' => array(
         'post'  => 'controllers\production\Players:resendPassword',  
     ),
@@ -167,6 +169,7 @@ Config::instance()->publicResources = array(
         'post'  => 'controllers\production\Players:login',
     ),
     '/players/logout/' => 'controllers\production\Players:logout',
+    '/players/social/' => 'controllers\production\Players:social',
     '/players/update/' => array(
         'post'  => 'controllers\production\Players:update',
     ),

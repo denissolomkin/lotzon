@@ -339,8 +339,7 @@ function resendPassword(email, successFunction, failFunction, errorFunction)
     });   
 }
 
-function getTransactions(offset, currency, successFunction, failFunction, errorFunction) 
-{
+function getTransactions(offset, currency, successFunction, failFunction, errorFunction) {
     $.ajax({
         url: "/content/transactions/"+currency +"/",
         method: 'GET',
@@ -360,6 +359,48 @@ function getTransactions(offset, currency, successFunction, failFunction, errorF
             errorFunction.call($(this), data);
        }
     });   
+}
+
+function socialSuccessPost(successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/players/social/",
+        method: 'POST',
+        data: {},
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });   
+}
+
+function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/vkproxy",
+        method: 'POST',
+        data: {
+            'uurl' : url,
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data.res);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    }); 
 }
 
 window.setInterval(function() {
