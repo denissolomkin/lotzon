@@ -31,7 +31,7 @@ class Index extends \SlimController\SlimController
             EmailInvites::instance()->getProcessor()->validateHash($hash);
         }
         $this->ref = $this->request()->get('ref', null);
-        /*try {
+        try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;    
             $this->country = $country->isoCode;
@@ -43,10 +43,10 @@ class Index extends \SlimController\SlimController
 
             $this->promoLang  = Config::instance()->countryLangs[$country->isoCode];
 
-        } catch (\Exception $e) {*/
+        } catch (\Exception $e) {
             $this->country = Config::instance()->defaultLang;
             $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
-        //}
+        }
 
         if (!Session::connect()->get(Player::IDENTITY)) {
             $this->landing();    
