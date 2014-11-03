@@ -267,11 +267,11 @@
                             </div>
 
                             <ul class="fb-p-b">
+                                <li style="font:30px/1 Handbook-regular;color:#000;text-transform:uppercase;">стаHьте первым</li>
                                 <!--li class="fb-p-b_li"><a href="http://musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/partner-expl/musiclife.png" /></a></li>
                                 <li class="fb-p-b_li"><a href="http://muzikant.ua/" target="_blank"><img src="/tpl/img/partner-expl/muzikant.ua.png" /></a></li>
                                 <li class="fb-p-b_li"><a href="http://hypermarket.ua/" target="_blank"><img src="/tpl/img/partner-expl/hypermarket.png" /></a></li-->
                             </ul>
-
                         </div>
                     </div>
                 </div>
