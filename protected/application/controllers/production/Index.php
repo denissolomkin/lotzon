@@ -224,7 +224,7 @@ class Index extends \SlimController\SlimController
         }
         $text = htmlspecialchars(strip_tags($text));
 
-        Common::sendEmail('partners@lotzon.com', 'Фидбек из лендинга', 'feedback', array(
+        Common::sendEmail('partners@lotozon.com', 'Фидбек из лендинга', 'feedback', array(
             'email'  => $email,
             'text' => $text,
         ));
