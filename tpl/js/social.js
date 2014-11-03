@@ -1,10 +1,9 @@
 function fbPost(postObject) {
     FB.init({
-            appId      : '865579400127881',
-            xfbml      : false,
-            version    : 'v2.2'
-        });
-    };
+        appId      : '865579400127881',
+        xfbml      : false,
+        version    : 'v2.2'
+    });
     getFbLogin(function(postObject){
         FB.api('/me/feed', 'post', postObject, function(r) {
             if (r && !r.error) {
