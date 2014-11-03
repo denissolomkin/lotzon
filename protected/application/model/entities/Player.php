@@ -38,8 +38,10 @@ class Player extends Entity
     private $_gamesPlayed = 0;
 
     private $_invitesCount = 0;
+    private $_socialPostsCount = 0;
+
     private $_online     = 0;
-    private $_onlineTime = 0;
+    private $_onlineTime = 0;    
 
     public function init()
     {
@@ -307,6 +309,18 @@ class Player extends Entity
         return $this;
     }
 
+    public function getSocialPostsCount()
+    {
+        return $this->_socialPostsCount;
+    }
+
+    public function setSocialPostsCount($sp)
+    {
+        $this->_socialPostsCount = $sp;
+
+        return $this;
+    }
+
     public function setOnlineTime($time) 
     {
         $this->_onlineTime  = time();
@@ -338,6 +352,20 @@ class Player extends Entity
 
         try {
             $model::instance()->decrementInvitesCount($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;
+    }
+
+    public function decrementSocialPostsCount()
+    {
+        $this->setSocialPostsCount($this->getSocialPostsCount() - 1);
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->decrementSocialPostsCount($this);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
@@ -586,6 +614,7 @@ class Player extends Entity
                  ->setMoney($data['Money'])
                  ->setGamesPlayed($data['GamesPlayed'])
                  ->setInvitesCount($data['InvitesCount'])
+                 ->setSocialPostsCount($data['SocialPostsCount'])
                  ->setOnline($data['Online'])
                  ->setOnlineTime($data['OnlineTime']);
         }

@@ -53,6 +53,7 @@
         <!-- For iPhone: -->
         <link rel="apple-touch-icon-precomposed" href="">
 
+        <script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
         <script src="/tpl/js/lib/modernizr.js"></script>
         <script src="/tpl/js/lib/jquery.min.js"></script>
         <script src="/tpl/js/lib/jquery-ui.min.js"></script>
@@ -65,22 +66,21 @@
     </head>
     <body>
     <script type="text/javascript">    
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '586602554796461',
-          xfbml      : false,
-          version    : 'v2.1'
-        });
-      };
+        window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '865579400127881',
+              xfbml      : true,
+              version    : 'v2.2'
+            });
+          };
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
     </script>
     <div class="wrap">
         <header>
@@ -458,7 +458,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr>Пригласить друга +10 баллов</nobr> <nobr>(осталось <span class="invites-count"><?=$player->getInvitesCount()?></span> приглашений на этой неделе)</nobr></div>
+                                    <div class="if-tl"><nobr>Пригласить друга +10 баллов</nobr> <nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -473,18 +473,18 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +10 баллов <br/> (не более 7 постов на этой неделе)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +10 баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)<br/><br/>Регистрация по вашей ссылке +5 баллов</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)" class="tw"></a>
-                                        <a href="javascript:void(0)" class="gp"></a>
-                                        <a href="javascript:void(0)" class="vk"></a>
-                                        <a href="javascript:void(0)" class="fb fb-share"></a-->
-                                        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus,vkontakte,facebook"></div>
+                                        <a href="javascript:void(0)" class="gp"></a-->
+                                        <a href="javascript:void(0)" class="vk vk-share"></a>
+                                        <a href="javascript:void(0)" class="fb fb-share"></a>
+                                        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div>
                                     </div>
                                 </div>
 
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +5 баллов</div>
+                                    <div class="rp-txt">Ваша реферальная ссылка</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -811,13 +811,33 @@
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
+
         <? include('popups.php') ?>
 
     <script>
+        VK.init({
+            apiId: 4617228,
+            scope: 'wall,photos'
+        });
+
         filledTicketsCount = <?=$filledTicketsCount;?>;
         var playerFavorite = [];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
+
+        var posts = {
+            fb : {
+                link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
+                picture: 'http://lotzon.com/tpl/img/social-share.jpg',
+                name : 'Lotzon.com',
+                description : 'Играл, играю и буду играть.',
+                caption : '',
+            },
+            vk : {
+                link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
+                message : 'Lotzon.com\nИграл, играю и буду играть.'
+            }
+        }
         
         <? foreach ($player->getFavoriteCombination() as $num) { ?>
         playerFavorite.push(<?=$num?>);

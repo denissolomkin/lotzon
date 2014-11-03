@@ -268,4 +268,18 @@ class Players extends \AjaxController
 
         $this->ajaxResponse(array());
     }
+
+    public function socialAction() 
+    {
+        if (Session::connect()->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
+            Session::connect()->get(Player::IDENTITY)->decrementSocialPostsCount();
+            Session::connect()->get(Player::IDENTITY)->addPoints(10, "Пост с реферальной ссылкой");
+            $this->ajaxResponse(array(
+                'postsCount' => Session::connect()->get(Player::IDENTITY)->getSocialPostsCount(),
+            ));    
+        } else {
+            $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
+        }
+        
+    }
 }

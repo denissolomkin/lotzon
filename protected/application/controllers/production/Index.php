@@ -182,4 +182,20 @@ class Index extends \SlimController\SlimController
         }
         $this->redirect('/');
     }
+
+    public function VKProxyAction() 
+    {
+        $upload_url = $this->request()->post('uurl');
+        $post_params['photo'] = '@' . PATH_ROOT . 'tpl/img/social-share.jpg'; ///ну тут понятно что это ваша фотка
+     
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $upload_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
+        $result = curl_exec($ch);
+        curl_close($ch);
+       
+        die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => json_decode($result))));
+    }
 }
