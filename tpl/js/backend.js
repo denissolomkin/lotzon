@@ -403,6 +403,29 @@ function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
     }); 
 }
 
+function sendPartnersFeedback(post, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/feedback",
+        method: 'POST',
+        data: {
+            'email' : post.email,
+            'text' : post.text,
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    }); 
+}
+
 window.setInterval(function() {
     $.ajax({
         url: "/players/ping",

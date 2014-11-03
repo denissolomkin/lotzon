@@ -153,6 +153,7 @@ Config::instance()->privateResources =  array(
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
     '/vkproxy/' => 'controllers\production\Index:VKProxy',
+    '/feedback/' => 'controllers\production\Index:feedback',
     '/trailer/' => array(
         'get'   => 'controllers\production\TrailerController:index',
         'post'  => 'controllers\production\TrailerController:subscribe'

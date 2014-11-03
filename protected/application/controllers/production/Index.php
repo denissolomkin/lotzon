@@ -199,4 +199,36 @@ class Index extends \SlimController\SlimController
        
         die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => json_decode($result))));
     }
+
+    public function feedbackAction()
+    {
+        $response = array(
+            'status'  => 1,
+            'message' => 'OK',
+            'res'     => array(),
+        );
+
+        $email = $this->request()->post('email');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $response['status'] = 0;
+            $response['message'] = 'INVALID_EMAIL';
+
+            die(json_encode($response));
+        }
+        $text = $this->request()->post('text');
+        if (empty($text)) {
+            $response['status'] = 0;
+            $response['message'] = 'EMPTY_TEXT';
+
+            die(json_encode($response));
+        }
+        $text = htmlspecialchars(strip_tags($text));
+
+        Common::sendEmail('partners@lotzon.com', 'Фидбек из лендинга', 'feedback', array(
+            'email'  => $email,
+            'text' => $text,
+        ));
+
+        die(json_encode($response));
+    }
 }
