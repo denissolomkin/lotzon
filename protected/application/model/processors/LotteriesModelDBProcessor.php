@@ -196,7 +196,7 @@ class LotteriesModelDBProcessor implements IProcessor
             // get winners
             $sql = "SELECT `p`.* FROM `PlayerLotteryWins` AS `plw` 
                     LEFT JOIN `Players` AS `p` ON `p`.`Id` = `plw`.`PlayerId`
-                    WHERE `plw`.`LotteryId` = :lotid AND (`plw`.`MoneyWin` > 0 OR `plw`.`PlayerId` = :plid)";
+                    WHERE `plw`.`LotteryId` = :lotid AND (`plw`.`MoneyWin` > 0 OR `plw`.`PointsWin` > 0 OR `plw`.`PlayerId` = :plid)";
 
             try {
                 $sth = DB::Connect()->prepare($sql);

@@ -115,12 +115,13 @@ if (timeToRunLottery()) {
                 }
                 // save some statistic
                 if ($gamePrizes[$pcountry][$numwins]['currency'] == GameSettings::CURRENCY_MONEY) {
-                    $moneyWonTotal += $gamePrizes[$pcountry][$numwins]['sum'];
-                    if (!in_array($ticket->getPlayerId(), $playersWonMoney)) {
-                        $playersWonMoney[] = $ticket->getPlayerId();
-                    }
+                    $moneyWonTotal += $gamePrizes[$pcountry][$numwins]['sum'];                    
                 } else {
                     $pointsWonTotal += $gamePrizes[$pcountry][$numwins]['sum'];
+                }
+
+                if (!in_array($ticket->getPlayerId(), $playersWonMoney)) {
+                    $playersWonMoney[] = $ticket->getPlayerId();
                 }
             }
         }
