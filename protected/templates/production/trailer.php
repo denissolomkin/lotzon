@@ -97,6 +97,7 @@
 </html>
 
 <script>
+location.href = '/';
 $(".timer").countdown({
     until: <?=$countdown?>,
     layout: '<span class="d">{dnn}</span><i>:</i><span class="a">{hnn}</span><i>:</i><span class="m">{mnn}</span><i>:</i><span class="s">{snn}</span>'
