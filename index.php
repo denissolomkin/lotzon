@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_URI'] != '/trailer' && $_SERVER['REQUEST_URI'] != '/traile
 }
 
 error_reporting(E_ALL & ~E_NOTICE);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 
 // load pathes 
 require_once dirname(__FILE__) . '/pathes.php';
