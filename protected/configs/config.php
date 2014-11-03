@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '1234',
+    'password' => '',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -153,6 +153,7 @@ Config::instance()->privateResources =  array(
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
     '/vkproxy/' => 'controllers\production\Index:VKProxy',
+    '/feedback/' => 'controllers\production\Index:feedback',
     '/trailer/' => array(
         'get'   => 'controllers\production\TrailerController:index',
         'post'  => 'controllers\production\TrailerController:subscribe'

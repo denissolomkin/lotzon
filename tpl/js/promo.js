@@ -159,4 +159,19 @@ $(function(){
         return false;
     })
 
+    $('form[name="feed-back-form"]').on('submit', function(e) {
+        e.preventDefault();
+
+        var post = {
+            email: $(this).find('input[name="mail"]').val(),
+            text: $(this).find('textarea').val(),
+        }
+
+        sendPartnersFeedback(post, function(data) {
+            $('#cf-ab').click();
+        }, function(data) {
+            alert(data.message);
+        })
+        return false;
+    });
 });
