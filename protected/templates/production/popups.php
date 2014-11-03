@@ -277,13 +277,17 @@
                                         GAME POPUP
 ========================================================================== -->
 
+<<<<<<< HEAD
+<div class="bl-pp-bk popup" id="game-itself">
+=======
 <div class="bl-pp-bk popup" id="game-itself" style="display: none;">
+>>>>>>> 637ae9db6682295e8ea02f1347f234ed1670e935
     <div class="bl-pp_table">
         <div class="bl-pp_td">
 
 
         <!-- WON BLOCK -->
-        <div id="game-won" class="pop-box"  style="display: block;">
+        <div id="game-won" class="pop-box">
             <section class="gpc-pad">
                 <a href="javascript:void(0)" class="b-c-p cs" onclick="document.location.reload();"></a>
                 <ul class="g-oc-b">
