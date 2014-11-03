@@ -141,7 +141,7 @@
                     <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
-                    <div class="tn-tr-tt">До следующего розыгрыша осталось</div>
+                    <div class="tn-tr-tt">До розыгрыша<br/>осталось</div>
                     <div id="countdownHolder" class="tn-tr"></div>
                 </div>
             </div>
