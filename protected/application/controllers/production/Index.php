@@ -22,6 +22,7 @@ class Index extends \SlimController\SlimController
 
     public $promoLang = '';
     public $country = '';
+    public $ref     = 0;
 
     public function indexAction()
     {
@@ -29,6 +30,8 @@ class Index extends \SlimController\SlimController
         if ($hash = $this->request()->get('ivh')) {
             EmailInvites::instance()->getProcessor()->validateHash($hash);
         }
+        $this->ref = $this->request()->get('ref', null);
+
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;    
@@ -146,6 +149,7 @@ class Index extends \SlimController\SlimController
             'seo' => $seo,
             'comments'    => $comments,
             'lastLottery' => $lastLottery,
+            'ref'         => $this->ref,
         ));
     }
 
@@ -166,6 +170,7 @@ class Index extends \SlimController\SlimController
             $this->country = Config::instance()->defaultLang;
             $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
         }
+        $gameSettings = GameSettingsModel::instance()->loadSettings();
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
@@ -177,5 +182,21 @@ class Index extends \SlimController\SlimController
             
         }
         $this->redirect('/');
+    }
+
+    public function VKProxyAction() 
+    {
+        $upload_url = $this->request()->post('uurl');
+        $post_params['photo'] = '@' . PATH_ROOT . 'tpl/img/social-share.jpg'; ///ну тут понятно что это ваша фотка
+     
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $upload_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
+        $result = curl_exec($ch);
+        curl_close($ch);
+       
+        die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => json_decode($result))));
     }
 }

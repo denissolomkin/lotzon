@@ -54,6 +54,18 @@ class Players extends \AjaxController
                 } catch (EntityException $e) {}
             }
 
+            if ($ref = $this->request()->post('ref', null)) {
+                try {
+                    $refPlayer = new Player();
+                    $refPlayer->setId($ref)->fetch();
+
+                    $refPlayer->addPoints(5, 'Регистрация по вашей ссылке');
+                } catch (EntityException $e) {}
+            }
+
+            if ($player->getId() <= 1000) {
+                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+            }
             $this->ajaxResponse(array(
                 'id' => $player->getId(),
             ));
@@ -255,5 +267,19 @@ class Players extends \AjaxController
         ));
 
         $this->ajaxResponse(array());
+    }
+
+    public function socialAction() 
+    {
+        if (Session::connect()->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
+            Session::connect()->get(Player::IDENTITY)->decrementSocialPostsCount();
+            Session::connect()->get(Player::IDENTITY)->addPoints(10, "Пост с реферальной ссылкой");
+            $this->ajaxResponse(array(
+                'postsCount' => Session::connect()->get(Player::IDENTITY)->getSocialPostsCount(),
+            ));    
+        } else {
+            $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
+        }
+        
     }
 }

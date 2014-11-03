@@ -17,24 +17,24 @@
         </tr>
         <tr>
             <td style="padding-left:40px;padding-right:40px;font: 12px/17px Arial;color:#000;">
-                <p style="margin:0 0 20px 0;">Здравствуйте!</p>
-                <p style="margin:0 0 20px 0;">Пользователь ТУТ_НАДО_РЕШИТЬ_КАК_ПИСАТЬ пригласил вас в игру.</p>
-                <p style="margin:0 0 40px 0;">Lotzon — уникальный проект бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла- бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-блабла-бла-блабла-бла-бла-бла-бла- бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла.</p>
+                <p style="margin:0 0 20px 0;">Привет!</p>
+                <p style="margin:0 0 20px 0;">Присоеденяйся ко мне и давай вместе играть и выигрывать деньги и призы. Посмотрим кто первый сорвет Jackpot!</p>
+            </td>
+        </tr>
+        <tr>
+            <td height="40"></td>
+        </tr>
+        <tr>
+            <td style="padding-left:40px;font: 12px/17px Arial;color:#000;">
+               <? if ($data['inviter']->getName() && $data['inviter']->getSurname()) { ?>
+                    <?=$data['inviter']->getName()?> <?=$data['inviter']->getSurname()?>
+               <? } else {?>
+                    <?=$data['inviter']->getEmail()?>
+               <? } ?>
             </td>
         </tr>
         <tr>
             <td style="padding-left:40px;"><a href="http://lotzon.com/?ivh=<?=$data['ivh']?>" style="display:inline-block;padding:0 28px;background-color:#ffe400;color:#000;text-decoration:none;font:12px/40px Arial;white-space:nowrap;">Принять приглашение</a></td>
-        </tr>
-        <tr>
-            <td height="200px"></td>
-        </tr>
-        <tr>
-            <td style="padding-left:40px;font: 12px/17px Arial;color:#000;">
-                Команда Lotzon<br/>
-                <a style="color:#000;text-decoration:underline;" href="mailto:play@lotzon.com">play@lotzon.com</a>
-                <br/><br/>
-                <a style="color:#000;text-decoration:underline;" href="http://lotzon.com">lotzon.com</a>
-            </td>
         </tr>
         <tr>
             <td height="40"></td>

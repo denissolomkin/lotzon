@@ -122,12 +122,13 @@ $(function(){
         var form = $(this);
         var email = form.find('input[name="login"]').val();
         var rulesAgree = form.find('#rulcheck').prop('checked') ? 1 : 0;
+        var ref = $(this).data('ref');
 
         if(rulesAgree == 0){
             $("#reg-form").addClass('rul-error');
             form.find('.e-t').text('Вы должны ознкомиться с правилами');
         }else{
-            registerPlayer({'email':email, 'agree':rulesAgree}, function(data){
+            registerPlayer({'email':email, 'agree':rulesAgree, 'ref':ref}, function(data){
                 document.location.href = "/";
             }, function(data){
                 $("#reg-form").addClass('error');

@@ -25,7 +25,7 @@ class PlayersDBProcessor implements IProcessor
         $player->setId(DB::Connect()->lastInsertId());
 
         try {
-            DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('id', `Id`) WHERE `Id` = :id")->execute(array(
+            DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
                 ':id' => $player->getId(),
             ));
         } catch (PDOException $e){}
@@ -205,6 +205,23 @@ class PlayersDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':ic'  => $player->getInvitesCount(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;   
+    }
+
+    public function decrementSocialPostsCount(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `SocialPostsCount` = :ic WHERE  `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':ic'  => $player->getSocialPostsCount(),
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {

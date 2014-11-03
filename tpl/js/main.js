@@ -1,15 +1,6 @@
 var currentShowedItem = 0;
 var winChance = false;
 var filledTicketsCount = 0;
-var wactive = true;
-
-$(window).on("blur", function (e) {
-    wactive = false;    
-});
-
-$(window).on("focus", function (e) {
-    wactive = true;
-});
 
 $(function(){
     /* ==========================================================================
@@ -1065,8 +1056,7 @@ $(function(){
     });
 });
 function showGameProccessPopup(){
-    console.log(wactive);
-    if (filledTicketsCount > 0 && wactive) {
+    if (filledTicketsCount > 0) {
         $('.popup').hide();
         $("#game-won").hide();
         $("#game-end").hide();
@@ -1353,24 +1343,14 @@ $('.st-hy-bt').on('click', function(){
         $(this).parents('.bblock').find('.pz-more-bt').show();
     });
 });
+$('.fb-share').on('click', function() {
+    fbPost(posts.fb);
+});
+$('.vk-share').on('click', function() {
+    vkPost(posts.vk);
+});
 
 function updatePoints(points) {
     playerPoints = points;
     $('.plPointHolder').text(playerPoints);
 }
-
-$('.fb-share').on('click', function() {
-FB.ui(
-  {
-    method: 'share',
-    href: 'http://lotzon.com/',
-  },
-  function(response) {
-    if (response && !response.error_code) {
-      alert('Posting completed.');
-    } else {
-      alert('Error while posting.');
-    }
-  }
-);
-});

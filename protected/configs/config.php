@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '',
+    'password' => '1234',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -26,7 +26,7 @@ Config::instance()->countryLangs = array(
     'RU' => 'UA',
     'BY' => 'UA',
 );
-Config::instance()->defaultLang = 'UA';
+Config::instance()->defaultLang = 'RU';
 Config::instance()->langCurrencies = array(
     'UA' => 'грн',
     'RU' => 'руб',
@@ -137,10 +137,13 @@ Config::instance()->privateResources =  array(
     '/private/comments/:id/delete' => array(
         'get' => 'controllers\admin\Comments:delete',
     ),
+    '/private/monetisation' => 'controllers\admin\Monetisation:index',
+    '/private/monetisation/approve/:id' => 'controllers\admin\Monetisation:approve',
+    '/private/monetisation/decline/:id' => 'controllers\admin\Monetisation:decline',
+
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
-    '/private/monetisation' => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',
@@ -149,6 +152,7 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/vkproxy/' => 'controllers\production\Index:VKProxy',
     '/trailer/' => array(
         'get'   => 'controllers\production\TrailerController:index',
         'post'  => 'controllers\production\TrailerController:subscribe'
@@ -157,6 +161,7 @@ Config::instance()->publicResources = array(
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
     ),
+
     '/players/resendPassword/' => array(
         'post'  => 'controllers\production\Players:resendPassword',  
     ),
@@ -164,6 +169,7 @@ Config::instance()->publicResources = array(
         'post'  => 'controllers\production\Players:login',
     ),
     '/players/logout/' => 'controllers\production\Players:logout',
+    '/players/social/' => 'controllers\production\Players:social',
     '/players/update/' => array(
         'post'  => 'controllers\production\Players:update',
     ),

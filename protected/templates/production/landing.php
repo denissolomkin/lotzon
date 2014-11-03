@@ -116,10 +116,12 @@
                                 </div>
                                 <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть</span></a>
                                 <div class="h-b-c-lg">
-                                    <div class="h-b-c-lg-t">розыгрыш от <?=date('d.m.Y', $lastLottery->getDate())?></div>
+                                    <div class="h-b-c-lg-t">розыгрыш от <?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
                                     <ul class="h-b-c-lg_ul">
-                                        <? foreach ($lastLottery->getCombination() as $num) { ?>
-                                            <li class="h-b-c-lg_ul_li"><?=$num?></li>
+                                        <? if ($lastLottery) { ?>
+                                            <? foreach ($lastLottery->getCombination() as $num) { ?>
+                                                <li class="h-b-c-lg_ul_li"><?=$num?></li>
+                                            <? } ?>
                                         <? } ?>
                                     </ul>
                                 </div>
@@ -304,7 +306,7 @@
                                     <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
                                 </div>
                                 <!-- REGISTRATION FORM -->
-                                <form name="register">
+                                <form name="register" data-ref="<?=$ref?>">
                                     <div id="reg-form">
                                         <div class="rf-txt">Укажите Ваш email. <b>На него будет выслан пароль,</b> который понадобится ввести при входе в следующий раз.</div>
                                         <div class="ib-l">
