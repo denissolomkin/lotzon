@@ -80,8 +80,8 @@
                         </div>
                     </div>
                     <div class="ws-yr-tks-bk">
-                        <div class="wr-pf-ph">
-                            <img src="/tpl/img/preview/profile-photo.jpg" />
+                        <div class="wr-pf-ph" style="background-image:url('/tpl/img/preview/profile-photo.jpg');">
+                            <!--img src="/tpl/img/preview/profile-photo.jpg" /-->
                         </div>
                         <ul class="yr-tb">
                         </ul>
