@@ -859,7 +859,7 @@ $(function(){
             if (winner.you) {
                 yourId = winner.id;
             }
-            winnerHtml += '<li data-id="'+winner.id+'" data-img="'+winner.avatar+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph" data-img="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
 
 
