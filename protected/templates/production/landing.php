@@ -322,6 +322,12 @@
                                         <div class="s-b">
                                             <input type="submit" disabled class="sb_but disabled" value="Играть" />
                                         </div>
+                                        <div class="sl-bk disabled">
+                                            <a href="javascript:void(0)" class="fb"></a>
+                                            <a href="javascript:void(0)" class="vk"></a>
+                                            <a href="javascript:void(0)" class="gp"></a>
+                                            <a href="javascript:void(0)" class="tw"></a>
+                                        </div>
                                     </div>
                                 </form>
                                 <!-- LOGIN FORM -->
