@@ -501,11 +501,13 @@ class Player extends Entity
 
     }
 
-    public function addMoney($quantity, $description = '') {
+    public function addMoney($quantity, $description = '', $inplaceUpdate = true) {
 
         $this->setMoney($this->getMoney() + $quantity);
-        $this->update();
-
+        if ($inplaceUpdate) {
+            $this->update();    
+        }
+    
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
                     ->setSum($quantity)
@@ -516,11 +518,13 @@ class Player extends Entity
         return $this;
     }
 
-    public function addPoints($quantity, $description = '') {
+    public function addPoints($quantity, $description = '', $inplaceUpdate = true) {
         //@TODO process transaction
         
         $this->setPoints($this->getPoints() + $quantity);
-        $this->update();
+         if ($inplaceUpdate) {
+            $this->update();    
+        }
 
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
