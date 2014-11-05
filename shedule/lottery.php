@@ -264,10 +264,12 @@ if (timeToRunLottery()) {
 
     releaseLock();
 } else {
+    messageLn("It is not time yet ;)");
     exit;
 }
 messageLn("");
 messageLn("Total time s  -> " . number_format((microtime(true) - $gt),2) . " s.");
+
 function timeToRunLottery() {
     global $gameSettings;
 
