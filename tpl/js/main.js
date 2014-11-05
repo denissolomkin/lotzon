@@ -859,7 +859,7 @@ $(function(){
             if (winner.you) {
                 yourId = winner.id;
             }
-            winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            winnerHtml += '<li data-id="'+winner.id+'" data-img="'+winner.avatar+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
 
 
@@ -869,7 +869,7 @@ $(function(){
             $('#profile-history').find('.ws-pf-rt-bk').show();
             $('#profile-history').find('.ws-dt.ch-hide').hide();
             //$('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
-            $('#profile-history').find('.wr-pf-ph').css('backgroundImage','url('+$('li[data-id="'+yourId+'"]').find('.ph img').attr('src')+')');
+            $('#profile-history').find('.wr-pf-ph').css('backgroundImage','url('+$('li[data-id="'+yourId+'"]').find('.ph').attr('data-img')+')');
             var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
