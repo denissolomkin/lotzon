@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5fc7ea-a58a-4250-b79c-cb6f4030861f" name="Default" comment="Merge branch 'master' of https://github.com/RevZer0/lotzone&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/templates/production/popups.php" afterPath="$PROJECT_DIR$/protected/templates/production/popups.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/js/main.js" afterPath="$PROJECT_DIR$/tpl/js/main.js" />
     </list>
     <ignored path="lotzone.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,25 +60,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="popups.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="popups.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54269004" vertical-offset="1258" max-vertical-offset="12180">
-              <caret line="82" column="73" selection-start-line="82" selection-start-column="73" selection-end-line="82" selection-end-column="73" />
-              <folding />
+            <state vertical-scroll-proportion="-15.466666" vertical-offset="1258" max-vertical-offset="12180">
+              <caret line="82" column="43" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tpl/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.428572" vertical-offset="17985" max-vertical-offset="28623">
-              <caret line="869" column="64" selection-start-line="869" selection-start-column="64" selection-end-line="869" selection-end-column="64" />
+            <state vertical-scroll-proportion="0.3325554" vertical-offset="18006" max-vertical-offset="28623">
+              <caret line="871" column="137" selection-start-line="871" selection-start-column="137" selection-end-line="871" selection-end-column="137" />
               <folding>
-                <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-                <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-                <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+                <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+                <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+                <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -158,8 +158,8 @@
         <option value="$PROJECT_DIR$/protected/templates/production/landing.php" />
         <option value="$PROJECT_DIR$/protected/templates/production/game.php" />
         <option value="$PROJECT_DIR$/tpl/css/main.css" />
-        <option value="$PROJECT_DIR$/tpl/js/main.js" />
         <option value="$PROJECT_DIR$/protected/templates/production/popups.php" />
+        <option value="$PROJECT_DIR$/tpl/js/main.js" />
       </list>
     </option>
   </component>
@@ -496,7 +496,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12180">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -524,9 +526,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="21362" max-vertical-offset="27804">
           <caret line="1038" column="21" selection-start-line="1038" selection-start-column="21" selection-end-line="1038" selection-end-column="21" />
           <folding>
-            <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+            <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -567,7 +569,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="11303" max-vertical-offset="12180">
           <caret line="562" column="44" selection-start-line="562" selection-start-column="32" selection-end-line="562" selection-end-column="44" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -595,9 +599,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="20106" max-vertical-offset="27363">
           <caret line="971" column="7" selection-start-line="971" selection-start-column="7" selection-end-line="971" selection-end-column="7" />
           <folding>
-            <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+            <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -638,7 +642,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="11303" max-vertical-offset="12180">
           <caret line="562" column="44" selection-start-line="562" selection-start-column="32" selection-end-line="562" selection-end-column="44" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -666,9 +672,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="20106" max-vertical-offset="27363">
           <caret line="971" column="7" selection-start-line="971" selection-start-column="7" selection-end-line="971" selection-end-column="7" />
           <folding>
-            <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+            <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -709,7 +715,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12096">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -737,9 +745,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="19308" max-vertical-offset="26586">
           <caret line="933" column="39" selection-start-line="933" selection-start-column="39" selection-end-line="933" selection-end-column="39" />
           <folding>
-            <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+            <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -764,7 +772,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11739">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -784,9 +794,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="5883" max-vertical-offset="26523">
           <caret line="294" column="30" selection-start-line="294" selection-start-column="30" selection-end-line="294" selection-end-column="30" />
           <folding>
-            <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+            <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -888,23 +898,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tpl/js/main.js">
+    <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.428572" vertical-offset="17985" max-vertical-offset="28623">
-          <caret line="869" column="64" selection-start-line="869" selection-start-column="64" selection-end-line="869" selection-end-column="64" />
+        <state vertical-scroll-proportion="-15.466666" vertical-offset="1258" max-vertical-offset="12180">
+          <caret line="82" column="43" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
           <folding>
-            <marker date="1415174952426" expanded="false" signature="11392:11401" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35711" placeholder="..." />
-            <marker date="1415174952426" expanded="true" signature="35690:35773" placeholder="..." />
+            <element signature="n#style#0;n#div#0;n#div#1;n#section#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/templates/production/popups.php">
+    <entry file="file://$PROJECT_DIR$/tpl/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54269004" vertical-offset="1258" max-vertical-offset="12180">
-          <caret line="82" column="73" selection-start-line="82" selection-start-column="73" selection-end-line="82" selection-end-column="73" />
-          <folding />
+        <state vertical-scroll-proportion="0.3325554" vertical-offset="18006" max-vertical-offset="28623">
+          <caret line="871" column="137" selection-start-line="871" selection-start-column="137" selection-end-line="871" selection-end-column="137" />
+          <folding>
+            <marker date="1415185923863" expanded="false" signature="11392:11401" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35740" placeholder="..." />
+            <marker date="1415185923863" expanded="true" signature="35719:35802" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
