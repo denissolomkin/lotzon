@@ -113,7 +113,7 @@
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Победителей<br/><br/></div>
+                            <div class="tl">Денежные выигрыши<br/><br/></div>
                             <b class="n"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
                         </div>
                     </div>
