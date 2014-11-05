@@ -868,7 +868,8 @@ $(function(){
         if (yourId) {
             $('#profile-history').find('.ws-pf-rt-bk').show();
             $('#profile-history').find('.ws-dt.ch-hide').hide();
-            $('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
+            //$('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
+            $('#profile-history').find('.wr-pf-ph').css('backgroundImage','url('+$('li[data-id="'+yourId+'"]').find('.ph img').attr('src')+')');
             var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
