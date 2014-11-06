@@ -62,6 +62,8 @@
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
 
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 
     </head>
     <body>
@@ -84,7 +86,7 @@
     </script>
     <div class="wrap">
         <header>
-            <div class="hr-br"><img src="/tpl/img/baners/Plug-960х135.png" width="960" height="135" /></div>
+            <div class="hr-br"><ins class="adsbygoogle" style="display:inline-block;width:965px;height:135px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1812817787"></ins><!--img src="/tpl/img/baners/Plug-960х135.png" width="960" height="135" /--></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -815,6 +817,7 @@
         <? include('popups.php') ?>
 
     <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
         VK.init({
             apiId: 4617228,
             scope: 'wall,photos'
