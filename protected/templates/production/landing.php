@@ -322,12 +322,12 @@
                                         <div class="s-b">
                                             <input type="submit" disabled class="sb_but disabled" value="Играть" />
                                         </div>
-                                        <div class="sl-bk disabled">
+                                        <!--div class="sl-bk disabled">
                                             <a href="javascript:void(0)" class="fb"></a>
                                             <a href="javascript:void(0)" class="vk"></a>
                                             <a href="javascript:void(0)" class="gp"></a>
                                             <a href="javascript:void(0)" class="tw"></a>
-                                        </div>
+                                        </div-->
                                     </div>
                                 </form>
                                 <!-- LOGIN FORM -->
@@ -352,12 +352,12 @@
                                         <div class="s-b">
                                             <input type="submit" class="sb_but disabled" disabled value="Играть" />
                                         </div>
-                                        <div class="sl-bk">
+                                        <!--div class="sl-bk">
                                             <a href="javascript:void(0)" class="fb"></a>
                                             <a href="javascript:void(0)" class="vk"></a>
                                             <a href="javascript:void(0)" class="gp"></a>
                                             <a href="javascript:void(0)" class="tw"></a>
-                                        </div>
+                                        </div-->
                                     </div>
                                 </form>
 
