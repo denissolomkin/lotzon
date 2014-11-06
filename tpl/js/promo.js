@@ -140,6 +140,16 @@ $(function(){
     $('#rulcheck').on('change', function(){
         if($(this).prop('checked')){
             $("#reg-form").removeClass('rul-error');
+            $("#reg-form .sl-bk").removeClass('disabled');
+        }else{
+            $("#reg-form .sl-bk").addClass('disabled');
+        }
+    });
+
+    $("#reg-form .sl-bk a").on('click', function(){
+        var rulesAgree = $('#reg-form').find('#rulcheck').prop('checked') ? 1 : 0;
+        if(rulesAgree == 0){
+            $("#reg-form").addClass('rul-error');
         }
     });
 

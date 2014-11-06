@@ -325,6 +325,20 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 .login-popup .lp-b .s-b .sb_but.disabled {opacity:0.4;}
 .login-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}
 .login-popup .lp-b .s-b .sb_but:hover {border-color:#000;background-color:#000;color:#ffe400;}
+.login-popup .lp-b .sl-bk {margin-top:40px;overflow:hidden;opacity:1;
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+}
+.login-popup .lp-b .sl-bk.disabled {opacity:0.4;}
+.login-popup .lp-b .sl-bk > a {display:block;float:left;width:68px;height:48px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social.png");background-repeat:no-repeat;margin-right:20px;}
+.login-popup .lp-b .sl-bk > a:last-child {margin:0;}
+.login-popup .lp-b .sl-bk > a.fb {border-color:#3b5998;background-position:0 0;}
+.login-popup .lp-b .sl-bk > a.vk {border-color:#45668e;background-position:-71px 0;}
+.login-popup .lp-b .sl-bk > a.gp {border-color:#d83b2a;background-position:-3px -50px;}
+.login-popup .lp-b .sl-bk > a.tw {border-color:#4c97d0;background-position:-71px -50px;}
 
 
 .error .ib-l, .error .ib-p {color:#c51e1e!important;border-color:#c51e1e!important;}
