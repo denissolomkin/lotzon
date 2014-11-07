@@ -264,7 +264,6 @@ class ShopItemOrder extends Entity
             $player->setId($data['PlayerId']);
 
             $this->setId($data['Id'])
-                 ->setItem($item->fetch())
                  ->setPlayer($player->fetch())
                  ->setDateOrdered($data['DateOrdered'])
                  ->setDateProcessed($data['DateProcessed'])
@@ -277,6 +276,12 @@ class ShopItemOrder extends Entity
                  ->setCity($data['City'])
                  ->setAddress($data['Address'])
                  ->setChanceGameId($data['ChanceGameId']);
+
+            try {
+                $this->setItem($item->fetch());
+            } catch (EntityException $e) {
+                $this->setItem(new ShopItem());
+            }
         }
 
         return $this;

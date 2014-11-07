@@ -17,6 +17,7 @@ class Monetisation extends PrivateArea
 
     public function indexAction()
     {
+
         $list = ShopOrdersModel::instance()->getOrdersToProcess();
 
         $this->render('admin/monetisation', array(
