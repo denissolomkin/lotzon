@@ -160,7 +160,7 @@
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
                 <aside class="rbs">
-                    <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+                    <div class="bz1"><!-- img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" / --></div>
                     <div class="bz2"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
                     <div class="bz3"><img src="/tpl/img/baners/Plug-300х175.png" width="300" height="175" /></div>
                 </aside>
@@ -577,7 +577,8 @@
                                 CHANCE BLOCK
         ======================================================================-->
         <section class="chance">
-        <div class="ch-br-bk"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+        <div class="ch-br-bk"><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1649537384"></ins>
+        <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" / --></div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl">шансы</div>

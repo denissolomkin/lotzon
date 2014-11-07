@@ -57,4 +57,9 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->markOnline($player);   
     }
+
+    public function validateHash($hash)
+    {
+        return $this->getProcessor()->validateHash($hash);
+    }
 }
