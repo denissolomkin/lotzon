@@ -41,7 +41,11 @@ class Player extends Entity
     private $_socialPostsCount = 0;
 
     private $_online     = 0;
-    private $_onlineTime = 0;    
+    private $_onlineTime = 0;
+
+    private $_valid = 0;
+    private $_hash = '';
+    private $_ip = '';    
 
     public function init()
     {
@@ -371,6 +375,42 @@ class Player extends Entity
         }
         
         return $this;
+    } 
+
+    public function setValid($valid) 
+    {
+        $this->_valid = $valid;
+
+        return $this;
+    }
+
+    public function getValid()
+    {
+        return $this->_valid;
+    }
+
+    public function setHash($hash) 
+    {
+        $this->_hash = $hash;
+
+        return $this;
+    }
+
+    public function getHash()
+    {
+        return $this->_hash;
+    }    
+
+    public function setIP($ip) 
+    {
+        $this->_ip = $ip;
+
+        return $this;
+    }
+
+    public function getIP()
+    {
+        return $this->_ip;
     }
 
     public function generatePassword()
@@ -419,6 +459,10 @@ class Player extends Entity
                 $this->validEmail();
                 if (empty($params['password'])) {
                     throw new EntityException('EMPTY_PASSWORD', 400);
+                }
+                $this->fetch();
+                if (!$this->getValid()) {
+                    throw new EntityException("EMAIL_NOT_VALIDATED", 400);
                 }
             break;
             case 'update' :
@@ -494,11 +538,11 @@ class Player extends Entity
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
             'password'  => $this->_generatedPassword,
+            'hash'  => $this->getHash(),
         ));
-        $this->login($this->_generatedPassword);
+        //$this->login($this->_generatedPassword);
 
         return $this;
-
     }
 
     public function addMoney($quantity, $description = '', $inplaceUpdate = true) {
@@ -620,7 +664,10 @@ class Player extends Entity
                  ->setInvitesCount($data['InvitesCount'])
                  ->setSocialPostsCount($data['SocialPostsCount'])
                  ->setOnline($data['Online'])
-                 ->setOnlineTime($data['OnlineTime']);
+                 ->setOnlineTime($data['OnlineTime'])
+                 ->setIp($data['Ip'])
+                 ->setHash($data['Hash'])
+                 ->setValid($data['Valid']);
         }
 
         return $this;

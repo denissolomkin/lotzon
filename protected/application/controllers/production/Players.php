@@ -34,6 +34,9 @@ class Players extends \AjaxController
             }
             
             $player->setVisibility(true);
+            $player->setIP(Common::getUserIp());
+            $player->setHash(md5(uniqid()));
+            $player->setValid(false);
             
             try {   
                 $player->create();

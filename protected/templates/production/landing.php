@@ -285,13 +285,13 @@
                                         LOGIN POPUP
         ========================================================================== -->
 
-        <div class="login-popup popup" id="login-block">
+        <div class="login-popup popup" id="login-block" <?=$showEmail ? 'style="display:block"' : ''?>>
             <div class="lb-table">
                 <div class="lb-tr">
                     <div class="lb-td">
                         <div class="lp-b">
                             <div class="pu-b-c" id="lb-close"></div>
-                            <div class="b-m registration" id="cl-check">
+                            <div class="b-m <?=$showEmail ? 'login' : 'registration'?>" id="cl-check">
                                 <div class="rules-bk">
                                     <div class="rb-cs-bt"></div>
                                     <div class="rb-pg">
@@ -308,7 +308,7 @@
                                 <!-- REGISTRATION FORM -->
                                 <form name="register" data-ref="<?=$ref?>">
                                     <div id="reg-form">
-                                        <div class="rf-txt">Укажите Ваш email. <b>На него будет выслан пароль,</b> который понадобится ввести при входе в следующий раз.</div>
+                                        <div class="rf-txt">Укажите Ваш email. На него будет выслана информация для завершения регистрации.</div>
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>
                                             <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
@@ -320,7 +320,7 @@
                                             <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
                                         </div>
                                         <div class="s-b">
-                                            <input type="submit" disabled class="sb_but disabled" value="Играть" />
+                                            <input type="submit" disabled class="sb_but disabled" value="Зарегистрироваться" />
                                         </div>
                                         <!--div class="sl-bk disabled">
                                             <a href="javascript:void(0)" class="fb"></a>
@@ -329,13 +329,14 @@
                                             <a href="javascript:void(0)" class="tw"></a>
                                         </div-->
                                     </div>
+                                    <div style="display:none" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email. </div>
                                 </form>
                                 <!-- LOGIN FORM -->
-                                <form name="login">
+                                <form name="login" <?=$showEmail ? 'style="display:block"' : ''?>>
                                     <div id="login-form">
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>
-                                            <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                            <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
                                         </div>
                                         <div class="ib-p">
                                             <div class="ph">Пароль</div>

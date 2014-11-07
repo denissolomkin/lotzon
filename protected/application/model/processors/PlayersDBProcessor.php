@@ -6,7 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`) VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`) 
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -17,6 +18,9 @@ class PlayersDBProcessor implements IProcessor
                 ':dl'       => time(),
                 ':cc'       => $player->getCountry(),
                 ':vis'      => 1,
+                ':ip'       => $player->getIP(),
+                ':hash'     => $player->getHash(),
+                ':valid'    => $player->getValid(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -28,6 +32,7 @@ class PlayersDBProcessor implements IProcessor
             DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
                 ':id' => $player->getId(),
             ));
+            $player->setNicname('Участник ' . $player->getId());
         } catch (PDOException $e){}
 
         return $player;
@@ -241,6 +246,22 @@ class PlayersDBProcessor implements IProcessor
                 ':onl'  => (int)$player->isOnline(),
                 ':onlt'  =>  (int)$player->getOnlineTime(),
                 ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;   
+    }
+
+    public function validateHash($hash)
+    {
+        $sql = "UPDATE `Players` SET `Valid` = 1 WHERE `Hash` = :hash";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':hash'  => $hash,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);   

@@ -55,6 +55,7 @@ Config::instance()->errorMessages = array(
     'PLAYER_NOT_FOUND' => 'Учетная запись не найдена',
     'INVALID_PASSWORD' => 'Неверный пароль',
     'ALREADY_INVITED'  => 'На этот email уже было отправлено приглашение',
+    'EMAIL_NOT_VALIDATED' => 'Завершите процесс регистрации через свой email.',
 );
 
 Config::instance()->privateResources =  array(

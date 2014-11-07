@@ -129,7 +129,8 @@ $(function(){
             form.find('.e-t').text('Вы должны ознкомиться с правилами');
         }else{
             registerPlayer({'email':email, 'agree':rulesAgree, 'ref':ref}, function(data){
-                document.location.href = "/";
+                $("#reg-succ-txt").show();
+                $("#reg-form").hide();
             }, function(data){
                 $("#reg-form").addClass('error');
                 form.find('.e-t').text(data.message);

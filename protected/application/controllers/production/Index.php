@@ -26,6 +26,10 @@ class Index extends \SlimController\SlimController
 
     public function indexAction()
     {
+        // validate registration
+        if ($vh = $this->request()->get('vh')) {
+            PlayersModel::instance()->validateHash($vh);
+        }
         // validate invite
         if ($hash = $this->request()->get('ivh')) {
             EmailInvites::instance()->getProcessor()->validateHash($hash);
@@ -113,6 +117,8 @@ class Index extends \SlimController\SlimController
 
     protected function landing()
     {
+        $showEmail = $this->request()->get('m', false);
+
         $seo = SEOModel::instance()->getSEOSettings();
         $gameSettings = GameSettingsModel::instance()->loadSettings();
         $comments = CommentsModel::instance()->getList();
@@ -140,6 +146,7 @@ class Index extends \SlimController\SlimController
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();        
 
         $this->render('production/landing', array(
+            'showEmail'   => $showEmail,
             'gameInfo'    => $gameInfo,
             'country'     => $this->country,
             'staticTexts' => $staticTexts,
