@@ -4,7 +4,7 @@ Config::instance()->cacheEnabled = false;
 Config::instance()->newsCacheCount = 18;
 
 Config::instance()->dbConnectionProperties = array(
-    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
+   'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
     'user' => 'lotzone_user',
     'password' => '63{_Tc252!#UoQq',
     'options' => array(

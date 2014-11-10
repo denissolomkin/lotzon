@@ -295,7 +295,7 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 .login-popup .lp-b .ch-b-bk .ch-b {float:left;}
 .login-popup .lp-b .ch-b-bk .r-p {float:right;font:13px/1 Handbook-bold;color:#000;text-decoration:none;margin-top:5px;}
 .login-popup .lp-b .ch-b-bk .r-p:hover {text-decoration:underline;}
-#pass-rec-txt {font:18px/1 Handbook-regular;color:#000;margin:100px 0;text-align:center;display:none;}
+#pass-rec-txt, #reg-succ-txt {font:18px/1 Handbook-regular;color:#000;margin:100px 0;text-align:center;display:none;}
 .login-popup .rec-txt {display:block;}
 
 
