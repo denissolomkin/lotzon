@@ -47,6 +47,8 @@ class Player extends Entity
     private $_hash = '';
     private $_ip = '';    
 
+    private $_additionalData = array();
+
     public function init()
     {
         $this->setModelClass('PlayersModel');
@@ -413,6 +415,18 @@ class Player extends Entity
         return $this->_ip;
     }
 
+    public function setAdditionalData($additionalData) 
+    {
+        $this->_additionalData = $additionalData;
+
+        return $this;
+    }
+
+    public function getAdditionalData()
+    {
+        return $this->_additionalData;
+    }
+
     public function generatePassword()
     {
         $an = array(
@@ -667,7 +681,8 @@ class Player extends Entity
                  ->setOnlineTime($data['OnlineTime'])
                  ->setIp($data['Ip'])
                  ->setHash($data['Hash'])
-                 ->setValid($data['Valid']);
+                 ->setValid($data['Valid'])
+                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
         }
 
         return $this;
