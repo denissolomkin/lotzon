@@ -167,6 +167,10 @@ class Players extends \AjaxController
                                            ->create()->markOnline();
 
                                         $loggedIn = true;
+
+                                        if ($player->getId() <= 1000) {
+                                            $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+                                        }
                                         // try to catch avatar
                                         if ($profile['photo_200']) {
                                             try {
