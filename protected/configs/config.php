@@ -212,6 +212,6 @@ Config::instance()->generatorNumTries = 5;
 Config::instance()->vkCredentials = array(
     'appId'        => '4617228',
     'secret'       => 'hbTNQKCHQ03tk5XLISmy',
-    'redirectUrl' => 'http://lotzone.local/players/login/vk?redirected=1',
+    'redirectUrl' => 'http://lotzon.com/players/login/vk?redirected=1',
     'scope'        => 'email',
 );  
