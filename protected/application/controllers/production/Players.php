@@ -110,6 +110,104 @@ class Players extends \AjaxController
         $this->redirect('/');
     }
 
+    public function loginVkAction() {
+        if (!$this->request()->get('redirected')) {
+            $auth_url = "https://oauth.vk.com/authorize?client_id=%s&scope=%s&redirect_uri=%s&response_type=code";
+            $auth_url = vsprintf($auth_url, array(
+                Config::instance()->vkCredentials['appId'],
+                Config::instance()->vkCredentials['scope'],
+                urlencode(Config::instance()->vkCredentials['redirectUrl']),
+            ));
+
+            $this->redirect($auth_url);
+        } else {
+            // returned
+            if ($vkAuthCode = $this->request()->get('code')) {
+
+                $token_url = vsprintf("https://oauth.vk.com/access_token?client_id=%s&client_secret=%s&code=%s&redirect_uri=%s", array(
+                    Config::instance()->vkCredentials['appId'],
+                    Config::instance()->vkCredentials['secret'],
+                    $vkAuthCode,
+                    urlencode(Config::instance()->vkCredentials['redirectUrl']),     
+                ));                
+                $data = @file_get_contents($token_url);
+                if ($data = @json_decode($data)) {
+                    if ($data->email) {
+                        $player = new Player();
+                        $player->setEmail($data->email);
+                        $loggedIn = false;
+                        try {
+                            $player->fetch();
+
+                            $loggedIn = true;
+                        } catch (EntityException $e) {
+                            if ($e->getCode() == 404) {
+                                $infoUrl = vsprintf("https://api.vk.com/method/users.get?user_id=%s&v=5.26&access_token=%s&fields=country,photo_200", array(
+                                    $data->user_id,
+                                    $data->access_token,                                    
+                                ));
+
+                                $profile = @file_get_contents($infoUrl);
+                                if ($resp = @json_decode($profile, true)) {
+                                    $profile = array_shift($resp['response']);
+                                    $countries = array(
+                                        1 => 'RU',
+                                        2 => 'UA',
+                                        3 => 'BY',
+                                    );
+                                    $realCountry = $countries[$profile['country']['id']] ?: Config::instance()->defaultLang;
+
+                                    try {
+                                        $player->setCountry($realCountry)
+                                           ->setIp(Common::getUserIp())
+                                           ->setHash('')
+                                           ->setValid(true)
+                                           ->setName($profile['first_name'])
+                                           ->setSurname($profile['last_name'])
+                                           ->create()->markOnline();
+
+                                        $loggedIn = true;
+                                        // try to catch avatar
+                                        if ($profile['photo_200']) {
+                                            try {
+                                                $image = WideImage::load($profile['photo_200']);
+                                                $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+                                                $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+                                            
+                                                $imageName = uniqid() . ".jpg";
+                                                $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
+
+                                                if (!is_dir($saveFolder)) {
+                                                    mkdir($saveFolder, 0777);
+                                                }
+                                                $image->saveToFile($saveFolder . $imageName, 100);
+                                                // remove old one
+                                                $player->setAvatar($imageName)->saveAvatar();
+
+                                                $this->ajaxResponse($data);    
+                                            } catch (\Exception $e) {
+                                                // do nothing
+                                            }
+                                        }
+                                    } catch (EntityException $e) {
+                                        // do nothing
+                                    }
+                                    
+                                }
+                            }
+                        }
+
+                        if ($loggedIn === true) {
+                            Session::connect()->set(Player::IDENTITY, $player);
+                        }
+                    }
+                }
+            }
+            
+            $this->redirect('/');
+        }
+    }
+
     public function logoutAction()
     {
         Session::connect()->close();
