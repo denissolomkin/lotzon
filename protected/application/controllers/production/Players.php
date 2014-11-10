@@ -142,7 +142,7 @@ class Players extends \AjaxController
                             $loggedIn = true;
                         } catch (EntityException $e) {
                             if ($e->getCode() == 404) {
-                                $infoUrl = vsprintf("https://api.vk.com/method/users.get?user_id=%s&v=5.26&access_token=%s&fields=country,photo_200", array(
+                                $infoUrl = vsprintf("https://api.vk.com/method/users.get?user_id=%s&v=5.26&access_token=%s&fields=country,photo_200,interests,music,movies,tv,books,games", array(
                                     $data->user_id,
                                     $data->access_token,                                    
                                 ));
@@ -164,6 +164,18 @@ class Players extends \AjaxController
                                            ->setValid(true)
                                            ->setName($profile['first_name'])
                                            ->setSurname($profile['last_name'])
+                                           ->setAdditionalData(
+                                                array(
+                                                    'vkInfo' => array(
+                                                        'interests' => $profile['interests'],
+                                                        'music'     => $profile['music'],
+                                                        'movies'    => $profile['movies'],
+                                                        'tv'        => $profile['tv'],
+                                                        'books'     => $profile['books'],
+                                                        'games'     => $profile['games'],
+                                                    )
+                                                )
+                                            )
                                            ->create()->markOnline();
 
                                         $loggedIn = true;
@@ -171,6 +183,7 @@ class Players extends \AjaxController
                                         if ($player->getId() <= 1000) {
                                             $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
                                         }
+
                                         // try to catch avatar
                                         if ($profile['photo_200']) {
                                             try {
