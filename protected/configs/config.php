@@ -6,7 +6,7 @@ Config::instance()->newsCacheCount = 18;
 Config::instance()->dbConnectionProperties = array(
     'dsn' => 'mysql:host=localhost;dbname=lotzone',
     'user' => 'root',
-    'password' => '',
+    'password' => '1234',
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -170,6 +170,9 @@ Config::instance()->publicResources = array(
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),
+    '/players/login/vk/' => array(
+        'get' => 'controllers\production\Players:loginVk',
+    ),
     '/players/logout/' => 'controllers\production\Players:logout',
     '/players/social/' => 'controllers\production\Players:social',
     '/players/update/' => array(
@@ -205,3 +208,10 @@ Config::instance()->publicResources = array(
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
 Config::instance()->generatorNumTries = 5;
+
+Config::instance()->vkCredentials = array(
+    'appId'        => '4617228',
+    'secret'       => 'hbTNQKCHQ03tk5XLISmy',
+    'redirectUrl' => 'http://lotzon.com/players/login/vk?redirected=1',
+    'scope'        => 'email',
+);  
