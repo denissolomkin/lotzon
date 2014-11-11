@@ -361,6 +361,9 @@
                                         <div class="s-b">
                                             <input type="submit" class="sb_but disabled" disabled value="Играть" />
                                         </div>
+                                        <div class="sl-bk" style="margin:40px 0 -20px 0;">
+                                            <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
+                                        </div>
                                         <!--div class="sl-bk">
                                             <a href="javascript:void(0)" class="fb"></a>
                                             <a href="javascript:void(0)" class="vk"></a>
