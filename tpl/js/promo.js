@@ -121,21 +121,15 @@ $(function(){
     $('#login-block form[name="register"]').on('submit', function(e) {
         var form = $(this);
         var email = form.find('input[name="login"]').val();
-        var rulesAgree = form.find('#rulcheck').prop('checked') ? 1 : 0;
+        var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
         var ref = $(this).data('ref');
-
-        if(rulesAgree == 0){
-            $("#reg-form").addClass('rul-error');
-            form.find('.e-t').text('Вы должны ознкомиться с правилами');
-        }else{
-            registerPlayer({'email':email, 'agree':rulesAgree, 'ref':ref}, function(data){
-                $("#reg-succ-txt").show();
-                $("#reg-form").hide();
-            }, function(data){
-                $("#reg-form").addClass('error');
-                form.find('.e-t').text(data.message);
-            }, function(data) {});
-        }
+        registerPlayer({'email':email, 'agree':1, 'ref':ref}, function(data){
+            $("#reg-succ-txt").show();
+            $("#reg-form").hide();
+        }, function(data){
+            $("#reg-form").addClass('error');
+            form.find('.e-t').text(data.message);
+        }, function(data) {});
         return false;
     });
     $('#rulcheck').on('change', function(){
@@ -148,7 +142,7 @@ $(function(){
     });
 
     $("#reg-form .sl-bk a").on('click', function(){
-        var rulesAgree = $('#reg-form').find('#rulcheck').prop('checked') ? 1 : 0;
+        var rulesAgree = 1;//$('#reg-form').find('#rulcheck').prop('checked') ? 1 : 0;
         if(rulesAgree == 0){
             $("#reg-form").addClass('rul-error');
         }
