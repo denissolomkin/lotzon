@@ -121,7 +121,7 @@ $(function(){
     $('#login-block form[name="register"]').on('submit', function(e) {
         var form = $(this);
         var email = form.find('input[name="login"]').val();
-        var rulesAgree = form.find('#rulcheck').prop('checked') ? 1 : 0;
+        var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
         var ref = $(this).data('ref');
 
         if(rulesAgree == 0){
@@ -148,7 +148,7 @@ $(function(){
     });
 
     $("#reg-form .sl-bk a").on('click', function(){
-        var rulesAgree = $('#reg-form').find('#rulcheck').prop('checked') ? 1 : 0;
+        var rulesAgree = 1;//$('#reg-form').find('#rulcheck').prop('checked') ? 1 : 0;
         if(rulesAgree == 0){
             $("#reg-form").addClass('rul-error');
         }
