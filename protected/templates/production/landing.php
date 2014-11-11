@@ -312,21 +312,29 @@
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>
                                             <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                            <div class="e-t">Этот email уже зарегистрирован</div>
                                         </div>
 
-                                        <div class="ch-b">
-                                            <div class="e-t"></div>
-                                            <input type="checkbox" id="rulcheck" hidden />
-                                            <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
-                                        </div>
+
                                         <div class="s-b">
                                             <input type="submit" disabled class="sb_but disabled" value="Зарегистрироваться" />
                                         </div>
-                                        <!--div class="sl-bk disabled">
-                                            <a href="javascript:void(0)" class="fb"></a>
-                                            <a href="javascript:void(0)" class="vk"></a>
-                                            <a href="javascript:void(0)" class="gp"></a>
-                                            <a href="javascript:void(0)" class="tw"></a>
+                                        <!-- Add class "disabled" -->
+                                        <div class="sl-bk">
+                                            <div class="sl-bk-tl">Зарегистрироваться через социальную сеть:</div>
+                                            <div>
+                                                <!--a href="javascript:void(0)" class="fb"></a-->
+                                                <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
+                                                <!--a href="javascript:void(0)" class="gp"></a>
+                                                <a href="javascript:void(0)" class="tw"></a-->
+                                            </div>
+                                        </div>
+                                        <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
+                                        <!--div class="ch-b">
+                                        Регистрируясь, Вы соглашаетесь с правилами участия.
+                                            <div class="e-t"></div>
+                                            <input type="checkbox" id="rulcheck" hidden />
+                                            <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
                                         </div-->
                                     </div>
                                     <div style="display:none" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email. </div>
