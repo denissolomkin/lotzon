@@ -489,7 +489,7 @@ $(function(){
 
     // CASE OUTPUT POPUP //
     $('#cash-output').on('click', function(){
-        if (playerMoney > 10) {
+        if (playerMoney >= 10) {
             $('#cash-output-popup').fadeIn(200);    
         } else {
             $('.pz-ifo-bk').hide();
