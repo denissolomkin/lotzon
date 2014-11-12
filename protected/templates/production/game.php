@@ -86,7 +86,7 @@
     </script>
     <div class="wrap">
         <header>
-            <div class="hr-br"><a href="http://musiclife.ua/" target="_blank"><img src="/tpl/img/baners/Musiclife-960x135.jpg" width="960" height="135" /></a></div>
+            <div class="hr-br"><a href="http://musiclife.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -384,7 +384,8 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" />
+            <ins class="adsbygoogle" style="display:inline-block;width:980px;height:120px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="4723768183"></ins>
+            <!-- img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" /-->
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
