@@ -78,8 +78,8 @@ class Index extends \SlimController\SlimController
         //}
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount(),
-            'win'          => LotteriesModel::instance()->getMoneyTotalWin()  * $gameSettings->getCountryCoefficient($this->country),
+            'winners'      => LotteriesModel::instance()->getWinnersCount() + 18,
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + 1100 ) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -125,8 +125,8 @@ class Index extends \SlimController\SlimController
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount(),
-            'win'          => LotteriesModel::instance()->getMoneyTotalWin() * $gameSettings->getCountryCoefficient($this->country),
+            'winners'      => LotteriesModel::instance()->getWinnersCount() + 18,
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + 1100) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
