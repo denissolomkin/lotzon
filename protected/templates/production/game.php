@@ -86,7 +86,7 @@
     </script>
     <div class="wrap">
         <header>
-            <div class="hr-br"><ins class="adsbygoogle" style="display:inline-block;width:965px;height:135px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1812817787"></ins><!--img src="/tpl/img/baners/Plug-960х135.png" width="960" height="135" /--></div>
+            <div class="hr-br"><a href="http://musiclife.ua/" target="_blank"><img src="/tpl/img/baners/Musiclife-960x135.jpg" width="960" height="135" /></a></div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -577,7 +577,7 @@
                                 CHANCE BLOCK
         ======================================================================-->
         <section class="chance">
-        <div class="ch-br-bk"><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1649537384"></ins></div>
+        <div class="ch-br-bk"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl">шансы</div>
