@@ -181,8 +181,8 @@ class Index extends \SlimController\SlimController
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
-                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount(), 0, '.', ' '),                
-                'win'          => number_format(LotteriesModel::instance()->getMoneyTotalWin()  * $gameSettings->getCountryCoefficient($this->country), 0, '.', ' ') . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
+                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount()  + 18, 0, '.', ' '),                
+                'win'          => number_format((LotteriesModel::instance()->getMoneyTotalWin() + 1100)  * $gameSettings->getCountryCoefficient($this->country), 0, '.', ' ') . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
