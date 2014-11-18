@@ -163,6 +163,7 @@
                     <div class="bz1">
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                        <span style="margin-bottom: 40px;">&nbsp;</span>
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                     </div>
