@@ -136,24 +136,24 @@
                     </script>
                     <!-- CARDS FORM -->
                     <section class="cards form">
-                        <form>
+                        <form onsubmit="moneyOutput('card', this); return false;" method="POST">
                             <div class="inp-bk">
                                 <div class="ph">Номер</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" data-title="Номер карты" name="number" data-type="number" maxlength="16" class="m_input">
                             </div>
                             <div class="inp-bk">
                                 <div class="ph">Имя Фамилия</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия (латиницей)" name="name" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия (латиницей)" data-title="ФИО" name="name" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" name="summ" data-type="number" class="m_input">
                             </div>
-                            <div class="inp-fl-bk">
+                            <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input type="file" class="f_input" name="file" />
-                            </div>
+                            </div-->
                             <div class="s-b">
                                 <input type="submit" value="вывести" class="sb_but">
                             </div>
@@ -161,20 +161,20 @@
                     </section>
                     <!-- QIWI FORM -->
                     <section class="qiwi form">
-                        <form>
+                        <form onsubmit="moneyOutput('qiwi', this); return false;"  method="POST">
                             <div class="inp-bk">
                                 <div class="ph">Номер телефона</div>
-                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="Номер телефона в международном формате" name="phone" data-type="phone" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="Номер телефона в международном формате" name="phone" data-title="Телефон" data-type="phone" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" name="summ" data-type="number" class="m_input">
                             </div>
-                            <div class="inp-fl-bk">
+                            <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input type="file" class="f_input" name="file" />
-                            </div>
+                            </div-->
                             <div class="s-b">
                                 <input type="submit" value="вывести" class="sb_but">
                             </div>
@@ -183,35 +183,35 @@
 
                     <!-- WEBMONEY FORM -->
                     <section class="webmoney form">
-                        <form>
+                        <form onsubmit="moneyOutput('webmoney', this); return false;"  method="POST">
                             <div class="purse-ch-bk">
                                 <div class="ps-ch-tl">Валюта кошелька</div>
                                 <div class="ps-r">
-                                    <input type="radio" name="purse" id="wm-r" hidden />
+                                    <input type="radio" name="purse" data-currency="WMR" data-title="Валюта кошелька" id="wm-r" hidden />
                                     <label for="wm-r">R</a></label>
                                 </div>
                                 <div class="ps-u">
-                                    <input type="radio" name="purse" id="wm-u" hidden />
+                                    <input type="radio" name="purse" data-currency="WMU" data-title="Валюта кошелька" id="wm-u" hidden />
                                     <label for="wm-u">U</a></label>
                                 </div>
                                 <div class="ps-b">
-                                    <input type="radio" name="purse" id="wm-b" hidden />
+                                    <input type="radio" name="purse" data-currency="WMB" data-title="Валюта кошелька" id="wm-b" hidden />
                                     <label for="wm-b">B</a></label>
                                 </div>
                             </div>
                             <div class="inp-bk">
                                 <div class="ph">Номер кошелька</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер кошелька" name="card-number" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер кошелька" data-title="Номер кошелька" name="card-number" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" name="summ" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" name="summ" data-type="number" class="m_input">
                             </div>
-                            <div class="inp-fl-bk">
+                            <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input type="file" class="f_input" name="file" />
-                            </div>
+                            </div-->
                             <div class="s-b">
                                 <input type="submit" value="вывести" class="sb_but">
                             </div>
@@ -219,20 +219,20 @@
                     </section>
                     <!-- YANDEX FORM -->
                     <section class="yandex form">
-                        <form>
+                        <form onsubmit="moneyOutput('yandex', this); return false;" method="POST">
                             <div class="inp-bk">
                                 <div class="ph">Номер счета</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер счета" name="card-number" data-type="number" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер счета" data-title="Номер счета" name="card-number" data-type="number" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" name="summ" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" data-type="number" name="summ" class="m_input">
                             </div>
-                            <div class="inp-fl-bk">
+                            <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input autocomplete="off" spellcheck="false" type="file" class="f_input" name="file" />
-                            </div>
+                            </div-->
                             <div class="s-b">
                                 <input autocomplete="off" spellcheck="false" type="submit" value="вывести" class="sb_but">
                             </div>
@@ -241,24 +241,24 @@
 
                     <!-- PRIVAT24 FORM -->
                     <section class="p24 form">
-                        <form>
+                        <form onsubmit="moneyOutput('private24', this); return false;" method="POST">
                             <div class="inp-bk">
                                 <div class="ph">Номер карты</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" data-title="Номер карты" name="card-number" data-type="number" maxlength="16" class="m_input">
                             </div>
                             <div class="inp-bk">
                                 <div class="ph">Имя Фамилия</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия" name="name" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия" name="name" data-title="ФИО" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" name="summ" class="m_input">
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" data-title="Сумма" name="summ" class="m_input">
                             </div>
-                            <div class="inp-fl-bk">
+                            <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input type="file" class="f_input" name="file" />
-                            </div>
+                            </div-->
                             <div class="s-b">
                                 <input type="submit" value="вывести" class="sb_but">
                             </div>
@@ -566,7 +566,7 @@
             <section class="report-block pop-box">
                 <div class="cs"></div>
                 <!-- Prize report block -->
-                <div class="txt" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>">a as dasd asd </div>
+                <div class="txt" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>"></div>
             </section>
         </div>
     </div>

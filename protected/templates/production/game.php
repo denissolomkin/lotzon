@@ -577,7 +577,7 @@
                                 CHANCE BLOCK
         ======================================================================-->
         <section class="chance">
-        <div class="ch-br-bk"><ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="3870986982"></ins></div><!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
+        <div class="ch-br-bk"><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="6820793380"></ins></div><!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl">шансы</div>

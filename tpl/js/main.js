@@ -1057,6 +1057,41 @@ $(function(){
         }
     });
 });
+function moneyOutput(type, form) {
+    form = $(form);
+    var data = {};
+
+    data.type = type;
+
+    form.find('input').each(function(id, input) {
+        if (!$(input).hasClass('sb_but')) {
+            if ($(input).attr('type') != 'radio') {
+                data[$(input).attr('name')] = {
+                    title: $(input).data('title'),
+                    value: $(input).val(),
+                }    
+            } else {
+                if ($(input).is(":checked")) {
+                    data[$(input).attr('name')] = {
+                        title: $(input).data('title'),
+                        value: $(input).data('currency'),
+                    }
+                }
+            }
+            
+        }
+    });
+
+    requestForMoney(data, function(){        
+        $("#cash-output-popup").hide();
+        $("#report-popup").find(".txt").text("Заявка успешно принята!");
+        $("#report-popup").show();
+    }, function(data){
+        alert(data.message);
+    }, function(){});
+    return false;
+}
+
 function showGameProccessPopup(){
     if (filledTicketsCount > 0) {
         $('.popup').hide();
@@ -1221,7 +1256,7 @@ $('.ch-gm-tbl .gm-bt').click(function(){
                 $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
             }
         }, function() {});
-    })
+    });
 });
 
 $('li[data-coord]').on('click', function() {

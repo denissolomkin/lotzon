@@ -403,6 +403,28 @@ function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
     }); 
 }
 
+function requestForMoney(data, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/order/money",
+        method: 'POST',
+        data: {
+            'data' : data,
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        }, 
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
+
 function sendPartnersFeedback(post, successFunction, failFunction, errorFunction) {
     $.ajax({
         url: "/feedback",

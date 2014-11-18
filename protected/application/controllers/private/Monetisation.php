@@ -2,7 +2,7 @@
 namespace controllers\admin;
 
 use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \ChanceGame, \ChanceGamesModel, \EntityException;
-use \ShopOrdersModel, \ShopItemOrder;
+use \ShopOrdersModel, \ShopItemOrder, \MoneyOrderModel, \MoneyOrder;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -19,39 +19,60 @@ class Monetisation extends PrivateArea
     {
 
         $list = ShopOrdersModel::instance()->getOrdersToProcess();
+        $moneyOrders = MoneyOrderModel::instance()->getOrdersToProcess();
 
         $this->render('admin/monetisation', array(
             'title'      => 'Вывод средств',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
+            'moneyOrders' => $moneyOrders,
         ));
     }
 
     public function approveAction($id)
     {
-        $order = new ShopItemOrder();
-        $order->setId($id)->fetch();
-        
-        $order->setStatus(\ShopItemOrder::STATUS_PROCESSED)
-              ->setDateProcessed(time());
+        if (!$this->request()->get('money')) {
+            $order = new ShopItemOrder();
+            $order->setId($id)->fetch();
+            
+            $order->setStatus(\ShopItemOrder::STATUS_PROCESSED)
+                  ->setDateProcessed(time());
 
-        try {
-            $order->update();
+            try {
+                $order->update();
 
-            // substract points
-            if (!$order->getChanceGameId()) {
-                $order->getPlayer()->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
+                // substract points
+                if (!$order->getChanceGameId()) {
+                    $order->getPlayer()->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
+                }
+
+                // update item
+                if ($order->getItem()->getQuantity()) {
+                    $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
+                }
+            } catch (EntityException $e) {
+
             }
 
-            // update item
-            if ($order->getItem()->getQuantity()) {
-                $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
-            }
-        } catch (EntityException $e) {
+        } else {
+            $order = new MoneyOrder();
+            $order->setId($id)->fetch();
 
+            $order->setStatus(\ShopItemOrder::STATUS_PROCESSED)
+                  ->setDateProcessed(time());
+
+            try {
+                $order->update();
+
+                // substract player money
+                $sum = $order->getData()['summ']['value'];
+                
+                $order->getPlayer()->addMoney(-1*$sum, "Вывод денег");
+            } catch (EntityException $e) {
+
+            }
         }
-
-        $this->redirect('/private/monetisation');
+        $this->redirect('/private/monetisation');        
     }
 }
