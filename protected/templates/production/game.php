@@ -576,18 +576,21 @@
                     </div>
                 </div>
                 <div class="pr-br">
-                <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1537812583"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5968012188"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    <img src="/tpl/img/baners/Plug-300х665.png" width="300" height="665" />
                 </div>
-                <div class="b-cl-block"></div><!--img src="/tpl/img/baners/Plug-300х665.png" width="300" height="665" /-->
+                <div class="b-cl-block"></div>
             </section>
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
         <section class="chance">
-        <div class="ch-br-bk"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+        <div class="ch-br-bk">
+            <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1537812583"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5968012188"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
+        </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl">шансы</div>
