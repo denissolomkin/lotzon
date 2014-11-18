@@ -580,7 +580,8 @@
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                 <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5968012188"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <div class="b-cl-block"></div><!--img src="/tpl/img/baners/Plug-300х665.png" width="300" height="665" /></div-->
+                </div>
+                <div class="b-cl-block"></div><!--img src="/tpl/img/baners/Plug-300х665.png" width="300" height="665" /-->
             </section>
         <!--=====================================================================
                                 CHANCE BLOCK
