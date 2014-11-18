@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \ShopItemOrder, \ShopItem, \ChanceGamesModel;
+use \Application, \Config, \Player, \EntityException, \Session, \MoneyOrder;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -50,6 +50,30 @@ class OrdersController extends \AjaxController
             $order->create();
         } catch(EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
+        }
+
+        $this->ajaxResponse(array(
+            'orderId'   => $order->getId(),
+        ));
+    }
+
+    public function orderMoneyAction() 
+    {
+        $data = $this->request()->post('data');
+        if (is_array($data)) {
+            $order = new MoneyOrder();
+            $order->setPlayer(Session::connect()->get(Player::IDENTITY))
+                  ->setType($data['type']);
+            unset($data['type']);
+
+            $order->setData($data);
+            try {
+                $order->create();
+            } catch(EntityException $e) {
+                $this->ajaxResponse(array(), 0, $e->getMessage());
+            }
+        } else {
+            $this->ajaxResponse(array(), 0, 'FRAUD');
         }
 
         $this->ajaxResponse(array(

@@ -191,6 +191,7 @@ Config::instance()->publicResources = array(
     '/content/shop/'      => 'controllers\production\ContentController:shop',
     '/content/news/'      => 'controllers\production\ContentController:news',
     '/order/item/'        => 'controllers\production\OrdersController:orderItem',
+    '/order/money/'       => 'controllers\production\OrdersController:orderMoney',
     '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
     '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
     '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',

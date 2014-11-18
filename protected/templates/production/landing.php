@@ -464,5 +464,105 @@
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--=========================================================================
+                                    Game-3.5.2-Email-Confirmation.psd
+        ==========================================================================-->
+<style>
+    .bl-pp-bk {position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.8);z-index:1000;overflow-x:hidden;overflow-y:auto;}
+    .bl-pp_table {display:table;width:100%;height:100%;}
+    .bl-pp_td {display:table-cell;vertical-align:middle;}
+    .ml-cn {margin:auto;background-color:#fff;width:460px;}
+    .ml-cn-padd {padding:30px;}
+    .ml-cn-padd .ml-cn-txt {font:18px/36px Handbook-regular;color:#000;}
+
+
+    .ml-cn .pi-inp-bk {height:29px;border-bottom:1px solid #e3e3e3;margin:45px 0 38px 0;position:relative;}
+    .ml-cn .pi-inp-bk.error {border-color:#c51e1e!important;color:#c51e1e!important;}
+    .ml-cn .pi-inp-bk.error > input, .prize-info .pz-fm-bk .pi-inp-bk.error .ph {color:#c51e1e!important;}
+    .ml-cn .pi-inp-bk.focus {border-bottom:1px solid #000;}
+
+    .ml-cn .pi-inp-bk > input {border:none;background:transparent;height:29px;width:350px;font:18px/29px Handbook-regular;color:#000;outline:none;}
+    .ml-cn .pi-inp-bk.td > input {width:300px;}
+    .ml-cn .pi-inp-bk > input::-webkit-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
+    .ml-cn .pi-inp-bk > input:-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
+    .ml-cn .pi-inp-bk > input::-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
+    .ml-cn .pi-inp-bk > input:-ms-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
+    .ml-cn .pi-inp-bk.focus > input::-webkit-input-placeholder {opacity:0;}
+    .ml-cn .pi-inp-bk.focus > input:-moz-placeholder {opacity:0;}
+    .ml-cn .pi-inp-bk.focus > input::-moz-placeholder {opacity:0;}
+    .ml-cn .pi-inp-bk.focus > input:-ms-input-placeholder {opacity:0;}
+
+    .ml-cn .pi-inp-bk .ph {height:29px;font:18px/29px Handbook-italic;color:#d2d2d2;position:absolute;top:0;right:0px;}
+    .ml-cn .pi-inp-bk.td .ph {display:none;}
+
+    .ml-cn .pi-inp-bk.focus .ph {color:#000;display:block;}
+
+    .ml-cn .ml-cn-but {border: 1px solid #000;cursor: pointer;font: 15px/48px Handbook-bold;height: 48px;margin: 0 0 0 auto;text-align: center;text-transform: uppercase;width:auto;}
+    .ml-cn .ml-cn-but:hover {background-color:#000;color:#fff;}
+    .ml-cn .ml-cn-but.disabled {opacity:0.25;}
+    .ml-cn .ml-cn-but.disabled:hover {background-color:#fff;color:#000;}
+</style>
+
+
+        <div class="bl-pp-bk popup" id="mail-conf">
+            <div class="bl-pp_table">
+                <div class="bl-pp_td">
+                    <section class="ml-cn pop-box">
+                        <div class="ml-cn-padd">
+                            <div class="ml-cn-txt">Для завершения регистрации, введите свой email.</div>
+                            <div class="pi-inp-bk td">
+                                <div class="ph">Email</div>
+                                <input type="text" placeholder="Email" name="addr" spellcheck="false" autocomplete="off">
+                            </div>
+                            <div class="ml-cn-but disabled">подтвердить</div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+
+    <script>
+        $('.pi-inp-bk input').on('focus', function(){
+            $(this).closest('.pi-inp-bk').addClass('focus')
+            if($(this).attr('name') == 'date')$(this).attr('type','date');
+            $('.profile-info .save-bk .sb-ch-td .but').addClass('save');
+        });
+
+        $('.pi-inp-bk input').on('blur', function(){
+            $(this).closest('.pi-inp-bk').removeClass('focus')
+            if($(this).attr('name') == 'date')$(this).attr('type','text');
+        });
+
+        $('#mail-conf .pi-inp-bk input').on('keyup', function(){
+            var val = $.trim($(this).val().length);
+            if(val > 0){
+                $(this).closest('.ml-cn-padd').find('.ml-cn-but').removeClass('disabled');
+            }else{
+                $(this).closest('.ml-cn-padd').find('.ml-cn-but').addClass('disabled');
+            }
+        });
+    </script>
+
+        <!--=========================================================================
+                                     END   Game-3.5.2-Email-Confirmation.psd
+            ==========================================================================-->
+
+
+
     </body>
 </html>

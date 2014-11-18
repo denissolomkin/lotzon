@@ -857,7 +857,6 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .prize-info .pz-fm-bk .pi-inp-bk:last-child {margin-bottom:0;}
 
 .prize-info .pz-fm-bk .pi-inp-bk > input {border:none;background:transparent;height:29px;width:350px;font:18px/29px Handbook-regular;color:#000;outline:none;}
-.font-fix .prize-info .pz-fm-bk .pi-inp-bk {line-height:32px;}
 .prize-info .pz-fm-bk .pi-inp-bk.td > input {width:300px;}
 .prize-info .pz-fm-bk .pi-inp-bk > input::-webkit-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .prize-info .pz-fm-bk .pi-inp-bk > input:-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
@@ -869,7 +868,6 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .prize-info .pz-fm-bk .pi-inp-bk.focus > input:-ms-input-placeholder {opacity:0;}
 
 .prize-info .pz-fm-bk .pi-inp-bk .ph {height:29px;font:18px/29px Handbook-italic;color:#d2d2d2;position:absolute;top:0;right:0px;}
-.font-fix .prize-info .pz-fm-bk .pi-inp-bk .ph {line-height:32px;}
 .prize-info .pz-fm-bk .pi-inp-bk.td .ph {display:none;}
 
 .prize-info .pz-fm-bk .pi-inp-bk.focus .ph {color:#000;display:block;}
