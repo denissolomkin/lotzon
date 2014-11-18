@@ -38,11 +38,6 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        <meta property="og:url" content="http://samples.ogp.me/136756249803614" /> 
-        <meta property="og:title" content="Chocolate Pecan Pie" />
-        <meta property="og:description" content="This pie is delicious!" /> 
-        <meta property="og:image" content="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/851565_496755187057665_544240989_n.jpg" /> 
-
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/promo.css" />
 
