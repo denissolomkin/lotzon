@@ -189,7 +189,7 @@ class MoneyOrder extends Entity
                         }
                         $data['name']['value'] = htmlspecialchars(strip_tags($data['name']['value']));
                          // clean up card number
-                        $cardNumber = preg_replace("/[^0-9]/", "", $data['number']['value']);
+                        $cardNumber = preg_replace("/[^0-9]/", "", $data['card-number']['value']);
                         // verify visa or mastercard
                         if (!preg_match("/^((4[0-9]{12}(?:[0-9]{3}))|(5[1-5][0-9]{14}))$/", $cardNumber)) {
                             throw new EntityException("INVALID_CARD_NUMBER", 400);
