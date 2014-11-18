@@ -75,6 +75,7 @@ if (timeToRunLottery()) {
         // get most better combination
         $maxWin = 0;
         $lotteryCombination = array();
+        $combinationsWeight = array();
         foreach ($lotteryCombinations as $id => $combination) {
             $combinationWin = 0;
             foreach ($combination as $combinationNum) {
@@ -84,46 +85,70 @@ if (timeToRunLottery()) {
                     }
                 }
             }
+            $combinationsWeight[$id] = $combinationWin;
             if ($combinationWin > $maxWin) {
                 $maxWin = $combinationWin;
 
-                $lotteryCombination = $lotteryCombinations[$id];
+                
             }
         }
+        // late night magick ;O
+        arsort($combinationsWeight);
+        $combinationsWeight = array_flip($combinationsWeight);
+        
+        $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
     }
     messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
     message("Compare tickets");
     $time = microtime(true);
-    $playersPlayed  = array();
-    $pointsWonTotal = 0;
-    $moneyWonTotal  = 0;
+    $lastIterationReached = false;
+    while (true) {
+        $playersPlayed  = array();
+        $pointsWonTotal = 0;
+        $moneyWonTotal  = 0;
 
-    foreach ($tickets as $ticket) {
-        $compares = 0;
-        foreach ($ticket->getCombination() as $ticketBet) {
-            foreach ($lotteryCombination as $lotteryBet) {
-                if ($ticketBet == $lotteryBet) {
-                    $compares++;
+        foreach ($tickets as $ticket) {
+            $compares = 0;
+            foreach ($ticket->getCombination() as $ticketBet) {
+                foreach ($lotteryCombination as $lotteryBet) {
+                    if ($ticketBet == $lotteryBet) {
+                        $compares++;
+                    }
                 }
             }
-        }
-        // ticket win
-        if ($compares > 0) {
-            // calculate point or UA money total
-            if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
-                $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];                    
-            } else {
-                $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
+            // ticket win
+            if ($compares > 0) {
+                // calculate point or UA money total
+                if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
+                    $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];                    
+                } else {
+                    $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
+                }
+                // compile players and tickets
+                if (!isset($playersPlayed[$ticket->getPlayerId()])) {
+                    $playersPlayed[$ticket->getPlayerId()] = array(
+                        'tickets'   => array(),
+                    );
+                }
+                $playersPlayed[$ticket->getPlayerId()]['tickets'][$ticket->getId()] = $compares;
             }
-            // compile players and tickets
-            if (!isset($playersPlayed[$ticket->getPlayerId()])) {
-                $playersPlayed[$ticket->getPlayerId()] = array(
-                    'tickets'   => array(),
-                );
-            }
-            $playersPlayed[$ticket->getPlayerId()]['tickets'][$ticket->getId()] = $compares;
         }
+
+        if (!$gameSettings->getJackpot()) {
+            if ($moneyWonTotal > $gameSettings->getTotalWinSum() && !$lastIterationReached) {
+                message(" limit -> ");
+
+                if (count($combinationsWeight)  == 1) {
+                    $lastIterationReached = true;
+                }
+                // restart with lower weight combination
+                $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
+                continue;
+            } 
+        }
+
+        break;
     }
 
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
