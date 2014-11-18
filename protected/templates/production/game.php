@@ -389,7 +389,9 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-            <img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" />
+                <ins class="adsbygoogle" style="display:inline-block;width:980px;height:120px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="4351678186"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <!-- img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" /-->
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
