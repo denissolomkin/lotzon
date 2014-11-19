@@ -51,6 +51,13 @@ class Session
         return $this;
     }
 
+    public function setParams($lifetime = 0, $path = '/', $domain = '', $secure = false, $httponly = false) 
+    {
+        session_set_cookie_params($lifetime, $path, $domain, $secure, $httponly);
+        
+        return $this;
+    }
+
     public function set($key, $value) 
     {
         $_SESSION[$key] = $value;

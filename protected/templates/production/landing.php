@@ -286,7 +286,7 @@
                     <div class="lb-td">
                         <div class="lp-b">
                             <div class="pu-b-c" id="lb-close"></div>
-                            <div class="b-m <?=$showEmail ? 'login' : 'registration'?>" id="cl-check">
+                            <div class="b-m <?=$showEmail || $showLoginScreen ? 'login' : 'registration'?>" id="cl-check">
                                 <div class="rules-bk">
                                     <div class="rb-cs-bt"></div>
                                     <div class="rb-pg">
@@ -335,7 +335,7 @@
                                     <div style="display:none" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email. </div>
                                 </form>
                                 <!-- LOGIN FORM -->
-                                <form name="login" <?=$showEmail ? 'style="display:block"' : ''?>>
+                                <form id="login-block-form" name="login" <?=$showEmail || $showLoginScreen ? 'style="display:block"' : ''?>>
                                     <div id="login-form">
                                         <div class="ib-l">
                                             <div class="ph">Ваш email</div>

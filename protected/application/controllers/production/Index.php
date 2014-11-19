@@ -118,6 +118,11 @@ class Index extends \SlimController\SlimController
     protected function landing()
     {
         $showEmail = $this->request()->get('m', false);
+        $showLoginScreen = false;
+
+        if (!empty($_COOKIE['showLoginScreen'])) {
+            $showLoginScreen = true;
+        }
 
         $seo = SEOModel::instance()->getSEOSettings();
         $gameSettings = GameSettingsModel::instance()->loadSettings();
@@ -146,6 +151,7 @@ class Index extends \SlimController\SlimController
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();        
 
         $this->render('production/landing', array(
+            'showLoginScreen' => $showLoginScreen,
             'showEmail'   => $showEmail,
             'gameInfo'    => $gameInfo,
             'country'     => $this->country,
