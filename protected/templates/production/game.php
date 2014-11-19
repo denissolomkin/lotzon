@@ -155,7 +155,11 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-                    <div class="bz1"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
+                    <div class="bz1">
+                    <ins class="adsbygoogle" style="display:inline-block;width:120px;height:600px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="7252942189"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    <!--img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /-->
+                    </div>
                     <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>                    
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
