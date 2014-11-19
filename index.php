@@ -15,6 +15,7 @@ Application::import(PATH_SYSTEM . '*');
 Application::import(PATH_CONFIGS . '*');
 Application::import(PATH_CONTROLLERS . '*');
 
+Session::connect()->start();
 
 $dispatcher = new \SlimController\Slim(array(
     'view'                       => '\Slim\LayoutView',
