@@ -578,8 +578,9 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .sn-bt-bk .tw {border-color:#4798e4;color:#4798e4;background:url("../img/bg-profile-invite-but-tw.png") no-repeat 9px 9px;}
 .profile-bonuses .sn-bt-bk .tw:hover {color:#fff;background:#4798e4 url("../img/bg-profile-invite-but-tw.png") no-repeat 9px -15px;}
 .profile-bonuses .rp-bk {display:table;width:100%;margin-top:50px;}
-.profile-bonuses .rp-bk .rp-txt {display:table-cell;width:260px;font:18px/19px Handbook-regular;color:#000;}
-.profile-bonuses .rp-bk .rp-sl-bk {display:table-cell;vertical-align:middle;text-align:right;padding-right:31px;}
+.profile-bonuses .rp-bk.ref {margin-top:20px;}
+.profile-bonuses .rp-bk .rp-txt {display:table-cell;width:400px;font:18px/19px Handbook-regular;color:#000;}
+.profile-bonuses .rp-bk .rp-sl-bk {display:table-cell;vertical-align:middle;text-align:right;padding-right:90px;}
 
 
 .profile .yashare-auto-init {float:right;}
