@@ -156,7 +156,7 @@
             <section class="wings">
                 <aside class="lbs">
                     <div class="bz1">
-                    <ins class="adsbygoogle" style="display:inline-block;width:120px;height:600px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="7252942189"></ins>
+                    <ins class="adsbygoogle" style="display:inline-block;width:120px;height:240px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="9368803789"></ins>
                     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                     <!--img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /-->
                     </div>
