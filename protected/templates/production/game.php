@@ -166,7 +166,7 @@
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                     </div>
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+                    <div class="bz2"><script language=JavaScript src='http://monopoly-club.ru/partnership/mc_banner.js?f=300x250&p=1000045425'></script></div>
                     <div class="bz3"><img src="/tpl/img/baners/Plug-300х175.png" width="300" height="175" /></div>
                 </aside>
                 <div class="w-ct">
