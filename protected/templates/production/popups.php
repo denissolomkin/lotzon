@@ -107,7 +107,7 @@
             <section class="csh-ch-bk pop-box">
                 <div class="cl-bt cs"></div>
                 <div class="padd">
-                    <p id="csh-ch-txt">Поступление денег производится в течение 3-х банковских дней бла-бла-бла. Для вывода суммы превышающей 200 грн. необходимо прикрепить фото документа удостоверяющего личность бла-бла-бла</p>
+                    <p id="csh-ch-txt"><?=$staticTexts['vivod-deneg'][$lang]->getText()?></p>
                     <p>Выберите способ вывода денежных стредств:</p>
                     <ul class="csh-ch-lst">
                         <li>
