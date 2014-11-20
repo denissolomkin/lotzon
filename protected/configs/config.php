@@ -208,7 +208,7 @@ Config::instance()->publicResources = array(
 
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
-Config::instance()->generatorNumTries = 100;
+Config::instance()->generatorNumTries = 5;
 
 Config::instance()->vkCredentials = array(
     'appId'        => '4617228',

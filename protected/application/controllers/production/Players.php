@@ -95,7 +95,7 @@ class Players extends \AjaxController
 
             try {   
                 $player->login($password)->markOnline();
-                
+
                 // set cookie to not show register form
                 setcookie("showLoginScreen", "1", time() + (10 * 365 * 24 * 60 * 60), '/');
             } catch (EntityException $e) {
@@ -110,11 +110,14 @@ class Players extends \AjaxController
 
     public function loginVkAction() {
         if (!$this->request()->get('redirected')) {
+            if ($ref = $this->request()->post('ref', '')) {
+                $ref = '&ref=' . $ref;
+            }
             $auth_url = "https://oauth.vk.com/authorize?client_id=%s&scope=%s&redirect_uri=%s&response_type=code";
             $auth_url = vsprintf($auth_url, array(
                 Config::instance()->vkCredentials['appId'],
                 Config::instance()->vkCredentials['scope'],
-                urlencode(Config::instance()->vkCredentials['redirectUrl']),
+                urlencode(Config::instance()->vkCredentials['redirectUrl'] . $ref),
             ));
 
             $this->redirect($auth_url);
@@ -173,8 +176,11 @@ class Players extends \AjaxController
                                                         'games'     => $profile['games'],
                                                     )
                                                 )
-                                            )
-                                           ->create()->markOnline();
+                                            );
+                                        if ($ref = $this->request()->post('ref', null)) {
+                                            $player->setReferalId((int)$ref);
+                                        }
+                                        $player->create()->markOnline();
 
                                         $loggedIn = true;
 
