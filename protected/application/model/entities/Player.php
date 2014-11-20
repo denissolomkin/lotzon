@@ -47,6 +47,8 @@ class Player extends Entity
     private $_hash = '';
     private $_ip = '';    
 
+    private $_referalId = 0;
+
     private $_additionalData = array();
 
     public function init()
@@ -415,6 +417,19 @@ class Player extends Entity
         return $this->_ip;
     }
 
+    public function setReferalId($referalId) 
+    {
+        $this->_referalId = $referalId;
+
+        return $this;
+    }
+
+    public function getReferalId()
+    {
+        return $this->_referalId;
+    }
+
+
     public function setAdditionalData($additionalData) 
     {
         $this->_additionalData = $additionalData;
@@ -682,6 +697,7 @@ class Player extends Entity
                  ->setIp($data['Ip'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
+                 ->setReferalId($data['ReferalId'])
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
         }
 
