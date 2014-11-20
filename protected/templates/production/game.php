@@ -493,13 +493,6 @@
                                 </div>
                                 <div class="rp-bk ref">
                                     <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов</div>
-                                    <div class="rp-sl-bk">
-
-                                    </div>
-                                </div>
-
-                                <div class="rp-bk">
-                                    <div class="rp-txt">Ваша реферальная ссылка</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
