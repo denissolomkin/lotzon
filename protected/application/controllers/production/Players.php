@@ -62,7 +62,7 @@ class Players extends \AjaxController
                     $refPlayer = new Player();
                     $refPlayer->setId($ref)->fetch();
 
-                    $refPlayer->addPoints(5, 'Регистрация по вашей ссылке');
+                    $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке');
                 } catch (EntityException $e) {}
             }
 
@@ -394,7 +394,7 @@ class Players extends \AjaxController
     {
         if (Session::connect()->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
             Session::connect()->get(Player::IDENTITY)->decrementSocialPostsCount();
-            Session::connect()->get(Player::IDENTITY)->addPoints(10, "Пост с реферальной ссылкой");
+            Session::connect()->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
             $this->ajaxResponse(array(
                 'postsCount' => Session::connect()->get(Player::IDENTITY)->getSocialPostsCount(),
             ));    

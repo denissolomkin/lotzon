@@ -467,7 +467,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr>Пригласить друга +10 баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
+                                    <div class="if-tl"><nobr>Пригласить друга +<?=EmailInvite::INVITE_COST?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -482,7 +482,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +10 баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)" class="tw"></a>
                                         <a href="javascript:void(0)" class="gp"></a>
@@ -492,16 +492,16 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +5 баллов</div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов</div>
                                     <div class="rp-sl-bk">
 
                                     </div>
                                 </div>
 
-                                <!-- div class="rp-bk">
+                                <div class="rp-bk">
                                     <div class="rp-txt">Ваша реферальная ссылка</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
-                                </div -->
+                                </div>
                             </section>
 
                             <section class="_section profile-info">
