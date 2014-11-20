@@ -10,6 +10,9 @@ class Player extends Entity
     const AVATAR_WIDTH  = 160;
     const AVATAR_HEIGHT = 160;
 
+    const REFERAL_INVITE_COST = 10;
+    const SOCIAL_POST_COST = 20;
+
     private $_id         = 0;
     private $_email      = '';
     private $_password   = '';
