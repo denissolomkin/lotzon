@@ -51,6 +51,7 @@ class Player extends Entity
     private $_ip = '';    
 
     private $_referalId = 0;
+    private $_referalPaid = 0;
 
     private $_additionalData = array();
 
@@ -432,6 +433,31 @@ class Player extends Entity
         return $this->_referalId;
     }
 
+    public function isReferalPaid()
+    {
+        return $this->_referalPaid;
+    }
+
+    public function setReferalPaid($status)
+    {
+        $this->_referalPaid = $status;
+
+        return $this;
+    }
+
+    public function markReferalPaid()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->getProcessor()->markReferalPaid($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;   
+    }
+
 
     public function setAdditionalData($additionalData) 
     {
@@ -634,9 +660,23 @@ class Player extends Entity
         Session::connect()->set(Player::IDENTITY, $this);
 
         $this->setDateLastLogin(time());
+
         try {
             $this->update();    
         } catch (Exception $e) {}
+
+        // add referal points on first login
+        if ($this->getReferalId() && !$this->isReferalPaid()) {
+            try {
+
+                $refPlayer = new Player();
+                $refPlayer->setId($this->getReferalId())->fetch();
+
+                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке');
+
+                $this->markReferalPaid();
+            } catch (EntityException $e) {}
+        }
         
         return $this;
     }

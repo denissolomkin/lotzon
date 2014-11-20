@@ -24,10 +24,10 @@ class PlayersDBProcessor implements IProcessor
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
-                ':rid'      => $player->getReferalId();
+                ':rid'      => $player->getReferalId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
 
         $player->setId(DB::Connect()->lastInsertId());
@@ -272,5 +272,20 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $player;   
+    }
+
+    public function markReferalPaid(Entity $player) {
+        $sql = "UPDATE `Players` SET `ReferalPaid` = 1 WHERE `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;  
     }
 }

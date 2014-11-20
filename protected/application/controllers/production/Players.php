@@ -37,6 +37,10 @@ class Players extends \AjaxController
             $player->setIP(Common::getUserIp());
             $player->setHash(md5(uniqid()));
             $player->setValid(false);
+
+            if ($ref = $this->request()->post('ref', null)) {
+                $player->setReferalId((int)$ref);
+            }
             
             try {   
                 $player->create();
@@ -54,15 +58,6 @@ class Players extends \AjaxController
                 try {
                     $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $player->getEmail());
                     $invite->delete();    
-                } catch (EntityException $e) {}
-            }
-
-            if ($ref = $this->request()->post('ref', null)) {
-                try {
-                    $refPlayer = new Player();
-                    $refPlayer->setId($ref)->fetch();
-
-                    $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке');
                 } catch (EntityException $e) {}
             }
 
@@ -100,7 +95,7 @@ class Players extends \AjaxController
 
             try {   
                 $player->login($password)->markOnline();
-
+                
                 // set cookie to not show register form
                 setcookie("showLoginScreen", "1", time() + (10 * 365 * 24 * 60 * 60), '/');
             } catch (EntityException $e) {
