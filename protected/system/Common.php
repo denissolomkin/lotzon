@@ -28,4 +28,9 @@ class Common
         // return real ip
         return $_SERVER['REMOTE_ADDR'];
     }
+
+    public static function getRefererHost()
+    {
+        return parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+    }
 }
