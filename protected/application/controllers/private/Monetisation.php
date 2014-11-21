@@ -64,6 +64,11 @@ class Monetisation extends PrivateArea
 
             try {
                 $order->update();
+
+                // substract player money
+                $sum = $order->getData()['summ']['value'];
+                
+                $order->getPlayer()->addMoney(-1*$sum, "Вывод денег");
             } catch (EntityException $e) {
 
             }
