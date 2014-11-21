@@ -37,6 +37,10 @@ class Players extends \AjaxController
             $player->setIP(Common::getUserIp());
             $player->setHash(md5(uniqid()));
             $player->setValid(false);
+
+            if ($ref = $this->request()->post('ref', null)) {
+                $player->setReferalId((int)$ref);
+            }
             
             try {   
                 $player->create();
@@ -54,15 +58,6 @@ class Players extends \AjaxController
                 try {
                     $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $player->getEmail());
                     $invite->delete();    
-                } catch (EntityException $e) {}
-            }
-
-            if ($ref = $this->request()->post('ref', null)) {
-                try {
-                    $refPlayer = new Player();
-                    $refPlayer->setId($ref)->fetch();
-
-                    $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке');
                 } catch (EntityException $e) {}
             }
 
@@ -115,11 +110,14 @@ class Players extends \AjaxController
 
     public function loginVkAction() {
         if (!$this->request()->get('redirected')) {
+            if ($ref = $this->request()->post('ref', '')) {
+                $ref = '&ref=' . $ref;
+            }
             $auth_url = "https://oauth.vk.com/authorize?client_id=%s&scope=%s&redirect_uri=%s&response_type=code";
             $auth_url = vsprintf($auth_url, array(
                 Config::instance()->vkCredentials['appId'],
                 Config::instance()->vkCredentials['scope'],
-                urlencode(Config::instance()->vkCredentials['redirectUrl']),
+                urlencode(Config::instance()->vkCredentials['redirectUrl'] . $ref),
             ));
 
             $this->redirect($auth_url);
@@ -178,8 +176,11 @@ class Players extends \AjaxController
                                                         'games'     => $profile['games'],
                                                     )
                                                 )
-                                            )
-                                           ->create()->markOnline();
+                                            );
+                                        if ($ref = $this->request()->post('ref', null)) {
+                                            $player->setReferalId((int)$ref);
+                                        }
+                                        $player->create()->markOnline();
 
                                         $loggedIn = true;
 
@@ -327,6 +328,7 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
+        
         $resp = array();
         if (Session::connect()->get(Player::IDENTITY)) {
             Session::connect()->get(Player::IDENTITY)->markOnline();    
