@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \MoneyOrder, \ShopItem;
+use \Application, \Config, \Player, \EntityException, \Session, \MoneyOrder, \ShopItem, \ShopItemOrder;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
