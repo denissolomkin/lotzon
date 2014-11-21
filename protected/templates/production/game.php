@@ -852,7 +852,7 @@
             },
             vk : {
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
-                message : 'Lotzon.com\nИграю и буду играть!'
+                message : 'Играю и буду играть!'
             }
         }
         

@@ -1084,7 +1084,7 @@ function moneyOutput(type, form) {
 
     requestForMoney(data, function(){        
         $("#cash-output-popup").hide();
-        $("#report-popup").find(".txt").text("Заявка успешно принята!");
+        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Вам счет в ближайшее время.");
         $("#report-popup").show();
     }, function(data){
         alert(data.message);
