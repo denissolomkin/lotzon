@@ -847,12 +847,12 @@
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
                 picture: 'http://lotzon.com/tpl/img/social-share.jpg',
                 name : 'Lotzon.com',
-                description : 'Играл, играю и буду играть.',
+                description : 'Играю и буду играть!',
                 caption : '',
             },
             vk : {
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
-                message : 'Lotzon.com\nИграл, играю и буду играть.'
+                message : 'Играю и буду играть!'
             }
         }
         
