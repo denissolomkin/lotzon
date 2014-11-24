@@ -20,6 +20,9 @@ class Index extends \SlimController\SlimController
     const TRANSACTIONS_PER_PAGE = 6;
     const COMMENTS_PER_PAGE = 8;
 
+    const MONEY_ADD = 1670;
+    const WINNERS_ADD = 29;
+
     public $promoLang = '';
     public $country = '';
     public $ref     = 0;
@@ -78,8 +81,8 @@ class Index extends \SlimController\SlimController
         //}
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount() + 18,
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + 1100 ) * $gameSettings->getCountryCoefficient($this->country),
+            'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -130,8 +133,8 @@ class Index extends \SlimController\SlimController
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount() + 18,
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + 1100) * $gameSettings->getCountryCoefficient($this->country),
+            'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -187,8 +190,8 @@ class Index extends \SlimController\SlimController
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
-                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount()  + 18, 0, '.', ' '),                
-                'win'          => number_format((LotteriesModel::instance()->getMoneyTotalWin() + 1100)  * $gameSettings->getCountryCoefficient($this->country), 0, '.', ' ') . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
+                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount()  + self::WINNERS_ADD, 0, '.', ' '),                
+                'win'          => number_format((LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD)  * $gameSettings->getCountryCoefficient($this->country), 0, '.', ' ') . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
