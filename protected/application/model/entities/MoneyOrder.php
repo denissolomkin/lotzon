@@ -6,7 +6,7 @@ class MoneyOrder extends Entity
     const STATUS_ORDERED = 0;
     const STATUS_PROCESSED = 1;
     
-    const GATEWAY_CARD     = 'card';
+    const GATEWAY_PHONE     = 'phone';
     const GATEWAY_QIWI     = 'qiwi';
     const GATEWAY_WEBMONEY = 'webmoney';
     const GATEWAY_YANDEX   = 'yandex';
@@ -119,7 +119,7 @@ class MoneyOrder extends Entity
                 if (!$this->getPlayer()) {
                     throw new EntityException("INVALID_PLAYER", 400);
                 }
-                if (!in_array($this->getType(), array(self::GATEWAY_CARD, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24))) {
+                if (!in_array($this->getType(), array(self::GATEWAY_PHONE, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24))) {
                     throw new EntityException("INVALID_PAYMENT_GATEWAY", 400);
                 }
                 if (!$this->getData()['summ']['value']) {
@@ -135,7 +135,7 @@ class MoneyOrder extends Entity
 
                 $data = $this->getData();
                 switch ($this->getType()) {
-                    case self::GATEWAY_CARD:
+                    /*case self::GATEWAY_CARD:
                         // clean up card number
                         if (empty($data['number']['value'])) {
                             throw new EntityException("EMPTY_CARD_NUMBER", 400);
@@ -149,7 +149,8 @@ class MoneyOrder extends Entity
                             throw new EntityException("EMPTY_CREDENTIALS", 400);       
                         }
                         $data['name']['value'] = htmlspecialchars(strip_tags($data['name']['value']));
-                    break;
+                    break;*/
+                    case self::GATEWAY_PHONE:
                     case self::GATEWAY_QIWI:
                         if (empty($data['phone']['value'])) {
                             throw new EntityException("EMPTY_PHONE", 400);   

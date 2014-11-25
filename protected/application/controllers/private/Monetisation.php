@@ -41,12 +41,6 @@ class Monetisation extends PrivateArea
 
             try {
                 $order->update();
-
-                // substract points
-                if (!$order->getChanceGameId()) {
-                    $order->getPlayer()->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
-                }
-
                 // update item
                 if ($order->getItem()->getQuantity()) {
                     $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
