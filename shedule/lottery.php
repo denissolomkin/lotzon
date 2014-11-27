@@ -51,11 +51,11 @@ if (timeToRunLottery()) {
         $lotteryCombinations = array();
         for ($i = 0; $i < Config::instance()->generatorNumTries; ++$i) {
             $combination = array();
-
+            $forbiddenNums = array(1);
             while (count($combination) < $_ballsCount ) {
                 $rand = mt_rand(1, $_variantsCount);
 
-                if (!in_array($rand, $combination)) {
+                if (!in_array($rand, $combination) && !in_array($rand, $forbiddenNums)) {
                     $combination[] = $rand;
                 }
             }
