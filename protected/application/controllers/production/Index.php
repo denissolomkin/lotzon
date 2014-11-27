@@ -57,6 +57,22 @@ class Index extends \SlimController\SlimController
         }
 
         if (!Session::connect()->get(Player::IDENTITY)) {
+            // check for autologin;
+            if (!empty($_COOKIE[Player::AUTOLOGIN_COOKIE])) {
+                $player = new Player();
+                try {
+                    if (!empty($_COOKIE[Player::AUTOLOGIN_HASH_COOKIE])) {
+                        $player->setEmail($_COOKIE[Player::AUTOLOGIN_COOKIE])->fetch();
+
+                        if ($player->generateAutologinHash() === $_COOKIE[Player::AUTOLOGIN_HASH_COOKIE]) {
+                            Session::connect()->set(Player::IDENTITY, $player);
+                            $player->markOnline();
+                        }
+                    }
+                } catch (EntityException $e) {
+                    // do nothing just show promo page
+                }
+            }
             $this->landing();    
         } else {
             $this->game();

@@ -6,6 +6,11 @@ Application::import(PATH_APPLICATION . 'model/entities/Transaction.php');
 class Player extends Entity
 {
     const IDENTITY = "player_session";
+    const AUTOLOGIN_COOKIE = "autologin";
+    const AUTOLOGIN_HASH_COOKIE   = "autologinHash";
+    // 3 months
+    const AUTOLOGIN_COOKIE_TTL = 7776000;
+
 
     const AVATAR_WIDTH  = 160;
     const AVATAR_HEIGHT = 160;
@@ -745,6 +750,25 @@ class Player extends Entity
         }
 
         return $this;
+    }
+
+    public function generateAutologinHash()
+    {
+        return md5($this->getEmail() . $this->getIp() . $this->getSalt());
+    }
+
+    public function enableAutologin()
+    {
+        setcookie(self::AUTOLOGIN_COOKIE, $this->getEmail(), time() + self::AUTOLOGIN_COOKIE_TTL, '/', false, true);
+        setcookie(self::AUTOLOGIN_HASH_COOKIE, $this->generateAutologinHash(), time() + self::AUTOLOGIN_COOKIE_TTL, '/', false, true);
+
+        return $this;
+    }
+
+    public function disableAutologin()
+    {
+        setcookie(self::AUTOLOGIN_COOKIE, "", -1, '/');
+        setcookie(self::AUTOLOGIN_HASH_COOKIE, "", -1, '/');
     }
 
 }

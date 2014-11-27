@@ -77,13 +77,8 @@ class Players extends \AjaxController
         if ($this->validRequest()) {
             $email  = $this->request()->post('email', null);
             $password = $this->request()->post('password', null);
-            $remember = $this->request()->post('remember', false);
+            $rememberMe = $this->request()->post('remember', false);
 
-            if ($remember) {
-                ini_set('session.gc_maxlifetime', 86400 * 30 * 3);
-
-                Session::connect()->setParams(86400 * 30 * 3, '/', $_SERVER['HTTP_HOST'])->start();
-            }
             if (empty($email)) {
                 $this->ajaxResponse(array(), 0, 'EMPTY_EMAIL');
             }
@@ -96,6 +91,9 @@ class Players extends \AjaxController
             try {   
                 $player->login($password)->markOnline();
 
+                if ($rememberMe) {
+                    $player->enableAutologin();
+                }
                 // set cookie to not show register form
                 setcookie("showLoginScreen", "1", time() + (10 * 365 * 24 * 60 * 60), '/');
             } catch (EntityException $e) {
@@ -231,6 +229,7 @@ class Players extends \AjaxController
 
     public function logoutAction()
     {
+        Session::connect()->get(Player::IDENTITY)->disableAutologin();
         Session::connect()->close();
 
         $this->redirect('/');   

@@ -112,7 +112,7 @@
                     <ul class="csh-ch-lst">
                         <li>
                             <input type="radio" name="cash" id="cards" hidden />
-                            <label for="cards">VISA / MasterCard</a></label>
+                            <label for="cards">Пополнение мобильного счета</a></label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="qiwi" hidden />
@@ -136,14 +136,10 @@
                     </script>
                     <!-- CARDS FORM -->
                     <section class="cards form">
-                        <form onsubmit="moneyOutput('card', this); return false;" method="POST">
+                        <form onsubmit="moneyOutput('phone', this); return false;" method="POST">
                             <div class="inp-bk">
-                                <div class="ph">Номер</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер карты" data-title="Номер карты" name="number" data-type="number" maxlength="16" class="m_input">
-                            </div>
-                            <div class="inp-bk">
-                                <div class="ph">Имя Фамилия</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Имя Фамилия (латиницей)" data-title="ФИО" name="name" class="m_input">
+                                <div class="ph">Номер телефона</div>
+                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="Номер телефона в международном формате" name="phone" data-title="Телефон" data-type="phone" class="m_input">
                             </div>
                             <div class="inp-bk last">
                                 <div class="ph">Сумма</div>

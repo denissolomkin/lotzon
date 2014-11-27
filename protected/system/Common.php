@@ -33,4 +33,8 @@ class Common
     {
         return parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
     }
+    public static function getHTTPHost()
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
 }

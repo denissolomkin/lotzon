@@ -48,6 +48,10 @@ class OrdersController extends \AjaxController
 
         try {
             $order->create();
+
+            if (!$order->getChanceGameId()) {
+                $order->getPlayer()->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
+            }
         } catch(EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }
