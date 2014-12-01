@@ -92,7 +92,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Джекпот<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], is_float($gameInfo['lotteryWins'][6]['sum']) ? 2 : 0, '.', ' ')?> <span><?=$currency?></span></b>
+                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], is_int($gameInfo['lotteryWins'][6]['sum']) ? 0 : 2, '.', ' ')?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -122,7 +122,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['win'], is_float($gameInfo['win']) ? 2 : 0, '.', ' ')?> <span><?=$currency?></span></b>
+                            <b class="n"><?=number_format($gameInfo['win'], is_int($gameInfo['win']) ? 0 : 2, '.', ' ')?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                 </div>
@@ -348,7 +348,7 @@
                                                     <li class="tb_li"></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="tb-t"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], is_float($gameInfo['lotteryWins'][$i]['sum']) ? 2 : 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                            <div class="tb-t"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], is_int($gameInfo['lotteryWins'][$i]['sum']) ? 0 : 2, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -417,7 +417,7 @@
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b><?=number_format($player->getMoney(), is_float($player->getMoney()) ? 2 : 0, '.', ' ')?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
+                                    <div class="ifo"><b><?=number_format($player->getMoney(), is_int($player->getMoney()) ? 0 : 2, '.', ' ')?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>
