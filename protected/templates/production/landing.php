@@ -90,7 +90,7 @@
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 2, '.', ' ')?> <span><?=$currency?></span></div>
+                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], is_float($gameInfo['win']) ? 2 : 0, '.', ' ')?> <span><?=$currency?></span></div>
                             </div>
                         </div>
                         <div class="h-t-bcb">
@@ -173,7 +173,7 @@
                                                     <li class="i_li"></li>
                                                 <? } ?>
                                             </ul>
-                                        <div class="ri-e"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 2, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                        <div class="ri-e"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], is_float($gameInfo['lotteryWins'][$i]['sum']) ? 2 : 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                     </li>
                                     <? } ?>
                                 </ul>
