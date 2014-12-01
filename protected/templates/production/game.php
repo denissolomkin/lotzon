@@ -122,7 +122,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
-                            <b class="n"><?=Common::viewNumberFormat($gameInfo['win'])?> <span><?=$currency?></span></b>
+                            <b class="n"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                 </div>

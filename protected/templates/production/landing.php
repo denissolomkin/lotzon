@@ -90,7 +90,7 @@
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i" id="win"><?=Common::viewNumberFormat($gameInfo['win'])?> <span><?=$currency?></span></div>
+                                <div class="h-t-mcb-r-i" id="win"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></div>
                             </div>
                         </div>
                         <div class="h-t-bcb">

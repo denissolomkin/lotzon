@@ -121,9 +121,16 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function getList($limit = 0, $offset = 0) 
+    public function getList($limit = 0, $offset = 0, array $sort) 
     {
-        $sql = "SELECT * FROM `Players`";
+        $sql = "SELECT *, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
+
+        if (count($sort)) {
+            if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
+                $sql .= ' ORDER BY `' . $sort['field'] . '` ' . $sort['direction'];
+            }
+            
+        }
 
         if ($limit) {
             $sql .= ' LIMIT ' . (int)$limit;

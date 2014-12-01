@@ -431,7 +431,7 @@
                     <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
-                            <div class="if"><?=number_format($player->getPoints(), 0, '.', ' ')?> <i>баллов<br/>на счету</i></div>
+                            <div class="if"><?=Common::viewNumberFormat($player->getPoints())?> <i>баллов<br/>на счету</i></div>
                             <div class="bt">
                                 <div class="if-bt points-get" onclick="$('#ta-his-popup').hide();$('#exchange').click();">обменять</div>
                             </div>
@@ -440,7 +440,7 @@
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
-                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : $transaction->getSum())?></div>
+                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum()))?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
                             <? } ?>
@@ -458,7 +458,7 @@
                     <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
-                            <div class="if"><?=number_format($player->getMoney(), 0, '.', ' ')?> <i><?=$country == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <div class="if"><?=Common::viewNumberFormat($player->getMoney())?> <i><?=$country == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
                             <div class="bt">
                                 <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
                             </div>
@@ -467,7 +467,7 @@
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
-                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=$transaction->getSum()?></div>
+                                    <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=Common::viewNumberFormat($transaction->getSum())?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
                             <? } ?>

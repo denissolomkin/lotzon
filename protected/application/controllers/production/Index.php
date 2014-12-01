@@ -207,7 +207,7 @@ class Index extends \SlimController\SlimController
             $info = array(
                 'participants' => Common::viewNumberFormat(PlayersModel::instance()->getPlayersCount()),
                 'winners'      => Common::viewNumberFormat(LotteriesModel::instance()->getWinnersCount()  + self::WINNERS_ADD),
-                'win'          => Common::viewNumberFormat(LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD) . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
+                'win'          => Common::viewNumberFormat(round(LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD)) . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
