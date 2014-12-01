@@ -92,7 +92,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Джекпот<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], is_int($gameInfo['lotteryWins'][6]['sum']) ? 0 : 2, '.', ' ')?> <span><?=$currency?></span></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][6]['sum'])?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -110,19 +110,19 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">участников<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Денежные выигрыши<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['win'], is_int($gameInfo['win']) ? 0 : 2, '.', ' ')?> <span><?=$currency?></span></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['win'])?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,7 @@
                     <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
-                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
+                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов</div>
                         </div>
                         <div class="pbk-ct">
                             <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
@@ -299,7 +299,7 @@
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
                                         <div class="im-tl"><?=$item->getTitle()?></div>
                                         <div class="im-bn">
-                                            <b><?=number_format($item->getPrice(), 0, '.', ' ')?></b>
+                                            <b><?=Common::viewNumberFormat($item->getPrice())?></b>
                                             <span>обменять на баллов</span>
                                         </div>
                                     </li>
@@ -348,7 +348,7 @@
                                                     <li class="tb_li"></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="tb-t"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], is_int($gameInfo['lotteryWins'][$i]['sum']) ? 0 : 2, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                            <div class="tb-t"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -413,11 +413,11 @@
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plPointHolder"><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
+                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов на счету</div>
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b><?=number_format($player->getMoney(), is_int($player->getMoney()) ? 0 : 2, '.', ' ')?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
+                                    <div class="ifo"><b><?=Common::viewNumberFormat($player->getMoney())?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>
