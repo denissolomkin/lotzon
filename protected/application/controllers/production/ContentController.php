@@ -164,7 +164,7 @@ class ContentController extends \AjaxController
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::siteViewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]) : '',
+                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]) : '',
                 );
             }
         }
@@ -223,7 +223,7 @@ class ContentController extends \AjaxController
         foreach ($transactions as $transaction) {
             $jsonTransactions[] = array(
                 'description' => $transaction->getDescription(),
-                'quantity' => ($transaction->getSum() > 0 ? '+' : '') . ($transaction->getSum() == 0 ? '' : Common::siteViewNumberFormat($transaction->getSum())),
+                'quantity' => ($transaction->getSum() > 0 ? '+' : '') . ($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum())),
                 'date'  => date('d.m.Y', $transaction->getDate()),
             );
         }
