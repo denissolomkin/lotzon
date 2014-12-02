@@ -23,9 +23,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getPlayersCount();
     }
 
-    public function getList($limit = 0, $offset = 0)
+    public function getList($limit = 0, $offset = 0, $sort = array())
     {
-        return $this->getProcessor()->getList($limit, $offset);
+        return $this->getProcessor()->getList($limit, $offset, $sort);
     }
 
     public function checkNickname(Entity $player) 

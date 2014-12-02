@@ -1084,7 +1084,7 @@ function moneyOutput(type, form) {
 
     requestForMoney(data, function(){        
         $("#cash-output-popup").hide();
-        $("#report-popup").find(".txt").text("Заявка успешно принята!");
+        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Ваш счет в ближайшее время.");
         $("#report-popup").show();
     }, function(data){
         alert(data.message);
@@ -1113,8 +1113,8 @@ function showFailPopup(data)
     $("#game-process").hide();
     $("#game-end").show();
     var ticketsHtml = '';
-    for (var i = 0; i < 5; ++i) {
-        ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #'+ (i+1) + '</div><ul class="yr-tt-tr">';
+    for (var i = 1; i <= 5; ++i) {
+        ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #'+ (i) + '</div><ul class="yr-tt-tr">';
         if (data.res.tickets[i]) {
             $(data.res.tickets[i]).each(function(id, num) {
                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';

@@ -56,6 +56,7 @@ Config::instance()->errorMessages = array(
     'INVALID_PASSWORD' => 'Неверный пароль',
     'ALREADY_INVITED'  => 'На этот email уже было отправлено приглашение',
     'EMAIL_NOT_VALIDATED' => 'Завершите процесс регистрации через свой email.',
+    'BLOCKED_EMAIL_DOMAIN' => 'Регистрация с этого email-домена запрещена',
 );
 
 Config::instance()->privateResources =  array(
@@ -144,6 +145,13 @@ Config::instance()->privateResources =  array(
 
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
+    '/private/users/rmTransaction/:trid' => array(
+        'post' => 'controllers\admin\Users:removeTransaction'
+    ),
+    '/private/users/addTransaction/:playerId' => array(
+        'post' => 'controllers\admin\Users:addTransaction'
+    ),
+    '/private/users/transactions/:playerId' => 'controllers\admin\Users:transactions',
     '/private/banners'      => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
     '/private/ogames'       => 'controllers\admin\ComingSoon:index',
@@ -208,7 +216,7 @@ Config::instance()->publicResources = array(
 
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
-Config::instance()->generatorNumTries = 100;
+Config::instance()->generatorNumTries = 5;
 
 Config::instance()->vkCredentials = array(
     'appId'        => '4617228',
@@ -216,3 +224,11 @@ Config::instance()->vkCredentials = array(
     'redirectUrl' => 'http://lotzon.com/players/login/vk?redirected=1',
     'scope'        => 'email',
 );  
+
+Config::instance()->blockedEmails = array(
+    'trbvm.com', 'tempinbox.com', 'mailinator.com', 'sharklasers.com',
+    'grr.la', 'guerrillamail.biz', 'guerrillamail.com', 'guerrillamail.de',
+    'guerrillamail.net', 'guerrillamail.org', 'guerrillamailblock.com', 'spam4.me',
+    'mt2014.com', 'mailmetrash.com', 'trashymail.com', 'mt2009.com', 'trash2009.com',
+    'thankyou2010.com', 'thankyou2010.com', 'TempEMail.net', 'bigprofessor.so'
+);

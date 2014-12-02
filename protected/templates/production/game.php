@@ -92,7 +92,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Джекпот<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['lotteryWins'][6]['sum'], 0, '.', ' ')?> <span><?=$currency?></span></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][6]['sum'])?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
@@ -110,19 +110,19 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">участников<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">Денежные выигрыши<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
-                            <b class="n"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <span><?=$currency?></span></b>
+                            <b class="n"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></b>
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,7 @@
                     <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
-                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=number_format($player->getPoints(), 0, '.', ' ')?></b> баллов</div>
+                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов</div>
                         </div>
                         <div class="pbk-ct">
                             <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
@@ -299,7 +299,7 @@
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
                                         <div class="im-tl"><?=$item->getTitle()?></div>
                                         <div class="im-bn">
-                                            <b><?=number_format($item->getPrice(), 0, '.', ' ')?></b>
+                                            <b><?=Common::viewNumberFormat($item->getPrice())?></b>
                                             <span>обменять на баллов</span>
                                         </div>
                                     </li>
@@ -348,7 +348,7 @@
                                                     <li class="tb_li"></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="tb-t"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                            <div class="tb-t"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -413,11 +413,11 @@
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plPointHolder"><?=number_format($player->getPoints(), 0, '.', ' ')?></b>баллов на счету</div>
+                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов на счету</div>
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b><?=number_format($player->getMoney(), 0, '.', ' ')?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
+                                    <div class="ifo"><b><?=Common::viewNumberFormat($player->getMoney())?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>
@@ -467,7 +467,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr>Пригласить друга +10 баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
+                                    <div class="if-tl"><nobr>Пригласить друга +<?=EmailInvite::INVITE_COST?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -482,7 +482,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +10 баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)" class="tw"></a>
                                         <a href="javascript:void(0)" class="gp"></a>
@@ -492,16 +492,9 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +5 баллов</div>
-                                    <div class="rp-sl-bk">
-
-                                    </div>
-                                </div>
-
-                                <!-- div class="rp-bk">
-                                    <div class="rp-txt">Ваша реферальная ссылка</div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
-                                </div -->
+                                </div>
                             </section>
 
                             <section class="_section profile-info">
@@ -1086,12 +1079,12 @@
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
                 picture: 'http://lotzon.com/tpl/img/social-share.jpg',
                 name : 'Lotzon.com',
-                description : 'Играл, играю и буду играть.',
+                description : 'Играю и буду играть!',
                 caption : '',
             },
             vk : {
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
-                message : 'Lotzon.com\nИграл, играю и буду играть.'
+                message : 'Играю и буду играть!'
             }
         }
         

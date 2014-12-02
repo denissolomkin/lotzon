@@ -37,6 +37,10 @@ class Players extends \AjaxController
             $player->setIP(Common::getUserIp());
             $player->setHash(md5(uniqid()));
             $player->setValid(false);
+
+            if ($ref = $this->request()->post('ref', null)) {
+                $player->setReferalId((int)$ref);
+            }
             
             try {   
                 $player->create();
@@ -57,15 +61,6 @@ class Players extends \AjaxController
                 } catch (EntityException $e) {}
             }
 
-            if ($ref = $this->request()->post('ref', null)) {
-                try {
-                    $refPlayer = new Player();
-                    $refPlayer->setId($ref)->fetch();
-
-                    $refPlayer->addPoints(5, 'Регистрация по вашей ссылке');
-                } catch (EntityException $e) {}
-            }
-
             if ($player->getId() <= 1000) {
                 $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
             }
@@ -82,13 +77,8 @@ class Players extends \AjaxController
         if ($this->validRequest()) {
             $email  = $this->request()->post('email', null);
             $password = $this->request()->post('password', null);
-            $remember = $this->request()->post('remember', false);
+            $rememberMe = $this->request()->post('remember', false);
 
-            if ($remember) {
-                ini_set('session.gc_maxlifetime', 86400 * 30 * 3);
-
-                Session::connect()->setParams(86400 * 30 * 3, '/', $_SERVER['HTTP_HOST'])->start();
-            }
             if (empty($email)) {
                 $this->ajaxResponse(array(), 0, 'EMPTY_EMAIL');
             }
@@ -101,6 +91,9 @@ class Players extends \AjaxController
             try {   
                 $player->login($password)->markOnline();
 
+                if ($rememberMe) {
+                    $player->enableAutologin();
+                }
                 // set cookie to not show register form
                 setcookie("showLoginScreen", "1", time() + (10 * 365 * 24 * 60 * 60), '/');
             } catch (EntityException $e) {
@@ -115,11 +108,14 @@ class Players extends \AjaxController
 
     public function loginVkAction() {
         if (!$this->request()->get('redirected')) {
+            if ($ref = $this->request()->post('ref', '')) {
+                $ref = '&ref=' . $ref;
+            }
             $auth_url = "https://oauth.vk.com/authorize?client_id=%s&scope=%s&redirect_uri=%s&response_type=code";
             $auth_url = vsprintf($auth_url, array(
                 Config::instance()->vkCredentials['appId'],
                 Config::instance()->vkCredentials['scope'],
-                urlencode(Config::instance()->vkCredentials['redirectUrl']),
+                urlencode(Config::instance()->vkCredentials['redirectUrl'] . $ref),
             ));
 
             $this->redirect($auth_url);
@@ -178,8 +174,11 @@ class Players extends \AjaxController
                                                         'games'     => $profile['games'],
                                                     )
                                                 )
-                                            )
-                                           ->create()->markOnline();
+                                            );
+                                        if ($ref = $this->request()->post('ref', null)) {
+                                            $player->setReferalId((int)$ref);
+                                        }
+                                        $player->create()->markOnline();
 
                                         $loggedIn = true;
 
@@ -230,6 +229,7 @@ class Players extends \AjaxController
 
     public function logoutAction()
     {
+        Session::connect()->get(Player::IDENTITY)->disableAutologin();
         Session::connect()->close();
 
         $this->redirect('/');   
@@ -327,6 +327,7 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
+        
         $resp = array();
         if (Session::connect()->get(Player::IDENTITY)) {
             Session::connect()->get(Player::IDENTITY)->markOnline();    
@@ -394,7 +395,7 @@ class Players extends \AjaxController
     {
         if (Session::connect()->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
             Session::connect()->get(Player::IDENTITY)->decrementSocialPostsCount();
-            Session::connect()->get(Player::IDENTITY)->addPoints(10, "Пост с реферальной ссылкой");
+            Session::connect()->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
             $this->ajaxResponse(array(
                 'postsCount' => Session::connect()->get(Player::IDENTITY)->getSocialPostsCount(),
             ));    

@@ -6,9 +6,17 @@ Application::import(PATH_APPLICATION . 'model/entities/Transaction.php');
 class Player extends Entity
 {
     const IDENTITY = "player_session";
+    const AUTOLOGIN_COOKIE = "autologin";
+    const AUTOLOGIN_HASH_COOKIE   = "autologinHash";
+    // 3 months
+    const AUTOLOGIN_COOKIE_TTL = 7776000;
+
 
     const AVATAR_WIDTH  = 160;
     const AVATAR_HEIGHT = 160;
+
+    const REFERAL_INVITE_COST = 20;
+    const SOCIAL_POST_COST = 20;
 
     private $_id         = 0;
     private $_email      = '';
@@ -47,7 +55,12 @@ class Player extends Entity
     private $_hash = '';
     private $_ip = '';    
 
+    private $_referalId = 0;
+    private $_referalPaid = 0;
+
     private $_additionalData = array();
+    // filled only when list of players fetched
+    private $_isTicketsFilled = array();
 
     public function init()
     {
@@ -415,6 +428,43 @@ class Player extends Entity
         return $this->_ip;
     }
 
+    public function setReferalId($referalId) 
+    {
+        $this->_referalId = $referalId;
+
+        return $this;
+    }
+
+    public function getReferalId()
+    {
+        return $this->_referalId;
+    }
+
+    public function isReferalPaid()
+    {
+        return $this->_referalPaid;
+    }
+
+    public function setReferalPaid($status)
+    {
+        $this->_referalPaid = $status;
+
+        return $this;
+    }
+
+    public function markReferalPaid()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->getProcessor()->markReferalPaid($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+        
+        return $this;   
+    }
+
     public function setAdditionalData($additionalData) 
     {
         $this->_additionalData = $additionalData;
@@ -425,6 +475,11 @@ class Player extends Entity
     public function getAdditionalData()
     {
         return $this->_additionalData;
+    }
+
+    public function isTicketsFilled()
+    {
+        return $this->_isTicketsFilled;
     }
 
     public function generatePassword()
@@ -536,9 +591,14 @@ class Player extends Entity
 
         if (!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL)) {
             if ($throwException) {
-                throw new EntityException('INVALID_EMAIL', 500);
+                throw new EntityException('INVALID_EMAIL', 400);
             }
         } 
+
+        $emailDomain = substr(strrchr($this->getEmail(), "@"), 1);
+        if (in_array($emailDomain, Config::instance()->blockedEmails)) {
+            throw new EntityException('BLOCKED_EMAIL_DOMAIN', 400);
+        }
 
         return true;
     }
@@ -616,9 +676,23 @@ class Player extends Entity
         Session::connect()->set(Player::IDENTITY, $this);
 
         $this->setDateLastLogin(time());
+
         try {
             $this->update();    
         } catch (Exception $e) {}
+
+        // add referal points on first login
+        if ($this->getReferalId() && !$this->isReferalPaid()) {
+            try {
+
+                $refPlayer = new Player();
+                $refPlayer->setId($this->getReferalId())->fetch();
+
+                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке');
+
+                $this->markReferalPaid();
+            } catch (EntityException $e) {}
+        }
         
         return $this;
     }
@@ -682,10 +756,34 @@ class Player extends Entity
                  ->setIp($data['Ip'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
+                 ->setReferalId($data['ReferalId'])
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
+
+            if ($data['TicketsFilled']) {
+                $this->_isTicketsFilled = true;
+            }
         }
 
         return $this;
+    }
+
+    public function generateAutologinHash()
+    {
+        return md5($this->getEmail() . $this->getIp() . $this->getSalt());
+    }
+
+    public function enableAutologin()
+    {
+        setcookie(self::AUTOLOGIN_COOKIE, $this->getEmail(), time() + self::AUTOLOGIN_COOKIE_TTL, '/', false, true);
+        setcookie(self::AUTOLOGIN_HASH_COOKIE, $this->generateAutologinHash(), time() + self::AUTOLOGIN_COOKIE_TTL, '/', false, true);
+
+        return $this;
+    }
+
+    public function disableAutologin()
+    {
+        setcookie(self::AUTOLOGIN_COOKIE, "", -1, '/');
+        setcookie(self::AUTOLOGIN_HASH_COOKIE, "", -1, '/');
     }
 
 }

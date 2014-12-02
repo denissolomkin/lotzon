@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`) 
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`) 
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -24,9 +24,10 @@ class PlayersDBProcessor implements IProcessor
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
+                ':rid'      => $player->getReferalId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
 
         $player->setId(DB::Connect()->lastInsertId());
@@ -120,9 +121,16 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function getList($limit = 0, $offset = 0) 
+    public function getList($limit = 0, $offset = 0, array $sort) 
     {
-        $sql = "SELECT * FROM `Players`";
+        $sql = "SELECT *, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
+
+        if (count($sort)) {
+            if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
+                $sql .= ' ORDER BY `' . $sort['field'] . '` ' . $sort['direction'];
+            }
+            
+        }
 
         if ($limit) {
             $sql .= ' LIMIT ' . (int)$limit;
@@ -271,5 +279,20 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $player;   
+    }
+
+    public function markReferalPaid(Entity $player) {
+        $sql = "UPDATE `Players` SET `ReferalPaid` = 1 WHERE `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);   
+        }
+
+        return $player;  
     }
 }

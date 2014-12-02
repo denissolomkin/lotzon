@@ -51,11 +51,11 @@ if (timeToRunLottery()) {
         $lotteryCombinations = array();
         for ($i = 0; $i < Config::instance()->generatorNumTries; ++$i) {
             $combination = array();
-
+            $forbiddenNums = array(1);
             while (count($combination) < $_ballsCount ) {
                 $rand = mt_rand(1, $_variantsCount);
 
-                if (!in_array($rand, $combination)) {
+                if (!in_array($rand, $combination) && !in_array($rand, $forbiddenNums)) {
                     $combination[] = $rand;
                 }
             }
@@ -107,6 +107,7 @@ if (timeToRunLottery()) {
         $playersPlayed  = array();
         $pointsWonTotal = 0;
         $moneyWonTotal  = 0;
+        $playersWinned = array();
 
         foreach ($tickets as $ticket) {
             $compares = 0;
@@ -117,21 +118,24 @@ if (timeToRunLottery()) {
                     }
                 }
             }
+            // compile players and tickets
+            if (!isset($playersPlayed[$ticket->getPlayerId()])) {
+                $playersPlayed[$ticket->getPlayerId()] = array(
+                    'tickets'   => array(),
+                );
+            }
+            $playersPlayed[$ticket->getPlayerId()]['tickets'][$ticket->getId()] = $compares;
             // ticket win
             if ($compares > 0) {
+                if (!isset($playersWinned[$ticket->getPlayerId()])) {
+                    $playersWinned[$ticket->getPlayerId()] = $ticket->getPlayerId();
+                }
                 // calculate point or UA money total
                 if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
                     $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];                    
                 } else {
                     $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
                 }
-                // compile players and tickets
-                if (!isset($playersPlayed[$ticket->getPlayerId()])) {
-                    $playersPlayed[$ticket->getPlayerId()] = array(
-                        'tickets'   => array(),
-                    );
-                }
-                $playersPlayed[$ticket->getPlayerId()]['tickets'][$ticket->getId()] = $compares;
             }
         }
 
@@ -169,7 +173,7 @@ if (timeToRunLottery()) {
     // create lottery instance;
     $lottery = new Lottery();
     $lottery->setCombination($lotteryCombination)
-            ->setWinnersCount(count($playersPlayed))
+            ->setWinnersCount(count($playersWinned))
             ->setMoneyTotal($moneyWonTotal)
             ->setPointsTotal($pointsWonTotal);
 
@@ -207,8 +211,12 @@ if (timeToRunLottery()) {
                 $pcountry = Config::instance()->defaultLang;
             }
 
-            $win = $gamePrizes[$pcountry][$ticketCompare]['sum'];
-            $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];
+            $win = 0;
+            $currency = GameSettings::CURRENCY_POINT;
+            if ($ticketCompare > 0) {
+                $win = $gamePrizes[$pcountry][$ticketCompare]['sum'];
+                $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];    
+            }
 
             if ($currency == GameSettings::CURRENCY_MONEY) {
                 $playerMoney += $win; 
@@ -282,7 +290,7 @@ if (timeToRunLottery()) {
     $lottery->publish();
 
     messageLn("");
-    echo "Players won count " . count($playersPlayed) . PHP_EOL;
+    echo "Players won count " . count($playersWinned) . PHP_EOL;
 
     echo "Money total " . $moneyWonTotal . PHP_EOL;
     echo "Points total " . $pointsWonTotal . PHP_EOL;

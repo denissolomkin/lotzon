@@ -20,6 +20,9 @@ class Index extends \SlimController\SlimController
     const TRANSACTIONS_PER_PAGE = 6;
     const COMMENTS_PER_PAGE = 8;
 
+    const MONEY_ADD = 1670;
+    const WINNERS_ADD = 29;
+
     public $promoLang = '';
     public $country = '';
     public $ref     = 0;
@@ -54,6 +57,22 @@ class Index extends \SlimController\SlimController
         }
 
         if (!Session::connect()->get(Player::IDENTITY)) {
+            // check for autologin;
+            if (!empty($_COOKIE[Player::AUTOLOGIN_COOKIE])) {
+                $player = new Player();
+                try {
+                    if (!empty($_COOKIE[Player::AUTOLOGIN_HASH_COOKIE])) {
+                        $player->setEmail($_COOKIE[Player::AUTOLOGIN_COOKIE])->fetch();
+
+                        if ($player->generateAutologinHash() === $_COOKIE[Player::AUTOLOGIN_HASH_COOKIE]) {
+                            Session::connect()->set(Player::IDENTITY, $player);
+                            $player->markOnline();
+                        }
+                    }
+                } catch (EntityException $e) {
+                    // do nothing just show promo page
+                }
+            }
             $this->landing();    
         } else {
             $this->game();
@@ -78,8 +97,8 @@ class Index extends \SlimController\SlimController
         //}
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount() + 18,
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + 1100 ) * $gameSettings->getCountryCoefficient($this->country),
+            'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -130,8 +149,8 @@ class Index extends \SlimController\SlimController
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount() + 18,
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + 1100) * $gameSettings->getCountryCoefficient($this->country),
+            'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
         );
@@ -186,9 +205,9 @@ class Index extends \SlimController\SlimController
         $gameSettings = GameSettingsModel::instance()->loadSettings();
         if ($this->request()->isAjax()) {
             $info = array(
-                'participants' => number_format(PlayersModel::instance()->getPlayersCount(), 0, '.', ' '),
-                'winners'      => number_format(LotteriesModel::instance()->getWinnersCount()  + 18, 0, '.', ' '),                
-                'win'          => number_format((LotteriesModel::instance()->getMoneyTotalWin() + 1100)  * $gameSettings->getCountryCoefficient($this->country), 0, '.', ' ') . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
+                'participants' => Common::viewNumberFormat(PlayersModel::instance()->getPlayersCount()),
+                'winners'      => Common::viewNumberFormat(LotteriesModel::instance()->getWinnersCount()  + self::WINNERS_ADD),
+                'win'          => Common::viewNumberFormat(round(LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD)) . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));

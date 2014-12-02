@@ -28,4 +28,22 @@ class Common
         // return real ip
         return $_SERVER['REMOTE_ADDR'];
     }
+
+    public static function getRefererHost()
+    {
+        return parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+    }
+    public static function getHTTPHost()
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
+
+    public static function viewNumberFormat($number) {
+        $is_float = false;
+        if ((int)$number != $number) {
+            $is_float = true;
+        }
+
+        return number_format($number, $is_float ? 2 : 0,'.', ' ');
+    }
 }
