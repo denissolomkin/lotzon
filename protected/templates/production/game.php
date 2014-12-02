@@ -601,7 +601,7 @@
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
-        <div class="sbk-tl">шансы</div>
+        <div class="sbk-tl">игры</div>
 
         <!-- CHASNE PREVIEW -->
         <div class="ch-bk" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
@@ -686,6 +686,7 @@
                 </div>
             </div>
         </div>
+
         <!-- CHASNE GAME -->
         <div class="game-bk" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
@@ -798,6 +799,237 @@
                 <!-- END GAME 5x5 -->
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- NEW GAME CODE -->
+        <div class="ngm-bk">
+            <!-- правила -->
+            <div class="ngm-rls">
+                <div class="ngm-rls-bk">
+                    <div class="rls-l">
+                        <div class="rw-t">
+                            <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
+                        </div>
+                        <div class="gm-if-bk">
+                            <div class="l">Название<br/>игры</div>
+                            <div class="r"><b>500</b>баллов</div>
+                        </div>
+                        <div class="rls-bt-bk">
+                            <div class="l">
+                                <div class="ngm-go">играть</div>
+                            </div>
+                            <div class="r">
+                                <div class="online">игроков онлайн <i>&bull;</i> 2045</div>
+                                <div class="all">всего сыграно игр <b>:</b> 983</div>
+                            </div>
+                        </div>
+                        <div class="rls-txt-bk">
+                            Поле состоит из 49 ячеек. Каждому игроку дается возможность открыть пять ячеек. Число каждой открытой ячейки суммируется
+                            к конкретному игроку.<br/><br/>
+                            По итогам пяти ходов сравнивается сумма двух игроков, побеждает тот у которого сумма больше и он забирает баллы проигравшего. Если по итогу пяти ходов
+                            у игроков одинаковое количество очков, каждому дается еще по одному открытию.
+                        </div>
+                    </div>
+                    <div class="rls-r">
+                        <div class="rls-r-t">ВЫ<b>:</b> 40 <b>•</b> 50 % = 4 000</div>
+                        <div class="rls-r-ws">
+                            <b>победители</b>
+                            <span>сыграно игр <i>•</i> % побед <i>=</i> выигранно баллов</span>
+                        </div>
+                        <ul class="rls-r-prs">
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                                <div class="prs-ifo">
+                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
+                                    <div class="ifo">120 • 20 % = 16 400</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="b-cl-block"></div>
+                </div>
+            </div>
+
+
+            <div class="ngm-gm">
+                <div class="tm">00:55</div>
+
+                <!-- класс для (gm-pr) "move" если ход, Класс "winner" если победитель -->
+                <div class="gm-pr l move">
+                    <div class="pr-ph-bk">
+                        <div class="mt">ход</div>
+                        <div class="pr-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                    </div>
+                    <div class="pr-nm">Вы</div>
+                    <div class="pr-fa">20 • 60 % = 6 000</div>
+                    <div class="pr-cl">
+                        <b>5</b>
+                        <span>ячеек<br/>осталось</span>
+                    </div>
+                    <div class="pr-pt">
+                        <b>5</b>
+                        <span>очков<br/>набрано</span>
+                    </div>
+                    <!--div class="pr-surr">сдаться</div-->
+                </div>
+
+                <div class="gm-mx">
+                    <!-- MATRIX -->
+                    <ul class="mx">
+                        <li></li><li></li><li class="m">10</li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li class="o">17</li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                    </ul>
+
+                    <!-- Equal massage-->
+                    <div class="msg equal">
+                        <div class="tbl">
+                            <div class="td">
+                                <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut luctus, dui condimentum rutrum condimentum, ipsum neque rutrum lectus, ac aliquet ipsum est tempus massa.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cancel massage-->
+                    <div class="msg ca">
+                        <div class="tbl">
+                            <div class="td">
+                                <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut luctus, dui condimentum rutrum condimentum, ipsum neque rutrum lectus, ac aliquet ipsum est tempus massa.</div>
+                                <div class="bt-bk">
+                                    <div class="l">ДА</div>
+                                    <div class="r">НЕТ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Winner massage-->
+                    <div class="msg winner">
+                        <div class="tbl">
+                            <div class="td">
+                                <div class="ot-exit">соперник вышел</div>
+                                <div class="re">Повторить</div>
+                                <div class="ch-ot">другой соперник</div>
+                                <div class="exit">Выйти</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <!-- класс для (gm-pr) "move" если ход, Класс "winner" если победитель -->
+                <div class="gm-pr r winner">
+                    <div class="pr-ph-bk">
+                        <div class="mt">ход</div>
+                        <div class="pr-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                    </div>
+                    <div class="pr-nm">Иосиф Джугашвили</div>
+                    <div class="pr-fa">20 • 60 % = 6 000</div>
+                    <div class="pr-cl">
+                        <b>5</b>
+                        <span>ячеек<br/>осталось</span>
+                    </div>
+                    <div class="pr-pt">
+                        <b>5</b>
+                        <span>очков<br/>набрано</span>
+                    </div>
+                </div>
+                <div class="b-cl-block"></div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- END GAME CODE -->
+
+
+
+
+
+
+
+
         </div>
         </div>
             <div class="b-cl-block"></div>
