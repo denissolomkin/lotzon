@@ -59,6 +59,8 @@ class Player extends Entity
     private $_referalPaid = 0;
 
     private $_additionalData = array();
+    // filled only when list of players fetched
+    private $_isTicketsFilled = array();
 
     public function init()
     {
@@ -463,7 +465,6 @@ class Player extends Entity
         return $this;   
     }
 
-
     public function setAdditionalData($additionalData) 
     {
         $this->_additionalData = $additionalData;
@@ -474,6 +475,11 @@ class Player extends Entity
     public function getAdditionalData()
     {
         return $this->_additionalData;
+    }
+
+    public function isTicketsFilled()
+    {
+        return $this->_isTicketsFilled;
     }
 
     public function generatePassword()
@@ -585,9 +591,14 @@ class Player extends Entity
 
         if (!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL)) {
             if ($throwException) {
-                throw new EntityException('INVALID_EMAIL', 500);
+                throw new EntityException('INVALID_EMAIL', 400);
             }
         } 
+
+        $emailDomain = substr(strrchr($this->getEmail(), "@"), 1);
+        if (in_array($emailDomain, Config::instance()->blockedEmails)) {
+            throw new EntityException('BLOCKED_EMAIL_DOMAIN', 400);
+        }
 
         return true;
     }
@@ -747,6 +758,10 @@ class Player extends Entity
                  ->setValid($data['Valid'])
                  ->setReferalId($data['ReferalId'])
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
+
+            if ($data['TicketsFilled']) {
+                $this->_isTicketsFilled = true;
+            }
         }
 
         return $this;

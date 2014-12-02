@@ -32,11 +32,44 @@ class TransactionsDBProcessor implements IProcessor
 
     public function fetch(Entity $transaction)
     {
+        $sql = "SELECT * FROM `Transactions` WHERE `Id` = :trid";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':trid' => $transaction->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if (!$sth->rowCount()) {
+            throw new ModelException("NOT_FOUND", 404);
+        }
+
+        $transactionData = $sth->fetch();
+
+        $transaction->setId($transactionData['Id'])
+                    ->setPlayerId($transactionData['PlayerId'])
+                    ->setSum($transactionData['Sum'])
+                    ->setDescription($transactionData['Description'])
+                    ->setCurrency($transactionData['Currency'])
+                    ->setDate($transactionData['Date']);
+
         return $transaction;
     }
 
     public function delete(Entity $transaction)
     {
+        $sql = "DELETE FROM `Transactions` WHERE `Id` = :trid";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':trid' => $transaction->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
         return true;
     }
 

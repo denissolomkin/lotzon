@@ -61,7 +61,7 @@
                         <td><?=$order->getType()?></td>
                         <td>
                             <? foreach ($order->getData() as $key => $data) { ?>
-                                <?=$data['title']?>: <?=$data['value']?> <br />
+                                <?=$data['title']?>: <?=$data['value']?> <?=($data['title'] == 'Cумма' ? ($order->getPlayer()->getCountry() == 'UA' ? 'грн' : 'руб') : '')?> <br />
                             <? } ?>
                         </td>
                         <td width="15%">

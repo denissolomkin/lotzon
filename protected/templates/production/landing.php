@@ -80,17 +80,17 @@
                         <div class="h-t-mcb">
                             <div class="h-t-mcb-l">
                                 <div class="h-t-mcb-l-wm">
-                                    <b class="h-t-mcb-l-wm_b" id="winners"><?=number_format($gameInfo['winners'], 0, '.', ' ')?></b>
+                                    <b class="h-t-mcb-l-wm_b" id="winners"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
                                     <span class="h-t-mcb-l-wm_span">Победителей</span>
                                 </div>
                                 <div class="h-t-mcb-l-wm">
-                                    <b class="h-t-mcb-l-wm_b" id="participants"><?=number_format($gameInfo['participants'], 0, '.', ' ')?></b>
+                                    <b class="h-t-mcb-l-wm_b" id="participants"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
                                     <span class="h-t-mcb-l-wm_span">участhиков</span>
                                 </div>
                             </div>
                             <div class="h-t-mcb-r">
                                 <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
-                                <div class="h-t-mcb-r-i" id="win"><?=number_format($gameInfo['win'], 0, '.', ' ')?> <span><?=$currency?></span></div>
+                                <div class="h-t-mcb-r-i" id="win"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></div>
                             </div>
                         </div>
                         <div class="h-t-bcb">
@@ -173,7 +173,7 @@
                                                     <li class="i_li"></li>
                                                 <? } ?>
                                             </ul>
-                                        <div class="ri-e"><?=number_format($gameInfo['lotteryWins'][$i]['sum'], 0, '.', ' ')?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                        <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                     </li>
                                     <? } ?>
                                 </ul>

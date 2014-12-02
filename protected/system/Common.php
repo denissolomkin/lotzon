@@ -37,4 +37,13 @@ class Common
     {
         return $_SERVER['HTTP_HOST'];
     }
+
+    public static function viewNumberFormat($number) {
+        $is_float = false;
+        if ((int)$number != $number) {
+            $is_float = true;
+        }
+
+        return number_format($number, $is_float ? 2 : 0,'.', ' ');
+    }
 }
