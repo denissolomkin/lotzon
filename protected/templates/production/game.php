@@ -417,7 +417,7 @@
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b><?=Common::viewNumberFormat($player->getMoney())?></b><?=$country == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
+                                    <div class="ifo"><b><?=Common::viewNumberFormat($player->getMoney())?></b><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>
