@@ -161,10 +161,11 @@
                 </aside>
                 <aside class="rbs">
                     <div class="bz1">
-                        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
+                        <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+                        <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
                     </div>
                     <div class="bz2"><script language=JavaScript src='http://monopoly-club.ru/partnership/mc_banner.js?f=300x250&p=1000045425'></script></div>
                     <div class="bz3"><img src="/tpl/img/baners/Plug-300х575.png" width="300" height="575" style="margin-top:40px;"/></div>
@@ -389,9 +390,9 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <ins class="adsbygoogle" style="display:inline-block;width:980px;height:120px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="4351678186"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <!-- img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" /-->
+                <!--ins class="adsbygoogle" style="display:inline-block;width:980px;height:120px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="4351678186"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
+                <img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" />
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
@@ -586,11 +587,11 @@
         ======================================================================-->
         <section class="chance">
         <div class="ch-br-bk">
-            <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1537812583"></ins>
+            <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1537812583"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5968012188"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
+            <img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" />
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">

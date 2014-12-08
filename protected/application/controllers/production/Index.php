@@ -20,7 +20,7 @@ class Index extends \SlimController\SlimController
     const TRANSACTIONS_PER_PAGE = 6;
     const COMMENTS_PER_PAGE = 8;
 
-    const MONEY_ADD = 1670;
+    const MONEY_ADD = 2070;
     const WINNERS_ADD = 29;
 
     public $promoLang = '';
