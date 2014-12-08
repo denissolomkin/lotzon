@@ -161,7 +161,7 @@
                 </aside>
                 <aside class="rbs">
                     <div class="bz1">
-                        <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="110" height="600" /></div>
+                        <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
                         <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
