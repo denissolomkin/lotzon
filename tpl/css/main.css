@@ -408,7 +408,7 @@ article .infos {padding:40px 20px 0 20px;}
 .font-fix .profile .p-bk .p-cnt aside .p-stat-bk .cr-st-bk .ifo > b {}
 .profile .p-bk .p-cnt aside .p-stat-bk .bt {height:28px;border:1px solid #000;text-align:center;font:12px/28px Handbook-bold;color:#000;text-transform:uppercase;text-shadow: 0 1px 0  rgba(255,255,255,0.4);margin-top:14px;cursor:pointer;}
 .font-fix .profile .p-bk .p-cnt aside .p-stat-bk .bt {line-height:30px;}
-.profile .p-bk .p-cnt aside .p-stat-bk .st-hy-bt {width:90px;height:35px;background: url("../img/but-arrow-right.png") no-repeat right center;font:12px/15px Handbook-bold;color:#383838;text-transform:uppercase;margin:auto;cursor:pointer;margin-top:45px;}
+.profile .p-bk .p-cnt aside .p-stat-bk .st-hy-bt {width:90px;height:35px;background: url("../img/but-arrow-right.png") no-repeat right center;font:12px/15px Handbook-bold;color:#383838;text-transform:uppercase;margin:auto;cursor:pointer;/*margin-top:45px;*/}
 .profile .p-bk .p-cnt aside .p-stat-bk .st-hy-bt > span {display:inline-block;margin-top:3px;}
 
 

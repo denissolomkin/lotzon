@@ -8,6 +8,7 @@ class GameSettings
     private $_model = null;
 
     private $_countryCoefficients = array();
+    private $_countryRates = array();
     private $_countryPrizes = array();
     private $_total = 0;
     private $_jackpot = false;
@@ -50,6 +51,17 @@ class GameSettings
     public function getCountryCoefficient($country)
     {
         return @$this->_countryCoefficients[$country];
+    }
+
+    public function setCountryRate($country, $rate) {
+        $this->_countryRates[$country] = $rate;
+
+        return $this;
+    }
+
+    public function getCountryRate($country)
+    {
+        return @$this->_countryRates[$country];
     }
 
     public function setPrizes($country, array $prizes)
