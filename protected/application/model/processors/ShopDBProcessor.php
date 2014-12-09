@@ -63,13 +63,14 @@ class ShopDBProcessor
 
     public function createItem(ShopItem $item) 
     {
-        $sql = "INSERT INTO `ShopItems` (`Title`, `Price`, `Quantity`, `Visible`, `Image`, `CategoryId`) VALUES (:title, :price, :quantity, :visible, :image, :category)";
+        $sql = "INSERT INTO `ShopItems` (`Title`, `Price`, `Quantity`, `Visible`, `Image`, `CategoryId`, `Countries`) VALUES (:title, :price, :quantity, :visible, :image, :category, :countries)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':title'    => $item->getTitle(),
                 ':price'    => $item->getPrice(),
                 ':quantity' => $item->getQuantity(),
+                ':countries'=> serialize($item->getCountries()),
                 ':visible'  => $item->isVisible(),
                 ':image'    => $item->getImage(),  
                 ':category' => $item->getCategory()->getId(),
@@ -85,13 +86,14 @@ class ShopDBProcessor
 
     public function updateItem(ShopItem $item) 
     {
-        $sql = "UPDATE `ShopItems` SET `Title` = :title, `Price` = :price, `Quantity` = :quantity WHERE `Id` = :id";
+        $sql = "UPDATE `ShopItems` SET `Title` = :title, `Price` = :price, `Quantity` = :quantity, `Countries` = :countries WHERE `Id` = :id";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':title'    => $item->getTitle(),
                 ':price'    => $item->getPrice(),
                 ':quantity' => $item->getQuantity(),
+                ':countries'=> serialize($item->getCountries()),
                 ':id'       => (int)$item->getId(),
             ));
         } catch (PDOException $e) {
@@ -148,6 +150,7 @@ class ShopDBProcessor
                  ->setTitle($row['ItemTitle'])
                  ->setPrice($row['Price'])
                  ->setQuantity($row['Quantity'])
+                 ->setCountries(unserialize($row['Countries']))
                  ->setImage($row['Image'])
                  ->setCategory($categories[$row['CategoryId']]);
 
@@ -182,6 +185,7 @@ class ShopDBProcessor
                  ->setTitle($row['ItemTitle'])
                  ->setPrice($row['Price'])
                  ->setQuantity($row['Quantity'])
+                 ->setCountries(unserialize($row['Countries']))
                  ->setImage($row['Image'])
                  ->setCategory($catObj);
 
