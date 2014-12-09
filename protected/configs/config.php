@@ -230,5 +230,6 @@ Config::instance()->blockedEmails = array(
     'grr.la', 'guerrillamail.biz', 'guerrillamail.com', 'guerrillamail.de',
     'guerrillamail.net', 'guerrillamail.org', 'guerrillamailblock.com', 'spam4.me',
     'mt2014.com', 'mailmetrash.com', 'trashymail.com', 'mt2009.com', 'trash2009.com',
-    'thankyou2010.com', 'thankyou2010.com', 'TempEMail.net', 'bigprofessor.so'
+    'thankyou2010.com', 'thankyou2010.com', 'TempEMail.net', 'bigprofessor.so',
+    'alivance.com', 'lackmail.net', 'walkmail.net'
 );
