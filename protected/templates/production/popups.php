@@ -269,6 +269,45 @@
 
 
 
+<!--=========================================================================
+                            CASH EXCHANGE POPUP CODE
+==========================================================================-->
+
+<div class="bl-pp-bk popup" id="cash-exchange-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="csh-ch-bk pop-box">
+                <div class="cl-bt cs"></div>
+                <div class="padd">
+                    <p id="csh-ch-txt"><?=$staticTexts['cash-exchange'][$lang]->getText()?></p>
+                    <p>Введиту денежную сумму (доступно <span class='plMoneyHolder' id='money'><?=($player->getMoney())?></span> <?=$currency?>):</p>
+                    <div class="form">
+                    <div class="pi-inp-bk">
+
+                    <form onsubmit="moneyExchange(this); return false;" method="POST">
+                        <input type="hidden" name="type" value="points"/>
+
+                        <div class="inp-bk">
+                            <div class="ph">Сумма <span class="glyphicons glyphicons-money" aria-hidden="true"></span></div>
+                            <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" data-title="Сумма" name="summ" class="m_input">
+                        </div>
+                        Курс обмена: 1 <?=$currency?> = <span id="rate"><?=($gameInfo['rate'])?></span> баллов
+                        <p>Вам будет зачислено <b id="points">0</b> баллов</p>
+                        <div class="s-b">
+                            <input type="submit" value="обменять" class="sb_but">
+                        </div>
+                    </form>
+                    </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+
 <!-- ==========================================================================
                                         GAME POPUP
 ========================================================================== -->
@@ -416,7 +455,6 @@
 </div>
 
 
-
 <!--=========================================================================
                             TRANSACTIONS HISTORY POPUP CODE
 ==========================================================================-->
@@ -431,7 +469,7 @@
                     <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
-                            <div class="if"><?=Common::viewNumberFormat($player->getPoints())?> <i>баллов<br/>на счету</i></div>
+                            <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
                             <div class="bt">
                                 <div class="if-bt points-get" onclick="$('#ta-his-popup').hide();$('#exchange').click();">обменять</div>
                             </div>
@@ -454,12 +492,13 @@
                         <? } ?>
                     </div>
 
-                    <!-- BONUSES BLOCK -->
+                    <!-- CASH BLOCK -->
                     <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
-                            <div class="if"><?=Common::viewNumberFormat($player->getMoney())?> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
                             <div class="bt">
+                                <div class="if-bt money-exchange" onclick="$('#ta-his-popup').hide();$('#cash-exchange').click();">обменять</div>
                                 <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
                             </div>
                         </div>

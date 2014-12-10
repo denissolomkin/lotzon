@@ -11,6 +11,7 @@ class MoneyOrder extends Entity
     const GATEWAY_WEBMONEY = 'webmoney';
     const GATEWAY_YANDEX   = 'yandex';
     const GATEWAY_P24      = 'private24';
+    const GATEWAY_POINTS      = 'points';
 
     private $_id       = 0;
     private $_type     = '';
@@ -119,7 +120,7 @@ class MoneyOrder extends Entity
                 if (!$this->getPlayer()) {
                     throw new EntityException("INVALID_PLAYER", 400);
                 }
-                if (!in_array($this->getType(), array(self::GATEWAY_PHONE, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24))) {
+                if (!in_array($this->getType(), array(self::GATEWAY_PHONE, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24, self::GATEWAY_POINTS))) {
                     throw new EntityException("INVALID_PAYMENT_GATEWAY", 400);
                 }
                 if (!$this->getData()['summ']['value']) {
@@ -196,6 +197,10 @@ class MoneyOrder extends Entity
                             throw new EntityException("INVALID_CARD_NUMBER", 400);
                         }
                     break;
+                    case self::GATEWAY_POINTS:
+                        $this->setStatus(1);
+                        $this->getPlayer()->addPoints($this->getData()['summ']['value']*GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry()), "Обмен денег на баллы");
+                        break;
                 }
                 $this->setData($data);
             break;

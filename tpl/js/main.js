@@ -500,6 +500,19 @@ $(function(){
     });
 
 
+    // CASE EXCHANGE POPUP //
+    $('#cash-exchange').on('click', function(){
+        if (playerMoney >= 1) {
+            $('#cash-exchange-popup').fadeIn(200);
+            $('#cash-exchange-popup div.form').show();
+        } else {
+            $('.pz-ifo-bk').hide();
+            $('.pz-rt-bk').text("Недостаточно средств для обмена!").show().parents('#shop-items-popup').show();
+        }
+
+    });
+
+
 
 
 
@@ -909,12 +922,24 @@ $(function(){
     /* ==========================================================================
                     Cash popup functional
      ========================================================================== */
+    /* CALC POINTS */
+    $("#cash-exchange-popup input").on('keyup', function(e){
+        if(!is_numeric($(this).val()))  {$(this).val(tmp_money);}
+        if($(this).val()>parseFloat($('#cash-exchange-popup #money').html()))
+            $(this).val(parseFloat($('#cash-exchange-popup #money').html()));
+        $("#cash-exchange-popup #points").html(parseInt($(this).val() * $('#cash-exchange-popup #rate').html()));
+        tmp_money=parseFloat($(this).val());
+    });
+
+    /* FOCUS PLACEHOLDER */
     $('.csh-ch-bk .m_input').on('focus', function(){
         $(this).parent().addClass('focus');
     });
     $('.csh-ch-bk .m_input').on('blur', function(){
         $(this).parent().removeClass('focus');
     });
+
+    /* FILE FIELD */
     $('.csh-ch-bk .f_input').hover(
         function(){
             if(!$('.inp-fl-bt').hasClass('check'))$('.inp-fl-bt').addClass('hover');
@@ -923,16 +948,20 @@ $(function(){
             $('.inp-fl-bt').removeClass('hover');
         }
     )
+
     $('.csh-ch-bk .f_input').on('change', function(){
         $('.inp-fl-bt').addClass('check').html('заменить');
     });
 
+    /* SWITCH SECTION */
     $('input[name="cash"]').on('change', function(){
         var id = $(this).attr('id');
         $('#csh-ch-txt').hide();
         $('.csh-ch-bk .form').hide();
         $('.csh-ch-bk .'+id).show();
     });
+
+    /* CHECK TEXT INPUT */
     $("input").keydown(function(e){
         if($(this).attr('data-type') == 'number'){
             // Allow: backspace, delete, tab, escape, enter and .
@@ -1092,6 +1121,44 @@ function moneyOutput(type, form) {
     return false;
 }
 
+
+function moneyExchange(form) {
+    form = $(form);
+    var data = {};
+
+    form.find('input').each(function(id, input) {
+        if (!$(input).hasClass('sb_but')) {
+            if ($(input).attr('type') != 'radio' && $(input).attr('name')!='type' ) {
+                data[$(input).attr('name')] = {
+                    title: $(input).data('title'),
+                    value: $(input).val(),
+                }
+            } else {
+                if ($(input).is(":checked")) {
+                    data[$(input).attr('name')] = {
+                        title: $(input).data('title'),
+                        value: $(input).data('currency'),
+                    }
+                }
+            }
+            data['type']='points';
+
+        }
+    });
+
+    requestForMoney(data, function(){
+        updateMoney(playerMoney-parseFloat($("#cash-exchange-popup input[name=summ]").val()));
+        updatePoints(playerPoints+parseInt($("#cash-exchange-popup #points").html()));
+        $("#cash-output-popup").hide();
+        $("#report-popup").find(".txt").text("Денежные средства обменены на баллы.");
+        $("#report-popup").show();
+    }, function(data){
+        alert(data.message);
+    }, function(){});
+    return false;
+
+}
+
 function showGameProccessPopup(){
     if (filledTicketsCount > 0) {
         $('.popup').hide();
@@ -1218,6 +1285,7 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
+<!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
     var gi = $(this).data('game');
     $('.msg-tb.won').hide();
@@ -1332,6 +1400,7 @@ $('li[data-coord]').on('click', function() {
     }, function() {});
 });
 
+<!-- CHANCE GAME -->
 $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);
     window.setTimeout(function(){
@@ -1342,6 +1411,7 @@ $('#mchance').find('.cs').on('click', function() {
     location.reload();
 });
 
+<!-- HISTORY OF TRANSACTIONS -->
 $('.st-hy-bt').on('click', function(){
     $('#ta-his-popup').fadeIn(200);
     $('#ta-his-popup').find('.cl').click();
@@ -1390,4 +1460,10 @@ $('.vk-share').on('click', function() {
 function updatePoints(points) {
     playerPoints = points;
     $('.plPointHolder').text(playerPoints);
+}
+
+
+function updateMoney(money) {
+    playerMoney = money;
+    $('.plMoneyHolder').text(playerMoney);
 }

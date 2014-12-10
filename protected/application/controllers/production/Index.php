@@ -101,6 +101,7 @@ class Index extends \SlimController\SlimController
             'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
+            'rate'         => $gameSettings->getCountryRate($this->country),
         );
 
         $playerTransactions = array(

@@ -53,15 +53,15 @@
             </div>
         </div>  
         <? } ?>
-        <h6>Коэфициент суммы розыграша</h6>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6">
+                <h6>Коэфициент суммы розыграша </h6>
                 <input type="text" class="form-control input-md" name="coof" value="<?=$settings->getCountryCoefficient('UA')?>"> 
             </div>
-            <div class="col-md-3">
-                
+            <div class="col-md-6"> <h6>Курс обмена (баллов за 1 ед.)</h6>
+                <input type="text" class="form-control input-md" name="rate" value="<?=$settings->getCountryRate('UA')?>">
             </div>
-        </div>  
+        </div>
     </div>
     
     <!-- scnd column -->
@@ -172,8 +172,11 @@ $ajaxedSettings['isJackpot']  = $settings->getJackpot();
 
 foreach ($supportedCountries as $country) {
     @$ajaxedSettings['countryCoefficients'][$country->getCountryCode()] = @$settings->getCountryCoefficient($country->getCountryCode());
+    @$ajaxedSettings['countryRates'][$country->getCountryCode()] = @$settings->getCountryRate($country->getCountryCode());
 }
 $ajaxedSettings['countryCoefficients'] = (object)$ajaxedSettings['countryCoefficients'];
+$ajaxedSettings['countryRates'] = (object)$ajaxedSettings['countryRates'];
+
 foreach ($settings->getPrizes() as $country => $prize) {
     $ajaxedSettings['prizes'][$country] = $prize;
 }
@@ -225,6 +228,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         gameSettings.lotteryTotal = $('input[name="sum"]').val();
         gameSettings.isJackpot = $('.jackpot').hasClass('btn-success') ? 1 : 0;
         gameSettings.countryCoefficients[country] = $('input[name="coof"]').val();
+        gameSettings.countryRates[country] = $('input[name="rate"]').val();
 
         gameSettings.prizes[country] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
@@ -335,6 +339,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
 
         // save pervious country data
         gameSettings.countryCoefficients[prevCountry] = $('input[name="coof"]').val();
+        gameSettings.countryRates[prevCountry] = $('input[name="rate"]').val();
 
         gameSettings.prizes[prevCountry] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
@@ -349,6 +354,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
 
         // rebuild form values to current country data
         $('input[name="coof"]').val(gameSettings.countryCoefficients[currentCountry] || "0");
+        $('input[name="rate"]').val(gameSettings.countryRates[currentCountry] || "0");
         
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             if (gameSettings.prizes[currentCountry] != undefined) {

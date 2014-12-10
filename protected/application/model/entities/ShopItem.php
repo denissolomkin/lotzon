@@ -11,6 +11,7 @@ class ShopItem extends Entity
     private $_title    = '';
     private $_price    = 0;
     private $_quantity = 0;
+    private $_countries = array();
     private $_visible  = true;
     private $_image    = '';
 
@@ -65,6 +66,18 @@ class ShopItem extends Entity
     public function getQuantity()
     {
         return $this->_quantity;
+    }
+
+    public function setCountries($countries)
+    {
+        $this->_countries = $countries;
+
+        return $this;
+    }
+
+    public function getCountries()
+    {
+        return $this->_countries;
     }
 
     public function setCategory(ShopCategory $category) 

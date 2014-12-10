@@ -1,8 +1,9 @@
 <?php
 namespace controllers\admin;
-use \PrivateArea, \Application, \ShopModel, \ShopCategory, \ShopItem, \WideImage, \EntityException;
+use \PrivateArea, \Application, \ShopModel, \ShopCategory, \SupportedCountriesModel, \ShopItem, \WideImage, \EntityException;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
+Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
 Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
 Application::import(PATH_APPLICATION . '/model/entities/ShopCategory.php');
 Application::import(PATH_APPLICATION . '/model/entities/ShopItem.php');
@@ -20,12 +21,14 @@ class Shop extends PrivateArea
     public function indexAction($id = '')
     {
 
+        $supportedCountries = SupportedCountriesModel::instance()->getEnabledCountriesList();
         $shop = ShopModel::instance()->loadShop();
         $this->render('admin/shop', array(
             'title'      => 'Товары',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'shop'  => $shop,
+            'supportedCountries'  => $supportedCountries,
             'currentCategory' => $id,
         ));
     }
@@ -72,6 +75,7 @@ class Shop extends PrivateArea
             $item->setTitle($this->request()->post('title'))
                  ->setPrice($this->request()->post('price'))
                  ->setQuantity($this->request()->post('quantity'))
+                 ->setCountries($this->request()->post('countries'))
                  ->setImage($this->request()->post('image'))
                  ->setCategory($categories[$this->request()->post('categoryId')]);
 
@@ -201,7 +205,8 @@ class Shop extends PrivateArea
             $item->setId($this->request()->post('id'))
                  ->setTitle($this->request()->post('title'))
                  ->setPrice($this->request()->post('price'))
-                 ->setQuantity($this->request()->post('quantity'));
+                 ->setQuantity($this->request()->post('quantity'))
+                 ->setCountries($this->request()->post('countries'));
 
             try {
                 $item->update();
