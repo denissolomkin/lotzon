@@ -223,7 +223,7 @@ Config::instance()->generatorNumTries = 5;
 Config::instance()->hybridAuth = array(
 
         // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
-        "base_url" => "http://lotzon.test/auth/endpoint/",
+        "base_url" => "http://lotzon.com/auth/endpoint/",
 
         "providers" => array (
 
@@ -258,5 +258,5 @@ Config::instance()->blockedEmails = array(
     'guerrillamail.net', 'guerrillamail.org', 'guerrillamailblock.com', 'spam4.me',
     'mt2014.com', 'mailmetrash.com', 'trashymail.com', 'mt2009.com', 'trash2009.com',
     'thankyou2010.com', 'thankyou2010.com', 'TempEMail.net', 'bigprofessor.so',
-    'alivance.com', 'lackmail.net', 'walkmail.net'
+    'alivance.com', 'lackmail.net', 'walkmail.net','yopmail.com','mailspeed.ru'
 );
