@@ -508,6 +508,7 @@ $(function(){
             $("#points").html('');
             $('#cash-exchange-popup').fadeIn(200);
             $('#cash-exchange-popup div.form').show();
+            $('#cash-exchange-popup input').focus();
         } else {
             $('.pz-rt-bk').text("Недостаточно средств для обмена!").show().parents('#shop-items-popup').show();
         }
