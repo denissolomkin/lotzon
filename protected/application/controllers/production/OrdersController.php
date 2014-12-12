@@ -77,7 +77,7 @@ class OrdersController extends \AjaxController
                 // substract player money
                 $sum = $order->getData()['summ']['value'];
                 
-                $order->getPlayer()->addMoney(-1*$sum, "Вывод денег");
+                $order->getPlayer()->addMoney(-1*$sum, $order->getText());
             } catch(EntityException $e) {
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }

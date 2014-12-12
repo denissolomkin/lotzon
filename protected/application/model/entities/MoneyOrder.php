@@ -15,6 +15,7 @@ class MoneyOrder extends Entity
 
     private $_id       = 0;
     private $_type     = '';
+    private $_text     = 'Вывод денег';
     private $_player   = null;
     private $_dateOrdered    = '';
     private $_dateProcessed  = '';
@@ -38,6 +39,18 @@ class MoneyOrder extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setText($text)
+    {
+        $this->_text = $text;
+
+        return $this;
+    }
+
+    public function getText()
+    {
+        return $this->_text;
     }
 
     public function setType($type)
@@ -199,6 +212,7 @@ class MoneyOrder extends Entity
                     break;
                     case self::GATEWAY_POINTS:
                         $this->setStatus(1);
+                        $this->setText('Конвертация денег');
                         $this->getPlayer()->addPoints((int)(round($this->getData()['summ']['value'],2)*GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry())), "Обмен денег на баллы");
                         break;
                 }
