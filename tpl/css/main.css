@@ -1007,7 +1007,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .cash-exchange .ttl-bk .l {float:left;}
 .cash-exchange .ttl-bk .r {float:right;}
 .cash-exchange .ttl-bk .bt {display:table-cell;vertical-align:bottom;width:140px;padding-bottom:8px;}
-.cash-exchange .if-bt {text-align:center;height:44px;border:1px solid #000;font:14px/44px Handbook-bold;text-transform:uppercase;color:#000;background: none;width: 100%;}
+.cash-exchange .if-bt {text-align:center;border:1px solid #000;font:14px/40px Handbook-bold;text-transform:uppercase;color:#000;background: none;width: 100%;}
 .cash-exchange .if-bt:hover {border:1px solid #000;color:#fff;background-color:#000;}
 .cash-exchange .fm-txt p {font-size:18px;color:#000;padding: 10px 0 40px 0;}
 .cash-exchange .tb {display:table;width:100%;margin-bottom:40px;}
