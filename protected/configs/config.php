@@ -181,6 +181,8 @@ Config::instance()->publicResources = array(
     '/players/login/vk/' => array(
         'get' => 'controllers\production\Players:loginVk',
     ),
+    '/auth/:provider' => 'controllers\production\AuthController:auth',
+    '/auth/endpoint/' => 'controllers\production\AuthController:endpoint',
     '/players/logout/' => 'controllers\production\Players:logout',
     '/players/social/' => 'controllers\production\Players:social',
     '/players/update/' => array(
@@ -218,12 +220,37 @@ Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
 Config::instance()->generatorNumTries = 5;
 
+Config::instance()->hybridAuth = array(
+
+        // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
+        "base_url" => "http://lotzon.test/auth/endpoint/",
+
+        "providers" => array (
+
+            "Twitter" => array (
+                "enabled" => true,
+                "keys" => array ( "key" => "****", "secret" => "****" )),
+
+            "Vkontakte" => array (
+                "enabled" => true,
+                "keys" => array ( "id" => "4674779", "secret" => "uiFFV2KDYUbH6z9SSyi4" ),
+                'scope' => 'email'
+            ),
+
+            "Facebook" => array (
+                "enabled" => true,
+                "keys" => array ( "id" => "571381022994041", "secret" => "2a59f655677472049ebf12ef95f489bc" ),
+                'scope' => 'email'
+            )
+        )
+    );
+
 Config::instance()->vkCredentials = array(
     'appId'        => '4617228',
     'secret'       => 'hbTNQKCHQ03tk5XLISmy',
     'redirectUrl' => 'http://lotzon.com/players/login/vk?redirected=1',
     'scope'        => 'email',
-);  
+);
 
 Config::instance()->blockedEmails = array(
     'trbvm.com', 'tempinbox.com', 'mailinator.com', 'sharklasers.com',
