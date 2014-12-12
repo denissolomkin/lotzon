@@ -503,10 +503,12 @@ $(function(){
     // CASE EXCHANGE POPUP //
     $('#cash-exchange').on('click', function(){
         if (playerMoney > 0) {
+            $("#exchange-submit").prop('disabled', true).addClass('button-disabled');
+            $("#summ_exchange").val('');
+            $("#points").html('');
             $('#cash-exchange-popup').fadeIn(200);
             $('#cash-exchange-popup div.form').show();
         } else {
-            $('.pz-ifo-bk').hide();
             $('.pz-rt-bk').text("Недостаточно средств для обмена!").show().parents('#shop-items-popup').show();
         }
 
@@ -924,11 +926,27 @@ $(function(){
      ========================================================================== */
     /* CALC POINTS */
     $("#cash-exchange-popup input").on('keyup', function(e){
-        if(!is_numeric($(this).val()))  {$(this).val(tmp_money);}
-        if($(this).val()>parseFloat($('#cash-exchange-popup #money').html()))
-            $(this).val(parseFloat($('#cash-exchange-popup #money').html()));
-        $("#cash-exchange-popup #points").html(parseInt($(this).val() * $('#cash-exchange-popup #rate').html()));
-        tmp_money=parseFloat($(this).val());
+        var tmp_money;
+        if(new_input=$(this).val().match(/\d*[,.]\d{2}/))
+            $(this).val(new_input);
+//        if($(this).val().indexOf(".") !== -1)
+  //          $(this).val(Math.round($(this).val()*100)/100);
+
+        input_money=parseFloat($(this).val());
+        if(!is_numeric($(this).val()) && $(this).val() && tmp_money>0)  {$(this).val(tmp_money);}
+        if(input_money>playerMoney && $(this).val()) {
+            //alert(input_money+' '+playerMoney);
+                input_money=playerMoney;
+                $(this).val(playerMoney);
+        }
+
+        $("#cash-exchange-popup #points").html(parseInt(input_money * $('#cash-exchange-popup #rate').html()));
+        if(parseInt($('#cash-exchange-popup #points').html())>0)
+            $("#exchange-submit").prop('disabled', false).removeClass('button-disabled');
+        else
+            $("#exchange-submit").prop('disabled', true).addClass('button-disabled');
+
+        tmp_money=$(this).val();
     });
 
     /* FOCUS PLACEHOLDER */
@@ -1097,7 +1115,7 @@ function moneyOutput(type, form) {
             if ($(input).attr('type') != 'radio') {
                 data[$(input).attr('name')] = {
                     title: $(input).data('title'),
-                    value: $(input).val(),
+                    value: $(input).val()
                 }
             } else {
                 if ($(input).is(":checked")) {
@@ -1134,15 +1152,16 @@ function moneyExchange() {
     requestForMoney(data, function(){
         updateMoney(playerMoney-parseFloat($("#cash-exchange-popup input[name=summ]").val()));
         updatePoints(playerPoints+parseInt($("#cash-exchange-popup #points").html()));
-
-        $("#exchange-submit").hide();
+        $("#cash-exchange-popup input[name=summ]").val('');
+        $("#cash-exchange-popup #points").html('');
+        $("#exchange-submit").prop('disabled', true).addClass('button-disabled').hide();
         $("#exchange-input").hide();
         $('#exchange-result').fadeIn(100);
         window.setTimeout(function(){
             $('#exchange-result').hide();
             $("#exchange-input").fadeIn(200);
             $("#exchange-submit").fadeIn(200);
-        }, 1200);
+        }, 2400);
 
     }, function(data){
         alert(data.message);
@@ -1451,11 +1470,13 @@ $('.vk-share').on('click', function() {
 
 function updatePoints(points) {
     playerPoints = points;
-    $('.plPointHolder').text(playerPoints);
+    points=points.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plPointHolder').text(points);
 }
 
 
 function updateMoney(money) {
-    playerMoney = money;
-    $('.plMoneyHolder').text(playerMoney);
+    playerMoney = parseFloat(money.toFixed(2));
+    money=money.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plMoneyHolder').text(money);
 }

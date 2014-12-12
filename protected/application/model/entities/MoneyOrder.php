@@ -199,7 +199,7 @@ class MoneyOrder extends Entity
                     break;
                     case self::GATEWAY_POINTS:
                         $this->setStatus(1);
-                        $this->getPlayer()->addPoints($this->getData()['summ']['value']*GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry()), "Обмен денег на баллы");
+                        $this->getPlayer()->addPoints((int)(round($this->getData()['summ']['value'],2)*GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry())), "Обмен денег на баллы");
                         break;
                 }
                 $this->setData($data);

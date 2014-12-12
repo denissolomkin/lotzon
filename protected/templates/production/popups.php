@@ -455,8 +455,8 @@
                             </div>
                         </div>
 
-                        <div class="bt" id="exchange-submit">
-                            <div class="if-bt"  onclick="moneyExchange();">Подтвердить</div>
+                        <div class="bt">
+                            <button class="if-bt" id="exchange-submit" onclick="moneyExchange();">Подтвердить</button>
                         </div>
 
                     </div>
@@ -483,9 +483,9 @@
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
                             <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
-                            <div class="bt">
+                           <?/*<div class="bt">
                                 <div class="if-bt points-get" onclick="$('#ta-his-popup').hide();$('#exchange').click();">обменять</div>
-                            </div>
+                            </div> */?>
                         </div>
                         <div class="tb">
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
@@ -510,10 +510,10 @@
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
                             <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
-                            <div class="bt">
-                                <div class="if-bt money-exchange" onclick="$('#ta-his-popup').hide();$('#cash-exchange').click();">обменять</div>
+                            <?/* <div class="bt">
+                              <!--  <div class="if-bt money-exchange" onclick="$('#ta-his-popup').hide();$('#cash-exchange').click();">обменять</div> -->
                                 <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
-                            </div>
+                            </div>*/?>
                         </div>
                         <div class="tb">
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>
