@@ -419,15 +419,19 @@
                                 <li class="ul_li" data-link="profile-bonuses">бонусы</li>
                                 <li class="ul_li" data-link="profile-info">информация</li>
                             </ul>
+
+
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов на счету</div>
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
+
+                                <div class="hand" id="cash-exchange"><img src="/tpl/img/but-exchange.png"></div>
+
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
-                                    <div class="bt" id="cash-exchange">обменять</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>

@@ -93,6 +93,7 @@ input[type="radio"]:checked + label:after {content: "";display:block;width:16px;
 .b-cl-block {clear:both;line-height:0;margin:0;padding:0;display:block;}
 .b-ha {height:auto!important;}
 
+
 /* ==========================================================================
                             Game-header styles
    ========================================================================== */
@@ -398,7 +399,7 @@ article .infos {padding:40px 20px 0 20px;}
 .font-fix .profile .p-bk .p-cnt aside > ul .ul_li {line-height:43px;}
 .profile .p-bk .p-cnt aside > ul .ul_li.now {background-color:#fff;}
 .profile .p-bk .p-cnt aside > ul .ul_li:hover {background-color:#fff;}
-.profile .p-bk .p-cnt aside .p-stat-bk {margin:auto;width:140px;border-top:1px solid #000;margin-top:120px;padding-top:20px;}
+.profile .p-bk .p-cnt aside .p-stat-bk {margin:auto;width:140px;border-top:1px solid #000;margin-top:80px;padding-top:20px;}
 .profile .p-bk .p-cnt aside .p-stat-bk .gm-st {font:12px/15px Handbook-bold;color:#000;text-align:center;text-transform:uppercase;text-shadow: 0 1px 0  rgba(255,255,255,0.4);margin-bottom:57px;}
 .profile .p-bk .p-cnt aside .p-stat-bk .gm-st > b {display:block;font:30px/1 Handbook-bold;margin-bottom:3px;text-shadow: 0 1px 0  rgba(255,255,255,0.4);}
 .font-fix .profile .p-bk .p-cnt aside .p-stat-bk .gm-st > b {}
@@ -992,6 +993,67 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 
 
 
+/* ==========================================================================
+                            CASH EXCHANGE popup styles
+   ========================================================================== */
+.cash-exchange {width:460px;background-color:#fff;margin:auto;position:relative;}
+.cash-exchange .cs {background: url("../img/bg-but-close-game.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);cursor: pointer;height: 30px;position: absolute;right: -50px;top: 0;width: 30px;}
+.cash-exchange .padd {padding:30px;height:270px;}
+.cash-exchange .ttl-bk {display:table;width:100%;padding-bottom:10px;}
+.cash-exchange .ttl-bk .nm {display:table-cell;vertical-align:bottom;width:360px;font:32px/1 Handbook-bold;text-transform:uppercase;color:#000;padding-bottom:2px;}
+.cash-exchange .ttl-bk .if {vertical-align:bottom;font:48px/1 Handbook-bold;text-transform:uppercase;color: #666;}
+.cash-exchange .ttl-bk .if > i {font:13px/15px Handbook-bold;display:inline-block;}
+.cash-exchange .ttl-bk .l {float:left;}
+.cash-exchange .ttl-bk .r {float:right;}
+.cash-exchange .ttl-bk .bt {display:table-cell;vertical-align:bottom;width:140px;padding-bottom:8px;}
+.cash-exchange .if-bt {text-align:center;height:44px;border:1px solid #000;font:14px/44px Handbook-bold;text-transform:uppercase;color:#000;cursor:pointer;}
+.cash-exchange .if-bt:hover {border:1px solid #000;color:#fff;background-color:#000;}
+.cash-exchange .fm-txt p {font-size:18px;color:#000;padding: 10px 0 40px 0;}
+.cash-exchange .tb {display:table;width:100%;margin-bottom:40px;}
+.cash-exchange .tb .rw {display:table-row;font:16px/1 Handbook-regular;color:#000;}
+.cash-exchange .tb .rw:nth-child(2n+1) {background-color:#ececec;}
+.cash-exchange .tb .rw .td {display:table-cell;vertical-align:middle;height:40px;}
+.cash-exchange .tb .rw .nm {width:360px;}
+.cash-exchange .tb .rw .nm >span {display:inline-block;margin-left:20px;}
+.cash-exchange .tb .rw .dt {width:110px;text-align:right;}
+.cash-exchange .tb .rw .dt > span {display:inline-block;margin-right:20px;}
+.cash-exchange .pz-more-bt {height:38px;border: 1px solid #b2d0d4;text-align:center;font:15px/38px Handbook-bold;color:#4c4c4c;cursor:pointer;background-color:transparent;text-transform:uppercase;
+    -webkit-transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -moz-transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -ms-transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -o-transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.cash-exchange .mr-cl-bt-bl {overflow: hidden;display:none;}
+.cash-exchange .mr-cl-bt-bl > div {border:1px solid #b2d0d4;color:#4f4f4f;cursor:pointer;font:15px/38px Handbook-bold;height:38px;text-align:center;text-transform:uppercase;}
+.cash-exchange .mr-cl-bt-bl .cl {width:248px;float:left;}
+.cash-exchange .mr-cl-bt-bl .mr {width:398px;float:right;}
+
+
+.cash-exchange .pi-inp-bk {height:50px;width: 140px;border-bottom:1px solid #e3e3e3;margin-bottom:20px;position:relative;}
+.cash-exchange .pi-inp-bk.error {border-color:#c51e1e!important;color:#c51e1e!important;}
+.cash-exchange .pi-inp-bk.error > input, .prize-info .pz-fm-bk .pi-inp-bk.error .ph {color:#c51e1e!important;}
+.cash-exchange .pi-inp-bk.focus {border-bottom:1px solid #000;}
+.cash-exchange .pi-inp-bk:last-child {margin-bottom:0;}
+
+.cash-exchange .pi-inp-bk > input {border:none;margin-top:-5px;background:transparent;width:114px;height:48px;font:48px/1 Handbook-bold;color:#000;outline:none;}
+.cash-exchange .pi-inp-bk.td > input {width:300px;}
+.cash-exchange .pi-inp-bk > input::-webkit-input-placeholder {font:18px/29px Handbook-regular;color:#d2d2d2;opacity:1;text-transform:uppercase;}
+.cash-exchange .pi-inp-bk > input:-moz-placeholder {font:18px/29px Handbook-regular;color:#d2d2d2;opacity:1;text-transform:uppercase;}
+.cash-exchange .pi-inp-bk > input::-moz-placeholder {font:18px/29px Handbook-regular;color:#d2d2d2;opacity:1;text-transform:uppercase;}
+.cash-exchange .pi-inp-bk > input:-ms-input-placeholder {font:18px/29px Handbook-regular;color:#d2d2d2;opacity:1;text-transform:uppercase;}
+.cash-exchange .pi-inp-bk.focus > input::-webkit-input-placeholder {opacity:0;}
+.cash-exchange .pi-inp-bk.focus > input:-moz-placeholder {opacity:0;}
+.cash-exchange .pi-inp-bk.focus > input::-moz-placeholder {opacity:0;}
+.cash-exchange .pi-inp-bk.focus > input:-ms-input-placeholder {opacity:0;}
+
+
+.cash-exchange .pi-inp-bk .ph {font:13px/15px Handbook-bold;color:#333;position:absolute;bottom:5px;right:0px;text-transform:uppercase;}
+.cash-exchange .pi-inp-bk.td .ph {display:none;}
+
+.cash-exchange .pi-inp-bk.focus .ph {color:#000;display:block;}
+
+
 
 /* ==========================================================================
                             CASH HISTORY popup styles
@@ -1008,6 +1070,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .cash-history .ttl-bk .bt {display:table-cell;vertical-align:bottom;width:140px;padding-bottom:8px;}
 .cash-history .if-bt {text-align:center;width:138px;height:28px;border:1px solid #000;font:12px/28px Handbook-bold;text-transform:uppercase;color:#000;float:right;cursor:pointer;}
 .cash-history .if-bt:hover {border:1px solid #000;color:#fff;background-color:#000;}
+
 .cash-history .tb {display:table;width:100%;margin-bottom:40px;}
 .cash-history .tb .rw {display:table-row;font:16px/1 Handbook-regular;color:#000;}
 .cash-history .tb .rw:nth-child(2n+1) {background-color:#ececec;}
@@ -1141,3 +1204,14 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-bold;text-transform:uppercase;}
 .rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-regular;}
 .rules-bk .rb-pg > p:last-child {margin:0;}
+
+
+/* ==========================================================================
+                            Logic styles
+   ========================================================================== */
+.hidden {display: none;}
+.hand > *{cursor: pointer;}
+#cash-exchange{
+margin: auto;
+width: 40px;
+    padding: 20px;}

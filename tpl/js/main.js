@@ -502,7 +502,7 @@ $(function(){
 
     // CASE EXCHANGE POPUP //
     $('#cash-exchange').on('click', function(){
-        if (playerMoney >= 1) {
+        if (playerMoney > 0) {
             $('#cash-exchange-popup').fadeIn(200);
             $('#cash-exchange-popup div.form').show();
         } else {
@@ -1098,16 +1098,16 @@ function moneyOutput(type, form) {
                 data[$(input).attr('name')] = {
                     title: $(input).data('title'),
                     value: $(input).val(),
-                }    
+                }
             } else {
                 if ($(input).is(":checked")) {
                     data[$(input).attr('name')] = {
                         title: $(input).data('title'),
-                        value: $(input).data('currency'),
+                        value: $(input).data('currency')
                     }
                 }
             }
-            
+
         }
     });
 
@@ -1122,36 +1122,28 @@ function moneyOutput(type, form) {
 }
 
 
-function moneyExchange(form) {
-    form = $(form);
+function moneyExchange() {
     var data = {};
 
-    form.find('input').each(function(id, input) {
-        if (!$(input).hasClass('sb_but')) {
-            if ($(input).attr('type') != 'radio' && $(input).attr('name')!='type' ) {
-                data[$(input).attr('name')] = {
-                    title: $(input).data('title'),
-                    value: $(input).val(),
-                }
-            } else {
-                if ($(input).is(":checked")) {
-                    data[$(input).attr('name')] = {
-                        title: $(input).data('title'),
-                        value: $(input).data('currency'),
-                    }
-                }
-            }
-            data['type']='points';
-
-        }
-    });
+    data['type']='points';
+    data['summ']={
+        title: 'summ',
+        value: $("#summ_exchange").val()
+    };
 
     requestForMoney(data, function(){
         updateMoney(playerMoney-parseFloat($("#cash-exchange-popup input[name=summ]").val()));
         updatePoints(playerPoints+parseInt($("#cash-exchange-popup #points").html()));
-        $("#cash-output-popup").hide();
-        $("#report-popup").find(".txt").text("Денежные средства обменены на баллы.");
-        $("#report-popup").show();
+
+        $("#exchange-submit").hide();
+        $("#exchange-input").hide();
+        $('#exchange-result').fadeIn(100);
+        window.setTimeout(function(){
+            $('#exchange-result').hide();
+            $("#exchange-input").fadeIn(200);
+            $("#exchange-submit").fadeIn(200);
+        }, 1200);
+
     }, function(data){
         alert(data.message);
     }, function(){});

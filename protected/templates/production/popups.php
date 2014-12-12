@@ -268,46 +268,6 @@
 
 
 
-
-<!--=========================================================================
-                            CASH EXCHANGE POPUP CODE
-==========================================================================-->
-
-<div class="bl-pp-bk popup" id="cash-exchange-popup">
-    <div class="bl-pp_table">
-        <div class="bl-pp_td">
-            <section class="csh-ch-bk pop-box">
-                <div class="cl-bt cs"></div>
-                <div class="padd">
-                    <p id="csh-ch-txt"><?=$staticTexts['cash-exchange'][$lang]->getText()?></p>
-                    <p>Введиту денежную сумму (доступно <span class='plMoneyHolder' id='money'><?=($player->getMoney())?></span> <?=$currency?>):</p>
-                    <div class="form">
-                    <div class="pi-inp-bk">
-
-                    <form onsubmit="moneyExchange(this); return false;" method="POST">
-                        <input type="hidden" name="type" value="points"/>
-
-                        <div class="inp-bk">
-                            <div class="ph">Сумма <span class="glyphicons glyphicons-money" aria-hidden="true"></span></div>
-                            <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-type="number" data-title="Сумма" name="summ" class="m_input">
-                        </div>
-                        Курс обмена: 1 <?=$currency?> = <span id="rate"><?=($gameInfo['rate'])?></span> баллов
-                        <p>Вам будет зачислено <b id="points">0</b> баллов</p>
-                        <div class="s-b">
-                            <input type="submit" value="обменять" class="sb_but">
-                        </div>
-                    </form>
-                    </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-
-
-
-
 <!-- ==========================================================================
                                         GAME POPUP
 ========================================================================== -->
@@ -453,6 +413,59 @@
         </div>
     </div>
 </div>
+
+
+<!--=========================================================================
+                            CASH EXCHANGE POPUP CODE
+==========================================================================-->
+
+<div class="wt-pp-bk popup" id="cash-exchange-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="cash-exchange pop-box">
+                <div class="cs"></div>
+                <div class="padd">
+                    <!-- exchange BLOCK -->
+                    <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
+                        <div class="ttl-bk">
+                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
+
+                        </div>
+
+                        <div class="fm-txt">
+                              <p>Введите сумму, которую хотите конвертировать в баллы.<br>Курс конвертации  1 <?=$currency?> = <span id="rate"><?=($gameInfo['rate'])?></span> баллов
+                        </div>
+
+
+                        <div class="ttl-bk" id="exchange-input">
+                            <div class="pi-inp-bk l">
+                                <div class="ph"><?=$currency?></div>
+                                <input autocomplete="off" spellcheck="false"  class="m_input" type="text" data-type="number" id="summ_exchange" name="summ" value="">
+                            </div>
+
+                            <div class="if r"><span id="points">0</span> <i><br/>баллов</i></div>
+
+
+                        </div>
+
+                        <div class="hidden" id="exchange-result">
+                            <div class="fm-txt">
+                                <p>Готово! Денежные средства сконвертированы в баллы.</p>
+                            </div>
+                        </div>
+
+                        <div class="bt" id="exchange-submit">
+                            <div class="if-bt"  onclick="moneyExchange();">Подтвердить</div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
 
 
 <!--=========================================================================
