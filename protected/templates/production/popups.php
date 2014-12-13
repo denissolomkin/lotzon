@@ -426,7 +426,6 @@
                 <div class="cs"></div>
                 <div class="padd">
                     <!-- exchange BLOCK -->
-                    <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
                             <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
@@ -459,7 +458,6 @@
                             <button class="if-bt" id="exchange-submit" onclick="moneyExchange();">Подтвердить</button>
                         </div>
 
-                    </div>
                 </div>
             </section>
         </div>
@@ -506,7 +504,7 @@
                     </div>
 
                     <!-- CASH BLOCK -->
-                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
+                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_MONEY?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
                             <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>

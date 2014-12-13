@@ -928,6 +928,7 @@ $(function(){
     /* CALC POINTS */
     $("#cash-exchange-popup input").on('keyup', function(e){
         var tmp_money;
+        $(this).val($(this).val().replaceArray(['ю','Ю'],'.'));
         if(new_input=$(this).val().match(/\d*[,.]\d{2}/))
             $(this).val(new_input);
 //        if($(this).val().indexOf(".") !== -1)
@@ -1426,8 +1427,23 @@ $('#mchance').find('.cs').on('click', function() {
 <!-- HISTORY OF TRANSACTIONS -->
 $('.st-hy-bt').on('click', function(){
     $('#ta-his-popup').fadeIn(200);
-    $('#ta-his-popup').find('.cl').click();
 
+    // update history on open popup
+    $( "div.bblock" ).each(function( index ) {
+        currency=$( this ).data('currency');
+        var div=$( this );
+        getTransactions(0, currency, function(data) {
+            if (data.res.length) {
+                var html = '';
+                $(data.res).each(function(id, tr) {
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                });
+                div.find('.tb').html($(html));
+            }
+        }, function(data) {}, function() {});
+    });
+
+    $('#ta-his-popup').find('.cl').click();
     $('#ta-his-popup').find('.pz-more-bt, .mr').off('click').on('click', function() {
         var currency = $(this).parents('.bblock').data('currency');
         button = $(this);
@@ -1469,6 +1485,7 @@ $('.vk-share').on('click', function() {
     vkPost(posts.vk);
 });
 
+
 function updatePoints(points) {
     playerPoints = points;
     points=points.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -1481,3 +1498,16 @@ function updateMoney(money) {
     money=money.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money);
 }
+
+String.prototype.replaceArray = function(find, replace) {
+    var replaceString = this;
+    var replaceMatch = replace;
+    var regex;
+    for (var i = 0; i < find.length; i++) {
+        regex = new RegExp(find[i], "g");
+        if($.isArray(replaceMatch))
+            replaceMatch=replace[i];
+        replaceString = replaceString.replace(regex, replaceMatch);
+    }
+    return replaceString;
+};
