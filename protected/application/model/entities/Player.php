@@ -688,7 +688,7 @@ class Player extends Entity
                 $refPlayer = new Player();
                 $refPlayer->setId($this->getReferalId())->fetch();
 
-                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке');
+                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке '.$this->getEmail());
 
                 $this->markReferalPaid();
             } catch (EntityException $e) {}

@@ -54,6 +54,14 @@ class Players extends \AjaxController
             } catch (ModelException $e) {}
             
             if ($invite && $invite->getValid()) {
+
+                // mark referal unpaid for preverse of double points
+                if ($player->getReferalId() && !$player->isReferalPaid()) {
+                    try {
+                        $player->markReferalPaid();
+                    } catch (EntityException $e) {}
+                }
+
                 // add bonuses to inviter and delete invite
                 try {
                     $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $player->getEmail());
