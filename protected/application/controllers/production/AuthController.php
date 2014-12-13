@@ -37,6 +37,7 @@ class AuthController extends \SlimController\SlimController {
             $adapter = $hybridauth->authenticate( $provider );
 
             $user_profile = $adapter->getUserProfile();
+            echo "<pre>";
             print_r($user_profile);
             // if okey, we will redirect to user profile page
             die;
