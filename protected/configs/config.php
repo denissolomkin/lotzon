@@ -3,10 +3,21 @@
 Config::instance()->cacheEnabled = false;
 Config::instance()->newsCacheCount = 18;
 
+
 Config::instance()->dbConnectionProperties = array(
-    'dsn' => 'mysql:host=localhost;dbname=lotzone',
-    'user' => 'root',
-    'password' => '1234',
+    // testbed
+    /*    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
+        'user' => 'testbed',
+        'password' => '2p9G808CVn17P',*/
+    // public
+    /**/    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
+        'user' => 'lotzone_user',
+        'password' => '63{_Tc252!#UoQq',
+        // local
+    /*    'dsn' => 'mysql:host=localhost;dbname=lotzone',
+        'user' => 'root', #test
+        'password' => '1234',*/
+
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -183,6 +194,7 @@ Config::instance()->publicResources = array(
     ),
     '/auth/:provider' => 'controllers\production\AuthController:auth',
     '/auth/endpoint/' => 'controllers\production\AuthController:endpoint',
+    '/ws/run/'      => 'controllers\production\WebSocketServer:run',
     '/players/logout/' => 'controllers\production\Players:logout',
     '/players/social/' => 'controllers\production\Players:social',
     '/players/update/' => array(
@@ -229,7 +241,8 @@ Config::instance()->hybridAuth = array(
 
             "Twitter" => array (
                 "enabled" => true,
-                "keys" => array ( "key" => "****", "secret" => "****" )),
+                "keys" => array ( "key" => "q8MuZoLMf02gd5lcDIcntWgsq", "secret" => "hO5NPBiiiJqrDIk57jJzLZYH65R24phFi0lxISWvKiUqL6Rsx8" )
+            ),
 
             "Vkontakte" => array (
                 "enabled" => true,
@@ -240,6 +253,18 @@ Config::instance()->hybridAuth = array(
             "Facebook" => array (
                 "enabled" => true,
                 "keys" => array ( "id" => "571381022994041", "secret" => "2a59f655677472049ebf12ef95f489bc" ),
+                'scope' => 'email'
+            ),
+
+            "Google" => array (
+                "enabled" => true,
+                "keys" => array ( "id" => "355196749921-66tdkn697420i6rbji3decd394ru8dsv.apps.googleusercontent.com", "secret" => "WkXAp8ky-R7zuEx565Bwdnji" ),
+                'scope' => 'email'
+            ),
+
+            "Odnoklassniki" => array (
+                "enabled" => true,
+                "keys" => array ( "id" => "1112461056", "secret" => "149DA72E626CF26CFCC436A3" ),
                 'scope' => 'email'
             )
         )
@@ -258,5 +283,21 @@ Config::instance()->blockedEmails = array(
     'guerrillamail.net', 'guerrillamail.org', 'guerrillamailblock.com', 'spam4.me',
     'mt2014.com', 'mailmetrash.com', 'trashymail.com', 'mt2009.com', 'trash2009.com',
     'thankyou2010.com', 'thankyou2010.com', 'TempEMail.net', 'bigprofessor.so',
-    'alivance.com', 'lackmail.net', 'walkmail.net','yopmail.com','mailspeed.ru'
+    'alivance.com', 'lackmail.net',
+    'walkmail.net','yopmail.com','mailspeed.ru',
+    'sharklasers.com', 'yopmail.fr','yopmail.net','cool.fr.nf','jetable.fr.nf',
+    'nospam.ze.tc','nomail.xl.cx','mega.zik.dj', 'gustr.com', 'fleckens.hu',
+    'speed.1s.fr','courriel.fr.nf','moncourrier.fr.nf','monemail.fr.nf','monmail.fr.nf','tryalert.com',
+    'sofimail.com','einrot.com','armyspy.com','cuvox.de','dayrep.com','hulapla.de','meltmail.com',
+    'anonymbox.com','discardmail.com','mail-temporaire.fr','trashmail.com','filzmail.com',
+    'dunflimblag.mailexpire.com', 'mailcatch.com', 'discardmail.de', 'dispostable.com',
+    'ce.mintemail.com', 'spambog.com', 'spamfree24.org', 'spambog.de', 'mailnull.com',
+    'mytempemail.com', 'incognitomail.com', 'spamobox.com', 'deadaddress.com', 'uroid.com',
+    'spambog.ru', 'mailscrap.com', 'cachedot.net', 'onewaymail.com', 'get2mail.fr', 'mynetstore.de',
+    '0815.ru', 'fakeinbox.com', 'teleworm.us', 'yomail.info', 'maildrop.cc', 'voidbay.com', 'mailnesia.com',
+    'mytemp.email', 'tempsky.com', 'mohmal.com', 'forward.cat', 'cnmsg.net', 'explodemail.com',
+    'emailsensei.com', 'nowmymail.com', 'crapmail.org', 'shitmail.org', 'eyepaste.com', 'hideme.be',
+    'q314.net', 'one-time.email', 'emailgo.de', 'squizzy.de', 'tempmailer.de', 'kurzepost.de',
+    'objectmail.com', 'proxymail.eu', 'rcpt.at', 'trash-mail.at', 'trashmail.at', 'trashmail.me',
+    'trashmail.net', 'wegwerfmail.de', 'wegwerfmail.net', 'wegwerfmail.org', 'jourrapide.com'
 );

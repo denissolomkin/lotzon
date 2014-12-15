@@ -510,12 +510,10 @@ $(function(){
             $('#cash-exchange-popup div.form').show();
             $('#cash-exchange-popup input').focus();
         } else {
-            $('.pz-rt-bk').text("Недостаточно средств для обмена!").show().parents('#shop-items-popup').show();
+            $("#report-popup").find(".txt").text("Недостаточно средств для обмена!").show();
         }
 
     });
-
-
 
 
 
@@ -1298,6 +1296,63 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
+<!-- NEW GAMES PREVIEW -->
+$('.ch-gm-tbl .ngm-bt').click(function(){
+    var gi = $(this).data('game');
+    $('.msg-tb.won').hide();
+    $('.msg-tb.los').hide();
+    // hide all games;
+    $('.game-bk .gm-tb').hide();
+    $('.game-bk .rw-b .tb').hide();
+    $('.game-bk .play').hide();
+    $('.game-bk li').removeClass('won').removeClass('los');
+    $('.game-bk li').removeClass('true').removeClass('blink');
+    // show current game
+
+    $('.ch-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ngm-bk').fadeIn(200);
+    }, 200);
+
+    /*    $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
+
+
+
+        $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
+        $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
+        $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
+        $('.ch-bk').fadeOut(200);
+        window.setTimeout(function(){
+            $('.game-bk').fadeIn(200);
+        }, 200);
+
+        $('.game-bk .play .bt').off('click').on('click', function() {
+            winChance = false;
+            var btn = $(this);
+            startChanceGame(gi, function(data) {
+                updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
+                btn.parents('.play').hide();
+            }, function(data) {
+                if (data.message=="INSUFFICIENT_FUNDS") {
+                    $('.pz-ifo-bk').hide();
+                    $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
+                }
+            }, function() {});
+        });
+     */
+});
+
+<!-- NEW GAME BACK -->
+$('.ngm-bk .bk-bt').on('click', function() {
+    $('.ngm-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ch-bk').fadeIn(200);
+    }, 200);
+});
+$('#mchance').find('.cs').on('click', function() {
+    location.reload();
+});
+
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
     var gi = $(this).data('game');
@@ -1340,6 +1395,7 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     });
 });
 
+<!-- CHANCE GAME COORD CLICK -->
 $('li[data-coord]').on('click', function() {
     var cell = $(this);
     playChanceGame($(this).parent().data('game'), $(this).data('coord'), function(data) {
