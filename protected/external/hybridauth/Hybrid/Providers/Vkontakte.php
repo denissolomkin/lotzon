@@ -54,6 +54,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 		}
 
 		// store tokens
+		$this->token( "email" , $response->email  );
 		$this->token( "access_token" , $this->api->access_token  );
 		$this->token( "refresh_token", $this->api->refresh_token );
 		$this->token( "expires_in"   , $this->api->access_token_expires_in );
@@ -71,54 +72,72 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 	*/
 	function getUserProfile()
 	{
+        	$this->setUserUnConnected();
 		// refresh tokens if needed 
 		$this->refreshToken();
 
 		// Vkontakte requires user id, not just token for api access
 		$params['uid'] = Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.user_id" );
-		$params['fields'] = 'first_name,last_name,nickname,screen_name,sex,bdate,timezone,photo_rec,photo_big';
+		$params['fields'] = 'first_name,last_name,nickname,screen_name,sex,bdate,photo_big';
 		// ask vkontakte api for user infos
 		$response = $this->api->api( "https://api.vk.com/method/getProfiles" , 'GET', $params);
 
+	    $infoUrl = vsprintf("https://api.vk.com/method/users.get?user_id=%s&v=5.8&access_token=%s&fields=%s", array(
+            $params['uid'],
+            $this->token( "access_token"),
+            'country,city,interests,music,movies,tv,books,games'
+        ));
+        $info = @json_decode(@file_get_contents($infoUrl), true);
 
-		if (!isset( $response->response[0] ) || !isset( $response->response[0]->uid ) || isset( $response->error ) ){
-			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
-		}
+        //$params['fields'] = 'interests,music,movies,tv,books,games';
+        //$info = $this->api->api( "https://api.vk.com/method/users.get", 'GET', $params);
 
-		$response = $response->response[0];
-		$this->user->profile->identifier    = (property_exists($response,'uid'))?$response->uid:"";
-		$this->user->profile->firstName     = (property_exists($response,'first_name'))?$response->first_name:"";
-		$this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
-		$this->user->profile->displayName   = (property_exists($response,'screen_name'))?$response->screen_name:"";
-		$this->user->profile->photoURL      = (property_exists($response,'photo_big'))?$response->photo_big:"";
-		$this->user->profile->profileURL    = (property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
-		if(property_exists($response,'sex')){
-			switch ($response->sex)
-			{
-				case 1: $this->user->profile->gender = 'female'; break;
-				case 2: $this->user->profile->gender = 'male'; break;
-				default: $this->user->profile->gender = ''; break;
-			}
-		}
+        if (!isset( $response->response[0] ) || !isset( $response->response[0]->uid ) || isset( $response->error ) ){
+            throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
+        }
 
-		if( property_exists($response,'bdate') ){
-			
-			$birthday = explode('.', $response->bdate);
-			
-			if (count($birthday) === 3) {
-				list($birthday_year, $birthday_month, $birthday_day) = $birthday;
-			} else {
-				$birthday_year = date('Y');
-				list($birthday_month, $birthday_day) = $birthday;
-			}
 
-			$this->user->profile->birthDay   = (int) $birthday_day;
-			$this->user->profile->birthMonth = (int) $birthday_month;
-			$this->user->profile->birthYear  = (int) $birthday_year;
-		}
+        $this->user->profile->country=array(1 => 'RU',2 => 'UA',3 => 'BY')[$info['country']['id']];
 
-		return $this->user->profile;
+            $this->user->profile->email    =            $this->token( "email");
+        $response = $response->response[0];
+        $this->user->profile->identifier    = (property_exists($response,'uid'))?$response->uid:"";
+        $this->user->profile->firstName     = (property_exists($response,'first_name'))?$response->first_name:"";
+        $this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
+        $this->user->profile->country       = (property_exists($response,'country'))?$response->country:"";
+        $this->user->profile->city          = (property_exists($response,'city'))?$response->city:"";
+        $this->user->profile->displayName   = (property_exists($response,'screen_name'))?$response->screen_name:"";
+        $this->user->profile->photoURL      = (property_exists($response,'photo_big'))?$response->photo_big:"";
+        $this->user->profile->profileURL    = (property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
+
+        if(property_exists($response,'sex')){
+            switch ($response->sex){
+
+                case 1: $this->user->profile->gender = 'female'; break;
+                case 2: $this->user->profile->gender = 'male'; break;
+                default: $this->user->profile->gender = ''; break;
+
+            }
+        }
+
+        if( property_exists($response,'bdate') ){
+
+            $birthday = explode('.', $response->bdate);
+
+            if (count($birthday) === 3) {
+            list($birthday_year, $birthday_month, $birthday_day) = $birthday;
+            } else {
+            $birthday_year = date('Y');
+            list($birthday_month, $birthday_day) = $birthday;
+            }
+
+            $this->user->profile->birthDay   = (int) $birthday_day;
+            $this->user->profile->birthMonth = (int) $birthday_month;
+            $this->user->profile->birthYear  = (int) $birthday_year;
+        }
+        return $this->user->profile;
+
 	}
 		
 	/**

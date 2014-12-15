@@ -45,9 +45,9 @@
                         <td><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td><?=$player->getPoints()?></td>
                         <td>
-                            <button class="btn btn-md btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
-                            <button class="btn btn-md btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-                            <button class="btn btn-md btn-danger ban-trigger" data-id="<?=$player->getId()?>">BAN</button>
+                            <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
+                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
+                            <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>">BAN</button>
                         </td>
                     </tr>
                 <? } ?>
