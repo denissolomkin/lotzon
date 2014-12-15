@@ -5,7 +5,8 @@ Config::instance()->newsCacheCount = 18;
 
 Config::instance()->dbConnectionProperties = array(
     // testbed
-    /**/    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
+    /**/
+    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
         'user' => 'testbed',
         'password' => '2p9G808CVn17P',
     // public
