@@ -510,7 +510,8 @@ $(function(){
             $('#cash-exchange-popup div.form').show();
             $('#cash-exchange-popup input').focus();
         } else {
-            $("#report-popup").find(".txt").text("Недостаточно средств для обмена!").show();
+            $("#report-popup").find(".txt").text("Недостаточно средств для обмена!");
+            $("#report-popup").show();
         }
 
     });

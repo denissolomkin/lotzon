@@ -618,7 +618,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .ch-bk {padding:0 40px 45px 40px;}
 .chance .ch-lot-bk .ch-bk .ch-txt {font:18px/19px Handbook-regular;color:#000;padding:30px 0 48px 0;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl {display:table;width:100%;}
-.chance .ch-lot-bk .ch-bk .ch-gm-tbl .td {display:table-cell;width:33%;vertical-align:top;}
+.chance .ch-lot-bk .ch-bk .ch-gm-tbl .td {display:table-cell;width:33%;vertical-align:top;height:200px;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl .td.l {text-align:left;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl .td.c {text-align:center;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl .td.r {text-align:right;}
@@ -698,6 +698,11 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .tl > b {font:25px/1 Handbook-bold;display:block;}
 .chance .ch-lot-bk .game-bk .gm-tb-bk .msg-tb.won .bt {width:208px;height:48px;border:1px solid #000;background-color:#fff;}
 
+.chance .ch-lot-bk .gm-if-bk .r > b {display:block;font-size:30px;margin-top:-5px;}
+.chance .ch-lot-bk .ch-bk .ngm-bt {width:240px;height:50px;text-align:center;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;}
+.chance .ch-lot-bk .ch-bk .ngm-bt:hover {background-color:#000;color:#fff;}
+.chance .ch-lot-bk .ch-bk .td.c .ngm-bt {margin:auto;}
+.chance .ch-lot-bk .ch-bk .td.r .ngm-bt {margin-left:auto;}
 
 
 .ngm-bk {position:relative;display: none;}
@@ -714,8 +719,8 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk {display:table;width:100%;margin-bottom:44px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l, .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r {display:table-cell;vertical-align:middle;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l {width:130px;}
-.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-go {width:90px;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:#ffe400;cursor:pointer;}
-.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-go:hover {background-color:#000;color:#fff;}
+.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-go {width:90px;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:#ffe400;cursor:pointer;border:1px solid #ffe400;}
+.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-go:hover {background-color:#000;color:#fff;border:1px solid #000;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online {color:#4f4f4f;font:15px/1 Handbook-bold;text-transform:uppercase;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online > i {font-style:normal;color:#1acf34;font-size:20px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all {color:#4f4f4f;font:15px/20px Handbook-bold;text-transform:uppercase;}
@@ -1200,5 +1205,5 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
    ========================================================================== */
 .hidden {display: none;}
 .hand > *{cursor: pointer;}
-.button-disabled {color:#ccc !important;border: 1px solid #ccc !important;}
-.button-disabled:hover {background:none !important;}
+.button-disabled {color:#ccc !important;border: 1px solid #ccc !important;background:none !important;}
+.button-disabled:hover {background:none !important;cursor:default;}
