@@ -97,8 +97,8 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
             throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
         }
 
-        $countries=array(1 => 'RU',2 => 'UA',3 => 'BY');
-        $this->user->profile->country=$countries[$info['country']['id']];
+
+        $this->user->profile->country=array(1 => 'RU',2 => 'UA',3 => 'BY')[$info['country']['id']];
 
             $this->user->profile->email    =            $this->token( "email");
         $response = $response->response[0];
