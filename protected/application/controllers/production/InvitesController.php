@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \EmailInvites, \EmailInvite, \Common;
+use \Application, \Config, \Player, \EntityException, \Session2, \EmailInvites, \EmailInvite, \Common;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -10,10 +10,10 @@ class InvitesController extends \AjaxController
     {
         parent::init();
         if ($this->validRequest()) {
-            if (!Session::connect()->get(Player::IDENTITY) instanceof PLayer) {
+            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }    
-            Session::connect()->get(Player::IDENTITY)->markOnline();
+            Session2::connect()->get(Player::IDENTITY)->markOnline();
         }
     }
 
@@ -23,11 +23,11 @@ class InvitesController extends \AjaxController
 
         $invite = new EmailInvite();
         $invite->setEmail($email)
-               ->setInviter(Session::connect()->get(Player::IDENTITY));
+               ->setInviter(Session2::connect()->get(Player::IDENTITY));
 
         try {
             $invite->create();
-            Session::connect()->get(Player::IDENTITY)->decrementInvitesCount();
+            Session2::connect()->get(Player::IDENTITY)->decrementInvitesCount();
 
             Common::sendEmail($invite->getEmail(), 'Приглашение на www.lotzon.com', 'player_invite', array(
                 'ivh'  => $invite->getHash(),
@@ -38,7 +38,7 @@ class InvitesController extends \AjaxController
         }
 
         $this->ajaxResponse(array(
-            'invitesCount' => Session::connect()->get(Player::IDENTITY)->getInvitesCount(),
+            'invitesCount' => Session2::connect()->get(Player::IDENTITY)->getInvitesCount(),
         ));
     }
 }

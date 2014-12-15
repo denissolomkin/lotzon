@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \ChanceGamesModel;
+use \Application, \Config, \Player, \EntityException, \Session2, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -225,7 +225,7 @@ class Players extends \AjaxController
                         }
 
                         if ($loggedIn === true) {
-                            Session::connect()->set(Player::IDENTITY, $player);
+                            Session2::connect()->set(Player::IDENTITY, $player);
                         }
                     }
                 }
@@ -237,8 +237,8 @@ class Players extends \AjaxController
 
     public function logoutAction()
     {
-        Session::connect()->get(Player::IDENTITY)->disableAutologin();
-        Session::connect()->close();
+        Session2::connect()->get(Player::IDENTITY)->disableAutologin();
+        Session2::connect()->close();
 
         $this->redirect('/');   
     }
@@ -247,15 +247,15 @@ class Players extends \AjaxController
     {
         if ($this->validRequest()) {
             $email = $this->request()->post('email');
-            if (!Session::connect()->get(Player::IDENTITY)) {
+            if (!Session2::connect()->get(Player::IDENTITY)) {
                 $this->ajaxResponse(array(), 0, 'FRAUD');
             }
-            if (Session::connect()->get(Player::IDENTITY)->getEmail() !== $email) {
+            if (Session2::connect()->get(Player::IDENTITY)->getEmail() !== $email) {
                 $this->ajaxResponse(array(), 0, 'FRAUD');
             }
 
 
-            $player = Session::connect()->get(Player::IDENTITY);
+            $player = Session2::connect()->get(Player::IDENTITY);
 
             try {
                 if ($this->request()->post('bd') && !strtotime($this->request()->post('bd'))) {
@@ -274,12 +274,12 @@ class Players extends \AjaxController
 
                 $player->update();
 
-                Session::connect()->set(Player::IDENTITY, $player);
+                Session2::connect()->set(Player::IDENTITY, $player);
             } catch (EntityException $e){
                 $this->ajaxResponse(array(), 0, $e->getMessage());                   
             }
             if ($pwd = $this->request()->post('password')) {
-                Session::connect()->get(Player::IDENTITY)->changePassword($pwd);
+                Session2::connect()->get(Player::IDENTITY)->changePassword($pwd);
             }
             $this->ajaxResponse(array());
         }
@@ -289,7 +289,7 @@ class Players extends \AjaxController
     public function saveAvatarAction()
     {
 
-        if (!Session::connect()->get(Player::IDENTITY)) {
+        if (!Session2::connect()->get(Player::IDENTITY)) {
             $this->ajaxResponse(array(), 0, 'FRAUD');
         }
 
@@ -299,7 +299,7 @@ class Players extends \AjaxController
             $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
         
             $imageName = uniqid() . ".jpg";
-            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil(Session::connect()->get(Player::IDENTITY)->getId() / 100)) . '/';
+            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil(Session2::connect()->get(Player::IDENTITY)->getId() / 100)) . '/';
 
             if (!is_dir($saveFolder)) {
                 mkdir($saveFolder, 0777);
@@ -307,15 +307,15 @@ class Players extends \AjaxController
 
             $image->saveToFile($saveFolder . $imageName, 100);
             // remove old one
-            if (Session::connect()->get(Player::IDENTITY)->getAvatar()) {
-                @unlink($saveFolder . Session::connect()->get(Player::IDENTITY)->getAvatar());
+            if (Session2::connect()->get(Player::IDENTITY)->getAvatar()) {
+                @unlink($saveFolder . Session2::connect()->get(Player::IDENTITY)->getAvatar());
             };
             $data = array(
                 'imageName' => $imageName,
-                'imageWebPath' => '/filestorage/avatars/' . (ceil(Session::connect()->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
+                'imageWebPath' => '/filestorage/avatars/' . (ceil(Session2::connect()->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
             );
 
-            Session::connect()->get(Player::IDENTITY)->setAvatar($imageName)->saveAvatar();
+            Session2::connect()->get(Player::IDENTITY)->setAvatar($imageName)->saveAvatar();
 
             $this->ajaxResponse($data);    
         } catch (\Exception $e) {
@@ -325,10 +325,10 @@ class Players extends \AjaxController
 
     public function removeAvatarAction()
     {
-        if (Session::connect()->get(Player::IDENTITY)->getAvatar()) {
-            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil(Session::connect()->get(Player::IDENTITY)->getId() / 100)) . '/' . Session::connect()->get(Player::IDENTITY)->getAvatar());
+        if (Session2::connect()->get(Player::IDENTITY)->getAvatar()) {
+            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil(Session2::connect()->get(Player::IDENTITY)->getId() / 100)) . '/' . Session2::connect()->get(Player::IDENTITY)->getAvatar());
         }
-        Session::connect()->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
+        Session2::connect()->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
 
         $this->ajaxResponse(array());
     }
@@ -337,30 +337,30 @@ class Players extends \AjaxController
     {
         
         $resp = array();
-        if (Session::connect()->get(Player::IDENTITY)) {
-            Session::connect()->get(Player::IDENTITY)->markOnline();    
+        if (Session2::connect()->get(Player::IDENTITY)) {
+            Session2::connect()->get(Player::IDENTITY)->markOnline();
             // check for moment chance
             // if not already played chance game           
-            if (Session::connect()->get('chanceGame')['moment']) {
-                if (Session::connect()->get('chanceGame')['moment']['start'] + 180 < time()) {
+            if (Session2::connect()->get('chanceGame')['moment']) {
+                if (Session2::connect()->get('chanceGame')['moment']['start'] + 180 < time()) {
                     unset($_SESSION['chanceGame']['moment']);
                 }
             }
-            if (Session::connect()->get('MomentChanseLastDate') && !Session::connect()->get('chanceGame')) {
+            if (Session2::connect()->get('MomentChanseLastDate') && !Session2::connect()->get('chanceGame')) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
-                if (Session::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() && 
-                    Session::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo() * 60 >= time()) {
+                if (Session2::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() &&
+                    Session2::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo() * 60 >= time()) {
                     if (($rnd = mt_rand(0, 100)) <= 30) {
                         $resp['moment'] = 1;
-                    } else if (Session::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 60) {
+                    } else if (Session2::connect()->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 60) {
                         // if not fired randomly  - fire at last minut
                         $resp['moment'] = 1;
                     }
                 }
                 if (isset($resp['moment']) && $resp['moment']) {
                     $gameField = $chanceGames['moment']->generateGame();
-                    Session::connect()->set('chanceGame', array(
+                    Session2::connect()->set('chanceGame', array(
                         'moment' => array(
                             'id'     => 'moment',
                             'start'  => time(),
@@ -369,7 +369,7 @@ class Players extends \AjaxController
                             'status' => 'process',
                         ),
                     ));
-                    Session::connect()->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
+                    Session2::connect()->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
             }
         }   
@@ -401,11 +401,11 @@ class Players extends \AjaxController
 
     public function socialAction() 
     {
-        if (Session::connect()->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
-            Session::connect()->get(Player::IDENTITY)->decrementSocialPostsCount();
-            Session::connect()->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
+        if (Session2::connect()->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
+            Session2::connect()->get(Player::IDENTITY)->decrementSocialPostsCount();
+            Session2::connect()->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
             $this->ajaxResponse(array(
-                'postsCount' => Session::connect()->get(Player::IDENTITY)->getSocialPostsCount(),
+                'postsCount' => Session2::connect()->get(Player::IDENTITY)->getSocialPostsCount(),
             ));    
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');

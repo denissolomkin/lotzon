@@ -202,7 +202,7 @@ class LotteriesModelDBProcessor implements IProcessor
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(
                     ':lotid' => $lottery->getId(),
-                    ':plid'  => Session::connect()->get(Player::IDENTITY)->getId(),
+                    ':plid'  => Session2::connect()->get(Player::IDENTITY)->getId(),
                 ));
 
             } catch (PDOException $e) {
@@ -226,7 +226,7 @@ class LotteriesModelDBProcessor implements IProcessor
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(
                     ':lotid' => $lottery->getId(),
-                    ':plid'  => Session::connect()->get(Player::IDENTITY)->getId(),
+                    ':plid'  => Session2::connect()->get(Player::IDENTITY)->getId(),
                 ));
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query ", 500);

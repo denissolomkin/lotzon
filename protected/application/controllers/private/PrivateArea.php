@@ -6,8 +6,8 @@ class PrivateArea extends \SlimController\SlimController
     
     public function init()
     {
-        if (!(Session::connect()->get(Admin::SESSION_VAR) instanceof Admin) && $_SERVER['REQUEST_URI'] != '/private/login') {
-            Session::connect()->set('_redirectAfterLogin', $_SERVER['REQUEST_URI']);
+        if (!(Session2::connect()->get(Admin::SESSION_VAR) instanceof Admin) && $_SERVER['REQUEST_URI'] != '/private/login') {
+            Session2::connect()->set('_redirectAfterLogin', $_SERVER['REQUEST_URI']);
             return $this->redirect('/private/login');
         }
     }

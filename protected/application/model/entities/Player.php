@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 Application::import(PATH_APPLICATION . 'model/Entity.php');
 Application::import(PATH_APPLICATION . 'model/entities/Transaction.php');
 
@@ -673,7 +675,10 @@ class Player extends Entity
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
-        Session::connect()->set(Player::IDENTITY, $this);
+        Session2::connect()->set(Player::IDENTITY, $this);
+
+        $session = new Session();
+        $session->set(Player::IDENTITY, $this);
 
         $this->setDateLastLogin(time());
 

@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
+use \Application, \Config, \Player, \EntityException, \Session2, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -10,10 +10,10 @@ class OrdersController extends \AjaxController
     {
         parent::init();
         if ($this->validRequest()) {
-            if (!Session::connect()->get(Player::IDENTITY) instanceof PLayer) {
+            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }    
-            Session::connect()->get(Player::IDENTITY)->markOnline();
+            Session2::connect()->get(Player::IDENTITY)->markOnline();
         }
     }
 
@@ -27,7 +27,7 @@ class OrdersController extends \AjaxController
         }
         
         $order = new ShopItemOrder();
-        $order->setPlayer(Session::connect()->get(Player::IDENTITY))
+        $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
               ->setItem($item)
               ->setName($this->request()->post('name'))
               ->setSurname($this->request()->post('surname'))
@@ -66,7 +66,7 @@ class OrdersController extends \AjaxController
         $data = $this->request()->post('data');
         if (is_array($data)) {
             $order = new MoneyOrder();
-            $order->setPlayer(Session::connect()->get(Player::IDENTITY))
+            $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
                   ->setType($data['type']);
             unset($data['type']);
 

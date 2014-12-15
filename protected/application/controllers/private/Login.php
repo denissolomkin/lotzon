@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session, \Admin, \Application, \EntityException;
+use \Session2, \Admin, \Application, \EntityException;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . 'model/entities/Admin.php');
@@ -20,14 +20,14 @@ class Login extends \PrivateArea
      */
     public function indexAction() 
     {
-        if (Session::connect()->get(Admin::SESSION_VAR) instanceof Admin) {
+        if (Session2::connect()->get(Admin::SESSION_VAR) instanceof Admin) {
             $this->redirect('/private');
         }
         
         $formdata = array();
-        if ($formdata['error'] = Session::connect()->getFlash('autherror')) 
+        if ($formdata['error'] = Session2::connect()->getFlash('autherror'))
         {
-            $formdata['authdata'] = Session::connect()->getFlash('authdata');
+            $formdata['authdata'] = Session2::connect()->getFlash('authdata');
         }
         $this->render('admin/login', array(
             'layout' => false,
@@ -51,8 +51,8 @@ class Login extends \PrivateArea
             $admin->setLogin($authdata['login'])
                   ->login($authdata['password']);            
         } catch (EntityException $e) {
-            Session::connect()->setFlash('authdata', $authdata);
-            Session::connect()->setFlash('autherror', $e->getMessage());
+            Session2::connect()->setFlash('authdata', $authdata);
+            Session2::connect()->setFlash('autherror', $e->getMessage());
 
             $this->redirect('/private/login');
         }
@@ -65,12 +65,12 @@ class Login extends \PrivateArea
 
         $admin->update();
 
-        $this->redirect(Session::connect()->get('_redirectAfterLogin', '/private'));
+        $this->redirect(Session2::connect()->get('_redirectAfterLogin', '/private'));
     }
 
     public function logoutAction()
     {
-        Session::connect()->get(Admin::SESSION_VAR)->logout();
+        Session2::connect()->get(Admin::SESSION_VAR)->logout();
 
         $this->redirect('/private');
     }

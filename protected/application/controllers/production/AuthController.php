@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
-use \Config,  \Hybrid_Auth;
-
+use \Config,  \Hybrid_Auth, \Player, \EntityException, \Session2, \WideImage,  \Common;
 
 class AuthController extends \SlimController\SlimController {
 
@@ -26,22 +25,19 @@ class AuthController extends \SlimController\SlimController {
         /* etc. */
 
         try{
+
             require_once PATH_PROTECTED . 'external/hybridauth/Hybrid/Auth.php';
+
             // create an instance for Hybridauth with the configuration file path as parameter
             $hybridauth = new Hybrid_Auth(Config::instance()->hybridAuth);
-
-            // set selected provider name
-            // $provider = @ trim( strip_tags( $_GET["provider"] ) );
 
             // try to authenticate the selected $provider
             $adapter = $hybridauth->authenticate( $provider );
 
-            $user_profile = $adapter->getUserProfile();
-            echo "<pre>";
-            print_r($user_profile);
+            $profile = $adapter->getUserProfile();
+
             // if okey, we will redirect to user profile page
-            die;
-            $hybridauth->redirect( "/" );
+            //    $hybridauth->redirect( "/" );
         }
         catch( Exception $e ){
             // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to
@@ -69,6 +65,92 @@ class AuthController extends \SlimController\SlimController {
             $error .= "<hr /><pre>Trace:<br />" . $e->getTraceAsString() . "</pre>";
             $this->ajaxResponse(array(), 0, $error);
         }
+
+
+
+        if ($profile->email) {
+            $player = new Player();
+            $player->setEmail($profile->email);
+            $loggedIn = false;
+            try {
+                $player->fetch();
+                $loggedIn = true;
+            } catch (EntityException $e) {
+                if ($e->getCode() == 404) {
+
+                    try {
+                        if($profile->country){
+                            $player->setCountry($profile->country);
+                        }
+                        else{
+                            $geoReader =  new Reader(PATH_MMDB_FILE);
+                            $country = $geoReader->country(Common::getUserIp())->country;
+                            $player->setCountry($country->isoCode);
+                        }
+
+                    } catch (\Exception $e) {
+                        $player->setCountry(Config::instance()->defaultLang);
+                    }
+
+                    try {
+                        $player->setIp(Common::getUserIp())
+                            ->setHash('')
+                            ->setValid(true)
+                            ->setName($profile->firstName)
+                            ->setSurname($profile->lastName)
+                            ->setAdditionalData(
+                                array(
+                                    $provider => $profile->additionalData
+                                )
+                            );
+
+                        if ($ref = $this->request()->post('ref', null)) {
+                            $player->setReferalId((int)$ref);
+                        }
+
+                        $player->create()->markOnline();
+                        $loggedIn = true;
+
+                        if ($player->getId() <= 1000) {
+                            $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+                        }
+
+                        // try to catch avatar
+                        if ($profile->photoURL) {
+                            try {
+                                $image = WideImage::load($profile->photoURL);
+                                $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+                                $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+
+                                $imageName = uniqid() . ".jpg";
+                                $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
+
+                                if (!is_dir($saveFolder)) {
+                                    mkdir($saveFolder, 0777);
+                                }
+                                $image->saveToFile($saveFolder . $imageName, 100);
+                                // remove old one
+                                $player->setAvatar($imageName)->saveAvatar();
+
+                                $this->ajaxResponse($data);
+                            } catch (\Exception $e) {
+                                // do nothing
+                            }
+                        }
+                    } catch (EntityException $e) {
+                        // do nothing
+                    }
+
+                }
+            }
+
+            if ($loggedIn === true) {
+                Session2::connect()->set(Player::IDENTITY, $player);
+
+            }
+        }
+
+        $this->redirect('/');
 
     }
 

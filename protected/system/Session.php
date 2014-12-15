@@ -1,6 +1,11 @@
 <?php
 
-class Session 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler;
+use Symfony\Component\HttpFoundation\Request;
+
+class Session2
 {
     private static $_instances = array();
 
@@ -9,7 +14,7 @@ class Session
     public static function Connect($name = 'default')
     {
         if (empty(self::$_instances[$name])) {
-            self::$_instances[$name] = new Session();
+            self::$_instances[$name] = new Session2();
             self::$_instances[$name]->setInstanceName($name);
             self::$_instances[$name]->start();
 
@@ -21,6 +26,8 @@ class Session
             
 
         }
+
+
 
         return self::$_instances[$name];
     }
@@ -46,7 +53,34 @@ class Session
 
     public function start()
     {
-        session_start();
+        //    session_start();
+
+
+        /*
+        $servers = explode(",", ini_get("session.save_path"));
+        $c = count($servers);
+        for ($i = 0; $i < $c; ++$i) {
+            $servers[$i] = explode(":", $servers[$i]);
+        }
+        $memcached = new \Memcached();
+        call_user_func_array([ $memcached, "addServers" ], $servers);
+        print_r($memcached->getAllKeys());
+        */  /*
+        $request = Request::createFromGlobals(); //new Request($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER);//
+        $memcache = new Memcache;
+        $memcache->connect('localhost', 11211);
+        $storage = new NativeSessionStorage(array(), new MemcacheSessionHandler($memcache));
+        echo $request->getSession();
+        $session = new Session($storage);
+      */
+
+       //$session->start();
+        //$session->set('name', 'Drak');
+       // print_r($session->all());
+       // print_r($_SESSION);
+
+
+
 
         return $this;
     }
