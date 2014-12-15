@@ -318,11 +318,15 @@
                                 <div class="sl-bk">
                                     <div class="sl-bk-tl">Зарегистрироваться через социальную сеть:</div>
                                     <div>
+                                        <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
+
+                                    </div>
+                                    <!--div>
                                         <a href="/auth/Facebook" class="fb"></a>
                                         <a href="/auth/Vkontakte" class="vk"></a>
                                         <a href="/auth/Google" class="gp"></a>
                                         <a href="/auth/Twitter" class="tw"></a>
-                                    </div>
+                                    </div-->
                                 </div>
                                 <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
                                 <!--div class="ch-b">
@@ -360,10 +364,11 @@
                                     <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
                                 </div-->
                                 <div class="sl-bk">
-                                    <a href="/auth/Facebook" class="fb"></a>
-                                    <a href="/auth/Vkontakte" class="vk"></a>
-                                    <a href="/auth/Google" class="gp"></a>
-                                    <a href="/auth/Twitter" class="tw"></a>
+                                    <!--a href="/auth/Facebook" class="fb"></a>
+                                       <a href="/auth/Vkontakte" class="vk"></a>
+                                       <a href="/auth/Google" class="gp"></a>
+                                       <a href="/auth/Twitter" class="tw"></a-->
+                                    <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
                                 </div>
                             </div>
                         </form>

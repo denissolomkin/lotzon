@@ -693,7 +693,7 @@ class Player extends Entity
                 $refPlayer = new Player();
                 $refPlayer->setId($this->getReferalId())->fetch();
 
-                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке '.$this->getEmail());
+                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
 
                 $this->markReferalPaid();
             } catch (EntityException $e) {}
@@ -762,6 +762,7 @@ class Player extends Entity
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
                  ->setReferalId($data['ReferalId'])
+                 ->setReferalPaid($data['ReferalPaid'])
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
 
             if ($data['TicketsFilled']) {

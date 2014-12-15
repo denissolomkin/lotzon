@@ -5,10 +5,11 @@ Config::instance()->newsCacheCount = 18;
 
 Config::instance()->dbConnectionProperties = array(
     // testbed
-    /**/
+    /*
     'dsn' => 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
         'user' => 'testbed',
         'password' => '2p9G808CVn17P',
+    */
     // public
     /*    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
     'user' => 'lotzone_user',
@@ -236,7 +237,7 @@ Config::instance()->generatorNumTries = 5;
 Config::instance()->hybridAuth = array(
 
         // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
-        "base_url" => "http://testbed.lotzon.com/auth/endpoint/",
+        "base_url" => "http://lotzon.com/auth/endpoint/",
 
         "providers" => array (
 
