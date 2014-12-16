@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -167,8 +167,14 @@
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
                     </div>
-                    <div class="bz2"><script language=JavaScript src='http://monopoly-club.ru/partnership/mc_banner.js?f=300x250&p=1000045425'></script></div>
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х525.png" width="300" height="525" style="margin-top:40px;"/></div>
+                    <div class="bz2">
+                        <!-- admitad.banner: 337fef45060096b382f6feba1a4143 My Lands -->
+                        <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/337fef45060096b382f6feba1a4143/?i=4">
+                            <img width="300" height="250" border="0" src="//ad.admitad.com/b/337fef45060096b382f6feba1a4143/" alt="My Lands" />
+                        </a>
+                        <!-- /admitad.banner -->
+                    </div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х525.png" width="300" height="525"/></div>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -393,14 +399,32 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <!-- admitad.banner: 7e1e872a600096b382f61bf6bd7bda Groupon RU -->
-                <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/7e1e872a600096b382f61bf6bd7bda/?i=4">
-                <img width="728" height="90" border="0" src="//ad.admitad.com/b/7e1e872a600096b382f61bf6bd7bda/" alt="Groupon RU" />
-                </a>
+                <!-- admitad.banner: 02c064fd180096b382f6feba1a4143 My Lands -->
+                <script type="text/javascript">
+                    try{(function(d,ad,s,ulp,subID,injectTo){
+
+                        / Optional settings (these lines can be removed): /
+                        ulp = "";  // - custom goto link;
+                        subID = "";  // - local banner key;
+                        injectTo = "";  // - #id of html element (ex., "top-banner").
+
+                        var dInject="admitad"+ad+subID+Math.round(Math.random()*100000000);
+                        injectTo=="" && d.write('<div id="'+dInject+'"></div>');
+                        s=s.replace("$",ad);s+="?inject="+(injectTo==""||!injectTo?dInject:injectTo);
+                        if(subID!="")s+="&subid="+subID;if(ulp!="")s+="&ulp="+escape(encodeURI(ulp));
+                        s=(("https:"==d.location.protocol)?"https":"http")+"://"+s;var j=d.createElement("script");
+                        j.type="text/javascript";j.src=s;(d.getElementsByTagName("head")[0]).appendChild(ninja);
+                    })(window.document,"02c064fd180096b382f6feba1a4143","ad.admitad.com/j/$/","","","");}catch(err){}
+                </script>
+                <noscript>
+                    <embed wmode="opaque" width="728" height="90" src="//ad.admitad.com/f/02c064fd180096b382f6feba1a4143/" type="application/x-shockwave-flash">
+                        <noembed>
+                            <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/02c064fd180096b382f6feba1a4143/?i=4">
+                                <img width="728" height="90" border="0" src="//ad.admitad.com/b/02c064fd180096b382f6feba1a4143/" alt="My Lands" />
+                            </a>
+                        </noembed>
+                </noscript>
                 <!-- /admitad.banner -->
-                <!--ins class="adsbygoogle" style="display:inline-block;width:980px;height:120px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="4351678186"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
-                <!--img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" /-->
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
