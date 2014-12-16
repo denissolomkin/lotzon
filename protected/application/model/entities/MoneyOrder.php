@@ -139,7 +139,7 @@ class MoneyOrder extends Entity
                 if (!$this->getData()['summ']['value']) {
                     throw new EntityException("EMPTY_SUMM", 400);   
                 }
-                if (!is_numeric($this->getData()['summ']['value'])) {
+                if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 ) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
                 
