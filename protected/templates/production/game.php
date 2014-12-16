@@ -160,13 +160,6 @@
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
                 <aside class="rbs">
-                    <div class="bz1">
-                        <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
-                        <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
-                    </div>
                     <div class="bz2">
                         <!-- admitad.banner: 337fef45060096b382f6feba1a4143 My Lands -->
                         <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/337fef45060096b382f6feba1a4143/?i=4">
@@ -174,7 +167,14 @@
                         </a>
                         <!-- /admitad.banner -->
                     </div>
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х525.png" width="300" height="525"/></div>
+                    <div class="bz1">
+                        <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+                        <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
+                    </div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х525.png" width="300" height="525"   /></div>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -399,31 +399,10 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <!-- admitad.banner: 02c064fd180096b382f6feba1a4143 My Lands -->
-                <script type="text/javascript">
-                    try{(function(d,ad,s,ulp,subID,injectTo){
-
-                        / Optional settings (these lines can be removed): /
-                        ulp = "";  // - custom goto link;
-                        subID = "";  // - local banner key;
-                        injectTo = "";  // - #id of html element (ex., "top-banner").
-
-                        var dInject="admitad"+ad+subID+Math.round(Math.random()*100000000);
-                        injectTo=="" && d.write('<div id="'+dInject+'"></div>');
-                        s=s.replace("$",ad);s+="?inject="+(injectTo==""||!injectTo?dInject:injectTo);
-                        if(subID!="")s+="&subid="+subID;if(ulp!="")s+="&ulp="+escape(encodeURI(ulp));
-                        s=(("https:"==d.location.protocol)?"https":"http")+"://"+s;var j=d.createElement("script");
-                        j.type="text/javascript";j.src=s;(d.getElementsByTagName("head")[0]).appendChild(ninja);
-                    })(window.document,"02c064fd180096b382f6feba1a4143","ad.admitad.com/j/$/","","","");}catch(err){}
-                </script>
-                <noscript>
-                    <embed wmode="opaque" width="728" height="90" src="//ad.admitad.com/f/02c064fd180096b382f6feba1a4143/" type="application/x-shockwave-flash">
-                        <noembed>
-                            <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/02c064fd180096b382f6feba1a4143/?i=4">
-                                <img width="728" height="90" border="0" src="//ad.admitad.com/b/02c064fd180096b382f6feba1a4143/" alt="My Lands" />
-                            </a>
-                        </noembed>
-                </noscript>
+                <!-- admitad.banner: dceeb0bd050096b382f6feba1a4143 My Lands -->
+                <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/dceeb0bd050096b382f6feba1a4143/?i=4">
+                    <img width="728" height="90" border="0" src="//ad.admitad.com/b/dceeb0bd050096b382f6feba1a4143/" alt="My Lands" />
+                </a>
                 <!-- /admitad.banner -->
             </section>
         <!--=====================================================================
