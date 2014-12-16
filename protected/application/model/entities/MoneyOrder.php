@@ -211,9 +211,13 @@ class MoneyOrder extends Entity
                         }
                     break;
                     case self::GATEWAY_POINTS:
-                        $this->setStatus(1);
-                        $this->setText('Конвертация денег');
-                        $this->getPlayer()->addPoints((int)(round($this->getData()['summ']['value'],2)*GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry())), "Обмен денег на баллы");
+                        $rate=GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry())?:
+                            GameSettingsModel::instance()->loadSettings()->getCountryRate(Config::instance()->defaultLang);
+
+                        $this->setStatus(1)
+                            ->setText('Конвертация денег')
+                            ->getPlayer()
+                            ->addPoints((int)(round($this->getData()['summ']['value'],2)*$rate), "Обмен денег на баллы");
                         break;
                 }
                 $this->setData($data);
