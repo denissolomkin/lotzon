@@ -16,19 +16,21 @@ class GameSettingsDBProcessor
         }
         $timesSql = sprintf($timesSql, join(",", $parts));
 
-        $prizesSql = "INSERT INTO `LotterySettings` (`BallsCount`, `CountryCode`, `Prize`, `Currency`, `SumTotal`, `Coefficient`, `JackPot`) VALUES %s";
+        $prizesSql = "INSERT INTO `LotterySettings` (`BallsCount`, `CountryCode`, `Prize`, `Currency`, `SumTotal`, `Coefficient`, `Rate`, `JackPot`) VALUES %s";
         $parts = array();
 
         foreach ($settings->getPrizes() as $country => $prizes) {
             $coeficient = $settings->getCountryCoefficient($country);
+            $rate = $settings->getCountryRate($country);
             foreach ($prizes as $ballsCount => $prize) {
-                $parts[] = vsprintf(("(%s,%s,%s,%s,%s,%s,%s)"), array(
+                $parts[] = vsprintf(("(%s,%s,%s,%s,%s,%s,%s,%s)"), array(
                     DB::Connect()->quote($ballsCount),
                     DB::Connect()->quote($country),
                     DB::Connect()->quote($prize['sum']),
                     DB::Connect()->quote($prize['currency']),
                     DB::Connect()->quote($settings->getTotalWinSum()),
                     DB::Connect()->quote($coeficient),
+                    DB::Connect()->quote($rate),
                     DB::Connect()->quote($settings->getJackpot()),
                 ));
             }
@@ -78,6 +80,9 @@ class GameSettingsDBProcessor
             }
             if (!$settings->getCountryCoefficient($lottery['CountryCode'])) {
                 $settings->setCountryCoefficient($lottery['CountryCode'], $lottery['Coefficient']);
+            }
+            if (!$settings->getCountryRate($lottery['CountryCode'])) {
+                $settings->setCountryRate($lottery['CountryCode'], $lottery['Rate']);
             }
             $settings->setJackpot($lottery['JackPot']);
             if (!isset($prizes[$lottery['CountryCode']])) {

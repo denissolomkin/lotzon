@@ -168,7 +168,7 @@
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
                     </div>
                     <div class="bz2"><script language=JavaScript src='http://monopoly-club.ru/partnership/mc_banner.js?f=300x250&p=1000045425'></script></div>
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х575.png" width="300" height="575" style="margin-top:40px;"/></div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х525.png" width="300" height="525" style="margin-top:40px;"/></div>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -290,6 +290,9 @@
                                     <? if ($i == $pager) {
                                         break;
                                     } ?>
+                                    <? if (is_array($item->getCountries()) and !in_array($player->getCountry(),$item->getCountries())) {
+                                        continue;
+                                    } ?>
                                     <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
@@ -390,9 +393,14 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
+                <!-- admitad.banner: 7e1e872a600096b382f61bf6bd7bda Groupon RU -->
+                <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/7e1e872a600096b382f61bf6bd7bda/?i=4">
+                <img width="728" height="90" border="0" src="//ad.admitad.com/b/7e1e872a600096b382f61bf6bd7bda/" alt="Groupon RU" />
+                </a>
+                <!-- /admitad.banner -->
                 <!--ins class="adsbygoogle" style="display:inline-block;width:980px;height:120px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="4351678186"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
-                <img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" />
+                <!--img src="/tpl/img/baners/Plug-970х135.png" width="970" height="135" /-->
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
@@ -411,14 +419,19 @@
                                 <li class="ul_li" data-link="profile-bonuses">бонусы</li>
                                 <li class="ul_li" data-link="profile-info">информация</li>
                             </ul>
+
+
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
                                     <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов на счету</div>
                                     <div class="bt" id="exchange" data-href="prizes">обменять</div>
                                 </div>
+
+                                <div class="hand" id="cash-exchange"><img src="/tpl/img/but-exchange.png"></div>
+
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b><?=Common::viewNumberFormat($player->getMoney())?></b><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
+                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
                                     <div class="bt" id="cash-output">вывести</div>
                                 </div>
                                 <div class="st-hy-bt"><span>история транзакций</span></div>

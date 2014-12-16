@@ -1,6 +1,11 @@
 <?php
 
-class Session 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler;
+use Symfony\Component\HttpFoundation\Request;
+
+class Session2
 {
     private static $_instances = array();
 
@@ -9,7 +14,7 @@ class Session
     public static function Connect($name = 'default')
     {
         if (empty(self::$_instances[$name])) {
-            self::$_instances[$name] = new Session();
+            self::$_instances[$name] = new Session2();
             self::$_instances[$name]->setInstanceName($name);
             self::$_instances[$name]->start();
 
@@ -21,6 +26,8 @@ class Session
             
 
         }
+
+
 
         return self::$_instances[$name];
     }
@@ -46,8 +53,8 @@ class Session
 
     public function start()
     {
-        session_start();
 
+        session_start();
         return $this;
     }
 

@@ -268,7 +268,6 @@
 
 
 
-
 <!-- ==========================================================================
                                         GAME POPUP
 ========================================================================== -->
@@ -416,6 +415,56 @@
 </div>
 
 
+<!--=========================================================================
+                            CASH EXCHANGE POPUP CODE
+==========================================================================-->
+
+<div class="wt-pp-bk popup" id="cash-exchange-popup">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="cash-exchange pop-box">
+                <div class="cs"></div>
+                <div class="padd">
+                    <!-- exchange BLOCK -->
+                        <div class="ttl-bk">
+                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
+
+                        </div>
+
+                        <div class="fm-txt">
+                              <p>Введите сумму, которую хотите конвертировать в баллы.<br>Курс конвертации  1 <?=$currency?> = <span id="rate"><?=($gameInfo['rate'])?></span> баллов
+                        </div>
+
+
+                        <div class="ttl-bk" id="exchange-input">
+                            <div class="pi-inp-bk l">
+                                <div class="ph"><?=$currency?></div>
+                                <input autocomplete="off" spellcheck="false"  class="m_input" type="text" data-type="number" id="summ_exchange" name="summ" value="">
+                            </div>
+
+                            <div class="if r"><span id="points">0</span> <i><br/>баллов</i></div>
+
+
+                        </div>
+
+                        <div class="hidden" id="exchange-result">
+                            <div class="fm-txt">
+                                <p>Готово! Денежные средства сконвертированы в баллы.</p>
+                            </div>
+                        </div>
+
+                        <div class="bt">
+                            <button class="if-bt" id="exchange-submit" onclick="moneyExchange();">Подтвердить</button>
+                        </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
 
 <!--=========================================================================
                             TRANSACTIONS HISTORY POPUP CODE
@@ -431,10 +480,10 @@
                     <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
-                            <div class="if"><?=Common::viewNumberFormat($player->getPoints())?> <i>баллов<br/>на счету</i></div>
-                            <div class="bt">
+                            <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
+                           <?/*<div class="bt">
                                 <div class="if-bt points-get" onclick="$('#ta-his-popup').hide();$('#exchange').click();">обменять</div>
-                            </div>
+                            </div> */?>
                         </div>
                         <div class="tb">
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
@@ -454,14 +503,15 @@
                         <? } ?>
                     </div>
 
-                    <!-- BONUSES BLOCK -->
-                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
+                    <!-- CASH BLOCK -->
+                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_MONEY?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
-                            <div class="if"><?=Common::viewNumberFormat($player->getMoney())?> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
-                            <div class="bt">
+                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <?/* <div class="bt">
+                              <!--  <div class="if-bt money-exchange" onclick="$('#ta-his-popup').hide();$('#cash-exchange').click();">обменять</div> -->
                                 <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
-                            </div>
+                            </div>*/?>
                         </div>
                         <div class="tb">
                             <? foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>

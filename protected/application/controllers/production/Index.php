@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session, \PlayersModel, \ShopModel, \NewsModel;
+use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session2, \PlayersModel, \ShopModel, \NewsModel;
 use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 
@@ -56,7 +56,7 @@ class Index extends \SlimController\SlimController
             $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
         }
 
-        if (!Session::connect()->get(Player::IDENTITY)) {
+        if (!Session2::connect()->get(Player::IDENTITY)) {
             // check for autologin;
             if (!empty($_COOKIE[Player::AUTOLOGIN_COOKIE])) {
                 $player = new Player();
@@ -65,7 +65,7 @@ class Index extends \SlimController\SlimController
                         $player->setEmail($_COOKIE[Player::AUTOLOGIN_COOKIE])->fetch();
 
                         if ($player->generateAutologinHash() === $_COOKIE[Player::AUTOLOGIN_HASH_COOKIE]) {
-                            Session::connect()->set(Player::IDENTITY, $player);
+                            Session2::connect()->set(Player::IDENTITY, $player);
                             $player->markOnline();
                         }
                     }
@@ -76,7 +76,7 @@ class Index extends \SlimController\SlimController
             $this->landing();    
         } else {
             $this->game();
-            Session::connect()->get(Player::IDENTITY)->markOnline();
+            Session2::connect()->get(Player::IDENTITY)->markOnline();
         }
         
     }
@@ -84,16 +84,16 @@ class Index extends \SlimController\SlimController
     protected function game()
     {
         $seo = SEOModel::instance()->getSEOSettings();
-        Session::connect()->get(Player::IDENTITY)->fetch();
+        Session2::connect()->get(Player::IDENTITY)->fetch();
 
         $gameSettings          = GameSettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
-        $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
+        $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session2::connect()->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
-        $currentChanceGame     = Session::connect()->get('chanceGame');
+        $currentChanceGame     = Session2::connect()->get('chanceGame');
 
-        //if (!Session::connect()->get('MomentChanseLastDate') || time() - Session::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
-            Session::connect()->set('MomentChanseLastDate', time());
+        //if (!Session2::connect()->get('MomentChanseLastDate') || time() - Session2::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
+            Session2::connect()->set('MomentChanseLastDate', time());
         //}
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
@@ -101,18 +101,19 @@ class Index extends \SlimController\SlimController
             'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $gameSettings->getCountryCoefficient($this->country),
             'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lotteryWins'  => $gameSettings->getPrizes($this->country),
+            'rate'         => $gameSettings->getCountryRate($this->country),
         );
 
         $playerTransactions = array(
-            GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory(Session::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
-            GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory(Session::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+            GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory(Session2::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+            GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory(Session2::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
 
-        $tickets = TicketsModel::instance()->getPlayerUnplayedTickets(Session::connect()->get(Player::IDENTITY));
+        $tickets = TicketsModel::instance()->getPlayerUnplayedTickets(Session2::connect()->get(Player::IDENTITY));
 
         $this->render('production/game', array(
             'gameInfo'    => $gameInfo,
@@ -122,7 +123,7 @@ class Index extends \SlimController\SlimController
             'lang'        => $this->promoLang,
             'currency'    => Config::instance()->langCurrencies[$this->country],
             'news'        => $news,
-            'player'      => Session::connect()->get(Player::IDENTITY),
+            'player'      => Session2::connect()->get(Player::IDENTITY),
             'tickets'     => $tickets,
             'layout'      => false,
             'lotteries'   => $lotteries,

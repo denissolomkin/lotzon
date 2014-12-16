@@ -500,6 +500,23 @@ $(function(){
     });
 
 
+    // CASE EXCHANGE POPUP //
+    $('#cash-exchange').on('click', function(){
+        if (playerMoney > 0) {
+            $("#exchange-submit").prop('disabled', true).addClass('button-disabled');
+            $("#summ_exchange").val('');
+            $("#points").html('');
+            $('#cash-exchange-popup').fadeIn(200);
+            $('#cash-exchange-popup div.form').show();
+            $('#cash-exchange-popup input').focus();
+        } else {
+            $("#report-popup").find(".txt").text("Недостаточно средств для обмена!");
+            $("#report-popup").show();
+        }
+
+    });
+
+
 
 
 
@@ -909,12 +926,41 @@ $(function(){
     /* ==========================================================================
                     Cash popup functional
      ========================================================================== */
+    /* CALC POINTS */
+    $("#cash-exchange-popup input").on('keyup', function(e){
+        var tmp_money;
+        $(this).val($(this).val().replaceArray(['ю','Ю'],'.'));
+        if(new_input=$(this).val().match(/\d*[,.]\d{2}/))
+            $(this).val(new_input);
+//        if($(this).val().indexOf(".") !== -1)
+  //          $(this).val(Math.round($(this).val()*100)/100);
+
+        input_money=parseFloat($(this).val());
+        if(!is_numeric($(this).val()) && $(this).val() && tmp_money>0)  {$(this).val(tmp_money);}
+        if(input_money>playerMoney && $(this).val()) {
+            //alert(input_money+' '+playerMoney);
+                input_money=playerMoney;
+                $(this).val(playerMoney);
+        }
+
+        $("#cash-exchange-popup #points").html(parseInt(input_money * $('#cash-exchange-popup #rate').html()));
+        if(parseInt($('#cash-exchange-popup #points').html())>0)
+            $("#exchange-submit").prop('disabled', false).removeClass('button-disabled');
+        else
+            $("#exchange-submit").prop('disabled', true).addClass('button-disabled');
+
+        tmp_money=$(this).val();
+    });
+
+    /* FOCUS PLACEHOLDER */
     $('.csh-ch-bk .m_input').on('focus', function(){
         $(this).parent().addClass('focus');
     });
     $('.csh-ch-bk .m_input').on('blur', function(){
         $(this).parent().removeClass('focus');
     });
+
+    /* FILE FIELD */
     $('.csh-ch-bk .f_input').hover(
         function(){
             if(!$('.inp-fl-bt').hasClass('check'))$('.inp-fl-bt').addClass('hover');
@@ -923,16 +969,20 @@ $(function(){
             $('.inp-fl-bt').removeClass('hover');
         }
     )
+
     $('.csh-ch-bk .f_input').on('change', function(){
         $('.inp-fl-bt').addClass('check').html('заменить');
     });
 
+    /* SWITCH SECTION */
     $('input[name="cash"]').on('change', function(){
         var id = $(this).attr('id');
         $('#csh-ch-txt').hide();
         $('.csh-ch-bk .form').hide();
         $('.csh-ch-bk .'+id).show();
     });
+
+    /* CHECK TEXT INPUT */
     $("input").keydown(function(e){
         if($(this).attr('data-type') == 'number'){
             // Allow: backspace, delete, tab, escape, enter and .
@@ -1068,17 +1118,17 @@ function moneyOutput(type, form) {
             if ($(input).attr('type') != 'radio') {
                 data[$(input).attr('name')] = {
                     title: $(input).data('title'),
-                    value: $(input).val(),
-                }    
+                    value: $(input).val()
+                }
             } else {
                 if ($(input).is(":checked")) {
                     data[$(input).attr('name')] = {
                         title: $(input).data('title'),
-                        value: $(input).data('currency'),
+                        value: $(input).data('currency')
                     }
                 }
             }
-            
+
         }
     });
 
@@ -1090,6 +1140,37 @@ function moneyOutput(type, form) {
         alert(data.message);
     }, function(){});
     return false;
+}
+
+
+function moneyExchange() {
+    var data = {};
+
+    data['type']='points';
+    data['summ']={
+        title: 'summ',
+        value: $("#summ_exchange").val()
+    };
+
+    requestForMoney(data, function(){
+        updateMoney(playerMoney-parseFloat($("#cash-exchange-popup input[name=summ]").val()));
+        updatePoints(playerPoints+parseInt($("#cash-exchange-popup #points").html()));
+        $("#cash-exchange-popup input[name=summ]").val('');
+        $("#cash-exchange-popup #points").html('');
+        $("#exchange-submit").prop('disabled', true).addClass('button-disabled').hide();
+        $("#exchange-input").hide();
+        $('#exchange-result').fadeIn(100);
+        window.setTimeout(function(){
+            $('#exchange-result').hide();
+            $("#exchange-input").fadeIn(200);
+            $("#exchange-submit").fadeIn(200);
+        }, 2400);
+
+    }, function(data){
+        alert(data.message);
+    }, function(){});
+    return false;
+
 }
 
 function showGameProccessPopup(){
@@ -1218,6 +1299,64 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
+<!-- NEW GAMES PREVIEW -->
+$('.ch-gm-tbl .ngm-bt').click(function(){
+    var gi = $(this).data('game');
+    $('.msg-tb.won').hide();
+    $('.msg-tb.los').hide();
+    // hide all games;
+    $('.game-bk .gm-tb').hide();
+    $('.game-bk .rw-b .tb').hide();
+    $('.game-bk .play').hide();
+    $('.game-bk li').removeClass('won').removeClass('los');
+    $('.game-bk li').removeClass('true').removeClass('blink');
+    // show current game
+
+    $('.ch-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ngm-bk').fadeIn(200);
+    }, 200);
+
+    /*    $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
+
+
+
+     $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
+     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
+     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
+     $('.ch-bk').fadeOut(200);
+     window.setTimeout(function(){
+     $('.game-bk').fadeIn(200);
+     }, 200);
+
+     $('.game-bk .play .bt').off('click').on('click', function() {
+     winChance = false;
+     var btn = $(this);
+     startChanceGame(gi, function(data) {
+     updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
+     btn.parents('.play').hide();
+     }, function(data) {
+     if (data.message=="INSUFFICIENT_FUNDS") {
+     $('.pz-ifo-bk').hide();
+     $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
+     }
+     }, function() {});
+     });
+     */
+});
+
+<!-- NEW GAME BACK -->
+$('.ngm-bk .bk-bt').on('click', function() {
+    $('.ngm-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ch-bk').fadeIn(200);
+    }, 200);
+});
+$('#mchance').find('.cs').on('click', function() {
+    location.reload();
+});
+
+<!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
     var gi = $(this).data('game');
     $('.msg-tb.won').hide();
@@ -1259,6 +1398,7 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     });
 });
 
+<!-- CHANCE GAME COORD CLICK -->
 $('li[data-coord]').on('click', function() {
     var cell = $(this);
     playChanceGame($(this).parent().data('game'), $(this).data('coord'), function(data) {
@@ -1332,6 +1472,7 @@ $('li[data-coord]').on('click', function() {
     }, function() {});
 });
 
+<!-- CHANCE GAME -->
 $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);
     window.setTimeout(function(){
@@ -1342,10 +1483,26 @@ $('#mchance').find('.cs').on('click', function() {
     location.reload();
 });
 
+<!-- HISTORY OF TRANSACTIONS -->
 $('.st-hy-bt').on('click', function(){
     $('#ta-his-popup').fadeIn(200);
-    $('#ta-his-popup').find('.cl').click();
 
+    // update history on open popup
+    $( "div.bblock" ).each(function( index ) {
+        currency=$( this ).data('currency');
+        var div=$( this );
+        getTransactions(0, currency, function(data) {
+            if (data.res.length) {
+                var html = '';
+                $(data.res).each(function(id, tr) {
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                });
+                div.find('.tb').html($(html));
+            }
+        }, function(data) {}, function() {});
+    });
+
+    $('#ta-his-popup').find('.cl').click();
     $('#ta-his-popup').find('.pz-more-bt, .mr').off('click').on('click', function() {
         var currency = $(this).parents('.bblock').data('currency');
         button = $(this);
@@ -1387,7 +1544,29 @@ $('.vk-share').on('click', function() {
     vkPost(posts.vk);
 });
 
+
 function updatePoints(points) {
     playerPoints = points;
-    $('.plPointHolder').text(playerPoints);
+    points=points.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plPointHolder').text(points);
 }
+
+
+function updateMoney(money) {
+    playerMoney = parseFloat(money.toFixed(2));
+    money=money.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plMoneyHolder').text(money);
+}
+
+String.prototype.replaceArray = function(find, replace) {
+    var replaceString = this;
+    var replaceMatch = replace;
+    var regex;
+    for (var i = 0; i < find.length; i++) {
+        regex = new RegExp(find[i], "g");
+        if($.isArray(replaceMatch))
+            replaceMatch=replace[i];
+        replaceString = replaceString.replace(regex, replaceMatch);
+    }
+    return replaceString;
+};

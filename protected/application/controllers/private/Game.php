@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \GameSettings, \GameSettingsException, \GameSettingsModel;
+use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \GameSettings, \GameSettingsException, \GameSettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
@@ -45,11 +45,16 @@ class Game extends \PrivateArea
             $prizes = $this->request()->post('prizes', array());
             $lotteries = $this->request()->post('lotteries', array());
             $coeficients = $this->request()->post('countryCoefficients', array());
+            $rates = $this->request()->post('countryRates', array());
 
             $settings->setTotalWinSum($totalSum);
             $settings->setJackpot($jackpot);
             foreach ($coeficients as $country => $coof) {
                 $settings->setCountryCoefficient($country, $coof);
+            }
+
+            foreach ($rates as $country => $rate) {
+                $settings->setCountryRate($country, $rate);
             }
 
             foreach ($prizes as $country => $prize) {

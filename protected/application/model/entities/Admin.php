@@ -224,13 +224,13 @@ class Admin extends Entity
             throw new EntityException("Invalid password", 401);
         } 
 
-        Session::connect()->set(self::SESSION_VAR, $this);
+        Session2::connect()->set(self::SESSION_VAR, $this);
         return true;
     }
 
     public function logout()
     {
-        Session::connect()->delete(self::SESSION_VAR);
+        Session2::connect()->delete(self::SESSION_VAR);
 
         return true;
     }

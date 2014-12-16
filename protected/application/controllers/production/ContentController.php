@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \TransactionsModel, \Common;
+use \Application, \Config, \Player, \EntityException, \Session2, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \TransactionsModel, \Common;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -13,13 +13,13 @@ class ContentController extends \AjaxController
     {
         parent::init();
         if ($this->validRequest()) {
-            if (!Session::connect()->get(Player::IDENTITY) instanceof PLayer) {
+            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
-            }    
+            }
         }
     }
 
-    public function lotteriesAction() 
+    public function lotteriesAction()
     {
         $offset = $this->request()->get('offset');
         $onlyMine = $this->request()->get('onlyMine', false);
@@ -27,16 +27,16 @@ class ContentController extends \AjaxController
 
             if (!$onlyMine) {
                 $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(Index::LOTTERIES_PER_PAGE, $offset);
-                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId());
+                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session2::connect()->get(Player::IDENTITY)->getId());
                 foreach ($playerLotteries as $lottery) {
                     if (isset($lotteries[$lottery->getId()])) {
                         $lotteries[$lottery->getId()]->playerPlayed = true;
                     }
                 }
             } else {
-                $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session::connect()->get(Player::IDENTITY)->getId(), Index::LOTTERIES_PER_PAGE, $offset);    
+                $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session2::connect()->get(Player::IDENTITY)->getId(), Index::LOTTERIES_PER_PAGE, $offset);
             }
-            
+
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }
@@ -63,7 +63,7 @@ class ContentController extends \AjaxController
         $this->ajaxResponse($response);
     }
 
-    public function shopAction() 
+    public function shopAction()
     {
         $offset = (int)$this->request()->get('offset');
         $category = (int)$this->request()->get('category');
@@ -76,13 +76,17 @@ class ContentController extends \AjaxController
         $items = array();
         $i = 0;
         foreach ($shop[$category]->getItems() as $item) {
+            if (is_array($item->getCountries()) and !in_array(Session2::connect()->get(Player::IDENTITY)->getCountry(),$item->getCountries())) {
+                continue;
+            }
+
             if ($i < $offset) {
                 $i++;
                 continue;
             }
             if (count($items) >= Index::SHOP_PER_PAGE) {
                 break;
-            } 
+            }
             $items[] = array(
                 'id'       => $item->getId(),
                 'title'    => $item->getTitle(),
@@ -105,7 +109,7 @@ class ContentController extends \AjaxController
     {
         $offset = (int)$this->request()->get('offset');
 
-        $news = NewsModel::instance()->getList(Session::connect()->get(Player::IDENTITY)->getCountry(), Index::NEWS_PER_PAGE, $offset);
+        $news = NewsModel::instance()->getList(Session2::connect()->get(Player::IDENTITY)->getCountry(), Index::NEWS_PER_PAGE, $offset);
         $responseData = array(
             'news'           => array(),
             'keepButtonShow' => false,
@@ -126,7 +130,7 @@ class ContentController extends \AjaxController
     }
 
     public function lotteryDetailsAction($lotteryId)
-    {   
+    {
         if (!$lotteryId) {
             $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
         }
@@ -134,7 +138,7 @@ class ContentController extends \AjaxController
             $lotteryDetails = LotteriesModel::instance()->getLotteryDetails($lotteryId);
         } catch (ModelException $e) {
 
-            $this->ajaxResponse(array(), 0, $e->getCode() . ':INTERNAL_ERROR' . $e->getMessage());            
+            $this->ajaxResponse(array(), 0, $e->getCode() . ':INTERNAL_ERROR' . $e->getMessage());
         }
 
         $responseData = array(
@@ -155,7 +159,7 @@ class ContentController extends \AjaxController
                 'surname' => $player->getVisibility() ? $player->getSurname() : '',
                 'nick'    => $player->getVisibility() ? $player->getNicName() : 'id'.$player->getId(),
                 'avatar'  => $player->getVisibility() ? ($player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '') : '',
-                'you'     => $player->getId() == Session::connect()->get(Player::IDENTITY)->getId(),
+                'you'     => $player->getId() == Session2::connect()->get(Player::IDENTITY)->getId(),
             );
         }
 
@@ -164,7 +168,7 @@ class ContentController extends \AjaxController
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()]) : '',
+                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session2::connect()->get(Player::IDENTITY)->getCountry()]) : '',
                 );
             }
         }
@@ -178,33 +182,33 @@ class ContentController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
         }
         try {
-            $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'next');    
+            $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'next');
         } catch (ModelException $e) {
             // be realllly dirty
-            $nextLottery = LotteriesModel::instance()->getDependentLottery(1000000/*;)*/, 'next');    
+            $nextLottery = LotteriesModel::instance()->getDependentLottery(1000000/*;)*/, 'next');
         }
-        
+
 
         if ($nextLottery) {
-            return $this->lotteryDetailsAction($nextLottery->getId());    
+            return $this->lotteryDetailsAction($nextLottery->getId());
         }
         $this->ajaxResponse(array(),0, 'NOT_FOUND');
     }
 
     public function prevLotteryDetailsAction($lotteryId)
-    {        
+    {
         if (!$lotteryId) {
             $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
         }
         try {
-            $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'prev');            
+            $nextLottery = LotteriesModel::instance()->getDependentLottery($lotteryId, 'prev');
         } catch (ModelException $e) {
             // be dirty
-            $nextLottery = LotteriesModel::instance()->getDependentLottery(0, 'prev');            
+            $nextLottery = LotteriesModel::instance()->getDependentLottery(0, 'prev');
         }
 
         if ($nextLottery) {
-            return $this->lotteryDetailsAction($nextLottery->getId());    
+            return $this->lotteryDetailsAction($nextLottery->getId());
         }
         $this->ajaxResponse(array(),0, 'NOT_FOUND');
     }
@@ -214,10 +218,10 @@ class ContentController extends \AjaxController
         $offset = (int)$this->request()->get('offset');
 
         if ($currency == GameSettings::CURRENCY_POINT) {
-            $transactions = TransactionsModel::instance()->playerPointsHistory(Session::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+            $transactions = TransactionsModel::instance()->playerPointsHistory(Session2::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
         }
         if ($currency == GameSettings::CURRENCY_MONEY) {
-            $transactions = TransactionsModel::instance()->playerMoneyHistory(Session::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+            $transactions = TransactionsModel::instance()->playerMoneyHistory(Session2::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
         }
         $jsonTransactions = array();
         foreach ($transactions as $transaction) {

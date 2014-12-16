@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session, \LotteryTicket, \LotteriesModel, \TicketsModel, \GameSettings, \GameSettingsModel;
+use \Application, \Config, \Player, \EntityException, \Session2, \LotteryTicket, \LotteriesModel, \TicketsModel, \GameSettings, \GameSettingsModel;
 use \ChanceGamesModel;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -14,10 +14,10 @@ class Game extends \AjaxController
     {
         parent::init();
         if ($this->validRequest()) {
-            if (!Session::connect()->get(Player::IDENTITY) instanceof PLayer) {
+            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }    
-            Session::connect()->get(Player::IDENTITY)->markOnline();
+            Session2::connect()->get(Player::IDENTITY)->markOnline();
         }
     }
 
@@ -26,7 +26,7 @@ class Game extends \AjaxController
         $respData = array();
 
         $ticket = new LotteryTicket();
-        $ticket->setPlayerId(Session::connect()->get(Player::IDENTITY)->getId());
+        $ticket->setPlayerId(Session2::connect()->get(Player::IDENTITY)->getId());
         $ticket->setCombination($this->request()->post('combination'));
         $ticket->setTicketNum($this->request()->post('tnum'));
 
@@ -43,9 +43,9 @@ class Game extends \AjaxController
     {
         $lottery = LotteriesModel::instance()->getLastPlayedLottery();
         if ($lottery && $lottery->getReady()) {
-            Session::connect()->get(Player::IDENTITY)->fetch();
+            Session2::connect()->get(Player::IDENTITY)->fetch();
 
-            $tickets      = TicketsModel::instance()->getPlayerLotteryTickets($lottery->getId(), Session::connect()->get(Player::IDENTITY)->getId());
+            $tickets      = TicketsModel::instance()->getPlayerLotteryTickets($lottery->getId(), Session2::connect()->get(Player::IDENTITY)->getId());
             $gameSettings = GameSettingsModel::instance()->loadSettings();
 
             $data = array();
@@ -55,8 +55,8 @@ class Game extends \AjaxController
                 'combination'   => $lottery->getCombination(),
             );
             $data['player'] = array(
-                'points'  => Session::connect()->get(Player::IDENTITY)->getPoints(),
-                'money'   => Session::connect()->get(Player::IDENTITY)->getMoney(),
+                'points'  => Session2::connect()->get(Player::IDENTITY)->getPoints(),
+                'money'   => Session2::connect()->get(Player::IDENTITY)->getMoney(),
                 'win'     => false,
             );
 
@@ -75,11 +75,11 @@ class Game extends \AjaxController
                 }
                 if ($shoots > 0) {
                     $data['player']['win']  = true;
-                    $prize = $gameSettings->getPrizes(Session::connect()->get(Player::IDENTITY)->getCountry())[$shoots];
+                    $prize = $gameSettings->getPrizes(Session2::connect()->get(Player::IDENTITY)->getCountry())[$shoots];
                     if ($prize['currency'] == GameSettings::CURRENCY_POINT) {
                         $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " баллов";
                     } else {
-                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " " . Config::instance()->langCurrencies[Session::connect()->get(Player::IDENTITY)->getCountry()];
+                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " " . Config::instance()->langCurrencies[Session2::connect()->get(Player::IDENTITY)->getCountry()];
                     }
                 } else {
                     $data['ticketWins'][] = 0;
@@ -99,11 +99,11 @@ class Game extends \AjaxController
     {
         $games = ChanceGamesModel::instance()->getGamesSettings();
         if ($games[$identifier] && $identifier != 'moment') {
-            if (Session::connect()->get(Player::IDENTITY)->getPoints() < $games[$identifier]->getGamePrice()) {
+            if (Session2::connect()->get(Player::IDENTITY)->getPoints() < $games[$identifier]->getGamePrice()) {
                 $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
             }
             $gameField = $games[$identifier]->generateGame();
-            Session::connect()->set('chanceGame', array(
+            Session2::connect()->set('chanceGame', array(
                 $identifier => array(
                     'id'     => $identifier,
                     'start'  => time(),
@@ -115,9 +115,9 @@ class Game extends \AjaxController
                 )
             ));
             try {
-                Session::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Шанс (" . $games[$identifier]->getGameTitle() . ")");
+                Session2::connect()->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Шанс (" . $games[$identifier]->getGameTitle() . ")");
             } catch (EntityException $e) {
-                Session::connect()->delete('chanceGame');
+                Session2::connect()->delete('chanceGame');
                 $this->ajaxResponse($e->getMessage(), $e->getCode());                
             }
 
@@ -198,7 +198,7 @@ class Game extends \AjaxController
                 }
 
                 if ($game[$identifier]['status'] == 'loose' || $game[$identifier]['status'] == 'win') {
-                    Session::connect()->delete('chanceGame');
+                    Session2::connect()->delete('chanceGame');
                 }
                
                 $responseData = array(
@@ -216,11 +216,11 @@ class Game extends \AjaxController
                             $prize = $prizes[$game[$identifier]['55failclickcount']];
                         }
 
-                        ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'],Session::connect()->get(Player::IDENTITY), $prize);
+                        ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'],Session2::connect()->get(Player::IDENTITY), $prize);
 
                         try {
                             $transaction = new \Transaction();
-                            $transaction->setPlayerId(Session::connect()->get(Player::IDENTITY)->getId())
+                            $transaction->setPlayerId(Session2::connect()->get(Player::IDENTITY)->getId())
                                 ->setSum(0)
                                 ->setCurrency(GameSettings::CURRENCY_POINT)
                                 ->setDescription("Выигрыш " . $prize->getTitle());
@@ -235,7 +235,7 @@ class Game extends \AjaxController
                             'image' => $prize->getImage(),
                         );
                     } else {
-                        Session::connect()->get(Player::IDENTITY)->addPoints($gameObj->getPointsWin(), "Выигрыш в моментальный шанс");
+                        Session2::connect()->get(Player::IDENTITY)->addPoints($gameObj->getPointsWin(), "Выигрыш в моментальный шанс");
                     }
                 }
                 if ($game[$identifier]['status'] == 'loose') {
