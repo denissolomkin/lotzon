@@ -155,7 +155,13 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-                    <div class="bz1"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
+                    <div class="bz1"><!-- admitad.banner: ff8694b86b0096b382f616525dc3e8 Aliexpress -->
+                        <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/ff8694b86b0096b382f616525dc3e8/?i=4">
+                            <img width="120" height="600" border="0" src="//ad.admitad.com/b/ff8694b86b0096b382f616525dc3e8/" alt="Aliexpress" />
+                        </a>
+                        <!-- /admitad.banner -->
+                        <!-- <img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /> -->
+                    </div>
                     <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>                    
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
                 </aside>
@@ -168,13 +174,30 @@
                         <!-- /admitad.banner -->
                     </div>
                     <div class="bz1">
-                        <div class="bz1"><img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /></div>
+
+                        <script type="text/javascript">
+                            <!--
+                            (function (w, d) {
+                                var js, id = "dumedia-ad", ref = d.getElementsByTagName('script')[0];
+                                if (d.getElementById(id)) {return;}
+                                js = d.createElement('script'); js.id = id; js.async = true; js.charset = 'utf-8';
+                                js.src = '//cdn.dumedia.ru/js/ad.js?r' + Math.random();
+                                ref.parentNode.insertBefore(js, ref);
+                            }(window, document));
+                            // -->
+                        </script>
+                        <div data-dumedia-adv="1866"></div>
                         <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                         <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
+
                     </div>
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-300х525.png" width="300" height="525"   /></div>
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-300х485.png" width="300" height="485"   /></div>
+
+                    <div class="bz3">
+                    <img src="/tpl/img/baners/Plug-300х300.png" width="300" height="300">
+                    </div>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -334,7 +357,8 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <img src="tpl/img/baners/Plug-video.png" width="570" height="320" />
+                        <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=0" frameborder="0" allowfullscreen=""></iframe>
+                    <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
