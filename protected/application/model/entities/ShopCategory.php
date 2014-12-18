@@ -5,6 +5,7 @@ class ShopCategory extends Entity
 {
     private $_id    =  0;
     private $_name  = '';
+    private $_order  = 0;
     private $_items = array();
 
     public function init() 
@@ -22,6 +23,18 @@ class ShopCategory extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setOrder($order)
+    {
+        $this->_order = $order;
+
+        return $this;
+    }
+
+    public function getOrder()
+    {
+        return $this->_order;
     }
 
     public function setName($name) 

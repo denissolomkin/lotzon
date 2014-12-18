@@ -28,11 +28,11 @@
                     $currentCategory = $category->getId();
                 }
                 ?>
-                <button onclick="document.location.href='/private/shop/category/<?=$category->getId()?>'" class="btn btn-md category-btn btn-default<?=($currentCategory == $category->getId() ? ' active' : '')?>"><?=$category->getName()?></button>    
+                <button onclick="document.location.href='/private/shop/category/<?=$category->getId()?>'" class="btn btn-md category-btn btn-default<?=($currentCategory == $category->getId() ? ' active' : '')?>" data-order="<?=$category->getOrder();?>"><?=$category->getName()?></button>
             <? $fst = false;} ?>
         </div> 
         <button class="btn btn-md btn-success add-category"><i class="glyphicon glyphicon-plus"></i></button>
-        <button class="btn btn-md btn-warning rename-category">Переименовать</button>
+        <button class="btn btn-md btn-warning rename-category">Изменить</button>
     </div>
     <div class="row-fluid">&nbsp;</div>
 
@@ -101,18 +101,21 @@
     function showAddCategoryInput()
     {
         var input = $('<input class="form-control input-md" value="" style="width:200px;" placeholder="Название категории">');
+        var order = $('<input class="form-control input-md" value="" style="width:45px;" placeholder="№">');
         var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
         var button = $(this);
 
         input.insertBefore($(this));
+        order.insertBefore($(this));
         cnlButton.insertAfter($(this));
 
         $(this).find('i').removeClass('glyphicon-plus').addClass('glyphicon-ok');
 
         $(this).off('click').on('click', function() {
             var catName = input.val();
+            var catOrder = order.val();
 
-            if (!catName) {
+            if (!catName || !catOrder) {
                 return false;
             }
 
@@ -121,6 +124,7 @@
                 method: 'POST',
                 data: {
                     name: catName,
+                    order: catOrder
                 },
                 async: true,
                 dataType: 'json',
@@ -147,11 +151,13 @@
     }
     $('.rename-category').on('click', function() {
         var input = $('<input class="form-control input-md" value="'+$('.category-btn.active').text()+'" style="width:200px;" placeholder="Название категории">');
+        var order = $('<input class="form-control input-md" value="'+$('.category-btn.active').data('order')+'" style="width:45px;" placeholder="№">');
         var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
         var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
         var button = $(this);
 
         input.insertBefore(button);
+        order.insertBefore(button);
         sccButton.insertBefore(button);
         cnlButton.insertBefore(button);
         button.hide();
@@ -169,7 +175,8 @@
             method: 'POST',
             data: {
                 newName: input.val(),
-                categoryId: '<?=$currentCategory?>',
+                newOrder: order.val(),
+                categoryId: '<?=$currentCategory?>'
             },
             async: true,
             dataType: 'json',

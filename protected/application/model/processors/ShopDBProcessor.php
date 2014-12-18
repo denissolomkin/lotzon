@@ -6,11 +6,12 @@ class ShopDBProcessor
 {
     public function createCategory(ShopCategory $category)
     {
-        $sql = "INSERT INTO `ShopCategories` (`Title`) VALUES (:title)";
+        $sql = "INSERT INTO `ShopCategories` (`Title`,`Order`) VALUES (:title, :order)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':title' => $category->getName(),
+                ':order' => $category->getOrder()
             ));
         } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
@@ -23,10 +24,11 @@ class ShopDBProcessor
 
     public function updateCategory(ShopCategory $category) 
     {
-        $sql = "UPDATE `ShopCategories` SET `Title` = :title WHERE `Id` = :id";
+        $sql = "UPDATE `ShopCategories` SET `Title` = :title, `Order` = :order WHERE `Id` = :id";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':title' => $category->getName(),
+                ':order' => $category->getOrder(),
                 ':id'    => $category->getId(),
             ));
         } catch (PDOException $e) {
@@ -120,9 +122,10 @@ class ShopDBProcessor
 
     public function loadShop()
     {
-        $sql = "SELECT `si`.*, `sc`.*, `si`.`Id` as `ItemId`, `sc`.`Id` AS `CategoryId`, `sc`.`Title` AS `CategoryTitle`, `si`.`Title` AS `ItemTitle`
+        $sql = "SELECT `si`.*, `sc`.*, `si`.`Id` as `ItemId`, `sc`.`Id` AS `CategoryId`, `sc`.`Title` AS `CategoryTitle`, `sc`.`Order` AS `CategoryOrder`, `si`.`Title` AS `ItemTitle`
                     FROM `ShopCategories` AS `sc`
-                    LEFT JOIN `ShopItems` AS `si` ON `si`.`CategoryId` = `sc`.`Id`";
+                    LEFT JOIN `ShopItems` AS `si` ON `si`.`CategoryId` = `sc`.`Id`
+                    ORDER BY `sc`.`Order`, `si`.`Id` DESC";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -141,6 +144,7 @@ class ShopDBProcessor
                 $catObj = new ShopCategory();
                 $catObj->setId($row['CategoryId']);
                 $catObj->setName($row['CategoryTitle']);
+                $catObj->setOrder($row['CategoryOrder']);
 
                 $categories[$row['CategoryId']] = $catObj;
             }
