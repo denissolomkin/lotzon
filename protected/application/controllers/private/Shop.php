@@ -42,9 +42,11 @@ class Shop extends PrivateArea
                 'data'    => array(),
             );
             $categoryName = $this->request()->post('name');
+            $categoryOrder = $this->request()->post('order');
 
             $category = new ShopCategory();
             $category->setName($categoryName);
+            $category->setOrder($categoryOrder);
 
             try {
                 $category->create();
@@ -173,11 +175,13 @@ class Shop extends PrivateArea
 
             $categoryId = $this->request()->post('categoryId');
             $newName    = $this->request()->post('newName');
+            $newOrder    = $this->request()->post('newOrder');
 
             $category = new ShopCategory();
 
             $category->setId($categoryId);
             $category->setName($newName);
+            $category->setOrder($newOrder);
 
             try {
                 $category->update();
