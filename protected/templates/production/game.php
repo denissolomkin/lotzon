@@ -357,7 +357,7 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=0" frameborder="0" allowfullscreen=""></iframe>
+                        <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe>
                     <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
                     </section>
                     <section class="rules">
