@@ -120,7 +120,7 @@ class NewGame extends Entity
 
         $this->setCallback(array(
             'current'   => $this->currentPlayer()[pid],
-            'timeout'   => SELF::TIME_OUT,
+            'timeout'   => self::TIME_OUT,
             'gid'       => $this->getIdentifier(),
             'players'   => $this->getPlayers(),
             'field'     => $this->getFieldPlayed(),
@@ -217,7 +217,7 @@ class NewGame extends Entity
 
     public function isCell($x,$y)
     {
-        return ($x>0 && $y>0 && $x<=SELF::FIELD_SIZE && $y<=SELF::FIELD_SIZE);
+        return ($x>0 && $y>0 && $x<=self::FIELD_SIZE && $y<=self::FIELD_SIZE);
     }
 
     public function isClicked($x,$y)
@@ -279,7 +279,7 @@ class NewGame extends Entity
             reset($this->_players);
         }
        // echo (current($this->_players)['pid']);
-        $this->_players[(current($this->_players)['pid'])]['timeout']=time()+SELF::TIME_OUT;
+        $this->_players[(current($this->_players)['pid'])]['timeout']=time()+self::TIME_OUT;
         return current($this->_players);
     }
 
@@ -484,12 +484,12 @@ class NewGame extends Entity
 
     public function generateField() {
 
-        $numbers = range(1, pow(SELF::FIELD_SIZE,2));
+        $numbers = range(1, pow(self::FIELD_SIZE,2));
         shuffle($numbers);
 
-        for ($i = 1; $i <= SELF::FIELD_SIZE ; ++$i) {
-            for ($j = 1; $j <= SELF::FIELD_SIZE; ++$j) {
-                $gameField[$i][$j]['points'] = $numbers[(($i-1)*SELF::FIELD_SIZE+$j)-1];
+        for ($i = 1; $i <= self::FIELD_SIZE ; ++$i) {
+            for ($j = 1; $j <= self::FIELD_SIZE; ++$j) {
+                $gameField[$i][$j]['points'] = $numbers[(($i-1)*self::FIELD_SIZE+$j)-1];
                 $gameField[$i][$j]['player'] = null;
                 $gameField[$i][$j]['coord'] = $i.'x'.$j;
             }
