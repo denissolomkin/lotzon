@@ -192,7 +192,7 @@ class WebSocketController implements MessageComponentInterface {
                 foreach ($this->_clients as $client) {
                     $client->send(json_encode(
                         array(
-                            'path'=>'chat',
+                            'path'=>'appchat',
                             'res'=>array(
                                 'uid'=>$player->getId(),
                                 'user'=>$player->getNicName(),
@@ -278,7 +278,7 @@ class WebSocketController implements MessageComponentInterface {
     function saveGame($app){
 
         $app->_isSaved = 1;
-        $sql_results = "INSERT INTO `PlayersGames` (`PlayerId`, `GameId`, `GameUid`, `Date`, `Result`, `Currency`, `Price`) VALUES (?,?,?,?,?,?,?)".
+        $sql_results = "INSERT INTO `PlayerGames` (`PlayerId`, `GameId`, `GameUid`, `Date`, `Result`, `Currency`, `Price`) VALUES (?,?,?,?,?,?,?)".
             str_repeat(',(?,?,?,?,?,?,?)', count($app->getPlayers())-1);
 
         if($app->getPrice())
