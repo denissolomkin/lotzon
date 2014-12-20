@@ -77,7 +77,7 @@ class WebSocketController implements MessageComponentInterface {
         $data=$data->data;
         $this->_class = $class = '\\'.$name;
         $action=$data->action.'Action';
-        $mode=$data->mode?:$this->_mode;
+        $mode=($data->mode?$data->mode:$this->_mode);
         $player=$from->Session->get(Player::IDENTITY);
 
 
@@ -155,7 +155,7 @@ class WebSocketController implements MessageComponentInterface {
                          }
 
                         // если приложение запустили или загрузили
-                        if($app){
+                        if(isset($app)){
                             echo "стартуем приложение $name $id \n";
 
                             // пробуем вызвать экшн

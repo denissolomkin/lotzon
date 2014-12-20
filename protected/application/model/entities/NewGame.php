@@ -88,7 +88,8 @@ class NewGame extends Entity
 
         $ready = 0;
         foreach($players as $player)
-            $ready+=$player['ready'];
+            if($player['ready'])
+                $ready+=$player['ready'];
 
         if($ready==count($players)){
             $this->unsetFieldPlayed();
@@ -302,7 +303,7 @@ class NewGame extends Entity
 
         krsort($winner);
 
-        if (current($winner)['count'] == 1) {
+        if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
             $this->updatePlayer(array('result'=>-1));
             $this->updatePlayer(array('result'=>2),current($winner)['player']['pid']);
             $this->_isOver=1;
@@ -328,9 +329,13 @@ class NewGame extends Entity
         foreach ($players as $player)
             foreach ($data as $key => $value)
                 if(!is_numeric($key))
-                    $this->_players[$player['pid']][$key]+=$value;
+                    if($this->_players[$player['pid']][$key])
+                        $this->_players[$player['pid']][$key]+=$value;
+                    else
+                        $this->_players[$player['pid']][$key]=$value;
                 else
-                    unset($this->_players[$player['pid']][$value]);
+                    if($this->_players[$player['pid']][$key])
+                        unset($this->_players[$player['pid']][$value]);
 
         return $this;
     }
