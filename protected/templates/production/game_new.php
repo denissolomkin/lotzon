@@ -680,8 +680,8 @@
             <div class="ch-gm-tbl">
                 <div class="td l">
                     <div class="gm-if-bk">
-                        <div class="l"><?=$chanceGames['77']->getGameTitle();?></div>
-                        <div class="r"><b><?=$chanceGames['77']->getGamePrice();?></b>баллов</div>
+                        <div class="l">Кто больше?</div>
+                        <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="77">подробнее</div>
                 </div>
