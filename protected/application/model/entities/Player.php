@@ -24,7 +24,11 @@ class Player extends Entity
     private $_email      = '';
     private $_password   = '';
     private $_salt       = '';
-    
+
+    private $_socialid     = 0;
+    private $_socialemail  = 0;
+    private $_socialname   = 0;
+
     private $_nicName    = '';
     private $_name       = '';
     private $_surname    = '';
@@ -79,6 +83,42 @@ class Player extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setSocialId($socialid)
+    {
+        $this->_socialid = $socialid;
+
+        return $this;
+    }
+
+    public function getSocialId()
+    {
+        return $this->_socialid;
+    }
+
+    public function setSocialName($socialname)
+    {
+        $this->_socialname = $socialname;
+
+        return $this;
+    }
+
+    public function getSocialName()
+    {
+        return $this->_socialname;
+    }
+
+    public function setSocialEmail($socialemail)
+    {
+        $this->_socialemail = $socialemail;
+
+        return $this;
+    }
+
+    public function getSocialEmail()
+    {
+        return $this->_socialemail;
     }
 
     public function setEmail($email)
@@ -467,9 +507,14 @@ class Player extends Entity
         return $this;   
     }
 
-    public function setAdditionalData($additionalData) 
+    public function setAdditionalData($additionalData=null)
     {
-        $this->_additionalData = $additionalData;
+
+        if(is_array($additionalData)){
+        $additionalData=array_merge($this->getAdditionalData(),$additionalData);
+        foreach($additionalData as $provider => $info)
+        $this->_additionalData[$provider] = $info;
+        }
 
         return $this;
     }
@@ -524,7 +569,7 @@ class Player extends Entity
                 }
             break;
             case 'fetch' :
-                $this->getId() || $this->validEmail();
+                $this->getSocialId() || $this->getId() || $this->validEmail();
             break;
             case 'login' :
                 $this->validEmail();
@@ -605,6 +650,19 @@ class Player extends Entity
         return true;
     }
 
+    public function updateSocial()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateSocial($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
     public function create()
     {
         $this->setPassword($this->compilePassword($this->generatePassword()));
@@ -675,7 +733,7 @@ class Player extends Entity
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
-        Session2::connect()->set(Player::IDENTITY, $this);
+        //Session2::connect()->set(Player::IDENTITY, $this);
 
         $session = new Session();
         $session->set(Player::IDENTITY, $this);
@@ -763,7 +821,7 @@ class Player extends Entity
                  ->setValid($data['Valid'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
-                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
+                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
 
             if ($data['TicketsFilled']) {
                 $this->_isTicketsFilled = true;

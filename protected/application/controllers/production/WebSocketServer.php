@@ -1,4 +1,20 @@
 <?php
+
+namespace controllers\production;
+
+
+class WebSocketServer
+{
+    public function runAction()
+    {
+        @file_get_contents('http://localhost/bin/server.php');
+        //require_once './bin/server.php';
+    }
+}
+
+
+
+/*
 namespace controllers\production;
 
 use WebSocket\WebSocketController;

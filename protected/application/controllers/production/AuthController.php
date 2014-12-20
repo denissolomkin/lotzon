@@ -2,13 +2,17 @@
 namespace controllers\production;
 use \Config,  \Hybrid_Auth, \Player, \EntityException, \Session2, \WideImage,  \Common;
 use \GeoIp2\Database\Reader;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthController extends \SlimController\SlimController {
+
+    private $session;
 
     public function __construct(\Slim\Slim &$app)
     {
         parent::__construct($app);
         $this->init();
+        $this->session = new Session();
     }
 
     public function init()
@@ -67,17 +71,21 @@ class AuthController extends \SlimController\SlimController {
             $this->ajaxResponse(array(), 0, $error);
         }
 
+        $profile->enabled=true;
 
-
-        if ($profile->email) {
             $player = new Player();
-            $player->setEmail($profile->email);
+            $player->setEmail($this->session->get(Player::IDENTITY)?$this->session->get(Player::IDENTITY)->getEmail():$profile->email)
+                ->setSocialId($profile->identifier)
+                ->setSocialName($provider)
+                ->setSocialEmail($profile->email);
             $loggedIn = false;
             try {
-                $player->fetch();
+                $player->fetch()->updateSocial()->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
                 $loggedIn = true;
             } catch (EntityException $e) {
-                if ($e->getCode() == 404) {
+                if ($e->getCode() == 500) {
+                }
+                if ($e->getCode() == 404 && $profile->email) {
 
                     try {
                         if($profile->country){
@@ -101,7 +109,7 @@ class AuthController extends \SlimController\SlimController {
                             ->setSurname($profile->lastName)
                             ->setAdditionalData(
                                 array(
-                                    $provider => $profile->additionalData
+                                    $provider => $profile
                                 )
                             );
 
@@ -109,7 +117,7 @@ class AuthController extends \SlimController\SlimController {
                             $player->setReferalId((int)$ref);
                         }
 
-                        $player->create()->markOnline();
+                        $player->create()->updateSocial()->markOnline();
                         $loggedIn = true;
 
                         if ($player->getId() <= 1000) {
@@ -133,7 +141,6 @@ class AuthController extends \SlimController\SlimController {
                                 // remove old one
                                 $player->setAvatar($imageName)->saveAvatar();
 
-                                $this->ajaxResponse($data);
                             } catch (\Exception $e) {
                                 // do nothing
                             }
@@ -146,10 +153,10 @@ class AuthController extends \SlimController\SlimController {
             }
 
             if ($loggedIn === true) {
-                Session2::connect()->set(Player::IDENTITY, $player);
+                $this->session->set(Player::IDENTITY, $player);
 
             }
-        }
+
 
         $this->redirect('/');
 

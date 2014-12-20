@@ -23,12 +23,13 @@ class Users extends PrivateArea
     public function indexAction()
     {
         $page = $this->request()->get('page', 1);
+        $search = $this->request()->get('search', null);
         $sort = array(
             'field' => $this->request()->get('sortField', 'Id'),
             'direction' => $this->request()->get('sortDirection', 'desc'),
         );
 
-        $list = PlayersModel::instance()->getList(self::PLAYERS_PER_PAGE, $page == 1 ? 0 : self::PLAYERS_PER_PAGE * $page - self::PLAYERS_PER_PAGE, $sort);
+        $list = PlayersModel::instance()->getList(self::PLAYERS_PER_PAGE, $page == 1 ? 0 : self::PLAYERS_PER_PAGE * $page - self::PLAYERS_PER_PAGE, $sort, $search);
         $count = PlayersModel::instance()->getPlayersCount();
 
         $pager = array(
@@ -47,6 +48,7 @@ class Users extends PrivateArea
             'playersCount' => $count,
             'pager'        => $pager,
             'currentSort'  => $sort,
+            'search'       => $search
         ));
     }
 

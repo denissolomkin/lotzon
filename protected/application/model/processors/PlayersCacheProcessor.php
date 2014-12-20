@@ -39,6 +39,14 @@ class PlayersCacheProcessor extends BaseCacheProcessor implements IProcessor
         return $player;
     }
 
+    public function updateSocial(Entity $player) {
+        $player = $this->getBackendProcessor()->updateSocial($player);
+
+        $this->cachePlayer($player->fetch());
+
+        return $player;
+    }
+
     public function fetch(Entity $player)
     {
         $cache = Cache::init()->get($this->playerCacheKey($player));

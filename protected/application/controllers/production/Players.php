@@ -3,6 +3,7 @@
 namespace controllers\production;
 use \Application, \Config, \Player, \EntityException, \Session2, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -237,8 +238,11 @@ class Players extends \AjaxController
 
     public function logoutAction()
     {
-        Session2::connect()->get(Player::IDENTITY)->disableAutologin();
-        Session2::connect()->close();
+        $session=new Session();
+        $session->get(Player::IDENTITY)->disableAutologin();
+        // Session2::connect()->get(Player::IDENTITY)->disableAutologin();
+        // Session2::connect()->close();
+        session_destroy();
 
         $this->redirect('/');   
     }

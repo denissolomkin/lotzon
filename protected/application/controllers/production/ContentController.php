@@ -2,6 +2,7 @@
 
 namespace controllers\production;
 use \Application, \Config, \Player, \EntityException, \Session2, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \TransactionsModel, \Common;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -11,9 +12,11 @@ class ContentController extends \AjaxController
 {
     public function init()
     {
+        $this->session = new Session();
         parent::init();
         if ($this->validRequest()) {
-            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
+//            if (!$this->Session->get(Player::IDENTITY) instanceof PLayer) {
+            if (!$this->session->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }
         }
@@ -27,14 +30,14 @@ class ContentController extends \AjaxController
 
             if (!$onlyMine) {
                 $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(Index::LOTTERIES_PER_PAGE, $offset);
-                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session2::connect()->get(Player::IDENTITY)->getId());
+                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->Session->get(Player::IDENTITY)->getId());
                 foreach ($playerLotteries as $lottery) {
                     if (isset($lotteries[$lottery->getId()])) {
                         $lotteries[$lottery->getId()]->playerPlayed = true;
                     }
                 }
             } else {
-                $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session2::connect()->get(Player::IDENTITY)->getId(), Index::LOTTERIES_PER_PAGE, $offset);
+                $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->Session->get(Player::IDENTITY)->getId(), Index::LOTTERIES_PER_PAGE, $offset);
             }
 
         } catch (EntityException $e) {
@@ -76,7 +79,7 @@ class ContentController extends \AjaxController
         $items = array();
         $i = 0;
         foreach ($shop[$category]->getItems() as $item) {
-            if (is_array($item->getCountries()) and !in_array(Session2::connect()->get(Player::IDENTITY)->getCountry(),$item->getCountries())) {
+            if (is_array($item->getCountries()) and !in_array($this->Session->get(Player::IDENTITY)->getCountry(),$item->getCountries())) {
                 continue;
             }
 
@@ -109,7 +112,7 @@ class ContentController extends \AjaxController
     {
         $offset = (int)$this->request()->get('offset');
 
-        $news = NewsModel::instance()->getList(Session2::connect()->get(Player::IDENTITY)->getCountry(), Index::NEWS_PER_PAGE, $offset);
+        $news = NewsModel::instance()->getList($this->Session->get(Player::IDENTITY)->getCountry(), Index::NEWS_PER_PAGE, $offset);
         $responseData = array(
             'news'           => array(),
             'keepButtonShow' => false,
@@ -159,7 +162,7 @@ class ContentController extends \AjaxController
                 'surname' => $player->getVisibility() ? $player->getSurname() : '',
                 'nick'    => $player->getVisibility() ? $player->getNicName() : 'id'.$player->getId(),
                 'avatar'  => $player->getVisibility() ? ($player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '') : '',
-                'you'     => $player->getId() == Session2::connect()->get(Player::IDENTITY)->getId(),
+                'you'     => $player->getId() == $this->Session->get(Player::IDENTITY)->getId(),
             );
         }
 
@@ -168,7 +171,7 @@ class ContentController extends \AjaxController
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[Session2::connect()->get(Player::IDENTITY)->getCountry()]) : '',
+                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$this->Session->get(Player::IDENTITY)->getCountry()]) : '',
                 );
             }
         }
@@ -216,19 +219,20 @@ class ContentController extends \AjaxController
     public function transactionsAction($currency)
     {
         $offset = (int)$this->request()->get('offset');
+        $this->session->get(Player::IDENTITY)->update();
 
         if ($currency == GameSettings::CURRENCY_POINT) {
-            $transactions = TransactionsModel::instance()->playerPointsHistory(Session2::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+            $transactions = TransactionsModel::instance()->playerPointsHistory($this->session->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
         }
         if ($currency == GameSettings::CURRENCY_MONEY) {
-            $transactions = TransactionsModel::instance()->playerMoneyHistory(Session2::connect()->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+            $transactions = TransactionsModel::instance()->playerMoneyHistory($this->session->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
         }
         $jsonTransactions = array();
         foreach ($transactions as $transaction) {
             $jsonTransactions[] = array(
                 'description' => $transaction->getDescription(),
                 'quantity' => ($transaction->getSum() > 0 ? '+' : '') . ($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum())),
-                'date'  => date('d.m.Y', $transaction->getDate()),
+                'date'  => date('d.m.y H:m:s', $transaction->getDate()),
             );
         }
 

@@ -1,6 +1,8 @@
+
 <div class="container-fluid">
+
     <div class="row-fluid">
-        <h2>Пользователи (<?=$playersCount?>)</h2>
+        <h2>Пользователи (<?=$playersCount?>) <button class="btn btn-md btn-success search-users"><i class="glyphicon glyphicon-search"></i></button></h2>
         <hr/>
     </div>
     <? if ($pager['pages'] > 1) {?>
@@ -13,7 +15,7 @@
         </div>
     <? } ?> 
     <div class="row-fluid">
-        <table class="table table-striped">
+        <table class="table table-striped users">
             <thead>
                 <th>#ID <?=sortIcon('Id', $currentSort, $pager)?></th>
                 <th>ФИО</th>
@@ -34,7 +36,17 @@
                     <tr>
                         <td><?=$player->getId()?></td>
                         <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?></td>
-                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?></td>
+                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                            <?foreach($player->getAdditionalData() as $provider=>$info)
+                            {
+                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.'"></a>
+                                <div class="hidden">';
+                                foreach($info as $key=>$value)
+                                    echo ''.$key.': '.$value.'<br/>';
+                                echo'</div>';
+                            }?>
+
+                        </td>
                         <td><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
                         <td><?=$player->getIP()?></td>
@@ -63,6 +75,25 @@
             </div>
         </div>
     <? } ?> 
+</div>
+<div class="modal fade" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Social information</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="stats-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -318,8 +349,52 @@ function addTransaction(plid) {
         });   
     });
 }
-</script>
+    $('.search-users').on('click', function() {
+        var input = $('<input class="form-control input-md" value="<?=$search;?>" style="width:200px;display:inline-block;" placeholder="id, фио или email...">');
+        var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
+        var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
+        var button = $(this);
 
+        input.insertBefore(button);
+        sccButton.insertBefore(button);
+        cnlButton.insertBefore(button);
+        button.hide();
+
+        cnlButton.on('click', function() {
+            url="/private/users";
+            document.location.href=url;
+        });
+
+        cnlButton.on('click', function() {
+            input.remove();
+            sccButton.remove();
+            cnlButton.remove();
+            button.show();
+        });
+
+        sccButton.on('click', function() {
+            url="/private/users?search="+input.val();
+            document.location.href=url;
+        });
+    });
+    <? if($search){?>
+    $('.search-users').trigger('click');
+    <? } ?>
+
+    $('.sl-bk').on('click', function() {
+
+        $("#social-holder").modal();
+
+        $("#social-holder").find('.cls').off('click').on('click', function() {
+            $("#social-holder").modal('hide');
+        });
+
+
+        $("#social-holder").find('.modal-body tbody').html($(this).next().html());
+//        id=parstInt(this.first().parent().parent().children().first().text());
+
+    });
+</script>
 <?php
 
     function sortIcon($currentField, $currentSort, $pager)

@@ -1317,32 +1317,6 @@ $('.ch-gm-tbl .ngm-bt').click(function(){
         $('.ngm-bk').fadeIn(200);
     }, 200);
 
-    /*    $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
-
-
-
-     $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
-     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
-     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
-     $('.ch-bk').fadeOut(200);
-     window.setTimeout(function(){
-     $('.game-bk').fadeIn(200);
-     }, 200);
-
-     $('.game-bk .play .bt').off('click').on('click', function() {
-     winChance = false;
-     var btn = $(this);
-     startChanceGame(gi, function(data) {
-     updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
-     btn.parents('.play').hide();
-     }, function(data) {
-     if (data.message=="INSUFFICIENT_FUNDS") {
-     $('.pz-ifo-bk').hide();
-     $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
-     }
-     }, function() {});
-     });
-     */
 });
 
 <!-- NEW GAME BACK -->
@@ -1495,7 +1469,7 @@ $('.st-hy-bt').on('click', function(){
             if (data.res.length) {
                 var html = '';
                 $(data.res).each(function(id, tr) {
-                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class=tm>')+'</span></span></div></div>';
                 });
                 div.find('.tb').html($(html));
             }
@@ -1555,7 +1529,7 @@ function updatePoints(points) {
 function updateMoney(money) {
     playerMoney = parseFloat(money.toFixed(2));
     money=money.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-    $('.plMoneyHolder').text(money);
+    $('.plMoneyHolder').text(money.replace('.00',''));
 }
 
 String.prototype.replaceArray = function(find, replace) {
