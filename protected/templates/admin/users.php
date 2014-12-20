@@ -78,7 +78,7 @@
         </div>
     <? } ?> 
 </div>
-<div class="modal fade" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -385,24 +385,24 @@ function addTransaction(plid) {
         $("#social-holder").find('.cls').off('click').on('click', function() {
             $("#social-holder").modal('hide');
         });
-        
+
         array=($(this).first().next().html().toString()).split(' , ');
-        tbl='';
+        tbl=photo=icon=name=page='';
         $.each(array, function(key,value) {
             if(value) {
                 param = value.split(' : ');
                 if (param[0] == 'photoURL')
                     photo = '<img style="float:left;padding:0 10px 10px 0;width:30%;" src="' + param[1] + '">';
                 else if (param[0] == 'profileURL')
-                    url = '<a target="_blank" href="' + param[1] + '">';
+                    page = '<a target="_blank" href="' + param[1] + '">';
                 else if (param[0] == 'displayName')
                     name = param[1];
                 else
                     tbl += '<tr><td>' + param[0] + '</td><td>' + param[1] + '</td></tr>';
             }
         });
-
-        html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2>'+url+name+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
+        icon='<span class='+$(this).attr("class")+'></span>';
+        html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2>'+page+name+icon+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
 
         $("#social-holder").modal().find('.modal-body').html(html);
 
