@@ -108,9 +108,7 @@ class AuthController extends \SlimController\SlimController {
                             ->setName($profile->firstName)
                             ->setSurname($profile->lastName)
                             ->setAdditionalData(
-                                array(
-                                    $provider => $profile
-                                )
+                                array($provider=>array_filter(get_object_vars($profile)))
                             );
 
                         if ($ref = $this->request()->post('ref', null)) {
