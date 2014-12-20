@@ -385,29 +385,32 @@ function addTransaction(plid) {
         $("#social-holder").find('.cls').off('click').on('click', function() {
             $("#social-holder").modal('hide');
         });
-
-        array=($(this).next().html().toString()).split(' , ');
-
+        
+        array=($(this).first().next().html().toString()).split(' , ');
+        tbl='';
         $.each(array, function(key,value) {
-            console.log( value);
-            param=value.split(' : ');
-            if(param[0]=='photoURL')
-                photo='<img style="float:left;padding:0 10px 10px 0;" src="'+param[1]+'">';
-            else if(param[0]=='profileURL')
-                url='<a target="_blank" href="'+param[1]+'">профиль</a>';
-            else if(param[0]=='displayName')
-                name = param[1];
-            else
-                table+='<tr><td>'+param[0]+'</td><td>'+param[1]+'</td></tr>';
+            if(value) {
+                param = value.split(' : ');
+                if (param[0] == 'photoURL')
+                    photo = '<img style="float:left;padding:0 10px 10px 0;width:30%;" src="' + param[1] + '">';
+                else if (param[0] == 'profileURL')
+                    url = '<a target="_blank" href="' + param[1] + '">';
+                else if (param[0] == 'displayName')
+                    name = param[1];
+                else
+                    tbl += '<tr><td>' + param[0] + '</td><td>' + param[1] + '</td></tr>';
+            }
         });
-        html=photo+url+
-        '<table class="table table-striped" >
-        <thead>
-        <th colspan=2>'+name'+'</th>
-        </thead>
-        <tbody>'+table+'</tbody>
-        </table>';
-        $("#social-holder").find('.modal-body tbody').html(html);
+
+        html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2>'+url+name+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
+
+        $("#social-holder").modal().find('.modal-body').html(html);
+
+
+
+
+
+
 
     });
 </script>
