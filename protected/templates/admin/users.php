@@ -401,7 +401,7 @@ function addTransaction(plid) {
                     tbl += '<tr><td>' + param[0] + '</td><td>' + param[1] + '</td></tr>';
             }
         });
-        icon='<span class='+$(this).attr("class")+'></span>';
+        icon='<span class="'+$(this).attr("class")+'"></span>';
         html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2>'+page+name+icon+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
 
         $("#social-holder").modal().find('.modal-body').html(html);
