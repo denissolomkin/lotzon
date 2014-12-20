@@ -41,8 +41,10 @@
                             {
                                 echo '<a href="javascript:void(0)" class="sl-bk '.$provider.'"></a>
                                 <div class="hidden">';
+                                if(is_array($info))
                                 foreach($info as $key=>$value)
                                     echo ''.$key.': '.$value.'<br/>';
+                                else echo $info;
                                 echo'</div>';
                             }?>
 
