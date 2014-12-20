@@ -43,7 +43,7 @@
                                 <div class="hidden">';
                                 if(is_array($info))
                                 foreach($info as $key=>$value)
-                                    echo ''.$key.': '.$value.'<br/>';
+                                    echo $key.' : '.$value.' , ';
                                 else echo $info;
                                 echo'</div>';
                             }?>
@@ -85,11 +85,6 @@
                 <h4 class="modal-title" id="confirmLabel">Social information</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-striped">
-                    <tbody>
-
-                    </tbody>
-                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default cls">Закрыть</button>
@@ -391,9 +386,28 @@ function addTransaction(plid) {
             $("#social-holder").modal('hide');
         });
 
+        array=($(this).next().html().toString()).split(' , ');
 
-        $("#social-holder").find('.modal-body tbody').html($(this).next().html());
-//        id=parstInt(this.first().parent().parent().children().first().text());
+        $.each(array, function(key,value) {
+            console.log( value);
+            param=value.split(' : ');
+            if(param[0]=='photoURL')
+                photo='<img style="float:left;padding:0 10px 10px 0;" src="'+param[1]+'">';
+            else if(param[0]=='profileURL')
+                url='<a target="_blank" href="'+param[1]+'">профиль</a>';
+            else if(param[0]=='displayName')
+                name = param[1];
+            else
+                table+='<tr><td>'+param[0]+'</td><td>'+param[1]+'</td></tr>';
+        });
+        html=photo+url+
+        '<table class="table table-striped" >
+        <thead>
+        <th colspan=2>'+name'+'</th>
+        </thead>
+        <tbody>'+table+'</tbody>
+        </table>';
+        $("#social-holder").find('.modal-body tbody').html(html);
 
     });
 </script>
