@@ -1478,6 +1478,7 @@ $('.p-cnt aside .ul_li[data-link="profile-notice"]').on('click', function(){
                     '<div class="n-i-txt">'+tr.text+'</div>' +
                     '</div>';
                 });
+
                 updateNotices(unread);
                 div.html($(html));
             }

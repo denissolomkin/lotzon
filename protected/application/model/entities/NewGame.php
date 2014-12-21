@@ -441,12 +441,14 @@ class NewGame extends Entity
     public function unsetCallback()
     {
         unset($this->_callback);
+        return $this;
     }
 
     public function setCallback($callback)
     {
         foreach($callback as $key=>$value)
             $this->_callback[$key] = $value;
+        return $this;
     }
 
     public function getCallback()

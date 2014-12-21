@@ -530,9 +530,9 @@ class Player extends Entity
     {
 
         if(is_array($additionalData)){
-        $additionalData=array_merge($this->getAdditionalData(),$additionalData);
-        foreach($additionalData as $provider => $info)
-        $this->_additionalData[$provider] = $info;
+            $additionalData=array_merge($this->getAdditionalData(),$additionalData);
+            foreach($additionalData as $provider => $info)
+                $this->_additionalData[$provider] = $info;
         }
 
         return $this;
@@ -798,7 +798,6 @@ class Player extends Entity
     public function updateLastNotice()
     {
         $this->setDateLastNotice(time());
-
         $model = $this->getModelClass();
 
         try {
