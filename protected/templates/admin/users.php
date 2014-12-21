@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
     <div class="row-fluid">
-        <h2>Пользователи (<?=$playersCount?>) <button class="btn btn-md btn-success search-users"><i class="glyphicon glyphicon-search"></i></button></h2>
+        <h2>Пользователи (<?=$playersCount?>) <button class="btn btn-md btn-success search-users"><i class="glyphicon glyphicon-search"></i></button> <button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button></h2>
         <hr/>
     </div>
     <? if ($pager['pages'] > 1) {?>
