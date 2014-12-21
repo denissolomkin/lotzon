@@ -178,6 +178,25 @@ function loadNews(offset, successFunction, failFunction, errorFunction) {
     });      
 }
 
+function loadReviews(offset, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/content/reviews?offset="+offset,
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+        }
+    });
+}
+
 function createItemOrder(order, successFunction, failFunction, errorFunction) 
 {
     $.ajax({

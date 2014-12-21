@@ -1,0 +1,90 @@
+<?php
+namespace controllers\production;
+use \Application, \WideImage, \Player, \EntityException, \Review, \ModelException;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
+
+class ReviewsController extends \AjaxController
+{
+    public function init()
+    {
+        $this->session = new Session();
+        parent::init();
+        if ($this->validRequest()) {
+            if (!$this->session->get(Player::IDENTITY) instanceof Player) {
+                $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
+            }    
+            $this->session->get(Player::IDENTITY)->markOnline();
+        }
+    }
+
+    public function saveAction()
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            $id = $this->request()->post('id', false);
+            $playerId = $this->session->get(Player::IDENTITY)->getId();
+            $text = $this->request()->post('text');
+            $image = $this->request()->post('image');
+
+            $reviewObj = new Review;
+            $reviewObj ->setId($id)
+                ->setPlayerId($playerId)
+                ->setText($text)
+                ->setImage($image);
+
+            try {
+                if ($reviewObj->getId()) {
+                    $reviewObj->update();
+                } else {
+                    $reviewObj->create();
+                }
+
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+    }
+
+    public function removeImageAction()
+    {
+    }
+
+    public function uploadImageAction()
+    {
+        try {
+
+            $image = WideImage::loadFromUpload('image');
+            $image = $image->resizeDown(Review::IMAGE_WIDTH, null, 'fill');
+            //$image = $image->crop("center", "center", Review::IMAGE_WIDTH, Review::IMAGE_HEIGHT);
+
+            $imageName = ($this->request()->post('Image'))?:uniqid() . ".jpg";
+            $imageName = uniqid() . ".jpg";
+            $saveFolder = PATH_FILESTORAGE . 'reviews/';
+
+            if (!is_dir($saveFolder)) {
+                mkdir($saveFolder, 0777);
+            }
+
+            $image->saveToFile($saveFolder . $imageName, 100);
+
+            $data = array(
+                'imageName' => $imageName,
+                'imageWebPath' => '/filestorage/reviews/' . $imageName,
+            );
+            $this->ajaxResponse($data);
+        } catch (\Exception $e) {
+            $this->ajaxResponse(array(), 0, 'INVALID');
+        }
+    }
+
+}

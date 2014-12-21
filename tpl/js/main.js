@@ -435,7 +435,139 @@ $(function(){
     /* ==========================================================================
                                 Info block functional
      ========================================================================== */
-    $('.n-add-but, .n-mr-cl-bt-bk .mr').on('click', function(){
+
+    $('.reviews .rv-upld-img').on('click', initReviewUpload);
+
+    var currentReview = {
+        image: '',
+        text: '',
+        id: '',
+    };
+
+    $(".reviews .rv-but-add").on('click', function() {
+
+        currentReview.text=$('.reviews .rv-txt textarea').val();
+        if(currentReview.text)
+        $.ajax({
+            url: "/review/save/",
+            method: 'POST',
+            async: true,
+            data: currentReview,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+
+                    $('.reviews .rv-txt textarea').val('');
+                    $('.reviews img.upload').hide();
+
+                    $('.reviews .rv-form').hide();
+
+                    $('.rv-sc').fadeIn(200);
+
+                    window.setTimeout(function(){
+                        $('.rv-sc').hide();
+                        $('.reviews .rv-form').fadeIn(200);
+                    }, 2400);
+
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+    });
+
+        function initReviewUpload() {
+
+        // create form
+        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
+        //$(button).parents('.photoalbum-box').prepend(form);
+
+        var input = form.find('input[type="file"]').damnUploader({
+            url: '/review/uploadImage',
+            fieldName: 'image',
+            data: currentReview,
+            dataType: 'json',
+        });
+
+        var image = $('.reviews img.upload');
+
+        input.off('du.add').on('du.add', function(e) {
+
+            e.uploadItem.completeCallback = function(succ, data, status) {
+                image.attr('src', data.res.imageWebPath).show();
+                currentReview.image = data.res.imageName;
+            };
+
+            e.uploadItem.progressCallback = function(perc) {
+                console.log(perc)
+            }
+
+            e.uploadItem.addPostData('Id', currentReview.id);
+            e.uploadItem.addPostData('Image', currentReview.image);
+            e.uploadItem.upload();
+        });
+
+        form.find('input[type="file"]').click();
+    }
+
+
+    $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
+        var reviewsBlock = $('.reviews');
+        loadReviews(reviewsBlock.find('.rv-item').length, function(data) {
+            if (data.res.reviews.length) {
+                reviewsBlock.addClass('b-ha');
+                var html = '';
+
+
+
+
+                $(data.res.reviews).each(function(id, review) {
+                    html += '<div class="rv-item"><div class="rv-i-avtr">';
+
+                    if(review.playerAvatar)
+                        html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'>';
+                    else
+                        html += '<img src="/tpl/img/default.jpg">';
+
+                    html+='</div><div class="rv-i-tl">'+review.name+' • '+review.date+'</div><div class="rv-i-txt">'+review.text+'</div>';
+
+                    if(review.image)
+                        html += '<div class="rv-i-img"><img src="/filestorage/reviews/'+review.image+'></div>';
+
+                    html+='</div>';
+                });
+                $('.rv-items .h-ch').append(html);
+
+                $('.rv-items').height($('.rv-items .h-ch').height());
+                $('.rv-add-but').hide();
+                if (!data.res.keepButtonShow) {
+                    $('.rv-mr-cl-bt-bk .mr').hide();
+                }
+                reviewsBlock.find('.rv-mr-cl-bt-bk').show();
+            }
+        }, function() {}, function() {});
+    });
+
+
+    $('.reviews .rv-mr-cl-bt-bk .cl').on('click', function(){
+        var reviewsBlock = $('.reviews');
+        $('.rv-items').find('.rv-item').each(function(id, review){
+            if (id >= 6) {
+                $(review).remove();
+            }
+        });
+        $('.rv-items').removeAttr('style');
+        $('.rv-mr-cl-bt-bk .mr').show();
+        $(this).closest('.rv-mr-cl-bt-bk').hide();
+        $('.rv-add-but').show();
+        reviewsBlock.removeClass('b-ha');
+    });
+
+
+    $('.news .n-add-but, .n-mr-cl-bt-bk .mr').on('click', function(){
         var newsBlock = $('.news');
         loadNews(newsBlock.find('.n-item').length, function(data) {
             if (data.res.news.length) {
@@ -456,7 +588,7 @@ $(function(){
         }, function() {}, function() {});
     });
 
-    $('.n-mr-cl-bt-bk .cl').on('click', function(){
+    $('.news .n-mr-cl-bt-bk .cl').on('click', function(){
         var newsBlock = $('.news');
         $('.n-items').find('.n-item').each(function(id, news){
             if (id >= 6) {

@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session2, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \NoticesModel, \TransactionsModel, \Common;
+use \Application, \Config, \Player, \EntityException, \Session2, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -106,6 +106,34 @@ class ContentController extends \AjaxController
         );
 
         $this->ajaxResponse($data);
+    }
+
+    public function reviewsAction()
+    {
+        $offset = (int)$this->request()->get('offset');
+
+        $reviews = ReviewsModel::instance()->getList(1, Index::NEWS_PER_PAGE, $offset);
+        $responseData = array(
+            'reviews'           => array(),
+            'keepButtonShow' => false,
+        );
+
+        foreach ($reviews as $reviewItem) {
+            $responseData['reviews'][] = array(
+                'date'  => date('d.m.Y', $reviewItem->getDate()),
+                'playerId' => $reviewItem->getPlayerId(),
+                'playerAvatar' => $reviewItem->getPlayerAvatar(),
+                'playerName' => $reviewItem->getPlayerName(),
+                'text'  => $reviewItem->getText(),
+                'image' => $reviewItem->getImage(),
+                'text'  => $reviewItem->getText(),
+            );
+        }
+        if (count($reviews) >= Index::NEWS_PER_PAGE) {
+            $responseData['keepButtonShow'] = true;
+        }
+
+        $this->ajaxResponse($responseData);
     }
 
     public function newsAction()

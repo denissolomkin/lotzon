@@ -80,7 +80,10 @@ class AuthController extends \SlimController\SlimController {
                 ->setSocialEmail($profile->email);
             $loggedIn = false;
             try {
-                $player->fetch()->updateSocial()->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
+                $player->fetch()->updateSocial();
+                if(!array_key_exists($provider, $player->getAdditionalData()))
+                    $player->addPoints(40, 'Бонус за привязку социальной сети '.$provider);
+                $player->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
                 $loggedIn = true;
             } catch (EntityException $e) {
                 if ($e->getCode() == 500) {
@@ -121,6 +124,8 @@ class AuthController extends \SlimController\SlimController {
                         if ($player->getId() <= 1000) {
                             $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
                         }
+
+                        $player->addPoints(40, 'Бонус за привязку социальной сети '.$provider);
 
                         // try to catch avatar
                         if ($profile->photoURL) {

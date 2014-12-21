@@ -61,6 +61,7 @@
         <script src="/tpl/js/lib/slick.min.js"></script>
         <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
+        <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -411,6 +412,69 @@
                         <div class="n-mr-cl-bt-bk">
                             <div class="cl scrollto" data-href="news">свернуть</div>
                             <div class="mr">ЧИТАТЬ ЕЩЕ</div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="i-rbk" style="padding-top: 40px;">
+                    <section class="reviews">
+                        <div class="sbk-tl-bk">
+                            <div class="sbk-tl">Отзывы</div>
+                        </div>
+                        <div class="rv-items">
+                            <div class="h-ch">
+                                <? foreach ($reviews as $reviewItem) { ?>
+                                    <div class="rv-item">
+                                        <div class="rv-i-avtr">
+                                            <? if ($reviewItem->getPlayerAvatar()) {?>
+                                                <img src="/filestorage/avatars/<?=ceil($reviewItem->getPlayerId() / 100)?>/<?=$reviewItem->getPlayerAvatar()?>">
+                                            <? } else { ?>
+                                                <img src="/tpl/img/default.jpg">
+                                            <? } ?>
+                                        </div>
+                                        <div class="rv-i-tl"><?=$reviewItem->getPlayerName()?> • <?=date('d.m.Y', $reviewItem->getDate())?></div>
+                                        <div class="rv-i-txt"><?=$reviewItem->getText()?></div>
+                                            <? if ($reviewItem->getImage()) {?>
+                                            <div class="rv-i-img">
+                                                <img src="/filestorage/reviews/<?=$reviewItem->getImage()?>">
+                                            </div>
+                                            <? }?>
+                                    </div>
+                                <? } ?>
+                            </div>
+                        </div>
+                        <div class="rv-add-but">ЧИТАТЬ ЕЩЕ</div>
+                        <div class="rv-mr-cl-bt-bk">
+                            <div class="cl scrollto" data-href="reviews">свернуть</div>
+                            <div class="mr">ЧИТАТЬ ЕЩЕ</div>
+                        </div>
+
+                        <div class="rv-add-frm">
+                            <div class="rv-image">
+                                <img class="upload">
+                            </div>
+                            <div class="rv-sc">Ваш отзыв отправлен на премодерацию</div>
+                            <div class="rv-form">
+                                <div class="rv-usr-avtr">
+                                    <? if ($player->getAvatar()) {?>
+                                        <img src="/filestorage/avatars/<?=ceil($player->getId() / 100)?>/<?=$player->getAvatar()?>">
+                                    <? } else { ?>
+                                        <img src="/tpl/img/default.jpg">
+                                    <? } ?>
+                                </div>
+                                <div class="rv-bg-add">
+                                    <img src="/tpl/img/bg-add-review.png"></div>
+                                <div class="rv-txt">
+                                    <textarea></textarea>
+                                </div>
+                                <div class="rv-upld-img">
+                                    <img src="/tpl/img/but-upload-review.png">
+                                </div>
+                                <div class="rv-but-add">
+                                    оставить<br>отзыв
+
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

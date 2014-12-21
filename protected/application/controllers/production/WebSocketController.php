@@ -33,9 +33,35 @@ class WebSocketController implements MessageComponentInterface {
 
         $this->quitPlayer($playerId);
 
+        $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':id'    => $playerId));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if (!$sth->rowCount()) {
+            throw new ModelException("Player not found", 404);
+        } elseif($sth->rowCount()>1){
+            throw new ModelException("Found more than one player", 400);
+        }
+
+        $player = $sth->fetch();
+
+        $this->_clients[$conn->Session->get(Player::IDENTITY)->getId()]->send(json_encode(
+                array('path'=>'update',
+                    'res'=>array(
+                        'money'=>$player['Money'],
+                        'points'=>$player['Points']
+                    )))
+        );
+
         echo "New connection: #{$conn->resourceId} ".$conn->Session->getId()."\n";
         $this->_class='chat';
         $this->sendCallback($this->_clients, array('message'=>$conn->Session->get(Player::IDENTITY)->getNicName().' присоединился'));
+
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
@@ -72,44 +98,70 @@ class WebSocketController implements MessageComponentInterface {
 
                             } else {
 
-                                echo "Игрок {$from->resourceId} записался в стек новой игры \n";
-                                $this->_stack[$name][$mode][$player->getId()] = $from;
-                                $this->_players[$from->resourceId]['appName'] = $name;
-                                $this->_players[$from->resourceId]['appMode'] = $mode;
-
-
-                            // если насобирали минимальную очередь
-                            if (count($this->_stack[$name][$mode]) >= $class::STACK_PLAYERS
-                                AND count($this->_stack[$name][$mode]) >= $class::GAME_PLAYERS) {
-
-                                // перемешали игроков
-                                $keys = array_keys($this->_stack[$name][$mode]);
-                                shuffle($keys);
-
-                                $app = new $class();
                                 list($currency, $price) = explode("-", $mode);
-                                $app->setCurrency($currency)->setPrice((float)$price);
 
-                                // начали формировать список на игру
-                                foreach ($keys as $key) {
-                                    $clients[$key] = $this->_stack[$name][$mode][$key];
-                                    unset ($this->_stack[$name][$mode][$key]);
-                                    $this->_players[$key]['appId'] = $app->getIdentifier();
+                                $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
 
-                                    // дошли до необходимого числа и прервали
-                                    if (count($clients) == $class::GAME_PLAYERS)
-                                        break;
+                                try {
+                                    $sth = DB::Connect()->prepare($sql);
+                                    $sth->execute(array(':id' => $from->resourceId));
+                                } catch (PDOException $e) {
+                                    throw new ModelException("Error processing storage query", 500);
                                 }
 
-                                // запускаем и кешируем приложение
-                                $app->setClients($clients);
-                                $app->setClient($from);
-                                $this->_apps[$name][$app->getIdentifier()] = $app;
+                                if (!$sth->rowCount()) {
+                                    throw new ModelException("Player not found", 404);
+                                } elseif($sth->rowCount()>1){
+                                    throw new ModelException("Found more than one player", 400);
+                                }
 
-                            } else {
-                                $this->sendCallback($from, array('action' => 'stack', 'stack' => count($this->_stack[$name][$mode]), 'mode' => $mode));
+                                $funds = $sth->fetch();
+
+                                if($funds[($currency=='MONEY'?'Money':'Points')] < $price) {
+                                    echo "Игрок {$from->resourceId} - недостаточно средств для игры\n";
+                                    $from->send(json_encode(array('error'=>'INSUFFICIENT_FUNDS')));
+
+                                } else {
+
+                                    echo "Игрок {$from->resourceId} записался в стек новой игры \n";
+                                    $this->_stack[$name][$mode][$player->getId()] = $from;
+                                    $this->_players[$from->resourceId]['appName'] = $name;
+                                    $this->_players[$from->resourceId]['appMode'] = $mode;
+
+
+                                    // если насобирали минимальную очередь
+                                    if (count($this->_stack[$name][$mode]) >= $class::STACK_PLAYERS
+                                        AND count($this->_stack[$name][$mode]) >= $class::GAME_PLAYERS) {
+
+                                        // перемешали игроков
+                                        $keys = array_keys($this->_stack[$name][$mode]);
+                                        shuffle($keys);
+
+                                        $app = new $class();
+                                        $app->setCurrency($currency)->setPrice((float)$price);
+
+                                        // начали формировать список на игру
+                                        foreach ($keys as $key) {
+                                            $clients[$key] = $this->_stack[$name][$mode][$key];
+                                            unset ($this->_stack[$name][$mode][$key]);
+                                            $this->_players[$key]['appId'] = $app->getIdentifier();
+
+                                            // дошли до необходимого числа и прервали
+                                            if (count($clients) == $class::GAME_PLAYERS)
+                                                break;
+                                        }
+
+                                        // запускаем и кешируем приложение
+                                        $app->setClients($clients);
+                                        $app->setClient($from);
+                                        $this->_apps[$name][$app->getIdentifier()] = $app;
+
+
+                                    } else {
+                                        $this->sendCallback($from, array('action' => 'stack', 'stack' => count($this->_stack[$name][$mode]), 'mode' => $mode));
+                                    }
+                                }
                             }
-                        }
                         }
 
                         // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека

@@ -28,6 +28,7 @@
         <div class="row-fluid">
             <ul class="nav nav-pills" role="tablist">
                 <li<?=($activeMenu == 'users' ? ' class="active"' : '')?>><a href="/private/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Пользователи</a></li>
+                <li<?=($activeMenu == 'reviews' ? ' class="active"' : '')?>><a href="/private/reviews"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Отзывы <span class="label label-warning"><?=ReviewsModel::instance()->getProcessor()->getCount(0)?></span></a></li>
                 <li<?=($activeMenu == 'comments' ? ' class="active"' : '')?>><a href="/private/comments"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Комментарии</a></li>
                 <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Новости</a></li>
                 <!--li><a href="/private/banners">Баннеры</a></li-->
