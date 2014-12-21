@@ -33,6 +33,7 @@ class WebSocketController implements MessageComponentInterface {
         $conn->resourceId = $player->getId();
         $this->_clients[$conn->resourceId] = $conn;
 
+        if(isset($this->_players[$conn->resourceId]['appName']))
         $class = $this->_players[$conn->resourceId]['appName'];
         $mode = $this->_players[$conn->resourceId]['appMode'];
         $id = $this->_players[$conn->resourceId]['appId'];
@@ -94,7 +95,7 @@ class WebSocketController implements MessageComponentInterface {
                             echo "id приложения нет \n";
                             // записались
 
-                            if ($action == 'quitAction') {
+                            if ($action == 'quitAction' && isset($this->_players[$from->resourceId]['appMode'])) {
                                 unset($this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()]);
                                 unset($this->_players[$from->resourceId]['appName']);
                                 unset($this->_players[$from->resourceId]['appMode']);

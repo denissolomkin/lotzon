@@ -5,8 +5,8 @@ Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 
 class NewGame extends Entity
 {
-    const   STACK_PLAYERS = 2;
-    const   GAME_PLAYERS = 2;
+    const   STACK_PLAYERS = 1;
+    const   GAME_PLAYERS = 1;
     const   TIME_OUT = 10;
     const   FIELD_SIZE = 7;
     const   GAME_MOVES = 2;

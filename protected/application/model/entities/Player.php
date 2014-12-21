@@ -43,6 +43,7 @@ class Player extends Entity
 
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
+    private $_dateLastNotice  = '';
     private $_country        = '';
 
     private $_generatedPassword = '';
@@ -251,7 +252,25 @@ class Player extends Entity
         }
 
         return $date;
-    }  
+    }
+
+    public function setDateLastNotice($dateLastNotice)
+    {
+        $this->_dateLastNotice = ($dateLastNotice?:time());
+
+        return $this;
+    }
+
+    public function getDateLastNotice($format = null)
+    {
+        $date = $this->_dateLastNotice;
+
+        if (!is_null($format)) {
+            $date = date($format, $this->_dateLastNotice);
+        }
+
+        return $date;
+    }
 
     public function setDateLastLogin($dateLastLogin)
     {
@@ -776,6 +795,19 @@ class Player extends Entity
         return $this;   
     }
 
+    public function updateLastNotice()
+    {
+        $this->setDateLastNotice(time());
+
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateLastNotice($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+    }
+
     public function markOnline()
     {
         $this->setOnline(true)
@@ -805,6 +837,7 @@ class Player extends Entity
                  ->setBirthday($data['Birthday'])
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
+                 ->setDateLastNotice($data['DateNoticed'])
                  ->setCountry($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setVisibility((boolean)$data['Visible'])

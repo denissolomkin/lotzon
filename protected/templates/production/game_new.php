@@ -139,7 +139,7 @@
                     <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет</a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
                     <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Шансы</a></li>
                     <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
                 </ul>
@@ -440,6 +440,7 @@
                                 <li class="ul_li now" data-link="profile-history">история розыгрышей</li>
                                 <li class="ul_li" data-link="profile-bonuses">бонусы</li>
                                 <li class="ul_li" data-link="profile-info">информация</li>
+                                <li class="ul_li" data-link="profile-notice">уведомления<span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
                             </ul>
 
 
@@ -461,6 +462,7 @@
                         </aside>
 
                         <div class="sp-cnt">
+
                             <section class="_section profile-history">
                                 <ul class="ph-fr-bk">
                                     <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
@@ -626,6 +628,15 @@
                                     </div>
                                 </form>
                             </section>
+
+                            <section class="_section profile-notice">
+                                <div class="notices">
+                                    <div class="n-items">
+
+                                    </div>
+                                </div>
+                            </section>
+
                         </div>
                         <div class="b-cl-block"></div>
                     </div>
@@ -1145,7 +1156,7 @@
             </div>
         </footer>
 
-        <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 350px;width: 300px;background: white;">
+        <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 65px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
             <span id="chatStatus"></span>
             <span style="bottom: 0;left: 0;position: absolute;padding: 5px;background: inherit;">
@@ -1192,7 +1203,8 @@
         var appId   = 0;
         var appMode   = 0;
         var appName   = '';
-
+        var unreadNotices = <?=$notices?>;
+        updateNotices(unreadNotices);
         var posts = {
             fb : {
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',

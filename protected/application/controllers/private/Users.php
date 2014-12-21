@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction;
+use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice;
 use \GameSettings;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
@@ -167,6 +167,82 @@ class Users extends PrivateArea
                 } else {
                     $player->addMoney($this->request()->post('sum'), $this->request()->post('description'));
                 }
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
+    public function noticesAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'notices' => NoticesModel::instance()->getList($playerId),
+                );
+
+                foreach ($response['data']['notices'] as &$notice) {
+                    $notice = array(
+                        'id' => $notice->getId(),
+                        'title' => $notice->getTitle(),
+                        'text' => $notice->getText(),
+                        'date' => date('d.m.Y H:i:s', $notice->getDate()),
+                    );
+                }
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
+    public function removeNoticeAction($noticeId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $notice = new Notice();
+                $notice->setId($noticeId)->delete();
+
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
+    public function addNoticeAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $notice = new Notice();
+                $notice->setPlayerId($playerId)->setText($this->request()->post('text'))->setTitle($this->request()->post('title'))->create();
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();

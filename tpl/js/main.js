@@ -3,6 +3,8 @@ var winChance = false;
 var filledTicketsCount = 0;
 
 $(function(){
+
+
     /* ==========================================================================
                         Start Slide functional
      ========================================================================== */
@@ -527,7 +529,7 @@ $(function(){
         $('.profile aside li').removeClass('now');
         $(this).addClass('now');
         $('.profile ._section').hide();
-        $('.'+link).show();
+        $('.'+link).fadeIn(200);
         if(link == 'profile-info'){
             $('.pi-inp-bk input').each(function(){                
                 $(this).val($(this).attr('data-valid'))
@@ -1106,7 +1108,11 @@ $(function(){
             $('nav.top-nav').removeClass('fixed');
         }
     });
+
+
 });
+
+
 function moneyOutput(type, form) {
     form = $(form);
     var data = {};
@@ -1457,6 +1463,34 @@ $('#mchance').find('.cs').on('click', function() {
     location.reload();
 });
 
+<!-- NOTICES -->
+$('.p-cnt aside .ul_li[data-link="profile-notice"]').on('click', function(){
+        var div=$( '.profile-notice .notices .n-items' );
+        getNotices(0, function(data) {
+            if (data.res.length) {
+                var html = '';
+                var unread = 0;
+                $(data.res).each(function(id, tr) {
+                    unread+=tr.unread;
+                    html += '<div class="n-item'+(tr.unread?'':' read')+'">' +
+                    '<div class="n-i-tl"><div class="n-i-dt">'+tr.date+' • </div>' +
+                    '<div class="n-i-ttl">'+tr.title+'</div></div>' +
+                    '<div class="n-i-txt">'+tr.text+'</div>' +
+                    '</div>';
+                });
+                updateNotices(unread);
+                div.html($(html));
+            }
+        }, function(data) {}, function() {});
+
+    setTimeout(function(){
+        $('.notice-unread').fadeOut(200);
+        $('.n-item:not(.read)').addClass('read');
+    }, 4500);
+
+
+});
+
 <!-- HISTORY OF TRANSACTIONS -->
 $('.st-hy-bt').on('click', function(){
     $('#ta-his-popup').fadeIn(200);
@@ -1469,7 +1503,7 @@ $('.st-hy-bt').on('click', function(){
             if (data.res.length) {
                 var html = '';
                 $(data.res).each(function(id, tr) {
-                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class=tm>')+'</span></span></div></div>';
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class="tm">')+'</span></span></div></div>';
                 });
                 div.find('.tb').html($(html));
             }
@@ -1517,6 +1551,18 @@ $('.fb-share').on('click', function() {
 $('.vk-share').on('click', function() {
     vkPost(posts.vk);
 });
+
+
+function updateNotices(notices) {
+    unreadNotices = notices;
+    if (unreadNotices>0) {
+        $('#profile-but a span.notice-unread').html(notices);
+        $('#notice-unread').html(notices);
+        $('.notice-unread').show();
+    }else{
+        $('.notice-unread').hide();
+    }
+}
 
 
 function updatePoints(points) {

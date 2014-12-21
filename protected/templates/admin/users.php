@@ -59,6 +59,7 @@
                         <td><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td><?=$player->getPoints()?></td>
                         <td>
+                            <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
                             <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>">BAN</button>
@@ -92,6 +93,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="stats-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -117,6 +119,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="transactions-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -162,6 +165,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="remove-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -187,6 +191,97 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="notices-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="btn btn-success pull-right add">Добавить уведомление</button>
+                <div style="clear:both"></div>
+            </div>
+            <div class="modal-body">
+                <h4>Уведомления</h4>
+                <hr />
+                <table class="table table-striped points" >
+                    <thead>
+                    <th>#ID</th>
+                    <th>Дата</th>
+                    <th>Заголовок</th>
+                    <th>Удалить</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success add">Добавить уведомление</button>
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Добавление уведомления</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid" id="errorForm" style="display:none">
+                    <div class="alert alert-danger" role="alert">
+                        <span class="error-container"></span>
+                    </div>
+                </div>
+
+
+
+
+                <form class="form">
+                    <div class="form-group">
+                        <label class="control-label">Заголовок</label>
+                        <input type="text" name="title" value="" placeholder="Заголовок" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Текст уведомления</label>
+                        <div id="text"></div>
+                    </div>
+                </form>
+
+
+                <div class="row-fluid">
+                    <button class="btn btn-md btn-success save pull-right"> Сохранить</button>
+                    <button class="btn btn-danger cls">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="remove-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Удаление уведомления</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    Это уведомление будет безвозвратно удалено, Вы уверены?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success rm">Удалить</button>
+                <button class="btn btn-danger cls">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="add-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -216,7 +311,30 @@
         </div>
     </div>
 </div>
+
+
 <script>
+
+var currentEdit = {
+    id: '',
+    text : '',
+};
+
+$(document).ready(function() {
+    $('#text').summernote({
+        height: 200,
+    });
+    $('#text').code('');
+});
+
+function showError(message) {
+    $(".error-container").text(message);
+    $("#errorForm").show();
+
+    $('.save').removeClass('btn-success').addClass('btn-danger');
+    $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
+}
+
     $('.stats-trigger').on('click', function() {
         $.ajax({
             url: "/private/users/stats/" + $(this).data('id'),
@@ -243,7 +361,125 @@
             }
         });   
     });
-    
+
+    $('.notices-trigger').on('click', function() {
+        var plid = $(this).data('id');
+        $.ajax({
+            url: "/private/users/notices/" + $(this).data('id'),
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    var tdata = ''
+                    $(data.data.notices).each(function(id, tr) {
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.title+'</td>'
+                        tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
+                        if(tr.text)
+                            tdata += '<tr><td colspan=4>'+tr.text+'</td></tr>';
+                    });
+                    $("#notices-holder").find('tbody').html(tdata);
+
+                    $("#notices-holder").modal();
+                    $("#notices-holder").find('.cls').on('click', function() {
+                        $("#notices-holder").modal('hide');
+                    })
+                    $("#notices-holder").find('.add').off('click').on('click', function() {
+                        addNotice(plid);
+                    });
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+    });
+
+
+    function removeNotice(trid) {
+        $("#remove-notice").modal();
+        $("#remove-notice").find('.cls').off('click').on('click', function() {
+            $("#remove-notice").modal('hide');
+        });
+        $("#remove-notice").find('.rm').off('click').on('click', function() {
+            $.ajax({
+                url: "/private/users/rmNotice/" + trid,
+                method: 'POST',
+                async: true,
+                data: {},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        $("#remove-notice").modal('hide');
+                        $("#notices-holder").modal('hide');
+
+                        alert('Уведомление удалено');
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function() {
+                    alert('Unexpected server error');
+                }
+            });
+
+        });
+    }
+
+    function addNotice(plid) {
+        $("#add-notice").modal();
+        $("#add-notice").find('.cls').off('click').on('click', function() {
+            $("#add-notice").modal('hide');
+        });
+        $('#text').code('');
+        $('input[name="title"]').val('')
+
+
+        $("#add-notice").find('.save').off('click').on('click', function() {
+            var text = $('#text').code();
+
+            if (!$('input[name="title"]').val()) {
+                showError('Title can\'t be empty');
+
+                return false;
+            }
+            currentEdit.title = $('input[name="title"]').val();
+            currentEdit.playerId = plid;
+            currentEdit.text = text;
+
+            $("#errorForm").hide();
+            $(this).find('.glyphicon').remove();
+
+
+
+            $.ajax({
+                url: "/private/users/addNotice/" + plid,
+                method: 'POST',
+                async: true,
+                data: currentEdit,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        $("#add-notice").modal('hide');
+                        $("#notices-holder").modal('hide');
+
+                        alert('Уведомление добавлено');
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function() {
+                    alert('Unexpected server error');
+                }
+            });
+
+
+        });
+
+    }
+
     $('.transactions-trigger').on('click', function() {
         var plid = $(this).data('id');
         $.ajax({
@@ -313,6 +549,7 @@ function removeTransaction(trid) {
         
     });    
 }
+
 function addTransaction(plid) {
     $("#add-transaction").modal();
 

@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session2, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \CommentsModel, \EmailInvites, \Common;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \NoticesModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -125,6 +125,7 @@ class Index extends \SlimController\SlimController
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
+        $notices = NoticesModel::instance()->getPlayerUnreadNotices($session->get(Player::IDENTITY));
 
         // $tickets = TicketsModel::instance()->getPlayerUnplayedTickets(Session2::connect()->get(Player::IDENTITY));
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($session->get(Player::IDENTITY));
@@ -135,6 +136,7 @@ class Index extends \SlimController\SlimController
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,
             'currency'    => Config::instance()->langCurrencies[$this->country],
+            'notices'     => $notices,
             'news'        => $news,
             //    'player'      => Session2::connect()->get(Player::IDENTITY),
             'player'      => $session->get(Player::IDENTITY),

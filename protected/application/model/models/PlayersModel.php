@@ -58,6 +58,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->decrementSocialPostsCount($player);
     }
 
+    public function updateLastNotice(Entity $player)
+    {
+        return $this->getProcessor()->updateLastNotice($player);
+    }
+
     public function markOnline(Entity $player)
     {
         return $this->getProcessor()->markOnline($player);   

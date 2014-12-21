@@ -304,6 +304,23 @@ class PlayersDBProcessor implements IProcessor
         return $player;   
     }
 
+    public function updateLastNotice(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `DateNoticed` = :date WHERE  `Id` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':date'  => $player->getDateLastNotice(),
+                ':id'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+    }
+
     public function markOnline(Entity $player)
     {
         $sql = "UPDATE `Players` SET `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
