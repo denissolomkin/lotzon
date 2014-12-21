@@ -80,6 +80,9 @@ class Index extends \SlimController\SlimController
             }
             $this->landing();    
         } else {
+            // FORCE UPDATE POINTS AND MONEY FOR FIX WEBSOCKET SESSION
+            $session->set(Player::IDENTITY, $session->get(Player::IDENTITY)->fetch());
+
             $this->game();
             // Session2::connect()->get(Player::IDENTITY)->markOnline();
             $session->get(Player::IDENTITY)->markOnline();

@@ -26,42 +26,45 @@ class WebSocketController implements MessageComponentInterface {
         $this->_clients = array();
     }
 
-    public function onOpen(ConnectionInterface $conn) {
+    public function onOpen(ConnectionInterface $conn)
+    {
 
 
         $player = $conn->Session->get(Player::IDENTITY);
         $conn->resourceId = $player->getId();
         $this->_clients[$conn->resourceId] = $conn;
 
-        if(isset($this->_players[$conn->resourceId]['appName']))
-        $class = $this->_players[$conn->resourceId]['appName'];
-        $mode = $this->_players[$conn->resourceId]['appMode'];
-        $id = $this->_players[$conn->resourceId]['appId'];
+        if (isset($this->_players[$conn->resourceId]['appName'])){
+            $class = $this->_players[$conn->resourceId]['appName'];
+            $mode = $this->_players[$conn->resourceId]['appMode'];
+            $id = $this->_players[$conn->resourceId]['appId'];
+        }
 
         // удаляемся из стека и маячки
-        unset(
-            $this->_stack[$class][$mode][$conn->resourceId],
-            $this->_players[$conn->resourceId]);
+        if (isset($class))
+        {
+            unset(
+                $this->_stack[$class][$mode][$conn->resourceId],
+                $this->_players[$conn->resourceId]);
 
-        if($app=$this->_apps[$class][$id]){
+            if ($app = $this->_apps[$class][$id]) {
 
-            // сигнализируем об уходе и отключаемся от игры
+                // сигнализируем об уходе и отключаемся от игры
 
-            $app -> setClient($conn);
-            if(!$app->isOver())
-            {
-                $app -> passAction();
-                $this -> sendCallback($app->getResponse(),$app->getCallback());
-            }
-            $app -> quitAction();
-            $this->sendCallback($app->getResponse(), $app->getCallback());
-
+                $app->setClient($conn);
+                if (!$app->isOver()) {
+                    $app->passAction();
+                    $this->sendCallback($app->getResponse(), $app->getCallback());
+                }
+                $app->quitAction();
+                $this->sendCallback($app->getResponse(), $app->getCallback());
 
 
-            // если приложение завершилось, сохраняем и выгружаем из памяти
-            if($app->isOver() && !$app->isSaved()){
-                $this->saveGame($app);
-                unset( $this->_apps[$class][$id] );
+                // если приложение завершилось, сохраняем и выгружаем из памяти
+                if ($app->isOver() && !$app->isSaved()) {
+                    $this->saveGame($app);
+                    unset($this->_apps[$class][$id]);
+                }
             }
         }
 
