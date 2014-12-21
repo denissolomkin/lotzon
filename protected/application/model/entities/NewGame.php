@@ -19,8 +19,8 @@ class NewGame extends Entity
     private $_identifier = '';
     private $_players = array();
     private $_client = '';
-    private $_isOver = 0;
-    public  $_isSaved = 0;
+    public $_isOver = 0;
+    public $_isSaved = 0;
     private $_clients = array();
     private $_response = '';
     private $_callback = array();
@@ -95,6 +95,8 @@ class NewGame extends Entity
             $this->unsetFieldPlayed();
             $this->setField($this->generateField());
             $this->setPlayers($this->getClients());
+            $this->_isOver=0;
+            $this->_isSaved=0;
             $this->startAction();
         } else {
             $this->unsetCallback();
@@ -111,12 +113,13 @@ class NewGame extends Entity
     public function startAction($data=null)
     {
         echo "Старт\n";
-        $this->_isOver=0;
         $this->unsetCallback();
 
         if(!$this->getPlayers()) {
             $this->setPlayers($this->getClients());
             $this->nextPlayer();
+            $this->_isOver=0;
+            $this->_isSaved=0;
         }
 
         $this->setCallback(array(
@@ -178,6 +181,7 @@ class NewGame extends Entity
         $this->unsetCallback();
         if($this->currentPlayer()['timeout']<=time())
         {
+            echo "Переход хода \n";
             if(!$this->isOver()) {
             $this->passMove();
             $this->nextPlayer();
@@ -198,7 +202,7 @@ class NewGame extends Entity
             'action'    => 'move'
             ));
 
-        $this->setResponse($this->getClient());
+        $this->setResponse($this->getClients());
 
         echo "Конец тайм-аута \n";
     }
@@ -229,7 +233,8 @@ class NewGame extends Entity
 
     public function isMove()
     {
-        return 1;
+        $current=$this->currentPlayer();
+        return ($current['pid']==$this->getClient()->Session->get(PLAYER::IDENTITY)->getId());
     }
 
     public function isOver()
@@ -307,7 +312,8 @@ class NewGame extends Entity
             $this->updatePlayer(array('result'=>-1));
             $this->updatePlayer(array('result'=>2),current($winner)['player']['pid']);
             $this->_isOver=1;
-            $this->_isSaved=0;
+            // $this->_isSaved=0;
+            echo "Победитель #".current($winner)['player']['pid']."\n";
             return current($winner)['player'];
         }
         else
@@ -326,16 +332,22 @@ class NewGame extends Entity
             $players=$this->getPlayers();
 
 
-        foreach ($players as $player)
+        foreach ($players as $player){
             foreach ($data as $key => $value)
-                if(!is_numeric($key))
+            {
+                if(!is_numeric($key)){
                     if($this->_players[$player['pid']][$key])
                         $this->_players[$player['pid']][$key]+=$value;
                     else
                         $this->_players[$player['pid']][$key]=$value;
-                else
-                    if($this->_players[$player['pid']][$key])
+                } else {
+                    if(array_key_exists($value,$this->_players[$player['pid']])) {
                         unset($this->_players[$player['pid']][$value]);
+                        echo "Удаление из игроков {$value}\n";
+                    }
+                }
+            }
+        }
 
         return $this;
     }
@@ -347,6 +359,7 @@ class NewGame extends Entity
 
     public function setPlayers($clients)
     {
+        echo "Инициализация игроков \n";
         foreach($clients as $pid=>$player)
             $this->_players[$pid]=array(
                 'pid'   =>  $pid,

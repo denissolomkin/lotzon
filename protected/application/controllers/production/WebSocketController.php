@@ -21,76 +21,39 @@ class WebSocketController implements MessageComponentInterface {
     private $_mode='POINT-0';
 
     public function __construct() {
-    echo "Server have started\n";
-        // Create a collection of clients
-        $this->_clients = array();
+        echo "Server have started\n";
+        $this->_clients = array();  // Create a collection of client
     }
 
     public function onOpen(ConnectionInterface $conn)
     {
+        $playerId = $conn->Session->get(Player::IDENTITY)->getId();
+        $conn->resourceId = $playerId;
+        $this->_clients[$playerId] = $conn;
 
-
-        $player = $conn->Session->get(Player::IDENTITY);
-        $conn->resourceId = $player->getId();
-        $this->_clients[$conn->resourceId] = $conn;
-
-        if (isset($this->_players[$conn->resourceId]['appName'])){
-            $class = $this->_players[$conn->resourceId]['appName'];
-            $mode = $this->_players[$conn->resourceId]['appMode'];
-            $id = $this->_players[$conn->resourceId]['appId'];
-        }
-
-        // удаляемся из стека и маячки
-        if (isset($class))
-        {
-            unset(
-                $this->_stack[$class][$mode][$conn->resourceId],
-                $this->_players[$conn->resourceId]);
-
-            if ($app = $this->_apps[$class][$id]) {
-
-                // сигнализируем об уходе и отключаемся от игры
-
-                $app->setClient($conn);
-                if (!$app->isOver()) {
-                    $app->passAction();
-                    $this->sendCallback($app->getResponse(), $app->getCallback());
-                }
-                $app->quitAction();
-                $this->sendCallback($app->getResponse(), $app->getCallback());
-
-
-                // если приложение завершилось, сохраняем и выгружаем из памяти
-                if ($app->isOver() && !$app->isSaved()) {
-                    $this->saveGame($app);
-                    unset($this->_apps[$class][$id]);
-                }
-            }
-        }
+        $this->quitPlayer($playerId);
 
         echo "New connection: #{$conn->resourceId} ".$conn->Session->getId()."\n";
         $this->_class='chat';
-        $this->sendCallback($this->_clients, array('message'=>$player->getNicName().' присоединился'));
+        $this->sendCallback($this->_clients, array('message'=>$conn->Session->get(Player::IDENTITY)->getNicName().' присоединился'));
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
 
         $data = json_decode($msg);
         list($type, $name, $id) = explode("/",$data->path);
-        echo "#{$from->resourceId}:".$data->path." \n";
+        echo "#{$from->resourceId}: ".$data->data->action." - ".$data->path." \n";
         $data=$data->data;
         $this->_class = $class = '\\'.$name;
         $action=$data->action.'Action';
         $mode=($data->mode?$data->mode:$this->_mode);
         $player=$from->Session->get(Player::IDENTITY);
 
-
-
         switch ($type) {
             case 'app':
                 try{
 
-                    $this->sendCallback($this->_clients, array('message'=>$class));
+                    $this->sendCallback($this->_clients, array('message'=>$from->resourceId.": ".$action),'chat');
                     if(class_exists($class))
                     {
                        // нет запущенного приложения, пробуем создать новое или просто записаться в очередь
@@ -98,11 +61,18 @@ class WebSocketController implements MessageComponentInterface {
                             echo "id приложения нет \n";
                             // записались
 
-                            if ($action == 'quitAction' && isset($this->_players[$from->resourceId]['appMode'])) {
-                                unset($this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()]);
-                                unset($this->_players[$from->resourceId]['appName']);
-                                unset($this->_players[$from->resourceId]['appMode']);
+                            if ($action == 'quitAction') {
+
+                                if(isset($this->_players[$from->resourceId]['appMode'])){
+                                    echo "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
+                                    unset($this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()],
+                                    $this->_players[$from->resourceId]['appName'],
+                                    $this->_players[$from->resourceId]['appMode']);
+                                }
+
                             } else {
+
+                                echo "Игрок {$from->resourceId} записался в стек новой игры \n";
                                 $this->_stack[$name][$mode][$player->getId()] = $from;
                                 $this->_players[$from->resourceId]['appName'] = $name;
                                 $this->_players[$from->resourceId]['appMode'] = $mode;
@@ -144,8 +114,9 @@ class WebSocketController implements MessageComponentInterface {
 
                         // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
                         elseif($app = $this->_apps[$name][$id]){
-                            echo "приложение нашли, удаляем игрока из очереди \n";
-                            unset ( $this->_stack[$name][$mode][$player->getId()] );
+                            //if($this->_stack[$name][$mode][$player->getId()])
+                            echo "приложение нашли $name ".$app->getCurrency().$app->getPrice()." $id\n";
+                            //unset ( $this->_stack[$name][$mode][$player->getId()] );
                         }
 
                         // если нет, сообщаем об ошибке
@@ -160,7 +131,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         // если приложение запустили или загрузили
                         if(isset($app)){
-                            echo "стартуем приложение $name $id \n";
+                            echo "стартуем приложение $name {$app->getIdentifier()} \n";
 
                             // пробуем вызвать экшн
                             $app -> setClient($from);
@@ -211,38 +182,10 @@ class WebSocketController implements MessageComponentInterface {
 
     public function onClose(ConnectionInterface $conn) {
 
-        // The connection is closed, remove it, as we can no longer send it messages
-        $class = $this->_players[$conn->resourceId]['appName'];
-        $mode = $this->_players[$conn->resourceId]['appMode'];
-        $id = $this->_players[$conn->resourceId]['appId'];
+        $this->quitPlayer($conn->resourceId);
 
-        echo"удаляемся из приложения \n";
-        // удаляемся из стека и маячки
-        unset(
-            $this->_stack[$class][$mode][$conn->resourceId],
-            $this->_players[$conn->resourceId]);
-
-        if($app=$this->_apps[$class][$id]){
-            // пробуем вызвать экшн
-            $app -> setClient($conn);
-            if(!$app->isOver())
-            {
-                $app -> passAction();
-                $this -> sendCallback($app->getResponse(),$app->getCallback());
-            }
-
-            $app -> quitAction();
-            $this -> sendCallback($app->getResponse(),$app->getCallback());
-
-            // если приложение завершилось, сохраняем и выгружаем из памяти
-            if($app->isOver() && !$app->isSaved()){
-                $this->saveGame($app);
-                unset( $this->_apps[$class][$id] );
-            }
-        }
-
-        echo "Connection {$conn->resourceId} has disconnected ".$conn->Session->get('appId')."\n";
         unset($this->_clients[$conn->resourceId]);
+        echo "Connection {$conn->resourceId} has disconnected\n";
 
         foreach ($this->_clients as $client) {
             $client->send(json_encode(
@@ -259,7 +202,12 @@ class WebSocketController implements MessageComponentInterface {
         $conn->close();
     }
 
-    public function sendCallback($response, $callback) {
+
+
+    public function sendCallback($response, $callback,$class=null) {
+
+        if(!$class)
+            $class=$this->_class;
 
         // рассылаем игрокам результат обработки
         if(is_array($response))
@@ -267,21 +215,70 @@ class WebSocketController implements MessageComponentInterface {
                 $client->send(
                     json_encode(
                         array(
-                            'path'=>'app'.$this->_class,
+                            'path'=>'app'.$class,
                             'res'=>$callback
                         )));
         else
             $response->send(
                 json_encode(
                     array(
-                        'path'=>'app'.$this->_class,
+                        'path'=>'app'.$class,
                         'res'=>$callback
                     )));
+    }
+
+    public function quitPlayer($playerId) {
+
+        echo "Выход игрока\n";
+        if (isset($this->_players[$playerId]['appName'])){
+            echo "Удаление маячка игры ".$this->_players[$playerId]['appName'].$this->_players[$playerId]['appMode']."\n";
+            $class = $this->_players[$playerId]['appName'];
+            $mode = $this->_players[$playerId]['appMode'];
+            if(isset($this->_players[$playerId]['appId'])){
+                echo "Выход маячка Id игры #".$this->_players[$playerId]['appId']."\n";
+                $id = $this->_players[$playerId]['appId'];
+            }
+        }
+
+        // сдаемся и выходим, сохраняем и удалеяем игру
+        if (isset($class))
+        {
+            echo "Удаление игрока из игрового стека ожидающих \n";
+            unset(
+                $this->_stack[$class][$mode][$playerId],
+                $this->_players[$playerId]);
+
+            if ($app = $this->_apps[$class][$id]) {
+
+                // если есть игра - сдаемся
+                $app->setClient($this->_clients[$playerId]);
+                if (!$app->isOver()) {
+                    echo "Игра активная - сдаемся\n";
+                    $app->passAction();
+                    $this->sendCallback($app->getResponse(), $app->getCallback());
+                }
+
+                // сигнализируем об уходе и отключаемся от игры
+                echo "Сигнализируем об уходе\n";
+                $app->quitAction();
+                $this->sendCallback($app->getResponse(), $app->getCallback());
+
+                // если приложение завершилось, сохраняем и выгружаем из памяти
+                if ($app->isOver() && !$app->isSaved()) {
+                    $this->saveGame($app);
+                    unset($this->_apps[$class][$id]);
+                }
+            }
+        }
+
     }
 
     function saveGame($app){
 
         $app->_isSaved = 1;
+        echo "Состояние игры:".$app->_isSaved."/".$app->_isOver." - Сохраняем игру #".$app->getId()."\n";
+        echo "Результаты: "; print_r($app->getPlayers());
+
         $sql_results = "INSERT INTO `PlayerGames` (`PlayerId`, `GameId`, `GameUid`, `Date`, `Result`, `Currency`, `Price`) VALUES (?,?,?,?,?,?,?)".
             str_repeat(',(?,?,?,?,?,?,?)', count($app->getPlayers())-1);
 
@@ -306,7 +303,7 @@ class WebSocketController implements MessageComponentInterface {
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 $sql="UPDATE Players SET ".$currency." = ".$currency.($player['result'] < 0 ? '' : '+').
                     ($player['result']*$app->getPrice())." WHERE Id=".$player['pid'];
-                echo $sql;
+                echo time()." ".$sql."\n";
                 DB::Connect()->query($sql);
 
                 $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setMoney(
@@ -346,6 +343,7 @@ class WebSocketController implements MessageComponentInterface {
             DB::Connect()->prepare($sql_results)->execute($results);
             if($app->getPrice())
                 DB::Connect()->prepare($sql_transactions.implode(",",$sql_transactions_players))->execute($transactions);
+            echo "Записали результаты в базу\n";
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
