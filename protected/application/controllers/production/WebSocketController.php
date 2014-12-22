@@ -398,8 +398,10 @@ class WebSocketController implements MessageComponentInterface {
         echo "Состояние игры:".$app->_isSaved."/".$app->_isOver." - Сохраняем игру #".$app->getId()."\n";
         echo "Результаты: "; print_r($app->getPlayers());
 
-        $sql_results = "INSERT INTO `PlayerGames` (`PlayerId`, `GameId`, `GameUid`, `Date`, `Result`, `Currency`, `Price`) VALUES (?,?,?,?,?,?,?)".
-            str_repeat(',(?,?,?,?,?,?,?)', count($app->getPlayers())-1);
+        $sql_results = "INSERT INTO `PlayerGames`
+        (`PlayerId`, `GameId`, `GameUid`, `Date`, `Win`, `Lose`, `Draw`, `Result`, `Currency`, `Price`)
+        VALUES (?,?,?,?,?,?,?,?,?,?)".
+            str_repeat(',(?,?,?,?,?,?,?,?,?,?)', count($app->getPlayers())-1);
 
         if($app->getPrice())
             $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Description`, `Date`) VALUES ";
@@ -453,6 +455,9 @@ class WebSocketController implements MessageComponentInterface {
                 $app->getId(),
                 $app->getIdentifier(),
                 time(),
+                ($player['result']==1?1:0),
+                ($player['result']==0?1:0),
+                ($player['result']==-1?1:0),
                 $player['result'],
                 $app->getCurrency(),
                 $app->getPrice()
