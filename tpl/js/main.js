@@ -1177,19 +1177,26 @@ $(function(){
     var navPos = $('nav.top-nav').offset().top;
     var tikets = $('.tickets').offset().top;
     var prizes = $('.prizes').offset().top;
-    var news = $('.news').offset().top;
+    // var news = $('.news').offset().top;
+    var reviews = $('.reviews').offset().top;
     var rules = $('.rules').offset().top;
     var profile = $('.profile').offset().top;
     var chance = $('.chance').offset().top;
     if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#tickets-but').addClass('now');
-    }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
+    }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (reviews - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#prizes-but').addClass('now');
+    }else if($(document).scrollTop() > (reviews - 300) && $(document).scrollTop() < (rules - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#reviews-but').addClass('now');
+    /*}else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#prizes-but').addClass('now');
     }else if($(document).scrollTop() > (news - 300) && $(document).scrollTop() < (rules - 300)){
         $('.tn-mbk_li').removeClass('now');
-        $('#news-but').addClass('now');
+        $('#news-but').addClass('now');*/
     }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#rules-but').addClass('now');
@@ -1209,19 +1216,26 @@ $(function(){
     $(document).on('scroll', function(){
         tikets = $('.tickets').offset().top;
         prizes = $('.prizes').offset().top;
-        news = $('.news').offset().top;
+        //news = $('.news').offset().top;
+        reviews = $('.reviews').offset().top;
         rules = $('.rules').offset().top;
         profile = $('.profile').offset().top;
         chance = $('.chance').offset().top;
         if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#tickets-but').addClass('now');
+        }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (reviews - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#prizes-but').addClass('now');
+        }else if($(document).scrollTop() > (reviews - 300) && $(document).scrollTop() < (rules - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#reviews-but').addClass('now');/*
         }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#prizes-but').addClass('now');
         }else if($(document).scrollTop() > (news - 300) && $(document).scrollTop() < (rules - 300)){
             $('.tn-mbk_li').removeClass('now');
-            $('#news-but').addClass('now');
+            $('#news-but').addClass('now');*/
         }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile -300)){
             $('.tn-mbk_li').removeClass('now');
             $('#rules-but').addClass('now');

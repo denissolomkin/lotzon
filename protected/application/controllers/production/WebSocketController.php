@@ -71,9 +71,9 @@ class WebSocketController implements MessageComponentInterface {
         echo "#{$from->resourceId}: ".$data->data->action." - ".$data->path." \n";
         $data=$data->data;
         $this->_class = $class = '\\'.$name;
-        $action=$data->action.'Action';
-        $mode=(isset($data->mode)?$data->mode:$this->_mode);
-        $player=$from->Session->get(Player::IDENTITY);
+        $action = (isset($data->action)?$data->action:'').'Action';
+        $mode   = (isset($data->mode)?$data->mode:$this->_mode);
+        $player = $from->Session->get(Player::IDENTITY);
 
         switch ($type) {
             case 'app':
@@ -215,7 +215,7 @@ class WebSocketController implements MessageComponentInterface {
             default:
                 if($data->message=='stop')
                     die;
-                elseif($data->message=='count') {
+                elseif($data->message=='online') {
                     $from->send(json_encode(
                         array(
                             'path' => 'appchat',

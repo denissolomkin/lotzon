@@ -138,7 +138,8 @@
                 <ul class="tn-mbk">
                     <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">РОЗЫГРЫШ</a></li>
                     <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
-                    <li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li>
+                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
+                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
                     <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
                     <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Игры</a></li>
