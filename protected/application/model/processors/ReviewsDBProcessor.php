@@ -85,6 +85,26 @@ class ReviewsDBProcessor implements IProcessor
         return $review;
     }
 
+    public function imageExists($image)
+    {
+        $sql = "SELECT 1
+                FROM `PlayerReviews`
+                WHERE `Image` = :image
+                LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':image'    => $image
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);;
+    }
+
+
 
     public function getList($status=1, $limit = null, $offset = null)
     {

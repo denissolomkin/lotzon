@@ -981,7 +981,7 @@
                                 </div>
 
                                 <div class="r">
-                                    <div class="online">игроков онлайн <i>&bull;</i><span></span></div>
+                                    <div class="online">игроков онлайн <i>&bull;</i> <span></span></div>
                                     <div class="all">всего сыграно игр <b>:</b> <span></span></div>
                                 </div>
                             </div>

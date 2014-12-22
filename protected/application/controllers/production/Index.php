@@ -19,8 +19,8 @@ class Index extends \SlimController\SlimController
     const SHOP_PER_PAGE = 6;
     const LOTTERIES_PER_PAGE = 6;
     const TRANSACTIONS_PER_PAGE = 6;
+    const REVIEWS_PER_PAGE = 6;
     const COMMENTS_PER_PAGE = 8;
-    const REVIEWS_PER_PAGE = 8;
 
     const MONEY_ADD = 2070;
     const WINNERS_ADD = 29;
@@ -122,8 +122,8 @@ class Index extends \SlimController\SlimController
         $playerTransactions = array(
         //    GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory(Session2::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory(Session2::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
-            GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
-            GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+        //    GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+        //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
@@ -144,7 +144,6 @@ class Index extends \SlimController\SlimController
             'notices'     => $notices,
             'news'        => $news,
             'reviews'     => $reviews,
-            //    'player'      => Session2::connect()->get(Player::IDENTITY),
             'player'      => $session->get(Player::IDENTITY),
             'tickets'     => $tickets,
             'layout'      => false,

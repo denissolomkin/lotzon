@@ -4,7 +4,7 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 class Review extends Entity
 {
     const IMAGE_WIDTH = 480;
-    const IMAGE_HEIGHT = 480;
+    const IMAGE_HEIGHT = 150;
 
     private $_id    = '';
     private $_status = '';

@@ -456,12 +456,12 @@ $(function(){
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
-
-                    $('.reviews .rv-txt .textarea').html('');
-                    $('.reviews img.upload').hide();
+                    currentReview.image = null;
 
                     $('.reviews .rv-form').hide();
-
+                    $('.reviews .rv-txt .textarea').html('');
+                    $('.reviews .rv-image').css('background', '#e1ecee').css('opacity', '1');
+                    $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-upload-review.png');
                     $('.rv-sc').fadeIn(200);
 
                     window.setTimeout(function(){
@@ -481,36 +481,68 @@ $(function(){
 
         function initReviewUpload() {
 
-        // create form
-        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-        //$(button).parents('.photoalbum-box').prepend(form);
+            var image = $('.reviews .rv-image');
+            if(!currentReview.image)
+            {
+                // create form
+                var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
+                //$(button).parents('.photoalbum-box').prepend(form);
 
-        var input = form.find('input[type="file"]').damnUploader({
-            url: '/review/uploadImage',
-            fieldName: 'image',
-            data: currentReview,
-            dataType: 'json',
-        });
+                var input = form.find('input[type="file"]').damnUploader({
+                    url: '/review/uploadImage',
+                    fieldName: 'image',
+                    data: currentReview,
+                    dataType: 'json',
+                });
 
-        var image = $('.reviews img.upload');
 
-        input.off('du.add').on('du.add', function(e) {
 
-            e.uploadItem.completeCallback = function(succ, data, status) {
-                image.attr('src', data.res.imageWebPath).show();
-                currentReview.image = data.res.imageName;
-            };
+                input.off('du.add').on('du.add', function(e) {
 
-            e.uploadItem.progressCallback = function(perc) {
-                console.log(perc)
+                    e.uploadItem.completeCallback = function(succ, data, status) {
+                        // image.attr('src', data.res.imageWebPath).show();
+                        image.css('background', 'url("'+data.res.imageWebPath+'") no-repeat').css('opacity','0.5').css('background-size', 'cover');
+                        $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-delete-review.png');
+                        currentReview.image = data.res.imageName;
+                    };
+
+                    e.uploadItem.progressCallback = function(perc) {
+                        console.log(perc)
+                    }
+
+                    e.uploadItem.addPostData('Id', currentReview.id);
+                    e.uploadItem.addPostData('Image', currentReview.image);
+                    e.uploadItem.upload();
+                });
+
+                form.find('input[type="file"]').click();
+            } else {
+
+
+                $.ajax({
+                    url: "/review/removeImage/",
+                    method: 'POST',
+                    async: true,
+                    data: {image:currentReview.image},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 1) {
+
+                            image.css('background', '#e1ecee').css('opacity', '1');
+                            $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-upload-review.png');
+                            currentReview.image = null;
+
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Unexpected server error');
+                    }
+                });
+
+
             }
-
-            e.uploadItem.addPostData('Id', currentReview.id);
-            e.uploadItem.addPostData('Image', currentReview.image);
-            e.uploadItem.upload();
-        });
-
-        form.find('input[type="file"]').click();
     }
 
 
@@ -520,9 +552,6 @@ $(function(){
             if (data.res.reviews.length) {
                 reviewsBlock.addClass('b-ha');
                 var html = '';
-
-
-
 
                 $(data.res.reviews).each(function(id, review) {
                     html += '<div class="rv-item"><div class="rv-i-avtr">';
@@ -1721,8 +1750,8 @@ function updatePoints(points) {
 
 
 function updateMoney(money) {
-    playerMoney = parseFloat(money.toFixed(2));
-    money=money.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    playerMoney = parseFloat(money).toFixed(2);
+    money=parseFloat(money).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money.replace('.00',''));
 }
 

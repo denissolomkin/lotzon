@@ -1,4 +1,6 @@
-<?php namespace WebSocket;
+<?php
+namespace controllers\production;
+//namespace WebSocket;
 
  use Ratchet\MessageComponentInterface;
  use Ratchet\ConnectionInterface;
@@ -82,7 +84,7 @@ class WebSocketController implements MessageComponentInterface {
             case 'app':
                 try{
 
-                    $this->sendCallback($this->_clients, array('message'=>$from->resourceId.": ".$action),'chat');
+                    $this->sendCallback($this->_clients, array('message'=>$player->getNicName().": ".$action),'chat');
                     if(class_exists($class))
                     {
                        // нет запущенного приложения, пробуем создать новое или просто записаться в очередь
@@ -120,7 +122,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                 if($funds[($currency=='MONEY'?'Money':'Points')] < $price) {
                                     echo "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                                    $from->send(json_encode(array('error'=>'INSUFFICIENT_FUNDS')));
+                                    $from->send(json_encode(array('error'=>'Недостаточно средств для игры')));
 
                                 } else {
 
@@ -177,7 +179,7 @@ class WebSocketController implements MessageComponentInterface {
                             echo "id есть, но приложения $name нет, сообщаем об ошибке, удаляем из активных игроков \n";
                             $this->sendCallback($from, array(
                                 'action'=>'error',
-                                'error'=>'APPLICATION_IS_NOT_EXISTS',
+                                'error'=>'Приложение не найдено',
                                 'appId'=>0));
                             unset($this->_players[$from->Session->get(Player::IDENTITY)->getId]);
                          }

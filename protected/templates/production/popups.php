@@ -486,7 +486,8 @@
                             </div> */?>
                         </div>
                         <div class="tb">
-                            <? foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
+                            <? if(is_array($playerTransactions[GameSettings::CURRENCY_POINT]))
+                                foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum()))?></div>
@@ -514,7 +515,8 @@
                             </div>*/?>
                         </div>
                         <div class="tb">
-                            <? foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>
+                            <? if(is_array($playerTransactions[GameSettings::CURRENCY_MONEY]))
+                                foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=Common::viewNumberFormat($transaction->getSum())?></div>

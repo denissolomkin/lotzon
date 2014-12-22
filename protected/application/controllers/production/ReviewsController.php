@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \WideImage, \Player, \EntityException, \Review, \ModelException;
+use \Application, \WideImage, \Player, \EntityException, \ReviewsModel, \Review, \ModelException;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -57,7 +57,34 @@ class ReviewsController extends \AjaxController
 
     public function removeImageAction()
     {
+
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            $image = $this->request()->post('image');
+
+            if(ReviewsModel::instance()->imageExists($image))
+                $response = array(
+                'status'  => 0,
+                'message' => 'Image Links To Review',
+            );
+            else
+            try {
+
+                @unlink(PATH_FILESTORAGE . 'reviews/' . $image);
+            } catch (Exception $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
     }
+
 
     public function uploadImageAction()
     {
@@ -65,6 +92,7 @@ class ReviewsController extends \AjaxController
 
             $image = WideImage::loadFromUpload('image');
             $image = $image->resizeDown(Review::IMAGE_WIDTH, null, 'fill');
+            $image = $image->resizeDown(null, Review::IMAGE_HEIGHT, 'outside');
             //$image = $image->crop("center", "center", Review::IMAGE_WIDTH, Review::IMAGE_HEIGHT);
 
             $imageName = ($this->request()->post('Image'))?:uniqid() . ".jpg";
