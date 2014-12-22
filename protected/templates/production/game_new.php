@@ -472,8 +472,7 @@
                                     <img src="/tpl/img/but-upload-review.png">
                                 </div>
                                 <div class="rv-but-add">
-                                    оставить<br>комментарий
-
+                                    отправить
                                 </div>
                             </div>
                         </div>
