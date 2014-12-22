@@ -736,21 +736,21 @@
                         <div class="l"><?=$chanceGames['33']->getGameTitle();?></div>
                         <div class="r"><b><?=$chanceGames['33']->getGamePrice();?></b>баллов</div>
                     </div>
-                    <div class="gm-bt" data-game="33">подробнее</div>
+                    <div class="gm-bt" data-game="33"><img src="tpl/img/game-3x3.png"></div>
                 </div>
                 <div class="td c">
                     <div class="gm-if-bk">
                         <div class="l"><?=$chanceGames['44']->getGameTitle();?></div>
                         <div class="r"><b><?=$chanceGames['44']->getGamePrice();?></b>баллов</div>
                     </div>
-                    <div class="gm-bt" data-game="44">подробнее</div>
+                    <div class="gm-bt" data-game="44"><img src="tpl/img/game-4x4.png"></div>
                 </div>
                 <div class="td r">
                     <div class="gm-if-bk">
                         <div class="l"><?=$chanceGames['55']->getGameTitle();?></div>
                         <div class="r"><b><?=$chanceGames['55']->getGamePrice();?></b>баллов</div>
                     </div>
-                    <div class="gm-bt" data-game="55">подробнее</div>
+                    <div class="gm-bt" data-game="55"><img src="tpl/img/game-5x5.png"></div>
                 </div>
             </div>
             <div class="ch-gm-tbl">
@@ -759,21 +759,21 @@
                         <div class="l">Кто больше?</div>
                         <div class="r"></div>
                     </div>
-                    <div class="ngm-bt" data-game="77">подробнее</div>
+                    <div class="ngm-bt" data-game="77"><img src="tpl/img/game-who-more.png"></div>
                 </div>
                 <div class="td c">
                     <div class="gm-if-bk">
                         <div class="l">Скоро</div>
                         <div class="r"></div>
                     </div>
-                    <div class="gm-bt" data-game="44">подробнее</div>
+                    <div class="gm-bt" data-game="44"><img src="tpl/img/game-sea-battle.png"></div>
                 </div>
                 <div class="td r">
-                    <div class="gm-if-bk">
+                    <!--div class="gm-if-bk">
                         <div class="l">Скоро</div>
                         <div class="r"></div>
-                    </div>
-                    <div class="gm-bt" data-game="55">подробнее</div>
+                    </div-->
+                    <div class="gm-bt" data-game="55"><img src="tpl/img/game-dots.png"></div>
                 </div>
             </div>
         </div>
@@ -981,8 +981,8 @@
                                 </div>
 
                                 <div class="r">
-                                    <div class="online">игроков онлайн <i>&bull;</i> 2045</div>
-                                    <div class="all">всего сыграно игр <b>:</b> 983</div>
+                                    <div class="online">игроков онлайн <i>&bull;</i><span></span></div>
+                                    <div class="all">всего сыграно игр <b>:</b> <span></span></div>
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
@@ -1076,10 +1076,10 @@
                     <div class="pr-ph-bk">
                         <div class="mt">ход</div>
                         <div class="wt">победитель</div>
-                        <div class="pr-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                        <div class="pr-ph"></div>
                     </div>
                     <div class="pr-nm">Вы</div>
-                    <div class="pr-fa">20 • 60 % = 6 000</div>
+                    <div class="pr-fa"></div>
                     <div class="pr-cl">
                         <b>0</b>
                         <span>ходов<br/>осталось</span>
@@ -1153,10 +1153,10 @@
                     <div class="pr-ph-bk">
                         <div class="mt">ход</div>
                         <div class="wt">победитель</div>
-                        <div class="pr-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
+                        <div class="pr-ph"></div>
                     </div>
                     <div class="pr-nm"></div>
-                    <div class="pr-fa">20 • 60 % = 6 000</div>
+                    <div class="pr-fa"></div>
                     <div class="pr-cl">
                         <b>0</b>
                         <span>ходов<br/>осталось</span>

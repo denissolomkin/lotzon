@@ -1463,6 +1463,7 @@ $('.ch-gm-tbl .ngm-bt').click(function(){
     $('.game-bk li').removeClass('won').removeClass('los');
     $('.game-bk li').removeClass('true').removeClass('blink');
     // show current game
+    WebSocketAjaxClient('update');
 
     $('.ch-bk').fadeOut(200);
     window.setTimeout(function(){

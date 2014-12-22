@@ -18,6 +18,9 @@ class WebSocketController implements MessageComponentInterface {
     private $_apps;
     private $_players;
     private $_class;
+    private $_games=array(
+        1 => 'NewGame'
+    );
     private $_mode='POINT-0';
 
     public function __construct() {
@@ -67,7 +70,7 @@ class WebSocketController implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
 
         $data = json_decode($msg);
-        @list($type, $name, $id) = explode("/",$data->path);
+        list($type, $name, $id) = explode("/",$data->path);
         echo "#{$from->resourceId}: ".(isset($data->data->action)?$data->data->action:'')." - ".$data->path." \n";
         $data=$data->data;
         $this->_class = $class = '\\'.$name;
@@ -111,8 +114,6 @@ class WebSocketController implements MessageComponentInterface {
 
                                 if (!$sth->rowCount()) {
                                     throw new ModelException("Player not found", 404);
-                                } elseif($sth->rowCount()>1){
-                                    throw new ModelException("Found more than one player", 400);
                                 }
 
                                 $funds = $sth->fetch();
@@ -210,6 +211,62 @@ class WebSocketController implements MessageComponentInterface {
                 break;
 
             case 'url':
+                break;
+
+            case 'update':
+                $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
+                        (SELECT count(Id) FROM `PlayerGames` WHERE `GameId` = 1) `All`
+                                        FROM `Players`
+                                        LEFT JOIN `PlayerGames`
+                                        ON `PlayerGames`.`PlayerId` = `Players`.`Id`
+                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = 1
+                                        LIMIT 1";
+
+                try {
+                    $sth = DB::Connect()->prepare($sql);
+                    $sth->execute(array(':id' => $from->resourceId));
+                } catch (PDOException $e) {
+                    throw new ModelException("Error processing storage query", 500);
+                }
+
+                if (!$sth->rowCount()) {
+                    throw new ModelException("Player not found", 404);
+                }
+
+                $stat = $sth->fetch();
+
+                $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
+                        `Players`.`Id`, `Players`.`Nicname`, `Players`.`Avatar`, `Players`.`Online`
+                        FROM `Players`
+                        LEFT JOIN `PlayerGames`
+                        ON `PlayerGames`.`PlayerId` = `Players`.`Id`
+                        WHERE `PlayerGames`.`GameId` = 1
+                        GROUP BY `Players`.`Id`
+                        ORDER BY (`Win`/count(`PlayerGames`.`Id`)) DESC
+                        LIMIT 10";
+
+                try {
+                    $sth = DB::Connect()->prepare($sql);
+                    $sth->execute(array(':id' => $from->resourceId));
+                } catch (PDOException $e) {
+                    throw new ModelException("Error processing storage query", 500);
+                }
+
+                $top = array();
+                foreach ($sth->fetchAll() as $player) {
+                    $top[] = $player;
+                }
+
+                    echo "Обновление данных для игрока\n";
+                    $from->send(json_encode(array(
+                        'path'=> 'update',
+                        'res' => array(
+                                'all'     => $stat['All'],
+                                'online'    => count($this->_clients),
+                                'count'     => $stat['Count'],
+                                'win'    => $stat['Win'],
+                                'top' => $top
+                        ))));
                 break;
 
             default:

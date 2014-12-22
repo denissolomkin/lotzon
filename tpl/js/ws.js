@@ -10,7 +10,7 @@ var conn;
                 conn.onopen = function (e) {
                     if(path){
                         conn.send(JSON.stringify({'path': path, 'data': data}));
-                        WebSocketStatus('<b style="color:blue">send',path+JSON.stringify(data))
+                        WebSocketStatus('<b style="color:blue">send',path+(data?JSON.stringify(data):''))
                     }
                     console.info('Socket open');
                     WebSocketStatus('<b style="color:green">socket', 'open')
@@ -18,7 +18,7 @@ var conn;
             }
             else
             {
-                WebSocketStatus('<b style="color:blue">send',path+JSON.stringify(data))
+                WebSocketStatus('<b style="color:blue">send',path+(data?JSON.stringify(data):''))
                 conn.send(JSON.stringify({'path': path, 'data': data}));
             }
 
@@ -55,8 +55,33 @@ function WebSocketStatus(action, data) {
 // chat
 function updateCallback(receiveData)
 {
-    updatePoints(receiveData.res.points);
-    updateMoney(receiveData.res.money);
+    if(receiveData.res.points)
+        updatePoints(receiveData.res.points);
+    if(receiveData.res.money)
+        updateMoney(receiveData.res.money);
+    if(receiveData.res.online){
+        $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
+        $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
+        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+receiveData.res.count+'<b> • </b>'+Math.ceil((parseInt(receiveData.res.win)/parseInt(receiveData.res.count))*100)+' %');
+
+
+        html='';
+        $.each(receiveData.res.top, function( index, value ) {
+            html+='<li><div class="prs-ph" style="background-image: url(';
+            if(value.Avatar)
+                html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.Id)/100)+"/"+value.Avatar+"'";
+            else
+                html += "'../tpl/img/bg-chanse-game-hz.png'";
+            html+=')"></div>' +
+            '<div class="prs-ifo">' +
+            '<div class="nm">'+value.Nicname+(value.Online?' <b>•</b>':'')+'</div>' +
+            '<div class="ifo">'+value.Count+' • '+Math.ceil((parseInt(value.Win)/parseInt(value.Count))*100)+' %</div>   ' +
+            '</div></li>';
+
+        });
+        $('.rls-r .rls-r-prs').html(html);
+        console.log(html);
+    }
 }
 
 
@@ -279,8 +304,6 @@ $(document).on('click', '.ngm-bk .ngm-go', function(e){
     }
 });
 
-
-
 // выход
 $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .exit', function(e){
     $('.ngm-rls').fadeIn(200);
@@ -290,6 +313,7 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .exit', function(e){
     var data={'action':'quit'};
     WebSocketAjaxClient(path,data);
     appId=0;
+    WebSocketAjaxClient('update');
 });
 
 // отмена
@@ -322,6 +346,7 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl
 $(document).on('click', '.ngm-bk .bk-bt-rl', function(e){
     $('.ngm-bk .prc-l').hide();
     $('.ngm-bk .rls-l').fadeIn(200);
+    WebSocketAjaxClient('update');
 });
 
 
