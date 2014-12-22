@@ -532,10 +532,10 @@ $(function(){
                     else
                         html += '<img src="/tpl/img/default.jpg">';
 
-                    html+='</div><div class="rv-i-tl">'+review.name+' • '+review.date+'</div><div class="rv-i-txt">'+review.text+'</div>';
+                    html+='</div><div class="rv-i-tl">'+review.playerName+' • '+review.date+'</div><div class="rv-i-txt">'+review.text+'</div>';
 
                     if(review.image)
-                        html += '<div class="rv-i-img"><img src="/filestorage/reviews/'+review.image+'></div>';
+                        html += '<div class="rv-i-img"><img src="/filestorage/reviews/'+review.image+'"></div>';
 
                     html+='</div>';
                 });
