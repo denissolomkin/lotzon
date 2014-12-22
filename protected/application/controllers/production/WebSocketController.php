@@ -67,8 +67,8 @@ class WebSocketController implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
 
         $data = json_decode($msg);
-        list($type, $name, $id) = explode("/",$data->path);
-        echo "#{$from->resourceId}: ".$data->data->action." - ".$data->path." \n";
+        @list($type, $name, $id) = explode("/",$data->path);
+        echo "#{$from->resourceId}: ".(isset($data->data->action)?$data->data->action:'')." - ".$data->path." \n";
         $data=$data->data;
         $this->_class = $class = '\\'.$name;
         $action = (isset($data->action)?$data->action:'').'Action';

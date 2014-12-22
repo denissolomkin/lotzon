@@ -1,3 +1,4 @@
+var url = 'ws://192.168.1.253:8080';
 var url = 'ws://testbed.lotzon.com:8080';
 var server = './ws/run';
 var conn;
@@ -33,7 +34,10 @@ var conn;
                 conn.onmessage = function (e) {
                     WebSocketStatus('<b style="color:purple">receive',e.data)
                     data=$.parseJSON(e.data);
-                    window[data.path.replace('\\','')+'Callback'](data);
+                    if(data.error)
+                        $("#report-popup").find(".txt").text(data.error).show().fadeIn(200);
+                    else
+                        window[data.path.replace('\\','')+'Callback'](data);
                 };
 
         }
@@ -86,8 +90,13 @@ console.log(receiveData.res.action);
          $('.ot-exit').html('Ожидаем соперника').show();
          break;
 
+     case 'stack':
+         $('.ngm-bk .ngm-go').hide().prev().show();
+         break;
+
      case 'start':
-         $('.ngm-bk').focus();
+         // document.location.href = '.ngm-bk';
+//         $('.ngm-bk').focus();
          $('.msg.winner').hide();
          $('.gm-pr').removeClass('winner');
          $('.ngm-bk .gm-pr.r .pr-nm').html();
@@ -259,9 +268,8 @@ $(document).on('click', '#chatButton', function(e){
 
 // game new
 $(document).on('click', '.ngm-bk .ngm-go', function(e){
-    if ($(this).is(":not(:disabled)"))
+    if ($(this).has(":not(.button-disabled)"))
     {
-        $('.ngm-bk .ngm-go').hide().prev().show();
         appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price');
         var path='app/NewGame/'+appId;
         var data={'action':'start', 'mode': appMode};
