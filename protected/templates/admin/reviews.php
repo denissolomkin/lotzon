@@ -3,7 +3,7 @@
 
     <div class="row-fluid">
         <button onclick="document.location.href='/private/reviews?status=1&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-default btn-md <?=($status ? 'active' : '')?>">Одобренные</button></h2>
-        <button onclick="document.location.href='/private/reviews?status=0?sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-default btn-md <?=(!$status ? 'active' : '')?>">На рассмотрении</button>
+        <button onclick="document.location.href='/private/reviews?status=0&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-default btn-md <?=(!$status ? 'active' : '')?>">На рассмотрении</button>
         <h2>Отзывы
         <hr/>
     </div>
