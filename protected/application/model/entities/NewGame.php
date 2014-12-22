@@ -7,9 +7,9 @@ class NewGame extends Entity
 {
     const   STACK_PLAYERS = 2;
     const   GAME_PLAYERS = 2;
-    const   TIME_OUT = 5;
+    const   TIME_OUT = 20;
     const   FIELD_SIZE = 7;
-    const   GAME_MOVES = 2;
+    const   GAME_MOVES = 6;
 
     private $_id = 1;
     private $_gameTitle = '"Кто больше?"';
@@ -19,8 +19,8 @@ class NewGame extends Entity
     private $_identifier = '';
     private $_players = array();
     private $_client = '';
-    public $_isOver = 0;
-    public $_isSaved = 0;
+    public  $_isOver = 0;
+    public  $_isSaved = 0;
     private $_clients = array();
     private $_response = '';
     private $_callback = array();

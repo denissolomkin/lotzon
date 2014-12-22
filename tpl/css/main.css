@@ -388,6 +388,7 @@ article .infos {padding:40px 20px 0 20px;}
 .infos .i-rbk .reviews .rv-add-frm .rv-usr-avtr img{max-width: 50px; max-height:50px; float: right;}
 .infos .i-rbk .reviews .rv-add-frm .rv-upld-img {cursor:pointer}
 .infos .i-rbk .reviews .rv-add-frm .rv-image{padding: 20px 40px 20px 110px;width: 480px;}
+.infos .i-rbk .reviews .rv-add-frm .rv-image img{display:none;}
 .infos .i-rbk .reviews .rv-add-frm .rv-but-add {cursor:pointer;margin-left: 20px;padding: 10px;height: 28px;border: 1px solid #b2d0d4;text-align: center;font: 13px/14px Handbook-bold;color: #4f4f4f;text-transform: uppercase;width: 78px;}
 .infos .i-rbk .reviews .rv-add-frm .rv-sc {text-align: center;font: 15px/38px Handbook-bold;color: #4c4c4c;text-transform: uppercase;height: 50px;width: 550px;display: none;padding: 0 40px 40px 40px;}
 
@@ -493,7 +494,7 @@ article .infos {padding:40px 20px 0 20px;}
     background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,1) 100%); /* W3C */
 }
 
-.profile-notice .notices .n-item.read .n-i-txt, .profile-notice .notices .n-item.read .n-i-dt, .profile-notice .notices .n-item.read .n-i-ttl,.profile-notice .notices .n-item.read .n-i-txt p {color: #ccc !important;}
+.profile-notice .notices .n-item.read .n-i-txt, .profile-notice .notices .n-item.read .n-i-dt, .profile-notice .notices .n-item.read .n-i-ttl,.profile-notice .notices .n-item.read .n-i-txt p {opacity: 0.5;}
 
 .profile-notice .notices .n-items .n-ic-bk {display:none;}
 .profile-notice .notices .n-items .n-item {margin-bottom:30px;}
