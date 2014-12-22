@@ -382,7 +382,7 @@ article .infos {padding:40px 20px 0 20px;}
 .infos .i-rbk .reviews  {background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);overflow:hidden;}
 .infos .i-rbk .reviews .rv-add-frm  {background:#e1ecee;float: left;}
 .infos .i-rbk .reviews .rv-add-frm .rv-form {padding: 0 40px 40px 40px;width: 550px;}
-.infos .i-rbk .reviews .rv-add-frm .rv-form textarea {background:#e1ecee;resize: none; ;border-top: 1px solid #b2d0d4;border-bottom: 1px solid #b2d0d4;border-right: 0;border-left: 0;height: 50px;width: 320px;  font: 14px/17px Handbook-regular;color: #4f4f4f;padding: 0 5px;overflow: hidden;}
+.infos .i-rbk .reviews .rv-add-frm .rv-form .textarea {background:#e1ecee;resize: none; ;border-top: 1px solid #b2d0d4;border-bottom: 1px solid #b2d0d4;border-right: 0;border-left: 0;height: 48px;width: 310px;  font: 14px/17px Handbook-regular;color: #4f4f4f;padding: 0 5px;overflow: hidden;}
 .infos .i-rbk .reviews .rv-add-frm div {float: left;}
 .infos .i-rbk .reviews .rv-add-frm .rv-usr-avtr {width: 50px; height:50px;}
 .infos .i-rbk .reviews .rv-add-frm .rv-usr-avtr img{max-width: 50px; max-height:50px; float: right;}

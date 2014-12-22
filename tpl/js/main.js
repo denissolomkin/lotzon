@@ -446,7 +446,7 @@ $(function(){
 
     $(".reviews .rv-but-add").on('click', function() {
 
-        currentReview.text=$('.reviews .rv-txt textarea').val();
+        currentReview.text=$('.reviews .rv-txt .textarea').html();
         if(currentReview.text)
         $.ajax({
             url: "/review/save/",
@@ -457,7 +457,7 @@ $(function(){
             success: function(data) {
                 if (data.status == 1) {
 
-                    $('.reviews .rv-txt textarea').val('');
+                    $('.reviews .rv-txt .textarea').html('');
                     $('.reviews img.upload').hide();
 
                     $('.reviews .rv-form').hide();

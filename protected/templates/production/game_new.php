@@ -465,7 +465,7 @@
                                 <div class="rv-bg-add">
                                     <img src="/tpl/img/bg-add-review.png"></div>
                                 <div class="rv-txt">
-                                    <textarea></textarea>
+                                    <div class="textarea" contenteditable></div>
                                 </div>
                                 <div class="rv-upld-img">
                                     <img src="/tpl/img/but-upload-review.png">
