@@ -141,7 +141,7 @@
                     <li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li>
                     <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
                     <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Шансы</a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Игры</a></li>
                     <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
                 </ul>
                 <div class="tn-tr-bk">
@@ -353,7 +353,8 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe>
+                        <iframe src="//player.vimeo.com/video/113223374" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe> -->
                         <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
                     </section>
                     <section class="rules">
@@ -393,7 +394,7 @@
                     </section>
                 </div>
 
-                <div class="i-rbk">
+                <!--div class="i-rbk">
                     <section class="news">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">новости</div>
@@ -414,12 +415,12 @@
                             <div class="mr">ЧИТАТЬ ЕЩЕ</div>
                         </div>
                     </section>
-                </div>
+                </div-->
 
-                <div class="i-rbk" style="padding-top: 40px;">
+                <div class="i-rbk">
                     <section class="reviews">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">Отзывы</div>
+                            <div class="sbk-tl">Комментарии</div>
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
@@ -453,7 +454,7 @@
                             <div class="rv-image">
                                 <img class="upload">
                             </div>
-                            <div class="rv-sc">Ваш отзыв отправлен на премодерацию</div>
+                            <div class="rv-sc">Ваш комментарий отправлен на премодерацию</div>
                             <div class="rv-form">
                                 <div class="rv-usr-avtr">
                                     <? if ($player->getAvatar()) {?>
@@ -471,7 +472,7 @@
                                     <img src="/tpl/img/but-upload-review.png">
                                 </div>
                                 <div class="rv-but-add">
-                                    оставить<br>отзыв
+                                    оставить<br>комментарий
 
                                 </div>
                             </div>
