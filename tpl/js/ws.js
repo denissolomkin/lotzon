@@ -35,7 +35,7 @@ var conn;
                     WebSocketStatus('<b style="color:purple">receive',e.data)
                     data=$.parseJSON(e.data);
                     if(data.error)
-                        $("#report-popup").find(".txt").text(data.error).show().fadeIn(200);
+                        $("#report-popup").show().find(".txt").text(data.error).fadeIn(200);
                     else
                         window[data.path.replace('\\','')+'Callback'](data);
                 };
@@ -117,10 +117,12 @@ console.log(receiveData.res.action);
              $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves);
              $('.gm-pr.'+class_player+' .pr-pt b').html(value.points);
 
-             if(value.avatar){
-                 value.avatar = value.avatar.lenght > 0 ? value.avatar:"url('../tpl/img/bg-chanse-game-hz.png')";
+             if(value.avatar)
+                 value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
+                else
+                 value.avatar = "url('../tpl/img/bg-chanse-game-hz.png')";
+
                  $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
-             }
 
              if(value.pid!=playerId && value.name){
                  $('.gm-pr.r .pr-nm').html(value.name);

@@ -302,7 +302,7 @@ class NewGame extends Entity
         {
             $winner=array();
             foreach ($this->getPlayers() as $player){
-                if($winner[$player['points']]['count'])
+                if(array_key_exists($player['points'],$winner))
                     $winner[$player['points']]['count']+=1;
                 else
                     $winner[$player['points']]['count']=1;
