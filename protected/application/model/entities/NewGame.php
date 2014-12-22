@@ -302,7 +302,10 @@ class NewGame extends Entity
         {
             $winner=array();
             foreach ($this->getPlayers() as $player){
-                $winner[$player['points']]['count']+=1;
+                if($winner[$player['points']]['count'])
+                    $winner[$player['points']]['count']+=1;
+                else
+                    $winner[$player['points']]['count']=1;
                 $winner[$player['points']]['player']=$player;
             }
 
@@ -336,7 +339,7 @@ class NewGame extends Entity
             foreach ($data as $key => $value)
             {
                 if(!is_numeric($key)){
-                    if($this->_players[$player['pid']][$key])
+                    if(array_key_exists($key,$this->_players[$player['pid']]))
                         $this->_players[$player['pid']][$key]+=$value;
                     else
                         $this->_players[$player['pid']][$key]=$value;

@@ -72,7 +72,7 @@ class WebSocketController implements MessageComponentInterface {
         $data=$data->data;
         $this->_class = $class = '\\'.$name;
         $action=$data->action.'Action';
-        $mode=($data->mode?$data->mode:$this->_mode);
+        $mode=(isset($data->mode)?$data->mode:$this->_mode);
         $player=$from->Session->get(Player::IDENTITY);
 
         switch ($type) {
@@ -215,18 +215,28 @@ class WebSocketController implements MessageComponentInterface {
             default:
                 if($data->message=='stop')
                     die;
-
-                foreach ($this->_clients as $client) {
-                    $client->send(json_encode(
+                elseif($data->message=='count') {
+                    $from->send(json_encode(
                         array(
-                            'path'=>'appchat',
-                            'res'=>array(
-                                'uid'=>$player->getId(),
-                                'user'=>$player->getNicName(),
-                                'message'=>$data->message)
+                            'path' => 'appchat',
+                            'res' => array(
+                                'user' => 'system',
+                                'message' => 'Игроков онлайн - ' . count($this->_clients))
                         )
                     ));
                 }
+                else
+                    foreach ($this->_clients as $client) {
+                        $client->send(json_encode(
+                            array(
+                                'path'=>'appchat',
+                                'res'=>array(
+                                    'uid'=>$player->getId(),
+                                    'user'=>$player->getNicName(),
+                                    'message'=>$data->message)
+                            )
+                        ));
+                    }
                 break;
         }
         /* */
