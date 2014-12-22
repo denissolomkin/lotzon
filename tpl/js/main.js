@@ -528,7 +528,7 @@ $(function(){
                     html += '<div class="rv-item"><div class="rv-i-avtr">';
 
                     if(review.playerAvatar)
-                        html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'>';
+                        html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'">';
                     else
                         html += '<img src="/tpl/img/default.jpg">';
 
