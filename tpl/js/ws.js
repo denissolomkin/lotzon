@@ -1,5 +1,5 @@
 var url = 'ws://192.168.1.253:8080';
-var url = 'ws://testbed.lotzon.com:8080';
+//var url = 'ws://testbed.lotzon.com:8080';
 //var server = './ws/run';
 var conn;
 
@@ -33,7 +33,7 @@ var conn;
                     WebSocketStatus('<b style="color:purple">receive',e.data)
                     data=$.parseJSON(e.data);
                     if(data.error)
-                        $("#report-popup").show().find(".txt").text(data.error).fadeIn(200);
+                        $("#report-popup").show().find(".txt").text((errors[data.error]?errors[data.error]:'data.error')).fadeIn(200);
                     else
                         window[data.path.replace('\\','')+'Callback'](data);
                 };
@@ -57,11 +57,11 @@ function updateCallback(receiveData)
         updatePoints(receiveData.res.points);
     if(receiveData.res.money)
         updateMoney(receiveData.res.money);
-    if(receiveData.res.online){
+    if(receiveData.res.top){
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+receiveData.res.count+'<b> • </b>'+
-        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win)/parseInt(receiveData.res.count))*100):"0")+' %');
+        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))):"0")+'');
 
 
         html='';
@@ -74,7 +74,7 @@ function updateCallback(receiveData)
             html+=')"></div>' +
             '<div class="prs-ifo">' +
             '<div class="nm">'+value.Nicname+(value.Online?' <b>•</b>':'')+'</div>' +
-            '<div class="ifo">'+value.Count+' • '+Math.ceil((parseInt(value.Win)/parseInt(value.Count))*100)+' %</div>   ' +
+            '<div class="ifo">'+value.Count+' • '+Math.ceil((parseInt(value.Win)))+'</div>   ' +
             '</div></li>';
 
         });
@@ -105,7 +105,6 @@ function appchatCallback(receiveData)
 // game
 function appNewGameCallback(receiveData)
 {
-console.log(receiveData.res.action);
      switch (receiveData.res.action) {
 
 
@@ -115,13 +114,16 @@ console.log(receiveData.res.action);
          break;
 
      case 'stack':
-         $('.ngm-bk .ngm-go').hide().prev().show();
+         //$('.ngm-bk .ngm-go').hide().prev().show();
          break;
 
      case 'start':
          // document.location.href = '.ngm-bk';
 //         $('.ngm-bk').focus();
-         $('.msg.winner').hide();
+
+         $('.ngm-bk .rls-r-ts').hide();
+         $('.ngm-bk .rls-r-t').show();
+         $('.ngm-bk .msg').hide();
          $('.gm-pr').removeClass('winner');
          $('.ngm-bk .gm-pr.r .pr-nm').html();
          $('.ngm-bk .pr-cl b').html();
@@ -155,11 +157,13 @@ console.log(receiveData.res.action);
 
          if(receiveData.res.current!=playerId)
          {
+             $('.ngm-bk .ngm-gm .tm').css('text-align','right');
              $('.gm-pr.r').addClass('move');
              $('.gm-pr.l').removeClass('move');
          }
          else
          {
+             $('.ngm-bk .ngm-gm .tm').css('text-align','left');
              $('.gm-pr.l').addClass('move');
              $('.gm-pr.r').removeClass('move');
          }
@@ -204,6 +208,14 @@ console.log(receiveData.res.action);
 
              }
 
+             if(receiveData.res.extra) {
+                 var equal = $('.ngm-bk .msg.equal');
+                 equal.fadeIn(200);
+                 window.setTimeout(function(){
+                     equal.fadeOu(200);
+                 }, 400);
+             }
+
              if(receiveData.res.current)
                  if(receiveData.res.current!=playerId)
                  {
@@ -238,6 +250,7 @@ console.log(receiveData.res.action);
 
              if(receiveData.res.winner){
                  $('.ngm-bk .tm').countdown('pause');
+                 $('.ngm-bk .msg').hide();
 
                  $('.gm-pr').removeClass('move');
                  $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
@@ -273,6 +286,7 @@ console.log(receiveData.res.action);
              $("#report-popup").show().fadeIn(200);
              if(receiveData.res.appId==0) {
                  appId = receiveData.res.appId;
+                 $('.ngm-bk .prc-but-cover').hide();
                  $('.ngm-rls').fadeIn(200);
              }
              break;
@@ -294,30 +308,47 @@ $(document).on('click', '#chatButton', function(e){
 
 // game new
 $(document).on('click', '.ngm-bk .ngm-go', function(e){
-    if ($(this).has(":not(.button-disabled)"))
-    {
-        appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price');
+
+    appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price');
+    price=appMode.split('-');
+
+    if((price[0]=='POINT' && playerPoints < parseInt(price[1])) || (price[0]=='MONEY' && playerMoney < price[1].toFixed(2))) {
+
+        $("#report-popup").show().find(".txt").text(errors['INSUFFICIENT_FUNDS']).fadeIn(200);
+
+    } else {
+
+        $('.ngm-bk .rls-r-ts').show();
+        $('.ngm-bk .rls-r-t').hide();
+        $('.ngm-bk .prc-but-cover').show();
         var path='app/NewGame/'+appId;
         var data={'action':'start', 'mode': appMode};
         WebSocketAjaxClient(path,data);
+
     }
 });
 
 // выход
 $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .exit', function(e){
+    //$('.ngm-bk .ngm-go').show();//.prev().hide();
+    $('.ngm-bk .rls-r-ts').hide();
+    $('.ngm-bk .rls-r-t').show();
+    $('.ngm-bk .prc-but-cover').hide();
     $('.ngm-rls').fadeIn(200);
-    $('.ngm-bk .ngm-go').show().prev().hide();// removeClass('button-disabled').attr('disabled',false);
 
     var path='app/NewGame/'+appId;
     var data={'action':'quit'};
     WebSocketAjaxClient(path,data);
     appId=0;
-    WebSocketAjaxClient('update');
+    WebSocketAjaxClient('update/NewGame');
 });
 
 // отмена
-$(document).on('click', '.ngm-bk .bk-bt-rl, .ngm-bk .bk-bt, .ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .ngm-cncl', function(e){
-    $('.ngm-bk .ngm-go').show().prev().hide();
+$(document).on('click', '.ngm-bk .bk-bt-rl, .ngm-bk .bk-bt, .ngm-bk .ngm-rls-bk .rls-r .ngm-cncl', function(e){
+    //$('.ngm-bk .ngm-go').show();//.prev().hide();
+    $('.ngm-bk .rls-r-ts').hide();
+    $('.ngm-bk .rls-r-t').show();
+    $('.ngm-bk .prc-but-cover').hide();
     appId=0;
     var path='app/NewGame/'+appId;
     var data={'action':'quit'};
@@ -344,8 +375,10 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl
 // switch rules block
 $(document).on('click', '.ngm-bk .bk-bt-rl', function(e){
     $('.ngm-bk .prc-l').hide();
+    $('.ngm-bk .rls-r-ts').hide();
+    $('.ngm-bk .rls-r-t').show();
     $('.ngm-bk .rls-l').fadeIn(200);
-    WebSocketAjaxClient('update');
+    WebSocketAjaxClient('update/NewGame');
 });
 
 
@@ -361,14 +394,26 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $('.ngm-bk .prc-l').fadeIn(200);
 });
 
-
 // сдаться
 $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
-    var path='app/NewGame/'+appId;
-    var data={'action':'pass'};
-    WebSocketAjaxClient(path,data);
-});
+    surr=$(this);
+    msg = $('.ngm-bk .ngm-gm .gm-mx .msg.ca');
+    surr.fadeOut(200)
+    msg.fadeIn(200);
 
+    $('.ngm-bk .ngm-gm .gm-mx .msg.ca .bt-bk .l').off('click').on('click', function(e){
+        var path='app/NewGame/'+appId;
+        var data={'action':'pass'};
+        WebSocketAjaxClient(path,data);
+        msg.fadeOut(200);
+    });
+
+    $('.ngm-bk .ngm-gm .gm-mx .msg.ca .bt-bk .r').off('click').on('click', function(e){
+        msg.fadeOut(200);
+        surr.fadeIn(200)
+    });
+
+});
 
 // повторить
 $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .re', function(e){
@@ -402,13 +447,18 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot', function(e)
 $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
 
     if(parseInt($('.gm-pr.l .pr-cl b').html())<=0){
-    //    $("#report-popup").find(".txt").text('ENOUGH_MOVES');
+    //    $("#report-popup").find(".txt").text(errors['ENOUGH_MOVES']);
     //    $("#report-popup").show().fadeIn(200);
     }
     else if(!($('.gm-pr.l').hasClass('move')))
     {
-    //    $("#report-popup").find(".txt").text('NOT_YOUR_MOVE');
+    //    $("#report-popup").find(".txt").text(errors['NOT_YOUR_MOVE']);
     //    $("#report-popup").show().fadeIn(200);
+    }
+    else if($(this).hasClass('m') || $(this).hasClass('o'))
+    {
+        //    $("#report-popup").find(".txt").text(errors['CELL_IS_PLAYED']);
+        //    $("#report-popup").show().fadeIn(200);
     }
     else{
         var path='app/NewGame/'+appId;
@@ -417,8 +467,34 @@ $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
     }
 });
 
+<!-- NEW GAMES PREVIEW -->
+$('.ch-gm-tbl .ngm-bt').click(function(){
+    hideAllGames();
+    WebSocketAjaxClient('update/NewGame');
+    $('.ch-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ngm-bk').fadeIn(200);
+    }, 200);
+});
+
+<!-- NEW GAME BACK -->
+$('.ngm-bk .bk-bt').on('click', function() {
+    $('.ngm-bk').fadeOut(200);
+    window.setTimeout(function(){
+        $('.ch-bk').fadeIn(200);
+    }, 200);
+});
+
 function NewGameTimeOut(){
     var path='app/NewGame/'+appId;
     var data={'action':'timeout'}
     WebSocketAjaxClient(path,data);
 }
+
+errors = {
+    'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
+    'NOT_YOUR_MOVE' : 'Сейчас не Ваша очередь ходить',
+    'APPLICATION_DOESNT_EXISTS' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
+    'CELL_IS_PLAYED' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
+    'ENOUGH_MOVES' : 'У Вас закончились ходы'
+};

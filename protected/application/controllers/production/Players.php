@@ -354,12 +354,12 @@ class Players extends \AjaxController
             $this->session->get(Player::IDENTITY)->markOnline();
             // check for moment chance
             // if not already played chance game
-            if ($this->session->get('chanceGame')['moment']) {
-                if ($this->session->get('chanceGame')['moment']['start'] + 180 < time()) {
+            if ($_SESSION['chanceGame']['moment']) {
+                if ($_SESSION['chanceGame']['moment']['start'] + 180 < time()) {
                     unset($_SESSION['chanceGame']['moment']);
                 }
             }
-            if ($this->session->get('MomentChanseLastDate') && !$this->session->get('chanceGame')) {
+            if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
                 if ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() &&
@@ -367,13 +367,15 @@ class Players extends \AjaxController
                     if (($rnd = mt_rand(0, 100)) <= 30) {
                         $resp['moment'] = 1;
                     } else if ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 60) {
-                        // if not fired randomly  - fire at last minut
+                        // if not fired randomly  - fire at last minute
                         $resp['moment'] = 1;
                     }
                 }
+
+                $resp['moment']=1;
                 if (isset($resp['moment']) && $resp['moment']) {
                     $gameField = $chanceGames['moment']->generateGame();
-                    $this->session->set('chanceGame', array(
+                    $_SESSION['chanceGame']=array(
                         'moment' => array(
                             'id'     => 'moment',
                             'start'  => time(),
@@ -381,7 +383,7 @@ class Players extends \AjaxController
                             'clicks' => array(),
                             'status' => 'process',
                         ),
-                    ));
+                    );
                     $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
             }

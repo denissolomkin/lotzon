@@ -18,7 +18,7 @@ $server = IoServer::factory(
     new HttpServer(
         new WsServer(
             new SessionProvider(
-                new WebSocketController,
+                new WebSocketController('shutDown'),
                 new MemcacheSessionHandler($memcache)
             )
         )
@@ -26,3 +26,8 @@ $server = IoServer::factory(
     ,8080
 );
 $server->run();
+
+function shutDown() {
+    echo '1';
+    $server->loop->stop();
+}

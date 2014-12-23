@@ -5,8 +5,8 @@ Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 
 class NewGame extends Entity
 {
-    const   STACK_PLAYERS = 2;
-    const   GAME_PLAYERS = 2;
+    const   STACK_PLAYERS = 1;
+    const   GAME_PLAYERS = 1;
     const   TIME_OUT = 20;
     const   FIELD_SIZE = 7;
     const   GAME_MOVES = 6;
@@ -171,7 +171,7 @@ class NewGame extends Entity
                 ->setResponse($this->getClient());
 
         elseif(!array_key_exists('action',$this->getCallback()))
-            $this->setCallback(array('action' => 'move'));
+        $this->setCallback(array('action' => 'move'));
         echo "Конец хода \n";
     }
 
@@ -318,9 +318,11 @@ class NewGame extends Entity
             // $this->_isSaved=0;
             echo "Победитель #".current($winner)['player']['pid']."\n";
             return current($winner)['player'];
+        } else {
+            $this->setCallback(array('extra' => 1));
+            $this->updatePlayer(array('moves' => 1));
         }
-        else
-            $this->updatePlayer(array('moves'=>1));
+
         }
         echo "Победителя нет \n";
 

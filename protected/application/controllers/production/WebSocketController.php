@@ -21,13 +21,15 @@ class WebSocketController implements MessageComponentInterface {
     private $_players;
     private $_class;
     private $_games=array(
-        1 => 'NewGame'
+        'NewGame' => 1
     );
     private $_mode='POINT-0';
+    protected $_shutdown;
 
-    public function __construct() {
+    public function __construct($shutdown) {
         echo "Server have started\n";
         $this->_clients = array();  // Create a collection of client
+        $this->_shutdown = $shutdown;
     }
 
     public function onOpen(ConnectionInterface $conn)
@@ -122,7 +124,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                 if($funds[($currency=='MONEY'?'Money':'Points')] < $price) {
                                     echo "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                                    $from->send(json_encode(array('error'=>'Недостаточно средств для игры')));
+                                    $from->send(json_encode(array('error'=>'INSUFFICIENT_FUNDS')));
 
                                 } else {
 
@@ -179,7 +181,7 @@ class WebSocketController implements MessageComponentInterface {
                             echo "id есть, но приложения $name нет, сообщаем об ошибке, удаляем из активных игроков \n";
                             $this->sendCallback($from, array(
                                 'action'=>'error',
-                                'error'=>'Приложение не найдено',
+                                'error'=>'APPLICATION_DOESNT_EXISTS',
                                 'appId'=>0));
                             unset($this->_players[$from->Session->get(Player::IDENTITY)->getId]);
                          }
@@ -217,16 +219,16 @@ class WebSocketController implements MessageComponentInterface {
 
             case 'update':
                 $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
-                        (SELECT count(Id) FROM `PlayerGames` WHERE `GameId` = 1) `All`
+                        (SELECT count(Id) FROM `PlayerGames` WHERE `GameId` = :gameid) `All`
                                         FROM `Players`
                                         LEFT JOIN `PlayerGames`
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = 1
+                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid
                                         LIMIT 1";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
-                    $sth->execute(array(':id' => $from->resourceId));
+                    $sth->execute(array(':id' => $from->resourceId, ':gameid' => $this->_games[$name]));
                 } catch (PDOException $e) {
                     throw new ModelException("Error processing storage query", 500);
                 }
@@ -242,14 +244,14 @@ class WebSocketController implements MessageComponentInterface {
                         FROM `Players`
                         LEFT JOIN `PlayerGames`
                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                        WHERE `PlayerGames`.`GameId` = 1
+                        WHERE `PlayerGames`.`GameId` = :gameid
                         GROUP BY `Players`.`Id`
                         ORDER BY (`Win`/count(`PlayerGames`.`Id`)) DESC
                         LIMIT 10";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
-                    $sth->execute(array(':id' => $from->resourceId));
+                    $sth->execute(array(':gameid' => $this->_games[$name]));
                 } catch (PDOException $e) {
                     throw new ModelException("Error processing storage query", 500);
                 }
@@ -264,7 +266,7 @@ class WebSocketController implements MessageComponentInterface {
                         'path'=> 'update',
                         'res' => array(
                                 'all'     => $stat['All'],
-                                'online'    => count($this->_clients),
+                                'online'    => count($this->_stack[$this->_games[$data->gameId]]),
                                 'count'     => $stat['Count'],
                                 'win'    => $stat['Win'],
                                 'top' => $top
@@ -272,8 +274,11 @@ class WebSocketController implements MessageComponentInterface {
                 break;
 
             default:
-                if($data->message=='stop')
-                    die;
+                if($data->message=='stop'){
+                    call_user_func($this->_shutdown);
+                    //die;
+                }
+
                 elseif($data->message=='online') {
                     $from->send(json_encode(
                         array(
@@ -415,15 +420,15 @@ class WebSocketController implements MessageComponentInterface {
             if($app->getPrice() AND $player['result']!=0) {
                 $sql_transactions_players[]='(?,?,?,?,?)';
 
+                $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 array_push($transactions,
                     $player['pid'],
                     $app->getCurrency(),
                     $app->getPrice()*$player['result'],
-                    'Игра '.$app->getTitle().' №'.$app->getIdentifier(),
+                    'Игра '.$app->getTitle().' №'.$app->getIdentifier()."<br>(баланс до операции ".$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints().")",
                     time()
                 );
 
-                $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 $sql="UPDATE Players SET ".$currency." = ".$currency.($player['result'] < 0 ? '' : '+').
                     ($player['result']*$app->getPrice())." WHERE Id=".$player['pid'];
                 echo time()." ".$sql."\n";

@@ -928,7 +928,7 @@
                             <div class="prc-txt-bk">
                                 <div class="all">Выберита тип и размер ставки или играйте бесплатно</div>
                             </div>
-
+                            <div class="prc-but-cover"></div>
                             <div class="prc-but-bk">
 
                                 <div class="prc-bt">баллы</div>
@@ -957,7 +957,7 @@
                                 <div class="prc-bt">бесплатно</div>
                                 <div class="prc-sel"><div data-price='POINT-0'>бесплатно</div></div>
 
-                                <div class="ngm-cncl">отмена</div>
+                                <!--div class="ngm-cncl">отмена</div-->
                                 <div class="ngm-go">играть</div>
                             </div>
                         </div>
@@ -998,10 +998,14 @@
 
 
                     <div class="rls-r">
-                        <div class="rls-r-t">ВЫ<b>:</b> 40 <b>•</b> 50 % = 4 000</div>
+
+                        <div class="rls-r-t">ВЫ<b>:</b> 40 <b>•</b> 50</div>
+                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b>Поиск</b></div><div class="ngm-cncl">отмена</div></div>
+
+
                         <div class="rls-r-ws">
                             <b>победители</b>
-                            <span>сыграно игр <i>•</i> % побед</span>
+                            <span>сыграно игр <i>•</i> побед</span>
                         </div>
                         <ul class="rls-r-prs">
                             <li>
@@ -1116,7 +1120,7 @@
                     <div class="msg equal">
                         <div class="tbl">
                             <div class="td">
-                                <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut luctus, dui condimentum rutrum condimentum, ipsum neque rutrum lectus, ac aliquet ipsum est tempus massa.</div>
+                                <div class="txt">Набрано одинаковое кол-во очков, решающий ход.</div>
                             </div>
                         </div>
                     </div>
@@ -1125,7 +1129,7 @@
                     <div class="msg ca">
                         <div class="tbl">
                             <div class="td">
-                                <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut luctus, dui condimentum rutrum condimentum, ipsum neque rutrum lectus, ac aliquet ipsum est tempus massa.</div>
+                                <div class="txt">Вы уверены, что хотите сдаться?<br>Вам будет засчитано поражение.</div>
                                 <div class="bt-bk">
                                     <div class="l">ДА</div>
                                     <div class="r">НЕТ</div>

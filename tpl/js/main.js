@@ -1480,51 +1480,16 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
-<!-- NEW GAMES PREVIEW -->
-$('.ch-gm-tbl .ngm-bt').click(function(){
-    var gi = $(this).data('game');
-    $('.msg-tb.won').hide();
-    $('.msg-tb.los').hide();
-    // hide all games;
-    $('.game-bk .gm-tb').hide();
-    $('.game-bk .rw-b .tb').hide();
-    $('.game-bk .play').hide();
-    $('.game-bk li').removeClass('won').removeClass('los');
-    $('.game-bk li').removeClass('true').removeClass('blink');
-    // show current game
-    WebSocketAjaxClient('update');
 
-    $('.ch-bk').fadeOut(200);
-    window.setTimeout(function(){
-        $('.ngm-bk').fadeIn(200);
-    }, 200);
-
-});
-
-<!-- NEW GAME BACK -->
-$('.ngm-bk .bk-bt').on('click', function() {
-    $('.ngm-bk').fadeOut(200);
-    window.setTimeout(function(){
-        $('.ch-bk').fadeIn(200);
-    }, 200);
-});
 $('#mchance').find('.cs').on('click', function() {
     location.reload();
 });
 
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
-    var gi = $(this).data('game');
-    $('.msg-tb.won').hide();
-    $('.msg-tb.los').hide();
-    // hide all games;
-    $('.game-bk .gm-tb').hide();
-    $('.game-bk .rw-b .tb').hide();
+    hideAllGames();
     $('.game-bk .play').show();
-    $('.game-bk li').removeClass('won').removeClass('los');
-    $('.game-bk li').removeClass('true').removeClass('blink');
-    // show current game
-    
+    var gi = $(this).data('game');
     $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
 
@@ -1635,6 +1600,7 @@ $('.game-bk .bk-bt').on('click', function() {
         $('.ch-bk').fadeIn(200);
     }, 200); 
 });
+
 $('#mchance').find('.cs').on('click', function() {
     location.reload();
 });
@@ -1741,7 +1707,6 @@ function updateNotices(notices) {
     }
 }
 
-
 function updatePoints(points) {
     playerPoints = points;
     points=points.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -1753,6 +1718,16 @@ function updateMoney(money) {
     playerMoney = parseFloat(money).toFixed(2);
     money=parseFloat(money).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money.replace('.00',''));
+}
+
+function hideAllGames() {
+    $('.msg-tb.won').hide();
+    $('.msg-tb.los').hide();
+    $('.game-bk .gm-tb').hide();
+    $('.game-bk .rw-b .tb').hide();
+    $('.game-bk .play').hide();
+    $('.game-bk li').removeClass('won').removeClass('los');
+    $('.game-bk li').removeClass('true').removeClass('blink');
 }
 
 String.prototype.replaceArray = function(find, replace) {
