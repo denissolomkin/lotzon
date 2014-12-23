@@ -12,7 +12,8 @@ class WebSocketServer
 {
     public function runAction()
     {
-//        file_get_contents('http://localhost/bin/server.php');
+        // file_get_contents('/../../../../bin/server.php');
+        die;
         require_once dirname(__DIR__) . '/../../../vendor/autoload.php';
         require_once dirname(__DIR__) . '/../../../pathes.php';
 // load application class
