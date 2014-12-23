@@ -32,16 +32,16 @@ class Players extends \AjaxController
             }
             $player = new Player();
             $player->setEmail($email);
-            
+
             try {
                 $geoReader =  new Reader(PATH_MMDB_FILE);
-                $country = $geoReader->country(Common::getUserIp())->country;    
+                $country = $geoReader->country(Common::getUserIp())->country;
                 $player->setCountry($country->isoCode);
 
             } catch (\Exception $e) {
                 $player->setCountry(Config::instance()->defaultLang);
             }
-            
+
             $player->setVisibility(true);
             $player->setIP(Common::getUserIp());
             $player->setHash(md5(uniqid()));
@@ -50,8 +50,8 @@ class Players extends \AjaxController
             if ($ref = $this->request()->post('ref', null)) {
                 $player->setReferalId((int)$ref);
             }
-            
-            try {   
+
+            try {
                 $player->create();
             } catch (EntityException $e) {
                 $this->ajaxResponse(array(), 0, $e->getMessage());
@@ -61,7 +61,7 @@ class Players extends \AjaxController
             try {
                 $invite = EmailInvites::instance()->getInvite($player->getEmail());
             } catch (ModelException $e) {}
-            
+
             if ($invite && $invite->getValid()) {
 
                 // mark referal unpaid for preverse of double points
@@ -74,7 +74,7 @@ class Players extends \AjaxController
                 // add bonuses to inviter and delete invite
                 try {
                     $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $player->getEmail());
-                    $invite->delete();    
+                    $invite->delete();
                 } catch (EntityException $e) {}
             }
 
@@ -105,7 +105,7 @@ class Players extends \AjaxController
             $player = new Player();
             $player->setEmail($email);
 
-            try {   
+            try {
                 $player->login($password)->markOnline();
 
                 if ($rememberMe) {
@@ -144,8 +144,8 @@ class Players extends \AjaxController
                     Config::instance()->vkCredentials['appId'],
                     Config::instance()->vkCredentials['secret'],
                     $vkAuthCode,
-                    urlencode(Config::instance()->vkCredentials['redirectUrl']),     
-                ));                
+                    urlencode(Config::instance()->vkCredentials['redirectUrl']),
+                ));
                 $data = @file_get_contents($token_url);
                 if ($data = @json_decode($data)) {
                     if ($data->email) {
@@ -160,7 +160,7 @@ class Players extends \AjaxController
                             if ($e->getCode() == 404) {
                                 $infoUrl = vsprintf("https://api.vk.com/method/users.get?user_id=%s&v=5.26&access_token=%s&fields=country,photo_200,interests,music,movies,tv,books,games", array(
                                     $data->user_id,
-                                    $data->access_token,                                    
+                                    $data->access_token,
                                 ));
 
                                 $profile = @file_get_contents($infoUrl);
@@ -209,7 +209,7 @@ class Players extends \AjaxController
                                                 $image = WideImage::load($profile['photo_200']);
                                                 $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
                                                 $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-                                            
+
                                                 $imageName = uniqid() . ".jpg";
                                                 $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
 
@@ -220,7 +220,7 @@ class Players extends \AjaxController
                                                 // remove old one
                                                 $player->setAvatar($imageName)->saveAvatar();
 
-                                                $this->ajaxResponse($data);    
+                                                $this->ajaxResponse($data);
                                             } catch (\Exception $e) {
                                                 // do nothing
                                             }
@@ -228,7 +228,7 @@ class Players extends \AjaxController
                                     } catch (EntityException $e) {
                                         // do nothing
                                     }
-                                    
+
                                 }
                             }
                         }
@@ -239,7 +239,7 @@ class Players extends \AjaxController
                     }
                 }
             }
-            
+
             $this->redirect('/');
         }
     }
@@ -247,12 +247,13 @@ class Players extends \AjaxController
     public function logoutAction()
     {
         //$session=new Session();
-        $this->session->get(Player::IDENTITY)->disableAutologin();
+        if($this->session->get(Player::IDENTITY))
+            $this->session->get(Player::IDENTITY)->disableAutologin();
         // $this->session->get(Player::IDENTITY)->disableAutologin();
         // $this->session->close();
         session_destroy();
 
-        $this->redirect('/');   
+        $this->redirect('/');
     }
 
     public function updateAction()
@@ -288,14 +289,14 @@ class Players extends \AjaxController
 
                 $this->session->set(Player::IDENTITY, $player);
             } catch (EntityException $e){
-                $this->ajaxResponse(array(), 0, $e->getMessage());                   
+                $this->ajaxResponse(array(), 0, $e->getMessage());
             }
             if ($pwd = $this->request()->post('password')) {
                 $this->session->get(Player::IDENTITY)->changePassword($pwd);
             }
             $this->ajaxResponse(array());
         }
-        $this->redirect('/');   
+        $this->redirect('/');
     }
 
     public function saveAvatarAction()
@@ -309,7 +310,7 @@ class Players extends \AjaxController
             $image = WideImage::loadFromUpload('image');
             $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
             $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-        
+
             $imageName = uniqid() . ".jpg";
             $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/';
 
@@ -329,7 +330,7 @@ class Players extends \AjaxController
 
             $this->session->get(Player::IDENTITY)->setAvatar($imageName)->saveAvatar();
 
-            $this->ajaxResponse($data);    
+            $this->ajaxResponse($data);
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }
@@ -347,12 +348,12 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
-        
+
         $resp = array();
         if ($this->session->get(Player::IDENTITY)) {
             $this->session->get(Player::IDENTITY)->markOnline();
             // check for moment chance
-            // if not already played chance game           
+            // if not already played chance game
             if ($this->session->get('chanceGame')['moment']) {
                 if ($this->session->get('chanceGame')['moment']['start'] + 180 < time()) {
                     unset($_SESSION['chanceGame']['moment']);
@@ -377,16 +378,16 @@ class Players extends \AjaxController
                             'id'     => 'moment',
                             'start'  => time(),
                             'field'  => $gameField,
-                            'clicks' => array(), 
+                            'clicks' => array(),
                             'status' => 'process',
                         ),
                     ));
                     $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
             }
-        }   
+        }
 
-        $this->ajaxResponse($resp);   
+        $this->ajaxResponse($resp);
     }
 
     public function resendPasswordAction()
@@ -394,10 +395,10 @@ class Players extends \AjaxController
         $email = $this->request()->post('email');
         $player = new Player();
         $player->setEmail($email);
-        
+
         try {
             $player->fetch();
-            
+
             $newPassword = $player->generatePassword();
             $player->changePassword($newPassword);
         } catch (EntityException $e) {
@@ -411,17 +412,17 @@ class Players extends \AjaxController
         $this->ajaxResponse(array());
     }
 
-    public function socialAction() 
+    public function socialAction()
     {
         if ($this->session->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
             $this->session->get(Player::IDENTITY)->decrementSocialPostsCount();
             $this->session->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
             $this->ajaxResponse(array(
                 'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount(),
-            ));    
+            ));
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
         }
-        
+
     }
 }

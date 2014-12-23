@@ -1,6 +1,6 @@
 var url = 'ws://192.168.1.253:8080';
 var url = 'ws://testbed.lotzon.com:8080';
-var server = './ws/run';
+//var server = './ws/run';
 var conn;
 
         function WebSocketAjaxClient(path, data, stop) {
@@ -15,9 +15,7 @@ var conn;
                     console.info('Socket open');
                     WebSocketStatus('<b style="color:green">socket', 'open')
                 };
-            }
-            else
-            {
+            } else {
                 WebSocketStatus('<b style="color:blue">send',path+(data?JSON.stringify(data):''))
                 conn.send(JSON.stringify({'path': path, 'data': data}));
             }
@@ -26,7 +24,7 @@ var conn;
                     WebSocketStatus('<b style="color:red">error', JSON.stringify(e))
                     console.error('There was an un-identified Web Socket error');
                     if(stop!==true) {
-                        $.ajax({url: server});
+                        // $.ajax({url: server});
                         WebSocketAjaxClient(path, data, true);
                     }
                 };
@@ -62,7 +60,8 @@ function updateCallback(receiveData)
     if(receiveData.res.online){
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
-        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+receiveData.res.count+'<b> • </b>'+(receiveData.res.count?Math.ceil((parseInt(receiveData.res.win)/parseInt(receiveData.res.count))*100):"0")+' %');
+        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+receiveData.res.count+'<b> • </b>'+
+        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win)/parseInt(receiveData.res.count))*100):"0")+' %');
 
 
         html='';

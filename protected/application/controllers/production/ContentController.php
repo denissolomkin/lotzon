@@ -112,7 +112,7 @@ class ContentController extends \AjaxController
     {
         $offset = (int)$this->request()->get('offset');
 
-        $reviews = ReviewsModel::instance()->getList(1, Index::NEWS_PER_PAGE, $offset);
+        $reviews = ReviewsModel::instance()->getList(1, Index::REVIEWS_PER_PAGE, $offset);
         $responseData = array(
             'reviews'           => array(),
             'keepButtonShow' => false,
@@ -129,7 +129,7 @@ class ContentController extends \AjaxController
                 'text'  => $reviewItem->getText(),
             );
         }
-        if (count($reviews) >= Index::NEWS_PER_PAGE) {
+        if (count($reviews) >= Index::REVIEWS_PER_PAGE) {
             $responseData['keepButtonShow'] = true;
         }
 
