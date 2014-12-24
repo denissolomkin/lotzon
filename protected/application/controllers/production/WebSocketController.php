@@ -91,7 +91,7 @@ class WebSocketController implements MessageComponentInterface {
                             echo "id приложения нет \n";
                             // записались
 
-                            if ($action == 'cancelAction') {
+                            if ($action == 'cancelAction' || $action == 'quitAction') {
 
                                 if(isset($this->_players[$from->resourceId]['appMode'])){
                                     echo "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
@@ -101,7 +101,7 @@ class WebSocketController implements MessageComponentInterface {
                                         $this->_players[$from->resourceId]['appMode']);
                                 }
 
-                            } else {
+                            } elseif($action == 'startAction') {
 
                                 list($currency, $price) = explode("-", $mode);
 
@@ -201,7 +201,7 @@ class WebSocketController implements MessageComponentInterface {
                             // если приложение завершилось, записываем данные и выгружаем из памяти
                             if(!$app->isSaved() && $app->isOver()){
                                 $this->saveGame($app);
-                                echo "Игроков:".(count($app->getPlayers()));
+                                echo "Игроков:".(count($app->getClients()));
                                 if( count($app->getClients()) < $class::GAME_PLAYERS)
                                     unset($this->_apps[$name][$id]);
                             }
