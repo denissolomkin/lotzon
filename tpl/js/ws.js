@@ -213,7 +213,7 @@ function appNewGameCallback(receiveData)
                  equal.fadeIn(200);
                  window.setTimeout(function(){
                      equal.fadeOut(100);
-                 }, 300);
+                 }, 800);
              }
 
              if(receiveData.res.current)
