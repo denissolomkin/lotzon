@@ -1,5 +1,5 @@
 var url = 'ws://192.168.1.253:8080';
-//var url = 'ws://testbed.lotzon.com:8080';
+var url = 'ws://testbed.lotzon.com:8080';
 //var server = './ws/run';
 var conn;
 
