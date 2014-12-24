@@ -608,7 +608,7 @@
 
                         <!-- add class "registration" or "login" -->
                         <div class="t-b">
-                            Для завершения регистрации через <?=($socialIdentity->getSocialName()?:'')?>введите свой email
+                            Для завершения регистрации через <?=($socialIdentity->getSocialName()?:'')?> введите свой email
                         </div>
                         <!-- MAIL FORM -->
                         <form id="mail-block-form" name="mail" style="display:block">

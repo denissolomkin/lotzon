@@ -77,7 +77,7 @@ class PlayersDBProcessor implements IProcessor
                     ':socialname'   => $player->getSocialName(),
                 ));
 
-                return $res->fetchColumn(0);
+                return $res->rowCount();
 
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
