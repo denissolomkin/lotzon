@@ -70,7 +70,7 @@ class PlayersDBProcessor implements IProcessor
         if($player->getSocialId())
             try {
                 $sql = "SELECT `PlayerId` FROM `PlayerSocials` WHERE
-                    `SocialId` = :socialid AND `SocialName` = `SocialEmail`";
+                    `SocialId` = :socialid AND `SocialName` = :socialname";
 
                 $res = DB::Connect()->prepare($sql)->execute(array(
                     ':socialid'     => $player->getSocialId(),
