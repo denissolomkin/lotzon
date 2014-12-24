@@ -98,9 +98,10 @@ class WebSocketController implements MessageComponentInterface {
 
                                 if(isset($this->_players[$from->resourceId]['appMode'])){
                                     echo "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
-                                    unset($this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()],
-                                    $this->_players[$from->resourceId]['appName'],
-                                    $this->_players[$from->resourceId]['appMode']);
+                                    unset(
+                                        $this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()],
+                                        $this->_players[$from->resourceId]['appName'],
+                                        $this->_players[$from->resourceId]['appMode']);
                                 }
 
                             } else {
@@ -155,6 +156,9 @@ class WebSocketController implements MessageComponentInterface {
                                             if (count($clients) == $class::GAME_PLAYERS)
                                                 break;
                                         }
+
+                                        if(count($this->_stack[$class][$mode])==0)
+                                            unset($this->_stack[$class][$mode]);
 
                                         // запускаем и кешируем приложение
                                         $app->setClients($clients);
@@ -240,7 +244,7 @@ class WebSocketController implements MessageComponentInterface {
                 $stat = $sth->fetch();
 
                 $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
-                        `Players`.`Id`, `Players`.`Nicname`, `Players`.`Avatar`, `Players`.`Online`
+                        `Players`.`Id`, `Players`.`Nicname`, `Players`.`Avatar`
                         FROM `Players`
                         LEFT JOIN `PlayerGames`
                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
@@ -258,6 +262,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 $top = array();
                 foreach ($sth->fetchAll() as $player) {
+                    $player['Online']=((isset($this->_players[$player['Id']]['appName']) && $this->_players[$player['Id']]['appName']==$name ? 1 : 0));
                     $top[] = $player;
                 }
 
@@ -265,11 +270,12 @@ class WebSocketController implements MessageComponentInterface {
                     $from->send(json_encode(array(
                         'path'=> 'update',
                         'res' => array(
-                                'all'     => $stat['All'],
-                                'online'    => count($this->_stack[$this->_games[$data->gameId]]),
-                                'count'     => $stat['Count'],
-                                'win'    => $stat['Win'],
-                                'top' => $top
+                                'all'   => $stat['All'],
+                                // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
+                                'online'=> (count($this->_stack[$name],COUNT_RECURSIVE)-count($this->_stack[$name]))+count($this->_apps[$name])*$class::GAME_PLAYERS,
+                                'count' => $stat['Count'],
+                                'win'   => $stat['Win'],
+                                'top'   => $top
                         ))));
                 break;
 
@@ -373,6 +379,8 @@ class WebSocketController implements MessageComponentInterface {
             unset(
                 $this->_stack[$class][$mode][$playerId],
                 $this->_players[$playerId]);
+            if(count($this->_stack[$class][$mode])==0)
+                unset($this->_stack[$class][$mode]);
 
             if ($app = $this->_apps[$class][$id]) {
 

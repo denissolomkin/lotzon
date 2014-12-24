@@ -1,5 +1,5 @@
 var url = 'ws://192.168.1.253:8080';
-var url = 'ws://testbed.lotzon.com:8080';
+//var url = 'ws://testbed.lotzon.com:8080';
 //var server = './ws/run';
 var conn;
 
@@ -219,11 +219,13 @@ function appNewGameCallback(receiveData)
              if(receiveData.res.current)
                  if(receiveData.res.current!=playerId)
                  {
+                     $('.ngm-bk .ngm-gm .tm').css('text-align','right');
                      $('.gm-pr.r').addClass('move');
                      $('.gm-pr.l').removeClass('move');
                  }
                  else
                  {
+                     $('.ngm-bk .ngm-gm .tm').css('text-align','left');
                      $('.gm-pr.l').addClass('move');
                      $('.gm-pr.r').removeClass('move');
                  }

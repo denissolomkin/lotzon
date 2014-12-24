@@ -818,9 +818,9 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l {width:130px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-price {width:90px;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:#ffe400;cursor:pointer;border:1px solid #ffe400;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-price:hover {background-color:#000;color:#fff;border:1px solid #000;}
-.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online {color:#4f4f4f;font:15px/1 Handbook-bold;text-transform:uppercase;}
+.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online {color:#4f4f4f;font:15px/1 Handbook-bold;text-transform:uppercase;opacity:0.7;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online > i {font-style:normal;color:#1acf34;font-size:20px;}
-.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all {color:#4f4f4f;font:15px/20px Handbook-bold;text-transform:uppercase;}
+.ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all {color:#4f4f4f;font:15px/20px Handbook-bold;text-transform:uppercase;opacity:0.7;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all > b {position:relative;top:-2px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-txt-bk {font:18px/19px Handbook-regular;}
 .ngm-bk .ngm-rls-bk .prc-l .prc-but-cover {opacity: 0.5;background:white; width:320px;height:400px;position:absolute;display:none;}
@@ -889,7 +889,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx .msg {position:absolute;width:480px;height:480px;background-color:rgba(255, 255, 255, 0.95);top:0;left:0;display:none;}
 .ngm-bk .ngm-gm .gm-mx .msg .tbl {display:table;width:100%;height:100%;}
 .ngm-bk .ngm-gm .gm-mx .msg .tbl .td {width:100%;height:100%;vertical-align:middle;text-align:center;display:table-cell;}
-.ngm-bk .ngm-gm .gm-mx .msg.equal .txt, .ngm-bk .ngm-gm .gm-mx .msg.ca .txt {width:350px;margin:auto;font:18px/19px Handbook-regular;color:#000;text-align:left;margin-top:-50px;}
+.ngm-bk .ngm-gm .gm-mx .msg.equal .txt, .ngm-bk .ngm-gm .gm-mx .msg.ca .txt {width:350px;margin:auto;font:18px/19px Handbook-regular;color:#000;text-align:center;margin-top:-50px;}
 .ngm-bk .ngm-gm .gm-mx .msg.ca .bt-bk {width:350px;margin:auto;overflow:hidden;margin-top:30px;}
 .ngm-bk .ngm-gm .gm-mx .msg.ca .bt-bk .l {width:130px;height:40px;float:left;background-color:#ffe400;color:#000;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;cursor:pointer;}
 .ngm-bk .ngm-gm .gm-mx .msg.ca .bt-bk .r {width:130px;height:40px;float:right;background-color:#ffe400;color:#000;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;cursor:pointer;}

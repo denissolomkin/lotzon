@@ -514,7 +514,7 @@ class NewGame extends Entity
 
         for ($i = 1; $i <= self::FIELD_SIZE ; ++$i) {
             for ($j = 1; $j <= self::FIELD_SIZE; ++$j) {
-                $gameField[$i][$j]['points'] = $numbers[(($i-1)*self::FIELD_SIZE+$j)-1];
+                $gameField[$i][$j]['points'] = 1;//$numbers[(($i-1)*self::FIELD_SIZE+$j)-1];
                 $gameField[$i][$j]['player'] = null;
                 $gameField[$i][$j]['coord'] = $i.'x'.$j;
             }
