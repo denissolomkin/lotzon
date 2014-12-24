@@ -534,7 +534,7 @@
             <section class="ml-cn pop-box">
                 <div class="pu-b-c" id="mb-close"></div>
                 <div class="ml-cn-padd">
-                    <div class="ml-cn-txt">Для завершения регистрации через <?=$socialIdentity?>, введите свой email.</div>
+                    <div class="ml-cn-txt">Для завершения регистрации введите свой email.</div>
                     <div class="pi-inp-bk td">
                         <div class="ph">Email</div>
                         <input type="text" placeholder="Email" name="addr" spellcheck="false" autocomplete="off">
@@ -596,7 +596,7 @@
 <!-- ==========================================================================
                                 MAIL POPUP
 ========================================================================== -->
-<?print_r($socialIdentity->getAdditionalData());?>
+<?print_r($socialIdentity->getAdditionalData()['Twitter']);?>
 <div class="mail-popup popup" id="mail-block" <?=($socialIdentity OR 1 )? 'style="display:block"' : ''?>>
     <div class="mb-table">
         <div class="mb-tr">
@@ -608,7 +608,7 @@
 
                         <!-- add class "registration" or "login" -->
                         <div class="t-b">
-                            Для завершения регистрации введите свой email
+                            Для завершения регистрации через <?=($socialIdentity->getSocialName()?:'')?>введите свой email
                         </div>
                         <!-- MAIL FORM -->
                         <form id="mail-block-form" name="mail" style="display:block">
