@@ -73,14 +73,14 @@ function updateCallback(receiveData)
         html='';
         $.each(receiveData.res.top, function( index, value ) {
             html+='<li><div class="prs-ph" style="background-image: url(';
-            if(value.Avatar)
-                html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.Id)/100)+"/"+value.Avatar+"'";
+            if(value.A)
+                html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.Id)/100)+"/"+value.A+"'";
             else
                 html += "'../tpl/img/default.jpg'";
             html+=')"></div>' +
             '<div class="prs-ifo">' +
-            '<div class="nm">'+value.Nicname+(value.Online?' <b>•</b>':'')+'</div>' +
-            '<div class="ifo">'+value.Count+' • '+Math.ceil((parseInt(value.Win)))+'</div>   ' +
+            '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
+            '<div class="ifo">'+Math.ceil(value.R*1000)+' = '+value.T+' • '+Math.ceil((parseInt(value.W)))+'</div>   ' +
             '</div></li>';
 
         });

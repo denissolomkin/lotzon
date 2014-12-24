@@ -101,7 +101,7 @@ class WebSocketController implements MessageComponentInterface {
                                         $this->_players[$from->resourceId]['appMode']);
                                 }
 
-                            } elseif($action == 'startAction') {
+                            } elseif ($action == 'startAction') {
 
                                 list($currency, $price) = explode("-", $mode);
 
@@ -154,7 +154,6 @@ class WebSocketController implements MessageComponentInterface {
                                             if (count($clients) == $class::GAME_PLAYERS)
                                                 break;
                                         }
-
                                         if(count($this->_stack[$class][$mode])==0)
                                             unset($this->_stack[$class][$mode]);
 
@@ -199,13 +198,14 @@ class WebSocketController implements MessageComponentInterface {
                             $this -> sendCallback($app->getResponse(),$app->getCallback());
 
                             // если приложение завершилось, записываем данные и выгружаем из памяти
-                            if(!$app->isSaved() && $app->isOver()){
+                            if(!$app->isSaved() && $app->isOver()) {
                                 $this->saveGame($app);
-                                echo "Игроков:".(count($app->getClients()));
-                                if( count($app->getClients()) < $class::GAME_PLAYERS)
-                                    unset($this->_apps[$name][$id]);
                             }
 
+                            if($app->isOver() && count($app->getClients()) < $class::GAME_PLAYERS) {
+                                unset($this->_apps[$name][$id]);
+                                echo "удаление приложения".$name.$id.'\n';
+                            }
 
                         }
                     }
@@ -247,32 +247,54 @@ class WebSocketController implements MessageComponentInterface {
                 $stat = $sth->fetch();
 
                 $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
+
                         `Players`.`Id`, `Players`.`Nicname`, `Players`.`Avatar`
                         FROM `Players`
+                        LEFT JOIN
+                        (SELECT count(Id)/count(DISTINCT(PlayerId)) FROM `PlayerGames` WHERE `GameId` = :gameid)
+
                         LEFT JOIN `PlayerGames`
                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                        WHERE `PlayerGames`.`GameId` = :gameid
+                        WHERE `PlayerGames`.`GameId` = :gameid AND Count >
                         GROUP BY `Players`.`Id`
                         ORDER BY (`Win`/count(`PlayerGames`.`Id`)) DESC
                         LIMIT 10";
 
-                echo time()." ".$sql."\n";
+                $sql =  "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A,
+( ( count(g.Id) / ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) * ( (sum(g.`Win`) /  count(g.Id) + 1) )
++
+( ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) / ( count(g.Id) + ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) ) * 1.5 )
+R
+FROM `PlayerGames` g
+LEFT JOIN Players p ON p.Id=g.PlayerId
+WHERE g.GameId = :gameid
+group by PlayerId
+having count(DISTINCT(g.`GameUid`))  > (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) OR g.PlayerId = :playerid
+ORDER By
+( count(g.Id) / ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) * ( (sum(g.`Win`) /  count(g.Id) + 1) )
++
+( ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) / ( count(g.Id) + ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) ) * 1.5
+LIMIT 11";
+                // echo time()." ".$sql."\n";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
-                    $sth->execute(array(':gameid' => $this->_games[$name]));
+                    $sth->execute(
+                        array(
+                            ':gameid' => $this->_games[$name],
+                            ':playerid' => $from->resourceId
+                        ));
                 } catch (PDOException $e) {
                     throw new ModelException("Error processing storage query", 500);
                 }
 
                 $top = array();
                 foreach ($sth->fetchAll() as $player) {
-                    $player['Online']=((isset($this->_players[$player['Id']]['appName']) && $this->_players[$player['Id']]['appName']==$name ? 1 : 0));
+                    $player['O']=((isset($this->_players[$player['Id']]['appName']) && $this->_players[$player['Id']]['appName']==$name ? 1 : 0));
                     $top[] = $player;
                 }
 
-                echo (count($this->_stack[$name],COUNT_RECURSIVE)."/".count($this->_stack[$name]))."/".count($this->_apps[$name])*$class::GAME_PLAYERS;
-                    echo "Обновление данных для игрока\n";
+                echo "Топ + обновление данных игрока\n";
                     $from->send(json_encode(array(
                         'path'=> 'update',
                         'res' => array(
@@ -411,8 +433,10 @@ class WebSocketController implements MessageComponentInterface {
 
                 // если приложение завершилось, сохраняем и выгружаем из памяти
                 if ($app->isOver() && !$app->isSaved()) {
+                    echo "Сохраняем результаты".$class.$id.'\n';
                     $this->saveGame($app);
                     unset($this->_apps[$class][$id]);
+                    echo "удаление приложения".$class.$id.'\n';
                 }
             }
         }
