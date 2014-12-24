@@ -1,6 +1,6 @@
 var url = 'ws://192.168.1.253:8080';
 var url = 'ws://testbed.lotzon.com:8080';
-//var server = './ws/run';
+// var server = './ws/run';
 var conn;
 var errors = {
     'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
@@ -351,15 +351,15 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .exit', function(e){
     WebSocketAjaxClient('update/NewGame');
 });
 
-// отмена
-$(document).on('click', '.ngm-bk .bk-bt-rl, .ngm-bk .bk-bt, .ngm-bk .ngm-rls-bk .rls-r .ngm-cncl', function(e){
+// отмена, назад
+$(document).on('click', '.ngm-bk .bk-bt-rl, .ngm-bk .ngm-rls-bk .rls-r .ngm-cncl', function(e){
     //$('.ngm-bk .ngm-go').show();//.prev().hide();
     $('.ngm-bk .rls-r-ts').hide();
     $('.ngm-bk .rls-r-t').show();
     $('.ngm-bk .prc-but-cover').hide();
     appId=0;
     var path='app/NewGame/'+appId;
-    var data={'action':'quit'};
+    var data={'action':'cancel'};
     WebSocketAjaxClient(path,data);
 });
 

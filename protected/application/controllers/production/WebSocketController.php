@@ -91,7 +91,7 @@ class WebSocketController implements MessageComponentInterface {
                             echo "id приложения нет \n";
                             // записались
 
-                            if ($action == 'quitAction') {
+                            if ($action == 'cancelAction') {
 
                                 if(isset($this->_players[$from->resourceId]['appMode'])){
                                     echo "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
@@ -106,6 +106,7 @@ class WebSocketController implements MessageComponentInterface {
                                 list($currency, $price) = explode("-", $mode);
 
                                 $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+                                echo time()." ".$sql."\n";
 
                                 try {
                                     $sth = DB::Connect()->prepare($sql);
@@ -175,10 +176,9 @@ class WebSocketController implements MessageComponentInterface {
                             //if($this->_stack[$name][$mode][$player->getId()])
                             echo "приложение нашли $name ".$app->getCurrency().$app->getPrice()." $id\n";
                             //unset ( $this->_stack[$name][$mode][$player->getId()] );
-                        }
 
                         // если нет, сообщаем об ошибке
-                        else{
+                        } else {
                             echo "id есть, но приложения $name нет, сообщаем об ошибке, удаляем из активных игроков \n";
                             $this->sendCallback($from, array(
                                 'action'=>'error',
@@ -199,8 +199,13 @@ class WebSocketController implements MessageComponentInterface {
                             $this -> sendCallback($app->getResponse(),$app->getCallback());
 
                             // если приложение завершилось, записываем данные и выгружаем из памяти
-                            if(!$app->isSaved() && $app->isOver())
+                            if(!$app->isSaved() && $app->isOver()){
                                 $this->saveGame($app);
+                                echo "Игроков:".(count($app->getPlayers()));
+                                if( count($app->getClients()) < $class::GAME_PLAYERS)
+                                    unset($this->_apps[$name][$id]);
+                            }
+
 
                         }
                     }
@@ -266,6 +271,7 @@ class WebSocketController implements MessageComponentInterface {
                     $top[] = $player;
                 }
 
+                echo (count($this->_stack[$name],COUNT_RECURSIVE)."/".count($this->_stack[$name]))."/".count($this->_apps[$name])*$class::GAME_PLAYERS;
                     echo "Обновление данных для игрока\n";
                     $from->send(json_encode(array(
                         'path'=> 'update',
@@ -415,8 +421,8 @@ class WebSocketController implements MessageComponentInterface {
 
     function saveGame($app){
 
-        $app->_isSaved = 1;
         echo "Состояние игры:".$app->_isSaved."/".$app->_isOver." - Сохраняем игру #".$app->getId()."\n";
+        $app->_isSaved = 1;
         echo "Результаты: "; print_r($app->getPlayers());
 
         $sql_results = "INSERT INTO `PlayerGames`
@@ -486,7 +492,9 @@ class WebSocketController implements MessageComponentInterface {
                 $app->getPrice()
             );
         }
-        echo time()." ".$results."\n";
+
+        echo time()." ".$sql_results."\n";
+
         try {
             DB::Connect()->prepare($sql_results)->execute($results);
             echo "Записали результаты игры в базу\n";
