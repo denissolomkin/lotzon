@@ -212,8 +212,8 @@ function appNewGameCallback(receiveData)
                  var equal = $('.ngm-bk .msg.equal');
                  equal.fadeIn(200);
                  window.setTimeout(function(){
-                     equal.fadeOu(200);
-                 }, 400);
+                     equal.fadeOut(100);
+                 }, 300);
              }
 
              if(receiveData.res.current)

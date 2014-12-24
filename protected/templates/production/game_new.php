@@ -1120,7 +1120,7 @@
                     <div class="msg equal">
                         <div class="tbl">
                             <div class="td">
-                                <div class="txt">Набрано одинаковое кол-во очков, решающий ход.</div>
+                                <div class="txt">Hабрано одинаковое кол-во очков.<br>Решающий ход.</div>
                             </div>
                         </div>
                     </div>
