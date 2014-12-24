@@ -196,7 +196,7 @@ class Index extends \SlimController\SlimController
             'showLoginScreen' => $showLoginScreen,
             'showEmail'   => $showEmail,
             'gameInfo'    => $gameInfo,
-            'socialIdentity'      => $session->has('SOCIAL_IDENTITY'),
+            'socialIdentity'      => $session->get('SOCIAL_IDENTITY'),
             'country'     => $this->country,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,

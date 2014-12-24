@@ -596,7 +596,7 @@
 <!-- ==========================================================================
                                 MAIL POPUP
 ========================================================================== -->
-
+<?print_r($socialIdentity->getAdditionalData());?>
 <div class="mail-popup popup" id="mail-block" <?=($socialIdentity OR 1 )? 'style="display:block"' : ''?>>
     <div class="mb-table">
         <div class="mb-tr">
@@ -617,10 +617,6 @@
                                     <div class="ph">Ваш email</div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
                                 </div>
-                                <div class="ib-p" style="display: none;">
-                                    <div class="ph">Пароль</div>
-                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
-                                </div>
                                 <div class="ch-b-bk">
                                     <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
                                 </div>
@@ -637,7 +633,7 @@
                                     <div class="ph">Ваш email</div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
                                 </div>
-                                <div class="ib-p" style="display: none;">
+                                <div class="ib-p">
                                     <div class="ph">Пароль</div>
                                     <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
                                 </div>
