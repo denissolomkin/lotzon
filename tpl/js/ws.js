@@ -76,7 +76,7 @@ function updateCallback(receiveData)
             if(value.Avatar)
                 html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.Id)/100)+"/"+value.Avatar+"'";
             else
-                html += "'../tpl/img/bg-chanse-game-hz.png'";
+                html += "'../tpl/img/default.jpg'";
             html+=')"></div>' +
             '<div class="prs-ifo">' +
             '<div class="nm">'+value.Nicname+(value.Online?' <b>•</b>':'')+'</div>' +
@@ -152,7 +152,7 @@ function appNewGameCallback(receiveData)
              if(value.avatar)
                  value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
                 else
-                 value.avatar = "url('../tpl/img/bg-chanse-game-hz.png')";
+                 value.avatar = "url('../tpl/img/default.jpg')";
 
                  $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
 
