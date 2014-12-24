@@ -1,14 +1,11 @@
-<?php
-namespace controllers\production;
-//namespace WebSocket;
+<?php namespace controllers\production;
 
  use Ratchet\MessageComponentInterface;
  use Ratchet\ConnectionInterface;
- use \Player;
  use Ratchet\Wamp\Exception;
- use \DB;
+ use \Player, \DB, \Config, \Application;
 
- \Application::import(PATH_APPLICATION . '/model/entities/Player.php');
+ Application::import(PATH_APPLICATION . '/model/entities/Player.php');
  require_once dirname(__DIR__) . '/../../system/DB.php';
  require_once dirname(__DIR__) . '/../../system/Config.php';
  require_once dirname(__DIR__) . '/../../../protected/configs/config.php';
@@ -42,6 +39,8 @@ class WebSocketController implements MessageComponentInterface {
 
         $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
 
+        echo time()." ".$sql."\n";
+
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(':id'    => $playerId));
@@ -51,8 +50,6 @@ class WebSocketController implements MessageComponentInterface {
 
         if (!$sth->rowCount()) {
             throw new ModelException("Player not found", 404);
-        } elseif($sth->rowCount()>1){
-            throw new ModelException("Found more than one player", 400);
         }
 
         $player = $sth->fetch();
@@ -229,6 +226,7 @@ class WebSocketController implements MessageComponentInterface {
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
                                         WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid
                                         LIMIT 1";
+                echo time()." ".$sql."\n";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
@@ -252,6 +250,8 @@ class WebSocketController implements MessageComponentInterface {
                         GROUP BY `Players`.`Id`
                         ORDER BY (`Win`/count(`PlayerGames`.`Id`)) DESC
                         LIMIT 10";
+
+                echo time()." ".$sql."\n";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
@@ -330,8 +330,14 @@ class WebSocketController implements MessageComponentInterface {
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
-        echo "An error has occurred: {$e->getMessage()}\n";
-        $conn->close();
+
+        if($e->getCode() == 'HY000' || stristr($e->getMessage(), 'server has gone away')) {
+            echo "{$e->getMessage()} RECONNECT \n";
+            DB::Reconnect('default', Config::instance()->dbConnectionProperties);
+        } else {
+            echo "An error has occurred: {$e->getMessage()}\n";
+            $conn->close();
+        }
     }
 
 
@@ -439,7 +445,9 @@ class WebSocketController implements MessageComponentInterface {
 
                 $sql="UPDATE Players SET ".$currency." = ".$currency.($player['result'] < 0 ? '' : '+').
                     ($player['result']*$app->getPrice())." WHERE Id=".$player['pid'];
+
                 echo time()." ".$sql."\n";
+
                 DB::Connect()->query($sql);
 
                 $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setMoney(
@@ -470,21 +478,31 @@ class WebSocketController implements MessageComponentInterface {
                 $app->getId(),
                 $app->getIdentifier(),
                 time(),
-                ($player['result']==1?1:0),
-                ($player['result']==0?1:0),
-                ($player['result']==-1?1:0),
+                ($player['result'] == 1?1:0),
+                ($player['result'] == 0?1:0),
+                ($player['result'] == -1?1:0),
                 $player['result'],
                 $app->getCurrency(),
                 $app->getPrice()
             );
         }
+        echo time()." ".$results."\n";
         try {
             DB::Connect()->prepare($sql_results)->execute($results);
-            if($app->getPrice())
-                DB::Connect()->prepare($sql_transactions.implode(",",$sql_transactions_players))->execute($transactions);
-            echo "Записали результаты в базу\n";
+            echo "Записали результаты игры в базу\n";
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        if($app->getPrice()) {
+            $sql=$sql_transactions.implode(",",$sql_transactions_players);
+            echo time()." ".$sql."\n";
+            try {
+                DB::Connect()->prepare($sql)->execute($transactions);
+                echo "Записали транзакции в базу\n";
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            }
         }
     }
 }

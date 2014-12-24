@@ -2,7 +2,13 @@ var url = 'ws://192.168.1.253:8080';
 var url = 'ws://testbed.lotzon.com:8080';
 //var server = './ws/run';
 var conn;
-
+var errors = {
+    'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
+    'NOT_YOUR_MOVE' : 'Сейчас не Ваша очередь ходить',
+    'APPLICATION_DOESNT_EXISTS' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
+    'CELL_IS_PLAYED' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
+    'ENOUGH_MOVES' : 'У Вас закончились ходы'
+};
         function WebSocketAjaxClient(path, data, stop) {
             if(!conn || conn.readyState !== 1)
             {
@@ -33,7 +39,7 @@ var conn;
                     WebSocketStatus('<b style="color:purple">receive',e.data)
                     data=$.parseJSON(e.data);
                     if(data.error)
-                        $("#report-popup").show().find(".txt").text((errors[data.error]?errors[data.error]:'data.error')).fadeIn(200);
+                        $("#report-popup").show().find(".txt").text(errors[data.error]?errors[data.error]:'1'+data.error).fadeIn(200);
                     else
                         window[data.path.replace('\\','')+'Callback'](data);
                 };
@@ -175,7 +181,6 @@ function appNewGameCallback(receiveData)
          });
          $(".ngm-bk .tm").countdown('resume');
          $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
-
          $.each(receiveData.res.field, function( x, cells ) {
              $.each(cells, function( y, cell) {
                 //     $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+x+'x'+y).html(cell.points);
@@ -212,8 +217,8 @@ function appNewGameCallback(receiveData)
                  var equal = $('.ngm-bk .msg.equal');
                  equal.fadeIn(200);
                  window.setTimeout(function(){
-                     equal.fadeOut(100);
-                 }, 800);
+                     equal.fadeOut(200);
+                 }, 2000);
              }
 
              if(receiveData.res.current)
@@ -237,7 +242,7 @@ function appNewGameCallback(receiveData)
                      $('.gm-pr.'+class_player+' .pr-pt b').html(value.points).hide().fadeIn(200);
                  });
 
-             $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
+             $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
     /*
              $('.gm-pr.'+current_player+' .pr-cl b').html(
                  parseInt($('.gm-pr.'+current_player+' .pr-cl b').html())-1
@@ -284,9 +289,10 @@ function appNewGameCallback(receiveData)
 
 
          case 'error':
-             $("#report-popup").find(".txt").text(receiveData.res.error);
+             $("#report-popup").show().find(".txt").text(errors[receiveData.res.error]?errors[receiveData.res.error]:receiveData.res.error).fadeIn(200);
              $("#report-popup").show().fadeIn(200);
              if(receiveData.res.appId==0) {
+                 $('.ngm-bk .tm').countdown('pause');
                  appId = receiveData.res.appId;
                  $('.ngm-bk .prc-but-cover').hide();
                  $('.ngm-rls').fadeIn(200);
@@ -492,11 +498,3 @@ function NewGameTimeOut(){
     var data={'action':'timeout'}
     WebSocketAjaxClient(path,data);
 }
-
-errors = {
-    'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
-    'NOT_YOUR_MOVE' : 'Сейчас не Ваша очередь ходить',
-    'APPLICATION_DOESNT_EXISTS' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
-    'CELL_IS_PLAYED' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
-    'ENOUGH_MOVES' : 'У Вас закончились ходы'
-};
