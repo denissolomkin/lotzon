@@ -30,6 +30,8 @@ class Players extends \AjaxController
             if (!$agreed) {
                 $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
             }
+
+
             $player = new Player();
             $player->setEmail($email);
 
@@ -54,8 +56,32 @@ class Players extends \AjaxController
             try {
                 $player->create();
             } catch (EntityException $e) {
-                $this->ajaxResponse(array(), 0, $e->getMessage());
+                if($e->getMessage()=='REG_LOGIN_EXISTS' AND $this->session->has('SOCIAL_IDENTITY'))
+                    $this->ajaxResponse(array(), 0, 'PROFILE_EXISTS_NEED_LOGIN');
+                else
+                    $this->ajaxResponse(array(), 0, $e->getMessage());
             }
+
+            if($this->session->has('SOCIAL_IDENTITY'))
+            {
+                $social=$this->session->get('SOCIAL_IDENTITY');
+
+                if(!$player->existsSocial()) // If Social Id didn't use earlier
+                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
+
+                $player->setAdditionalData($social->getAdditionalData())
+                    ->setSocialId($social->getSocialId())
+                    ->setSocialName($social->getSocialName())
+                    ->setSocialEmail($social->getSocialEmail())
+                    ->update()
+                    ->updateSocial();
+
+                if ($social->getAdditionalData()[$social->getSocialName()]['photoURL'])
+                    $this->saveAvatarAction($social->getAdditionalData()[$social->getSocialName()]['photoURL']);
+
+                $this->session->remove('SOCIAL_IDENTITY');
+            }
+
             // check invites
             $invite = false;
             try {
@@ -102,11 +128,30 @@ class Players extends \AjaxController
             if (!$password) {
                 $this->ajaxResponse(array(), 0, 'EMPTY_PASSWORD');
             }
+
             $player = new Player();
             $player->setEmail($email);
 
             try {
                 $player->login($password)->markOnline();
+
+
+                if($this->session->has('SOCIAL_IDENTITY'))
+                {
+                    $social=$this->session->get('SOCIAL_IDENTITY');
+
+                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$player->existsSocial())  // If Social Id didn't use earlier And This Provider Link First Time
+                        $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
+
+                    $player->setAdditionalData($social->getAdditionalData())
+                        ->setSocialId($social->getSocialId())
+                        ->setSocialName($social->getSocialName())
+                        ->setSocialEmail($social->getSocialEmail())
+                        ->update()
+                        ->updateSocial();
+
+                    $this->session->remove('SOCIAL_IDENTITY');
+                }
 
                 if ($rememberMe) {
                     $player->enableAutologin();
@@ -299,7 +344,7 @@ class Players extends \AjaxController
         $this->redirect('/');
     }
 
-    public function saveAvatarAction()
+    public function saveAvatarAction($photoURL=null)
     {
 
         if (!$this->session->get(Player::IDENTITY)) {
@@ -307,7 +352,10 @@ class Players extends \AjaxController
         }
 
         try {
-            $image = WideImage::loadFromUpload('image');
+            if($photoURL)
+                $image = WideImage::load($photoURL);
+            else
+                $image = WideImage::loadFromUpload('image');
             $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
             $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
 
@@ -330,7 +378,8 @@ class Players extends \AjaxController
 
             $this->session->get(Player::IDENTITY)->setAvatar($imageName)->saveAvatar();
 
-            $this->ajaxResponse($data);
+            if(!$photoURL)
+                $this->ajaxResponse($data);
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }
@@ -344,6 +393,24 @@ class Players extends \AjaxController
         $this->session->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
 
         $this->ajaxResponse(array());
+    }
+
+    public function disableSocial($provider)
+    {
+
+        if (!$this->session->get(Player::IDENTITY)) {
+            $this->ajaxResponse(array(), 0, 'FRAUD');
+        }
+
+        try {
+            $this->session->get(Player::IDENTITY)->setSocialName($provider)->disableSocial();
+            $this->ajaxResponse(array(), 1, $provider);
+        } catch (\Exception $e) {
+            $this->ajaxResponse(array(), 0, 'INVALID');
+        }
+
+
+
     }
 
     public function pingAction()

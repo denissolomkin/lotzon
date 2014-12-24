@@ -12,11 +12,12 @@
 
 class WebSocketController implements MessageComponentInterface {
 
-    private $_clients;
-    private $_stack;
-    private $_apps;
-    private $_players;
+    private $_clients=array();
+    private $_stack=array();
+    private $_apps=array();
+    private $_players=array();
     private $_class;
+    private $_rating=array();
     private $_games=array(
         'NewGame' => 1
     );
@@ -224,6 +225,7 @@ class WebSocketController implements MessageComponentInterface {
                 break;
 
             case 'update':
+
                 $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
                         (SELECT count(Id) FROM `PlayerGames` WHERE `GameId` = :gameid) `All`
                                         FROM `Players`
@@ -246,6 +248,16 @@ class WebSocketController implements MessageComponentInterface {
 
                 $stat = $sth->fetch();
 
+
+
+
+                if($this->rating[$name]['timeout']<time()) {
+                    $top=$this->rating[$name]['top'];
+                }
+                else
+                {
+
+
                 $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
 
                         `Players`.`Id`, `Players`.`Nicname`, `Players`.`Avatar`
@@ -260,7 +272,7 @@ class WebSocketController implements MessageComponentInterface {
                         ORDER BY (`Win`/count(`PlayerGames`.`Id`)) DESC
                         LIMIT 10";
 
-                $sql =  "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A,
+                $sql =  "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I,
 ( ( count(g.Id) / ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) * ( (sum(g.`Win`) /  count(g.Id) + 1) )
 +
 ( ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) / ( count(g.Id) + ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) ) * 1.5 )
@@ -290,21 +302,27 @@ LIMIT 11";
 
                 $top = array();
                 foreach ($sth->fetchAll() as $player) {
-                    $player['O']=((isset($this->_players[$player['Id']]['appName']) && $this->_players[$player['Id']]['appName']==$name ? 1 : 0));
+                    $player['O']=((isset($this->_players[$player['I']]['appName']) && $this->_players[$player['Id']]['appName']==$name ? 1 : 0));
                     $top[] = $player;
                 }
 
+                    $this->rating[$name]['top']=$top;
+                    $this->rating[$name]['timeout']=time()+300;
+
+                }
+
                 echo "Топ + обновление данных игрока\n";
-                    $from->send(json_encode(array(
-                        'path'=> 'update',
-                        'res' => array(
-                                'all'   => $stat['All'],
-                                // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
-                                'online'=> (count($this->_stack[$name],COUNT_RECURSIVE)-count($this->_stack[$name]))+count($this->_apps[$name])*$class::GAME_PLAYERS,
-                                'count' => $stat['Count'],
-                                'win'   => $stat['Win'],
-                                'top'   => $top
-                        ))));
+                $from->send(json_encode(array(
+                    'path'=> 'update',
+                    'res' => array(
+                        'all'   => $stat['All'],
+                        'count' => $stat['Count'],
+                        'win'   => $stat['Win'],
+                        // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
+                        'online'=> (count($this->_stack[$name],COUNT_RECURSIVE)-count($this->_stack[$name]))+count($this->_apps[$name])*$class::GAME_PLAYERS,
+                        'top'   => $top
+                    ))));
+
                 break;
 
             default:

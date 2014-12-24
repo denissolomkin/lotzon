@@ -80,15 +80,16 @@ class AuthController extends \SlimController\SlimController {
                 ->setSocialEmail($profile->email);
             $loggedIn = false;
             try {
-                $player->fetch()->updateSocial();
-                if(!array_key_exists($provider, $player->getAdditionalData()))
-                    $player->addPoints(40, 'Бонус за привязку социальной сети '.$provider);
-                $player->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
+                $player->fetch();
+                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->existsSocial())
+                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
+                $player->updateSocial()->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
                 $loggedIn = true;
             } catch (EntityException $e) {
                 if ($e->getCode() == 500) {
+                    // fetch more than one player
                 }
-                if ($e->getCode() == 404 && $profile->email) {
+                if ($e->getCode() == 404) {
 
                     try {
                         if($profile->country){
@@ -114,40 +115,46 @@ class AuthController extends \SlimController\SlimController {
                                 array($provider=>array_filter(get_object_vars($profile)))
                             );
 
-                        if ($ref = $this->request()->post('ref', null)) {
-                            $player->setReferalId((int)$ref);
-                        }
-
-                        $player->create()->updateSocial()->markOnline();
-                        $loggedIn = true;
-
-                        if ($player->getId() <= 1000) {
-                            $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
-                        }
-
-                        $player->addPoints(40, 'Бонус за привязку социальной сети '.$provider);
-
-                        // try to catch avatar
-                        if ($profile->photoURL) {
-                            try {
-                                $image = WideImage::load($profile->photoURL);
-                                $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-                                $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-
-                                $imageName = uniqid() . ".jpg";
-                                $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
-
-                                if (!is_dir($saveFolder)) {
-                                    mkdir($saveFolder, 0777);
-                                }
-                                $image->saveToFile($saveFolder . $imageName, 100);
-                                // remove old one
-                                $player->setAvatar($imageName)->saveAvatar();
-
-                            } catch (\Exception $e) {
-                                // do nothing
+                        if($profile->email) {
+                            if ($ref = $this->request()->post('ref', null)) {
+                                $player->setReferalId((int)$ref);
                             }
+
+                            $player->create()->updateSocial()->markOnline();
+                            $loggedIn = true;
+
+                            // try to catch avatar
+                            if ($profile->photoURL) {
+                                try {
+                                    $image = WideImage::load($profile->photoURL);
+                                    $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+                                    $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+
+                                    $imageName = uniqid() . ".jpg";
+                                    $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
+
+                                    if (!is_dir($saveFolder)) {
+                                        mkdir($saveFolder, 0777);
+                                    }
+                                    $image->saveToFile($saveFolder . $imageName, 100);
+                                    // remove old one
+                                    $player->setAvatar($imageName)->saveAvatar();
+
+                                } catch (\Exception $e) {
+                                    // do nothing
+                                }
+                            }
+
+                            if ($player->getId() <= 1000) {
+                                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+                            }
+
+                            $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $provider);
                         }
+                        else{
+                            $this->session->set('SOCIAL_IDENTITY', $player);
+                        }
+
                     } catch (EntityException $e) {
                         // do nothing
                     }

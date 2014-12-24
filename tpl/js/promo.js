@@ -135,6 +135,7 @@ $(function(){
         }, function(data) {});
         return false;
     });
+
     $('#rulcheck').on('change', function(){
         if($(this).prop('checked')){
             $("#reg-form").removeClass('rul-error');

@@ -609,31 +609,35 @@
                                             <? if ($player->getAvatar()) {?>
                                                 <img src="/filestorage/avatars/<?=ceil($player->getId() / 100)?>/<?=$player->getAvatar()?>">
                                             <? } ?>
-                                        </div>  
+                                        </div>
                                         <div class="pi-cs-bk">
                                             <? if(count($player->getAdditionalData())<4) {?>
                                             <div class="txt">Привязать соцсеть и получить бонус по 40 баллов.</div>
                                             <? } ?>
-                                            <a href="./auth/Facebook"><div class="cs-int-bt fb<?
-                                            if(array_key_exists('Facebook', $player->getAdditionalData())
+                                            <? if(array_key_exists('Facebook', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Facebook']['enabled'])
-                                                echo ' int'
+                                                echo '<a href="./players/disableSocial/Facebook"><div class="cs-int-bt fb int';
+                                            else
+                                                echo '<a href="./auth/Facebook"><div class="cs-int-bt fb';
                                             ?>"></div></a>
-                                            <a href="./auth/Vkontakte"><div class="cs-int-bt vk<?
-                                                if(array_key_exists('Vkontakte', $player->getAdditionalData())
-                                                    && $player->getAdditionalData()['Vkontakte']['enabled'])
-                                                    echo ' int'
-                                                ?>"></div></a>
-                                            <a href="./auth/Google"><div class="cs-int-bt gp<?
-                                                if(array_key_exists('Google', $player->getAdditionalData())
-                                                    && $player->getAdditionalData()['Google']['enabled'])
-                                                    echo ' int'
-                                                ?>"></div></a>
-                                            <a href="./auth/Twitter"><div class="cs-int-bt tw<?
-                                                if(array_key_exists('Twitter', $player->getAdditionalData())
-                                                    && $player->getAdditionalData()['Twitter']['enabled'])
-                                                    echo ' int'
-                                                ?>"></div></a>
+                                            <? if(array_key_exists('Vkontakte', $player->getAdditionalData())
+                                                && $player->getAdditionalData()['Vkontakte']['enabled'])
+                                                echo '<a href="./players/disableSocial/Vkontakte"><div class="cs-int-bt vk int';
+                                            else
+                                                echo '<a href="./auth/Vkontakte"><div class="cs-int-bt vk';
+                                            ?>"></div></a>
+                                            <? if(array_key_exists('Google', $player->getAdditionalData())
+                                                && $player->getAdditionalData()['Google']['enabled'])
+                                                echo '<a href="./players/disableSocial/Google"><div class="cs-int-bt gp int';
+                                            else
+                                                echo '<a href="./auth/Google"><div class="cs-int-bt gp';
+                                            ?>"></div></a>
+                                            <? if(array_key_exists('Twitter', $player->getAdditionalData())
+                                                && $player->getAdditionalData()['Twitter']['enabled'])
+                                                echo '<a href="./players/disableSocial/Twitter"><div class="cs-int-bt tw int';
+                                            else
+                                                echo '<a href="./auth/Twitter"><div class="cs-int-bt tw';
+                                            ?>"></div></a>
                                         </div>
                                     </div>
                                     <div class="pi-et-bk">

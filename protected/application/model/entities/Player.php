@@ -19,6 +19,7 @@ class Player extends Entity
 
     const REFERAL_INVITE_COST = 20;
     const SOCIAL_POST_COST = 20;
+    const SOCIAL_PROFILE_COST = 40;
 
     private $_id         = 0;
     private $_email      = '';
@@ -26,8 +27,9 @@ class Player extends Entity
     private $_salt       = '';
 
     private $_socialid     = 0;
-    private $_socialemail  = 0;
-    private $_socialname   = 0;
+    private $_socialemail  = '';
+    private $_socialname   = '';
+    private $_socialenable = 1;
 
     private $_nicName    = '';
     private $_name       = '';
@@ -43,7 +45,7 @@ class Player extends Entity
 
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
-    private $_dateLastNotice  = '';
+    private $_dateLastNotice = '';
     private $_country        = '';
 
     private $_generatedPassword = '';
@@ -84,6 +86,18 @@ class Player extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setSocialEnable($socialenable)
+    {
+        $this->_socialenable = $socialenable;
+
+        return $this;
+    }
+
+    public function getSocialEnable()
+    {
+        return $this->_socialenable;
     }
 
     public function setSocialId($socialid)
@@ -680,6 +694,28 @@ class Player extends Entity
         }
 
         return $this;
+    }
+
+    public function disableSocial()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $socialData=$this->getAdditionalData()[$this->getSocialName()];
+            $socialData['enabled']=0;
+            $this->setAdditionalData($socialData)->update();
+            $model::instance()->disableSocial($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function existsSocial()
+    {
+        $model = $this->getModelClass();
+        return $model::instance()->existsSocial($this);
     }
 
     public function create()

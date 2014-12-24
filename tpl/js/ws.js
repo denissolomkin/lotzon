@@ -74,7 +74,7 @@ function updateCallback(receiveData)
         $.each(receiveData.res.top, function( index, value ) {
             html+='<li><div class="prs-ph" style="background-image: url(';
             if(value.A)
-                html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.Id)/100)+"/"+value.A+"'";
+                html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.I)/100)+"/"+value.A+"'";
             else
                 html += "'../tpl/img/default.jpg'";
             html+=')"></div>' +

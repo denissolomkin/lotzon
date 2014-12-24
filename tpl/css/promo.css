@@ -357,7 +357,7 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 
 .registration #reg-form {display:block;}
 .registration #login-form, .registration #pass-rec-form {display:none;}
-.login #reg-form, .login #pass-rec-form {display:none;}
+.login #reg-form, .login #pass-rec-form, .login #reg-succ-txt {display:none;}
 .login #login-form {display:block;}
 .rec-pass #pass-rec-form {display:block;}
 .rec-pass #login-form, .rec-pass #reg-form {display:none;}

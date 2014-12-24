@@ -47,14 +47,15 @@ class PlayersDBProcessor implements IProcessor
 
         if($player->getSocialId())
             try {
-                $sql = "REPLACE INTO `PlayersSocials` (`PlayerId`, `SocialId`, `SocialName`, `SocialEmail`)
-                      VALUES (:id, :socialid, :socialname, :socialemail)";
+                $sql = "REPLACE INTO `PlayerSocials` (`PlayerId`, `SocialId`, `SocialName`, `SocialEmail`, `Enabled`)
+                      VALUES (:id, :socialid, :socialname, :socialemail, :enabled)";
 
                 DB::Connect()->prepare($sql)->execute(array(
                     ':id'           => $player->getId(),
                     ':socialemail'  => $player->getSocialEmail(),
                     ':socialid'     => $player->getSocialId(),
                     ':socialname'   => $player->getSocialName(),
+                    ':enabled'      => $player->getSocialEnabled(),
                 ));
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
@@ -63,16 +64,15 @@ class PlayersDBProcessor implements IProcessor
 
     }
 
-
-    public function deleteSocial(Entity $player)
+    public function existsSocial(Entity $player)
     {
 
         if($player->getSocialId())
             try {
-                $sql = "DELETE FROM `PlayersSocials` WHERE `PlayerId`=:id  AND `SocialId`=:socialid AND `SocialName`=:socialname";
+                $sql = "SELECT `PlayerId` FROM `PlayerSocials` WHERE
+                    `SocialId` = :socialid AND `SocialName` = `SocialEmail`";
 
-                DB::Connect()->prepare($sql)->execute(array(
-                    ':id'           => $player->getId(),
+                $res = DB::Connect()->prepare($sql)->execute(array(
                     ':socialid'     => $player->getSocialId(),
                     ':socialname'   => $player->getSocialName(),
                 ));
@@ -80,11 +80,29 @@ class PlayersDBProcessor implements IProcessor
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
             }
 
+        return $res->fetchColumn(0);
+    }
 
+
+    public function disableSocial(Entity $player)
+    {
+        if($player->getSocialName())
+            try {
+                $sql = "UPDATE `PlayerSocials` SET `Enabled` = 0
+                        WHERE `PlayerId` = :id AND `SocialName`=:socialname";
+
+                DB::Connect()->prepare($sql)->execute(array(
+                    ':id'           => $player->getId(),
+                    ':socialname'   => $player->getSocialName(),
+                ));
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            }
+        return $player;
     }
 
     public function update(Entity $player)
-    {   
+    {
         $sql = "UPDATE `Players` SET
                     `DateLogined` = :dl, `Country` = :cc, 
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, 
@@ -123,11 +141,11 @@ class PlayersDBProcessor implements IProcessor
     public function fetch(Entity $player)
     {
         $sql = "SELECT p.* FROM `Players` p
-                LEFT JOIN `PlayersSocials` s
+                LEFT JOIN `PlayerSocials` s
                   ON s.`PlayerId`=p.`Id`
                 WHERE p.`Id` = :id OR p.`Email` = :email
-                  OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname)
-                  OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` IS NOT NULL)
+                  OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
+                  OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
                 GROUP BY p.Id";
         try {
             $sth = DB::Connect()->prepare($sql);

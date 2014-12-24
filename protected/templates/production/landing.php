@@ -556,6 +556,24 @@
             $(this).closest('.ml-cn-padd').find('.ml-cn-but').addClass('disabled');
         }
     });
+    <? if($socialIdentity) {?>
+        $('.bl-pp-bk.popup').show();
+    <? } ?>
+
+    // registration handler
+    $('#mail-conf .ml-cn-but').on('click', function(e) {
+        var form = $('#login-block form[name="register"]');
+        var email = $('#mail-conf').find('input[name="addr"]').val();
+        var rulesAgree = 1;
+        var ref = form.data('ref');
+        registerPlayer({'email':email, 'agree':rulesAgree, 'ref':ref}, function(data){
+            // success
+        }, function(data){
+            $('#mail-conf .ml-cn-txt').text( $('#mail-conf .ml-cn-txt').text() + data.message);
+        }, function(data) {});
+        return false;
+    });
+
 </script>
 
 <!--=========================================================================

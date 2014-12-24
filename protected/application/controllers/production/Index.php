@@ -160,6 +160,7 @@ class Index extends \SlimController\SlimController
     {
         $showEmail = $this->request()->get('m', false);
         $showLoginScreen = false;
+        $session = new Session();
 
         if (!empty($_COOKIE['showLoginScreen'])) {
             $showLoginScreen = true;
@@ -195,6 +196,7 @@ class Index extends \SlimController\SlimController
             'showLoginScreen' => $showLoginScreen,
             'showEmail'   => $showEmail,
             'gameInfo'    => $gameInfo,
+            'socialIdentity'      => $session->has('SOCIAL_IDENTITY'),
             'country'     => $this->country,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,
