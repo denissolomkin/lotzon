@@ -625,7 +625,27 @@
                                     <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Играть" />
+                                    <input type="submit" class="sb_but disabled" disabled value="Отправить" />
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- MAIL LOGIN FORM -->
+                        <form id="mail-block-form" name="login" style="display:none">
+                            <div id="mail-form">
+                                <div class="ib-l">
+                                    <div class="ph">Ваш email</div>
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
+                                </div>
+                                <div class="ib-p" style="display: none;">
+                                    <div class="ph">Пароль</div>
+                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
+                                </div>
+                                <div class="ch-b-bk">
+                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                </div>
+                                <div class="s-b">
+                                    <input type="submit" class="sb_but disabled" disabled value="Отправить" />
                                 </div>
                             </div>
                         </form>

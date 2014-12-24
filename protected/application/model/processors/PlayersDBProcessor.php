@@ -76,11 +76,13 @@ class PlayersDBProcessor implements IProcessor
                     ':socialid'     => $player->getSocialId(),
                     ':socialname'   => $player->getSocialName(),
                 ));
+
+                return $res->fetchColumn(0);
+
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
             }
 
-        return $res->fetchColumn(0);
     }
 
 
@@ -370,7 +372,6 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);   
         }
 
-        return $player;   
     }
 
     public function markReferalPaid(Entity $player) {

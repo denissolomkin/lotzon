@@ -92,7 +92,7 @@ class Players extends \AjaxController
             {
                 $social=$this->session->get('SOCIAL_IDENTITY');
 
-                if(!$player->existsSocial()) // If Social Id didn't use earlier
+                if(!$social->existsSocial()) // If Social Id didn't use earlier
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
 
                 $player->setAdditionalData($social->getAdditionalData())
@@ -142,7 +142,7 @@ class Players extends \AjaxController
                 {
                     $social=$this->session->get('SOCIAL_IDENTITY');
 
-                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$player->existsSocial())  // If Social Id didn't use earlier And This Provider Link First Time
+                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->existsSocial())  // If Social Id didn't use earlier And This Provider Link First Time
                         $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
 
                     $player->setAdditionalData($social->getAdditionalData())

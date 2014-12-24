@@ -162,14 +162,15 @@ $(function(){
 
 
         }, function(data){
-            $('.mail-popup form[name="login"]').addClass('error');
             if(data.message=='PROFILE_EXISTS_NEED_LOGIN'){
+                $('.mail-popup form[name="login"]').addClass('error');
                 $('.mail-popup form[name="mail"]').hide();
                 $('.mail-popup form[name="login"]').fadeIn(200);
                 $('.mail-popup form[name="login"]').find('input[name="login"]').val(email)
                 $('.mail-popup form[name="login"]').find('.e-t').text('Данный email уже зарегистрирован, для привязки к нему введите Ваш пароль на Lotzon');
             }
             else{
+                $('.mail-popup form[name="mail"]').addClass('error');
                 form.find('.e-t').text(data.message);
             }
         }, function(data) {});
