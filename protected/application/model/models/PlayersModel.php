@@ -38,6 +38,17 @@ class PlayersModel extends Model
         return $this->getProcessor()->updateSocial($player);
     }
 
+    public function disableSocial(Entity $player)
+    {
+        return $this->getProcessor()->disableSocial($player);
+    }
+
+
+    public function existsSocial(Entity $player)
+    {
+        return $this->getProcessor()->existsSocial($player);
+    }
+
     public function saveAvatar(Entity $player) 
     {
         return $this->getProcessor()->saveAvatar($player);   

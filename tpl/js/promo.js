@@ -48,7 +48,7 @@ $(function(){
 
 
 
-    $('.login-popup .m_input').on('keyup', function(){
+    $('.login-popup .m_input,.mail-popup .m_input').on('keyup', function(){
         var val = $.trim($(this).val().length);
         if(val > 0){
             $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
@@ -57,9 +57,9 @@ $(function(){
         }
     });
 
-    $('.login-popup form').on('mousemove', function(){
+    $('.login-popup form,.mail-popup .m_input').on('mousemove', function(){
         //var val = $.trim($(this).find('input').val().length);
-        $(this).closest('form').find('.m_input').each(function(){
+        $(this).find('.m_input').each(function(){
             var val = $.trim($(this).val().length);
             if(val > 0){
                 $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
@@ -78,10 +78,10 @@ $(function(){
         event.preventDefault();
     });
 
-    $('#login-block .m_input').on('focus', function(){
+    $('#login-block .m_input,.mail-popup .m_input').on('focus', function(){
         $(this).parent().addClass('focus');
     });
-    $('#login-block .m_input').on('blur', function(){
+    $('#login-block .m_input,.mail-popup .m_input').on('blur', function(){
         $(this).parent().removeClass('focus');
     });
 
@@ -132,6 +132,46 @@ $(function(){
         }, function(data){
             $("#reg-form").addClass('error');
             form.find('.e-t').text(data.message);
+        }, function(data) {});
+        return false;
+    });
+
+
+
+    // mail confirm login handler
+    $('.mail-popup form[name="login"]').on('submit', function(e) {
+        var form = $(this);
+        var email = form.find('input[name="login"]').val();
+        var pwd   = form.find('input[name="password"]').val();
+        loginPlayer({'email':email, 'password':pwd}, function(data){
+            document.location.href = "/";
+        }, function(data){
+            form.find('.e-t').text(data.message);
+        }, function(data) {});
+
+        return false;
+    })
+
+    // mail confirm handler
+    $('.mail-popup form[name="mail"]').on('submit', function(e) {
+        var form = $(this);
+        var email = form.find('input[name="login"]').val();
+        var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
+        var ref = $(this).data('ref');
+        registerPlayer({'email':email, 'agree':1, 'ref':ref}, function(data){
+
+
+        }, function(data){
+            $('.mail-popup form[name="login"]').addClass('error');
+            if(data.message=='PROFILE_EXISTS_NEED_LOGIN'){
+                $('.mail-popup form[name="mail"]').hide();
+                $('.mail-popup form[name="login"]').fadeIn(200);
+                $('.mail-popup form[name="login"]').find('input[name="login"]').val(email)
+                $('.mail-popup form[name="login"]').find('.e-t').text('Данный email уже зарегистрирован, для привязки к нему введите Ваш пароль на Lotzon');
+            }
+            else{
+                form.find('.e-t').text(data.message);
+            }
         }, function(data) {});
         return false;
     });

@@ -62,26 +62,6 @@ class Players extends \AjaxController
                     $this->ajaxResponse(array(), 0, $e->getMessage());
             }
 
-            if($this->session->has('SOCIAL_IDENTITY'))
-            {
-                $social=$this->session->get('SOCIAL_IDENTITY');
-
-                if(!$player->existsSocial()) // If Social Id didn't use earlier
-                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
-
-                $player->setAdditionalData($social->getAdditionalData())
-                    ->setSocialId($social->getSocialId())
-                    ->setSocialName($social->getSocialName())
-                    ->setSocialEmail($social->getSocialEmail())
-                    ->update()
-                    ->updateSocial();
-
-                if ($social->getAdditionalData()[$social->getSocialName()]['photoURL'])
-                    $this->saveAvatarAction($social->getAdditionalData()[$social->getSocialName()]['photoURL']);
-
-                $this->session->remove('SOCIAL_IDENTITY');
-            }
-
             // check invites
             $invite = false;
             try {
@@ -107,6 +87,28 @@ class Players extends \AjaxController
             if ($player->getId() <= 1000) {
                 $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
             }
+
+            if($this->session->has('SOCIAL_IDENTITY'))
+            {
+                $social=$this->session->get('SOCIAL_IDENTITY');
+
+                if(!$player->existsSocial()) // If Social Id didn't use earlier
+                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
+
+                $player->setAdditionalData($social->getAdditionalData())
+                    ->setSocialId($social->getSocialId())
+                    ->setSocialName($social->getSocialName())
+                    ->setSocialEmail($social->getSocialEmail())
+                    ->update()
+                    ->updateSocial();
+
+                if ($social->getAdditionalData()[$social->getSocialName()]['photoURL'])
+                    $this->saveAvatarAction($social->getAdditionalData()[$social->getSocialName()]['photoURL']);
+
+                $this->session->remove('SOCIAL_IDENTITY');
+                $this->redirect('/');
+            }
+
             $this->ajaxResponse(array(
                 'id' => $player->getId(),
             ));
