@@ -509,7 +509,7 @@ window.setInterval(function() {
         dataType: 'json',
         success: function(data) {
             // if main game screen is visible
-            var gw = $(".ngm-bk:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+            var gw = $(".ngm-bk .rls-r-ts:visible").length ||  $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
             if (!gw) {
                 if (data.res && data.res.moment == 1) {
                     $('.popup').hide();

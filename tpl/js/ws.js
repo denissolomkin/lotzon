@@ -66,7 +66,8 @@ function updateCallback(receiveData)
     if(receiveData.res.top){
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
-        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+receiveData.res.count+'<b> • </b>'+
+        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+
+        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))/(parseInt(receiveData.res.count))*1000):"0")+' = '+receiveData.res.count+'<b> • </b>'+
         (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))):"0")+'');
 
 

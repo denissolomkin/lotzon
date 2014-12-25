@@ -596,7 +596,7 @@
 <!-- ==========================================================================
                                 MAIL POPUP
 ========================================================================== -->
-<?print_r($socialIdentity->getAdditionalData()['Twitter']);?>
+
 <div class="mail-popup popup" id="mail-block" <?=($socialIdentity OR 1 )? 'style="display:block"' : ''?>>
     <div class="mb-table">
         <div class="mb-tr">
@@ -605,13 +605,14 @@
                     <div class="pu-b-c" id="mb-close" onclick="$('.mail-popup').fadeOut(200);"></div>
                     <div class="b-m" id="cl-check">
 
-
                         <!-- add class "registration" or "login" -->
+
+
                         <div class="t-b">
                             Для завершения регистрации через <?=($socialIdentity->getSocialName()?:'')?> введите свой email
                         </div>
                         <!-- MAIL FORM -->
-                        <form id="mail-block-form" name="mail" style="display:block">
+                        <form id="mail-block-form" name="mail" style="display:none">
                             <div id="mail-form">
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
@@ -621,17 +622,17 @@
                                     <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Отправить" />
+                                    <input type="submit" class="sb_but disabled" disabled value="Зарегистрироваться" />
                                 </div>
                             </div>
                         </form>
 
                         <!-- MAIL LOGIN FORM -->
-                        <form id="mail-block-form" name="login" style="display:none">
+                        <form id="mail-block-form" name="login" style="display:block">
                             <div id="mail-form">
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>">
                                 </div>
                                 <div class="ib-p">
                                     <div class="ph">Пароль</div>
@@ -641,7 +642,8 @@
                                     <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Отправить" />
+
+                                    <input type="submit" class="sb_but disabled" disabled value="Войти" />
                                 </div>
                             </div>
                         </form>

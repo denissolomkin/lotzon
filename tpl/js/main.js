@@ -698,6 +698,7 @@ $(function(){
             success: function(data) {
                 if (data.status == 1) {
                     btn.removeClass('int');
+                    btn.wrapAll('<a href="./auth/'+provider+'"></a>');
                 } else {
                     alert(data.message);
                 }

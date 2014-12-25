@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session2, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
+use \Application, \Config, \Player, \EntityException, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -32,7 +32,7 @@ class OrdersController extends \AjaxController
         }
         
         $order = new ShopItemOrder();
-        $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
+        $order->setPlayer($this->session->get(Player::IDENTITY))
               ->setItem($item)
               ->setName($this->request()->post('name'))
               ->setSurname($this->request()->post('surname'))

@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \Session2, \PlayersModel, \ShopModel, \NewsModel;
+use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \PlayersModel, \ShopModel, \NewsModel;
 use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -190,13 +190,21 @@ class Index extends \SlimController\SlimController
         $lastLottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
         $lastLottery = array_shift($lastLottery);
 
-        $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();        
+        $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
+
+        if($session->has('SOCIAL_IDENTITY'))
+        {
+            $socialIdentity = $session->get('SOCIAL_IDENTITY');
+            if($session->has('SOCIAL_IDENTITY_DISABLED'))
+                $session->remove('SOCIAL_IDENTITY')->remove('SOCIAL_IDENTITY_DISABLED');
+            else $session->set('SOCIAL_IDENTITY_DISABLED',1);
+        }
 
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,
             'showEmail'   => $showEmail,
             'gameInfo'    => $gameInfo,
-            'socialIdentity'      => $session->get('SOCIAL_IDENTITY'),
+            'socialIdentity'  => $socialIdentity,
             'country'     => $this->country,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,

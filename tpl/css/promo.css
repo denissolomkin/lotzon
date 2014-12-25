@@ -293,6 +293,8 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 .mail-popup .lp-b .focus .ph {display:block;}
 .mail-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .mail-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
+.mail-popup .lp-b #mail-block-form[name="login"] .ib-l .m_input[name="login"] {cursor:pointer;}
+.mail-popup .lp-b .ib-l .ph {display:block;}
 .mail-popup .lp-b .ib-l .m_input, .mail-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-regular;width:250px;}
 .mail-popup .lp-b .ib-l .m_input, .mail-popup .lp-b .ib-p .m_input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */

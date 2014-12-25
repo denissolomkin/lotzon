@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Config,  \Hybrid_Auth, \Player, \EntityException, \Session2, \WideImage,  \Common;
+use \Config,  \Hybrid_Auth, \Player, \EntityException, \WideImage,  \Common;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 

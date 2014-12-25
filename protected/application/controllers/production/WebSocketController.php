@@ -251,7 +251,7 @@ class WebSocketController implements MessageComponentInterface {
 
 
 
-                if($this->rating[$name]['timeout']<time()) {
+                if($this->rating[$name]['timeout']>time()) {
                     $top=$this->rating[$name]['top'];
                 }
                 else
@@ -287,6 +287,20 @@ ORDER By
 +
 ( ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) / ( count(g.Id) + ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) ) * 1.5
 LIMIT 11";
+
+
+                    $sql =  "
+SELECT
+sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I,
+(sum(g.Win)/count(distinct(g.GameUid))) R
+FROM `PlayerGames` g
+LEFT JOIN Players p On p.Id=g.PlayerId
+where g.GameId = :gameid
+group by g.PlayerId
+having T > (SELECT (count(distinct(GameUid))/count(distinct(PlayerId))) FROM PlayerGames)
+OR g.PlayerId = :playerid
+order by R DESC
+LIMIT 11";
                 // echo time()." ".$sql."\n";
 
                 try {
@@ -307,7 +321,7 @@ LIMIT 11";
                 }
 
                     $this->rating[$name]['top']=$top;
-                    $this->rating[$name]['timeout']=time()+300;
+                    $this->rating[$name]['timeout']=time()+5*60*60;
 
                 }
 

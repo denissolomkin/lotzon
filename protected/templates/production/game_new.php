@@ -770,14 +770,14 @@
                         <div class="l">Скоро</div>
                         <div class="r"></div>
                     </div>
-                    <div class="gm-bt" data-game="44"><img src="tpl/img/game-sea-battle.png"></div>
+                    <img src="tpl/img/game-sea-battle.png">
                 </div>
                 <div class="td r">
                     <!--div class="gm-if-bk">
                         <div class="l">Скоро</div>
                         <div class="r"></div>
                     </div-->
-                    <div class="gm-bt" data-game="55"><img src="tpl/img/game-dots.png"></div>
+                    <img src="tpl/img/game-dots.png">
                 </div>
             </div>
         </div>
@@ -1009,7 +1009,7 @@
 
                         <div class="rls-r-ws">
                             <b>победители</b>
-                            <span>сыграно игр <i>•</i> побед</span>
+                            <span>рейтиHг <i>=</i> сыграно игр <i>•</i> побед</span>
                         </div>
                         <ul class="rls-r-prs">
                             <li>
