@@ -114,7 +114,7 @@ class NoticesDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':dn' => ($player->getDateLastNotice()?:1),
+                ':dn' => ($player->getDateLastNotice()>0 ? $player->getDateLastNotice() : 1),
                 ':dr' => $player->getDateRegistered(),
                 ':id' => $player->getId()
             ));

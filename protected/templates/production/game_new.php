@@ -925,7 +925,7 @@
                             <div class="bk-bt-rl"><spn>назад<br/>к описанию игры</spn></div>
                         </div>
                         <div class="gm-if-bk">
-                            <div class="l">Кто больше?</div>
+                            <div class="l">Кто больше</div>
                         </div>
 
                         <div class="prc-bl">
