@@ -597,7 +597,7 @@
                                 MAIL POPUP
 ========================================================================== -->
 
-<div class="mail-popup popup" id="mail-block" <?=($socialIdentity OR 1 )? 'style="display:block"' : ''?>>
+<div class="mail-popup popup" id="mail-block" <?=($socialIdentity)? 'style="display:block"' : ''?>>
     <div class="mb-table">
         <div class="mb-tr">
             <div class="mb-td">
@@ -609,7 +609,7 @@
 
 
                         <div class="t-b">
-                            Для завершения регистрации через <?=($socialIdentity->getSocialName()?:'')?> введите свой email
+                            Для завершения регистрации через <?=($socialIdentity?$socialIdentity->getSocialName():'')?> введите свой email
                         </div>
                         <!-- MAIL FORM -->
                         <form id="mail-block-form" name="mail" style="display:none">
