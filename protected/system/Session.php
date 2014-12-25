@@ -1,10 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler;
-use Symfony\Component\HttpFoundation\Request;
-
 class Session2
 {
     private static $_instances = array();
@@ -54,7 +49,7 @@ class Session2
     public function start()
     {
 
-        session_start();
+        // session_start();
         return $this;
     }
 

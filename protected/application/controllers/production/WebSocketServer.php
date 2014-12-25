@@ -1,33 +1,38 @@
 <?php
-namespace controllers\production;
 
-use WebSocket\WebSocketController;
+namespace controllers\production;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\Session\SessionProvider;
 use Ratchet\WebSocket\WsServer;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler;
-use \Memcache;
 
-// load application class
-require_once PATH_APPLICATION . 'Application.php';
 
 class WebSocketServer
 {
     public function runAction()
     {
-        $memcache = new Memcache;
+        // file_get_contents('/../../../../bin/server.php');
+        die;
+        require_once dirname(__DIR__) . '/../../../vendor/autoload.php';
+        require_once dirname(__DIR__) . '/../../../pathes.php';
+// load application class
+        require_once PATH_APPLICATION . 'Application.php';
+//echo dirname(__DIR__);die();
+        \Application::import(PATH_APPLICATION . '/controllers/production/WebSocketController.php');
+
+        $memcache = new \Memcache;
         $memcache->connect('localhost', 11211);
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
                     new SessionProvider(
-                        new WebSocketController(),
+                        new WebSocketController,
                         new MemcacheSessionHandler($memcache)
                     )
                 )
             )
-            , 8080
+            ,8080
         );
         $server->run();
     }

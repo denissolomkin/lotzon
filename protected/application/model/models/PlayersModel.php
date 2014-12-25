@@ -23,14 +23,30 @@ class PlayersModel extends Model
         return $this->getProcessor()->getPlayersCount();
     }
 
-    public function getList($limit = 0, $offset = 0, $sort = array())
+    public function getList($limit = 0, $offset = 0, $sort = array(), $search=0)
     {
-        return $this->getProcessor()->getList($limit, $offset, $sort);
+        return $this->getProcessor()->getList($limit, $offset, $sort, $search);
     }
 
     public function checkNickname(Entity $player) 
     {
         return $this->getProcessor()->checkNickname($player);   
+    }
+
+    public function updateSocial(Entity $player)
+    {
+        return $this->getProcessor()->updateSocial($player);
+    }
+
+    public function disableSocial(Entity $player)
+    {
+        return $this->getProcessor()->disableSocial($player);
+    }
+
+
+    public function existsSocial(Entity $player)
+    {
+        return $this->getProcessor()->existsSocial($player);
     }
 
     public function saveAvatar(Entity $player) 
@@ -51,6 +67,11 @@ class PlayersModel extends Model
     public function decrementSocialPostsCount(Entity $player) 
     {
         return $this->getProcessor()->decrementSocialPostsCount($player);
+    }
+
+    public function updateLastNotice(Entity $player)
+    {
+        return $this->getProcessor()->updateLastNotice($player);
     }
 
     public function markOnline(Entity $player)

@@ -3,6 +3,8 @@ var winChance = false;
 var filledTicketsCount = 0;
 
 $(function(){
+
+
     /* ==========================================================================
                         Start Slide functional
      ========================================================================== */
@@ -433,7 +435,168 @@ $(function(){
     /* ==========================================================================
                                 Info block functional
      ========================================================================== */
-    $('.n-add-but, .n-mr-cl-bt-bk .mr').on('click', function(){
+
+    $('.reviews .rv-upld-img').on('click', initReviewUpload);
+
+    var currentReview = {
+        image: '',
+        text: '',
+        id: '',
+    };
+
+    $(".reviews .rv-but-add").on('click', function() {
+
+        currentReview.text=$('.reviews .rv-txt .textarea').html();
+        if(currentReview.text)
+        $.ajax({
+            url: "/review/save/",
+            method: 'POST',
+            async: true,
+            data: currentReview,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    currentReview.image = null;
+
+                    $('.reviews .rv-form').hide();
+                    $('.reviews .rv-txt .textarea').html('');
+                    $('.reviews .rv-image').css('background', '#e1ecee').css('opacity', '1');
+                    $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-upload-review.png');
+                    $('.rv-sc').fadeIn(200);
+
+                    window.setTimeout(function(){
+                        $('.rv-sc').hide();
+                        $('.reviews .rv-form').fadeIn(200);
+                    }, 2400);
+
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+    });
+
+        function initReviewUpload() {
+
+            var image = $('.reviews .rv-image');
+            if(!currentReview.image)
+            {
+                // create form
+                var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
+                //$(button).parents('.photoalbum-box').prepend(form);
+
+                var input = form.find('input[type="file"]').damnUploader({
+                    url: '/review/uploadImage',
+                    fieldName: 'image',
+                    data: currentReview,
+                    dataType: 'json',
+                });
+
+
+
+                input.off('du.add').on('du.add', function(e) {
+
+                    e.uploadItem.completeCallback = function(succ, data, status) {
+                        // image.attr('src', data.res.imageWebPath).show();
+                        image.css('background', 'url("'+data.res.imageWebPath+'") no-repeat').css('opacity','0.5').css('background-size', 'cover');
+                        $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-delete-review.png');
+                        currentReview.image = data.res.imageName;
+                    };
+
+                    e.uploadItem.progressCallback = function(perc) {
+                        console.log(perc)
+                    }
+
+                    e.uploadItem.addPostData('Id', currentReview.id);
+                    e.uploadItem.addPostData('Image', currentReview.image);
+                    e.uploadItem.upload();
+                });
+
+                form.find('input[type="file"]').click();
+            } else {
+
+
+                $.ajax({
+                    url: "/review/removeImage/",
+                    method: 'POST',
+                    async: true,
+                    data: {image:currentReview.image},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 1) {
+
+                            image.css('background', '#e1ecee').css('opacity', '1');
+                            $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-upload-review.png');
+                            currentReview.image = null;
+
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Unexpected server error');
+                    }
+                });
+
+
+            }
+    }
+
+
+    $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
+        var reviewsBlock = $('.reviews');
+        loadReviews(reviewsBlock.find('.rv-item').length, function(data) {
+            if (data.res.reviews.length) {
+                reviewsBlock.addClass('b-ha');
+                var html = '';
+
+                $(data.res.reviews).each(function(id, review) {
+                    html += '<div class="rv-item"><div class="rv-i-avtr">';
+
+                    if(review.playerAvatar)
+                        html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'">';
+                    else
+                        html += '<img src="/tpl/img/default.jpg">';
+
+                    html+='</div><div class="rv-i-tl">'+review.playerName+' • '+review.date+'</div><div class="rv-i-txt">'+review.text+'</div>';
+
+                    if(review.image)
+                        html += '<div class="rv-i-img"><img src="/filestorage/reviews/'+review.image+'"></div>';
+
+                    html+='</div>';
+                });
+                $('.rv-items .h-ch').append(html);
+
+                $('.rv-items').height($('.rv-items .h-ch').height());
+                $('.rv-add-but').hide();
+                if (!data.res.keepButtonShow) {
+                    $('.rv-mr-cl-bt-bk .mr').hide();
+                }
+                reviewsBlock.find('.rv-mr-cl-bt-bk').show();
+            }
+        }, function() {}, function() {});
+    });
+
+
+    $('.reviews .rv-mr-cl-bt-bk .cl').on('click', function(){
+        var reviewsBlock = $('.reviews');
+        $('.rv-items').find('.rv-item').each(function(id, review){
+            if (id >= 6) {
+                $(review).remove();
+            }
+        });
+        $('.rv-items').removeAttr('style');
+        $('.rv-mr-cl-bt-bk .mr').show();
+        $(this).closest('.rv-mr-cl-bt-bk').hide();
+        $('.rv-add-but').show();
+        reviewsBlock.removeClass('b-ha');
+    });
+
+
+    $('.news .n-add-but, .n-mr-cl-bt-bk .mr').on('click', function(){
         var newsBlock = $('.news');
         loadNews(newsBlock.find('.n-item').length, function(data) {
             if (data.res.news.length) {
@@ -454,7 +617,7 @@ $(function(){
         }, function() {}, function() {});
     });
 
-    $('.n-mr-cl-bt-bk .cl').on('click', function(){
+    $('.news .n-mr-cl-bt-bk .cl').on('click', function(){
         var newsBlock = $('.news');
         $('.n-items').find('.n-item').each(function(id, news){
             if (id >= 6) {
@@ -522,12 +685,36 @@ $(function(){
 
     // PROFILE INFORMATIONS //
 
+    $(".pi-cs-bk .cs-int-bt.int").on('click', function() {
+        btn=$(this);
+
+        provider=btn.data('provider');
+        $.ajax({
+            url: "/players/disableSocial/"+provider,
+            method: 'GET',
+            async: true,
+            data: null,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    btn.removeClass('int');
+                    btn.wrapAll('<a href="./auth/'+provider+'"></a>');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+    });
+
     $('.profile aside li').on('click', function(){
         var link = $(this).attr('data-link');
         $('.profile aside li').removeClass('now');
         $(this).addClass('now');
         $('.profile ._section').hide();
-        $('.'+link).show();
+        $('.'+link).fadeIn(200);
         if(link == 'profile-info'){
             $('.pi-inp-bk input').each(function(){                
                 $(this).val($(this).attr('data-valid'))
@@ -1043,19 +1230,26 @@ $(function(){
     var navPos = $('nav.top-nav').offset().top;
     var tikets = $('.tickets').offset().top;
     var prizes = $('.prizes').offset().top;
-    var news = $('.news').offset().top;
+    // var news = $('.news').offset().top;
+    var reviews = $('.reviews').offset().top;
     var rules = $('.rules').offset().top;
     var profile = $('.profile').offset().top;
     var chance = $('.chance').offset().top;
     if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#tickets-but').addClass('now');
-    }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
+    }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (reviews - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#prizes-but').addClass('now');
+    }else if($(document).scrollTop() > (reviews - 300) && $(document).scrollTop() < (rules - 300)){
+        $('.tn-mbk_li').removeClass('now');
+        $('#reviews-but').addClass('now');
+    /*}else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#prizes-but').addClass('now');
     }else if($(document).scrollTop() > (news - 300) && $(document).scrollTop() < (rules - 300)){
         $('.tn-mbk_li').removeClass('now');
-        $('#news-but').addClass('now');
+        $('#news-but').addClass('now');*/
     }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile - 300)){
         $('.tn-mbk_li').removeClass('now');
         $('#rules-but').addClass('now');
@@ -1075,19 +1269,26 @@ $(function(){
     $(document).on('scroll', function(){
         tikets = $('.tickets').offset().top;
         prizes = $('.prizes').offset().top;
-        news = $('.news').offset().top;
+        //news = $('.news').offset().top;
+        reviews = $('.reviews').offset().top;
         rules = $('.rules').offset().top;
         profile = $('.profile').offset().top;
         chance = $('.chance').offset().top;
         if($(document).scrollTop() >= 0 && $(document).scrollTop() < (prizes - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#tickets-but').addClass('now');
+        }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (reviews - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#prizes-but').addClass('now');
+        }else if($(document).scrollTop() > (reviews - 300) && $(document).scrollTop() < (rules - 300)){
+            $('.tn-mbk_li').removeClass('now');
+            $('#reviews-but').addClass('now');/*
         }else if($(document).scrollTop() > (prizes - 300) && $(document).scrollTop() < (news - 300)){
             $('.tn-mbk_li').removeClass('now');
             $('#prizes-but').addClass('now');
         }else if($(document).scrollTop() > (news - 300) && $(document).scrollTop() < (rules - 300)){
             $('.tn-mbk_li').removeClass('now');
-            $('#news-but').addClass('now');
+            $('#news-but').addClass('now');*/
         }else if($(document).scrollTop() > (rules - 300) && $(document).scrollTop() < (profile -300)){
             $('.tn-mbk_li').removeClass('now');
             $('#rules-but').addClass('now');
@@ -1106,7 +1307,11 @@ $(function(){
             $('nav.top-nav').removeClass('fixed');
         }
     });
+
+
 });
+
+
 function moneyOutput(type, form) {
     form = $(form);
     var data = {};
@@ -1299,76 +1504,16 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
-<!-- NEW GAMES PREVIEW -->
-$('.ch-gm-tbl .ngm-bt').click(function(){
-    var gi = $(this).data('game');
-    $('.msg-tb.won').hide();
-    $('.msg-tb.los').hide();
-    // hide all games;
-    $('.game-bk .gm-tb').hide();
-    $('.game-bk .rw-b .tb').hide();
-    $('.game-bk .play').hide();
-    $('.game-bk li').removeClass('won').removeClass('los');
-    $('.game-bk li').removeClass('true').removeClass('blink');
-    // show current game
 
-    $('.ch-bk').fadeOut(200);
-    window.setTimeout(function(){
-        $('.ngm-bk').fadeIn(200);
-    }, 200);
-
-    /*    $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
-
-
-
-     $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
-     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
-     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
-     $('.ch-bk').fadeOut(200);
-     window.setTimeout(function(){
-     $('.game-bk').fadeIn(200);
-     }, 200);
-
-     $('.game-bk .play .bt').off('click').on('click', function() {
-     winChance = false;
-     var btn = $(this);
-     startChanceGame(gi, function(data) {
-     updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
-     btn.parents('.play').hide();
-     }, function(data) {
-     if (data.message=="INSUFFICIENT_FUNDS") {
-     $('.pz-ifo-bk').hide();
-     $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
-     }
-     }, function() {});
-     });
-     */
-});
-
-<!-- NEW GAME BACK -->
-$('.ngm-bk .bk-bt').on('click', function() {
-    $('.ngm-bk').fadeOut(200);
-    window.setTimeout(function(){
-        $('.ch-bk').fadeIn(200);
-    }, 200);
-});
 $('#mchance').find('.cs').on('click', function() {
     location.reload();
 });
 
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
-    var gi = $(this).data('game');
-    $('.msg-tb.won').hide();
-    $('.msg-tb.los').hide();
-    // hide all games;
-    $('.game-bk .gm-tb').hide();
-    $('.game-bk .rw-b .tb').hide();
+    hideAllGames();
     $('.game-bk .play').show();
-    $('.game-bk li').removeClass('won').removeClass('los');
-    $('.game-bk li').removeClass('true').removeClass('blink');
-    // show current game
-    
+    var gi = $(this).data('game');
     $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
 
@@ -1479,8 +1624,38 @@ $('.game-bk .bk-bt').on('click', function() {
         $('.ch-bk').fadeIn(200);
     }, 200); 
 });
+
 $('#mchance').find('.cs').on('click', function() {
     location.reload();
+});
+
+<!-- NOTICES -->
+$('.p-cnt aside .ul_li[data-link="profile-notice"]').on('click', function(){
+        var div=$( '.profile-notice .notices .n-items' );
+        getNotices(0, function(data) {
+            if (data.res.length) {
+                var html = '';
+                var unread = 0;
+                $(data.res).each(function(id, tr) {
+                    unread+=tr.unread;
+                    html += '<div class="n-item'+(tr.unread?'':' read')+'">' +
+                    '<div class="n-i-tl"><div class="n-i-dt">'+tr.date+' • </div>' +
+                    '<div class="n-i-ttl">'+tr.title+'</div></div>' +
+                    '<div class="n-i-txt">'+tr.text+'</div>' +
+                    '</div>';
+                });
+
+                updateNotices(unread);
+                div.html($(html));
+            }
+        }, function(data) {}, function() {});
+
+    setTimeout(function(){
+        $('.notice-unread').fadeOut(200);
+        $('.n-item:not(.read)').addClass('read');
+    }, 4500);
+
+
 });
 
 <!-- HISTORY OF TRANSACTIONS -->
@@ -1495,7 +1670,7 @@ $('.st-hy-bt').on('click', function(){
             if (data.res.length) {
                 var html = '';
                 $(data.res).each(function(id, tr) {
-                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class="tm">')+'</span></span></div></div>';
                 });
                 div.find('.tb').html($(html));
             }
@@ -1545,6 +1720,17 @@ $('.vk-share').on('click', function() {
 });
 
 
+function updateNotices(notices) {
+    unreadNotices = notices;
+    if (unreadNotices>0) {
+        $('#profile-but a span.notice-unread').html(notices);
+        $('#notice-unread').html(notices);
+        $('.notice-unread').show();
+    }else{
+        $('.notice-unread').hide();
+    }
+}
+
 function updatePoints(points) {
     playerPoints = points;
     points=points.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -1553,9 +1739,19 @@ function updatePoints(points) {
 
 
 function updateMoney(money) {
-    playerMoney = parseFloat(money.toFixed(2));
-    money=money.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-    $('.plMoneyHolder').text(money);
+    playerMoney = parseFloat(money).toFixed(2);
+    money=parseFloat(money).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plMoneyHolder').text(money.replace('.00',''));
+}
+
+function hideAllGames() {
+    $('.msg-tb.won').hide();
+    $('.msg-tb.los').hide();
+    $('.game-bk .gm-tb').hide();
+    $('.game-bk .rw-b .tb').hide();
+    $('.game-bk .play').hide();
+    $('.game-bk li').removeClass('won').removeClass('los');
+    $('.game-bk li').removeClass('true').removeClass('blink');
 }
 
 String.prototype.replaceArray = function(find, replace) {

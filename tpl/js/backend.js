@@ -178,6 +178,25 @@ function loadNews(offset, successFunction, failFunction, errorFunction) {
     });      
 }
 
+function loadReviews(offset, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/content/reviews?offset="+offset,
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+        }
+    });
+}
+
 function createItemOrder(order, successFunction, failFunction, errorFunction) 
 {
     $.ajax({
@@ -373,6 +392,28 @@ function getTransactions(offset, currency, successFunction, failFunction, errorF
     });   
 }
 
+function getNotices(offset, successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/content/notices/",
+        method: 'GET',
+        data: {
+            offset: offset,
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+        }
+    });
+}
+
 function socialSuccessPost(successFunction, failFunction, errorFunction) {
     $.ajax({
         url: "/players/social/",
@@ -468,7 +509,7 @@ window.setInterval(function() {
         dataType: 'json',
         success: function(data) {
             // if main game screen is visible
-            var gw = $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+            var gw = $(".ngm-bk .rls-r-ts:visible").length ||  $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
             if (!gw) {
                 if (data.res && data.res.moment == 1) {
                     $('.popup').hide();

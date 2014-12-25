@@ -42,22 +42,85 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function updateSocial(Entity $player)
+    {
+
+        if($player->getSocialId())
+            try {
+                $sql = "REPLACE INTO `PlayerSocials` (`PlayerId`, `SocialId`, `SocialName`, `SocialEmail`, `Enabled`)
+                      VALUES (:id, :socialid, :socialname, :socialemail, :enabled)";
+
+                DB::Connect()->prepare($sql)->execute(array(
+                    ':id'           => $player->getId(),
+                    ':socialemail'  => $player->getSocialEmail(),
+                    ':socialid'     => $player->getSocialId(),
+                    ':socialname'   => $player->getSocialName(),
+                    ':enabled'      => $player->getSocialEnable(),
+                ));
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            }
+
+
+    }
+
+    public function existsSocial(Entity $player)
+    {
+
+        if($player->getSocialId())
+            try {
+                $sql = "SELECT `PlayerId` FROM `PlayerSocials` WHERE
+                    `SocialId` = :socialid AND `SocialName` = :socialname";
+
+                $sth = DB::Connect()->prepare($sql);
+                $sth->execute(array(
+                    ':socialid'     => $player->getSocialId(),
+                    ':socialname'   => $player->getSocialName(),
+                ));
+
+                return $sth->fetchColumn();
+
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            }
+
+
+    }
+
+
+    public function disableSocial(Entity $player)
+    {
+        if($player->getSocialName())
+            try {
+                $sql = "UPDATE `PlayerSocials` SET `Enabled` = 0
+                        WHERE `PlayerId` = :id AND `SocialName`=:socialname";
+
+                DB::Connect()->prepare($sql)->execute(array(
+                    ':id'           => $player->getId(),
+                    ':socialname'   => $player->getSocialName(),
+                ));
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            }
+        return $player;
+    }
+
     public function update(Entity $player)
-    {   
-        $sql = "UPDATE `Players` SET  
+    {
+        $sql = "UPDATE `Players` SET
                     `DateLogined` = :dl, `Country` = :cc, 
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, 
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
-                    `Money` = :money, `Points`  = :points, `GamesPlayed` = :gp
+                    `Money` = :money, `Points`  = :points, `GamesPlayed` = :gp, `AdditionalData` = :ad
                 WHERE `Id` = :id OR `Email` = :email";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':dl'     => $player->getDateLastLogin(),
-                ':cc'     => $player->getCountry(),
-                ':nic'    => $player->getNicname(),
-                ':name'   => $player->getName(),
+                ':dl'       => $player->getDateLastLogin(),
+                ':cc'       => $player->getCountry(),
+                ':nic'      => $player->getNicname(),
+                ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
                 ':secname'  => $player->getSecondName(),
                 ':phone'    => $player->getPhone(),
@@ -70,6 +133,7 @@ class PlayersDBProcessor implements IProcessor
                 ':money'    => $player->getMoney(),
                 ':points'   => $player->getPoints(),
                 ':gp'       => $player->getGamesPlayed(),
+                ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : ''
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);   
@@ -80,20 +144,31 @@ class PlayersDBProcessor implements IProcessor
 
     public function fetch(Entity $player)
     {
-        $sql = "SELECT * FROM `Players` WHERE `Id` = :id OR `Email` = :email LIMIT 1";
-
+        $sql = "SELECT p.* FROM `Players` p
+                LEFT JOIN `PlayerSocials` s
+                  ON s.`PlayerId`=p.`Id`
+                WHERE p.`Id` = :id OR p.`Email` = :email
+                  OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
+                  OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
+                GROUP BY p.Id";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':id'    => $player->getId(),
                 ':email' => $player->getEmail(),
+                ':socialid'    => $player->getSocialId(),
+                ':socialname'    => $player->getSocialName(),
+                ':socialemail'    => $player->getSocialEmail()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);      
+            throw new ModelException("Error processing storage query", 500);
         }
 
         if (!$sth->rowCount()) {
             throw new ModelException("Player not found", 404);
+        } elseif($sth->rowCount()>1){
+
+            throw new ModelException("Found more than one player", 400);
         }
 
         $data = $sth->fetch();
@@ -121,9 +196,13 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function getList($limit = 0, $offset = 0, array $sort) 
+    public function getList($limit = 0, $offset = 0, array $sort, $search=0)
     {
         $sql = "SELECT *, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
+
+        if ($search) {
+                $sql .= ' WHERE '.(is_numeric($search)?'`Id`='.$search.' OR ':'').'`Surname` LIKE "%'.$search.'%" OR `Name` LIKE "%'.$search.'%" OR `Email` LIKE "%' . $search.'%"';
+        }
 
         if (count($sort)) {
             if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
@@ -247,6 +326,23 @@ class PlayersDBProcessor implements IProcessor
         return $player;   
     }
 
+    public function updateLastNotice(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `DateNoticed` = :date WHERE  `Id` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':date'  => $player->getDateLastNotice(),
+                ':id'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+    }
+
     public function markOnline(Entity $player)
     {
         $sql = "UPDATE `Players` SET `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
@@ -278,7 +374,6 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);   
         }
 
-        return $player;   
     }
 
     public function markReferalPaid(Entity $player) {

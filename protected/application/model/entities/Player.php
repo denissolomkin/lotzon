@@ -19,12 +19,18 @@ class Player extends Entity
 
     const REFERAL_INVITE_COST = 20;
     const SOCIAL_POST_COST = 20;
+    const SOCIAL_PROFILE_COST = 40;
 
     private $_id         = 0;
     private $_email      = '';
     private $_password   = '';
     private $_salt       = '';
-    
+
+    private $_socialid     = 0;
+    private $_socialemail  = '';
+    private $_socialname   = '';
+    private $_socialenable = 1;
+
     private $_nicName    = '';
     private $_name       = '';
     private $_surname    = '';
@@ -39,6 +45,7 @@ class Player extends Entity
 
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
+    private $_dateLastNotice = '';
     private $_country        = '';
 
     private $_generatedPassword = '';
@@ -79,6 +86,54 @@ class Player extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setSocialEnable($socialenable)
+    {
+        $this->_socialenable = $socialenable;
+
+        return $this;
+    }
+
+    public function getSocialEnable()
+    {
+        return $this->_socialenable;
+    }
+
+    public function setSocialId($socialid)
+    {
+        $this->_socialid = $socialid;
+
+        return $this;
+    }
+
+    public function getSocialId()
+    {
+        return $this->_socialid;
+    }
+
+    public function setSocialName($socialname)
+    {
+        $this->_socialname = $socialname;
+
+        return $this;
+    }
+
+    public function getSocialName()
+    {
+        return $this->_socialname;
+    }
+
+    public function setSocialEmail($socialemail)
+    {
+        $this->_socialemail = $socialemail;
+
+        return $this;
+    }
+
+    public function getSocialEmail()
+    {
+        return $this->_socialemail;
     }
 
     public function setEmail($email)
@@ -211,7 +266,25 @@ class Player extends Entity
         }
 
         return $date;
-    }  
+    }
+
+    public function setDateLastNotice($dateLastNotice)
+    {
+        $this->_dateLastNotice = ($dateLastNotice?:time());
+
+        return $this;
+    }
+
+    public function getDateLastNotice($format = null)
+    {
+        $date = $this->_dateLastNotice;
+
+        if (!is_null($format)) {
+            $date = date($format, $this->_dateLastNotice);
+        }
+
+        return $date;
+    }
 
     public function setDateLastLogin($dateLastLogin)
     {
@@ -467,9 +540,14 @@ class Player extends Entity
         return $this;   
     }
 
-    public function setAdditionalData($additionalData) 
+    public function setAdditionalData($additionalData=null)
     {
-        $this->_additionalData = $additionalData;
+
+        if(is_array($additionalData)){
+            $additionalData=array_merge($this->getAdditionalData(),$additionalData);
+            foreach($additionalData as $provider => $info)
+                $this->_additionalData[$provider] = $info;
+        }
 
         return $this;
     }
@@ -524,7 +602,7 @@ class Player extends Entity
                 }
             break;
             case 'fetch' :
-                $this->getId() || $this->validEmail();
+                $this->getSocialId() || $this->getId() || $this->validEmail();
             break;
             case 'login' :
                 $this->validEmail();
@@ -605,6 +683,41 @@ class Player extends Entity
         return true;
     }
 
+    public function updateSocial()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateSocial($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function disableSocial()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $socialData=$this->getAdditionalData()[$this->getSocialName()];
+            $socialData['enabled']=0;
+            $this->setAdditionalData(array($this->getSocialName()=>$socialData))->update();
+            $model::instance()->disableSocial($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function existsSocial()
+    {
+        $model = $this->getModelClass();
+        return $model::instance()->existsSocial($this);
+    }
+
     public function create()
     {
         $this->setPassword($this->compilePassword($this->generatePassword()));
@@ -675,7 +788,7 @@ class Player extends Entity
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
-        Session2::connect()->set(Player::IDENTITY, $this);
+        //Session2::connect()->set(Player::IDENTITY, $this);
 
         $session = new Session();
         $session->set(Player::IDENTITY, $this);
@@ -718,6 +831,18 @@ class Player extends Entity
         return $this;   
     }
 
+    public function updateLastNotice()
+    {
+        $this->setDateLastNotice(time());
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateLastNotice($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+    }
+
     public function markOnline()
     {
         $this->setOnline(true)
@@ -747,6 +872,7 @@ class Player extends Entity
                  ->setBirthday($data['Birthday'])
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
+                 ->setDateLastNotice($data['DateNoticed'])
                  ->setCountry($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setVisibility((boolean)$data['Visible'])
@@ -763,7 +889,7 @@ class Player extends Entity
                  ->setValid($data['Valid'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
-                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : array());
+                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
 
             if ($data['TicketsFilled']) {
                 $this->_isTicketsFilled = true;

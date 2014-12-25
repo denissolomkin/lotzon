@@ -1,7 +1,7 @@
 <?php
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler, \Memcache;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler;
 
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set('display_errors', 1);
@@ -19,14 +19,14 @@ Application::import(PATH_CONFIGS . '*');
 Application::import(PATH_CONTROLLERS . '*');
 
 
-/*$memcache = new Memcache;
+$memcache = new Memcache;
 $memcache->connect('localhost', 11211);
 $storage = new NativeSessionStorage(array(), new MemcacheSessionHandler($memcache));
 $session = new Session($storage);
 $session->start();
-*/
+/*
 Session2::connect()->start();
-
+*/
 
 
 $dispatcher = new \SlimController\Slim(array(

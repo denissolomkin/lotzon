@@ -22,6 +22,7 @@ class Hybrid_User_Profile
          */
         public $identifier = NULL;
 
+        public $interests = NULL;
 	/**
          * User website, blog, web page
          * @var String

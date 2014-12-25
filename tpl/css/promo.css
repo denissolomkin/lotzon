@@ -232,6 +232,124 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 
 
 /* ==========================================================================
+                            Promo-mail-popup styles
+   ========================================================================== */
+.popup {display:none;}
+.mail-popup {width:100%;height:100%;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.8);overflow:auto;}
+.mail-popup .mb-table {display:table;width:100%;height:100%;}
+.mail-popup .mb-tr {display:table-row;}
+.mail-popup .mb-tr .mb-td {display:table-cell;vertical-align:middle;overflow:auto;}
+.rules-bk {width:620px;position:absolute;background-color:#fff;top:0;right:-640px;display:none;}
+.rules-bk .rb-cs-bt {width:30px;height:30px;background:url("../img/bg-but-close-rules.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
+.rules-bk .rb-pg {padding:35px 60px;color:#000;}
+.rules-bk .rb-pg > h2 {margin:0 0 60px 0;padding:0;font:19px/20px Handbook-bold;text-transform:uppercase;}
+.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-bold;text-transform:uppercase;}
+.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font:15px/20px Handbook-regular;}
+.rules-bk .rb-pg > p:last-child {margin:0;}
+
+.mail-popup.active-block {opacity:1;display:block;}
+.mail-popup .lp-b {width:460px;background-color:#ffe400;margin:auto;position:relative;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
+.mail-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:0px;right:-50px;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
+.mail-popup .lp-b .b-m {padding:40px 60px 60px 60px;position:relative;}
+.mail-popup .rf-txt {font:14px/1 Handbook-regular;color:#000;margin:50px 0 15px 0;}
+.mail-popup .rf-txt > b {font-family:Handbook-bold;color:#c51e1e;font-weight:normal;}
+#reg-form .ch-b {padding:24px 0 0 0;text-align:center;font:16px/20px Handbook-regular;color:#000;margin-bottom:-35px;}
+#reg-form .ch-b .rs-sw {font:16px/1 Handbook-bold;text-decoration:none;color:#000;}
+#reg-form .ch-b .rs-sw:hover {text-decoration: underline;}
+
+
+
+
+
+
+#reg-form.rul-error .e-t {display:none;}
+#reg-form.rul-error input[type="checkbox"] + label, #reg-form.rul-error input[type="checkbox"] + label > a {color:#c51e1e;}
+#reg-form.rul-error input[type="checkbox"] + label:before {border-color:#c51e1e;}
+.mail-popup .lp-b .b-m .t-b {overflow:hidden;}
+.mail-popup .t-b .tb_a-l, .mail-popup .t-b .tb_a-r {display:block;font:24px/1 Handbook-bold;text-transform:uppercase;text-decoration:none;color:#000;letter-spacing:1px;}
+.mail-popup .t-b .tb_a-l {float:left;}
+.mail-popup .t-b .tb_a-r {float:right;opacity:0.3;}
+.mail-popup .registration .t-b .tb_a-l {opacity:0.3;}
+.mail-popup .rec-txt .t-b .tb_a-l, .mail-popup .rec-txt .t-b .tb_a-r {opacity:0.3;}
+.mail-popup .rec-pass .tb_a-l, .mail-popup .rec-pass .tb_a-r {opacity:0.3;}
+.mail-popup .rec-pass .tb_a-l:hover, .mail-popup .rec-pass .tb_a-r:hover {text-decoration:underline;}
+.mail-popup .registration .t-b .tb_a-l:hover {text-decoration:underline;}
+.mail-popup .registration .t-b .tb_a-r {opacity:1;cursor:text;}
+.mail-popup .mail .t-b .tb_a-l {opacity:1;cursor:text;}
+.mail-popup .mail .t-b .tb_a-r:hover {text-decoration:underline;}
+.mail-popup .lp-b .ib-l {height:31px;position:relative;border-bottom:1px solid #b29f00;color:#000;}
+.mail-popup .lp-b .registration .ib-l {margin-bottom:28px;}
+.mail-popup .lp-b .ib-l.focus {border-bottom:1px solid #000;}
+#mail-form {padding-top:43px;}
+#pass-rec-form .ib-l {margin-bottom:60px;}
+.mail-popup .lp-b .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font:18px/29px Handbook-italic;display:none;}
+.font-fix .mail-popup .lp-b .ph {line-height:32px;}
+.mail-popup .lp-b .focus .ph {display:block;}
+.mail-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
+.mail-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
+.mail-popup .lp-b #mail-block-form[name="login"] .ib-l .m_input[name="login"] {cursor:pointer;}
+.mail-popup .lp-b .ib-l .ph {display:block;}
+.mail-popup .lp-b .ib-l .m_input, .mail-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-regular;width:250px;}
+.mail-popup .lp-b .ib-l .m_input, .mail-popup .lp-b .ib-p .m_input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */
+    height:28px;
+}
+.mail-popup .lp-b .ch-b-bk {overflow:hidden;padding:34px 0 25px 0;position:relative;}
+/*.mail-popup .registration .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;bottom:-20px;left:0;display:none;}*/
+.mail-popup .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;top:5px;left:0;display:none;}
+.mail-popup .lp-b .ch-b-bk .ch-b {float:left;}
+.mail-popup .lp-b .ch-b-bk .r-p {float:right;font:13px/1 Handbook-bold;color:#000;text-decoration:none;margin-top:5px;}
+.mail-popup .lp-b .ch-b-bk .r-p:hover {text-decoration:underline;}
+.mail-popup .rec-txt {display:block;}
+
+
+
+
+.mail-popup input[type="checkbox"] {display:none;}
+
+
+
+.mail-popup .lp-b .s-b {}
+.mail-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #000;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#000;}
+.mail-popup .lp-b .s-b .sb_but.disabled {opacity:0.4;}
+.mail-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}
+.mail-popup .lp-b .s-b .sb_but:hover {border-color:#000;background-color:#000;color:#ffe400;}
+.mail-popup .lp-b .sl-bk {margin-top:28px;overflow:hidden;opacity:1;
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+}
+.mail-popup .lp-b .sl-bk .sl-bk-tl {font:15px/1 Handbook-regular;color:#000;text-align:center;margin-bottom:20px;}
+.mail-popup .lp-b .sl-bk.disabled {opacity:0.4;}
+.mail-popup .lp-b .sl-bk a {display:block;float:left;width:68px;height:48px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social.png");background-repeat:no-repeat;margin-right:20px;}
+.mail-popup .lp-b .sl-bk a:last-child {margin:0;}
+.mail-popup .lp-b .sl-bk a.fb {border-color:#3b5998;background-position:0 0;}
+.mail-popup .lp-b .sl-bk a.vk {border-color:#45668e;background-position:-71px 0;}
+.mail-popup .lp-b .sl-bk a.gp {border-color:#d83b2a;background-position:-3px -50px;}
+.mail-popup .lp-b .sl-bk a.tw {border-color:#4c97d0;background-position:-71px -50px;}
+
+
+.error .ib-l, .error .ib-p {color:#c51e1e!important;border-color:#c51e1e!important;}
+.error .ph, .error .e-t {display:block!important;}
+.mail-popup.error .mail .e-b {display:block;}
+
+.mail #reg-form, .mail #pass-rec-form, .mail #reg-succ-txt {display:none;}
+.mail #mail-form {display:block;}
+.rec-pass #pass-rec-form {display:block;}
+.rec-pass #mail-form, .rec-pass #reg-form {display:none;}
+.rec-txt #mail-form, .rec-txt #reg-form, .rec-txt #pass-rec-form {display:none;}
+.rec-txt #pass-rec-txt {display:block;}
+
+
+/* ==========================================================================
                             Promo-login-popup styles
    ========================================================================== */
 .popup {display:none;}
@@ -357,7 +475,7 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 
 .registration #reg-form {display:block;}
 .registration #login-form, .registration #pass-rec-form {display:none;}
-.login #reg-form, .login #pass-rec-form {display:none;}
+.login #reg-form, .login #pass-rec-form, .login #reg-succ-txt {display:none;}
 .login #login-form {display:block;}
 .rec-pass #pass-rec-form {display:block;}
 .rec-pass #login-form, .rec-pass #reg-form {display:none;}

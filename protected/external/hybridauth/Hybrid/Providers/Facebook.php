@@ -99,8 +99,9 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 	{ 
 		// in case we get error_reason=user_denied&error=access_denied
 		if ( isset( $_REQUEST['error'] ) && $_REQUEST['error'] == "access_denied" ){ 
-			throw new Exception( "Authentication failed! The user denied your request.", 5 );
-		}
+			//throw new Exception( "Authentication failed! The user denied your request.", 5 );
+            $this->session->set('auth_error','access_denied');
+		} else {
 
 		// in case we are using iOS/Facebook reverse authentication
 		if(isset($_REQUEST['access_token'])){
@@ -141,7 +142,9 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 
 		// store facebook access token 
 		$this->token( "access_token", $this->api->getAccessToken() );
-	}
+
+        }
+    }
 
 	/**
 	* logout
@@ -182,7 +185,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		$this->user->profile->profileURL    = (array_key_exists('link',$data))?$data['link']:""; 
 		$this->user->profile->webSiteURL    = (array_key_exists('website',$data))?$data['website']:""; 
 		$this->user->profile->gender        = (array_key_exists('gender',$data))?$data['gender']:"";
-        	$this->user->profile->language      = (array_key_exists('locale',$data))?$data['locale']:"";
+        $this->user->profile->language      = (array_key_exists('locale',$data))?$data['locale']:"";
 		$this->user->profile->description   = (array_key_exists('about',$data))?$data['about']:"";
 		$this->user->profile->email         = (array_key_exists('email',$data))?$data['email']:"";
 		$this->user->profile->emailVerified = (array_key_exists('email',$data))?$data['email']:"";

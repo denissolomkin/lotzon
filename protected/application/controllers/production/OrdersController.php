@@ -1,6 +1,7 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \Session2, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
+use \Application, \Config, \Player, \EntityException, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -8,12 +9,16 @@ class OrdersController extends \AjaxController
 {
     public function init()
     {
+        $this->session = new Session();
         parent::init();
         if ($this->validRequest()) {
-            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
+//            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
+            if (!$this->session->get(Player::IDENTITY) instanceof Player) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }    
-            Session2::connect()->get(Player::IDENTITY)->markOnline();
+//            Session2::connect()->get(Player::IDENTITY)->markOnline();
+            $this->session->get(Player::IDENTITY)->markOnline();
+
         }
     }
 
@@ -27,7 +32,7 @@ class OrdersController extends \AjaxController
         }
         
         $order = new ShopItemOrder();
-        $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
+        $order->setPlayer($this->session->get(Player::IDENTITY))
               ->setItem($item)
               ->setName($this->request()->post('name'))
               ->setSurname($this->request()->post('surname'))
@@ -66,7 +71,8 @@ class OrdersController extends \AjaxController
         $data = $this->request()->post('data');
         if (is_array($data)) {
             $order = new MoneyOrder();
-            $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
+//            $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
+            $order->setPlayer($this->session->get(Player::IDENTITY))
                   ->setType($data['type']);
             unset($data['type']);
 

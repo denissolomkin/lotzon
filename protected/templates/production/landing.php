@@ -317,16 +317,16 @@
                                 <!-- Add class "disabled" -->
                                 <div class="sl-bk">
                                     <div class="sl-bk-tl">Зарегистрироваться через социальную сеть:</div>
-                                    <div>
+                                    <!--div>
                                         <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
 
-                                    </div>
-                                    <!--div>
+                                    </div-->
+                                    <div>
                                         <a href="/auth/Facebook" class="fb"></a>
                                         <a href="/auth/Vkontakte" class="vk"></a>
                                         <a href="/auth/Google" class="gp"></a>
                                         <a href="/auth/Twitter" class="tw"></a>
-                                    </div-->
+                                    </div>
                                 </div>
                                 <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
                                 <!--div class="ch-b">
@@ -364,11 +364,11 @@
                                     <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
                                 </div-->
                                 <div class="sl-bk">
-                                    <!--a href="/auth/Facebook" class="fb"></a>
-                                       <a href="/auth/Vkontakte" class="vk"></a>
-                                       <a href="/auth/Google" class="gp"></a>
-                                       <a href="/auth/Twitter" class="tw"></a-->
-                                    <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
+                                    <a href="/auth/Facebook" class="fb"></a>
+                                    <a href="/auth/Vkontakte" class="vk"></a>
+                                    <a href="/auth/Google" class="gp"></a>
+                                    <a href="/auth/Twitter" class="tw"></a>
+                                    <!--a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a-->
                                 </div>
                             </div>
                         </form>
@@ -489,6 +489,7 @@
     .ml-cn-padd {padding:30px;}
     .ml-cn-padd .ml-cn-txt {font:18px/36px Handbook-regular;color:#000;}
 
+    .ml-cn .e-t {font:13px/1 Handbook-regular;color:#c51e1e;position:absolute;top:5px;left:0;display:none;}
 
     .ml-cn .pi-inp-bk {height:29px;border-bottom:1px solid #e3e3e3;margin:45px 0 38px 0;position:relative;}
     .ml-cn .pi-inp-bk.error {border-color:#c51e1e!important;color:#c51e1e!important;}
@@ -515,6 +516,15 @@
     .ml-cn .ml-cn-but:hover {background-color:#000;color:#fff;}
     .ml-cn .ml-cn-but.disabled {opacity:0.25;}
     .ml-cn .ml-cn-but.disabled:hover {background-color:#fff;color:#000;}
+    .ml-cn .pu-b-c {width: 30px;
+        height: 30px;
+        background: url("/tpl/img/bg-but-close-rules.png") no-repeat 0 0;
+        position: absolute;
+        top: 0;
+        right: -50px;
+        cursor: pointer;
+
+ }
 </style>
 
 
@@ -522,12 +532,18 @@
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="ml-cn pop-box">
+                <div class="pu-b-c" id="mb-close"></div>
                 <div class="ml-cn-padd">
-                    <div class="ml-cn-txt">Для завершения регистрации, введите свой email.</div>
+                    <div class="ml-cn-txt">Для завершения регистрации введите свой email.</div>
                     <div class="pi-inp-bk td">
                         <div class="ph">Email</div>
                         <input type="text" placeholder="Email" name="addr" spellcheck="false" autocomplete="off">
                     </div>
+                    <div class="pi-inp-bk td" style="display:none">
+                        <div class="ph">Пароль</div>
+                        <input type="text" placeholder="Пароль" name="addr" spellcheck="false" autocomplete="off">
+                    </div>
+                    <div class="e-t"></div>
                     <div class="ml-cn-but disabled">подтвердить</div>
                 </div>
             </section>
@@ -556,12 +572,88 @@
             $(this).closest('.ml-cn-padd').find('.ml-cn-but').addClass('disabled');
         }
     });
+    // registration handler
+    $('#mail-conf .ml-cn-but').on('click', function(e) {
+        var form = $('#login-block form[name="register"]');
+        var email = $('#mail-conf').find('input[name="addr"]').val();
+        var rulesAgree = 1;
+        var ref = form.data('ref');
+        registerPlayer({'email':email, 'agree':rulesAgree, 'ref':ref}, function(data){
+            // success
+        }, function(data){
+            $('#mail-conf .e-t').text(data.message);
+        }, function(data) {});
+        return false;
+    });
+
 </script>
 
 <!--=========================================================================
                              END   Game-3.5.2-Email-Confirmation.psd
     ==========================================================================-->
 
+
+<!-- ==========================================================================
+                                MAIL POPUP
+========================================================================== -->
+
+<div class="mail-popup popup" id="mail-block" <?=($socialIdentity)? 'style="display:block"' : ''?>>
+    <div class="mb-table">
+        <div class="mb-tr">
+            <div class="mb-td">
+                <div class="lp-b">
+                    <div class="pu-b-c" id="mb-close" onclick="$('.mail-popup').fadeOut(200);"></div>
+                    <div class="b-m" id="cl-check">
+
+                        <!-- add class "registration" or "login" -->
+
+
+                        <div class="t-b">
+                            Для завершения регистрации через <?=($socialIdentity?$socialIdentity->getSocialName():'')?> введите свой email
+                        </div>
+                        <!-- MAIL FORM -->
+                        <form id="mail-block-form" name="mail" style="display:block;">
+                            <div id="mail-form">
+                                <div class="ib-l">
+                                    <div class="ph">Ваш email</div>
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
+                                </div>
+                                <div class="ch-b-bk">
+                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                </div>
+                                <div class="s-b">
+                                    <input type="submit" class="sb_but disabled" disabled value="Зарегистрироваться" />
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- MAIL LOGIN FORM -->
+                        <form id="mail-block-form" name="login" style="display:none;">
+                            <div id="mail-form">
+                                <div class="ib-l">
+                                    <div class="ph">Ваш email</div>
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>">
+                                </div>
+                                <div class="ib-p">
+                                    <div class="ph">Пароль</div>
+                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
+                                </div>
+                                <div class="ch-b-bk">
+                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                </div>
+                                <div class="s-b">
+
+                                    <input type="submit" class="sb_but disabled" disabled value="Войти" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

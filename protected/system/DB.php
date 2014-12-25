@@ -33,7 +33,24 @@ class DB {
         }
         return self::$_instances[$name];
     }
-    
+
+    public static function Reconnect($name = 'default', $connection_properties = array()) {
+            // try to force create new connection
+            if ($connection_properties['dsn'] &&
+                $connection_properties['user']) {
+                try {
+                    $pdo = new \PDO($connection_properties['dsn'], $connection_properties['user'], $connection_properties['password'], @$connection_properties['options']);
+                    self::$_instances[$name] = $pdo;
+                } catch (\PDOException $e) {
+                    throw new DBExeption($e->getMessage());
+                }
+            } else {
+                throw new DBExeption('Missing connection properties');
+            }
+
+        return self::$_instances[$name];
+    }
+
 }
 
 class DBExeption extends \Exception {}

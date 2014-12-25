@@ -1,14 +1,18 @@
 <?php
 namespace controllers\production;
-use \Config,  \Hybrid_Auth, \Player, \EntityException, \Session2, \WideImage,  \Common;
+use \Config,  \Hybrid_Auth, \Player, \EntityException, \WideImage,  \Common;
 use \GeoIp2\Database\Reader;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthController extends \SlimController\SlimController {
+
+    private $session;
 
     public function __construct(\Slim\Slim &$app)
     {
         parent::__construct($app);
         $this->init();
+        $this->session = new Session();
     }
 
     public function init()
@@ -67,16 +71,24 @@ class AuthController extends \SlimController\SlimController {
             $this->ajaxResponse(array(), 0, $error);
         }
 
+        $profile->enabled=true;
 
-
-        if ($profile->email) {
             $player = new Player();
-            $player->setEmail($profile->email);
+            $player->setEmail($this->session->get(Player::IDENTITY)?$this->session->get(Player::IDENTITY)->getEmail():$profile->email)
+                ->setSocialId($profile->identifier)
+                ->setSocialName($provider)
+                ->setSocialEmail($profile->email);
             $loggedIn = false;
             try {
                 $player->fetch();
+                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->existsSocial())
+                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
+                $player->updateSocial()->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
                 $loggedIn = true;
             } catch (EntityException $e) {
+                if ($e->getCode() == 500) {
+                    // fetch more than one player
+                }
                 if ($e->getCode() == 404) {
 
                     try {
@@ -100,44 +112,49 @@ class AuthController extends \SlimController\SlimController {
                             ->setName($profile->firstName)
                             ->setSurname($profile->lastName)
                             ->setAdditionalData(
-                                array(
-                                    $provider => $profile->additionalData
-                                )
+                                array($provider=>array_filter(get_object_vars($profile)))
                             );
 
-                        if ($ref = $this->request()->post('ref', null)) {
-                            $player->setReferalId((int)$ref);
-                        }
-
-                        $player->create()->markOnline();
-                        $loggedIn = true;
-
-                        if ($player->getId() <= 1000) {
-                            $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
-                        }
-
-                        // try to catch avatar
-                        if ($profile->photoURL) {
-                            try {
-                                $image = WideImage::load($profile->photoURL);
-                                $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-                                $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-
-                                $imageName = uniqid() . ".jpg";
-                                $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
-
-                                if (!is_dir($saveFolder)) {
-                                    mkdir($saveFolder, 0777);
-                                }
-                                $image->saveToFile($saveFolder . $imageName, 100);
-                                // remove old one
-                                $player->setAvatar($imageName)->saveAvatar();
-
-                                $this->ajaxResponse($data);
-                            } catch (\Exception $e) {
-                                // do nothing
+                        if($profile->email) {
+                            if ($ref = $this->request()->post('ref', null)) {
+                                $player->setReferalId((int)$ref);
                             }
+
+                            $player->create()->updateSocial()->markOnline();
+                            $loggedIn = true;
+
+                            // try to catch avatar
+                            if ($profile->photoURL) {
+                                try {
+                                    $image = WideImage::load($profile->photoURL);
+                                    $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+                                    $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+
+                                    $imageName = uniqid() . ".jpg";
+                                    $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/';
+
+                                    if (!is_dir($saveFolder)) {
+                                        mkdir($saveFolder, 0777);
+                                    }
+                                    $image->saveToFile($saveFolder . $imageName, 100);
+                                    // remove old one
+                                    $player->setAvatar($imageName)->saveAvatar();
+
+                                } catch (\Exception $e) {
+                                    // do nothing
+                                }
+                            }
+
+                            if ($player->getId() <= 1000) {
+                                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+                            }
+
+                            $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $provider);
                         }
+                        else{
+                            $this->session->set('SOCIAL_IDENTITY', $player);
+                        }
+
                     } catch (EntityException $e) {
                         // do nothing
                     }
@@ -146,10 +163,10 @@ class AuthController extends \SlimController\SlimController {
             }
 
             if ($loggedIn === true) {
-                Session2::connect()->set(Player::IDENTITY, $player);
+                $this->session->set(Player::IDENTITY, $player);
 
             }
-        }
+
 
         $this->redirect('/');
 
