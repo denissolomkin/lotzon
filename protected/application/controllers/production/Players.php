@@ -108,7 +108,6 @@ class Players extends \AjaxController
                 if ($social->getAdditionalData()[$social->getSocialName()]['photoURL'])
                     $this->saveAvatarAction($social->getAdditionalData()[$social->getSocialName()]['photoURL']);
 
-                $this->redirect('/');
             }
 
             $this->ajaxResponse(array(

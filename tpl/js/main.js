@@ -686,8 +686,9 @@ $(function(){
     // PROFILE INFORMATIONS //
 
     $(".pi-cs-bk .cs-int-bt.int").on('click', function() {
+        btn=$(this);
 
-        provider=$(this).data('provider');
+        provider=btn.data('provider');
         $.ajax({
             url: "/players/disableSocial/"+provider,
             method: 'GET',
@@ -696,7 +697,7 @@ $(function(){
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
-                    $(this).removeClass('int');
+                    btn.removeClass('int');
                 } else {
                     alert(data.message);
                 }

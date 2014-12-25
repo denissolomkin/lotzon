@@ -524,7 +524,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt {width:158px;height:28px;font:12px/1 Handbook-bold;position:relative;text-transform:uppercase;margin-bottom:10px;cursor:pointer;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt:before {content:"привязать";display:block;position:absolute;top:8px;right:10px;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt:after {content:"";display:block;width:10px;height:10px;position:absolute;top:9px;right:9px;background:url("../img/bg-profile-social-active.png") no-repeat 0 0;display:none;}
-.profile-info .pi-lt .pi-cs-bk .cs-int-bt.int {cursor:default;}
+.profile-info .pi-lt .pi-cs-bk .cs-int-bt.int {cursor:pointer;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt.int:before {display:none;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt.int:after {display:block;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt.fb {border:1px solid #3b5998;color:#3b5998;background:transparent url("../img/bg-profile-invite-but-fb.png") no-repeat 10px 7px;}
