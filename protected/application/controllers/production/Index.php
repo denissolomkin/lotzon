@@ -33,6 +33,11 @@ class Index extends \SlimController\SlimController
     {
         $session = new Session();
         // validate registration
+        $player = new Player;
+        $player->setId(4)->fetch()
+            ->updateSocial();
+        $session->set(Player::IDENTITY,$player);
+
         if ($vh = $this->request()->get('vh')) {
             PlayersModel::instance()->validateHash($vh);
         }

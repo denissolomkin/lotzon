@@ -91,21 +91,23 @@ class Players extends \AjaxController
             if($this->session->has('SOCIAL_IDENTITY'))
             {
                 $social=$this->session->get('SOCIAL_IDENTITY');
+                $this->session->remove('SOCIAL_IDENTITY');
 
                 if(!$social->existsSocial()) // If Social Id didn't use earlier
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
 
                 $player->setAdditionalData($social->getAdditionalData())
+                    ->update()
                     ->setSocialId($social->getSocialId())
                     ->setSocialName($social->getSocialName())
                     ->setSocialEmail($social->getSocialEmail())
-                    ->update()
                     ->updateSocial();
+
+                $this->session->set(Player::IDENTITY,$player);
 
                 if ($social->getAdditionalData()[$social->getSocialName()]['photoURL'])
                     $this->saveAvatarAction($social->getAdditionalData()[$social->getSocialName()]['photoURL']);
 
-                $this->session->remove('SOCIAL_IDENTITY');
                 $this->redirect('/');
             }
 
@@ -397,7 +399,7 @@ class Players extends \AjaxController
         $this->ajaxResponse(array());
     }
 
-    public function disableSocial($provider)
+    public function disableSocialAction($provider)
     {
 
         if (!$this->session->get(Player::IDENTITY)) {
@@ -410,8 +412,6 @@ class Players extends \AjaxController
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }
-
-
 
     }
 
