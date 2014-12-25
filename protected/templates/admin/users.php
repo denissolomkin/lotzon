@@ -637,8 +637,8 @@ function addTransaction(plid) {
                 else {
                     tbl += '<tr><td>' + param[0] + '</td><td>';
                     if($.isArray(param[1]))
-                        $.each(param[1], function(k,v)
-                            tbl +=k+': '+v;
+                        $.each(param[1], function(k,v){
+                            tbl +=k+": "+v;   });
                     else
                         tbl += param[1];
 

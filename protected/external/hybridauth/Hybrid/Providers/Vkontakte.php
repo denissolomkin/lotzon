@@ -95,10 +95,10 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
             'country,city,interests,music,movies,tv,books,games'
         ));
         $info = @json_decode(@file_get_contents($infoUrl), true);
+        $info = array_shift($info['response']);
 
         //$params['fields'] = 'interests,music,movies,tv,books,games';
         //$info = $this->api->api( "https://api.vk.com/method/users.get", 'GET', $params);
-
 
         if (!isset( $response->response[0] ) || !isset( $response->response[0]->uid ) || isset( $response->error ) ){
             throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
@@ -108,15 +108,17 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 
         $countries=array(1 => 'RU',2 => 'UA',3 => 'BY');
         $this->user->profile->country=$countries[$info['country']['id']];
+        $this->user->profile->city          = $info['city']['title'];
+        unset($info['id'],$info['first_name'],$info['last_name'], $info['country'],$info['city']);
 
         $this->user->profile->email    =            $this->token( "email");
         $response = $response->response[0];
         $this->user->profile->identifier    = (property_exists($response,'uid'))?$response->uid:"";
         $this->user->profile->firstName     = (property_exists($response,'first_name'))?$response->first_name:"";
         $this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
-        $this->user->profile->city          = (property_exists($response,'city'))?$response->city:"";
         $this->user->profile->displayName   = (property_exists($response,'screen_name'))?$response->screen_name:"";
         $this->user->profile->photoURL      = (property_exists($response,'photo_big'))?$response->photo_big:"";
+        // $this->user->profile->city          = (property_exists($response,'city'))?$response->city:"";
         $this->user->profile->profileURL    = (property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
         $this->user->profile->interests    = array_filter($info);//(property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
