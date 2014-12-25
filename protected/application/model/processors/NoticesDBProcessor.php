@@ -109,12 +109,12 @@ class NoticesDBProcessor implements IProcessor
     }
 
     public function getPlayerUnreadNotices(Player $player) {
-        $sql = "SELECT COUNT(*) FROM `PlayerNotices` WHERE (`Date` >= :dn AND `Date` >= :dr )AND (`PlayerId` = 0 OR `PlayerId` = :id)";
+        $sql = "SELECT COUNT(*) FROM `PlayerNotices` WHERE (`Date` >= :dn AND `Date` >= :dr ) AND (`PlayerId` = 0 OR `PlayerId` = :id)";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':dn' => ($player->getDateLastNotice()>0 ? $player->getDateLastNotice() : 1),
+                ':dn' => $player->getDateLastNotice(),
                 ':dr' => $player->getDateRegistered(),
                 ':id' => $player->getId()
             ));
