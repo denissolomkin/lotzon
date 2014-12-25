@@ -1,5 +1,6 @@
 <?php
 Application::import(PATH_INTERFACES . 'IProcessor.php');
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class LotteriesModelDBProcessor implements IProcessor
 {
@@ -168,6 +169,7 @@ class LotteriesModelDBProcessor implements IProcessor
 
     public function getLotteryDetails($lotteryId)
     {
+        $session = new Session();
         $returnData = array(
             'lottery' => null,
             'winners' => array(),
@@ -202,7 +204,7 @@ class LotteriesModelDBProcessor implements IProcessor
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(
                     ':lotid' => $lottery->getId(),
-                    ':plid'  => Session2::connect()->get(Player::IDENTITY)->getId(),
+                    ':plid'  => $session->get(Player::IDENTITY)->getId(),
                 ));
 
             } catch (PDOException $e) {
@@ -226,7 +228,7 @@ class LotteriesModelDBProcessor implements IProcessor
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(
                     ':lotid' => $lottery->getId(),
-                    ':plid'  => Session2::connect()->get(Player::IDENTITY)->getId(),
+                    ':plid'  => $session->get(Player::IDENTITY)->getId(),
                 ));
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query ", 500);
@@ -293,6 +295,7 @@ class LotteriesModelDBProcessor implements IProcessor
     public function getMoneyTotalWin()
     {
         $sql = "SELECT SUM(MoneyWin) FROM PlayerLotteryWins";
+        // $sql = "SELECT SUM(MoneyTotal) FROM Lotteries";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
