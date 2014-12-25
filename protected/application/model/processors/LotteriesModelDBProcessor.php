@@ -294,8 +294,8 @@ class LotteriesModelDBProcessor implements IProcessor
 
     public function getMoneyTotalWin()
     {
-        $sql = "SELECT SUM(MoneyWin) FROM PlayerLotteryWins";
-        // $sql = "SELECT SUM(MoneyTotal) FROM Lotteries";
+        // $sql = "SELECT SUM(MoneyWin) FROM PlayerLotteryWins";
+        $sql = "SELECT SUM(MoneyTotal) FROM Lotteries";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
