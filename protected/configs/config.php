@@ -4,22 +4,22 @@ Config::instance()->cacheEnabled = false;
 Config::instance()->newsCacheCount = 18;
 
 Config::instance()->dbConnectionProperties = array(
-    // testbed
-    /*
+/*    // testbed
     'dsn' => 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
         'user' => 'testbed',
         'password' => '2p9G808CVn17P',
-    */
+
+    // local
+       'dsn' => 'mysql:host=localhost;dbname=lotzone',
+        'user' => 'root',
+        'password' => '1234',
+*/
     // public
     'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
     'user' => 'lotzone_user',
     'password' => '63{_Tc252!#UoQq',
-    /*   */
-    // local
-    /*    'dsn' => 'mysql:host=localhost;dbname=lotzone',
-        'user' => 'root', #test
-        'password' => '1234',
-    */
+
+
     'options' => array(
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -152,12 +152,25 @@ Config::instance()->privateResources =  array(
     '/private/comments/:id/delete' => array(
         'get' => 'controllers\admin\Comments:delete',
     ),
+    '/private/results' => 'controllers\admin\LotteryResult:index',
+
+    '/private/reviews/' => 'controllers\admin\Reviews:index',
+    '/private/reviews/status/:id' => 'controllers\admin\Reviews:status',
+    '/private/reviews/delete/:id' => 'controllers\admin\Reviews:delete',
+
     '/private/monetisation' => 'controllers\admin\Monetisation:index',
     '/private/monetisation/approve/:id' => 'controllers\admin\Monetisation:approve',
     '/private/monetisation/decline/:id' => 'controllers\admin\Monetisation:decline',
 
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
+    '/private/users/rmNotice/:trid' => array(
+        'post' => 'controllers\admin\Users:removeNotice'
+    ),
+    '/private/users/addNotice/:playerId' => array(
+        'post' => 'controllers\admin\Users:addNotice'
+    ),
+    '/private/users/notices/:playerId' => 'controllers\admin\Users:notices',
     '/private/users/rmTransaction/:trid' => array(
         'post' => 'controllers\admin\Users:removeTransaction'
     ),
@@ -196,7 +209,7 @@ Config::instance()->publicResources = array(
     ),
     '/auth/:provider' => 'controllers\production\AuthController:auth',
     '/auth/endpoint/' => 'controllers\production\AuthController:endpoint',
-    '/ws/run/'      => 'controllers\production\WebSocketServer:run',
+    '/players/disableSocial/:provider' => 'controllers\production\Players:disableSocial',
     '/players/logout/' => 'controllers\production\Players:logout',
     '/players/social/' => 'controllers\production\Players:social',
     '/players/update/' => array(
@@ -214,12 +227,17 @@ Config::instance()->publicResources = array(
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
     '/content/news/'      => 'controllers\production\ContentController:news',
+    '/content/reviews/'      => 'controllers\production\ContentController:reviews',
     '/order/item/'        => 'controllers\production\OrdersController:orderItem',
     '/order/money/'       => 'controllers\production\OrdersController:orderMoney',
+    '/review/save/'        => 'controllers\production\ReviewsController:save',
+    '/review/uploadImage/'       => 'controllers\production\ReviewsController:uploadImage',
+    '/review/removeImage/'       => 'controllers\production\ReviewsController:removeImage',
     '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
     '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
     '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
     '/content/transactions/:currency/'  => 'controllers\production\ContentController:transactions',
+    '/content/notices/'  => 'controllers\production\ContentController:notices',
 
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
     '/chance/build/:identifier' => array(
@@ -237,6 +255,8 @@ Config::instance()->generatorNumTries = 5;
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
+//    "base_url" => "http://testbed.lotzon.com/auth/endpoint/",
+//    "base_url" => "http://lotzon.test/auth/endpoint/",
     "base_url" => "http://lotzon.com/auth/endpoint/",
 
     "providers" => array (
