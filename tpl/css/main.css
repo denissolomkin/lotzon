@@ -883,8 +883,10 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx ul.mx {list-style:none;margin:0;padding:0;overflow:hidden;}
 .ngm-bk .ngm-gm .gm-mx ul.mx > li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
 .ngm-bk .ngm-gm .gm-mx ul.mx > li:nth-child(7n+7) {margin-right:0;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li.m {background:#ffe400;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li.o {background:#f68e56;}
+.ngm-bk .ngm-gm .gm-mx ul.mx > li.m {background:#ffe400;opacity:0.5;}
+.ngm-bk .ngm-gm .gm-mx ul.mx > li.o {background:#f68e56;opacity:0.5;}
+.ngm-bk .ngm-gm .gm-mx ul.mx > li.m.last {opacity:1;}
+.ngm-bk .ngm-gm .gm-mx ul.mx > li.o.last {opacity:1;}
 
 .ngm-bk .ngm-gm .gm-mx .msg {position:absolute;width:480px;height:480px;background-color:rgba(255, 255, 255, 0.95);top:0;left:0;display:none;}
 .ngm-bk .ngm-gm .gm-mx .msg .tbl {display:table;width:100%;height:100%;}

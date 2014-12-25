@@ -1,6 +1,4 @@
-var url = 'ws://192.168.1.253:8080';
 var url = 'ws://testbed.lotzon.com:8080';
-// var server = './ws/run';
 var conn;
 var errors = {
     'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
@@ -12,7 +10,7 @@ var errors = {
         function WebSocketAjaxClient(path, data, stop) {
             if(!conn || conn.readyState !== 1)
             {
-                conn = new WebSocket(url);// window['MozWebSocket'] ? new MozWebSocket(url) : new WebSocket(url);
+                conn = new WebSocket(url);
                 conn.onopen = function (e) {
                     if(path){
                         conn.send(JSON.stringify({'path': path, 'data': data}));
@@ -30,7 +28,6 @@ var errors = {
                     WebSocketStatus('<b style="color:red">error', JSON.stringify(e))
                     console.error('There was an un-identified Web Socket error');
                     if(stop!==true) {
-                        // $.ajax({url: server});
                         WebSocketAjaxClient(path, data, true);
                     }
                 };
@@ -86,7 +83,6 @@ function updateCallback(receiveData)
 
         });
         $('.rls-r .rls-r-prs').html(html);
-        console.log(html);
     }
 }
 
@@ -192,9 +188,13 @@ function appNewGameCallback(receiveData)
                  {
                      var class_cell='o';
                  }
+
+                 $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                     removeClass('last');
+
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+cell.coord).
                      html(cell.points).
-                     addClass(class_cell).fadeIn(100);
+                     addClass(class_cell+' last').fadeIn(100);
                  });
              });
          break;
@@ -208,9 +208,12 @@ function appNewGameCallback(receiveData)
                  else
                      var class_cell='o';
 
+                 $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                     removeClass('last');
+
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+receiveData.res.cell.coord).
                      html(receiveData.res.cell.points).
-                     addClass(class_cell).fadeIn(300);
+                     addClass(class_cell+' last').fadeIn(300);
 
              }
 

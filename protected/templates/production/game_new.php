@@ -941,9 +941,9 @@
                                     <!--
                                     <div class="prc-vl" data-price='POINT-500'>500</div>
                                     <div class="prc-vl" data-price='POINT-200'>200</div>
+                                    <div class="prc-vl" data-price='POINT-100'>100</div>
                                     <div class="prc-vl" data-price='POINT-50'>50</div>
                                     -->
-                                    <div class="prc-vl" data-price='POINT-100'>100</div>
                                     <div class="prc-vl" data-price='POINT-25'>25</div>
                                     <div class="prc-vl" data-price='POINT-10'>10</div>
                                 </div>
@@ -990,9 +990,9 @@
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
-                                Поле состоит из 49 ячеек. Каждому игроку дается возможность открыть пять ячеек. Число каждой открытой ячейки суммируется
+                                Поле состоит из 49 ячеек. Каждому игроку дается возможность открыть шесть ячеек. Число каждой открытой ячейки суммируется
                                 к конкретному игроку.<br/><br/>
-                                По итогам пяти ходов сравнивается сумма двух игроков, побеждает тот у которого сумма больше и он забирает баллы проигравшего. Если по итогу пяти ходов
+                                По итогам шести ходов сравнивается сумма двух игроков, побеждает тот у которого сумма больше и он забирает баллы проигравшего. Если по итогу шести ходов
                                 у игроков одинаковое количество очков, каждому дается еще по одному открытию.
                             </div>
                         </div>
@@ -1228,7 +1228,7 @@
                 </div>
             </div>
         </footer>
-
+<? /*
         <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 65px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
             <span id="chatStatus"></span>
@@ -1251,7 +1251,7 @@
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#wsStatus').parent('div').show();$('#wsStatusShow').hide();"><b>^</b></span>
             <span id="wsStatusShow"></span>
         </div>
-
+*/ ?>
 
         </div>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
