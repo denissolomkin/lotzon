@@ -369,18 +369,21 @@ LIMIT 11";
 
     public function onClose(ConnectionInterface $conn) {
 
+        if($conn->Session->get(Player::IDENTITY)){
         $this->quitPlayer($conn->resourceId);
 
         unset($this->_clients[$conn->resourceId]);
         echo "Connection {$conn->resourceId} has disconnected\n";
 
-        foreach ($this->_clients as $client) {
+/*        foreach ($this->_clients as $client) {
             $client->send(json_encode(
                 array(
                     'path'=>'appchat',
                     'res'=>array(
                         'message'=>$conn->Session->get(Player::IDENTITY)->getNicName().' отсоединился')
                 )));
+        }
+*/
         }
     }
 

@@ -354,7 +354,7 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <iframe src="//player.vimeo.com/video/113223374" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <iframe src="//player.vimeo.com/video/114883943" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                         <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe> -->
                         <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
                     </section>
@@ -612,7 +612,7 @@
                                         </div>
                                         <div class="pi-cs-bk">
                                             <? if(count($player->getAdditionalData())<4) {?>
-                                            <div class="txt">Привязать соцсеть и получить бонус по 40 баллов.</div>
+                                            <div class="txt">Привязать соцсеть и получить бонус 40 баллов за каждую.</div>
                                             <? } ?>
                                             <? if(array_key_exists('Facebook', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Facebook']['enabled'])
@@ -990,10 +990,10 @@
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
-                                Поле состоит из 49 ячеек. Каждому игроку дается возможность открыть шесть ячеек. Число каждой открытой ячейки суммируется
-                                к конкретному игроку.<br/><br/>
-                                По итогам шести ходов сравнивается сумма двух игроков, побеждает тот у которого сумма больше и он забирает баллы проигравшего. Если по итогу шести ходов
-                                у игроков одинаковое количество очков, каждому дается еще по одному открытию.
+
+                                Поле состоит из 49 ячеек за каждой из которых скрыта цыфра от 1 до 49. Игрок выбирает свою ставку. Каждому игроку дается возможность открыть шесть ячеек.
+                                <br/><br/>
+                                По итогам шести ходов сравнивается количество набраных очков каждым игроком, побеждает тот у кого их больше и он забирает ставку противника.
                             </div>
                         </div>
                     </div>
