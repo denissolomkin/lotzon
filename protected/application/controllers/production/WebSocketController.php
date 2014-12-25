@@ -496,7 +496,7 @@ LIMIT 11";
                     $player['pid'],
                     $app->getCurrency(),
                     $app->getPrice()*$player['result'],
-                    'Игра '.$app->getTitle().' №'.$app->getIdentifier()."<br>(баланс до операции ".$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints().")",
+                    'Игра '.$app->getTitle(),
                     time()
                 );
 

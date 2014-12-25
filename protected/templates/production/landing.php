@@ -612,7 +612,7 @@
                             Для завершения регистрации через <?=($socialIdentity?$socialIdentity->getSocialName():'')?> введите свой email
                         </div>
                         <!-- MAIL FORM -->
-                        <form id="mail-block-form" name="mail" style="display:none">
+                        <form id="mail-block-form" name="mail" style="display:block;">
                             <div id="mail-form">
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
@@ -628,7 +628,7 @@
                         </form>
 
                         <!-- MAIL LOGIN FORM -->
-                        <form id="mail-block-form" name="login" style="display:block">
+                        <form id="mail-block-form" name="login" style="display:none;">
                             <div id="mail-form">
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
