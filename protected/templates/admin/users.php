@@ -635,13 +635,11 @@ function addTransaction(plid) {
                 else if (param[0] == 'displayName')
                     name = param[1];
                 else {
-                    tbl += '<tr><td>' + param[0] + '</td><td>;' +
-                    if($.isArray(param[1])){
-
-                        $.each(param[1], function(k,v) {
+                    tbl += '<tr><td>' + param[0] + '</td><td>';
+                    if($.isArray(param[1]))
+                        $.each(param[1], function(k,v)
                             tbl +=k+': '+v;
-                        }
-                    } else
+                    else
                         tbl += param[1];
 
                     tbl += '</td></tr>';
