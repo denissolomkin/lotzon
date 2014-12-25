@@ -270,7 +270,7 @@ class Player extends Entity
 
     public function setDateLastNotice($dateLastNotice)
     {
-        $this->_dateLastNotice = ($dateLastNotice?:time());
+        $this->_dateLastNotice = $dateLastNotice;
 
         return $this;
     }
