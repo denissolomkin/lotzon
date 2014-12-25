@@ -233,7 +233,7 @@ class WebSocketController implements MessageComponentInterface {
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
                                         WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid
                                         LIMIT 1";
-                echo time()." ".$sql."\n";
+                echo time()." SELECT PLAYER INFO"."\n";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
@@ -292,16 +292,16 @@ LIMIT 11";
                     $sql =  "
 SELECT
 sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I,
-(sum(g.Win)/count(distinct(g.GameUid))) R
+(sum(g.Win)/count(g.Id)) R
 FROM `PlayerGames` g
 LEFT JOIN Players p On p.Id=g.PlayerId
 where g.GameId = :gameid
 group by g.PlayerId
-having T > (SELECT (count(distinct(GameUid))/count(distinct(PlayerId))) FROM PlayerGames)
+having T > (SELECT (count(Id) / count(distinct(PlayerId)) ) FROM PlayerGames WHERE GameId = :gameid)
 OR g.PlayerId = :playerid
-order by R DESC
+order by R DESC, T DESC
 LIMIT 11";
-                // echo time()." ".$sql."\n";
+                echo time()." SELECT TOP\n";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
@@ -321,7 +321,7 @@ LIMIT 11";
                 }
 
                     $this->rating[$name]['top']=$top;
-                    $this->rating[$name]['timeout']=time()+5*60*60;
+                    $this->rating[$name]['timeout']=time()+5*60;
 
                 }
 

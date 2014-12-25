@@ -30,41 +30,48 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 	}
 
 	function loginFinish()
-	{
-		$error = (array_key_exists('error',$_REQUEST))?$_REQUEST['error']:"";
+    {
 
-		// check for errors
-		if ( $error ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an error: $error", 5 );
-		}
+        // check for errors
+        // in case we get error_reason=user_denied&error=access_denied
 
-		// try to authenticate user
-		$code = (array_key_exists('code',$_REQUEST))?$_REQUEST['code']:"";
+        if (isset($_REQUEST['error']) && $_REQUEST['error'] == "access_denied") {
+            //throw new Exception( "Authentication failed! The user denied your request.", 5 );
+            $this->session->set('auth_error','access_denied');
+        } else {
 
-		try{
-			$response = $this->api->authenticate( $code );
-		}
-		catch( Exception $e ){
-			throw new Exception( "User profile request failed! {$this->providerId} returned an error: $e", 6 );
-		}
+            $error = (array_key_exists('error', $_REQUEST)) ? $_REQUEST['error'] : "";
+            if ($error) {
+                throw new Exception("Authentication failed! {$this->providerId} returned an error: $error", 5);
+            }
 
-		// check if authenticated
-		if ( !property_exists($response,'user_id') || ! $this->api->access_token ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access token.", 5 );
-		}
+            // try to authenticate user
+            $code = (array_key_exists('code', $_REQUEST)) ? $_REQUEST['code'] : "";
 
-		// store tokens
-		$this->token( "email" , $response->email  );
-		$this->token( "access_token" , $this->api->access_token  );
-		$this->token( "refresh_token", $this->api->refresh_token );
-		$this->token( "expires_in"   , $this->api->access_token_expires_in );
-		$this->token( "expires_at"   , $this->api->access_token_expires_at );
+            try {
+                $response = $this->api->authenticate($code);
+            } catch (Exception $e) {
+                throw new Exception("User profile request failed! {$this->providerId} returned an error: $e", 6);
+            }
 
-		// store user id. it is required for api access to Vkontakte
-		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user_id", $response->user_id );
+            // check if authenticated
+            if (!property_exists($response, 'user_id') || !$this->api->access_token) {
+                throw new Exception("Authentication failed! {$this->providerId} returned an invalid access token.", 5);
+            }
 
-		// set user connected locally
-		$this->setUserConnected();
+            // store tokens
+            $this->token("email", $response->email);
+            $this->token("access_token", $this->api->access_token);
+            $this->token("refresh_token", $this->api->refresh_token);
+            $this->token("expires_in", $this->api->access_token_expires_in);
+            $this->token("expires_at", $this->api->access_token_expires_at);
+
+            // store user id. it is required for api access to Vkontakte
+            Hybrid_Auth::storage()->set("hauth_session.{$this->providerId}.user_id", $response->user_id);
+
+            // set user connected locally
+            $this->setUserConnected();
+        }
 	}
 
 	/**
@@ -110,6 +117,8 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
         $this->user->profile->displayName   = (property_exists($response,'screen_name'))?$response->screen_name:"";
         $this->user->profile->photoURL      = (property_exists($response,'photo_big'))?$response->photo_big:"";
         $this->user->profile->profileURL    = (property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
+
+        $this->user->profile    = $info;//(property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
         if(property_exists($response,'sex')){
             switch ($response->sex){
