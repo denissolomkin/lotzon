@@ -55,7 +55,7 @@ class PlayersDBProcessor implements IProcessor
                     ':socialemail'  => $player->getSocialEmail(),
                     ':socialid'     => $player->getSocialId(),
                     ':socialname'   => $player->getSocialName(),
-                    ':enabled'      => $player->getSocialEnabled(),
+                    ':enabled'      => $player->getSocialEnable(),
                 ));
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
