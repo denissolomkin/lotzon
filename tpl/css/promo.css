@@ -407,7 +407,7 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 .login-popup .lp-b .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font:18px/29px Handbook-italic;display:none;}
 .font-fix .login-popup .lp-b .ph {line-height:32px;}
 .login-popup .lp-b .focus .ph {display:block;}
-.login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;display: none;}
+.login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-regular;width:250px;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input:-webkit-autofill {

@@ -703,7 +703,7 @@ class Player extends Entity
         try {
             $socialData=$this->getAdditionalData()[$this->getSocialName()];
             $socialData['enabled']=0;
-            $this->setAdditionalData($socialData)->update();
+            $this->setAdditionalData(array($this->getSocialName()=>$socialData))->update();
             $model::instance()->disableSocial($this);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);

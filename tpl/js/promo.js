@@ -159,8 +159,7 @@ $(function(){
         var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
         var ref = $(this).data('ref');
         registerPlayer({'email':email, 'agree':1, 'ref':ref}, function(data){
-
-
+            document.location.href = "/";
         }, function(data){
             if(data.message=='PROFILE_EXISTS_NEED_LOGIN'){
                 $('.mail-popup form[name="login"]').addClass('error');

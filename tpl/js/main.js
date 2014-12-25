@@ -685,6 +685,28 @@ $(function(){
 
     // PROFILE INFORMATIONS //
 
+    $(".pi-cs-bk .cs-int-bt.int").on('click', function() {
+
+        provider=$(this).data('provider');
+        $.ajax({
+            url: "/players/disableSocial/"+provider,
+            method: 'GET',
+            async: true,
+            data: null,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    $(this).removeClass('int');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+    });
+
     $('.profile aside li').on('click', function(){
         var link = $(this).attr('data-link');
         $('.profile aside li').removeClass('now');
