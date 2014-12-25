@@ -1003,7 +1003,7 @@
 
                     <div class="rls-r">
 
-                        <div class="rls-r-t">ВЫ<b>:</b> 40 <b>•</b> 50</div>
+                        <div class="rls-r-t">ВЫ<b>:</b> 0 <b>•</b> 0</div>
                         <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b>Поиск</b></div><div class="ngm-cncl">отмена</div></div>
 
 
@@ -1012,62 +1012,7 @@
                             <span>рейтиHг <i>=</i> сыграно игр <i>•</i> побед</span>
                         </div>
                         <ul class="rls-r-prs">
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 %</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 %</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 %</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 %</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 %</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 % = 16 400</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 % = 16 400</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="prs-ph" style="background-image: url('http://lotzon.com/filestorage/avatars/comments/5478f78b08588.jpg')"></div>
-                                <div class="prs-ifo">
-                                    <div class="nm">Иосиф Джугашвили <b>•</b></div>
-                                    <div class="ifo">120 • 20 % = 16 400</div>
-                                </div>
-                            </li>
+
                         </ul>
                     </div>
 
