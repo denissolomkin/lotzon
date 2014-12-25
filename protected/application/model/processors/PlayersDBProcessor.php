@@ -72,16 +72,18 @@ class PlayersDBProcessor implements IProcessor
                 $sql = "SELECT `PlayerId` FROM `PlayerSocials` WHERE
                     `SocialId` = :socialid AND `SocialName` = :socialname";
 
-                $res = DB::Connect()->prepare($sql)->execute(array(
+                $sth = DB::Connect()->prepare($sql);
+                $sth->execute(array(
                     ':socialid'     => $player->getSocialId(),
                     ':socialname'   => $player->getSocialName(),
                 ));
 
-                return $res->rowCount();
+                return $sth->fetchColumn();
 
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
             }
+
 
     }
 
