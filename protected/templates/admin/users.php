@@ -634,8 +634,18 @@ function addTransaction(plid) {
                     page = '<a target="_blank" href="' + param[1] + '">';
                 else if (param[0] == 'displayName')
                     name = param[1];
-                else
-                    tbl += '<tr><td>' + param[0] + '</td><td>' + param[1] + '</td></tr>';
+                else {
+                    tbl += '<tr><td>' + param[0] + '</td><td>;' +
+                    if(param[1].isArray()){
+
+                        $.each(param[1], function(k,v) {
+                            tbl +=k+': '+v;
+                        }
+                    } else
+                        tbl += param[1];
+
+                    tbl += '</td></tr>';
+                }
             }
         });
         icon='<span class="'+$(this).attr("class")+'"></span>';

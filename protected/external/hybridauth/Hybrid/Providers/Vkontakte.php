@@ -104,21 +104,22 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
             throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
         }
 
+        $this->user->profile->country       = (property_exists($response,'country'))?$response->country:"";
+
         $countries=array(1 => 'RU',2 => 'UA',3 => 'BY');
         $this->user->profile->country=$countries[$info['country']['id']];
 
-            $this->user->profile->email    =            $this->token( "email");
+        $this->user->profile->email    =            $this->token( "email");
         $response = $response->response[0];
         $this->user->profile->identifier    = (property_exists($response,'uid'))?$response->uid:"";
         $this->user->profile->firstName     = (property_exists($response,'first_name'))?$response->first_name:"";
         $this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
-        $this->user->profile->country       = (property_exists($response,'country'))?$response->country:"";
         $this->user->profile->city          = (property_exists($response,'city'))?$response->city:"";
         $this->user->profile->displayName   = (property_exists($response,'screen_name'))?$response->screen_name:"";
         $this->user->profile->photoURL      = (property_exists($response,'photo_big'))?$response->photo_big:"";
         $this->user->profile->profileURL    = (property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
-        $this->user->profile    = $info;//(property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
+        $this->user->profile->interests    = array_filter($info);//(property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
         if(property_exists($response,'sex')){
             switch ($response->sex){
