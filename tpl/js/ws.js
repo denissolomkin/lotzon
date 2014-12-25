@@ -1,4 +1,4 @@
-var url = 'ws://testbed.lotzon.com:8080';
+var url = 'ws://lotzon.com:8080';
 var conn;
 var errors = {
     'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',

@@ -194,12 +194,14 @@ class Index extends \SlimController\SlimController
 
         if($session->has('SOCIAL_IDENTITY'))
         {
-            $socialIdentity = $session->get('SOCIAL_IDENTITY');
             if($session->has('SOCIAL_IDENTITY_DISABLED')){
                 $session->remove('SOCIAL_IDENTITY');
                 $session->remove('SOCIAL_IDENTITY_DISABLED');
             }
-            else $session->set('SOCIAL_IDENTITY_DISABLED',1);
+            else{
+                $socialIdentity = $session->get('SOCIAL_IDENTITY');
+                $session->set('SOCIAL_IDENTITY_DISABLED',1);
+            }
         }
 
         $this->render('production/landing', array(
