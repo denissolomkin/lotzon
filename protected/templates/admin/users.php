@@ -19,6 +19,7 @@
             <thead>
                 <th>#ID <?=sortIcon('Id', $currentSort, $pager)?></th>
                 <th>ФИО</th>
+                <th>Никнейм</th>
                 <th>Email <?=sortIcon('Valid', $currentSort, $pager)?></th>
                 <th>Страна <?=sortIcon('Country', $currentSort, $pager)?></th>
                 <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager)?></th>
@@ -36,14 +37,21 @@
                     <tr>
                         <td><?=$player->getId()?></td>
                         <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?></td>
+                        <td><?=($player->getNicName())?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
                                 echo '<a href="javascript:void(0)" class="sl-bk '.$provider.'"></a>
                                 <div class="hidden">';
                                 if(is_array($info))
-                                foreach($info as $key=>$value)
-                                    echo $key.' : '.$value.' , ';
+                                foreach ($info as $key=>$value) {
+                                    echo $key.' : ';
+                                    if(is_array($value))
+                                        foreach($value as $k=>$v)
+                                            echo $k.' - '.$v.' , ';
+                                    else
+                                        echo $value.' , ';
+                                }
                                 else echo $info;
                                 echo'</div>';
                             }?>
@@ -79,6 +87,7 @@
         </div>
     <? } ?> 
 </div>
+
 <div class="modal fade users" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -584,7 +593,7 @@ function addTransaction(plid) {
     });
 }
     $('.search-users').on('click', function() {
-        var input = $('<input class="form-control input-md" value="<?=$search;?>" style="width:200px;display:inline-block;" placeholder="id, фио или email...">');
+        var input = $('<input class="form-control input-md" value="<?=$search;?>" style="width:200px;display:inline-block;" placeholder="id, фио, ник или email...">');
         var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
         var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
         var button = $(this);
@@ -650,12 +659,6 @@ function addTransaction(plid) {
         html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2>'+page+name+icon+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
 
         $("#social-holder").modal().find('.modal-body').html(html);
-
-
-
-
-
-
 
     });
 </script>
