@@ -295,9 +295,9 @@ LEFT JOIN Players p On p.Id=g.PlayerId
 where g.GameId = :gameid
 group by g.PlayerId
 having T > (SELECT (count(Id) / count(distinct(PlayerId)) / ".$class::GAME_PLAYERS." ) FROM PlayerGames WHERE GameId = :gameid)
-OR g.PlayerId = :playerid
 order by R DESC, T DESC
 LIMIT 10";
+//                        OR g.PlayerId = :playerid
                         echo time() . " SELECT TOP\n";
 
                         try {
