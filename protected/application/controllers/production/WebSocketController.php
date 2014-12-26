@@ -76,9 +76,10 @@ class WebSocketController implements MessageComponentInterface {
 
         if($from->Session->get(Player::IDENTITY)) {
             $data = json_decode($msg);
-            list($type, $name, $id) = explode("/", $data->path);
+            list($type, $name, $id) = array_pad(explode("/", $data->path),3,0);
             echo "#{$from->resourceId}: " . (isset($data->data->action) ? $data->data->action : '') . " - " . $data->path . " \n";
-            $data = $data->data;
+            if(isset($data->data))
+                $data = $data->data;
             $this->_class = $class = '\\' . $name;
             $action = (isset($data->action) ? $data->action : '') . 'Action';
             $mode = (isset($data->mode) ? $data->mode : $this->_mode);
@@ -186,7 +187,7 @@ class WebSocketController implements MessageComponentInterface {
                                     'action' => 'error',
                                     'error' => 'APPLICATION_DOESNT_EXISTS',
                                     'appId' => 0));
-                                unset($this->_players[$from->Session->get(Player::IDENTITY)->getId]);
+                                unset($this->_players[$from->Session->get(Player::IDENTITY)->getId()]);
                             }
 
                             // если приложение запустили или загрузили
@@ -228,7 +229,7 @@ class WebSocketController implements MessageComponentInterface {
                 case 'update':
 
                     $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
-                        (SELECT count(Id) FROM `PlayerGames` WHERE `GameId` = :gameid) `All`
+                        (SELECT count(Id)  FROM `PlayerGames` WHERE `GameId` = :gameid) `All`
                                         FROM `Players`
                                         LEFT JOIN `PlayerGames`
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
@@ -248,10 +249,10 @@ class WebSocketController implements MessageComponentInterface {
                     }
 
                     $stat = $sth->fetch();
+                    $stat['All']/=$class::GAME_PLAYERS;
 
-
-                    if ($this->rating[$name]['timeout'] > time()) {
-                        $top = $this->rating[$name]['top'];
+                    if ($this->_rating[$name]['timeout'] > time()) {
+                        $top = $this->_rating[$name]['top'];
                     } else {
 
 
@@ -286,18 +287,17 @@ ORDER By
 LIMIT 11";
 
 
-                        $sql = "
-SELECT
+                        $sql = "SELECT
 sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I,
 (sum(g.Win)/count(g.Id)) R
 FROM `PlayerGames` g
 LEFT JOIN Players p On p.Id=g.PlayerId
 where g.GameId = :gameid
 group by g.PlayerId
-having T > (SELECT (count(Id) / count(distinct(PlayerId)) ) FROM PlayerGames WHERE GameId = :gameid)
+having T > (SELECT (count(Id) / count(distinct(PlayerId)) / ".$class::GAME_PLAYERS." ) FROM PlayerGames WHERE GameId = :gameid)
 OR g.PlayerId = :playerid
 order by R DESC, T DESC
-LIMIT 11";
+LIMIT 10";
                         echo time() . " SELECT TOP\n";
 
                         try {
@@ -317,8 +317,8 @@ LIMIT 11";
                             $top[] = $player;
                         }
 
-                        $this->rating[$name]['top'] = $top;
-                        $this->rating[$name]['timeout'] = time() + 5 * 60;
+                        $this->_rating[$name]['top'] = $top;
+                        $this->_rating[$name]['timeout'] = time() + 5 * 60;
 
                     }
 
@@ -330,7 +330,9 @@ LIMIT 11";
                             'count' => $stat['Count'],
                             'win' => $stat['Win'],
                             // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
-                            'online' => (count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name])) + count($this->_apps[$name]) * $class::GAME_PLAYERS,
+                            'online' =>
+                                ((is_array($this->_stack[$name]) ? count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name]) : 0 ) +
+                                (is_array($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0)),
                             'top' => $top
                         ))));
 
@@ -369,10 +371,11 @@ LIMIT 11";
 
     public function onClose(ConnectionInterface $conn) {
 
+        if(isset($this->_clients[$conn->resourceId]))
+            unset($this->_clients[$conn->resourceId]);
+
         if($conn->Session->get(Player::IDENTITY)){
         $this->quitPlayer($conn->resourceId);
-
-        unset($this->_clients[$conn->resourceId]);
         echo "Connection {$conn->resourceId} has disconnected\n";
 
 /*        foreach ($this->_clients as $client) {
@@ -446,8 +449,9 @@ LIMIT 11";
             if(count($this->_stack[$class][$mode])==0)
                 unset($this->_stack[$class][$mode]);
 
-            if ($app = $this->_apps[$class][$id]) {
+            if (isset($id) AND isset($this->_apps[$class][$id])) {
 
+                $app = $this->_apps[$class][$id];
                 // если есть игра - сдаемся
                 $app->setClient($this->_clients[$playerId]);
                 if (!$app->isOver()) {
@@ -539,8 +543,8 @@ LIMIT 11";
                 $app->getIdentifier(),
                 time(),
                 ($player['result'] == 1?1:0),
-                ($player['result'] == 0?1:0),
                 ($player['result'] == -1?1:0),
+                ($player['result'] == 0?1:0),
                 $player['result'],
                 $app->getCurrency(),
                 $app->getPrice()

@@ -322,10 +322,10 @@
 
                                     </div-->
                                     <div>
-                                        <a href="/auth/Facebook" class="fb"></a>
-                                        <a href="/auth/Vkontakte" class="vk"></a>
-                                        <a href="/auth/Google" class="gp"></a>
-                                        <a href="/auth/Twitter" class="tw"></a>
+                                        <a href="http://lotzon.com/auth/Facebook" class="fb"></a>
+                                        <a href="http://lotzon.com/auth/Vkontakte" class="vk"></a>
+                                        <a href="http://lotzon.com/auth/Google" class="gp"></a>
+                                        <a href="http://lotzon.com/auth/Twitter" class="tw"></a>
                                     </div>
                                 </div>
                                 <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
@@ -364,10 +364,10 @@
                                     <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
                                 </div-->
                                 <div class="sl-bk">
-                                    <a href="/auth/Facebook" class="fb"></a>
-                                    <a href="/auth/Vkontakte" class="vk"></a>
-                                    <a href="/auth/Google" class="gp"></a>
-                                    <a href="/auth/Twitter" class="tw"></a>
+                                    <a href="http://lotzon.com/auth/Facebook" class="fb"></a>
+                                    <a href="http://lotzon.com/auth/Vkontakte" class="vk"></a>
+                                    <a href="http://lotzon.com/auth/Google" class="gp"></a>
+                                    <a href="http://lotzon.com/auth/Twitter" class="tw"></a>
                                     <!--a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a-->
                                 </div>
                             </div>
