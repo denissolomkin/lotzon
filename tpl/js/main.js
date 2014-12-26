@@ -1670,7 +1670,7 @@ $('.st-hy-bt').on('click', function(){
             if (data.res.length) {
                 var html = '';
                 $(data.res).each(function(id, tr) {
-                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class="tm">')+'</span></span></div></div>';
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class="tm">')+'</span></div></div>';
                 });
                 div.find('.tb').html($(html));
             }
@@ -1712,6 +1712,10 @@ $('.st-hy-bt').on('click', function(){
         $(this).parents('.bblock').find('.pz-more-bt').show();
     });
 });
+
+
+
+
 $('.fb-share').on('click', function() {
     fbPost(posts.fb);
 });

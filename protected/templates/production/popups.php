@@ -495,7 +495,7 @@
                                 </div>
                             <? } ?>
                         </div>
-                        <? if (count($playerTransactions[GameSettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
+                        <? if (count($playerTransactions[GameSettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
                             <div class="pz-more-bt">ПОКАЗАТЬ ЕЩЕ</div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl">свернуть</div>
@@ -524,7 +524,7 @@
                                 </div>
                             <? } ?>
                         </div>
-                        <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE) { ?>
+                        <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
                             <div class="pz-more-bt">загрузить еще</div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl">свернуть</div>
