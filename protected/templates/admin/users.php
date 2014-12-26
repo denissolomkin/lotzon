@@ -593,7 +593,8 @@ function addTransaction(plid) {
     });
 }
     $('.search-users').on('click', function() {
-        var input = $('<input class="form-control input-md" value="<?=$search;?>" style="width:200px;display:inline-block;" placeholder="id, фио, ник или email...">');
+        var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:200px;display:inline-block;" placeholder="id, фио, ник или email...">' +
+        '<select id="search_where" class="form-control input-md" style="width: 100px;display: inline-block;"><option value="">везде</option><option value="Id">Id</option><option value="NicName">Ник</option><option value="CONCAT(`Surname`,`Name`)">фио</option><option value="Email">Email</option></select>');
         var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
         var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
         var button = $(this);
@@ -616,12 +617,15 @@ function addTransaction(plid) {
         });
 
         sccButton.on('click', function() {
-            url="/private/users?search="+input.val();
+            url="/private/users?search[query]="+input.val()+
+            ($("#search_where").val() ? "&search[where]="+$("#search_where").val(): '');
             document.location.href=url;
         });
     });
-    <? if($search){?>
+    <? if(isset($search['query']) and $search['query']){?>
     $('.search-users').trigger('click');
+    $('#search_where').val('<?=$search['where']?>');
+
     <? } ?>
 
     $('.sl-bk').on('click', function() {

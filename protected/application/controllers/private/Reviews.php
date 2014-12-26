@@ -42,7 +42,7 @@ class Reviews extends PrivateArea
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
-            'status' => $status,
+            'status'     => $status,
             'pager'        => $pager,
             'currentSort'  => $sort,
         ));
@@ -69,14 +69,13 @@ class Reviews extends PrivateArea
     {
         $review = new Review();
         $review->setId($id)->fetch();
-        $review->setStatus((int)$this->request()->get('offset')?:1);
 
         try {
-            $review->update();
+            $review->delete();
         } catch (EntityException $e) {
 
         }
 
-        $this->redirect('/private/reviews');
+        $this->redirect('/private/reviews?status='.(int)$this->request()->get('status'));
     }
 }

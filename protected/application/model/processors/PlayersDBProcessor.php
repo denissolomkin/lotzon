@@ -200,8 +200,11 @@ class PlayersDBProcessor implements IProcessor
     {
         $sql = "SELECT *, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
 
-        if ($search) {
-                $sql .= ' WHERE '.(is_numeric($search)?'`Id`='.$search.' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search.'%" OR `NicName` LIKE "%'.$search.'%" OR `Email` LIKE "%' . $search.'%"';
+        if (is_array($search)) {
+            if($search['where'])
+                $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
+            else
+                $sql .= ' WHERE '.(is_numeric($search['query'])?'`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
         }
 
         if (count($sort)) {
