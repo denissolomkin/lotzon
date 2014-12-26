@@ -760,7 +760,7 @@
             <div class="ch-gm-tbl">
                 <div class="td l">
                     <div class="gm-if-bk">
-                        <div class="l">Кто больше?</div>
+                        <div class="l">Кто больше</div>
                         <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="77"><img src="tpl/img/game-who-more.png"></div>
