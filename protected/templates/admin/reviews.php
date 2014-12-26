@@ -2,9 +2,10 @@
 <div class="container-fluid">
 
     <div class="row-fluid">
-        <button onclick="document.location.href='/private/reviews?status=1&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-default btn-md <?=($status ? 'active' : '')?>">Одобренные</button></h2>
-        <button onclick="document.location.href='/private/reviews?status=0&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-default btn-md <?=(!$status ? 'active' : '')?>">На рассмотрении</button>
-        <h2>Отзывы
+        <button onclick="document.location.href='/private/reviews?status=2&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-md btn-danger <?=($status==2 ? 'active' : '' )?>">Удаленные</button>
+        <button onclick="document.location.href='/private/reviews?status=1&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right  btn-md btn-success <?=($status==1 ? 'active' : '')?>">Одобренные</button>
+        <button onclick="document.location.href='/private/reviews?status=0&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-warning btn-md <?=(!$status ? 'active' : '')?>">На рассмотрении</button>
+        <h2>Отзывы</h2>
         <hr/>
     </div>
     <? if ($pager['pages'] > 1) {?>
@@ -33,8 +34,9 @@
                         <td><?=$review->getDate('d.m.Y H:i')?></td>
                         <td><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
                         <td>
-                            <button class="btn btn-md btn-warning status-trigger" data-status='0' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-lock"></i></button>
-                            <button class="btn btn-md btn-success status-trigger" data-status='1' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button class="btn btn-md btn-warning status-trigger<?=($status==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-lock"></i></button>
+                            <button class="btn btn-md btn-success status-trigger<?=($status==1 ? ' hidden' : '' )?>" data-status='1' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button class="btn btn-md btn-danger status-trigger<?=($status==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-remove"></i></button>
                         </td>
                     </tr>
                 <? } ?>
