@@ -34,12 +34,17 @@ class WebSocketController implements MessageComponentInterface {
     {
         if($conn->Session->get(Player::IDENTITY)) {
 
+
             $playerId = $conn->Session->get(Player::IDENTITY)->getId();
             $conn->resourceId = $playerId;
             $this->_clients[$playerId] = $conn;
 
-            echo "Выход игрока при соединении {$playerId}\n";
-            $this->quitPlayer($playerId);
+            echo "New connection: #{$conn->resourceId} " . $conn->Session->getId() . "\n";
+
+            if(isset($this->_players[$playerId])){
+                echo "Выход игрока при соединении {$playerId}\n";
+                $this->quitPlayer($playerId);
+            }
 
             $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
 
@@ -58,7 +63,7 @@ class WebSocketController implements MessageComponentInterface {
 
             $player = $sth->fetch();
 
-            $this->_clients[$conn->Session->get(Player::IDENTITY)->getId()]->send(json_encode(
+            $conn->send(json_encode(
                     array('path' => 'update',
                         'res' => array(
                             'money' => $player['Money'],
@@ -66,7 +71,6 @@ class WebSocketController implements MessageComponentInterface {
                         )))
             );
 
-            echo "New connection: #{$conn->resourceId} " . $conn->Session->getId() . "\n";
             // $this->_class='chat';
             // $this->sendCallback($this->_clients, array('message'=>$conn->Session->get(Player::IDENTITY)->getNicName().' присоединился'));
         }
@@ -373,9 +377,11 @@ LIMIT 10";
 
 
         if($conn->Session->get(Player::IDENTITY)){
-            echo "Выход игрока при разъединении {$conn->resourceId}\n";
+            if(isset($this->_players[$conn->resourceId])){
+
+                echo "Выход игрока при разъединении {$conn->resourceId}\n";
             $this->quitPlayer($conn->resourceId);
-            echo "Connection {$conn->resourceId} has disconnected\n";
+            }
 
 /*        foreach ($this->_clients as $client) {
             $client->send(json_encode(
@@ -388,8 +394,10 @@ LIMIT 10";
 */
         }
 
-        if(isset($this->_clients[$conn->resourceId]))
+        if(isset($this->_clients[$conn->resourceId])){
             unset($this->_clients[$conn->resourceId]);
+            echo "Connection {$conn->resourceId} has disconnected\n";
+        }
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
@@ -520,8 +528,15 @@ LIMIT 10";
 
                 echo time()." ".$sql."\n";
 
-                DB::Connect()->query($sql);
+                try{
+                    DB::Connect()->query($sql);
+                }
+                catch(\Exception $e)
+                {
+                    echo $e->getMessage();
+                }
 
+            if(null!==($this->_clients[$player['pid']]->Session->get(Player::IDENTITY))){
                 $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setMoney(
                     $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getMoney()+
                     ($currency=='Money'?$app->getPrice()*$player['result']:0)
@@ -545,6 +560,8 @@ LIMIT 10";
 
             }
 
+            }
+
             array_push($results,
                 $player['pid'],
                 $app->getId(),
@@ -559,7 +576,7 @@ LIMIT 10";
             );
         }
 
-        echo time()." ".$sql_results."\n";
+        echo time(); print_r($results); echo"\n";
 
         try {
             DB::Connect()->prepare($sql_results)->execute($results);
