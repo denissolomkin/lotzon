@@ -160,8 +160,8 @@ class WebSocketController implements MessageComponentInterface {
                                                 if (count($clients) == $class::GAME_PLAYERS)
                                                     break;
                                             }
-                                            if (count($this->_stack[$class][$mode]) == 0)
-                                                unset($this->_stack[$class][$mode]);
+                                            if (isset($this->_stack[$name][$mode]) AND count($this->_stack[$name][$mode]) == 0)
+                                                unset($this->_stack[$name][$mode]);
 
                                             // запускаем и кешируем приложение
                                             $app->setClients($clients);
@@ -208,7 +208,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                 if ($app->isOver() && count($app->getClients()) < $class::GAME_PLAYERS) {
                                     unset($this->_apps[$name][$id]);
-                                    echo "удаление приложения" . $name . $id . '\n';
+                                    echo "удаление приложения" . $name . $id . "\n";
                                 }
 
                             }
@@ -251,7 +251,7 @@ class WebSocketController implements MessageComponentInterface {
                     $stat = $sth->fetch();
                     $stat['All']/=$class::GAME_PLAYERS;
 
-                    if ($this->_rating[$name]['timeout'] > time()) {
+                    if (isset($this->_rating[$name]['timeout']) AND $this->_rating[$name]['timeout'] > time()) {
                         $top = $this->_rating[$name]['top'];
                     } else {
 
@@ -295,7 +295,6 @@ LEFT JOIN Players p On p.Id=g.PlayerId
 where g.GameId = :gameid
 group by g.PlayerId
 having T > (SELECT (count(Id) / count(distinct(PlayerId)) / ".$class::GAME_PLAYERS." ) FROM PlayerGames WHERE GameId = :gameid)
-OR g.PlayerId = :playerid
 order by R DESC, T DESC
 LIMIT 10";
                         echo time() . " SELECT TOP\n";
@@ -313,7 +312,7 @@ LIMIT 10";
 
                         $top = array();
                         foreach ($sth->fetchAll() as $player) {
-                            $player['O'] = ((isset($this->_players[$player['I']]['appName']) && $this->_players[$player['Id']]['appName'] == $name ? 1 : 0));
+                            $player['O'] = ( (isset($this->_players[$player['I']]['appName']) && $this->_players[$player['I']]['appName'] == $name ? 1 : 0) );
                             $top[] = $player;
                         }
 
@@ -331,8 +330,8 @@ LIMIT 10";
                             'win' => $stat['Win'],
                             // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
                             'online' =>
-                                ((is_array($this->_stack[$name]) ? count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name]) : 0 ) +
-                                (is_array($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0)),
+                                ((isset($this->_stack[$name]) ? count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name]) : 0 ) +
+                                (isset($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0)),
                             'top' => $top
                         ))));
 
@@ -467,10 +466,10 @@ LIMIT 10";
 
                 // если приложение завершилось, сохраняем и выгружаем из памяти
                 if ($app->isOver() && !$app->isSaved()) {
-                    echo "Сохраняем результаты".$class.$id.'\n';
+                    echo "Сохраняем результаты".$class.$id."\n";
                     $this->saveGame($app);
                     unset($this->_apps[$class][$id]);
-                    echo "удаление приложения".$class.$id.'\n';
+                    echo "удаление приложения".$class.$id."\n";
                 }
             }
         }
