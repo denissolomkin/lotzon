@@ -38,6 +38,7 @@ class WebSocketController implements MessageComponentInterface {
             $conn->resourceId = $playerId;
             $this->_clients[$playerId] = $conn;
 
+            echo "Выход игрока при соединении {$playerId}\n";
             $this->quitPlayer($playerId);
 
             $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
@@ -370,12 +371,11 @@ LIMIT 10";
 
     public function onClose(ConnectionInterface $conn) {
 
-        if(isset($this->_clients[$conn->resourceId]))
-            unset($this->_clients[$conn->resourceId]);
 
         if($conn->Session->get(Player::IDENTITY)){
-        $this->quitPlayer($conn->resourceId);
-        echo "Connection {$conn->resourceId} has disconnected\n";
+            echo "Выход игрока при разъединении {$conn->resourceId}\n";
+            $this->quitPlayer($conn->resourceId);
+            echo "Connection {$conn->resourceId} has disconnected\n";
 
 /*        foreach ($this->_clients as $client) {
             $client->send(json_encode(
@@ -387,6 +387,9 @@ LIMIT 10";
         }
 */
         }
+
+        if(isset($this->_clients[$conn->resourceId]))
+            unset($this->_clients[$conn->resourceId]);
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
@@ -427,7 +430,6 @@ LIMIT 10";
 
     public function quitPlayer($playerId) {
 
-        echo "Выход игрока\n";
         if (isset($this->_players[$playerId]['appName'])){
             echo "Удаление маячка игры ".$this->_players[$playerId]['appName'].$this->_players[$playerId]['appMode']."\n";
             $class = $this->_players[$playerId]['appName'];
@@ -441,18 +443,25 @@ LIMIT 10";
         // сдаемся и выходим, сохраняем и удалеяем игру
         if (isset($class))
         {
-            echo "Удаление игрока из игрового стека ожидающих \n";
-            unset(
-                $this->_stack[$class][$mode][$playerId],
-                $this->_players[$playerId]);
-            if(count($this->_stack[$class][$mode])==0)
+            if(isset($this->_stack[$class][$mode][$playerId])){
+                unset($this->_stack[$class][$mode][$playerId]);
+                echo "Удаление игрока из игрового стека ожидающих \n";
+            }
+
+            echo "Удаление игрока из массива игроков \n";
+            unset($this->_players[$playerId]);
+
+            if(isset($this->_stack[$class][$mode]) AND count($this->_stack[$class][$mode])==0){
+                echo "Удаление стека ожидающих игроков {$class} {$mode}\n";
                 unset($this->_stack[$class][$mode]);
+            }
 
             if (isset($id) AND isset($this->_apps[$class][$id])) {
 
                 $app = $this->_apps[$class][$id];
                 // если есть игра - сдаемся
                 $app->setClient($this->_clients[$playerId]);
+
                 if (!$app->isOver()) {
                     echo "Игра активная - сдаемся\n";
                     $app->passAction();

@@ -19,7 +19,7 @@ class Index extends \SlimController\SlimController
     const SHOP_PER_PAGE = 6;
     const LOTTERIES_PER_PAGE = 6;
     const TRANSACTIONS_PER_PAGE = 6;
-    const REVIEWS_PER_PAGE = 6;
+    const REVIEWS_PER_PAGE = 8;
     const COMMENTS_PER_PAGE = 8;
 
     const MONEY_ADD = 2070;
@@ -104,7 +104,7 @@ class Index extends \SlimController\SlimController
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($session->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
         //$currentChanceGame     = Session2::connect()->get('chanceGame');
-        $currentChanceGame     = $session->get('chanceGame');
+        $currentChanceGame     = $_SESSION['chanceGame'];
 
         //if (!Session2::connect()->get('MomentChanseLastDate') || time() - Session2::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
         //   Session2::connect()->set('MomentChanseLastDate', time());
