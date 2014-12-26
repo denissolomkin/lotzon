@@ -1359,7 +1359,7 @@ function moneyExchange() {
 
     requestForMoney(data, function(){
         updateMoney(playerMoney-parseFloat($("#cash-exchange-popup input[name=summ]").val()));
-        updatePoints(playerPoints+parseInt($("#cash-exchange-popup #points").html()));
+        updatePoints(parseInt(playerPoints)+parseInt($("#cash-exchange-popup #points").html()));
         $("#cash-exchange-popup input[name=summ]").val('');
         $("#cash-exchange-popup #points").html('');
         $("#exchange-submit").prop('disabled', true).addClass('button-disabled').hide();

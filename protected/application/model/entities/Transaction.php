@@ -6,6 +6,7 @@ class Transaction extends Entity
     private $_playerId = 0;
     private $_currency = GameSettings::CURRENCY_POINT;
     private $_sum = 0;
+    private $_balance = 0;
     private $_description = '';
     private $_date = 0;
 
@@ -24,6 +25,19 @@ class Transaction extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+
+    public function setBalance($balance)
+    {
+        $this->_balance = $balance;
+
+        return $this;
+    }
+
+    public function getBalance()
+    {
+        return $this->_balance;
     }
 
     public function setPlayerId($playerId)

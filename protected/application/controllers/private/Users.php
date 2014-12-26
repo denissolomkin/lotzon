@@ -95,6 +95,7 @@ class Users extends PrivateArea
                     $transaction = array(
                         'id' => $transaction->getId(),
                         'sum' => $transaction->getSum(),
+                        'bal' => $transaction->getBalance(),
                         'desc' => $transaction->getDescription(),
                         'date' => date('d.m.Y H:i:s', $transaction->getDate()),
                     );
@@ -103,6 +104,7 @@ class Users extends PrivateArea
                     $transaction = array(
                         'id' => $transaction->getId(),
                         'sum' => $transaction->getSum(),
+                        'bal' => $transaction->getBalance(),
                         'desc' => $transaction->getDescription(),
                         'date' => date('d.m.Y H:i:s', $transaction->getDate()),
                     );

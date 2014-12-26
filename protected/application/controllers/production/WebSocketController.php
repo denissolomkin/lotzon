@@ -25,7 +25,7 @@ class WebSocketController implements MessageComponentInterface {
     protected $_shutdown;
 
     public function __construct($shutdown) {
-        echo "Server have started\n";
+        echo time()." ". "Server have started\n";
         $this->_clients = array();  // Create a collection of client
         $this->_shutdown = $shutdown;
     }
@@ -39,10 +39,10 @@ class WebSocketController implements MessageComponentInterface {
             $conn->resourceId = $playerId;
             $this->_clients[$playerId] = $conn;
 
-            echo "New connection: #{$conn->resourceId} " . $conn->Session->getId() . "\n";
+            echo time()." ". "New connection: #{$conn->resourceId} " . $conn->Session->getId() . "\n";
 
             if(isset($this->_players[$playerId])){
-                echo "Выход игрока при соединении {$playerId}\n";
+                echo time()." ". "Выход игрока при соединении {$playerId}\n";
                 $this->quitPlayer($playerId);
             }
 
@@ -82,7 +82,7 @@ class WebSocketController implements MessageComponentInterface {
         if($from->Session->get(Player::IDENTITY)) {
             $data = json_decode($msg);
             list($type, $name, $id) = array_pad(explode("/", $data->path),3,0);
-            echo "#{$from->resourceId}: " . (isset($data->data->action) ? $data->data->action : '') . " - " . $data->path . " \n";
+            echo time()." ". "#{$from->resourceId}: " . (isset($data->data->action) ? $data->data->action : '') . " - " . $data->path . " \n";
             if(isset($data->data))
                 $data = $data->data;
             $this->_class = $class = '\\' . $name;
@@ -98,13 +98,13 @@ class WebSocketController implements MessageComponentInterface {
                         if (class_exists($class)) {
                             // нет запущенного приложения, пробуем создать новое или просто записаться в очередь
                             if (!$id) {
-                                echo "id приложения нет \n";
+                                echo time()." ". "id приложения нет \n";
                                 // записались
 
                                 if ($action == 'cancelAction' || $action == 'quitAction') {
 
                                     if (isset($this->_players[$from->resourceId]['appMode'])) {
-                                        echo "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
+                                        echo time()." ". "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
                                         unset(
                                             $this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()],
                                             $this->_players[$from->resourceId]['appName'],
@@ -132,12 +132,12 @@ class WebSocketController implements MessageComponentInterface {
                                     $funds = $sth->fetch();
 
                                     if ($funds[($currency == 'MONEY' ? 'Money' : 'Points')] < $price) {
-                                        echo "Игрок {$from->resourceId} - недостаточно средств для игры\n";
+                                        echo time()." ". "Игрок {$from->resourceId} - недостаточно средств для игры\n";
                                         $from->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
 
                                     } else {
 
-                                        echo "Игрок {$from->resourceId} записался в стек новой игры \n";
+                                        echo time()." ". "Игрок {$from->resourceId} записался в стек новой игры \n";
                                         $this->_stack[$name][$mode][$player->getId()] = $from;
                                         $this->_players[$from->resourceId]['appName'] = $name;
                                         $this->_players[$from->resourceId]['appMode'] = $mode;
@@ -182,21 +182,25 @@ class WebSocketController implements MessageComponentInterface {
                             } // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
                             elseif (isset($this->_apps[$name][$id])) {
                                 $app = $this->_apps[$name][$id];
-                                echo "приложение нашли $name " . $app->getCurrency() . $app->getPrice() . " $id\n";
+                                echo time()." ". "приложение нашли $name " . $app->getCurrency() . $app->getPrice() . " $id\n";
 
                                 // если нет, сообщаем об ошибке
                             } else {
-                                echo "id есть, но приложения $name нет, сообщаем об ошибке, удаляем из активных игроков \n";
-                                $this->sendCallback($from, array(
-                                    'action' => 'error',
-                                    'error' => 'APPLICATION_DOESNT_EXISTS',
-                                    'appId' => 0));
-                                unset($this->_players[$from->Session->get(Player::IDENTITY)->getId()]);
+                                if($action=='replayAction' || $action=='quitAction'){
+                                    echo time()." ". "id есть, но приложения $name $id нет, заглушка\n";
+                                } else {
+                                    echo time()." ". "id есть, но приложения $name $id нет, сообщаем об ошибке, удаляем из активных игроков \n";
+                                    $this->sendCallback($from, array(
+                                        'action' => 'error',
+                                        'error' => 'APPLICATION_DOESNT_EXISTS',
+                                        'appId' => 0));
+                                    unset($this->_players[$from->Session->get(Player::IDENTITY)->getId()]);
+                                }
                             }
 
                             // если приложение запустили или загрузили
                             if (isset($app)) {
-                                echo "стартуем приложение $name {$app->getIdentifier()} \n";
+                                echo time()." ". "стартуем приложение $name {$app->getIdentifier()} \n";
 
                                 // пробуем вызвать экшн
                                 $app->setClient($from);
@@ -212,7 +216,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                 if ($app->isOver() && count($app->getClients()) < $class::GAME_PLAYERS) {
                                     unset($this->_apps[$name][$id]);
-                                    echo "удаление приложения" . $name . $id . "\n";
+                                    echo time()." ". "удаление приложения" . $name . $id . "\n";
                                 }
 
                             }
@@ -325,7 +329,7 @@ LIMIT 10";
 
                     }
 
-                    echo "Топ + обновление данных игрока\n";
+                    echo time()." ". "Топ + обновление данных игрока\n";
                     $from->send(json_encode(array(
                         'path' => 'update',
                         'res' => array(
@@ -378,7 +382,7 @@ LIMIT 10";
         if($conn->Session->get(Player::IDENTITY)){
             if(isset($this->_players[$conn->resourceId])){
 
-                echo "Выход игрока при разъединении {$conn->resourceId}\n";
+                echo time()." ". "Выход игрока при разъединении {$conn->resourceId}\n";
             $this->quitPlayer($conn->resourceId);
             }
 
@@ -395,17 +399,17 @@ LIMIT 10";
 
         if(isset($this->_clients[$conn->resourceId])){
             unset($this->_clients[$conn->resourceId]);
-            echo "Connection {$conn->resourceId} has disconnected\n";
+            echo time()." ". "Connection {$conn->resourceId} has disconnected\n";
         }
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
 
         if($e->getCode() == 'HY000' || stristr($e->getMessage(), 'server has gone away')) {
-            echo "{$e->getMessage()} RECONNECT \n";
+            echo time()." ". "{$e->getMessage()} RECONNECT \n";
             DB::Reconnect('default', Config::instance()->dbConnectionProperties);
         } else {
-            echo "An error has occurred: {$e->getMessage()}\n";
+            echo time()." ". "An error has occurred: {$e->getMessage()}\n";
             $conn->close();
         }
     }
@@ -438,11 +442,11 @@ LIMIT 10";
     public function quitPlayer($playerId) {
 
         if (isset($this->_players[$playerId]['appName'])){
-            echo "Удаление маячка игры ".$this->_players[$playerId]['appName'].$this->_players[$playerId]['appMode']."\n";
+            echo time()." ". "Удаление маячка игры ".$this->_players[$playerId]['appName'].$this->_players[$playerId]['appMode']."\n";
             $class = $this->_players[$playerId]['appName'];
             $mode = $this->_players[$playerId]['appMode'];
             if(isset($this->_players[$playerId]['appId'])){
-                echo "Выход маячка Id игры #".$this->_players[$playerId]['appId']."\n";
+                echo time()." ". "Выход маячка Id игры #".$this->_players[$playerId]['appId']."\n";
                 $id = $this->_players[$playerId]['appId'];
             }
         }
@@ -452,14 +456,14 @@ LIMIT 10";
         {
             if(isset($this->_stack[$class][$mode][$playerId])){
                 unset($this->_stack[$class][$mode][$playerId]);
-                echo "Удаление игрока из игрового стека ожидающих \n";
+                echo time()." ". "Удаление игрока из игрового стека ожидающих \n";
             }
 
-            echo "Удаление игрока из массива игроков \n";
+            echo time()." ". "Удаление игрока из массива игроков \n";
             unset($this->_players[$playerId]);
 
             if(isset($this->_stack[$class][$mode]) AND count($this->_stack[$class][$mode])==0){
-                echo "Удаление стека ожидающих игроков {$class} {$mode}\n";
+                echo time()." ". "Удаление стека ожидающих игроков {$class} {$mode}\n";
                 unset($this->_stack[$class][$mode]);
             }
 
@@ -470,22 +474,22 @@ LIMIT 10";
                 $app->setClient($this->_clients[$playerId]);
 
                 if (!$app->isOver()) {
-                    echo "Игра активная - сдаемся\n";
+                    echo time()." ". "Игра активная - сдаемся\n";
                     $app->passAction();
                     $this->sendCallback($app->getResponse(), $app->getCallback());
                 }
 
                 // сигнализируем об уходе и отключаемся от игры
-                echo "Сигнализируем об уходе\n";
+                echo time()." ". "Сигнализируем об уходе\n";
                 $app->quitAction();
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
                 // если приложение завершилось, сохраняем и выгружаем из памяти
                 if ($app->isOver() && !$app->isSaved()) {
-                    echo "Сохраняем результаты".$class.$id."\n";
+                    echo time()." ". "Сохраняем результаты".$class.$id."\n";
                     $this->saveGame($app);
                     unset($this->_apps[$class][$id]);
-                    echo "удаление приложения".$class.$id."\n";
+                    echo time()." ". "удаление приложения".$class.$id."\n";
                 }
             }
         }
@@ -494,9 +498,9 @@ LIMIT 10";
 
     function saveGame($app){
 
-        echo "Состояние игры:".$app->_isSaved."/".$app->_isOver." - Сохраняем игру #".$app->getId()."\n";
+        echo time()." ". "Состояние игры:".$app->_isSaved."/".$app->_isOver." - Сохраняем игру #".$app->getId()."\n";
         $app->_isSaved = 1;
-        echo "Результаты: "; print_r($app->getPlayers());
+        echo time()." ". "Результаты: "; print_r($app->getPlayers());
 
         $sql_results = "INSERT INTO `PlayerGames`
         (`PlayerId`, `GameId`, `GameUid`, `Date`, `Win`, `Lose`, `Draw`, `Result`, `Currency`, `Price`)
@@ -504,7 +508,7 @@ LIMIT 10";
             str_repeat(',(?,?,?,?,?,?,?,?,?,?)', count($app->getPlayers())-1);
 
         if($app->getPrice())
-            $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Description`, `Date`) VALUES ";
+            $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES ";
 
         $results = $transactions = array();
 
@@ -514,10 +518,36 @@ LIMIT 10";
                 $sql_transactions_players[]='(?,?,?,?,?)';
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
+
+                if(isset($this->_clients[$player['pid']])){
+                    $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setMoney(
+                        $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getMoney()+
+                        ($currency=='Money'?$app->getPrice()*$player['result']:0)
+                    );
+                    $money=$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getMoney();
+
+                    $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setPoints(
+                        $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints()+
+                        ($currency=='Points'?$app->getPrice()*$player['result']:0)
+                    );
+
+                    $points=$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints();
+
+                    $this->_clients[$player['pid']]->send(json_encode(
+                            array('path'=>'update',
+                                'res'=>array(
+                                    'money'=>$money,
+                                    'points'=>$points
+                                )))
+                    );
+
+                }
+
                 array_push($transactions,
                     $player['pid'],
                     $app->getCurrency(),
                     $app->getPrice()*$player['result'],
+                    ($currency=='Money' ? $money : $points),
                     'Игра '.$app->getTitle(),
                     time()
                 );
@@ -532,32 +562,8 @@ LIMIT 10";
                 }
                 catch(\Exception $e)
                 {
-                    echo $e->getMessage();
+                    echo time()." ". $e->getMessage();
                 }
-
-            if(null!==($this->_clients[$player['pid']]->Session->get(Player::IDENTITY))){
-                $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setMoney(
-                    $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getMoney()+
-                    ($currency=='Money'?$app->getPrice()*$player['result']:0)
-                );
-                $money=$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getMoney();
-
-                $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setPoints(
-                    $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints()+
-                    ($currency=='Points'?$app->getPrice()*$player['result']:0)
-                );
-
-                $points=$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints();
-
-                $this->_clients[$player['pid']]->send(json_encode(
-                    array('path'=>'update',
-                        'res'=>array(
-                            'money'=>$money,
-                            'points'=>$points
-                        )))
-                );
-
-            }
 
             }
 
@@ -575,11 +581,11 @@ LIMIT 10";
             );
         }
 
-        echo time(); print_r($results); echo"\n";
+        echo time(); print_r($results); echo "\n";
 
         try {
             DB::Connect()->prepare($sql_results)->execute($results);
-            echo "Записали результаты игры в базу\n";
+            echo time()." ". "Записали результаты игры в базу\n";
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
@@ -589,7 +595,7 @@ LIMIT 10";
             echo time()." ".$sql."\n";
             try {
                 DB::Connect()->prepare($sql)->execute($transactions);
-                echo "Записали транзакции в базу\n";
+                echo time()." ". "Записали транзакции в базу\n";
             } catch (PDOException $e) {
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
             }

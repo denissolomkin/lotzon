@@ -144,7 +144,8 @@
                         <th>#ID транзакции</th>
                         <th>Дата</th>
                         <th>Описание транзакции</th>
-                        <th>Сумма</th>                        
+                        <th>Сумма</th>
+                        <th>Баланс</th>
                         <th>Удалить</th>
                     </thead>
                     <tbody>
@@ -159,7 +160,8 @@
                         <th>#ID транзакции</th>
                         <th>Дата</th>
                         <th>Описание транзакции</th>
-                        <th>Сумма</th>  
+                        <th>Сумма</th>
+                        <th>Баланс</th>
                         <th>Удалить</th>                      
                     </thead>
                     <tbody>
@@ -500,13 +502,13 @@ function showError(message) {
                 if (data.status == 1) {
                     var tdata = ''
                     $(data.data.points).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td><td>'+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
                     });
                     $("#transactions-holder").find('.points tbody').html(tdata);
                     tdata = '';
                     $(data.data.money).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td><td>'+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
                     });
                     $("#transactions-holder").find('.money tbody').html(tdata);
