@@ -180,10 +180,9 @@ class WebSocketController implements MessageComponentInterface {
                                     }
                                 }
                             } // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
-                            elseif ($app = $this->_apps[$name][$id]) {
-                                //if($this->_stack[$name][$mode][$player->getId()])
+                            elseif (isset($this->_apps[$name][$id])) {
+                                $app = $this->_apps[$name][$id];
                                 echo "приложение нашли $name " . $app->getCurrency() . $app->getPrice() . " $id\n";
-                                //unset ( $this->_stack[$name][$mode][$player->getId()] );
 
                                 // если нет, сообщаем об ошибке
                             } else {

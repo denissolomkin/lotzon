@@ -511,7 +511,7 @@ class NewGame extends Entity
 
     public function unsetFieldPlayed()
     {
-        unset($this->_fieldPlayed);
+        $this->_fieldPlayed=array();
     }
 
     public function getField()
