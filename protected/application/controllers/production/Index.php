@@ -20,7 +20,7 @@ class Index extends \SlimController\SlimController
     const LOTTERIES_PER_PAGE = 6;
     const TRANSACTIONS_PER_PAGE = 6;
     const REVIEWS_PER_PAGE = 8;
-    const COMMENTS_PER_PAGE = 8;
+    const COMMENTS_PER_PAGE = 9;
 
     const MONEY_ADD = 2070;
     const WINNERS_ADD = 29;
