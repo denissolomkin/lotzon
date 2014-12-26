@@ -103,6 +103,7 @@ class NewGame extends Entity
                 $this->setPlayers($this->getClients());
                 $this->_isOver = 0;
                 $this->_isSaved = 0;
+                $this->nextPlayer();
                 $this->startAction();
             } else {
                 $this->unsetCallback();
