@@ -446,7 +446,7 @@ $(function(){
 
     $(".reviews .rv-but-add").on('click', function() {
 
-        currentReview.text=$('.reviews .rv-txt .textarea').html();
+        currentReview.text=$('.reviews .rv-txt .textarea').text();
         if(currentReview.text)
         $.ajax({
             url: "/review/save/",
