@@ -6,13 +6,14 @@ class TransactionsDBProcessor implements IProcessor
     public function create(Entity $transaction)
     {   
         $transaction->setDate(time());
-        $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Description`, `Date`) VALUES (:plid, :curr, :sum, :desc, :date)";
+        $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES (:plid, :curr, :sum,  :bal, :desc, :date)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':plid' => $transaction->getPlayerId(),
                 ':curr' => $transaction->getCurrency(),
-                ':sum' => $transaction->getSum(),
+                ':sum'  => $transaction->getSum(),
+                ':bal'  => $transaction->getBalance(),
                 ':desc' => $transaction->getDescription(),
                 ':date' => $transaction->getDate(),
             ));
@@ -51,6 +52,7 @@ class TransactionsDBProcessor implements IProcessor
         $transaction->setId($transactionData['Id'])
                     ->setPlayerId($transactionData['PlayerId'])
                     ->setSum($transactionData['Sum'])
+                    ->setBalance($transactionData['Balance'])
                     ->setDescription($transactionData['Description'])
                     ->setCurrency($transactionData['Currency'])
                     ->setDate($transactionData['Date']);
@@ -112,6 +114,7 @@ class TransactionsDBProcessor implements IProcessor
                 $transaction->setId($transactionData['Id'])
                             ->setPlayerId($transactionData['PlayerId'])
                             ->setSum($transactionData['Sum'])
+                            ->setBalance($transactionData['Balance'])
                             ->setDescription($transactionData['Description'])
                             ->setCurrency($transactionData['Currency'])
                             ->setDate($transactionData['Date']);

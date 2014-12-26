@@ -973,7 +973,7 @@
                             <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
                         </div>
                         <div class="gm-if-bk">
-                            <div class="l">Кто больше?</div>
+                            <div class="l">Кто больше</div>
                         </div>
 
                         <div class="rls-bl">

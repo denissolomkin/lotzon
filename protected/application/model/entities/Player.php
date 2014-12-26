@@ -744,6 +744,7 @@ class Player extends Entity
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
                     ->setSum($quantity)
+                    ->setBalance($this->getMoney())
                     ->setCurrency(GameSettings::CURRENCY_MONEY)
                     ->setDescription($description);
         $transaction->create();
@@ -761,6 +762,7 @@ class Player extends Entity
 
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
+                    ->setBalance($this->getPoints())
                     ->setSum($quantity)
                     ->setCurrency(GameSettings::CURRENCY_POINT)
                     ->setDescription($description);

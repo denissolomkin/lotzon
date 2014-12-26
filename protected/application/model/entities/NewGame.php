@@ -185,7 +185,7 @@ class NewGame extends Entity
     {
         #echo "Тайм-аут \n";
         $this->unsetCallback();
-        if($this->currentPlayer()['timeout']<=time())
+        if(isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout']<=time())
         {
             #echo "Переход хода \n";
             if(!$this->isOver()) {
