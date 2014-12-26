@@ -515,7 +515,7 @@ LIMIT 10";
         foreach($app->getPlayers() as $player)
         {
             if($app->getPrice() AND $player['result']!=0) {
-                $sql_transactions_players[]='(?,?,?,?,?)';
+                $sql_transactions_players[]='(?,?,?,?,?,?)';
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
 
