@@ -9,7 +9,7 @@
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/users?page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="document.location.href='/private/users?page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'')?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
@@ -70,7 +70,7 @@
                             <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-                            <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>">BAN</button>
+                            <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
                         </td>
                     </tr>
                 <? } ?>
