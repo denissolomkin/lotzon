@@ -164,36 +164,16 @@
                 </aside>
                 <aside class="rbs">
                     <div class="bz2">
-                        <!-- admitad.banner: 337fef45060096b382f6feba1a4143 My Lands -->
-                        <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/337fef45060096b382f6feba1a4143/?i=4">
-                            <img width="300" height="250" border="0" src="//ad.admitad.com/b/337fef45060096b382f6feba1a4143/" alt="My Lands" />
-                        </a>
-                        <!-- /admitad.banner -->
+                        <!--noindex--><div id="ambn35732"></div><!--/noindex-->
                     </div>
                     <div class="bz1">
-
-                        <script type="text/javascript">
-                            <!--
-                            (function (w, d) {
-                                var js, id = "dumedia-ad", ref = d.getElementsByTagName('script')[0];
-                                if (d.getElementById(id)) {return;}
-                                js = d.createElement('script'); js.id = id; js.async = true; js.charset = 'utf-8';
-                                js.src = '//cdn.dumedia.ru/js/ad.js?r' + Math.random();
-                                ref.parentNode.insertBefore(js, ref);
-                            }(window, document));
-                            // -->
-                        </script>
-                        <div data-dumedia-adv="1866"></div>
-                        <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="2294692189"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5248158589"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
-
+                        <!--noindex--><div id="ambw13798"></div><!--/noindex-->
                     </div>
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-300х485.png" width="300" height="485"   /></div>
-
+                    <div class="bz2">
+                        <img src="/tpl/img/baners/Plug-300х300.png" width="300" height="300"   />
+                    </div>
                     <div class="bz3">
-                        <img src="/tpl/img/baners/Plug-300х300.png" width="300" height="300">
+                        <img src="/tpl/img/baners/Plug-300х525.png" width="300" height="530"   />
                     </div>
                 </aside>
                 <div class="w-ct">
@@ -721,11 +701,15 @@
         ======================================================================-->
         <section class="chance">
         <div class="ch-br-bk">
-            <!--ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px;margin-bottom:40px;" data-ad-client="ca-pub-7111611486297513" data-ad-slot="1537812583"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-7111611486297513" data-ad-slot="5968012188"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script-->
-            <img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" />
+            <div style="margin-bottom:40px;">
+                <!--noindex--><div id="ambn6632"></div><!--/noindex-->
+            </div>
+
+            <!-- RotaBan.ru Zone Code -->
+            <div id="rotaban_233828" class="rbrocks rotaban_5d4ce818200f48a4a5f6def3b2e19747"></div>
+            <!-- END RotaBan.ru Zone Code -->
+
+            <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
@@ -1314,6 +1298,26 @@
                 };
     </script>
     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+    <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=35732"></script><!--/noindex-->
+    <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=1&r=13798&p=right&q=2&t=5000" class="ambw-s"></script><!--/noindex-->
+    <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=6632"></script><!--/noindex-->
+    <!-- RotaBan.ru Ad Code -->
+    <script type="text/javascript">
+        (function(){
+            var rb = document.createElement('script');
+            d = new Date();
+            d.setHours(0);
+            d.setMinutes(0);
+            d.setSeconds(0);
+            d.setMilliseconds(0);
+            rb.type = 'text/javascript';
+            rb.async = true;
+            rb.src = '//s1.rotaban.ru/rotaban.js?v=' + d.getTime();
+            (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(rb);
+        })();
+    </script>
+    <!-- END RotaBan.ru Ad Code -->
+
     </body>
 
 </html>
