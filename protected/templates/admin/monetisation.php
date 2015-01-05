@@ -51,12 +51,12 @@
 
                         </td>
                         <td><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice())?></td>
-                        <td width="15%">
+                        <td width="10%">
 
                             <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs approve btn-success"><i class="glyphicon glyphicon-ok"></i></button>&nbsp;
+                            <button data-id="<?=$order->getId()?>" class="btn btn-xs approve btn-success"><i class="glyphicon glyphicon-ok"></i></button>
                             <button data-id="<?=$order->getId()?>" class="btn btn-xs decline btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
                         </td>
                     </tr>   
@@ -109,7 +109,7 @@
                                 <?=$data['title']?>: <?=$data['value']?> <?=($data['title'] == 'Cумма' ? ($order->getPlayer()->getCountry() == 'UA' ? 'грн' : 'руб') : '')?> <br />
                             <? } ?>
                         </td>
-                        <td width="15%">
+                        <td width="10%">
                             <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
