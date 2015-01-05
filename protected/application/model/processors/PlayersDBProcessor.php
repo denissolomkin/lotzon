@@ -183,9 +183,18 @@ class PlayersDBProcessor implements IProcessor
         return true;
     }
 
-    public function getPlayersCount()
+    public function getPlayersCount($search=null)
     {
         $sql = "SELECT COUNT(*) as `counter`  FROM `Players`";
+
+        if (is_array($search) AND $search['query']) {
+            if($search['where'] AND $search['where']=='Id')
+                $sql .= ' WHERE Id = '.$search['query'];
+            elseif($search['where'])
+                $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
+            else
+                $sql .= ' WHERE '.(is_numeric($search['query'])?'`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
+        }
 
         try {
             $res = DB::Connect()->query($sql);
@@ -196,12 +205,14 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function getList($limit = 0, $offset = 0, array $sort, $search=0)
+    public function getList($limit = 0, $offset = 0, array $sort, $search=null)
     {
-        $sql = "SELECT *, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
+        $sql = "SELECT *, (SELECT count(p.Id ) FROM `Players` p WHERE p. `Ip` =`Players` . `Ip` ) AS CountIp, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
 
-        if (is_array($search)) {
-            if($search['where'])
+        if (is_array($search) AND $search['query']) {
+            if($search['where'] AND $search['where']=='Id')
+                $sql .= ' WHERE Id = '.$search['query'];
+            elseif($search['where'])
                 $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
             else
                 $sql .= ' WHERE '.(is_numeric($search['query'])?'`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';

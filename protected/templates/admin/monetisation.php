@@ -119,6 +119,7 @@
         </table>
     </div>
 </div>
+
 <div class="modal fade" id="stats-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -131,10 +132,10 @@
                         <th>#ID лотереи</th>
                         <th>Дата</th>
                         <th>Баллов выиграно</th>
-                        <th>Денег выиграно</th>                        
+                        <th>Денег выиграно</th>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -161,32 +162,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="stats-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="confirmLabel">Game stats</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <thead>
-                    <th>#ID лотереи</th>
-                    <th>Дата</th>
-                    <th>Баллов выиграно</th>
-                    <th>Денег выиграно</th>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default cls">Закрыть</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="transactions-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -203,6 +178,7 @@
                     <th>Дата</th>
                     <th>Описание транзакции</th>
                     <th>Сумма</th>
+                    <th>Баланс</th>
                     <th>Удалить</th>
                     </thead>
                     <tbody>
@@ -585,16 +561,20 @@
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
-                    var tdata = ''
+                    var tdata = '';
+                    temp_bal = 0;
                     $(data.data.points).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+(parseFloat(temp_bal)+parseFloat(tr.sum)!=parseFloat(tr.bal)?'<span class=red>':'')+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
+                        temp_bal=tr.bal;
                     });
                     $("#transactions-holder").find('.points tbody').html(tdata);
                     tdata = '';
+                    temp_bal = 0;
                     $(data.data.money).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+(parseFloat(temp_bal)+parseFloat(tr.sum)!=parseFloat(tr.bal)?'<span class=red>':'')+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
+                        temp_bal=tr.bal;
                     });
                     $("#transactions-holder").find('.money tbody').html(tdata);
                     $("#transactions-holder").modal();

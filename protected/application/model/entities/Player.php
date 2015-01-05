@@ -70,6 +70,7 @@ class Player extends Entity
     private $_additionalData = array();
     // filled only when list of players fetched
     private $_isTicketsFilled = array();
+    private $_countIp = 0;
 
     public function init()
     {
@@ -562,6 +563,11 @@ class Player extends Entity
         return $this->_isTicketsFilled;
     }
 
+    public function getCountIp()
+    {
+        return $this->_countIp;
+    }
+
     public function generatePassword()
     {
         $an = array(
@@ -895,6 +901,10 @@ class Player extends Entity
 
             if ($data['TicketsFilled']) {
                 $this->_isTicketsFilled = true;
+            }
+
+            if ($data['CountIp']) {
+                $this->_countIp = $data['CountIp'];
             }
         }
 

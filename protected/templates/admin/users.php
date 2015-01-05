@@ -17,19 +17,19 @@
     <div class="row-fluid">
         <table class="table table-striped users">
             <thead>
-                <th>#ID <?=sortIcon('Id', $currentSort, $pager)?></th>
+                <th>#ID <?=sortIcon('Id', $currentSort, $pager, $search)?></th>
                 <th>ФИО</th>
                 <th>Никнейм</th>
-                <th>Email <?=sortIcon('Valid', $currentSort, $pager)?></th>
-                <th>Страна <?=sortIcon('Country', $currentSort, $pager)?></th>
-                <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager)?></th>
-                <th>IP <?=sortIcon('IP', $currentSort, $pager)?></th>
-                <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager)?></th>
-                <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager)?></th>
-                <th>Игр сыграно <?=sortIcon('GamesPlayed', $currentSort, $pager)?></th>
-                <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager)?></th>
-                <th>Денег <?=sortIcon('Money', $currentSort, $pager)?></th>
-                <th>Баллов <?=sortIcon('Points', $currentSort, $pager)?></th>
+                <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
+                <th>Страна <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
+                <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
+                <th>IP <?=sortIcon('IP', $currentSort, $pager, $search)?></th>
+                <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
+                <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
+                <th>Игр сыграно <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
+                <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
+                <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
+                <th>Баллов <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
                 <th>Options</th>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@
                         </td>
                         <td><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td><?=$player->getIP()?></td>
+                        <td><?if($player->getCountIp()>1) {?><span class="label label-danger"><?=$player->getCountIp()?><?}?></span> <?=$player->getIP()?></td>
                         <td class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""?>"><?=$player->getDateLastLogin('d.m.Y H:i')?></td>
                         <td><?=$player->getGamesPlayed()?></td>
@@ -500,16 +500,20 @@ function showError(message) {
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
-                    var tdata = ''
+                    var tdata = '';
+                    temp_bal = 0;
                     $(data.data.points).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td><td>'+tr.bal+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+(parseFloat(temp_bal)+parseFloat(tr.sum)!=parseFloat(tr.bal)?'<span class=red>':'')+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
+                        temp_bal=tr.bal;
                     });
                     $("#transactions-holder").find('.points tbody').html(tdata);
                     tdata = '';
+                    temp_bal = 0;
                     $(data.data.money).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+tr.sum+'</td><td>'+tr.bal+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+(parseFloat(temp_bal)+parseFloat(tr.sum)!=parseFloat(tr.bal)?'<span class=red>':'')+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
+                        temp_bal=tr.bal;
                     });
                     $("#transactions-holder").find('.money tbody').html(tdata);
                     $("#transactions-holder").modal();
@@ -596,7 +600,13 @@ function addTransaction(plid) {
 }
     $('.search-users').on('click', function() {
         var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:200px;display:inline-block;" placeholder="id, фио, ник или email...">' +
-        '<select id="search_where" class="form-control input-md" style="width: 100px;display: inline-block;"><option value="">везде</option><option value="Id">Id</option><option value="NicName">Ник</option><option value="CONCAT(`Surname`,`Name`)">фио</option><option value="Email">Email</option></select>');
+        '<select id="search_where" class="form-control input-md" style="width: 100px;display: inline-block;">' +
+        '<option value="">Везде</option>' +
+        '<option value="Id">Id</option>' +
+        '<option value="Ip">Ip</option>' +
+        '<option value="NicName">Ник</option>' +
+        '<option value="CONCAT(`Surname`,`Name`)">Фио</option>' +
+        '<option value="Email">Email</option></select>');
         var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
         var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
         var button = $(this);
@@ -670,9 +680,9 @@ function addTransaction(plid) {
 </script>
 <?php
 
-    function sortIcon($currentField, $currentSort, $pager)
+    function sortIcon($currentField, $currentSort, $pager, $search)
     {
-        $icon = '<a href="/private/users?page=1&sortField=%s&sortDirection=%s"><i class="glyphicon glyphicon-chevron-%s"></i></a>';
+        $icon = '<a href="/private/users?page=1&sortField=%s&sortDirection=%s'.($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'').'"><i class="glyphicon glyphicon-chevron-%s"></i></a>';
         if ($currentField == $currentSort['field']) {
             $icon = vsprintf($icon, array(
                 $currentField,
