@@ -15,6 +15,7 @@ class NewGame extends Entity
     private $_gameTitle = '"Кто больше"';
     private $_gameCurrency = '';
     private $_gamePrice = null;
+    private $_gameTime = null;
 
     private $_identifier = '';
     private $_players = array();
@@ -29,8 +30,9 @@ class NewGame extends Entity
 
     public function init()
     {
-        $this->setField($this->generateField());
-        $this->setIdentifier(uniqid());
+        $this->setField($this->generateField())
+            ->setIdentifier(uniqid())
+            ->setTime(time());
     }
 
     public function quitAction($data=null)
@@ -458,6 +460,23 @@ class NewGame extends Entity
         return $this->_gameTitle;
     }
 
+    public function setPrice($price)
+    {
+        $this->_gamePrice = $price;
+        return $this;
+    }
+
+    public function getTime()
+    {
+        return $this->_gameTime;
+    }
+
+    public function setTime($time)
+    {
+        $this->_gameTime = $time;
+        return $this;
+    }
+
     public function getPrice()
     {
         return $this->_gamePrice;
@@ -486,21 +505,9 @@ class NewGame extends Entity
         return $this->_callback;
     }
 
-    public function setPrice($price)
-    {
-        $this->_gamePrice = $price;
-        return $this;
-    }
-
     public function setCurrency($currency)
     {
         $this->_gameCurrency = $currency;
-        return $this;
-    }
-
-    public function setField($field)
-    {
-        $this->_field = $field;
         return $this;
     }
 
@@ -512,6 +519,12 @@ class NewGame extends Entity
     public function unsetFieldPlayed()
     {
         $this->_fieldPlayed=array();
+    }
+
+    public function setField($field)
+    {
+        $this->_field = $field;
+        return $this;
     }
 
     public function getField()
