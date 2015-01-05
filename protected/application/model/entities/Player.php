@@ -70,6 +70,7 @@ class Player extends Entity
     private $_additionalData = array();
     // filled only when list of players fetched
     private $_isTicketsFilled = array();
+    private $_countIp = 0;
 
     public function init()
     {
@@ -562,6 +563,11 @@ class Player extends Entity
         return $this->_isTicketsFilled;
     }
 
+    public function getCountIp()
+    {
+        return $this->_countIp;
+    }
+
     public function generatePassword()
     {
         $an = array(
@@ -647,6 +653,19 @@ class Player extends Entity
         }
         
         return $this;   
+    }
+
+    public function countIp()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            return $model::instance()->countIp($this);
+        } catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
     }
 
     protected function checkNickname()
@@ -895,6 +914,10 @@ class Player extends Entity
 
             if ($data['TicketsFilled']) {
                 $this->_isTicketsFilled = true;
+            }
+
+            if ($data['CountIp']) {
+                $this->_countIp = $data['CountIp'];
             }
         }
 

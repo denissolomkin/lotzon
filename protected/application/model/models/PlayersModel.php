@@ -18,12 +18,12 @@ class PlayersModel extends Model
         return __CLASS__;
     }
 
-    public function getPlayersCount()
+    public function getPlayersCount($search=null)
     {
-        return $this->getProcessor()->getPlayersCount();
+        return $this->getProcessor()->getPlayersCount($search);
     }
 
-    public function getList($limit = 0, $offset = 0, $sort = array(), $search=0)
+    public function getList($limit = 0, $offset = 0, $sort = array(), $search=null)
     {
         return $this->getProcessor()->getList($limit, $offset, $sort, $search);
     }
@@ -31,6 +31,11 @@ class PlayersModel extends Model
     public function checkNickname(Entity $player) 
     {
         return $this->getProcessor()->checkNickname($player);   
+    }
+
+    public function countIP(Entity $player)
+    {
+        return $this->getProcessor()->countIP($player);
     }
 
     public function updateSocial(Entity $player)
@@ -42,7 +47,6 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->disableSocial($player);
     }
-
 
     public function existsSocial(Entity $player)
     {

@@ -30,7 +30,7 @@ class Users extends PrivateArea
         );
 
         $list = PlayersModel::instance()->getList(self::PLAYERS_PER_PAGE, $page == 1 ? 0 : self::PLAYERS_PER_PAGE * $page - self::PLAYERS_PER_PAGE, $sort, $search);
-        $count = PlayersModel::instance()->getPlayersCount();
+        $count = PlayersModel::instance()->getPlayersCount($search);
 
         $pager = array(
             'page' => $page,
