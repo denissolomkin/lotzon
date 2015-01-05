@@ -64,7 +64,7 @@ function updateCallback(receiveData)
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+
-        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))/(parseInt(receiveData.res.count))*1000):"0")+' = '+receiveData.res.count+'<b> • </b>'+
+        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))*5+(parseInt(receiveData.res.count))):"0")+' = '+receiveData.res.count+'<b> • </b>'+
         (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))):"0")+'');
 
 
@@ -78,7 +78,7 @@ function updateCallback(receiveData)
             html+=')"></div>' +
             '<div class="prs-ifo">' +
             '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
-            '<div class="ifo">'+Math.ceil(value.R*1000)+' = '+value.T+' • '+Math.ceil((parseInt(value.W)))+'</div>   ' +
+            '<div class="ifo">'+Math.ceil(value.R)+' = '+value.T+' • '+Math.ceil((parseInt(value.W)))+'</div>   ' +
             '</div></li>';
 
         });
