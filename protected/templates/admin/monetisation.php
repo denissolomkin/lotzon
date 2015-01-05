@@ -37,7 +37,7 @@
                                 else echo $info;
                                 echo'</div>';
                             }?>
-                            
+
                             <br>
                             <?if($order->getPlayer()->countIp()>1) {?><span class="label label-danger"><?=$order->getPlayer()->countIp()?><?}?></span> <?=$order->getPlayer()->getIP()?>
                         </td>
