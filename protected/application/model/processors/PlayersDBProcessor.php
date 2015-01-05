@@ -205,6 +205,23 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
+    public function countIp(Player $player)
+    {
+        $sql = "SELECT COUNT(Id) FROM `Players` WHERE Ip=:ip";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':ip'    => $player->getIP()
+            ));
+
+            return $sth->fetchColumn(0);
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+    }
+
     public function getList($limit = 0, $offset = 0, array $sort, $search=null)
     {
         $sql = "SELECT *, (SELECT count(p.Id ) FROM `Players` p WHERE p. `Ip` =`Players` . `Ip` ) AS CountIp, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";

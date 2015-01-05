@@ -6,7 +6,7 @@
     <div class="row-fluid">
         <table class="table table-striped">
             <thead>
-                <th>#ID</th>
+                <!--th>#ID</th-->
                 <th>Дата заказа</th>
                 <th>Игрок</th>
                 <th>Товар</th>
@@ -17,8 +17,8 @@
             <tbody>
                 <? foreach ($list as $order) { ?>
                     <tr>
-                        <td><?=$order->getId()?></td>
-                        <td><?=date('d.m.Y', $order->getDateOrdered())?></td>
+                        <!--td><?=$order->getId()?></td-->
+                        <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
                         <td class="<?=$order->getPlayer()->getValid() ? "success" : "danger"?>"><?=$order->getPlayer()->getEmail()?>
                             <?
                             foreach($order->getPlayer()->getAdditionalData() as $provider=>$info)
@@ -37,7 +37,9 @@
                                 else echo $info;
                                 echo'</div>';
                             }?>
-
+                            
+                            <br>
+                            <?if($order->getPlayer()->countIp()>1) {?><span class="label label-danger"><?=$order->getPlayer()->countIp()?><?}?></span> <?=$order->getPlayer()->getIP()?>
                         </td>
                         <td><?=$order->getItem()->getTitle()?></td>
 
@@ -69,7 +71,7 @@
     <div class="row-fluid">
         <table class="table table-striped">
             <thead>
-                <th>#ID</th>
+                <!--th>#ID</th-->
                 <th>Дата заказа</th>
                 <th>Игрок</th>
                 <th>Платежная сис-ма</th>
@@ -79,8 +81,8 @@
             <tbody>
                 <? foreach ($moneyOrders as $order) { ?>
                     <tr>
-                        <td><?=$order->getId()?></td>
-                        <td><?=date('d.m.Y', $order->getDateOrdered())?></td>
+                        <!--td><?=$order->getId()?></td-->
+                        <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
                         <td class="<?=$order->getPlayer()->getValid() ? "success" : "danger"?>"><?=$order->getPlayer()->getEmail()?>
                             <?foreach($order->getPlayer()->getAdditionalData() as $provider=>$info)
                             {
@@ -98,7 +100,8 @@
                                 else echo $info;
                                 echo'</div>';
                             }?>
-
+                            <br>
+                            <?if($order->getPlayer()->countIp()>1) {?><span class="label label-danger"><?=$order->getPlayer()->countIp()?><?}?></span> <?=$order->getPlayer()->getIP()?>
                         </td>
                         <td><?=$order->getType()?></td>
                         <td>

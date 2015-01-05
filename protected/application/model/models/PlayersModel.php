@@ -33,6 +33,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkNickname($player);   
     }
 
+    public function countIP(Entity $player)
+    {
+        return $this->getProcessor()->countIP($player);
+    }
+
     public function updateSocial(Entity $player)
     {
         return $this->getProcessor()->updateSocial($player);

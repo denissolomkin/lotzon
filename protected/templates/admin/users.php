@@ -59,7 +59,7 @@
                         </td>
                         <td><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td><?if($player->getCountIp()>1) {?><span class="label label-danger"><?=$player->getCountIp()?><?}?></span> <?=$player->getIP()?></td>
+                        <td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
                         <td class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""?>"><?=$player->getDateLastLogin('d.m.Y H:i')?></td>
                         <td><?=$player->getGamesPlayed()?></td>

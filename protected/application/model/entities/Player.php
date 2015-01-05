@@ -655,6 +655,19 @@ class Player extends Entity
         return $this;   
     }
 
+    public function countIp()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            return $model::instance()->countIp($this);
+        } catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+    }
+
     protected function checkNickname()
     {
         $model = $this->getModelClass();
