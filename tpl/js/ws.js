@@ -30,6 +30,13 @@ var errors = {
                     if(stop!==true) {
                         WebSocketAjaxClient(path, data, true);
                     }
+                    else {
+                        $.ajax({
+                            url: "/players/trouble/WS",
+                            method: 'GET'
+                        });
+                    }
+
                 };
 
                 conn.onmessage = function (e) {

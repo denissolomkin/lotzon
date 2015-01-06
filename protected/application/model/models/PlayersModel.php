@@ -48,9 +48,24 @@ class PlayersModel extends Model
         return $this->getProcessor()->disableSocial($player);
     }
 
-    public function existsSocial(Entity $player)
+    public function isSocialUsed(Entity $player)
     {
-        return $this->getProcessor()->existsSocial($player);
+        return $this->getProcessor()->isSocialUsed($player);
+    }
+
+    public function getBalance(Entity $player, $currency)
+    {
+        return $this->getProcessor()->getBalance($player, $currency);
+    }
+
+    public function updateBalance(Entity $player, $currency, $quantity)
+    {
+        return $this->getProcessor()->updateBalance($player, $currency, $quantity);
+    }
+
+    public function reportTrouble(Entity $player, $trouble)
+    {
+        return $this->getProcessor()->reportTrouble($player, $trouble);
     }
 
     public function saveAvatar(Entity $player) 

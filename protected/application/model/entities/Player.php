@@ -541,6 +541,19 @@ class Player extends Entity
         return $this;   
     }
 
+    public function reportTrouble($trouble)
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->getProcessor()->reportTrouble($this, $trouble);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
     public function setAdditionalData($additionalData=null)
     {
 
@@ -715,6 +728,31 @@ class Player extends Entity
         return $this;
     }
 
+    public function updateBalance($currency, $quantity=0)
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateBalance($this, $currency, $quantity);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function getBalance($currency)
+    {
+        $model = $this->getModelClass();
+
+        try {
+            return $model::instance()->getBalance($this, $currency);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+    }
+
     public function disableSocial()
     {
         $model = $this->getModelClass();
@@ -731,10 +769,10 @@ class Player extends Entity
         return $this;
     }
 
-    public function existsSocial()
+    public function isSocialUsed()
     {
         $model = $this->getModelClass();
-        return $model::instance()->existsSocial($this);
+        return $model::instance()->isSocialUsed($this);
     }
 
     public function create()
@@ -755,9 +793,10 @@ class Player extends Entity
 
     public function addMoney($quantity, $description = '', $inplaceUpdate = true) {
 
-        $this->setMoney($this->getMoney() + $quantity);
+        $this->setMoney($this->getBalance('Money') + $quantity);
+
         if ($inplaceUpdate) {
-            $this->update();    
+            $this->updateBalance('Money', $quantity);
         }
     
         $transaction = new Transaction();
@@ -773,10 +812,11 @@ class Player extends Entity
 
     public function addPoints($quantity, $description = '', $inplaceUpdate = true) {
         //@TODO process transaction
-        
-        $this->setPoints($this->getPoints() + $quantity);
-         if ($inplaceUpdate) {
-            $this->update();    
+
+        $this->setPoints($this->getBalance('Points') + $quantity);
+
+        if ($inplaceUpdate) {
+            $this->updateBalance('Points', $quantity);
         }
 
         $transaction = new Transaction();

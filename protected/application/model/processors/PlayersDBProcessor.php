@@ -42,6 +42,24 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function reportTrouble(Entity $player, $trouble)
+    {
+        $sql = "REPLACE INTO `PlayerTroubles` (`PlayerId`, `Trouble`, `Time`)
+                VALUES (:id, :trbl, :tm)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'       => $player->getId(),
+                ':trbl'     => $trouble,
+                ':tm'       => time()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
     public function updateSocial(Entity $player)
     {
 
@@ -61,10 +79,29 @@ class PlayersDBProcessor implements IProcessor
                 throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
             }
 
+        return $player;
 
     }
 
-    public function existsSocial(Entity $player)
+    public function disableSocial(Entity $player)
+    {
+        if($player->getSocialName())
+            try {
+                $sql = "UPDATE `PlayerSocials` SET `Enabled` = 0
+                        WHERE `PlayerId` = :id AND `SocialName`=:socialname";
+
+                DB::Connect()->prepare($sql)->execute(array(
+                    ':id'           => $player->getId(),
+                    ':socialname'   => $player->getSocialName(),
+                ));
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            }
+
+        return $player;
+    }
+
+    public function isSocialUsed(Entity $player)
     {
 
         if($player->getSocialId())
@@ -85,24 +122,6 @@ class PlayersDBProcessor implements IProcessor
             }
 
 
-    }
-
-
-    public function disableSocial(Entity $player)
-    {
-        if($player->getSocialName())
-            try {
-                $sql = "UPDATE `PlayerSocials` SET `Enabled` = 0
-                        WHERE `PlayerId` = :id AND `SocialName`=:socialname";
-
-                DB::Connect()->prepare($sql)->execute(array(
-                    ':id'           => $player->getId(),
-                    ':socialname'   => $player->getSocialName(),
-                ));
-            } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
-            }
-        return $player;
     }
 
     public function update(Entity $player)
@@ -140,6 +159,45 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $player;
+    }
+
+    public function updateBalance(Entity $player, $currency, $quantity)
+    {
+        $sql = "UPDATE `Players` SET
+                    `".$currency."` = `".$currency."` + :qt
+                WHERE `Id` = :id OR `Email` = :email";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'       => $player->getId(),
+                ':email'    => $player->getEmail(),
+                ':qt'   => $quantity,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
+    public function getBalance(Entity $player, $currency)
+    {
+        $sql = "SELECT `".$currency."` FROM `Players`
+                WHERE `Id` = :id OR `Email` = :email";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'    => $player->getId(),
+                ':email' => $player->getEmail(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
+
     }
 
     public function fetch(Entity $player)
@@ -229,6 +287,8 @@ class PlayersDBProcessor implements IProcessor
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='Ip')
+                $sql .= ' WHERE Ip = "'.$search['query'].'"';
             elseif($search['where'])
                 $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
             else

@@ -81,9 +81,9 @@ class AuthController extends \SlimController\SlimController {
             $loggedIn = false;
             try {
                 $player->fetch();
-                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->existsSocial())
+                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed())
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
-                $player->updateSocial()->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
+                $player->updateSocial()->setDateLastLogin(time())->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))->update();
                 $loggedIn = true;
             } catch (EntityException $e) {
                 if ($e->getCode() == 500) {
@@ -92,17 +92,16 @@ class AuthController extends \SlimController\SlimController {
                 if ($e->getCode() == 404) {
 
                     try {
+                        $geoReader =  new Reader(PATH_MMDB_FILE);
+                        $country = $geoReader->country(Common::getUserIp())->country;
+                        $player->setCountry($country->isoCode);
+                    } catch (\Exception $e) {
                         if($profile->country){
                             $player->setCountry($profile->country);
                         }
-                        else{
-                            $geoReader =  new Reader(PATH_MMDB_FILE);
-                            $country = $geoReader->country(Common::getUserIp())->country;
-                            $player->setCountry($country->isoCode);
+                        else {
+                            $player->setCountry(Config::instance()->defaultLang);
                         }
-
-                    } catch (\Exception $e) {
-                        $player->setCountry(Config::instance()->defaultLang);
                     }
 
                     try {

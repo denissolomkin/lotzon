@@ -72,7 +72,7 @@ class MoneyOrdersDBProcessor implements IProcessor
 
     public function getOrdersToProcess()
     {
-        $sql = "SELECT * FROM `MoneyOrders` WHERE `Status` = :status ORDER BY `DateOrdered` DESC";
+        $sql = "SELECT * FROM `MoneyOrders` WHERE `Status` = :status ORDER BY `DateOrdered` ASC";
 
         try {
             $sth = DB::Connect()->prepare($sql);
