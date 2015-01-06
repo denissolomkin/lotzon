@@ -127,7 +127,7 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
                             Navigation styles
    ========================================================================== */
 nav.top-nav {width:100%;margin-bottom:-55px;}
-nav.top-nav.fixed {position:fixed;top:0;z-index:100;}
+nav.top-nav.fixed {position:fixed;top:0;z-index:1000;}
 .tn-box {width:1280px;height:55px;margin:auto;background:#f2efed url("../img/Lotzon-Logo.svg") no-repeat 15px 15px / auto 24px;}
 #logo-gotop {width:170px;height:55px;float:left;cursor:pointer;}
 .tn-mbk {list-style:none;margin:0px 0 0 0px;padding:5px 0 0 0;overflow:hidden;float:left;}

@@ -463,11 +463,7 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <!-- admitad.banner: dceeb0bd050096b382f6feba1a4143 My Lands -->
-                <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/dceeb0bd050096b382f6feba1a4143/?i=4">
-                    <img width="728" height="90" border="0" src="//ad.admitad.com/b/dceeb0bd050096b382f6feba1a4143/" alt="My Lands" />
-                </a>
-                <!-- /admitad.banner -->
+                <!--noindex--><div id="ambw73372" style="margin: auto;"></div><!--/noindex-->
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
@@ -1157,7 +1153,7 @@
                 </div>
             </div>
         </footer>
-<? /*
+        <? /*
         <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 65px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
             <span id="chatStatus"></span>
@@ -1180,6 +1176,7 @@
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#wsStatus').parent('div').show();$('#wsStatusShow').hide();"><b>^</b></span>
             <span id="wsStatusShow"></span>
         </div>
+
 */ ?>
 
         </div>
@@ -1317,6 +1314,8 @@
         })();
     </script>
     <!-- END RotaBan.ru Ad Code -->
+    <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
+    <!--noindex--><script type="text/javascript" src="http://am15.net/cu.php?s=63465"></script><!--/noindex-->
 
     </body>
 
