@@ -93,7 +93,7 @@ class Players extends \AjaxController
                 $social=$this->session->get('SOCIAL_IDENTITY');
                 $this->session->remove('SOCIAL_IDENTITY');
 
-                if(!$social->existsSocial()) // If Social Id didn't use earlier
+                if(!$social->isSocialUsed()) // If Social Id didn't use earlier
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
 
                 $player->setAdditionalData($social->getAdditionalData())
@@ -138,12 +138,11 @@ class Players extends \AjaxController
             try {
                 $player->login($password)->markOnline();
 
-
                 if($this->session->has('SOCIAL_IDENTITY'))
                 {
                     $social=$this->session->get('SOCIAL_IDENTITY');
 
-                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->existsSocial())  // If Social Id didn't use earlier And This Provider Link First Time
+                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->isSocialUsed())  // If Social Id didn't use earlier And This Provider Link First Time
                         $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
 
                     $player->setAdditionalData($social->getAdditionalData())
@@ -408,6 +407,21 @@ class Players extends \AjaxController
         try {
             $this->session->get(Player::IDENTITY)->setSocialName($provider)->disableSocial();
             $this->ajaxResponse(array(), 1, $provider);
+        } catch (\Exception $e) {
+            $this->ajaxResponse(array(), 0, 'INVALID');
+        }
+
+    }
+
+    public function troubleAction($trouble)
+    {
+
+        if (!$this->session->get(Player::IDENTITY)) {
+            $this->ajaxResponse(array(), 0, 'FRAUD');
+        }
+
+        try {
+            $this->session->get(Player::IDENTITY)->reportTrouble($trouble);
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }

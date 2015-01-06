@@ -501,19 +501,19 @@ function showError(message) {
             success: function(data) {
                 if (data.status == 1) {
                     var tdata = '';
-                    temp_bal = 0;
+                    temp_bal = '';
                     $(data.data.points).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+(parseFloat(temp_bal)+parseFloat(tr.sum)!=parseFloat(tr.bal)?'<span class=red>':'')+tr.bal+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+((temp_bal)!=parseFloat(tr.bal) && id!=0?'<span class=red>':'')+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
-                        temp_bal=tr.bal;
+                        temp_bal=parseFloat(tr.bal)-parseFloat(tr.sum);
                     });
                     $("#transactions-holder").find('.points tbody').html(tdata);
                     tdata = '';
                     temp_bal = 0;
                     $(data.data.money).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+(parseFloat(temp_bal)+parseFloat(tr.sum)!=parseFloat(tr.bal)?'<span class=red>':'')+tr.bal+'</td>'
+                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+((temp_bal)!=parseFloat(tr.bal) && id!=0?'<span class=red>':'')+tr.bal+'</td>'
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
-                        temp_bal=tr.bal;
+                        temp_bal=parseFloat(tr.bal)-parseFloat(tr.sum);
                     });
                     $("#transactions-holder").find('.money tbody').html(tdata);
                     $("#transactions-holder").modal();

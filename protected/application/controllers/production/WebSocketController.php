@@ -392,9 +392,10 @@ class WebSocketController implements MessageComponentInterface {
                             {
                                 $count++;
                                 $games .= $app->getTitle().' ['.$app->getCurrency().'-'.$app->getPrice().'] '.(time()-$app->getTime()).'s ';
+                                $names = array();
                                 foreach ($app->getPlayers() as $name)
                                     $names[] = $name['pid'];
-                                $games.=implode(':',$names).'<br>';
+                                $games.=(!empty($names)?implode(':',$names).'<br>':'');
                             }
 
                         $from->send(json_encode(
@@ -415,10 +416,11 @@ class WebSocketController implements MessageComponentInterface {
                             foreach ($stack_class as $mode=>$players)
                             {
                                 $count++;
+                                $names=array();
                                 $stack .= $class.' ['.$mode.'] ';
                                 foreach ($players as $id=>$client)
                                     $names[] = $id;
-                                $stack.=implode(',',$names).'<br>';
+                                $stack.=(!empty($names)?implode(',',$names).'<br>':'');
                             }
                         $from->send(json_encode(
                             array(
@@ -558,12 +560,16 @@ class WebSocketController implements MessageComponentInterface {
                 $app->quitAction();
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
-                // если приложение завершилось, сохраняем и выгружаем из памяти
+                // если приложение завершилось и не сохранено, сохраняем
                 if ($app->isOver() && !$app->isSaved()) {
                     echo time()." ". "Сохраняем результаты".$class.$id."\n";
                     $this->saveGame($app);
-                    unset($this->_apps[$class][$id]);
+                }
+
+                // если приложение завершилось и сохранено, выгружаем из памяти
+                if ($app->isOver() && $app->isSaved()) {
                     echo time()." ". "удаление приложения".$class.$id."\n";
+                    unset($this->_apps[$class][$id]);
                 }
             }
         }
@@ -593,6 +599,51 @@ class WebSocketController implements MessageComponentInterface {
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
 
+                /* update balance after game */
+                $sql="UPDATE Players SET ".$currency." = ".$currency.($player['result'] < 0 ? '' : '+').
+                    ($player['result']*$app->getPrice())." WHERE Id=".$player['pid'];
+
+                echo time()." ".$sql."\n";
+
+                try{
+                    DB::Connect()->query($sql);
+                }
+                catch(\Exception $e)
+                {
+                    echo time()." ". $e->getMessage();
+                }
+
+
+                /* send new balance to player */
+                if(isset($this->_clients[$player['pid']])) {
+                    $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+
+                    echo time() . " " . $sql . "\n";
+
+                    try {
+                        $sth = DB::Connect()->prepare($sql);
+                        $sth->execute(array(':id' => $player['pid']));
+                    } catch (PDOException $e) {
+                        throw new ModelException("Error processing storage query", 500);
+                    }
+
+                    if (!$sth->rowCount()) {
+                        throw new ModelException("Player not found", 404);
+                    }
+
+                    $balance = $sth->fetch();
+
+                    $this->_clients[$player['pid']]->send(json_encode(
+                            array('path'=>'update',
+                                'res'=>array(
+                                    'money'=>$balance['Money'],
+                                    'points'=>$balance['Points']
+                                )))
+                    );
+
+                }
+
+/*
                 if(isset($this->_clients[$player['pid']])){
                     $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->setMoney(
                         $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getMoney()+
@@ -607,37 +658,19 @@ class WebSocketController implements MessageComponentInterface {
 
                     $points=$this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getPoints();
 
-                    $this->_clients[$player['pid']]->send(json_encode(
-                            array('path'=>'update',
-                                'res'=>array(
-                                    'money'=>$money,
-                                    'points'=>$points
-                                )))
-                    );
 
                 }
+*/
 
+                /* prepare transactions */
                 array_push($transactions,
                     $player['pid'],
                     $app->getCurrency(),
                     $app->getPrice()*$player['result'],
-                    ($currency=='Money' ? $money : $points),
+                    $balance[$currency],
                     'Игра '.$app->getTitle(),
                     time()
                 );
-
-                $sql="UPDATE Players SET ".$currency." = ".$currency.($player['result'] < 0 ? '' : '+').
-                    ($player['result']*$app->getPrice())." WHERE Id=".$player['pid'];
-
-                echo time()." ".$sql."\n";
-
-                try{
-                    DB::Connect()->query($sql);
-                }
-                catch(\Exception $e)
-                {
-                    echo time()." ". $e->getMessage();
-                }
 
             }
 

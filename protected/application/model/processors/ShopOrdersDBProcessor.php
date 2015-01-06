@@ -88,7 +88,7 @@ class ShopOrdersDBProcessor implements IProcessor
 
     public function getOrdersToProcess()
     {
-        $sql = "SELECT * FROM `ShopOrders` WHERE `Status` = :status ORDER BY `DateOrdered` DESC";
+        $sql = "SELECT * FROM `ShopOrders` WHERE `Status` = :status ORDER BY `DateOrdered` ASC";
 
         try {
             $sth = DB::Connect()->prepare($sql);
