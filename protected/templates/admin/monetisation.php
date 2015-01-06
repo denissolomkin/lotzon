@@ -39,7 +39,7 @@
                             }?>
 
                             <br>
-                            <?if($order->getPlayer()->countIp()>1) {?><span class="label label-danger"><?=$order->getPlayer()->countIp()?><?}?></span> <?=$order->getPlayer()->getIP()?>
+                            <?if($order->getPlayer()->countIP()>1) {?><a target=_blank href="users?search[where]=Ip&search[query]=<?=$order->getPlayer()->getIP()?>"><span class="label label-danger"><?=$order->getPlayer()->countIP()?><?}?></span></a> <?=$order->getPlayer()->getIP()?>
                         </td>
                         <td><?=$order->getItem()->getTitle()?></td>
 

@@ -84,8 +84,8 @@ class Index extends \SlimController\SlimController
             // FORCE UPDATE POINTS AND MONEY FOR FIX WEBSOCKET SESSION
             $session->set(Player::IDENTITY, $session->get(Player::IDENTITY)->fetch());
 
+            $this->country=$session->get(Player::IDENTITY)->getCountry();
             $this->game();
-            // Session2::connect()->get(Player::IDENTITY)->markOnline();
             $session->get(Player::IDENTITY)->markOnline();
         }
         
@@ -95,19 +95,15 @@ class Index extends \SlimController\SlimController
     {
         $seo = SEOModel::instance()->getSEOSettings();
         $session = new Session();
-        //Session2::connect()->get(Player::IDENTITY)->fetch();
         $session->get(Player::IDENTITY)->fetch();
 
         $gameSettings          = GameSettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
-        //$playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries(Session2::connect()->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($session->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
-        //$currentChanceGame     = Session2::connect()->get('chanceGame');
         $currentChanceGame     = $_SESSION['chanceGame'];
 
         //if (!Session2::connect()->get('MomentChanseLastDate') || time() - Session2::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
-        //   Session2::connect()->set('MomentChanseLastDate', time());
              $session->set('MomentChanseLastDate', time());
         //}
         $gameInfo = array(
@@ -120,8 +116,6 @@ class Index extends \SlimController\SlimController
         );
 
         $playerTransactions = array(
-        //    GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory(Session2::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
-        //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory(Session2::connect()->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         //    GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
@@ -132,7 +126,6 @@ class Index extends \SlimController\SlimController
         $reviews = ReviewsModel::instance()->getList(1, self::REVIEWS_PER_PAGE);
         $notices = NoticesModel::instance()->getPlayerUnreadNotices($session->get(Player::IDENTITY));
 
-        // $tickets = TicketsModel::instance()->getPlayerUnplayedTickets(Session2::connect()->get(Player::IDENTITY));
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($session->get(Player::IDENTITY));
         $this->render('production/game_new', array(
             'gameInfo'    => $gameInfo,
