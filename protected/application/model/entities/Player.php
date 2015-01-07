@@ -58,6 +58,7 @@ class Player extends Entity
     private $_socialPostsCount = 0;
 
     private $_online     = 0;
+    private $_adBlock     = '';
     private $_onlineTime = 0;
 
     private $_valid = 0;
@@ -480,6 +481,18 @@ class Player extends Entity
         return $this->_valid;
     }
 
+    public function setAdBlock($check)
+    {
+        $this->_adBlock = $check;
+
+        return $this;
+    }
+
+    public function getAdBlock()
+    {
+        return $this->_adBlock;
+    }
+
     public function setHash($hash) 
     {
         $this->_hash = $hash;
@@ -655,6 +668,44 @@ class Player extends Entity
         return true;
     }
 
+    public function uploadAvatar($photoURL=null)
+    {
+
+        try {
+            if($photoURL)
+                $image = WideImage::load($photoURL);
+            else
+                $image = WideImage::loadFromUpload('image');
+
+            $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+            $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+
+            $imageName = uniqid() . ".jpg";
+            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($this->getId() / 100)) . '/';
+
+            if (!is_dir($saveFolder)) {
+                mkdir($saveFolder, 0777);
+            }
+
+            $image->saveToFile($saveFolder . $imageName, 100);
+            // remove old one
+            if ($this->getAvatar()) {
+                @unlink($saveFolder . $this->getAvatar());
+            };
+
+            $this->setAvatar($imageName)->saveAvatar();
+
+        } catch (EntityException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+        }
+
+        if(!$photoURL)
+            return $imageName;
+        else
+            return $this;
+
+    }
+
     public function saveAvatar() 
     {
         $model = $this->getModelClass();
@@ -741,12 +792,12 @@ class Player extends Entity
         return $this;
     }
 
-    public function getBalance($currency)
+    public function getBalance()
     {
         $model = $this->getModelClass();
 
         try {
-            return $model::instance()->getBalance($this, $currency);
+            return $model::instance()->getBalance($this);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
@@ -793,7 +844,7 @@ class Player extends Entity
 
     public function addMoney($quantity, $description = '', $inplaceUpdate = true) {
 
-        $this->setMoney($this->getBalance('Money') + $quantity);
+        $this->setMoney($this->getBalance()['Money'] + $quantity);
 
         if ($inplaceUpdate) {
             $this->updateBalance('Money', $quantity);
@@ -813,7 +864,7 @@ class Player extends Entity
     public function addPoints($quantity, $description = '', $inplaceUpdate = true) {
         //@TODO process transaction
 
-        $this->setPoints($this->getBalance('Points') + $quantity);
+        $this->setPoints($this->getBalance()['Points'] + $quantity);
 
         if ($inplaceUpdate) {
             $this->updateBalance('Points', $quantity);
@@ -845,20 +896,52 @@ class Player extends Entity
                 throw new EntityException("INTERNAL_ERROR", 500);
             }
         }
+
         if ($this->getPassword() !== $this->compilePassword($password)) {
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
-        //Session2::connect()->set(Player::IDENTITY, $this);
+        $this->setDateLastLogin(time())
+            ->payReferal()
+            ->update();
 
         $session = new Session();
         $session->set(Player::IDENTITY, $this);
 
-        $this->setDateLastLogin(time());
+        return $this;
+    }
 
+
+    public function payInvite()
+    {
+
+        // check invites
+        $invite = false;
         try {
-            $this->update();    
-        } catch (Exception $e) {}
+            $invite = EmailInvites::instance()->getInvite($this->getEmail());
+        } catch (ModelException $e) {}
+
+        if ($invite && $invite->getValid()) {
+
+            // mark referal unpaid for preverse of double points
+            if ($this->getReferalId() && !$this->isReferalPaid()) {
+                try {
+                    $this->markReferalPaid();
+                } catch (EntityException $e) {}
+            }
+
+            // add bonuses to inviter and delete invite
+            try {
+                $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
+                $invite->delete();
+            } catch (EntityException $e) {}
+        }
+
+        return $this;
+    }
+
+    public function payReferal()
+    {
 
         // add referal points on first login
         if ($this->getReferalId() && !$this->isReferalPaid()) {
@@ -872,7 +955,7 @@ class Player extends Entity
                 $this->markReferalPaid();
             } catch (EntityException $e) {}
         }
-        
+
         return $this;
     }
 
@@ -945,6 +1028,7 @@ class Player extends Entity
                  ->setSocialPostsCount($data['SocialPostsCount'])
                  ->setOnline($data['Online'])
                  ->setOnlineTime($data['OnlineTime'])
+                 ->setAdBlock($data['AdBlock'])
                  ->setIp($data['Ip'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])

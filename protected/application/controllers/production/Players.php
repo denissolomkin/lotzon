@@ -51,6 +51,8 @@ class Players extends \AjaxController
 
             if ($ref = $this->request()->post('ref', null)) {
                 $player->setReferalId((int)$ref);
+            } elseif ($this->session->has('SOCIAL_IDENTITY') AND $ref = $this->session->get('SOCIAL_IDENTITY')->getReferalId()){
+                $player->setReferalId((int)$ref);
             }
 
             try {
@@ -63,26 +65,7 @@ class Players extends \AjaxController
             }
 
             // check invites
-            $invite = false;
-            try {
-                $invite = EmailInvites::instance()->getInvite($player->getEmail());
-            } catch (ModelException $e) {}
-
-            if ($invite && $invite->getValid()) {
-
-                // mark referal unpaid for preverse of double points
-                if ($player->getReferalId() && !$player->isReferalPaid()) {
-                    try {
-                        $player->markReferalPaid();
-                    } catch (EntityException $e) {}
-                }
-
-                // add bonuses to inviter and delete invite
-                try {
-                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $player->getEmail());
-                    $invite->delete();
-                } catch (EntityException $e) {}
-            }
+            $player->payInvite();
 
             if ($player->getId() <= 1000) {
                 $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
@@ -94,20 +77,25 @@ class Players extends \AjaxController
                 $this->session->remove('SOCIAL_IDENTITY');
 
                 if(!$social->isSocialUsed()) // If Social Id didn't use earlier
-                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
+                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $social->getSocialName());
 
                 $player->setAdditionalData($social->getAdditionalData())
+                    ->setName($social->getName())
+                    ->setSurname($social->getSurname())
+                    ->setNicname($social->getNicname())
+                    ->setDateLastLogin(time())
                     ->update()
                     ->setSocialId($social->getSocialId())
                     ->setSocialName($social->getSocialName())
                     ->setSocialEmail($social->getSocialEmail())
-                    ->updateSocial();
+                    ->updateSocial()
+                    ->payReferal()
+                    ->markOnline();
+
+                if (!$player->getAvatar() AND $photoURL=$social->getAdditionalData()[$social->getSocialName()]['photoURL'])
+                    $player->uploadAvatar($photoURL);
 
                 $this->session->set(Player::IDENTITY,$player);
-
-                if ($social->getAdditionalData()[$social->getSocialName()]['photoURL'])
-                    $this->saveAvatarAction($social->getAdditionalData()[$social->getSocialName()]['photoURL']);
-
             }
 
             $this->ajaxResponse(array(
@@ -142,14 +130,24 @@ class Players extends \AjaxController
                 {
                     $social=$this->session->get('SOCIAL_IDENTITY');
 
-                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->isSocialUsed())  // If Social Id didn't use earlier And This Provider Link First Time
+                    // If Social Id didn't use earlier And This Provider Link First Time
+                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->isSocialUsed())
                         $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
 
+                    if (!$player->getAvatar() AND $photoURL=$social->getAdditionalData()[$social->getSocialName()]['photoURL'])
+                        $this->saveAvatarAction($photoURL);
+
+                    if(!$player->getName() AND $social->getName())
+                        $player->setName($social->getName());
+
+                    if(!$player->getSurname() AND $social->getSurname())
+                        $player->setSurname($social->getSurname());
+
                     $player->setAdditionalData($social->getAdditionalData())
+                        ->update()
                         ->setSocialId($social->getSocialId())
                         ->setSocialName($social->getSocialName())
                         ->setSocialEmail($social->getSocialEmail())
-                        ->update()
                         ->updateSocial();
 
                     $this->session->remove('SOCIAL_IDENTITY');
@@ -346,42 +344,23 @@ class Players extends \AjaxController
         $this->redirect('/');
     }
 
-    public function saveAvatarAction($photoURL=null)
+    public function saveAvatarAction()
     {
 
         if (!$this->session->get(Player::IDENTITY)) {
             $this->ajaxResponse(array(), 0, 'FRAUD');
         }
-
+        else
         try {
-            if($photoURL)
-                $image = WideImage::load($photoURL);
-            else
-                $image = WideImage::loadFromUpload('image');
-            $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-            $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+            $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
 
-            $imageName = uniqid() . ".jpg";
-            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/';
-
-            if (!is_dir($saveFolder)) {
-                mkdir($saveFolder, 0777);
-            }
-
-            $image->saveToFile($saveFolder . $imageName, 100);
-            // remove old one
-            if ($this->session->get(Player::IDENTITY)->getAvatar()) {
-                @unlink($saveFolder . $this->session->get(Player::IDENTITY)->getAvatar());
-            };
             $data = array(
                 'imageName' => $imageName,
                 'imageWebPath' => '/filestorage/avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
             );
 
-            $this->session->get(Player::IDENTITY)->setAvatar($imageName)->saveAvatar();
+            $this->ajaxResponse($data);
 
-            if(!$photoURL)
-                $this->ajaxResponse($data);
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }
@@ -432,8 +411,8 @@ class Players extends \AjaxController
     {
 
         $resp = array();
-        if ($this->session->get(Player::IDENTITY)) {
-            $this->session->get(Player::IDENTITY)->markOnline();
+        if ($this->session->has(Player::IDENTITY)) {
+            $this->session->get(Player::IDENTITY)->setAdBlock($this->request()->get('online', null))->markOnline();
             // check for moment chance
             // if not already played chance game
             if ($_SESSION['chanceGame']['moment']) {

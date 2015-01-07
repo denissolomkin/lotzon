@@ -503,7 +503,7 @@ function sendPartnersFeedback(post, successFunction, failFunction, errorFunction
 
 window.setInterval(function() {
     $.ajax({
-        url: "/players/ping",
+        url: "/players/ping?online="+(online?$.now():''),
         method: 'GET',
         async: true,
         dataType: 'json',

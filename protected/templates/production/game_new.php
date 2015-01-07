@@ -88,7 +88,13 @@
     </script>
     <div class="wrap">
         <header>
-            <div class="hr-br"><a href="http://musiclife.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a></div>
+            <div class="hr-br">
+
+                <!-- RotaBan.ru Zone Code -->
+                <div id="rotaban_233852" class="rbrocks rotaban_5d4ce818200f48a4a5f6def3b2e19747"></div>
+                <!-- END RotaBan.ru Zone Code -->
+                <!--a href="http://musiclife.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a-->
+            </div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
@@ -158,9 +164,18 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-                    <div class="bz1"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="110" height="600" /></div>                    
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div>
+
+                    <div class="bz1">
+                    <!-- admitad.banner: ed74c660ea0096b382f6ae06fcdccb War thunder (Мотивированный) -->
+                    <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/ed74c660ea0096b382f6ae06fcdccb/?i=4">
+                        <img width="120" height="240" border="0" src="//ad.admitad.com/b/ed74c660ea0096b382f6ae06fcdccb/" alt="War thunder (Мотивированный)" />
+                    </a>
+                    <!-- /admitad.banner -->
+                    </div>
+
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="570" /></div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="558" /></div>
+                    <!--div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div-->
                 </aside>
                 <aside class="rbs">
                     <div class="bz2">
@@ -594,25 +609,25 @@
                                                 && $player->getAdditionalData()['Facebook']['enabled'])
                                                 echo '<div data-provider="Facebook" class="cs-int-bt fb int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Facebook?method=link"><div class="cs-int-bt fb"></div></a>';
+                                                echo '<a href="/auth/Facebook?method=link"><div class="cs-int-bt fb"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Vkontakte', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Vkontakte']['enabled'])
                                                 echo '<div data-provider="Vkontakte" class="cs-int-bt vk int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Vkontakte?method=link"><div class="cs-int-bt vk"></div></a>';
+                                                echo '<a href="/auth/Vkontakte?method=link"><div class="cs-int-bt vk"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Google', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Google']['enabled'])
                                                 echo '<div data-provider="Google" class="cs-int-bt gp int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Google?method=link"><div class="cs-int-bt gp"></div></a>';
+                                                echo '<a href="/auth/Google?method=link"><div class="cs-int-bt gp"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Twitter', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Twitter']['enabled'])
                                                 echo '<div data-provider="Twitter" class="cs-int-bt tw int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Twitter?method=link"><div class="cs-int-bt tw"></div></a>';
+                                                echo '<a href="/auth/Twitter?method=link"><div class="cs-int-bt tw"></div></a>';
                                             ?>
                                         </div>
                                     </div>
@@ -1147,12 +1162,14 @@
                 <div class="ct-bk">
                     <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
                     <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
+                    <a target="_blank" href="http://ok.ru/group/52501162950725" class="ct-sl ok"></a>
                     <a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="ct-sl gp"></a>
                     <a target="_blank" href="https://twitter.com/LOTZON_COM" class="ct-sl tw"></a>
                     <a target="_blank" href="mailto:info@lotzon.com" class="mail">info@lotzon.com</a>
                 </div>
             </div>
         </footer>
+
         <? /*
         <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 150px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
@@ -1176,7 +1193,6 @@
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#wsStatus').parent('div').show();$('#wsStatusShow').hide();"><b>^</b></span>
             <span id="wsStatusShow"></span>
         </div>
-
 */ ?>
 
         </div>
@@ -1184,6 +1200,7 @@
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
         <script src="/tpl/js/ws.js"></script>
+        <script src="/tpl/js/ads.js"></script>
 
         <? include('popups.php') ?>
 
@@ -1199,6 +1216,7 @@
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
         var playerId   = <?=$player->getId()?>;
+        var online   = 1;
         var appId   = 0;
         var appMode   = 0;
         var appName   = '';
@@ -1314,6 +1332,8 @@
         })();
     </script>
     <!-- END RotaBan.ru Ad Code -->
+
+
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
     <!--noindex--><script type="text/javascript" src="http://am15.net/cu.php?s=63465"></script><!--/noindex-->
 

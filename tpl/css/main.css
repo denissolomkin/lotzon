@@ -960,6 +960,7 @@ footer .fr-cnt-bk .ct-bk {position:absolute;top:15px;right:40px;overflow:hidden;
 footer .fr-cnt-bk .ct-bk .ct-sl {background-image: url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;border: 1px solid #000;display:block;height:38px;width:38px;float:left;margin-right:20px;}
 footer .fr-cnt-bk .ct-bk .ct-sl.fb {background-position:-1px -1px;}
 footer .fr-cnt-bk .ct-bk .ct-sl.vk {background-position:-51px -1px}
+footer .fr-cnt-bk .ct-bk .ct-sl.ok {background-position:-95px -1px}
 footer .fr-cnt-bk .ct-bk .ct-sl.gp {background-position:-1px -51px;}
 footer .fr-cnt-bk .ct-bk .ct-sl.tw {background-position:-51px -51px;margin-right:41px;}
 footer .fr-cnt-bk .ct-bk .mail {font:20px/1 Handbook-regular;color:#000;text-decoration:none;margin-top:8px;display:inline-block;letter-spacing:-1px;}
