@@ -89,6 +89,10 @@ class AuthController extends \SlimController\SlimController {
 
                 if(!$player->getSurname() AND $profile->lastName)
                     $player->setSurname($profile->lastName);
+
+                if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
+                    $player->setValid(true);
+
                 /* ? баг
                                 // try to catch avatar
                                 if ($profile->photoURL AND !$player->getAvatar())
