@@ -93,11 +93,9 @@ class AuthController extends \SlimController\SlimController {
                 if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
                     $player->setValid(true);
 
-                /* ? баг
-                                // try to catch avatar
-                                if ($profile->photoURL AND !$player->getAvatar())
-                                    $player->uploadAvatar($profile->photoURL);
-                */
+                // try to catch avatar
+                if ($profile->photoURL AND !$player->getAvatar())
+                    $player->uploadAvatar($profile->photoURL);
 
                 if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed())
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
