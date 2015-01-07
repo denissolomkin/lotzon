@@ -323,10 +323,10 @@
 
                                     </div-->
                                     <div>
-                                        <a href="./auth/Facebook?method=user<?($ref?'&ref='.$ref:'')?>" class="fb"></a>
-                                        <a href="./auth/Vkontakte?method=user<?($ref?'&ref='.$ref:'')?>" class="vk"></a>
-                                        <a href="./auth/Google?method=user<?($ref?'&ref='.$ref:'')?>" class="gp"></a>
-                                        <a href="./auth/Twitter?method=user<?($ref?'&ref='.$ref:'')?>" class="tw"></a>
+                                        <a href="./auth/Facebook?method=user<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>
+                                        <a href="./auth/Vkontakte?method=user<?=($ref?'&ref='.$ref:'')?>" class="vk"></a>
+                                        <a href="./auth/Google?method=user<?=($ref?'&ref='.$ref:'')?>" class="gp"></a>
+                                        <a href="./auth/Twitter?method=user<?=($ref?'&ref='.$ref:'')?>" class="tw"></a>
                                     </div>
                                 </div>
                                 <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
@@ -365,10 +365,10 @@
                                     <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
                                 </div-->
                                 <div class="sl-bk">
-                                    <a href="./auth/Facebook?method=log-in<?($ref?'&ref='.$ref:'')?>" class="fb"></a>
-                                    <a href="./auth/Vkontakte?method=log-in<?($ref?'&ref='.$ref:'')?>" class="vk"></a>
-                                    <a href="./auth/Google?method=log-in<?($ref?'&ref='.$ref:'')?>" class="gp"></a>
-                                    <a href="./auth/Twitter?method=log-in<?($ref?'&ref='.$ref:'')?>" class="tw"></a>
+                                    <a href="./auth/Facebook?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>
+                                    <a href="./auth/Vkontakte?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="vk"></a>
+                                    <a href="./auth/Google?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="gp"></a>
+                                    <a href="./auth/Twitter?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="tw"></a>
                                     <!--a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a-->
                                 </div>
                             </div>
