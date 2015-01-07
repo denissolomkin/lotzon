@@ -82,10 +82,17 @@ class Index extends \SlimController\SlimController
             $this->landing();    
         } else {
             // FORCE UPDATE POINTS AND MONEY FOR FIX WEBSOCKET SESSION
-            $session->set(Player::IDENTITY, $session->get(Player::IDENTITY)->fetch());
-            $this->country = (in_array($session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang );
-            $this->game();
-            $session->get(Player::IDENTITY)->markOnline();
+            try {
+                $session->set(Player::IDENTITY, $session->get(Player::IDENTITY)->fetch());
+                $this->country = (in_array($session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang );
+                $this->game();
+                $session->get(Player::IDENTITY)->markOnline();
+            } catch (EntityException $e) {
+                if($e->getCode()=='404'){
+                    $session->remove(Player::IDENTITY);
+                    $this->landing();
+                }
+            }
         }
         
     }
