@@ -83,8 +83,7 @@ class Index extends \SlimController\SlimController
         } else {
             // FORCE UPDATE POINTS AND MONEY FOR FIX WEBSOCKET SESSION
             $session->set(Player::IDENTITY, $session->get(Player::IDENTITY)->fetch());
-
-            $this->country=$session->get(Player::IDENTITY)->getCountry();
+            $this->country = (in_array($session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang );
             $this->game();
             $session->get(Player::IDENTITY)->markOnline();
         }
