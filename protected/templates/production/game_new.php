@@ -594,25 +594,25 @@
                                                 && $player->getAdditionalData()['Facebook']['enabled'])
                                                 echo '<div data-provider="Facebook" class="cs-int-bt fb int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Facebook"><div class="cs-int-bt fb"></div></a>';
+                                                echo '<a href="http://lotzon.com/auth/Facebook?method=link"><div class="cs-int-bt fb"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Vkontakte', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Vkontakte']['enabled'])
                                                 echo '<div data-provider="Vkontakte" class="cs-int-bt vk int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Vkontakte"><div class="cs-int-bt vk"></div></a>';
+                                                echo '<a href="http://lotzon.com/auth/Vkontakte?method=link"><div class="cs-int-bt vk"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Google', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Google']['enabled'])
                                                 echo '<div data-provider="Google" class="cs-int-bt gp int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Google"><div class="cs-int-bt gp"></div></a>';
+                                                echo '<a href="http://lotzon.com/auth/Google?method=link"><div class="cs-int-bt gp"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Twitter', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Twitter']['enabled'])
                                                 echo '<div data-provider="Twitter" class="cs-int-bt tw int"></div>';
                                             else
-                                                echo '<a href="http://lotzon.com/auth/Twitter"><div class="cs-int-bt tw"></div></a>';
+                                                echo '<a href="http://lotzon.com/auth/Twitter?method=link"><div class="cs-int-bt tw"></div></a>';
                                             ?>
                                         </div>
                                     </div>
@@ -1154,7 +1154,7 @@
             </div>
         </footer>
         <? /*
-        <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 65px;width: 300px;background: white;">
+        <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 150px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
             <span id="chatStatus"></span>
             <span style="bottom: 0;left: 0;position: absolute;padding: 5px;background: inherit;">

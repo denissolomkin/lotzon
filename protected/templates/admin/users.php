@@ -47,10 +47,14 @@
                                 foreach ($info as $key=>$value) {
                                     echo $key.' : ';
                                     if(is_array($value))
+                                    {
+                                        $array=array();
                                         foreach($value as $k=>$v)
-                                            echo $k.' - '.$v.' , ';
+                                            $array[] = $k.' - '.$v;
+                                        echo implode(' , ',$array).' ; ';
+                                    }
                                     else
-                                        echo $value.' , ';
+                                        echo $value.' ; ';
                                 }
                                 else echo $info;
                                 echo'</div>';
@@ -648,8 +652,8 @@ function addTransaction(plid) {
             $("#social-holder").modal('hide');
         });
 
-        array=($(this).first().next().html().toString()).split(' , ');
-        tbl=photo=icon=name=page='';
+        array=($(this).first().next().html().toString()).split(' ; ');
+        tbl=photo=icon=name=method=page=enabled='';
         $.each(array, function(key,value) {
             if(value) {
                 param = value.split(' : ');
@@ -659,6 +663,10 @@ function addTransaction(plid) {
                     page = '<a target="_blank" href="' + param[1] + '">';
                 else if (param[0] == 'displayName')
                     name = param[1];
+                else if (param[0] == 'method')
+                    method = '<span class="glyphicon glyphicon-'+param[1]+'" aria-hidden="true"></span> ';
+                else if (param[0] == 'enabled')
+                    enabled = param[1]?'success':'danger';
                 else {
                     tbl += '<tr><td>' + param[0] + '</td><td>';
                     if($.isArray(param[1]))
@@ -672,7 +680,7 @@ function addTransaction(plid) {
             }
         });
         icon='<span class="'+$(this).attr("class")+'"></span>';
-        html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2>'+page+name+icon+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
+        html=photo+'<table class="table table-striped" style="width:70%;"><thead><th colspan=2 class='+enabled+'>'+page+method+name+icon+'</a></th></thead><tbody>'+tbl+'</tbody></table>';
 
         $("#social-holder").modal().find('.modal-body').html(html);
 

@@ -322,10 +322,10 @@
 
                                     </div-->
                                     <div>
-                                        <a href="http://lotzon.com/auth/Facebook" class="fb"></a>
-                                        <a href="http://lotzon.com/auth/Vkontakte" class="vk"></a>
-                                        <a href="http://lotzon.com/auth/Google" class="gp"></a>
-                                        <a href="http://lotzon.com/auth/Twitter" class="tw"></a>
+                                        <a href="http://lotzon.com/auth/Facebook?method=user" class="fb"></a>
+                                        <a href="http://lotzon.com/auth/Vkontakte?method=user" class="vk"></a>
+                                        <a href="http://lotzon.com/auth/Google?method=user" class="gp"></a>
+                                        <a href="http://lotzon.com/auth/Twitter?method=user" class="tw"></a>
                                     </div>
                                 </div>
                                 <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
@@ -364,10 +364,10 @@
                                     <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
                                 </div-->
                                 <div class="sl-bk">
-                                    <a href="http://lotzon.com/auth/Facebook" class="fb"></a>
-                                    <a href="http://lotzon.com/auth/Vkontakte" class="vk"></a>
-                                    <a href="http://lotzon.com/auth/Google" class="gp"></a>
-                                    <a href="http://lotzon.com/auth/Twitter" class="tw"></a>
+                                    <a href="http://lotzon.com/auth/Facebook?method=log-in" class="fb"></a>
+                                    <a href="http://lotzon.com/auth/Vkontakte?method=log-in" class="vk"></a>
+                                    <a href="http://lotzon.com/auth/Google?method=log-in" class="gp"></a>
+                                    <a href="http://lotzon.com/auth/Twitter?method=log-in" class="tw"></a>
                                     <!--a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a-->
                                 </div>
                             </div>
