@@ -138,7 +138,7 @@ class AuthController extends \SlimController\SlimController {
                                 array($provider=>array_filter(get_object_vars($profile)))
                             );
 
-                        if ($ref = $this->request()->post('ref', null)) {
+                        if ($ref = $this->request()->get('ref')) {
                             $player->setReferalId((int)$ref);
                         }
 
