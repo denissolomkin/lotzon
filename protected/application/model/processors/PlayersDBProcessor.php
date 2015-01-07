@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `NicName`, `AdditionalData`, `ReferalId`)
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :nic, :ad, :rid)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`)
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -23,7 +23,6 @@ class PlayersDBProcessor implements IProcessor
                 ':valid'    => $player->getValid(),
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
-                ':nic'      => $player->getNicName(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
                 ':rid'      => $player->getReferalId(),
             ));
@@ -33,13 +32,12 @@ class PlayersDBProcessor implements IProcessor
 
         $player->setId(DB::Connect()->lastInsertId());
 
-        if(!$player->getNicName())
-            try {
-                DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
-                    ':id' => $player->getId(),
-                ));
-                $player->setNicName('Участник ' . $player->getId());
-            } catch (PDOException $e){}
+        try {
+            DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
+                ':id' => $player->getId(),
+            ));
+            $player->setNicName('Участник ' . $player->getId());
+        } catch (PDOException $e){}
 
         return $player;
     }

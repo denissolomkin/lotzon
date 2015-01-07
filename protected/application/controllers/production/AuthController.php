@@ -83,9 +83,20 @@ class AuthController extends \SlimController\SlimController {
             try {
                 $player->fetch();
 
+
+                if(!$player->getName() AND $profile->firstName)
+                    $player->setName($profile->firstName);
+
+                if(!$player->getSurname() AND $profile->lastName)
+                    $player->setSurname($profile->lastName);
+                /* ? баг
+                                // try to catch avatar
+                                if ($profile->photoURL AND !$player->getAvatar())
+                                    $player->uploadAvatar($profile->photoURL);
+                */
+
                 if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed())
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
-
 
                 $player->updateSocial()
                     ->setDateLastLogin(time())
