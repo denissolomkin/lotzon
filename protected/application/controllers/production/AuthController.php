@@ -71,6 +71,7 @@ class AuthController extends \SlimController\SlimController {
             $this->ajaxResponse(array(), 0, $error);
         }
 
+        $profile->method=$this->request()->get('method');
         $profile->enabled=true;
 
             $player = new Player();
