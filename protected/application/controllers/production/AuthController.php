@@ -157,7 +157,8 @@ class AuthController extends \SlimController\SlimController {
                                 $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
                             }
 
-                            $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
+                            if(!$player->isSocialUsed()) // If Social Id didn't use earlier
+                                $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
                         }
                         else{
                             $this->session->set('SOCIAL_IDENTITY', $player);
