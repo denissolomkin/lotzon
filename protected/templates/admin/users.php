@@ -51,7 +51,7 @@
                                         $array=array();
                                         foreach($value as $k=>$v)
                                             $array[] = $k.' - '.$v;
-                                        echo implode(' , ',$array).' ; ';
+                                        echo implode('<br>',$array).' ; ';
                                     }
                                     else
                                         echo $value.' ; ';
