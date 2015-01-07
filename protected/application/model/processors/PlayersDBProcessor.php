@@ -438,13 +438,14 @@ class PlayersDBProcessor implements IProcessor
 
     public function markOnline(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
+        $sql = "UPDATE `Players` SET `AdBlock` = :adb, `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':onl'  => (int)$player->isOnline(),
                 ':onlt'  =>  (int)$player->getOnlineTime(),
+                ':adb'  =>  ($player->getAdBlock()?time():0),
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {

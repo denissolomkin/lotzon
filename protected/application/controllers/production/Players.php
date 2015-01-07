@@ -411,8 +411,8 @@ class Players extends \AjaxController
     {
 
         $resp = array();
-        if ($this->session->get(Player::IDENTITY)) {
-            $this->session->get(Player::IDENTITY)->markOnline();
+        if ($this->session->has(Player::IDENTITY)) {
+            $this->session->get(Player::IDENTITY)->setAdBlock($this->request()->get('online', null))->markOnline();
             // check for moment chance
             // if not already played chance game
             if ($_SESSION['chanceGame']['moment']) {

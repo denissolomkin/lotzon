@@ -58,6 +58,7 @@ class Player extends Entity
     private $_socialPostsCount = 0;
 
     private $_online     = 0;
+    private $_adBlock     = '';
     private $_onlineTime = 0;
 
     private $_valid = 0;
@@ -478,6 +479,18 @@ class Player extends Entity
     public function getValid()
     {
         return $this->_valid;
+    }
+
+    public function setAdBlock($check)
+    {
+        $this->_adBlock = $check;
+
+        return $this;
+    }
+
+    public function getAdBlock()
+    {
+        return $this->_adBlock;
     }
 
     public function setHash($hash) 
@@ -1015,6 +1028,7 @@ class Player extends Entity
                  ->setSocialPostsCount($data['SocialPostsCount'])
                  ->setOnline($data['Online'])
                  ->setOnlineTime($data['OnlineTime'])
+                 ->setAdBlock($data['AdBlock'])
                  ->setIp($data['Ip'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])

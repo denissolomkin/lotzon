@@ -28,6 +28,7 @@
                 <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th>Игр сыграно <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
+                <th>Ad <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
                 <th>Баллов <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
                 <th>Options</th>
@@ -68,6 +69,7 @@
                         <td class="<?=($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""?>"><?=$player->getDateLastLogin('d.m.Y H:i')?></td>
                         <td><?=$player->getGamesPlayed()?></td>
                         <td class="<?=$player->isTicketsFilled() ? 'success' : 'danger'?>"><?=$player->isTicketsFilled() ? 'да' : 'нет'?></td>
+                        <td><?=$player->getAdBlock()? '<button class="btn btn-xs btn-danger notices-trigger" style="opacity: 1;" disabled="disabled"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>' : ''?></td>
                         <td><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td><?=$player->getPoints()?></td>
                         <td>

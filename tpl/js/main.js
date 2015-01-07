@@ -72,24 +72,20 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if(filledTicketsCount=0){
+           if(filledTicketsCount!=4 || 1){
             setTimeout(function(){
                 st.fadeIn(300);
             }, 300);
-            }else {
+            } else {
 
                temp=st.html();
-
                setTimeout(function(){
                    st.html('<iframe width="750" height="420" src="//www.youtube.com/embed/OCTuKKKPGuc?rel=0&autoplay=1&controls=0" frameborder="0" allowfullscreen></iframe>')
                    st.fadeIn(300);
                }, 300);
-
                setTimeout(function(){
                    st.html(temp)
                }, 10000);
-
-
             }
         }
     });
