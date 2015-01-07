@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`) 
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `NicName`, `AdditionalData`, `ReferalId`)
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :nic, :ad, :rid)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -15,7 +15,7 @@ class PlayersDBProcessor implements IProcessor
                 ':passwd'   => $player->getPassword(),
                 ':salt'     => $player->getSalt(),
                 ':dr'       => time(),
-                ':dl'       => time(),
+                ':dl'       => $player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
                 ':vis'      => 1,
                 ':ip'       => $player->getIP(),
@@ -23,6 +23,7 @@ class PlayersDBProcessor implements IProcessor
                 ':valid'    => $player->getValid(),
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
+                ':nic'      => $player->getNicName(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
                 ':rid'      => $player->getReferalId(),
             ));
@@ -32,12 +33,13 @@ class PlayersDBProcessor implements IProcessor
 
         $player->setId(DB::Connect()->lastInsertId());
 
-        try {
-            DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
-                ':id' => $player->getId(),
-            ));
-            $player->setNicname('Участник ' . $player->getId());
-        } catch (PDOException $e){}
+        if(!$player->getNicName())
+            try {
+                DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
+                    ':id' => $player->getId(),
+                ));
+                $player->setNicName('Участник ' . $player->getId());
+            } catch (PDOException $e){}
 
         return $player;
     }
@@ -181,9 +183,9 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function getBalance(Entity $player, $currency)
+    public function getBalance(Entity $player)
     {
-        $sql = "SELECT `".$currency."` FROM `Players`
+        $sql = "SELECT `Money`, `Points`  FROM `Players`
                 WHERE `Id` = :id OR `Email` = :email";
 
         try {
@@ -196,7 +198,7 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
 
-        return $sth->fetchColumn(0);
+        return $sth->fetch();
 
     }
 

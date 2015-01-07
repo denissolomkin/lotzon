@@ -14,3 +14,7 @@
 .hidden {display: none;}
 .right {float:right;}
 .red {color:red;}
+.users td img {
+    float: right;
+    margin: -8px;
+    max-height: 33px;}

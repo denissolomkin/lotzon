@@ -36,7 +36,7 @@
                 <? foreach ($list as $player) { ?>
                     <tr>
                         <td><?=$player->getId()?></td>
-                        <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?></td>
+                        <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar()) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                         <td><?=($player->getNicName())?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)

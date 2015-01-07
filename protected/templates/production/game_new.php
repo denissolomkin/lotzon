@@ -1153,7 +1153,7 @@
                 </div>
             </div>
         </footer>
-        <? /*
+
         <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 150px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
             <span id="chatStatus"></span>
@@ -1176,7 +1176,7 @@
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#wsStatus').parent('div').show();$('#wsStatusShow').hide();"><b>^</b></span>
             <span id="wsStatusShow"></span>
         </div>
-
+        <? /*
 */ ?>
 
         </div>
