@@ -93,8 +93,9 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 .h-t-tcb-l {width:238px;height:60px;float:left;}
 .h-t-tcb-t {font:18px/19px Handbook-regular;margin-left:390px;width:410px;}
 .h-t-tcb-sb {float:right;overflow:hidden;width:90px;height:90px;position:relative;zoom:1;}
-.h-t-tcb-sb-fb, .h-t-tcb-sb-vk, .h-t-tcb-sb-gp, .h-t-tcb-sb-tw {display:block;width:38px;height:38px;background-image:url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;position:absolute;border:1px solid #000;}
+.h-t-tcb-sb-fb, .h-t-tcb-sb-vk, .h-t-tcb-sb-gp, .h-t-tcb-sb-tw, .h-t-tcb-sb-ok {display:block;width:38px;height:38px;background-image:url("../img/bg-promo-social-buts.png");background-repeat: no-repeat;position:absolute;border:1px solid #000;}
 .h-t-tcb-sb-fb {background-position:-1px -1px;left:0;top:0;}
+.h-t-tcb-sb-ok {background-position:-95px -1px;left:0;bottom:0;}
 .h-t-tcb-sb-vk {background-position:-51px -1px;right:0;top:0;}
 .h-t-tcb-sb-gp {background-position:-1px -51px;left:0;bottom:0;}
 .h-t-tcb-sb-tw {background-position:-51px -51px;bottom:0;right:0;}

@@ -68,7 +68,8 @@
                     <div class="h-t-tcb-sb">
                         <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="h-t-tcb-sb-fb"></a>
                         <a target="_blank" href="http://vk.com/lotzon" class="h-t-tcb-sb-vk"></a>
-                        <a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a>
+                        <a target="_blank" href="http://ok.ru/group/52501162950725" class="h-t-tcb-sb-ok">
+                        <!--a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a-->
                         <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                     </div>
                     <div class="h-t-tcb-t"><?=$staticTexts['promo-top'][$lang]->getText()?></div>
