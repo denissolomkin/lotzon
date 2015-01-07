@@ -17,4 +17,5 @@
 .users td img {
     float: right;
     margin: -8px;
-    max-height: 33px;}
+    height: 33px;
+    width: 33px;}

@@ -83,9 +83,24 @@ class AuthController extends \SlimController\SlimController {
             try {
                 $player->fetch();
 
+
+                if(!$player->getName() AND $profile->firstName)
+                    $player->setName($profile->firstName);
+
+                if(!$player->getSurname() AND $profile->lastName)
+                    $player->setSurname($profile->lastName);
+
+                if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
+                    $player->setValid(true);
+
+                /* ? баг
+                                // try to catch avatar
+                                if ($profile->photoURL AND !$player->getAvatar())
+                                    $player->uploadAvatar($profile->photoURL);
+                */
+
                 if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed())
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
-
 
                 $player->updateSocial()
                     ->setDateLastLogin(time())
@@ -123,7 +138,7 @@ class AuthController extends \SlimController\SlimController {
                                 array($provider=>array_filter(get_object_vars($profile)))
                             );
 
-                        if ($ref = $this->request()->post('ref', null)) {
+                        if ($ref = $this->request()->get('ref')) {
                             $player->setReferalId((int)$ref);
                         }
 
@@ -146,7 +161,8 @@ class AuthController extends \SlimController\SlimController {
                                 $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
                             }
 
-                            $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
+                            if(!$player->isSocialUsed()) // If Social Id didn't use earlier
+                                $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
                         }
                         else{
                             $this->session->set('SOCIAL_IDENTITY', $player);
