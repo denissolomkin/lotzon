@@ -26,6 +26,7 @@
                 <th>IP <?=sortIcon('IP', $currentSort, $pager, $search)?></th>
                 <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
                 <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
+                <th>Последний пинг <?=sortIcon('OnlineTime', $currentSort, $pager, $search)?></th>
                 <th>Игр сыграно <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
                 <th>Ad <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
@@ -67,6 +68,7 @@
                         <td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" style="cursor:pointer;"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
+                        <td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td>
                         <td><?=$player->getGamesPlayed()?></td>
                         <td class="<?=$player->isTicketsFilled() ? 'success' : 'danger'?>"><?=$player->isTicketsFilled() ? 'да' : 'нет'?></td>
                         <td><?=$player->getAdBlock()? '<button class="btn btn-xs btn-danger notices-trigger" style="opacity: 1;" disabled="disabled"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>' : ''?></td>
@@ -76,6 +78,7 @@
                             <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
+                            <button class="btn btn-xs btn-danger profile-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></button>
                             <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
                         </td>
                     </tr>
@@ -83,15 +86,6 @@
             </tbody>
         </table>
     </div>
-    <? if ($pager['pages'] > 1) {?>
-        <div class="row-fluid">
-            <div class="btn-group">
-                <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/users?page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
-                <? } ?>
-            </div>
-        </div>
-    <? } ?> 
 </div>
 
 <div class="modal fade users" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
@@ -99,6 +93,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="confirmLabel">Social information</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade users" id="profile-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Profile information</h4>
             </div>
             <div class="modal-body">
             </div>

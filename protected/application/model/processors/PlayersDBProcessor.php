@@ -130,7 +130,7 @@ class PlayersDBProcessor implements IProcessor
                     `DateLogined` = :dl, `Country` = :cc, 
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, 
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
-                    `Money` = :money, `Points`  = :points, `GamesPlayed` = :gp, `AdditionalData` = :ad
+                    `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad
                 WHERE `Id` = :id OR `Email` = :email";
 
         try {
@@ -149,8 +149,7 @@ class PlayersDBProcessor implements IProcessor
                 ':email'    => $player->getEmail(),
                 ':vis'      => (int)$player->getVisibility(),
                 ':fav'      => is_array($player->getFavoriteCombination()) ? serialize($player->getFavoriteCombination()) : '',
-                ':money'    => $player->getMoney(),
-                ':points'   => $player->getPoints(),
+                ':vld'      => $player->getValid(),
                 ':gp'       => $player->getGamesPlayed(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : ''
             ));
@@ -248,11 +247,14 @@ class PlayersDBProcessor implements IProcessor
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='Ip')
+                $sql .= ' WHERE Ip = "'.$search['query'].'"';
             elseif($search['where'])
                 $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
             else
                 $sql .= ' WHERE '.(is_numeric($search['query'])?'`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
         }
+
 
         try {
             $res = DB::Connect()->query($sql);
@@ -436,7 +438,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function markOnline(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `AdBlock` = :adb, `Online` = :onl, `OnlineTime` = :onlt WHERE  `Id` = :plid";
+        $sql = "UPDATE `Players` SET `AdBlock` = :adb, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
 
         try {
             $sth = DB::Connect()->prepare($sql);

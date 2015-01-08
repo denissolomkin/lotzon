@@ -82,7 +82,6 @@ class Players extends \AjaxController
                 $player->setAdditionalData($social->getAdditionalData())
                     ->setName($social->getName())
                     ->setSurname($social->getSurname())
-                    ->setNicname($social->getNicname())
                     ->setDateLastLogin(time())
                     ->update()
                     ->setSocialId($social->getSocialId())
@@ -292,7 +291,7 @@ class Players extends \AjaxController
     public function logoutAction()
     {
         //$session=new Session();
-        if($this->session->get(Player::IDENTITY))
+        if($this->session->has(Player::IDENTITY))
             $this->session->get(Player::IDENTITY)->disableAutologin();
         // $this->session->get(Player::IDENTITY)->disableAutologin();
         // $this->session->close();

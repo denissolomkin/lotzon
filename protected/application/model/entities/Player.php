@@ -419,14 +419,19 @@ class Player extends Entity
 
     public function setOnlineTime($time) 
     {
-        $this->_onlineTime  = time();
-
+        $this->_onlineTime  = $time;
         return $this;
     }
 
-    public function getOnlineTime()
+    public function getOnlineTime($format = null)
     {
-        return $this->_onlineTime;
+        $date = $this->_onlineTime;
+
+        if (!is_null($format)) {
+            $date = date($format, $this->_onlineTime);
+        }
+
+        return $date;
     }
 
     public function setOnline($online)
@@ -924,11 +929,10 @@ class Player extends Entity
         if ($invite && $invite->getValid()) {
 
             // mark referal unpaid for preverse of double points
-            if ($this->getReferalId() && !$this->isReferalPaid()) {
+            if ($this->getReferalId() && !$this->isReferalPaid())
                 try {
                     $this->markReferalPaid();
                 } catch (EntityException $e) {}
-            }
 
             // add bonuses to inviter and delete invite
             try {
@@ -946,12 +950,9 @@ class Player extends Entity
         // add referal points on first login
         if ($this->getReferalId() && !$this->isReferalPaid()) {
             try {
-
                 $refPlayer = new Player();
                 $refPlayer->setId($this->getReferalId())->fetch();
-
                 $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
-
                 $this->markReferalPaid();
             } catch (EntityException $e) {}
         }

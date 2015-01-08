@@ -92,6 +92,9 @@ class AuthController extends \SlimController\SlimController {
                 if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
                     $player->setValid(true);
 
+                if(!$this->session->has(Player::IDENTITY))
+                    $player->setDateLastLogin(time());
+
                 // try to catch avatar
                 if ($profile->photoURL AND !$player->getAvatar())
                     $player->uploadAvatar($profile->photoURL);
@@ -129,7 +132,6 @@ class AuthController extends \SlimController\SlimController {
                             ->setHash('')
                             ->setName($profile->firstName)
                             ->setSurname($profile->lastName)
-                            ->setNicname($profile->displayName)
                             ->setAdditionalData(
                                 array($provider=>array_filter(get_object_vars($profile)))
                             );
