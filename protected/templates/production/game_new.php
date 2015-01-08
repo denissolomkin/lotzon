@@ -602,7 +602,7 @@
                                             <? } ?>
                                         </div>
                                         <div class="pi-cs-bk">
-                                            <? if(count($player->getAdditionalData())<4) {?>
+                                            <? if(count($player->getAdditionalData())<5) {?>
                                             <div class="txt">Привязать соцсеть и получить бонус 40 баллов за каждую.</div>
                                             <? } ?>
                                             <? if(array_key_exists('Facebook', $player->getAdditionalData())
@@ -616,6 +616,12 @@
                                                 echo '<div data-provider="Vkontakte" class="cs-int-bt vk int"></div>';
                                             else
                                                 echo '<a href="./auth/Vkontakte?method=link"><div class="cs-int-bt vk"></div></a>';
+                                            ?>
+                                            <? if(array_key_exists('Odnoklassniki', $player->getAdditionalData())
+                                                && $player->getAdditionalData()['Odnoklassniki']['enabled'])
+                                                echo '<div data-provider="Odnoklassniki" class="cs-int-bt ok int"></div>';
+                                            else
+                                                echo '<a href="./auth/Odnoklassniki?method=link"><div class="cs-int-bt ok"></div></a>';
                                             ?>
                                             <? if(array_key_exists('Google', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Google']['enabled'])

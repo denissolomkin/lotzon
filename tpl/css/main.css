@@ -535,6 +535,8 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt.gp.int, .profile-info .pi-lt .pi-cs-bk .cs-int-bt.gp:hover {background:#a13b3b url("../img/bg-profile-invite-but-gp.png") no-repeat 9px -17px;color:#fff;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt.tw {border:1px solid #4798e4;color:#4798e4;background:transparent url("../img/bg-profile-invite-but-tw.png") no-repeat 9px 8px;}
 .profile-info .pi-lt .pi-cs-bk .cs-int-bt.tw.int, .profile-info .pi-lt .pi-cs-bk .cs-int-bt.tw:hover {background:#4798e4 url("../img/bg-profile-invite-but-tw.png") no-repeat 9px -15px;color:#fff;}
+.profile-info .pi-lt .pi-cs-bk .cs-int-bt.ok {border:1px solid #ed812b;color:#ed812b;background:transparent url("../img/bg-profile-invite-but-ok.png") no-repeat 9px 4px;}
+.profile-info .pi-lt .pi-cs-bk .cs-int-bt.ok.int, .profile-info .pi-lt .pi-cs-bk .cs-int-bt.ok:hover {background:#ed812b url("../img/bg-profile-invite-but-ok.png") no-repeat 9px -26px;color:#fff;}
 
 
 .profile-info .pi-et-bk {margin-left:200px;overflow:hidden;}
