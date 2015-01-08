@@ -184,18 +184,26 @@
                     <!--div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div-->
                 </aside>
                 <aside class="rbs">
+                    <div class="bz1">
+                        <div id="Adhub_Teaser_Block_17323"></div>
+                        <script type="text/javascript">
+                            adhub_blockid=17323;
+                            adhub_areaid=10934;
+                            adhub_padid=12664;
+                        </script>
+                    </div>
                     <div class="bz2">
                         <!--noindex--><div id="ambn35732"></div><!--/noindex-->
                     </div>
                     <div class="bz1">
                         <!--noindex--><div id="ambw13798"></div><!--/noindex-->
                     </div>
-                    <div class="bz2">
-                        <img src="/tpl/img/baners/Plug-300х300.png" width="300" height="300"   />
-                    </div>
                     <div class="bz3">
-                        <img src="/tpl/img/baners/Plug-300х525.png" width="300" height="530"   />
+                        <img src="/tpl/img/baners/Plug-300х300.png" width="300" height="259"   />
                     </div>
+                    <!--div class="bz3">
+                        <img src="/tpl/img/baners/Plug-300х525.png" width="300" height="603"   />
+                    </div-->
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -1048,7 +1056,7 @@
                         <b>0</b>
                         <span>очков<br/>набрано</span>
                     </div>
-                    <div class="pr-surr">сдаться</div>
+                    <!--div class="pr-surr">сдаться</div-->
                 </div>
 
                 <div class="gm-mx">
@@ -1348,6 +1356,10 @@
 
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
     <!--noindex--><script type="text/javascript" src="http://am15.net/cu.php?s=63465"></script><!--/noindex-->
+
+    /* tizzer */
+    <script type="text/javascript" src="http://www.adtraff.ru/block3.js"></script>
+    /* tizzer end */
 
     </body>
 
