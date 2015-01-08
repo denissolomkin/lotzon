@@ -628,12 +628,12 @@
                                             else
                                                 echo '<a href="./auth/Vkontakte?method=link"><div class="cs-int-bt vk"></div></a>';
                                             ?>
-                                            <? /* if(array_key_exists('Odnoklassniki', $player->getAdditionalData())
+                                            <? if(array_key_exists('Odnoklassniki', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Odnoklassniki']['enabled'])
                                                 echo '<div data-provider="Odnoklassniki" class="cs-int-bt ok int"></div>';
                                             else
                                                 echo '<a href="./auth/Odnoklassniki?method=link"><div class="cs-int-bt ok"></div></a>';
-                                            */ ?>
+                                            ?>
                                             <? if(array_key_exists('Google', $player->getAdditionalData())
                                                 && $player->getAdditionalData()['Google']['enabled'])
                                                 echo '<div data-provider="Google" class="cs-int-bt gp int"></div>';

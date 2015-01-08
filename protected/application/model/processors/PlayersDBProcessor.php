@@ -207,7 +207,7 @@ class PlayersDBProcessor implements IProcessor
                   ON s.`PlayerId`=p.`Id`
                 WHERE p.`Id` = :id OR p.`Email` = :email
                   OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
-                  OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
+                  OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` !='' AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
                 GROUP BY p.Id";
         try {
             $sth = DB::Connect()->prepare($sql);
