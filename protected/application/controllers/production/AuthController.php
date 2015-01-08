@@ -140,13 +140,14 @@ class AuthController extends \SlimController\SlimController {
 
                         if($profile->email) {
 
+                            $player->setValid(true)
+                                ->setDateLastLogin(time())
+                                ->create();
+
                             if(!$player->isSocialUsed()) // If Social Id didn't use earlier
                                 $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
 
-                            $player->setValid(true)
-                                ->setDateLastLogin(time())
-                                ->create()
-                                ->updateSocial()
+                            $player->updateSocial()
                                 ->payInvite()
                                 ->payReferal()
                                 ->markOnline();

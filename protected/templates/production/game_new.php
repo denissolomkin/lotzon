@@ -173,8 +173,14 @@
                     <!-- /admitad.banner -->
                     </div>
 
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="570" /></div>
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="558" /></div>
+
+                    <div class="bz2"><!-- admitad.banner: b9d7478ffd0096b382f616525dc3e8 Aliexpress -->
+                        <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/b9d7478ffd0096b382f616525dc3e8/?i=4">
+                            <img width="120" height="240" border="0" src="//ad.admitad.com/b/b9d7478ffd0096b382f616525dc3e8/" alt="Aliexpress" />
+                        </a>
+                        <!-- /admitad.banner --></div>
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х170.png" width="120" height="200" /></div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="648" /></div>
                     <!--div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div-->
                 </aside>
                 <aside class="rbs">
@@ -349,7 +355,12 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <iframe src="//player.vimeo.com/video/114883943" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <!--noindex-->
+                        <div id="ambn634654"></div>
+                        <script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>
+                        <!--/noindex-->
+
+                        <!--iframe src="//player.vimeo.com/video/114883943" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe-->
                         <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe> -->
                         <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
                     </section>
