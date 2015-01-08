@@ -4,8 +4,8 @@
    ========================================================================== */
 .btn-xs {padding: 1px 4px;width: 17px;height: 19px;font-size: 12px;margin: -2px 0px;}
 .btn-xs{padding: 1px 2px;}
-.sl-bk {background-size: 125px;float:right;margin: -2px 0;width:20px;height:20px;display:block;background-image:url("../../../tpl/img/bg-profile-repost-social.png");background-repeat:no-repeat; opacity: 0.5;}
-.sl-bk:hover {background-image:url("../../../tpl/img/bg-profile-repost-social-hover.png"); opacity: 1;}
+.sl-bk {background-size: 125px;float:right;margin: -2px 0;width:20px;height:20px;display:block;background-image:url("../../../tpl/img/bg-profile-repost-social-new.png");background-repeat:no-repeat; opacity: 0.5;}
+.sl-bk:hover {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png"); opacity: 1;}
 .sl-bk.Twitter {background-position:-83px 3px;}
 .sl-bk.Google {background-position:-54px 2px;}
 .sl-bk.Vkontakte {background-position:-20px 3px;}

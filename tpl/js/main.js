@@ -705,7 +705,8 @@ $(function(){
         btn=$(this);
 
         provider=btn.data('provider');
-        $.ajax({
+        if(btn.hasClass('int'))
+            $.ajax({
             url: "/players/disableSocial/"+provider,
             method: 'GET',
             async: true,

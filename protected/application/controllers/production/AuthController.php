@@ -132,7 +132,6 @@ class AuthController extends \SlimController\SlimController {
                             ->setHash('')
                             ->setName($profile->firstName)
                             ->setSurname($profile->lastName)
-                            ->setNicname($profile->displayName)
                             ->setAdditionalData(
                                 array($provider=>array_filter(get_object_vars($profile)))
                             );

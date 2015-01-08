@@ -355,12 +355,7 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-                        <!--noindex-->
-                        <div id="ambn634654"></div>
-                        <script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>
-                        <!--/noindex-->
-
-                        <!--iframe src="//player.vimeo.com/video/114883943" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe-->
+                        <iframe src="//player.vimeo.com/video/114883943" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                         <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe> -->
                         <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
                     </section>
