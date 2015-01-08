@@ -462,12 +462,13 @@ input:-ms-input-placeholder {color:#8d7d00;font-family:Handbook-italic;}
 }
 .login-popup .lp-b .sl-bk .sl-bk-tl {font:15px/1 Handbook-regular;color:#000;text-align:center;margin-bottom:20px;}
 .login-popup .lp-b .sl-bk.disabled {opacity:0.4;}
-.login-popup .lp-b .sl-bk a {display:block;float:left;width:68px;height:48px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social.png");background-repeat:no-repeat;margin-right:20px;}
+.login-popup .lp-b .sl-bk a {display:block;float:left;width:58px;height:48px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social.png");background-repeat:no-repeat;margin-right:10px;}
 .login-popup .lp-b .sl-bk a:last-child {margin:0;}
-.login-popup .lp-b .sl-bk a.fb {border-color:#3b5998;background-position:0 0;}
-.login-popup .lp-b .sl-bk a.vk {border-color:#45668e;background-position:-71px 0;}
-.login-popup .lp-b .sl-bk a.gp {border-color:#d83b2a;background-position:-3px -50px;}
-.login-popup .lp-b .sl-bk a.tw {border-color:#4c97d0;background-position:-71px -50px;}
+.login-popup .lp-b .sl-bk a.fb {border-color:#3b5998;background-position:-5px 0;}
+.login-popup .lp-b .sl-bk a.vk {border-color:#45668e;background-position:-76px 0;}
+.login-popup .lp-b .sl-bk a.gp {border-color:#d83b2a;background-position:-8px -50px;}
+.login-popup .lp-b .sl-bk a.tw {border-color:#4c97d0;background-position:-76px -50px;}
+.login-popup .lp-b .sl-bk a.ok {border-color:#ed812b;background-position:-146px 0px;}
 
 
 .error .ib-l, .error .ib-p {color:#c51e1e!important;border-color:#c51e1e!important;}
