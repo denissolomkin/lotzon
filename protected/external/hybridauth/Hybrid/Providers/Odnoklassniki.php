@@ -162,11 +162,10 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
 		$this->user->profile->displayName   = (property_exists($response,'name'))?$response->name:"";
 		$this->user->profile->photoURL      = (property_exists($response,'pic_1'))?$response->pic_1:"";
-		$this->user->profile->photoBIG      = (property_exists($response,'pic_2'))?$response->pic_2:"";
+		/*$this->user->profile->photoBIG      = (property_exists($response,'pic_2'))?$response->pic_2:"";*/
 		$this->user->profile->profileURL    = (property_exists($response,'link'))?$response->link:"http://ok.ru/profile/".$response->uid;
-		$this->user->profile->gender        = (property_exists($response,'gender'))?$response->gender:""; 
-		$this->user->profile->email         = (property_exists($response,'email'))?$response->email:"";
-		$this->user->profile->emailVerified = (property_exists($response,'email'))?$response->email:"";
+		$this->user->profile->gender        = (property_exists($response,'gender'))?$response->gender:"";
+        $this->user->profile->email         = (property_exists($response,'email'))?$response->email:null;
         $this->user->profile->country       = ($response->location->country_code?:'');
         $this->user->profile->city          = ($response->location->city?:'');
 
