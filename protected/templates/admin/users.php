@@ -26,7 +26,7 @@
                 <th>IP <?=sortIcon('IP', $currentSort, $pager, $search)?></th>
                 <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
                 <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
-                <th>Последний пинг <?=sortIcon('OnlineTime', $currentSort, $pager, $search)?></th>
+                <!--th>Последний пинг <?=sortIcon('OnlineTime', $currentSort, $pager, $search)?></th-->
                 <th>Игр сыграно <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
                 <th>Ad <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
@@ -38,7 +38,7 @@
                 <? foreach ($list as $player) { ?>
                     <tr>
                         <td><?=$player->getId()?></td>
-                        <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar()) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
+                        <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                         <td><?=($player->getNicName())?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
@@ -68,7 +68,7 @@
                         <td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" style="cursor:pointer;"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
-                        <td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td>
+                        <!--td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td-->
                         <td><?=$player->getGamesPlayed()?></td>
                         <td class="<?=$player->isTicketsFilled() ? 'success' : 'danger'?>"><?=$player->isTicketsFilled() ? 'да' : 'нет'?></td>
                         <td><?=$player->getAdBlock()? '<button class="btn btn-xs btn-danger notices-trigger" style="opacity: 1;" disabled="disabled"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>' : ''?></td>
