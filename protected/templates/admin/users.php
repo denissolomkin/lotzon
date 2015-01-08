@@ -43,7 +43,7 @@
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
-                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.'"></a>
+                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
                                 <div class="hidden">';
                                 if(is_array($info))
                                 foreach ($info as $key=>$value) {
@@ -677,7 +677,7 @@ function addTransaction(plid) {
                 else if (param[0] == 'method')
                     method = '<span class="glyphicon glyphicon-'+param[1]+'" aria-hidden="true"></span> ';
                 else if (param[0] == 'enabled')
-                    enabled = param[1]?'success':'danger';
+                    enabled = param[1]==1?'success':'danger';
                 else {
                     tbl += '<tr><td>' + param[0] + '</td><td>';
                     if($.isArray(param[1]))

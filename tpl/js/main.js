@@ -74,7 +74,7 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if(filledTicketsCount!=4 && 0){
+           if(filledTicketsCount!=4 || 1){
             setTimeout(function(){
                 st.fadeIn(300);
             }, 300);
