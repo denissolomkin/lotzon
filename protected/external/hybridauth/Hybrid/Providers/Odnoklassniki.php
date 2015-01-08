@@ -161,8 +161,8 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->firstName     = (property_exists($response,'first_name'))?$response->first_name:"";
 		$this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
 		$this->user->profile->displayName   = (property_exists($response,'name'))?$response->name:"";
-		$this->user->profile->photoURL      = (property_exists($response,'pic_1'))?$response->pic_1:"";
-		/*$this->user->profile->photoBIG      = (property_exists($response,'pic_2'))?$response->pic_2:"";*/
+		/*$this->user->profile->photoURL      = (property_exists($response,'pic_1'))?$response->pic_1:"";*/
+		$this->user->profile->photoURL      = (property_exists($response,'pic_2'))?$response->pic_2:"";
 		$this->user->profile->profileURL    = (property_exists($response,'link'))?$response->link:"http://ok.ru/profile/".$response->uid;
 		$this->user->profile->gender        = (property_exists($response,'gender'))?$response->gender:"";
         $this->user->profile->email         = (property_exists($response,'email'))?$response->email:null;
