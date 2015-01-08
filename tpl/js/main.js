@@ -67,28 +67,37 @@ $(function(){
     $('.tb-tabs_li').on('click', function(){
         var tn = $(this).attr('data-ticket');
         var st = $('#tb-slide'+tn);
-        if(!$(this).hasClass('now')){
+
+        if(!$(this).hasClass('now') && !$(this).parents('ul').find('.video').length){
+
             $('.tb-tabs_li').removeClass('now').find('span').hide();
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if(filledTicketsCount!=4 || 1){
+           if(filledTicketsCount!=4 && 0){
             setTimeout(function(){
                 st.fadeIn(300);
             }, 300);
             } else {
-
+               $(this).addClass('video');
+               id=new Date().getTime();
                temp=st.html();
                setTimeout(function(){
-                   st.html('<!--noindex-->' +
-                   '<div id="ambn634654"></div>' +
-                   '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
-                   '<!--/noindex-->')
+                   st.html(
+                       '<div style="text-align: center;margin:60px 50px 0;min-width:600px;min-height:303px;" id="ambn634654"></div>' +
+                       '<!--noindex-->' +
+                           '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
+                       '<!--/noindex-->'+
+                       '<div style="text-align: center;margin-left:-20px;" id="timer_videobanner'+id+'"></div>' +
+                       '<script>' +
+                       '$("#timer_videobanner'+id+'").countdown({until: 19,layout: "осталось {snn} сек"});' +
+                       '</script> ')
                    st.fadeIn(300);
                }, 300);
                setTimeout(function(){
-                   st.html(temp)
-               }, 50000);
+                   $('.tb-tabs_li').removeClass('video');
+                   st.hide().html(temp).fadeIn(300)
+               }, 20000);
             }
         }
     });
