@@ -31,6 +31,7 @@ class Index extends \SlimController\SlimController
 
     public function indexAction()
     {
+
         $session = new Session();
         // validate registration
         if ($vh = $this->request()->get('vh')) {
@@ -88,7 +89,8 @@ class Index extends \SlimController\SlimController
                 $this->game();
                 $session->get(Player::IDENTITY)->markOnline();
             } catch (EntityException $e) {
-                if($e->getCode()=='404'){
+                echo $e->getCode();
+                if ($e->getCode() == 404) {
                     $session->remove(Player::IDENTITY);
                     $this->landing();
                 }

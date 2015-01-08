@@ -80,12 +80,15 @@ $(function(){
 
                temp=st.html();
                setTimeout(function(){
-                   st.html('<iframe width="750" height="420" src="//www.youtube.com/embed/OCTuKKKPGuc?rel=0&autoplay=1&controls=0" frameborder="0" allowfullscreen></iframe>')
+                   st.html('<!--noindex-->' +
+                   '<div id="ambn634654"></div>' +
+                   '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
+                   '<!--/noindex-->')
                    st.fadeIn(300);
                }, 300);
                setTimeout(function(){
                    st.html(temp)
-               }, 10000);
+               }, 50000);
             }
         }
     });
