@@ -58,8 +58,9 @@ class Player extends Entity
     private $_socialPostsCount = 0;
 
     private $_online     = 0;
-    private $_adBlock     = '';
     private $_onlineTime = 0;
+    private $_adBlock    = 0;
+    private $_webSocket  = 0;
 
     private $_valid = 0;
     private $_hash = '';
@@ -498,6 +499,18 @@ class Player extends Entity
         return $this->_adBlock;
     }
 
+    public function setWebSocket($check)
+    {
+        $this->_webSocket = $check;
+
+        return $this;
+    }
+
+    public function getWebSocket()
+    {
+        return $this->_webSocket;
+    }
+
     public function setHash($hash) 
     {
         $this->_hash = $hash;
@@ -559,6 +572,19 @@ class Player extends Entity
         return $this;   
     }
 
+    public function writeLog($action,$desc='')
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->getProcessor()->writeLog($this, $action, $desc);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
     public function reportTrouble($trouble)
     {
         $model = $this->getModelClass();
@@ -612,7 +638,15 @@ class Player extends Entity
 
         $this->_generatedPassword = str_shuffle($pass);
         return $this->_generatedPassword;
-    }  
+    }
+
+    public function hidePassword($pass)
+    {
+        if(strlen($pass)>4){
+            $pass=substr($pass,0, 2).str_pad('', strlen($pass)-4,"*"). substr($pass,strlen($pass)-2, 2);
+        }
+        return $pass;
+    }
 
     public function compilePassword($password)
     {
@@ -648,6 +682,7 @@ class Player extends Entity
                 }
                 $this->fetch();
                 if (!$this->getValid()) {
+                    $this->writeLog('LOGIN_DENIED', 'EMAIL_NOT_VALIDATED');
                     throw new EntityException("EMAIL_NOT_VALIDATED", 400);
                 }
             break;
@@ -833,9 +868,12 @@ class Player extends Entity
 
     public function create()
     {
-        $this->setPassword($this->compilePassword($this->generatePassword()));
+        $psw=$this->generatePassword();
+        $this->setPassword($this->compilePassword($psw));
 
         parent::create();
+
+        $this->writeLog('PLAYER_CREATED', $this->hidePassword($psw));
 
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
@@ -896,13 +934,16 @@ class Player extends Entity
             $this->fetch();
         } catch (EntityException $e) {
             if ($e->getCode() == 404) {
+                $this->writeLog('LOGIN_DENIED', 'PLAYER_NOT_FOUND');
                 throw new EntityException("PLAYER_NOT_FOUND", 404);
             } else {
+                $this->writeLog('LOGIN_DENIED', 'INTERNAL_ERROR');
                 throw new EntityException("INTERNAL_ERROR", 500);
             }
         }
 
         if ($this->getPassword() !== $this->compilePassword($password)) {
+            $this->writeLog('INVALID_PASSWORD', $this->hidePassword($password));
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
@@ -1030,6 +1071,7 @@ class Player extends Entity
                  ->setOnline($data['Online'])
                  ->setOnlineTime($data['OnlineTime'])
                  ->setAdBlock($data['AdBlock'])
+                 ->setWebSocket($data['WebSocket'])
                  ->setIp($data['Ip'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
