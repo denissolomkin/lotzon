@@ -22,7 +22,8 @@ class AuthController extends \SlimController\SlimController {
 
     public function endpointAction()
     {
-        require_once PATH_PROTECTED . 'external/hybridauth/index.php';
+            require_once PATH_PROTECTED . 'external/hybridauth/index.php';
+
     }
 
     public function authAction($provider) {
@@ -103,6 +104,7 @@ class AuthController extends \SlimController\SlimController {
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
 
                 $player->updateSocial()
+                    ->setLastIp(Common::getUserIp())
                     ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
                     ->update();
 

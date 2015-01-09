@@ -195,25 +195,19 @@
                     </div>
 
 
-                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х170.png" width="120" height="200" /></div>
-                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="648" /></div>
+                    <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="602" /></div>
+                    <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="120" height="170" /></div>
                     <!--div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div-->
                 </aside>
                 <aside class="rbs">
-
-
                     <div class="bz1">
-
-                        <div id="Adhub_Teaser_Block_17334"></div>
+                        <div id="Adhub_Teaser_Block_17323"></div>
                         <script type="text/javascript">
-                            adhub_blockid=17334;
+                            adhub_blockid=17323;
                             adhub_areaid=10934;
                             adhub_padid=12664;
                         </script>
-
                     </div>
-
-
                     <div class="bz2">
                         <!--noindex--><div id="ambn35732"></div><!--/noindex-->
                     </div>
@@ -755,12 +749,15 @@
         <section class="chance">
         <div class="ch-br-bk">
 
-            <div id="Adhub_Teaser_Block_17323"></div>
-            <script type="text/javascript">
-                adhub_blockid=17323;
-                adhub_areaid=10934;
-                adhub_padid=12664;
-            </script>
+
+            <div style="margin-bottom:40px;">
+                <!--noindex--><div id="ambn6632"></div><!--/noindex-->
+            </div>
+
+            <!-- RotaBan.ru Zone Code -->
+            <div id="rotaban_233828" class="rbrocks rotaban_5d4ce818200f48a4a5f6def3b2e19747"></div>
+            <!-- END RotaBan.ru Zone Code -->
+
             <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
         </div>
         <div class="ch-lot-bk">
@@ -985,7 +982,6 @@
                                 </div>
 
                                 <!--
-                                -->
                                 <div class="prc-bt">деньги</div>
                                 <div class="prc-sel">
                                     <div class="prc-tl">деньги</div>
@@ -994,6 +990,7 @@
                                     <div class="prc-vl" data-price='MONEY-0.5'><?=(0.5*$gameInfo['coefficient'])?></div>
                                     <div class="prc-vl" data-price='MONEY-0.1'><?=(0.1*$gameInfo['coefficient'])?></div>
                                 </div>
+                                -->
 
                                 <div class="prc-bt">бесплатно</div>
                                 <div class="prc-sel"><div data-price='POINT-0'>бесплатно</div></div>
@@ -1365,6 +1362,8 @@
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
     <!--noindex--><script type="text/javascript" src="//am15.net/cu.php?s=63465"></script><!--/noindex-->
 
+    <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=6632"></script><!--/noindex-->
+
     <!-- RotaBan.ru Ad Code -->
     <script type="text/javascript">
         (function(){
@@ -1381,7 +1380,6 @@
         })();
     </script>
     <!-- END RotaBan.ru Ad Code -->
-
 
 
     <!-- tizzer -->

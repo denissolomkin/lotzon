@@ -64,7 +64,8 @@ class Player extends Entity
 
     private $_valid = 0;
     private $_hash = '';
-    private $_ip = '';    
+    private $_ip = '';
+    private $_lastip = '';
 
     private $_referalId = 0;
     private $_referalPaid = 0;
@@ -535,6 +536,19 @@ class Player extends Entity
         return $this->_ip;
     }
 
+    public function setLastIP($ip)
+    {
+        if($ip!=$this->getIP())
+            $this->_lastip = $ip;
+
+        return $this;
+    }
+
+    public function getLastIP()
+    {
+        return $this->_lastip;
+    }
+
     public function setReferalId($referalId) 
     {
         $this->_referalId = $referalId;
@@ -961,6 +975,7 @@ class Player extends Entity
         }
 
         $this->setDateLastLogin(time())
+            ->setLastIp(Common::getUserIp())
             ->payReferal()
             ->update();
 
@@ -1086,6 +1101,7 @@ class Player extends Entity
                  ->setAdBlock($data['AdBlock'])
                  ->setWebSocket($data['WebSocket'])
                  ->setIp($data['Ip'])
+                 ->setLastIp($data['LastIp'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
                  ->setReferalId($data['ReferalId'])
