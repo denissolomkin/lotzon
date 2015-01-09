@@ -166,32 +166,54 @@
                 <aside class="lbs">
 
                     <div class="bz1">
-                    <!-- admitad.banner: ed74c660ea0096b382f6ae06fcdccb War thunder (Мотивированный) -->
-                    <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/ed74c660ea0096b382f6ae06fcdccb/?i=4">
-                        <img width="120" height="240" border="0" src="//ad.admitad.com/b/ed74c660ea0096b382f6ae06fcdccb/" alt="War thunder (Мотивированный)" />
-                    </a>
-                    <!-- /admitad.banner -->
+                        <!-- admitad.banner: e3c08868ae0096b382f6e6dcee139a Альфа Банк UA -->
+                        <script type="text/javascript">
+                            try{(function(d,ad,s,ulp,subID,injectTo){
+
+                                /* Optional settings (these lines can be removed): */
+                                ulp = "";  // - custom goto link;
+                                subID = "";  // - local banner key;
+                                injectTo = "";  // - #id of html element (ex., "top-banner").
+
+                                var dInject="admitad"+ad+subID+Math.round(Math.random()*100000000);
+                                injectTo=="" && d.write('<div id="'+dInject+'"></div>');
+                                s=s.replace("$",ad);s+="?inject="+(injectTo==""||!injectTo?dInject:injectTo);
+                                if(subID!="")s+="&subid="+subID;if(ulp!="")s+="&ulp="+escape(encodeURI(ulp));
+                                s=(("https:"==d.location.protocol)?"https":"http")+"://"+s;var j=d.createElement("script");
+                                j.type="text/javascript";j.src=s;(d.getElementsByTagName("head")[0]).appendChild(j);
+                            })(window.document,"e3c08868ae0096b382f6e6dcee139a","ad.admitad.com/j/$/","","","");}catch(err){}
+                        </script>
+                        <noscript>
+                            <embed wmode="opaque" width="120" height="600" src="//ad.admitad.com/f/e3c08868ae0096b382f6e6dcee139a/" type="application/x-shockwave-flash">
+                                <noembed>
+                                    <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/e3c08868ae0096b382f6e6dcee139a/?i=4">
+                                        <img width="120" height="600" border="0" src="//ad.admitad.com/b/e3c08868ae0096b382f6e6dcee139a/" alt="Альфа Банк UA" />
+                                    </a>
+                                </noembed>
+                        </noscript>
+                        <!-- /admitad.banner -->
                     </div>
 
 
-                    <div class="bz2"><!-- admitad.banner: b9d7478ffd0096b382f616525dc3e8 Aliexpress -->
-                        <a target="_blank" rel="nofollow" href="//ad.admitad.com/goto/b9d7478ffd0096b382f616525dc3e8/?i=4">
-                            <img width="120" height="240" border="0" src="//ad.admitad.com/b/b9d7478ffd0096b382f616525dc3e8/" alt="Aliexpress" />
-                        </a>
-                        <!-- /admitad.banner --></div>
                     <div class="bz2"><img src="/tpl/img/baners/Plug-110х170.png" width="120" height="200" /></div>
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="648" /></div>
                     <!--div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div-->
                 </aside>
                 <aside class="rbs">
+
+
                     <div class="bz1">
-                        <div id="Adhub_Teaser_Block_17323"></div>
+
+                        <div id="Adhub_Teaser_Block_17334"></div>
                         <script type="text/javascript">
-                            adhub_blockid=17323;
+                            adhub_blockid=17334;
                             adhub_areaid=10934;
                             adhub_padid=12664;
                         </script>
+
                     </div>
+
+
                     <div class="bz2">
                         <!--noindex--><div id="ambn35732"></div><!--/noindex-->
                     </div>
@@ -732,14 +754,13 @@
         ======================================================================-->
         <section class="chance">
         <div class="ch-br-bk">
-            <div style="margin-bottom:40px;">
-                <!--noindex--><div id="ambn6632"></div><!--/noindex-->
-            </div>
 
-            <!-- RotaBan.ru Zone Code -->
-            <div id="rotaban_233828" class="rbrocks rotaban_5d4ce818200f48a4a5f6def3b2e19747"></div>
-            <!-- END RotaBan.ru Zone Code -->
-
+            <div id="Adhub_Teaser_Block_17323"></div>
+            <script type="text/javascript">
+                adhub_blockid=17323;
+                adhub_areaid=10934;
+                adhub_padid=12664;
+            </script>
             <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
         </div>
         <div class="ch-lot-bk">
@@ -964,15 +985,16 @@
                                 </div>
 
                                 <!--
+                                -->
                                 <div class="prc-bt">деньги</div>
                                 <div class="prc-sel">
                                     <div class="prc-tl">деньги</div>
-                                    <div class="prc-vl" data-price='MONEY-10'>10</div>
-                                    <div class="prc-vl" data-price='MONEY-2'>2</div>
-                                    <div class="prc-vl" data-price='MONEY-0,5'>0,5</div>
-                                    <div class="prc-vl" data-price='MONEY-0,1'>0,1</div>
+                                    <div class="prc-vl" data-price='MONEY-10'><?=(10*$gameInfo['coefficient'])?></div>
+                                    <div class="prc-vl" data-price='MONEY-2'><?=(2*$gameInfo['coefficient'])?></div>
+                                    <div class="prc-vl" data-price='MONEY-0.5'><?=(0.5*$gameInfo['coefficient'])?></div>
+                                    <div class="prc-vl" data-price='MONEY-0.1'><?=(0.1*$gameInfo['coefficient'])?></div>
                                 </div>
-                                -->
+
                                 <div class="prc-bt">бесплатно</div>
                                 <div class="prc-sel"><div data-price='POINT-0'>бесплатно</div></div>
 
@@ -1235,7 +1257,9 @@
         var playerFavorite = [];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
+        var playerCurrency = '<?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?>';
         var playerId   = <?=$player->getId()?>;
+        var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
         var online   = 1;
         var appId   = 0;
@@ -1334,9 +1358,13 @@
                 };
     </script>
     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
-    <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=35732"></script><!--/noindex-->
+
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=1&r=13798&p=right&q=2&t=5000" class="ambw-s"></script><!--/noindex-->
-    <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=6632"></script><!--/noindex-->
+    <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=35732"></script><!--/noindex-->
+
+    <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
+    <!--noindex--><script type="text/javascript" src="//am15.net/cu.php?s=63465"></script><!--/noindex-->
+
     <!-- RotaBan.ru Ad Code -->
     <script type="text/javascript">
         (function(){
@@ -1355,8 +1383,6 @@
     <!-- END RotaBan.ru Ad Code -->
 
 
-    <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
-    <!--noindex--><script type="text/javascript" src="http://am15.net/cu.php?s=63465"></script><!--/noindex-->
 
     <!-- tizzer -->
     <script type="text/javascript" src="http://www.adtraff.ru/block3.js"></script>

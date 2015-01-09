@@ -87,14 +87,14 @@ $(function(){
                        '<!--/noindex-->'+
                        '<div style="text-align: center;margin-left:-20px;" id="timer_videobanner'+id+'"></div>' +
                        '<script>' +
-                       '$("#timer_videobanner'+id+'").countdown({until: 24,layout: "осталось {snn} сек"});' +
+                       '$("#timer_videobanner'+id+'").countdown({until: 30,layout: "осталось {snn} сек"});' +
                        '</script> ').fadeIn(300)
                }, 300);
                setTimeout(function(){
                    $('#ticket_video').remove();
                    $('.tb-tabs_li').removeClass('video');
                    st.fadeIn(300)
-               }, 15*1000);
+               }, 31*1000);
             } else {
                setTimeout(function(){
                    st.fadeIn(300);
