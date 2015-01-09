@@ -23,7 +23,7 @@
                             <?
                             foreach($order->getPlayer()->getAdditionalData() as $provider=>$info)
                             {
-                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.'"></a>
+                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
                                 <div class="hidden">';
                                 if(is_array($info))
                                     foreach ($info as $key=>$value) {
@@ -101,7 +101,7 @@
                                 echo'</div>';
                             }?>
                             <br>
-                            <?if($order->getPlayer()->countIp()>1) {?><span class="label label-danger"><?=$order->getPlayer()->countIp()?><?}?></span> <?=$order->getPlayer()->getIP()?>
+                            <?if($order->getPlayer()->countIP()>1) {?><a target=_blank href="users?search[where]=Ip&search[query]=<?=$order->getPlayer()->getIP()?>"><span class="label label-danger"><?=$order->getPlayer()->countIP()?><?}?></span></a> <?=$order->getPlayer()->getIP()?>
                         </td>
                         <td><?=$order->getType()?></td>
                         <td>
