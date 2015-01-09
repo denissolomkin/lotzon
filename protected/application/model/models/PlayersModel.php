@@ -38,6 +38,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkNickname($player);   
     }
 
+    public function checkAdBlockNotices(Entity $player)
+    {
+        return $this->getProcessor()->checkAdBlockNotices($player);
+    }
+
     public function countIP(Entity $player)
     {
         return $this->getProcessor()->countIP($player);

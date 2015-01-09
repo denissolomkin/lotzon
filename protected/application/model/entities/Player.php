@@ -772,6 +772,18 @@ class Player extends Entity
 
     }
 
+    public function checkAdBlockNotices()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            return $model::instance()->checkAdBlockNotices($this);
+        } catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+        }
+
+    }
+
     protected function checkNickname()
     {
         $model = $this->getModelClass();
