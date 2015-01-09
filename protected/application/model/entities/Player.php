@@ -926,6 +926,7 @@ class Player extends Entity
 
     public function login($password)
     {
+        $password=trim($password);
         $this->validate('login', array(
             'password' => $password,
         ));

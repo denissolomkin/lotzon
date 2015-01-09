@@ -336,6 +336,7 @@ class Players extends \AjaxController
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
             if ($pwd = $this->request()->post('password')) {
+                $pwd=trim($pwd);
                 $this->session->get(Player::IDENTITY)->writeLog('CHANGE_PASSWORD', $this->session->get(Player::IDENTITY)->hidePassword($pwd))->changePassword($pwd);
             }
             $this->ajaxResponse(array());
