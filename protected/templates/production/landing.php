@@ -338,7 +338,7 @@
                                     <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
                                 </div-->
                             </div>
-                            <div style="display:none" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email. </div>
+                            <div class="hidden" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email. </div>
                         </form>
                         <!-- LOGIN FORM -->
                         <form id="login-block-form" name="login" <?=$showEmail || $showLoginScreen ? 'style="display:block"' : ''?>>
@@ -383,12 +383,13 @@
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                    <div class="e-t"></div>
                                 </div>
                                 <div class="s-b">
                                     <input type="submit" class="sb_but disabled" disabled value="Отправить пароль" />
                                 </div>
                             </div>
-                            <div id="pass-rec-txt">Новый пароль выслан на указанный email. </div>
+                            <div class="hidden" id="pass-rec-txt">Новый пароль выслан на указанный email. </div>
                         </form>
                     </div>
                 </div>
@@ -606,7 +607,7 @@
             <div class="mb-td">
                 <div class="lp-b">
                     <div class="pu-b-c" id="mb-close" onclick="$('.mail-popup').fadeOut(200);"></div>
-                    <div class="b-m" id="cl-check">
+                    <div class="b-m">
 
                         <!-- add class "registration" or "login" -->
 

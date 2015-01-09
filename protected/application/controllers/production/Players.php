@@ -336,7 +336,7 @@ class Players extends \AjaxController
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
             if ($pwd = $this->request()->post('password')) {
-                $this->session->get(Player::IDENTITY)->changePassword($pwd);
+                $this->session->get(Player::IDENTITY)->writeLog('CHANGE_PASSWORD', $this->session->get(Player::IDENTITY)->hidePassword($pwd))->changePassword($pwd);
             }
             $this->ajaxResponse(array());
         }
@@ -411,7 +411,7 @@ class Players extends \AjaxController
 
         $resp = array();
         if ($this->session->has(Player::IDENTITY)) {
-            $this->session->get(Player::IDENTITY)->setAdBlock($this->request()->get('online', null))->markOnline();
+            $this->session->get(Player::IDENTITY)->setWebSocket($this->request()->get('ws', null))->setAdBlock($this->request()->get('online', null))->markOnline();
             // check for moment chance
             // if not already played chance game
             if ($_SESSION['chanceGame']['moment']) {
@@ -464,7 +464,7 @@ class Players extends \AjaxController
             $player->fetch();
 
             $newPassword = $player->generatePassword();
-            $player->changePassword($newPassword);
+            $player->writeLog('RESEND_PASSWORD', $player->hidePassword($newPassword))->changePassword($newPassword);
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }

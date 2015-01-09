@@ -42,6 +42,25 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function writeLog(Entity $player, $action, $desc)
+    {
+        $sql = "INSERT INTO `PlayerLogs` (`PlayerId`, `Action`, `Desc`, `Time`)
+                VALUES (:id, :act, :dsc, :tm)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'      => $player->getId(),
+                ':act'     => $action,
+                ':dsc'     => $desc,
+                ':tm'      => time()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
     public function reportTrouble(Entity $player, $trouble)
     {
         $sql = "REPLACE INTO `PlayerTroubles` (`PlayerId`, `Trouble`, `Time`)
@@ -329,6 +348,28 @@ class PlayersDBProcessor implements IProcessor
         return $players;
     }
 
+    public function getLog($playerId)
+    {
+        $sql = "SELECT * FROM `PlayerLogs` WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $logs = array();
+        foreach ($res->fetchAll() as $logData) {
+            $logData['Date']=date('d.m.Y H:i:s', $logData['Time']);
+            $logs[] = $logData;
+        }
+
+        return $logs;
+    }
+
     public function checkNickname(Entity $player) 
     {
         $sql = "SELECT * FROM `Players` WHERE `Nicname` = :nic AND `Id` != :plid";
@@ -438,14 +479,15 @@ class PlayersDBProcessor implements IProcessor
 
     public function markOnline(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `AdBlock` = :adb, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
+        $sql = "UPDATE `Players` SET `AdBlock` = :adb, `WebSocket` = :ws, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':onl'  => (int)$player->isOnline(),
-                ':onlt'  =>  (int)$player->getOnlineTime(),
-                ':adb'  =>  ($player->getAdBlock()?time():0),
+                ':onlt' => (int)$player->getOnlineTime(),
+                ':adb'  => ($player->getAdBlock()?time():0),
+                ':ws'   => ($player->getWebSocket()?time():0),
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {

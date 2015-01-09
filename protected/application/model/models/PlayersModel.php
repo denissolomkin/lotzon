@@ -28,6 +28,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getList($limit, $offset, $sort, $search);
     }
 
+    public function getLog($playerId)
+    {
+        return $this->getProcessor()->getLog($playerId);
+    }
+
     public function checkNickname(Entity $player) 
     {
         return $this->getProcessor()->checkNickname($player);   
@@ -61,6 +66,11 @@ class PlayersModel extends Model
     public function updateBalance(Entity $player, $currency, $quantity)
     {
         return $this->getProcessor()->updateBalance($player, $currency, $quantity);
+    }
+
+    public function writeLog(Entity $player, $action, $desc='')
+    {
+        return $this->getProcessor()->writeLog($player, $action, $desc);
     }
 
     public function reportTrouble(Entity $player, $trouble)

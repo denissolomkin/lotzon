@@ -25,9 +25,11 @@ $(function(){
     });
     $('#login-block').click(function(event) {
         if ($(event.target).closest("#cl-check").length){
+            $('#reg-succ-txt, #pass-rec-txt').addClass('hidden');
             if($(event.target).hasClass('tb_a-l') && !$(event.target).closest('#cl-check').hasClass('login')){
                 $('#cl-check').removeAttr('class').addClass('b-m login');
             }else if($(event.target).hasClass('tb_a-r') && !$(event.target).closest('#cl-check').hasClass('registration')){
+                $('#reg-form').removeClass('hidden');
                 $('#cl-check').removeAttr('class').addClass('b-m registration');
             }else if($(event.target).hasClass('r-p')){
                 $('#cl-check').toggleClass('login rec-pass');
@@ -72,9 +74,13 @@ $(function(){
     $('form[name="rec-pass"]').submit(function(event){
         var email = $(this).find('input[name="login"]').val();
         resendPassword(email, function() {
-
+            $('form[name="rec-pass"]').find('input[name="login"]').val('');
+            $('#pass-rec-txt').removeClass('hidden');
             $('#cl-check').removeAttr('class').addClass('b-m rec-txt');
-        },function(){}, function(){});
+        },function(data){
+            $("#cl-check").addClass('error');
+            $('#pass-rec-form .e-t').text(data.message);
+        }, function(){});
         event.preventDefault();
     });
 
@@ -127,8 +133,9 @@ $(function(){
         var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
         var ref = $(this).data('ref');
         registerPlayer({'email':email, 'agree':1, 'ref':ref}, function(data){
-            $("#reg-succ-txt").show();
-            $("#reg-form").hide();
+            $('#login-block form[name="register"]').find('input[name="login"]').val('');
+            $("#reg-succ-txt").removeClass('hidden');
+            $("#reg-form").removeClass('error').addClass('hidden');
         }, function(data){
             $("#reg-form").addClass('error');
             form.find('.e-t').text(data.message);

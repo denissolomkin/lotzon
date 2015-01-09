@@ -78,8 +78,9 @@
                             <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-                            <button class="btn btn-xs btn-danger profile-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></button>
-                            <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
+                            <button class="btn btn-xs btn-warning logs-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-time" aria-hidden="true"></button>
+                            <!--button class="btn btn-xs btn-danger profile-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></button>
+                            <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button-->
                         </td>
                     </tr>
                 <? } ?>
@@ -134,6 +135,32 @@
                     </thead>
                     <tbody>
                         
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="logs-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Log</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <th>#ID</th>
+                    <th>Действие</th>
+                    <th>Описание</th>
+                    <th>Дата</th>
+                    </thead>
+                    <tbody>
+
                     </tbody>
                 </table>
             </div>
@@ -505,6 +532,38 @@ function showError(message) {
         });
 
     }
+
+$('.logs-trigger').on('click', function() {
+    $.ajax({
+        url: "/private/users/logs/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = '';
+                $(data.data.logs).each(function(id, tr) {
+                    tdata += '<tr><td>'+tr.Id+'</td><td>'+tr.Action+'</td><td>'+tr.Desc+'</td><td>'+tr.Date+'</td>'
+                });
+                $("#logs-holder").find('tbody').html(tdata);
+
+
+                $("#logs-holder").modal();
+                $("#logs-holder").find('.cls').on('click', function() {
+                    $("#logs-holder").modal('hide');
+                })
+                $("#logs-holder").find('.add').off('click').on('click', function() {
+                    addTransaction(plid);
+                });
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
 
     $('.transactions-trigger').on('click', function() {
         var plid = $(this).data('id');

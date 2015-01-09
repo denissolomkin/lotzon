@@ -1236,6 +1236,7 @@
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
         var playerId   = <?=$player->getId()?>;
+        var ws = 0;
         var online   = 1;
         var appId   = 0;
         var appMode   = 0;
@@ -1357,9 +1358,9 @@
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
     <!--noindex--><script type="text/javascript" src="http://am15.net/cu.php?s=63465"></script><!--/noindex-->
 
-    /* tizzer */
+    <!-- tizzer -->
     <script type="text/javascript" src="http://www.adtraff.ru/block3.js"></script>
-    /* tizzer end */
+    <!-- tizzer end -->
 
     </body>
 

@@ -180,6 +180,29 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function logsAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'logs' => PlayersModel::instance()->getLog($playerId),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function noticesAction($playerId)
     {
         if ($this->request()->isAjax()) {
