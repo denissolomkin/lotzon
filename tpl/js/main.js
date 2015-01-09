@@ -74,7 +74,7 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if(filledTicketsCount==4 && !$(this).hasClass('done')){
+           if((filledTicketsCount==4 && !$(this).hasClass('done')) && 0){
                $(this).addClass('video');
                id=new Date().getTime();
                temp=st.html();
@@ -93,7 +93,7 @@ $(function(){
                setTimeout(function(){
                    $('.tb-tabs_li').removeClass('video');
                    st.hide().html(temp).fadeIn(300)
-               }, 25*1000);
+               }, 1*1000);
             } else {
                setTimeout(function(){
                    st.fadeIn(300);
