@@ -370,6 +370,23 @@ class PlayersDBProcessor implements IProcessor
         return $logs;
     }
 
+    public function checkAdBlockNotices(Entity $player)
+    {
+        $sql = "SELECT COUNT(Id) FROM `PlayerNotices` WHERE `PlayerId` = :plid AND `Type` = :tp ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid' => $player->getId(),
+                ':tp'   => 'AdBlock',
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
+    }
+
     public function checkNickname(Entity $player) 
     {
         $sql = "SELECT * FROM `Players` WHERE `Nicname` = :nic AND `Id` != :plid";

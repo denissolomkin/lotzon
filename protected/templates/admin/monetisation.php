@@ -86,7 +86,7 @@
                         <td class="<?=$order->getPlayer()->getValid() ? "success" : "danger"?>"><?=$order->getPlayer()->getEmail()?>
                             <?foreach($order->getPlayer()->getAdditionalData() as $provider=>$info)
                             {
-                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.'"></a>
+                                echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
                                 <div class="hidden">';
                                 if(is_array($info))
                                     foreach ($info as $key=>$value) {
@@ -113,7 +113,7 @@
                             <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
                             <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>&nbsp;
+                            <button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
                             <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
                         </td>
                     </tr>   

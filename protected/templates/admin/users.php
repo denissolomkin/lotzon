@@ -71,7 +71,9 @@
                         <!--td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td-->
                         <td><?=$player->getGamesPlayed()?></td>
                         <td class="<?=$player->isTicketsFilled() ? 'success' : 'danger'?>"><?=$player->isTicketsFilled() ? 'да' : 'нет'?></td>
-                        <td><?=$player->getAdBlock()? '<button class="btn btn-xs btn-danger notices-trigger" style="opacity: 1;" disabled="disabled"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>' : ''?></td>
+                        <td>
+                            <?=$player->getAdBlock()? '<button class="btn btn-xs btn-danger notices-trigger" style="opacity: 1;" disabled="disabled"><b>'.
+                                ($player->checkAdBlockNotices()?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : ''?></td>
                         <td><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td><?=$player->getPoints()?></td>
                         <td>

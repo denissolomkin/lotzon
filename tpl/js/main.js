@@ -74,11 +74,7 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if(filledTicketsCount!=4 || 1){
-            setTimeout(function(){
-                st.fadeIn(300);
-            }, 300);
-            } else {
+           if(filledTicketsCount==4 && !$(this).hasClass('done')){
                $(this).addClass('video');
                id=new Date().getTime();
                temp=st.html();
@@ -86,18 +82,22 @@ $(function(){
                    st.html(
                        '<div style="text-align: center;margin:60px 50px 0;min-width:600px;min-height:303px;" id="ambn634654"></div>' +
                        '<!--noindex-->' +
-                           '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
+                       '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
                        '<!--/noindex-->'+
                        '<div style="text-align: center;margin-left:-20px;" id="timer_videobanner'+id+'"></div>' +
                        '<script>' +
-                       '$("#timer_videobanner'+id+'").countdown({until: 19,layout: "осталось {snn} сек"});' +
+                       '$("#timer_videobanner'+id+'").countdown({until: 24,layout: "осталось {snn} сек"});' +
                        '</script> ')
                    st.fadeIn(300);
                }, 300);
                setTimeout(function(){
                    $('.tb-tabs_li').removeClass('video');
                    st.hide().html(temp).fadeIn(300)
-               }, 20000);
+               }, 25*1000);
+            } else {
+               setTimeout(function(){
+                   st.fadeIn(300);
+               }, 300);
             }
         }
     });
@@ -245,7 +245,8 @@ $(function(){
                 $('.tb-slide.done').find('.loto-tl_li').off('click');
                 $('.tb-slide.done').find('.ticket-random').off('click');
                 $('.tb-slide.done').find('.ticket-favorite').off('click');
-                
+
+                filledTicketsCount++;
                 if ($('.tb-tabs .done').length == 5) {
                     $('.tb-slide').each(function(id, slide) {
                         var comb = [];
@@ -269,7 +270,6 @@ $(function(){
                 } else {
                     $('.tb-tabs_li:not(.done)').first().click();                     
                 }
-                filledTicketsCount++;
             }, function(data){
                 if (data.message == 'ALREADY_FILLED') {
                     button.closest('.bm-pl').find('.tb-fs-tl').remove();
