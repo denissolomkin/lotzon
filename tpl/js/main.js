@@ -74,12 +74,13 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if((filledTicketsCount==4 && !$(this).hasClass('done')) && 0){
+           if((filledTicketsCount==4 && !$(this).hasClass('done'))){
+               st.parent().append('<div id="ticket_video" class="tb-slide"></div>');
                $(this).addClass('video');
                id=new Date().getTime();
-               temp=st.html();
+               // temp=st.html();
                setTimeout(function(){
-                   st.html(
+                   $('#ticket_video').html(
                        '<div style="text-align: center;margin:60px 50px 0;min-width:600px;min-height:303px;" id="ambn634654"></div>' +
                        '<!--noindex-->' +
                        '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
@@ -87,13 +88,13 @@ $(function(){
                        '<div style="text-align: center;margin-left:-20px;" id="timer_videobanner'+id+'"></div>' +
                        '<script>' +
                        '$("#timer_videobanner'+id+'").countdown({until: 24,layout: "осталось {snn} сек"});' +
-                       '</script> ')
-                   st.fadeIn(300);
+                       '</script> ').fadeIn(300)
                }, 300);
                setTimeout(function(){
+                   $('#ticket_video').remove();
                    $('.tb-tabs_li').removeClass('video');
-                   st.hide().html(temp).fadeIn(300)
-               }, 1*1000);
+                   st.fadeIn(300)
+               }, 15*1000);
             } else {
                setTimeout(function(){
                    st.fadeIn(300);
