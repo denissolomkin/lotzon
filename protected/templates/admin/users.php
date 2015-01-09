@@ -677,8 +677,8 @@ function addTransaction(plid) {
     });
 }
     $('.search-users').on('click', function() {
-        var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:200px;display:inline-block;" placeholder="id, фио, ник или email...">' +
-        '<select id="search_where" class="form-control input-md" style="width: 100px;display: inline-block;">' +
+        var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:260px;display:inline-block;" placeholder="id, фио, ник или email...">' +
+        '<select id="search_where" class="form-control input-md" style="width: 80px;display: inline-block;">' +
         '<option value="">Везде</option>' +
         '<option value="Id">Id</option>' +
         '<option value="Ip">Ip</option>' +

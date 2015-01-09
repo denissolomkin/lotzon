@@ -9,7 +9,7 @@ class NewGame extends Entity
     const   GAME_PLAYERS = 2;
     const   TIME_OUT = 20;
     const   FIELD_SIZE = 7;
-    const   GAME_MOVES = 1;
+    const   GAME_MOVES = 6;
 
     private $_id = 1;
     private $_gameTitle = '"Кто больше"';
