@@ -506,8 +506,8 @@ SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.Las
             $sth->execute(array(
                 ':onl'   => (int)$player->isOnline(),
                 ':onlt'  => (int)$player->getOnlineTime(),
-                ':adb'   => ($player->getAdBlock()?time():0),
-                ':dtadb' => ($player->getAdBlock()?time():$player->getDateAdBlocked()),
+                ':adb'   => $player->getAdBlock(),
+                ':dtadb' => $player->getDateAdBlocked(),
                 ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));
