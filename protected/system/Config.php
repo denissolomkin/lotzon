@@ -32,4 +32,13 @@ class Config
 
         return null;
     }
+
+    public function save($key, $value)
+    {
+        $sth = DB::Connect()->prepare("REPLACE INTO `Config` (`Key`, `Value`) VALUES(:k, :v)");
+        $sth->execute(array(
+            ':k'=>$key,
+            ':v'=>serialize($value)
+        ));
+    }
 }

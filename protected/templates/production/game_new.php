@@ -89,11 +89,20 @@
     <div class="wrap">
         <header>
             <div class="hr-br">
-
+            <aside class="lbs">
+                <? if(is_array($banners['Header']))
+                    foreach($banners['Header'] as $banner) {
+                        echo '<!-- '.$banner['title'].' -->
+                        '.$banner['div'];
+                        $bannerScript.='<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+                    } ?>
+                <? /*
                 <!-- RotaBan.ru Zone Code -->
                 <div id="rotaban_233852" class="rbrocks rotaban_5d4ce818200f48a4a5f6def3b2e19747"></div>
                 <!-- END RotaBan.ru Zone Code -->
                 <!--a href="http://musiclife.ua/" target="_blank"><img src="/tpl/img/baners/musiclife.jpg" width="960" height="135" /></a-->
+ */ ?>
             </div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
@@ -164,13 +173,20 @@
         ======================================================================-->
             <section class="wings">
                 <aside class="lbs">
-
+                    <? if(is_array($banners['TicketsLeft']))
+                        foreach($banners['TicketsLeft'] as $banner) {
+                            echo '<!-- '.$banner['title'].' -->
+                        '.$banner['div'];
+                            $bannerScript.='<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+                        } ?>
+                    <? /*
                     <div class="bz1">
                         <!-- admitad.banner: e3c08868ae0096b382f6e6dcee139a Альфа Банк UA -->
                         <script type="text/javascript">
                             try{(function(d,ad,s,ulp,subID,injectTo){
 
-                                /* Optional settings (these lines can be removed): */
+                                // Optional settings (these lines can be removed):
                                 ulp = "";  // - custom goto link;
                                 subID = "";  // - local banner key;
                                 injectTo = "";  // - #id of html element (ex., "top-banner").
@@ -198,29 +214,30 @@
                     <div class="bz2"><img src="/tpl/img/baners/Plug-110х600.png" width="120" height="602" /></div>
                     <div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="120" height="170" /></div>
                     <!--div class="bz3"><img src="/tpl/img/baners/Plug-110х170.png" width="110" height="170" /></div-->
+                      */ ?>
                 </aside>
                 <aside class="rbs">
-                    <div class="bz1">
-                        <div id="Adhub_Teaser_Block_17323"></div>
-                        <script type="text/javascript">
-                            adhub_blockid=17323;
-                            adhub_areaid=10934;
-                            adhub_padid=12664;
-                        </script>
-                    </div>
+                    <? if(is_array($banners['TicketsRight']))
+                    foreach($banners['TicketsRight'] as $banner) {
+                        echo '<!-- '.$banner['title'].' -->
+                        '.$banner['div'];
+                        $bannerScript.='<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+                    } ?>
+                    <? /*
                     <div class="bz2">
                         <!--noindex--><div id="ambn35732"></div><!--/noindex-->
                     </div>
                     <div class="bz1">
                         <!--noindex--><div id="ambw13798"></div><!--/noindex-->
                     </div>
-                    <div class="bz3" style="text-align: center;">
+                    <div class="bz3" style="margin-left: 25px;">
                         <a href="http://thebest-fruitfarm.ru/?i=44627" target="_blank"><img  width="250" height="250" src="http://thebest-fruitfarm.ru/img/250x250.gif"></a>
-                        <!--img src="/tpl/img/baners/Plug-300х300.png" width="300" height="259"   /-->
                     </div>
                     <!--div class="bz3">
                         <img src="/tpl/img/baners/Plug-300х525.png" width="300" height="603"   />
                     </div-->
+ */ ?>
                 </aside>
                 <div class="w-ct">
                     <section class="tickets">
@@ -380,9 +397,19 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
+
+                    <? if(is_array($banners['Video']))
+                        $banners['Video']=array_shift($banners['Video']);
+                        echo '<!-- '.$banners['Video']['title'].' -->
+                        '.$banners['Video']['div'];
+                    $bannerScript.='<!-- '.$banners['Video']['title'].' -->
+                        '.$banners['Video']['script'];
+                    ?>
+                    <? /*
                         <iframe src="//player.vimeo.com/video/114883943" width="570" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                         <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/HVQdFltpX08?controls=2" frameborder="0" allowfullscreen=""></iframe> -->
                         <!-- <img src="tpl/img/baners/Plug-video.png" width="570" height="320" /> -->
+ */ ?>
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
@@ -509,7 +536,16 @@
                 <div class="b-cl-block"></div>
             </section>
             <section class="banner100">
-                <!--noindex--><div id="ambw73372" style="margin: auto;"></div><!--/noindex-->
+
+                <? if(is_array($banners['Banner100']))
+                    foreach($banners['Banner100'] as $banner) {
+                        echo '<!-- '.$banner['title'].' -->
+                        '.$banner['div'];
+                        $bannerScript.='<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+                    } ?>
+            <? /*
+                <!--noindex--><div id="ambw73372" style="margin: auto;"></div><!--/noindex--> */ ?>
             </section>
         <!--=====================================================================
                                 PROFILE BLOCK
@@ -739,7 +775,18 @@
                     </div>
                 </div>
                 <div class="pr-br">
+
+                    <? if(is_array($banners['Profile']))
+                        foreach($banners['Profile'] as $banner) {
+                            echo '<!-- '.$banner['title'].' -->
+                        '.$banner['div'];
+                            $bannerScript.='<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+                        } ?>
+                    <? /*
+
                     <img src="/tpl/img/baners/Plug-300х665.png" width="300" height="665" />
+ */ ?>
                 </div>
                 <div class="b-cl-block"></div>
             </section>
@@ -750,6 +797,14 @@
         <section class="chance">
         <div class="ch-br-bk">
 
+        <? if(is_array($banners['Games']))
+            foreach($banners['Games'] as $banner) {
+                echo '<!-- '.$banner['title'].' -->
+                        '.$banner['div'];
+                $bannerScript.='<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+            } ?>
+        <? /*
 
             <div style="margin-bottom:40px;">
                 <!--noindex--><div id="ambn6632"></div><!--/noindex-->
@@ -760,6 +815,7 @@
             <!-- END RotaBan.ru Zone Code -->
 
             <!--img src="/tpl/img/baners/Plug-300х600.png" width="300" height="600" /-->
+ */ ?>
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
@@ -1358,13 +1414,20 @@
                 };
     </script>
     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
-
+<?
+echo $bannerScript;
+/*
+ 13798
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=1&r=13798&p=right&q=2&t=5000" class="ambw-s"></script><!--/noindex-->
+
+ 35732
     <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=35732"></script><!--/noindex-->
 
+ 100
     <!--noindex--><script type="text/javascript" src="//c.am15.net/bn-wrapper/bn-wrapper.min.js?s=63465&f=6&r=73372&p=right&q=3&t=7000" class="ambw-s"></script><!--/noindex-->
     <!--noindex--><script type="text/javascript" src="//am15.net/cu.php?s=63465"></script><!--/noindex-->
 
+ chance
     <!--noindex--><script type="text/javascript" src="//am15.net/bn.php?s=63465&f=1&d=6632"></script><!--/noindex-->
 
     <!-- RotaBan.ru Ad Code -->
@@ -1388,7 +1451,7 @@
     <!-- tizzer -->
     <script type="text/javascript" src="http://www.adtraff.ru/block3.js"></script>
     <!-- tizzer end -->
-
+*/ ?>
     </body>
 
 </html>

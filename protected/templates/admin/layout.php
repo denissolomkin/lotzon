@@ -29,12 +29,23 @@
             <ul class="nav nav-pills" role="tablist">
                 <li<?=($activeMenu == 'users' ? ' class="active"' : '')?>><a href="/private/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Пользователи</a></li>
                 <li<?=($activeMenu == 'reviews' ? ' class="active"' : '')?>><a href="/private/reviews"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Отзывы <span class="label label-warning"><?=ReviewsModel::instance()->getProcessor()->getCount(0)?></span></a></li>
-                <li<?=($activeMenu == 'comments' ? ' class="active"' : '')?>><a href="/private/comments"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Комментарии</a></li>
-                <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Новости</a></li>
-                <!--li><a href="/private/banners">Баннеры</a></li-->
-                <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Товары</a></li>
-                <li<?=($activeMenu == 'monetisation' ? ' class="active"' : '')?>><a href="/private/monetisation">Запросы <span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?> / <?=MoneyOrderModel::instance()->getProcessor()->getOrdersToProcessCount()?></span></a></li>
+                <li<?=($activeMenu == 'monetisation' ? ' class="active"' : '')?>><a href="/private/monetisation"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Запросы <span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?> / <?=MoneyOrderModel::instance()->getProcessor()->getOrdersToProcessCount()?></span></a></li>
                 <!--li><a href="/private/stats">Статистика</a></li-->
+
+                <li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info" style='padding: 9px 12px;' data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Контент <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li<?=($activeMenu == 'banners' ? ' class="active"' : '')?>><a href="/private/banners"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Баннеры</a></li>
+                            <!--li><a href="/private/banners"></a></li-->
+                            <li<?=($activeMenu == 'comments' ? ' class="active"' : '')?>><a href="/private/comments"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Комментарии</a></li>
+                            <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Новости</a></li>
+                            <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Товары</a></li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <div class="btn-group">
