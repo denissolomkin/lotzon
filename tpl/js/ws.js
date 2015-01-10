@@ -31,10 +31,11 @@ var errors = {
                         WebSocketAjaxClient(path, data, true);
                     }
                     else {
-                        $.ajax({
+                        ws=1;
+                        /*$.ajax({
                             url: "/players/trouble/WS",
                             method: 'GET'
-                        });
+                        });*/
                     }
 
                 };
@@ -127,7 +128,7 @@ function appNewGameCallback(receiveData)
          //$('.ngm-bk .ngm-go').hide().prev().show();
          break;
 
-     case 'start':
+         case 'start':
          // document.location.href = '.ngm-bk';
 //         $('.ngm-bk').focus();
 
@@ -143,7 +144,7 @@ function appNewGameCallback(receiveData)
 
 
 
-         $('.ngm-bk .ngm-gm .gm-pr .pr-surr').show();
+         // $('.ngm-bk .ngm-gm .gm-pr .pr-surr').show();
          $('.ngm-rls').fadeOut(200);
          $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();//.addClass('m');
          appId=receiveData.res.gid;
@@ -279,7 +280,10 @@ function appNewGameCallback(receiveData)
 
 
                      $('.gm-pr .pr-cl').css('opacity','0');
-                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+receiveData.res.price+"</b><span>"+(receiveData.res.currenсy=='MONEY'?'денег':'баллов')+"<br>выиграно</span>");
+                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
+                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                     "</b><span>"+
+                     (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
 
                      $('.gm-pr.'+class_player).addClass('winner');
                  }, 1200);
@@ -331,7 +335,7 @@ $(document).on('click', '.ngm-bk .ngm-go', function(e){
     appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price');
     price=appMode.split('-');
 
-    if((price[0]=='POINT' && playerPoints < parseInt(price[1])) || (price[0]=='MONEY' && playerMoney < price[1].toFixed(2))) {
+    if((price[0]=='POINT' && playerPoints < parseInt(price[1])) || (price[0]=='MONEY' && playerMoney < parseFloat(price[1]).toFixed(2)*coefficient)) {
 
         $("#report-popup").show().find(".txt").text(errors['INSUFFICIENT_FUNDS']).fadeIn(200);
 
