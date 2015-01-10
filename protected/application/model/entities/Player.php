@@ -46,7 +46,7 @@ class Player extends Entity
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_dateLastNotice = '';
-    private $_dateAdBlocked    = '';
+    private $_dateAdBlocked  = '';
     private $_country        = '';
 
     private $_generatedPassword = '';
@@ -503,7 +503,8 @@ class Player extends Entity
 
     public function setDateAdBlocked($date)
     {
-        $this->_dateAdBlocked = $date;
+        if($date)
+            $this->_dateAdBlocked = $date;
 
         return $this;
     }

@@ -412,7 +412,7 @@ class Players extends \AjaxController
 
         $resp = array();
         if ($this->session->has(Player::IDENTITY)) {
-            $this->session->get(Player::IDENTITY)->setWebSocket($this->request()->get('ws', null))->setAdBlock($this->request()->get('online', null))->markOnline();
+            $this->session->get(Player::IDENTITY)->setWebSocket($this->request()->get('ws', null))->setDateAdBlocked(($this->request()->get('online', null)?time():null))->setAdBlock(($this->request()->get('online', null)?time():null))->markOnline();
             // check for moment chance
             // if not already played chance game
             if ($_SESSION['chanceGame']['moment']) {
