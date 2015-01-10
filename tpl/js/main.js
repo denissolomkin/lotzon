@@ -1712,7 +1712,7 @@ $('.st-hy-bt').on('click', function(){
             if (data.res.length) {
                 var html = '';
                 $(data.res).each(function(id, tr) {
-                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date+'</span></div></div>';
+                    html += '<div class="rw"><div class="nm td"><span>'+tr.description+'</span></div><div class="if td">'+tr.quantity+'</div><div class="dt td"><span>'+tr.date.replace(' ','<br><span class="tm">')+'</span></div></div>';
                 });
 
                 button.parents('.bblock').find('.tb').append($(html));
