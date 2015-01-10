@@ -23,7 +23,8 @@
                 <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
                 <th>Страна <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
                 <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
-                <th>IP <?=sortIcon('IP', $currentSort, $pager, $search)?></th>
+                <th>IP<?=sortIcon('IP', $currentSort, $pager, $search)?></th>
+                <!--th>Последний IP <?=sortIcon('LastIP', $currentSort, $pager, $search)?></th-->
                 <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
                 <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <!--th>Последний пинг <?=sortIcon('OnlineTime', $currentSort, $pager, $search)?></th-->
@@ -65,7 +66,8 @@
                         </td>
                         <td><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
+                        <td><?if($player->getCountIp()>1) {?><a href='?search[where]=Ip&search[query]=<?=$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP()?>'><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
+                        <!--td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getLastIP()?></td-->
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" style="cursor:pointer;"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
                         <!--td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td-->
@@ -675,8 +677,8 @@ function addTransaction(plid) {
     });
 }
     $('.search-users').on('click', function() {
-        var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:200px;display:inline-block;" placeholder="id, фио, ник или email...">' +
-        '<select id="search_where" class="form-control input-md" style="width: 100px;display: inline-block;">' +
+        var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:260px;display:inline-block;" placeholder="id, фио, ник или email...">' +
+        '<select id="search_where" class="form-control input-md" style="width: 80px;display: inline-block;">' +
         '<option value="">Везде</option>' +
         '<option value="Id">Id</option>' +
         '<option value="Ip">Ip</option>' +

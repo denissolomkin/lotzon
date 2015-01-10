@@ -6,7 +6,7 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`)
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `LastIp`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`)
                 VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid)";
 
         try {
@@ -146,10 +146,10 @@ class PlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
         $sql = "UPDATE `Players` SET
-                    `DateLogined` = :dl, `Country` = :cc, 
-                    `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, 
+                    `DateLogined` = :dl, `Country` = :cc,
+                    `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
-                    `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad
+                    `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `LastIp` = :ip
                 WHERE `Id` = :id OR `Email` = :email";
 
         try {
@@ -170,10 +170,11 @@ class PlayersDBProcessor implements IProcessor
                 ':fav'      => is_array($player->getFavoriteCombination()) ? serialize($player->getFavoriteCombination()) : '',
                 ':vld'      => $player->getValid(),
                 ':gp'       => $player->getGamesPlayed(),
-                ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : ''
+                ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
+                ':ip'       => $player->getLastIp(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);   
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
 
         return $player;
@@ -255,7 +256,7 @@ class PlayersDBProcessor implements IProcessor
     }
 
     public function delete(Entity $player)
-    { 
+    {
         return true;
     }
 
@@ -267,7 +268,7 @@ class PlayersDBProcessor implements IProcessor
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
-                $sql .= ' WHERE Ip = "'.$search['query'].'"';
+                $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
                 $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
             else
@@ -286,14 +287,14 @@ class PlayersDBProcessor implements IProcessor
 
     public function countIp(Player $player)
     {
-        $sql = "SELECT COUNT(Id) FROM `Players` WHERE Ip=:ip AND Ip!=''";
+        $sql = "SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':ip'    => $player->getIP()
+                ':ip'    => $player->getIP(),
+                ':lip'    => $player->getLastIP()
             ));
-
             return $sth->fetchColumn(0);
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -303,13 +304,15 @@ class PlayersDBProcessor implements IProcessor
 
     public function getList($limit = 0, $offset = 0, array $sort, $search=null)
     {
-        $sql = "SELECT *, (SELECT count(p.Id ) FROM `Players` p WHERE p. `Ip` =`Players` . `Ip`  AND p.`Ip`!='') AS CountIp, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
+        $sql = "SELECT *, (
+SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!=''))
+ AS CountIp, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
 
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
-                $sql .= ' WHERE Ip = "'.$search['query'].'"';
+                $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
                 $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
             else
@@ -320,7 +323,7 @@ class PlayersDBProcessor implements IProcessor
             if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
                 $sql .= ' ORDER BY `' . $sort['field'] . '` ' . $sort['direction'];
             }
-            
+
         }
 
         if ($limit) {
@@ -334,13 +337,13 @@ class PlayersDBProcessor implements IProcessor
             $res = DB::Connect()->prepare($sql);
             $res->execute();
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
         $players = array();
         foreach ($res->fetchAll() as $playerData) {
             $player = new Player();
-            $player->formatFrom('DB', $playerData);   
+            $player->formatFrom('DB', $playerData);
 
             $players[] = $player;
         }
@@ -387,7 +390,7 @@ class PlayersDBProcessor implements IProcessor
         return $sth->fetchColumn(0);
     }
 
-    public function checkNickname(Entity $player) 
+    public function checkNickname(Entity $player)
     {
         $sql = "SELECT * FROM `Players` WHERE `Nicname` = :nic AND `Id` != :plid";
 
@@ -398,7 +401,7 @@ class PlayersDBProcessor implements IProcessor
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
         if ($sth->rowCount()) {
@@ -408,7 +411,7 @@ class PlayersDBProcessor implements IProcessor
         return true;
     }
 
-    public function saveAvatar(Entity $player) 
+    public function saveAvatar(Entity $player)
     {
         $sql = "UPDATE `Players` SET `Avatar` = :av WHERE  `Id` = :plid";
 
@@ -419,13 +422,13 @@ class PlayersDBProcessor implements IProcessor
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return true;
     }
 
-    public function changePassword(Entity $player) 
+    public function changePassword(Entity $player)
     {
         $sql = "UPDATE `Players` SET `Password` = :pw, `Salt` = :salt WHERE  `Id` = :plid";
 
@@ -437,7 +440,7 @@ class PlayersDBProcessor implements IProcessor
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -454,10 +457,10 @@ class PlayersDBProcessor implements IProcessor
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
-        return $player;   
+        return $player;
     }
 
     public function decrementSocialPostsCount(Entity $player)
@@ -471,10 +474,10 @@ class PlayersDBProcessor implements IProcessor
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
-        return $player;   
+        return $player;
     }
 
     public function updateLastNotice(Entity $player)
@@ -508,10 +511,10 @@ class PlayersDBProcessor implements IProcessor
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
-        return $player;   
+        return $player;
     }
 
     public function validateHash($hash)
@@ -524,7 +527,7 @@ class PlayersDBProcessor implements IProcessor
                 ':hash'  => $hash,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
     }
@@ -538,9 +541,9 @@ class PlayersDBProcessor implements IProcessor
                 ':plid'  => $player->getId(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
 
-        return $player;  
+        return $player;
     }
 }
