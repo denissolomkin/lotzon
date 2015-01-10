@@ -214,8 +214,9 @@
                     <div class="bz1">
                         <!--noindex--><div id="ambw13798"></div><!--/noindex-->
                     </div>
-                    <div class="bz3">
-                        <img src="/tpl/img/baners/Plug-300х300.png" width="300" height="259"   />
+                    <div class="bz3" style="text-align: center;">
+                        <a href="http://thebest-fruitfarm.ru/?i=44627" target="_blank"><img  width="250" height="250" src="http://thebest-fruitfarm.ru/img/250x250.gif"></a>
+                        <!--img src="/tpl/img/baners/Plug-300х300.png" width="300" height="259"   /-->
                     </div>
                     <!--div class="bz3">
                         <img src="/tpl/img/baners/Plug-300х525.png" width="300" height="603"   />
