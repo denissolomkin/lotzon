@@ -975,22 +975,24 @@
                                     <div class="prc-vl" data-price='POINT-500'>500</div>
                                     <div class="prc-vl" data-price='POINT-200'>200</div>
                                     <div class="prc-vl" data-price='POINT-100'>100</div>
-                                    <div class="prc-vl" data-price='POINT-50'>50</div>
-                                    -->
-                                    <div class="prc-vl" data-price='POINT-25'>25</div>
                                     <div class="prc-vl" data-price='POINT-10'>10</div>
+                                    -->
+                                    <div class="prc-vl" data-price='POINT-50'>50</div>
+                                    <div class="prc-vl" data-price='POINT-25'>25</div>
                                 </div>
 
-                                <!--
+
                                 <div class="prc-bt">деньги</div>
                                 <div class="prc-sel">
                                     <div class="prc-tl">деньги</div>
-                                    <div class="prc-vl" data-price='MONEY-10'><?=(10*$gameInfo['coefficient'])?></div>
+                                    <!--
+                                     <div class="prc-vl" data-price='MONEY-10'><?=(10*$gameInfo['coefficient'])?></div>
                                     <div class="prc-vl" data-price='MONEY-2'><?=(2*$gameInfo['coefficient'])?></div>
-                                    <div class="prc-vl" data-price='MONEY-0.5'><?=(0.5*$gameInfo['coefficient'])?></div>
+                                    -->
+                                    <div class="prc-vl" data-price='MONEY-0.25'><?=(0.25*$gameInfo['coefficient'])?></div>
                                     <div class="prc-vl" data-price='MONEY-0.1'><?=(0.1*$gameInfo['coefficient'])?></div>
                                 </div>
-                                -->
+
 
                                 <div class="prc-bt">бесплатно</div>
                                 <div class="prc-sel"><div data-price='POINT-0'>бесплатно</div></div>

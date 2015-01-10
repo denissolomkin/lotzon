@@ -499,16 +499,17 @@ SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.Las
 
     public function markOnline(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `AdBlock` = :adb, `WebSocket` = :ws, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
+        $sql = "UPDATE `Players` SET `DateAdBlocked` = :dtadb, `AdBlock` = :adb, `WebSocket` = :ws, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':onl'  => (int)$player->isOnline(),
-                ':onlt' => (int)$player->getOnlineTime(),
-                ':adb'  => ($player->getAdBlock()?time():0),
-                ':ws'   => ($player->getWebSocket()?time():0),
-                ':plid' => $player->getId(),
+                ':onl'   => (int)$player->isOnline(),
+                ':onlt'  => (int)$player->getOnlineTime(),
+                ':adb'   => ($player->getAdBlock()?time():0),
+                ':dtadb' => ($player->getAdBlock()?time():$player->getDateAdBlocked()),
+                ':ws'    => ($player->getWebSocket()?time():0),
+                ':plid'  => $player->getId(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
