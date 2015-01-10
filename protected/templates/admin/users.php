@@ -66,7 +66,7 @@
                         </td>
                         <td><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td><?if($player->getCountIp()>1) {?><a href='?search[where]=Ip&search[query]=<?=$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP()?>'><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
+                        <td class="<?=($player->getLastIP()?'warning':'')?>"><?if($player->getCountIp()>1) {?><a href='?search[where]=Ip&search[query]=<?=$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP()?>'><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
                         <!--td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getLastIP()?></td-->
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" style="cursor:pointer;"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
@@ -74,8 +74,8 @@
                         <td><?=$player->getGamesPlayed()?></td>
                         <td class="<?=$player->isTicketsFilled() ? 'success' : 'danger'?>"><?=$player->isTicketsFilled() ? 'да' : 'нет'?></td>
                         <td>
-                            <?=$player->getAdBlock()? '<button class="btn btn-xs btn-danger notices-trigger" style="opacity: 1;" disabled="disabled"><b>'.
-                                ($player->checkAdBlockNotices()?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : ''?></td>
+                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-danger" '.($player->getAdBlock()?'':'disabled="disabled"').'><b>'.
+                                ($player->checkAdBlockNotices()?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?></td>
                         <td><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td><?=$player->getPoints()?></td>
                         <td>

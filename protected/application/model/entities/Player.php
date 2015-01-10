@@ -46,6 +46,7 @@ class Player extends Entity
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_dateLastNotice = '';
+    private $_dateAdBlocked    = '';
     private $_country        = '';
 
     private $_generatedPassword = '';
@@ -498,6 +499,18 @@ class Player extends Entity
     public function getAdBlock()
     {
         return $this->_adBlock;
+    }
+
+    public function setDateAdBlocked($date)
+    {
+        $this->_dateAdBlocked = $date;
+
+        return $this;
+    }
+
+    public function getDateAdBlocked()
+    {
+        return $this->_dateAdBlocked;
     }
 
     public function setWebSocket($check)
@@ -1099,6 +1112,7 @@ class Player extends Entity
                  ->setOnline($data['Online'])
                  ->setOnlineTime($data['OnlineTime'])
                  ->setAdBlock($data['AdBlock'])
+                 ->setDateAdBlocked($data['DateAdBlocked'])
                  ->setWebSocket($data['WebSocket'])
                  ->setIp($data['Ip'])
                  ->setLastIp($data['LastIp'])
