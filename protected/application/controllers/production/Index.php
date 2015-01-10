@@ -105,6 +105,7 @@ class Index extends \SlimController\SlimController
         $session = new Session();
         $session->get(Player::IDENTITY)->fetch();
 
+        $banners          = Config::instance()->banners;
         $gameSettings          = GameSettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($session->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
@@ -155,6 +156,7 @@ class Index extends \SlimController\SlimController
             'chanceGames'  => $chanceGames,
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
             'playerTransactions' => $playerTransactions,
+            'banners'      => $banners
         ));
     }
 
