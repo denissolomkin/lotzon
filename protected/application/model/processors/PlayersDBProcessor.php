@@ -415,7 +415,7 @@ class PlayersDBProcessor implements IProcessor
 
         $reviews = array();
         foreach ($res->fetchAll() as $reviewData) {
-            $reviewData['Date']=date('d.m.Y H:i:s', $reviewData['Time']);
+            $reviewData['Date']=date('d.m.Y H:i:s', $reviewData['Date']);
             $reviews[] = $reviewData;
         }
 
