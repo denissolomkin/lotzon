@@ -1223,6 +1223,9 @@
         var appMode   = 0;
         var appName   = '';
         var unreadNotices = <?=$notices?>;
+        var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=array_shift($banners['TicketLast']))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
+        var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;
+
         updateNotices(unreadNotices);
         var posts = {
             fb : {
