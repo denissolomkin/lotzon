@@ -4,8 +4,6 @@ namespace controllers\admin;
 use \Application, \PrivateArea, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
-Application::import(PATH_APPLICATION . '/model/entities/StaticSiteText.php');
 
 class Banners extends PrivateArea
 {

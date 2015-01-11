@@ -39,7 +39,6 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li<?=($activeMenu == 'banners' ? ' class="active"' : '')?>><a href="/private/banners"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Баннеры</a></li>
-                            <!--li><a href="/private/banners"></a></li-->
                             <li<?=($activeMenu == 'comments' ? ' class="active"' : '')?>><a href="/private/comments"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Комментарии</a></li>
                             <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Новости</a></li>
                             <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Товары</a></li>
@@ -53,6 +52,7 @@
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Настройки <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
+                            <li<?=($activeMenu == 'blacklist' ? ' class="active"' : '')?>><a href="/private/blacklist"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Blacklist</a></li>
                             <li<?=($activeMenu == 'game' ? ' class="active"' : '')?>><a href="/private/game"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> Розыгрыши</a></li>
                             <li <?=($activeMenu == 'chances' ? ' class="active"' : '')?>><a href="/private/chances"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Шансы</a></li>
                             <li <?=($activeMenu == 'seo' ? ' class="active"' : '')?>><a href="/private/seo"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> SEO</a></li>

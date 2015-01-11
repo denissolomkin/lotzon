@@ -691,6 +691,7 @@ class Player extends Entity
         switch ($action) {
             case 'create':
                 $this->validEmail();
+                $this->validIp();
                 try {
                     $this->fetch();
                     throw new EntityException('REG_LOGIN_EXISTS', 500);
@@ -701,10 +702,11 @@ class Player extends Entity
                 }
             break;
             case 'fetch' :
-                $this->getSocialId() || $this->getId() || $this->validEmail();
+                $this->getSocialId() || $this->getId() || $this->validEmail() || $this->validIp();
             break;
             case 'login' :
                 $this->validEmail();
+                $this->validIp();
                 if (empty($params['password'])) {
                     throw new EntityException('EMPTY_PASSWORD', 400);
                 }
@@ -824,6 +826,16 @@ class Player extends Entity
             }
             throw new EntityException($e->getMessage(), $e->getCode());
             
+        }
+
+        return true;
+    }
+
+    protected function validIp()
+    {
+
+        if (in_array($this->getIp(), Config::instance()->blockedIps)) {
+            throw new EntityException('BLOCKED_IP', 400);
         }
 
         return true;
