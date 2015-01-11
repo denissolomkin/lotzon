@@ -909,7 +909,7 @@ $(function(){
                     html += '<li>' + num + '</li>';
                 });
                 html += '</ul><div class="nw">' + lottery.winnersCount + '</div>';
-                if ((lottery.winnersCount > 0 || lottery.iPlayed || onlyMineLotteryResults) && lottery.iPlayed) {
+                if ((lottery.winnersCount > 0 || lottery.iPlayed || onlyMineLotteryResults) && (lottery.iPlayed || onlyMineLotteryResults)) {
                     html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
                 }
                 html += '</li>';
@@ -1096,7 +1096,11 @@ $(function(){
         yourId=playerId;
 
 
-        $('#profile-history').find('.ws-lt').html(winnerHtml);
+        if(winnerHtml)
+            $('#profile-history').find('.ws-lt').html(winnerHtml).show();
+        else
+            $('#profile-history').find('.ws-lt').hide();
+
         if (data.res.tickets[yourId]) {
             $('#profile-history').find('.ws-pf-rt-bk').show();
             $('#profile-history').find('.ws-dt.ch-hide').hide();
