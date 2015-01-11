@@ -183,6 +183,7 @@ class ContentController extends \AjaxController
         );
 
         $langs = array();
+        /*
         foreach ($lotteryDetails['winners'] as $player) {
             $responseData['winners'][] = array(
                 'id'      => $player->getId(),
@@ -193,7 +194,7 @@ class ContentController extends \AjaxController
                 'you'     => $player->getId() == $this->session->get(Player::IDENTITY)->getId(),
             );
         }
-
+        */
         foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
             $response['tickets'][$playerId] = array();
             foreach ($ticketData as $ticket) {
