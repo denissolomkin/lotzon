@@ -80,7 +80,7 @@
                            <?}?><?=$player->getIP()?></td>
                         <!--td><?if($player->getCounters()['Ip']>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCounters()['Ip']?><?}?></span></a> <?=$player->getLastIP()?></td-->
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>">
-                            <?if($player->getCounters()['Referal']>1) {?> <span class="label label-danger"><?=$player->getCounters()['Referal']?></span>
+                            <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
@@ -88,7 +88,7 @@
                         <td class="stats-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getGamesPlayed()?></td>
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
                         <td>
-                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-danger notices-trigger" data-type="AdBlock" data-id="<?=$player->getId()?>" '.($player->getAdBlock()?'':'disabled="disabled"').'>'.
+                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-danger notices-trigger" data-type="AdBlock" data-id="'.$player->getId().'" '.($player->getAdBlock()?'':'disabled="disabled"').'>'.
                                 ($player->getCounters()['AdBlock']?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?></td>
                         <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getPoints()?></td>
