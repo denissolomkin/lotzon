@@ -17,8 +17,13 @@ class MoneyOrderModel extends Model
         return __CLASS__;
     }
 
-    public function getOrdersToProcess()
+    public function getOrdersToProcess($limit = 0, $offset = 0, $playerid=null,$status=null)
     {
-        return $this->getProcessor()->getOrdersToProcess();
+        return $this->getProcessor()->getOrdersToProcess($limit,$offset,$playerid,$status);
+    }
+
+    public function getOrdersToProcessCount($playerid=null,$status=null)
+    {
+        return $this->getProcessor()->getOrdersToProcessCount($playerid,$status);
     }
 }

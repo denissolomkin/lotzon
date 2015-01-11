@@ -74,7 +74,7 @@ class Player extends Entity
     private $_additionalData = array();
     // filled only when list of players fetched
     private $_isTicketsFilled = array();
-    private $_countIp = 0;
+    private $_counters = array();
 
     public function init()
     {
@@ -647,12 +647,17 @@ class Player extends Entity
     {
         return $this->_isTicketsFilled;
     }
-
+/*
     public function getCountIp()
     {
         return $this->_countIp;
     }
 
+    public function setCountIp($count)
+    {
+        return $this->_countIp=$count;
+    }
+*/
     public function generatePassword()
     {
         $an = array(
@@ -789,31 +794,56 @@ class Player extends Entity
         return $this;   
     }
 
-    public function countIp()
+    public function getCounters()
+    {
+        return $this->_counters;
+    }
+
+    public function setCounters($counters)
+    {
+        return $this->_counters=$counters;
+    }
+
+    public function updateCounters()
     {
         $model = $this->getModelClass();
 
         try {
-            return $model::instance()->countIp($this);
+            $counters=$model::instance()->updateCounters($this);
+            $this->setCounters($counters);
+            return $counters;
         } catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
 
         }
 
     }
+    /*
+        public function countIp()
+        {
+            $model = $this->getModelClass();
 
-    public function checkAdBlockNotices()
-    {
-        $model = $this->getModelClass();
+            try {
+                return $model::instance()->countIp($this);
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
 
-        try {
-            return $model::instance()->checkAdBlockNotices($this);
-        } catch (ModelException $e) {
-            throw new EntityException($e->getMessage(), $e->getCode());
+            }
+
         }
+    /*
+        public function checkAdBlockNotices()
+        {
+            $model = $this->getModelClass();
 
-    }
+            try {
+                return $model::instance()->checkAdBlockNotices($this);
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+            }
 
+        }
+    */
     protected function checkNickname()
     {
         $model = $this->getModelClass();
@@ -1136,11 +1166,21 @@ class Player extends Entity
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
 
             if ($data['TicketsFilled']) {
-                $this->_isTicketsFilled = true;
+                $this->_isTicketsFilled = $data['TicketsFilled'];
             }
 
-            if ($data['CountIp']) {
-                $this->_countIp = $data['CountIp'];
+            if (isset($data['CountIp'])) {
+                $this->setCounters(array(
+                    'Notice' => $data['CountNotice'],
+                    'Note' => $data['CountNote'],
+                    'AdBlock' => $data['CountAdBlock'],
+                    'Log' => $data['CountLog'],
+                    'Ip' => $data['CountIp'],
+                    'MyReferal' => $data['CountMyReferal'],
+                    'Referal' => $data['CountReferal'],
+                    'Order' => ($data['CountMoneyOrder']+$data['CountShopOrder']),
+                    'Review' => $data['CountReview'],
+                ));
             }
         }
 

@@ -1,8 +1,8 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice;
-use \GameSettings;
+use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice, \NotesModel, \Note, \Session2, \Admin;
+use \GameSettings, \ShopOrdersModel, \MoneyOrderModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/PlayersModel.php');
@@ -180,6 +180,108 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function ordersAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+
+
+            try {
+                $response['data'] = array(
+                    'ShopOrders' => ShopOrdersModel::instance()->getOrdersToProcess(null,null,$playerId),
+                    'MoneyOrders' => MoneyOrderModel::instance()->getOrdersToProcess(null,null,$playerId)
+                );
+
+                foreach ($response['data']['ShopOrders'] as &$order) {
+                    $order = array(
+                        'id' => $order->getId(),
+                        'status' => $order->getStatus(),
+                        'item' => $order->getItem()->getTitle(),
+                        'name' => $order->getSurname().' '.$order->getName.' '.$order->getSecondName(),
+                        'phone' => $order->getPhone(),
+                        'address' => ($order->getRegion() ? $order->getRegion() . ' обл.,' : '').' г. '.$order->getCity().', '.$order->getAddress(),
+                        'price'     => ($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice()),
+                        'date' => date('d.m.Y H:i:s', $order->getDateOrdered()),
+                    );
+                }
+
+
+                foreach ($response['data']['MoneyOrders'] as &$order) {
+
+                    $dataOrder=array();
+                    foreach ($order->getData() as $key => $data)
+                        $dataOrder[] = $data['title'].': '.$data['value'];
+
+                    $order = array(
+                        'id' => $order->getId(),
+                        'status' => $order->getStatus(),
+                        'type' => $order->getType(),
+                        'data' => (implode('</br>',$dataOrder)),
+                        'date' => date('d.m.Y H:i:s', $order->getDateOrdered()),
+                    );
+                }
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
+    public function ticketsAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'tickets' => PlayersModel::instance()->getTickets($playerId),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
+    public function reviewsAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'reviews' => PlayersModel::instance()->getReviews($playerId),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function logsAction($playerId)
     {
         if ($this->request()->isAjax()) {
@@ -200,6 +302,82 @@ class Users extends PrivateArea
 
             die(json_encode($response));
         }
+        $this->redirect('/private');
+    }
+
+    public function notesAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'notes' => NotesModel::instance()->getList($playerId),
+                );
+
+                foreach ($response['data']['notes'] as &$note) {
+                    $note = array(
+                        'id' => $note->getId(),
+                        'user' => $note->getUser(),
+                        'date' => date('d.m.Y H:i:s', $note->getDate()),
+                        'text' => $note->getText(),
+                    );
+                }
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
+    public function removeNoteAction($noteId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $note = new Note();
+                $note->setId($noteId)->delete();
+
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
+    public function addNoteAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $note = new Note();
+                $note->setPlayerId($playerId)->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())->setText($this->request()->post('text'))->create();
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
         $this->redirect('/private');
     }
 

@@ -70,15 +70,35 @@ class MoneyOrdersDBProcessor implements IProcessor
         
     } 
 
-    public function getOrdersToProcess()
+    public function getOrdersToProcess($limit = 0, $offset = 0, $playerid=0, $status=0)
     {
-        $sql = "SELECT * FROM `MoneyOrders` WHERE `Status` = :status ORDER BY `DateOrdered` ASC";
+        if($playerid){
+            $order=" ORDER BY `Id` DESC";
+            $where[]='`PlayerId` = :pid';
+            if($status)
+                $where[]='`Status` = :status';
+
+        }else{
+            $order=" ORDER BY `Id` ASC";
+            $where[]='`Status` = :status';
+            $status=($status?:ShopItemOrder::STATUS_ORDERED);
+        }
+
+
+        $sql = "SELECT * FROM `MoneyOrders` WHERE ".implode('AND',$where).$order;
+
+        if ($limit) {
+            $sql .= ' LIMIT ' . (int)$limit;
+        }
+        if ($offset) {
+            $sql .= ' OFFSET ' . (int)$offset;
+        }
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':status' => ShopItemOrder::STATUS_ORDERED,
-            ));
+            $sth->execute(
+                ($playerid && $status?array(':pid' => $playerid,':status' => $status):$playerid?array(':pid' => $playerid):array(':status' => $status))
+            );
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);    
         }
@@ -86,6 +106,10 @@ class MoneyOrdersDBProcessor implements IProcessor
         $orders = array();
         if ($sth->rowCount()) {
             foreach ($sth->fetchAll() as $orderData) {
+
+                if($playerid)
+                    unset($orderData['PlayerId']);
+
                 $order = new MoneyOrder();
                 $order->formatFrom('DB', $orderData);
 
@@ -96,14 +120,17 @@ class MoneyOrdersDBProcessor implements IProcessor
         return $orders;
     }
 
-    public function getOrdersToProcessCount()
+    public function getOrdersToProcessCount($playerid=null,$status=null)
     {
+        if(!$status)
+            $status=ShopItemOrder::STATUS_ORDERED;
+
         $sql = "SELECT COUNT(*) FROM `MoneyOrders` WHERE `Status` = :status";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':status' => ShopItemOrder::STATUS_ORDERED,
+                ':status' => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);    

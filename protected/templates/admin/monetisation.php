@@ -1,24 +1,43 @@
 <div class="container-fluid">    
     <div class="row-fluid" id="items">
-        <h2>Запросы на вывод товаров <button class="btn btn-success pull-right" onclick="location.href='#money'">Запросы на вывод денег</button></h2>        
+        <h2>Запросы на вывод товаров (<span id="shopCount"><?=$shopCount?></span>) <button class="btn btn-info" onclick="location.href='#money'"><i class="glyphicon glyphicon-hand-down"></i> Запросы на вывод денег</button>
+
+            <button onclick="document.location.href='/private/monetisation?moneyPage=<?=$moneyPager['page']?>&moneyStatus=<?=$moneyStatus?>&shopStatus=2&amp;sortField=Id&amp;sortDirection=desc#shop'" class="btn right btn-md btn-danger <?=($shopStatus==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ban-circle"></i> Отклоненные</button>
+            <button onclick="document.location.href='/private/monetisation?moneyPage=<?=$moneyPager['page']?>&moneyStatus=<?=$moneyStatus?>&shopStatus=1&amp;sortField=Id&amp;sortDirection=desc#shop'" class="btn right btn-md btn-success <?=($shopStatus==1 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ok"></i> Одобренные</button>
+            <button onclick="document.location.href='/private/monetisation?moneyPage=<?=$moneyPager['page']?>&moneyStatus=<?=$moneyStatus?>&shopStatus=0&amp;sortField=Id&amp;sortDirection=desc#shop'" class="btn right btn-warning btn-md <?=(!$shopStatus ? 'active' : '' )?>"><i class="glyphicon glyphicon-time"></i> На рассмотрении</button>
+
+  </h2>
         <hr />
     </div>
+
+    <? if ($shopPager['pages'] > 1) {?>
+        <div class="row-fluid">
+            <div class="btn-group">
+                <? for ($i=1; $i <= $shopPager['pages']; ++$i) { ?>
+                    <button onclick="document.location.href='/private/monetisation?shopPage=<?=$i?>&moneyPage=<?=$moneyPager['page']?>&moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'')?>'" class="btn btn-default btn-xs <?=($i == $shopPager['page'] ? 'active' : '')?>"><?=$i?></button>
+                <? } ?>
+            </div>
+        </div>
+    <? } ?>
+
     <div class="row-fluid">
         <table class="table table-striped">
             <thead>
                 <!--th>#ID</th-->
-                <th>Дата заказа</th>
-                <th>Игрок</th>
+                <th width="50">Дата</th>
+                <th width="10%">Игрок</th>
+                <th width="20%">Информация</th>
                 <th>Товар</th>
                 <th>Данные</th>
                 <th>Стоимость</th>
-                <th>Options</th>
+                <th width="50">Options</th>
             </thead>
             <tbody>
-                <? foreach ($list as $order) { ?>
-                    <tr>
+                <? foreach ($shopOrders as $order) { ?>
+                    <tr id="shop<?=$order->getId()?>">
                         <!--td><?=$order->getId()?></td-->
                         <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
+                        <td><?=$order->getPlayer()->getNicname()?><br><?=$order->getPlayer()->getName()?> <?=$order->getPlayer()->getSurName()?> <?=$order->getPlayer()->getSecondName()?></td>
                         <td class="<?=$order->getPlayer()->getValid() ? "success" : "danger"?>"><?=$order->getPlayer()->getEmail()?>
                             <?
                             foreach($order->getPlayer()->getAdditionalData() as $provider=>$info)
@@ -39,7 +58,12 @@
                             }?>
 
                             <br>
-                            <?if($order->getPlayer()->countIP()>1) {?><a target=_blank href="users?search[where]=Ip&search[query]=<?=$order->getPlayer()->getIP()?>"><span class="label label-danger"><?=$order->getPlayer()->countIP()?><?}?></span></a> <?=$order->getPlayer()->getIP()?>
+                            <?if($order->getPlayer()->getCounters()['Ip']>1) {?><a target=_blank href="users?search[where]=Ip&search[query]=<?=$order->getPlayer()->getIP()?>"><span class="label label-danger"><?=$order->getPlayer()->getCounters()['Ip']?><?}?></span></a> <?=$order->getPlayer()->getIP()?>
+                            <div class="right">
+                                <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+                                <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
+                                <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
+                            </div>
                         </td>
                         <td><?=$order->getItem()->getTitle()?></td>
 
@@ -51,13 +75,11 @@
 
                         </td>
                         <td><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice())?></td>
-                        <td width="10%">
-
-                            <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
-                            <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs approve btn-success"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs decline btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
+                        <td class="nobr">
+                            <button class="btn btn-md btn-warning status <?=($shopStatus==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
+                            <button class="btn btn-md btn-success status <?=($shopStatus==1 ? ' hidden' : '' )?>" data-status='1' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button class="btn btn-md btn-danger status <?=($shopStatus==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
+                            <button class="btn btn-md btn-danger status <?=($shopStatus==2 ? ' hidden' : ' hidden' )?>" data-status='3' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-remove"></i></button>
                         </td>
                     </tr>   
                 <? } ?>
@@ -65,24 +87,43 @@
         </table>
     </div>
     <div class="row-fluid" id="money">
-        <h2>Запросы на вывод денег  <button class="btn btn-success pull-right" onclick="location.href='#items'">Запросы на вывод товаров</button></h2>
+        <h2>Запросы на вывод денег (<span id="moneyCount"><?=$moneyCount?></span>)
+            <button class="btn btn-info" onclick="location.href='#items'"><i class="glyphicon glyphicon-hand-up"></i> Запросы на вывод товаров</button>
+
+            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=2&amp;sortField=Id&amp;sortDirection=desc#money'" class="btn right btn-md btn-danger <?=($moneyStatus==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ban-circle"></i> Отклоненные</button>
+            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=1&amp;sortField=Id&amp;sortDirection=desc#money'" class="btn right btn-md btn-success <?=($moneyStatus==1 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ok"></i> Одобренные</button>
+            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=0&amp;sortField=Id&amp;sortDirection=desc#money'" class="btn right btn-warning btn-md <?=(!$moneyStatus ? 'active' : '' )?>"><i class="glyphicon glyphicon-time"></i> На рассмотрении</button>
+        </h2>
         <hr />
     </div>
+
+
+    <? if ($moneyPager['pages'] > 1) {?>
+        <div class="row-fluid">
+            <div class="btn-group">
+                <? for ($i=1; $i <= $moneyPager['pages']; ++$i) { ?>
+                    <button onclick="document.location.href='/private/monetisation?moneyPage=<?=$i?>&shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=<?=$moneyStatus?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'')?>'" class="btn btn-default btn-xs <?=($i == $moneyPager['page'] ? 'active' : '')?>"><?=$i?></button>
+                <? } ?>
+            </div>
+        </div>
+    <? } ?>
+
     <div class="row-fluid">
         <table class="table table-striped">
             <thead>
                 <!--th>#ID</th-->
-                <th>Дата заказа</th>
-                <th>Игрок</th>
+                <th width="50">Дата</th>
+                <th width="10%">Игрок</th>
+                <th width="20%">Информация</th>
                 <th>Платежная сис-ма</th>
                 <th>Данные</th>
                 <th>Options</th>
             </thead>
             <tbody>
                 <? foreach ($moneyOrders as $order) { ?>
-                    <tr>
-                        <!--td><?=$order->getId()?></td-->
+                    <tr id="money<?=$order->getId()?>">
                         <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
+                        <td><?=$order->getPlayer()->getNicname()?><br><?=$order->getPlayer()->getName()?> <?=$order->getPlayer()->getSurName()?> <?=$order->getPlayer()->getSecondName()?></td>
                         <td class="<?=$order->getPlayer()->getValid() ? "success" : "danger"?>"><?=$order->getPlayer()->getEmail()?>
                             <?foreach($order->getPlayer()->getAdditionalData() as $provider=>$info)
                             {
@@ -101,7 +142,13 @@
                                 echo'</div>';
                             }?>
                             <br>
-                            <?if($order->getPlayer()->countIP()>1) {?><a target=_blank href="users?search[where]=Ip&search[query]=<?=$order->getPlayer()->getIP()?>"><span class="label label-danger"><?=$order->getPlayer()->countIP()?><?}?></span></a> <?=$order->getPlayer()->getIP()?>
+                            <?if($order->getPlayer()->getCounters()['Ip']>1) {?><a target=_blank href="users?search[where]=Ip&search[query]=<?=$order->getPlayer()->getIP()?>"><span class="label label-danger"><?=$order->getPlayer()->getCounters()['Ip']?><?}?></span></a> <?=$order->getPlayer()->getIP()?>
+                            <div class="right"><button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+                            <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
+                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
+                            <!--button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
+                            </div>
                         </td>
                         <td><?=$order->getType()?></td>
                         <td>
@@ -109,12 +156,13 @@
                                 <?=$data['title']?>: <?=$data['value']?> <?=($data['title'] == 'Cумма' ? ($order->getPlayer()->getCountry() == 'UA' ? 'грн' : 'руб') : '')?> <br />
                             <? } ?>
                         </td>
-                        <td width="10%">
-                            <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$order->getPlayer()->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
-                            <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
+                        <td class="nobr" width="50">
+
+                            <button class="btn btn-md btn-warning status money <?=($moneyStatus==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
+                            <button class="btn btn-md btn-success status money <?=($moneyStatus==1 ? ' hidden' : '' )?>" data-status='1' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button class="btn btn-md btn-danger status money<?=($moneyStatus==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
+                            <button class="btn btn-md btn-danger status money<?=($moneyStatus==2 ? ' hidden' : ' hidden' )?>" data-status='3' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-remove"></i></button>
+
                         </td>
                     </tr>   
                 <? } ?>
@@ -704,10 +752,51 @@
 
 
 
-    $('.approve').on('click', function() {
-        location.href = '/private/monetisation/approve/' + $(this).data('id') + '?money=' + ($(this).hasClass('money') ? 1 : 0);
+    $('.status').on('click', function() {
+        id= $(this).data('id');
+        status= $(this).data('status');
+        money=($(this).hasClass('money') ? 1 : 0);
+        $.ajax({
+            url: "/private/monetisation/status/"+id+"?status="+status+"&money=" + money,
+            method: 'GET',
+            async: true,
+            data: null,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    if(money){
+                        if(($("table tr#money"+id).parent().children().length)==1)
+                            location.reload()
+                        $("table tr#money"+id).remove();
+                        $("#moneyCount").text(parseInt($("#moneyCount").text())-1);
+
+                    } else {
+                        if(($("table tr#shop"+id).parent().children().length)==1)
+                            location.reload()
+                        $("table tr#shop"+id).remove();
+                        $("#shopCount").text(parseInt($("#shopCount").text())-1);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+
     });
-    $('.descline').on('click', function() {
-        location.href = '/private/monetisation/decline/' + $(this).data('id') + '?money=' + ($(this).hasClass('money') ? 1 : 0);
+
+    $('.approve').on('click', function() {
+        location.href = '/private/monetisation/approve/' + $(this).data('id') + '?moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&money=' + ($(this).hasClass('money') ? 1 : 0);
+    });
+    $('.decline').on('click', function() {
+        location.href = '/private/monetisation/decline/' + $(this).data('id') + '?moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&money=' + ($(this).hasClass('money') ? 1 : 0);
+    });
+    $('.process').on('click', function() {
+        location.href = '/private/monetisation/process/' + $(this).data('id') + '?moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&money=' + ($(this).hasClass('money') ? 1 : 0);
+    });
+    $('.delete').on('click', function() {
+        location.href = '/private/monetisation/delete/' + $(this).data('id') + '?moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&money=' + ($(this).hasClass('money') ? 1 : 0);
     });
 </script>

@@ -2,14 +2,19 @@
 <div class="container-fluid">
 
     <div class="row-fluid">
-        <h2>Пользователи (<?=$playersCount?>) <button class="btn btn-md btn-success search-users"><i class="glyphicon glyphicon-search"></i></button> <button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button></h2>
-        <hr/>
-    </div>
+        <h2>
+            Пользователи (<?=$playersCount?>)
+            <div class="flex"><?=($search['query']?'<button class="btn btn-md btn-success" onclick="history.back();"><i class="glyphicon glyphicon-arrow-left"></i></button>':'');?>
+                <button class="btn btn-md btn-info search-users"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+            <button class="btn btn-md btn-warning notices-trigger right" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+        </h2>
+    </div>  <hr/>
     <? if ($pager['pages'] > 1) {?>
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/users?page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'')?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="document.location.href='/private/users?page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'')?>'" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
@@ -28,20 +33,21 @@
                 <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
                 <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <!--th>Последний пинг <?=sortIcon('OnlineTime', $currentSort, $pager, $search)?></th-->
-                <th>Игр сыграно <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
+                <th>Игр <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
                 <th>Ad <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
                 <th>Баллов <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
-                <th>Options</th>
+                <th width="100">Options</th>
             </thead>
             <tbody>
                 <? foreach ($list as $player) { ?>
                     <tr>
                         <td><?=$player->getId()?></td>
-                        <td><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
-                        <td><?=($player->getNicName())?></td>
+                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
+                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                            <div class="flex">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
                                 echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
@@ -62,29 +68,66 @@
                                 else echo $info;
                                 echo'</div>';
                             }?>
-
+                            </div>
                         </td>
-                        <td><?=$player->getCountry()?></td>
+
+
+                        <td class="country"><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td class="<?=($player->getLastIP()?'warning':'')?>"><?if($player->getCountIp()>1) {?><a href='?search[where]=Ip&search[query]=<?=$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP()?>'><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getIP()?></td>
-                        <!--td><?if($player->getCountIp()>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCountIp()?><?}?></span></a> <?=$player->getLastIP()?></td-->
-                        <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" style="cursor:pointer;"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>"><?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
+                        <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
+                            <?if($player->getCounters()['Ip']>1) {?>
+                                <span class="label label-danger"><?=$player->getCounters()['Ip']?></span>
+                           <?}?><?=$player->getIP()?></td>
+                        <!--td><?if($player->getCounters()['Ip']>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCounters()['Ip']?><?}?></span></a> <?=$player->getLastIP()?></td-->
+                        <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>">
+                            <?if($player->getCounters()['Referal']>1) {?> <span class="label label-danger"><?=$player->getCounters()['Referal']?></span>
+                            <?}?>
+                            <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
                         <!--td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'warning')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td-->
-                        <td><?=$player->getGamesPlayed()?></td>
-                        <td class="<?=$player->isTicketsFilled() ? 'success' : 'danger'?>"><?=$player->isTicketsFilled() ? 'да' : 'нет'?></td>
+                        <td class="stats-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getGamesPlayed()?></td>
+                        <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
                         <td>
-                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-danger" '.($player->getAdBlock()?'':'disabled="disabled"').'><b>'.
-                                ($player->checkAdBlockNotices()?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?></td>
-                        <td><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
-                        <td><?=$player->getPoints()?></td>
-                        <td>
-                            <button class="btn btn-xs btn-warning notices-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
-                            <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-                            <button class="btn btn-xs btn-warning logs-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-time" aria-hidden="true"></button>
+                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-danger notices-trigger" data-type="AdBlock" data-id="<?=$player->getId()?>" '.($player->getAdBlock()?'':'disabled="disabled"').'>'.
+                                ($player->getCounters()['AdBlock']?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?></td>
+                        <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
+                        <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getPoints()?></td>
+                        <td><div class="right nobr">
+
+                            <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
+                            </button>
+                            <button class="btn btn-xs btn-<?=($player->getCounters()['Notice']?'success':'warning');?> notices-trigger" data-type="Message" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span><?=$player->getCounters()['Notice']>1?$player->getCounters()['Notice']:''?>
+                            </button>
+
+                                <? if ($player->getCounters()['MyReferal']>0): ?>
+                                    <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=ReferalId&search[query]=<?=$player->getId();?>'">
+                                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if ($player->getCounters()['Review']>0): ?>
+                            <button class="btn btn-xs btn-success reviews-trigger" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><?=$player->getCounters()['Review']>1?$player->getCounters()['Review']:''?>
+                            </button>
+                            <? endif ?>
+
+                                <? if ($player->getCounters()['Order']>0): ?>
+                            <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($player->getCounters()['Order']>1?$player->getCounters()['Order']:'');?>
+                            </button>
+                            <? endif ?>
+                            <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
+                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
+                            <? if ($player->getCounters()['Log']>0): ?>
+                            <button class="btn btn-xs btn-<?=($player->getCounters()['Log']>1?'danger':(($player->getCounters()['Log']==1 AND $player->getValid())?'success':'warning'))?> logs-trigger" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters()['Log']>1?$player->getCounters()['Log']:''?>
+                            </button>
+                             <? endif ?>
                             <!--button class="btn btn-xs btn-danger profile-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></button>
                             <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button-->
+                            </div>
                         </td>
                     </tr>
                 <? } ?>
@@ -115,6 +158,32 @@
                 <h4 class="modal-title" id="confirmLabel">Profile information</h4>
             </div>
             <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tickets-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Tickets</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <th>#ID лотереи</th>
+                    <th>Дата заполнения</th>
+                    <th>№</th>
+                    <th>Комбинация</th>
+                    <th>Выигрыш</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default cls">Закрыть</button>
@@ -217,6 +286,57 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-success add">Добавить транзакцию</button>
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="orders-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style="clear:both"></div>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid" id="shopOrders">
+                <h4>Запросы товаров
+                <button class="btn btn-info pull-right" onclick="location.href='#moneyOrders'" style="margin-top: -10px;"><i class="glyphicon glyphicon-hand-down"></i> Запросы денег</button>
+                </h4>
+                <hr />
+                </div>
+                <table class="table table-striped shop">
+                    <thead>
+                    <th>#ID</th>
+                    <th>Дата</th>
+                    <th>Товар</th>
+                    <th>Данные</th>
+                    <th>Стоимость</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <div class="row-fluid" id="moneyOrders">
+                <h4>Деньги
+                    <button class="btn btn-info pull-right" onclick="location.href='#shopOrders'" style="margin-top: -10px;"><i class="glyphicon glyphicon-hand-up"></i> Запросы товаров</button>
+                </h4>
+                <hr />
+                </div>
+                <table class="table table-striped money">
+                    <thead>
+                    <th>#ID</th>
+                    <th>Дата</th>
+                    <th>Система</th>
+                    <th>Данные</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
                 <button type="button" class="btn btn-default cls">Закрыть</button>
             </div>
         </div>
@@ -338,6 +458,111 @@
     </div>
 </div>
 
+<div class="modal fade" id="reviews-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Комментарии</h4>
+                <hr />
+                <table class="table table-striped points" >
+                    <thead>
+                    <th>Дата</th>
+                    <th>Комментарий</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="notes-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="btn btn-success pull-right add">Добавить заметку</button>
+                <div style="clear:both"></div>
+            </div>
+            <div class="modal-body">
+                <h4>Заметки</h4>
+                <hr />
+                <table class="table table-striped points" >
+                    <thead>
+                    <th>Дата</th>
+                    <th>Автор</th>
+                    <th>Заметка</th>
+                    <th>Удалить</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success add">Добавить заметку</button>
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-note" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Добавление заметки</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid" id="errorForm" style="display:none">
+                    <div class="alert alert-danger" role="alert">
+                        <span class="error-container"></span>
+                    </div>
+                </div>
+
+                <form class="form">
+                    <div class="form-group">
+                        <textarea class="form-control input-md" id="note-text"></textarea>
+                    </div>
+                </form>
+
+
+                <div class="row-fluid">
+                    <button class="btn btn-md btn-success save pull-right"> Сохранить</button>
+                    <button class="btn btn-danger cls">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="remove-note" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Удаление заметки</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    Эта заметка будет безвозвратно удалена, Вы уверены?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success rm">Удалить</button>
+                <button class="btn btn-danger cls">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="add-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -372,26 +597,83 @@
 
 <script>
 
-var currentEdit = {
-    id: '',
-    text : '',
-};
+/* OEDERS BLOCK */
+$('.orders-trigger').on('click', function() {
+    $.ajax({
+        url: "/private/users/orders/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
 
-$(document).ready(function() {
-    $('#text').summernote({
-        height: 200,
+                var tdata = '';
+                $(data.data.MoneyOrders).each(function(id, tr) {
+                    tdata += '<tr class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.type+'</td><td>'+tr.data+'</td>'
+                    tdata += '</td></tr>'
+
+                });
+                $("#orders-holder").find('.money tbody').html(tdata);
+
+                tdata = '';
+                $(data.data.ShopOrders).each(function(id, tr) {
+                    tdata += '<tr class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.item+'</td><td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td><td>'+tr.price+'</td>'
+                    tdata += '</tr>'
+
+                });
+                $("#orders-holder").find('.shop tbody').html(tdata);
+                $("#orders-holder").modal();
+                $("#orders-holder").find('.cls').on('click', function() {
+                    $("#orders-holder").modal('hide');
+                })
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
     });
-    $('#text').code('');
 });
+/* END ORDERS BLOCK */
 
-function showError(message) {
-    $(".error-container").text(message);
-    $("#errorForm").show();
+/* TICKETS BLOCK */
+$('.tickets-trigger').on('click', function() {
+    currency=($(this).parent().find('td.country').text()=='UA'?'грн':'руб');
+    $.ajax({
+        url: "/private/users/tickets/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = ''
+                $(data.data.tickets).each(function(id, ticket) {
+                    tdata += '<tr>' +
+                    '<td>'+(ticket.LotteryId>0?ticket.LotteryId:'')+'</td>' +
+                    '<td>'+ticket.DateCreated+'</td>' +
+                    '<td>'+ticket.TicketNum+'</td>' +
+                    '<td><ul class="ticket-numbers"><li>'+(ticket.Combination).join('</li><li>')+'</li></ul></td>' +
+                    '<td>'+(ticket.LotteryId>0?ticket.TicketWin+(ticket.TicketWin>0?' '+(ticket.TicketWinCurrency=='MONEY'?currency:'баллов'):''):'')+'</td>' +
+                    '</tr>'
+                });
+                $("#tickets-holder").find('tbody').html(tdata);
+                $("#tickets-holder").modal();
+                $("#tickets-holder").find('.cls').on('click', function() {
+                    $("#tickets-holder").modal('hide');
+                })
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+/* END TICKETS BLOCK */
 
-    $('.save').removeClass('btn-success').addClass('btn-danger');
-    $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
-}
-
+/* STATS BLOCK */
     $('.stats-trigger').on('click', function() {
         $.ajax({
             url: "/private/users/stats/" + $(this).data('id'),
@@ -418,11 +700,148 @@ function showError(message) {
             }
         });   
     });
+/* END STATS BLOCK */
+
+/* NOTE BLOCK */
+$('.notes-trigger').on('click', function() {
+    var plid = $(this).data('id');
+    $.ajax({
+        url: "/private/users/notes/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = ''
+                $(data.data.notes).each(function(id, tr) {
+                    tdata += '<tr><td>'+tr.date+'</td><td>'+tr.user+'</td><td>'+tr.text+'</td>'
+                    tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
+                });
+                $("#notes-holder").find('tbody').html(tdata);
+
+                $("#notes-holder").modal();
+                $("#notes-holder").find('.cls').on('click', function() {
+                    $("#notes-holder").modal('hide');
+                })
+                $("#notes-holder").find('.add').off('click').on('click', function() {
+                    addNote(plid);
+                });
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+
+
+function removeNote(trid) {
+    $("#remove-notice").modal();
+    $("#remove-notice").find('.cls').off('click').on('click', function() {
+        $("#remove-notice").modal('hide');
+    });
+    $("#remove-notice").find('.rm').off('click').on('click', function() {
+        $.ajax({
+            url: "/private/users/rmNotice/" + trid,
+            method: 'POST',
+            async: true,
+            data: {},
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    $("#remove-notice").modal('hide');
+                    $("#notices-holder").modal('hide');
+
+                    alert('Уведомление удалено');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+
+    });
+}
+
+function addNote(plid) {
+    $("#add-note").modal();
+    $("#add-note").find('.cls').off('click').on('click', function() {
+        $("#add-note").modal('hide');
+    });
+    $('#note-text').val('');
+
+    $("#add-note").find('.save').off('click').on('click', function() {
+        var text = $('#note-text').val();
+
+        if (!text) {
+            alert('Text can\'t be empty');
+            return false;
+        }
+        currentEdit.playerId = plid;
+        currentEdit.text = text;
+
+        $("#errorForm").hide();
+        $(this).find('.glyphicon').remove();
+
+
+
+        $.ajax({
+            url: "/private/users/addNote/" + plid,
+            method: 'POST',
+            async: true,
+            data: currentEdit,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    $("#add-note").modal('hide');
+                    $("#notes-holder").modal('hide');
+
+                    alert('Заметка добавлена');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+
+
+    });
+
+}
+/* END NOTE BLOCK */
+
+/* NOTICE BLOCK */
+var currentEdit = {
+    id: '',
+    text : '',
+};
+
+$(document).ready(function() {
+    $('#text').summernote({
+        height: 200,
+    });
+    $('#text').code('');
+});
+
+function showError(message) {
+    $(".error-container").text(message);
+    $("#errorForm").show();
+
+    $('.save').removeClass('btn-success').addClass('btn-danger');
+    $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
+}
 
     $('.notices-trigger').on('click', function() {
         var plid = $(this).data('id');
+        var type = $(this).data('type');
         $.ajax({
-            url: "/private/users/notices/" + $(this).data('id'),
+            url: "/private/users/notices/" + $(this).data('id')+'?type='+type,
             method: 'GET',
             async: true,
             dataType: 'json',
@@ -536,7 +955,40 @@ function showError(message) {
         });
 
     }
+/* END NOTICE BLOCK */
 
+/* REVIEW BLOCK */
+$('.reviews-trigger').on('click', function() {
+    $.ajax({
+        url: "/private/users/reviews/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = '';
+                $(data.data.reviews).each(function(id, tr) {
+                    tdata += '<tr class="'+(tr.Status==0?'warning':tr.Status==1?'success':'danger')+'"><td>'+tr.Date+'</td><td>'+tr.Text+'</td><td>'+(tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')+'</td>'
+                });
+                $("#reviews-holder").find('tbody').html(tdata);
+
+
+                $("#reviews-holder").modal();
+                $("#reviews-holder").find('.cls').on('click', function() {
+                    $("#reviews-holder").modal('hide');
+                })
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+/* END REVIEW BLOCK */
+
+/* LOG BLOCK */
 $('.logs-trigger').on('click', function() {
     $.ajax({
         url: "/private/users/logs/" + $(this).data('id'),
@@ -568,7 +1020,9 @@ $('.logs-trigger').on('click', function() {
         }
     });
 });
+/* END LOG BLOCK */
 
+/* TRANSACTIONS BLOCK */
     $('.transactions-trigger').on('click', function() {
         var plid = $(this).data('id');
         $.ajax({
@@ -676,23 +1130,32 @@ function addTransaction(plid) {
         });   
     });
 }
+/* END TRANSACTIONS BLOCK */
+
+/* SEARCH BLOCK */
     $('.search-users').on('click', function() {
-        var input = $('<input class="form-control input-md" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:260px;display:inline-block;" placeholder="id, фио, ник или email...">' +
-        '<select id="search_where" class="form-control input-md" style="width: 80px;display: inline-block;">' +
+        if($(this).next().hasClass('input-md')){
+            $(this).parent().children('.search-form').remove();
+        }else{
+
+
+        var input = $('<input class="form-control input-md search-form" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:260px;display:inline-block;" placeholder="id, фио, ник или email...">' +
+        '<select id="search_where" class="form-control input-md search-form" style="width: 120px;display: inline-block;">' +
         '<option value="">Везде</option>' +
         '<option value="Id">Id</option>' +
         '<option value="Ip">Ip</option>' +
         '<option value="NicName">Ник</option>' +
+        '<option value="ReferalId">Реферал</option>' +
         '<option value="CONCAT(`Surname`,`Name`)">Фио</option>' +
         '<option value="Email">Email</option></select>');
-        var sccButton = $('<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>')
-        var cnlButton = $('<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button>');
+        var sccButton = $('<button class="btn btn-md btn-success search-form"><i class="glyphicon glyphicon-ok"></i></button>')
+        var cnlButton = $('<button class="btn btn-md btn-danger search-form"><i class="glyphicon glyphicon-remove"></i></button>');
         var button = $(this);
 
-        input.insertBefore(button);
-        sccButton.insertBefore(button);
-        cnlButton.insertBefore(button);
-        button.hide();
+        cnlButton.insertAfter(button);
+        sccButton.insertAfter(button);
+        input.insertAfter(button);
+        /*button.hide();*/
 
         cnlButton.on('click', function() {
             url="/private/users";
@@ -707,17 +1170,24 @@ function addTransaction(plid) {
         });
 
         sccButton.on('click', function() {
-            url="/private/users?search[query]="+input.val()+
-            ($("#search_where").val() ? "&search[where]="+$("#search_where").val(): '');
-            document.location.href=url;
-        });
+            if(input.val()){
+                url="/private/users?search[query]="+input.val()+
+                ($("#search_where").val() ? "&search[where]="+$("#search_where").val(): '');
+                document.location.href=url;
+            }
+            });
+        }
+
     });
+
     <? if(isset($search['query']) and $search['query']){?>
     $('.search-users').trigger('click');
     $('#search_where').val('<?=$search['where']?>');
 
     <? } ?>
+/* END SEARCH BLOCK */
 
+/* SOCIAL INFORMATION */
     $('.sl-bk').on('click', function() {
 
         $("#social-holder").modal();
@@ -759,7 +1229,10 @@ function addTransaction(plid) {
         $("#social-holder").modal().find('.modal-body').html(html);
 
     });
+/* END SOCIAL INFORMATION */
+
 </script>
+
 <?php
 
     function sortIcon($currentField, $currentSort, $pager, $search)

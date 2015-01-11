@@ -7,12 +7,15 @@ class Admin extends Entity
     
     const ROLE_ADMIN   = 'ADMIN';
     const ROLE_MANAGER = 'MANAGER';
+    const ROLE_MODERATOR = 'MODERATOR';
+    const ROLE_DEVELOPER = 'DEVELOPER';
 
     public function init()
     {
         $this->setModelClass('AdminModel');
     }
 
+    private $_id = 0;
     private $_login = '';
     private $_password = '';
     private $_salt = '';
@@ -31,6 +34,18 @@ class Admin extends Entity
     public function getLogin()
     {
         return $this->_login;
+    }
+
+    public function setId($id)
+    {
+        $this->_id = $id;
+
+        return $this;
+    }
+
+    public function getId()
+    {
+        return $this->_id;
     }
 
     public function setPassword($password)
@@ -96,7 +111,8 @@ class Admin extends Entity
     public function formatFrom($from, $data) 
     {
         if ($from == 'DB') {
-            $this->setLogin($data['Login'])
+            $this->setId($data['Id'])
+                 ->setLogin($data['Login'])
                  ->setPassword($data['Password'])
                  ->setSalt($data['Salt'])
                  ->setRole($data['Role'])
@@ -204,7 +220,7 @@ class Admin extends Entity
 
     protected function isValidRole($throwException = true)
     {   
-        if (!in_array($this->getRole(), array(self::ROLE_ADMIN, self::ROLE_MANAGER))) {
+        if (!in_array($this->getRole(), array(self::ROLE_MODERATOR, self::ROLE_DEVELOPER, self::ROLE_ADMIN, self::ROLE_MANAGER))) {
             if ($throwException) {
                 throw new EntityException("Invalid admin role", 400);           
             }

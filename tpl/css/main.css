@@ -990,7 +990,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .bl-pp-bk .pr-mg .padd .go-pzs:before {content:"";width:0;height:0;display:block;border-bottom: 18px solid transparent;border-left: 10px solid #000;border-top: 18px solid transparent;position:absolute;top:0;right:-30px;}
 .bl-pp-bk .pr-mg .padd .go-pzs:after {content:"";width:0;height:0;display:block;border-bottom: 18px solid transparent;border-left: 10px solid #fff;border-top: 18px solid transparent;position:absolute;top:0;right:-29px;}
 
-.wt-pp-bk .ws-lt-bk {margin:60px auto;padding:0px 0 40px 0;width:860px;position:relative;background-color:#fff;}
+.wt-pp-bk .ws-lt-bk {margin:60px auto;padding:0;width:860px;position:relative;background-color:#fff;}
 .wt-pp-bk .ws-lt-bk .ws-pf-rt-bk {}
 .wt-pp-bk .ws-lt-bk .ws-pf-rt-bk .ws-pf-tl {height:100px;background-color:#b2d0d4;position:relative;}
 .wt-pp-bk .ws-lt-bk .ws-pf-rt-bk .ws-pf-tl .ws-dt {font:20px/1 Handbook-bold;text-transform:uppercase;color:#4c4c4c;display:block;position:absolute;left:70px;top:40px;}
@@ -1018,7 +1018,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 
 
 .wt-pp-bk .ws-lt-bk > .ws-dt {height:30px;padding:40px 0 0 70px;font:20px/1 Handbook-bold;color: #4c4c4c;display:block;margin-bottom:-30px;}
-.wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:50px 0 0 20px;padding:0 0 0 30px;}
+.wt-pp-bk .ws-lt-bk .ws-lt {list-style:none;overflow:hidden;margin:50px 0 0 20px;padding:40px 0 0 30px;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li {width:240px;height:70px;float:left;cursor:pointer;margin:0 30px 10px 0;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li.you {background-color:#b2d0d4;}
 .wt-pp-bk .ws-lt-bk .ws-lt > li .tl {display:table;width:210px;height:50px;margin:10px 10px 10px 20px;}
