@@ -33,19 +33,29 @@ class PlayersModel extends Model
         return $this->getProcessor()->getLog($playerId);
     }
 
+    public function getReviews($playerId)
+    {
+        return $this->getProcessor()->getReviews($playerId);
+    }
+
+    public function getTickets($playerId, $lotteryId=0)
+    {
+        return $this->getProcessor()->getTickets($playerId,$lotteryId);
+    }
+
     public function checkNickname(Entity $player) 
     {
         return $this->getProcessor()->checkNickname($player);   
     }
-
+/*
     public function checkAdBlockNotices(Entity $player)
     {
         return $this->getProcessor()->checkAdBlockNotices($player);
     }
-
-    public function countIP(Entity $player)
+*/
+    public function updateCounters(Entity $player)
     {
-        return $this->getProcessor()->countIP($player);
+        return $this->getProcessor()->updateCounters($player);
     }
 
     public function updateSocial(Entity $player)

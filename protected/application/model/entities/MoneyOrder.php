@@ -67,6 +67,7 @@ class MoneyOrder extends Entity
 
     public function setPlayer(Player $player) 
     {
+        $player->updateCounters();
         $this->_player = $player;
 
         return $this;
@@ -242,16 +243,19 @@ class MoneyOrder extends Entity
     public function formatFrom($from, $data) 
     {
         if ($from == 'DB') {
-            $player = new Player();
-            $player->setId($data['PlayerId']);
 
             $this->setId($data['Id'])
-                 ->setPlayer($player->fetch())
                  ->setDateOrdered($data['DateOrdered'])
                  ->setDateProcessed($data['DateProcessed'])
                  ->setStatus($data['Status'])
                  ->setType($data['Type'])
                  ->setData(@unserialize($data['Data']));
+
+            if($data['PlayerId']){
+                $player = new Player();
+                $player->setId($data['PlayerId']);
+                $this->setPlayer($player->fetch());
+            }
         }
 
         return $this;

@@ -285,18 +285,35 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function countIp(Player $player)
+    public function updateCounters(Player $player)
     {
+
         $sql = "SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')";
+
+        $sql = "SELECT
+                (SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')) AS Ip,
+                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
+                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) CountReferal,
+                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) MoneyOrder,
+                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review
+                FROM `Players`
+                WHERE `Players`.Id = :id";
+
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
+                ':id'    => $player->getId(),
                 ':ip'    => $player->getIP(),
                 ':lip'    => $player->getLastIP()
             ));
-            return $sth->fetchColumn(0);
-        } catch (PDOException $e) {
+            return $sth->fetch();
+        } catch (PDOException $e) {echo $e->getMessage();
             throw new ModelException("Error processing storage query", 500);
         }
 
@@ -304,20 +321,52 @@ class PlayersDBProcessor implements IProcessor
 
     public function getList($limit = 0, $offset = 0, array $sort, $search=null)
     {
-        $sql = "SELECT *, (
-SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!=''))
- AS CountIp, (SELECT 1 FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id` LIMIT 1) AS TicketsFilled FROM `Players`";
 
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
-                $sql .= ' WHERE Id = '.$search['query'];
+                $search = ' WHERE `Players`.Id = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
-                $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
+                $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
-                $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
+                $search= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
             else
-                $sql .= ' WHERE '.(is_numeric($search['query'])?'`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
+                $search= ' WHERE '.(is_numeric($search['query'])?'`Players`.`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
         }
+
+        $sql = "SELECT `Players`.*,
+                (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
+                COUNT(DISTINCT (PlayerNotes .Id)) CountNote,
+                COUNT(DISTINCT (PlayerNotices.Id)) CountNotice,
+                COUNT(DISTINCT (`PlayerLogs`.`Id`)) CountLog,
+                COUNT(DISTINCT (`ShopOrders`.`Id`)) CountShopOrder,
+                COUNT(DISTINCT (`MoneyOrders`.`Id`)) CountMoneyOrder,
+                SUM(IF(PlayerNotices .Type='AdBlock',1,0)) CountAdBlock,
+                (SELECT COUNT(Id) FROM `PlayerReviews` WHERE `PlayerId` = `Players`.`Id` ) AS CountReview,
+                (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
+                FROM `Players`
+                LEFT JOIN `PlayerNotices` ON `PlayerNotices` . `PlayerId` = `Players`.`Id`
+                LEFT JOIN `PlayerNotes` ON `PlayerNotes` . `PlayerId` = `Players`.`Id`
+                LEFT JOIN `PlayerLogs` ON `PlayerLogs` . `PlayerId` = `Players`.`Id`
+                LEFT JOIN `MoneyOrders` ON `MoneyOrders` . `PlayerId` = `Players`.`Id`
+                LEFT JOIN `ShopOrders` ON `ShopOrders` . `PlayerId` = `Players`.`Id`
+                {$search}
+                GROUP BY `Players`.`Id`";
+
+
+        $sql = "SELECT `Players`.*,
+                (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
+                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) CountNote,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) CountNotice,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') CountAdBlock,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) CountReferal,
+                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) CountLog,
+                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) CountShopOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) CountMoneyOrder,
+                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) CountReview,
+                (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
+                FROM `Players`
+                {$search}";
 
         if (count($sort)) {
             if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
@@ -336,7 +385,7 @@ SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.Las
         try {
             $res = DB::Connect()->prepare($sql);
             $res->execute();
-        } catch (PDOException $e) {
+        } catch (PDOException $e) {echo $e->getMessage();
             throw new ModelException("Error processing storage query", 500);
         }
 
@@ -349,6 +398,51 @@ SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.Las
         }
 
         return $players;
+    }
+
+    public function getReviews($playerId)
+    {
+        $sql = "SELECT * FROM `PlayerReviews` WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $reviews = array();
+        foreach ($res->fetchAll() as $reviewData) {
+            $reviewData['Date']=date('d.m.Y H:i:s', $reviewData['Time']);
+            $reviews[] = $reviewData;
+        }
+
+        return $reviews;
+    }
+
+    public function getTickets($playerId, $lotteryId)
+    {
+        $sql = "SELECT * FROM `LotteryTickets` WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $tickets = array();
+        foreach ($res->fetchAll() as $ticketData) {
+            $ticketData['DateCreated']=date('d.m.Y H:i:s', $ticketData['DateCreated']);
+            $ticketData['Combination']=unserialize($ticketData['Combination']);
+            $tickets[] = $ticketData;
+        }
+
+        return $tickets;
     }
 
     public function getLog($playerId)
@@ -372,7 +466,7 @@ SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.Las
 
         return $logs;
     }
-
+/*
     public function checkAdBlockNotices(Entity $player)
     {
         $sql = "SELECT COUNT(Id) FROM `PlayerNotices` WHERE `PlayerId` = :plid AND `Type` = :tp ";
@@ -389,7 +483,7 @@ SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.Las
 
         return $sth->fetchColumn(0);
     }
-
+*/
     public function checkNickname(Entity $player)
     {
         $sql = "SELECT * FROM `Players` WHERE `Nicname` = :nic AND `Id` != :plid";

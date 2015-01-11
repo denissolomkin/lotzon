@@ -69,6 +69,7 @@ class ShopItemOrder extends Entity
 
     public function setPlayer(Player $player) 
     {
+        $player->updateCounters();
         $this->_player = $player;
 
         return $this;
@@ -259,12 +260,15 @@ class ShopItemOrder extends Entity
     {
         if ($from == 'DB') {
             $item = new ShopItem();
-            $player = new Player();
             $item->setId($data['ItemId']);
-            $player->setId($data['PlayerId']);
+
+            if($data['PlayerId']){
+                $player = new Player();
+                $player->setId($data['PlayerId']);
+                $this->setPlayer($player->fetch());
+            }
 
             $this->setId($data['Id'])
-                 ->setPlayer($player->fetch())
                  ->setDateOrdered($data['DateOrdered'])
                  ->setDateProcessed($data['DateProcessed'])
                  ->setStatus($data['Status'])
