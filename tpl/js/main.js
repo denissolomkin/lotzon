@@ -81,20 +81,19 @@ $(function(){
                // temp=st.html();
                setTimeout(function(){
                    $('#ticket_video').html(
-                       '<div style="text-align: center;margin:60px 50px 0;min-width:600px;min-height:303px;" id="ambn634654"></div>' +
-                       '<!--noindex-->' +
-                       '<script type="text/javascript" src="//am15.net/bn.php?s=63465&f=4&d=634654"></script>' +
-                       '<!--/noindex-->'+
-                       '<div style="text-align: center;margin-left:-20px;" id="timer_videobanner'+id+'"></div>' +
+                   '<div style="z-index: 10000;margin-top: 390px;margin-left: 320px;position: absolute;">'+
+                       '<div style="background: #b2d0d4;border: 4px solid #b2d0d4;border-radius: 4px;" id="timer_videobanner'+id+'">'+
+                       '</div></div>' +
+                        bannerTicketLast+
                        '<script>' +
-                       '$("#timer_videobanner'+id+'").countdown({until: 30,layout: "осталось {snn} сек"});' +
+                       '$("#timer_videobanner'+id+'").countdown({until: '+bannerTicketLastTimer+',layout: "осталось {snn} сек"});' +
                        '</script> ').fadeIn(300)
                }, 300);
                setTimeout(function(){
                    $('#ticket_video').remove();
                    $('.tb-tabs_li').removeClass('video');
                    st.fadeIn(300)
-               }, 31*1000);
+               }, (bannerTicketLastTimer+1)*1000);
             } else {
                setTimeout(function(){
                    st.fadeIn(300);
@@ -910,7 +909,7 @@ $(function(){
                     html += '<li>' + num + '</li>';
                 });
                 html += '</ul><div class="nw">' + lottery.winnersCount + '</div>';
-                if (lottery.winnersCount > 0 || lottery.iPlayed || onlyMineLotteryResults) {
+                if ((lottery.winnersCount > 0 || lottery.iPlayed || onlyMineLotteryResults) && lottery.iPlayed) {
                     html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
                 }
                 html += '</li>';
@@ -1094,10 +1093,11 @@ $(function(){
             winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph" data-img="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
         });
 
+        yourId=playerId;
 
 
         $('#profile-history').find('.ws-lt').html(winnerHtml);
-        if (yourId) {
+        if (data.res.tickets[yourId]) {
             $('#profile-history').find('.ws-pf-rt-bk').show();
             $('#profile-history').find('.ws-dt.ch-hide').hide();
             //$('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
