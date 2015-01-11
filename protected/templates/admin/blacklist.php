@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row-fluid">
-        <h2>Emails
+        <h2>Blacklist
         <hr />
     </div>
     <div class="row-fluid">
@@ -46,24 +46,4 @@
     $(document ).on( "click",".del-block", function( event ) {
         $(this).parent().remove();
     });
-/*
-    $( "form" ).on( "submit", function( event ) {
-
-        event.preventDefault();
-        $.ajax({
-            url: "/private/banners/",
-            method: 'POST',
-            data: $( this ).serialize(),
-            async: true,
-            dataType: 'json',
-            success: function(data) {
-                console.log(data)
-            },
-            error: function() {
-
-            }
-        });
-
-    });
-    */
 </script>

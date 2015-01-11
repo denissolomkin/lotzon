@@ -2,7 +2,7 @@
 /* ==========================================================================
                             Admin styles
    ========================================================================== */
-.btn-xs {padding: 1px 4px;width: 17px;height: 19px;font-size: 12px;margin: -2px 0px;}
+.btn-xs {padding: 1px 4px;min-width: 17px;height: 19px;font-size: 12px;margin: -2px 0px;}
 .btn-xs{padding: 1px;}
 .sl-bk {background-size: 125px;float:right;margin: -2px 0;width:20px;height:20px;display:block;background-image:url("../../../tpl/img/bg-profile-repost-social-new.png");background-repeat:no-repeat; opacity: 0.5;}
 .sl-bk.active {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png");}
@@ -12,10 +12,13 @@
 .sl-bk.Vkontakte {background-position:-20px 3px;}
 .sl-bk.Facebook {background-position:6px 1px;}
 .sl-bk.Odnoklassniki {background-position:-105px 1px;}
-
+.pointer {cursor:pointer;}
+.pointer:hover {color:#008cba;}
 .hidden {display: none;}
 .right {float:right;}
 .red {color:red;}
+.nobr {white-space: nowrap;}
+.flex {display: inline-flex;}
 .users td img {
     float: right;
     margin: -8px;

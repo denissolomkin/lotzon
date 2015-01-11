@@ -6,7 +6,8 @@
         <hr />
     </div>
     <div class="row-fluid">
-            <? foreach ($list as $key=>$sector) : ?>
+            <? if(is_array($list))
+                foreach ($list as $key=>$sector) : ?>
             <div class="col-md-6">
                 <h2>
                     <button type="button" data-sector="<?=$key?>" class="btn btn-success add-banner"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
