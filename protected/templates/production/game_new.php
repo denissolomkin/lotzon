@@ -552,7 +552,7 @@
                                                 <? } ?>
                                             </ul>
                                             <div class="nw"><?=$lottery->getWinnersCount()?></div>
-                                            <? if (0 && ($lottery->getWinnersCount() > 0 || isset($playerPlayedLotteries[$lottery->getId()]))) { ?>
+                                            <? if ($lottery->getWinnersCount() > 0 || isset($playerPlayedLotteries[$lottery->getId()])) { ?>
                                                 <div class="aw-bt" data-lotid="<?=$lottery->getId()?>">
                                                     <a href="javascript:void(0)"></a>
                                                 </div>
