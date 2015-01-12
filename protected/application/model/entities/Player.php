@@ -1045,13 +1045,11 @@ class Player extends Entity
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
-        if(!$_COOKIE[Self::PLAYERID_COOKIE])
-        {
-            setcookie(Self::PLAYERID_COOKIE, $this->getId(), time() + Self::AUTOLOGIN_COOKIE_TTL, '/');
-        }
+        if(!$_COOKIE[self::PLAYERID_COOKIE])
+            setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
         $this->setDateLastLogin(time())
-            ->setCookieId($_COOKIE[Self::PLAYERID_COOKIE])
+            ->setCookieId($_COOKIE[self::PLAYERID_COOKIE])
             ->setLastIp(Common::getUserIp())
             ->payReferal()
             ->update();
