@@ -56,6 +56,7 @@ class Monetisation extends PrivateArea
         $this->render('admin/monetisation', array(
             'title'      => 'Вывод средств',
             'layout'     => 'admin/layout.php',
+            'frontend'      => 'admin/users_frontend.php',
             'activeMenu' => $this->activeMenu,
             'shopOrders' => $shopOrders,
             'moneyOrders'=> $moneyOrders,
