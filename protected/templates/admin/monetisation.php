@@ -109,14 +109,13 @@
 
 
 
-                                <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
-                                <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
+                                <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
                                 <!--button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
                             <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
                             </div>
                         </td>
                         <td><?=$player->getCountry()?></td>
-                        <td class="nobr"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <td><?=$order->getItem()->getTitle()?></td>
 
 
@@ -246,15 +245,13 @@
 
 
 
-
-                            <button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$order->getPlayer()->getId()?>">T</button>
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$order->getPlayer()->getId()?>">Р</button>
+                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
                             <!--button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
                             <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
                             </div>
                         </td>
                         <td><?=$player->getCountry()?></td>
-                        <td class="nobr"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <td><?=$order->getType()?></td>
                         <td>
                             <? foreach ($order->getData() as $key => $data) { ?>

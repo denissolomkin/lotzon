@@ -864,7 +864,7 @@ class Player extends Entity
     protected function validIp()
     {
 
-        if (in_array($this->getIp(), Config::instance()->blockedIps) || in_array($this->getLastIp(), Config::instance()->blockedIps)) {
+        if (is_array(Config::instance()->blockedIps) && (in_array($this->getIp(), Config::instance()->blockedIps) || $this->getLastIp() && in_array($this->getLastIp(), Config::instance()->blockedIps))) {
             throw new EntityException('BLOCKED_IP', 400);
         }
 
