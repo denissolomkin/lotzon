@@ -715,7 +715,7 @@ $('.notes-trigger').on('click', function() {
                 var tdata = ''
                 $(data.data.notes).each(function(id, tr) {
                     tdata += '<tr><td>'+tr.date+'</td><td>'+tr.user+'</td><td>'+tr.text+'</td>'
-                    tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
+                    tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNote('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
                 });
                 $("#notes-holder").find('tbody').html(tdata);
 
@@ -738,23 +738,23 @@ $('.notes-trigger').on('click', function() {
 
 
 function removeNote(trid) {
-    $("#remove-notice").modal();
-    $("#remove-notice").find('.cls').off('click').on('click', function() {
-        $("#remove-notice").modal('hide');
+    $("#remove-note").modal();
+    $("#remove-note").find('.cls').off('click').on('click', function() {
+        $("#remove-note").modal('hide');
     });
-    $("#remove-notice").find('.rm').off('click').on('click', function() {
+    $("#remove-note").find('.rm').off('click').on('click', function() {
         $.ajax({
-            url: "/private/users/rmNotice/" + trid,
+            url: "/private/users/rmNote/" + trid,
             method: 'POST',
             async: true,
             data: {},
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
-                    $("#remove-notice").modal('hide');
-                    $("#notices-holder").modal('hide');
+                    $("#remove-note").modal('hide');
+                    $("#notes-holder").modal('hide');
 
-                    alert('Уведомление удалено');
+                    alert('Заметка удалена');
                 } else {
                     alert(data.message);
                 }
