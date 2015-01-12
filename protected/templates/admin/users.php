@@ -79,7 +79,7 @@
                                 <span class="label label-danger"><?=$player->getCounters()['Ip']?></span>
                            <?}?><?=$player->getIP()?></td>
                         <!--td><?if($player->getCounters()['Ip']>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCounters()['Ip']?><?}?></span></a> <?=$player->getLastIP()?></td-->
-                        <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer"':'')?> class="<?=$player->getReferalId() ? "success" : "danger"?>">
+                        <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer ':' class="')?><?=$player->getReferalId() ? "success" : "danger"?>">
                             <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
