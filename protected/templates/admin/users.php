@@ -47,7 +47,7 @@
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
-                            <div class="flex">
+                            <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
                                 echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
