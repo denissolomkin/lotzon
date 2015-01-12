@@ -9,7 +9,7 @@ Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 class Monetisation extends PrivateArea 
 {
     public $activeMenu = 'monetisation';
-    const ORDERS_PER_PAGE = 10;
+    const ORDERS_PER_PAGE = 50;
 
     public function init()
     {
