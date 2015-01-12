@@ -10,6 +10,7 @@ class Player extends Entity
     const IDENTITY = "player_session";
     const AUTOLOGIN_COOKIE = "autologin";
     const AUTOLOGIN_HASH_COOKIE   = "autologinHash";
+    const PLAYERID_COOKIE   = "playerId";
     // 3 months
     const AUTOLOGIN_COOKIE_TTL = 7776000;
 
@@ -67,6 +68,7 @@ class Player extends Entity
     private $_hash = '';
     private $_ip = '';
     private $_lastip = '';
+    private $_cookieId = 0;
 
     private $_referalId = 0;
     private $_referalPaid = 0;
@@ -223,6 +225,18 @@ class Player extends Entity
     public function getSecondName()
     {
         return $this->_secondName;
+    }
+
+    public function setCookieId($id)
+    {
+        $this->_cookieId = $id;
+
+        return $this;
+    }
+
+    public function getCookieId()
+    {
+        return $this->_cookieId;
     }
 
     public function setPhone($phone)
@@ -552,7 +566,9 @@ class Player extends Entity
 
     public function setLastIP($ip)
     {
-        if($ip!=$this->getIP())
+        if(!$this->getIP())
+            $this->setIP($ip);
+        elseif($ip!=$this->getIP())
             $this->_lastip = $ip;
 
         return $this;
@@ -600,12 +616,12 @@ class Player extends Entity
         return $this;   
     }
 
-    public function writeLog($action,$desc='')
+    public function writeLog($options=array())
     {
         $model = $this->getModelClass();
 
         try {
-            $model::instance()->getProcessor()->writeLog($this, $action, $desc);
+            $model::instance()->getProcessor()->writeLog($this, $options);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
@@ -717,7 +733,7 @@ class Player extends Entity
                 }
                 $this->fetch();
                 if (!$this->getValid()) {
-                    $this->writeLog('LOGIN_DENIED', 'EMAIL_NOT_VALIDATED');
+                    $this->writeLog(array('action'=>'LOGIN_DENIED', 'desc'=>'EMAIL_NOT_VALIDATED', 'status'=>'warning'));
                     throw new EntityException("EMAIL_NOT_VALIDATED", 400);
                 }
             break;
@@ -955,7 +971,7 @@ class Player extends Entity
 
         parent::create();
 
-        $this->writeLog('PLAYER_CREATED', $this->hidePassword($psw));
+        $this->writeLog(array('action'=>'PLAYER_CREATED', 'desc'=>$this->hidePassword($psw), 'status'=>'success'));
 
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
@@ -1017,20 +1033,25 @@ class Player extends Entity
             $this->fetch();
         } catch (EntityException $e) {
             if ($e->getCode() == 404) {
-                $this->writeLog('LOGIN_DENIED', 'PLAYER_NOT_FOUND');
                 throw new EntityException("PLAYER_NOT_FOUND", 404);
             } else {
-                $this->writeLog('LOGIN_DENIED', 'INTERNAL_ERROR');
+                $this->writeLog(array('action'=>'LOGIN_DENIED', 'desc'=>'INTERNAL_ERROR', 'status'=>'danger'));
                 throw new EntityException("INTERNAL_ERROR", 500);
             }
         }
 
         if ($this->getPassword() !== $this->compilePassword($password)) {
-            $this->writeLog('INVALID_PASSWORD', $this->hidePassword($password));
+            $this->writeLog(array('action'=>'INVALID_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'danger'));
             throw new EntityException("INVALID_PASSWORD", 403);
         }
 
+        if(!$_COOKIE[Self::PLAYERID_COOKIE])
+        {
+            setcookie(Self::PLAYERID_COOKIE, $this->getId(), time() + Self::AUTOLOGIN_COOKIE_TTL, '/');
+        }
+
         $this->setDateLastLogin(time())
+            ->setCookieId($_COOKIE[Self::PLAYERID_COOKIE])
             ->setLastIp(Common::getUserIp())
             ->payReferal()
             ->update();
@@ -1087,6 +1108,7 @@ class Player extends Entity
 
     public function changePassword($password) 
     {
+        $this->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$this->hidePassword($password),'status'=>'info'));
         $this->setSalt("");
         $this->setPassword($this->compilePassword($password));
 
@@ -1157,6 +1179,7 @@ class Player extends Entity
                  ->setAdBlock($data['AdBlock'])
                  ->setDateAdBlocked($data['DateAdBlocked'])
                  ->setWebSocket($data['WebSocket'])
+                 ->setCookieId($data['CookieId'])
                  ->setIp($data['Ip'])
                  ->setLastIp($data['LastIp'])
                  ->setHash($data['Hash'])
@@ -1180,6 +1203,7 @@ class Player extends Entity
                     'Referal' => $data['CountReferal'],
                     'Order' => ($data['CountMoneyOrder']+$data['CountShopOrder']),
                     'Review' => $data['CountReview'],
+                    'CookieId' => $data['CountCookieId'],
                 ));
             }
         }

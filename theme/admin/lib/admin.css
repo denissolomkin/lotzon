@@ -30,6 +30,17 @@
     padding: 0;
     float: left;
 }
+.ips{
+    float: left;
+    line-height: 14px;
+    margin: -6px 0;}
+
+.label-ips{
+    margin-right: 4px;
+float: left;
+line-height: 13px;
+min-height: 17px;
+}
 .ticket-numbers > li
 {
     width: 25px;
