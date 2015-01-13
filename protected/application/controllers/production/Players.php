@@ -126,7 +126,7 @@ class Players extends \AjaxController
             if (!$password) {
                 $this->ajaxResponse(array(), 0, 'EMPTY_PASSWORD');
             }
-
+            echo $_SERVER['HTTP_HOST']; die;
             if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.com','testbed.lotzon.com','192.168.1.253')))
                 $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
 
