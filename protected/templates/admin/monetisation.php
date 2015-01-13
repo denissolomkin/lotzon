@@ -66,7 +66,7 @@
                             <br>
 
                             <div class="left">
-                                <? if($player->getCounters()['Ip']):?>
+                                <? if($player->getCounters()['Ip']>1):?>
                                     <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>
@@ -84,19 +84,17 @@
                                     </button>
                                 <? endif ?>
 
-                            </div >
-
-
-
-                            <div class="right">
-
-
-                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
+                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])>1):?>
                                     <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
                                     </button>
                                 <? endif ?>
 
+                            </div >
+
+
+
+                            <div class="right">
 
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
@@ -221,7 +219,7 @@
                         <?}?><?=$player->getIP()?></span> -->
 
                             <div class="left">
-                                <? if($player->getCounters()['Ip']):?>
+                                <? if($player->getCounters()['Ip']>1):?>
                                     <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>
@@ -236,6 +234,11 @@
                                 <? if(($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1) :?>
                                     <button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getCookieId();?>')">
                                         <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['CookieId']>1?$player->getCounters()['CookieId']:'';?>
+                                    </button><? endif ?>
+
+                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])>1):?>
+                                    <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
                                     </button>
                                 <? endif ?>
 
@@ -245,12 +248,6 @@
 
                             <div class="right">
 
-
-                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
-                                    <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
-                                    </button>
-                                <? endif ?>
 
 
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
