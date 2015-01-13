@@ -41,7 +41,7 @@
             </thead>
             <tbody>
                 <? foreach ($list as $player) { ?>
-                    <tr>
+                    <tr id="user<?=$player->getId()?>">
                         <td><?=$player->getId()?></td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?><?=($player->isOnline()?'<i class="online right">•</i>':'');?></td>
@@ -131,8 +131,8 @@
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters()['Log']>1?$player->getCounters()['Log']:''?>
                             </button>
                              <? endif ?>
-                            <!--button class="btn btn-xs btn-danger profile-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></button>
-                            <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button-->
+                            <button class="btn btn-xs btn-danger delete-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button>
+                            <!--button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button-->
                             </div>
                         </td>
                     </tr>

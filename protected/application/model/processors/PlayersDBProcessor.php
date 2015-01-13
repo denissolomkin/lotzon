@@ -262,7 +262,50 @@ class PlayersDBProcessor implements IProcessor
 
     public function delete(Entity $player)
     {
+        $sql = "
+        DELETE `Players`, `PlayerLogs`, `EmailInvites`, `LotteryTickets`, `ChanceGameWins`, `PlayerLotteryWins`, `MoneyOrders`, `PlayerNotes`, `PlayerNotices`, `PlayerReviews`,  `PlayerSocials`, `ShopOrders`, `Transactions`
+        FROM `Players`
+        LEFT JOIN `ChanceGameWins`    ON `Players`.`id` = `ChanceGameWins`.`PlayerId`
+        LEFT JOIN `EmailInvites`    ON `Players`.`id` = `EmailInvites`.`InviterId`
+        LEFT JOIN `LotteryTickets`    ON `Players`.`id` = `LotteryTickets`.`PlayerId`
+        LEFT JOIN `MoneyOrders`    ON `Players`.`id` = `MoneyOrders`.`PlayerId`
+        LEFT JOIN `PlayerLogs`    ON `Players`.`id` = `PlayerLogs`.`PlayerId`
+        LEFT JOIN `PlayerLotteryWins`    ON `Players`.`id` = `PlayerLotteryWins`.`PlayerId`
+        LEFT JOIN `PlayerNotes`    ON `Players`.`id` = `PlayerNotes`.`PlayerId`
+        LEFT JOIN `PlayerNotices`    ON `Players`.`id` = `PlayerNotices`.`PlayerId`
+        LEFT JOIN `PlayerReviews`    ON `Players`.`id` = `PlayerReviews`.`PlayerId`
+        LEFT JOIN `PlayerSocials`    ON `Players`.`id` = `PlayerSocials`.`PlayerId`
+        LEFT JOIN `ShopOrders`    ON `Players`.`id` = `ShopOrders`.`PlayerId`
+        LEFT JOIN `Transactions`    ON `Players`.`id` = `Transactions`.`PlayerId`
+        WHERE `Players`.`Id` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+
         return true;
+    }
+
+
+    public function ban(Entity $player) {
+        $sql = "UPDATE `Players` SET `Ban` = 1 WHERE `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
     }
 
     public function getPlayersCount($search=null)
