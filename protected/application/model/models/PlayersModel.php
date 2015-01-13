@@ -28,9 +28,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getList($limit, $offset, $sort, $search);
     }
 
-    public function getLog($playerId)
+    public function getLog($playerId, $action=null)
     {
-        return $this->getProcessor()->getLog($playerId);
+        return $this->getProcessor()->getLog($playerId, $action);
     }
 
     public function getReviews($playerId)

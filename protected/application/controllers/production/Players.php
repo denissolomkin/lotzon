@@ -30,6 +30,8 @@ class Players extends \AjaxController
             if (!$agreed) {
                 $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
             }
+            if($_SERVER['HTTP_HOST']!='lotzon.com' && $_SERVER['HTTP_HOST']!='testbed.lotzon.com' && $_SERVER['HTTP_HOST']!='192.168.1.253')
+                $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
 
 
             $player = new Player();
@@ -124,6 +126,8 @@ class Players extends \AjaxController
             if (!$password) {
                 $this->ajaxResponse(array(), 0, 'EMPTY_PASSWORD');
             }
+            if($_SERVER['HTTP_HOST']!='lotzon.com' && $_SERVER['HTTP_HOST']!='testbed.lotzon.com' && $_SERVER['HTTP_HOST']!='192.168.1.253')
+                $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
 
             $player = new Player();
             $player->setEmail($email);
@@ -417,8 +421,19 @@ class Players extends \AjaxController
     {
 
         $resp = array();
-        if ($this->session->has(Player::IDENTITY)) {
-            $this->session->get(Player::IDENTITY)->setWebSocket($this->request()->get('ws', null))->setDateAdBlocked(($this->request()->get('online', null)?time():null))->setAdBlock(($this->request()->get('online', null)?time():null))->markOnline();
+        if ($this->session->has(Player::IDENTITY) && $player=$this->session->get(Player::IDENTITY)) {
+
+            $AdBlockDetected=$this->request()->get('online', null);
+
+            if(($player->getAdBlock() && !$AdBlockDetected) || (!$player->getAdBlock() && $AdBlockDetected))
+                $player->writeLog(array('action'=>'AdBlock','desc'=>($AdBlockDetected?'ADBLOCK_DETECTED':'ADBLOCK_DISABLED'),'status'=>($AdBlockDetected?'danger':'warning')));
+
+            $player->setWebSocket($this->request()->get('ws', null))
+                ->setDateAdBlocked(($AdBlockDetected?time():null))
+                ->setAdBlock(($AdBlockDetected?time():null))
+                ->markOnline();
+
+
             // check for moment chance
             // if not already played chance game
             if ($_SESSION['chanceGame']['moment']) {

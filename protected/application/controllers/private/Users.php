@@ -293,7 +293,7 @@ class Users extends PrivateArea
             );
             try {
                 $response['data'] = array(
-                    'logs' => PlayersModel::instance()->getLog($playerId),
+                    'logs' => PlayersModel::instance()->getLog($playerId,$this->request()->get('action', 'null')),
                 );
 
             } catch (ModelException $e) {
@@ -370,7 +370,10 @@ class Users extends PrivateArea
             );
             try {
                 $note = new Note();
-                $note->setPlayerId($playerId)->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())->setText($this->request()->post('text'))->create();
+                $note->setPlayerId($playerId)
+                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setText($this->request()->post('text'))
+                    ->create();
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
@@ -446,7 +449,12 @@ class Users extends PrivateArea
             );
             try {
                 $notice = new Notice();
-                $notice->setPlayerId($playerId)->setText($this->request()->post('text'))->setTitle($this->request()->post('title'))->create();
+                $notice->setPlayerId($playerId)
+                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setText($this->request()->post('text'))
+                    ->setTitle($this->request()->post('title'))
+                    ->setType($this->request()->post('type'))
+                    ->create();
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();

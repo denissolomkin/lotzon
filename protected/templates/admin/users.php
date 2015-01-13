@@ -32,7 +32,7 @@
                 <th>Cookie <?=sortIcon('CountCookieId', $currentSort, $pager, $search)?></th>
                 <th>Реф <?=sortIcon('CountReferal', $currentSort, $pager, $search)?></th>
                 <th>Логин / пинг <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
-                <th>Игр <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
+                <th class="icon"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th class="icon"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>  <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
                 <th class="icon"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
@@ -92,8 +92,8 @@
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
                         <td>
                             <? if($player->getDateAdBlocked()) :?>
-                            <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> notices-trigger" data-type="AdBlock" data-id="<?=$player->getId()?>">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?($player->getCounters()['AdBlock']?:'')?></button>
+                            <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters()['AdBlock']?:'')?></button>
                             <? endif ?>
                         </td>
                         <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
@@ -101,7 +101,7 @@
                         <td><div class="right nobr">
 
                             <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
-                                <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
                             </button>
                             <button class="btn btn-xs btn-<?=($player->getCounters()['Notice']?'success':'warning');?> notices-trigger" data-type="Message" data-id="<?=$player->getId()?>">
                                 <span class="glyphicon glyphicon-bell" aria-hidden="true"></span><?=$player->getCounters()['Notice']>1?$player->getCounters()['Notice']:''?>
@@ -109,7 +109,7 @@
 
                                 <? if ($player->getCounters()['MyReferal']>0): ?>
                                     <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=ReferalId&search[query]=<?=$player->getId();?>'">
-                                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
                                     </button>
                                 <? endif ?>
 

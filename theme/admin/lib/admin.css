@@ -56,6 +56,7 @@ line-height: 13px;
 min-height: 17px;
 }
 .right {float:right;text-align: right;}
+.left {float:left;text-align: left;}
 .ticket-numbers > li
 {
     width: 25px;
