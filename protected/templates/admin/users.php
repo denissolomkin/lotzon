@@ -30,10 +30,8 @@
                 <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
                 <th>IP<?=sortIcon('IP', $currentSort, $pager, $search)?></th>
                 <th>Cookie<?=sortIcon('CookieId', $currentSort, $pager, $search)?></th>
-                <!--th>Последний IP <?=sortIcon('LastIP', $currentSort, $pager, $search)?></th-->
                 <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
-                <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
-                <!--th>Последний пинг <?=sortIcon('OnlineTime', $currentSort, $pager, $search)?></th-->
+                <th>Логин / пинг <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th>Игр <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
                 <th>Ad <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
@@ -74,7 +72,7 @@
 
 
                         <td class="country"><?=$player->getCountry()?></td>
-                        <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
+                        <td class="nobr"><?=$player->getDateRegistered('d.m.Y H:i')?></td>
                         <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr">
                             <? if($player->getCounters()['Ip']>1) : ?>
                                 <div class="label label-danger label-ips"><?=$player->getCounters()['Ip']?></div>
@@ -86,12 +84,11 @@
                             <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
-                        <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'danger')?>">
-                            <?=($player->getOnlineTime()?'<div class="ips">'.($player->getDateLastLogin('d.m.Y H:i')).'<br>'.($player->getOnlineTime('d.m.Y H:i')).'</div>':($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):''))?>
+                        <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>">
+                            <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
 
                         </td>
-                        <!--td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td-->
-                        <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer" data-id='.$player->getId().'"':'class="danger"')?>><?=($player->getGamesPlayed()?:'нет')?></td>
+                        <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer success" data-id='.$player->getId().'"':'class="danger"')?>><?=($player->getGamesPlayed()?:'нет')?></td>
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
                         <td>
                             <? if($player->getDateAdBlocked()) :?>

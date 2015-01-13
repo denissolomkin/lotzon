@@ -44,6 +44,9 @@ class Players extends \AjaxController
                 $player->setCountry(Config::instance()->defaultLang);
             }
 
+            if($_COOKIE[Player::PLAYERID_COOKIE])
+                $player->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]);
+
             $player->setVisibility(true);
             $player->setIP(Common::getUserIp());
             $player->setHash(md5(uniqid()));
@@ -63,6 +66,9 @@ class Players extends \AjaxController
                 else
                     $this->ajaxResponse(array(), 0, $e->getMessage());
             }
+
+            if(!$_COOKIE[Player::PLAYERID_COOKIE])
+                setcookie(Player::PLAYERID_COOKIE, $player->getId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
 
             // check invites
             $player->payInvite();
