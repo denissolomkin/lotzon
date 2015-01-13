@@ -733,7 +733,7 @@ class Player extends Entity
                 }
                 $this->fetch();
                 if (!$this->getValid()) {
-                    $this->writeLog(array('action'=>'LOGIN_DENIED', 'desc'=>'EMAIL_NOT_VALIDATED', 'status'=>'warning'));
+                    $this->writeLog(array('action'=>'LOGIN_DENIED', 'desc'=>'EMAIL_NOT_VALIDATED', 'status'=>'danger'));
                     throw new EntityException("EMAIL_NOT_VALIDATED", 400);
                 }
             break;
