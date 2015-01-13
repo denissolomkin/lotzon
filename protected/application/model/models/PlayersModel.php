@@ -47,12 +47,7 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->checkNickname($player);   
     }
-/*
-    public function checkAdBlockNotices(Entity $player)
-    {
-        return $this->getProcessor()->checkAdBlockNotices($player);
-    }
-*/
+
     public function updateCounters(Entity $player)
     {
         return $this->getProcessor()->updateCounters($player);
@@ -83,9 +78,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->updateBalance($player, $currency, $quantity);
     }
 
-    public function writeLog(Entity $player, $action, $desc='')
+    public function writeLog(Entity $player, $options)
     {
-        return $this->getProcessor()->writeLog($player, $action, $desc);
+        return $this->getProcessor()->writeLog($player, $options);
     }
 
     public function reportTrouble(Entity $player, $trouble)

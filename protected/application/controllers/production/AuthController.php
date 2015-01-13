@@ -108,7 +108,7 @@ class AuthController extends \SlimController\SlimController {
 
                 $player->updateSocial()
                     ->setLastIp(Common::getUserIp())
-                    ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE])
+                    ->setCookieId(($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId()))
                     ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
                     ->update();
 

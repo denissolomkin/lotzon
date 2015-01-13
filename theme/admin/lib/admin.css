@@ -15,7 +15,6 @@
 .pointer {cursor:pointer;}
 .pointer:hover {color:#008cba;}
 .hidden {display: none;}
-.right {float:right;}
 .red {color:red;}
 .nobr {white-space: nowrap;}
 .flex {display: inline-flex;}
@@ -33,7 +32,12 @@
 .ips{
     float: left;
     line-height: 14px;
-    margin: -6px 0;}
+    margin: -6px -50px -6px 0;}
+
+.datestamps{
+    float: left;
+    line-height: 14px;
+    margin: -6px 0 -6px 0;}
 
 .label-ips{
     margin-right: 4px;
@@ -41,6 +45,7 @@ float: left;
 line-height: 13px;
 min-height: 17px;
 }
+.right {float:right;text-align: right;}
 .ticket-numbers > li
 {
     width: 25px;

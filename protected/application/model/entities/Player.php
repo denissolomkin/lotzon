@@ -1049,7 +1049,7 @@ class Player extends Entity
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
         $this->setDateLastLogin(time())
-            ->setCookieId($_COOKIE[self::PLAYERID_COOKIE])
+            ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
             ->payReferal()
             ->update();

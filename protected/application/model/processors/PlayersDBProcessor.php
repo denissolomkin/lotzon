@@ -150,7 +150,7 @@ class PlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
         $sql = "UPDATE `Players` SET
-                    `DateLogined` = :dl, `Country` = :cc,`CookieId` = :ckid,
+                    `DateLogined` = :dl, `Country` = :cc, `CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `LastIp` = :ip
