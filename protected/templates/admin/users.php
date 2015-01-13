@@ -29,6 +29,7 @@
                 <th>Страна <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
                 <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
                 <th>IP<?=sortIcon('IP', $currentSort, $pager, $search)?></th>
+                <th>Cookie<?=sortIcon('CookieId', $currentSort, $pager, $search)?></th>
                 <!--th>Последний IP <?=sortIcon('LastIP', $currentSort, $pager, $search)?></th-->
                 <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
                 <th>Последний логин <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
@@ -74,22 +75,30 @@
 
                         <td class="country"><?=$player->getCountry()?></td>
                         <td><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
-                            <?if($player->getCounters()['Ip']>1) {?>
-                                <span class="label label-danger"><?=$player->getCounters()['Ip']?></span>
-                           <?}?><?=$player->getIP()?></td>
-                        <!--td><?if($player->getCounters()['Ip']>1) {?><a href="?search[where]=Ip&search[query]=<?=$player->getLastIP()?>"><span class="label label-danger"><?=$player->getCounters()['Ip']?><?}?></span></a> <?=$player->getLastIP()?></td-->
+                        <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr">
+                            <? if($player->getCounters()['Ip']>1) : ?>
+                                <div class="label label-danger label-ips"><?=$player->getCounters()['Ip']?></div>
+                           <? endif ?><?=($player->getLastIP()?'<div class="ips">'.$player->getIP().'<br>'.$player->getLastIP().'</div>':$player->getIP())?></td>
+                        <td <?=((($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1)
+                            ?'onclick="location.href=\'?search[where]=CookieId&search[query]='.$player->getCookieId().'\';" class="pointer"><span class="label label-danger">'.$player->getCounters()['CookieId'].'</span> #' . $player->getCookieId():'>')?>
+                        </td>
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer ':' class="')?><?=$player->getReferalId() ? "success" : "danger"?>">
                             <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
-                        <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'danger')?>"><?=($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):'')?></td>
+                        <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : ""):'danger')?>">
+                            <?=($player->getOnlineTime()?'<div class="ips">'.($player->getDateLastLogin('d.m.Y H:i')).'<br>'.($player->getOnlineTime('d.m.Y H:i')).'</div>':($player->getDateLastLogin()?$player->getDateLastLogin('d.m.Y H:i'):''))?>
+
+                        </td>
                         <!--td class="<?=($player->getOnlineTime()?(($player->getOnlineTime() < strtotime('-7 day', time())) ? "warning" : ""):'')?>"><?=($player->getOnlineTime()?$player->getOnlineTime('d.m.Y H:i'):'')?></td-->
                         <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer" data-id='.$player->getId().'"':'class="danger"')?>><?=($player->getGamesPlayed()?:'нет')?></td>
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
                         <td>
-                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-'.($player->getAdBlock()?'danger':'warning"').' notices-trigger" data-type="AdBlock" data-id="'.$player->getId().'">'.
-                                ($player->getCounters()['AdBlock']?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?></td>
+                            <? if($player->getDateAdBlocked()) :?>
+                            <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> notices-trigger" data-type="AdBlock" data-id="<?=$player->getId()?>">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?($player->getCounters()['AdBlock']?:'')?></button>
+                            <? endif ?>
+                        </td>
                         <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
                         <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getPoints()?></td>
                         <td><div class="right nobr">
@@ -152,6 +161,7 @@ $('.search-users').on('click', function() {
         '<option value="Ip">Ip</option>' +
         '<option value="NicName">Ник</option>' +
         '<option value="ReferalId">Реферал</option>' +
+        '<option value="CookieId">Cookie</option>' +
         '<option value="CONCAT(`Surname`,`Name`)">Фио</option>' +
         '<option value="Email">Email</option></select>');
         var sccButton = $('<button class="btn btn-md btn-success search-form"><i class="glyphicon glyphicon-ok"></i></button>')

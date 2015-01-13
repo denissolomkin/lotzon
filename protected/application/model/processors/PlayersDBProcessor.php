@@ -33,8 +33,11 @@ class PlayersDBProcessor implements IProcessor
         $player->setId(DB::Connect()->lastInsertId());
 
         try {
-            DB::Connect()->prepare("UPDATE `Players` SET `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
+            if(!$player->getCookieId())
+                $player->setCookieId($player->getId());
+            DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
                 ':id' => $player->getId(),
+                ':ccid' => $player->getCookieId(),
             ));
             $player->setNicName('Участник ' . $player->getId());
         } catch (PDOException $e){}
@@ -42,16 +45,17 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function writeLog(Entity $player, $action, $desc)
+    public function writeLog(Entity $player, $options)
     {
-        $sql = "INSERT INTO `PlayerLogs` (`PlayerId`, `Action`, `Desc`, `Time`)
-                VALUES (:id, :act, :dsc, :tm)";
+        $sql = "INSERT INTO `PlayerLogs` (`PlayerId`, `Action`, `Status`, `Desc`, `Time`)
+                VALUES (:id, :act, :st, :dsc, :tm)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'      => $player->getId(),
-                ':act'     => $action,
-                ':dsc'     => $desc,
+                ':act'     => $options['action'],
+                ':st'      => $options['status'],
+                ':dsc'     => $options['desc'],
                 ':tm'      => time()
             ));
         } catch (PDOException $e) {
@@ -146,7 +150,7 @@ class PlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
         $sql = "UPDATE `Players` SET
-                    `DateLogined` = :dl, `Country` = :cc,
+                    `DateLogined` = :dl, `Country` = :cc,`CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `LastIp` = :ip
@@ -165,6 +169,7 @@ class PlayersDBProcessor implements IProcessor
                 ':bd'       => $player->getBirthday(),
                 ':avatar'   => $player->getAvatar(),
                 ':id'       => $player->getId(),
+                ':ckid'     => $player->getCookieId(),
                 ':email'    => $player->getEmail(),
                 ':vis'      => (int)$player->getVisibility(),
                 ':fav'      => is_array($player->getFavoriteCombination()) ? serialize($player->getFavoriteCombination()) : '',
@@ -298,6 +303,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) CountReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CountCookieId,
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review
@@ -360,6 +366,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') CountAdBlock,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) CountReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CountCookieId,
                 (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) CountLog,
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) CountShopOrder,
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) CountMoneyOrder,

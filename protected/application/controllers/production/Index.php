@@ -60,7 +60,6 @@ class Index extends \SlimController\SlimController
             $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
         }
 
-        //if (!Session2::connect()->get(Player::IDENTITY)) {
         if (!$session->get(Player::IDENTITY)) {
 
             // check for autologin;
@@ -71,7 +70,6 @@ class Index extends \SlimController\SlimController
                         $player->setEmail($_COOKIE[Player::AUTOLOGIN_COOKIE])->fetch();
 
                         if ($player->generateAutologinHash() === $_COOKIE[Player::AUTOLOGIN_HASH_COOKIE]) {
-                            //Session2::connect()->set(Player::IDENTITY, $player);
                             $session->set(Player::IDENTITY, $player);
                             $player->markOnline();
                         }

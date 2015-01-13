@@ -855,7 +855,7 @@ $('.logs-trigger').on('click', function() {
             if (data.status == 1) {
                 var tdata = '';
                 $(data.data.logs).each(function(id, tr) {
-                    tdata += '<tr><td>'+tr.Id+'</td><td>'+tr.Action+'</td><td>'+tr.Desc+'</td><td>'+tr.Date+'</td>'
+                    tdata += '<tr class="'+tr.Status+'"><td>'+tr.Id+'</td><td>'+tr.Action+'</td><td>'+tr.Desc+'</td><td>'+tr.Date+'</td>'
                 });
                 $("#logs-holder").find('tbody').html(tdata);
 
