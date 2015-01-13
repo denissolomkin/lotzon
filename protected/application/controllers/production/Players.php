@@ -129,7 +129,7 @@ class Players extends \AjaxController
 
 
             if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.com','testbed.lotzon.com','192.168.1.253')))
-                $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
+            {$this->ajaxResponse(array(), 0, 'ACCESS_DENIED'); echo 1;}
             echo $_SERVER['HTTP_HOST']; die;
 
             $player = new Player();
