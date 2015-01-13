@@ -27,7 +27,7 @@
       <div class="row-fluid">&nbsp;</div>
         <div class="row-fluid">
             <ul class="nav nav-pills" role="tablist">
-                <li<?=($activeMenu == 'users' ? ' class="active"' : '')?>><a href="/private/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Пользователи</a></li>
+                <li<?=($activeMenu == 'users' ? ' class="active"' : '')?>><a href="/private/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Пользователи <span class="label label-warning"><?=PlayersModel::instance()->getProcessor()->getPlayersCount()?></span></a></li>
                 <li<?=($activeMenu == 'reviews' ? ' class="active"' : '')?>><a href="/private/reviews"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Отзывы <span class="label label-warning"><?=ReviewsModel::instance()->getProcessor()->getCount(0)?></span></a></li>
                 <li<?=($activeMenu == 'monetisation' ? ' class="active"' : '')?>><a href="/private/monetisation"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Запросы <span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?> / <?=MoneyOrderModel::instance()->getProcessor()->getOrdersToProcessCount()?></span></a></li>
                 <!--li><a href="/private/stats">Статистика</a></li-->

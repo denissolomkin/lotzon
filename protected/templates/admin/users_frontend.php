@@ -715,6 +715,29 @@ function showError(message) {
     $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
 }
 
+
+/* REVIEW BLOCK */
+$("#add-notice select").on('change', function() {
+
+
+    texts=  {
+        'AdBlock': {
+            'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Устраните это нарушение в ближайшее время. Если это нарушение не будет устранено до следующей проверки, мы будем вынуждены заблокировать ваш аккаунт.",
+            'title': "Нарушение правил участия"
+        }
+
+    };
+
+    if(texts[$(this).val()]){
+        $('#text').code(texts[$(this).val()]['text']);
+        $('input[name="title"]').val(texts[$(this).val()]['title']);
+    } else {
+        $('#text').code('');
+        $('input[name="title"]').val('');
+    }
+
+});
+
     $('.notices-trigger').on('click', function() {
         var plid = $(this).data('id');
         var type = $(this).data('type');
@@ -802,7 +825,7 @@ function showError(message) {
             currentEdit.title = $('input[name="title"]').val();
             currentEdit.playerId = plid;
             currentEdit.text = text;
-            currentEdit.type =  $('select[name="type"]').val();;
+            currentEdit.type =  $('select[name="type"]').val();
 
             $("#errorForm").hide();
             $(this).find('.glyphicon').remove();
@@ -906,7 +929,7 @@ $('.logs-trigger').on('click', function() {
 $('.delete-trigger').on('click', function() {
 
     var plid = $(this).data('id');
-    $("#delete-user #username").text($("tr#user"+plid+" td:nth-child(3)").text()+' ('+$("tr#user"+plid+" td:nth-child(4)").text()+')');
+    $("#delete-user #username").text($("tr#user"+plid+" td:nth-child(3)").text()+' ('+$("tr#user"+plid+" td:nth-child(4)").contents().first().text()+')');
     $("#delete-user").modal();
     $("#delete-user").find('.cls').off('click').on('click', function() {
         $("#delete-user").modal('hide');
