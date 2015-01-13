@@ -299,6 +299,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="delete-user" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Удаление пользователя</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    Пользователь <b><span id="username"></span></b> будет подчистую стерт из базы данных без возможности восстановления.<br>
+                    <div style="text-align: center;"><h4> <b> Вы уверены?</b></h4></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success rm">Удалить</button>
+                <button class="btn btn-danger cls">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="remove-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -881,6 +901,42 @@ $('.logs-trigger').on('click', function() {
     });
 });
 /* END LOG BLOCK */
+
+/* DELETE USER BLOCK */
+$('.delete-trigger').on('click', function() {
+
+    var plid = $(this).data('id');
+    $("#delete-user #username").text($("tr#user"+plid+" td:nth-child(3)").text()+' ('+$("tr#user"+plid+" td:nth-child(4)").text()+')');
+    $("#delete-user").modal();
+    $("#delete-user").find('.cls').off('click').on('click', function() {
+        $("#delete-user").modal('hide');
+    });
+    $("#delete-user").find('.rm').off('click').on('click', function() {
+        $.ajax({
+            url: "/private/users/delete/" + plid,
+            method: 'POST',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    $("#delete-user").modal('hide');
+                    $("tr#user"+plid).remove();
+
+                    alert('Пользователь удален');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+
+    });
+
+});
+
+/* END DELETE BLOCK */
 
 /* TRANSACTIONS BLOCK */
     $('.transactions-trigger').on('click', function() {

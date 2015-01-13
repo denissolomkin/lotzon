@@ -439,6 +439,31 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function deleteAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $player = new Player;
+                $player->setId($playerId)->fetch();
+                $response['data'] = array(
+                    'delete' => PlayersModel::instance()->delete($player),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function addNoticeAction($playerId)
     {
         if ($this->request()->isAjax()) {
