@@ -331,6 +331,10 @@ class PlayersDBProcessor implements IProcessor
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
                 $search = ' WHERE `Players`.Id = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='CookieId')
+                $search = ' WHERE `Players`.CookieId = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='ReferalId')
+                $search = ' WHERE `Players`.ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
                 $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
