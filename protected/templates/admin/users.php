@@ -28,9 +28,9 @@
                 <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
                 <th>Страна <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
                 <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
-                <th>IP<?=sortIcon('IP', $currentSort, $pager, $search)?></th>
-                <th>Cookie<?=sortIcon('CookieId', $currentSort, $pager, $search)?></th>
-                <th>Реферал <?=sortIcon('ReferalId', $currentSort, $pager, $search)?></th>
+                <th>IP<?=sortIcon('CountIP', $currentSort, $pager, $search)?></th>
+                <th>Cookie<?=sortIcon('CountCookieId', $currentSort, $pager, $search)?></th>
+                <th>Реферал <?=sortIcon('CountReferal', $currentSort, $pager, $search)?></th>
                 <th>Логин / пинг <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th>Игр <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
