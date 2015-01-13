@@ -64,27 +64,52 @@
                                 echo'</div>';
                             }?>
                             <br>
-                            <span <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
-                            <?if($player->getCounters()['Ip']>1) {?>
-                            <span class="label label-danger"><?=$player->getCounters()['Ip']?></span>
-                            <?}?><?=$player->getIP()?></span>
+
+                            <div class="left">
+                                <? if($player->getCounters()['Ip']):?>
+                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
+                                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
+                                </button>
+                            <? endif ?>
+
+                                <? if ($player->getDateAdBlocked()):?>
+                                    <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <?=($player->getCounters()['AdBlock']?:'')?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if(($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1) :?>
+                                    <button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getCookieId();?>')">
+                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['CookieId']>1?$player->getCounters()['CookieId']:'';?>
+                                    </button>
+                                <? endif ?>
+
+                            </div >
+
+
 
                             <div class="right">
 
 
-                                <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-'.($player->getAdBlock()?'danger':'warning"').' notices-trigger" data-type="AdBlock" data-id="'.$player->getId().'" '.($player->getAdBlock()?'':'disabled="disabled"').'>'.
-                                    ($player->getCounters()['AdBlock']?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?>
+                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
+                                    <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                        <?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
+                                    </button>
+                                <? endif ?>
+
 
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
-                                    <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
                                 </button>
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Notice']?'success':'warning');?> notices-trigger" data-type="Message" data-id="<?=$player->getId()?>">
                                     <span class="glyphicon glyphicon-bell" aria-hidden="true"></span><?=$player->getCounters()['Notice']>1?$player->getCounters()['Notice']:''?>
                                 </button>
 
                                 <? if ($player->getCounters()['MyReferal']>0): ?>
-                                    <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=ReferalId&search[query]=<?=$player->getId();?>'">
-                                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                    <button class="btn btn-xs btn-success" onclick="window.open('users?search[where]=ReferalId&search[query]=<?=$player->getId();?>')">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
                                     </button>
                                 <? endif ?>
 
@@ -107,13 +132,9 @@
                                     </button>
                                 <? endif ?>
 
-
-
-
                                 <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-                                <!--button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
                             </div>
+
                         </td>
                         <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <td><?=$order->getItem()->getTitle()?></td>
@@ -201,27 +222,56 @@
                                 echo'</div>';
                             }?>
                             <br>
-                        <span <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
+                      <!--  <span <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
                         <?if($player->getCounters()['Ip']>1) {?>
                         <span class="label label-danger"><?=$player->getCounters()['Ip']?></span>
-                        <?}?><?=$player->getIP()?></span>
+                        <?}?><?=$player->getIP()?></span> -->
+
+                            <div class="left">
+                                <? if($player->getCounters()['Ip']):?>
+                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
+                                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
+                                </button>
+                            <? endif ?>
+
+                                <? if ($player->getDateAdBlocked()):?>
+                                    <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <?=($player->getCounters()['AdBlock']?:'')?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if(($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1) :?>
+                                    <button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getCookieId();?>')">
+                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['CookieId']>1?$player->getCounters()['CookieId']:'';?>
+                                    </button>
+                                <? endif ?>
+
+                            </div >
+
+
 
                             <div class="right">
 
 
-                            <?=($player->getDateAdBlocked()? '<button class="btn btn-xs btn-'.($player->getAdBlock()?'danger':'warning"').' notices-trigger" data-type="AdBlock" data-id="'.$player->getId().'">'.
-                                ($player->getCounters()['AdBlock']?:'<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>').'</button>' : '')?>
+                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
+                                    <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                        <?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
+                                    </button>
+                                <? endif ?>
+
 
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
-                                    <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
                                 </button>
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Notice']?'success':'warning');?> notices-trigger" data-type="Message" data-id="<?=$player->getId()?>">
                                     <span class="glyphicon glyphicon-bell" aria-hidden="true"></span><?=$player->getCounters()['Notice']>1?$player->getCounters()['Notice']:''?>
                                 </button>
 
                                 <? if ($player->getCounters()['MyReferal']>0): ?>
-                                    <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=ReferalId&search[query]=<?=$player->getId();?>'">
-                                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                    <button class="btn btn-xs btn-success" onclick="window.open('users?search[where]=ReferalId&search[query]=<?=$player->getId();?>')">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
                                     </button>
                                 <? endif ?>
 
@@ -244,12 +294,9 @@
                                     </button>
                                 <? endif ?>
 
-
-
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-                            <!--button data-id="<?=$order->getId()?>" class="btn btn-xs approve money btn-success"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
+                                <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
                             </div>
+
                         </td>
                         <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <td><?=$order->getType()?></td>

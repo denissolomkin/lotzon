@@ -301,9 +301,9 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
                 (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) CountReferal,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CountCookieId,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) Referal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CookieId,
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review
@@ -456,15 +456,14 @@ class PlayersDBProcessor implements IProcessor
         return $tickets;
     }
 
-    public function getLog($playerId)
+    public function getLog($playerId, $action)
     {
-        $sql = "SELECT * FROM `PlayerLogs` WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+        $sql = "SELECT * FROM `PlayerLogs` WHERE `PlayerId` = :pid ".($action?'AND Action=:action ':'')."ORDER BY `Id` DESC";
 
         try {
             $res = DB::Connect()->prepare($sql);
-            $res->execute(array(
-                ':pid' => $playerId,
-            ));
+            $res->execute($action?array(':pid' => $playerId,':action' => $action):array(':pid' => $playerId)
+            );
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
@@ -477,24 +476,7 @@ class PlayersDBProcessor implements IProcessor
 
         return $logs;
     }
-/*
-    public function checkAdBlockNotices(Entity $player)
-    {
-        $sql = "SELECT COUNT(Id) FROM `PlayerNotices` WHERE `PlayerId` = :plid AND `Type` = :tp ";
 
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':plid' => $player->getId(),
-                ':tp'   => 'AdBlock',
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        return $sth->fetchColumn(0);
-    }
-*/
     public function checkNickname(Entity $player)
     {
         $sql = "SELECT * FROM `Players` WHERE `Nicname` = :nic AND `Id` != :plid";
@@ -616,6 +598,7 @@ class PlayersDBProcessor implements IProcessor
                 ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));
+
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }

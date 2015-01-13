@@ -39,6 +39,9 @@ max-width: 120px;}
 th.icon a .glyphicon{
     padding-left: 4px;
 }
+.glyphicon.glyphicon-tag{
+    left: 2px;
+}
 .datestamps{
     float: left;
     line-height: 14px;
@@ -56,6 +59,7 @@ line-height: 13px;
 min-height: 17px;
 }
 .right {float:right;text-align: right;}
+.left {float:left;text-align: left;}
 .ticket-numbers > li
 {
     width: 25px;

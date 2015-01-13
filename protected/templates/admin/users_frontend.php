@@ -1,5 +1,5 @@
-
-<div class="modal fade users" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true"
+     xmlns="http://www.w3.org/1999/html">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -281,6 +281,8 @@
                     <div class="form-group">
                         <label class="control-label">Заголовок</label>
                         <input type="text" name="title" value="" placeholder="Заголовок" class="form-control" />
+                        <label class="control-label">Тип</label>
+                        <select name="type" class="form-control" /><option value="Message">Стандартное уведомление</option><option value="AdBlock">Предупреждение об AdBlock</option></select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Текст уведомления</label>
@@ -780,6 +782,7 @@ function showError(message) {
             currentEdit.title = $('input[name="title"]').val();
             currentEdit.playerId = plid;
             currentEdit.text = text;
+            currentEdit.type =  $('select[name="type"]').val();;
 
             $("#errorForm").hide();
             $(this).find('.glyphicon').remove();
@@ -846,8 +849,9 @@ $('.reviews-trigger').on('click', function() {
 
 /* LOG BLOCK */
 $('.logs-trigger').on('click', function() {
+
     $.ajax({
-        url: "/private/users/logs/" + $(this).data('id'),
+        url: "/private/users/logs/" + $(this).data('id')+'?action='+($(this).data('action')?$(this).data('action'):''),
         method: 'GET',
         async: true,
         dataType: 'json',

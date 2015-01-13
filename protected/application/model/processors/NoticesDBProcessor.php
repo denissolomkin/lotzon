@@ -6,14 +6,16 @@ class NoticesDBProcessor implements IProcessor
 {
     public function create(Entity $notice)
     {
-        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `Date`, `Title`, `Text`) VALUES (:id, :playerid, :date, :title, :text)";
+        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `UserId`, `Type`, `Date`, `Title`, `Text`) VALUES (:id, :playerid, :userid, :type, :date, :title, :text)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $notice->getId(),
                 ':playerid'  => $notice->getPlayerId(),
+                ':userid'  => $notice->getUserId(),
                 ':date'  => time(),
                 ':title'  => $notice->getTitle(),
+                ':type'  => $notice->getType(),
                 ':text'  => $notice->getText(),
             ));
         } catch (PDOExeption $e) {
