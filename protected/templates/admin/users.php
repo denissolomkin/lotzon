@@ -22,21 +22,21 @@
     <div class="row-fluid">
         <table class="table table-striped users">
             <thead>
-                <th>#ID <?=sortIcon('Id', $currentSort, $pager, $search)?></th>
+                <th>ID <?=sortIcon('Id', $currentSort, $pager, $search)?></th>
                 <th>ФИО</th>
                 <th>Никнейм</th>
                 <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
-                <th>Страна <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
-                <th>Дата регистрации <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
-                <th>IP<?=sortIcon('CountIP', $currentSort, $pager, $search)?></th>
-                <th>Cookie<?=sortIcon('CountCookieId', $currentSort, $pager, $search)?></th>
-                <th>Реферал <?=sortIcon('CountReferal', $currentSort, $pager, $search)?></th>
+                <th class="icon"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
+                <th>Регистрация <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
+                <th style="min-width: 120px;">IP <?=sortIcon('CountIP', $currentSort, $pager, $search)?></th>
+                <th>Cookie <?=sortIcon('CountCookieId', $currentSort, $pager, $search)?></th>
+                <th>Реф <?=sortIcon('CountReferal', $currentSort, $pager, $search)?></th>
                 <th>Логин / пинг <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th>Игр <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
-                <th>Билеты <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
-                <th>Ad <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
+                <th class="icon"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>  <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
+                <th class="icon"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
-                <th>Баллов <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
+                <th>Баллы <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
                 <th width="100">Options</th>
             </thead>
             <tbody>
@@ -44,7 +44,7 @@
                     <tr>
                         <td><?=$player->getId()?></td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
-                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?></td>
+                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?><?=($player->isOnline()?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
@@ -73,7 +73,7 @@
 
                         <td class="country"><?=$player->getCountry()?></td>
                         <td class="nobr"><?=$player->getDateRegistered('d.m.Y H:i')?></td>
-                        <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr">
+                        <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr div-ips">
                             <? if($player->getCounters()['Ip']>1) : ?>
                                 <div class="label label-danger label-ips"><?=$player->getCounters()['Ip']?></div>
                            <? endif ?><?=($player->getLastIP()?'<div class="ips">'.$player->getIP().'<br>'.$player->getLastIP().'</div>':$player->getIP())?></td>
@@ -85,7 +85,7 @@
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>">
-                            <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
+                            <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
 
                         </td>
                         <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer success" data-id='.$player->getId().'"':'class="danger"')?>><?=($player->getGamesPlayed()?:'нет')?></td>

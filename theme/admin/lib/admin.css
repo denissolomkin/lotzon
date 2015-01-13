@@ -34,11 +34,21 @@
     line-height: 14px;
     margin: -6px -50px -6px 0;}
 
+.div-ips{overflow: hidden;
+max-width: 120px;}
+th.icon a .glyphicon{
+    padding-left: 4px;
+}
 .datestamps{
     float: left;
     line-height: 14px;
     margin: -6px 0 -6px 0;}
-
+.users .online{
+    font-style: normal;
+    color: #1acf34;
+    font-size: 20px;
+    line-height: 17px;
+    font-weight: bold;}
 .label-ips{
     margin-right: 4px;
 float: left;
