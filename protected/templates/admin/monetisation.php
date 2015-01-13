@@ -74,8 +74,7 @@
 
                                 <? if ($player->getDateAdBlocked()):?>
                                     <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                        <?=($player->getCounters()['AdBlock']?:'')?>
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters()['AdBlock']?:'')?>
                                     </button>
                                 <? endif ?>
 
@@ -94,8 +93,7 @@
 
                                 <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
                                     <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                                        <?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
                                     </button>
                                 <? endif ?>
 
@@ -119,11 +117,6 @@
                                     </button>
                                 <? endif ?>
 
-                                <? if ($player->getCounters()['Order']>0): ?>
-                                    <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($player->getCounters()['Order']>1?$player->getCounters()['Order']:'');?>
-                                    </button>
-                                <? endif ?>
                                 <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
                                 <? if ($player->getCounters()['Log']>0): ?>
@@ -236,8 +229,7 @@
 
                                 <? if ($player->getDateAdBlocked()):?>
                                     <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-7 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                        <?=($player->getCounters()['AdBlock']?:'')?>
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters()['AdBlock']?:'')?>
                                     </button>
                                 <? endif ?>
 
@@ -256,8 +248,7 @@
 
                                 <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
                                     <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                                        <?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
                                     </button>
                                 <? endif ?>
 
@@ -281,11 +272,6 @@
                                     </button>
                                 <? endif ?>
 
-                                <? if ($player->getCounters()['Order']>0): ?>
-                                    <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($player->getCounters()['Order']>1?$player->getCounters()['Order']:'');?>
-                                    </button>
-                                <? endif ?>
                                 <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
                                 <? if ($player->getCounters()['Log']>0): ?>
