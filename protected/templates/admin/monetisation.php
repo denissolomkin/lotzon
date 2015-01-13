@@ -66,7 +66,7 @@
                             <br>
 
                             <div class="left">
-                                <? if($player->getCounters()['Ip']):?>
+                                <? if($player->getCounters()['Ip']>1):?>
                                     <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>
@@ -219,7 +219,7 @@
                         <?}?><?=$player->getIP()?></span> -->
 
                             <div class="left">
-                                <? if($player->getCounters()['Ip']):?>
+                                <? if($player->getCounters()['Ip']>1):?>
                                     <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>

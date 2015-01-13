@@ -589,7 +589,6 @@
         }, function(data) {});
         return false;
     });
-console.log('<?=$_SERVER['HTTP_REFERER'].' / '.$_SERVER['HTTP_HOST']?>')
 </script>
 
 <!--=========================================================================
