@@ -26,8 +26,8 @@
                 <!--th>#ID</th-->
                 <th width="50">Дата</th>
                 <th width="10%">Игрок</th>
-                <th width="20%">Информация</th>
                 <th width="20"></th>
+                <th width="20%">Информация</th>
                 <th width="50">Баланс</th>
                 <th>Товар</th>
                 <th>Данные</th>
@@ -41,6 +41,7 @@
                         <?$player=$order->getPlayer();?>
                         <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
                         <td><?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?></td>
+                        <td><?=$player->getCountry()?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -114,7 +115,6 @@
                             <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
                             </div>
                         </td>
-                        <td><?=$player->getCountry()?></td>
                         <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <td><?=$order->getItem()->getTitle()?></td>
 
@@ -165,8 +165,8 @@
                 <!--th>#ID</th-->
                 <th width="50">Дата</th>
                 <th width="10%">Игрок</th>
-                <th width="20%">Информация</th>
                 <th width="20"></th>
+                <th width="20%">Информация</th>
                 <th width="100">Баланс</th>
                 <th>Платежная сис-ма</th>
                 <th>Данные</th>
@@ -178,6 +178,7 @@
                         <?$player=$order->getPlayer();?>
                         <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
                         <td><?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?></td>
+                        <td><?=$player->getCountry()?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -250,7 +251,6 @@
                             <button data-id="<?=$order->getId()?>" class="btn btn-xs decline money btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button-->
                             </div>
                         </td>
-                        <td><?=$player->getCountry()?></td>
                         <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?><br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <td><?=$order->getType()?></td>
                         <td>
