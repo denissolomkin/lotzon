@@ -589,7 +589,7 @@
         }, function(data) {});
         return false;
     });
-
+console.log('<?=$_SERVER['HTTP_REFERER']?>')
 </script>
 
 <!--=========================================================================

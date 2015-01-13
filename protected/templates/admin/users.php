@@ -32,7 +32,7 @@
                 <th>Cookie <?=sortIcon('CountCookieId', $currentSort, $pager, $search)?></th>
                 <th>Реф <?=sortIcon('CountReferal', $currentSort, $pager, $search)?></th>
                 <th>Логин / пинг <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
-                <th>Игр <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
+                <th class="icon"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th class="icon"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>  <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
                 <th class="icon"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
