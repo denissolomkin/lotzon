@@ -206,12 +206,19 @@ class Index extends \SlimController\SlimController
             }
         }
 
+        if($session->has('ERROR')){
+            $error=$session->get('ERROR');
+            $session->remove('ERROR');
+        }
+
+
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,
             'showEmail'   => $showEmail,
             'gameInfo'    => $gameInfo,
             'socialIdentity'  => $socialIdentity,
             'country'     => $this->country,
+            'error'       => $error,
             'staticTexts' => $staticTexts,
             'lang'        => $this->promoLang,
             'currency'    => Config::instance()->langCurrencies[$this->country],            

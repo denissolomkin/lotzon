@@ -84,6 +84,11 @@ class AuthController extends \SlimController\SlimController {
             try {
                 $player->fetch();
 
+                if($player->getBan()){
+                    $this->session->set('ERROR', 'Учетная запись заблокирована');
+                    $this->redirect('/');
+                }
+
                 if(!$player->getName() AND $profile->firstName)
                     $player->setName($profile->firstName);
 
