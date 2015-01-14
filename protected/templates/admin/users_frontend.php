@@ -233,6 +233,34 @@
 </div>
 
 
+<div class="modal fade" id="filter-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Уведомления</h4>
+                <hr />
+                <table class="table table-striped points" >
+                    <thead>
+                    <th>#ID</th>
+                    <th>Дата</th>
+                    <th>Заголовок</th>
+                    <th>Удалить</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success add">Отфильтровать результаты</button>
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="notices-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -515,6 +543,16 @@ $('.orders-trigger').on('click', function() {
 });
 /* END ORDERS BLOCK */
 
+/* FILTER BLOCK */
+$('.filter-trigger').on('click', function() {
+
+    $("#filter-holder").modal();
+    $("#filter-holder").find('.cls').on('click', function() {
+        $("#filter-holder").modal('hide');
+    })
+});
+/* END TICKETS BLOCK */
+
 /* TICKETS BLOCK */
 $('.tickets-trigger').on('click', function() {
     currency=($(this).parent().find('td.country').text()=='UA'?'грн':'руб');
@@ -716,7 +754,7 @@ function showError(message) {
 }
 
 
-/* REVIEW BLOCK */
+/* notice BLOCK */
 $("#add-notice select").on('change', function() {
 
 
@@ -811,7 +849,8 @@ $("#add-notice select").on('change', function() {
             $("#add-notice").modal('hide');
         });
         $('#text').code('');
-        $('input[name="title"]').val('')
+        $('input[name="title"]').val('');
+        $("#add-notice select").val('Message');
 
 
         $("#add-notice").find('.save').off('click').on('click', function() {
@@ -924,6 +963,37 @@ $('.logs-trigger').on('click', function() {
     });
 });
 /* END LOG BLOCK */
+
+/* DELETE USER BLOCK */
+$('.ban-trigger').on('click', function() {
+
+    var plid = $(this).data('id');
+    var status = ($("tr#user"+plid).hasClass("danger") ? 0 : 1);
+        $.ajax({
+            url: "/private/users/ban/" + plid+"?ban="+status,
+            method: 'POST',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    if($("tr#user"+plid).hasClass("danger"))
+                        $("tr#user"+plid).removeClass('danger');
+                    else
+                        $("tr#user"+plid).addClass('danger');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+
+
+
+});
+
+/* END DELETE BLOCK */
 
 /* DELETE USER BLOCK */
 $('.delete-trigger').on('click', function() {
