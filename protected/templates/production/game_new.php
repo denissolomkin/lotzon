@@ -67,6 +67,14 @@
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 
+        <? if(is_array($banners['HeaderScripts']))
+            foreach($banners['HeaderScripts'] as $banner) {
+                echo '<!-- '.$banner['title'].' -->
+                '.$banner['div'].$banner['script'];
+            } ?>
+?>
+
+
     </head>
     <body>
     <script type="text/javascript">    
@@ -1201,6 +1209,11 @@
         <script src="/tpl/js/ws.js"></script>
         <script src="/tpl/js/ads.js"></script>
 
+    <? if(is_array($banners['BodyScripts']))
+        foreach($banners['BodyScripts'] as $banner) {
+            echo '<!-- '.$banner['title'].' -->
+                '.$banner['div'].$banner['script'];
+        } ?>
         <? include('popups.php') ?>
 
     <script>
