@@ -7,7 +7,9 @@
             <div class="flex"><?=($search['query']?'<button class="btn btn-md btn-success" onclick="history.back();"><i class="glyphicon glyphicon-arrow-left"></i></button>':'');?>
                 <button class="btn btn-md btn-info search-users"><i class="glyphicon glyphicon-search"></i></button>
             </div>
-            <button class="btn btn-md btn-warning notices-trigger right" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+            <div class="right">
+                <!--button class="btn btn-md btn-info filter-trigger" data-id="0"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button--><button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+            </div>
         </h2>
     </div>  <hr/>
     <? if ($pager['pages'] > 1) {?>
@@ -41,9 +43,9 @@
             </thead>
             <tbody>
                 <? foreach ($list as $player) { ?>
-                    <tr id="user<?=$player->getId()?>">
+                    <tr id="user<?=$player->getId()?>" class="<?=$player->getBan()?'danger':''?>">
                         <td><?=$player->getId()?></td>
-                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
+                        <td class="pointer profile-trigger" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?><?=($player->isOnline()?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <div class="right">
@@ -131,8 +133,8 @@
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters()['Log']>1?$player->getCounters()['Log']:''?>
                             </button>
                              <? endif ?>
-                            <button class="btn btn-xs btn-danger delete-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button>
-                            <!--button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button-->
+                                <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
+                                <button class="btn btn-xs btn-danger delete-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button>
                             </div>
                         </td>
                     </tr>
