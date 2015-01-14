@@ -43,6 +43,7 @@ class Player extends Entity
 
     private $_favoriteCombination = array();
     private $_visible             = false;
+    private $_ban             = false;
 
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
@@ -93,6 +94,18 @@ class Player extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setBan($status)
+    {
+        $this->_ban = $status;
+
+        return $this;
+    }
+
+    public function getBan()
+    {
+        return $this->_ban;
     }
 
     public function setSocialEnable($socialenable)
@@ -1039,6 +1052,9 @@ class Player extends Entity
                 throw new EntityException("INTERNAL_ERROR", 500);
             }
         }
+        if ($this->getBan()) {
+            throw new EntityException("ACCESS_DENIED", 403);
+        }
 
         if ($this->getPassword() !== $this->compilePassword($password)) {
             $this->writeLog(array('action'=>'INVALID_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'danger'));
@@ -1151,6 +1167,7 @@ class Player extends Entity
     {
         if ($from == 'DB') {
             $this->setId($data['Id'])
+                 ->setBan($data['Ban'])
                  ->setEmail($data['Email'])
                  ->setPassword($data['Password'])
                  ->setSalt($data['Salt'])

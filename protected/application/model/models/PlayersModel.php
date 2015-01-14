@@ -88,6 +88,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->reportTrouble($player, $trouble);
     }
 
+    public function ban(Entity $player, $status=0)
+    {
+        return $this->getProcessor()->ban($player,$status);
+    }
+
     public function saveAvatar(Entity $player) 
     {
         return $this->getProcessor()->saveAvatar($player);   

@@ -293,13 +293,14 @@ class PlayersDBProcessor implements IProcessor
     }
 
 
-    public function ban(Entity $player) {
-        $sql = "UPDATE `Players` SET `Ban` = 1 WHERE `Id` = :plid";
+    public function ban(Entity $player, $status) {
+        $sql = "UPDATE `Players` SET `Ban` = :st WHERE `Id` = :plid";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':plid'  => $player->getId(),
+                ':st'  => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);

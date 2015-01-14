@@ -439,6 +439,35 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function banAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $player = new Player;
+                $player->setId($playerId)->fetch();
+                $status = $this->request()->get('ban',0);
+
+                PlayersModel::instance()->writeLog($player,array('action'=>'PLAYER_BAN', 'desc'=>($status?'BLOCKED':'UNBLOCKED'), 'status'=>($status?'danger':'warning')));
+
+                $response['data'] = array(
+                    'ban' => PlayersModel::instance()->ban($player,$status),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function deleteAction($playerId)
     {
         if ($this->request()->isAjax()) {
