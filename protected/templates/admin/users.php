@@ -20,7 +20,10 @@
                 <? } ?>
             </div>
         </div>
-    <? } ?> 
+    <? } ?>
+    <script>$(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })</script>
     <div class="row-fluid">
         <table class="table table-striped users">
             <thead>
@@ -28,15 +31,15 @@
                 <th>ФИО</th>
                 <th>Никнейм</th>
                 <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
-                <th class="icon"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <?=sortIcon('Country', $currentSort, $pager, $search)?></th>
+                <th class="icon"><?=sortIcon('Country', $currentSort, $pager, $search, 'globe')?></th>
                 <th>Регистрация <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
-                <th style="min-width: 120px;">IP <?=sortIcon('CountIP', $currentSort, $pager, $search)?></th>
-                <th>Cookie <?=sortIcon('CountCookieId', $currentSort, $pager, $search)?></th>
-                <th>Реф <?=sortIcon('CountReferal', $currentSort, $pager, $search)?></th>
-                <th>Логин / пинг <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
-                <th class="icon"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
-                <th class="icon"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>  <?=sortIcon('TicketsFilled', $currentSort, $pager, $search)?></th>
-                <th class="icon"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <?=sortIcon('AdBlock', $currentSort, $pager, $search)?></th>
+                <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
+                <th class="icon"><?=sortIcon('CountCookieId', $currentSort, $pager, $search, 'flag')?></th>
+                <th class="icon"><?=sortIcon('CountReferal', $currentSort, $pager, $search, 'user')?></th>
+                <th>Login / Ping <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
+                <th class="icon"><?=sortIcon('GamesPlayed', $currentSort, $pager, $search, 'gift')?></th>
+                <th class="icon"><?=sortIcon('TicketsFilled', $currentSort, $pager, $search, 'tags')?></th>
+                <th class="icon"><?=sortIcon('AdBlock', $currentSort, $pager, $search ,'exclamation-sign')?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
                 <th>Баллы <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
                 <th width="100">Options</th>
@@ -45,8 +48,15 @@
                 <? foreach ($list as $player) { ?>
                     <tr id="user<?=$player->getId()?>" class="<?=$player->getBan()?'danger':''?>">
                         <td><?=$player->getId()?></td>
-                        <td class="pointer profile-trigger" data-id="<?=$player->getId()?>"><?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
-                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>"><?=($player->getNicName())?><?=($player->isOnline()?'<i class="online right">•</i>':'');?></td>
+                        <td class="pointer profile-trigger" data-id="<?=$player->getId()?>">
+                            <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
+                            <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
+                            </div>
+                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
+                            <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
+                            <?=($player->getNicName())?><?=($player->isOnline()?'<i class="online right">•</i>':'');?>
+                            </div>
+                        </td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
@@ -206,9 +216,9 @@ $('#search_where').val('<?=$search['where']?>');
 
 <?php
 
-    function sortIcon($currentField, $currentSort, $pager, $search)
+    function sortIcon($currentField, $currentSort, $pager, $search, $icon=null)
     {
-        $icon = '<a href="/private/users?page=1&sortField=%s&sortDirection=%s'.($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'').'"><i class="glyphicon glyphicon-chevron-%s"></i></a>';
+        $icon = '<a href="/private/users?page=1&sortField=%s&sortDirection=%s'.($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'').'">'.($icon?'<span class="glyphicon glyphicon-'.$icon.'" aria-hidden="true"></span>':'').'<i class="glyphicon glyphicon-chevron-%s"></i>';
         if ($currentField == $currentSort['field']) {
             $icon = vsprintf($icon, array(
                 $currentField,
