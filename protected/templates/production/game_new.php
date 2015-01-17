@@ -558,7 +558,7 @@
                                                     <li><?=$num?></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="nw"><?=$lottery->getWinnersCount()?></div>
+                                            <div class="nw"><?=($lottery->getWinnersCount()+($lottery->getId()>76?1000:0))?></div>
                                             <? if ($lottery->getWinnersCount() > 0 && isset($playerPlayedLotteries[$lottery->getId()])) { ?>
                                                 <div class="aw-bt" data-lotid="<?=$lottery->getId()?>">
                                                     <a href="javascript:void(0)"></a>
@@ -1175,7 +1175,6 @@
                 </div>
             </div>
         </footer>
-
         <? /*
         <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 150px;width: 300px;background: white;">
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
@@ -1199,6 +1198,8 @@
             <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#wsStatus').parent('div').show();$('#wsStatusShow').hide();"><b>^</b></span>
             <span id="wsStatusShow"></span>
         </div>
+        <div id="ads">ads</div>
+
 */ ?>
 
         </div>
