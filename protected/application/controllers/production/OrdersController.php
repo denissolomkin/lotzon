@@ -30,13 +30,16 @@ class OrdersController extends \AjaxController
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }
+        $number=preg_replace("/\D/","",$this->request()->post('phone'));
+        if($number[0]==0)
+            $number='38'.$number;
 
         $order = new ShopItemOrder();
         $order->setPlayer($this->session->get(Player::IDENTITY))
               ->setItem($item)
               ->setName($this->request()->post('name'))
               ->setSurname($this->request()->post('surname'))
-              ->setNumber(preg_replace("/\D/","",$this->request()->post('phone')))
+              ->setNumber($number)
               ->setPhone($this->request()->post('phone'))
               ->setRegion($this->request()->post('region'))
               ->setCity($this->request()->post('city'))
