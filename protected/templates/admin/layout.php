@@ -55,7 +55,7 @@
                         </li>';
                     } elseif(Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$key]) { ?>
 
-                        <li class="<?=($activeMenu == $key ? 'active' : '')?><?=$pages['css']?:''?>"><a href="/private/<?=$key?>">
+                        <li class="<?=($activeMenu == $key ? 'active ' : '')?><?=$pages['css']?:''?>"><a href="/private/<?=$key?>">
                                 <? if($pages['icon']): ?> <span class="glyphicon glyphicon-<?=$pages['icon']?>" aria-hidden="true"></span>  <? endif ?>
                                 <?=($pages['name']?:'')?>
                                 <? if ($key=='users') : ?><span class="label label-warning"><?=PlayersModel::instance()->getProcessor()->getPlayersCount()?></span> <? endif ?>
