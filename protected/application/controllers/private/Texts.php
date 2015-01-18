@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \StaticSiteText, \StaticSiteTextsModel;
+use \Application, \PrivateArea, \StaticSiteText, \StaticSiteTextsModel, \Config, \Session2, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -14,6 +14,10 @@ class Texts extends PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction()

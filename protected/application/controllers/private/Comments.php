@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \GameSettings, \GameSettingsException, \GameSettingsModel, \CommentsModel, \Comment, \WideImage;
+use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \GameSettings, \GameSettingsException, \GameSettingsModel, \CommentsModel, \Comment, \WideImage, \Admin, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/CommentsModel.php');
@@ -14,6 +14,10 @@ class Comments extends \PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction()

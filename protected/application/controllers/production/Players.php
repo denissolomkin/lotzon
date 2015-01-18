@@ -330,18 +330,16 @@ class Players extends \AjaxController
                 if ($this->request()->post('bd') && !strtotime($this->request()->post('bd'))) {
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
-                $player->setNicname($this->request()->post('nick'))
-                   ->setName($this->request()->post('name'))
-                   ->setSurName($this->request()->post('surname'))
-                   ->setSecondName($this->request()->post('secondname'))
-                   ->setPhone($this->request()->post('phone'))
-                   ->setBirthday(strtotime($this->request()->post('bd')))
-                   ->setVisibility($this->request()->post('visible', false));
                 $favs = $this->request()->post('favs', array());
-
-                $player->setFavoriteCombination($favs);
-
-                $player->update();
+                $player->setNicname($this->request()->post('nick'))
+                    ->setName($this->request()->post('name'))
+                    ->setSurName($this->request()->post('surname'))
+                    ->setSecondName($this->request()->post('secondname'))
+                    ->setPhone($this->request()->post('phone'))
+                    ->setBirthday(strtotime($this->request()->post('bd')))
+                    ->setVisibility($this->request()->post('visible', false))
+                    ->setFavoriteCombination($favs)
+                    ->update();
 
                 $this->session->set(Player::IDENTITY, $player);
             } catch (EntityException $e){
@@ -349,7 +347,8 @@ class Players extends \AjaxController
             }
             if ($pwd = $this->request()->post('password')) {
                 $pwd=trim($pwd);
-                $this->session->get(Player::IDENTITY)->changePassword($pwd);
+                $player->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$player->hidePassword($pwd),'status'=>'info'))
+                    ->changePassword($pwd);
             }
             $this->ajaxResponse(array());
         }

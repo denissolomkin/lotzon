@@ -21,9 +21,6 @@
             </div>
         </div>
     <? } ?>
-    <script>$(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })</script>
     <div class="row-fluid">
         <table class="table table-striped users">
             <thead>
@@ -48,7 +45,7 @@
                 <? foreach ($list as $player) { ?>
                     <tr id="user<?=$player->getId()?>" class="<?=$player->getBan()?'danger':''?>">
                         <td><?=$player->getId()?></td>
-                        <td class="pointer profile-trigger" data-id="<?=$player->getId()?>">
+                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                             <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                             </div>

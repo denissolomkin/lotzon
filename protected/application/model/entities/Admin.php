@@ -4,7 +4,45 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 class Admin extends Entity
 {
     const SESSION_VAR  = '540236854b650';
-    
+
+    static $ROLES = array('ADMIN','MANAGER','MODERATOR','DEVELOPER');
+    static $PAGES = array(
+
+        'users'=>array('name'=>'Пользователи','icon'=>'user'),
+        'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-up'),
+        'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
+
+        'Настройки'=>array('icon'=>'cog',
+            'pages'=>array(
+                'blacklist'=>array('icon'=>'minus-sign','name'=>'Blacklist'),
+                'game'=>array('icon'=>'gift','name'=>'Розыгрыши'),
+                'chances'=>array('icon'=>'star-empty','name'=>'Шансы'),
+                'seo'=>array('icon'=>'screenshot','name'=>'SEO'),
+                'texts'=>array('icon'=>'globe','name'=>'Тексты'),
+                'rights'=>array('name'=>'Права доступа'),
+            )),
+
+        'Контент'=>array('icon'=>'th-list',
+            'pages'=>array(
+                'banners'=>array('icon'=>'picture','name'=>'Баннеры'),
+                'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
+                'news'=>array('icon'=>'calendar','name'=>'Новости'),
+                'shop'=>array('icon'=>'shopping-cart','name'=>'Товары'),
+            )),
+
+        'Игры'=>array('icon'=>'star',
+            'pages'=>array(
+                'gamebots'=>array('name'=>'Боты'),
+                /*'gameoptions'=>array('name'=>'Настройки'),
+                'gamestats'=>array('name'=>'Статистика'),*/
+            )),
+
+        'logout'=>array('icon'=>'off','css'=>'pull-right'),
+        'admins'=>array('name'=>'Администраторы','icon'=>'','css'=>'pull-right'),
+    );
+
+
+
     const ROLE_ADMIN   = 'ADMIN';
     const ROLE_MANAGER = 'MANAGER';
     const ROLE_MODERATOR = 'MODERATOR';

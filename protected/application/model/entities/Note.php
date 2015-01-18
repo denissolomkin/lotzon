@@ -6,7 +6,7 @@ class Note extends Entity
     private $_id    = '';
     private $_playerid = '';
     private $_userid = '';
-    private $_user = '';
+    private $_username = '';
     private $_text  = '';
     private $_date  = '';
     
@@ -50,16 +50,16 @@ class Note extends Entity
         return $this->_playerid;
     }
 
-    public function setUser($user)
+    public function setUserName($user)
     {
-        $this->_user = $user;
+        $this->_username = $user;
 
         return $this;
     }
 
-    public function getUser()
+    public function getUserName()
     {
-        return $this->_user;
+        return $this->_username;
     }
 
     public function setUserId($userid)
@@ -92,7 +92,7 @@ class Note extends Entity
             $this->setId($data['Id'])
                  ->setPlayerId($data['PlayerId'])
                  ->setUserId($data['UserId'])
-                 ->setUser($data['User'])
+                 ->setUserName($data['UserName'])
                  ->setDate($data['Date'])
                  ->setText($data['Text']);
         }

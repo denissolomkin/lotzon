@@ -966,7 +966,7 @@ $(function(){
         });
 
         form.find('input').each(function(id, input) {
-            if($(input).attr('name') != 'plug')playerData[$(input).attr('name')] = $(input).val();
+            if($(input).attr('name') != 'plug') playerData[$(input).attr('name')] = $(input).val();
         });
         playerData.email=$("#profile_email").text();
         // favorite
@@ -979,7 +979,7 @@ $(function(){
         playerData.visible = form.find('input[name="visible"]:checked').length ? 1 : 0;
         updatePlayerProfile(playerData,
             function(data) {
-
+                form.find('input[name="password"]').val('');
             },
             function(data) {
                 switch (data.message) {
@@ -1368,9 +1368,10 @@ function moneyOutput(type, form) {
         }
     });
 
-    requestForMoney(data, function(){        
+    requestForMoney(data, function(){
+        updateMoney(playerMoney-parseFloat($("#cash-output-popup section.form:visible input[name=summ]").val()));
         $("#cash-output-popup").hide();
-        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Ваш счет в ближайшее время.");
+        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Ваш счет в течении 3 рабочих дней.");
         $("#report-popup").show();
     }, function(data){
         alert(data.message);

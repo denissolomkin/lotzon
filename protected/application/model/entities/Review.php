@@ -13,6 +13,8 @@ class Review extends Entity
     private $_playerName = '';
     private $_playerAvatar  = '';
     private $_playerId  = '';
+    private $_userId    = 0;
+    private $_userName = '';
     private $_date  = '';
     
     public function init()
@@ -30,6 +32,30 @@ class Review extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setUserId($id)
+    {
+        $this->_userId = $id;
+
+        return $this;
+    }
+
+    public function getUserId()
+    {
+        return $this->_userId;
+    }
+
+    public function setUserName($name)
+    {
+        $this->_userName = $name;
+
+        return $this;
+    }
+
+    public function getUserName()
+    {
+        return $this->_userName;
     }
 
     public function setPlayerId($playerId)
@@ -77,7 +103,7 @@ class Review extends Entity
 
     public function getText()
     {
-        return $this->_text;
+        return htmlspecialchars_decode($this->_text);
     }
 
     public function setStatus($status)
@@ -127,6 +153,8 @@ class Review extends Entity
             $this->setId($data['Id'])
                  ->setStatus($data['Status'])
                  ->setPlayerId($data['PlayerId'])
+                 ->setUserId($data['UserId'])
+                 ->setUserName($data['UserName'])
                  ->setPlayerAvatar($data['PlayerAvatar'])
                  ->setPlayerName($data['PlayerName'])
                  ->setDate($data['Date'])

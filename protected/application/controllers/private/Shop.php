@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \PrivateArea, \Application, \ShopModel, \ShopCategory, \SupportedCountriesModel, \ShopItem, \WideImage, \EntityException;
+use \PrivateArea, \Application, \ShopModel, \ShopCategory, \SupportedCountriesModel, \Session2, \Admin, \ShopItem, \WideImage, \EntityException, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
@@ -16,6 +16,10 @@ class Shop extends PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction($id = '')
@@ -153,7 +157,7 @@ class Shop extends PrivateArea
         $image = $image->resize(ShopItem::IMAGE_WIDTH, ShopItem::IMAGE_HEIGHT);
         $image = $image->crop("center", "center", ShopItem::IMAGE_WIDTH, ShopItem::IMAGE_HEIGHT);
         
-        $imageName = uniqid() . ".jpg";
+        $imageName = ($this->request()->post('imageName')?: uniqid() . ".jpg");
         $image->saveToFile(PATH_FILESTORAGE .  'shop/' . $imageName, 100);
 
         $data = array(

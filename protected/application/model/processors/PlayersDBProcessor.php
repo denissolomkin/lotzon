@@ -316,6 +316,10 @@ class PlayersDBProcessor implements IProcessor
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='CookieId')
+                $sql .= ' WHERE CookieId = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='ReferalId')
+                $sql .= ' WHERE ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
                 $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -349,7 +353,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) Referal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CookieId,
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
-                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) MoneyOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review
                 FROM `Players`
                 WHERE `Players`.Id = :id";
@@ -417,7 +421,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CountCookieId,
                 (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) CountLog,
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) CountShopOrder,
-                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id`) CountMoneyOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) CountReview,
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`

@@ -17,8 +17,12 @@ class MoneyOrder extends Entity
     private $_type     = '';
     private $_text     = 'Вывод денег';
     private $_player   = null;
+    private $_userid   = 0;
+    private $_username   = '';
     private $_dateOrdered    = '';
     private $_dateProcessed  = '';
+    private $_number       = '';
+    private $_count       = 0;
     private $_adminProcessed = '';
     private $_status   = self::STATUS_ORDERED;
 
@@ -39,6 +43,42 @@ class MoneyOrder extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setUserId($userid)
+    {
+        $this->_userid = $userid;
+
+        return $this;
+    }
+
+    public function getUserId()
+    {
+        return $this->_userid;
+    }
+
+    public function setUserName($username)
+    {
+        $this->_username = $username;
+
+        return $this;
+    }
+
+    public function getUserName()
+    {
+        return $this->_username;
+    }
+
+    public function setCount($count)
+    {
+        $this->_count = $count;
+
+        return $this;
+    }
+
+    public function getCount()
+    {
+        return $this->_count;
     }
 
     public function setText($text)
@@ -114,6 +154,18 @@ class MoneyOrder extends Entity
         return $this->_status;
     }
 
+    public function setNumber($number)
+    {
+        $this->_number = preg_replace("/\D/","",$number);
+
+        return $this;
+    }
+
+    public function getNumber()
+    {
+        return $this->_number;
+    }
+
     public function setData($orderData)
     {
         $this->_orderData = $orderData;
@@ -143,10 +195,6 @@ class MoneyOrder extends Entity
                 if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 ) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
-                
-                if ($this->getData()['summ']['value'] > $this->getPlayer()->getMoney()) {
-                    throw new EntityException("INSUFFICIENT_FUNDS", 400);   
-                }
 
                 $data = $this->getData();
                 switch ($this->getType()) {
@@ -173,6 +221,7 @@ class MoneyOrder extends Entity
                         if (!preg_match('/^[+0-9\- ()]*$/', $data['phone']['value'])) {
                             throw new EntityException("INVALID_PHONE_FORMAT", 400);
                         }
+                        $this->setNumber($data['phone']['value']);
                     break;
                     case self::GATEWAY_WEBMONEY:
                         if (empty($data['purse']['value'])) {
@@ -187,6 +236,7 @@ class MoneyOrder extends Entity
                         if (!preg_match("/[a-z][0-9]{12}/i", $data['card-number']['value'])) {
                             throw new EntityException("INVALID_WEBMONEY_PURSE", 400);   
                         }
+                        $this->setNumber($data['card-number']['value']);
                     break;
                     case self::GATEWAY_YANDEX:
                         if (empty($data['card-number']['value'])) {
@@ -195,6 +245,7 @@ class MoneyOrder extends Entity
                         if (!preg_match("/[0-9]+/", $data['card-number']['value'])) {
                             throw new EntityException("INVALID_YANDEX_PURSE", 400);   
                         }
+                        $this->setNumber($data['card-number']['value']);
                     break;
                     case self::GATEWAY_P24:
                         if (empty($data['card-number']['value'])) {
@@ -210,6 +261,7 @@ class MoneyOrder extends Entity
                         if (!preg_match("/^((4[0-9]{12}(?:[0-9]{3}))|(5[1-5][0-9]{14}))$/", $cardNumber)) {
                             throw new EntityException("INVALID_CARD_NUMBER", 400);
                         }
+                        $this->setNumber($cardNumber);
                     break;
                     case self::GATEWAY_POINTS:
                         $rate=GameSettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry())?:
@@ -248,13 +300,16 @@ class MoneyOrder extends Entity
                  ->setDateOrdered($data['DateOrdered'])
                  ->setDateProcessed($data['DateProcessed'])
                  ->setStatus($data['Status'])
+                 ->setUserName($data['UserName'])
+                 ->setNumber($data['Number'])
                  ->setType($data['Type'])
                  ->setData(@unserialize($data['Data']));
 
             if($data['PlayerId']){
                 $player = new Player();
                 $player->setId($data['PlayerId']);
-                $this->setPlayer($player->fetch());
+                $this->setPlayer($player->fetch())
+                    ->setCount($data['Count']);
             }
         }
 

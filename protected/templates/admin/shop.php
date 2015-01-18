@@ -39,7 +39,7 @@
     <? foreach ($shop[$currentCategory]->getItems() as $item) { ?>
         <div class="col-md-2">
             <div class="thumbnail" data-id="<?=$item->getId()?>">
-                <img src="/filestorage/shop/<?=$item->getImage()?>" alt="...">
+                <img src="/filestorage/shop/<?=$item->getImage()?>" data-image="<?=$item->getImage()?>" class="upload" alt="...">
                 <div class="caption clearfix" data-title="<?=$item->getTitle()?>" data-price="<?=$item->getPrice()?>" data-quantity="<?=$item->getQuantity()?>" data-countries="<?=($item->getCountries() ? implode(" ",$item->getCountries()) : null)?>">
                     <h4><?=$item->getTitle()?></h4>
                     <div class="btn-group pull-left"> <span><?=$item->getPrice()?>/<?=($item->getQuantity() ? $item->getQuantity() : "&infin;")?>
@@ -69,7 +69,7 @@
     </div-->
     <div class="col-md-2">
         <div class="thumbnail">
-            <img src="/theme/admin/img/photo-icon-plus.png" class="upload" alt="click to upload" style="cursor:pointer;">
+            <img src="/theme/admin/img/photo-icon-plus.png" data-image="" class="upload" id="image" alt="click to upload" style="cursor:pointer;">
             <div class="caption">
                 <input type="text" name="title" class="form-control input-sm" placeholder="Название товара" value="" />
                 <div class="form-inline" style="margin-top:10px;">
@@ -211,25 +211,27 @@
         var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
         //$(button).parents('.photoalbum-box').prepend(form);
 
+        var image = $(this);
         var input = form.find('input[type="file"]').damnUploader({
             url: '/private/shop/uploadPhoto',
             fieldName: 'image',
             data: currentItem,
-            dataType: 'json',
+            dataType: 'json'
         });
-
-        var image = $(this);
 
         input.off('du.add').on('du.add', function(e) {
             
             e.uploadItem.completeCallback = function(succ, data, status) {
-                image.attr('src', data.imageWebPath);
+                image.attr('src', data.imageWebPath+"?"+(new Date().getTime()));
+                image.attr('data-image', data.imageName);
 
-                currentItem.image = data.imageName;
+                //if(!image.data('image'))
+                //    currentItem.image = data.imageName;
             }; 
 
             e.uploadItem.progressCallback = function(perc) {}
 
+            e.uploadItem.addPostData('imageName', image.attr('data-image'));
             e.uploadItem.addPostData('categoryId', currentItem.categoryId);
             e.uploadItem.addPostData('itemId', currentItem.itemId);
             e.uploadItem.upload();
@@ -241,6 +243,7 @@
     $('.save').on('click', function() {
         var form = $(this).parents('.thumbnail');
 
+        currentItem.image = $(form).find('img#image').data('image');
         currentItem.title = $(form).find('input[name="title"]').val();
         currentItem.price = $(form).find('input[name="price"]').val();
         currentItem.quantity = $(form).find('input[name="quantity"]').val();

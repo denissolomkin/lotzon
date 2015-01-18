@@ -20,7 +20,7 @@
                     <tr>
                         <td class="login"><?=$admin->getLogin()?></td>
                         <td title="click to edit" class="passInput" style="cursor:pointer;">************</td>
-                        <td title="click to edit" class="roleInput" style="cursor:pointer;"><?=($admin->getRole() == Admin::ROLE_ADMIN ? 'Администратор' : 'Менеджер')?></td>
+                        <td title="click to edit" class="roleInput" style="cursor:pointer;"><?=(ucfirst(strtolower($admin->getRole())))?></td>
                         <td><?=($admin->getLastLogin() ? date('D (d/m) H:i', $admin->getLastLogin()) : '<span class="label label-warning">еще не заходил</span>')?></td>
                         <td><?=$admin->getLastLoginIp()?></td>
                         <td><button class="btn btn-md btn-danger btn-delete"><i class="glyphicon glyphicon-remove"></i></button></td>
@@ -74,7 +74,7 @@ $("#createAdmin").on('click', function(){
                 if (data.status == 1) {
                     tableRow.find('input[name="login"]').parent().html(admin.login).addClass('login');
                     tableRow.find('input[name="password"]').parent().html("************").addClass("passInput").attr('title', 'click to edit');
-                    tableRow.find('select[name="role"]').parent().html(admin.role == '<?=Admin::ROLE_ADMIN?>' ? 'Администратор' : 'Менеджер').addClass("roleInput").attr('title', 'click to edit');
+                    tableRow.find('select[name="role"]').parent().html(admin.role).addClass("roleInput").attr('title', 'click to edit');
                     tableRow.find('.err-field').html('<span class="label label-success"> success </span>');    
                 } else {
                     tableRow.find('.err-field').html('<span class="label label-danger"> ' + data.message + ' </span>');    
@@ -95,7 +95,12 @@ function tdClickInputs() {
 
     var inputRow = $('<div class="form-inline"><input class="form-control" type="password" value="" name="password" placeholder="New password" />&nbsp;<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>&nbsp;<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button></div>');
     if ($(this).hasClass('roleInput')) {
-        inputRow = $('<div class="form-inline"><select class="form-control" name="role"><option value="<?=Admin::ROLE_ADMIN?>">Администратор</option><option value="<?=Admin::ROLE_MANAGER?>">Менеджер</option></select>&nbsp;<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>&nbsp;<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button></div>')
+        inputRow = $('<div class="form-inline"><select class="form-control" name="role">' +
+        '<option value="<?=Admin::ROLE_ADMIN?>"><?=(ucfirst(strtolower(Admin::ROLE_ADMIN)))?></option>' +
+        '<option value="<?=Admin::ROLE_MANAGER?>"><?=(ucfirst(strtolower(Admin::ROLE_MANAGER)))?></option>' +
+        '<option value="<?=Admin::ROLE_DEVELOPER?>"><?=(ucfirst(strtolower(Admin::ROLE_DEVELOPER)))?></option>' +
+        '<option value="<?=Admin::ROLE_MODERATOR?>"><?=(ucfirst(strtolower(Admin::ROLE_MODERATOR)))?></option>' +
+        '</select>&nbsp;<button class="btn btn-md btn-success"><i class="glyphicon glyphicon-ok"></i></button>&nbsp;<button class="btn btn-md btn-danger"><i class="glyphicon glyphicon-remove"></i></button></div>')
     }
 
     inputRow.on('click', function(e) {
@@ -136,7 +141,7 @@ function tdClickInputs() {
                     if (td.hasClass('passInput')) {
                         td.html("************");
                     } else {
-                        td.html(value == '<?=Admin::ROLE_ADMIN?>' ? 'Администратор' : 'Менеджер');
+                        td.html(value);
                     }
                 } else {
                     if (!td.find('.label-danger').length) {

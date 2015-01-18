@@ -68,7 +68,7 @@ class NoticesDBProcessor implements IProcessor
 
     public function getList($playerId = null, $date=null, $limit = null, $offset = null)
     {
-        $sql = "SELECT * FROM `PlayerNotices` WHERE ";
+        $sql = "SELECT `PlayerNotices`.*, `Admins`.Login UserName FROM `PlayerNotices` LEFT JOIN `Admins` ON UserId = `Admins`.Id WHERE ";
 
         $where[]=1;
 

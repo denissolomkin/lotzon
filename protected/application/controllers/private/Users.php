@@ -2,7 +2,7 @@
 namespace controllers\admin;
 
 use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice, \NotesModel, \Note, \Session2, \Admin;
-use \GameSettings, \ShopOrdersModel, \MoneyOrderModel;
+use \GameSettings, \ShopOrdersModel, \MoneyOrderModel, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/PlayersModel.php');
@@ -18,6 +18,10 @@ class Users extends PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction()
@@ -189,19 +193,21 @@ class Users extends PrivateArea
                 'message' => 'OK',
                 'data'    => array(),
             );
-
-
+            $number=$this->request()->get('number',null);
 
             try {
                 $response['data'] = array(
-                    'ShopOrders' => ShopOrdersModel::instance()->getOrdersToProcess(null,null,$playerId),
-                    'MoneyOrders' => MoneyOrderModel::instance()->getOrdersToProcess(null,null,$playerId)
+                    'ShopOrders' => ShopOrdersModel::instance()->getOrdersToProcess(null,null,$playerId,null,$number),
+                    'MoneyOrders' => MoneyOrderModel::instance()->getOrdersToProcess(null,null,$playerId,null,null,$number)
                 );
 
                 foreach ($response['data']['ShopOrders'] as &$order) {
                     $order = array(
                         'id' => $order->getId(),
                         'status' => $order->getStatus(),
+                        'number' => $order->getPhone(),
+                        'username' => ($order->getUsername()?$order->getUsername().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
+                        'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurName().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():''),
                         'item' => $order->getItem()->getTitle(),
                         'name' => $order->getSurname().' '.$order->getName.' '.$order->getSecondName(),
                         'phone' => $order->getPhone(),
@@ -221,6 +227,9 @@ class Users extends PrivateArea
                     $order = array(
                         'id' => $order->getId(),
                         'status' => $order->getStatus(),
+                        'number' => $order->getNumber(),
+                        'username' => ($order->getUsername()?$order->getUsername().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
+                        'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurName().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():null),
                         'type' => $order->getType(),
                         'data' => (implode('</br>',$dataOrder)),
                         'date' => date('d.m.Y H:i:s', $order->getDateOrdered()),
@@ -322,7 +331,7 @@ class Users extends PrivateArea
                 foreach ($response['data']['notes'] as &$note) {
                     $note = array(
                         'id' => $note->getId(),
-                        'user' => $note->getUser(),
+                        'user' => $note->getUserName(),
                         'date' => date('d.m.Y H:i:s', $note->getDate()),
                         'text' => $note->getText(),
                     );
@@ -402,6 +411,7 @@ class Users extends PrivateArea
                     $notice = array(
                         'id' => $notice->getId(),
                         'title' => $notice->getTitle(),
+                        'username' => ($notice->getUserName()?:''),
                         'text' => $notice->getText(),
                         'date' => date('d.m.Y H:i:s', $notice->getDate()),
                     );

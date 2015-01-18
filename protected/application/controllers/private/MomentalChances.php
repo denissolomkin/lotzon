@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \ChanceGame, \ChanceGamesModel, \EntityException;
+use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \ChanceGame, \ChanceGamesModel, \EntityException, \Admin, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -12,6 +12,10 @@ class MomentalChances extends PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction()
