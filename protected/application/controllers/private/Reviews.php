@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \ReviewsModel, \Review, \EntityException;
+use \Application, \PrivateArea, \ReviewsModel, \Review, \EntityException, \Session2, \Admin, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -13,6 +13,10 @@ class Reviews extends PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction()
@@ -53,7 +57,7 @@ class Reviews extends PrivateArea
     public function statusAction($id)
     {
             $review = new Review();
-            $review->setId($id)->fetch();
+            $review->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())->setId($id)->fetch();
             $review->setStatus((int)$this->request()->get('setstatus')?:0);
 
             try {

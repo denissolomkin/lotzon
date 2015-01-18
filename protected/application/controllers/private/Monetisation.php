@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \ChanceGame, \ChanceGamesModel, \EntityException;
+use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \ChanceGame, \ChanceGamesModel, \EntityException, \Session2, \Admin;
 use \ShopOrdersModel, \ShopItemOrder, \MoneyOrderModel, \MoneyOrder;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
@@ -14,6 +14,10 @@ class Monetisation extends PrivateArea
     public function init()
     {
         parent::init();
+
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+            $this->redirect('/private');
+        }
     }
 
     public function indexAction()
@@ -22,6 +26,7 @@ class Monetisation extends PrivateArea
         $shopPage = $this->request()->get('shopPage', 1);
         $moneyPage = $this->request()->get('moneyPage', 1);
         $shopStatus = $this->request()->get('shopStatus', 0);
+        $moneyType = $this->request()->get('moneyType', 0);
         $moneyStatus = $this->request()->get('moneyStatus', 0);
         $search = $this->request()->get('search', null);
         $sort = array(
@@ -30,7 +35,7 @@ class Monetisation extends PrivateArea
         );
 
         $shopOrders = ShopOrdersModel::instance()->getOrdersToProcess(self::ORDERS_PER_PAGE, $shopPage == 1 ? 0 : self::ORDERS_PER_PAGE * $shopPage - self::ORDERS_PER_PAGE, null, $shopStatus);
-        $shopCount = ShopOrdersModel::instance()->getOrdersToProcessCount(null, $shopStatus);
+        $shopCount = ShopOrdersModel::instance()->getOrdersToProcessCount($shopStatus);
 
         $shopPager = array(
             'page' => $shopPage,
@@ -41,8 +46,8 @@ class Monetisation extends PrivateArea
 
         $shopPager['pages'] = ceil($shopPager['rows'] / $shopPager['per_page']);
 
-        $moneyOrders = MoneyOrderModel::instance()->getOrdersToProcess(self::ORDERS_PER_PAGE, $moneyPage == 1 ? 0 : self::ORDERS_PER_PAGE * $moneyPage - self::ORDERS_PER_PAGE, null, $moneyStatus);
-        $moneyCount = MoneyOrderModel::instance()->getOrdersToProcessCount(null, $moneyStatus);
+        $moneyOrders = MoneyOrderModel::instance()->getOrdersToProcess(self::ORDERS_PER_PAGE, $moneyPage == 1 ? 0 : self::ORDERS_PER_PAGE * $moneyPage - self::ORDERS_PER_PAGE, null, $moneyStatus, $moneyType);
+        $moneyCount = MoneyOrderModel::instance()->getOrdersToProcessCount($moneyStatus, $moneyType);
 
         $moneyPager = array(
             'page' => $moneyPage,
@@ -63,6 +68,7 @@ class Monetisation extends PrivateArea
             'moneyCount' => $moneyCount,
             'moneyPager' => $moneyPager,
             'moneyStatus' => $moneyStatus,
+            'moneyType'  => $moneyType,
             'shopCount'  => $shopCount,
             'shopPager'  => $shopPager,
             'shopStatus'  => $shopStatus,
@@ -71,7 +77,6 @@ class Monetisation extends PrivateArea
 
     public function statusAction($id)
     {
-
 
         if ($this->request()->isAjax()) {
 
@@ -90,8 +95,8 @@ class Monetisation extends PrivateArea
                     $order->setId($id)->fetch();
 
                     $order->setStatus($status)
+                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setDateProcessed(time());
-
                     try {
                         $order->update();
                         // update item
@@ -107,6 +112,7 @@ class Monetisation extends PrivateArea
                     $order->setId($id)->fetch();
 
                     $order->setStatus($status)
+                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setDateProcessed(time());
 
                     try {

@@ -115,9 +115,10 @@
                 <div style="clear:both"></div>
             </div>
             <div class="modal-body">
-                <h4>Баллы</h4>
+                <h4>Баллы
+                    <button class="btn btn-info pull-right" onclick="location.href='#moneyTransactions'" style="margin-top: -10px;"><i class="glyphicon glyphicon-hand-down"></i> Деньги</button></h4>
                 <hr />
-                <table class="table table-striped points" >
+                <table class="table table-striped points"  id="pointsTransactions">
                     <thead>
                         <th>#ID транзакции</th>
                         <th>Дата</th>
@@ -131,9 +132,10 @@
                     </tbody>
                 </table>
                 
-                <h4>Деньги</h4>
+                <h4>Деньги
+                    <button class="btn btn-info pull-right" onclick="location.href='#pointsTransactions'" style="margin-top: -10px;"><i class="glyphicon glyphicon-hand-up"></i> Баллы</button></h4>
                 <hr />
-                <table class="table table-striped money" >
+                <table class="table table-striped money" id="moneyTransactions">
                     <thead>
                         <th>#ID транзакции</th>
                         <th>Дата</th>
@@ -171,11 +173,11 @@
                 </div>
                 <table class="table table-striped shop">
                     <thead>
-                    <th>#ID</th>
                     <th>Дата</th>
+                    <th></th>
+                    <th>Номер</th>
                     <th>Товар</th>
                     <th>Данные</th>
-                    <th>Стоимость</th>
                     </thead>
                     <tbody>
 
@@ -189,9 +191,9 @@
                 </div>
                 <table class="table table-striped money">
                     <thead>
-                    <th>#ID</th>
                     <th>Дата</th>
-                    <th>Система</th>
+                    <th></th>
+                    <th colspan="2">Номер</th>
                     <th>Данные</th>
                     </thead>
                     <tbody>
@@ -273,9 +275,8 @@
                 <hr />
                 <table class="table table-striped points" >
                     <thead>
-                    <th>#ID</th>
                     <th>Дата</th>
-                    <th>Заголовок</th>
+                    <th>Уведомление</th>
                     <th>Удалить</th>
                     </thead>
                     <tbody>
@@ -506,7 +507,7 @@
 /* OEDERS BLOCK */
 $('.orders-trigger').on('click', function() {
     $.ajax({
-        url: "/private/users/orders/" + $(this).data('id'),
+        url: "/private/users/orders/" + ($(this).attr('data-id')?$(this).data('id'):'0?number='+$(this).data('number')),
         method: 'GET',
         async: true,
         dataType: 'json',
@@ -515,7 +516,7 @@ $('.orders-trigger').on('click', function() {
 
                 var tdata = '';
                 $(data.data.MoneyOrders).each(function(id, tr) {
-                    tdata += '<tr class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.type+'</td><td>'+tr.data+'</td>'
+                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'" class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td'+(tr.playername?'>'+tr.playername+'</td><td>':' colspan=2>')+(tr.number>0?tr.number:'')+'</td><td><img src="../tpl/img/'+tr.type+'.png"></td><td>'+tr.data+'</td>'
                     tdata += '</td></tr>'
 
                 });
@@ -523,7 +524,7 @@ $('.orders-trigger').on('click', function() {
 
                 tdata = '';
                 $(data.data.ShopOrders).each(function(id, tr) {
-                    tdata += '<tr class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.item+'</td><td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td><td>'+tr.price+'</td>'
+                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"  class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td>'+tr.playername+'</td><td>'+(tr.number>0?tr.number:'')+'</td><td>'+tr.item+'<br>'+tr.price+'</td><td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td>'
                     tdata += '</tr>'
 
                 });
@@ -532,6 +533,8 @@ $('.orders-trigger').on('click', function() {
                 $("#orders-holder").find('.cls').on('click', function() {
                     $("#orders-holder").modal('hide');
                 })
+
+                $('[data-toggle="tooltip"]').tooltip()
             } else {
                 alert(data.message);
             }
@@ -540,6 +543,7 @@ $('.orders-trigger').on('click', function() {
             alert('Unexpected server error');
         }
     });
+
 });
 /* END ORDERS BLOCK */
 
@@ -642,6 +646,7 @@ $('.notes-trigger').on('click', function() {
                 $("#notes-holder").find('.add').off('click').on('click', function() {
                     addNote(plid);
                 });
+
             } else {
                 alert(data.message);
             }
@@ -788,10 +793,9 @@ $("#add-notice select").on('change', function() {
                 if (data.status == 1) {
                     var tdata = ''
                     $(data.data.notices).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.title+'</td>'
+                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"><td>'+tr.date+'</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
-                        if(tr.text)
-                            tdata += '<tr><td colspan=4>'+tr.text+'</td></tr>';
+
                     });
                     $("#notices-holder").find('tbody').html(tdata);
 
@@ -802,6 +806,8 @@ $("#add-notice select").on('change', function() {
                     $("#notices-holder").find('.add').off('click').on('click', function() {
                         addNotice(plid);
                     });
+
+                    $('[data-toggle="tooltip"]').tooltip();
                 } else {
                     alert(data.message);
                 }
@@ -1184,5 +1190,9 @@ function addTransaction(plid) {
 
     });
 /* END SOCIAL INFORMATION */
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 
 </script>

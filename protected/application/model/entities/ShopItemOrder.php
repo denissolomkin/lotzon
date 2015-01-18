@@ -9,6 +9,9 @@ class ShopItemOrder extends Entity
     private $_id       = 0;
     private $_item     = null;
     private $_player   = null;
+    private $_number   = null;
+    private $_userid   = 0;
+    private $_username   = '';
     private $_dateOrdered    = '';
     private $_dateProcessed  = '';
     private $_adminProcessed = '';
@@ -41,6 +44,43 @@ class ShopItemOrder extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+
+    public function setUserId($userid)
+    {
+        $this->_userid = $userid;
+
+        return $this;
+    }
+
+    public function getUserId()
+    {
+        return $this->_userid;
+    }
+
+    public function setUserName($username)
+    {
+        $this->_username = $username;
+
+        return $this;
+    }
+
+    public function getUserName()
+    {
+        return $this->_username;
+    }
+
+    public function setNumber($number)
+    {
+        $this->_number = $number;
+
+        return $this;
+    }
+
+    public function getNumber()
+    {
+        return $this->_number;
     }
 
     public function setChanceGameId($chanceGameId)
@@ -272,6 +312,9 @@ class ShopItemOrder extends Entity
                  ->setDateOrdered($data['DateOrdered'])
                  ->setDateProcessed($data['DateProcessed'])
                  ->setStatus($data['Status'])
+                 ->setNumber($data['Number'])
+                 ->setUserName($data['UserName'])
+                 ->setUserId($data['UserId'])
                  ->setName($data['Name'])
                  ->setSurname($data['Surname'])
                  ->setSecondName($data['SecondName'])

@@ -7,11 +7,12 @@ class NewGame extends Entity
 {
     const   STACK_PLAYERS = 2;
     const   GAME_PLAYERS = 2;
-    const   TIME_OUT = 20;
+    const   TIME_OUT = 5;
     const   FIELD_SIZE = 7;
-    const   GAME_MOVES = 6;
+    const   GAME_MOVES = 2;
 
-    private $_id = 1;
+    private $_gameid = 1;
+    public  $_botTimer = 0;
     private $_gameTitle = '"Кто больше"';
     private $_gameCurrency = '';
     private $_gamePrice = null;
@@ -37,93 +38,93 @@ class NewGame extends Entity
 
     public function quitAction($data=null)
     {
-        if($this->getClient()->Session->get(PLAYER::IDENTITY)!==null) {
-            #echo "Выход из игры\n";
-            $this->unsetCallback();
-            $playerId = $this->getClient()->Session->get(PLAYER::IDENTITY)->getId();
+        #echo ' '.time().' '. "Выход из игры\n";
 
-            $this->setCallback(array(
-                'quit' => $playerId,
-                'action' => 'quit'
-            ));
+        $playerId = $this->getClient()->id;
+        $this->unsetCallback();
+        $this->setCallback(array(
+            'quit' => $playerId,
+            'action' => 'quit'
+        ));
 
-            $this->setResponse($this->getClients());
-            #echo "Удаляем из клиентов игры {$playerId}\n";
-            $this->unsetClients($playerId);
-            #echo "Конец выход из игры\n";
-        }
+        $this->setResponse($this->getClients());
+        #echo ' '.time().' '. "Удаляем из клиентов игры {$playerId}\n";
+        $this->unsetClients($playerId);
+
+        #echo ' '.time().' '. "Конец выход из игры\n";
     }
 
     public function passAction($data=null)
     {
-        if($this->getClient()->Session->get(PLAYER::IDENTITY)!==null) {
-            #echo "Сдаться\n";
+        #echo ' '.time().' '. "Сдаться\n";
 
-            $this->unsetCallback();
-            $playerId = $this->getClient()->Session->get(PLAYER::IDENTITY)->getId();
-            $this->updatePlayer(array('result' => 1));
-            $this->updatePlayer(array('result' => -2), $playerId);
+        $playerId = $this->getClient()->id;
 
-            $this->_isOver = 1;
-            $this->_isSaved = 0;
+        $this->updatePlayer(array('result' => 1))
+            ->updatePlayer(array('result' => -2), $playerId)
+            ->unsetCallback();
+        $this->_isOver = 1;
+        $this->_isSaved = 0;
 
-            if (count($this->getPlayers()) > 1)
-                while ($this->currentPlayer()['pid'] == $playerId)
-                    $this->nextPlayer();
+        if (count($this->getPlayers()) > 1)
+            while ($this->currentPlayer()['pid'] == $playerId)
+                $this->nextPlayer();
 
-            $this->setCallback(array(
-                'winner' => $this->currentPlayer()['pid'],
-                'players' => $this->getPlayers(),
-                'currency' => $this->getCurrency(),
-                'price' => $this->getPrice(),
-                'action' => 'move'
-            ));
+        $this->setCallback(array(
+            'winner' => $this->currentPlayer()['pid'],
+            'players' => $this->getPlayers(),
+            'currency' => $this->getCurrency(),
+            'price' => $this->getPrice(),
+            'action' => 'move'
+        ));
 
-            $this->setResponse($this->getClients());
-            #echo "Конец сдаться\n";
-        }
+        $this->setResponse($this->getClients());
+            #echo ' '.time().' '. "Конец сдаться\n";
     }
 
 
     public function replayAction($data=null)
     {
-        if($this->getClient()->Session->get(PLAYER::IDENTITY)!==null) {
-            #echo "Повтор игры\n";
-            $playerId = $this->getClient()->Session->get(PLAYER::IDENTITY)->getId();
-            $this->updatePlayer(array('ready' => 1), $playerId);
+            #echo ''.time().' '. "Повтор игры\n";
+
+            $clientId = $this->getClient()->id;
+            $this->updatePlayer(array('ready' => 1), $clientId );
             $players = $this->getPlayers();
 
             $ready = 0;
-            foreach ($players as $player)
-                if (isset($player['ready']))
-                    $ready += $player['ready'];
+            foreach ($players as $player){
+                if (isset($player['ready']) || $this->getClients()[$player['pid']]->bot === true)
+                    $ready += 1;
+            }
 
             if ($ready == count($players)) {
-                $this->unsetFieldPlayed();
-                $this->setField($this->generateField());
-                $this->setPlayers($this->getClients());
                 $this->_isOver = 0;
                 $this->_isSaved = 0;
-                $this->startAction();
+                #echo ' '.time().' '. "Переустановка игроков\n";
+                $this->unsetFieldPlayed()
+                    ->setField($this->generateField())
+                    ->setPlayers($this->getClients())
+                    ->nextPlayer()
+                    ->startAction();
             } else {
-                $this->unsetCallback();
-                $this->setResponse($this->getClient());
-                $this->setCallback(array(
+                $this->unsetCallback()
+                    ->setResponse($clientId)
+                    ->setCallback(array(
                     'action' => 'ready',
                     'ready' => $ready
                 ));
             }
 
-            #echo "Конец повтора игры\n";
-        }
+            #echo ' '.time().' '. "Конец повтора игры\n";
     }
 
     public function startAction($data=null)
     {
-        #echo "Старт\n";
+        #echo ''.time().' '. "Старт\n";
         $this->unsetCallback();
 
         if(!$this->getPlayers()) {
+            #echo ' '.time().' '. "Первичная установка игроков\n";
             $this->setPlayers($this->getClients());
             $this->nextPlayer();
             $this->_isOver=0;
@@ -145,15 +146,21 @@ class NewGame extends Entity
 
     public function moveAction($data=null)
     {
-        #echo "Ход \n";
         $this->unsetCallback();
-        list($x,$y)=explode('x',$data->cell);
+        if($this->getClients()[$this->currentPlayer()['pid']]->bot === true){
+            #echo ''.time().' '. "ход бота\n";
+            $this->setClient($this->currentPlayer()['pid']);
+            list($x,$y) = $this->generateMove();}
+        else{
+            #echo ''.time().' '. "ход игрока\n";
+            list($x,$y) = explode('x',$data->cell);}
 
         if($error=$this->checkError($x, $y))
             $this->setCallback(array('error' => $error));
         else {
-
+            #echo ' '.time().' '. "ход";
             $this->doMove($x,$y);
+            #echo ' '.time().' '. "следующий игрок";
             $this->nextPlayer();
 
             if($winner=$this->checkWinner()){
@@ -176,25 +183,25 @@ class NewGame extends Entity
 
         if (array_key_exists('error',$this->getCallback()))
             $this->setCallback(array('action' => 'error'))
-                ->setResponse($this->getClient());
+                ->setResponse($this->getClient()->id);
 
         elseif(!array_key_exists('action',$this->getCallback()))
-        $this->setCallback(array('action' => 'move'));
-        #echo "Конец хода \n";
+            $this->setCallback(array('action' => 'move'));
+        #echo ' '.time().' '. "Конец хода \n";
     }
 
     public function timeoutAction($data=null)
     {
-        #echo "Тайм-аут \n";
-        $this->unsetCallback();
-        if(isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout']<=time())
-        {
-            #echo "Переход хода \n";
-            if(!$this->isOver()) {
-            $this->passMove();
-            $this->nextPlayer();
-            }
 
+        #echo ' '.time().' '. "Тайм-аут \n";
+        $this->unsetCallback();
+        if(!$this->isOver() AND isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout']<=time())
+        {
+            #echo ' '.time().' '. "Переход хода \n";
+            $this->passMove();
+            #echo ' '.time().' '. 'разница времени после пасса '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
+            $this->nextPlayer();
+            #echo ' '.time().' '. 'разница времени после перехода '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
         }
 
         if($winner=$this->checkWinner())
@@ -203,21 +210,22 @@ class NewGame extends Entity
                 'price' => $this->getPrice(),
                 'currency' => $this->getCurrency()));
 
+        $currentPlayer=$this->currentPlayer();
+
         $this->setCallback(array(
             'current'   => $this->currentPlayer()['pid'],
-            'timeout'   => $this->currentPlayer()['timeout']-time(),
+            'timeout'   => $currentPlayer['timeout']-time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
             'players'   => $this->getPlayers(),
             'action'    => 'move'
             ));
 
         $this->setResponse($this->getClients());
-
-        #echo "Конец тайм-аута \n";
+        #echo ' '.time().' '. "Конец тайм-аута \n";
     }
 
     public function checkError($x, $y)
     {
-        #echo "Проверка ошибок \n";
+        #echo ' '.time().' '. "Проверка ошибок \n";
         if (!$this->isMove())
             return 'NOT_YOUR_MOVE';
         elseif (!$this->isCell($x,$y))
@@ -238,13 +246,11 @@ class NewGame extends Entity
         return $this->_field[$x][$y]['player'];
     }
 
-
     public function isMove()
     {
-        if($this->getClient()->Session->get(PLAYER::IDENTITY)!==null) {
-            $current = $this->currentPlayer();
-            return ($current['pid'] == $this->getClient()->Session->get(PLAYER::IDENTITY)->getId());
-        }
+        $current = $this->currentPlayer();
+        return ($current['pid'] == $this->getClient()->id);
+
     }
 
     public function isOver()
@@ -264,7 +270,7 @@ class NewGame extends Entity
 
     public function passMove()
     {
-        #echo "Пас хода \n";
+        #echo ' '.time().' '. "Пас хода \n";
         $current=$this->currentPlayer();
         $this->updatePlayer(array(
                 'moves'=>-1), $current['pid']);
@@ -274,9 +280,8 @@ class NewGame extends Entity
 
     public function doMove($x,$y)
     {
-        if($this->getClient()->Session->get(PLAYER::IDENTITY)!==null) {
-            #echo "Запись хода \n";
-            $playerId = $this->getClient()->Session->get(PLAYER::IDENTITY)->getId();
+
+            $playerId = $this->getClient()->id;
             $points = $this->_field[$x][$y]['points'];
             $this->_field[$x][$y]['player'] = $playerId;
 
@@ -287,18 +292,44 @@ class NewGame extends Entity
             $this->_fieldPlayed[$x][$y] = $this->_field[$x][$y];
 
             return $this;
-        }
+    }
+
+    public function generateMove()
+    {
+
+        $minimum=(rand(1,2)<2?(pow(self::FIELD_SIZE,2)-(self::GAME_MOVES*(self::GAME_PLAYERS+1))):0);
+
+        #echo ' '.time().' '. "Генерация поля для бота\n";
+        do {
+            do {
+                $x=rand(1,self::FIELD_SIZE);
+                $y=rand(1,self::FIELD_SIZE);
+            } while($this->_field[$x][$y]['player']);
+        } while($this->_field[$x][$y]['points']<$minimum);
+
+        #echo ' '.time().' '. "Ход бота $x, $y = $minimum ".$this->_field[$x][$y]['points']."\n";
+        return array($x, $y);
     }
 
     public function nextPlayer()
     {
-        #echo "Следующий игрок \n";
+        #echo ' '.time().' '. "Следующий игрок \n";
         if (next($this->_players) === false) {
             reset($this->_players);
         }
-       // #echo (current($this->_players)['pid']);
+
+        #echo ' '.time().' '. 'игрок '.(current($this->_players)['pid'])."\n";
+        #echo ' '.time().' '. 'было '.$this->_players[(current($this->_players)['pid'])]['timeout']."\n";
+
         $this->_players[(current($this->_players)['pid'])]['timeout']=time()+self::TIME_OUT;
-        return current($this->_players);
+
+        if($this->_clients[(current($this->_players)['pid'])]->bot)
+            $this->_botTimer = rand(1,3);
+        else
+            $this->_botTimer = 0;
+
+        #echo ' '.time().' '. 'стало '.$this->_players[(current($this->_players)['pid'])]['timeout']."\n";
+        return $this; //current($this->_players);
     }
 
     public function currentPlayer()
@@ -308,12 +339,13 @@ class NewGame extends Entity
 
     public function checkWinner()
     {
-        #echo "Проверка победителя \n";
+        #echo ' '.time().' '. "Проверка победителя \n";
         $current = $this->currentPlayer();
         if ($current['moves'] < 1)
         {
+            $players=$this->getPlayers();
             $winner=array();
-            foreach ($this->getPlayers() as $player){
+            foreach ($players as $player){
                 if(array_key_exists($player['points'],$winner))
                     $winner[$player['points']]['count']+=1;
                 else
@@ -321,28 +353,30 @@ class NewGame extends Entity
                 $winner[$player['points']]['player']=$player;
             }
 
-        krsort($winner);
+            krsort($winner);
 
-        if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
-            $this->updatePlayer(array('result'=>-1));
-            $this->updatePlayer(array('result'=>2),current($winner)['player']['pid']);
-            $this->_isOver=1;
-            // $this->_isSaved=0;
-            #echo "Победитель #".current($winner)['player']['pid']."\n";
-            return current($winner)['player'];
-        } else {
-            $this->setCallback(array('extra' => 1));
-            $this->updatePlayer(array('moves' => 1));
-        }
+            if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
+                #echo ' '.time().' '. "Победитель #".current($winner)['player']['pid']."\n";
+                $this->updatePlayer(array('result'=>-1));
+                $this->updatePlayer(array('result'=>2),current($winner)['player']['pid']);
+                $this->_isOver=1;
+                return current($winner)['player'];
+            } else {
+                #echo ' '.time().' '. "Экстра время \n";
+                $this->setCallback(array('extra' => 1));
+                $this->updatePlayer(array('moves' => 1));
+            }
 
         }
-        #echo "Победителя нет \n";
+        #echo ' '.time().' '. "Победителя нет \n";
 
     }
 
     public function updatePlayer($data,$id=null)
     {
-        #echo "Обновление игроков \n";
+        $currentPlayer=$this->currentPlayer();
+        #echo ' '.time().' '. "Обновление данных\n";
+        #echo ' '.time().' '. ' до '.$this->currentPlayer()['pid'];
         if($id)
             $players[]=$this->getPlayers()[$id];
         else
@@ -360,11 +394,24 @@ class NewGame extends Entity
                 } else {
                     if(array_key_exists($value,$this->_players[$player['pid']])) {
                         unset($this->_players[$player['pid']][$value]);
-                        #echo "Удаление из игроков {$value}\n";
+                        #echo ' '.time().' '. "Удаление из игроков {$value}\n";
                     }
                 }
             }
         }
+
+        if(!$id){
+            reset($players);
+            while(each($players)==$currentPlayer){}
+                #echo ' '.time().' '. "\n".(1)."\n";//print_r($this->currentPlayer());
+        }
+//        foreach ($players as $player)
+//            if($player==$currentPlayer)
+//                break;
+
+
+        #echo ' '.time().' '. " - ".($this->currentPlayer()['pid']?$this->currentPlayer()['pid']:0)."после  \n";
+
 
         return $this;
     }
@@ -376,19 +423,20 @@ class NewGame extends Entity
 
     public function setPlayers($clients)
     {
-        if($this->getClient()->Session->get(PLAYER::IDENTITY)!==null) {
-            //shuffle($clients);
-            #echo "Инициализация игроков \n";
-            foreach ($clients as $pid => $player)
-                $this->_players[$pid] = array(
-                    'pid' => $pid,
-                    'moves' => self::GAME_MOVES,
-                    'points' => 0,
-                    'avatar' => $player->Session->get(Player::IDENTITY)->getAvatar(),
-                    'name' => $player->Session->get(Player::IDENTITY)->getNicName());
+        rand(0,1)?arsort($clients):asort($clients);
 
-            return $this;
-        }
+        #echo ' '.time().' '. "Инициализация игроков \n";
+        foreach ($clients as $id => $client)
+            $this->_players[$id] = array(
+                'pid' => $id,
+                'moves' => self::GAME_MOVES,
+                'points' => 0,
+                'avatar' => $client->avatar,
+                'name' => $client->name
+            );
+
+
+        return $this;
     }
 
     public function setResponse($clients)
@@ -405,7 +453,7 @@ class NewGame extends Entity
 
     public function setClient($client)
     {
-        $this->_client=$client;
+        $this->_client=$this->getClients()[$client];
 
         return $this;
     }
@@ -438,9 +486,9 @@ class NewGame extends Entity
         return $this;
     }
 
-    public function setIdentifier($identity)
+    public function setIdentifier($identifier)
     {
-        $this->_identifier = $identity;
+        $this->_identifier = $identifier;
 
         return $this;
     }
@@ -452,7 +500,7 @@ class NewGame extends Entity
 
     public function getId()
     {
-        return $this->_id;
+        return $this->_gameid;
     }
 
     public function getTitle()
@@ -519,6 +567,7 @@ class NewGame extends Entity
     public function unsetFieldPlayed()
     {
         $this->_fieldPlayed=array();
+        return $this;
     }
 
     public function setField($field)

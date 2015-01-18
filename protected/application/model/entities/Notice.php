@@ -6,6 +6,7 @@ class Notice extends Entity
     private $_id    = '';
     private $_playerid = '';
     private $_userid = '';
+    private $_username = '';
     private $_text  = '';
     private $_type  = '';
     private $_title  = '';
@@ -63,6 +64,18 @@ class Notice extends Entity
         return $this->_userid;
     }
 
+    public function setUserName($user)
+    {
+        $this->_username = $user;
+
+        return $this;
+    }
+
+    public function getUserName()
+    {
+        return $this->_username;
+    }
+
     public function setPlayerId($playerid) {
         $this->_playerid = $playerid;
 
@@ -104,6 +117,7 @@ class Notice extends Entity
             $this->setId($data['Id'])
                  ->setPlayerId($data['PlayerId'])
                  ->setDate($data['Date'])
+                 ->setUserName($data['UserName'])
                  ->setTitle($data['Title'])
                  ->setText($data['Text']);
         }

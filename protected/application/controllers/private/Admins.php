@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Admin, \Application, \EntityException, \AdminModel;
+use \Session2, \Config, \Admin, \Application, \EntityException, \AdminModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . 'model/models/AdminModel.php');
@@ -13,7 +13,7 @@ class Admins extends \PrivateArea
     {
         parent::init();
 
-        if (Session2::connect()->get(Admin::SESSION_VAR)->getRole() !== Admin::ROLE_ADMIN) {
+        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
             $this->redirect('/private');
         }
     }

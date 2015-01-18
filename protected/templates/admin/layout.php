@@ -27,46 +27,47 @@
       <div class="row-fluid">&nbsp;</div>
         <div class="row-fluid">
             <ul class="nav nav-pills" role="tablist">
-                <li<?=($activeMenu == 'users' ? ' class="active"' : '')?>><a href="/private/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Пользователи <span class="label label-warning"><?=PlayersModel::instance()->getProcessor()->getPlayersCount()?></span></a></li>
-                <li<?=($activeMenu == 'reviews' ? ' class="active"' : '')?>><a href="/private/reviews"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Отзывы <span class="label label-warning"><?=ReviewsModel::instance()->getProcessor()->getCount(0)?></span></a></li>
-                <li<?=($activeMenu == 'monetisation' ? ' class="active"' : '')?>><a href="/private/monetisation"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Запросы <span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?> / <?=MoneyOrderModel::instance()->getProcessor()->getOrdersToProcessCount()?></span></a></li>
+
+                <? foreach(Admin::$PAGES as $key=>$pages) : ?>
+                    <? if(is_array($pages['pages'])) {
+                        $menu=array();
+                        foreach($pages['pages'] as $link=>$page)
+                            if(Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$link]) :
+                                $menu[]='
+                                <li'.($activeMenu == $link ? ' class="active"' : '').'><a href="/private/'.$link.'">'.
+                                    (isset($page['icon'])?'<span class="glyphicon glyphicon-'.$page['icon'].'" aria-hidden="true"></span> ':'').
+                                    ($page['name']?:'').'</a></li>';
+
+                            endif ?>
+
+                <? if(count($menu))
+                            echo'
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info" style="padding: 9px 12px;" data-toggle="dropdown" aria-expanded="false">'.
+                                (isset($pages['icon'])? '<span class="glyphicon glyphicon-'.$pages['icon'].'" aria-hidden="true"></span> ':'').
+                                $key.' <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                '.implode('',$menu).'
+                                </ul>
+                            </div>
+                        </li>';
+                    } elseif(Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$key]) { ?>
+
+                        <li class="<?=($activeMenu == $key ? 'active' : '')?><?=$pages['css']?:''?>"><a href="/private/<?=$key?>">
+                                <? if($pages['icon']): ?> <span class="glyphicon glyphicon-<?=$pages['icon']?>" aria-hidden="true"></span>  <? endif ?>
+                                <?=($pages['name']?:'')?>
+                                <? if ($key=='users') : ?><span class="label label-warning"><?=PlayersModel::instance()->getProcessor()->getPlayersCount()?></span> <? endif ?>
+                                <? if ($key=='reviews') : ?><span class="label label-warning"><?=ReviewsModel::instance()->getProcessor()->getCount(0)?></span> <? endif ?>
+                                <? if ($key=='monetisation') : ?><span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?> / <?=MoneyOrderModel::instance()->getProcessor()->getOrdersToProcessCount()?></span> <? endif ?>
+                            </a></li>
+                <? } ?>
+                <? endforeach ?>
                 <!--li><a href="/private/stats">Статистика</a></li-->
 
-                <li>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info" style='padding: 9px 12px;' data-toggle="dropdown" aria-expanded="false">
-                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Контент <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li<?=($activeMenu == 'banners' ? ' class="active"' : '')?>><a href="/private/banners"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Баннеры</a></li>
-                            <li<?=($activeMenu == 'comments' ? ' class="active"' : '')?>><a href="/private/comments"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Комментарии</a></li>
-                            <li<?=($activeMenu == 'news' ? ' class="active"' : '')?>><a href="/private/news"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Новости</a></li>
-                            <li<?=($activeMenu == 'shop' ? ' class="active"' : '')?>><a href="/private/shop"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Товары</a></li>
-                        </ul>
-                    </div>
-                </li>
 
-                <li>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info" style='padding: 9px 12px;' data-toggle="dropdown" aria-expanded="false">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Настройки <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li<?=($activeMenu == 'blacklist' ? ' class="active"' : '')?>><a href="/private/blacklist"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Blacklist</a></li>
-                            <li<?=($activeMenu == 'game' ? ' class="active"' : '')?>><a href="/private/game"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> Розыгрыши</a></li>
-                            <li <?=($activeMenu == 'chances' ? ' class="active"' : '')?>><a href="/private/chances"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Шансы</a></li>
-                            <li <?=($activeMenu == 'seo' ? ' class="active"' : '')?>><a href="/private/seo"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> SEO</a></li>
-                            <li<?=($activeMenu == 'texts' ? ' class="active"' : '')?>><a href="/private/texts"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Тексты</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <!--li><a href="/private/ogames">Онлайн игры</a></li-->
-                <!--li ><a href="/private/subscribes">Заявки</a></li-->
 
-                <!--li><a href="/private/ogames">Онлайн игры</a></li-->
-                <!--li <?=($activeMenu == 'subscribes' ? ' class="active"' : '')?>><a href="/private/subscribes">Заявки</a></li-->
-                <li class="pull-right"><a class="glyphicon glyphicon-off" href="/private/logout"></a></li>
-                <li class="<?=($activeMenu == 'admins' ? ' active ' : '')?>pull-right"><a href="/private/admins">Администраторы</a></li>
             </ul>
         </div>
       </div>

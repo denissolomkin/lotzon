@@ -60,9 +60,10 @@ class ReviewsDBProcessor implements IProcessor
 
     public function fetch(Entity $review)
     {
-        $sql = "SELECT `PlayerReviews`.*, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName
+        $sql = "SELECT `PlayerReviews`.*, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
                 WHERE `PlayerReviews`.`Id` = :id
                 LIMIT 1";
 
@@ -108,9 +109,10 @@ class ReviewsDBProcessor implements IProcessor
 
     public function getList($status=1, $limit = null, $offset = null)
     {
-        $sql = "SELECT `PlayerReviews`.*, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName
+        $sql = "SELECT `PlayerReviews`.*, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
                 WHERE `Status` = :status 
                 ORDER BY `Date` DESC";
         if (!is_null($limit)) {

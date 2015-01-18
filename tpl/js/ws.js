@@ -149,6 +149,7 @@ function appNewGameCallback(receiveData)
          $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();//.addClass('m');
          appId=receiveData.res.gid;
          appTimeOut=receiveData.res.timeout;
+
          $.each(receiveData.res.players, function( index, value ) {
              var class_player=value.pid==playerId?'l':'r';
              $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves);
@@ -179,13 +180,20 @@ function appNewGameCallback(receiveData)
              $('.gm-pr.r').removeClass('move');
          }
 
-         $(".ngm-bk .tm").countdown({
-             until: (appTimeOut),
-             layout: '{mnn}<span>:</span>{snn}',
-             onExpiry: NewGameTimeOut
-         });
-         $(".ngm-bk .tm").countdown('resume');
-         $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
+         if(appTimeOut<1)
+         {
+             NewGameTimeOut;
+         }
+         else{
+             $(".ngm-bk .tm").countdown({
+                 until: (appTimeOut),
+                 layout: '{mnn}<span>:</span>{snn}',
+                 onExpiry: NewGameTimeOut
+             });
+             $(".ngm-bk .tm").countdown('resume');
+             $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
+         }
+
          $.each(receiveData.res.field, function( x, cells ) {
              $.each(cells, function( y, cell) {
                 //     $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+x+'x'+y).html(cell.points);
@@ -254,7 +262,10 @@ function appNewGameCallback(receiveData)
                      $('.gm-pr.'+class_player+' .pr-pt b').html(value.points).hide().fadeIn(200);
                  });
 
-             $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
+             if(receiveData.res.timeout<1)
+                 NewGameTimeOut();
+             else
+                 $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
     /*
              $('.gm-pr.'+current_player+' .pr-cl b').html(
                  parseInt($('.gm-pr.'+current_player+' .pr-cl b').html())-1

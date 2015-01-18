@@ -676,17 +676,7 @@ class Player extends Entity
     {
         return $this->_isTicketsFilled;
     }
-/*
-    public function getCountIp()
-    {
-        return $this->_countIp;
-    }
 
-    public function setCountIp($count)
-    {
-        return $this->_countIp=$count;
-    }
-*/
     public function generatePassword()
     {
         $an = array(
@@ -847,32 +837,7 @@ class Player extends Entity
         }
 
     }
-    /*
-        public function countIp()
-        {
-            $model = $this->getModelClass();
 
-            try {
-                return $model::instance()->countIp($this);
-            } catch (ModelException $e) {
-                throw new EntityException($e->getMessage(), $e->getCode());
-
-            }
-
-        }
-    /*
-        public function checkAdBlockNotices()
-        {
-            $model = $this->getModelClass();
-
-            try {
-                return $model::instance()->checkAdBlockNotices($this);
-            } catch (ModelException $e) {
-                throw new EntityException($e->getMessage(), $e->getCode());
-            }
-
-        }
-    */
     protected function checkNickname()
     {
         $model = $this->getModelClass();
@@ -1122,7 +1087,6 @@ class Player extends Entity
 
     public function changePassword($password) 
     {
-        $this->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$this->hidePassword($password),'status'=>'info'));
         $this->setSalt("");
         $this->setPassword($this->compilePassword($password));
 

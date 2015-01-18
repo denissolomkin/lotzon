@@ -17,13 +17,13 @@ class ShopOrdersModel extends Model
         return __CLASS__;
     }
 
-    public function getOrdersToProcess($limit = 0, $offset = 0, $playerid=null,$status=null)
+    public function getOrdersToProcess($limit = 0, $offset = 0, $playerid=null, $status=null, $number=null)
     {
-        return $this->getProcessor()->getOrdersToProcess($limit,$offset,$playerid,$status);
+        return $this->getProcessor()->getOrdersToProcess($limit, $offset, $playerid, $status, $number);
     }
 
-    public function getOrdersToProcessCount($playerid=null,$status=null)
+    public function getOrdersToProcessCount($status=null)
     {
-        return $this->getProcessor()->getOrdersToProcessCount($playerid,$status);
+        return $this->getProcessor()->getOrdersToProcessCount($status);
     }
 }

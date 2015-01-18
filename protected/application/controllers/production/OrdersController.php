@@ -30,12 +30,13 @@ class OrdersController extends \AjaxController
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }
-        
+
         $order = new ShopItemOrder();
         $order->setPlayer($this->session->get(Player::IDENTITY))
               ->setItem($item)
               ->setName($this->request()->post('name'))
               ->setSurname($this->request()->post('surname'))
+              ->setNumber(preg_replace("/\D/","",$this->request()->post('phone')))
               ->setPhone($this->request()->post('phone'))
               ->setRegion($this->request()->post('region'))
               ->setCity($this->request()->post('city'))
@@ -82,7 +83,6 @@ class OrdersController extends \AjaxController
 
                 // substract player money
                 $sum = $order->getData()['summ']['value'];
-                
                 $order->getPlayer()->addMoney(-1*$sum, $order->getText());
             } catch(EntityException $e) {
                 $this->ajaxResponse(array(), 0, $e->getMessage());
