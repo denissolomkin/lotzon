@@ -21,8 +21,10 @@ if ($sth->rowCount()) {
     foreach ($sth->fetchAll() as $orderData) {
         $data=unserialize($orderData['Data']);
         //print_r($orderData);
-        if(in_array($orderData['Type'],array('phone','qiwi')))
+        if(in_array($orderData['Type'],array('phone','qiwi'))){
+            $data['phone']['value']=preg_replace("/\D/","",($data['phone']['value']));
             $number=($data['phone']['value'][0]==0?'38':'').$data['phone']['value'];
+        }
         if(in_array($orderData['Type'],array('private24','webmoney','yandex')))
             $number=preg_replace("/\D/","",($data['card-number']['value']));
 
@@ -57,7 +59,8 @@ $orders = array();
 if ($sth->rowCount()) {
     foreach ($sth->fetchAll() as $orderData) {
         $ids[]=$orderData['Id'];
-        $new[]='WHEN Id= '.$orderData['Id'].' THEN '.($orderData['Phone'][0]==0?'38':'').$orderData['Phone'];
+        $number=preg_replace("/\D/","",($orderData['Phone']));
+        $new[]='WHEN Id= '.$orderData['Id'].' THEN '.($number[0]==0?'38':'').$number;
     }
     echo "
 
