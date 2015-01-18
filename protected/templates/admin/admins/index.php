@@ -36,7 +36,13 @@
 <script>
 
 $("#createAdmin").on('click', function(){
-    var tableRow =  $('<tr><td><input type="text" class="form-control" placeholder="Login" name="login"></input></td><td><input class="form-control" placeholder="Password" type="password" name="password"></input></td><td><select class="form-control" name="role"><option value="<?=Admin::ROLE_ADMIN?>">Администратор</option><option value="<?=Admin::ROLE_MANAGER?>">Менеджер</option></select></td><td colspan="2" class="err-field"></td><td><button class="btn btn-md btn-success new-add"><i class="glyphicon glyphicon-ok"></i></button> &nbsp;<button class="btn btn-md btn-danger new-remove"><i class="glyphicon glyphicon-remove"></i></button></td></tr>');
+    var tableRow =  $('<tr><td><input type="text" class="form-control" placeholder="Login" name="login"></input></td>' +
+    '<td><input class="form-control" placeholder="Password" type="password" name="password"></input></td><td><select class="form-control" name="role">' +
+    '<option value="<?=Admin::ROLE_ADMIN?>"><?=(ucfirst(strtolower(Admin::ROLE_ADMIN)))?></option>' +
+    '<option value="<?=Admin::ROLE_MANAGER?>"><?=(ucfirst(strtolower(Admin::ROLE_MANAGER)))?></option>' +
+    '<option value="<?=Admin::ROLE_DEVELOPER?>"><?=(ucfirst(strtolower(Admin::ROLE_DEVELOPER)))?></option>' +
+    '<option value="<?=Admin::ROLE_MODERATOR?>"><?=(ucfirst(strtolower(Admin::ROLE_MODERATOR)))?></option>' +
+    '</select></td><td colspan="2" class="err-field"></td><td><button class="btn btn-md btn-success new-add"><i class="glyphicon glyphicon-ok"></i></button> &nbsp;<button class="btn btn-md btn-danger new-remove"><i class="glyphicon glyphicon-remove"></i></button></td></tr>');
 
     $("table tbody").append(tableRow);    
     tableRow.find('.new-remove').on('click', function() {
