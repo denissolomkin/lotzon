@@ -45,7 +45,7 @@ class ShopOrdersDBProcessor implements IProcessor
 
     public function update(Entity $order) 
     {
-        $sql = "UPDATE `ShopOrders` SET `Status` = :status, SET `UserId` = :userid, `DateProcessed` = :dp WHERE `Id` = :id";
+        $sql = "UPDATE `ShopOrders` SET `Status` = :status, `UserId` = :userid, `DateProcessed` = :dp WHERE `Id` = :id";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':status' => $order->getStatus(),
@@ -56,7 +56,6 @@ class ShopOrdersDBProcessor implements IProcessor
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
-
         return $order;
     } 
 

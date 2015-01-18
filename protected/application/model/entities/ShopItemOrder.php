@@ -61,7 +61,7 @@ class ShopItemOrder extends Entity
 
     public function setUserName($username)
     {
-        $this->_userid = $username;
+        $this->_username = $username;
 
         return $this;
     }

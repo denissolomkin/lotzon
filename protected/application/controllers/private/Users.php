@@ -206,7 +206,7 @@ class Users extends PrivateArea
                         'id' => $order->getId(),
                         'status' => $order->getStatus(),
                         'number' => $order->getPhone(),
-                        'username' => ($order->getUsername()?$order->getUsername().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
+                        'username' => ($order->getUserName()?$order->getUserName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
                         'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurName().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():''),
                         'item' => $order->getItem()->getTitle(),
                         'name' => $order->getSurname().' '.$order->getName.' '.$order->getSecondName(),
@@ -223,12 +223,11 @@ class Users extends PrivateArea
                     $dataOrder=array();
                     foreach ($order->getData() as $key => $data)
                         $dataOrder[] = $data['title'].': '.$data['value'];
-
                     $order = array(
                         'id' => $order->getId(),
                         'status' => $order->getStatus(),
                         'number' => $order->getNumber(),
-                        'username' => ($order->getUsername()?$order->getUsername().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
+                        'username' => ($order->getUserName()?$order->getUserName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
                         'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurName().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():null),
                         'type' => $order->getType(),
                         'data' => (implode('</br>',$dataOrder)),

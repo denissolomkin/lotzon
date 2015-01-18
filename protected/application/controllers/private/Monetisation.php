@@ -78,7 +78,6 @@ class Monetisation extends PrivateArea
     public function statusAction($id)
     {
 
-
         if ($this->request()->isAjax()) {
 
             $status=$this->request()->get('status');
@@ -93,11 +92,11 @@ class Monetisation extends PrivateArea
 
                 if (!$this->request()->get('money')) {
                     $order = new ShopItemOrder();
-                    $order->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())->setId($id)->fetch();
+                    $order->setId($id)->fetch();
 
                     $order->setStatus($status)
+                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setDateProcessed(time());
-
                     try {
                         $order->update();
                         // update item
@@ -110,9 +109,10 @@ class Monetisation extends PrivateArea
 
                 } else {
                     $order = new MoneyOrder();
-                    $order->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())->setId($id)->fetch();
+                    $order->setId($id)->fetch();
 
                     $order->setStatus($status)
+                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setDateProcessed(time());
 
                     try {
