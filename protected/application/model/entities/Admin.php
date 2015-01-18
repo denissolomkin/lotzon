@@ -11,6 +11,7 @@ class Admin extends Entity
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
         'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
+        'admins'=>array('name'=>'Администраторы','icon'=>'user','css'=>'pull-right'),
 
         'Настройки'=>array('icon'=>'cog',
             'pages'=>array(
@@ -19,7 +20,7 @@ class Admin extends Entity
                 'chances'=>array('icon'=>'star-empty','name'=>'Шансы'),
                 'seo'=>array('icon'=>'screenshot','name'=>'SEO'),
                 'texts'=>array('icon'=>'globe','name'=>'Тексты'),
-                'rights'=>array('name'=>'Права доступа'),
+                'rights'=>array('icon'=>'cog','name'=>'Права доступа'),
             )),
 
         'Контент'=>array('icon'=>'th-list',
@@ -32,13 +33,11 @@ class Admin extends Entity
 
         'Игры'=>array('icon'=>'star',
             'pages'=>array(
-                'gamebots'=>array('name'=>'Боты'),
+                'gamebots'=>array('icon'=>'user','name'=>'Боты'),
                 /*'gameoptions'=>array('name'=>'Настройки'),
                 'gamestats'=>array('name'=>'Статистика'),*/
             )),
 
-        'logout'=>array('icon'=>'off','css'=>'pull-right'),
-        'admins'=>array('name'=>'Администраторы','icon'=>'','css'=>'pull-right'),
     );
 
 

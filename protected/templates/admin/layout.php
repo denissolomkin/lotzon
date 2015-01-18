@@ -28,6 +28,8 @@
         <div class="row-fluid">
             <ul class="nav nav-pills" role="tablist">
 
+                <li class="pull-right"><a href="/private/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
+
                 <? foreach(Admin::$PAGES as $key=>$pages) : ?>
                     <? if(is_array($pages['pages'])) {
                         $menu=array();
@@ -64,10 +66,6 @@
                             </a></li>
                 <? } ?>
                 <? endforeach ?>
-                <!--li><a href="/private/stats">Статистика</a></li-->
-
-
-
             </ul>
         </div>
       </div>

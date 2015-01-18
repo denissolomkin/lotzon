@@ -1,3 +1,85 @@
+
+
+<?
+echo"<pre>";
+
+
+
+$sql = "SELECT *
+                FROM `MoneyOrders`
+                WHERE Number=0 AND Type!='points'";
+
+try {
+    $sth = DB::Connect()->prepare($sql);
+    $sth->execute($args);
+} catch (PDOException $e) {echo $e->getMessage();
+    throw new ModelException("Error processing storage query", 500);
+}
+
+$orders = array();
+if ($sth->rowCount()) {
+    foreach ($sth->fetchAll() as $orderData) {
+        $data=unserialize($orderData['Data']);
+        //print_r($orderData);
+        if(in_array($orderData['Type'],array('phone','qiwi')))
+            $number=($data['phone']['value'][0]==0?'38':'').$data['phone']['value'];
+        if(in_array($orderData['Type'],array('private24','webmoney','yandex')))
+            $number=preg_replace("/\D/","",($data['card-number']['value']));
+
+        $ids[]=$orderData['Id'];
+        $new[]='WHEN Id= '.$orderData['Id'].' THEN '.$number;
+    }
+    echo "UPDATE `MoneyOrders` SET `Number` = CASE
+    ";
+    echo implode('
+    ',$new);
+}
+echo"
+ END
+  WHERE `Id` IN (";
+
+echo implode(',',$ids);
+
+echo")";
+
+$sql = "SELECT `ShopOrders`.*
+                FROM `ShopOrders`
+                WHERE Number=0";
+
+try {
+    $sth = DB::Connect()->prepare($sql);
+    $sth->execute($args);
+} catch (PDOException $e) {echo $e->getMessage();
+    throw new ModelException("Error processing storage query", 500);
+}
+
+$orders = array();
+if ($sth->rowCount()) {
+    foreach ($sth->fetchAll() as $orderData) {
+        $ids[]=$orderData['Id'];
+        $new[]='WHEN Id= '.$orderData['Id'].' THEN '.($orderData['Phone'][0]==0?'38':'').$orderData['Phone'];
+    }
+    echo "
+
+UPDATE `ShopOrders` SET `Number` = CASE
+    ";
+    echo implode('
+    ',$new);
+
+    echo"
+ END
+  WHERE `Id` IN (";
+
+    echo implode(',',$ids);
+
+    echo")";
+
+}
+echo"</pre>";
+
+
+
+?>
 <div class="container-fluid">
     <div class="row-fluid">
         <h2 class="heading">Администраторы</h2>
