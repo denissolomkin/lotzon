@@ -57,7 +57,8 @@ class WebSocketController implements MessageComponentInterface {
 
     public function initGame($clients,$name,$mode,$id)
     {
-        $app = new $this->_class;
+        $class='\\' . $name;
+        $app = new $class;//new $this->_class;
         $keys = array_keys($clients);
         list($currency, $price) = explode("-", $mode);
         echo time()." $name инициируем приложение $currency $price\n";
@@ -90,6 +91,7 @@ class WebSocketController implements MessageComponentInterface {
 
         if($app=$this->_apps[$name][$id]) {
             $class = $this->_class;
+            $class='\\' . $name;
             echo time() . " " . "$name {$app->getIdentifier()} $action ".($pid?"игрок №$pid":'бот №'.$app->currentPlayer()['pid'])." \n";
 
             if (($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
