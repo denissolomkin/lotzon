@@ -11,6 +11,7 @@ class ShopItemOrder extends Entity
     private $_player   = null;
     private $_number   = null;
     private $_userid   = 0;
+    private $_count   = 0;
     private $_username   = '';
     private $_dateOrdered    = '';
     private $_dateProcessed  = '';
@@ -45,6 +46,19 @@ class ShopItemOrder extends Entity
     {
         return $this->_id;
     }
+
+    public function setCount($count)
+    {
+        $this->_count = $count;
+
+        return $this;
+    }
+
+    public function getCount()
+    {
+        return $this->_count;
+    }
+
 
 
     public function setUserId($userid)
@@ -305,7 +319,8 @@ class ShopItemOrder extends Entity
             if($data['PlayerId']){
                 $player = new Player();
                 $player->setId($data['PlayerId']);
-                $this->setPlayer($player->fetch());
+                $this->setPlayer($player->fetch())
+                    ->setCount($data['Count']);;
             }
 
             $this->setId($data['Id'])

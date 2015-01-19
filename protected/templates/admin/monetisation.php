@@ -133,7 +133,10 @@
                         <td><?=$order->getItem()->getTitle()?></br><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice().' баллов')?></td>
 
 
-                        <td>
+                        <?if($order->getCount()>1):?>
+                        <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
+                            <span class="label label-danger" ><?=$order->getCount()?></span>
+                            <? else : ?> <td> <? endif ?>
                             ФИО: <?=$order->getSurname()?> <?=$order->getName()?> <?=$order->getSecondName()?> <br />
                             Телефон: <?=$order->getPhone()?> <br />
                             Адрес: <?=($order->getRegion() ? $order->getRegion() . ' обл.,' : '')?> г. <?=$order->getCity()?>, <?=$order->getAddress()?>
