@@ -39,7 +39,7 @@
 
                         <?$player=$order->getPlayer();?>
                         <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
-                        <td class="profile-trigger pointer" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>">
+                        <td class="profile-trigger pointer<?=$player->getBan()?' danger':''?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>">
                             <div  <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
@@ -196,7 +196,7 @@
                     <tr id="money<?=$order->getId()?>">
                         <?$player=$order->getPlayer();?>
                         <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
-                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')">
+                        <td class="profile-trigger pointer<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')">
                             <div  <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
