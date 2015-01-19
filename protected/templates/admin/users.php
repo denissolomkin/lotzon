@@ -86,7 +86,7 @@
                             <? if($player->getCounters()['Ip']>1) : ?>
                                 <div class="label label-danger label-ips"><?=$player->getCounters()['Ip']?></div>
                            <? endif ?><?=($player->getLastIP()?'<div class="ips">'.$player->getIP().'<br>'.$player->getLastIP().'</div>':$player->getIP())?></td>
-                        <td <?=((($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1)
+                        <td <?=(($player->getCounters()['CookieId']>1)
                             ?'onclick="location.href=\'?search[where]=CookieId&search[query]='.$player->getCookieId().'\';" class="pointer danger"><span class="label label-danger">'.$player->getCounters()['CookieId'].'</span> #' . $player->getCookieId():($player->getCookieId()?'class="success">':'>'))?>
                         </td>
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer ':' class="')?><?=$player->getReferalId() ? "success" : "danger"?>">

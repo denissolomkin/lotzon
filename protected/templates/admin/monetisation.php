@@ -247,9 +247,9 @@
                                     </button>
                                 <? endif ?>
 
-                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])>1):?>
-                                    <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
+                                <? if(($count=$player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
+                                    <button class="btn btn-xs btn-<?=($count>1?'danger':'success')?> orders-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($count>1?$count:'')?>
                                     </button>
                                 <? endif ?>
 
@@ -296,7 +296,7 @@
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                         <span class="label label-danger" ><?=$order->getCount()+1?></span>
                         <? else : ?> <td> <? endif ?>
-                        <img class="right" src="../tpl/img/<?=$order->getType()?>.png"><?=(($order->getType()=='webmoney')?$order->getData()['card-number']['value'][0]:($order->getType()=='phone'?'+':''))?><?=($order->getNumber()?:'')?></td>
+                        <img class="right" src="../tpl/img/<?=$order->getType()?>.png"><?=(($order->getType()=='webmoney')?$order->getData()['card-number']['value'][0]:(in_array($order->getType(),array('phone','qiwi'))?'+':''))?><?=($order->getNumber()?:'')?></td>
                         <td>
                             <? foreach ($order->getData() as $key => $data) { ?>
                                 <?=$data['title']?>: <?=$data['value']?> <?=($data['title'] == 'Cумма' ? ($order->getPlayer()->getCountry() == 'UA' ? 'грн' : 'руб') : '')?> <br />
