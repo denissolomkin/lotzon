@@ -9,7 +9,7 @@ class NewGame extends Entity
     const   GAME_PLAYERS = 2;
     const   TIME_OUT = 5;
     const   FIELD_SIZE = 7;
-    const   GAME_MOVES = 2;
+    const   GAME_MOVES = 6;
 
     private $_gameid = 1;
     public  $_botTimer = 0;
@@ -93,7 +93,7 @@ class NewGame extends Entity
 
             $ready = 0;
             foreach ($players as $player){
-                if (isset($player['ready']) || $this->getClients()[$player['pid']]->bot === true)
+                if (isset($player['ready']) || isset($this->getClients()[$player['pid']]->bot))
                     $ready += 1;
             }
 
@@ -147,7 +147,7 @@ class NewGame extends Entity
     public function moveAction($data=null)
     {
         $this->unsetCallback();
-        if($this->getClients()[$this->currentPlayer()['pid']]->bot === true){
+        if(isset($this->getClients()[$this->currentPlayer()['pid']]->bot)){
             #echo ''.time().' '. "ход бота\n";
             $this->setClient($this->currentPlayer()['pid']);
             list($x,$y) = $this->generateMove();}
@@ -318,17 +318,13 @@ class NewGame extends Entity
             reset($this->_players);
         }
 
-        #echo ' '.time().' '. 'игрок '.(current($this->_players)['pid'])."\n";
-        #echo ' '.time().' '. 'было '.$this->_players[(current($this->_players)['pid'])]['timeout']."\n";
-
         $this->_players[(current($this->_players)['pid'])]['timeout']=time()+self::TIME_OUT;
 
-        if($this->_clients[(current($this->_players)['pid'])]->bot)
+        if(isset($this->_clients[(current($this->_players)['pid'])]->bot))
             $this->_botTimer = rand(1,3);
         else
             $this->_botTimer = 0;
 
-        #echo ' '.time().' '. 'стало '.$this->_players[(current($this->_players)['pid'])]['timeout']."\n";
         return $this; //current($this->_players);
     }
 
@@ -376,7 +372,6 @@ class NewGame extends Entity
     {
         $currentPlayer=$this->currentPlayer();
         #echo ' '.time().' '. "Обновление данных\n";
-        #echo ' '.time().' '. ' до '.$this->currentPlayer()['pid'];
         if($id)
             $players[]=$this->getPlayers()[$id];
         else
@@ -405,12 +400,6 @@ class NewGame extends Entity
             while(each($players)==$currentPlayer){}
                 #echo ' '.time().' '. "\n".(1)."\n";//print_r($this->currentPlayer());
         }
-//        foreach ($players as $player)
-//            if($player==$currentPlayer)
-//                break;
-
-
-        #echo ' '.time().' '. " - ".($this->currentPlayer()['pid']?$this->currentPlayer()['pid']:0)."после  \n";
 
 
         return $this;
@@ -425,7 +414,6 @@ class NewGame extends Entity
     {
         rand(0,1)?arsort($clients):asort($clients);
 
-        #echo ' '.time().' '. "Инициализация игроков \n";
         foreach ($clients as $id => $client)
             $this->_players[$id] = array(
                 'pid' => $id,
@@ -435,7 +423,7 @@ class NewGame extends Entity
                 'name' => $client->name
             );
 
-
+        #echo ' '.time().' '. "Инициализация игроков";
         return $this;
     }
 
