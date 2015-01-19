@@ -56,7 +56,7 @@
         '' +
         '<div class="flex">' +
         '<button type="button" class="btn btn-danger del-one"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
-        '<input placeholder="Name" class="form-control input-md" name=bots['+cnt+'][name] value=""</input>' +
+        '<input placeholder="Name" class="form-control input-md" name=bots['+cnt+'][name] value="Участник '+cnt+'"</input>' +
         '</div>' +
         '' +
         '</div>');
