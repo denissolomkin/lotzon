@@ -260,7 +260,7 @@ class ContentController extends \AjaxController
             $jsonTransactions[] = array(
                 'description' => $transaction->getDescription(),
                 'quantity' => ($transaction->getSum() > 0 ? '+' : '') . ($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum())),
-                'date'  => date('d.m.Y H:m:s', $transaction->getDate()),
+                'date'  => date('d.m.Y H:i:s', $transaction->getDate()),
             );
         }
 
