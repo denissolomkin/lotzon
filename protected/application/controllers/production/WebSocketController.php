@@ -561,7 +561,7 @@ class WebSocketController implements MessageComponentInterface {
         // рассылаем игрокам результат обработки
         if(is_array($response))
             foreach( $response as $client ) {
-                if(!isset($client->bot) && isset($this->_clients[$client->id]))
+                if(!isset($client->bot) && isset($this->_clients[$client->id]) && ($this->_clients[$client->id] instanceof ConnectionInterface))
                 $this->_clients[$client->id]->send(
                     json_encode(
                         array(
@@ -570,7 +570,7 @@ class WebSocketController implements MessageComponentInterface {
                         )));
             }
         else {
-            if(!isset($response->bot) && isset($this->_clients[$response]))
+            if(!isset($response->bot) && isset($this->_clients[$response]) && ($this->_clients[$response] instanceof ConnectionInterface))
             $this->_clients[$response]->send(
                 json_encode(
                     array(
