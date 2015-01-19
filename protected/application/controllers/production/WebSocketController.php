@@ -22,18 +22,6 @@ class WebSocketController implements MessageComponentInterface {
     private $_apps=array();
     private $_players=array();
     private $_bots=array();
-/*array(
-        array('id'=>4,'name'=>'Бот №4','avatar'=>'','bot'=>true),
-        array('id'=>5,'name'=>'Бот №5','avatar'=>'','bot'=>true),
-        array('id'=>6,'name'=>'Бот №6','avatar'=>'','bot'=>true),
-        array('id'=>7,'name'=>'Бот №7','avatar'=>'','bot'=>true),
-        array('id'=>8,'name'=>'Бот №8','avatar'=>'','bot'=>true),
-        array('id'=>9,'name'=>'Бот №9','avatar'=>'','bot'=>true),
-        array('id'=>10,'name'=>'Бот №10','avatar'=>'','bot'=>true),
-        array('id'=>11,'name'=>'Бот №1','avatar'=>'','bot'=>true),
-        array('id'=>12,'name'=>'Бот №2','avatar'=>'','bot'=>true),
-        array('id'=>13,'name'=>'Бот №3','avatar'=>'','bot'=>true),
-    );*/
     private $_class;
     private $_settings,$_loop;
     private $_rating=array();
@@ -573,7 +561,7 @@ class WebSocketController implements MessageComponentInterface {
         // рассылаем игрокам результат обработки
         if(is_array($response))
             foreach( $response as $client ) {
-                if(!isset($client->bot))
+                if(!isset($client->bot) && isset($this->_clients[$client->id]))
                 $this->_clients[$client->id]->send(
                     json_encode(
                         array(
@@ -582,7 +570,7 @@ class WebSocketController implements MessageComponentInterface {
                         )));
             }
         else {
-            if(!isset($response->bot))
+            if(!isset($response->bot) && isset($this->_clients[$response]))
             $this->_clients[$response]->send(
                 json_encode(
                     array(
