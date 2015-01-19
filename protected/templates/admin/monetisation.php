@@ -38,12 +38,13 @@
                     <tr id="shop<?=$order->getId()?>">
 
                         <?$player=$order->getPlayer();?>
-                        <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
                         <td class="profile-trigger pointer<?=$player->getBan()?' danger':''?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>">
                             <div  <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
-                        </td>                        <td><?=$player->getCountry()?></td>
+                        </td>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=$player->getCountry()?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -195,13 +196,13 @@
                 <? foreach ($moneyOrders as $order) { ?>
                     <tr id="money<?=$order->getId()?>">
                         <?$player=$order->getPlayer();?>
-                        <td><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
                         <td class="profile-trigger pointer<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')">
                             <div  <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
                         </td>
-                        <td><?=$player->getCountry()?></td>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=$player->getCountry()?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
