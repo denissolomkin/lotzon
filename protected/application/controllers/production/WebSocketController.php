@@ -47,20 +47,20 @@ class WebSocketController implements MessageComponentInterface {
             foreach($modes as $mode=>$stacks)
                 foreach($stacks as $id=>$client)
                     if($client->time + self::MIN_WAIT_TIME < time()){
+                        $clients=array();
                         $clients[$id] = $client;
                         $bot=(object) $this->_bots[array_rand($this->_bots)];
                         $clients[$bot->id] = $bot;
                         $this->initGame($clients,$game,$mode,$id);
-
                     }
     }
 
     public function initGame($clients,$name,$mode,$id)
     {
-        echo time()." $name инициируем приложение\n";
         $app = new $this->_class;
         $keys = array_keys($clients);
         list($currency, $price) = explode("-", $mode);
+        echo time()." $name инициируем приложение $currency $price\n";
 
         #echo time()." чистим стек\n";
         foreach ($keys as $key) {
@@ -90,7 +90,7 @@ class WebSocketController implements MessageComponentInterface {
 
         if($app=$this->_apps[$name][$id]) {
             $class = $this->_class;
-            echo time() . " " . "$name {$app->getIdentifier()} $action ".($pid?"игрок №$pid":'бот')." \n";
+            echo time() . " " . "$name {$app->getIdentifier()} $action ".($pid?"игрок №$pid":'бот №'.$app->currentPlayer()['pid'])." \n";
 
             if (($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
                 #echo time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
