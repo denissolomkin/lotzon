@@ -46,7 +46,7 @@
 
 
 
-        $("#bots").append('<div class="col-md-2">' +
+        $("#bots").prepend('<div class="col-md-2">' +
         '<div class="thumbnail" data-id="'+cnt+'">' +
         '<img src="/theme/admin/img/photo-icon-plus.png" class="upload" data-id="'+cnt+'" data-image="" alt="...">' +
         '<input type="hidden" name="bots['+cnt+'][id]" value="'+cnt+'">' +
