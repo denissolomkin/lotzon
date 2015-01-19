@@ -221,7 +221,8 @@ class MoneyOrder extends Entity
                         if (!preg_match('/^[+0-9\- ()]*$/', $data['phone']['value'])) {
                             throw new EntityException("INVALID_PHONE_FORMAT", 400);
                         }
-                        $this->setNumber(($data['phone']['value'][0]==0?'38':'').$data['phone']['value']);
+                        $number = preg_replace("/[^0-9]/", "", $data['phone']['value']);
+                        $this->setNumber(($number[0]==0?'38':'').$number);
                     break;
                     case self::GATEWAY_WEBMONEY:
                         if (empty($data['purse']['value'])) {
