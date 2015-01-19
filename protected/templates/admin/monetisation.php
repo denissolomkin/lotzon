@@ -29,8 +29,8 @@
                 <th width="20"></th>
                 <th width="20%">Информация</th>
                 <th width="50">Баланс</th>
-                <th>Товар</th>
                 <th>Данные</th>
+                <th>Товар</th>
                 <th width="50">Options</th>
             </thead>
             <tbody>
@@ -133,7 +133,7 @@
                         <td><?=$order->getItem()->getTitle()?></br><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice().' баллов')?></td>
 
 
-                        <?if($order->getCount()>1):?>
+                        <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                             <span class="label label-danger" ><?=$order->getCount()?></span>
                             <? else : ?> <td> <? endif ?>
@@ -292,7 +292,7 @@
 
                         </td>
                         <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?>  <br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
-                        <?if($order->getCount()>1):?>
+                        <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                         <span class="label label-danger" ><?=$order->getCount()?></span>
                         <? else : ?> <td> <? endif ?>

@@ -96,8 +96,8 @@ class MoneyOrdersDBProcessor implements IProcessor
 
         $where[]="`Type` != 'points'";
 
-        $sql = "SELECT ((SELECT COUNT(*) FROM `ShopOrders` o WHERE  o.`Number`=`MoneyOrders`.`Number` AND o.`PlayerId`!=`MoneyOrders`.`PlayerId`)
-                        +(SELECT COUNT(*) FROM `MoneyOrders` o WHERE  o.`Number`=`MoneyOrders`.`Number` AND o.`PlayerId`!=`MoneyOrders`.`PlayerId`)) Count,
+        $sql = "SELECT ((SELECT COUNT(DISTINCT(PlayerId)) FROM `ShopOrders` o WHERE  o.`Number`=`MoneyOrders`.`Number` AND o.`PlayerId`!=`MoneyOrders`.`PlayerId`)
+                        +(SELECT COUNT(DISTINCT(PlayerId)) FROM `MoneyOrders` o WHERE  o.`Number`=`MoneyOrders`.`Number` AND o.`PlayerId`!=`MoneyOrders`.`PlayerId`)) Count,
                 `Admins`.`Login` UserName, `MoneyOrders`.*
                 FROM `MoneyOrders`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `UserId`
