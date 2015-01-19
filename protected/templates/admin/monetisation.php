@@ -135,7 +135,7 @@
 
                         <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
-                            <span class="label label-danger" ><?=$order->getCount()?></span>
+                            <span class="label label-danger" ><?=$order->getCount()+1?></span>
                             <? else : ?> <td> <? endif ?>
                             ФИО: <?=$order->getSurname()?> <?=$order->getName()?> <?=$order->getSecondName()?> <br />
                             Телефон: <?=$order->getPhone()?> <br />
@@ -294,7 +294,7 @@
                         <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=$player->getPoints()?>  <br><?=$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
                         <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
-                        <span class="label label-danger" ><?=$order->getCount()?></span>
+                        <span class="label label-danger" ><?=$order->getCount()+1?></span>
                         <? else : ?> <td> <? endif ?>
                         <img class="right" src="../tpl/img/<?=$order->getType()?>.png"><?=(($order->getType()=='webmoney')?$order->getData()['card-number']['value'][0]:($order->getType()=='phone'?'+':''))?><?=($order->getNumber()?:'')?></td>
                         <td>
