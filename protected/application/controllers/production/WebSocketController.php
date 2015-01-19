@@ -216,7 +216,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                     if($this->checkBalance($player->getId(), $currency, $price)){
 
-                                        #echo time() . " " . "Игрок {$from->resourceId} записался в стек новой игры \n";
+                                        echo time() . " " . "Игрок {$from->resourceId} записался в стек $currency $price\n";
                                         $this->_stack[$name][$mode][$player->getId()] =
                                             (object) array(
                                                 'time'      =>  time(),
