@@ -298,7 +298,7 @@ class NewGame extends Entity
     {
 
         //$minimum=(rand(1,2)<2?(pow(self::FIELD_SIZE,2)-(self::GAME_MOVES*(self::GAME_PLAYERS+1))):0);
-        $minimum=( rand(1,3) < 2 ? pow(self::FIELD_SIZE,2)/2:0 );
+        $minimum=( rand(1,4) < 2 ? (pow(self::FIELD_SIZE,2)/2):0 );
 
         #echo ' '.time().' '. "Генерация поля для бота\n";
         do {
