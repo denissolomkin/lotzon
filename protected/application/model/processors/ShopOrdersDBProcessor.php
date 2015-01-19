@@ -107,8 +107,8 @@ class ShopOrdersDBProcessor implements IProcessor
             $args[':status']=($status?:ShopItemOrder::STATUS_ORDERED);
         }
 
-        $sql = "SELECT ((SELECT COUNT(*) FROM `ShopOrders` o WHERE  o.`Number`=`ShopOrders`.`Number` AND o.`PlayerId`!=`ShopOrders`.`PlayerId`)
-                        +(SELECT COUNT(*) FROM `MoneyOrders` o WHERE  o.`Number`=`ShopOrders`.`Number` AND o.`PlayerId`!=`ShopOrders`.`PlayerId`)) Count,
+        $sql = "SELECT ((SELECT COUNT(DISTINCT(PlayerId)) FROM `ShopOrders` o WHERE  o.`Number`=`ShopOrders`.`Number` AND o.`PlayerId`!=`ShopOrders`.`PlayerId`)
+                        +(SELECT COUNT(DISTINCT(PlayerId)) FROM `MoneyOrders` o WHERE  o.`Number`=`ShopOrders`.`Number` AND o.`PlayerId`!=`ShopOrders`.`PlayerId`)) Count,
                 `Admins`.`Login` UserName, `ShopOrders`.*
                 FROM `ShopOrders`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `UserId`
