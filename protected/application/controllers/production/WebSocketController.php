@@ -580,7 +580,10 @@ class WebSocketController implements MessageComponentInterface {
         }
     }
 
-    private function checkBalance($pid, $currency, $price) {
+    private function checkBalance($pid, $currency, $price)
+    {
+
+        if (isset($this->_players[$pid])) {
 
         $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
         echo time() . " " . $sql . " || $pid \n";
@@ -599,10 +602,13 @@ class WebSocketController implements MessageComponentInterface {
         $balance = $sth->fetch();
         if ($currency == 'MONEY'
             ? $balance['Money'] < $price * $this->_settings->getCountryCoefficient((in_array($this->_players[$pid]['Country'], Config::instance()->langs) ? $this->_players[$pid]['Country'] : Config::instance()->defaultLang))
-            : $balance['Points'] < $price) {
+            : $balance['Points'] < $price
+        ) {
             return false;
         } else
             return true;
+    }   else
+            return false;
     }
 
     public function quitPlayer($playerId) {
