@@ -7,7 +7,7 @@ class NewGame extends Entity
 {
     const   STACK_PLAYERS = 2;
     const   GAME_PLAYERS = 2;
-    const   TIME_OUT = 5;
+    const   TIME_OUT = 20;
     const   FIELD_SIZE = 7;
     const   GAME_MOVES = 6;
 
