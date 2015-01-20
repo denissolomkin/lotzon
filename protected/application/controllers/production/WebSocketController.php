@@ -35,13 +35,13 @@ class WebSocketController implements MessageComponentInterface {
 
         echo time()." ". "Server have started\n";
         $this->_loop=$loop;
-        $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->checkStack();});
+        $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->periodicTimer();});
         $this->_bots=Config::instance()->gameBots;
         $this->_clients = array();
         $this->_settings = GameSettingsModel::instance()->loadSettings();
     }
 
-    public function checkStack()
+    public function periodicTimer()
     {
         foreach($this->_stack as $game=>$modes)
             foreach($modes as $mode=>$stacks)
@@ -53,6 +53,23 @@ class WebSocketController implements MessageComponentInterface {
                         $clients[$bot->id] = $bot;
                         $this->initGame($clients,$game,$mode,$id);
                     }
+
+        foreach($this->_apps as $class=>$apps)
+            foreach($apps as $id=>$app) {
+
+                if ($app->_isOver && $app->_bot) {
+                    if ($app->currentPlayer()['timeout'] + 10 < time())
+                        $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->_bot);
+                    elseif(!$app->_botReplay && $app->currentPlayer()['timeout'] + rand(0,3) < time())
+                        $this->runGame($class, $app->getIdentifier(), 'replayAction', $app->_bot);
+
+                } elseif (!$app->_isOver && $app->currentPlayer()['timeout'] + 5 < time()) {
+                        $this->runGame($class, $app->getIdentifier(), 'timeoutAction', $app->currentPlayer()['pid']);
+                } elseif ($app->_isOver && $app->currentPlayer()['timeout'] + 60 < time()) {
+                    $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->currentPlayer()['pid']);
+                }
+            }
+        /**/
     }
 
     public function initGame($clients,$name,$mode,$id)
@@ -94,7 +111,7 @@ class WebSocketController implements MessageComponentInterface {
             $class='\\' . $name;
             echo time() . " " . "$name {$app->getIdentifier()} $action ".($pid?"игрок №$pid":'бот №'.$app->currentPlayer()['pid'])." \n";
 
-            if (($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
+            if ($app->_bot!=$pid && ($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
                 #echo time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
                 if($this->_clients[$pid])
                     $this->_clients[$pid]->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
@@ -112,9 +129,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 if($app->_botTimer AND !$app->_isOver)
                     $this->_loop->addTimer($app->_botTimer, function () use ($name, $id) {
-                        $this->runGame($name,$id,'moveAction');
-//                        $this->_apps[$name][$id]->moveAction();
-//                        $this->sendCallback($this->_apps[$name][$id]->getResponse(), $this->_apps[$name][$id]->getCallback());
+                        $this->runGame($name,$id,'moveAction',$app->_bot);
 //                        echo time() . " " . "$name {$this->_apps[$name][$id]->getIdentifier()} moveAction Бот \n";
                     });
 
@@ -182,7 +197,8 @@ class WebSocketController implements MessageComponentInterface {
 
     public function onMessage(ConnectionInterface $from, $msg) {
 
-        if($player = $from->Session->get(Player::IDENTITY)) {
+        if($player = $from->Session->get(Player::IDENTITY))
+            if($player instanceof Player){
             $data = json_decode($msg);
             list($type, $name, $id) = array_pad(explode("/", $data->path),3,0);
             #echo time()." ". "#{$from->resourceId}: " . (isset($data->data->action) ? $data->data->action : '') . " - " . $data->path . " \n";
@@ -205,7 +221,7 @@ class WebSocketController implements MessageComponentInterface {
                                 if ($action == 'cancelAction' || $action == 'quitAction') {
 
                                     if (isset($this->_players[$from->resourceId]['appMode'])) {
-                                        #echo time() . " " . "Игрок {$from->resourceId} отказался ждать в стеке новой игры \n";
+                                        echo time() . " " . "Игрок {$from->resourceId} отказался ждать в стеке {$this->_players[$from->resourceId]['appMode']}\n";
                                         unset(
                                             $this->_stack[$name][$this->_players[$from->resourceId]['appMode']][$player->getId()],
                                             $this->_players[$from->resourceId]['appName'],
@@ -265,7 +281,7 @@ class WebSocketController implements MessageComponentInterface {
                             }  elseif (!isset($this->_apps[$name][$id])) {
 
                                 if ($action == 'replayAction' || $action == 'quitAction') {
-                                    echo time() . " " . "id есть, но приложения $name $id нет, заглушка\n";
+                                    echo time() . " " . "id есть, но приложения $name $id нет, {$from->resourceId} $action заглушка\n";
 
                                 } else {
                                     echo time() . " " . "id есть, но приложения $name $id нет, сообщаем об ошибке, удаляем из активных игроков \n";
@@ -280,7 +296,7 @@ class WebSocketController implements MessageComponentInterface {
                             } else {
 
                                 #echo time() . " " . "приложение нашли $name  $id\n";
-                                $this->runGame($name,$id,$action,$from->resourceId,$data);
+                                $this->runGame($name,$id,$action,$player->getId(),$data);
                             }
 
                         // если не нашли класс
@@ -453,7 +469,7 @@ class WebSocketController implements MessageComponentInterface {
                                 foreach ($apps_class as $app)
                                 {
                                     $count++;
-                                    $games .= $app->getTitle().' ['.$app->getCurrency().'-'.$app->getPrice().'] '.(time()-$app->getTime()).'s ';
+                                    $games .= $app->getTitle().' '.$app->getIdentifier().' ['.$app->getCurrency().'-'.$app->getPrice().'] '.(time()-$app->getTime()).'s ';
                                     $names = array();
                                     foreach ($app->getPlayers() as $name)
                                         $names[] = $name['pid'];
