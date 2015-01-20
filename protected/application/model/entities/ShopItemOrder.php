@@ -282,8 +282,7 @@ class ShopItemOrder extends Entity
                 if (!$this->getAddress()) {
                     throw new EntityException("ORDER_INVALID_ADRESS", 400);
                 }
-
-                if (!$this->getChanceGameId() && $this->getPlayer()->getPoints() < $this->getItem()->getPrice()) {
+                if (!$this->getChanceGameId() && $this->getPlayer()->getBalance()['Points'] < $this->getItem()->getPrice()) {
                     throw new EntityException("INSUFFICIENT_FUNDS", 400);   
                 }
 
