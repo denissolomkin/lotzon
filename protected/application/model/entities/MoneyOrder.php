@@ -195,7 +195,9 @@ class MoneyOrder extends Entity
                 if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 ) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
-
+                if ($this->getData()['summ']['value'] > $this->getPlayer()->getBalance()['Money']) {
+                    throw new EntityException("INSUFFICIENT_FUNDS", 400);
+                }
                 $data = $this->getData();
                 switch ($this->getType()) {
                     /*case self::GATEWAY_CARD:

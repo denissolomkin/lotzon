@@ -153,7 +153,7 @@ class NewGame extends Entity
     public function moveAction($data=null)
     {
         $this->unsetCallback();
-        if(isset($this->getClients()[$this->currentPlayer()['pid']]->bot)){
+        if(!isset($data->cell) OR isset($this->getClients()[$this->currentPlayer()['pid']]->bot)){
             #echo ''.time().' '. "ход бота\n";
             $this->setClient($this->currentPlayer()['pid']);
             list($x,$y) = $this->generateMove();}
@@ -220,7 +220,7 @@ class NewGame extends Entity
 
         $this->setCallback(array(
             'current'   => $this->currentPlayer()['pid'],
-            'timeout'   => $currentPlayer['timeout']-time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
+            'timeout'   => (isset($currentPlayer['timeout'])?$currentPlayer['timeout']:time()+1)-time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
             'players'   => $this->getPlayers(),
             'action'    => 'move'
             ));
