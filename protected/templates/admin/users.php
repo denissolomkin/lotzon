@@ -87,7 +87,9 @@
                                 <div class="label label-danger label-ips"><?=$player->getCounters()['Ip']?></div>
                            <? endif ?><?=($player->getLastIP()?'<div class="ips">'.$player->getIP().'<br>'.$player->getLastIP().'</div>':$player->getIP())?></td>
                         <td <?=(($player->getCounters()['CookieId']>1)
-                            ?'onclick="location.href=\'?search[where]=CookieId&search[query]='.$player->getCookieId().'\';" class="pointer danger"><span class="label label-danger">'.$player->getCounters()['CookieId'].'</span> #' . $player->getCookieId():($player->getCookieId()?'class="success">':'>'))?>
+                            ?'onclick="location.href=\'?search[where]=CookieId&search[query]='.$player->getCookieId().'\';" class="pointer danger">
+                            <div data-toggle="tooltip" data-placement="right" title="'.$player->getCookieId().'" >
+                            <span class="label label-danger">'.$player->getCounters()['CookieId'].'</span></div>':($player->getCookieId()?'class="success">':'>'))?>
                         </td>
                         <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer ':' class="')?><?=$player->getReferalId() ? "success" : "danger"?>">
                             <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
@@ -105,8 +107,9 @@
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters()['AdBlock']?:'')?></button>
                             <? endif ?>
                         </td>
-                        <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getMoney()?> <?=$player->getCountry() == 'UA' ? 'грн' : 'руб'?></td>
-                        <td class="transactions-trigger pointer" data-id="<?=$player->getId()?>"><?=$player->getPoints()?></td>
+
+                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?></td>
                         <td><div class="right nobr">
 
                             <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
