@@ -58,9 +58,9 @@ class WebSocketController implements MessageComponentInterface {
             foreach($apps as $id=>$app) {
 
                 if ($app->_isOver && $app->_bot) {
-                    if ($app->currentPlayer()['timeout'] + 10 < time())
+                    if ($app->currentPlayer()['timeout'] - $app::TIME_OUT + 10 < time())
                         $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->_bot);
-                    elseif(!$app->_botReplay && $app->currentPlayer()['timeout'] + rand(0,3) < time())
+                    elseif(!$app->_botReplay && $app->currentPlayer()['timeout'] + rand(2,4) - $app::TIME_OUT < time())
                         $this->runGame($class, $app->getIdentifier(), 'replayAction', $app->_bot);
 
                 } elseif (!$app->_isOver && $app->currentPlayer()['timeout'] + 5 < time()) {
