@@ -87,7 +87,7 @@ class NewGame extends Entity
 
     public function replayAction($data=null)
     {
-            echo ''.time().' '. "Повтор игры {$this->getClient()->id} \n";
+            echo ' '.time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
 
             $clientId = $this->getClient()->id;
             $this->updatePlayer(array('ready' => 1), $clientId );
