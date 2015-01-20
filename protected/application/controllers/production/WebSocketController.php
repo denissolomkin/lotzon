@@ -109,7 +109,7 @@ class WebSocketController implements MessageComponentInterface {
         if($app=$this->_apps[$name][$id]) {
             $class = $this->_class;
             $class='\\' . $name;
-            echo time() . " " . "$name {$app->getIdentifier()} $action ".($pid?"игрок №$pid":'бот №'.$app->currentPlayer()['pid'])." \n";
+            echo time() . " " . "$name {$app->getIdentifier()} $action ".(!isset($app->_bot) || $pid!=$app->_bot?"игрок №$pid":'бот №'.$app->currentPlayer()['pid'])." \n";
 
             if ($app->_bot!=$pid && ($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
                 #echo time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
@@ -428,7 +428,7 @@ class WebSocketController implements MessageComponentInterface {
                             // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
                             'online' =>
                                 ((isset($this->_stack[$name]) ? count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name]) : 0) +
-                                    (isset($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0))+10,
+                                    (isset($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0))+rand(7,14),
                             'top' => $top
                         ))));
 
