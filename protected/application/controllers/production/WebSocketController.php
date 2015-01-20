@@ -127,11 +127,13 @@ class WebSocketController implements MessageComponentInterface {
                 #echo time() . " " . "рассылаем игрокам результат обработки \n";
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
-                if($app->_botTimer AND !$app->_isOver)
-                    $this->_loop->addTimer($app->_botTimer, function () use ($name, $id) {
-                        $this->runGame($name,$id,'moveAction',$app->_bot);
+                if($app->_botTimer AND !$app->_isOver) {
+                    $bot = $app->_bot;
+                    $this->_loop->addTimer($app->_botTimer, function () use ($name, $id, $bot) {
+                        $this->runGame($name, $id, 'moveAction', $bot);
 //                        echo time() . " " . "$name {$this->_apps[$name][$id]->getIdentifier()} moveAction Бот \n";
                     });
+                    }
 
                 if (!$app->isSaved() && $app->isOver()) {
                     echo time() . " $name $id приложение завершилось, записываем данные\n";

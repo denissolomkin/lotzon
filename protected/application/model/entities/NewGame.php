@@ -425,7 +425,7 @@ class NewGame extends Entity
 
         foreach ($clients as $id => $client){
 
-            if($client->bot)
+            if(isset($client->bot))
                 $this->_bot=$id;
 
             $this->_players[$id] = array(
