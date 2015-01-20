@@ -12,7 +12,9 @@ class NewGame extends Entity
     const   GAME_MOVES = 6;
 
     private $_gameid = 1;
+    public  $_bot = 0;
     public  $_botTimer = 0;
+    public  $_botReplay =0;
     private $_gameTitle = '"Кто больше"';
     private $_gameCurrency = '';
     private $_gamePrice = null;
@@ -85,15 +87,19 @@ class NewGame extends Entity
 
     public function replayAction($data=null)
     {
-            #echo ''.time().' '. "Повтор игры\n";
+            echo ''.time().' '. "Повтор игры {$this->getClient()->id} \n";
 
             $clientId = $this->getClient()->id;
             $this->updatePlayer(array('ready' => 1), $clientId );
             $players = $this->getPlayers();
 
+            if(isset($this->getClient()->bot) AND !$this->_botReplay){
+                $this->_botReplay=1;
+            }
+
             $ready = 0;
             foreach ($players as $player){
-                if (isset($player['ready']) || isset($this->getClients()[$player['pid']]->bot))
+                if (isset($player['ready']))// || isset($this->getClients()[$player['pid']]->bot))
                     $ready += 1;
             }
 
@@ -358,6 +364,7 @@ class NewGame extends Entity
                 $this->updatePlayer(array('result'=>-1));
                 $this->updatePlayer(array('result'=>2),current($winner)['player']['pid']);
                 $this->_isOver=1;
+                $this->_botReplay=0;
                 return current($winner)['player'];
             } else {
                 #echo ' '.time().' '. "Экстра время \n";
@@ -416,7 +423,11 @@ class NewGame extends Entity
     {
         rand(0,1)?arsort($clients):asort($clients);
 
-        foreach ($clients as $id => $client)
+        foreach ($clients as $id => $client){
+
+            if($client->bot)
+                $this->_bot=$id;
+
             $this->_players[$id] = array(
                 'pid' => $id,
                 'moves' => self::GAME_MOVES,
@@ -424,6 +435,7 @@ class NewGame extends Entity
                 'avatar' => $client->avatar,
                 'name' => $client->name
             );
+        }
 
         #echo ' '.time().' '. "Инициализация игроков";
         return $this;
