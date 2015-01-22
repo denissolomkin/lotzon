@@ -886,7 +886,7 @@ article .infos {padding:40px 20px 0 20px;}
 /* to remove */
 .ngm-bk .ngm-gm .gm-mx {width:480px;float:left;position:relative;}
 .ngm-bk .ngm-gm .gm-mx ul.mx {list-style:none;margin:0;padding:0;overflow:hidden;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
+.ngm-bk .ngm-gm .gm-mx ul.mx > li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
 .ngm-bk .ngm-gm .gm-mx ul.mx > li:nth-child(7n+7) {margin-right:0;}
 .ngm-bk .ngm-gm .gm-mx ul.mx > li.m {background:#ffe400;opacity:0.6;}
 .ngm-bk .ngm-gm .gm-mx ul.mx > li.o {background:#f68e56;opacity:0.6;}
