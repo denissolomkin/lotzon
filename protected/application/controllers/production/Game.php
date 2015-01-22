@@ -137,121 +137,134 @@ class Game extends \AjaxController
 //        $this->session->remove('chanceGame');
         $game = &$_SESSION['chanceGame'];
         if ($game && isset($game[$identifier]) && $game[$identifier]['status'] == 'process') {
-            $player=$this->session->get(Player::IDENTITY);
-                $playerChoose = $this->request()->post('choose', null);
-                if ($playerChoose) {
-                    $field = $game[$identifier]['field'];
-                    if ($identifier != 'moment') {
-                        $playerChoose = explode("x", $playerChoose);
+            $player = $this->session->get(Player::IDENTITY);
+            $playerChoose = $this->request()->post('choose', null);
 
-                        // check already exists click
-                        $clicked = false;
-                        foreach ($game[$identifier]['clicks'] as $click) {
-                            if ($click[0] == $playerChoose[0] && $click[1] == $playerChoose[1]) {
-                                $clicked = true;
-                                break;
-                            }
-                        }
-                        if ($clicked) {
-                            $this->ajaxResponse(array(
-                                'status' => 'process',
-                                'cell' => $field[$playerChoose[0]][$playerChoose[1]],
-                                'dublicate' => 1,
-                            ));
-                        }
-                        if (isset($field[$playerChoose[0]][$playerChoose[1]]) && $field[$playerChoose[0]][$playerChoose[1]] == 1) {
-                            $game[$identifier]['clicks'][] = $playerChoose;
 
-                            if ($identifier == '33' || $identifier == '44') {
-                                if (count($game[$identifier]['clicks']) == 3) {
-                                    // double check clicks
-                                    $status = true;
-                                    foreach ($game[$identifier]['clicks'] as $point) {
-                                        if ($field[$point[0]][$point[1]] != 1) {
-                                            $status = false;
-                                        }
-                                    }
-                                    if ($status) {
-                                        $game[$identifier]['status'] = 'win';
-                                    } else {
-                                        $game[$identifier]['status'] = 'loose';
+            if ($identifier == 'moment')
+                if ($player->updateLastChanced()) {
+                    $responseData = array(
+                        'status' => 'error',
+                        'error' => 'Игра не засчитана, Вы уже принимали участие сегодня в ' . $player->getDateLastChance("H:i:s")
+                    );
+                    $player->writeLog(array('action' => 'CHEAT', 'desc' => 'MOMENTAL_CHANCE', 'status' => 'danger'));
+                    $this->ajaxResponse($responseData);
+                }
+
+
+            if ($playerChoose) {
+                $field = $game[$identifier]['field'];
+                if ($identifier != 'moment') {
+                    $playerChoose = explode("x", $playerChoose);
+
+                    // check already exists click
+                    $clicked = false;
+                    foreach ($game[$identifier]['clicks'] as $click) {
+                        if ($click[0] == $playerChoose[0] && $click[1] == $playerChoose[1]) {
+                            $clicked = true;
+                            break;
+                        }
+                    }
+                    if ($clicked) {
+                        $this->ajaxResponse(array(
+                            'status' => 'process',
+                            'cell' => $field[$playerChoose[0]][$playerChoose[1]],
+                            'dublicate' => 1,
+                        ));
+                    }
+                    if (isset($field[$playerChoose[0]][$playerChoose[1]]) && $field[$playerChoose[0]][$playerChoose[1]] == 1) {
+                        $game[$identifier]['clicks'][] = $playerChoose;
+
+                        if ($identifier == '33' || $identifier == '44') {
+                            if (count($game[$identifier]['clicks']) == 3) {
+                                // double check clicks
+                                $status = true;
+                                foreach ($game[$identifier]['clicks'] as $point) {
+                                    if ($field[$point[0]][$point[1]] != 1) {
+                                        $status = false;
                                     }
                                 }
-                            }
-                        } else {
-                            $game[$identifier]['clicks'][] = $playerChoose;
-                            if ($identifier == '33' || $identifier == '44') {
-                                $game[$identifier]['status'] = 'loose';
-                            }
-                            if ($identifier == '55') {
-
-                                $clicksAccepted = $game[$identifier]['55clickcount'] - 5;
-                                if ($game[$identifier]['55failclickcount'] < $clicksAccepted) {
-                                    $game[$identifier]['55failclickcount']++;
+                                if ($status) {
+                                    $game[$identifier]['status'] = 'win';
                                 } else {
                                     $game[$identifier]['status'] = 'loose';
                                 }
                             }
                         }
                     } else {
-                        if ($field[$playerChoose - 1] == 1) {
-                            $game[$identifier]['status'] = 'win';
-                        } else {
+                        $game[$identifier]['clicks'][] = $playerChoose;
+                        if ($identifier == '33' || $identifier == '44') {
                             $game[$identifier]['status'] = 'loose';
                         }
-                    }
+                        if ($identifier == '55') {
 
-                    if ($game[$identifier]['status'] == 'loose' || $game[$identifier]['status'] == 'win') {
-                        unset($_SESSION['chanceGame']); //$this->session->remove('chanceGame');
-                    }
-
-                    $responseData = array(
-                        'status' => $game[$identifier]['status'],
-                        'cell' => $identifier != 'moment' ? $field[$playerChoose[0]][$playerChoose[1]] : $field[$playerChoose - 1],
-                    );
-
-                    if ($game[$identifier]['status'] == 'win') {
-                        $gameObj = ChanceGamesModel::instance()->getGamesSettings()[$identifier];
-                        if ($identifier != 'moment') {
-                            $prizes = $gameObj->loadPrizes();
-                            if ($identifier == '33' || $identifier == '44') {
-                                $prize = array_shift($prizes);
+                            $clicksAccepted = $game[$identifier]['55clickcount'] - 5;
+                            if ($game[$identifier]['55failclickcount'] < $clicksAccepted) {
+                                $game[$identifier]['55failclickcount']++;
                             } else {
-                                $prize = $prizes[$game[$identifier]['55failclickcount']];
+                                $game[$identifier]['status'] = 'loose';
                             }
-
-                            ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'], $player, $prize);
-
-                            try {
-                                $transaction = new \Transaction();
-                                $transaction->setPlayerId($player->getId())
-                                    ->setSum(0)
-                                    ->setCurrency(GameSettings::CURRENCY_POINT)
-                                    ->setDescription("Выигрыш " . $prize->getTitle());
-
-                                $transaction->create();
-                            } catch (EntityException $e) {
-                            }
-
-
-                            $responseData['prize'] = array(
-                                'id' => $prize->getId(),
-                                'title' => $prize->getTitle(),
-                                'image' => $prize->getImage(),
-                            );
-                        } else {
-                            $player->addPoints($gameObj->getPointsWin(), "Выигрыш в моментальный шанс");
-
                         }
                     }
-                    if ($game[$identifier]['status'] == 'loose') {
-                        $responseData['field'] = $field;
-                    }
-                    $this->ajaxResponse($responseData);
-
                 } else {
-                    $this->ajaxResponse(array(), 0, 'FRONTEND_ERROR');
+                    if ($field[$playerChoose - 1] == 1) {
+                        $game[$identifier]['status'] = 'win';
+                    } else {
+                        $game[$identifier]['status'] = 'loose';
+                    }
                 }
+
+                if ($game[$identifier]['status'] == 'loose' || $game[$identifier]['status'] == 'win') {
+                    unset($_SESSION['chanceGame']); //$this->session->remove('chanceGame');
+                }
+
+                $responseData = array(
+                    'status' => $game[$identifier]['status'],
+                    'cell' => $identifier != 'moment' ? $field[$playerChoose[0]][$playerChoose[1]] : $field[$playerChoose - 1],
+                );
+
+                if ($game[$identifier]['status'] == 'win') {
+                    $gameObj = ChanceGamesModel::instance()->getGamesSettings()[$identifier];
+                    if ($identifier != 'moment') {
+                        $prizes = $gameObj->loadPrizes();
+                        if ($identifier == '33' || $identifier == '44') {
+                            $prize = array_shift($prizes);
+                        } else {
+                            $prize = $prizes[$game[$identifier]['55failclickcount']];
+                        }
+
+                        ChanceGamesModel::instance()->logWin($gameObj, $field, $game[$identifier]['clicks'], $player, $prize);
+
+                        try {
+                            $transaction = new \Transaction();
+                            $transaction->setPlayerId($player->getId())
+                                ->setSum(0)
+                                ->setCurrency(GameSettings::CURRENCY_POINT)
+                                ->setDescription("Выигрыш " . $prize->getTitle());
+
+                            $transaction->create();
+                        } catch (EntityException $e) {
+                        }
+
+
+                        $responseData['prize'] = array(
+                            'id' => $prize->getId(),
+                            'title' => $prize->getTitle(),
+                            'image' => $prize->getImage(),
+                        );
+                    } else {
+                        $player->addPoints($gameObj->getPointsWin(), "Выигрыш в моментальный шанс");
+
+                    }
+                }
+                if ($game[$identifier]['status'] == 'loose') {
+                    $responseData['field'] = $field;
+                }
+                $this->ajaxResponse($responseData);
+
+            } else {
+                $this->ajaxResponse(array(), 0, 'FRONTEND_ERROR');
+            }
 
         } else {
             $this->ajaxResponse(array(), 0, 'INVALID_GAME');
