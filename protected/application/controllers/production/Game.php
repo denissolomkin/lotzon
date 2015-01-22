@@ -142,7 +142,7 @@ class Game extends \AjaxController
 
 
             if ($identifier == 'moment')
-                if(!$player->updateLastChanced()) {
+                if(!$player->updateLastChance()) {
                     $responseData = array(
                         'status' => 'error',
                         'error' => 'Игра не засчитана, Вы уже принимали участие за последние '.ChanceGamesModel::instance()->getGamesSettings()['moment']->getMinFrom().' минут'

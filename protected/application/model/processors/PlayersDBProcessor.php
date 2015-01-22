@@ -35,6 +35,9 @@ class PlayersDBProcessor implements IProcessor
         try {
             if(!$player->getCookieId())
                 $player->setCookieId($player->getId());
+
+            $player->updateCookieId($player->getCookieId());
+
             DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
                 ':id' => $player->getId(),
                 ':ccid' => $player->getCookieId(),
@@ -284,10 +287,14 @@ class PlayersDBProcessor implements IProcessor
             $sth->execute(array(
                 ':id' => $player->getId(),
             ));
+
+            if ($player->getAvatar()) {
+                @unlink( PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/' . $player->getAvatar());
+            };
+
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
-
 
         return true;
     }
@@ -340,6 +347,8 @@ class PlayersDBProcessor implements IProcessor
                 $sql .= ' WHERE CookieId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $sql .= ' WHERE ReferalId = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='Online')
+                $sql .= ' WHERE Online = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
                 $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -376,8 +385,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review
                 FROM `Players`
-                    LEFT JOIN `PlayerCookie` ON `PlayerCookie`.PlayerId=`Players`.Id
-                    INNER JOIN `PlayerCookie`c ON c.Cookie=`PlayerCookie`.Cookie
+                    LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId=`Players`.Id
+                    INNER JOIN `PlayerCookies`c ON c.CookieId=`PlayerCookies`.CookieId
                 WHERE `Players`.Id = :id";
 
         $sql = "SELECT
@@ -420,6 +429,8 @@ class PlayersDBProcessor implements IProcessor
                 $search = ' WHERE `Players`.CookieId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $search = ' WHERE `Players`.ReferalId = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='Online')
+                $sql .= ' WHERE Online = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ip')
                 $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -430,7 +441,7 @@ class PlayersDBProcessor implements IProcessor
 
 
         $sql = "SELECT `Players`.*,
-                group_concat(DISTINCT(`PlayerCookie`.Cookie)) CookieId,
+                group_concat(DISTINCT(`PlayerCookie`.Cookies)) CookieId,
                 count(DISTINCT(c.PlayerId)) CountCookieId,
                 (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) CountNote,
@@ -444,8 +455,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) CountReview,
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
-                    LEFT JOIN `PlayerCookie` ON `PlayerCookie`.PlayerId=`Players`.Id
-                    INNER JOIN `PlayerCookie`c ON c.Cookie=`PlayerCookie`.Cookie
+                    LEFT JOIN `PlayerCookies` ON `PlayerCookie`.PlayerId=`Players`.Id
+                    INNER JOIN `PlayerCookies`c ON c.CookieId=`PlayerCookie`.CookieId
                 {$search}
                 GROUP BY `Players`.Id";
 
@@ -672,7 +683,25 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function updateLastChanced(Entity $player)
+    public function updateCookieId(Entity $player, $cookie)
+    {
+        $sql = "REPLACE INTO `PlayerCookies` (`PlayerId`, `CookieId`, `Time`)
+                VALUES (:id, :cookie, :tm)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'       => $player->getId(),
+                ':cookie'     => $cookie,
+                ':tm'       => time()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
+    public function updateLastChance(Entity $player)
     {
         $sql = "UPDATE `Players` SET `DateChanced` = :date WHERE  `Id` = :id AND `DateChanced` < :min";
 

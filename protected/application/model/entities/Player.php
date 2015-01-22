@@ -10,7 +10,7 @@ class Player extends Entity
     const IDENTITY = "player_session";
     const AUTOLOGIN_COOKIE = "autologin";
     const AUTOLOGIN_HASH_COOKIE   = "autologinHash";
-    const PLAYERID_COOKIE   = "playerId";
+    const PLAYERID_COOKIE   = "_ga_ca";
     // 3 months
     const AUTOLOGIN_COOKIE_TTL = 7776000;
 
@@ -510,13 +510,13 @@ class Player extends Entity
     }
 
 
-    public function updateLastChanced()
+    public function updateLastChance()
     {
         $model = $this->getModelClass();
         $check=false;
 
         try {
-            if($model::instance()->updateLastChanced($this)) {
+            if($model::instance()->updateLastChance($this)) {
                 $this->setDateLastChance(time());
                 $check=true;
             }
@@ -869,12 +869,27 @@ class Player extends Entity
         try {
             $counters=$model::instance()->updateCounters($this);
             $this->setCounters($counters);
-            return $counters;
         } catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
 
         }
 
+        return $counters;
+
+    }
+
+    public function updateCookieId($cookie)
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateCookieId($this,$cookie);
+        } catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return $this;
     }
 
     protected function checkNickname()
@@ -1064,6 +1079,9 @@ class Player extends Entity
             $this->writeLog(array('action'=>'INVALID_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'danger'));
             throw new EntityException("INVALID_PASSWORD", 403);
         }
+
+        if(!$_COOKIE[self::PLAYERID_COOKIE] OR $_COOKIE[self::PLAYERID_COOKIE] != $this->getId() OR $_COOKIE[self::PLAYERID_COOKIE] != $this->getCookieId() OR !$this->getCookieId())
+            $this->updateCookieId($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId());
 
         if(!$_COOKIE[self::PLAYERID_COOKIE])
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
