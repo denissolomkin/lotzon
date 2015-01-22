@@ -260,6 +260,7 @@ class Game extends \AjaxController
                     'status' => 'error',
                     'error'   => 'Игра не засчитана, Вы уже принимали участие сегодня в '.$player->getDateLastChance("H:i:s")
                 );
+                $player->writeLog(array('action'=>'CHEAT', 'desc'=>'MOMENTAL_CHANCE','status'=>'danger'));
                 $this->ajaxResponse($responseData);
             }
         } else {
