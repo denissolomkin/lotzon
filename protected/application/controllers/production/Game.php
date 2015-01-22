@@ -138,8 +138,6 @@ class Game extends \AjaxController
         $game = &$_SESSION['chanceGame'];
         if ($game && isset($game[$identifier]) && $game[$identifier]['status'] == 'process') {
             $player=$this->session->get(Player::IDENTITY);
-            if($player->updateLastChanced() OR $identifier != 'moment') {
-
                 $playerChoose = $this->request()->post('choose', null);
                 if ($playerChoose) {
                     $field = $game[$identifier]['field'];
@@ -255,14 +253,6 @@ class Game extends \AjaxController
                     $this->ajaxResponse(array(), 0, 'FRONTEND_ERROR');
                 }
 
-            } else{
-                $responseData = array(
-                    'status' => 'error',
-                    'error'   => 'Игра не засчитана, Вы уже принимали участие сегодня в '.$player->getDateLastChance("H:i:s")
-                );
-                $player->writeLog(array('action'=>'CHEAT', 'desc'=>'MOMENTAL_CHANCE','status'=>'danger'));
-                $this->ajaxResponse($responseData);
-            }
         } else {
             $this->ajaxResponse(array(), 0, 'INVALID_GAME');
         }
