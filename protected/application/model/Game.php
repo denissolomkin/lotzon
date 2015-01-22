@@ -1,9 +1,6 @@
 <?php
 
-Application::import(PATH_APPLICATION . 'model/Entity.php');
-Application::import(PATH_APPLICATION . 'model/entities/Player.php');
-
-class NewGame extends Entity
+class Game
 {
     const   STACK_PLAYERS = 2;
     const   GAME_PLAYERS = 2;
@@ -30,6 +27,10 @@ class NewGame extends Entity
     private $_callback = array();
     private $_field = array();
     private $_fieldPlayed = array();
+
+    public function __construct() {
+        $this->init();
+    }
 
     public function init()
     {
@@ -107,10 +108,12 @@ class NewGame extends Entity
                 $this->_isOver = 0;
                 $this->_isSaved = 0;
                 #echo ' '.time().' '. "Переустановка игроков\n";
+
                 $this->unsetFieldPlayed()
                     ->setField($this->generateField())
                     ->setPlayers($this->getClients())
                     ->nextPlayer()
+                    ->setTime(time())
                     ->startAction();
             } else {
                 $this->unsetCallback()
@@ -155,7 +158,7 @@ class NewGame extends Entity
         $this->unsetCallback();
         if(!isset($data->cell) OR isset($this->getClients()[$this->currentPlayer()['pid']]->bot)){
             #echo ''.time().' '. "ход бота\n";
-            $this->setClient($this->currentPlayer()['pid']);
+//            $this->setClient($this->currentPlayer()['pid']);
             list($x,$y) = $this->generateMove();}
         else{
             #echo ''.time().' '. "ход игрока\n";

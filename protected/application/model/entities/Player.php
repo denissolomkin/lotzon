@@ -48,6 +48,7 @@ class Player extends Entity
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_dateLastNotice = '';
+    private $_dateLastChance = '';
     private $_dateAdBlocked  = '';
     private $_country        = '';
 
@@ -300,6 +301,24 @@ class Player extends Entity
         return $date;
     }
 
+    public function setDateLastChance($dateLastChance)
+    {
+        $this->_dateLastChance = $dateLastChance;
+
+        return $this;
+    }
+
+    public function getDateLastChance($format = null)
+    {
+        $date = $this->_dateLastChance;
+
+        if (!is_null($format)) {
+            $date = date($format, $this->_dateLastChance);
+        }
+
+        return $date;
+    }
+
     public function setDateLastNotice($dateLastNotice)
     {
         $this->_dateLastNotice = $dateLastNotice;
@@ -489,6 +508,26 @@ class Player extends Entity
         
         return $this;
     }
+
+
+    public function updateLastChanced()
+    {
+        $model = $this->getModelClass();
+        $check=false;
+
+        try {
+            if($model::instance()->updateLastChanced($this)) {
+                $this->setDateLastChance(time());
+                $check=true;
+            }
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $check;
+
+    }
+
 
     public function decrementSocialPostsCount()
     {
@@ -1144,6 +1183,7 @@ class Player extends Entity
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
                  ->setDateLastNotice($data['DateNoticed'])
+                 ->setDateLastChance($data['DateChanced'])
                  ->setCountry($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setVisibility((boolean)$data['Visible'])

@@ -8,6 +8,9 @@
 
  Application::import(PATH_APPLICATION . '/model/entities/Player.php');
  Application::import(PATH_APPLICATION . '/model/entities/GameSettings.php');
+ Application::import(PATH_APPLICATION . '/model/games/WhoMore.php');
+ Application::import(PATH_APPLICATION . '/model/games/NewGame.php');
+ Application::import(PATH_APPLICATION . '/model/games/SeaBattle.php');
  require_once dirname(__DIR__) . '/../../system/DB.php';
  require_once dirname(__DIR__) . '/../../system/Config.php';
  require_once dirname(__DIR__) . '/../../../protected/configs/config.php';
@@ -26,6 +29,7 @@ class WebSocketController implements MessageComponentInterface {
     private $_settings,$_loop;
     private $_rating=array();
     private $_games=array(
+        'WhoMore' => 1,
         'NewGame' => 1
     );
     private $_modes=array('POINT-0','POINT-25','POINT-50','MONEY-0.1','MONEY-0.25');
@@ -58,14 +62,24 @@ class WebSocketController implements MessageComponentInterface {
             foreach($apps as $id=>$app) {
 
                 if ($app->_isOver && $app->_bot) {
-                    if ($app->currentPlayer()['timeout'] - $app::TIME_OUT + 10 < time())
+                    if ($app->currentPlayer()['timeout'] - $app::TIME_OUT + 10 < time()) {
+                        #echo " -- таймер на выход после 10 сек \n";
                         $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->_bot);
-                    elseif(!$app->_botReplay && $app->currentPlayer()['timeout'] + rand(2,4) - $app::TIME_OUT < time())
-                        $this->runGame($class, $app->getIdentifier(), 'replayAction', $app->_bot);
+                    } elseif(!$app->_botReplay && $app->currentPlayer()['timeout'] + rand(2,4) - $app::TIME_OUT < time()) {
+                        if(rand(1,5)==1){
+                            #echo " -- таймер на случайный выход\n";
+                            $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->_bot);
+                        } else {
+                            #echo " -- таймер на повтор \n";
+                            $this->runGame($class, $app->getIdentifier(), 'replayAction', $app->_bot);
+                        }
+                    }
 
-                } elseif (!$app->_isOver && $app->currentPlayer()['timeout'] + 5 < time()) {
+                } elseif (!$app->_isOver && $app->getTime()+$app::TIME_OUT < time() && $app->currentPlayer()['timeout'] < time()) {
+                    #echo " -- таймер на таймаут \n";
                         $this->runGame($class, $app->getIdentifier(), 'timeoutAction', $app->currentPlayer()['pid']);
                 } elseif ($app->_isOver && $app->currentPlayer()['timeout'] + 60 < time()) {
+                    #echo " -- таймер на выход \n";
                     $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->currentPlayer()['pid']);
                 }
             }
@@ -74,7 +88,7 @@ class WebSocketController implements MessageComponentInterface {
 
     public function initGame($clients,$name,$mode,$id)
     {
-        $class='\\' . $name;
+        $this->_class = $class='\\' . $name;
         $app = new $class;//new $this->_class;
         $keys = array_keys($clients);
         list($currency, $price) = explode("-", $mode);
@@ -107,9 +121,8 @@ class WebSocketController implements MessageComponentInterface {
     {
 
         if($app=$this->_apps[$name][$id]) {
-            $class = $this->_class;
-            $class='\\' . $name;
-            echo time() . " " . "$name {$app->getIdentifier()} $action ".(!isset($app->_bot) || $pid!=$app->_bot?"игрок №$pid":'бот №'.$app->currentPlayer()['pid'])." \n";
+            $this->_class = $class='\\' . $name;
+            echo time() . " " . "$name {$app->getIdentifier()} $action ".(!isset($app->_bot) || $pid != $app->_bot ? "игрок №" : 'бот №').$pid.' (текущий'.$app->currentPlayer()['pid'].") \n";
 
             if ($app->_bot!=$pid && ($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
                 #echo time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
@@ -127,7 +140,7 @@ class WebSocketController implements MessageComponentInterface {
                 #echo time() . " " . "рассылаем игрокам результат обработки \n";
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
-                if($app->_botTimer AND !$app->_isOver) {
+                if($app->_botTimer AND $app->currentPlayer()['pid']=$app->_bot AND !$app->_isOver) {
                     $bot = $app->_bot;
                     $this->_loop->addTimer($app->_botTimer, function () use ($name, $id, $bot) {
                         $this->runGame($name, $id, 'moveAction', $bot);
@@ -209,6 +222,7 @@ class WebSocketController implements MessageComponentInterface {
             $this->_class = $class = '\\' . $name;
             $action = (isset($data->action) ? $data->action : '') . 'Action';
             $mode = ((isset($data->mode) AND in_array($data->mode,$this->_modes)) ? $data->mode : $this->_modes[0]);
+
 
             switch ($type) {
                 case 'app':
@@ -428,7 +442,7 @@ class WebSocketController implements MessageComponentInterface {
                             // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
                             'online' =>
                                 ((isset($this->_stack[$name]) ? count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name]) : 0) +
-                                    (isset($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0))+rand(7,14),
+                                    (isset($this->_apps[$name]) ? count($this->_apps[$name]) * $class::GAME_PLAYERS : 0))+rand(9,11),
                             'top' => $top
                         ))));
 
@@ -463,6 +477,21 @@ class WebSocketController implements MessageComponentInterface {
                                         'message' => 'Игроки онлайн - '. count($this->_clients).': ' . implode(', ', $names))
                                 )
                             ));
+                        } elseif ($data->message == 'stats') {
+                            $count=0;
+                            foreach ($this->_apps as $apps_class)
+                                $count+=count($apps_class);
+
+                            $from->send(json_encode(
+                                array(
+                                    'path' => 'appchat',
+                                    'res' => array(
+                                        'user' => 'system',
+                                        'message' => array ('games'=>$count, 'players'=>count($this->_clients))
+                                    )
+                                )
+                            ));
+
 
                         } elseif ($data->message == 'games') {
                             $games='';

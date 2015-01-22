@@ -3,12 +3,16 @@
 
     <div class="row-fluid">
         <h2>
-            Пользователи (<?=$playersCount?>)
+            Пользователи (<?=$playersCount?>)<?$stats=PlayersModel::instance()->getProcessor()->getPlayersStats();?>
             <div class="flex"><?=($search['query']?'<button class="btn btn-md btn-success" onclick="history.back();"><i class="glyphicon glyphicon-arrow-left"></i></button>':'');?>
                 <button class="btn btn-md btn-info search-users"><i class="glyphicon glyphicon-search"></i></button>
             </div>
             <div class="right">
                 <!--button class="btn btn-md btn-info filter-trigger" data-id="0"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button--><button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+            </div>
+            <div class="right" id="wsStatus" style="margin: -3px 10px 0 0;">
+                <span class="pointer" onclick="location.href='?search[where]=Online&search[query]=1'"><span class="label label-md label-default">онлайн</span><span class="label label-info"><b><?=$stats['Online']?></b></span></span>
+                <span class="label label-default">билеты</span><span class="label label-info"><b><?=$stats['Tickets']?></b></span>
             </div>
         </h2>
     </div>  <hr/>
@@ -154,6 +158,18 @@
     </div>
 </div>
 
+<div class="modal fade" id="ws" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Статистика</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
 /* SEARCH BLOCK */
@@ -163,7 +179,7 @@ $('.search-users').on('click', function() {
     }else{
 
 
-        var input = $('<input class="form-control input-md search-form" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:260px;display:inline-block;" placeholder="id, фио, ник или email...">' +
+        var input = $('<input class="form-control input-md search-form" value="<?=(isset($search['query'])?$search['query']:'');?>" style="width:230px;display:inline-block;" placeholder="id, фио, ник или email...">' +
         '<select id="search_where" class="form-control input-md search-form" style="width: 120px;display: inline-block;">' +
         '<option value="">Везде</option>' +
         '<option value="Id">Id</option>' +
@@ -171,6 +187,7 @@ $('.search-users').on('click', function() {
         '<option value="NicName">Ник</option>' +
         '<option value="ReferalId">Реферал</option>' +
         '<option value="CookieId">Cookie</option>' +
+        '<option value="Online">Online</option>' +
         '<option value="CONCAT(`Surname`,`Name`)">Фио</option>' +
         '<option value="Email">Email</option></select>');
         var sccButton = $('<button class="btn btn-md btn-success search-form"><i class="glyphicon glyphicon-ok"></i></button>')
@@ -211,6 +228,43 @@ $('#search_where').val('<?=$search['where']?>');
 
 <? } ?>
 /* END SEARCH BLOCK */
+
+
+var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
+var conn;
+function WebSocketAjaxClient(data) {
+    if(!conn || conn.readyState !== 1)
+    {
+        conn = new WebSocket(url);
+        conn.onopen = function (e) {
+            conn.send(JSON.stringify({'path': 'chat', 'data': {'message':'stats'}}));
+        };
+    } else {
+        conn.send(JSON.stringify({'path': 'chat', 'data': {'message': data}}));
+    }
+
+    conn.onerror = function (e) {
+    };
+
+    conn.onmessage = function (e) {
+        data=$.parseJSON(e.data);
+        WebSocketStatus('<b style="color:purple">receive',data)
+    };
+
+}
+
+// try start websocket
+WebSocketAjaxClient();
+
+function WebSocketStatus(action, data) {
+    if(data.res.message.players)
+        $("#wsStatus").html('<small>'+$("#wsStatus").html()+' <span onclick="WebSocketAjaxClient(\'players\');" class="label pointer label-default">вебсокет</span><span onclick="WebSocketAjaxClient(\'players\');" class="label label-info"><b>'+data.res.message.players+'</b></span>  <span onclick="WebSocketAjaxClient(\'games\');" class="label pointer label-default">игр</span><span onclick="WebSocketAjaxClient(\'games\');" class="label label-info"><b>'+data.res.message.games+'<b></span></small>');
+    else{
+        $("#ws .modal-content .modal-body").html(data.res.message);
+        $("#ws").modal();
+    }
+
+}
 
 </script>
 

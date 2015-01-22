@@ -153,16 +153,29 @@
         <nav class="top-nav">
             <div class="tn-box">
                 <div id="logo-gotop"></div>
+                <? if($page) :?>
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">РОЗЫГРЫШ</a></li>
-                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($page=='tickets'?' now':'')?>"><a href="/tickets">РОЗЫГРЫШ</a></li>
+                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($page=='prizes'?' now':'')?>"><a href="/prizes">призы</a></li>
                     <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
-                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews">комментарии</a></li>
-                    <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Игры</a></li>
+                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($page=='reviews'?' now':'')?>"><a href="/reviews">комментарии</a></li>
+                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($page=='rules'?' now':'')?>"><a href="/rules">правила</a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($page=='profile'?' now':'')?>"><a href="/profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($page=='chance'?' now':'')?>"><a href="/chance">Игры</a></li>
                     <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
                 </ul>
+                <? else :?>
+                    <ul class="tn-mbk">
+                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">РОЗЫГРЫШ</a></li>
+                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
+                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
+                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews">комментарии</a></li>
+                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
+                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
+                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Игры</a></li>
+                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
+                    </ul>
+                <? endif ?>
                 <div class="tn-tr-bk">
                     <div class="tn-tr-tt">До розыгрыша<br/>осталось</div>
                     <div id="countdownHolder" class="tn-tr"></div>
@@ -174,6 +187,7 @@
         <!--=====================================================================
                                 TIKETS & PRIZES BLOCK
         ======================================================================-->
+        <? if(in_array($page,array('prizes','tickets')) OR !$page) :?>
             <section class="wings">
                 <aside class="lbs">
 
@@ -198,6 +212,7 @@
 
                 </aside>
                 <div class="w-ct">
+                    <? if($page=='tickets' OR !$page) :?>
                     <section class="tickets">
                         <? $filledTicketsCount = count($tickets); ?>
                         <? if (count($tickets) < 5) { ?>
@@ -290,6 +305,9 @@
                             </div>
                         <? } ?>
                     </section>
+                    <? endif ?>
+
+                    <? if($page=='prizes' OR !$page) :?>
                     <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">Призы</div>
@@ -346,12 +364,15 @@
                             </div>
                         </div>
                     </section>
+                    <? endif ?>
                 </div>
                 <div class="b-cl-block"></div>
             </section>
+        <? endif ?>
         <!--=====================================================================
                                 NEWS & RULEZ BLOCK
         ======================================================================-->
+        <? if(in_array($page,array('reviews','rules'))) :?>
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
@@ -488,6 +509,8 @@
 
                 <div class="b-cl-block"></div>
             </section>
+
+        <? endif ?>
             <section class="banner100">
 
                 <? if(is_array($banners['Banner100']))
@@ -500,9 +523,11 @@
             <? /*
                 <!--noindex--><div id="ambw73372" style="margin: auto;"></div><!--/noindex--> */ ?>
             </section>
+
         <!--=====================================================================
                                 PROFILE BLOCK
         ======================================================================-->
+        <? if($page=='profile' OR !$page) :?>
             <section class="profile">
                 <div class="p-bk">
                     <div class="p-tl-bk">
@@ -740,10 +765,13 @@
                 </div>
                 <div class="b-cl-block"></div>
             </section>
+        <? endif ?>
+
 
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
+        <? if($page=='chance' OR !$page) :?>
         <section class="chance">
         <div class="ch-br-bk">
 
@@ -792,14 +820,14 @@
                         <div class="l">Кто больше</div>
                         <div class="r"></div>
                     </div>
-                    <div class="ngm-bt" data-game="77"><img src="tpl/img/game-who-more.png"></div>
+                    <div class="ngm-bt" data-game="WhoMore"><img src="tpl/img/game-who-more.png"></div>
                 </div>
                 <div class="td c">
                     <div class="gm-if-bk">
                         <div class="l">Скоро</div>
                         <div class="r"></div>
                     </div>
-                    <img src="tpl/img/game-sea-battle.png">
+                    <div data-game="SeaBattle"><img src="tpl/img/game-sea-battle.png"></div>
                 </div>
                 <div class="td r">
                     <!--div class="gm-if-bk">
@@ -1147,6 +1175,8 @@
         </div>
         <div class="b-cl-block"></div>
         </section>
+        <? endif ?>
+
         <script>
             $('.ch-gm-tbl .gm-bt').click(function(){
                 $(this).closest('.ch-bk').fadeOut(200);
@@ -1161,7 +1191,7 @@
             ======================================================================-->
         <footer>
             <section class="fr-br-bk" style="display:none;">
-                <img src="/tpl/img/baners/footer-banner.jpg" width="1280" height="135" />
+                <!--img src="/tpl/img/baners/footer-banner.jpg" width="1280" height="135" /-->
             </section>
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Условия участия</a>
@@ -1175,11 +1205,12 @@
                 </div>
             </div>
         </footer>
+
         <? /*
-        <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: hidden;bottom: 0;height: 150px;width: 300px;background: white;">
-            <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
+        <div style="z-index: 100;position: fixed;padding: 5px;left: 0;overflow-x: auto;overflow-y: auto;bottom: 0;height: 300px;width: 300px;background: white;">
             <span id="chatStatus"></span>
-            <span style="bottom: 0;left: 0;position: absolute;padding: 5px;background: inherit;">
+            <span style="cursor:pointer;right:5px;position:absolute;" onclick="$('#chatStatus').parent('div').hide();$('#chatStatusShow').show();"><b>x</b></span>
+            <span style="bottom: 0;left: 0;position: fixed;padding: 5px;background: inherit;">
                 <input style="width:210px;" id="chatMessage"> <button id="chatButton">Отправить</button>
             </span>
         </div>
@@ -1224,7 +1255,7 @@
             scope: 'wall,photos'
         });
 
-        filledTicketsCount = <?=$filledTicketsCount;?>;
+        filledTicketsCount = <?=($filledTicketsCount?:0);?>;
         var playerFavorite = [];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
@@ -1232,6 +1263,7 @@
         var playerId   = <?=$player->getId()?>;
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
+        var page = <?=($page?1:0)?>;
         var online   = 1;
         var appId   = 0;
         var appMode   = 0;
@@ -1239,6 +1271,7 @@
         var unreadNotices = <?=$notices?>;
         var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=array_shift($banners['TicketLast']))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
         var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;
+        var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
 
         updateNotices(unreadNotices);
         var posts = {
@@ -1293,6 +1326,7 @@
                 location.hash = "";
             } 
         });
+        /*
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -1329,7 +1363,7 @@
                             xfbml      : true,
                             version    : 'v2.1'
                         });
-                };
+                }; */
     </script>
     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
     <?=$bannerScript;?>

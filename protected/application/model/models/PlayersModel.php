@@ -23,6 +23,16 @@ class PlayersModel extends Model
         return $this->getProcessor()->getPlayersCount($search);
     }
 
+    public function getPlayersStats()
+    {
+        return $this->getProcessor()->getPlayersStats();
+    }
+
+    public function updateLastChanced(Entity $player)
+    {
+        return $this->getProcessor()->updateLastChanced($player);
+    }
+
     public function getList($limit = 0, $offset = 0, $sort = array(), $search=null)
     {
         return $this->getProcessor()->getList($limit, $offset, $sort, $search);

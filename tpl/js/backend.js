@@ -528,10 +528,19 @@ window.setInterval(function() {
                                     $("#mchance").hide();
                                     $('.pz-ifo-bk').hide();
                                     $('.pz-rt-bk').text("Поздравляем, выигранные баллы зачислены на счет.").show().parents('#shop-items-popup').show();              
-                                }, 2000)    
+                                }, 2000)
                                 window.setTimeout(function() {
                                     location.reload();
                                 }, 4000);
+                            } else if (data.res.status == 'error') {
+
+                                $("#mchance").hide();
+                                $('.pz-ifo-bk').hide();
+                                $('.pz-rt-bk').text(data.res.error).show().parents('#shop-items-popup').show();
+
+                                 window.setTimeout(function() {
+                                 location.reload();
+                                 }, 4000);
                             } else {
                                 li.addClass('los');
 
