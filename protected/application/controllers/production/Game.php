@@ -138,7 +138,7 @@ class Game extends \AjaxController
         $game = &$_SESSION['chanceGame'];
         if ($game && isset($game[$identifier]) && $game[$identifier]['status'] == 'process') {
             $player=$this->session->get(Player::IDENTITY);
-            if($player->updateLastChanced()) {
+            if($player->updateLastChanced() OR $identifier != 'moment') {
 
                 $playerChoose = $this->request()->post('choose', null);
                 if ($playerChoose) {
