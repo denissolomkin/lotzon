@@ -29,7 +29,7 @@ class Index extends \SlimController\SlimController
     public $country = '';
     public $ref     = 0;
 
-    public function indexAction()
+    public function indexAction($page='tickets')
     {
 
         $session = new Session();
@@ -84,7 +84,7 @@ class Index extends \SlimController\SlimController
             try {
                 $session->set(Player::IDENTITY, $session->get(Player::IDENTITY)->fetch());
                 $this->country = (in_array($session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang );
-                $this->game();
+                $this->game($page);
                 $session->get(Player::IDENTITY)->markOnline();
             } catch (EntityException $e) {
                 echo $e->getCode();
@@ -97,12 +97,11 @@ class Index extends \SlimController\SlimController
         
     }
 
-    protected function game()
+    protected function game($page)
     {
         $seo = SEOModel::instance()->getSEOSettings();
         $session = new Session();
         $session->get(Player::IDENTITY)->fetch();
-
         $banners          = Config::instance()->banners;
         $gameSettings          = GameSettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
@@ -136,6 +135,7 @@ class Index extends \SlimController\SlimController
 
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($session->get(Player::IDENTITY));
         $this->render('production/game_new', array(
+            'page'        => ($seo['pages']?$page:0),
             'gameInfo'    => $gameInfo,
             'country'     => $this->country,
             'shop'        => $shop,

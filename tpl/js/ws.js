@@ -1,4 +1,4 @@
-var url = 'ws://lotzon.com:8080';
+$(function(){
 var conn;
 var errors = {
     'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
@@ -44,15 +44,19 @@ var errors = {
                     WebSocketStatus('<b style="color:purple">receive',e.data)
                     data=$.parseJSON(e.data);
                     if(data.error)
-                        $("#report-popup").show().find(".txt").text(errors[data.error]?errors[data.error]:'1'+data.error).fadeIn(200);
-                    else
-                        window[data.path.replace('\\','')+'Callback'](data);
+                        $("#report-popup").show().find(".txt").text(errors[data.error]?errors[data.error]:data.error).fadeIn(200);
+                    else {
+                        //console.log(data.path);
+                        eval(data.path.replace('\\', '') + 'Callback')(data);
+                        //window[data.path.replace('\\', '') + 'Callback'](data);
+                    }
                 };
 
         }
 
 // try start websocket
 WebSocketAjaxClient();
+
 
 function WebSocketStatus(action, data) {
     $("#wsStatus").html(action+': </b>'+data+'</br>'+$("#wsStatus").html());
@@ -131,7 +135,7 @@ function appNewGameCallback(receiveData)
          case 'start':
          // document.location.href = '.ngm-bk';
 //         $('.ngm-bk').focus();
-
+         $("html, body").animate({scrollTop: $('.chance').offset().top}, 500, 'easeInOutQuint');
          $('.ngm-bk .rls-r-ts').hide();
          $('.ngm-bk .rls-r-t').show();
          $('.ngm-bk .msg').hide();
@@ -182,13 +186,12 @@ function appNewGameCallback(receiveData)
 
          if(appTimeOut<1)
          {
-             NewGameTimeOut;
-         }
-         else{
+             onTimeOut();
+         } else{
              $(".ngm-bk .tm").countdown({
                  until: (appTimeOut),
                  layout: '{mnn}<span>:</span>{snn}',
-                 onExpiry: NewGameTimeOut
+                 onExpiry: onTimeOut
              });
              $(".ngm-bk .tm").countdown('resume');
              $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
@@ -262,9 +265,9 @@ function appNewGameCallback(receiveData)
                      $('.gm-pr.'+class_player+' .pr-pt b').html(value.points).hide().fadeIn(200);
                  });
 
-             if(receiveData.res.timeout<1)
-                 NewGameTimeOut();
-             else
+             if(receiveData.res.timeout<1){
+                 onTimeOut();
+             } else
                  $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
     /*
              $('.gm-pr.'+current_player+' .pr-cl b').html(
@@ -329,6 +332,221 @@ function appNewGameCallback(receiveData)
      }
 }
 
+// game
+function appWhoMoreCallback(receiveData)
+{
+    switch (receiveData.res.action) {
+
+
+        case 'ready':
+            $('.re').hide();
+            $('.ot-exit').html('Ожидаем соперника').show();
+            break;
+
+        case 'stack':
+            //$('.ngm-bk .ngm-go').hide().prev().show();
+            break;
+
+        case 'start':
+            // document.location.href = '.ngm-bk';
+//         $('.ngm-bk').focus();
+            $("html, body").animate({scrollTop: $('.chance').offset().top}, 500, 'easeInOutQuint');
+            $('.ngm-bk .rls-r-ts').hide();
+            $('.ngm-bk .rls-r-t').show();
+            $('.ngm-bk .msg').hide();
+            $('.gm-pr').removeClass('winner');
+            $('.ngm-bk .gm-pr.r .pr-nm').html();
+            $('.ngm-bk .pr-cl b').html();
+            $('.ngm-bk .pr-pt b').html();
+
+            $('.gm-pr .pr-cl').css('opacity','100').html("<b>0</b><span>ходов<br>осталось</span>");
+
+
+
+            // $('.ngm-bk .ngm-gm .gm-pr .pr-surr').show();
+            $('.ngm-rls').fadeOut(200);
+            $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();//.addClass('m');
+            appId=receiveData.res.gid;
+            appTimeOut=receiveData.res.timeout;
+
+            $.each(receiveData.res.players, function( index, value ) {
+                var class_player=value.pid==playerId?'l':'r';
+                $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves);
+                $('.gm-pr.'+class_player+' .pr-pt b').html(value.points);
+
+                if(value.avatar)
+                    value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
+                else
+                    value.avatar = "url('../tpl/img/default.jpg')";
+
+                $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
+
+                if(value.pid!=playerId && value.name){
+                    $('.gm-pr.r .pr-nm').html(value.name);
+                }
+            });
+
+            if(receiveData.res.current!=playerId)
+            {
+                $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                $('.gm-pr.r').addClass('move');
+                $('.gm-pr.l').removeClass('move');
+            }
+            else
+            {
+                $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                $('.gm-pr.l').addClass('move');
+                $('.gm-pr.r').removeClass('move');
+            }
+
+            if(appTimeOut<1)
+            {
+                onTimeOut();
+            } else{
+                $(".ngm-bk .tm").countdown({
+                    until: (appTimeOut),
+                    layout: '{mnn}<span>:</span>{snn}',
+                    onExpiry: onTimeOut
+                });
+                $(".ngm-bk .tm").countdown('resume');
+                $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
+            }
+
+            $.each(receiveData.res.field, function( x, cells ) {
+                $.each(cells, function( y, cell) {
+                    //     $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+x+'x'+y).html(cell.points);
+                    if(cell.player==playerId) {
+                        var class_cell='m';
+                    }
+                    else
+                    {
+                        var class_cell='o';
+                    }
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                        removeClass('last');
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+cell.coord).
+                        html(cell.points).
+                        addClass(class_cell+' last').fadeIn(100);
+                });
+            });
+            break;
+
+        case 'move':
+
+            if(receiveData.res.cell)
+            {
+                if(receiveData.res.cell.player==playerId)
+                    var class_cell='m';
+                else
+                    var class_cell='o';
+
+                $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                    removeClass('last');
+
+                $('.ngm-bk .ngm-gm .gm-mx ul.mx li#'+receiveData.res.cell.coord).
+                    html(receiveData.res.cell.points).
+                    addClass(class_cell+' last').fadeIn(300);
+
+            }
+
+            if(receiveData.res.extra) {
+                var equal = $('.ngm-bk .msg.equal');
+                equal.fadeIn(200);
+                window.setTimeout(function(){
+                    equal.fadeOut(200);
+                }, 2000);
+            }
+
+            if(receiveData.res.current)
+                if(receiveData.res.current!=playerId)
+                {
+                    $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                    $('.gm-pr.r').addClass('move');
+                    $('.gm-pr.l').removeClass('move');
+                }
+                else
+                {
+                    $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                    $('.gm-pr.l').addClass('move');
+                    $('.gm-pr.r').removeClass('move');
+                }
+
+            if(receiveData.res.players)
+                $.each(receiveData.res.players, function( index, value ) {
+                    var class_player=value.pid==playerId?'l':'r';
+                    $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves).hide().fadeIn(200);
+                    $('.gm-pr.'+class_player+' .pr-pt b').html(value.points).hide().fadeIn(200);
+                });
+
+            if(receiveData.res.timeout<1){
+                onTimeOut();
+            } else
+                $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
+            /*
+             $('.gm-pr.'+current_player+' .pr-cl b').html(
+             parseInt($('.gm-pr.'+current_player+' .pr-cl b').html())-1
+             ).hide().fadeIn(200);
+
+             $('.gm-pr.'+current_player+' .pr-pt b').html(
+             parseInt($('.gm-pr.'+current_player+' .pr-pt b').html())+
+             receiveData.res.cell.points
+             ).hide().fadeIn(200);
+             */
+
+
+            if(receiveData.res.winner){
+                $('.ngm-bk .tm').countdown('pause');
+                $('.ngm-bk .msg').hide();
+
+                $('.gm-pr').removeClass('move');
+                $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
+
+                setTimeout(function(){
+                    $('.msg.winner').fadeIn(200);
+                    class_player=receiveData.res.winner==playerId?'l':'r';
+
+
+                    $('.gm-pr .pr-cl').css('opacity','0');
+                    $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
+                    (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                    "</b><span>"+
+                    (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+
+                    $('.gm-pr.'+class_player).addClass('winner');
+                }, 1200);
+
+                $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
+                $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
+                $('.ngm-bk .ot-exit').hide();
+            }
+            break;
+
+        case 'quit':
+            if(receiveData.res.quit!=playerId){
+                $('.ngm-bk .re').hide();
+                $('.ngm-bk .ot-exit').html('Соперник вышел').show();
+            }
+            appId=0;
+            break;
+
+
+        case 'error':
+            $("#report-popup").show().find(".txt").text(errors[receiveData.res.error]?errors[receiveData.res.error]:receiveData.res.error).fadeIn(200);
+            $("#report-popup").show().fadeIn(200);
+            if(receiveData.res.appId==0) {
+                $('.ngm-bk .tm').countdown('pause');
+                appId = receiveData.res.appId;
+                $('.ngm-bk .prc-but-cover').hide();
+                $('.ngm-rls').fadeIn(200);
+            }
+            break;
+
+
+    }
+}
+
 /****************************************************
  *         WebSocketAjaxClient Queries              *
  ****************************************************/
@@ -355,7 +573,7 @@ $(document).on('click', '.ngm-bk .ngm-go', function(e){
         $('.ngm-bk .rls-r-ts').show();
         $('.ngm-bk .rls-r-t').hide();
         $('.ngm-bk .prc-but-cover').show();
-        var path='app/NewGame/'+appId;
+        var path='app/'+appName+'/'+appId;
         var data={'action':'start', 'mode': appMode};
         WebSocketAjaxClient(path,data);
 
@@ -370,11 +588,11 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .exit', function(e){
     $('.ngm-bk .prc-but-cover').hide();
     $('.ngm-rls').fadeIn(200);
 
-    var path='app/NewGame/'+appId;
+    var path='app/'+appName+'/'+appId;
     var data={'action':'quit'};
     WebSocketAjaxClient(path,data);
     appId=0;
-    WebSocketAjaxClient('update/NewGame');
+    WebSocketAjaxClient('update/'+appName);
 });
 
 // отмена, назад
@@ -384,7 +602,7 @@ $(document).on('click', '.ngm-bk .bk-bt-rl, .ngm-bk .ngm-rls-bk .rls-r .ngm-cncl
     $('.ngm-bk .rls-r-t').show();
     $('.ngm-bk .prc-but-cover').hide();
     appId=0;
-    var path='app/NewGame/'+appId;
+    var path='app/'+appName+'/'+appId;
     var data={'action':'cancel'};
     WebSocketAjaxClient(path,data);
 });
@@ -412,14 +630,13 @@ $(document).on('click', '.ngm-bk .bk-bt-rl', function(e){
     $('.ngm-bk .rls-r-ts').hide();
     $('.ngm-bk .rls-r-t').show();
     $('.ngm-bk .rls-l').fadeIn(200);
-    WebSocketAjaxClient('update/NewGame');
+    WebSocketAjaxClient('update/'+appName);
 });
 
 
 // switch price block
 $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $('.ngm-bk .rls-l').hide();
-
     $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
     $('.ngm-bk .prc-but-bk').find('active').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
@@ -436,7 +653,7 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
     msg.fadeIn(200);
 
     $('.ngm-bk .ngm-gm .gm-mx .msg.ca .bt-bk .l').off('click').on('click', function(e){
-        var path='app/NewGame/'+appId;
+        var path='app/'+appName+'/'+appId;
         var data={'action':'pass'};
         WebSocketAjaxClient(path,data);
         msg.fadeOut(200);
@@ -451,7 +668,7 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
 
 // повторить
 $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .re', function(e){
-    var path='app/NewGame/'+appId;
+    var path='app/'+appName+'/'+appId;
     var data={'action':'replay'};
     WebSocketAjaxClient(path,data);
 });
@@ -462,7 +679,7 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot', function(e)
 
     if(appId)
     {
-        var path='app/NewGame/'+appId;
+        var path='app/'+appName+'/'+appId;
         var data={'action':'quit'};
         WebSocketAjaxClient(path,data);
         appId=0;
@@ -471,8 +688,8 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot', function(e)
     $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').hide();
     $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').hide();
     $('.ot-exit').html('Ожидаем соперника').show();
-    
-    var path='app/NewGame/'+appId;
+
+    var path='app/'+appName+'/'+appId;
     var data={'action':'start', 'mode':appMode};
     WebSocketAjaxClient(path,data);
 });
@@ -495,7 +712,7 @@ $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
         //    $("#report-popup").show().fadeIn(200);
     }
     else{
-        var path='app/NewGame/'+appId;
+        var path='app/'+appName+'/'+appId;
         var data={'action':'move','cell':$(this).attr('id')}
         WebSocketAjaxClient(path,data);
     }
@@ -504,7 +721,8 @@ $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
 <!-- NEW GAMES PREVIEW -->
 $('.ch-gm-tbl .ngm-bt').click(function(){
     hideAllGames();
-    WebSocketAjaxClient('update/NewGame');
+    appName=$(this).data('game');
+    WebSocketAjaxClient('update/'+appName);
     $('.ch-bk').fadeOut(200);
     window.setTimeout(function(){
         $('.ngm-bk').fadeIn(200);
@@ -519,8 +737,9 @@ $('.ngm-bk .bk-bt').on('click', function() {
     }, 200);
 });
 
-function NewGameTimeOut(){
-    var path='app/NewGame/'+appId;
+function onTimeOut(){
+    var path='app/'+appName+'/'+appId;
     var data={'action':'timeout'}
     WebSocketAjaxClient(path,data);
 }
+});

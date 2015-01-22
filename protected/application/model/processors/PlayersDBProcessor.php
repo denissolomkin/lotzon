@@ -309,6 +309,26 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function getPlayersStats()
+    {
+        $sql = "SELECT SUM(Online) Online, (SELECT COUNT( * )
+                FROM (
+                SELECT 1
+                FROM LotteryTickets
+                WHERE LotteryId =0
+                GROUP BY PlayerId) t
+                ) Tickets
+                FROM `Players`";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+            return $sth->fetch();
+        } catch (PDOException $e) {echo $e->getMessage();
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
+
     public function getPlayersCount($search=null)
     {
         $sql = "SELECT COUNT(Id) as `counter` FROM `Players`";
@@ -342,6 +362,23 @@ class PlayersDBProcessor implements IProcessor
     {
 
         $sql = "SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')";
+
+        $sql = "SELECT
+                count(DISTINCT(c.PlayerId)) CookieId,
+                (SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')) AS Ip,
+                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
+                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) Referal,
+                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
+                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review
+                FROM `Players`
+                    LEFT JOIN `PlayerCookie` ON `PlayerCookie`.PlayerId=`Players`.Id
+                    INNER JOIN `PlayerCookie`c ON c.Cookie=`PlayerCookie`.Cookie
+                WHERE `Players`.Id = :id";
 
         $sql = "SELECT
                 (SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')) AS Ip,
@@ -391,6 +428,27 @@ class PlayersDBProcessor implements IProcessor
                 $search= ' WHERE '.(is_numeric($search['query'])?'`Players`.`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
         }
 
+
+        $sql = "SELECT `Players`.*,
+                group_concat(DISTINCT(`PlayerCookie`.Cookie)) CookieId,
+                count(DISTINCT(c.PlayerId)) CountCookieId,
+                (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
+                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) CountNote,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) CountNotice,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') CountAdBlock,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) CountReferal,
+                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) CountLog,
+                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) CountShopOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') CountMoneyOrder,
+                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) CountReview,
+                (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
+                FROM `Players`
+                    LEFT JOIN `PlayerCookie` ON `PlayerCookie`.PlayerId=`Players`.Id
+                    INNER JOIN `PlayerCookie`c ON c.Cookie=`PlayerCookie`.Cookie
+                {$search}
+                GROUP BY `Players`.Id";
+
         $sql = "SELECT `Players`.*,
                 (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
                 COUNT(DISTINCT (PlayerNotes .Id)) CountNote,
@@ -409,7 +467,6 @@ class PlayersDBProcessor implements IProcessor
                 LEFT JOIN `ShopOrders` ON `ShopOrders` . `PlayerId` = `Players`.`Id`
                 {$search}
                 GROUP BY `Players`.`Id`";
-
 
         $sql = "SELECT `Players`.*,
                 (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
@@ -613,6 +670,24 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $player;
+    }
+
+    public function updateLastChanced(Entity $player)
+    {
+        $sql = "UPDATE `Players` SET `DateChanced` = :date WHERE  `Id` = :id AND `DateChanced` < :min";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':date'  => time(),
+                ':min'  => time() - ChanceGamesModel::instance()->getGamesSettings()['moment']->getMinFrom()*60,
+                ':id'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->rowCount();
     }
 
     public function updateLastNotice(Entity $player)
