@@ -145,7 +145,7 @@ class Game extends \AjaxController
                 if(!$player->updateLastChanced()) {
                     $responseData = array(
                         'status' => 'error',
-                        'error' => 'Игра не засчитана, Вы уже принимали участие сегодня в ' . $player->getDateLastChance("H:i:s")
+                        'error' => 'Игра не засчитана, Вы уже принимали участие за последние '.ChanceGamesModel::instance()->getGamesSettings()['moment']->getMinFrom().' минут'
                     );
                     $player->writeLog(array('action' => 'CHEAT', 'desc' => 'MOMENTAL_CHANCE', 'status' => 'danger'));
                     $this->ajaxResponse($responseData);
