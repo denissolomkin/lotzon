@@ -10,8 +10,8 @@
             <div class="right">
                 <!--button class="btn btn-md btn-info filter-trigger" data-id="0"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button--><button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
             </div>
-            <div class="right" id="wsStatus" style="margin: -3px 10px 0 0;">
-                <span class="pointer" onclick="location.href='?search[where]=Online&search[query]=1'"><span class="label label-md label-default">онлайн</span><span class="label label-info"><b><?=$stats['Online']?></b></span></span>
+            <div class="right" id="wsStatus" style="margin: -3px 50px 0 0;">
+               <span class="pointer" onclick="location.href='?search[where]=Online&search[query]=1'"><span class="label label-md label-default">онлайн</span><span class="label label-info"><b><?=$stats['Online']?></b></span></span>
                 <span class="label label-default">билеты</span><span class="label label-info"><b><?=$stats['Tickets']?></b></span>
             </div>
         </h2>
@@ -258,7 +258,7 @@ WebSocketAjaxClient();
 
 function WebSocketStatus(action, data) {
     if(data.res.message.players)
-        $("#wsStatus").html('<small>'+$("#wsStatus").html()+' <span onclick="WebSocketAjaxClient(\'players\');" class="label pointer label-default">вебсокет</span><span onclick="WebSocketAjaxClient(\'players\');" class="label label-info"><b>'+data.res.message.players+'</b></span>  <span onclick="WebSocketAjaxClient(\'games\');" class="label pointer label-default">игр</span><span onclick="WebSocketAjaxClient(\'games\');" class="label label-info"><b>'+data.res.message.games+'<b></span></small>');
+        $("#wsStatus").html('<small><small>'+$("#wsStatus").html()+' <span onclick="WebSocketAjaxClient(\'players\');" class="label pointer label-default">вебсокет</span><span onclick="WebSocketAjaxClient(\'players\');" class="label label-info"><b>'+data.res.message.players+'</b></span>  <span onclick="WebSocketAjaxClient(\'games\');" class="label pointer label-default">игр</span><span onclick="WebSocketAjaxClient(\'games\');" class="label label-info"><b>'+data.res.message.games+'<b></span></small></small>');
     else{
         $("#ws .modal-content .modal-body").html(data.res.message);
         $("#ws").modal();
