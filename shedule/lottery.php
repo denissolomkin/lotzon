@@ -34,7 +34,7 @@ if (timeToRunLottery()) {
 
     message("Get tickets");
     $time = microtime(true);
-    // get players tickets    
+    // get players tickets
     $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     $lotteryCombination = array();
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
@@ -43,10 +43,10 @@ if (timeToRunLottery()) {
     messageLn("Generation (" . Config::instance()->generatorNumTries . " tries)");
     $tgt = microtime(true);
     // if need to play jackpot
-    
+
     if ($gameSettings->getJackpot()) {
         $winner = array_rand($tickets);
-        $lotteryCombination = $tickets[$winner]->getCombination(); 
+        $lotteryCombination = $tickets[$winner]->getCombination();
     } else {
         $lotteryCombinations = array();
         for ($i = 0; $i < Config::instance()->generatorNumTries; ++$i) {
@@ -89,14 +89,14 @@ if (timeToRunLottery()) {
             if ($combinationWin > $maxWin) {
                 $maxWin = $combinationWin;
 
-                
+
             }
         }
         // late night magick ;O
         arsort($combinationsWeight);
         $combinationsWeight = array_flip($combinationsWeight);
-        
-        $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
+
+        $lotteryCombination = $lotteryCombinations[array_pop($combinationsWeight)];
     }
     messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
@@ -132,7 +132,7 @@ if (timeToRunLottery()) {
                 }
                 // calculate point or UA money total
                 if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
-                    $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];                    
+                    $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];
                 } else {
                     $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
                 }
@@ -149,7 +149,7 @@ if (timeToRunLottery()) {
                 // restart with lower weight combination
                 $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
                 continue;
-            } 
+            }
         }
 
         break;
@@ -215,11 +215,11 @@ if (timeToRunLottery()) {
             $currency = GameSettings::CURRENCY_POINT;
             if ($ticketCompare > 0) {
                 $win = $gamePrizes[$pcountry][$ticketCompare]['sum'];
-                $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];    
+                $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];
             }
 
             if ($currency == GameSettings::CURRENCY_MONEY) {
-                $playerMoney += $win; 
+                $playerMoney += $win;
             } else {
                 $playerPoints += $win;
             }
@@ -250,7 +250,7 @@ if (timeToRunLottery()) {
                 DB::Connect()->quote($playerPoints),
                 DB::Connect()->quote("Выигрыш в розыгрыше"),
                 DB::Connect()->quote(time()),
-            ));   
+            ));
         }
         $playersMoneySql[] = vsprintf("WHEN `Id`=%s THEN `Money`+%s", array(
             DB::Connect()->quote($playerId),
@@ -272,7 +272,7 @@ if (timeToRunLottery()) {
     $queries['transactions'] = sprintf($queries['transactions'], join(',', $transactionsSql));
     $queries['players'] = sprintf($queries['players'], join(" ", $playersMoneySql), join(" ", $playersPointsSql), join(",", array_keys($playersPlayed)));
     $queries['tickets'] = sprintf($queries['tickets'], join(" ", $ticketsSumSql), join(" ", $ticketsCurrencySql), join(",", $ticketIds));
-    
+
     $queries['lotteryWins'] = sprintf($queries['lotteryWins'], join(',', $lotteryWinSql));
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
@@ -332,7 +332,7 @@ function getLock()
     return file_get_contents($lockFile);
 }
 
-function setLock() 
+function setLock()
 {
     global $lockFile;
 
@@ -346,7 +346,7 @@ function releaseLock()
     unlink($lockFile);
 }
 
-function isLocked() 
+function isLocked()
 {
     global $lockTimeout;
 
