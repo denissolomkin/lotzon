@@ -108,12 +108,15 @@ class AuthController extends \SlimController\SlimController {
                 if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed())
                     $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
 
+                if(!$_COOKIE[Player::PLAYERID_COOKIE] OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getId() OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getCookieId() OR !$player->getCookieId())
+                    $player->updateCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId());
+
                 if(!$_COOKIE[Player::PLAYERID_COOKIE])
                     setcookie(Player::PLAYERID_COOKIE, $player->getId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
 
                 $player->updateSocial()
                     ->setLastIp(Common::getUserIp())
-                    ->setCookieId(($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId()))
+                    ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                     ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
                     ->update();
 

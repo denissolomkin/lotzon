@@ -28,9 +28,14 @@ class PlayersModel extends Model
         return $this->getProcessor()->getPlayersStats();
     }
 
-    public function updateLastChanced(Entity $player)
+    public function updateLastChance(Entity $player)
     {
-        return $this->getProcessor()->updateLastChanced($player);
+        return $this->getProcessor()->updateLastChance($player);
+    }
+
+    public function updateCookieId(Entity $player, $cookie)
+    {
+        return $this->getProcessor()->updateCookieId($player, $cookie);
     }
 
     public function getList($limit = 0, $offset = 0, $sort = array(), $search=null)
