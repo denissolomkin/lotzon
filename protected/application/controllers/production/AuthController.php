@@ -143,7 +143,6 @@ class AuthController extends \SlimController\SlimController {
 
                     try {
                         $player->setIp(Common::getUserIp())
-                            ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                             ->setHash('')
                             ->setName($profile->firstName)
                             ->setSurname($profile->lastName)

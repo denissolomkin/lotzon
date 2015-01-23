@@ -33,16 +33,18 @@ class PlayersDBProcessor implements IProcessor
         $player->setId(DB::Connect()->lastInsertId());
 
         try {
-            if(!$player->getCookieId())
-                $player->setCookieId($player->getId());
+            $player->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
+                ->updateCookieId($player->getCookieId())
+                ->setNicName('Участник ' . $player->getId());
 
-            $player->updateCookieId($player->getCookieId());
+            if(!$_COOKIE[Player::PLAYERID_COOKIE])
+                setcookie(Player::PLAYERID_COOKIE, $player->getCookieId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
 
             DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
                 ':id' => $player->getId(),
                 ':ccid' => $player->getCookieId(),
             ));
-            $player->setNicName('Участник ' . $player->getId());
+
         } catch (PDOException $e){}
 
         return $player;
