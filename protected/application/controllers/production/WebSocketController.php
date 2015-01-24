@@ -20,20 +20,19 @@ class WebSocketController implements MessageComponentInterface {
     const   MIN_WAIT_TIME = 2;
     const   PERIODIC_TIMER = 2;
 
+    private $_class, $_settings, $_loop;
     private $_clients=array();
     private $_stack=array();
     private $_apps=array();
     private $_players=array();
     private $_bots=array();
-    private $_class;
-    private $_settings,$_loop;
     private $_rating=array();
     private $_games=array(
         'WhoMore' => 1,
-        'NewGame' => 1
+        'NewGame' => 1,
+        'SeaBattle' => 2,
     );
     private $_modes=array('POINT-0','POINT-25','POINT-50','MONEY-0.1','MONEY-0.25');
-    protected $_shutdown;
 
     public function __construct($loop) {
 
@@ -452,7 +451,6 @@ class WebSocketController implements MessageComponentInterface {
                     if(isset($data->message)){
 
                         if ($data->message == 'stop') {
-                            call_user_func($this->_shutdown);
                             //die;
                         } elseif ($data->message == 'online') {
 
@@ -735,15 +733,17 @@ class WebSocketController implements MessageComponentInterface {
             $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES ";
 
         $results = $transactions = array();
+        $players = $app->getPlayers();
 
-        foreach($app->getPlayers() as $player)
+        foreach($players as $player)
         {
             if($app->getPrice() AND $player['result']!=0 AND !isset($app->getClients()[$player['pid']]->bot)) {
                 $sql_transactions_players[]='(?,?,?,?,?,?)';
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 $price=($currency=='Money'?
-                    $app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang ))
+                    $app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_players[$pid]['Country'], Config::instance()->langs) ? $this->_players[$pid]['Country'] : Config::instance()->defaultLang))
+                    //$app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang ))
                     :$app->getPrice());
 
                 /* update balance after game */
