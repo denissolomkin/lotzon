@@ -19,6 +19,7 @@ class WebSocketController implements MessageComponentInterface {
 
     const   MIN_WAIT_TIME = 2;
     const   PERIODIC_TIMER = 2;
+    const   CONNECTION_TIMER = 1800;
 
     private $_class, $_settings, $_loop;
     private $_clients=array();
@@ -39,9 +40,22 @@ class WebSocketController implements MessageComponentInterface {
         echo time()." ". "Server have started\n";
         $this->_loop=$loop;
         $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->periodicTimer();});
+        $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
         $this->_bots=Config::instance()->gameBots;
         $this->_clients = array();
         $this->_settings = GameSettingsModel::instance()->loadSettings();
+    }
+
+    public function checkConnections()
+    {
+        foreach($this->_players as $player)
+            if($player['Ping']<time()-self::CONNECTION_TIMER){
+                echo time()." ". "игрок №{$player['Id']} - ping timeout\n";
+                $this->quitPlayer($player['Id']);
+                unset($this->_players[$player['Id']]);
+                if(isset($this->_clients[$player['Id']]) && $this->_clients[$player['Id']] instanceof ConnectionInterface)
+                    $this->_clients[$player['Id']]->close();
+            }
     }
 
     public function periodicTimer()
@@ -82,7 +96,6 @@ class WebSocketController implements MessageComponentInterface {
                     $this->runGame($class, $app->getIdentifier(), 'quitAction', $app->currentPlayer()['pid']);
                 }
             }
-        /**/
     }
 
     public function initGame($clients,$name,$mode,$id)
@@ -168,7 +181,7 @@ class WebSocketController implements MessageComponentInterface {
             $player = $conn->Session->get(Player::IDENTITY);
             $conn->resourceId = $player->getId();
             $this->_clients[$player->getId()] = $conn;
-            $this->_players[$player->getId()] = array('Id'=>$player->getId(),'Country'=>$player->getCountry());
+            $this->_players[$player->getId()] = array('Id'=>$player->getId(),'Ping'=>time(),'Country'=>$player->getCountry());
 
             echo time()." "."New connection: #{$conn->resourceId} " . $conn->Session->getId() . "\n";
 
@@ -213,12 +226,13 @@ class WebSocketController implements MessageComponentInterface {
 
         if($player = $from->Session->get(Player::IDENTITY))
             if($player instanceof Player){
+                $this->_players[$player->getId()]['Ping']=time();
             $data = json_decode($msg);
             list($type, $name, $id) = array_pad(explode("/", $data->path),3,0);
-            #echo time()." ". "#{$from->resourceId}: " . (isset($data->data->action) ? $data->data->action : '') . " - " . $data->path . " \n";
-            if(isset($data->data))
-                $data = $data->data;
+            echo time()." ". "#{$from->resourceId}: " . $data->path. (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
             $this->_class = $class = '\\' . $name;
+                if(isset($data->data))
+                    $data = $data->data;
             $action = (isset($data->action) ? $data->action : '') . 'Action';
             $mode = ((isset($data->mode) AND in_array($data->mode,$this->_modes)) ? $data->mode : $this->_modes[0]);
 
@@ -304,7 +318,8 @@ class WebSocketController implements MessageComponentInterface {
                                         'action' => 'error',
                                         'error' => 'APPLICATION_DOESNT_EXISTS',
                                         'appId' => 0));
-                                    unset($this->_players[$from->Session->get(Player::IDENTITY)->getId()]);
+                                    $this->quitPlayer($player->getId());
+                                    //unset($this->_players[$from->Session->get(Player::IDENTITY)->getId()]);
                                 }
 
                             // если нет, сообщаем об ошибке
@@ -677,8 +692,8 @@ class WebSocketController implements MessageComponentInterface {
                 echo time()." ". "$class Удаление игрока из игрового стека ожидающих \n";
             }
 
-            echo time()." ". "Удаление игрока №$playerId из массива игроков \n";
-            unset($this->_players[$playerId]);
+            //echo time()." ". "Удаление игрока №$playerId из массива игроков \n";
+            //unset($this->_players[$playerId]);
 
             if(isset($this->_stack[$class][$mode]) AND count($this->_stack[$class][$mode])==0){
                 echo time()." ". "$class Удаление стека ожидающих игроков {$class} {$mode}\n";
@@ -742,7 +757,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 $price=($currency=='Money'?
-                    $app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_players[$pid]['Country'], Config::instance()->langs) ? $this->_players[$pid]['Country'] : Config::instance()->defaultLang))
+                    $app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_players[$player['pid']]['Country'], Config::instance()->langs) ? $this->_players[$player['pid']]['Country'] : Config::instance()->defaultLang))
                     //$app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getCountry(), Config::instance()->langs) ? $this->_clients[$player['pid']]->Session->get(Player::IDENTITY)->getCountry() : Config::instance()->defaultLang ))
                     :$app->getPrice());
 
