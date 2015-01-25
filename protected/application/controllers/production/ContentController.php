@@ -53,7 +53,7 @@ class ContentController extends \AjaxController
                     'id'           => $lottery->getId(),
                     'date'         => $lottery->getDate('d.m.Y'),
                     'combination'  => $lottery->getCombination(),
-                    'winnersCount' => ($lottery->getWinnersCount()+($lottery->getId()>76?1000:0)),
+                    'winnersCount' => ($lottery->getWinnersCount()+($lottery->getId()>84?1750:($lottery->getId()>76?1000:0))),
                     'iPlayed'      => $lottery->playerPlayed,
                 );
             }
