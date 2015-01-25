@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -583,7 +583,7 @@
                                 <li><?=$num?></li>
                             <? } ?>
                         </ul>
-                        <div class="nw"><?=($lottery->getWinnersCount()+($lottery->getId()>76?1000:0))?></div>
+                        <div class="nw"><?=($lottery->getWinnersCount()+($lottery->getId()>84?1750:($lottery->getId()>76?1000:0)))?></div>
                         <? if ($lottery->getWinnersCount() > 0 && isset($playerPlayedLotteries[$lottery->getId()])) { ?>
                             <div class="aw-bt" data-lotid="<?=$lottery->getId()?>">
                                 <a href="javascript:void(0)"></a>
@@ -1327,43 +1327,43 @@
         }
     });
 
-     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-     ga('create', 'UA-56113090-1', 'auto');
-     ga('send', 'pageview');
+    ga('create', 'UA-56113090-1', 'auto');
+    ga('send', 'pageview');
 
-     (function (d, w, c) {
-     (w[c] = w[c] || []).push(function() {
-     try {
-     w.yaCounter26806191 = new Ya.Metrika({id:26806191,
-     webvisor:true,
-     clickmap:true,
-     trackLinks:true,
-     accurateTrackBounce:true});
-     } catch(e) { }
-     });
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter26806191 = new Ya.Metrika({id:26806191,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+            } catch(e) { }
+        });
 
-     var n = d.getElementsByTagName("script")[0],
-     s = d.createElement("script"),
-     f = function () { n.parentNode.insertBefore(s, n); };
-     s.type = "text/javascript";
-     s.async = true;
-     s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-     if (w.opera == "[object Opera]") {
-     d.addEventListener("DOMContentLoaded", f, false);
-     } else { f(); }
-     })(document, window, "yandex_metrika_callbacks");
-     window.fbAsyncInit = function() {
-     FB.init({
-     appId      : 'your-app-id',
-     xfbml      : true,
-     version    : 'v2.1'
-     });
-     };
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : 'your-app-id',
+            xfbml      : true,
+            version    : 'v2.1'
+        });
+    };
 </script>
 <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
 <?=$bannerScript;?>
