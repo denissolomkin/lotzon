@@ -228,7 +228,8 @@ $(function(){
     });
 
     $('.add-ticket').on('click', function(){
-        if($(this).hasClass('on')){
+        if($(this).hasClass('on') && !$(this).data('disabled')){
+            $(this).data('disabled',true);
             var combination = [];
             $(this).parents('.tb-slide').find('li.select').each(function(id, li) {
                 if (!$(li).hasClass('ticket-favorite') && !$(li).hasClass('ticket-random')) {
@@ -270,6 +271,7 @@ $(function(){
                 } else {
                     $('.tb-tabs_li:not(.done)').first().click();                     
                 }
+                $(this).data('disabled',false);
             }, function(data){
                 if (data.message == 'ALREADY_FILLED') {
                     button.closest('.bm-pl').find('.tb-fs-tl').remove();
@@ -277,8 +279,11 @@ $(function(){
                     button.closest('.tb-slide').addClass('done');
                     button.closest('.tb-st-bk').html('<div class="tb-st-done" style="color:red">Этот билет уже был заполнен</div>');
                 }
+                $(this).data('disabled',false);
 
-            }, function(){});
+            }, function(){
+                $(this).data('disabled',false);
+            });
         }
     });
 
@@ -472,36 +477,40 @@ $(function(){
     $(".reviews .rv-but-add").on('click', function() {
 
         currentReview.text=$('.reviews .rv-txt .textarea').text();
-        if(currentReview.text)
-        $.ajax({
-            url: "/review/save/",
-            method: 'POST',
-            async: true,
-            data: currentReview,
-            dataType: 'json',
-            success: function(data) {
-                if (data.status == 1) {
-                    currentReview.image = null;
+        if(currentReview.text && !$(this).data('disabled')) {
+            $(this).data('disabled',true);
+            $.ajax({
+                url: "/review/save/",
+                method: 'POST',
+                async: true,
+                data: currentReview,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        currentReview.image = null;
 
-                    $('.reviews .rv-form').hide();
-                    $('.reviews .rv-txt .textarea').html('');
-                    $('.reviews .rv-image').css('background', '#e1ecee').css('opacity', '1');
-                    $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-upload-review.png');
-                    $('.rv-sc').fadeIn(200);
+                        $('.reviews .rv-form').hide();
+                        $('.reviews .rv-txt .textarea').html('');
+                        $('.reviews .rv-image').css('background', '#e1ecee').css('opacity', '1');
+                        $('.reviews .rv-upld-img img').attr('src', '/tpl/img/but-upload-review.png');
+                        $('.rv-sc').fadeIn(200);
 
-                    window.setTimeout(function(){
-                        $('.rv-sc').hide();
-                        $('.reviews .rv-form').fadeIn(200);
-                    }, 2400);
+                        window.setTimeout(function () {
+                            $('.rv-sc').hide();
+                            $('.reviews .rv-form').fadeIn(200);
+                        }, 2400);
+                        $(this).data('disabled',false);
 
-                } else {
-                    alert(data.message);
+                    } else {
+                        $(this).data('disabled',false);
+                        alert(data.message);
+                    }
+                },
+                error: function () {
+                    alert('Unexpected server error');
                 }
-            },
-            error: function() {
-                alert('Unexpected server error');
-            }
-        });
+            });
+        }
     });
 
         function initReviewUpload() {
