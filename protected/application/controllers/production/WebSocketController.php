@@ -349,7 +349,7 @@ class WebSocketController implements MessageComponentInterface {
                                         FROM `Players`
                                         LEFT JOIN `PlayerGames`
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid
+                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>1422230400
                                         LIMIT 1";
                     #echo time() . " SELECT PLAYER INFO" . "\n";
 
@@ -416,7 +416,7 @@ class WebSocketController implements MessageComponentInterface {
                         $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*5+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId = :gameid
+                                where g.GameId = :gameid AND g.`Date`>1422230400
                                 group by g.PlayerId
                                 having T > (SELECT (count(Id) / count(distinct(PlayerId)) / " . $class::GAME_PLAYERS . " ) FROM PlayerGames WHERE GameId = :gameid)
                                 order by R DESC, T DESC
