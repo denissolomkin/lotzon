@@ -30,7 +30,7 @@ class Players extends \AjaxController
             if (!$agreed) {
                 $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
             }
-            if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.com','testbed.lotzon.com','192.168.1.253')))
+            if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.com','testbed.lotzon.com','192.168.1.253','lotzon')))
                 $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
 
 
