@@ -748,8 +748,8 @@ class PlayersDBProcessor implements IProcessor
             $sth->execute(array(
                 ':onl'   => (int)$player->isOnline(),
                 ':onlt'  => (int)$player->getOnlineTime(),
-                ':adb'   => $player->getAdBlock(),
-                ':dtadb' => $player->getDateAdBlocked(),
+                ':adb'   => (int)$player->getAdBlock(),
+                ':dtadb' => (int)$player->getDateAdBlocked(),
                 ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));
