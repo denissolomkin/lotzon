@@ -180,6 +180,13 @@ function ConverDB()
 {
 	global $_variantsCount;
 
+	if(!DB::Connect()->query('SHOW INDEX FROM Players WHERE Key_name = "Country"')->fetch())
+	{
+		DB::Connect()->query('ALTER TABLE Players			ADD INDEX `Country`		(`Country`)');
+		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `CountryCode`	(`CountryCode`)');
+		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `BallsCount`	(`BallsCount`)');
+	}
+
 	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
 	{
 		$SQL_LT = 'ALTER TABLE LotteryTickets ';
