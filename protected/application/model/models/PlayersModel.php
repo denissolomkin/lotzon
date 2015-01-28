@@ -83,9 +83,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->isSocialUsed($player);
     }
 
-    public function getBalance(Entity $player)
+    public function getBalance(Entity $player, $forUpdate = false)
     {
-        return $this->getProcessor()->getBalance($player);
+        return $this->getProcessor()->getBalance($player, $forUpdate);
     }
 
     public function updateBalance(Entity $player, $currency, $quantity)

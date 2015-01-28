@@ -82,12 +82,14 @@ class OrdersController extends \AjaxController
 
             $order->setData($data);
             try {
+                $order->beginTransaction();
                 $order->create();
-
                 // substract player money
                 $sum = $order->getData()['summ']['value'];
                 $order->getPlayer()->addMoney(-1*$sum, $order->getText());
+                $order->commit();
             } catch(EntityException $e) {
+                $order->rollBack();
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
         } else {

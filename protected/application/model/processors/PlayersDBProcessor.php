@@ -210,10 +210,14 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function getBalance(Entity $player)
+    public function getBalance(Entity $player, $forUpdate = false)
     {
+
         $sql = "SELECT `Money`, `Points`  FROM `Players`
                 WHERE `Id` = :id OR `Email` = :email";
+        if ($forUpdate) {
+            $sql .= ' FOR UPDATE';
+        }
 
         try {
             $sth = DB::Connect()->prepare($sql);
