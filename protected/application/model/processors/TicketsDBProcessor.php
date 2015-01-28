@@ -5,12 +5,30 @@ class TicketsDBProcessor implements IProcessor
 {
     public function create(Entity $ticket)
     {
-        $sql = "INSERT INTO `LotteryTickets` (`PlayerId`, `Combination`, `DateCreated`, `TicketNum`) VALUES (:playerid, :combination, :dc, :tn)";
+		$comb	= $ticket->getCombination();
 
-        try {
+		if(DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
+		{
+			$filds	= array();
+
+			foreach((array)$comb as $ball)
+			{
+				$filds[]= 'B'.((int)$ball);
+			}
+
+			$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`, ".implode(',', $filds).")
+					VALUES							(:playerid, :combination, :dc, :tn, 1, 1, 1, 1, 1, 1)";
+		}
+		else
+		{
+			$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`)
+					VALUES							(:playerid, :combination, :dc, :tn)";
+		}
+
+		try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':playerid'    => $ticket->getPlayerId(),
-                ':combination' => @serialize($ticket->getCombination()),
+                ':combination' => @serialize($comb),
                 ':dc'          => time(),
                 ':tn'          => $ticket->getTicketNum(),
             ));
