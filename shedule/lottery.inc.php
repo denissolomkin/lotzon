@@ -95,7 +95,8 @@ function SetLotteryCombination($comb)
 
 	DB::Connect()->query($SQL);
 
-	$comb['id'] = DB::Connect()->lastInsertId();
+	$comb['id']           = DB::Connect()->lastInsertId();
+	$comb['WinnersCount'] = $WinnersCount;
 
 	return $comb;
 }
