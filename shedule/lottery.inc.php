@@ -25,7 +25,7 @@ function ApplyLotteryCombination($comb)
 
 	foreach($comb['fields'] as $field)
 	{
-		$select[]= "IF($field IS NULL, 0, 1)";
+		$select[]= "IFNULL($field, 0)";
 		$where []= "$field IS NOT NULL";
 	}
 
@@ -57,7 +57,7 @@ function SetLotteryCombination($comb)
 		return;
 	}
 
-	$Combination = array();
+	$Combination = $where = array();
 
 	$comb['fields'] = $comb['combination'];
 
@@ -65,9 +65,21 @@ function SetLotteryCombination($comb)
 	{
 		$Combination[]= (int)substr($ball, 1);
 		$ball = '`'.addslashes($ball).'`';
+		$where[]= "$ball IS NOT NULL";
 	}
 
 	$Combination = serialize($Combination);
+
+
+	$SQL = 'SELECT
+				COUNT(DISTINCT(PlayerId))
+			FROM
+				LotteryTickets
+			WHERE
+				LotteryId = 0
+				AND ('.implode(' OR ', $where).')';
+	$WinnersCount = current(DB::Connect()->query($SQL)->fetch());
+
 
 	$SQL = "INSERT INTO Lotteries
 				(`Date`, `Combination`, `WinnersCount`, `MoneyTotal`, `PointsTotal`, %s)
@@ -77,7 +89,7 @@ function SetLotteryCombination($comb)
 	$SQL = sprintf($SQL,    implode(',', $comb['fields']),
 							time(),
 							$Combination,
-							$comb['WinnersCount'],
+							$WinnersCount,
 							$comb['MoneyTotal'],
 							$comb['PointsTotal']);
 
@@ -128,16 +140,16 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
 		$balls  = array_rand($stats, $_ballsCount);
 		$fields = array_map(function($ball)
 		{
-			return "IF($ball IS NULL, 0, $ball)";
+			return "IFNULL($ball, 0)";
 		},
 		$balls);
 
 		$SQL = "SELECT
-                    SUM(IF(ls.Currency = 'POINT', ls.Prize / 100, ls.Prize) * stat.cnt)	AS UAH,
-                    SUM(IF(ls.Currency = 'POINT', Prize, 0) * stat.cnt)					AS PointsTotal,
-                    SUM(IF(ls.Currency = 'POINT', 0, Prize) * stat.cnt)					AS MoneyTotal,
-                    MAX(stat.BallsCount)												AS BallsMax,
-                    SUM(cnt)															AS WinnersCount
+                    SUM(IF(ls.Currency = 'POINT', ls.Prize / 100, ls.Prize) * cnt)	AS UAH,
+                    SUM(IF(ls.Currency = 'POINT', Prize, 0) * cnt)					AS PointsTotal,
+                    SUM(IF(ls.Currency = 'POINT', 0, Prize) * cnt)					AS MoneyTotal,
+                    MAX(stat.BallsCount)											AS BallsMax,
+                    SUM(cnt)														AS TicketsCount
                 FROM
                 (   SELECT
                         COUNT(*) AS cnt,
@@ -210,7 +222,7 @@ function ConverDB()
 		$tckts = DB::Connect()->query("SELECT count(*) FROM LotteryTickets WHERE LotteryId = 0")->fetch();
 		$tckts = current($tckts);
 
-		for($inc = 10000, $l1 = 0, $l2 = $inc; $l1 < $tckts; $l1 += $inc, $l2 += $inc)
+		for($inc = 1000, $l1 = 0, $l2 = $inc; $l1 < $tckts; $l1 += $inc, $l2 += $inc)
 		{
 			$limit = "$l1, $l2";
 
