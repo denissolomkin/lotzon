@@ -52,6 +52,9 @@
 
 html,button,input,select,textarea {}
 body {line-height:1;background-color:#f3f3f3;font-family: Handbook-regular;color:#4f4f4f;display:none;}
+*{-webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;}
 
 ::-moz-selection {background: #b3d4fc;text-shadow: none;}
 
@@ -91,6 +94,14 @@ input[type="radio"]:checked + label:after {content: "";display:block;width:16px;
                             Author's custom styles
    ========================================================================== */
 .b-cl-block {clear:both;line-height:0;margin:0;padding:0;display:block;}
+.b-cntrl-block {
+    right: 0px;
+    top: 0px;
+    padding: 12px;
+    position: absolute;
+    cursor: pointer;
+    font-size: 24px;
+}
 .b-ha {height:auto!important;}
 
 
@@ -249,7 +260,7 @@ article .wings {}
 .prizes .pbk-pi > b {font:20px/50px Handbook-bold;}
 .font-fix .prizes .pbk-pi, .font-fix .prizes .pbk-pi > b {line-height:54px;}
 .prizes .sbk-tl {float:left;}
-.sbk-tl-bk {background-color:#b2d0d4;height:50px;box-shadow:0 1px 0 0 rgba(255, 255, 255, 0.4) inset;}
+.sbk-tl-bk {background-color:#b2d0d4;height:50px;box-shadow:0 1px 0 0 rgba(255, 255, 255, 0.4) inset;position: relative;    }
 .sbk-tl-bk .sbk-tl {font:20px/50px Handbook-bold;color:#000;margin-left:40px;text-transform:uppercase;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);}
 .news .sbk-tl-bk {margin-bottom:29px;}
 .font-fix .sbk-tl-bk .sbk-tl {line-height:54px;}
@@ -478,8 +489,8 @@ article .infos {padding:40px 20px 0 20px;}
 
 
 
-
-.profile .p-bk .p-cnt #notice-unread{float: right;margin-right: 50px;}
+#profile-but .notice-unread,#profile-but .notice-unread:hover{background-color: #ce4847;color: whitesmoke !important;}
+.profile .p-bk .p-cnt #notice-unread{float: right;margin: 8px 40px 8px 0;background-color: #ce4847;color: whitesmoke !important;width: 24px;height: 24px;font: 18px/1.4 Handbook-bold;text-align: center;}
 .profile-notice {padding:30px 50px 0 50px;display:none;
     overflow-y: auto;
     height: 580px;}
@@ -878,38 +889,49 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-pr.l.winner {background:#ffe400;}
 .ngm-bk .ngm-gm .gm-pr.r.winner {background:#f68e56;}
 .ngm-bk .ngm-gm .gm-pr.winner .pr-ph-bk {opacity:1;}
-
 .ngm-bk .ngm-gm .gm-pr .mt, .ngm-bk .ngm-gm .gm-pr .wt {font:12px/1 Handbook-bold;color:#000;position:absolute;top:10px;left:0;width:70px;display:none;}
 .ngm-bk .ngm-gm .gm-pr.move .mt {display:block;}
 .ngm-bk .ngm-gm .gm-pr.winner .wt {display:block;}
 
-/* to remove */
-.ngm-bk .ngm-gm .gm-mx {width:480px;float:left;position:relative;}
-.ngm-bk .ngm-gm .gm-mx ul.mx {list-style:none;margin:0;padding:0;overflow:hidden;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li:nth-child(7n+7) {margin-right:0;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li.m {background:#ffe400;opacity:0.6;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li.o {background:#f68e56;opacity:0.6;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li.m.last {opacity:1;}
-.ngm-bk .ngm-gm .gm-mx ul.mx > li.o.last {opacity:1;}
-/* to remove */
-
 .ngm-bk .ngm-gm .gm-mx {width:480px;float:left;position:relative;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore {list-style:none;margin:0;padding:0;overflow:hidden;}
-.ngm-bk .ngm-gm .gm-mx ul.WhoMore > li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
+.ngm-bk .ngm-gm .gm-mx ul.WhoMore > li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li:nth-child(7n+7) {margin-right:0;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.m {background:#ffe400;opacity:0.6;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.o {background:#f68e56;opacity:0.6;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.m.last {opacity:1;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.o.last {opacity:1;}
 
-.ngm-bk .ngm-gm .gm-mx ul.SeaBattle {list-style:none;margin:0;padding:0;overflow:hidden;}
-.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li {width:60px;height:60px;margin:0 10px 10px 0;background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0/60px 60px;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
-.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li:nth-child(7n+7) {margin-right:0;}
-.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.m {background:#ffe400;opacity:0.6;}
-.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.o {background:#f68e56;opacity:0.6;}
+.ngm-bk .ngm-gm .gm-mx div.place div.but {width:130px;height:40px;font:15px/40px Handbook-bold;margin-top: 20px;text-transform:uppercase;text-align:center;cursor:pointer;background-color:#ffe400;border:1px solid #ffe400;}
+.ngm-bk .ngm-gm .gm-mx div.place div.but:hover {background-color:#000;color:#fff;border:1px solid #000;}
+.ngm-bk .ngm-gm .gm-mx div.place .sb-wait{height: 40px;font: 15px/40px Handbook-bold;margin-top: 20px;text-transform: uppercase;}
+.ngm-bk .ngm-gm .gm-mx div.place {margin:0;padding:40px;overflow:hidden;width:140px;float: left;font:18px/20px Handbook-regular;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle {list-style:none;margin:0;padding:0;overflow:hidden;width: 220px;float: left;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o {display:none;cursor:crosshair;cursor: url('http://192.168.1.253/tpl/img/games/Crosshair.cur') 12 12, crosshair;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle:first-of-type {margin-right: 40px;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li {width:19px;height:19px;margin:0 1px 1px 0;background-color: #d8e7ea;float:left;font:19px/19px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li:nth-child(11n+11) {margin-right:0;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.d, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.k {background:url("../img/games/damage.png") #d8e7ea no-repeat 0 0/19px 19px;}
+
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m > li.d, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m > li.s, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m > li.k { background-color:#00b8d4;opacity:1;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o > li.d, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o > li.s, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o > li.k { background-color:#f24235;opacity:1;}
+
 .ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.m.last {opacity:1;}
 .ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.o.last {opacity:1;}
+
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o.disabled {opacity:0.8;}
+
+.ngm-bk .ngm-gm .pr-cl .s {height: 20px;margin: 10px 0 0 20px ;background-color: black;text-align: left;}
+.ngm-bk .ngm-gm .gm-pr .pr-cl > b div {font:16px/1.2 Handbook-bold;color:white;}
+.ngm-bk .ngm-gm .gm-pr .pr-cl div b {margin-left:6px;}
+.ngm-bk .ngm-gm .pr-cl .e {background-color: lightgray;}
+/*.ngm-bk .ngm-gm .pr-cl .m {background-color: #ffe400;}
+.ngm-bk .ngm-gm .pr-cl .o {background-color: #f68e56;}*/
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m div.s {background-color: #00b8d4;cursor:pointer;position: absolute !important;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.e { background-color: gray; /*background:url('http://www.manyhill.com/wp-content/themes/manyhill/images/menu_dot.png') #d8e7ea no-repeat 0 0/19px 19px;*/}
+
+/*.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.v {margin:0;margin-bottom:1px;width: 20px;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.h {margin:0;margin-right:1px;height:20px;}*/
 
 .ngm-bk .ngm-gm .gm-mx .msg {position:absolute;width:480px;height:480px;background-color:rgba(255, 255, 255, 0.95);top:0;left:0;display:none;}
 .ngm-bk .ngm-gm .gm-mx .msg .tbl {display:table;width:100%;height:100%;}

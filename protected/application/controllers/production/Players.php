@@ -30,7 +30,7 @@ class Players extends \AjaxController
             if (!$agreed) {
                 $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
             }
-            if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.com','testbed.lotzon.com','192.168.1.253','lotzon')))
+            if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.test','lotzon.com','testbed.lotzon.com','192.168.1.253','lotzon')))
                 $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
 
 
@@ -122,7 +122,7 @@ class Players extends \AjaxController
             }
 
 
-            if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.com','testbed.lotzon.com','192.168.1.253','lotzon')))
+            if(!in_array($_SERVER['HTTP_HOST'],array('lotzon.test','lotzon.com','testbed.lotzon.com','192.168.1.253','lotzon')))
             {$this->ajaxResponse(array(), 0, 'ACCESS_DENIED');}
 
             $player = new Player();
@@ -437,6 +437,8 @@ class Players extends \AjaxController
                 }
             }
 
+            #delete
+            //unset($_SESSION['chanceGame']['moment']);
 
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
@@ -450,7 +452,9 @@ class Players extends \AjaxController
                         $resp['moment'] = 1;
                     }
                 }
-
+                #delete
+                //$resp['moment'] = 1;
+                //$resp['block'] = '<img style="" src="../tpl/img/plugs/plug.jpg">';
 
                 if (isset($resp['moment']) && $resp['moment']) {
                     $gameField = $chanceGames['moment']->generateGame();
