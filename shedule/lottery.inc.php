@@ -9,6 +9,7 @@ function ApplyLotteryCombination(&$comb)
 
 	echo 'ApplyLotteryCombination'.PHP_EOL;
 
+
 	$time = microtime(true);
 	echo '  Update win tickets: ';
 
@@ -52,11 +53,11 @@ function ApplyLotteryCombination(&$comb)
 
 	$SQL = sprintf($SQL, implode('+', $select), implode(' ', $codes), implode(' OR ', $where));
 
-//exit();
-
 	DB::Connect()->query($SQL);
 
 	echo (microtime(true) - $time).PHP_EOL;
+
+
 
 	$time = microtime(true);
 	echo '  Update losing tickets: ';
@@ -64,6 +65,7 @@ function ApplyLotteryCombination(&$comb)
 	DB::Connect()->query("UPDATE LotteryTickets SET LotteryId	= $lid  WHERE LotteryId = 0");
 
 	echo (microtime(true) - $time).PHP_EOL;
+
 
 
 	$time = microtime(true);
@@ -95,6 +97,7 @@ function ApplyLotteryCombination(&$comb)
 	DB::Connect()->query($SQL);
 
 	echo (microtime(true) - $time).PHP_EOL;
+
 
 
 	$time = microtime(true);
@@ -132,6 +135,7 @@ function ApplyLotteryCombination(&$comb)
 	echo (microtime(true) - $time).PHP_EOL;
 
 
+
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
 
 	echo PHP_EOL.PHP_EOL;
@@ -144,6 +148,8 @@ function SetLotteryCombination($comb)
 	{
 		return;
 	}
+
+	global $_ballsCount;
 
 	$time = microtime(true);
 	echo 'SetLotteryCombination: ';
@@ -162,6 +168,11 @@ function SetLotteryCombination($comb)
 	$Combination = serialize($Combination);
 
 
+	$ballsArray = array_flip(range(1, $_ballsCount - 1));
+	$ballsArray = array_intersect_key($comb, $ballsArray);
+	$ballsArray = serialize($ballsArray);
+
+
 	$SQL = 'SELECT
 				COUNT(DISTINCT(PlayerId))
 			FROM
@@ -173,16 +184,17 @@ function SetLotteryCombination($comb)
 
 
 	$SQL = "INSERT INTO Lotteries
-				(`Date`, `Combination`, `WinnersCount`, `MoneyTotal`, `PointsTotal`, %s)
+				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsStat, %s)
 			VALUES
-				(%d, '%s', %d, %f, %d, 1, 1, 1, 1, 1, 1)";
+				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
 	$SQL = sprintf($SQL,    implode(',', $comb['fields']),
 							time(),
 							$Combination,
 							$WinnersCount,
 							$comb['MoneyTotal'],
-							$comb['PointsTotal']);
+							$comb['PointsTotal'],
+							$ballsArray);
 
 	DB::Connect()->query($SQL);
 
@@ -237,6 +249,12 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
 	$time = microtime(true);
 	echo 'GetLotteryCombination:'.PHP_EOL;
 
+	$ballsStatSQL = array();
+	for($i = 1; $i < $_ballsCount; $i++)
+	{
+		$ballsStatSQL[]= "SUM(IF(stat.BallsCount = $i, stat.cnt, 0)) AS '$i'";
+	}
+
 	$stats = array_splice($stats, $ballsStart, $ballsRange);
 
 	for($r = $rounds, $rountdsStats = array(); $r--;)
@@ -261,8 +279,9 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
                     SUM(IF(ls.Currency = 'POINT', ls.Prize / 100, ls.Prize) * cnt)	AS UAH,
                     SUM(IF(ls.Currency = 'POINT', Prize, 0) * cnt)					AS PointsTotal,
                     SUM(IF(ls.Currency = 'POINT', 0, Prize) * cnt)					AS MoneyTotal,
+                    SUM(cnt)														AS TicketsCount,
                     MAX(stat.BallsCount)											AS BallsMax,
-                    SUM(cnt)														AS TicketsCount
+                    %s
                 FROM
                 (   SELECT
                         COUNT(*) AS cnt,
@@ -286,7 +305,7 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
                 WHERE
                     ls.CountryCode = 'UA'";
 
-		$SQL = sprintf($SQL, implode('+', $fields));
+		$SQL = sprintf($SQL, implode(',', $ballsStatSQL), implode('+', $fields));
 
 		$rountdStats = DB::Connect()->query($SQL)->fetch();
 		$rountdStats['combination'] = $balls;
@@ -320,6 +339,11 @@ function ConverDB()
 		DB::Connect()->query('ALTER TABLE Players			ADD INDEX `Country`		(`Country`)');
 		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `CountryCode`	(`CountryCode`)');
 		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `BallsCount`	(`BallsCount`)');
+	}
+
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsStat"')->fetch())
+	{
+		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsStat varchar(255) NULL');
 	}
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
