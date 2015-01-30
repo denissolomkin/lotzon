@@ -91,9 +91,46 @@ function ApplyLotteryCombination(&$comb)
 				AND lt.TicketWin	> 0
 			GROUP BY
 				lt.PlayerId";
+
 	DB::Connect()->query($SQL);
 
 	echo (microtime(true) - $time).PHP_EOL;
+
+
+	$time = microtime(true);
+	echo 'Transactions: ';
+
+	$SQL = "INSERT INTO Transactions
+			(
+				PlayerId,
+				Currency,
+				Sum,
+				Date,
+				Balance,
+				Description
+			)
+			SELECT
+				lt.PlayerId,
+				lt.TicketWinCurrency,
+				SUM(lt.TicketWin),
+				l.Date,
+				IF(lt.TicketWinCurrency = 'POINT', p.Points, p.Money),
+				'Выигрыш в розыгрыше'
+			FROM
+							Lotteries		l
+				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
+				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
+			WHERE
+					l.Id 			= $lid
+				AND lt.TicketWin	> 0
+			GROUP BY
+				lt.PlayerId,
+			    lt.TicketWinCurrency";
+
+	DB::Connect()->query($SQL);
+
+	echo (microtime(true) - $time).PHP_EOL;
+
 
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
 
