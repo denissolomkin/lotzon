@@ -1,7 +1,10 @@
 var currentShowedItem = 0;
 var winChance = false;
 var filledTicketsCount = 0;
-
+jQuery.fn.random = function() {
+    var randomIndex = Math.floor(Math.random() * this.length);
+    return jQuery(this[randomIndex]);
+};
 $(function(){
 
 
@@ -42,8 +45,6 @@ $(function(){
             $('.popup').fadeOut(200);
         };
     });
-
-
 
     /* ==========================================================================
                                 Logout functional
@@ -330,7 +331,7 @@ $(function(){
             if (data.res.items.length) {
                 var html = '';
                 $(data.res.items).each(function(id, item) {
-                    html += '<li class="pz-cg_li">';
+                    html += '<li class="pz-cg_li" data-item-id="'+item.id+'">';
                     if (item.quantity > 0) {
                         html += '<div class="pz-lim"><span>ограниченное количество</span><b>'+item.quantity+' шт</b></div>';
                     }
