@@ -1,11 +1,16 @@
 <?php
 
-function ApplyLotteryCombination($comb)
+function ApplyLotteryCombination(&$comb)
 {
 	if(!$comb)
 	{
 		return;
 	}
+
+	echo 'ApplyLotteryCombination'.PHP_EOL;
+
+	$time = microtime(true);
+	echo '  Update win tickets: ';
 
 	$defaultCountry  = Config::instance()->defaultLang;
 	$select = $where = array();
@@ -46,9 +51,55 @@ function ApplyLotteryCombination($comb)
 				AND (%s)";
 
 	$SQL = sprintf($SQL, implode('+', $select), implode(' ', $codes), implode(' OR ', $where));
+
+//exit();
+
 	DB::Connect()->query($SQL);
+
+	echo (microtime(true) - $time).PHP_EOL;
+
+	$time = microtime(true);
+	echo '  Update losing tickets: ';
+
 	DB::Connect()->query("UPDATE LotteryTickets SET LotteryId	= $lid  WHERE LotteryId = 0");
-	DB::Connect()->query("UPDATE Lotteries  	SET Ready		= 1		WHERE Id		= $lid");
+
+	echo (microtime(true) - $time).PHP_EOL;
+
+
+	$time = microtime(true);
+	echo 'PlayerLotteryWins: ';
+
+	$SQL = "INSERT INTO PlayerLotteryWins
+			(
+				PlayerId,
+				MoneyWin,
+				PointsWin,
+				Date,
+				LotteryId
+			)
+			SELECT
+				lt.PlayerId,
+				SUM(IF(lt.TicketWinCurrency = 'POINT', 0, lt.TicketWin)) AS MoneyWin,
+				SUM(IF(lt.TicketWinCurrency = 'POINT', lt.TicketWin, 0)) AS PointsWin,
+				l.Date,
+				l.Id
+			FROM
+			 				Lotteries		l
+				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
+			WHERE
+					l.Id			= $lid
+				AND lt.TicketWin	> 0
+			GROUP BY
+				lt.PlayerId";
+	DB::Connect()->query($SQL);
+
+	echo (microtime(true) - $time).PHP_EOL;
+
+	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
+
+	echo PHP_EOL.PHP_EOL;
+
+	unset($comb['fields']);
 }
 function SetLotteryCombination($comb)
 {
@@ -56,6 +107,9 @@ function SetLotteryCombination($comb)
 	{
 		return;
 	}
+
+	$time = microtime(true);
+	echo 'SetLotteryCombination: ';
 
 	$Combination = $where = array();
 
@@ -98,11 +152,16 @@ function SetLotteryCombination($comb)
 	$comb['id']           = DB::Connect()->lastInsertId();
 	$comb['WinnersCount'] = $WinnersCount;
 
+	echo (microtime(true) - $time).PHP_EOL;
+
 	return $comb;
 }
 function GetLotteryCombinationStatistics()
 {
 	global $_variantsCount;
+
+	$time = microtime(true);
+	echo 'GetLotteryCombinationStatistics: ';
 
 	$fields = array();
 
@@ -116,12 +175,16 @@ function GetLotteryCombinationStatistics()
 
 	asort($stats);
 
+	echo (microtime(true) - $time).PHP_EOL;
+
 	return $stats;
 }
 function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $return = 0, $orderBy = 'UAH')
 {
 	global $_ballsCount;
 	global $_variantsCount;
+
+	static $cache = array();
 
 	$ballsStart = min($ballsStart, $_variantsCount - $_ballsCount);
 	$ballsRange+= $_ballsCount;
@@ -134,11 +197,23 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
 		return;
 	}
 
+	$time = microtime(true);
+	echo 'GetLotteryCombination:'.PHP_EOL;
+
 	$stats = array_splice($stats, $ballsStart, $ballsRange);
 
 	for($r = $rounds, $rountdsStats = array(); $r--;)
 	{
-		$balls  = array_rand($stats, $_ballsCount);
+		$balls  = array_rand($stats, $_ballsCount);     asort($balls);  $balls = array_values($balls);
+		$hash   = serialize($balls);
+
+		if(isset($cache[$hash]))
+		{
+			continue;
+		}
+
+		$t = microtime(true);
+
 		$fields = array_map(function($ball)
 		{
 			return "IFNULL($ball, 0)";
@@ -180,17 +255,27 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
 		$rountdStats['combination'] = $balls;
 
 		$rountdsStats[(int)$rountdStats[$orderBy]] = $rountdStats;
+
+		echo '  check candidate: '.(microtime(true) - $t).PHP_EOL;
+
+		$cache[$hash]= true;
 	}
 
 	ksort($rountdsStats);   $rountdsStats = array_values($rountdsStats);
 
 	$return = min($return, count($rountdsStats)-1);
 
+	echo 'Total: '.(microtime(true) - $time).PHP_EOL;
+
 	return $rountdsStats[$return];
 }
 
 function ConverDB()
 {
+	$time = microtime(true);
+
+	echo PHP_EOL.'ConverDB: ';
+
 	global $_variantsCount;
 
 	if(!DB::Connect()->query('SHOW INDEX FROM Players WHERE Key_name = "Country"')->fetch())
@@ -202,6 +287,11 @@ function ConverDB()
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
 	{
+//		foreach(array('Players', 'Lotteries', 'LotterySettings', 'LotteryTickets', 'PlayerLotteryWins') as $table)
+//		{
+//			DB::Connect()->query("ALTER TABLE $table ENGINE='MyISAM'");
+//		}
+
 		$SQL_LT = 'ALTER TABLE LotteryTickets ';
 		$SQL_L  = 'ALTER TABLE Lotteries ';
 
@@ -270,8 +360,12 @@ function ConverDB()
 			}
 		}
 
+		echo (microtime(true) - $time).PHP_EOL;
+
 		return true;
 	}
+
+	echo (microtime(true) - $time).PHP_EOL;
 
 	return false;
 }

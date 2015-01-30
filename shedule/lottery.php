@@ -27,7 +27,7 @@ print_r($comb);
 //DB::Connect()->commit();
 //DB::Connect()->rollBack();
 
-echo microtime(true) - $time;
+echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL;
 
 
 /*
