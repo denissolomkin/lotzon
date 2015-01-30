@@ -45,7 +45,10 @@ function ApplyLotteryCombination(&$comb)
 			SET
 				lt.TicketWin		 = ls.Prize,
   				lt.TicketWinCurrency = ls.Currency,
-  				lt.LotteryId		 = $lid
+  				lt.LotteryId		 = $lid,
+
+  				p.Points = IF(ls.Currency = 'POINT', ls.Prize, 0) + p.Points,
+  				p.Money	 = IF(ls.Currency = 'POINT', 0, ls.Prize) + p.Money
 
 			WHERE
 				lt.LotteryId = 0
