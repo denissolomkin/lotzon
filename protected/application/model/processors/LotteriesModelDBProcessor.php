@@ -8,7 +8,7 @@ class LotteriesModelDBProcessor implements IProcessor
     {
         $lottery->setDate(time());
 
-        $sql = "INSERT INTO Lotteries (`Date`, `Combination`, `WinnersCount`, `MoneyTotal`, `PointsTotal`) VALUES (:date, :comb, :wc, :mt, :pt)";
+        $sql = "INSERT INTO Lotteries (`Date`, `Combination`, `WinnersCount`, `MoneyTotal`, `PointsTotal`, `BallsTotal`) VALUES (:date, :comb, :wc, :mt, :pt, :bt)";
         
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -17,6 +17,7 @@ class LotteriesModelDBProcessor implements IProcessor
                 ':wc'   => $lottery->getWinnersCount(),
                 ':mt'   => $lottery->getMoneyTotal(),
                 ':pt'   => $lottery->getPointsTotal(),
+                ':bt'   => @serialize($lottery->getBallsTotal()),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error process storage query", 500);

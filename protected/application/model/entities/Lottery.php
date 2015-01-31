@@ -9,6 +9,7 @@ class Lottery extends Entity
     private $_winnersCount = 0;
     private $_moneyTotal   = 0;
     private $_pointsTotal   = 0;
+    private $_ballsTotal   = '';
 
     private $_ready = false;
 
@@ -43,6 +44,19 @@ class Lottery extends Entity
     public function getCombination()
     {
         return $this->_combination;
+    }
+
+
+    public function setBallsTotal($ballsTotal)
+    {
+        $this->_ballsTotal = $ballsTotal;
+
+        return $this;
+    }
+
+    public function getBallsTotal()
+    {
+        return $this->_ballsTotal;
     }
 
     public function setDate($dateCreated)
@@ -145,7 +159,8 @@ class Lottery extends Entity
                  ->setReady($data['Ready'])
                  ->setWinnersCount($data['WinnersCount'])
                  ->setMoneyTotal($data['MoneyTotal'])
-                 ->setPointsTotal($data['PointsTotal']);
+                 ->setPointsTotal($data['PointsTotal'])
+                 ->setBallsTotal(@unserialize($data['BallsTotal']));
         }
 
         return $this;

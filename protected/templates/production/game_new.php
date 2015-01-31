@@ -983,10 +983,8 @@
                                 <div class="prc-bt">баллы</div>
                                 <div class="prc-sel">
                                     <div class="prc-tl">баллы</div>
-                                    <!--
                                     <div class="prc-vl" data-price='POINT-500'>500</div>
                                     <div class="prc-vl" data-price='POINT-200'>200</div>
-                                    -->
                                     <div class="prc-vl" data-price='POINT-100'>100</div>
                                     <div class="prc-vl" data-price='POINT-75'>75</div>
                                     <div class="prc-vl" data-price='POINT-50'>50</div>
@@ -997,8 +995,6 @@
                                 <div class="prc-bt">деньги</div>
                                 <div class="prc-sel">
                                     <div class="prc-tl">деньги</div>
-                                    <!--
-                                    -->
                                     <div class="prc-vl" data-price='MONEY-1'><?=(1*$gameInfo['coefficient'])?></div>
                                     <div class="prc-vl" data-price='MONEY-0.5'><?=(0.5*$gameInfo['coefficient'])?></div>
                                     <div class="prc-vl" data-price='MONEY-0.25'><?=(0.25*$gameInfo['coefficient'])?></div>
@@ -1307,8 +1303,12 @@
         var page = <?=($page?1:0)?>;
         var online   = 1;
         var appId   = 0;
-        var appMode   = 0;
         var appName   = '';
+        var appMode   = 0;
+        var appModes = {
+            'WhoMore': ['POINT-0', 'POINT-25', 'POINT-50', 'POINT-75', 'POINT-100', 'MONEY-0.1', 'MONEY-0.25', 'MONEY-0.5', 'MONEY-1'],
+            'SeaBattle': ['POINT-0']
+        };
         var unreadNotices = <?=$notices?>;
         var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=array_shift($banners['TicketLast']))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
         var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;

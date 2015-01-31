@@ -354,7 +354,7 @@ function appSeaBattleCallback(receiveData)
                      .addClass(receiveData.res.cell.class)
                      .html('<div class="'+receiveData.res.cell.class+'" style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]').css('background')+';width:19px;height:19px;"></div>')
                      .find('div')
-                     .toggle('explode', {pieces: 4 }, 500)
+                     .effect('explode', {pieces: 4 }, 500)
                      //.effect('bounce')
                      .parent().addClass(class_cell+' last')
                      .fadeIn(300);
@@ -536,6 +536,21 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', functi
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
     $(this).hide().next().show().children().last().addClass('active');
     $('.ngm-bk .ngm-go').removeClass('button-disabled').attr('disabled',false);
+
+    $('.prc-sel').each(function() {
+        if( $(this).find('.prc-vl').length){
+            var mode = $(this);
+            $(this).find('.prc-vl').each(function() {
+                if ($.inArray($(this).data('price'), appModes[appName])>0)
+                    $(this).show();
+            });
+            if(!(mode.find('.prc-vl[style$="display: block;"]').length))
+                mode.prev().hide();
+        }
+    });
+
+
+
 });
 
 // выбор ставки
@@ -561,7 +576,20 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
     $('.ngm-bk .prc-but-bk').find('active').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
+    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').hide();
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
+
+    $('.prc-sel').each(function() {
+        if( $(this).find('.prc-vl').length){
+            var mode = $(this);
+            $(this).find('.prc-vl').each(function() {
+                if ($.inArray($(this).data('price'), appModes[appName])>0)
+                   $(this).show();
+            });
+        if(!(mode.find('.prc-vl[style$="display: block;"]').length))
+            mode.prev().hide();
+        }
+    });
 
     $('.ngm-bk .prc-l').fadeIn(200);
 });

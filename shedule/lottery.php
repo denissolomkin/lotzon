@@ -1,6 +1,6 @@
 <?php
 
-echo 'Init'.PHP_EOL;
+message("Init");
 
 require_once('init.php');
 require_once('lottery.inc.php');
@@ -12,6 +12,7 @@ global $_ballsCount;    $_ballsCount    = 6;
 global $_variantsCount; $_variantsCount = 49;
 
 
+/*
 $time = microtime(true);
 
 
@@ -28,16 +29,14 @@ print_r($comb);
 //DB::Connect()->rollBack();
 
 echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL;
-
-
-/*
+*/
 $gt = microtime(true);
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
 Application::import(PATH_APPLICATION . '/model/entities/Lottery.php');
 
-messageLn(" [done]");
+messageLn(" [done] -> " . number_format((microtime(true) - $gt),3) . " s.");
 
 message("Get settings");
 $time = microtime(true);
@@ -51,17 +50,18 @@ $lockTimeout = 60 * 3;
 if (isLocked()) {
     die("Locked by previous execution" . PHP_EOL);
 }
-messageLn("Start lottery");
-if (timeToRunLottery()) {
-    setLock();
 
-    message("Get tickets");
+messageLn("Start lottery");
+if (timeToRunLottery() OR 1) {
+    // setLock();
+
+    message("   Get tickets");
     $time = microtime(true);
     // get players tickets    
     $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     $lotteryCombination = array();
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
-    messageLn("Tickets count - " . count($tickets));
+    messageLn("      Tickets count - " . count($tickets));
 
     messageLn("Generation (" . Config::instance()->generatorNumTries . " tries)");
     $tgt = microtime(true);
@@ -91,6 +91,7 @@ if (timeToRunLottery()) {
         {
             foreach ((array)$ticket->getCombination() as $num)
             {
+
                 if($num !== false)
                 {
                     @$bets[$num]++;
@@ -100,10 +101,40 @@ if (timeToRunLottery()) {
         $time = microtime(true);
         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
 
+
+/*
+        message("Count balls for every combinations");
+        $tgt = microtime(true);
+        $combBalls = array();
+        foreach ($tickets as $ticket)
+            foreach ($lotteryCombinations as $id => $combination)
+                @$combBalls[$id][count(array_intersect((array)$ticket->getCombination(),$combination))]++;
+         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
+*/
+
+
         // get most better combination
         $maxWin = 0;
         $lotteryCombination = array();
         $combinationsWeight = array();
+
+        foreach ($lotteryCombinations as $id => $combination)
+            foreach ($tickets as $ticket)
+                if($compare=count(array_intersect((array)$ticket->getCombination(),$combination))) {
+/*                    if($compare>4) {
+                        message("   > 4balls");
+                        unset($combinationsWeight[$id]);
+                        continue 2;
+                    }
+*/
+                    if ($gamePrizes['UA'][$compare]['currency'] == GameSettings::CURRENCY_MONEY)
+                        @$combinationsWeight[$id] += $gamePrizes['UA'][$compare]['sum'];
+                }
+
+        foreach ($combinationsWeight as $id => $sum)
+            $combinationsWeight[$id]=(int)$sum;
+
+        /*
         foreach ($lotteryCombinations as $id => $combination) {
             $combinationWin = 0;
             foreach ($combination as $combinationNum) {
@@ -116,14 +147,13 @@ if (timeToRunLottery()) {
             $combinationsWeight[$id] = $combinationWin;
             if ($combinationWin > $maxWin) {
                 $maxWin = $combinationWin;
-
-                
             }
         }
+        */
         // late night magick ;O
-        arsort($combinationsWeight);
+        asort($combinationsWeight);
         $combinationsWeight = array_flip($combinationsWeight);
-        
+        print_r($combinationsWeight);
         $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
     }
     messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
@@ -131,11 +161,13 @@ if (timeToRunLottery()) {
     message("Compare tickets");
     $time = microtime(true);
     $lastIterationReached = false;
+
     while (true) {
         $playersPlayed  = array();
         $pointsWonTotal = 0;
         $moneyWonTotal  = 0;
         $playersWinned = array();
+        $combBalls = array();
 
         foreach ($tickets as $ticket) {
             $compares = 0;
@@ -162,6 +194,9 @@ if (timeToRunLottery()) {
             $playersPlayed[$ticket->getPlayerId()]['tickets'][$ticket->getId()] = $compares;
             // ticket win
             if ($compares > 0) {
+
+                @$combBalls[$compares]++;
+
                 if (!isset($playersWinned[$ticket->getPlayerId()])) {
                     $playersWinned[$ticket->getPlayerId()] = $ticket->getPlayerId();
                 }
@@ -174,6 +209,7 @@ if (timeToRunLottery()) {
             }
         }
 
+/*
         if (!$gameSettings->getJackpot()) {
             if ($moneyWonTotal > $gameSettings->getTotalWinSum() && !$lastIterationReached) {
                 message(" limit -> ");
@@ -186,7 +222,7 @@ if (timeToRunLottery()) {
                 continue;
             } 
         }
-
+*/
         break;
     }
 
@@ -213,8 +249,8 @@ if (timeToRunLottery()) {
     $lottery->setCombination($lotteryCombination)
             ->setWinnersCount(count($playersWinned))
             ->setMoneyTotal($moneyWonTotal)
-            ->setPointsTotal($pointsWonTotal);
-
+            ->setPointsTotal($pointsWonTotal)
+            ->setBallsTotal($combBalls);
     try {
         $lottery->create();
     } catch (EntityException $e) {
@@ -319,16 +355,19 @@ if (timeToRunLottery()) {
     $queries['lotteryWins']  = sprintf($queries['lotteryWins'], join(',', $lotteryWinSql));
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
-    message("Storing data");
+    messageLn("Storing data");
     $time = microtime(true);
     try {
-        foreach ($queries as $query) {
+        foreach ($queries as $name=>$query) {
+            message("   $name");
+            $qtime = microtime(true);
             DB::Connect()->query($query);
+            messageLn(" [done]  -> " . number_format((microtime(true) - $qtime),2) . " s.");
         }
     } catch (PDOException $e) {
         messageLn($e->getMessage());
     }
-    messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
+    messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
     $lottery->publish();
 
@@ -337,6 +376,9 @@ if (timeToRunLottery()) {
 
     echo "Money total " . $moneyWonTotal . PHP_EOL;
     echo "Points total " . $pointsWonTotal . PHP_EOL;
+    echo "Balls compares: ";
+    print_r($combBalls );
+        echo PHP_EOL;
 
     releaseLock();
 } else {
@@ -416,4 +458,4 @@ function messageLn($message) {
     echo PHP_EOL;
 }
 
-// */
+//
