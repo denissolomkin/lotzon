@@ -52,8 +52,8 @@ if (isLocked()) {
 }
 
 messageLn("Start lottery");
-if (timeToRunLottery() OR 1) {
-    // setLock();
+if (timeToRunLottery()) {
+    setLock();
 
     message("   Get tickets");
     $time = microtime(true);
@@ -155,6 +155,7 @@ if (timeToRunLottery() OR 1) {
         $combinationsWeight = array_flip($combinationsWeight);
         print_r($combinationsWeight);
         $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
+
     }
     messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
@@ -377,6 +378,7 @@ if (timeToRunLottery() OR 1) {
     echo "Money total " . $moneyWonTotal . PHP_EOL;
     echo "Points total " . $pointsWonTotal . PHP_EOL;
     echo "Balls compares: ";
+    print_r($lotteryCombination );
     print_r($combBalls );
         echo PHP_EOL;
 
