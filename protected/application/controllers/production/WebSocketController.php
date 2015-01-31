@@ -222,7 +222,7 @@ class WebSocketController implements MessageComponentInterface {
                         )))
             );
 
-            if($this->_players[$player->getId()]['appId']){
+            if(isset($this->_players[$player->getId()]['appId'])){
                 $this->runGame($this->_players[$player->getId()]['appName'],$this->_players[$player->getId()]['appId'],'startAction',$player->getId());
             } elseif(0) {
             $clients=array();
