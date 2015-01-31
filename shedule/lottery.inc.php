@@ -1,5 +1,14 @@
 <?php
 
+require_once('init.php');
+
+ini_set('memory_limit', -1);
+
+global $_ballsCount;    $_ballsCount    = 6;
+global $_variantsCount; $_variantsCount = 49;
+
+
+
 function ApplyLotteryCombination(&$comb)
 {
 	if(!$comb)
@@ -168,6 +177,7 @@ function SetLotteryCombination($comb)
 		$where[]= "$ball IS NOT NULL";
 	}
 
+	shuffle($Combination);
 	$Combination = serialize($Combination);
 
 
@@ -227,7 +237,17 @@ function GetLotteryCombinationStatistics()
 
 	asort($stats);
 
-	echo (microtime(true) - $time).PHP_EOL;
+	echo (microtime(true) - $time).PHP_EOL.PHP_EOL;
+
+	$echo = array();
+	foreach($stats as $ball => $count)
+	{
+		$echo[]= "$ball:$count";
+	}
+	$echo = implode(', ', $echo);
+	echo wordwrap($echo);
+
+	echo PHP_EOL.PHP_EOL.PHP_EOL;
 
 	return $stats;
 }
@@ -315,7 +335,7 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
 
 		$rountdsStats[(int)$rountdStats[$orderBy]] = $rountdStats;
 
-		echo '  check candidate: '.(microtime(true) - $t).PHP_EOL;
+		echo '  check candidate [ '.implode(', ', $balls).' ] ('.number_format($rountdStats['UAH']).' UAH): '.(microtime(true) - $t).PHP_EOL;
 
 		$cache[$hash]= true;
 	}
@@ -328,7 +348,142 @@ function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $
 
 	return $rountdsStats[$return];
 }
+function ResetLottery($lid = null)
+{
+	if($lid)
+	{
+		$SQL = "UPDATE
+					LotteryTickets l
+				SET
+					l.LotteryId = 0
+				WHERE
+					l.LotteryId = $lid";
+	}
+	elseif(!isset($lid))
+	{
+		$SQL = "UPDATE
+				(
+					SELECT
+    					MAX(LotteryTickets.LotteryId) AS mx
+					FROM
+					 	LotteryTickets
+				)	mx
 
+  				INNER JOIN LotteryTickets l	 ON	 mx.mx = l.LotteryId
+				SET
+  					l.LotteryId = 0";
+	}
+
+	if(isset($SQL))
+	{
+		$time = microtime(true);
+
+		echo 'ResetLottery: ';
+
+		DB::Connect()->query($SQL);
+
+		echo (microtime(true) - $time).PHP_EOL;
+	}
+}
+function HoldLottery($lid = 0)
+{
+	$time = microtime(true);
+
+			ConverDB();
+			ResetLottery($lid);
+	$comb = GetLotteryCombination();
+	$comb = SetLotteryCombination($comb);
+			ApplyLotteryCombination($comb);
+
+	print_r($comb);
+
+//DB::Connect()->beginTransaction();
+//DB::Connect()->commit();
+//DB::Connect()->rollBack();
+
+	echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL.PHP_EOL.PHP_EOL.'==============================================='.PHP_EOL.PHP_EOL.PHP_EOL;
+}
+
+function RestoreAllTickets()
+{
+	$SQL = "SELECT
+			plw.LotteryId AS lid,
+			count(*) AS cnt
+		FROM
+			PlayerLotteryWins plw
+		GROUP BY
+			plw.LotteryId
+		ORDER BY
+			plw.LotteryId DESC";
+
+	DB::Connect()->query($SQL)->fetchAll(PDO::FETCH_FUNC, function($lid, $cnt)
+	{
+
+		$time = microtime(true);
+
+		echo "Lottery #$lid ($cnt): ";
+
+		RestoreTickets($lid);
+
+		echo (microtime(true) - $time).PHP_EOL;
+
+	});
+}
+
+function RestoreTickets($lid = 0)
+{
+	global $_variantsCount;
+
+	$tckts = DB::Connect()->query("SELECT count(*) FROM LotteryTickets WHERE LotteryId = $lid")->fetch();
+	$tckts = current($tckts);
+
+	for($inc = 1000, $l1 = 0, $l2 = $inc; $l1 < $tckts; $l1 += $inc, $l2 += $inc)
+	{
+		$limit = "$l1, $l2";
+
+		$SQL = 'INSERT IGNORE INTO LotteryTickets (Id';
+
+		for ($i = 1; $i <= $_variantsCount; $i++)
+		{
+			$SQL .= ",B$i";
+		}
+
+		$SQL.= ') VALUES %s ON DUPLICATE KEY UPDATE ';
+
+		for ($i = 1; $i <= $_variantsCount; $i++)
+		{
+			$SQL .= "B$i=VALUES(B$i),";
+		}
+		$SQL = substr($SQL, 0, -1);
+		$cls = array();
+
+		$lot = DB::Connect()->query("SELECT Id, Combination FROM LotteryTickets WHERE LotteryId = $lid LIMIT $limit")->fetchAll();
+		foreach ($lot as $l)
+		{
+			if ($l['Combination'])
+			{
+				$balls = unserialize($l['Combination']);
+
+				$vars = array();
+
+				for ($i = 1; $i <= $_variantsCount; $i++)
+				{
+					$vars[] = in_array($i, $balls)
+						? 1
+						: 'NULL';
+				}
+
+				$cls[] = sprintf("({$l['Id']},%s)", implode(',', $vars));
+			}
+		}
+
+		if($cls)
+		{
+			$SQL = sprintf($SQL, implode(',', $cls));
+			DB::Connect()->query($SQL);
+		}
+	}
+}
 function ConverDB()
 {
 	$time = microtime(true);
@@ -374,55 +529,7 @@ function ConverDB()
 
 		DB::Connect()->query('ALTER TABLE `LotteryTickets` CHANGE `Combination` `Combination` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;');
 
-		$tckts = DB::Connect()->query("SELECT count(*) FROM LotteryTickets WHERE LotteryId = 0")->fetch();
-		$tckts = current($tckts);
-
-		for($inc = 1000, $l1 = 0, $l2 = $inc; $l1 < $tckts; $l1 += $inc, $l2 += $inc)
-		{
-			$limit = "$l1, $l2";
-
-			$SQL = 'INSERT IGNORE INTO LotteryTickets (Id';
-
-			for ($i = 1; $i <= $_variantsCount; $i++)
-			{
-				$SQL .= ",B$i";
-			}
-
-			$SQL.= ') VALUES %s ON DUPLICATE KEY UPDATE ';
-
-			for ($i = 1; $i <= $_variantsCount; $i++)
-			{
-				$SQL .= "B$i=VALUES(B$i),";
-			}
-			$SQL = substr($SQL, 0, -1);
-			$cls = array();
-
-			$lot = DB::Connect()->query("SELECT Id, Combination FROM LotteryTickets WHERE LotteryId = 0 LIMIT $limit")->fetchAll();
-			foreach ($lot as $l)
-			{
-				if ($l['Combination'])
-				{
-					$balls = unserialize($l['Combination']);
-
-					$vars = array();
-
-					for ($i = 1; $i <= $_variantsCount; $i++)
-					{
-						$vars[] = in_array($i, $balls)
-							? 1
-							: 'NULL';
-					}
-
-					$cls[] = sprintf("({$l['Id']},%s)", implode(',', $vars));
-				}
-			}
-
-			if($cls)
-			{
-				$SQL = sprintf($SQL, implode(',', $cls));
-				DB::Connect()->query($SQL);
-			}
-		}
+		RestoreTickets();
 
 		echo (microtime(true) - $time).PHP_EOL;
 
