@@ -151,7 +151,7 @@ class WebSocketController implements MessageComponentInterface {
                 #echo time() . " " . "пробуем вызвать экшн \n";
                 call_user_func(array($app, $action), $data);
 
-                #echo time() . " " . "рассылаем игрокам результат обработки \n";
+                echo time() . " " . "рассылаем игрокам результат обработки \n";
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
                 if($app->_botTimer AND $app->currentPlayer()['pid']==$app->_bot AND !$app->_isOver) {
@@ -316,7 +316,7 @@ class WebSocketController implements MessageComponentInterface {
                                         if ($success) {
                                             $this->initGame($clients,$name,$mode,$player->getId());
                                         } else {
-                                            $this->sendCallback($from->resourceId,
+                                            $this->sendCallback(array($from->resourceId),
                                                 array(
                                                     'action' => 'stack',
                                                     'stack' => count($this->_stack[$name][$mode]),
@@ -333,7 +333,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                 } else {
                                     echo time() . " " . "id есть, но приложения $name $id нет, сообщаем об ошибке, удаляем из активных игроков \n";
-                                    $this->sendCallback($from->resourceId, array(
+                                    $this->sendCallback(array($from->resourceId), array(
                                         'action' => 'error',
                                         'error' => 'APPLICATION_DOESNT_EXISTS',
                                         'appId' => 0));
@@ -639,6 +639,9 @@ class WebSocketController implements MessageComponentInterface {
         if(!$class)
             $class=$this->_class;
 
+        if(!isset($response) OR !is_array($response) OR !count($response))
+            echo "проблема с response\n";
+
         // рассылаем игрокам результат обработки
             foreach($response as $client ) {
                 if(!isset($client->bot) && isset($this->_clients[$client->id]) && ($this->_clients[$client->id] instanceof ConnectionInterface))
@@ -722,7 +725,7 @@ class WebSocketController implements MessageComponentInterface {
                 }
 
                 // сигнализируем об уходе и отключаемся от игры
-                #echo time()." ". "$class $id Сигнализируем об уходе\n";
+                echo time()." ". "$class $id Сигнализируем об уходе\n";
                 $app->quitAction();
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
