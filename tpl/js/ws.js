@@ -9,6 +9,7 @@ var errors = {
     'ENOUGH_MOVES' : 'У Вас закончились ходы',
     'SHIP_TOO_CLOSE' : 'Корабли расположены слишком близко',
     'ERROR_COORDINATES' : 'Неверные координаты корабля',
+    'CHOICE_BET' : 'Выберите ставку',
 };
         function WebSocketAjaxClient(path, data, stop) {
             if(!conn || conn.readyState !== 1)
@@ -482,22 +483,24 @@ $(document).on('click', '#chatButton', function(e){
 // game new
 $(document).on('click', '.ngm-bk .ngm-go', function(e){
 
-    appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price');
-    price=appMode.split('-');
+    if(appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price')) {
+        price = appMode.split('-');
+        if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < parseFloat(price[1]).toFixed(2) * coefficient)) {
 
-    if((price[0]=='POINT' && playerPoints < parseInt(price[1])) || (price[0]=='MONEY' && playerMoney < parseFloat(price[1]).toFixed(2)*coefficient)) {
+            $("#report-popup").show().find(".txt").text(errors['INSUFFICIENT_FUNDS']).fadeIn(200);
 
-        $("#report-popup").show().find(".txt").text(errors['INSUFFICIENT_FUNDS']).fadeIn(200);
+        } else {
 
+            $('.ngm-bk .rls-r-ts').show();
+            $('.ngm-bk .rls-r-t').hide();
+            $('.ngm-bk .prc-but-cover').show();
+            var path = 'app/' + appName + '/' + appId;
+            var data = {'action': 'start', 'mode': appMode};
+            WebSocketAjaxClient(path, data);
+
+        }
     } else {
-
-        $('.ngm-bk .rls-r-ts').show();
-        $('.ngm-bk .rls-r-t').hide();
-        $('.ngm-bk .prc-but-cover').show();
-        var path='app/'+appName+'/'+appId;
-        var data={'action':'start', 'mode': appMode};
-        WebSocketAjaxClient(path,data);
-
+        $("#report-popup").show().find(".txt").text(errors['CHOICE_BET']).fadeIn(200);
     }
 });
 
@@ -532,6 +535,7 @@ $(document).on('click', '.ngm-bk .bk-bt-rl, .ngm-bk .ngm-rls-bk .rls-r .ngm-cncl
 $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', function(e){
 
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').removeClass('active');
+    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
     $(this).hide().next().show().children().last().addClass('active');
@@ -574,7 +578,8 @@ $(document).on('click', '.ngm-bk .bk-bt-rl', function(e){
 $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $('.ngm-bk .rls-l').hide();
     $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
-    $('.ngm-bk .prc-but-bk').find('active').removeClass('active');
+    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel > div').removeClass('active');
+    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk').find('active').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').hide();
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
