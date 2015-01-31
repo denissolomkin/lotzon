@@ -331,7 +331,7 @@ class SeaBattle extends Game
                 if (isset($this->getField()[$f][$x1][$y1]) && !isset($this->getFieldPlayed()[$f][$x1][$y1])) {
                     #echo ' '.time().' '. "Проверка1 $x1 x $y1 \n";
                     return false;
-                } elseif ($this->getFieldPlayed()[$f][$x1][$y1] == 'd' && !$this->isDestroyed($cell1, array($cell, $cell1))) {
+                } elseif (isset($this->getFieldPlayed()[$f][$x1][$y1]) && $this->getFieldPlayed()[$f][$x1][$y1] == 'd' && !$this->isDestroyed($cell1, array($cell, $cell1))) {
                     #echo ' '.time().' '. "Проверка2 $x1 x $y1 \n";
                     return false;
                 }
