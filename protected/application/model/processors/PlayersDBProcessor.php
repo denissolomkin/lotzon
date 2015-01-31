@@ -15,12 +15,12 @@ class PlayersDBProcessor implements IProcessor
                 ':passwd'   => $player->getPassword(),
                 ':salt'     => $player->getSalt(),
                 ':dr'       => time(),
-                ':dl'       => $player->getDateLastLogin(),
+                ':dl'       => (int)$player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
                 ':vis'      => 1,
                 ':ip'       => $player->getIP(),
                 ':hash'     => $player->getHash(),
-                ':valid'    => $player->getValid(),
+                ':valid'    => (int)$player->getValid(),
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
@@ -210,10 +210,14 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function getBalance(Entity $player)
+    public function getBalance(Entity $player, $forUpdate = false)
     {
+
         $sql = "SELECT `Money`, `Points`  FROM `Players`
                 WHERE `Id` = :id OR `Email` = :email";
+        if ($forUpdate) {
+            $sql .= ' FOR UPDATE';
+        }
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -748,8 +752,8 @@ class PlayersDBProcessor implements IProcessor
             $sth->execute(array(
                 ':onl'   => (int)$player->isOnline(),
                 ':onlt'  => (int)$player->getOnlineTime(),
-                ':adb'   => $player->getAdBlock(),
-                ':dtadb' => $player->getDateAdBlocked(),
+                ':adb'   => (int)$player->getAdBlock(),
+                ':dtadb' => (int)$player->getDateAdBlocked(),
                 ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));

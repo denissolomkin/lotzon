@@ -5,6 +5,8 @@ class MoneyOrder extends Entity
 {
     const STATUS_ORDERED = 0;
     const STATUS_PROCESSED = 1;
+
+    const FOR_UPDATE = true;
     
     const GATEWAY_PHONE     = 'phone';
     const GATEWAY_QIWI     = 'qiwi';
@@ -195,7 +197,7 @@ class MoneyOrder extends Entity
                 if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 ) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
-                if ($this->getData()['summ']['value'] > $this->getPlayer()->getBalance()['Money']) {
+                if ($this->getData()['summ']['value'] > $this->getPlayer()->getBalance(self::FOR_UPDATE)['Money']) {
                     throw new EntityException("INSUFFICIENT_FUNDS", 400);
                 }
                 $data = $this->getData();
@@ -318,4 +320,43 @@ class MoneyOrder extends Entity
 
         return $this;
     }
+
+    public function beginTransaction()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->beginTransaction();
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function commit()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->commit();
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function rollBack()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->rollBack();
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }    
 }

@@ -962,12 +962,12 @@ class Player extends Entity
         return $this;
     }
 
-    public function getBalance()
+    public function getBalance($forUpdate = false)
     {
         $model = $this->getModelClass();
 
         try {
-            return $model::instance()->getBalance($this);
+            return $model::instance()->getBalance($this, $forUpdate);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }

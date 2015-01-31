@@ -13,7 +13,7 @@ Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/ChanceGamesModel.php');
 
 
-class Index extends \SlimController\SlimController 
+class Index extends \SlimController\SlimController
 {
     const NEWS_PER_PAGE = 6;
     const SHOP_PER_PAGE = 6;
@@ -206,9 +206,9 @@ class Index extends \SlimController\SlimController
             }
         }
 
-        if($session->has('ERROR')){
-            $error=$session->get('ERROR');
-            $session->remove('ERROR');
+        if($session->has('ERROR') OR $_SESSION['ERROR']){
+            $error=$session->get('ERROR')?:$_SESSION['ERROR'];
+            $session->remove('ERROR');unset($_SESSION['ERROR']);
         }
 
 
@@ -264,7 +264,7 @@ class Index extends \SlimController\SlimController
     public function VKProxyAction() 
     {
         $upload_url = $this->request()->post('uurl');
-        $post_params['photo'] = '@' . PATH_ROOT . 'tpl/img/social-share.jpg'; ///ну тут понятно что это ваша фотка
+        $post_params['photo'] = curl_file_create(PATH_ROOT . 'tpl/img/social-share.jpg');
      
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $upload_url);

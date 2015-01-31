@@ -26,4 +26,19 @@ class MoneyOrderModel extends Model
     {
         return $this->getProcessor()->getOrdersToProcessCount($status,$type);
     }
+
+    public function beginTransaction()
+    {
+        return $this->getProcessor()->beginTransaction();
+    }
+
+    public function commit()
+    {
+        return $this->getProcessor()->commit();
+    }
+
+    public function rollBack()
+    {
+        return $this->getProcessor()->rollBack();
+    }
 }

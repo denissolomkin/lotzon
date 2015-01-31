@@ -110,6 +110,9 @@ class WebSocketController implements MessageComponentInterface {
         foreach ($keys as $key) {
             if(isset($this->_players[$key])) {
                 unset ($this->_stack[$name][$mode][$key]);
+                if(isset($this->_players[$key]['appId']))
+                    $this->quitPlayer($key);
+                $this->_players[$key]['appName'] = $name;
                 $this->_players[$key]['appId'] = $app->getIdentifier();
             }
         }
@@ -131,7 +134,6 @@ class WebSocketController implements MessageComponentInterface {
 
     public function runGame($name,$id,$action,$pid=null,$data=null)
     {
-
         if($app=$this->_apps[$name][$id]) {
             $this->_class = $class='\\' . $name;
             echo time() . " " . "$name {$app->getIdentifier()} $action ".(!isset($app->_bot) || $pid != $app->_bot ? "игрок №" : 'бот №').$pid.' (текущий'.$app->currentPlayer()['pid'].") \n";
@@ -152,11 +154,11 @@ class WebSocketController implements MessageComponentInterface {
                 #echo time() . " " . "рассылаем игрокам результат обработки \n";
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
-                if($app->_botTimer AND $app->currentPlayer()['pid']=$app->_bot AND !$app->_isOver) {
+                if($app->_botTimer AND $app->currentPlayer()['pid']==$app->_bot AND !$app->_isOver) {
                     $bot = $app->_bot;
                     $this->_loop->addTimer($app->_botTimer, function () use ($name, $id, $bot) {
                         $this->runGame($name, $id, 'moveAction', $bot);
-//                        echo time() . " " . "$name {$this->_apps[$name][$id]->getIdentifier()} moveAction Бот \n";
+                        //echo time() . " " . "$name {$this->_apps[$name][$id]->getIdentifier()} moveAction Бот \n";
                     });
                     }
 
@@ -176,22 +178,25 @@ class WebSocketController implements MessageComponentInterface {
     public function onOpen(ConnectionInterface $conn)
     {
 
+
         if($conn->Session->has(Player::IDENTITY)) {
 
             $player = $conn->Session->get(Player::IDENTITY);
             $conn->resourceId = $player->getId();
             $this->_clients[$player->getId()] = $conn;
-            $this->_players[$player->getId()] = array('Id'=>$player->getId(),'Ping'=>time(),'Country'=>$player->getCountry());
+            $this->_players[$player->getId()] = array_merge(
+                array('Id'=>$player->getId(),'Ping'=>time(),'Country'=>$player->getCountry()),
+                isset($this->_players[$player->getId()]) ? $this->_players[$player->getId()] : array()
+            );
 
             echo time()." "."New connection: #{$conn->resourceId} " . $conn->Session->getId() . "\n";
 
             if(isset($this->_players[$player->getId()])){
-                echo time()." ". "Выход игрока при соединении {$player->getId()}\n";
-                $this->quitPlayer($player->getId());
+                #echo time()." ". "Выход игрока при соединении {$player->getId()}\n";
+                #$this->quitPlayer($player->getId());
             }
 
             $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
-
 
             try {
                 $sth = DB::Connect()->prepare($sql);
@@ -212,10 +217,24 @@ class WebSocketController implements MessageComponentInterface {
                     array('path' => 'update',
                         'res' => array(
                             'money' => $balance['Money'],
-                            'points' => $balance['Points']
+                            'points' => $balance['Points'],
+                            'appName' => isset($this->_players[$player->getId()]['appName'])?$this->_players[$player->getId()]['appName']:'',
                         )))
             );
 
+            if($this->_players[$player->getId()]['appId']){
+                $this->runGame($this->_players[$player->getId()]['appName'],$this->_players[$player->getId()]['appId'],'startAction',$player->getId());
+            } elseif(0) {
+            $clients=array();
+            $clients[$player->getId()] = (object) array(
+                'time'      =>  time(),
+                'id'        =>  $player->getId(),
+                'avatar'    =>  $player->getAvatar(),
+                'name'      =>  $player->getNicName());;
+            $bot=(object) $this->_bots[array_rand($this->_bots)];
+            $clients[$bot->id] = $bot;
+            $this->initGame($clients,'SeaBattle','POINT-0',$player->getId());
+                }
             // $this->_class='chat';
             // $this->sendCallback($this->_clients, array('message'=>$conn->Session->get(Player::IDENTITY)->getNicName().' присоединился'));
         }
@@ -581,8 +600,8 @@ class WebSocketController implements MessageComponentInterface {
 
         if($conn->Session->get(Player::IDENTITY)){
             if(isset($this->_players[$conn->resourceId])){
-                echo time()." ". "Выход игрока при разъединении {$conn->resourceId}\n";
-                $this->quitPlayer($conn->resourceId);
+            #    echo time()." ". "Выход игрока при разъединении {$conn->resourceId}\n";
+            #    $this->quitPlayer($conn->resourceId);
             }
 
 /*        foreach ($this->_clients as $client) {
@@ -621,25 +640,15 @@ class WebSocketController implements MessageComponentInterface {
             $class=$this->_class;
 
         // рассылаем игрокам результат обработки
-        if(is_array($response))
-            foreach( $response as $client ) {
+            foreach($response as $client ) {
                 if(!isset($client->bot) && isset($this->_clients[$client->id]) && ($this->_clients[$client->id] instanceof ConnectionInterface))
                 $this->_clients[$client->id]->send(
                     json_encode(
                         array(
                             'path' => 'app' . $class,
-                            'res' => $callback
+                            'res' => (isset($callback[$client->id])?$callback[$client->id]:$callback)
                         )));
             }
-        else {
-            if(!isset($response->bot) && isset($this->_clients[$response]) && ($this->_clients[$response] instanceof ConnectionInterface))
-            $this->_clients[$response]->send(
-                json_encode(
-                    array(
-                        'path' => 'app' . $class,
-                        'res' => $callback
-                    )));
-        }
     }
 
     private function checkBalance($pid, $currency, $price)
@@ -679,7 +688,7 @@ class WebSocketController implements MessageComponentInterface {
             $class = $this->_players[$playerId]['appName'];
             $mode = $this->_players[$playerId]['appMode'];
             if(isset($this->_players[$playerId]['appId'])){
-                echo time()." ". $this->_players[$playerId]['appName']. $this->_players[$playerId]['appId']. " удаление appId у игрока №$playerId\n";
+                echo time()." ". $this->_players[$playerId]['appName'].' '. $this->_players[$playerId]['appId']. " удаление appId у игрока №$playerId\n";
                 $id = $this->_players[$playerId]['appId'];
             }
         }

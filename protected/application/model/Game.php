@@ -5,28 +5,31 @@ class Game
     const   STACK_PLAYERS = 2;
     const   GAME_PLAYERS = 2;
     const   TIME_OUT = 20;
-    const   FIELD_SIZE = 7;
+    const   FIELD_SIZE_X = 7;
+    const   FIELD_SIZE_Y = 7;
     const   GAME_MOVES = 6;
 
-    private $_gameid = 1;
+    protected $_gameid = 0;
+    protected $_gameTitle = '';
+
     public  $_bot = 0;
     public  $_botTimer = 0;
     public  $_botReplay =0;
-    private $_gameTitle = '"Кто больше"';
     private $_gameCurrency = '';
     private $_gamePrice = null;
     private $_gameTime = null;
 
     private $_identifier = '';
-    private $_players = array();
     private $_client = '';
     public  $_isOver = 0;
     public  $_isSaved = 0;
     private $_clients = array();
     private $_response = '';
     private $_callback = array();
-    private $_field = array();
-    private $_fieldPlayed = array();
+
+    protected $_players = array();
+    protected $_field = array();
+    protected $_fieldPlayed = array();
 
     public function __construct() {
         $this->init();
@@ -117,7 +120,7 @@ class Game
                     ->startAction();
             } else {
                 $this->unsetCallback()
-                    ->setResponse($clientId)
+                    ->setResponse($this->getClient())
                     ->setCallback(array(
                     'action' => 'ready',
                     'ready' => $ready
@@ -142,14 +145,15 @@ class Game
 
         $this->setCallback(array(
             'current'   => $this->currentPlayer()['pid'],
-            'timeout'   => self::TIME_OUT,
-            'gid'       => $this->getIdentifier(),
+            'timeout'   => $this->currentPlayer()['timeout'],
+            'appId'       => $this->getIdentifier(),
+            'appMode' => $this->getCurrency().'-'.$this->getPrice(),
             'players'   => $this->getPlayers(),
             'field'     => $this->getFieldPlayed(),
             'action'    => 'start'
         ));
 
-        $this->updatePlayer( array('ready','avatar','name','result') );
+        $this->updatePlayer( array('ready','result') );
         $this->setResponse($this->getClients());
     }
 
@@ -158,19 +162,16 @@ class Game
         $this->unsetCallback();
         if(!isset($data->cell) OR isset($this->getClients()[$this->currentPlayer()['pid']]->bot)){
             #echo ''.time().' '. "ход бота\n";
-//            $this->setClient($this->currentPlayer()['pid']);
-            list($x,$y) = $this->generateMove();}
+            $cell = $this->generateMove();}
         else{
             #echo ''.time().' '. "ход игрока\n";
-            list($x,$y) = explode('x',$data->cell);}
+            $cell = explode('x',$data->cell);}
 
-        if($error=$this->checkError($x, $y))
+        if($error=$this->checkError($cell))
             $this->setCallback(array('error' => $error));
         else {
             #echo ' '.time().' '. "ход";
-            $this->doMove($x,$y);
-            #echo ' '.time().' '. "следующий игрок";
-            $this->nextPlayer();
+            $this->doMove($cell);
 
             if($winner=$this->checkWinner()){
                 $this->setCallback(array(
@@ -183,7 +184,7 @@ class Game
             $this->setCallback(array(
                 'current'   => $this->currentPlayer()['pid'],
                 'timeout'   => $this->currentPlayer()['timeout']-time(),
-                'cell'      => $this->getCell($x,$y),
+                'cell'      => $this->getCell($cell),
                 'players'   => $this->getPlayers()
             ));
         }
@@ -192,7 +193,7 @@ class Game
 
         if (array_key_exists('error',$this->getCallback()))
             $this->setCallback(array('action' => 'error'))
-                ->setResponse($this->getClient()->id);
+                ->setResponse($this->getClient());
 
         elseif(!array_key_exists('action',$this->getCallback()))
             $this->setCallback(array('action' => 'move'));
@@ -232,26 +233,29 @@ class Game
         #echo ' '.time().' '. "Конец тайм-аута \n";
     }
 
-    public function checkError($x, $y)
+    public function checkError($cell)
     {
+        list($x,$y)=$cell;
         #echo ' '.time().' '. "Проверка ошибок \n";
         if (!$this->isMove())
             return 'NOT_YOUR_MOVE';
-        elseif (!$this->isCell($x,$y))
+        elseif (!$this->isCell($cell))
             return 'WRONG_CELL '.$x.'x'.$y;
-        elseif ($this->isClicked($x,$y))
+        elseif ($this->isClicked($cell))
             return 'CELL_IS_PLAYED';
         elseif($this->isOver())
             return 'GAME_IS_OVER';
     }
 
-    public function isCell($x,$y)
+    public function isCell($cell)
     {
-        return ($x>0 && $y>0 && $x<=self::FIELD_SIZE && $y<=self::FIELD_SIZE);
+        list($x,$y)=$cell;
+        return ($x>0 && $y>0 && $x<=static::FIELD_SIZE_X && $y<=static::FIELD_SIZE_Y);
     }
 
-    public function isClicked($x,$y)
+    public function isClicked($cell)
     {
+        list($x,$y)=$cell;
         return $this->_field[$x][$y]['player'];
     }
 
@@ -272,8 +276,9 @@ class Game
         return $this->_isSaved;
     }
 
-    public function getCell($x,$y)
+    public function getCell($cell)
     {
+        list($x,$y)=$cell;
         return $this->_field[$x][$y];
     }
 
@@ -287,9 +292,9 @@ class Game
         return $this;
     }
 
-    public function doMove($x,$y)
+    public function doMove($cell)
     {
-
+        list($x,$y)=$cell;
             $playerId = $this->getClient()->id;
             $points = $this->_field[$x][$y]['points'];
             $this->_field[$x][$y]['player'] = $playerId;
@@ -300,21 +305,23 @@ class Game
 
             $this->_fieldPlayed[$x][$y] = $this->_field[$x][$y];
 
+            #echo ' '.time().' '. "следующий игрок";
+            $this->nextPlayer();
             return $this;
     }
 
     public function generateMove()
     {
 
-        //$minimum=(rand(1,2)<2?(pow(self::FIELD_SIZE,2)-(self::GAME_MOVES*(self::GAME_PLAYERS+1))):0);
-        // $minimum=( rand(1,5) < 2 ? (pow(self::FIELD_SIZE,2)/2):0 );
+        //$minimum=(rand(1,2)<2?(static::FIELD_SIZE_X*static::FIELD_SIZE_Y)-(self::GAME_MOVES*(self::GAME_PLAYERS+1))):0);
+        // $minimum=( rand(1,5) < 2 ? (static::FIELD_SIZE_X*static::FIELD_SIZE_Y/2):0 );
         $minimum=0;
 
         #echo ' '.time().' '. "Генерация поля для бота\n";
         do {
             do {
-                $x=rand(1,self::FIELD_SIZE);
-                $y=rand(1,self::FIELD_SIZE);
+                $x=rand(1,static::FIELD_SIZE_X);
+                $y=rand(1,static::FIELD_SIZE_Y);
             } while($this->_field[$x][$y]['player']);
         } while($this->_field[$x][$y]['points']<$minimum);
 
@@ -322,21 +329,23 @@ class Game
         return array($x, $y);
     }
 
-    public function nextPlayer()
+    public function nextPlayer($skip=false)
     {
-        #echo ' '.time().' '. "Следующий игрок \n";
-        if (next($this->_players) === false) {
-            reset($this->_players);
+        if(!$skip) {
+            echo ' '.time().' '. "Следующий игрок \n";
+            if (next($this->_players) === false) {
+                reset($this->_players);
+            }
         }
 
-        $this->_players[(current($this->_players)['pid'])]['timeout']=time()+self::TIME_OUT;
+        $this->_players[(current($this->_players)['pid'])]['timeout']=time()+static::TIME_OUT;
 
         if(isset($this->_clients[(current($this->_players)['pid'])]->bot))
-            $this->_botTimer = rand(1,3);
+            $this->_botTimer = rand(5,30)/10;
         else
             $this->_botTimer = 0;
 
-        return $this; //current($this->_players);
+        return $this;
     }
 
     public function currentPlayer()
@@ -433,27 +442,16 @@ class Game
 
             $this->_players[$id] = array(
                 'pid' => $id,
-                'moves' => self::GAME_MOVES,
+                'moves' => static::GAME_MOVES,
                 'points' => 0,
                 'avatar' => $client->avatar,
-                'name' => $client->name
+                'name' => $client->name,
+                'timeout' => time()+static::TIME_OUT
             );
         }
 
         #echo ' '.time().' '. "Инициализация игроков";
         return $this;
-    }
-
-    public function setResponse($clients)
-    {
-        $this->_response=$clients;
-
-        return $this;
-    }
-
-    public function getResponse()
-    {
-        return $this->_response;
     }
 
     public function setClient($client)
@@ -546,16 +544,32 @@ class Game
         return $this;
     }
 
-    public function setCallback($callback)
+    public function setCallback($callback,$playerId=null)
     {
         foreach($callback as $key=>$value)
-            $this->_callback[$key] = $value;
+            if(!$playerId)
+                $this->_callback[$key] = $value;
+            else
+                $this->_callback[$playerId][$key] = $value;
+
         return $this;
     }
 
     public function getCallback()
     {
         return $this->_callback;
+    }
+
+    public function setResponse($clients)
+    {
+        is_array($clients) ? $this->_response=$clients : $this->_response=array($clients);
+
+        return $this;
+    }
+
+    public function getResponse()
+    {
+        return $this->_response;
     }
 
     public function setCurrency($currency)
@@ -575,9 +589,12 @@ class Game
         return $this;
     }
 
-    public function setField($field)
+    public function setField($field, $playerId=null)
     {
-        $this->_field = $field;
+        if($playerId)
+            $this->_field[$playerId] = $field;
+        else
+            $this->_field = $field;
         return $this;
     }
 
@@ -588,17 +605,16 @@ class Game
 
     public function generateField() {
 
-        $numbers = range(1, pow(self::FIELD_SIZE,2));
+        $numbers = range(1, static::FIELD_SIZE_X*static::FIELD_SIZE_Y);
         shuffle($numbers);
 
-        for ($i = 1; $i <= self::FIELD_SIZE ; ++$i) {
-            for ($j = 1; $j <= self::FIELD_SIZE; ++$j) {
-                $gameField[$i][$j]['points'] = $numbers[(($i-1)*self::FIELD_SIZE+$j)-1];
+        for ($i = 1; $i <= static::FIELD_SIZE_X ; ++$i) {
+            for ($j = 1; $j <= static::FIELD_SIZE_Y; ++$j) {
+                $gameField[$i][$j]['points'] = $numbers[(($i-1)*self::FIELD_SIZE_Y+$j)-1];
                 $gameField[$i][$j]['player'] = null;
                 $gameField[$i][$j]['coord'] = $i.'x'.$j;
             }
         }
-
         return $gameField;
     }
 

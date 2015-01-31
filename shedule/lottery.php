@@ -1,15 +1,42 @@
 <?php
 
 message("Init");
-require_once('init.php');
 
+require_once('init.php');
+require_once('lottery.inc.php');
+
+ini_set('memory_limit', -1);
+
+
+global $_ballsCount;    $_ballsCount    = 6;
+global $_variantsCount; $_variantsCount = 49;
+
+
+/*
+$time = microtime(true);
+
+
+        ConverDB();
+$comb = GetLotteryCombination();
+$comb = SetLotteryCombination($comb);
+        ApplyLotteryCombination($comb);
+
+print_r($comb);
+
+
+//DB::Connect()->beginTransaction();
+//DB::Connect()->commit();
+//DB::Connect()->rollBack();
+
+echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL;
+*/
 $gt = microtime(true);
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
 Application::import(PATH_APPLICATION . '/model/entities/Lottery.php');
 
-messageLn(" [done]");
+messageLn(" [done] -> " . number_format((microtime(true) - $gt),3) . " s.");
 
 message("Get settings");
 $time = microtime(true);
@@ -20,33 +47,29 @@ messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
 $lockFile = dirname(__FILE__) . '/lottery.lock';
 $lockTimeout = 60 * 3;
 
-$_ballsCount = 6;
-$_variantsCount = 49;
-
-ini_set('memory_limit', -1);
-
 if (isLocked()) {
     die("Locked by previous execution" . PHP_EOL);
 }
+
 messageLn("Start lottery");
 if (timeToRunLottery()) {
     setLock();
 
-    message("Get tickets");
+    message("   Get tickets");
     $time = microtime(true);
-    // get players tickets
+    // get players tickets    
     $tickets = TicketsModel::instance()->getAllUnplayedTickets();
     $lotteryCombination = array();
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
-    messageLn("Tickets count - " . count($tickets));
+    messageLn("      Tickets count - " . count($tickets));
 
     messageLn("Generation (" . Config::instance()->generatorNumTries . " tries)");
     $tgt = microtime(true);
     // if need to play jackpot
-
+    
     if ($gameSettings->getJackpot()) {
         $winner = array_rand($tickets);
-        $lotteryCombination = $tickets[$winner]->getCombination();
+        $lotteryCombination = $tickets[$winner]->getCombination(); 
     } else {
         $lotteryCombinations = array();
         for ($i = 0; $i < Config::instance()->generatorNumTries; ++$i) {
@@ -64,18 +87,54 @@ if (timeToRunLottery()) {
         message("   Sorting bets");
         $time = microtime(true);
         $bets = array();
-        foreach ($tickets as $ticket) {
-            foreach ($ticket->getCombination() as $num) {
-                @$bets[$num]++;
+        foreach ($tickets as $ticket)
+        {
+            foreach ((array)$ticket->getCombination() as $num)
+            {
+
+                if($num !== false)
+                {
+                    @$bets[$num]++;
+                }
             }
         }
         $time = microtime(true);
         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
 
+
+/*
+        message("Count balls for every combinations");
+        $tgt = microtime(true);
+        $combBalls = array();
+        foreach ($tickets as $ticket)
+            foreach ($lotteryCombinations as $id => $combination)
+                @$combBalls[$id][count(array_intersect((array)$ticket->getCombination(),$combination))]++;
+         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
+*/
+
+
         // get most better combination
         $maxWin = 0;
         $lotteryCombination = array();
         $combinationsWeight = array();
+
+        foreach ($lotteryCombinations as $id => $combination)
+            foreach ($tickets as $ticket)
+                if($compare=count(array_intersect((array)$ticket->getCombination(),$combination))) {
+/*                    if($compare>4) {
+                        message("   > 4balls");
+                        unset($combinationsWeight[$id]);
+                        continue 2;
+                    }
+*/
+                    if ($gamePrizes['UA'][$compare]['currency'] == GameSettings::CURRENCY_MONEY)
+                        @$combinationsWeight[$id] += $gamePrizes['UA'][$compare]['sum'];
+                }
+
+        foreach ($combinationsWeight as $id => $sum)
+            $combinationsWeight[$id]=(int)$sum;
+
+        /*
         foreach ($lotteryCombinations as $id => $combination) {
             $combinationWin = 0;
             foreach ($combination as $combinationNum) {
@@ -88,36 +147,45 @@ if (timeToRunLottery()) {
             $combinationsWeight[$id] = $combinationWin;
             if ($combinationWin > $maxWin) {
                 $maxWin = $combinationWin;
-
-
             }
         }
+        */
         // late night magick ;O
-        arsort($combinationsWeight);
+        asort($combinationsWeight);
         $combinationsWeight = array_flip($combinationsWeight);
+        print_r($combinationsWeight);
+        $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
 
-        $lotteryCombination = $lotteryCombinations[array_pop($combinationsWeight)];
     }
     messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
     message("Compare tickets");
     $time = microtime(true);
     $lastIterationReached = false;
+
     while (true) {
         $playersPlayed  = array();
         $pointsWonTotal = 0;
         $moneyWonTotal  = 0;
         $playersWinned = array();
+        $combBalls = array();
 
         foreach ($tickets as $ticket) {
             $compares = 0;
-            foreach ($ticket->getCombination() as $ticketBet) {
-                foreach ($lotteryCombination as $lotteryBet) {
-                    if ($ticketBet == $lotteryBet) {
-                        $compares++;
+            foreach ((array)$ticket->getCombination() as $ticketBet)
+            {
+                if($ticketBet !== false)
+                {
+                    foreach ($lotteryCombination as $lotteryBet)
+                    {
+                        if ($ticketBet == $lotteryBet)
+                        {
+                            $compares++;
+                        }
                     }
                 }
             }
+
             // compile players and tickets
             if (!isset($playersPlayed[$ticket->getPlayerId()])) {
                 $playersPlayed[$ticket->getPlayerId()] = array(
@@ -127,18 +195,22 @@ if (timeToRunLottery()) {
             $playersPlayed[$ticket->getPlayerId()]['tickets'][$ticket->getId()] = $compares;
             // ticket win
             if ($compares > 0) {
+
+                @$combBalls[$compares]++;
+
                 if (!isset($playersWinned[$ticket->getPlayerId()])) {
                     $playersWinned[$ticket->getPlayerId()] = $ticket->getPlayerId();
                 }
                 // calculate point or UA money total
                 if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
-                    $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];
+                    $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];                    
                 } else {
                     $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
                 }
             }
         }
 
+/*
         if (!$gameSettings->getJackpot()) {
             if ($moneyWonTotal > $gameSettings->getTotalWinSum() && !$lastIterationReached) {
                 message(" limit -> ");
@@ -149,9 +221,9 @@ if (timeToRunLottery()) {
                 // restart with lower weight combination
                 $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
                 continue;
-            }
+            } 
         }
-
+*/
         break;
     }
 
@@ -160,10 +232,13 @@ if (timeToRunLottery()) {
     $time = microtime(true);
 
     $playersCountry = array();
-    DB::Connect()->query(sprintf("SELECT `Id`, `Country` FROM `Players` WHERE `Id` IN (%s)", join(",", array_keys($playersPlayed))))->fetchAll(PDO::FETCH_FUNC, function($plid, $country) use (&$playersCountry) {
+    if($playersPlayed)
+    {
+        DB::Connect()->query(sprintf("SELECT `Id`, `Country` FROM `Players` WHERE `Id` IN (%s)", join(",", array_keys($playersPlayed))))->fetchAll(PDO::FETCH_FUNC, function($plid, $country) use (&$playersCountry) {
             $playersCountry[$plid] = $country;
             return $country;
         });
+    }
 
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
     messageLn("");
@@ -175,8 +250,8 @@ if (timeToRunLottery()) {
     $lottery->setCombination($lotteryCombination)
             ->setWinnersCount(count($playersWinned))
             ->setMoneyTotal($moneyWonTotal)
-            ->setPointsTotal($pointsWonTotal);
-
+            ->setPointsTotal($pointsWonTotal)
+            ->setBallsTotal($combBalls);
     try {
         $lottery->create();
     } catch (EntityException $e) {
@@ -191,22 +266,28 @@ if (timeToRunLottery()) {
 
     message("Calculations and data preparing");
     $time = microtime(true);
-    $queries = array(
-        'transactions' => "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Description`, `Date`) VALUES %s",
-        'players'      => "UPDATE `Players` SET `GamesPlayed`=`GamesPlayed`+1,`Money`=CASE %s END,`Points`=CASE %s END WHERE `Id` IN (%s)",
-        'tickets' => "UPDATE `LotteryTickets` SET `TicketWin`=CASE %s END, `TicketWinCurrency`=CASE %s END WHERE `Id` IN(%s)",
-        'lotteryWins' => "INSERT INTO `PlayerLotteryWins` (`LotteryId`, `PlayerId`, `Date`, `MoneyWin`, `PointsWin`) VALUES %s",
-        'ticketsUpdate' => sprintf("UPDATE `LotteryTickets` SET `LotteryId` = %s WHERE `LotteryId` = 0", DB::Connect()->quote($lottery->getId())),
-
+    $queries = array
+    (
+        'transactions'  => "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Description`, `Date`) VALUES %s",
+        'players'       => "UPDATE `Players` SET `GamesPlayed`=`GamesPlayed`+1,`Money`=CASE %s END,`Points`=CASE %s END WHERE `Id` IN (%s)",
+        'lotteryWins'   => "INSERT INTO `PlayerLotteryWins` (`LotteryId`, `PlayerId`, `Date`, `MoneyWin`, `PointsWin`) VALUES %s",
+        'tickets'       => array(),
     );
-    $transactionsSql = $playersMoneySql = $playersPointsSql = $ticketsSumSql = $ticketsCurrencySql = $lotteryWinSql = array();
-    $ticketIds = array();
-    foreach ($playersPlayed as $playerId => $data) {
+
+    $transactionsSql    = $playersMoneySql = $playersPointsSql = $ticketsSumSql = $ticketsCurrencySql = $lotteryWinSql = array();
+    $lid                = (int)$lottery->getId();
+
+    foreach ($playersPlayed as $playerId => $data)
+    {
         $playerPoints = $playerMoney = 0;
-        foreach ($data['tickets'] as $ticketId => $ticketCompare) {
-            $ticketIds[] = $ticketId;
+        foreach ($data['tickets'] as $ticketId => $ticketCompare)
+        {
             // get player country
-            $pcountry = $playersCountry[$playerId];
+
+            $pcountry   = isset($playersCountry[$playerId])
+                        ? $playersCountry[$playerId]
+                        : null;
+
             if (!in_array($pcountry, Config::instance()->langs)) {
                 $pcountry = Config::instance()->defaultLang;
             }
@@ -215,22 +296,21 @@ if (timeToRunLottery()) {
             $currency = GameSettings::CURRENCY_POINT;
             if ($ticketCompare > 0) {
                 $win = $gamePrizes[$pcountry][$ticketCompare]['sum'];
-                $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];
+                $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];    
             }
 
             if ($currency == GameSettings::CURRENCY_MONEY) {
-                $playerMoney += $win;
+                $playerMoney += $win; 
             } else {
                 $playerPoints += $win;
             }
-            $ticketsSumSql[] = vsprintf("WHEN `Id`=%s THEN %s", array(
-                DB::Connect()->quote($ticketId),
-                DB::Connect()->quote($win),
-            ));
-            $ticketsCurrencySql[] = vsprintf("WHEN `Id`=%s THEN %s", array(
-                DB::Connect()->quote($ticketId),
-                DB::Connect()->quote($currency),
-            ));
+
+            $tid = (int)$ticketId;
+            $win = DB::Connect()->quote($win);
+            $cur = DB::Connect()->quote($currency);
+
+            $queries['tickets'][]= "($tid,$win,$cur,$lid)";
+
             // update ticket data
         }
         // create transactions
@@ -250,7 +330,7 @@ if (timeToRunLottery()) {
                 DB::Connect()->quote($playerPoints),
                 DB::Connect()->quote("Выигрыш в розыгрыше"),
                 DB::Connect()->quote(time()),
-            ));
+            ));   
         }
         $playersMoneySql[] = vsprintf("WHEN `Id`=%s THEN `Money`+%s", array(
             DB::Connect()->quote($playerId),
@@ -262,30 +342,33 @@ if (timeToRunLottery()) {
         ));
         //`LotteryId`, `PlayerId`, `Date`, `MoneyWin`, `PointsWin`
         $lotteryWinSql[] = vsprintf("(%s,%s,%s,%s,%s)", array(
-            DB::Connect()->quote($lottery->getId()),
+            DB::Connect()->quote($lid),
             DB::Connect()->quote($playerId),
             DB::Connect()->quote(time()),
             DB::Connect()->quote($playerMoney),
             DB::Connect()->quote($playerPoints),
         ));
     }
-    $queries['transactions'] = sprintf($queries['transactions'], join(',', $transactionsSql));
-    $queries['players'] = sprintf($queries['players'], join(" ", $playersMoneySql), join(" ", $playersPointsSql), join(",", array_keys($playersPlayed)));
-    $queries['tickets'] = sprintf($queries['tickets'], join(" ", $ticketsSumSql), join(" ", $ticketsCurrencySql), join(",", $ticketIds));
 
-    $queries['lotteryWins'] = sprintf($queries['lotteryWins'], join(',', $lotteryWinSql));
+    $queries['tickets']      = sprintf('INSERT IGNORE INTO `LotteryTickets` (`Id`, `TicketWin`, `TicketWinCurrency`, `LotteryId`) VALUES %s ON DUPLICATE KEY UPDATE `TicketWin` = VALUES(`TicketWin`), `TicketWinCurrency` = VALUES(`TicketWinCurrency`), `LotteryId` = VALUES(`LotteryId`)', implode(',', $queries['tickets']));
+    $queries['transactions'] = sprintf($queries['transactions'], join(',', $transactionsSql));
+    $queries['players']      = sprintf($queries['players'], join(" ", $playersMoneySql), join(" ", $playersPointsSql), join(",", array_keys($playersPlayed)));
+    $queries['lotteryWins']  = sprintf($queries['lotteryWins'], join(',', $lotteryWinSql));
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
-    message("Storing data");
+    messageLn("Storing data");
     $time = microtime(true);
     try {
-        foreach ($queries as $query) {
+        foreach ($queries as $name=>$query) {
+            message("   $name");
+            $qtime = microtime(true);
             DB::Connect()->query($query);
+            messageLn(" [done]  -> " . number_format((microtime(true) - $qtime),2) . " s.");
         }
     } catch (PDOException $e) {
         messageLn($e->getMessage());
     }
-    messageLn(" [done]  -> " . number_format((microtime(true) - $time),2) . " s.");
+    messageLn("[done]  -> " . number_format((microtime(true) - $time),2) . " s.");
 
     $lottery->publish();
 
@@ -294,6 +377,10 @@ if (timeToRunLottery()) {
 
     echo "Money total " . $moneyWonTotal . PHP_EOL;
     echo "Points total " . $pointsWonTotal . PHP_EOL;
+    echo "Balls compares: ";
+    print_r($lotteryCombination );
+    print_r($combBalls );
+        echo PHP_EOL;
 
     releaseLock();
 } else {
@@ -332,7 +419,7 @@ function getLock()
     return file_get_contents($lockFile);
 }
 
-function setLock()
+function setLock() 
 {
     global $lockFile;
 
@@ -346,7 +433,7 @@ function releaseLock()
     unlink($lockFile);
 }
 
-function isLocked()
+function isLocked() 
 {
     global $lockTimeout;
 
@@ -372,3 +459,5 @@ function messageLn($message) {
 
     echo PHP_EOL;
 }
+
+//
