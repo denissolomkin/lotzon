@@ -33,7 +33,7 @@ class WebSocketController implements MessageComponentInterface {
         'NewGame' => 1,
         'SeaBattle' => 2,
     );
-    private $_modes=array('POINT-0','POINT-25','POINT-50','MONEY-0.1','MONEY-0.25');
+    private $_modes=array('POINT-0','POINT-25','POINT-50','POINT-75','POINT-100','MONEY-0.1','MONEY-0.25','MONEY-0.5','MONEY-1');
 
     public function __construct($loop) {
 
