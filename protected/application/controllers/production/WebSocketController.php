@@ -188,8 +188,7 @@ class WebSocketController implements MessageComponentInterface {
 
             $player = $conn->Session->get(Player::IDENTITY);
             $conn->resourceId = $player->getId();
-            if(!isset($this->_clients[$player->getId()]))
-                $this->_clients[$player->getId()]= $conn;
+            $this->_clients[$player->getId()]= $conn;
             $this->_players[$player->getId()] = array_merge(
                 array('Id'=>$player->getId(),'Ping'=>time(),'Country'=>$player->getCountry()),
                 isset($this->_players[$player->getId()]) ? $this->_players[$player->getId()] : array()
@@ -672,14 +671,17 @@ class WebSocketController implements MessageComponentInterface {
                 if(!isset($client->bot)) {
                     if(is_numeric($client))
                         $client=(object)['id'=>$client];
-                    if (isset($this->_clients[$client->id]) && ($this->_clients[$client->id] instanceof ConnectionInterface))
+                    if (isset($this->_clients[$client->id]) && ($this->_clients[$client->id] instanceof ConnectionInterface)){
+                        #echo $this->time(1) . "  отправляем данные #{$client->id} \n";
+                        #print_r((isset($callback[$client->id]) ? $callback[$client->id] : $callback));
+
                         $this->_clients[$client->id]->send(
                             json_encode(
                                 array(
                                     'path' => 'app' . $class,
                                     'res' => (isset($callback[$client->id]) ? $callback[$client->id] : $callback)
                                 )));
-                    else
+                    } else
                         echo $this->time(0,'WARNING') . "  соединение #{$client->id} не найдено \n";
                 }
             }

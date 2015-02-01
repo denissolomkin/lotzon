@@ -236,7 +236,7 @@ class SeaBattle extends Game
 
     public function replayAction($data = null)
     {
-        echo ' ' . time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
+        echo $this->time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
 
         $clientId = $this->getClient()->id;
         $this->updatePlayer(array('ready' => 1), $clientId);
@@ -307,7 +307,7 @@ class SeaBattle extends Game
             }
         }
 
-        #echo ' ' . time() . ' ' . "следующий игрок";
+        #echo $this->time() . ' ' . "следующий игрок";
         $this->nextPlayer($hit);
 
         return $this;
@@ -350,7 +350,7 @@ class SeaBattle extends Game
 
     public function generateHit($cell, $ignore = array(),$time)
     {
-        if($time+5>time()){
+        if($time+5<time()){
             echo $this->time()." [ERROR] Поиск попадания занимает более 5 секунд\n";
             print_r($this->getFieldPlayed());
         }
@@ -415,7 +415,7 @@ class SeaBattle extends Game
                 $x = rand(1, static::FIELD_SIZE_X);
                 $y = rand(1, static::FIELD_SIZE_Y);
                 if ($i>1000) {
-                    echo ' ' . time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
+                    echo $this->time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
                     print_r($this->getFieldPlayed());
                     }
             } while ((!isset($this->_field[$client->id][$x][$y]) AND !$miss) OR isset($this->_fieldPlayed[$client->id][$x][$y]));
