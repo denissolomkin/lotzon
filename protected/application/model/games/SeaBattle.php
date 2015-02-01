@@ -350,7 +350,7 @@ class SeaBattle extends Game
 
     public function generateHit($cell, $ignore = array(),$time)
     {
-        if($time+100>time()){
+        if($time+5>time()){
             echo $this->time()." [ERROR] Поиск попадания занимает более 5 секунд\n";
             print_r($this->getFieldPlayed());
         }

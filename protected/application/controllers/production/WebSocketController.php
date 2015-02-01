@@ -260,17 +260,21 @@ class WebSocketController implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
 
         if($player = $from->Session->get(Player::IDENTITY))
-            if($player instanceof Player){
-                $this->_players[$player->getId()]['Ping']=time();
-            $data = json_decode($msg);
-            list($type, $name, $id) = array_pad(explode("/", $data->path),3,0);
-            echo $this->time(0,'MESSAGE')." #{$from->resourceId}: " . $data->path. (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
-            $this->_class = $class = '\\' . $name;
-                if(isset($data->data))
+            if($player instanceof Player) {
+                $this->_players[$player->getId()]['Ping'] = time();
+                $data = json_decode($msg);
+                list($type, $name, $id) = array_pad(explode("/", $data->path), 3, 0);
+                echo $this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
+                $this->_class = $class = '\\' . $name;
+                if (isset($data->data))
                     $data = $data->data;
-            $action = (isset($data->action) ? $data->action : '') . 'Action';
-            $mode = ((isset($data->mode) AND in_array($data->mode,$this->_modes)) ? $data->mode : $this->_modes[0]);
+                $action = (isset($data->action) ? $data->action : '') . 'Action';
+                $mode = ((isset($data->mode) AND in_array($data->mode, $this->_modes)) ? $data->mode : $this->_modes[0]);
 
+                if (!isset($this->_clients[$player->getId()]) || !($this->_clients[$player->getId()] instanceof ConnectionInterface)) {
+                    echo $this->time(0, 'WARNING') . "  соединение #{$player->getId()} {$from->Session->getId()} не найдено в коллекции клиентов \n";
+                    return false;
+                }
 
             switch ($type) {
                 case 'app':
@@ -847,7 +851,9 @@ class WebSocketController implements MessageComponentInterface {
                                 )))
                     );
 
-                }
+                } else
+                    echo $this->time(0,'ERROR')." client #{$player['Id']} не найден в коллекции при получении баланса\n";
+
 
 /*
                 if(isset($this->_clients[$player['pid']])){
@@ -873,7 +879,7 @@ class WebSocketController implements MessageComponentInterface {
                     $player['pid'],
                     $app->getCurrency(),
                     $price*$player['result'],
-                    $balance[$currency],
+                    (isset($balance)?$balance[$currency]:null),
                     'Игра '.$app->getTitle(),
                     time()
                 );
