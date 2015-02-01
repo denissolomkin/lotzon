@@ -187,7 +187,7 @@ class SeaBattle extends Game
     public function moveAction($data = null)
     {
         $this->unsetCallback();
-        if (count($this->getField()) != count($this->getClients())) {
+        if (count($this->getField()) != count($this->getClients()) || $this->_isOver) {
             #echo '' . time() . ' ' . " поля не готовы для хода\n";
             return false;
         }
