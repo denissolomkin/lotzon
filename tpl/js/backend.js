@@ -610,4 +610,4 @@ window.setInterval(function() {
         },
         error: function() {}
     });   
-}, 60 * 1000/10);
+}, 60 * 1000);

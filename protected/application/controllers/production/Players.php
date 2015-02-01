@@ -445,9 +445,9 @@ class Players extends \AjaxController
 
                 if ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() &&
                     $this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo() * 60 >= time()) {
-                    if (($rnd = mt_rand(0, 100)) <= 100) {
+                    if (($rnd = mt_rand(0, 100)) <= 7) {
                         $resp['moment'] = 1;
-                    } else if ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 60) {
+                    } elseif ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 120) {
                         // if not fired randomly  - fire at last minute
                         $resp['moment'] = 1;
                     }

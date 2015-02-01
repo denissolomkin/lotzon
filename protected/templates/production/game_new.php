@@ -832,7 +832,7 @@
                         <div class="l">Морской бой</div>
                         <div class="r"></div>
                     </div>
-                    <!--div class="ngm-bt" data-game="SeaBattle"></div--><img src="tpl/img/game-sea-battle.png">
+                    <div class="ngm-bt" data-game="SeaBattle"><img src="tpl/img/game-sea-battle.jpg"></div>
                 </div>
                 <div class="td r">
                     <!--div class="gm-if-bk">
