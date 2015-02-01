@@ -101,7 +101,7 @@ class Game extends \AjaxController
     {
         $games = ChanceGamesModel::instance()->getGamesSettings();
         if ($games[$identifier] && $identifier != 'moment') {
-            if ($this->session->get(Player::IDENTITY)->getPoints() < $games[$identifier]->getGamePrice()) {
+            if ($this->session->get(Player::IDENTITY)->getBalance()['Points'] < $games[$identifier]->getGamePrice()) {
                 $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
             }
             $gameField = $games[$identifier]->generateGame();

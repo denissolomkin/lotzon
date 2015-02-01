@@ -130,14 +130,27 @@ class Lottery extends Entity
         switch ($action) {
             case 'create' :
                 if (!$this->getCombination() || !is_array($this->getCombination()) || count($this->getCombination()) != 6) {
-                    throw new EntityException("INVALID_COMBINATION", 400);   
+                    throw new EntityException("INVALID_COMBINATION", 400);
                 }
                 foreach ($this->getCombination() as $num) {
                     if (!is_numeric($num) || $num < 1 || $num > 49) {
-                        throw new EntityException("INVALID_COMBINATION", 400);       
+                        throw new EntityException("INVALID_COMBINATION", 400);
                     }
                 }
             break;
+            case 'update' :
+                if (!$this->getId()) {
+                    throw new EntityException("EMPTY_LOTTERY_ID", 400);
+                }
+                if (!$this->getCombination() || !is_array($this->getCombination()) || count($this->getCombination()) != 6) {
+                    throw new EntityException("INVALID_COMBINATION", 400);
+                }
+                foreach ($this->getCombination() as $num) {
+                    if (!is_numeric($num) || $num < 1 || $num > 49) {
+                        throw new EntityException("INVALID_COMBINATION", 400);
+                    }
+                }
+                break;
             case 'publish' :
                 if (!$this->getId()) {
                     throw new EntityException("EMPTY_LOTTERY_ID", 400);

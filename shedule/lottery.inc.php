@@ -242,7 +242,7 @@ function GetLotteryCombinationStatistics()
 	$echo = array();
 	foreach($stats as $ball => $count)
 	{
-		$echo[]= "$ball:$count";
+		$echo[]= str_pad($ball, 3, '_', STR_PAD_RIGHT).":$count";
 	}
 	$echo = implode(', ', $echo);
 	echo wordwrap($echo);
@@ -251,7 +251,7 @@ function GetLotteryCombinationStatistics()
 
 	return $stats;
 }
-function GetLotteryCombination($ballsStart = 0, $ballsRange = 2, $rounds = 30, $return = 0, $orderBy = 'UAH')
+function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy)
 {
 	global $_ballsCount;
 	global $_variantsCount;
@@ -378,20 +378,20 @@ function ResetLottery($lid = null)
 	{
 		$time = microtime(true);
 
-		echo 'ResetLottery: ';
+		echo 'ResetLottery'.($lid ? " $lid" : null).': ';
 
 		DB::Connect()->query($SQL);
 
 		echo (microtime(true) - $time).PHP_EOL;
 	}
 }
-function HoldLottery($lid = 0)
+function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 2, $rounds = 100, $return = 0, $orderBy = 'UAH')
 {
 	$time = microtime(true);
 
 			ConverDB();
 			ResetLottery($lid);
-	$comb = GetLotteryCombination();
+	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy);
 	$comb = SetLotteryCombination($comb);
 			ApplyLotteryCombination($comb);
 
@@ -402,19 +402,52 @@ function HoldLottery($lid = 0)
 //DB::Connect()->rollBack();
 
 	echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL.PHP_EOL.PHP_EOL.'==============================================='.PHP_EOL.PHP_EOL.PHP_EOL;
-}
 
+	return $comb['combination'];
+}
+function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsRange = 2, $rounds = 100, $return = 0, $orderBy = 'UAH')
+{
+	$SQL = "SELECT
+				LotteryId AS lid
+			FROM
+				LotteryTickets
+			WHERE
+				LotteryId > 72
+			GROUP BY
+				LotteryId
+			ORDER BY
+				LotteryId DESC";
+
+	$results = DB::Connect()->query($SQL)->fetchAll(PDO::FETCH_FUNC, function($lid) use ($ballsStart, $ballsRange, $rounds, $return, $orderBy)
+	{
+		$row = HoldLottery($lid, $ballsStart, $ballsRange, $rounds, $return, $orderBy);
+
+		sleep(30);
+
+		if(isset($row))
+		{
+			$row = '<td>'.implode('</td><td>', $row).'</td>';
+		}
+
+		return $row;
+	});
+
+	$results = '<table border=1 cellpadding=5><tr>'.implode('</tr><tr>', $results).'</tr></table>';
+
+	file_put_contents($output, $results);
+
+}
 function RestoreAllTickets()
 {
 	$SQL = "SELECT
-			plw.LotteryId AS lid,
+			LotteryId AS lid,
 			count(*) AS cnt
 		FROM
-			PlayerLotteryWins plw
+			LotteryTickets
 		GROUP BY
-			plw.LotteryId
+			LotteryId
 		ORDER BY
-			plw.LotteryId DESC";
+			LotteryId DESC";
 
 	DB::Connect()->query($SQL)->fetchAll(PDO::FETCH_FUNC, function($lid, $cnt)
 	{
@@ -497,6 +530,11 @@ function ConverDB()
 		DB::Connect()->query('ALTER TABLE Players			ADD INDEX `Country`		(`Country`)');
 		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `CountryCode`	(`CountryCode`)');
 		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `BallsCount`	(`BallsCount`)');
+	}
+
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
+	{
+		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
 	}
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsStat"')->fetch())

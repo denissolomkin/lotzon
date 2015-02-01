@@ -42,11 +42,11 @@ class SeaBattle extends Game
 
     public function startAction($data = null)
     {
-        #echo ''.time().' '. "Старт\n";
+        #echo $this->time().' '. "Старт\n";
         $this->unsetCallback();
 
         if (!$this->getPlayers()) {
-            #echo ' '.time().' '. "Первичная установка игроков\n";
+            #echo $this->time().' '. "Первичная установка игроков\n";
             $this->setPlayers($this->getClients());
             $this->updatePlayer(array(
                 'timeout' => static::START_TIME_OUT-static::TIME_OUT,
@@ -57,14 +57,14 @@ class SeaBattle extends Game
         }
 
         if ($this->_bot && !isset($this->getField()[$this->_bot])) {
-            #echo ''.time().' '. "Генерация поля для бота \n";
+            #echo $this->time().' '. "Генерация поля для бота \n";
             $this->setField($this->generateField($this->_bot), $this->_bot);
             #if(count($this->getField()==count($this->getClients())))
             #$this->nextPlayer();
         }
 
         if (count($this->getField()) == count($this->getClients())) {
-            #echo ''.time().' '. "Количество полей совпадает с игроками \n";
+            #echo $this->time().' '. "Количество полей совпадает с игроками \n";
             $this->setResponse($this->getClients());
             foreach ($this->getClients() as $client) {
                 if (!isset($client->bot)) {
@@ -106,7 +106,7 @@ class SeaBattle extends Game
                 'action' => 'wait',
             ));
         } else {
-            #echo ''.time().' '. "Количество полей не совпадает с игроками \n";
+            #echo $this->time().' '. "Количество полей не совпадает с игроками \n";
             $this->setResponse($this->getClients());
             $this->setCallback(array(
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
@@ -144,7 +144,7 @@ class SeaBattle extends Game
     {
 
         $this->unsetCallback();
-        #echo ' '.time().' '. "Тайм-аут \n";
+        #echo $this->time().' '. "Тайм-аут \n";
         if (!$this->isOver() AND isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout'] <= time()) {
 
             if (count($this->getField()) != count($this->getClients())) {
@@ -158,11 +158,11 @@ class SeaBattle extends Game
                 return false;
             }
 
-            #echo ' '.time().' '. "Переход хода \n";
+            #echo $this->time().' '. "Переход хода \n";
             $this->passMove();
-            #echo ' '.time().' '. 'разница времени после пасса '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
+            #echo $this->time().' '. 'разница времени после пасса '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
             $this->nextPlayer();
-            #echo ' '.time().' '. 'разница времени после перехода '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
+            #echo $this->time().' '. 'разница времени после перехода '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
         }
 
         if ($winner = $this->checkWinner())
@@ -181,29 +181,29 @@ class SeaBattle extends Game
         ));
 
         $this->setResponse($this->getClients());
-        #echo ' '.time().' '. "Конец тайм-аута \n";
+        #echo $this->time().' '. "Конец тайм-аута \n";
     }
 
     public function moveAction($data = null)
     {
         $this->unsetCallback();
         if (count($this->getField()) != count($this->getClients())) {
-            echo '' . time() . ' ' . " поля не готовы для хода\n";
-            return;
+            #echo '' . time() . ' ' . " поля не готовы для хода\n";
+            return false;
         }
 
         if (!isset($data->cell) OR isset($this->getClients()[$this->currentPlayer()['pid']]->bot)) {
-            #echo ''.time().' '. "ход бота\n";
+            #echo $this->time().' '. "ход бота\n";
             $cell = $this->generateMove();
         } else {
-            #echo ''.time().' '. "ход игрока\n";
+            #echo $this->time().' '. "ход игрока\n";
             $cell = explode('x', $data->cell);
         }
 
         if ($error = $this->checkError($cell))
             $this->setCallback(array('error' => $error));
         else {
-            #echo ' '.time().' '. "ход";
+            #echo $this->time().' '. "ход";
             $this->doMove($cell);
 
             if ($winner = $this->checkWinner()) {
@@ -230,13 +230,13 @@ class SeaBattle extends Game
 
         elseif (!array_key_exists('action', $this->getCallback()))
             $this->setCallback(array('action' => 'move'));
-        #echo ' '.time().' '. "Конец хода \n";
+        #echo $this->time().' '. "Конец хода \n";
     }
 
 
     public function replayAction($data = null)
     {
-        echo ' ' . time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
+        echo $this->time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
 
         $clientId = $this->getClient()->id;
         $this->updatePlayer(array('ready' => 1), $clientId);
@@ -256,7 +256,7 @@ class SeaBattle extends Game
         if ($ready == count($players)) {
             $this->_isOver = 0;
             $this->_isSaved = 0;
-            #echo ' '.time().' '. "Переустановка игроков\n";
+            #echo $this->time().' '. "Переустановка игроков\n";
 
             $this->unsetFieldPlayed()
                 ->setField(array())
@@ -277,7 +277,7 @@ class SeaBattle extends Game
                 ));
         }
 
-        #echo ' '.time().' '. "Конец повтора игры\n";
+        #echo $this->time().' '. "Конец повтора игры\n";
     }
 
     public function doMove($cell)
@@ -307,7 +307,7 @@ class SeaBattle extends Game
             }
         }
 
-        #echo ' ' . time() . ' ' . "следующий игрок";
+        #echo $this->time() . ' ' . "следующий игрок";
         $this->nextPlayer($hit);
 
         return $this;
@@ -318,7 +318,7 @@ class SeaBattle extends Game
         list($x, $y, $f) = $cell;
         $this->_destroy[$f][$x][$y] = 'k';
 
-        #echo ' '.time().' '. "Проверка $x x $y \n";
+        #echo $this->time().' '. "Проверка $x x $y \n";
         foreach ($this->_matrix as $mx) {
 
             list($x1, $y1) = $mx;
@@ -329,10 +329,10 @@ class SeaBattle extends Game
 
             if ($this->isCell($cell1) && !in_array($cell1, $ignore)) {
                 if (isset($this->getField()[$f][$x1][$y1]) && !isset($this->getFieldPlayed()[$f][$x1][$y1])) {
-                    #echo ' '.time().' '. "Проверка1 $x1 x $y1 \n";
+                    #echo $this->time().' '. "Проверка1 $x1 x $y1 \n";
                     return false;
                 } elseif (isset($this->getFieldPlayed()[$f][$x1][$y1]) && $this->getFieldPlayed()[$f][$x1][$y1] == 'd' && !$this->isDestroyed($cell1, array($cell, $cell1))) {
-                    #echo ' '.time().' '. "Проверка2 $x1 x $y1 \n";
+                    #echo $this->time().' '. "Проверка2 $x1 x $y1 \n";
                     return false;
                 }
 
@@ -342,22 +342,25 @@ class SeaBattle extends Game
                     $this->_destroy[$f][$x1][$y1] = 'e';
 
             }
-            #else echo ' '.time().' '. "Игнор $x1 x $y1 \n";
+            #else echo $this->time().' '. "Игнор $x1 x $y1 \n";
         }
 
         return $this->getField()[$f][$x][$y];
     }
 
-    public function generateHit($cell, $ignore = array())
+    public function generateHit($cell, $ignore = array(),$time)
     {
-
+        if($time+5<time()){
+            echo $this->time()." [ERROR] Поиск попадания занимает более 5 секунд\n";
+            print_r($this->getFieldPlayed());
+        }
         $hit = rand(0, 1);
         list($x, $y, $f) = $cell;
         foreach ($this->_hit_matrix as $mx) {
             list($x1, $y1) = $mx;
             if(isset($this->getFieldPlayed()[$f][$x1 + $x][$y1 + $y]) && $this->getFieldPlayed()[$f][$x1 + $x][$y1 + $y] == 'd'){
                 $vector=($x1!=0?'x':'y');
-                #echo ' '.time().' '. "Нашли вектор $vector \n";
+                #echo $this->time().' '. "Нашли вектор $vector \n";
                 break;
             }
         }
@@ -366,7 +369,7 @@ class SeaBattle extends Game
         foreach ($matrix as $mx) {
             list($x1, $y1) = $mx;
             if(isset($vector) && (($vector=='x' && $x1==0) || ($vector=='y' && $y1==0))){
-                #echo ' '.time().' '. "Пропускаем $x1, $y1 \n";
+                #echo $this->time().' '. "Пропускаем $x1, $y1 \n";
                 continue;
             }
 
@@ -377,10 +380,10 @@ class SeaBattle extends Game
 
             if ($this->isCell($cell1) AND !in_array($cell1,$ignore)) {
                 if ((isset($this->getField()[$f][$x1][$y1]) OR $hit) && !isset($this->getFieldPlayed()[$f][$x1][$y1])) {
-                    #echo ' '.time().' '. "Нашли $x1, $y1 \n";
+                    #echo $this->time().' '. "Нашли $x1, $y1 \n";
                     return array($x1,$y1,$f);
-                } elseif (isset($this->getFieldPlayed()[$f][$x1][$y1]) && $this->getFieldPlayed()[$f][$x1][$y1] == 'd' && $hit_cell=$this->generateHit($cell1, array($cell, $cell1))) {
-                    #echo ' '.time().' '. "Нашли {$hit_cell[0]}, {$hit_cell[1]} \n";
+                } elseif (isset($this->getFieldPlayed()[$f][$x1][$y1]) && $this->getFieldPlayed()[$f][$x1][$y1] == 'd' && $hit_cell=$this->generateHit($cell1, array($cell, $cell1),$time)) {
+                    #echo $this->time().' '. "Нашли {$hit_cell[0]}, {$hit_cell[1]} \n";
                     return $hit_cell;
                 }
             }
@@ -391,13 +394,14 @@ class SeaBattle extends Game
     public function generateMove()
     {
         foreach ($this->getClients() as $client)
-            if (!isset($client->bot))
+//            if (!isset($client->bot))
+            if ($client->id!=$this->getClient()->id)
                 break;
 
-        #echo ' '.time().' '. "Генерация хода для бота\n";
+        #echo $this->time().' '. "Генерация хода для бота\n";
 
         if (isset($this->currentPlayer()['hit']) && $cell = $this->currentPlayer()['hit']) {
-            list($x, $y, $f) = $this->generateHit($cell,array($cell));
+            list($x, $y, $f) = $this->generateHit($cell,array($cell),time());
         } else {
 
             if($this->getPrice())
@@ -405,9 +409,15 @@ class SeaBattle extends Game
             else
                 $miss=true;
 
+            $i=0;
             do {
+                $i++;
                 $x = rand(1, static::FIELD_SIZE_X);
                 $y = rand(1, static::FIELD_SIZE_Y);
+                if ($i>1000) {
+                    echo $this->time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
+                    print_r($this->getFieldPlayed());
+                    }
             } while ((!isset($this->_field[$client->id][$x][$y]) AND !$miss) OR isset($this->_fieldPlayed[$client->id][$x][$y]));
         }
         return array($x, $y, $client->id);
@@ -415,7 +425,7 @@ class SeaBattle extends Game
 
     public function checkWinner()
     {
-        #echo ' '.time().' '. "Проверка победителя \n";
+        #echo $this->time().' '. "Проверка победителя \n";
         $current = $this->currentPlayer();
         if ($current['points'] >= count($this->_ships) OR $current['moves'] <= 0) {
             if ($current['moves'] <= 0)
@@ -434,20 +444,20 @@ class SeaBattle extends Game
             krsort($winner);
 
             if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
-                #echo ' '.time().' '. "Победитель #".current($winner)['player']['pid']."\n";
+                #echo $this->time().' '. "Победитель #".current($winner)['player']['pid']."\n";
                 $this->updatePlayer(array('result' => -1));
                 $this->updatePlayer(array('result' => 2), current($winner)['player']['pid']);
                 $this->_isOver = 1;
                 $this->_botReplay = 0;
                 return current($winner)['player'];
             } else {
-                #echo ' '.time().' '. "Экстра время \n";
+                #echo $this->time().' '. "Экстра время \n";
                 $this->setCallback(array('extra' => 1));
                 $this->updatePlayer(array('moves' => 1));
             }
 
         }
-        #echo ' '.time().' '. "Победителя нет \n";
+        #echo $this->time().' '. "Победителя нет \n";
 
     }
 
