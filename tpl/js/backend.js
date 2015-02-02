@@ -437,7 +437,7 @@ function socialSuccessPost(successFunction, failFunction, errorFunction) {
 
 function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
     $.ajax({
-        url: "/vkproxy",
+        url: "/vkproxy/",
         method: 'POST',
         data: {
             'uurl' : url,
