@@ -11,9 +11,11 @@ class SeaBattle extends Game
     const   FIELD_SIZE_X = 11;
     const   FIELD_SIZE_Y = 24;
     const   GAME_MOVES = 6;
+    const   BOT_ENABLED = 1;
 
     protected $_gameid = 2;
     protected $_gameTitle = '"Морской бой"';
+
     protected $_matrix = array(
         array(-1, -1), array(-1, 0), array(-1, 1),
         array(0, -1), array(0, 0), array(0, 1),
@@ -85,7 +87,6 @@ class SeaBattle extends Game
 
                     $this->setCallback(array(
                         'current' => $this->currentPlayer()['pid'],
-                        'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::TIME_OUT,
                         'appId' => $this->getIdentifier(),
                         'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                         'players' => $this->getPlayers(),
@@ -394,9 +395,6 @@ class SeaBattle extends Game
 
     public function generateMove()
     {
-        if($this->_isOver)
-            return array(1,1,$this->getClient()->id);
-
         foreach ($this->getClients() as $client)
 //            if (!isset($client->bot))
             if ($client->id!=$this->getClient()->id)
@@ -414,13 +412,26 @@ class SeaBattle extends Game
                 $miss=true;
 
             $i=0;
+            /*$x=0;
+            $y=1;*/
             do {
                 $i++;
+                /*
+                $x++;
+                if ($x>static::FIELD_SIZE_X) {
+                    $x=1;
+                    $y++;
+                }
+                */
                 $x = rand(1, static::FIELD_SIZE_X);
                 $y = rand(1, static::FIELD_SIZE_Y);
                 if ($i>1000) {
                     echo $this->time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
-                    print_r($this->getFieldPlayed());
+                    print_r($this->getPlayers());
+                    echo "\n";
+                    foreach($this->getFieldPlayed() as $fid=>$field)
+                        echo ' '.$fid.':'.(count($field, COUNT_RECURSIVE) - count($field));
+                    echo "\n";
                     return array(1,1,$this->getClient()->id);
                     }
             } while ((!isset($this->_field[$client->id][$x][$y]) AND !$miss) OR isset($this->_fieldPlayed[$client->id][$x][$y]));

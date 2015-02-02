@@ -8,6 +8,7 @@ class Game
     const   FIELD_SIZE_X = 7;
     const   FIELD_SIZE_Y = 7;
     const   GAME_MOVES = 6;
+    const   BOT_ENABLED = 1;
 
     protected $_gameid = 0;
     protected $_gameTitle = '';
@@ -146,7 +147,7 @@ class Game
 
         $this->setCallback(array(
             'current'   => $this->currentPlayer()['pid'],
-            'timeout'   => $this->currentPlayer()['timeout'],
+            'timeout'   => $this->currentPlayer()['timeout']-time(),
             'appId'       => $this->getIdentifier(),
             'appMode' => $this->getCurrency().'-'.$this->getPrice(),
             'players'   => $this->getPlayers(),
@@ -347,7 +348,7 @@ class Game
         $this->_players[(current($this->_players)['pid'])]['timeout']=time()+static::TIME_OUT;
 
         if(isset($this->_clients[(current($this->_players)['pid'])]->bot))
-            $this->_botTimer = rand(5,30)/10;
+            $this->_botTimer = rand(5,30)/10; // 0.1;
         else
             $this->_botTimer = 0;
 
