@@ -353,6 +353,7 @@ class SeaBattle extends Game
         if($time+5<time()){
             echo $this->time()." [ERROR] Поиск попадания занимает более 5 секунд\n";
             print_r($this->getFieldPlayed());
+            return array(1,1,$this->getClient()->id);
         }
         $hit = rand(0, 1);
         list($x, $y, $f) = $cell;
@@ -393,6 +394,9 @@ class SeaBattle extends Game
 
     public function generateMove()
     {
+        if($this->_isOver)
+            return array(1,1,$this->getClient()->id);
+
         foreach ($this->getClients() as $client)
 //            if (!isset($client->bot))
             if ($client->id!=$this->getClient()->id)
@@ -417,6 +421,7 @@ class SeaBattle extends Game
                 if ($i>1000) {
                     echo $this->time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
                     print_r($this->getFieldPlayed());
+                    return array(1,1,$this->getClient()->id);
                     }
             } while ((!isset($this->_field[$client->id][$x][$y]) AND !$miss) OR isset($this->_fieldPlayed[$client->id][$x][$y]));
         }
