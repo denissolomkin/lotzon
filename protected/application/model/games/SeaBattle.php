@@ -114,6 +114,7 @@ class SeaBattle extends Game
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                 'players' => $this->getPlayers(),
+                'ships' => $this->_ships,
                 'action' => 'field'
             ));
         }
@@ -169,6 +170,7 @@ class SeaBattle extends Game
         if ($winner = $this->checkWinner())
             $this->setCallback(array(
                 'winner' => $winner['pid'],
+                'fields' => $this->getField(),
                 'price' => $this->getPrice(),
                 'currency' => $this->getCurrency()));
 
@@ -210,6 +212,7 @@ class SeaBattle extends Game
             if ($winner = $this->checkWinner()) {
                 $this->setCallback(array(
                     'winner' => $winner['pid'],
+                    'fields' => $this->getField(),
                     'currency' => $this->getCurrency(),
                     'price' => $this->getPrice()
                 ));
@@ -410,9 +413,10 @@ class SeaBattle extends Game
                 $miss = rand(0, 20);
             else
                 $miss=true;
-
             $i=0;
-            /*$x=0;
+            /*
+            $miss=rand(0,1);
+            $x=0;
             $y=1;*/
             do {
                 $i++;
