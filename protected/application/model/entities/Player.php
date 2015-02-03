@@ -72,6 +72,7 @@ class Player extends Entity
     private $_lastip = '';
     private $_cookieId = 0;
 
+    private $_inviterId = 0;
     private $_referalId = 0;
     private $_referalPaid = 0;
 
@@ -618,10 +619,18 @@ class Player extends Entity
 
     public function setLastIP($ip)
     {
-        if(!$this->getIP())
-            $this->setIP($ip);
-        elseif($ip!=$this->getIP())
+        $update=false;
+
+        if(!$this->getIP()){
+            $this->setIp($ip);
+            $update=true;
+        } elseif($ip!=$this->getIP()){
             $this->_lastip = $ip;
+            $update=true;
+        }
+
+        if($update)
+            $this->updateIp($ip);
 
         return $this;
     }
@@ -629,6 +638,18 @@ class Player extends Entity
     public function getLastIP()
     {
         return $this->_lastip;
+    }
+
+    public function setInviterId($inviterId)
+    {
+        $this->_inviterId = $inviterId;
+
+        return $this;
+    }
+
+    public function getInviterId()
+    {
+        return $this->_inviterId;
     }
 
     public function setReferalId($referalId) 
@@ -651,6 +672,19 @@ class Player extends Entity
     public function setReferalPaid($status)
     {
         $this->_referalPaid = $status;
+
+        return $this;
+    }
+
+    public function updateInvite()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->getProcessor()->updateInvite($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
 
         return $this;
     }
@@ -892,6 +926,26 @@ class Player extends Entity
         return $this;
     }
 
+    public function updateIp($ip)
+    {
+
+        if(!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
+            return $this;
+
+        $ip=sprintf("%u", ip2long($ip));
+        $model = $this->getModelClass();
+
+        try {
+            if(is_numeric($ip)){
+                $model::instance()->updateIp($this,$ip);}
+        } catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return $this;
+    }
+
     protected function checkNickname()
     {
         $model = $this->getModelClass();
@@ -1112,15 +1166,22 @@ class Player extends Entity
 
             // mark referal unpaid for preverse of double points
             if ($this->getReferalId() && !$this->isReferalPaid())
+                $this->setReferalPaid(1);
+            /*
                 try {
                     $this->markReferalPaid();
                 } catch (EntityException $e) {}
-
+            */
             // add bonuses to inviter and delete invite
             try {
                 $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
                 $invite->delete();
             } catch (EntityException $e) {}
+
+            try {
+                $this->setInviterId($invite->getInviter()->getId())->updateInvite();
+            } catch (EntityException $e) {}
+
         }
 
         return $this;
@@ -1221,6 +1282,7 @@ class Player extends Entity
                  ->setLastIp($data['LastIp'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
+                 ->setInviterId($data['InviterId'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
@@ -1238,6 +1300,8 @@ class Player extends Entity
                     'Ip' => $data['CountIp'],
                     'MyReferal' => $data['CountMyReferal'],
                     'Referal' => $data['CountReferal'],
+                    'MyInviter' => $data['CountMyInviter'],
+                    'Inviter' => $data['CountInviter'],
                     'Order' => ($data['CountMoneyOrder']+$data['CountShopOrder']),
                     'Review' => $data['CountReview'],
                     'CookieId' => $data['CountCookieId'],

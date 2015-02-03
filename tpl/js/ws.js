@@ -1,5 +1,6 @@
 $(function(){
 var ships = [];
+var game_ships = [];
 var conn;
 var errors = {
     'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
@@ -226,6 +227,7 @@ function appSeaBattleCallback(receiveData)
              hideAllGames();
              if((!($('ul.mx.SeaBattle.m').find('div').length) && !($('ul.mx.SeaBattle.m').find('li.s').length)) || $('ul.SeaBattle.o').is(':visible')){
                  runGame();
+                 window.game_ships=receiveData.res.ships;
                  genFieldSeaBattle();
                  $('.ngm-bk .gm-fld .place').show();
                  $('.ngm-bk .gm-fld .mx.SeaBattle.o').hide();
@@ -331,7 +333,7 @@ function appSeaBattleCallback(receiveData)
                      $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.'+class_cell+' li.last').
                          removeClass('last');
                      $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.'+class_cell+' li[data-cell="'+x+'x'+y+'x'+index+'"]').
-                         addClass((is_numeric(cell)?'s':cell)+' last').fadeIn(100);
+                         addClass((is_numeric(cell)?'s':cell)+' last').addClass(class_cell).fadeIn(100);
                  });
              });
          });
@@ -358,7 +360,7 @@ function appSeaBattleCallback(receiveData)
                      .effect('explode', {pieces: 4 }, 500)
                      //.effect('bounce')
                      .parent().addClass(class_cell+' last')
-                     .fadeIn(300);
+                     .fadeIn(300).html(receiveData.res.cell.class=='d'?"<img src='tpl/img/games/damage.png'>":'');
 
              }
 
@@ -369,8 +371,9 @@ function appSeaBattleCallback(receiveData)
                          $.each(cells, function (y, cell) {
                              $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.' + class_cell + ' li.last').
                                  removeClass('last');
+
                              $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.' + class_cell + ' li[data-cell="' + x + 'x' + y + 'x' + index + '"]').
-                                 addClass((is_numeric(cell)?'s':cell) + ' last').fadeIn(100);
+                                 addClass((is_numeric(cell)?'s':cell) + ' last').addClass(class_cell).fadeIn(100).html(cell=='d'?"<img src='tpl/img/games/damage.png'>":'');
                          });
                      });
                  });
@@ -426,6 +429,8 @@ function appSeaBattleCallback(receiveData)
                  $('.gm-pr').removeClass('move');
                  $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
+                 $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.o li.s:not(.d)').effect('pulsate',{times:10});
+
                  setTimeout(function(){
                      $('.msg.winner').fadeIn(200);
                      class_player=receiveData.res.winner==playerId?'l':'r';
@@ -438,7 +443,7 @@ function appSeaBattleCallback(receiveData)
                      (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
 
                      $('.gm-pr.'+class_player).addClass('winner');
-                 }, 1200);
+                 }, (receiveData.res.winner==playerId?1200:2400));
 
                  $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
                  $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
@@ -684,12 +689,13 @@ $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
     //    $("#report-popup").find(".txt").text(errors['NOT_YOUR_MOVE']);
     //    $("#report-popup").show().fadeIn(200);
     }
-    else if($(this).hasClass('m') || $(this).hasClass('o'))
+    else if($(this).hasClass('m') || $(this).hasClass('o') || $(this).hasClass('b'))
     {
         //    $("#report-popup").find(".txt").text(errors['CELL_IS_PLAYED']);
         //    $("#report-popup").show().fadeIn(200);
     }
     else{
+        $(this).addClass('b');
         var path='app/'+appName+'/'+appId;
         var data={'action':'move','cell':$(this).data('cell')}
         WebSocketAjaxClient(path,data);
@@ -727,7 +733,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
             [1, -1], [1, 0], [1, 1]
         ];
 
-        var game_ships = [5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1];
+        var game_ships = window.game_ships;
 
         var field = [];
         for (y = 1; y <= size_y; y++) {
@@ -796,8 +802,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
         [1,-1], [1,0],  [1,1]
     ];
 
-    var game_ships = [5,4,4,3,3,3,2,2,2,2,1,1,1,1,1];
-
+    var game_ships = window.game_ships;
     var field = [];
     for (y = 1; y <= size_y; y++){
         field[y] = [];
@@ -1126,9 +1131,9 @@ function appWhoMoreCallback(receiveData)
         $('.ngm-bk').fadeIn(200);
         $('.ngm-bk .ngm-gm .gm-mx .gm-fld').html($('#newgame-fields div[data-game="'+appName+'"]').html());
         window.setTimeout(function(){
-            $("html, body").animate({scrollTop: $('.chance').offset().top}, 500, 'easeInOutQuint');
+            $("html, body").animate({scrollTop: $('.chance').offset().top-60}, 500, 'easeInOutQuint');
             $('.ngm-bk .msg').hide();
-        }, 200);
+        }, 300);
         $('.ngm-bk .rls-r-ts').hide();
         $('.ngm-rls').hide();
         $('.ngm-bk .rls-r-t').show();
