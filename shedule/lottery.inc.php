@@ -335,7 +335,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 
 		$rountdsStats[(int)$rountdStats[$orderBy]] = $rountdStats;
 
-		echo '  check candidate [ '.implode(', ', $balls).' ] ('.number_format($rountdStats['UAH']).' UAH): '.(microtime(true) - $t).PHP_EOL;
+		echo '  check candidate [ '.implode(', ', $balls).' ] ('.number_format($rountdStats[$orderBy]).'): '.(microtime(true) - $t).PHP_EOL;
 
 		$cache[$hash]= true;
 	}
@@ -385,7 +385,7 @@ function ResetLottery($lid = null)
 		echo (microtime(true) - $time).PHP_EOL;
 	}
 }
-function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 2, $rounds = 100, $return = 0, $orderBy = 'UAH')
+function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
 {
 	$time = microtime(true);
 
@@ -405,7 +405,7 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 2, $rounds = 100, 
 
 	return $comb['combination'];
 }
-function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsRange = 2, $rounds = 100, $return = 0, $orderBy = 'UAH')
+function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
 {
 	$SQL = "SELECT
 				LotteryId AS lid
@@ -422,7 +422,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 	{
 		$row = HoldLottery($lid, $ballsStart, $ballsRange, $rounds, $return, $orderBy);
 
-		sleep(30);
+		sleep(60);
 
 		if(isset($row))
 		{
@@ -544,7 +544,7 @@ function ConverDB()
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
 	{
-//		foreach(array('Players', 'Lotteries', 'LotterySettings', 'LotteryTickets', 'PlayerLotteryWins') as $table)
+//		foreach(array('Players', 'Lotteries', 'LotterySettings', 'LotteryTickets', 'PlayerLotteryWins', 'Transactions') as $table)
 //		{
 //			DB::Connect()->query("ALTER TABLE $table ENGINE='MyISAM'");
 //		}

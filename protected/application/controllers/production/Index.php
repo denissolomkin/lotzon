@@ -264,7 +264,14 @@ class Index extends \SlimController\SlimController
     public function VKProxyAction() 
     {
         $upload_url = $this->request()->post('uurl');
-        $post_params['photo'] = curl_file_create(PATH_ROOT . 'tpl/img/social-share.jpg');
+
+        // if use php<=5.5.0
+        if (!function_exists('curl_file_create')) {
+            $post_params['photo'] = "@".PATH_ROOT . 'tpl/img/social-share.jpg'.";filename=".basename(PATH_ROOT . 'tpl/img/social-share.jpg');
+        }
+        else {
+            $post_params['photo'] = curl_file_create(PATH_ROOT . 'tpl/img/social-share.jpg');
+        }
      
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $upload_url);
