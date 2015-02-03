@@ -1296,7 +1296,7 @@
         var appMode   = 0;
         var appModes = {
             'WhoMore': ['POINT-0', 'POINT-25', 'POINT-50', 'POINT-75', 'POINT-100', 'MONEY-0.1', 'MONEY-0.25', 'MONEY-0.5', 'MONEY-1'],
-            'SeaBattle': ['POINT-0', 'POINT-50', 'MONEY-0.5']
+            'SeaBattle': ['POINT-0', 'POINT-25', 'MONEY-0.1']
         };
         var unreadNotices = <?=$notices?>;
         var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
