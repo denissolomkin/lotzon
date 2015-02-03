@@ -75,14 +75,15 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           if((filledTicketsCount==4 && !$(this).hasClass('done'))){
+           //if((filledTicketsCount==4 && !$(this).hasClass('done'))){
+           if((filledTicketsCount==bannerTicketLastNum && !$(this).hasClass('done'))){
                st.parent().append('<div id="ticket_video" class="tb-slide"></div>');
                $(this).addClass('video');
                id=new Date().getTime();
                // temp=st.html();
                setTimeout(function(){
                    $('#ticket_video').html(
-                   '<div style="z-index: 10000;margin-top: 390px;margin-left: 320px;position: absolute;">'+
+                   '<div style="z-index: 5;margin-top: 390px;margin-left: 320px;position: absolute;">'+
                        '<div style="background: #b2d0d4;border: 4px solid #b2d0d4;border-radius: 4px;" id="timer_videobanner'+id+'">'+
                        '</div></div>' +
                         bannerTicketLast+
@@ -1399,7 +1400,7 @@ function moneyOutput(type, form) {
     requestForMoney(data, function(){
         updateMoney(playerMoney-parseFloat($("#cash-output-popup section.form:visible input[name=summ]").val()));
         $("#cash-output-popup").hide();
-        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Ваш счет в течении 3 рабочих дней.");
+        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Ваш счет в течение 7 рабочих дней.");
         $("#report-popup").show();
     }, function(data){
         alert(data.message);
