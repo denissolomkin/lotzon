@@ -594,7 +594,7 @@
                             <li class="" data-num="2"></li>
                             <li class="" data-num="3"></li>
                         </ul>
-                        <div class="block" style="display:none;margin-top: 20px;float:right;" >Загрузка...</div>
+                        <div class="block" style="display:none;" >Загрузка...</div>
                     </div>
                 </div>
             </section>

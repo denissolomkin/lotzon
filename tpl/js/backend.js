@@ -522,7 +522,7 @@ window.setInterval(function() {
                     if(data.res.block){
                         moment=$("#mchance").find('.block');
                         block=data.res.block;
-                        moment.html(block).show().parent().parent().css('height','440px');
+                        moment.html('<div class="tl">Реклама</div>'+block).show();
                     }
 
                     $("#mchance").find('li').off('click').on('click', function(){
