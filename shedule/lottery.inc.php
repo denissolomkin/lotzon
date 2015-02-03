@@ -403,7 +403,7 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 
 	echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL.PHP_EOL.PHP_EOL.'==============================================='.PHP_EOL.PHP_EOL.PHP_EOL;
 
-	return $comb['combination'];
+	return $comb;
 }
 function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
 {
@@ -412,7 +412,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 			FROM
 				LotteryTickets
 			WHERE
-				LotteryId > 72
+				LotteryId BETWEEN 72 AND
 			GROUP BY
 				LotteryId
 			ORDER BY
@@ -426,7 +426,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 
 		if(isset($row))
 		{
-			$row = '<td>'.implode('</td><td>', $row).'</td>';
+			$row = "<td><b>$lid:</b></td><td>".implode('</td><td>', $row['combination'])."</td><td><b>{$row['MoneyTotal']}</b></td>";
 		}
 
 		return $row;

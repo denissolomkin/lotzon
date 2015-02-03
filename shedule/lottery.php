@@ -1,5 +1,10 @@
 <?php
 
+
+	require_once('lottery.inc.php');
+	HoldLottery(0, 0, 40, 50);
+
+/*
 message("Init");
 
 require_once('init.php');
@@ -12,24 +17,6 @@ global $_ballsCount;    $_ballsCount    = 6;
 global $_variantsCount; $_variantsCount = 49;
 
 
-/*
-$time = microtime(true);
-
-
-        ConverDB();
-$comb = GetLotteryCombination();
-$comb = SetLotteryCombination($comb);
-        ApplyLotteryCombination($comb);
-
-print_r($comb);
-
-
-//DB::Connect()->beginTransaction();
-//DB::Connect()->commit();
-//DB::Connect()->rollBack();
-
-echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL;
-*/
 $gt = microtime(true);
 
 Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
@@ -103,15 +90,14 @@ if (timeToRunLottery()) {
         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
 
 
-/*
-        message("Count balls for every combinations");
-        $tgt = microtime(true);
-        $combBalls = array();
-        foreach ($tickets as $ticket)
-            foreach ($lotteryCombinations as $id => $combination)
-                @$combBalls[$id][count(array_intersect((array)$ticket->getCombination(),$combination))]++;
-         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
-*/
+//        message("Count balls for every combinations");
+//        $tgt = microtime(true);
+//        $combBalls = array();
+//        foreach ($tickets as $ticket)
+//            foreach ($lotteryCombinations as $id => $combination)
+//                @$combBalls[$id][count(array_intersect((array)$ticket->getCombination(),$combination))]++;
+//         messageLn("    [done]  -> " . number_format((microtime(true) - $tgt),3) . " s.");
+
 
 
         // get most better combination
@@ -122,12 +108,12 @@ if (timeToRunLottery()) {
         foreach ($lotteryCombinations as $id => $combination)
             foreach ($tickets as $ticket)
                 if($compare=count(array_intersect((array)$ticket->getCombination(),$combination))) {
-/*                    if($compare>4) {
-                        message("   > 4balls");
-                        unset($combinationsWeight[$id]);
-                        continue 2;
-                    }
-*/
+//                    if($compare>4) {
+//                        message("   > 4balls");
+//                        unset($combinationsWeight[$id]);
+//                        continue 2;
+//                    }
+
                     if ($gamePrizes['UA'][$compare]['currency'] == GameSettings::CURRENCY_MONEY)
                         @$combinationsWeight[$id] += $gamePrizes['UA'][$compare]['sum'];
                 }
@@ -135,22 +121,21 @@ if (timeToRunLottery()) {
         foreach ($combinationsWeight as $id => $sum)
             $combinationsWeight[$id]=(int)$sum;
 
-        /*
-        foreach ($lotteryCombinations as $id => $combination) {
-            $combinationWin = 0;
-            foreach ($combination as $combinationNum) {
-                foreach ($bets as $num => $bet) {
-                    if ($combinationNum == $num) {
-                        $combinationWin += $bet;
-                    }
-                }
-            }
-            $combinationsWeight[$id] = $combinationWin;
-            if ($combinationWin > $maxWin) {
-                $maxWin = $combinationWin;
-            }
-        }
-        */
+//        foreach ($lotteryCombinations as $id => $combination) {
+//            $combinationWin = 0;
+//            foreach ($combination as $combinationNum) {
+//                foreach ($bets as $num => $bet) {
+//                    if ($combinationNum == $num) {
+//                        $combinationWin += $bet;
+//                    }
+//                }
+//            }
+//            $combinationsWeight[$id] = $combinationWin;
+//            if ($combinationWin > $maxWin) {
+//                $maxWin = $combinationWin;
+//            }
+//        }
+
         // late night magick ;O
         asort($combinationsWeight);
         $combinationsWeight = array_flip($combinationsWeight);
@@ -211,20 +196,20 @@ if (timeToRunLottery()) {
             }
         }
 
-/*
-        if (!$gameSettings->getJackpot()) {
-            if ($moneyWonTotal > $gameSettings->getTotalWinSum() && !$lastIterationReached) {
-                message(" limit -> ");
 
-                if (count($combinationsWeight)  == 1) {
-                    $lastIterationReached = true;
-                }
-                // restart with lower weight combination
-                $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
-                continue;
-            } 
-        }
-*/
+//        if (!$gameSettings->getJackpot()) {
+//            if ($moneyWonTotal > $gameSettings->getTotalWinSum() && !$lastIterationReached) {
+//                message(" limit -> ");
+//
+//                if (count($combinationsWeight)  == 1) {
+//                    $lastIterationReached = true;
+//                }
+//                // restart with lower weight combination
+//                $lotteryCombination = $lotteryCombinations[array_shift($combinationsWeight)];
+//                continue;
+//            } 
+//        }
+
         break;
     }
 
@@ -766,4 +751,5 @@ function recompile(){
     messageLn("Total time s  -> " . number_format((microtime(true) - $gt),2) . " s.");
     exit;
 }
-//
+
+// */
