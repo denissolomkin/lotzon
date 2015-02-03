@@ -462,7 +462,7 @@ class Players extends \AjaxController
                             foreach ($group as $banner) {
                                 if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
                                     continue;
-                                //$resp['block'] = '<!-- ' . $banner['title'] . ' -->' . $banner['script']. $banner['div'];
+                                $resp['block'] = '<!-- ' . $banner['title'] . ' -->' . $banner['script']. $banner['div'];
                                 break;
                             }
                         }
