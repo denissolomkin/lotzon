@@ -197,7 +197,7 @@ function SetLotteryCombination($comb)
 
 
 	$SQL = "INSERT INTO Lotteries
-				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsStat, %s)
+				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
 			VALUES
 				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
@@ -548,9 +548,9 @@ function ConverDB()
 		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
 	}
 
-	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsStat"')->fetch())
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
 	{
-		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsStat varchar(255) NULL');
+		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
 	}
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
