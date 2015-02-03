@@ -37,6 +37,7 @@
                 <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
                 <th class="icon"><?=sortIcon('CountCookieId', $currentSort, $pager, $search, 'flag')?></th>
                 <th class="icon"><?=sortIcon('CountReferal', $currentSort, $pager, $search, 'user')?></th>
+                <th class="icon"><?=sortIcon('CountInvite', $currentSort, $pager, $search, 'envelope')?></th>
                 <th>Login / Ping <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th class="icon"><?=sortIcon('GamesPlayed', $currentSort, $pager, $search, 'gift')?></th>
                 <th class="icon"><?=sortIcon('TicketsFilled', $currentSort, $pager, $search, 'tags')?></th>
@@ -99,6 +100,12 @@
                             <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
+
+                        <td <?=($player->getInviterId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getInviterId().'\';" class="pointer ':' class="')?><?=$player->getInviterId() ? "success" : "danger"?>">
+                            <?if($player->getCounters()['Inviter']>1) {?> <span class="label label-info"><?=$player->getCounters()['Inviter']?></span>
+                            <?}?>
+                            <?=$player->getInviterId() ? "#" . $player->getInviterId() : "&nbsp;"?></td>
+
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>">
                             <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
 
@@ -126,6 +133,12 @@
                                 <? if ($player->getCounters()['MyReferal']>0): ?>
                                     <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=ReferalId&search[query]=<?=$player->getId();?>'">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if ($player->getCounters()['MyInviter']>0): ?>
+                                    <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=InviterId&search[query]=<?=$player->getId();?>'">
+                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><?=($player->getCounters()['MyInviter']>1?$player->getCounters()['MyInviter']:'');?>
                                     </button>
                                 <? endif ?>
 
