@@ -525,7 +525,18 @@ function ConverDB()
 
 	global $_variantsCount;
 
-	if(!DB::Connect()->query('SHOW INDEX FROM Players WHERE Key_name = "Country"')->fetch())
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Players LIKE "InviterId"')->fetch())
+	{
+		DB::Connect()->query('ALTER TABLE `Players` ADD `InviterId` INT(11) UNSIGNED NOT NULL DEFAULT "0" AFTER `CookieId`, ADD INDEX (`InviterId`)');
+		DB::Connect()->query('CREATE TABLE IF NOT EXISTS `PlayerIps` (
+								`PlayerId` int(11) unsigned NOT NULL,
+								`Ip` int(11) unsigned NOT NULL,
+								`Time` int(11) unsigned NOT NULL
+							) ENGINE=InnoDB DEFAULT CHARSET=latin1');
+		DB::Connect()->query('ALTER TABLE `PlayerIps` ADD PRIMARY KEY (`PlayerId`,`Ip`), ADD KEY `PlayerId` (`PlayerId`), ADD KEY `Ip` (`Ip`)');
+	}
+
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
 	{
 		DB::Connect()->query('ALTER TABLE Players			ADD INDEX `Country`		(`Country`)');
 		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `CountryCode`	(`CountryCode`)');
