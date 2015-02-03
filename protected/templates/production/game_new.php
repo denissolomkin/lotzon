@@ -70,11 +70,45 @@
 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-        <? if(is_array($banners['HeaderScripts']))
-            foreach($banners['HeaderScripts'] as $banner) {
-                echo '<!-- '.$banner['title'].' -->
-                '.$banner['script'];
-            }
+        <?
+        echo getScripts($banners['HeaderScripts'],$player);
+        ?>
+
+        <?
+        function getBanners($sector, &$player, &$bannerScript){
+            $res='';
+            if(is_array($sector))
+                foreach($sector as $group) {
+                    if (is_array($group)) {
+                        shuffle($group);
+                        foreach ($group as $banner) {
+                            if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
+                                continue;
+                            $bannerScript .= '<!-- ' . $banner['title'] . ' -->
+                        ' . $banner['script'];
+                            $res .= '<!-- ' . $banner['title'] . ' -->
+                        ' . $banner['div'];
+                            break;
+                        }
+                    }
+                }
+            return $res;
+        }
+
+        function getScripts($script,&$player){
+            $res='';
+            if(is_array($script))
+                foreach($script as $group) {
+                    if (is_array($group))
+                        foreach ($group as $banner) {
+                            if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
+                                continue;
+                            $res.=    '<!-- '.$banner['title'].' -->
+                        '.$banner['script'];
+                        }
+                }
+            return $res;
+        }
         ?>
 
 
@@ -102,13 +136,7 @@
             <div class="hr-br">
             <aside class="lbs">
 
-                <? if(is_array($banners['Header']))
-                    foreach($banners['Header'] as $banner) {
-                        echo '<!-- '.$banner['title'].' -->
-                        '.$banner['div'];
-                        $bannerScript.='<!-- '.$banner['title'].' -->
-                        '.$banner['script'];
-                    } ?>
+                <? getBanners($banners['Header'],$player,$bannerScript); ?>
 
             </div>
             <div class="hr-io-bk">
@@ -195,24 +223,12 @@
             <section class="wings">
                 <aside class="lbs">
 
-                    <? if(is_array($banners['TicketsLeft']))
-                        foreach($banners['TicketsLeft'] as $banner) {
-                            echo '<!-- '.$banner['title'].' -->
-                            '.$banner['div'];
-                            $bannerScript.='<!-- '.$banner['title'].' -->
-                            '.$banner['script'];
-                        } ?>
+                    <? echo getBanners($banners['TicketsLeft'],$player,$bannerScript); ?>
 
                 </aside>
                 <aside class="rbs">
 
-                        <? if(is_array($banners['TicketsRight']))
-                        foreach($banners['TicketsRight'] as $banner) {
-                            echo '<!-- '.$banner['title'].' -->
-                            '.$banner['div'];
-                            $bannerScript.='<!-- '.$banner['title'].' -->
-                            '.$banner['script'];
-                        } ?>
+                    <? echo getBanners($banners['TicketsRight'],$player,$bannerScript); ?>
 
                 </aside>
                 <div class="w-ct">
@@ -381,13 +397,8 @@
                 <div class="i-lbk">
                     <section class="i-v-bk">
 
-                    <? if(is_array($banners['Video'])) {
-                        $banners['Video'] = array_shift($banners['Video']);
-                        echo '<!-- ' . $banners['Video']['title'] . ' -->
-                        ' . $banners['Video']['div'];
-                        $bannerScript .= '<!-- ' . $banners['Video']['title'] . ' -->
-                        ' . $banners['Video']['script'];
-                    } ?>
+                        <? echo getBanners($banners['Video'],$player,$bannerScript); ?>
+
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
@@ -517,13 +528,8 @@
         <? endif ?>
             <section class="banner100">
 
-                <? if(is_array($banners['Banner100']))
-                    foreach($banners['Banner100'] as $banner) {
-                        echo '<!-- '.$banner['title'].' -->
-                        '.$banner['div'];
-                        $bannerScript.='<!-- '.$banner['title'].' -->
-                        '.$banner['script'];
-                    } ?>
+                <? echo getBanners($banners['Banner100'],$player,$bannerScript); ?>
+
             <? /*
                 <!--noindex--><div id="ambw73372" style="margin: auto;"></div><!--/noindex--> */ ?>
             </section>
@@ -758,13 +764,7 @@
                 </div>
                 <div class="pr-br">
 
-                    <? if(is_array($banners['Profile']))
-                        foreach($banners['Profile'] as $banner) {
-                            echo '<!-- '.$banner['title'].' -->
-                            '.$banner['div'];
-                            $bannerScript.='<!-- '.$banner['title'].' -->
-                            '.$banner['script'];
-                        } ?>
+                    <? echo getBanners($banners['Profile'],$player,$bannerScript); ?>
 
                 </div>
                 <div class="b-cl-block"></div>
@@ -779,13 +779,7 @@
         <section class="chance">
         <div class="ch-br-bk">
 
-        <? if(is_array($banners['Games']))
-            foreach($banners['Games'] as $banner) {
-                echo '<!-- '.$banner['title'].' -->
-                '.$banner['div'];
-                $bannerScript.='<!-- '.$banner['title'].' -->
-                '.$banner['script'];
-            } ?>
+            <? echo getBanners($banners['Games'],$player,$bannerScript); ?>
 
         </div>
         <div class="ch-lot-bk">
@@ -1279,12 +1273,8 @@
 
         <? include('popups.php') ?>
 
-    <? if(is_array($banners['BodyScripts']))
-        foreach($banners['BodyScripts'] as $banner) {
-            echo '<!-- '.$banner['title'].' -->
-                '.$banner['script'];
-        }
-    ?>
+    <? echo getScripts($banners['BodyScripts'],$player); ?>
+
     <script>
 
         VK.init({
@@ -1310,7 +1300,7 @@
             'SeaBattle': ['POINT-0']
         };
         var unreadNotices = <?=$notices?>;
-        var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=array_shift($banners['TicketLast']))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
+        var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
         var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
 

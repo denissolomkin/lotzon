@@ -490,7 +490,7 @@ article .infos {padding:40px 20px 0 20px;}
 
 
 #profile-but .notice-unread,#profile-but .notice-unread:hover{background-color: #ce4847;color: whitesmoke !important;}
-.profile .p-bk .p-cnt #notice-unread{float: right;margin: 8px 40px 8px 0;background-color: #ce4847;color: whitesmoke !important;width: 24px;height: 24px;font: 18px/1.4 Handbook-bold;text-align: center;}
+.profile .p-bk .p-cnt #notice-unread{float: right;margin: 8px 40px 8px 0;background-color: #ce4847;color: whitesmoke !important;width: 24px;height: 24px;font: 18px/1.4 Handbook-regular;text-align: center;}
 .profile-notice {padding:30px 50px 0 50px;display:none;
     overflow-y: auto;
     height: 580px;}

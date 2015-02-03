@@ -519,37 +519,11 @@ window.setInterval(function() {
                     }, 3 * 60000);
                     $("#mchance").show();
 
-                    /*
-                    $("#mchance").find('li').off('click').on('click', function(){
+                    if(data.res.block){
                         moment=$("#mchance").find('.block');
                         block=data.res.block;
-
-                        //$("#mchance").css('margin-bottom', '20px');
-                        //moment.parent().find('div').css('margin-bottom', '-200px');
-                        moment.parent().css('bottom', 'auto');
-                        //moment.parent().css('bottom', '150px');
-                        moment.html(block);
-                        window.setTimeout(function() {
-//                            moment.parent().css('margin-bottom', '-130px');
-                            moment.parent().find('ul').css('margin-bottom', '-160px');
-                        }, 50);
-
-                        window.setTimeout(function() {
-                            moment.parent().find('ul').css('margin-bottom', '-80px');
-                        }, 140);
-
-                        window.setTimeout(function() {
-
-                            moment.parent().find('ul, div').css('margin-bottom', 'auto');
-                           // var win = window.open ('http://musiclife.ua','_blank');
-                           // win.blur();
-                           // window.focus();
-                            //return false;
-                        }, 200);
-
-                        $("#mchance").off();
-                     });
-                     */
+                        moment.html(block).show().parent().parent().css('height','440px');
+                    }
 
                     $("#mchance").find('li').off('click').on('click', function(){
                         var li = $(this);
