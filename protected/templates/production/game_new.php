@@ -136,7 +136,7 @@
             <div class="hr-br">
             <aside class="lbs">
 
-                <? getBanners($banners['Header'],$player,$bannerScript); ?>
+                <? echo getBanners($banners['Header'],$player,$bannerScript); ?>
 
             </div>
             <div class="hr-io-bk">
@@ -530,8 +530,6 @@
 
                 <? echo getBanners($banners['Banner100'],$player,$bannerScript); ?>
 
-            <? /*
-                <!--noindex--><div id="ambw73372" style="margin: auto;"></div><!--/noindex--> */ ?>
             </section>
 
         <!--=====================================================================
@@ -787,7 +785,7 @@
         <div class="sbk-tl">игры</div>
         <div class="b-cntrl-block"><span class="glyphicon glyphicon-volume-up audio" aria-hidden="true"></span></div>
 
-        <!-- CHASNE PREVIEW -->
+        <!-- CHANCE PREVIEW -->
         <div class="ch-bk" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
             <div class="ch-gm-tbl">
@@ -838,7 +836,7 @@
             </div>
         </div>
 
-        <!-- CHASNE GAME -->
+        <!-- CHANCE GAME -->
         <div class="game-bk" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
@@ -1036,7 +1034,8 @@
                                         <div class="place">Расставьте корабли в необходимом порядке.<br><br>Что бы изменить ориентацию корабля, кликните по нему дважды.
                                             <div class="sb-random but">случайно</div>
                                             <div class="sb-ready but">готово</div>
-                                            <div class="sb-wait">ожидаем соперника</div></div>
+                                            <div class="sb-wait">ожидаем соперника</div>
+                                        </div>
                                         <ul class="mx SeaBattle o">
                                             <? for($i=1;$i<=24;$i++)
                                                 for($j=1;$j<=11;$j++)

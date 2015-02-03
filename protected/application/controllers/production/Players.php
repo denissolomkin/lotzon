@@ -470,7 +470,7 @@ class Players extends \AjaxController
                                 }
                             }
                         }
-                    
+
                     $gameField = $chanceGames['moment']->generateGame();
                     $_SESSION['chanceGame']=array(
                         'moment' => array(
