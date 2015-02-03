@@ -1,39 +1,82 @@
-<div class="container-fluid">
+<div class="container-fluid banners">
     <form role="form" action="/private/banners" method="POST">
     <div class="row-fluid">
         <h2>Banners
             <button type="submit" class="btn btn-success right">Сохранить</button></h2>
-        <hr />
     </div>
-    <div class="row-fluid">
-            <? if(is_array($list))
-                foreach ($list as $key=>$sector) : ?>
-            <div class="col-md-6">
-                <h2>
-                    <button type="button" data-sector="<?=$key?>" class="btn btn-success add-banner"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-                    <?=$key?><input type="hidden" name="banners[<?=$key?>]" value="">
-                </h2>
-                <div id="<?=$key?>">
-                <? $cnt=0;
+        <script>
+        var safeColors = ['00','33','66','99','cc','ff'];
+        var rand = function() {
+        return Math.floor(Math.random()*6);
+        };
+        var randomColor = function() {
+        var r = safeColors[rand()];
+        var g = safeColors[rand()];
+        var b = safeColors[rand()];
+        return "#"+r+g+b;
+        };
+        $(document).ready(function() {
+            $('div.sector1').each(function() {
+                    $(this).css('background',randomColor());
+                $(this).css('background',randomColor());
+                });
+        });
+        </script>
+    <div class="row-fluid" style="background: #ccc;margin-left: -15px;position: absolute;padding: 0 0 5px 5px;">
+            <?
+            if(is_array($list))
+                foreach ($list as $sid=>$sector) : ?>
+                    <div class="col-md-3  row-banner">
+            <div class="sector" /*style="background-color: rgba(<?=rand(0,255).','.rand(0,255).','.rand(0,255)?>,0.2);"*/>
+                <div style="" >
+                    <button type="button" data-sector="<?=$sid?>" class="btn btn-success btn-xs add-group"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> <small><?=$sid?></small><input type="hidden" name="banners[<?=$sid?>]" value="">
+                </div>
+                <div id="<?=$sid?>">
+                <? $gid=0;
                 if(is_array($sector))
-                foreach ($sector as $banner) : ?>
+                foreach ($sector as $group) : ?>
 
-                    <div class="row" data-id="<?=$cnt?>" style="margin-bottom: 10px;">
-                        <div class="col-md-2" style="display: flex;">
-                               <button type="button" data-sector="<?=$key?>" class="btn btn-danger del-banner"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
-                               <textarea placeholder="Title" class="form-control input-md" name=banners[<?=$key?>][<?=$cnt?>][title]><?=$banner['title'];?></textarea>
-                            </div>
-                        <div class="col-md-5 row">
-                               <textarea placeholder="Div" class="form-control input-md" name=banners[<?=$key?>][<?=$cnt?>][div]><?=$banner['div'];?></textarea>
-                            </div>
-                        <div class="col-md-5">
-                               <textarea placeholder="Script" class="form-control input-md" name=banners[<?=$key?>][<?=$cnt?>][script]><?=$banner['script'];?></textarea>
-                            </div>
+                    <div id="group<?=$gid?>" class='group' data-gid="<?=$gid?>" style="clear: both;">
+                        <div class="row-fluid" style=""><input type="hidden" name="banners[<?=$sid?>][<?=$gid?>]" value="">
+                            <button type="button" data-group="<?=$gid?>" data-sector="<?=$sid?>" class="btn btn-success  add-banner btn-xs"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button><button type="button" class="btn btn-danger del-group btn-xs"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
+                            <small>Группа баннеров №<?=($gid+1)?></small>
                         </div>
 
-                <? $cnt++;
+                    <? $bid=0;
+                    if(is_array($group))
+                        foreach ($group as $banner) : ?>
+
+                    <div class="row-banner banner" data-bid="<?=$bid?>" >
+
+                        <div class="col-md-3" style="display: flex;">
+                            <button type="button" style="margin-top: 0px;" data-sector="<?=$key?>" class="btn btn-danger del-banner btn-xs"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
+                            <textarea placeholder="Title" rows=1 class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][title]"><?=$banner['title'];?></textarea>
+                            </div>
+                        <div class="col-md-3">
+                               <textarea placeholder="Div" rows=1  class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][div]"><?=$banner['div'];?></textarea>
+                            </div>
+                        <div class="col-md-4">
+                               <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][script]"><?=$banner['script'];?></textarea>
+                            </div>
+
+                        <div class="col-md-2 ">
+                        <select name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][countries][]" size="1" multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны" />
+                        <? foreach ($supportedCountries as $country) {?>
+                            <option <?=(is_array($banner['countries']) && array_search($country->getCountryCode(),$banner['countries'])!==false?' selected ':'');?> value="<?=$country->getCountryCode()?>"><?=$country->getCountryCode()?></option>
+                        <? } ?>
+                        </select>
+                        </div>
+                        </div>
+
+
+                            <?  $bid++;?>
+                        <? endforeach ?>
+                    </div>
+                <? $gid++;
                 endforeach ?>
                 </div>
+            </div>
             </div>
             <? endforeach ?>
 
@@ -42,26 +85,68 @@
 </div>
 
 <script>
+    $( document ).on( "mouseover", "select", function( event ) {
+        $(this).attr('size',3).css('z-index',10);
+    });
+    $( document ).on( "mouseleave", "select", function( event ) {
+        $(this).attr('size',1).css('z-index',1);
+    });
 
-    $( ".add-banner" ).on( "click", function( event ) {
-        var id=$(this).data('sector');
-        var cnt = $('#'+id).children().last().data('id')+1;
-        if (!cnt)
-            cnt=0;
-        $("#"+id).append('<div class="row" data-id="'+cnt+'" style="margin-bottom: 10px;">' +
-        '<div class="col-md-2" style="display: flex;">' +
-        '   <button type="button" data-sector="'+id+'" class="btn btn-danger del-banner"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
-        '   <textarea placeholder="Title" class="form-control input-md" name=banners['+id+']['+cnt+'][title]></textarea>' +
+
+    $( document ).on( "click", ".add-banner", function( event ) {
+        var sid=$(this).data('sector');
+        var gid=$(this).data('group');
+        console.log($('#group'+gid).children('.banner').last());
+        var bid = $('#'+sid+' #group'+gid).children('.banner').last().data('bid')+1;
+        if (!bid)
+            bid=0;
+
+        $("#"+sid+" #group"+gid).append('<div class="row-banner banner" data-bid="'+bid+'" class="group'+gid+'">' +
+        '<div class="col-md-3" style="display: flex;">' +
+        '   <button type="button" class="btn btn-xs btn-danger del-banner" style="margin-top: 0px;"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
+        '   <textarea placeholder="Title" rows=1 class="form-control-banner input-md" name=banners['+sid+']['+gid+']['+bid+'][title]></textarea>' +
         '</div>' +
-        '<div class="col-md-5 row">' +
-        '   <textarea placeholder="Div" class="form-control input-md" name=banners['+id+']['+cnt+'][div]></textarea>' +
+        '<div class="col-md-3">' +
+        '   <textarea placeholder="Div" rows=1 class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][div]"></textarea>' +
         '</div>' +
-        '<div class="col-md-5">' +
-        '   <textarea placeholder="Script" class="form-control input-md" name=banners['+id+']['+cnt+'][script]></textarea>' +
+        '<div class="col-md-4">' +
+        '   <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][script]"></textarea>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+        '<select size=1 name="banners['+sid+']['+gid+']['+bid+'][countries][]"  multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны">'+
+        <? foreach ($supportedCountries as $country) { ?>'<option value="<?=$country->getCountryCode()?>"><?=$country->getCountryCode()?></option>'+
+        <? } ?>
+        '</select>' +
         '</div>' +
         '</div>');
     });
 
+
+    $( ".add-group" ).on( "click", function( event ) {
+        var sid=$(this).data('sector');
+        var gid = $('#'+sid).children('.group').last().data('gid')+1;
+        if (!gid)
+            gid=0;
+
+
+        $("#"+sid).append('<div id="group'+gid+'" class="group" style="clear: both;" data-gid="'+gid+'">' +
+        '<div class="row-fluid" style="">'+
+        '<input type="hidden" name="banners['+sid+']['+gid+']" value="">'+
+        '   <button type="button" data-group="'+gid+'" data-sector="'+sid+'" class="btn btn-success add-banner btn-xs"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>' +
+        '   <button type="button" data-sector="'+sid+'" class="btn btn-danger del-group btn-xs"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
+        '<small> Группа баннеров №'+(gid+1)+'</small>'+
+        '</div>' +
+        '</div>');
+    });
+    $(document ).on( "click",".del-group", function( event ) {
+        //$(".group"+$(this).data('group')).remove();
+        $(this).parent().parent().remove();
+    });
+
+    $(document ).on( "click",".del-banner", function( event ) {
+        $(this).parent().parent().remove();
+    });
+    /*
     $(document ).on( "click",".del-banner", function( event ) {
         $(this).parent().parent().remove();
     });

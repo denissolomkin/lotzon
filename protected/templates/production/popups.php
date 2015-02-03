@@ -585,7 +585,7 @@
         <div class="bl-pp_td">
             <section class="momentum pop-box">
                 <!--div class="cs"></div-->
-                <div class="mm-bk-pg" style="/*position:relative;height:440px*/">
+                <div class="mm-bk-pg" style="position:relative;/*height:440px*/">
                     <div class="mm-bk-tl">Моментальный шанс</div>
                     <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <div style="/*bottom:0;position: absolute;*/">
@@ -594,7 +594,7 @@
                             <li class="" data-num="2"></li>
                             <li class="" data-num="3"></li>
                         </ul>
-                        <div class="block" style="display:none;margin-top: 20px;float:right;" >Загрузка...</div>
+                        <div class="block" style="display:none;" >Загрузка...</div>
                     </div>
                 </div>
             </section>

@@ -16,6 +16,23 @@
 .pointer:hover {color:#008cba;}
 .hidden {display: none;}
 .red {color:red;}
+.banners select{position: absolute;
+    padding: 1px 0 0 0;font-size: 11px;}
+.banners .btn-success{float:right;margin-top: 3px;}
+.row-banner  {padding:0;display: inline-block;}
+.row-banner.banner {margin-bottom: -8px;margin-top: 3px}
+.row-banner textarea {font-size:10px;position: absolute1;padding: 1.5px; }
+.row-banner div{padding:0;
+    vertical-align: top;}
+
+.form-control-banner {width:100%;}
+.sector {
+    background: #fff;
+    padding: 10px !important;
+    margin:5px 5px 0 0;
+    border-radius: 10px;
+}
+
 .nobr {white-space: nowrap;}
 .flex {display: inline-flex;}
 .users td img {

@@ -7,8 +7,6 @@ if($_SERVER['argv'][1] == 'dbg')
 //	ConverDB();
 //	RestoreAllTickets();
 
-	HoldLottery(null);
-//	sleep(10);
-//	LotterySimulation();
+	HoldLottery(0, $ballsStart = 0, $ballsRange = 20, $rounds = 20);
 
 }

@@ -454,9 +454,23 @@ class Players extends \AjaxController
                 }
                 #delete
                 //$resp['moment'] = 1;
-                //$resp['block'] = '<img style="" src="../tpl/img/plugs/plug.jpg">';
+
 
                 if (isset($resp['moment']) && $resp['moment']) {
+
+                    if(is_array(Config::instance()->banners['Moment']))
+                        foreach(Config::instance()->banners['Moment'] as $group) {
+                            if (is_array($group)) {
+                                shuffle($group);
+                                foreach ($group as $banner) {
+                                    if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
+                                        continue;
+                                    $resp['block'] = '<!-- ' . $banner['title'] . ' -->' . $banner['script']. $banner['div'];
+                                    break;
+                                }
+                            }
+                        }
+
                     $gameField = $chanceGames['moment']->generateGame();
                     $_SESSION['chanceGame']=array(
                         'moment' => array(
