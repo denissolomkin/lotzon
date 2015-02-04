@@ -111,10 +111,8 @@ class Player extends Entity
         return $this->_ban;
     }
 
-    public function setAgent($agent=null)
+    public function setAgent($agent)
     {
-        if(!$agent)
-            $agent=$_SERVER['HTTP_USER_AGENT'];
         $this->_agent = $agent;
 
         return $this;
@@ -1069,7 +1067,7 @@ class Player extends Entity
     {
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
-            ->setAgent();
+            ->setAgent($_SERVER['HTTP_USER_AGENT']);
 
         parent::create();
 
@@ -1160,7 +1158,7 @@ class Player extends Entity
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
             ->payReferal()
-            ->setAgent()
+            ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update();
 
         $session = new Session();
