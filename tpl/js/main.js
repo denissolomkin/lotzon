@@ -672,12 +672,12 @@ $(function(){
         if(!rulesBlock.hasClass('b-ha')){
             rulesBlock.addClass('b-ha');
             $('.rules .faq').show();
-            $('.r-add-but.show').hide();
-            $('.r-add-but.close').show();
+            $('.r-add-but.more').hide();
+            $('.r-add-but.less').show();
         }else{
             $('.rules .faq').hide();
-            $('.r-add-but.show').show();
-            $('.r-add-but.close').hide();
+            $('.r-add-but.more').show();
+            $('.r-add-but.less').hide();
             rulesBlock.removeClass('b-ha');
         };
     });
