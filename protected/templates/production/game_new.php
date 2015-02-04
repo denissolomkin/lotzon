@@ -431,8 +431,8 @@
                             <ul class="faq">
                                 <?=$staticTexts['main-faq'][$lang]->getText()?>
                             </ul>
-                            <div class="r-add-but show">ЧИТАТЬ ДАЛЬШЕ</div>
-                            <div class="r-add-but close scrollto" data-href="rules" style="display:none;">спрятать</div>
+                            <div class="r-add-but more">ЧИТАТЬ ДАЛЬШЕ</div>
+                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;">спрятать</div>
                         </div>
                     </section>
                 </div>
