@@ -37,7 +37,8 @@ class Player extends Entity
     private $_surname    = '';
     private $_secondName = '';
     private $_avatar     = '';
-    
+    private $_agent     = '';
+
     private $_phone      = '';
     private $_birthday   = '';
 
@@ -108,6 +109,20 @@ class Player extends Entity
     public function getBan()
     {
         return $this->_ban;
+    }
+
+    public function setAgent($agent=null)
+    {
+        if(!$agent)
+            $agent=$_SERVER['HTTP_USER_AGENT'];
+        $this->_agent = $agent;
+
+        return $this;
+    }
+
+    public function getAgent()
+    {
+        return $this->_agent;
     }
 
     public function setSocialEnable($socialenable)
@@ -1053,7 +1068,8 @@ class Player extends Entity
     public function create()
     {
         $psw=$this->generatePassword();
-        $this->setPassword($this->compilePassword($psw));
+        $this->setPassword($this->compilePassword($psw))
+            ->setAgent();
 
         parent::create();
 
@@ -1144,6 +1160,7 @@ class Player extends Entity
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
             ->payReferal()
+            ->setAgent()
             ->update();
 
         $session = new Session();
@@ -1265,6 +1282,7 @@ class Player extends Entity
                  ->setDateLastChance($data['DateChanced'])
                  ->setCountry($data['Country'])
                  ->setAvatar($data['Avatar'])
+                 ->setAgent($data['Agent'])
                  ->setVisibility((boolean)$data['Visible'])
                  ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
                  ->setPoints($data['Points'])
