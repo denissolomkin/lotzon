@@ -1059,12 +1059,12 @@ class Player extends Entity
     {
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
-            ->updateIp(Common::getUserIp())
             ->setAgent($_SERVER['HTTP_USER_AGENT']);
 
         parent::create();
 
-        $this->writeLog(array('action'=>'PLAYER_CREATED', 'desc'=>$this->hidePassword($psw), 'status'=>'success'));
+        $this->updateIp(Common::getUserIp())
+            ->writeLog(array('action'=>'PLAYER_CREATED', 'desc'=>$this->hidePassword($psw), 'status'=>'success'));
 
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
