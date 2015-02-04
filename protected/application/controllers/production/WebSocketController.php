@@ -858,11 +858,11 @@ class WebSocketController implements MessageComponentInterface {
                     $sth = DB::Connect()->prepare($sql);
                     $sth->execute(array(':id' => $player['pid']));
                 } catch (PDOException $e) {
-                    throw new ModelException("Error processing storage query", 500);
+                    echo $this->time(0,'ERROR')." Error processing storage query в таблице Players при получении баланса\n";
                 }
 
                 if (!$sth->rowCount()) {
-                    throw new ModelException("Player not found", 404);
+                    echo $this->time(0,'ERROR')." player #{$player['pid']} не найден в таблице Players при получении баланса\n";
                 }
 
                 $balance = $sth->fetch();

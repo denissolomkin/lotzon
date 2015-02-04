@@ -6,8 +6,30 @@ ini_set('memory_limit', -1);
 
 global $_ballsCount;    $_ballsCount    = 6;
 global $_variantsCount; $_variantsCount = 49;
+global $gameSettings;   $gameSettings   = GameSettingsModel::instance()->loadSettings();
 
 
+function timeToRunLottery()
+{
+	global $gameSettings;
+
+	if(@$_SERVER['argv'][1] == 'dbg')
+	{
+		return true;
+	}
+
+	$currentTime = strtotime(date('H:i'), 0);
+
+	foreach($gameSettings->getGameTimes() as $time)
+	{
+		if($currentTime == $time)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 
 function ApplyLotteryCombination(&$comb)
 {
@@ -140,7 +162,7 @@ function ApplyLotteryCombination(&$comb)
 				AND lt.TicketWin	> 0
 			GROUP BY
 				lt.PlayerId,
-			    lt.TicketWinCurrency";
+				lt.TicketWinCurrency";
 
 	DB::Connect()->query($SQL);
 
@@ -201,7 +223,7 @@ function SetLotteryCombination($comb)
 			VALUES
 				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
-	$SQL = sprintf($SQL,    implode(',', $comb['fields']),
+	$SQL = sprintf($SQL,	implode(',', $comb['fields']),
 							time(),
 							$Combination,
 							$WinnersCount,
@@ -527,13 +549,15 @@ function ConverDB()
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM Players LIKE "InviterId"')->fetch())
 	{
-		DB::Connect()->query('ALTER TABLE `Players` ADD `InviterId` INT(11) UNSIGNED NOT NULL DEFAULT "0" AFTER `CookieId`, ADD INDEX (`InviterId`)');
+		DB::Connect()->query('ALTER TABLE `Players` ADD `InviterId` INT(11) UNSIGNED	NOT NULL DEFAULT "0", ADD INDEX (`InviterId`)');
+		DB::Connect()->query('ALTER TABLE `Players` ADD `Agent`		VARCHAR(255)		NOT NULL');
 		DB::Connect()->query('CREATE TABLE IF NOT EXISTS `PlayerIps` (
 								`PlayerId` int(11) unsigned NOT NULL,
 								`Ip` int(11) unsigned NOT NULL,
 								`Time` int(11) unsigned NOT NULL
 							) ENGINE=InnoDB DEFAULT CHARSET=latin1');
 		DB::Connect()->query('ALTER TABLE `PlayerIps` ADD PRIMARY KEY (`PlayerId`,`Ip`), ADD KEY `PlayerId` (`PlayerId`), ADD KEY `Ip` (`Ip`)');
+
 	}
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
