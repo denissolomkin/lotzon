@@ -5,7 +5,14 @@
 
 	if(timeToRunLottery())
 	{
-		HoldLottery(0, 0, 40, 50);
+		if(!file_exists($tmp = 'lottery.lock.tmp'))
+		{
+			file_put_contents($tmp, '');
+
+			HoldLottery(0, 0, 40, 50);
+
+			unlink($tmp);
+		}
 	}
 
 /*
