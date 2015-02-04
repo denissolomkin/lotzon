@@ -37,7 +37,7 @@
                 <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
                 <th class="icon"><?=sortIcon('CountCookieId', $currentSort, $pager, $search, 'flag')?></th>
                 <th class="icon"><?=sortIcon('CountReferal', $currentSort, $pager, $search, 'user')?></th>
-                <th class="icon"><?=sortIcon('CountInvite', $currentSort, $pager, $search, 'envelope')?></th>
+                <th class="icon"><?=sortIcon('CountInviter', $currentSort, $pager, $search, 'envelope')?></th>
                 <th>Login / Ping <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th class="icon"><?=sortIcon('GamesPlayed', $currentSort, $pager, $search, 'gift')?></th>
                 <th class="icon"><?=sortIcon('TicketsFilled', $currentSort, $pager, $search, 'tags')?></th>

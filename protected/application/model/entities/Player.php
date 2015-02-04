@@ -632,19 +632,11 @@ class Player extends Entity
 
     public function setLastIP($ip)
     {
-        $update=false;
-
         if(!$this->getIP()){
             $this->setIp($ip);
-            $update=true;
         } elseif($ip!=$this->getIP()){
             $this->_lastip = $ip;
-            $update=true;
         }
-
-        if($update)
-            $this->updateIp($ip);
-
         return $this;
     }
 
@@ -1067,6 +1059,7 @@ class Player extends Entity
     {
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
+            ->updateIp(Common::getUserIp())
             ->setAgent($_SERVER['HTTP_USER_AGENT']);
 
         parent::create();
@@ -1158,6 +1151,7 @@ class Player extends Entity
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
             ->payReferal()
+            ->updateIp(Common::getUserIp())
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update();
 
