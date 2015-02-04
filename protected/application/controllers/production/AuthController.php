@@ -36,12 +36,10 @@ class AuthController extends \SlimController\SlimController {
 
             // create an instance for Hybridauth with the configuration file path as parameter
             $hybridauth = new Hybrid_Auth(Config::instance()->hybridAuth);
-
             // try to authenticate the selected $provider
             $adapter = $hybridauth->authenticate( $provider );
 
             $profile = $adapter->getUserProfile();
-
             // if okey, we will redirect to user profile page
             //    $hybridauth->redirect( "/" );
         }
@@ -116,8 +114,10 @@ class AuthController extends \SlimController\SlimController {
 
                 $player->updateSocial()
                     ->setLastIp(Common::getUserIp())
+                    ->updateIp(Common::getUserIp())
                     ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                     ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
+                    ->setAgent($_SERVER['HTTP_USER_AGENT'])
                     ->update();
 
                 $loggedIn = true;
