@@ -1,10 +1,10 @@
 <?php
 
-
+/*
 	require_once('lottery.inc.php');
 	HoldLottery(0, 0, 40, 50);
+*/
 
-/*
 message("Init");
 
 require_once('init.php');
@@ -751,5 +751,6 @@ function recompile(){
     messageLn("Total time s  -> " . number_format((microtime(true) - $gt),2) . " s.");
     exit;
 }
+/*
 
 // */
