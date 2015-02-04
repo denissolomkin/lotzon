@@ -2,7 +2,10 @@
     <form role="form" action="/private/banners" method="POST">
     <div class="row-fluid">
         <h2>Banners
-            <button type="submit" class="btn btn-success right">Сохранить</button></h2>
+            <button type="submit" class="btn btn-success right">Сохранить</button>
+            <input placeholder="Chance"  class="form-control input-md" style='display: inline-block;width:100px;margin-left: 30%;vertical-align: bottom;' name="banners[settings][chance]" value="<?=$list['settings']['chance'];?>">
+            <input type="checkbox" name='banners[settings][enabled]' <?=$list['settings']['enabled']?'checked ':'';?>data-toggle="toggle">
+        </h2>
     </div>
         <script>
         var safeColors = ['00','33','66','99','cc','ff'];
@@ -24,6 +27,7 @@
         </script>
     <div class="row-fluid" style="background: #ccc;margin-left: -15px;position: absolute;padding: 0 0 5px 5px;">
             <?
+            unset($list['settings']);
             if(is_array($list))
                 foreach ($list as $sid=>$sector) : ?>
                     <div class="col-md-3  row-banner">
@@ -60,12 +64,13 @@
                                <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][script]"><?=$banner['script'];?></textarea>
                             </div>
 
-                        <div class="col-md-2 ">
+                        <div class="col-md-2" style="display: flex;">
                         <select name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][countries][]" size="1" multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны" />
                         <? foreach ($supportedCountries as $country) {?>
                             <option <?=(is_array($banner['countries']) && array_search($country->getCountryCode(),$banner['countries'])!==false?' selected ':'');?> value="<?=$country->getCountryCode()?>"><?=$country->getCountryCode()?></option>
                         <? } ?>
                         </select>
+                            <button type="button" class="btn btn-info btn-xs view-banner right"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
                         </div>
                         </div>
 

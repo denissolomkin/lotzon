@@ -217,7 +217,7 @@ class WebSocketController implements MessageComponentInterface {
             }
 
             if (!$sth->rowCount()) {
-                throw new ModelException("Player not found", 404);
+                echo $this->time(0,'ERROR')." player #{$player['pid']} не найден в таблице Players при получении баланса\n";
             }
 
             $balance = $sth->fetch();
@@ -470,7 +470,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         */
 
-                        $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*5+count(g.Id)) R
+                        $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
                                 where g.GameId = :gameid AND g.`Date`>1422230400

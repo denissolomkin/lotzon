@@ -11,8 +11,11 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    
-    <!-- Include Summernote CSS files -->
+
+      <link href="/theme/admin/bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
+      <script src="/theme/admin/bootstrap/js/bootstrap-toggle.min.js"></script>
+
+      <!-- Include Summernote CSS files -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
     
     <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
