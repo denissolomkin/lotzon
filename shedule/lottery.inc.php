@@ -8,6 +8,27 @@ global $_ballsCount;    $_ballsCount    = 6;
 global $_variantsCount; $_variantsCount = 49;
 
 
+function timeToRunLottery()
+{
+	global $gameSettings;
+
+	if(@$_SERVER['argv'][1] == 'dbg')
+	{
+		return true;
+	}
+
+	$currentTime = strtotime(date('H:i'), 0);
+
+	foreach($gameSettings->getGameTimes() as $time)
+	{
+		if($currentTime == $time)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 
 function ApplyLotteryCombination(&$comb)
 {
@@ -140,7 +161,7 @@ function ApplyLotteryCombination(&$comb)
 				AND lt.TicketWin	> 0
 			GROUP BY
 				lt.PlayerId,
-			    lt.TicketWinCurrency";
+				lt.TicketWinCurrency";
 
 	DB::Connect()->query($SQL);
 
@@ -201,7 +222,7 @@ function SetLotteryCombination($comb)
 			VALUES
 				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
-	$SQL = sprintf($SQL,    implode(',', $comb['fields']),
+	$SQL = sprintf($SQL,	implode(',', $comb['fields']),
 							time(),
 							$Combination,
 							$WinnersCount,
