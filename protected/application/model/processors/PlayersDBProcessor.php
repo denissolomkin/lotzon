@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`)
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`)
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -25,6 +25,7 @@ class PlayersDBProcessor implements IProcessor
                 ':surname'  => $player->getSurname(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
                 ':rid'      => $player->getReferalId(),
+                ':agent'    => $player->getAgent(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
@@ -35,6 +36,7 @@ class PlayersDBProcessor implements IProcessor
         try {
             $player->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                 ->updateCookieId($player->getCookieId())
+                ->updateIp($player->getIp())
                 ->setNicName('Участник ' . $player->getId());
 
             if(!$_COOKIE[Player::PLAYERID_COOKIE])
@@ -158,7 +160,7 @@ class PlayersDBProcessor implements IProcessor
                     `DateLogined` = :dl, `Country` = :cc, `CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
-                    `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `LastIp` = :ip
+                    `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `Ip` = :ip, `LastIp` = :lip, `Agent` = :agent
                 WHERE `Id` = :id OR `Email` = :email";
 
         try {
@@ -174,6 +176,7 @@ class PlayersDBProcessor implements IProcessor
                 ':bd'       => $player->getBirthday(),
                 ':avatar'   => $player->getAvatar(),
                 ':id'       => $player->getId(),
+                ':ip'       => $player->getIp(),
                 ':ckid'     => $player->getCookieId(),
                 ':email'    => $player->getEmail(),
                 ':vis'      => (int)$player->getVisibility(),
@@ -181,7 +184,8 @@ class PlayersDBProcessor implements IProcessor
                 ':vld'      => $player->getValid(),
                 ':gp'       => $player->getGamesPlayed(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
-                ':ip'       => $player->getLastIp(),
+                ':lip'      => $player->getLastIp(),
+                ':agent'    => $player->getAgent(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
@@ -402,6 +406,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
                 (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) Referal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CookieId,
@@ -491,6 +497,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) CountNote,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) CountNotice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') CountAdBlock,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) CountMyInviter,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) CountInviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) CountMyReferal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) CountReferal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CountCookieId,
@@ -708,6 +716,24 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function updateIp(Entity $player, $ip) {
+
+        $sql = "REPLACE INTO `PlayerIps` (`PlayerId`,`Ip`,`Time`) VALUES (:plid,:ip,:tm)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid'  => $player->getId(),
+                ':ip'  => $ip,
+                ':tm'  => time(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+    }
+
     public function updateLastChance(Entity $player)
     {
         $sql = "UPDATE `Players` SET `DateChanced` = :date WHERE  `Id` = :id AND `DateChanced` < :min";
@@ -778,6 +804,23 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
 
+    }
+
+    public function updateInvite(Entity $player) {
+        $sql = "UPDATE `Players` SET `ReferalPaid` = :rfpd, `InviterId` = :invid WHERE `Id` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':rfpd'  => $player->isReferalPaid(),
+                ':invid'  => $player->getInviterId(),
+                ':plid'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
     }
 
     public function markReferalPaid(Entity $player) {

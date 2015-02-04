@@ -112,6 +112,12 @@
                                     </button>
                                 <? endif ?>
 
+                                <? if ($player->getCounters()['MyInviter']>0): ?>
+                                    <button class="btn btn-xs btn-success" onclick="window.open('users?search[where]=InviterId&search[query]=<?=$player->getId();?>')">
+                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><?=($player->getCounters()['MyInviter']>1?$player->getCounters()['MyInviter']:'');?>
+                                    </button>
+                                <? endif ?>
+
                                 <? if ($player->getCounters()['Review']>0): ?>
                                     <button class="btn btn-xs btn-success reviews-trigger" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><?=$player->getCounters()['Review']>1?$player->getCounters()['Review']:''?>
@@ -260,8 +266,6 @@
 
                             <div class="right">
 
-
-
                                 <button class="btn btn-xs btn-<?=($player->getCounters()['Note']?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><?=$player->getCounters()['Note']>1?$player->getCounters()['Note']:'';?>
                                 </button>
@@ -273,6 +277,12 @@
                                 <? if ($player->getCounters()['MyReferal']>0): ?>
                                     <button class="btn btn-xs btn-success" onclick="window.open('users?search[where]=ReferalId&search[query]=<?=$player->getId();?>')">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if ($player->getCounters()['MyInviter']>0): ?>
+                                    <button class="btn btn-xs btn-success" onclick="window.open('users?search[where]=InviterId&search[query]=<?=$player->getId();?>')">
+                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><?=($player->getCounters()['MyInviter']>1?$player->getCounters()['MyInviter']:'');?>
                                     </button>
                                 <? endif ?>
 

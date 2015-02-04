@@ -276,7 +276,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 if (!isset($this->_clients[$player->getId()]) || !($this->_clients[$player->getId()] instanceof ConnectionInterface)) {
                     echo $this->time(0, 'WARNING') . "  соединение #{$player->getId()} {$from->Session->getId()} не найдено в коллекции клиентов \n";
-                    return false;
+                    $this->_clients[$player->getId()]=$from;
                 }
 
             switch ($type) {
@@ -305,7 +305,22 @@ class WebSocketController implements MessageComponentInterface {
 
                                     if($this->checkBalance($player->getId(), $currency, $price)){
 
-                                        echo $this->time() . " " . "$name Игрок {$from->resourceId} записался в стек $currency $price\n";
+                                        if( isset($this->_players[$from->resourceId]['appName'])
+                                            && isset($this->_players[$from->resourceId]['appId'])
+                                            && isset($this->_apps[$this->_players[$from->resourceId]['appName']][$this->_players[$from->resourceId]['appId']])
+                                            && !$this->_apps[$this->_players[$from->resourceId]['appName']][$this->_players[$from->resourceId]['appId']]->_isOver){
+                                            echo $this->time(0,'ERROR') . " " . "{$this->_players[$from->resourceId]['appName']} Запуск игроком {$from->resourceId} новой игры при незавершенной {$this->_players[$from->resourceId]['appId']}\n";
+                                            return false;
+                                        }
+
+                                        if(isset($this->_players[$from->resourceId]['appName'])
+                                            && isset($this->_players[$from->resourceId]['appMode'])
+                                            && isset($this->_stack[$this->_players[$from->resourceId]['appName']][$this->_players[$from->resourceId]['appMode']][$player->getId()])){
+                                            unset($this->_stack[$this->_players[$from->resourceId]['appName']][$this->_players[$from->resourceId]['appMode']][$player->getId()]);
+                                            echo $this->time() . " " . "{$this->_players[$from->resourceId]['appName']} Игрок {$from->resourceId} выписался из стека {$this->_players[$from->resourceId]['appMode']}\n";
+                                        }
+
+                                        echo $this->time() . " " . "$name Игрок {$from->resourceId} записался в стек {$currency}-{$price}\n";
                                         $this->_stack[$name][$mode][$player->getId()] =
                                             (object) array(
                                                 'time'      =>  time(),
@@ -645,7 +660,7 @@ class WebSocketController implements MessageComponentInterface {
             echo $this->time(0,'ERROR')." "."onClose: #{$conn->resourceId} " . $conn->Session->getId() . " без Entity Player \n";
 
         if(isset($this->_clients[$conn->resourceId])){
-            if(isset($this->_players[$conn->resourceId]['appName']) && isset($this->_players[$conn->resourceId]['appMode']) ){
+            if(isset($this->_players[$conn->resourceId]['appName']) && isset($this->_players[$conn->resourceId]['appMode']) && isset($this->_stack[$this->_players[$conn->resourceId]['appName']][$this->_players[$conn->resourceId]['appMode']][$conn->resourceId])){
                 echo $this->time() . " {$this->_players[$conn->resourceId]['appName']}" . "Игрок {$conn->resourceId} удален из стека {$this->_players[$conn->resourceId]['appMode']} при выходе\n";
                 unset($this->_stack[$this->_players[$conn->resourceId]['appName']][$this->_players[$conn->resourceId]['appMode']][$conn->resourceId]);
             }
@@ -837,25 +852,23 @@ class WebSocketController implements MessageComponentInterface {
                 }
 
 
+                $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+                #echo $this->time() . " " . $sql . "\n";
+                try {
+                    $sth = DB::Connect()->prepare($sql);
+                    $sth->execute(array(':id' => $player['pid']));
+                } catch (PDOException $e) {
+                    throw new ModelException("Error processing storage query", 500);
+                }
+
+                if (!$sth->rowCount()) {
+                    throw new ModelException("Player not found", 404);
+                }
+
+                $balance = $sth->fetch();
+
                 /* send new balance to player */
                 if(isset($this->_clients[$player['pid']])) {
-                    $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
-
-                    #echo $this->time() . " " . $sql . "\n";
-
-                    try {
-                        $sth = DB::Connect()->prepare($sql);
-                        $sth->execute(array(':id' => $player['pid']));
-                    } catch (PDOException $e) {
-                        throw new ModelException("Error processing storage query", 500);
-                    }
-
-                    if (!$sth->rowCount()) {
-                        throw new ModelException("Player not found", 404);
-                    }
-
-                    $balance = $sth->fetch();
-
                     $this->_clients[$player['pid']]->send(json_encode(
                             array('path'=>'update',
                                 'res'=>array(
@@ -863,9 +876,8 @@ class WebSocketController implements MessageComponentInterface {
                                     'points'=>$balance['Points']
                                 )))
                     );
-
                 } else
-                    echo $this->time(0,'ERROR')." client #{$player['pid']} не найден в коллекции при получении баланса\n";
+                    echo $this->time(0,'ERROR')." client #{$player['pid']} не найден в коллекции при отправке баланса\n";
 
 
 /*

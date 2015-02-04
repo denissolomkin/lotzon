@@ -37,6 +37,7 @@
                 <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
                 <th class="icon"><?=sortIcon('CountCookieId', $currentSort, $pager, $search, 'flag')?></th>
                 <th class="icon"><?=sortIcon('CountReferal', $currentSort, $pager, $search, 'user')?></th>
+                <th class="icon"><?=sortIcon('CountInvite', $currentSort, $pager, $search, 'envelope')?></th>
                 <th>Login / Ping <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th class="icon"><?=sortIcon('GamesPlayed', $currentSort, $pager, $search, 'gift')?></th>
                 <th class="icon"><?=sortIcon('TicketsFilled', $currentSort, $pager, $search, 'tags')?></th>
@@ -48,7 +49,11 @@
             <tbody>
                 <? foreach ($list as $player) { ?>
                     <tr id="user<?=$player->getId()?>" class="<?=$player->getBan()?'danger':''?>">
-                        <td><?=$player->getId()?></td>
+                        <td>
+                            <div data-toggle="tooltip" data-placement="right" title="<?=$player->getAgent()?>" >
+                                <?=$player->getId()?>
+                            </div>
+                        </td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                             <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
@@ -99,10 +104,16 @@
                             <?if($player->getCounters()['Referal']>1) {?> <span class="label label-info"><?=$player->getCounters()['Referal']?></span>
                             <?}?>
                             <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
+
+                        <td <?=($player->getInviterId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getInviterId().'\';" class="pointer ':' class="')?><?=$player->getInviterId() ? "success" : "danger"?>">
+                            <?if($player->getCounters()['Inviter']>1) {?> <span class="label label-info"><?=$player->getCounters()['Inviter']?></span>
+                            <?}?>
+                            <?=$player->getInviterId() ? "#" . $player->getInviterId() : "&nbsp;"?></td>
+
                         <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>">
                             <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
-
                         </td>
+
                         <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer success" data-id='.$player->getId().'"':'class="danger"')?>><?=($player->getGamesPlayed()?:'нет')?></td>
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
                         <td>
@@ -126,6 +137,12 @@
                                 <? if ($player->getCounters()['MyReferal']>0): ?>
                                     <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=ReferalId&search[query]=<?=$player->getId();?>'">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span><?=($player->getCounters()['MyReferal']>1?$player->getCounters()['MyReferal']:'');?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if ($player->getCounters()['MyInviter']>0): ?>
+                                    <button class="btn btn-xs btn-success" onclick="location.href='?search[where]=InviterId&search[query]=<?=$player->getId();?>'">
+                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><?=($player->getCounters()['MyInviter']>1?$player->getCounters()['MyInviter']:'');?>
                                     </button>
                                 <? endif ?>
 

@@ -197,7 +197,7 @@ function SetLotteryCombination($comb)
 
 
 	$SQL = "INSERT INTO Lotteries
-				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsStat, %s)
+				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
 			VALUES
 				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
@@ -403,7 +403,7 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 
 	echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL.PHP_EOL.PHP_EOL.'==============================================='.PHP_EOL.PHP_EOL.PHP_EOL;
 
-	return $comb['combination'];
+	return $comb;
 }
 function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
 {
@@ -412,7 +412,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 			FROM
 				LotteryTickets
 			WHERE
-				LotteryId > 72
+				LotteryId BETWEEN 72 AND
 			GROUP BY
 				LotteryId
 			ORDER BY
@@ -426,7 +426,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 
 		if(isset($row))
 		{
-			$row = '<td>'.implode('</td><td>', $row).'</td>';
+			$row = "<td><b>$lid:</b></td><td>".implode('</td><td>', $row['combination'])."</td><td><b>{$row['MoneyTotal']}</b></td>";
 		}
 
 		return $row;
@@ -525,7 +525,18 @@ function ConverDB()
 
 	global $_variantsCount;
 
-	if(!DB::Connect()->query('SHOW INDEX FROM Players WHERE Key_name = "Country"')->fetch())
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Players LIKE "InviterId"')->fetch())
+	{
+		DB::Connect()->query('ALTER TABLE `Players` ADD `InviterId` INT(11) UNSIGNED NOT NULL DEFAULT "0" AFTER `CookieId`, ADD INDEX (`InviterId`)');
+		DB::Connect()->query('CREATE TABLE IF NOT EXISTS `PlayerIps` (
+								`PlayerId` int(11) unsigned NOT NULL,
+								`Ip` int(11) unsigned NOT NULL,
+								`Time` int(11) unsigned NOT NULL
+							) ENGINE=InnoDB DEFAULT CHARSET=latin1');
+		DB::Connect()->query('ALTER TABLE `PlayerIps` ADD PRIMARY KEY (`PlayerId`,`Ip`), ADD KEY `PlayerId` (`PlayerId`), ADD KEY `Ip` (`Ip`)');
+	}
+
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
 	{
 		DB::Connect()->query('ALTER TABLE Players			ADD INDEX `Country`		(`Country`)');
 		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `CountryCode`	(`CountryCode`)');
@@ -537,9 +548,9 @@ function ConverDB()
 		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
 	}
 
-	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsStat"')->fetch())
+	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
 	{
-		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsStat varchar(255) NULL');
+		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
 	}
 
 	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
