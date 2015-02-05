@@ -172,7 +172,7 @@ class Players extends \AjaxController
 
         $this->redirect('/');
     }
-
+/*
     public function loginVkAction() {
         if (!$this->request()->get('redirected')) {
             if ($ref = $this->request()->post('ref', '')) {
@@ -293,7 +293,7 @@ class Players extends \AjaxController
             $this->redirect('/');
         }
     }
-
+*/
     public function logoutAction()
     {
         //$session=new Session();
@@ -438,7 +438,8 @@ class Players extends \AjaxController
             }
 
             #delete
-            //unset($_SESSION['chanceGame']['moment']);
+            //$resp['moment'] = 1;
+            //unset($_SESSION['chanceGame']);
 
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
@@ -452,8 +453,6 @@ class Players extends \AjaxController
                         $resp['moment'] = 1;
                     }
                 }
-                #delete
-                //$resp['moment'] = 1;
 
 
                 if (isset($resp['moment']) && $resp['moment']) {
@@ -465,7 +464,67 @@ class Players extends \AjaxController
                                 foreach ($group as $banner) {
                                     if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
                                         continue;
-                                    $resp['block'] = '<!-- ' . $banner['title'] . ' -->' . $banner['script']. $banner['div'];
+
+                                    /*
+    block=(". json_encode('<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']).");
+    */
+
+if(!rand(0,(Config::instance()->banners['settings']['chance']?:1)-1) AND Config::instance()->banners['settings']['enabled'])
+$resp['block'] = $banner['div'].$banner['script'].
+    "<script>
+    $('#mchance .mm-bk-pg').css('height','450px').css('overflow','hidden');
+    $('#mchance .mm-bk-pg').children('div').last().css('position', 'absolute').css('bottom', '0');
+    moment=$('#mchance')
+        .find('.block');
+
+    moment.find('.tl').html('Загрузка...')
+        .next().css('top','200px').css('position','absolute').css('overflow','hidden');
+
+    $('#mchance').find('li').off('click').on('click', function(){
+    num=$(this).data('num');
+
+    href=moment.find('a[target=\"_blank\"]:eq('+
+        ((moment.find('a[target=\"_blank\"]').length-6)+num*2-1)
+        +')').attr('href');
+
+    moment.css('position', 'absolute').css('bottom', '-10px')
+        .parent().css('position', 'initial').css('bottom','auto');
+
+    window.setTimeout(function() {
+        moment.find('.tl').html('Реклама')
+        .parent().prev().css('margin-bottom', '380px').next().find('div:eq(1)')
+        .css('top','auto').css('position', 'initial');
+    }, 50);
+
+    window.setTimeout(function() {
+        moment.parent().find('ul').css('margin-bottom', '-50px')
+        ;
+        //moment.css('top', '150px').css('bottom', 'auto');
+        moment.css('position', 'initial');
+    }, 150);
+
+    window.setTimeout(function() {
+        moment.parent().find('ul, div').css('margin-bottom', 'auto').parent().parent().css('height','auto');
+    }, 200);
+
+    if(moment.find('a[target=\"_blank\"]').length>=3)
+        window.setTimeout(function() {
+            var win = window.open (href,'_blank');
+            win.blur();
+            window.focus();
+            return false;
+        }, 1000);
+
+    startMoment();
+});
+</script>";
+                                    else
+                                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']."
+                                        <script>
+                                        $('#mchance .mm-bk-pg').css('height', 'auto').children('div').last().css('position','initial');
+                                        startMoment();
+                                        </script>";
+
                                     break;
                                 }
                             }
