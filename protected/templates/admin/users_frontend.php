@@ -38,7 +38,8 @@
             <div class="modal-body">
                 <table class="table table-striped">
                     <thead>
-                    <th>#ID лотереи</th>
+                    <th>#ID</th>
+                    <th>Дата</th>
                     <th>Дата заполнения</th>
                     <th>№</th>
                     <th>Комбинация</th>
@@ -64,7 +65,7 @@
             <div class="modal-body">
                 <table class="table table-striped">
                     <thead>
-                        <th>#ID лотереи</th>
+                        <th>#ID</th>
                         <th>Дата</th>
                         <th>Баллов выиграно</th>
                         <th>Денег выиграно</th>                        
@@ -569,11 +570,20 @@ $('.tickets-trigger').on('click', function() {
             if (data.status == 1) {
                 var tdata = ''
                 $(data.data.tickets).each(function(id, ticket) {
+                    var tickets=[];
+                    var WinCombination=ticket.WinCombination;
+                    $(ticket.Combination).each(function(i, num) {
+                        tickets.push('<li'+($.inArray( parseInt(num), WinCombination )>=0 ? ' class="win"':'')+'>'+num+'</li>');
+                    });
+
                     tdata += '<tr>' +
                     '<td>'+(ticket.LotteryId>0?ticket.LotteryId:'')+'</td>' +
+                    '<td>'+(ticket.LotteryId>0?ticket.Date:'')+'</td>' +
                     '<td>'+ticket.DateCreated+'</td>' +
                     '<td>'+ticket.TicketNum+'</td>' +
-                    '<td><ul class="ticket-numbers"><li>'+(ticket.Combination).join('</li><li>')+'</li></ul></td>' +
+                    '<td><ul class="ticket-numbers">' +
+                    tickets.join('')+
+                    '</ul></td>' +
                     '<td>'+(ticket.LotteryId>0?ticket.TicketWin+(ticket.TicketWin>0?' '+(ticket.TicketWinCurrency=='MONEY'?currency:'баллов'):''):'')+'</td>' +
                     '</tr>'
                 });

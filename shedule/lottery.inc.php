@@ -30,14 +30,76 @@ function timeToRunLottery()
 
 	return false;
 }
-
-function ApplyLotteryCombination(&$comb)
+function PlayerLotteryWins($lid)
 {
-	if(!$comb)
-	{
-		return;
-	}
+	$time = microtime(true);
+	echo 'PlayerLotteryWins: ';
 
+	$SQL = "INSERT INTO PlayerLotteryWins
+			(
+				PlayerId,
+				MoneyWin,
+				PointsWin,
+				Date,
+				LotteryId
+			)
+			SELECT
+				lt.PlayerId,
+				SUM(IF(lt.TicketWinCurrency = 'POINT', 0, lt.TicketWin)) AS MoneyWin,
+				SUM(IF(lt.TicketWinCurrency = 'POINT', lt.TicketWin, 0)) AS PointsWin,
+				l.Date,
+				l.Id
+			FROM
+			 				Lotteries		l
+				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
+			WHERE
+					l.Id			= $lid
+				AND lt.TicketWin	> 0
+			GROUP BY
+				lt.PlayerId";
+
+	DB::Connect()->query($SQL);
+
+	echo (microtime(true) - $time).PHP_EOL;
+}
+function Transactions($lid)
+{
+	$time = microtime(true);
+	echo 'Transactions: ';
+
+	$SQL = "INSERT INTO Transactions
+			(
+				PlayerId,
+				Currency,
+				Sum,
+				Date,
+				Balance,
+				Description
+			)
+			SELECT
+				lt.PlayerId,
+				lt.TicketWinCurrency,
+				SUM(lt.TicketWin),
+				l.Date,
+				IF(lt.TicketWinCurrency = 'POINT', p.Points, p.Money),
+				'Выигрыш в розыгрыше'
+			FROM
+							Lotteries		l
+				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
+				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
+			WHERE
+					l.Id 			= $lid
+				AND lt.TicketWin	> 0
+			GROUP BY
+				lt.PlayerId,
+				lt.TicketWinCurrency";
+
+	DB::Connect()->query($SQL);
+
+	echo (microtime(true) - $time).PHP_EOL;
+}
+function ApplyLotteryTickets($comb)
+{
 	echo 'ApplyLotteryCombination'.PHP_EOL;
 
 
@@ -76,10 +138,7 @@ function ApplyLotteryCombination(&$comb)
 			SET
 				lt.TicketWin		 = ls.Prize,
   				lt.TicketWinCurrency = ls.Currency,
-  				lt.LotteryId		 = $lid,
-
-  				p.Points = IF(ls.Currency = 'POINT', ls.Prize, 0) + p.Points,
-  				p.Money	 = IF(ls.Currency = 'POINT', 0, ls.Prize) + p.Money
+  				lt.LotteryId		 = $lid
 
 			WHERE
 				lt.LotteryId = 0
@@ -99,80 +158,40 @@ function ApplyLotteryCombination(&$comb)
 	DB::Connect()->query("UPDATE LotteryTickets SET LotteryId	= $lid  WHERE LotteryId = 0");
 
 	echo (microtime(true) - $time).PHP_EOL;
-
-
-
+}
+function PlayerTotal($lid)
+{
 	$time = microtime(true);
-	echo 'PlayerLotteryWins: ';
+	echo 'PlayerTotal: ';
 
-	$SQL = "INSERT INTO PlayerLotteryWins
-			(
-				PlayerId,
-				MoneyWin,
-				PointsWin,
-				Date,
-				LotteryId
-			)
-			SELECT
-				lt.PlayerId,
-				SUM(IF(lt.TicketWinCurrency = 'POINT', 0, lt.TicketWin)) AS MoneyWin,
-				SUM(IF(lt.TicketWinCurrency = 'POINT', lt.TicketWin, 0)) AS PointsWin,
-				l.Date,
-				l.Id
-			FROM
-			 				Lotteries		l
-				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
+	$SQL = "UPDATE
+							Players				p
+				INNER JOIN	PlayerLotteryWins	plw	 ON  plw.PlayerId = p.Id
+			SET
+				p.Points = p.Points + plw.PointsWin,
+				p.Money  = p.Money  + plw.MoneyWin
+
 			WHERE
-					l.Id			= $lid
-				AND lt.TicketWin	> 0
-			GROUP BY
-				lt.PlayerId";
-
+				plw.LotteryId = $lid";
 	DB::Connect()->query($SQL);
 
 	echo (microtime(true) - $time).PHP_EOL;
+}
+function ApplyLotteryCombination(&$comb)
+{
+	if(!$comb)
+	{
+		return;
+	}
 
+	$lid = (int)$comb['id'];
 
-
-	$time = microtime(true);
-	echo 'Transactions: ';
-
-	$SQL = "INSERT INTO Transactions
-			(
-				PlayerId,
-				Currency,
-				Sum,
-				Date,
-				Balance,
-				Description
-			)
-			SELECT
-				lt.PlayerId,
-				lt.TicketWinCurrency,
-				SUM(lt.TicketWin),
-				l.Date,
-				IF(lt.TicketWinCurrency = 'POINT', p.Points, p.Money),
-				'Выигрыш в розыгрыше'
-			FROM
-							Lotteries		l
-				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
-				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
-			WHERE
-					l.Id 			= $lid
-				AND lt.TicketWin	> 0
-			GROUP BY
-				lt.PlayerId,
-				lt.TicketWinCurrency";
-
-	DB::Connect()->query($SQL);
-
-	echo (microtime(true) - $time).PHP_EOL;
-
-
+	ApplyLotteryTickets($comb);
+	PlayerLotteryWins($lid);
+	PlayerTotal($lid);
+	Transactions($lid);
 
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
-
-	echo PHP_EOL.PHP_EOL;
 
 	unset($comb['fields']);
 }
@@ -321,11 +340,11 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 		$balls);
 
 		$SQL = "SELECT
-                    SUM(IF(ls.Currency = 'POINT', ls.Prize / 100, ls.Prize) * cnt)	AS UAH,
-                    SUM(IF(ls.Currency = 'POINT', Prize, 0) * cnt)					AS PointsTotal,
-                    SUM(IF(ls.Currency = 'POINT', 0, Prize) * cnt)					AS MoneyTotal,
-                    SUM(cnt)														AS TicketsCount,
-                    MAX(stat.BallsCount)											AS BallsMax,
+                    SUM(IF(Currency = 'POINT', Prize / 100, Prize) * cnt)	AS UAH,
+                    SUM(IF(Currency = 'POINT', Prize, 0) * cnt)				AS PointsTotal,
+                    SUM(IF(Currency = 'POINT', 0, Prize) * cnt)				AS MoneyTotal,
+                    SUM(cnt)												AS TicketsCount,
+                    MAX(stat.BallsCount)									AS BallsMax,
                     %s
                 FROM
                 (   SELECT
@@ -417,7 +436,8 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 	$comb = SetLotteryCombination($comb);
 			ApplyLotteryCombination($comb);
 
-	print_r($comb);
+
+	echo PHP_EOL.PHP_EOL;   print_r($comb);
 
 //DB::Connect()->beginTransaction();
 //DB::Connect()->commit();
@@ -434,7 +454,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 			FROM
 				LotteryTickets
 			WHERE
-				LotteryId BETWEEN 72 AND
+				LotteryId BETWEEN 72 AND 79
 			GROUP BY
 				LotteryId
 			ORDER BY
