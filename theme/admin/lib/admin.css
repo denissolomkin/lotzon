@@ -95,10 +95,14 @@ min-height: 17px;
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background-color: #ffe400;
+    background-color: RGBA(200,180,50,0.2);
     float: left;
     margin-right: 2px;
     text-align: center;
     font: 12px/25px "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #000;
     margin: -5px 1px;}
+
+.ticket-numbers > li.win {
+    background-color: #ffe400;
+}
