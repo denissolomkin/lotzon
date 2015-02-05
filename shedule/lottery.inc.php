@@ -177,6 +177,23 @@ function PlayerTotal($lid)
 
 	echo (microtime(true) - $time).PHP_EOL;
 }
+function PlayerCounter($lid)
+{
+	$time = microtime(true);
+	echo 'PlayerCounter: ';
+
+	$SQL = "UPDATE
+							LotteryTickets	lt
+				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
+			SET
+				p.GamesPlayed = p.GamesPlayed + 1
+			WHERE
+				lt.LotteryId = $lid";
+
+	DB::Connect()->query($SQL);
+
+	echo (microtime(true) - $time).PHP_EOL;
+}
 function ApplyLotteryCombination(&$comb)
 {
 	if(!$comb)
@@ -190,6 +207,7 @@ function ApplyLotteryCombination(&$comb)
 	PlayerLotteryWins($lid);
 	PlayerTotal($lid);
 	Transactions($lid);
+	PlayerCounter($lid);
 
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
 
