@@ -329,7 +329,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersStats()
     {
-        $sql = "SELECT SUM(Money/Coefficient) Money, SUM(Points) Points,SUM(Online) Online, (SELECT COUNT( * )
+        $sql = "SELECT SUM(Money/(SELECT `Coefficient` FROM `LotterySettings` WHERE `CountryCode`=`Players`.`Country` LIMIT 1) ) Money, SUM(Points) Points,SUM(Online) Online, (SELECT COUNT( * )
                 FROM (
                 SELECT 1
                 FROM LotteryTickets
@@ -337,7 +337,6 @@ class PlayersDBProcessor implements IProcessor
                 GROUP BY PlayerId) t
                 ) Tickets
                 FROM `Players`
-                LEFT JOIN `LotterySettings` ON `LotterySettings`.`CountryCode`=`Players`.`Country`
                 ";
 
         try {
