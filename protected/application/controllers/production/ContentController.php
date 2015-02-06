@@ -85,11 +85,21 @@ class ContentController extends \AjaxController
                                 {$banner['div']}
                                 {$banner['script']}
                             </div>
-                            <script>setTimeout(function(){ $('#ticket_video').show();}, 600);</script>";
+                            <script>setTimeout(function(){ $('#ticket_video').show();}, 600);";
 
                         if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
-                            $resp['block'] .="<script>$('#ticket_video').children().first().css('margin-top','100px').next().css('height','100px').css('overflow','hidden'); $('.tb-loto-tl li.loto-tl_li, .ticket-random, .ticket-favorite').off().on('click',function(event){ $('#timer_videobanner{$id}').countdown({until: {$banner['title']},layout: 'осталось {snn} сек'}).parent().css('margin-top','390px').next().css('height','auto').css('overflow','hidden').css('margin-top','auto');moment=$('#ticket_video'); href=moment.find('a[target=\"_blank\"]:eq(6)').attr('href');setTimeout(function(){  $('#ticket_video').hide(); },100);setTimeout(function(){  $('#ticket_video').show(); },300); if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() {var win = window.open (href,'_blank');win.blur();window.focus();return false;}, 1000);setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*1000);activateTicket();});</script>";
+                            $resp['block'] .="$('#ticket_video').children().first().css('margin-top','100px').next().css('height','100px').css('overflow','hidden');
+$('.tb-loto-tl li.loto-tl_li, .ticket-random, .ticket-favorite').off().on('click',function(event){
+$('#timer_videobanner{$id}').countdown({until: {$banner['title']},layout: 'осталось {snn} сек'}).parent().css('margin-top','390px').next().css('height','auto').css('overflow','hidden').css('margin-top','auto');
+moment=$('#ticket_video'); href=moment.find('a[target=\"_blank\"]:eq(6)').attr('href');
+ setTimeout(function(){  $('#ticket_video').hide(); },100);setTimeout(function(){  $('#ticket_video').show(); },300);
+if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() {var win = window.open (href,'_blank');win.blur();window.focus();return false;}, 1000);
+setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*1000);activateTicket();});";
+                        else $resp['block'].="$('#timer_videobanner{$id}').countdown({until: {$banner['title']},layout: 'осталось {snn} сек'});
+                        setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*1000);
+                        activateTicket();";
 
+                        $resp['block'].="</script>";
                         break;
                     }
                 }
