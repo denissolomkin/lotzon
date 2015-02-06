@@ -329,14 +329,16 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersStats()
     {
-        $sql = "SELECT SUM(Money) Money, SUM(Points) Points,SUM(Online) Online, (SELECT COUNT( * )
+        $sql = "SELECT SUM(Money/Coefficient) Money, SUM(Points) Points,SUM(Online) Online, (SELECT COUNT( * )
                 FROM (
                 SELECT 1
                 FROM LotteryTickets
                 WHERE LotteryId =0
                 GROUP BY PlayerId) t
                 ) Tickets
-                FROM `Players`";
+                FROM `Players`
+                LEFT JOIN `LotterySettings` ON `LotterySettings`.`CountryCode`=`Players`.`Country`
+                ";
 
         try {
             $sth = DB::Connect()->prepare($sql);

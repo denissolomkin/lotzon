@@ -14,7 +14,7 @@
                 <div>
                     <span class="label label-default">
                     <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                </span><span class="label label-info"><b><?=$stats['Money']?></b></span>
+                </span><span class="label label-info"><b><?=round($stats['Money'])?></b></span>
                 </div>
                 <div>
                 <span class="label label-default">
