@@ -379,7 +379,7 @@
                         <!-- REPASSWORD FORM -->
                         <form name="rec-pass">
                             <div id="pass-rec-form">
-                                <div class="rf-txt">Укажите ваш email. Hа него будет выслан новый пароль.</div>
+                                <div class="rf-txt">Укажите ваш email. Hа него будет выслан новый пароль.<br><br><span style="color:red;font: 14px/1 Handbook-bold;;">Внимание! Имеются временные сложности с доставкой писем на MAIL.RU, LIST.RU, BK.RU, INBOX.RU. Для регистрации используйте почтовый ящик на другом сервисе.</span></div>
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
