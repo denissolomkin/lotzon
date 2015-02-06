@@ -65,12 +65,13 @@ $(function(){
     /* ==========================================================================
                             Tickets sliders functional
      ========================================================================== */
+
     $('.tb-tabs_li').on('click', function(){
         var tn = $(this).attr('data-ticket');
         var st = $('#tb-slide'+tn);
 
-        if(!$(this).hasClass('now') && !$(this).parents('ul').find('.video').length){
-
+        if(!$(this).hasClass('now') && !$('.tb-slides').find('#ticket_video').length){
+            activateTicket();
             $('.tb-tabs_li').removeClass('now').find('span').hide();
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
@@ -118,131 +119,9 @@ $(function(){
             }
         }
     });
+
     var filledTickets = [];
     var ticketCache = [];
-    $('.ticket-random').on('click', function(e) {
-        if($(e.target).hasClass('after'))return false;
-        if (!$(this).hasClass('select')) {
-            var after = $(this).find('.after');
-            after.fadeIn(300);
-            setTimeout(function(){
-                after.fadeOut(300);
-            }, 2000);
-            if($('.ticket-favorite .after:visible').length)$('.ticket-favorite .after').fadeOut(150);
-            if ($(this).parents('.tb-slide').find('li.select').length > 0) {
-                $(this).parents('.tb-slide').find('li.select').removeClass('select');
-            }
-            ticketCache = [];
-            for (var i = 1; i <= 6; ++i) {
-                ticketCache.push(randomCachedNum());
-            }
-            var button = $(this);
-            $(ticketCache).each(function(id, num) {
-                button.parents('.tb-slide').find('.loto-' + num).addClass('select');
-            });
-
-            $(this).addClass('select');
-            $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
-            $(this).parents('.tb-slide').find('.sm-but').addClass('on');
-        } else {
-            $(this).parents('.tb-slide').find('li.select').removeClass('select');
-        }
-        if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
-            $(this).parents('.tb-slide').find('.tb-ifo').show();
-            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);
-            $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
-        } else {
-
-            $(this).parents('.tb-slide').find('.tb-ifo').hide();
-            $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
-        }
-    });
-    function randomCachedNum() {
-        var rand = Math.floor((Math.random() * 49) + 1);
-        $(ticketCache).each(function(id, num) {
-            if (num == rand) {
-                rand = randomCachedNum();
-            }
-        });
-        return rand;
-    }
-    $('.ticket-favorite').on('click', function() {
-        if (!$(this).hasClass('select')) {
-            if($('.ticket-random .after:visible').length)$('.ticket-random .after').fadeOut(150);
-            if ($(this).parents('.tb-slide').find('li.select').length > 0) {
-                $(this).parents('.tb-slide').find('li.select').removeClass('select');
-            }
-            if (playerFavorite.length) {
-                for (var i = 0; i <= 5; ++i) {
-                    $(this).parents('.tb-slide').find('.loto-' + playerFavorite[i]).addClass('select');
-                }
-                $(this).addClass('select');
-                $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
-                $(this).parents('.tb-slide').find('.sm-but').addClass('on');
-            }else{
-                if($(this).find('.after:hidden').length){
-                    $(this).find('.after').fadeIn(200);
-                }else{
-                    $(this).find('.after').fadeOut(200);
-                }
-             }
-        } else {
-            $(this).parents('.tb-slide').find('li.select').removeClass('select');
-        }
-        if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
-            $(this).parents('.tb-slide').find('.tb-ifo').show();
-            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);
-            $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
-        } else {
-
-            $(this).parents('.tb-slide').find('.tb-ifo').hide();
-            $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
-        }
-    });
-
-    $('.ticket-favorite .after i').on('click', function(){
-        $('.profile .ul_li[data-link="profile-info"]').click();
-    });
-
-    $('.tb-loto-tl li.loto-tl_li').on('click', function() {
-        $('.ticket-favorite .after:visible').fadeOut(300);
-        if ($('.tb-tabs_li[data-ticket="' + $(this).parents('.tb-slide').data('ticket') + '"]').hasClass('done')) {
-            return;
-        }
-        if ($(this).parents('.tb-slide').find('.tb-loto-tl li.select').length == 6) {
-            if (!$(this).hasClass('select')) {
-                return;
-            }
-        }
-        if (!$(this).hasClass('ticket-random') && !$(this).hasClass('ticket-favorite')) {
-            if(!$(this).hasClass('select')){
-                var lim = $(this).closest('ul').find('.select').length;
-                var sel = 5 - lim;
-                if(lim < 6){
-                    $(this).addClass('select');
-                    $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
-                    if(lim == 5){
-                        $(this).closest('.tb-slide').find('.tb-ifo').hide();
-                        $(this).closest('.tb-slide').find('.sm-but').addClass('on');
-                    }
-                }
-            }else{
-                var lim = $(this).closest('ul').find('.select').length;
-                var sel = 6 - lim + 1;
-                $(this).removeClass('select');
-                $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
-                $(this).closest('.tb-slide').find('.tb-ifo').show();
-                $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
-            }
-        }else{
-            var lim = $(this).closest('ul').find('.select').length;
-            var sel = 6 - lim + 1;
-            $(this).removeClass('select');
-            $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
-            $(this).closest('.tb-slide').find('.tb-ifo').show();
-            $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
-        }
-    });
 
     $('.add-ticket').on('click', function(){
         if($(this).hasClass('on') && !$(this).data('disabled')){
@@ -1824,6 +1703,134 @@ function hideAllGames() {
     $('.game-bk .play').hide();
     $('.game-bk li').removeClass('won').removeClass('los');
     $('.game-bk li').removeClass('true').removeClass('blink');
+}
+
+function activateTicket() {
+    $('.ticket-random').off().on('click', function(e) {
+        if($(e.target).hasClass('after'))return false;
+        if (!$(this).hasClass('select')) {
+            var after = $(this).find('.after');
+            after.fadeIn(300);
+            setTimeout(function(){
+                after.fadeOut(300);
+            }, 2000);
+            if($('.ticket-favorite .after:visible').length)$('.ticket-favorite .after').fadeOut(150);
+            if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+                $(this).parents('.tb-slide').find('li.select').removeClass('select');
+            }
+            ticketCache = [];
+            for (var i = 1; i <= 6; ++i) {
+                ticketCache.push(randomCachedNum());
+            }
+            var button = $(this);
+            $(ticketCache).each(function(id, num) {
+                button.parents('.tb-slide').find('.loto-' + num).addClass('select');
+            });
+
+            $(this).addClass('select');
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
+            $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+        } else {
+            $(this).parents('.tb-slide').find('li.select').removeClass('select');
+        }
+        if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
+            $(this).parents('.tb-slide').find('.tb-ifo').show();
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);
+            $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
+        } else {
+
+            $(this).parents('.tb-slide').find('.tb-ifo').hide();
+            $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
+        }
+    });
+
+    $('.ticket-favorite').off().on('click', function() {
+        if (!$(this).hasClass('select')) {
+            if($('.ticket-random .after:visible').length)$('.ticket-random .after').fadeOut(150);
+            if ($(this).parents('.tb-slide').find('li.select').length > 0) {
+                $(this).parents('.tb-slide').find('li.select').removeClass('select');
+            }
+            if (playerFavorite.length) {
+                for (var i = 0; i <= 5; ++i) {
+                    $(this).parents('.tb-slide').find('.loto-' + playerFavorite[i]).addClass('select');
+                }
+                $(this).addClass('select');
+                $(this).parents('.tb-slide').find('.tb-ifo b').html(0);
+                $(this).parents('.tb-slide').find('.sm-but').addClass('on');
+            }else{
+                if($(this).find('.after:hidden').length){
+                    $(this).find('.after').fadeIn(200);
+                }else{
+                    $(this).find('.after').fadeOut(200);
+                }
+            }
+        } else {
+            $(this).parents('.tb-slide').find('li.select').removeClass('select');
+        }
+        if ((6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length) > 0) {
+            $(this).parents('.tb-slide').find('.tb-ifo').show();
+            $(this).parents('.tb-slide').find('.tb-ifo b').html(6 - $(this).parents('.tb-slide').find('.tb-loto-tl li.select').length);
+            $(this).parents('.tb-slide').find('.add-ticket').removeClass('on');
+        } else {
+
+            $(this).parents('.tb-slide').find('.tb-ifo').hide();
+            $(this).parents('.tb-slide').find('.add-ticket').addClass('on');
+        }
+    });
+
+    $('.ticket-favorite .after i').off().on('click', function(){
+        $('.profile .ul_li[data-link="profile-info"]').click();
+    });
+
+    $('.tb-loto-tl li.loto-tl_li').off().on('click', function () {
+        $('.ticket-favorite .after:visible').fadeOut(300);
+        if ($('.tb-tabs_li[data-ticket="' + $(this).parents('.tb-slide').data('ticket') + '"]').hasClass('done')) {
+            return;
+        }
+        if ($(this).parents('.tb-slide').find('.tb-loto-tl li.select').length == 6) {
+            if (!$(this).hasClass('select')) {
+                return;
+            }
+        }
+        if (!$(this).hasClass('ticket-random') && !$(this).hasClass('ticket-favorite')) {
+            if (!$(this).hasClass('select')) {
+                var lim = $(this).closest('ul').find('.select').length;
+                var sel = 5 - lim;
+                if (lim < 6) {
+                    $(this).addClass('select');
+                    $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+                    if (lim == 5) {
+                        $(this).closest('.tb-slide').find('.tb-ifo').hide();
+                        $(this).closest('.tb-slide').find('.sm-but').addClass('on');
+                    }
+                }
+            } else {
+                var lim = $(this).closest('ul').find('.select').length;
+                var sel = 6 - lim + 1;
+                $(this).removeClass('select');
+                $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+                $(this).closest('.tb-slide').find('.tb-ifo').show();
+                $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
+            }
+        } else {
+            var lim = $(this).closest('ul').find('.select').length;
+            var sel = 6 - lim + 1;
+            $(this).removeClass('select');
+            $(this).closest('.tb-slide').find('.tb-ifo b').html(sel);
+            $(this).closest('.tb-slide').find('.tb-ifo').show();
+            $(this).closest('.tb-slide').find('.sm-but').removeClass('on');
+        }
+    });
+};
+
+function randomCachedNum() {
+    var rand = Math.floor((Math.random() * 49) + 1);
+    $(ticketCache).each(function(id, num) {
+        if (num == rand) {
+            rand = randomCachedNum();
+        }
+    });
+    return rand;
 }
 
 String.prototype.replaceArray = function(find, replace) {

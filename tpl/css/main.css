@@ -200,9 +200,10 @@ article .wings {}
 .tickets .tb-tabs .tb-tabs_li.now > a > span {display:inline;}
 
 .tb-slide#ticket_video {position: absolute;z-index: 2;}
-.tb-slide#ticket_video .is-countdown{
-    background: #b2d0d4;
+.tb-slide#ticket_video .timer{
+    background: #b2d0d4;/*#ffe400*/
     border: 4px solid #b2d0d4;
+    color: white;
     border-radius: 4px;
     font-size: 20px;}
 
@@ -522,7 +523,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-notice .notices .n-items .n-item {margin-bottom:30px;}
 .profile-notice .notices .n-items .n-item:last-child {margin-bottom:0;}
 .profile-notice .notices .n-item .n-i-tl {font:15px/1 Handbook-bold;color:#000;margin-bottom:4px;}
-.profile-notice .notices .n-item .n-i-txt {font:13px/17px Handbook-regular;color:#000; padding-left: 80px;  width: 460px;}
+.profile-notice .notices .n-item .n-i-txt {font:14px/16px Handbook-regular;color:#000; padding-left: 80px;  width: 460px;}
 .profile-notice .notices .n-item .n-i-txt a {color:#c51e1e;}
 .profile-notice .notices .n-item .n-i-txt a:hover {text-decoration:underline;}
 .profile-notice .notices .n-item .n-i-dt{  float: left;  width: 80px;}
