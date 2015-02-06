@@ -199,6 +199,13 @@ article .wings {}
 .tickets .tb-tabs .tb-tabs_li.now > a {display:block;width:120px;border-radius:5px 5px 0 0;box-shadow:2px 2px 1px 0 rgba(0, 0, 0, 0.4);color:#4c4c4c;}
 .tickets .tb-tabs .tb-tabs_li.now > a > span {display:inline;}
 
+.tb-slide#ticket_video {position: absolute;z-index: 2;}
+.tb-slide#ticket_video .is-countdown{
+    background: #b2d0d4;
+    border: 4px solid #b2d0d4;
+    border-radius: 4px;
+    font-size: 20px;}
+
 .tb-slides {background-color:#b2d0d4;box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4), 2px 2px 1px 0 rgba(0, 0, 0, 0.4);overflow:hidden;height:420px;overflow:hidden;}
 .tb-slides .tb-sl-scroller {height:420px;overflow:hidden;width:5000px;
     -webkit-transition: all 500ms cubic-bezier(0.86, 0, 0.07, 1);;
@@ -1116,6 +1123,13 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 
 .momentum {width:570px;background-color:#fff;margin:50px auto;position:relative;}
 .momentum .mm-bk-pg {padding:35px 40px 40px 40px;}
+
+.momentum .mm-bk-pg .mm-msg {position:absolute;width:470px;height:130px;text-align: center;padding:10px;background-color: rgba(255,255,255,0.6);z-index: 5;display:table;}
+.momentum .mm-bk-pg .mm-msg .txt {width: 250px;background-color: #fff;font: 15px/18px Handbook-bold;color: #a13b3b;padding: 20px 0;margin: 0 auto;text-align: center;text-transform: uppercase;}
+.momentum .mm-msg.win .txt {color:black;}
+.momentum .mm-bk-pg .mm-msg .rld {width: 250px;background-color: #ffe400;font: 15px/45px Handbook-bold;color: #000;text-transform: uppercase;cursor: pointer;display: inline-block;}
+.momentum .mm-bk-pg .mm-msg .rld:hover {background-color:#000!important;color:#fff;}
+.momentum .mm-bk-pg .mm-msg .td {display:table-cell;vertical-align:middle;text-align:center;}
 .momentum .mm-bk-pg .mm-bk-tl {color:#2f2f2f;font:30px/1 Handbook-bold;margin-bottom:10px;text-transform:uppercase;}
 .momentum .mm-bk-pg .mm-txt {color:#404040;font:18px/19px Handbook-regular;margin-bottom:30px;}
 .momentum .mm-bk-pg .mm-tbl {list-style:none;display:table;width:100%;margin:0;padding:0;}

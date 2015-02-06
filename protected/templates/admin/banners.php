@@ -3,7 +3,6 @@
     <div class="row-fluid">
         <h2>Banners
             <button type="submit" class="btn btn-success right">Сохранить</button>
-            <input placeholder="Chance"  class="form-control input-md" style='display: inline-block;width:100px;margin-left: 30%;vertical-align: bottom;' name="banners[settings][chance]" value="<?=$list['settings']['chance'];?>">
             <input type="checkbox" name='banners[settings][enabled]' <?=$list['settings']['enabled']?'checked ':'';?>data-toggle="toggle">
         </h2>
     </div>
@@ -60,9 +59,14 @@
                         <div class="col-md-3">
                                <textarea placeholder="Div" rows=1  class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][div]"><?=$banner['div'];?></textarea>
                             </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                                <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][script]"><?=$banner['script'];?></textarea>
                             </div>
+                        <div class="col-md-1">
+                            <input placeholder="Chance"  class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][chance]" value="<?=$banner['chance'];?>">
+                        </div>
+
+
 
                         <div class="col-md-2" style="display: flex;">
                         <select name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][countries][]" size="1" multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны" />
@@ -114,9 +118,13 @@
         '<div class="col-md-3">' +
         '   <textarea placeholder="Div" rows=1 class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][div]"></textarea>' +
         '</div>' +
-        '<div class="col-md-4">' +
+        '<div class="col-md-3">' +
         '   <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][script]"></textarea>' +
         '</div>' +
+        '<div class="col-md-1">' +
+        '<input placeholder="Chance" class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][chance]">' +
+        '</div>' +
+
         '<div class="col-md-2">' +
         '<select size=1 name="banners['+sid+']['+gid+']['+bid+'][countries][]"  multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны">'+
         <? foreach ($supportedCountries as $country) { ?>'<option value="<?=$country->getCountryCode()?>"><?=$country->getCountryCode()?></option>'+

@@ -304,7 +304,7 @@
                         <!-- REGISTRATION FORM -->
                         <form name="register" data-ref="<?=$ref?>">
                             <div id="reg-form">
-                                <div class="rf-txt">Укажите Ваш email. На него будет выслана информация для завершения регистрации.</div>
+                                <div class="rf-txt">Укажите Ваш email. На него будет выслана информация для завершения регистрации.<br><br><span style="color:red;font: 14px/1 Handbook-bold;;">Внимание! Имеются временные сложности с доставкой писем на MAIL.RU, LIST.RU, BK.RU, INBOX.RU. Для регистрации используйте почтовый ящик на другом сервисе.</span></div>
                                 <div class="ib-l">
                                     <div class="ph">Ваш email</div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />

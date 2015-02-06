@@ -66,6 +66,43 @@ class ContentController extends \AjaxController
         $this->ajaxResponse($response);
     }
 
+    public function bannerAction($sector)
+    {
+        if(is_array(Config::instance()->banners[$sector]))
+            foreach(Config::instance()->banners[$sector] as $group) {
+                if (is_array($group)) {
+                    shuffle($group);
+                    foreach ($group as $banner) {
+                        if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
+                            continue;
+
+                        $resp['block'] =
+                            "<div id='ticket_video' class='tb-slide'>
+                                <div style='z-index: 5;margin-top: 390px;margin-left: 320px;position: absolute;'>
+                                    <div style='background: #b2d0d4;border: 4px solid #b2d0d4;border-radius: 4px;' id='timer_videobanner".($id=time())."'>
+                                    </div>
+                                </div>
+                                {$banner['div']}
+                                {$banner['script']}
+                            </div>
+                            <script>
+                                $('#timer_videobanner{$id}').countdown({until: {$banner['title']},layout: 'осталось {snn} сек'});
+                                setTimeout(function(){
+                                    $('#ticket_video').remove();
+                                }, ({$banner['title']}+1)*1000);
+                            </script>";
+
+                        if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
+                            $resp['block'] .=" <script>$('#ticket_video').hide();setTimeout(function(){ $('#ticket_video').show(); }, 600);</script>";
+
+                        break;
+                    }
+                }
+            }
+
+        $this->ajaxResponse($resp);
+    }
+
     public function shopAction()
     {
         $offset = (int)$this->request()->get('offset');

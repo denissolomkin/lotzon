@@ -513,6 +513,9 @@ window.setInterval(function() {
             var gw = $(".ngm-bk .rls-r-ts:visible").length ||  $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
             if (!gw) {
                 if (data.res && data.res.moment == 1) {
+                    $("#mchance ul li").removeClass();
+                    $("#mchance .mm-msg").hide();
+
                     $('.popup').hide();
                     window.setTimeout(function() {
                         $("#mchance").hide();
@@ -530,7 +533,7 @@ window.setInterval(function() {
         },
         error: function() {}
     });   
-}, 60 * 1000 );
+}, 60 * 1000);
 
 
 
@@ -541,23 +544,31 @@ function startMoment() {
             if (data.res.status == 'win') {
                 li.html($("#mchance").data('pointsWin'));
                 li.addClass('won');
+
                 window.setTimeout(function () {
-                    $("#mchance").hide();
+                 $("#mchance .mm-msg").addClass('win').show().find('.txt').text('Поздравляем, выигранные баллы зачислены на счет');
+                    //$("#mchance").hide();
                     $('.pz-ifo-bk').hide();
-                    $('.pz-rt-bk').text("Поздравляем, выигранные баллы зачислены на счет.").show().parents('#shop-items-popup').show();
-                }, 2000)
+                    //$('.pz-rt-bk').text("Поздравляем, выигранные баллы зачислены на счет.").show().parents('#shop-items-popup').show();
+                }, 1000)
+                /*
                 window.setTimeout(function () {
                     location.reload();
                 }, 4000);
+                */
             } else if (data.res.status == 'error') {
 
-                $("#mchance").hide();
+                //$("#mchance").hide();
                 $('.pz-ifo-bk').hide();
+                $("#mchance .mm-msg").show().find('.txt').text(data.res.error);
+                /*
                 $('.pz-rt-bk').text(data.res.error).show().parents('#shop-items-popup').show();
+
 
                 window.setTimeout(function () {
                     location.reload();
                 }, 4000);
+ */
             } else {
                 li.addClass('los');
 
@@ -572,13 +583,16 @@ function startMoment() {
                 var blinkInterval = window.setInterval(function () {
                     if (blinkCount == 0) {
                         window.clearInterval(blinkInterval);
-                        $("#mchance").hide();
+                        //$("#mchance").hide();
                         $('.pz-ifo-bk').hide();
-                        $('.pz-rt-bk').text("Повезет в следующий раз").show().parents('#shop-items-popup').show();
+                        $("#mchance .mm-msg").show().find('.txt').text('Повезет в следующий раз');
+                        //$('.pz-rt-bk').text("Повезет в следующий раз").show().parents('#shop-items-popup').show();
 
+                        /*
                         window.setTimeout(function () {
                             location.reload();
                         }, 4000);
+                        */
                         return;
                     }
                     blinkCount--;
@@ -586,6 +600,10 @@ function startMoment() {
                     $('li.blink').toggleClass('true');
                 }, 600);
             }
-        })
+        },
+            function (data) {
+                $("#mchance .mm-msg").show().find('.txt').text(data.message);
+            }
+        )
     });
 }

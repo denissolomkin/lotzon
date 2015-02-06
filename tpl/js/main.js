@@ -75,13 +75,31 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-           //if((filledTicketsCount==4 && !$(this).hasClass('done'))){
+
+            setTimeout(function(){
+                st.fadeIn(300);
+            }, 300);
+
            if((filledTicketsCount==bannerTicketLastNum && !$(this).hasClass('done'))){
-               st.parent().append('<div id="ticket_video" class="tb-slide"></div>');
+               $.ajax({
+                   url: "/content/banner/TicketLast",
+                   method: 'POST',
+                   async: true,
+                   dataType: 'json',
+                   success: function(data) {
+                       st.parent().prepend(data.res.block);
+                   },
+                   error: function(xhr, status, error) {
+                       console.log(xhr.responseText);
+                   }
+               });
+/*
+               st.parent().prepend('<div id="ticket_video" class="tb-slide"></div>');
                $(this).addClass('video');
                id=new Date().getTime();
                // temp=st.html();
                setTimeout(function(){
+                   st.fadeIn(300);
                    $('#ticket_video').html(
                    '<div style="z-index: 5;margin-top: 390px;margin-left: 320px;position: absolute;">'+
                        '<div style="background: #b2d0d4;border: 4px solid #b2d0d4;border-radius: 4px;" id="timer_videobanner'+id+'">'+
@@ -89,17 +107,14 @@ $(function(){
                         bannerTicketLast+
                        '<script>' +
                        '$("#timer_videobanner'+id+'").countdown({until: '+bannerTicketLastTimer+',layout: "осталось {snn} сек"});' +
-                       '</script> ').fadeIn(300)
+                       '</script> ').fadeIn(300);
                }, 300);
                setTimeout(function(){
                    $('#ticket_video').remove();
                    $('.tb-tabs_li').removeClass('video');
-                   st.fadeIn(300)
                }, (bannerTicketLastTimer+1)*1000);
+*/
             } else {
-               setTimeout(function(){
-                   st.fadeIn(300);
-               }, 300);
             }
         }
     });
@@ -1566,10 +1581,6 @@ function proccessResult()
 }
 
 
-$('#mchance').find('.cs').on('click', function() {
-    location.reload();
-});
-
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
     hideAllGames();
@@ -1684,10 +1695,6 @@ $('.game-bk .bk-bt').on('click', function() {
     window.setTimeout(function(){
         $('.ch-bk').fadeIn(200);
     }, 200); 
-});
-
-$('#mchance').find('.cs').on('click', function() {
-    location.reload();
 });
 
 <!-- NOTICES -->

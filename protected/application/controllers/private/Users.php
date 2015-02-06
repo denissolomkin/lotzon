@@ -53,7 +53,8 @@ class Users extends PrivateArea
             'playersCount' => $count,
             'pager'        => $pager,
             'currentSort'  => $sort,
-            'search'       => $search
+            'search'       => $search,
+            'stats'        => PlayersModel::instance()->getProcessor()->getPlayersStats(),
         ));
     }
 
