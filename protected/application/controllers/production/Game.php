@@ -123,10 +123,9 @@ class Game extends \AjaxController
 //                $this->session->remove('chanceGame');
                 $this->ajaxResponse($e->getMessage(), $e->getCode());                
             }
-
             $this->ajaxResponse(array('id' => $identifier, 'start' => time()));
         } else {
-            $this->ajaxResponse(array(), 0, 'INVALID_GAME');
+            $this->ajaxResponse(array(), 0, 'INVALID_GAME_START');
         }
     }
 
@@ -267,7 +266,7 @@ class Game extends \AjaxController
             }
 
         } else {
-            $this->ajaxResponse(array(), 0, 'INVALID_GAME');
+            $this->ajaxResponse(array(), 0, 'INVALID_GAME_PLAY');
         }
 
 

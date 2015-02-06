@@ -29,6 +29,63 @@
     </div>
 </div>
 
+<div class="modal fade" id="tree" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 95%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Дерево связей</h4>
+            </div>
+            <div class="modal-body">
+                <!--
+                We will create a family tree using just CSS(3)
+                The markup will be simple nested lists
+                -->
+                <div class="tree">
+                    <ul>
+                        <li>
+                            <a href="#">Parent</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Child</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Grand Child</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Child</a>
+                                    <ul>
+                                        <li><a href="#">Grand Child</a></li>
+                                        <li>
+                                            <a href="#">Grand Child</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="#">Great Grand Child</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Great Grand Child</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Great Grand Child</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Grand Child</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="tickets-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1009,7 +1066,17 @@ $('.ban-trigger').on('click', function() {
 
 });
 
-/* END DELETE BLOCK */
+/* TREE */
+$('.tree-trigger').on('click', function() {
+
+    $("#tree").modal();
+    $("#tree").find('.cls').off('click').on('click', function() {
+        $("#tree").modal('hide');
+    });
+
+});
+
+/* END TREE BLOCK */
 
 /* DELETE USER BLOCK */
 $('.delete-trigger').on('click', function() {

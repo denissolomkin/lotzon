@@ -584,11 +584,17 @@
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="momentum pop-box">
-                <!--div class="cs"></div-->
+                <div class="cs" onclick="location.reload();"></div>
                 <div class="mm-bk-pg" style="position:relative;/*height:440px*/">
                     <div class="mm-bk-tl">Моментальный шанс</div>
                     <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
                     <div style="/*bottom:0;position: absolute;*/">
+                        <div class="mm-msg">
+                            <div class="td">
+                                <div class="txt">Поздравляем, баллы зачислены на Ваш баланс</div>
+                                <!--div class="rld" onclick="location.reload();">обновить страницу</div-->
+                            </div>
+                        </div>
                         <ul class="mm-tbl" style="position: relative;">
                             <li class="" data-num="1"></li>
                             <li class="" data-num="2"></li>

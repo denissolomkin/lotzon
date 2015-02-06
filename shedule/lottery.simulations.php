@@ -1,7 +1,46 @@
 <?php
 
+if(!file_exists($tmp = 'lottery.fix.night.95.tmp'))
+{
+	echo $tmp.PHP_EOL;
+
+	file_put_contents($tmp, '');
+
+	require_once('lottery.inc.php');
+
+	$lid = 95;
+
+	$SQL = "UPDATE
+				LotteryTickets  lt
+			SET
+				lt.TicketWin = 0,
+				lt.TicketWinCurrency = ''
+			WHERE
+					lt.LotteryId = $lid
+				AND lt.B6	IS NULL
+				AND lt.B16	IS NULL
+				AND lt.B26	IS NULL
+				AND lt.B31	IS NULL
+				AND lt.B37	IS NULL
+				AND lt.B43	IS NULL";
+
+	DB::Connect()->query($SQL);
+
+	$SQL = "UPDATE
+							LotteryTickets	lt
+				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
+			SET
+				p.GamesPlayed = p.GamesPlayed + 1
+			WHERE
+				lt.LotteryId >= $lid";
+
+	DB::Connect()->query($SQL);
+}
+
 if(!file_exists($tmp = 'lottery.fix.95.tmp'))
 {
+	echo $tmp.PHP_EOL;
+
 	file_put_contents($tmp, '');
 
 	require_once('lottery.inc.php');

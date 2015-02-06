@@ -1,19 +1,37 @@
 
-<div class="container-fluid">
+<div class="container-fluid users">
 
     <div class="row-fluid">
         <h2>
-            Пользователи (<?=$playersCount?>)<?$stats=PlayersModel::instance()->getProcessor()->getPlayersStats();?>
+            Пользователи (<?=$playersCount?>)
             <div class="flex"><?=($search['query']?'<button class="btn btn-md btn-success" onclick="history.back();"><i class="glyphicon glyphicon-arrow-left"></i></button>':'');?>
                 <button class="btn btn-md btn-info search-users"><i class="glyphicon glyphicon-search"></i></button>
             </div>
             <div class="right">
                 <!--button class="btn btn-md btn-info filter-trigger" data-id="0"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button--><button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+            </div><small><small>
+            <div class="right" id="wsStatus" style="margin: 10px ;">
+                <div>
+                    <span class="label label-default">
+                    <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                </span><span class="label label-info"><b><?=$stats['Money']?></b></span>
+                </div>
+                <div>
+                <span class="label label-default">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                </span><span class="label label-info"><b><?=$stats['Points']?></b></span>
+                </div>
+                <div class="pointer" onclick="location.href='?search[where]=Online&search[query]=1'">
+                <span>
+                    <span class="label label-md label-default"><i class="online" style="vertical-align: top;margin: 0 2px;">•</i></span></span><span class="label label-info"><b><?=$stats['Online']?></b></span>
+                </div>
+                <div>
+                <span class="label label-default">
+                    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                </span><span class="label label-info"><b><?=$stats['Tickets']?></b></span>
+                </div>
             </div>
-            <div class="right" id="wsStatus" style="margin: -3px 50px 0 0;">
-               <span class="pointer" onclick="location.href='?search[where]=Online&search[query]=1'"><span class="label label-md label-default">онлайн</span><span class="label label-info"><b><?=$stats['Online']?></b></span></span>
-                <span class="label label-default">билеты</span><span class="label label-info"><b><?=$stats['Tickets']?></b></span>
-            </div>
+                    </small></small>
         </h2>
     </div>  <hr/>
     <? if ($pager['pages'] > 1) {?>
@@ -54,7 +72,7 @@
                                 <?=$player->getId()?>
                             </div>
                         </td>
-                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
+                        <td class="tree-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                             <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                             </div>
@@ -175,6 +193,11 @@
     </div>
 </div>
 
+
+
+
+
+
 <div class="modal fade" id="ws" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -275,7 +298,8 @@ WebSocketAjaxClient();
 
 function WebSocketStatus(action, data) {
     if(data.res.message.players)
-        $("#wsStatus").html('<small><small>'+$("#wsStatus").html()+' <span onclick="WebSocketAjaxClient(\'players\');" class="label pointer label-default">вебсокет</span><span onclick="WebSocketAjaxClient(\'players\');" class="label label-info"><b>'+data.res.message.players+'</b></span>  <span onclick="WebSocketAjaxClient(\'games\');" class="label pointer label-default">игр</span><span onclick="WebSocketAjaxClient(\'games\');" class="label label-info"><b>'+data.res.message.games+'<b></span></small></small>');
+        $("#wsStatus").append(' <div class="pointer" onclick="WebSocketAjaxClient(\'players\');"><span class="label label-default"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>' +
+        '<span class="label label-info"><b>'+data.res.message.players+'</b></span>  </div><div class="pointer" onclick="WebSocketAjaxClient(\'games\');"><span class="label label-default"><span class="glyphicon glyphicon-tower" aria-hidden="true"></span></span><span class="label label-info"><b>'+data.res.message.games+'<b></span></div>');
     else{
         $("#ws .modal-content .modal-body").html(data.res.message);
         $("#ws").modal();

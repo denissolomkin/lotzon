@@ -329,7 +329,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersStats()
     {
-        $sql = "SELECT SUM(Online) Online, (SELECT COUNT( * )
+        $sql = "SELECT SUM(Money) Money, SUM(Points) Points,SUM(Online) Online, (SELECT COUNT( * )
                 FROM (
                 SELECT 1
                 FROM LotteryTickets
