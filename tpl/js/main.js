@@ -66,6 +66,7 @@ $(function(){
                             Tickets sliders functional
      ========================================================================== */
 
+    activateTicket();
     $('.tb-tabs_li').on('click', function(){
         var tn = $(this).attr('data-ticket');
         var st = $('#tb-slide'+tn);
