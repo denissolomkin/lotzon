@@ -470,7 +470,7 @@ class Players extends \AjaxController
     block=(". json_encode('<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']).");
     */
 
-if(!rand(0,(Config::instance()->banners['settings']['chance']?:1)-1) AND Config::instance()->banners['settings']['enabled'])
+if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
 $resp['block'] = $banner['div'].$banner['script'].
     "<script>
     $('#mchance .mm-bk-pg').css('height','450px').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
