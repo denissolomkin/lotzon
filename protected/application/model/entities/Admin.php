@@ -26,6 +26,7 @@ class Admin extends Entity
         'Контент'=>array('icon'=>'th-list',
             'pages'=>array(
                 'banners'=>array('icon'=>'picture','name'=>'Баннеры'),
+                'images'=>array('icon'=>'picture','name'=>'Изображения'),
                 'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
                 'news'=>array('icon'=>'calendar','name'=>'Новости'),
                 'shop'=>array('icon'=>'shopping-cart','name'=>'Товары'),

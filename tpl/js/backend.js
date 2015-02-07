@@ -519,6 +519,7 @@ window.setInterval(function() {
                     $('.popup').hide();
                     window.setTimeout(function() {
                         $("#mchance").hide();
+                        location.reload();
                     }, 3 * 60000 );
                     $("#mchance").show();
 
