@@ -80,8 +80,6 @@ class News extends PrivateArea
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
-
-                break;
             }   
 
             die(json_encode($response));

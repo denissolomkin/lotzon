@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="form-inline" style="margin-top:10px;">
-                    <button class="btn btn-md btn-default" onclick="$('#slct-cntrs').show();$(this).hide();"><i class="glyphicon glyphicons-globe-af"></i>Страны</button>
+                    <button class="btn btn-md btn-default" onclick="$('#slct-cntrs').show();$(this).hide();"><i class="glyphicon glyphicon-globe"></i> Страны</button>
                 <select style="width:100%;display: none;" id="slct-cntrs" name="countries" size="3" multiple="multiple" class="form-control input-sm" value="" placeholder="Страны" />
                     <? foreach ($supportedCountries as $country) { ?>
                         <option value="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></option>
@@ -243,7 +243,7 @@
     $('.save').on('click', function() {
         var form = $(this).parents('.thumbnail');
 
-        currentItem.image = $(form).find('img#image').data('image');
+        currentItem.image = $(form).find('img#image').attr('data-image');
         currentItem.title = $(form).find('input[name="title"]').val();
         currentItem.price = $(form).find('input[name="price"]').val();
         currentItem.quantity = $(form).find('input[name="quantity"]').val();

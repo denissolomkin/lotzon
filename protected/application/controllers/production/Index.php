@@ -99,6 +99,7 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
+
         $seo = SEOModel::instance()->getSEOSettings();
         $session = new Session();
         $session->get(Player::IDENTITY)->fetch();
@@ -109,9 +110,9 @@ class Index extends \SlimController\SlimController
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
         $currentChanceGame     = $_SESSION['chanceGame'];
 
-        //if (!Session2::connect()->get('MomentChanseLastDate') || time() - Session2::connect()->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
+        if (!$session->has('MomentChanseLastDate') || time() - $session->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
              $session->set('MomentChanseLastDate', time());
-        //}
+        }
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
