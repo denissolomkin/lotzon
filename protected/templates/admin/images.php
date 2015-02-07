@@ -48,6 +48,8 @@
                 <h4 class="modal-title" id="confirmLabel">Image Information</h4>
             </div>
             <div class="modal-body" style="overflow: overlay">
+                <div class="image">
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="row-fluid">
@@ -71,7 +73,7 @@
                 <h4 class="modal-title" id="confirmLabel">Удаление изображения</h4>
             </div>
             <div class="modal-body">
-                <p>Изображение <span id="name"></span> будет безвозвратно удалено. Вы уверены?</p>
+                    <p>Изображение <span id="name"></span> будет безвозвратно удалено. Вы уверены?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger rm">Да</button>
@@ -88,7 +90,6 @@ $(document).on('click','.image-trigger', function() {
 
     $("#image").modal();
     var size=$(this).children(':eq(1)').html().split('x');
-    console.log(size);
 
     tdata=$(this).find('img').clone().removeAttr('style').css('width',size[0]).css('height',size[1]);
 
@@ -97,27 +98,27 @@ $(document).on('click','.image-trigger', function() {
     $("#image input#height").val(size[1]);
     $("#image input").trigger('input');
 
-    $("#image").find('.modal-body').html(tdata);
+    $("#image").find('.modal-body div').html(tdata);
     updateCode();
 
     $("#image").find('.cls').off('click').on('click', function () {
         $("#image").modal('hide');
     });
 
-    $('#image img').off().on('click', initUpload);
+    $('#image .modal-body div').off().on('click', initUpload);
 });
 
-$("#image input#width").on('input', function(){ $("#image .modal-body img").css('width',$(this).val()); });
-$("#image input#height").on('input', function(){ $("#image .modal-body img").css('height',$(this).val()); });
+$("#image input#width").on('input', function(){ $("#image .modal-body div img").css('width',$(this).val()); });
+$("#image input#height").on('input', function(){ $("#image .modal-body div img").css('height',$(this).val()); });
 $("#image input").on('input', updateCode);
 $('.upload, #image img').on('click', initUpload);
 
-function updateCode() { $("#image textarea").text(($("#image input").val()?'<a target="_blank" href="'+$("#image input").val()+'">':'')+$("#image .modal-body").html()+($("#image input").val()?'</a>':'')); }
+function updateCode() { $("#image textarea").text(($("#image input").val()?'<a target="_blank" href="'+$("#image input").val()+'">':'')+$("#image .modal-body div").html()+($("#image input").val()?'</a>':'')); }
 function initUpload() {
 
     // create form
     var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-    var image = $(this);
+    var image = $(this).find('img');
     var input = form.find('input[type="file"]').damnUploader({
         url: '/private/images?folder=<?=$curDir?>',
         fieldName: 'image',
@@ -126,8 +127,13 @@ function initUpload() {
 
     input.off('du.add').on('du.add', function(e) {
         e.uploadItem.completeCallback = function(succ, data, status) {
-            if(image.parent().prev().find('h4').text()) {
+            if(image.parent().parent().prev().find('h4').text()) {
                 image.attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/' + data.imageWebPath + "?" + (new Date().getTime()));
+                $("img[src^=\"http://<?=$_SERVER['SERVER_NAME']?>/"+data.imageWebPath+"\"]").
+                    attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/' + data.imageWebPath + "?" + (new Date().getTime())).
+                    parent().find('.size').
+                    text(data.imageWidth+'x'+data.imageHeight);
+
                 $("#image .modal-body img").css('height', data.imageHeight).css('width', data.imageWidth);
                 $("#image input#width").val(data.imageWidth);
                 $("#image input#height").val(data.imageHeight);
@@ -146,7 +152,7 @@ function initUpload() {
         };
 
         e.uploadItem.progressCallback = function(perc) {}
-        e.uploadItem.addPostData('name', image.parent().prev().find('h4').text());
+        e.uploadItem.addPostData('name', image.parent().parent().prev().find('h4').text());
         e.uploadItem.upload();
     });
 
@@ -171,7 +177,7 @@ $('.delete-trigger').on('click', function() {
             success: function(data) {
                 if (data.status == 1) {
                     $(".delete, #image").modal('hide');
-                    $("img[src=\"http://<?=$_SERVER['SERVER_NAME']?>/"+data.delete+"\"]").parent().remove();
+                    $(".images img[src^=\"http://<?=$_SERVER['SERVER_NAME']?>/"+data.delete+"\"]").parent().remove();
                     alert('Изображение удалено');
                 } else {
                     alert(data.message);
