@@ -147,7 +147,7 @@ opacity: 0.5;
 #image .modal-body div:hover::after {
     position: absolute;
     margin: -20px;
-    padding: 10px;
+    padding: 10px 12px;
     color: black;
     left: 50%;
     top: 50%;
