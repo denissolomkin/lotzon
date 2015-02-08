@@ -639,7 +639,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="color:red;">Внимание! Приглашение участников через CAP и похожие системы, категорически запрещено.</span></div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br>(<span style="font-weight:bold;color:red;">Внимание!</span> Приглашение участников через CAP и похожие системы, категорически запрещено.)</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
