@@ -639,7 +639,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов</div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="color:red;">Внимание! Приглашение участников через CAP и похожие системы, категорически запрещено.</span></div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -1296,7 +1296,7 @@
         var appMode   = 0;
         var appModes = {
             'WhoMore': ['POINT-0', 'POINT-25', 'POINT-50', 'POINT-75', 'POINT-100', 'MONEY-0.1', 'MONEY-0.25', 'MONEY-0.5', 'MONEY-1'],
-            'SeaBattle': ['POINT-0', 'POINT-25', 'MONEY-0.1']
+            'SeaBattle': ['POINT-0', 'POINT-25', 'POINT-50', 'POINT-75', 'POINT-100', 'MONEY-0.1', 'MONEY-0.25', 'MONEY-0.5', 'MONEY-1']
         };
         var unreadNotices = <?=$notices?>;
         var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
