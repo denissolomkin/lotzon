@@ -25,18 +25,13 @@
 
         <div class="pointer " data-image='' style='display:inline-table;position: relative;margin:5px;'>
             <img src="/theme/admin/img/photo-icon-plus.png" class="upload" alt="click to upload" style="cursor:pointer;">
-        </div>
-
-
-        <? $new=true;
-        foreach ($images as $image) : ?>
-        <?=$image['size'][1]>500 && $new?'<br>'.($new=false):''?>
-        <div class="pointer image-trigger">
+        </div><? $new=true;
+        foreach ($images as $image) : ?><?=$image['size'][1]>500 && $new?'<br>'.($new=false):''
+            ?><div class="pointer image-trigger">
             <div class="name"><?=$image['name']?></div>
             <?=($image['size']?"<div class='size'>{$image['size'][0]}x{$image['size'][1]}</div>":"")?>
             <img src="http://<?=$_SERVER['SERVER_NAME'].$webDir?><?=$image['name']?>" style='<?=$image['size'][1]>400?'max-height: 300px':''?>'/>
-        </div>
-        <? endforeach;?>
+        </div><? endforeach;?>
     </div>
 </div>
 

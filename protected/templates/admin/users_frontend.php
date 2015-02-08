@@ -86,7 +86,7 @@
 </div>
 
 
-<div class="modal fade" id="tickets-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="tickets-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,7 +113,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="stats-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="stats-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,7 +139,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="logs-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="logs-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -165,7 +165,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="transactions-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="transactions-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -216,7 +216,7 @@
 </div>
 
 
-<div class="modal fade" id="orders-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="orders-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -266,7 +266,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="remove-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="remove-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -293,7 +293,7 @@
 </div>
 
 
-<div class="modal fade" id="filter-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="filter-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -321,7 +321,7 @@
 </div>
 
 
-<div class="modal fade" id="notices-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="notices-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -351,7 +351,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="add-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -386,7 +386,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="delete-user" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="delete-user" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -406,7 +406,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="remove-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="remove-notice" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -425,7 +425,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="reviews-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="reviews-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -450,7 +450,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="notes-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="notes-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -481,7 +481,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-note" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="add-note" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -511,7 +511,7 @@
 </div>
 
 
-<div class="modal fade" id="remove-note" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="remove-note" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -530,7 +530,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade users" id="add-transaction" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -1215,7 +1215,7 @@
             ======================================================================-->
         <footer>
             <section class="fr-br-bk">
-                <img src="/tpl/img/baners/goroskop.jpg" width="1280" height="257" /-->
+                <img src="/tpl/img/baners/goroskop.jpg?<?=time()?>" width="1280" height="257" /-->
             </section>
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Условия участия</a>
