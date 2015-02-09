@@ -483,7 +483,7 @@ $resp['block'] = $banner['div'].$banner['script'].
     window.setTimeout(function() {moment.find('.tl').html('Реклама').parent().prev().css('margin-bottom', '380px').next().find('div:eq(1)').css('top','auto').css('position', 'initial');}, 50);
     window.setTimeout(function() {moment.css('position', 'initial').parent().find('ul').css('margin-bottom', '-50px');}, 150);
     window.setTimeout(function() {moment.parent().find('ul').css('margin-bottom', 'auto').parent().parent().css('height','auto');}, 200);
-    if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() { /*var win = window.open (href,'_blank');win.blur();window.focus();*/alert(href);return false;}, 1000);
+    if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() { var win = window.open (href,'_blank');win.blur();window.focus();return false;}, 1000);
     startMoment();});
 </script>";
                                     else
