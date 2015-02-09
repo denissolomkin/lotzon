@@ -6,24 +6,15 @@ class TicketsDBProcessor implements IProcessor
     public function create(Entity $ticket)
     {
 		$comb	= $ticket->getCombination();
+		$filds	= array();
 
-		if(DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
+		foreach((array)$comb as $ball)
 		{
-			$filds	= array();
-
-			foreach((array)$comb as $ball)
-			{
-				$filds[]= 'B'.((int)$ball);
-			}
-
-			$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`, ".implode(',', $filds).")
-					VALUES							(:playerid, :combination, :dc, :tn, 1, 1, 1, 1, 1, 1)";
+			$filds[]= 'B'.((int)$ball);
 		}
-		else
-		{
-			$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`)
-					VALUES							(:playerid, :combination, :dc, :tn)";
-		}
+
+		$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`, ".implode(',', $filds).")
+				VALUES							(:playerid, :combination, :dc, :tn, 1, 1, 1, 1, 1, 1)";
 
 		try {
             DB::Connect()->prepare($sql)->execute(array(
