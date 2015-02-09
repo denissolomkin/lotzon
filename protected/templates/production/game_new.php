@@ -639,17 +639,16 @@
                                                 'width=500,height=436');
                                                 return false;"
                                              class="tw"></a-->
-                                        <a href="javascript:void(0)" 
+                                        <!--a href="javascript:void(0)"
                                             onclick="
                                                 window.open(
                                                 'https://plus.google.com/share?url=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>', 
                                                 'googleplus-share-dialog', 
                                                 'width=500,height=436'); 
                                                 return false;"
-                                                class="gp"></a>
+                                                class="gp"></a-->
                                         <!--div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div-->
-                                        <a href="javascript:void(0)" class="vk vk-share"></a>
-                                        <a  href="javascript:void(0)" 
+                                        <!--a  href="javascript:void(0)"
                                             onclick="
                                                 window.open(
                                                 'https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>', 
@@ -657,11 +656,12 @@
                                                 'width=626,height=436'); 
                                                 return false;" 
                                             class="fb fb-share">
-                                        </a>
+                                        </a-->
+                                        <a href="javascript:void(0)" class="vk vk-share"></a>
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br>(<span style="font-weight:bold;color:red;">Внимание!</span> Приглашение участников через CAP и похожие системы, категорически запрещено.)</div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов</div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
