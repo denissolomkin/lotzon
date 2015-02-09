@@ -128,7 +128,7 @@ class Index extends \SlimController\SlimController
         //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
 
-        if(in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
+        if(is_array(Config::instance()->blockedReferers) && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
             $metrikaDisabled=true;
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
@@ -211,7 +211,7 @@ class Index extends \SlimController\SlimController
             }
         }
 
-        if(in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
+        if(is_array(Config::instance()->blockedReferers) && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
             $metrikaDisabled=true;
 
         if($session->has('ERROR') OR $_SESSION['ERROR']){

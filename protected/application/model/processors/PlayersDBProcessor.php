@@ -26,7 +26,7 @@ class PlayersDBProcessor implements IProcessor
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
                 ':rid'      => $player->getReferalId(),
                 ':agent'    => $player->getAgent(),
-                ':referer'    => (in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers)?parse_url($_SERVER['HTTP_REFERER'])['host']:''),
+                ':referer'    => (is_array(Config::instance()->blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers)?parse_url($_SERVER['HTTP_REFERER'])['host']:''),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
