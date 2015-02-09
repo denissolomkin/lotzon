@@ -218,7 +218,6 @@ class Index extends \SlimController\SlimController
         $referer=parse_url($_SERVER['HTTP_REFERER']);
         if($referer && is_array(Config::instance()->blockedReferers) && !$session->has('REFERER') && ( ($referer['host'] && in_array(str_replace('www','',$referer['host']), Config::instance()->blockedReferers)) OR ($referer['path'] && in_array(str_replace('www','',$referer['path']), Config::instance()->blockedReferers)))){
             $session->set('REFERER',$referer['host']?:$referer['path']);
-            $this->redirect('/');
         }
 
         $this->render('production/landing', array(
