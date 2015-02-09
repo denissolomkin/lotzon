@@ -110,7 +110,7 @@ class LotteriesModelDBProcessor implements IProcessor
 
     public function getLastPlayedLottery()
     {
-        $currentMinute = strtotime(date("H:i"));
+        $currentMinute = (strtotime(date("H:i")) - 5*60);
         $sql = "SELECT * FROM `Lotteries` WHERE `Date` >= :curminute LIMIT 1";
         try {
             $sth = DB::Connect()->prepare($sql);
