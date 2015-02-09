@@ -128,6 +128,9 @@ class Index extends \SlimController\SlimController
         //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
 
+        if(in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
+            $metrikaDisabled=true;
+
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
@@ -145,6 +148,7 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->country],
             'notices'     => $notices,
             'news'        => $news,
+            'metrikaDisabled' => $metrikaDisabled,
             'reviews'     => $reviews,
             'player'      => $session->get(Player::IDENTITY),
             'tickets'     => $tickets,
@@ -207,6 +211,9 @@ class Index extends \SlimController\SlimController
             }
         }
 
+        if(in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
+            $metrikaDisabled=true;
+
         if($session->has('ERROR') OR $_SESSION['ERROR']){
             $error=$session->get('ERROR')?:$_SESSION['ERROR'];
             $session->remove('ERROR');unset($_SESSION['ERROR']);
@@ -225,6 +232,7 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->country],            
             'layout'      => false,
             'seo' => $seo,
+            'metrikaDisabled' => $metrikaDisabled,
             'comments'    => $comments,
             'lastLottery' => $lastLottery,
             'ref'         => $this->ref,

@@ -108,7 +108,11 @@
 
 
                         <td class="country"><?=$player->getCountry()?></td>
-                        <td class="nobr"><?=$player->getDateRegistered('d.m.Y H:i')?></td>
+                        <td class="nobr<?=($player->getReferer()?' danger':'')?>">
+                            <?if($player->getReferer()) {?><div data-toggle="tooltip" data-placement="right" title="<?=$player->getReferer()?>" class=""><span class="label label-danger">!</span><?}?>
+                            <?=$player->getDateRegistered('d.m.Y H:i')?>
+                                <?if($player->getReferer()) {?></div><?}?>
+                        </td>
                         <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr div-ips">
                             <? if($player->getCounters()['Ip']>1) : ?>
                                 <div class="label label-danger label-ips"><?=$player->getCounters()['Ip']?></div>

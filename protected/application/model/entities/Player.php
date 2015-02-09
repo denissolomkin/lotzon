@@ -38,6 +38,7 @@ class Player extends Entity
     private $_secondName = '';
     private $_avatar     = '';
     private $_agent     = '';
+    private $_referer     = '';
 
     private $_phone      = '';
     private $_birthday   = '';
@@ -109,6 +110,18 @@ class Player extends Entity
     public function getBan()
     {
         return $this->_ban;
+    }
+
+    public function setReferer($referer)
+    {
+        $this->_referer = $referer;
+
+        return $this;
+    }
+
+    public function getReferer()
+    {
+        return $this->_referer;
     }
 
     public function setAgent($agent)
@@ -1275,6 +1288,7 @@ class Player extends Entity
                  ->setCountry($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setAgent($data['Agent'])
+                 ->setReferer($data['Referer'])
                  ->setVisibility((boolean)$data['Visible'])
                  ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
                  ->setPoints($data['Points'])
