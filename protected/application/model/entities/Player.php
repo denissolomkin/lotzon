@@ -1072,7 +1072,8 @@ class Player extends Entity
     {
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
-            ->setAgent($_SERVER['HTTP_USER_AGENT']);
+            ->setAgent($_SERVER['HTTP_USER_AGENT'])
+            ->setReferer($this->session->get('REFERER'));
 
         parent::create();
 

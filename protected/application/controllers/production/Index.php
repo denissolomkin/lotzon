@@ -128,8 +128,8 @@ class Index extends \SlimController\SlimController
         //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
 
-        if(is_array(Config::instance()->blockedReferers) && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
-            $metrikaDisabled=true;
+        if(is_array(Config::instance()->blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers) && !$session->has('REFERER'))
+            $session->set('REFERER',parse_url($_SERVER['HTTP_REFERER'])['host']);
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
@@ -148,7 +148,6 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->country],
             'notices'     => $notices,
             'news'        => $news,
-            'metrikaDisabled' => $metrikaDisabled,
             'reviews'     => $reviews,
             'player'      => $session->get(Player::IDENTITY),
             'tickets'     => $tickets,
@@ -211,14 +210,14 @@ class Index extends \SlimController\SlimController
             }
         }
 
-        if(is_array(Config::instance()->blockedReferers) && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers))
-            $metrikaDisabled=true;
-
         if($session->has('ERROR') OR $_SESSION['ERROR']){
             $error=$session->get('ERROR')?:$_SESSION['ERROR'];
             $session->remove('ERROR');unset($_SESSION['ERROR']);
         }
 
+        $referer=parse_url($_SERVER['HTTP_REFERER']);
+        if($referer && is_array(Config::instance()->blockedReferers) && !$session->has('REFERER') && ( ($referer['host'] && in_array(str_replace('www','',$referer['host']), Config::instance()->blockedReferers)) OR ($referer['path'] && in_array(str_replace('www','',$referer['path']), Config::instance()->blockedReferers))))
+            $session->set('REFERER',$referer['host']?:$referer['path']);
 
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,
@@ -232,10 +231,10 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->country],            
             'layout'      => false,
             'seo' => $seo,
-            'metrikaDisabled' => $metrikaDisabled,
             'comments'    => $comments,
             'lastLottery' => $lastLottery,
             'ref'         => $this->ref,
+            'metrikaDisabled' => $session->get('REFERER'),
         ));
     }
 
