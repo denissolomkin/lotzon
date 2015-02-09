@@ -23,9 +23,10 @@ class Blacklist extends PrivateArea
         $list['blockedIps']    = Config::instance()->blockedIps;
         // $list['blockedSites'] = Config::instance()->blockedSites;
         $list['blockedEmails'] = Config::instance()->blockedEmails;
+        $list['blockedReferers'] = Config::instance()->blockedReferers;
 
         $this->render('admin/blacklist', array(
-            'title'      => 'Запрещенные email и ip',
+            'title'      => 'Черный список',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
@@ -40,6 +41,8 @@ class Blacklist extends PrivateArea
             Config::instance()->save('blockedIps',$this->request()->post('blockedIps'));
         elseif($this->request()->post('blockedSites'))
             Config::instance()->save('blockedSites',$this->request()->post('blockedSites'));
+        elseif($this->request()->post('blockedReferers'))
+            Config::instance()->save('blockedReferers',$this->request()->post('blockedReferers'));
 
         $this->redirect('/private/blacklist');
     }
