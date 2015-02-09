@@ -34,7 +34,7 @@
         <!-- Open Graph data -->
         <meta property="og:title" content="<?=$seo['Title']?>" />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="http://www.lotzon.com/" />
+        <!--meta property="og:url" content="http://www.lotzon.com/" /-->
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
@@ -631,11 +631,33 @@
                                 <div class="rp-bk">
                                     <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
                                     <div class="rp-sl-bk">
-                                        <!--a href="javascript:void(0)" class="tw"></a>
-                                        <a href="javascript:void(0)" class="gp"></a>
-                                        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div-->
+                                        <!--a href="javascript:void(0)" 
+                                            onclick="
+                                                window.open(
+                                                'http://twitter.com/share?url=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>', 
+                                                'twitter-share-dialog', 
+                                                'width=500,height=436');
+                                                return false;"
+                                             class="tw"></a-->
+                                        <a href="javascript:void(0)" 
+                                            onclick="
+                                                window.open(
+                                                'https://plus.google.com/share?url=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>', 
+                                                'googleplus-share-dialog', 
+                                                'width=500,height=436'); 
+                                                return false;"
+                                                class="gp"></a>
+                                        <!--div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div-->
                                         <a href="javascript:void(0)" class="vk vk-share"></a>
-                                        <!--a href="javascript:void(0)" class="fb fb-share"></a-->
+                                        <a  href="javascript:void(0)" 
+                                            onclick="
+                                                window.open(
+                                                'https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>', 
+                                                'facebook-share-dialog', 
+                                                'width=626,height=436'); 
+                                                return false;" 
+                                            class="fb fb-share">
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
