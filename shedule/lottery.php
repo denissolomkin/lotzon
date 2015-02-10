@@ -1,6 +1,6 @@
 <?php
 
-
+/*
 	require_once('lottery.inc.php');
 
 	if(timeToRunLottery())
@@ -14,8 +14,7 @@
 			unlink($tmp);
 		}
 	}
-
-/*
+*/
 message("Init");
 
 require_once('init.php');
@@ -427,7 +426,7 @@ function releaseLock()
 {
     global $lockFile;
 
-    unlink($lockFile);
+//    unlink($lockFile);
 }
 
 function isLocked() 
@@ -763,4 +762,5 @@ function recompile(){
     exit;
 }
 
+/*
 // */
