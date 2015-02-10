@@ -1223,6 +1223,8 @@
         </section>
         <? endif ?>
 
+
+
         <script>
             $('.ch-gm-tbl .gm-bt').click(function(){
                 $(this).closest('.ch-bk').fadeOut(200);
@@ -1231,6 +1233,22 @@
                 }, 200);
             });
         </script>
+
+
+<? /*
+        <!--=========================================================================
+                                    REPORT POPUP CODE
+        ==========================================================================-->
+        <div class="" style="width:290px;height:140px;background-color: #ffe51c;margin: 0 0 40px 60px;
+position:fixed;bottom: 0;" id="report-popup">
+                <div class="bl-pp_td">
+                    <section class="report-block pop-box">
+                        <div class="cs"></div>
+                    </section>
+                </div>
+        </div>
+*/ ?>
+
         </article>
         <!--=====================================================================
                                     FOOTER BLOCK
@@ -1412,6 +1430,7 @@
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
         <? endif; ?>
+
                 window.fbAsyncInit = function() {
                     FB.init({
                             appId      : 'your-app-id',
