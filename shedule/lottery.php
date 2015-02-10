@@ -18,7 +18,6 @@
 message("Init");
 
 require_once('init.php');
-require_once('lottery.inc.php');
 
 ini_set('memory_limit', -1);
 
