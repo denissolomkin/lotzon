@@ -49,7 +49,7 @@ if (isLocked()) {
 }
 
 messageLn("Start lottery");
-if (timeToRunLottery() OR 1) {
+if (timeToRunLottery()) {
     setLock();
 
     message("   Get tickets");
@@ -425,7 +425,7 @@ function releaseLock()
 {
     global $lockFile;
 
-//    unlink($lockFile);
+    unlink($lockFile);
 }
 
 function isLocked() 
