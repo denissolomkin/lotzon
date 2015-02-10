@@ -110,6 +110,24 @@ class NoticesDBProcessor implements IProcessor
         return $notices;
     }
 
+    public function getPlayerLastUnreadNotice(Entity $player)
+    {
+        $sql = "SELECT `Title` FROM `PlayerNotices` WHERE (`Date` >= :dl AND `Date` >= :do) AND (`PlayerId` = 0 OR `PlayerId` = :id) LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':dl'  => $player->getDateLastLogin(),
+                ':do'  => $player->getOnlineTime(),
+                ':id'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
+    }
+
     public function getPlayerUnreadNotices(Player $player) {
         $sql = "SELECT COUNT(*) FROM `PlayerNotices` WHERE (`Date` >= :dn AND `Date` >= :dr ) AND (`PlayerId` = 0 OR `PlayerId` = :id)";
 

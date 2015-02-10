@@ -1223,6 +1223,8 @@
         </section>
         <? endif ?>
 
+
+
         <script>
             $('.ch-gm-tbl .gm-bt').click(function(){
                 $(this).closest('.ch-bk').fadeOut(200);
@@ -1231,6 +1233,23 @@
                 }, 200);
             });
         </script>
+
+
+        <!--=========================================================================
+                                    NOTIFICATIONS POPUP CODE
+        ==========================================================================-->
+        <div class="notifications">
+            <div class="badge parent">
+                <div class="bl-pp_td">
+                    <section class="badge-block pop-box">
+                        <div class="cs"></div>
+                        <div class="title"></div>
+                        <div class="txt"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
         </article>
         <!--=====================================================================
                                     FOOTER BLOCK
@@ -1412,6 +1431,7 @@
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
         <? endif; ?>
+
                 window.fbAsyncInit = function() {
                     FB.init({
                             appId      : 'your-app-id',

@@ -22,6 +22,9 @@ class NoticesModel extends Model
         return $this->getProcessor()->getList($playerId, $date, $limit, $offset);
     }
 
+    public function getPlayerLastUnreadNotice(Player $player) {
+        return $this->getProcessor()->getPlayerLastUnreadNotice($player);
+    }
     public function getPlayerUnreadNotices(Player $player) {
         return $this->getProcessor()->getPlayerUnreadNotices($player);
     }

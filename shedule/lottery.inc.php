@@ -579,6 +579,7 @@ function RestoreTickets($lid = 0)
 }
 function ConverDB()
 {
+/*
 	$time = microtime(true);
 
 	echo PHP_EOL.'ConverDB: ';
@@ -648,7 +649,7 @@ function ConverDB()
 	}
 
 	echo (microtime(true) - $time).PHP_EOL;
-
+// */
 	return false;
 }
 

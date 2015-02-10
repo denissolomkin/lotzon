@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \ChanceGamesModel;
+use \Application, \Config, \Player, \EntityException, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -420,6 +420,16 @@ class Players extends \AjaxController
 
             $AdBlockDetected=$this->request()->get('online', null);
 
+
+            if($title=NoticesModel::instance()->getPlayerLastUnreadNotice($player))
+                $resp['notice'] = array(
+                    'name'=> 'notice',
+                    'title'=>'Уведомление',
+                    'txt'=>$title,
+                    'unread'=>NoticesModel::instance()->getPlayerUnreadNotices($player)
+                );
+
+
             if(($player->getAdBlock() && !$AdBlockDetected) || (!$player->getAdBlock() && $AdBlockDetected))
                 $player->writeLog(array('action'=>'AdBlock','desc'=>($AdBlockDetected?'ADBLOCK_DETECTED':'ADBLOCK_DISABLED'),'status'=>($AdBlockDetected?'danger':'warning')));
 
@@ -443,6 +453,22 @@ class Players extends \AjaxController
 
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
+
+                /*
+                 if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
+                    $diff=($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo());
+                    //if(($diff<5 AND !$_SESSION['timer_soon']['five']) OR ($diff<$chanceGames['moment']->getMinFrom() AND !$_SESSION['timer_soon']['start']) OR $diff<)
+                    $resp['soon'] = array(
+                        'name' => 'soon',
+                        'title' => 'Моментальный шанс',
+                        'txt' => 'Шанс будет доступен через  '.$diff.'<span id="timer_soon"></span><script>
+                    $("#timer_soon").countdown({until: ' . ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 - time()) . ',layout: "{mnn}:{snn}",
+                    onExpiry: function(){
+                    $(".notification #soon .badge-block .txt").html("Не пропустите моментальный шанс ' . ' ' .($diff>0?'в ближайшие '. $diff .($diff>4 ? 'минут':$diff>1?'минуты':$diff>0?'минуту':''):'сейчас') . '!");}
+                     })</script>',
+                    );
+                }
+                */
 
                 if ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() &&
                     $this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo() * 60 >= time()) {
@@ -512,7 +538,6 @@ $resp['block'] = $banner['div'].$banner['script'].
                 }
             }
         }
-
         $this->ajaxResponse($resp);
     }
 

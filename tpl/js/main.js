@@ -35,6 +35,22 @@ $(function(){
     $('.popup .cs').on('click', function(){
         $('.popup').fadeOut(200);
     });
+
+    $(document).on('click','.notifications .cs', function(){
+        badge=$(this).parent().parent().parent();
+        badge.fadeOut(1200);
+        setTimeout(function(){badge.remove()},1200);
+    });
+
+
+    $(document).on('click','.notifications .badge#notice div div:not(.cs)', function() {
+        $("li#profile-but").click();
+        $('section.profile .p-cnt li[data-link="profile-notice"]').click();
+        $(this).prev().prev().click();
+    });
+
+
+
     $('.popup').click(function(event) {
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;

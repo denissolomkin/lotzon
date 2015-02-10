@@ -509,26 +509,50 @@ window.setInterval(function() {
         async: true,
         dataType: 'json',
         success: function(data) {
-            // if main game screen is visible
-            var gw = $(".ngm-bk .rls-r-ts:visible").length ||  $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
-            if (!gw) {
-                if (data.res && data.res.moment == 1) {
-                    $("#mchance ul li").removeClass();
-                    $("#mchance .mm-msg").hide();
 
-                    $('.popup').hide();
-                    window.setTimeout(function() {
-                        $("#mchance").hide();
-                        location.reload();
-                    }, 3 * 60000 );
-                    $("#mchance").show();
+            if (data.res) {
+                if(data.res.moment == 1) {
+                    // if main game screen is visible
+                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+                    if (!gw) {
 
-                    startMoment();
+                        $("#mchance ul li").removeClass();
+                        $("#mchance .mm-msg").hide();
 
-                     if(data.res.block){
-                         $("#mchance").find('.block').show().html('<div class="tl">Реклама</div>'+data.res.block);
-                     }
+                        $('.popup').hide();
+                        window.setTimeout(function () {
+                            $("#mchance").hide();
+                            location.reload();
+                        }, 3 * 60000);
+                        $("#mchance").show();
 
+                        startMoment();
+
+                        if (data.res.block) {
+                            $("#mchance").find('.block').show().html('<div class="tl">Реклама</div>' + data.res.block);
+                        }
+
+                    }
+                }
+
+                if(data.res.soon) {
+                    if(!$(".notifications .badge#soon").length) {
+                        badge=$(".notifications .badge").first().clone();
+                        badge.attr('id', data.res.soon.name).fadeIn(1200).find('.title').text(data.res.soon.title).next().html(data.res.soon.txt);
+                        $(".notifications").append(badge);
+                    }
+                }
+
+                if(data.res.notice) {
+                        if(!$(".notifications .badge#notice").length) {
+                            badge=$(".notifications .badge").first().clone();
+                            badge.attr('id', data.res.notice.name).fadeIn(1200).find('.title').text(data.res.notice.title).next().html(data.res.notice.txt);
+                            $(".notifications").append(badge);
+                        } else {
+                            $(".notifications .badge#notice").fadeIn(600).find('.title').text(data.res.notice.title).next().html(data.res.notice.txt);
+                        }
+                    $("section.profile .p-cnt li[data-link='profile-info']").click();
+                    updateNotices(data.res.notice.unread);
                 }
             }
         },
