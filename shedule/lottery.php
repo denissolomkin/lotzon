@@ -42,7 +42,7 @@ $gamePrizes   = $gameSettings->getPrizes();
 messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
 
 $lockFile = dirname(__FILE__) . '/lottery.lock';
-$lockTimeout = 60 * 3;
+$lockTimeout = 60 * 5;
 
 if (isLocked()) {
     die("Locked by previous execution" . PHP_EOL);
