@@ -49,7 +49,7 @@ if (isLocked()) {
 }
 
 messageLn("Start lottery");
-if (timeToRunLottery()) {
+if (timeToRunLottery() OR 1) {
     setLock();
 
     message("   Get tickets");
