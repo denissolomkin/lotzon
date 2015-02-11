@@ -93,7 +93,6 @@ $(function(){
             $(this).addClass('now').find('span').show();
             $('.tb-slides .tb-slide').fadeOut(300);
 
-
             setTimeout(function(){
                 st.fadeIn(300);
             }, 300);
@@ -111,28 +110,6 @@ $(function(){
                        console.log(xhr.responseText);
                    }
                });
-/*
-               st.parent().prepend('<div id="ticket_video" class="tb-slide"></div>');
-               $(this).addClass('video');
-               id=new Date().getTime();
-               // temp=st.html();
-               setTimeout(function(){
-                   st.fadeIn(300);
-                   $('#ticket_video').html(
-                   '<div style="z-index: 5;margin-top: 390px;margin-left: 320px;position: absolute;">'+
-                       '<div style="background: #b2d0d4;border: 4px solid #b2d0d4;border-radius: 4px;" id="timer_videobanner'+id+'">'+
-                       '</div></div>' +
-                        bannerTicketLast+
-                       '<script>' +
-                       '$("#timer_videobanner'+id+'").countdown({until: '+bannerTicketLastTimer+',layout: "осталось {snn} сек"});' +
-                       '</script> ').fadeIn(300);
-               }, 300);
-               setTimeout(function(){
-                   $('#ticket_video').remove();
-                   $('.tb-tabs_li').removeClass('video');
-               }, (bannerTicketLastTimer+1)*1000);
-*/
-            } else {
             }
         }
     });
