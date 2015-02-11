@@ -721,10 +721,9 @@ $(function(){
         if(!$(this).hasClass('on')){
             $('.fc-nrch-bk li').removeClass('on');
             var n = $(this).find('span').text();
-            console.log(n);
             $('.fc-nbs-bk li.dis').each(function(){
                 if($(this).text() == n)$(this).removeClass('dis');
-            })
+            });
             $(this).find('span').text('');
             $(this).addClass('on');
             $('.fc-nbs-bk').fadeIn(200);
