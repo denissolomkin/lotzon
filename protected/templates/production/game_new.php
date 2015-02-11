@@ -138,6 +138,7 @@
 
                 <? echo getBanners($banners['Header'],$player,$bannerScript); ?>
 
+            </aside>
             </div>
             <div class="hr-io-bk">
                 <div id="hr-io-slider">
@@ -1256,7 +1257,7 @@
             ======================================================================-->
         <footer>
             <section class="fr-br-bk">
-                <img src="/tpl/img/baners/goroskop.jpg?<?=time()?>" width="1280" height="257" /-->
+                <img src="/tpl/img/baners/goroskop.jpg?<?=(strtotime(date("md")))?>" width="1280" height="257">
             </section>
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Условия участия</a>

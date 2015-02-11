@@ -96,7 +96,7 @@ function updateCallback(receiveData)
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
         $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+
-        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))*5+(parseInt(receiveData.res.count))):"0")+' = '+receiveData.res.count+'<b> • </b>'+
+        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))+(parseInt(receiveData.res.count))):"0")+' = '+receiveData.res.count+'<b> • </b>'+
         (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))):"0")+'');
 
 
@@ -429,7 +429,7 @@ function appSeaBattleCallback(receiveData)
                  $('.gm-pr').removeClass('move');
                  $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
-                 $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.o li.s:not(.d)').effect('pulsate',{times:10});
+                 $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.o li.s:not(.d,.k)').effect('pulsate',{times:10});
 
                  setTimeout(function(){
                      $('.msg.winner').fadeIn(200);
@@ -443,7 +443,7 @@ function appSeaBattleCallback(receiveData)
                      (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
 
                      $('.gm-pr.'+class_player).addClass('winner');
-                 }, (receiveData.res.winner==playerId?1200:2400));
+                 }, (receiveData.res.winner==playerId?1200:3600));
 
                  $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
                  $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
@@ -543,7 +543,7 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', functi
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
-    $(this).hide().next().show().children().last().addClass('active');
+    $(this).hide().next().show().children(':not([style$="display: none;"])').last().addClass('active');
     $('.ngm-bk .ngm-go').removeClass('button-disabled').attr('disabled',false);
 
     $('.prc-sel').each(function() {
@@ -551,9 +551,11 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', functi
             var mode = $(this);
             $(this).find('.prc-vl').each(function() {
                 if ($.inArray($(this).data('price'), appModes[appName])>0)
+                {
                     $(this).show();
+                }
             });
-            if(!(mode.find('.prc-vl[style$="display: block;"]').length))
+            if(!(mode.find('.prc-vl:not([style$="display: none;"])').length))
                 mode.prev().hide();
         }
     });
@@ -593,10 +595,12 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
         if( $(this).find('.prc-vl').length){
             var mode = $(this);
             $(this).find('.prc-vl').each(function() {
-                if ($.inArray($(this).data('price'), appModes[appName])>0)
-                   $(this).show();
+                if ($.inArray($(this).data('price'), appModes[appName])>0) {
+                    $(this).show();
+                }
             });
-        if(!(mode.find('.prc-vl[style$="display: block;"]').length))
+
+            if(!(mode.find('.prc-vl:not([style$="display: none;"])').length))
             mode.prev().hide();
         }
     });

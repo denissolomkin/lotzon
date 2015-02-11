@@ -14,8 +14,11 @@
 			unlink($tmp);
 		}
 	}
+
 */
-message("Init");
+
+/**/
+message(date("H:i:s").": Init");
 
 require_once('init.php');
 
@@ -761,5 +764,4 @@ function recompile(){
     exit;
 }
 
-/*
-// */
+//

@@ -112,23 +112,23 @@
                     <ul class="csh-ch-lst">
                         <li>
                             <input type="radio" name="cash" id="cards" hidden />
-                            <label for="cards">Пополнение мобильного счета</a></label>
+                            <label for="cards">Пополнение мобильного счета</label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="qiwi" hidden />
-                            <label for="qiwi">QIWI</a></label>
+                            <label for="qiwi">QIWI</label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="webmoney" hidden />
-                            <label for="webmoney">WebMoney</a></label>
+                            <label for="webmoney">WebMoney</label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="yandex" hidden />
-                            <label for="yandex">Яндекс деньги</a></label>
+                            <label for="yandex">Яндекс деньги</label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="p24" hidden />
-                            <label for="p24">Приват 24</a></label>
+                            <label for="p24">Приват 24</label>
                         </li>
                     </ul>
                     <script>
@@ -184,11 +184,11 @@
                                 <div class="ps-ch-tl">Валюта кошелька</div>
                                 <div class="ps-r">
                                     <input type="radio" name="purse" data-currency="WMR" data-title="Валюта кошелька" id="wm-r" hidden />
-                                    <label for="wm-r">R</a></label>
+                                    <label for="wm-r">R</label>
                                 </div>
                                 <div class="ps-u">
                                     <input type="radio" name="purse" data-currency="WMU" data-title="Валюта кошелька" id="wm-u" hidden />
-                                    <label for="wm-u">U</a></label>
+                                    <label for="wm-u">U</label>
                                 </div>
                             </div>
                             <div class="inp-bk">

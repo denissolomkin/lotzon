@@ -406,7 +406,7 @@ class WebSocketController implements MessageComponentInterface {
                                         FROM `Players`
                                         LEFT JOIN `PlayerGames`
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>1422230400
+                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>1422230400 AND `PlayerGames`.`Price`>0
                                         LIMIT 1";
                     #echo $this->time() . " SELECT PLAYER INFO" . "\n";
 
@@ -473,7 +473,7 @@ class WebSocketController implements MessageComponentInterface {
                         $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId = :gameid AND g.`Date`>1422230400
+                                where g.GameId = :gameid AND g.`Date`>1422230400 AND g.Price>0
                                 group by g.PlayerId
                                 having T > (SELECT (count(Id) / count(distinct(PlayerId)) / " . $class::GAME_PLAYERS . " ) FROM PlayerGames WHERE GameId = :gameid)
                                 order by R DESC, T DESC
@@ -509,7 +509,7 @@ class WebSocketController implements MessageComponentInterface {
                         'res' => array(
                             'all' => $stat['All'],
                             'count' => $stat['Count'],
-                            'win' => $stat['Win'],
+                            'win' => $stat['Win']*25,
                             // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
                             'online' =>
                                 ((isset($this->_stack[$name]) ? count($this->_stack[$name], COUNT_RECURSIVE) - count($this->_stack[$name]) : 0) +
