@@ -1340,8 +1340,8 @@
             'SeaBattle': ['POINT-0', 'POINT-25', 'POINT-50', 'POINT-75', 'POINT-100', 'MONEY-0.1', 'MONEY-0.25', 'MONEY-0.5', 'MONEY-1']
         };
         var unreadNotices = <?=$notices?>;
-        var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
-        var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;
+        /*var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
+        var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;*/
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
 
