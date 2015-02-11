@@ -68,6 +68,7 @@ class ContentController extends \AjaxController
 
     public function bannerAction($sector)
     {
+        $resp=array();
         if(is_array(Config::instance()->banners[$sector]))
             foreach(Config::instance()->banners[$sector] as $group) {
                 if (is_array($group)) {
@@ -100,7 +101,6 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                         setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*1000);
                         activateTicket();";
                         }
-
                         $resp['block'].="</script>";
                         break;
                     }
