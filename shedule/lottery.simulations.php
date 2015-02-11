@@ -1,5 +1,6 @@
 <?php
 
+/*
 if(!file_exists($tmp = 'lottery.fix.night.95.tmp'))
 {
 	echo $tmp.PHP_EOL;
@@ -78,12 +79,13 @@ if(!file_exists($tmp = 'lottery.fix.95.tmp'))
 	PlayerTotal($lid);
 	Transactions($lid);
 }
+// */
 
 if($_SERVER['argv'][1] == 'dbg')
 {
+/*
 	require_once('lottery.inc.php');
 
-/*
 	$comb = Array
 	(
 		'combination' => Array

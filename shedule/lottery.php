@@ -1,6 +1,9 @@
 <?php
 
-/*
+
+    echo PHP_EOL.'************ '.date('H:i:s').' ************'.PHP_EOL;
+
+
 	require_once('lottery.inc.php');
 
 	if(timeToRunLottery())
@@ -9,16 +12,23 @@
 		{
 			file_put_contents($tmp, '');
 
-			HoldLottery(0, 0, 40, 50);
+            HoldLotteryAndCheck(0, 40, 50);
 
-			unlink($tmp);
+            unlink($tmp);
 		}
+        else
+        {
+            echo $tmp.' is exists'.PHP_EOL;
+        }
 	}
+    else
+    {
+        echo 'timeToRunLottery is false'.PHP_EOL;
+    }
 
-*/
 
-/**/
-messageLn("************ ".date("H:i:s")." ************");
+
+/*
 message("Init");
 
 require_once('init.php');
@@ -770,4 +780,4 @@ function recompile(){
     exit;
 }
 
-//
+// */

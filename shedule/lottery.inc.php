@@ -30,6 +30,57 @@ function timeToRunLottery()
 
 	return false;
 }
+
+//////////////////////////////////////////////////
+
+function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
+{
+	static $counter = 0;
+
+	$rollBack = function($text) use ($ballsStart, $ballsRange, $rounds, $return, $orderBy,      &$counter)
+	{
+		$times = 10;
+
+		echo $text.PHP_EOL;
+
+		$time = microtime(true);
+		echo 'rollBack: ';
+		DB::Connect()->rollBack();
+		echo (microtime(true) - $time).PHP_EOL;
+
+			$counter ++;
+		if( $counter < $times)
+		{
+			sleep(20);
+			HoldLotteryAndCheck($ballsStart, $ballsRange, $rounds, $return, $orderBy);
+		}
+		else
+		{
+			echo "rollBack is looped $times times: exit".PHP_EOL;
+		}
+	};
+
+	DB::Connect()->beginTransaction();
+
+	try
+	{
+		$data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy);
+
+		if(empty($data)
+		|| current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch()))
+		{
+			DB::Connect()->commit();
+		}
+		else
+		{
+			$rollBack('HoldLottery is not ready');
+		}
+	}
+	catch(EntityException $e)
+	{
+		$rollBack(PHP_EOL.'HoldLottery is catch'.PHP_EOL.$e->getMessage().PHP_EOL);
+	}
+}
 function PlayerLotteryWins($lid)
 {
 	$time = microtime(true);
@@ -325,7 +376,9 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 
 	if(!array_sum($stats))
 	{
-		return;
+		echo 'Tickets is not found.'.PHP_EOL;
+
+		return null;
 	}
 
 	$time = microtime(true);
@@ -456,10 +509,6 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 
 
 	echo PHP_EOL.PHP_EOL;   print_r($comb);
-
-//DB::Connect()->beginTransaction();
-//DB::Connect()->commit();
-//DB::Connect()->rollBack();
 
 	echo PHP_EOL.'Total time: '.(microtime(true) - $time).PHP_EOL.PHP_EOL.PHP_EOL.'==============================================='.PHP_EOL.PHP_EOL.PHP_EOL;
 
