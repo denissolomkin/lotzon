@@ -219,7 +219,6 @@ class Index extends \SlimController\SlimController
         if($referer && is_array(Config::instance()->blockedReferers) && !$session->has('REFERER') && ( ($referer['host'] && in_array(str_replace('www','',$referer['host']), Config::instance()->blockedReferers)) OR ($referer['path'] && in_array(str_replace('www','',$referer['path']), Config::instance()->blockedReferers)))){
             $session->set('REFERER',$referer['host']?:$referer['path']);
         }
-
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,
             'showEmail'   => $showEmail,
@@ -232,6 +231,7 @@ class Index extends \SlimController\SlimController
             'currency'    => Config::instance()->langCurrencies[$this->country],            
             'layout'      => false,
             'seo' => $seo,
+            'rules'=> (bool) stristr($_SERVER['REQUEST_URI'],'rules'),
             'comments'    => $comments,
             'lastLottery' => $lastLottery,
             'ref'         => $this->ref,
