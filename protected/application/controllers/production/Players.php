@@ -454,6 +454,7 @@ class Players extends \AjaxController
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
+                $resp['test'] = ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom()  * 60 - time());
                 /*
                  if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
                     $diff=($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo());

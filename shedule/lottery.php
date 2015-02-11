@@ -18,7 +18,8 @@
 */
 
 /**/
-message(date("H:i:s").": Init");
+messageLn("************ ".date("H:i:s")." ************");
+message("Init");
 
 require_once('init.php');
 
@@ -59,6 +60,11 @@ if (timeToRunLottery()) {
     $time = microtime(true);
     // get players tickets    
     $tickets = TicketsModel::instance()->getAllUnplayedTickets();
+    if(!count($tickets)){
+        messageLn("\nSorry, no tickets yet ;)");
+        releaseLock();
+        exit;
+    }
     $lotteryCombination = array();
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
     messageLn("      Tickets count - " . count($tickets));
