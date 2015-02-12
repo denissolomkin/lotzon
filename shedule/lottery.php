@@ -8,7 +8,7 @@
 
 	if(timeToRunLottery())
 	{
-		if(!file_exists($tmp = 'lottery.lock.tmp'))
+		if(!file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
 		{
 			file_put_contents($tmp, '');
 
