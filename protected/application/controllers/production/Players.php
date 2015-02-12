@@ -444,6 +444,7 @@ class Players extends \AjaxController
             if ($_SESSION['chanceGame']['moment']) {
                 if ($_SESSION['chanceGame']['moment']['start'] + 180 < time()) {
                     unset($_SESSION['chanceGame']['moment']);
+                    $this->session->set('MomentChanseLastDate',time());
                 }
             }
 
@@ -454,7 +455,6 @@ class Players extends \AjaxController
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
-                $resp['test'] = ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom()  * 60 - time());
                 /*
                  if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
                     $diff=($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo());
@@ -535,8 +535,14 @@ $resp['block'] = $banner['div'].$banner['script'].
                             'status' => 'process',
                         ),
                     );
-                    $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
+                    $this->session->set('MomentChanseLastDate', time());
+// ????                    $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
+
+                if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time()<0)
+                    $this->session->set('MomentChanseLastDate',time());
+
+                $resp['test'] = ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom()  * 60 - time());
             }
         }
         $this->ajaxResponse($resp);
