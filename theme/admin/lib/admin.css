@@ -173,7 +173,7 @@ min-height: 17px;
 .qgames .description, .qgames .banner {width: 100%;padding: 0 8px;}
 .qgames .description textarea, .qgames .banner textarea {width: 100%;}
 .qgames .holder {width: 100px;margin:0px;}
-.qgames  .tab#prizes div:not(:last-of-type){;margin-right:30px;}
+.qgames  .tab#prizes > div:not(:last-of-type){margin-right:30px;}
 .qgames .holder button:first-of-type{width: 100px;}
 .qgames .item-holder input{
     font-size: 30px;

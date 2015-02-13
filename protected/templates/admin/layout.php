@@ -12,15 +12,15 @@
       <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/redmond/jquery-ui.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/theme/admin/glyphicons/css/style-new.css">
+      <!--link rel="stylesheet" href="/theme/admin/glyphicons/css/style-new.css"-->
 
 
       <link href="/theme/admin/bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
       <script src="/theme/admin/bootstrap/js/bootstrap-toggle.min.js"></script>
 
-      <link href="/theme/admin/jquery-ui/css/jquery-ui.min.css" rel="stylesheet">
+      <!--link href="/theme/admin/jquery-ui/css/jquery-ui.min.css" rel="stylesheet">
       <link href="/theme/admin/jquery-ui/css/jquery-ui.structure.min.css" rel="stylesheet">
-      <script src="/theme/admin/jquery-ui/js/jquery-ui.min.js"></script>
+      <script src="/theme/admin/jquery-ui/js/jquery-ui.min.js"></script-->
 
       <!-- Include Summernote CSS files -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
