@@ -25,7 +25,7 @@ class Admin extends Entity
 
         'Контент'=>array('icon'=>'th-list',
             'pages'=>array(
-                'banners'=>array('icon'=>'picture','name'=>'Баннеры'),
+                'banners'=>array('icon'=>'bold','name'=>'Баннеры'),
                 'images'=>array('icon'=>'picture','name'=>'Изображения'),
                 'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
                 'news'=>array('icon'=>'calendar','name'=>'Новости'),
@@ -35,6 +35,7 @@ class Admin extends Entity
         'Игры'=>array('icon'=>'star',
             'pages'=>array(
                 'gamebots'=>array('icon'=>'user','name'=>'Боты'),
+                'qgames'=>array('icon'=>'star-empty','name'=>'Конструктор игр'),
                 /*'gameoptions'=>array('name'=>'Настройки'),
                 'gamestats'=>array('name'=>'Статистика'),*/
             )),

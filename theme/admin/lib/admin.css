@@ -3,7 +3,7 @@
                             Admin styles
    ========================================================================== */
 .btn-xs {padding: 1px 4px;min-width: 17px;height: 19px;font-size: 12px;margin: -2px 0px;}
-.btn-xs{padding: 1px;}
+.btn-xs {padding: 1px;}
 .sl-bk {background-size: 125px;float:right;margin: -2px 0;width:20px;height:20px;display:block;background-image:url("../../../tpl/img/bg-profile-repost-social-new.png");background-repeat:no-repeat; opacity: 0.5;}
 .sl-bk.active {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png");}
 .sl-bk:hover {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png"); opacity: 1;}
@@ -108,11 +108,141 @@ min-height: 17px;
     position: relative;
     margin: 5px;
 }
+.toggle.btn {height: 39px !important;}
 
-.images .image-trigger:hover img {
-opacity: 0.5;
+.qgames .game-build .t {font-size: 24px;}
+.qgames .game-build .d {margin-bottom: 5px;}
+
+
+
+.qgames .game-build:hover  {opacity: 0.5;cursor: pointer;}
+.qgames .game-build.disabled::after {
+    position: absolute;
+    margin: -30px -20px;
+    left: 50%;
+    top: 50%;
+    /*
+    padding: 10px;
+    width: 38px;
+    height: 38px;
+    background-color: red;
+    border-radius: 20px;
+    */
+    color: red;
+    font-family: 'Glyphicons Halflings';
+    font-size: 40px;
+    content: "\e090";}
+.qgames #field-size{font-size: 10px;color: dimgray;}
+.qgames .game-build:hover::after {
+    position: absolute;
+    margin: -20px;
+    padding: 10px;
+    color: black;
+    left: 50%;
+    top: 50%;
+    width: 37px;
+    height: 37px;
+    font-family: 'Glyphicons Halflings';
+    background-color: #ffffff;
+    border-radius: 20px;
+    font-size: inherit;
+    content: "\e003";
 }
-/*::after*/
+
+.qgames .game-build {
+    max-width: 590px;
+    position: relative;
+    float: left;
+    margin: 10px;
+    background: #fff;
+    padding: 10px !important;
+    margin: 5px 5px 0 0;
+    border-radius: 10px;
+}
+.qgames .thumbnail{
+    width: 90px;
+    float: left;
+    padding: 0;
+    margin: 4px;
+}
+.qgames .thumbnail .caption{white-space: nowrap;overflow: hidden;    padding: 5px;}
+
+.qgames .title > div:not(:last-of-type) {margin-right: 10px;}
+.qgames .title input {width: 500px;  }
+.qgames .title button {width: 190px;}
+.qgames .description, .qgames .banner {width: 100%;padding: 0 8px;}
+.qgames .description textarea, .qgames .banner textarea {width: 100%;}
+.qgames .holder {width: 100px;margin:0px;}
+.qgames  .tab#prizes div:not(:last-of-type){;margin-right:30px;}
+.qgames .holder button:first-of-type{width: 100px;}
+.qgames .item-holder input{
+    font-size: 30px;
+    background: rgba(255,255,255,0.5);
+    border: 0;
+    color: black;
+    box-shadow: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height:50px;
+    width: 100%;}
+.qgames .prize-holder div{position: relative;}
+/*.qgames .math-holder div, .qgames  .points-holder div, .qgames .money-holder div{display: flex;}
+.qgames input.value{width:100%;}
+*/
+.qgames .math-holder input, .qgames .points-holder input, .qgames .money-holder input{width: 100%;height:50px;clear: both;
+    font-size: 30px;
+    background: rgba(255,255,255,0.5);
+    border: 0;
+    color: black;
+    box-shadow: none;
+}
+
+.qgames .math-holder input:last-of-type, .qgames .points-holder input:last-of-type, .qgames .money-holder input:last-of-type{
+    text-align: right;
+}
+.qgames .game-builds {
+    float: left;
+    background: #ccc;
+    margin: -15px;
+    padding: 0 0 5px 5px;}
+.qgames form .row-fluid {
+    margin: 10px 0;
+}
+.qgames .holder .row-fluid div:nth-child(n+1)  {margin-top: 10px;position: relative;background: antiquewhite;border-radius: 5px;}
+.qgames .holder div .glyphicon {margin: 5px;position: absolute;top: 0px;right: 0;cursor: pointer;}
+.qgames .ul {clear: both;}
+/*.qgames .field{width: 100%;margin: 10px 0; }*/
+.qgames .field div.input-group{margin-right: 10px;margin-bottom: 10px;}
+.qgames .field div:last-of-type {margin-right: 0px;}
+.qgames .field .input-group-addon, .qgames .field .form-control {width: 42px;}
+.qgames ul > li {width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../../../tpl/img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;
+    color:transparent;
+    position: relative;
+    color:black;
+    font-weight: bold;}
+.qgames ul > li.money,.qgames ul > li.points,.qgames ul > li.math {
+    background:rgb(255,228,0);
+    border:0;
+    overflow: hidden;
+}
+
+.qgames ul li span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.5);
+    padding: 5px;
+    font-size: 10px;
+}
+.qgames ul li div {
+    float: inherit;
+    width: 100%;
+}
+.qgames .form-inline .form-group{vertical-align: top;}
+.qgames ul {list-style:none;display:table;padding:0;margin: 0 auto;}
+
+.images .image-trigger:hover img {opacity: 0.5;}
 .images .image-trigger:hover::after {
     position: absolute;
     margin: -20px;
@@ -127,6 +257,7 @@ opacity: 0.5;
     border-radius: 20px;
  content: "\e003";
 }
+
 .images img {
     max-width: 500px;
     max-height: 100px;
