@@ -417,9 +417,9 @@ class Players extends \AjaxController
 
         $resp = array();
         if ($this->session->has(Player::IDENTITY) && $player=$this->session->get(Player::IDENTITY)) {
+            $resp['player']=true;
 
             $AdBlockDetected=$this->request()->get('online', null);
-
 
             if($title=NoticesModel::instance()->getPlayerLastUnreadNotice($player))
                 $resp['notice'] = array(
@@ -438,6 +438,7 @@ class Players extends \AjaxController
                 ->setAdBlock(($AdBlockDetected?time():null))
                 ->markOnline();
 
+            //$resp['chance']=$_SESSION['chanceGame'];
 
             // check for moment chance
             // if not already played chance game
@@ -497,28 +498,28 @@ class Players extends \AjaxController
     block=(". json_encode('<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']).");
     */
 
-if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
-$resp['block'] = $banner['div'].$banner['script'].
-    "<script>
-    $('#mchance .mm-bk-pg').css('height','450px').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
-    moment=$('#mchance').find('.block');
-    moment.find('.tl').html('Загрузка...').next().css('top','200px').css('position','absolute').css('overflow','hidden');
-    $('#mchance').find('li').off('click').on('click', function(){
-    num=$(this).data('num');
-    href=moment.find('a[target=\"_blank\"]:eq('+((moment.find('a[target=\"_blank\"]').length-6)+num*2-1)+')').attr('href');
-    moment.css('position', 'absolute').css('bottom', '-10px').parent().css('position', 'initial').css('bottom','auto');
-    window.setTimeout(function() {moment.find('.tl').html('Реклама').parent().prev().css('margin-bottom', '380px').next().find('div:eq(1)').css('top','auto').css('position', 'initial');}, 50);
-    window.setTimeout(function() {moment.css('position', 'initial').parent().find('ul').css('margin-bottom', '-50px');}, 150);
-    window.setTimeout(function() {moment.parent().find('ul').css('margin-bottom', 'auto').parent().parent().css('height','auto');}, 200);
-    if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() { var win = window.open (href,'_blank');win.blur();window.focus();return false;}, 1000);
-    startMoment();});
-</script>";
+                                    if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
+                                        $resp['block'] = $banner['div'].$banner['script'].
+                                            "<script>
+                                            $('#mchance .mm-bk-pg').css('height','450px').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
+                                            moment=$('#mchance').find('.block');
+                                            moment.find('.tl').html('Загрузка...').next().css('top','200px').css('position','absolute').css('overflow','hidden');
+                                            $('#mchance').find('li').off('click').on('click', function(){
+                                            num=$(this).data('num');
+                                            href=moment.find('a[target=\"_blank\"]:eq('+((moment.find('a[target=\"_blank\"]').length-6)+num*2-1)+')').attr('href');
+                                            moment.css('position', 'absolute').css('bottom', '-10px').parent().css('position', 'initial').css('bottom','auto');
+                                            window.setTimeout(function() {moment.find('.tl').html('Реклама').parent().prev().css('margin-bottom', '380px').next().find('div:eq(1)').css('top','auto').css('position', 'initial');}, 50);
+                                            window.setTimeout(function() {moment.css('position', 'initial').parent().find('ul').css('margin-bottom', '-50px');}, 150);
+                                            window.setTimeout(function() {moment.parent().find('ul').css('margin-bottom', 'auto').parent().parent().css('height','auto');}, 200);
+                                            if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() { var win = window.open (href,'_blank');win.blur();window.focus();return false;}, 1000);
+                                            startMoment();});
+                                        </script>";
                                     else
                                         $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']."
-                                        <script>
-                                        $('#mchance .mm-bk-pg').css('height', 'auto').children('div').last().css('position','initial');
-                                        startMoment();
-                                        </script>";
+                                            <script>
+                                            $('#mchance .mm-bk-pg').css('height', 'auto').children('div').last().css('position','initial');
+                                            startMoment();
+                                            </script>";
 
                                     break;
                                 }
@@ -539,11 +540,12 @@ $resp['block'] = $banner['div'].$banner['script'].
 // ????                    $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
 
-                if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time()<0)
-                    $this->session->set('MomentChanseLastDate',time());
+                if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 0)
+                    $this->session->set('MomentChanseLastDate', time());
 
                 $resp['test'] = ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom()  * 60 - time());
-            }
+            } else
+                $resp['game']=true;
         }
         $this->ajaxResponse($resp);
     }
