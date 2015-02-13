@@ -6,23 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?=$title?></title>
 
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/redmond/jquery-ui.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/theme/admin/glyphicons/css/style-new.css">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
       <link href="/theme/admin/bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
       <script src="/theme/admin/bootstrap/js/bootstrap-toggle.min.js"></script>
+
+      <link href="/theme/admin/jquery-ui/css/jquery-ui.min.css" rel="stylesheet">
+      <link href="/theme/admin/jquery-ui/css/jquery-ui.structure.min.css" rel="stylesheet">
+      <script src="/theme/admin/jquery-ui/js/jquery-ui.min.js"></script>
 
       <!-- Include Summernote CSS files -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
     
     <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
-    <link href="/theme/admin/lib/admin.css" rel="stylesheet">
 
     <!-- Include Summernote JS file -->
     <script src="/theme/admin/lib/summernote/summernote.js"></script>
+      <link href="/theme/admin/lib/admin.css" rel="stylesheet">
 
   </head>
   <body style="">
@@ -75,5 +82,42 @@
       <?=$yield?>
     <!-- Latest compiled and minified JavaScript -->
     <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+      function assignByPath(obj,path,value){
+          if (path.length == 1) {
+              obj[path[0]] = value;
+              return obj;
+          } else if (obj[path[0]] === undefined) {
+              obj[path[0]] = {};
+          }
+          return assignByPath(obj[path.shift()],path,value);
+      }
+
+      $.fn.serializeObject = function(){
+          var obj = {};
+
+          $.each( this.serializeArray(), function(i,o){
+              var n = o.name,
+                  v = o.value;
+              path = n.replace(/\]\[/g,'.').replace(/\[/g,'.').replace(']','').split('.');
+
+              assignByPath(obj,path,v);
+          });
+
+          return obj;
+      };
+      String.prototype.replaceArray = function (find, replace) {
+          var replaceString = this;
+          for (var i = 0; i < find.length; i++) {
+              // global replacement
+              var pos = replaceString.indexOf(find[i]);
+              while (pos > -1) {
+                  replaceString = replaceString.replace(find[i], replace[i]);
+                  pos = replaceString.indexOf(find[i]);
+              }
+          }
+          return replaceString;
+      };
+  </script>
   </body>
 </html>
