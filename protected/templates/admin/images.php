@@ -20,7 +20,11 @@
 
     <div class="row-fluid">&nbsp;</div>
 
-    <div class="row-fluid">
+    <div class="row-fluid" style="
+background: #ccc;
+margin-left: -15px;
+position: absolute;
+padding: 5px;">
 
 
         <div class="pointer " data-image='' style='display:inline-table;position: relative;margin:5px;'>

@@ -16,23 +16,21 @@
 .pointer:hover {color:#008cba;}
 .hidden {display: none;}
 .red {color:red;}
-.banners select{position: absolute;
-    padding: 1px 0 0 0;font-size: 11px;}
+
+.banners select{position: absolute;padding: 1px 0 0 0;font-size: 11px;}
 .banners .btn-success{float:right;margin-top: 3px;}
 .banners .row-banner  {padding:0;display: inline-block;}
 .banners .row-banner.banner {margin-bottom: -8px;margin-top: 3px;width: 100%;}
 .banners .row-banner textarea {position: absolute1;padding: 1.5px; }
-.banners .row-banner div{padding:0;
-    vertical-align: top;}
-
+.banners .row-banner div{padding:0;vertical-align: top;}
 .banners .view-banner {
     right: 0;
     position: absolute;
     margin-top: 0;
     z-index: 20;
 }
-
 .form-control-banner {width:100%;vertical-align: top;padding: 0.5px;font-size:10px;}
+
 .sector {
     background: #fff;
     padding: 10px !important;
@@ -100,8 +98,9 @@ min-height: 17px;
 .images .size {
     position:absolute;margin: 1px;padding:5px;background: rgba(255,255,255,0.5);border-radius: 5px 0 0 0;font:13px/13px Handbook-regular;
 }
+.images .pointer {background: #ffffff;border-radius: 5px }
 .images .image-trigger img {
-    max-width:500px;max-height:100px;min-height: 100px;padding:5px;border:1px solid gray;border-radius: 5px;
+    max-width:500px;max-height:100px;min-height: 100px;padding:5px;/*border:1px solid gray;*/border-radius: 5px;
 }
 .images .image-trigger {
     display: inline-table;
@@ -255,7 +254,7 @@ min-height: 17px;
     font-family: 'Glyphicons Halflings';
     background-color: #ffffff;
     border-radius: 20px;
- content: "\e003";
+    content: "\e003";
 }
 
 .images img {
@@ -263,7 +262,7 @@ min-height: 17px;
     max-height: 100px;
     min-height: 100px;
     padding: 5px;
-    border: 1px solid gray;
+    /*border: 1px solid gray;*/
     border-radius: 5px;
 }
 #image .modal-body div:hover img{
