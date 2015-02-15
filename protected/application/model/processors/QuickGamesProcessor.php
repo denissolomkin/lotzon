@@ -33,14 +33,12 @@ class QuickGamesProcessor
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);   
         }
-
         $games = array();
         $data = $sth->fetchAll();
         foreach ($data as $gameData) {
             $games[$gameData['Id']] = $gameData;
             $games[$gameData['Id']]['Field'] = @unserialize($gameData['Field']);
             $games[$gameData['Id']]['Prizes'] = @unserialize($gameData['Prizes']);
-
         }
         return $games;
 
