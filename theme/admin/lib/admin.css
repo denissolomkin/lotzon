@@ -59,7 +59,7 @@
 
 .bots #bots > div{
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     padding: 10px;
     background: white;}
 
@@ -67,6 +67,10 @@
 
     border: 0;
     margin: 0 0 10px 0;
+}
+#bots .thumbnail>img{
+
+    max-height: 98px;
 }
 #bots .form-control{
 padding: 2px;
