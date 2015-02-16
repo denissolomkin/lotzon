@@ -55,11 +55,15 @@
 .bots #bots {
     position: absolute;
     background: #ccc;
-    margin-left: -15px;}
+    margin-left: -15px;
+    padding-right: 5px;}
 
 .bots #bots > div{
+    margin: 0;
+    padding: 0;}
+.bots #bots div > div.holder {
     border-radius: 10px;
-    margin: 5px;
+    margin: 5px 0 0 5px;
     padding: 10px;
     background: white;}
 
