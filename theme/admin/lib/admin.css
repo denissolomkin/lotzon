@@ -73,8 +73,7 @@
     margin: 0 0 10px 0;
 }
 #bots .thumbnail>img{
-
-    max-height: 98px;
+    height: 100px;
 }
 #bots .form-control{
 padding: 2px;
