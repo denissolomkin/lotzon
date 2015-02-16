@@ -14,6 +14,7 @@
 
 
             <div class="col-md-1">
+                <div class="holder">
                 <div class="thumbnail" data-id="<?=$key?>">
                     <img src='<?=($bot['avatar']?'../filestorage/avatars/'.(ceil($key / 100)) . '/'.$bot['avatar']:'/theme/admin/img/photo-icon-plus.png')?>' data-id="<?=$key?>" data-image="<?=$bot['avatar']?>" class="upload" alt="...">
                 </div>
@@ -24,7 +25,7 @@
                     <input type="hidden" name="bots[<?=$key?>][bot]" value="1">
                     <input type="hidden" name="bots[<?=$key?>][avatar]" value="<?=$bot['avatar']?>">
                 </div>
-
+                </div>
             </div>
 
             <? endforeach ?>
@@ -47,7 +48,7 @@
 
         $('#count_bots').text(parseInt($('#count_bots').text())+1);
 
-        $("#bots").prepend('<div class="col-md-2">' +
+        $("#bots").prepend('<div class="col-md-1"><div class="holder">' +
         '<div class="thumbnail" data-id="'+cnt+'">' +
         '<img src="/theme/admin/img/photo-icon-plus.png" class="upload" data-id="'+cnt+'" data-image="" alt="...">' +
         '<input type="hidden" name="bots['+cnt+'][id]" value="'+cnt+'">' +
@@ -59,14 +60,14 @@
         '<button type="button" class="btn btn-danger del-one"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
         '<input placeholder="Name" class="form-control input-md" name=bots['+cnt+'][name] value="Участник '+cnt+'"</input>' +
         '</div>' +
-        '' +
+        '</div>' +
         '</div>');
 
         $('.upload').off('click').on('click', initUpload);
     });
 
     $(document ).on( "click",".del-one", function( event ) {
-        $(this).parent().parent().remove();
+        $(this).parent().parent().parent().remove();
         $('#count_bots').text(parseInt($('#count_bots').text())-1);
     });
 
