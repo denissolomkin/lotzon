@@ -68,13 +68,12 @@
     background: white;}
 
 #bots .thumbnail{
-
     border: 0;
-    margin: 0 0 10px 0;
+    margin: 0;
+    height: 100px;
 }
 #bots .thumbnail>img{
-
-    max-height: 98px;
+    height: 100%;
 }
 #bots .form-control{
 padding: 2px;
