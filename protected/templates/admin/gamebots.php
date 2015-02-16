@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <form role="form" action="/private/gamebots" method="POST">
         <div class="row-fluid">
-            <h2>Bots
+            <h2>Bots (<span id="count_bots"><?=count($list);?></span>)
                 <button type="submit" class="btn btn-success right">Сохранить</button>
                 <button type="button" data-sector="<?=$key?>" class="btn btn-success add-one"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
             </h2>
@@ -45,7 +45,7 @@
         }
         var cnt = ids.shift();//$('#'+id).children().last().data('id')+1;
 
-
+        $('#count_bots').text(parseInt($('#count_bots').text())+1);
 
         $("#bots").prepend('<div class="col-md-2">' +
         '<div class="thumbnail" data-id="'+cnt+'">' +
@@ -67,6 +67,7 @@
 
     $(document ).on( "click",".del-one", function( event ) {
         $(this).parent().parent().remove();
+        $('#count_bots').text(parseInt($('#count_bots').text())-1);
     });
 
 
