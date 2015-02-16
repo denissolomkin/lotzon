@@ -28,6 +28,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getPlayersStats();
     }
 
+    public function getAvailableIds()
+    {
+        return $this->getProcessor()->getAvailableIds();
+    }
+
     public function updateLastChance(Entity $player)
     {
         return $this->getProcessor()->updateLastChance($player);
