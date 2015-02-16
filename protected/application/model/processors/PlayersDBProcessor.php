@@ -215,6 +215,30 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+
+
+    public function getAvailableIds()
+    {
+
+        $sql = "SELECT (p1.Id-1) Id
+                FROM `Players` p1
+                LEFT JOIN `Players` p2
+                ON p2.Id = p1.Id-1
+                WHERE p2.Id is null AND p1.Id>1";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $ids=array();
+        foreach ($sth->fetchAll() as $data) {
+            $ids[] = $data['Id'];
+        }
+        return $ids;
+    }
+
     public function getBalance(Entity $player, $forUpdate = false)
     {
 

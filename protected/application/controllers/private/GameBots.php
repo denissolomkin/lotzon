@@ -1,7 +1,8 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Session2, \Admin, \WideImage;
+use \Application, \PrivateArea, \Config, \Session2, \Admin, \WideImage, \PlayersModel;
+use controllers\production\Players;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -20,13 +21,16 @@ class GameBots extends PrivateArea
 
     public function indexAction()
     {
-        $list    = Config::instance()->gameBots;
+        $list = Config::instance()->gameBots;
+        $ids = PlayersModel::instance()->getAvailableIds();
+        $ids = array_diff($ids,array_keys($list));
 
         $this->render('admin/gamebots', array(
             'title'      => 'Боты для игры',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
+            'ids'        => $ids,
         ));
     }
 
