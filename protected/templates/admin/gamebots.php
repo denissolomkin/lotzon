@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid bots">
     <form role="form" action="/private/gamebots" method="POST">
         <div class="row-fluid">
             <h2>Bots (<span id="count_bots"><?=count($list);?></span>/<?=count($list)+count($ids);?>)
@@ -13,13 +13,13 @@
                 foreach ($list as $key=>$bot) : ?>
 
 
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="thumbnail" data-id="<?=$key?>">
                     <img src='<?=($bot['avatar']?'../filestorage/avatars/'.(ceil($key / 100)) . '/'.$bot['avatar']:'/theme/admin/img/photo-icon-plus.png')?>' data-id="<?=$key?>" data-image="<?=$bot['avatar']?>" class="upload" alt="...">
                 </div>
                 <div class="flex">
-                    <button type="button" data-sector="<?=$key?>" class="btn btn-danger del-one"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>
                     <input placeholder="Name" class="form-control input-md" name=bots[<?=$key?>][name] value="<?=$bot['name'];?>"</input>
+                    <button type="button" data-sector="<?=$key?>" class="btn btn-danger del-one"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                     <input type="hidden" name="bots[<?=$key?>][id]" value="<?=$key?>">
                     <input type="hidden" name="bots[<?=$key?>][bot]" value="1">
                     <input type="hidden" name="bots[<?=$key?>][avatar]" value="<?=$bot['avatar']?>">
