@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <form role="form" action="/private/gamebots" method="POST">
         <div class="row-fluid">
-            <h2>Bots (<span id="count_bots"><?=count($list);?></span>)
+            <h2>Bots (<span id="count_bots"><?=count($list);?></span>/<?=count($list)+count($ids);?>)
                 <button type="submit" class="btn btn-success right">Сохранить</button>
                 <button type="button" data-sector="<?=$key?>" class="btn btn-success add-one"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
             </h2>
