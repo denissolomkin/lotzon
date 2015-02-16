@@ -67,7 +67,7 @@
     });
 
     $(document ).on( "click",".del-one", function( event ) {
-        $(this).parent().parent().remove().remove();
+        $(this).parent().parent().parent().remove();
         $('#count_bots').text(parseInt($('#count_bots').text())-1);
     });
 
