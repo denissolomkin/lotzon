@@ -51,15 +51,31 @@
     padding: 0;
     float: left;
 }
+
+.bots #bots {
+    position: absolute;
+    background: #ccc;
+    margin-left: -15px;}
+
+.bots #bots > div{
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    background: white;}
+
 #bots .thumbnail{
 
     border: 0;
     margin: 0 0 10px 0;
 }
-#bots .thumbnail>img{
-
-    height: 160px;
+#bots .form-control{
+padding: 2px;
+font-size: 10px;
+    height: auto;
 }
+#bots .btn{padding: 0;
+    width: 24px;
+    font-size: 10px;}
 .ips{
     float: left;
     line-height: 14px;
