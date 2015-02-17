@@ -1024,17 +1024,19 @@ $(function(){
                 
                 ticketsHtml += '</li>';
             }
-            //$('#profile-history').find('.yr-tb').html(ticketsHtml);
+
+            $('#profile-history').find('.yr-tb').html(ticketsHtml);
             $(data.res.lottery.combination).each(function(id, num){
                 $('#profile-history').find('.yr-tb').find('li[data-num="'+num+'"]').addClass('won');
             });
         } else {
             //$('#profile-history').find('.ws-dt.ch-hide').hide();
             ticketsHtml='<li class="yr-tt"><div class="yr-tt-tn none">Вы не принимали участие в данном розыгрыше</div></li>';
+            $('#profile-history').find('.yr-tb').html(ticketsHtml).
             //$('#profile-history').find('.ws-yr-tks-bk').show();
         }
 
-        $('#profile-history').find('.yr-tb').html(ticketsHtml).prev().hide();
+        $('#profile-history').find('.wr-pf-pr').hide();
 
         $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
             e.stopPropagation();
