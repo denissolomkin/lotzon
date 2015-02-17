@@ -1032,7 +1032,7 @@ $(function(){
         } else {
             //$('#profile-history').find('.ws-dt.ch-hide').hide();
             ticketsHtml='<li class="yr-tt"><div class="yr-tt-tn none">Вы не принимали участие в данном розыгрыше</div></li>';
-            $('#profile-history').find('.yr-tb').html(ticketsHtml).
+            $('#profile-history').find('.yr-tb').html(ticketsHtml);
             //$('#profile-history').find('.ws-yr-tks-bk').show();
         }
 
