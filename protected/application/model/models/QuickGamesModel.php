@@ -26,6 +26,11 @@ class QuickGamesModel extends Model
       return $this->getProcessor()->getGamesSettings();
    }
 
+    public function getRandomGame()
+    {
+        return $this->getProcessor()->getRandomGame();
+    }
+
    public function logWin($game, $combination, $clicks, $player, $item)
    {
     return $this->getProcessor()->logWin($game, $combination, $clicks, $player, $item);

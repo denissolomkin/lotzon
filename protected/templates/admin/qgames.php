@@ -219,14 +219,12 @@
 
             var html='';
             for(y1=0;y1<game.Field.y;y1++)
-                for(x1=0;x1<game.Field.x;x1++){
+                for(x1=0;x1<game.Field.x;x1++)
                     html+="<li style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+game.Field.m+"px "+game.Field.m+"px 0;'></li>"
-                }
             holder.find('.t').text(game.Title).next().text(game.Description).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.m))*parseInt(game.Field.x))).html(html);
+
+
             var i=0;
-
-            console.log(game.Prizes);
-
             if(game.Prizes)
             $.each(game.Prizes, function(index, prize) {
                 do

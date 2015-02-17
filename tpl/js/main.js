@@ -603,10 +603,6 @@ $(function(){
 
     });
 
-
-
-
-
     // PROFILE INFORMATIONS //
 
     $(".pi-cs-bk .cs-int-bt.int").on('click', function() {
@@ -1138,6 +1134,7 @@ $(function(){
         $('#terms').fadeIn(200);
     });
     $('body').show();
+    window.setTimeout(function(){o=(!Boolean($('img#ad:visible').length));},5*1000);
 
     /* ==========================================================================
                         Navigations scroll functional
@@ -1452,6 +1449,50 @@ function proccessResult()
     }, function(){}, function(){});
 }
 
+
+$(document).on('click','#soon .start',function () {
+    startQuickGame(function(data) {
+
+        game=data.res;
+        holder=$('#qgame');
+
+        var html='';
+        for(y1=1;y1<=game.Field.y;y1++)
+            for(x1=1;x1<=game.Field.x;x1++)
+                html+="<li data-cell='"+x1+"x"+y1+"' style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+game.Field.m+"px "+game.Field.m+"px 0;'></li>";
+        width=((parseInt(game.Field.w)+parseInt(game.Field.m))*parseInt(game.Field.x));
+        holder.find('.qg-bk-tl').text(game.Title).next().text(game.Description).next().find('ul').css('width',width).html(html).parents('section').css('width',width+80);
+        holder.show().find('.qg-msg').hide();
+
+    }, function(data) {
+        if (data.message=="NOT_TIME_YET") {
+            $('.pz-rt-bk').text("Время игры еще не настало!").show().parents('#shop-items-popup').show().find('.pz-ifo-bk').hide();
+        }
+    }, function() {});
+
+});
+
+$(document).on('click','#qgame li[data-cell]', function() {
+    var cell = $(this);
+    playQuickGame($(this).data('cell'), function(data) {
+        console.log(data.res.prize);
+        console.log(data.res);
+        if (prize=data.res.prize) {
+            if (prize.t != 'item')
+                cell.addClass(prize.t).html(
+                    '<div style="margin: 0 0 -' + parseInt(game.Field.h) / 15 + 'px 0;font-size:' + parseInt(game.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
+                    '<div style="margin-top:-' + parseInt(game.Field.h) / 10 + 'px;font-size:' + parseInt(game.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? 'грн' : '') + '</div>');
+            else {
+                cell.addClass(prize.t).html(
+                    '<div></div>').find('div').append($('.thumbnail[data-id="' + prize.v + '"] img').clone().attr('width','100%').attr('height','100%'));
+            }
+        } else {
+            cell.addClass('los');
+        }
+    }, function() {
+
+    }, function() {});
+});
 
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
@@ -1826,15 +1867,34 @@ function randomCachedNum() {
     return rand;
 }
 
+/*
+String.prototype.replaceArray = function (find, replace) {
+    var replaceString = this;
+    for (var i = 0; i < find.length; i++) {
+        // global replacement
+        var pos = replaceString.indexOf(find[i]);
+        while (pos > -1) {
+            replaceString = replaceString.replace(find[i], replace[i]);
+            pos = replaceString.indexOf(find[i]);
+        }
+    }
+    return replaceString;
+};
+ */
 String.prototype.replaceArray = function(find, replace) {
     var replaceString = this;
     var replaceMatch = replace;
+    var replaceFind = find;
     var regex;
     for (var i = 0; i < find.length; i++) {
-        regex = new RegExp(find[i], "g");
-        if($.isArray(replaceMatch))
+        if($.isArray(find))
+            replaceFind = find[i];
+        regex = new RegExp(replaceFind, "g");
+        if($.isArray(replace))
             replaceMatch=replace[i];
-        replaceString = replaceString.replace(regex, replaceMatch);
+        replaceString =  replaceString.replace(regex, replaceMatch);
+        if(!$.isArray(find))
+            break;
     }
     return replaceString;
 };

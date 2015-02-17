@@ -59,6 +59,7 @@
 
 </head>
 <body>
+<!--!*** 9768326***advMaker.net***17,02,2015 @-@-@@-@-@-TeRRaN###-->
 <header class="display-slide" id="slide1">
     <div class="h-dt-b">
         <div class="t-tr">
