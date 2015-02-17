@@ -1,3 +1,3 @@
 $(function(){
-    o='';
+    online='';
 });

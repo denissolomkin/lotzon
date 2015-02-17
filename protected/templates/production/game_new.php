@@ -1331,6 +1331,7 @@
         var playerId   = <?=$player->getId()?>;
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
+        var online = 1;
         var page = <?=($page?1:0)?>;
         var appId   = 0;
         var appName   = '';
