@@ -438,8 +438,6 @@ class Players extends \AjaxController
                 ->setAdBlock(($AdBlockDetected?time():null))
                 ->markOnline();
 
-            //$resp['chance']=$_SESSION['chanceGame'];
-
             // check for moment chance
             // if not already played chance game
             if ($_SESSION['chanceGame']['moment']) {
@@ -449,6 +447,34 @@ class Players extends \AjaxController
                 }
             }
 
+            /*
+            $timer=30;
+            //if(!$this->session->has('QuickGameLastDate'))
+                $this->session->set('QuickGameLastDate',time());
+                unset($_SESSION['timer_soon']);
+
+            if($this->session->get('QuickGameLastDate') +  $timer * 60 > time()) {
+                $diff=$this->session->get('QuickGameLastDate') + $timer  * 60 - time();
+                if( ($diff/60<=5 AND !$_SESSION['timer_soon']['five']) OR
+                    ($diff/60<=$timer AND !$_SESSION['timer_soon']['start'])) {
+
+                    if($diff/60<$timer)
+                        $_SESSION['timer_soon']['start']=true;
+                    elseif($diff/60<5)
+                        $_SESSION['timer_soon']['five']=true;
+
+                    $resp['soon'] = array(
+                        'name' => 'soon',
+                        'title' => 'Случайная игра',
+                        'txt' => 'Игра будет доступна через <span id="timer_soon"></span> <div class="start">start</div>
+                            <script>$("#timer_soon").countdown({until: ' . ($diff) . ',layout: "{mnn}:{snn}",onExpiry: function(){
+                            $(".notification #soon .badge-block .txt").html("Не пропустите моментальный шанс ' . ' ' . ($diff > 0 ? 'в ближайшие ' . $diff . ($diff > 4 ? 'минут' : $diff > 1 ? 'минуты' : $diff > 0 ? 'минуту' : '') : 'сейчас') . '!");
+                            }})</script>',
+                    );
+                }
+            }
+            */
+
             #delete
             //$resp['moment'] = 1;
             //unset($_SESSION['chanceGame']);
@@ -456,6 +482,7 @@ class Players extends \AjaxController
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
                 $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
+                #delete
                 /*
                  if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
                     $diff=($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo());
@@ -482,6 +509,7 @@ class Players extends \AjaxController
                     }
                 }
 
+                #delete
                 //$resp['moment'] = 0;
 
                 if (isset($resp['moment']) && $resp['moment']) {
@@ -494,12 +522,10 @@ class Players extends \AjaxController
                                     if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
                                         continue;
 
-                                    /*
-    block=(". json_encode('<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']).");
-    */
-
                                     if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
-                                        $resp['block'] = $banner['div'].$banner['script'].
+                                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
+                                            str_replace('document.write',"$('#mchance .block').append",$banner['div']).
+                                            str_replace('document.write',"$('#mchance .block').append",$banner['script']).
                                             "<script>
                                             $('#mchance .mm-bk-pg').css('height','450px').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
                                             moment=$('#mchance').find('.block');
@@ -515,8 +541,10 @@ class Players extends \AjaxController
                                             startMoment();});
                                         </script>";
                                     else
-                                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .$banner['div'].$banner['script']."
-                                            <script>
+                                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
+                                            str_replace('document.write',"$('#mchance .block').append",$banner['div']).
+                                            str_replace('document.write',"$('#mchance .block').append",$banner['script']).
+                                            "<script>
                                             $('#mchance .mm-bk-pg').css('height', 'auto').children('div').last().css('position','initial');
                                             startMoment();
                                             </script>";
@@ -536,8 +564,9 @@ class Players extends \AjaxController
                             'status' => 'process',
                         ),
                     );
+
                     $this->session->set('MomentChanseLastDate', time());
-// ????                    $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
+// ????             $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
 
                 if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 0)

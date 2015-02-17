@@ -1107,13 +1107,13 @@
 
                     <div class="rls-r">
 
-                        <div class="rls-r-t">ВЫ<b>:</b> 0 <b>•</b> 0</div>
+                        <div class="rls-r-t">ВЫ <b>|</b> 0 <b>|</b> 0</div>
                         <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b>Поиск</b></div><div class="ngm-cncl">отмена</div></div>
 
 
                         <div class="rls-r-ws">
                             <b>победители</b>
-                            <span>рейтиHг <i>=</i> сыграHо игр <i>•</i> побед</span>
+                            <span>рейтиHг <b>|</b> сыграHо игр <b>|</b> побед</span>
                         </div>
                         <ul class="rls-r-prs">
 
@@ -1256,6 +1256,7 @@
                                     FOOTER BLOCK
             ======================================================================-->
         <footer>
+            <img id="ad" src="/tpl/img/baners/ad.gif" />
             <section class="fr-br-bk">
                 <img src="/tpl/img/baners/goroskop.jpg?<?=(strtotime(date("md")))?>" width="1280" height="257">
             </section>
@@ -1310,7 +1311,6 @@
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
         <script src="/tpl/js/ws.js"></script>
-        <script src="/tpl/js/ads.js"></script>
 
         <? include('popups.php') ?>
 
@@ -1332,7 +1332,6 @@
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
         var page = <?=($page?1:0)?>;
-        var online   = 1;
         var appId   = 0;
         var appName   = '';
         var appMode   = 0;
@@ -1341,8 +1340,8 @@
             'SeaBattle': ['POINT-0', 'POINT-25', 'POINT-50', 'POINT-75', 'POINT-100', 'MONEY-0.1', 'MONEY-0.25', 'MONEY-0.5', 'MONEY-1']
         };
         var unreadNotices = <?=$notices?>;
-        /*var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
-        var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;*/
+        <?php /*var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
+        var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;*/ ?>
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
 

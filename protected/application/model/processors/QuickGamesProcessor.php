@@ -55,6 +55,28 @@ class QuickGamesProcessor
         return $games;
     }
 
+    public function getRandomGame()
+    {
+        $sql = "SELECT * FROM `QuickGames` WHERE Enabled=1 ORDER BY RAND() LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        $data = $sth->fetch();
+
+        $game = new QuickGame();
+        $game->setId($data['Id'])
+            ->setTitle($data['Title'])
+            ->setDescription($data['Description'])
+            ->setPrizes(@unserialize($data['Prizes']))
+            ->setField(@unserialize($data['Field']))
+            ->setEnabled($data['Enabled']);
+        return $game;
+    }
+
     public function logWin($game, $combination, $clicks, $player, $prize) 
     {
         $sql = "INSERT INTO `ChanceGameWins` (`GameId`, `Combination`, `Clicks`, `Date`, `PlayerId`, `ItemId`) VALUES (:gid, :comb, :clicks, :date, :plid, :iid)";

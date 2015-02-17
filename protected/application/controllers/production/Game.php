@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \TicketsModel, \GameSettings, \GameSettingsModel;
+use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \TicketsModel, \GameSettings, \GameSettingsModel, \QuickGamesModel;
 use \ChanceGamesModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -95,6 +95,45 @@ class Game extends \AjaxController
             ));
         }
         $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
+    }
+
+    public function startQuickGameAction()
+    {
+        if ($this->session->get('QuickGameLastDate') + 30 * 60 > time() AND 0) {
+            $this->ajaxResponse(array(), 0, 'NOT_TIME_YET');
+        }
+
+        if($game = QuickGamesModel::instance()->getRandomGame()) {
+
+            $game->setUserId($this->session->get(Player::IDENTITY)->getId())
+                ->setTime(time())
+                ->saveGame();
+
+            $this->session->set('QuickGameLastDate', time());
+            $this->session->set('QuickGame', $game);
+
+            $this->ajaxResponse(
+                array('Title'=>$game->getTitle(),
+                    'Description'=>$game->getDescription(),
+                    'Field' => $game->getField())
+            );
+        }
+    }
+
+    public function quickGamePlayAction()
+    {
+        if (!($player = $this->session->get(Player::IDENTITY))){
+            $this->ajaxResponse(array(), 0, 'PLAYER_NOT_FOUND');
+        } elseif(!$this->session->has('QuickGame')) {
+            $this->ajaxResponse(array(), 0, 'GAME_NOT_FOUND');
+        } elseif(!($cell = $this->request()->post('cell', null))){
+            $this->ajaxResponse(array(), 0, 'CELL_NOT_SELECT');
+        } elseif(!($game = $this->session->get('QuickGame'))) {
+            $this->ajaxResponse(array(), 0, 'WRONG_GAME');
+        }
+        $this->ajaxResponse(
+            $game->doMove($cell)
+        );
     }
 
     public function startChanceGameAction($identifier)

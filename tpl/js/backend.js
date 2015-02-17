@@ -1,3 +1,4 @@
+document.write = function(html){ $(document.body).append(html); };
 function registerPlayer(playerData, successFunction, failFunction, errorFunction)
 {
     $.ajax({
@@ -287,6 +288,48 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
     });   
 }
 
+function startQuickGame(successFunction, failFunction, errorFunction) {
+    $.ajax({
+        url: "/quickgame/build/",
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+        }
+    });
+}
+
+function playQuickGame(cell, successFunction, failFunction, errorFunction) {
+    var data = {
+        cell: cell
+    };
+    $.ajax({
+        url: "/quickgame/play/",
+        method: 'POST',
+        data: data,
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+        }
+    });
+}
+
 function startChanceGame(gi, successFunction, failFunction, errorFunction) {
     $.ajax({
         url: "/chance/build/" + gi,
@@ -305,6 +348,7 @@ function startChanceGame(gi, successFunction, failFunction, errorFunction) {
        }
     });
 }
+
 function playChanceGame(gi, choose, successFunction, failFunction, errorFunction) {
     var data = {
         choose: choose
@@ -504,7 +548,7 @@ function sendPartnersFeedback(post, successFunction, failFunction, errorFunction
 
 window.setInterval(function() {
     $.ajax({
-        url: "/players/ping?ws="+ws+"&online="+(online?$.now():''),
+        url: "/players/ping?ws="+ws+"&online="+(o?$.now():''),
         method: 'GET',
         async: true,
         dataType: 'json',
@@ -543,6 +587,7 @@ window.setInterval(function() {
                     }
                 }
 
+
                 if(data.res.notice) {
                         if(!$(".notifications .badge#notice").length) {
                             badge=$(".notifications .badge").first().clone();
@@ -559,8 +604,6 @@ window.setInterval(function() {
         error: function() {}
     });   
 }, 60 * 1000);
-
-
 
 function startMoment() {
     $("#mchance").find('li').off('click').on('click', function () {
