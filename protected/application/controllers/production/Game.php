@@ -139,33 +139,41 @@ class Game extends \AjaxController
     public function startChanceGameAction($identifier)
     {
         $games = ChanceGamesModel::instance()->getGamesSettings();
-        if ($games[$identifier] && $identifier != 'moment') {
-            if ($this->session->get(Player::IDENTITY)->getBalance()['Points'] < $games[$identifier]->getGamePrice()) {
-                $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
-            }
+
+        if (!$games[$identifier] || $identifier == 'moment')
+            $this->ajaxResponse(array(), 0, 'INVALID_GAME_START');
+
+        if (isset($_SESSION['chanceGame']) && isset($_SESSION['chanceGame'][$identifier]))
+            $this->ajaxResponse(array(), 0, 'GAME_ALREADY_STARTED');
+
+        if ($this->session->get(Player::IDENTITY)->getBalance()['Points'] < $games[$identifier]->getGamePrice())
+            $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
+
+        try {
+            ChanceGamesModel::instance()->beginTransaction();
+
             $gameField = $games[$identifier]->generateGame();
-            $_SESSION['chanceGame']=array(
+            $_SESSION['chanceGame'] = array(
                 $identifier => array(
-                    'id'     => $identifier,
-                    'start'  => time(),
-                    'field'  => $gameField,
-                    'clicks' => array(), 
+                    'id' => $identifier,
+                    'start' => time(),
+                    'field' => $gameField,
+                    'clicks' => array(),
                     'status' => 'process',
                     '55clickcount' => $games[$identifier]->getTriesCount(),
                     '55failclickcount' => 0,
                 ));
-            //$this->session->set('chanceGame',             );
-            try {
-                $this->session->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Шанс (" . $games[$identifier]->getGameTitle() . ")");
-            } catch (EntityException $e) {
-                unset($_SESSION['chanceGame']);
-//                $this->session->remove('chanceGame');
-                $this->ajaxResponse($e->getMessage(), $e->getCode());                
-            }
-            $this->ajaxResponse(array('id' => $identifier, 'start' => time()));
-        } else {
-            $this->ajaxResponse(array(), 0, 'INVALID_GAME_START');
+
+            $this->session->get(Player::IDENTITY)->addPoints(-$games[$identifier]->getGamePrice(), "Шанс (" . $games[$identifier]->getGameTitle() . ")");
+            ChanceGamesModel::instance()->commit();
+
+        } catch (EntityException $e) {
+            ChanceGamesModel::instance()->rollBack();
+            unset($_SESSION['chanceGame']);
+            $this->ajaxResponse(array(), 0, $e->getMessage());
         }
+
+        $this->ajaxResponse(array('id' => $identifier, 'start' => time()));
     }
 
     public function chanceGamePlayAction($identifier)

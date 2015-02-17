@@ -34,4 +34,19 @@ class ChanceGamesModel extends Model
     public function getUnorderedChanceWinData($itemId, $player) { 
       return $this->getProcessor()->getUnorderedChanceWinData($itemId, $player);
     }
+
+    public function beginTransaction()
+    {
+        return $this->getProcessor()->beginTransaction();
+    }
+
+    public function commit()
+    {
+        return $this->getProcessor()->commit();
+    }
+
+    public function rollBack()
+    {
+        return $this->getProcessor()->rollBack();
+    }
 }
