@@ -1311,6 +1311,7 @@
         <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/main.js"></script>
         <script src="/tpl/js/ws.js"></script>
+        <script src="/tpl/js/ads.js"></script>
 
         <? include('popups.php') ?>
 
