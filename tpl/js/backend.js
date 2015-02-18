@@ -222,11 +222,16 @@ function createItemOrder(order, successFunction, failFunction, errorFunction)
 }
 
 function loadLotteryDetails(lotteryId, deps, successFunction, failFunction, errorFunction) {
+    $('#profile-history').fadeIn(200).find('.yr-tb').html('').prev().show().parents('section').nextAll().hide();
+    //$('#profile-history').find('.ws-dt.ch-hide').hide();
     var url = "/content/lottery/" + lotteryId;
     if (deps == 'next') {
         url = "/content/lottery/next/" + lotteryId;
     } else if (deps == 'prev') {
         url = "/content/lottery/prev/" + lotteryId;
+    } else if (deps == 'current') {
+        $('#profile-history').find('.ws-dt').text( $('.aw-bt[data-lotid="'+lotteryId+'"]').prevAll('.dt').text() );
+
     }
     $.ajax({
         url: url,

@@ -803,7 +803,7 @@ $(function(){
                     html += '<li>' + num + '</li>';
                 });
                 html += '</ul><div class="nw">' + lottery.winnersCount + '</div>';
-                if ((lottery.winnersCount > 0 || lottery.iPlayed || onlyMineLotteryResults) && (lottery.iPlayed || onlyMineLotteryResults)) {
+                if ((lottery.winnersCount > 0 || lottery.iPlayed || onlyMineLotteryResults)) {
                     html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
                 }
                 html += '</li>';
@@ -964,7 +964,7 @@ $(function(){
     }
 
     function showLotteryDetails() {
-        loadLotteryDetails($(this).data('lotid'), 'current',function(data) {
+        loadLotteryDetails($(this).data('lotid'), 'current', function(data) {
             renderLotteryDetails(data)
         }, function() {
             $('#profile-history').hide();
@@ -980,11 +980,17 @@ $(function(){
         });
         $('#profile-history').find('.loto-holder').html(combHtml);
         var yourId = '';
+
         $(data.res.winners).each(function(id, winner){
             if (winner.you) {
                 yourId = winner.id;
             }
-            winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'><div class="tl"><div class="ph" data-img="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div><div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div></div></li>';
+            winnerHtml += '<li data-id="'+winner.id+'" '+(winner.you ? 'class="you"' : '')+'>' +
+            '<div class="tl">' +
+                '<div class="ph" data-img="'+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+'" style="background-image:url('+(winner.avatar ? winner.avatar : '/tpl/img/default.jpg' )+')"></div>' +
+                '<div class="nm">'+(winner.name && winner.surname ? winner.name + ' ' + winner.surname : winner.nick)+'</div>' +
+            '</div>' +
+            '</li>';
         });
 
         yourId=playerId;
@@ -996,10 +1002,10 @@ $(function(){
             $('#profile-history').find('.ws-lt').hide();
 
         if (data.res.tickets[yourId]) {
-            $('#profile-history').find('.ws-pf-rt-bk').show();
-            $('#profile-history').find('.ws-dt.ch-hide').hide();
+            $('#profile-history').find('.ws-yr-tks-bk').show();
+            //$('#profile-history').find('.ws-dt.ch-hide').hide();
             //$('#profile-history').find('.wr-pf-ph img').attr('src', $('li[data-id="'+yourId+'"]').find('.ph img').attr('src'));
-            $('#profile-history').find('.wr-pf-ph').css('backgroundImage','url('+$('li[data-id="'+yourId+'"]').find('.ph').attr('data-img')+')');
+            //$('#profile-history').find('.wr-pf-ph').css('backgroundImage','url('+$('li[data-id="'+yourId+'"]').find('.ph').attr('data-img')+')');
             var tickets = data.res.tickets[yourId];
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
@@ -1018,18 +1024,24 @@ $(function(){
                 
                 ticketsHtml += '</li>';
             }
+
             $('#profile-history').find('.yr-tb').html(ticketsHtml);
             $(data.res.lottery.combination).each(function(id, num){
                 $('#profile-history').find('.yr-tb').find('li[data-num="'+num+'"]').addClass('won');
             });
         } else {
-            $('#profile-history').find('.ws-pf-rt-bk').hide();
+            //$('#profile-history').find('.ws-dt.ch-hide').hide();
+            ticketsHtml='<li class="yr-tt"><div class="yr-tt-tn none">Вы не принимали участие в данном розыгрыше</div></li>';
+            $('#profile-history').find('.yr-tb').html(ticketsHtml);
+            //$('#profile-history').find('.ws-yr-tks-bk').show();
         }
+
+        $('#profile-history').find('.wr-pf-pr').hide();
+
         $('#profile-history').find('.ws-lt').find('li').off('click').on('click', function(e) {
             e.stopPropagation();
         });
         $('#profile-history').find('.ws-lt').find('li:first').click();
-        $('#profile-history').fadeIn(200); 
 
         $('#profile-history .ar-r').off('click').on('click', nextLotteryDetails);
         $('#profile-history .ar-l').off('click').on('click', prevLotteryDetails);

@@ -221,7 +221,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                 'combination'  => $lotteryDetails['lottery']->getCombination(),
                 'date'  => $lotteryDetails['lottery']->getDate('d.m.Y'),
             ),
-            'winners' => array(),
+            'winners' => array(), //$lotteryDetails['lottery']->getBallsTotal(),
             'tickets' => array(),
         );
 
@@ -238,6 +238,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             );
         }
         */
+        //print_r($lotteryDetails['tickets']);
         foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
             $response['tickets'][$playerId] = array();
             foreach ($ticketData as $ticket) {

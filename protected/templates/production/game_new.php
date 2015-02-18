@@ -593,7 +593,7 @@
                                                 <? } ?>
                                             </ul>
                                             <div class="nw"><?=($lottery->getWinnersCount()+($lottery->getId()>84?1750:($lottery->getId()>76?1000:0)))?></div>
-                                            <? if ($lottery->getWinnersCount() > 0 && isset($playerPlayedLotteries[$lottery->getId()])) { ?>
+                                            <? if ($lottery->getWinnersCount() > 0 || isset($playerPlayedLotteries[$lottery->getId()])) { ?>
                                                 <div class="aw-bt" data-lotid="<?=$lottery->getId()?>">
                                                     <a href="javascript:void(0)"></a>
                                                 </div>

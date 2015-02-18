@@ -83,6 +83,8 @@
                         <div class="wr-pf-ph" style="background-image:url('/tpl/img/default.jpg');">
                             <!--img src="/tpl/img/preview/profile-photo.jpg" /-->
                         </div>
+                        <div class="wr-pf-pr" style="background-image:url('/tpl/img/preloader.gif');">
+                        </div>
                         <ul class="yr-tb">
                         </ul>
                     </div>

@@ -214,6 +214,7 @@ class LotteriesModelDBProcessor implements IProcessor
         $lottery = new Lottery();
         $lottery->formatFrom('DB', $lotteryData);
 
+        /*
         $winners = array();
             // get winners
             $sql = "SELECT `p`.* FROM `PlayerLotteryWins` AS `plw` 
@@ -241,6 +242,8 @@ class LotteriesModelDBProcessor implements IProcessor
                     $returnData['winners'][] = $player;
                 }
             }
+        */
+
             // get lottery tikets
             $sql = "SELECT * FROM `LotteryTickets` WHERE `LotteryId` = :lotid AND `PlayerId` = :plid";
 
@@ -266,7 +269,6 @@ class LotteriesModelDBProcessor implements IProcessor
                     }
                     $returnData['tickets'][$ticket->getPlayerId()][$ticket->getTicketNum()] = $ticket;
                 }
-
             }
 
         $returnData['lottery'] = $lottery;
