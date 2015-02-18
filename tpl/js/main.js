@@ -1043,8 +1043,8 @@ $(function(){
         });
         $('#profile-history').find('.ws-lt').find('li:first').click();
 
-        $('#profile-history .ar-r').off('click').on('click', nextLotteryDetails);
-        $('#profile-history .ar-l').off('click').on('click', prevLotteryDetails);
+        $('#profile-history .ar-r').off('click').on('click', prevLotteryDetails);
+        $('#profile-history .ar-l').off('click').on('click', nextLotteryDetails);
     }
 
     /* ==========================================================================
