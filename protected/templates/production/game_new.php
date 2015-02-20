@@ -662,7 +662,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов</div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="color:red">Внимание! Приглашать участников через CAP системы (буксы) категорически запрещено!</span></div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -1249,6 +1249,19 @@
                     </section>
                 </div>
             </div>
+
+            <div class="badge" id="qgame" style="display:none">
+                <div class="bl-pp_td">
+                    <section class="badge-block pop-box">
+                        <div class="cs"></div>
+                        <div class="title"><?=$quickGame['title'];?></div>
+                        <div class="txt">
+                            <div>Игра будет доступна через <span id="timer_soon"></span></div>
+                            <div class="start">Играть!</div>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
 
         </article>
@@ -1332,6 +1345,7 @@
         var playerId   = <?=$player->getId()?>;
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
+        var quickGame = {};
         var online = 1;
         var page = <?=($page?1:0)?>;
         var appId   = 0;
@@ -1346,8 +1360,16 @@
         var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;*/ ?>
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
-
         updateNotices(unreadNotices);
+        <? /* if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
+
+        $("#timer_soon").countdown(
+            {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
+            onExpiry: showQuickGameStart
+        });
+        $("#timer_soon").countdown('resume');
+        $("#timer_soon").countdown('option', {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>)});
+        */ ?>
         var posts = {
             fb : {
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',
