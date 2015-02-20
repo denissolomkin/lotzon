@@ -48,6 +48,10 @@ class MomentalChances extends PrivateArea
                     $game->setMinTo($this->request()->post('minTo'));
                     $game->setPointsWin($this->request()->post('pointsWin'));
                 break;
+                case 'quickgame':
+                    $game->setGameTitle($this->request()->post('title'));
+                    $game->setMinFrom($this->request()->post('minFrom'));
+                    break;
                 case '33' :
                 case '44' :
                 case '55' :

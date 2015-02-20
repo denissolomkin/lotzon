@@ -172,7 +172,6 @@ min-height: 17px;
 }
 
 .qgames .game-build {
-    max-width: 590px;
     position: relative;
     float: left;
     margin: 10px;
@@ -235,9 +234,9 @@ min-height: 17px;
 .qgames .holder div .glyphicon {margin: 5px;position: absolute;top: 0px;right: 0;cursor: pointer;}
 .qgames .ul {clear: both;}
 /*.qgames .field{width: 100%;margin: 10px 0; }*/
-.qgames .field div.input-group{margin-right: 10px;margin-bottom: 10px;}
+.qgames .field div.input-group{margin-right: -5px;margin-bottom: 10px;}
 .qgames .field div:last-of-type {margin-right: 0px;}
-.qgames .field .input-group-addon, .qgames .field .form-control {width: 42px;}
+.qgames .field .input-group-addon, .qgames .field .form-control {width: 42px;font-size: 9px;}
 .qgames ul > li {width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../../../tpl/img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;
     color:transparent;
     position: relative;

@@ -584,14 +584,29 @@ window.setInterval(function() {
                     }
                 }
 
+                /*
                 if(data.res.soon) {
-                    if(!$(".notifications .badge#soon").length) {
-                        badge=$(".notifications .badge").first().clone();
+                    if($(".notifications .badge#soon:visible").length || data.res.soon.important) {
+                        badge=$(".notifications .badge#soon");//$(".notifications .badge").first().clone();
                         badge.attr('id', data.res.soon.name).fadeIn(1200).find('.title').text(data.res.soon.title).next().html(data.res.soon.txt);
                         $(".notifications").append(badge);
                     }
-                }
+                }*/
+                if(data.res.qgame) {
+                    if($(".notifications .badge#soon:visible").length || data.res.qgame.important) {
+                        badge = $(".notifications .badge#qgame");
+                        badge.fadeIn(1200);
+                        if(data.res.qgame.timer>0){
+                            $("#timer_soon").countdown({until: (data.res.qgame.timer) ,layout: "{mnn}:{snn}",
+                                onExpiry: showQuickGameStart});
+                            $("#timer_soon").countdown('resume');
+                            $("#timer_soon").countdown('option', {until: (data.res.qgame.timer)});
+                        } else {
+                            showQuickGameStart();
+                        }
 
+                    }
+                }
 
                 if(data.res.notice) {
                         if(!$(".notifications .badge#notice").length) {
@@ -609,6 +624,10 @@ window.setInterval(function() {
         error: function() {}
     });   
 }, 60 * 1000);
+
+function showQuickGameStart(){
+    $(".notifications #qgame .badge-block .txt div").first().hide().next().fadeIn(200).parents('.badge-block').find('.cs').hide();
+}
 
 function startMoment() {
     $("#mchance").find('li').off('click').on('click', function () {

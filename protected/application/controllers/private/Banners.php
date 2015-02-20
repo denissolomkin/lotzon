@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Admin,  \SupportedCountriesModel, \Session2;
+use \Application, \PrivateArea, \Config, \Admin,  \SupportedCountriesModel, \QuickGamesModel, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
@@ -22,6 +22,7 @@ class Banners extends PrivateArea
     public function indexAction()
     {
         $list = Config::instance()->banners;
+        $games = QuickGamesModel::instance()->getGamesSettings();
         $supportedCountries = SupportedCountriesModel::instance()->getEnabledCountriesList();
 
         $this->render('admin/banners', array(
@@ -30,6 +31,7 @@ class Banners extends PrivateArea
             'activeMenu' => $this->activeMenu,
             'supportedCountries'  => $supportedCountries,
             'list'       => $list,
+            'games'       => $games,
         ));
     }
 

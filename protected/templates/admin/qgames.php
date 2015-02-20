@@ -42,8 +42,12 @@
                         <div class="row-fluid tab" id="field">
                                 <div class="row-fluid field">
                                     <div class="input-group">
-                                        <span class="input-group-addon">M</span>
-                                        <input class="form-control m" type="text" name="game[Field][m]" value="1" placeholder="Отступ" value="">
+                                        <span class="input-group-addon">R</span>
+                                        <input class="form-control r" type="text" name="game[Field][r]" value="1" placeholder="Справа" value="">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">B</span>
+                                        <input class="form-control b" type="text" name="game[Field][b]" value="1" placeholder="Снизу" value="">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">W</span>
@@ -173,7 +177,8 @@
             holder.find('.y').val(game.Field.y);
             holder.find('.h').val(game.Field.h);
             holder.find('.w').val(game.Field.w);
-            holder.find('.m').val(game.Field.m).trigger('input');
+            holder.find('.r').val(typeof game.Field.r !== "undefined" && game.Field.r?game.Field.r:0);
+            holder.find('.b').val(typeof game.Field.b !== "undefined" && game.Field.b?game.Field.b:0).trigger('input');
             holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));
             holder.find('[name="game[Title]"]').val(game.Title);
             holder.find('[name="game[Id]"]').val(game.Id);
@@ -199,8 +204,6 @@
                     holder.find('.'+prize.t+'-holder').append(html);
                 });
             }
-
-
         }
 
         function buildGame(game){
@@ -218,10 +221,10 @@
             holder.addClass('disabled');
 
             var html='';
-            for(y1=0;y1<game.Field.y;y1++)
-                for(x1=0;x1<game.Field.x;x1++)
-                    html+="<li style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+game.Field.m+"px "+game.Field.m+"px 0;'></li>"
-            holder.find('.t').text(game.Title).next().text(game.Description).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.m))*parseInt(game.Field.x))).html(html);
+            for(y1=1;y1<=game.Field.y;y1++)
+                for(x1=1;x1<=game.Field.x;x1++)
+                    html+="<li style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+(x1!=game.Field.x?game.Field.r:0)+"px "+(y1!=game.Field.y?game.Field.b:0)+"px 0;'></li>"
+            holder.find('.t').text(game.Title).next().text(game.Description).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
 
 
             var i=0;
@@ -245,20 +248,21 @@
         };
 
 
-        $(document).on('input','.w,.h,.x,.y,.m',function(){
+        $(document).on('input','.w,.h,.x,.y,.r,.b',function(){
             holder=$(this).parent().parent().parent().parent();
             x=(parseInt(holder.find('.x').val())?parseInt(holder.find('.x').val()):0);
             y=(parseInt(holder.find('.y').val())?parseInt(holder.find('.y').val()):0);
             h=(parseInt(holder.find('.h').val())?parseInt(holder.find('.h').val()):0);
             w=(parseInt(holder.find('.w').val())?parseInt(holder.find('.w').val()):0);
-            m=(parseInt(holder.find('.m').val())?parseInt(holder.find('.m').val()):0);
+            r=(parseInt(holder.find('.r').val())?parseInt(holder.find('.r').val()):0);
+            b=(parseInt(holder.find('.b').val())?parseInt(holder.find('.b').val()):0);
             var html='';
-            for(y1=0;y1<y;y1++)
-                for(x1=0;x1<x;x1++)
-                    html+="<li style='width: "+w+"px;height: "+h+"px;margin: 0 "+m+"px "+m+"px 0;'></li>"
+            for(y1=1;y1<=y;y1++)
+                for(x1=1;x1<=x;x1++)
+                    html+="<li style='width: "+w+"px;height: "+h+"px;margin: 0 "+(x1!=x?r:0)+"px "+(y1!=y?b:0)+"px 0;'></li>"
 
-            holder.find('ul').css('width',((w+m)*x)).html(html);
-            $("#field-size").text(((w+m)*x)+'x'+((h+m)*y)+'px')
+            holder.find('ul').css('width',((w+r)*x-r)).html(html);
+            $("#field-size").text(((w+r)*x-r)+'x'+((h+b)*y-b)+'px')
             holder.find('.save-game').addClass('btn-success');
 
         });
@@ -294,7 +298,7 @@
         });
 
     $('.add-game').on('click', function() {
-        var game = {Id:0,Title:'',Description:'',Banner:'',Field:{x:6,y:1,m:1,w:95,h:95,c:1}};
+        var game = {Id:0,Title:'',Description:'',Banner:'',Field:{x:6,y:1,b:1,r:1,w:95,h:95,c:1}};
         genGame(game);
         $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
         $('#editGame').find('div.tab').hide().first().show();

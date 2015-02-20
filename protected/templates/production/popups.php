@@ -582,18 +582,19 @@
 <!--=========================================================================
                             QUICK GAME POPUP CODE
     ==========================================================================-->
-<div class="bl-pp-bk popup" id="qgame" style="display: none;">
+<div class="bl-pp-bk popup" id="qgame-popup" style="display: none;">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="quickgame pop-box">
                 <div class="cs" onclick="location.reload();"></div>
                 <div class="qg-bk-pg" style="position:relative;">
-                    <div class="qg-bk-tl"></div>
+                    <div class="qg-bk-tl">СЛУЧАЙНАЯ ИГРА</div>
                     <div class="qg-txt"></div>
-                    <div style="/*bottom:0;position: absolute;*/">
+                    <div>
                         <div class="qg-msg">
                             <div class="td">
                                 <div class="txt">Поздравляем, выигрыш зачислен на Ваш баланс</div>
+                                <div class="preloader"></div>
                             </div>
                         </div>
                         <ul class="qg-tbl" style="position: relative;">
