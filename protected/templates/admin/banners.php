@@ -6,6 +6,9 @@
             <input type="checkbox" name='banners[settings][enabled]' <?=$list['settings']['enabled']?'checked ':'';?>data-toggle="toggle">
         </h2>
     </div>
+        <? foreach($games as $id=>$game)
+            if(!isset($list['game'.$id]))
+                $list['game'.$id]='';?>
         <script>
         var safeColors = ['00','33','66','99','cc','ff'];
         var rand = function() {
@@ -31,9 +34,9 @@
                 foreach ($list as $sid=>$sector) : ?>
                     <div class="col-md-3  row-banner">
             <div class="sector" /*style="background-color: rgba(<?=rand(0,255).','.rand(0,255).','.rand(0,255)?>,0.2);"*/>
-                <div style="" >
+                <div>
                     <button type="button" data-sector="<?=$sid?>" class="btn btn-success btn-xs add-group"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> <small><?=$sid?></small><input type="hidden" name="banners[<?=$sid?>]" value="">
+                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> <small><?=(strstr($sid,'game')?$games[(str_replace('game','',$sid))]['Title']:$sid);?></small><input type="hidden" name="banners[<?=$sid?>]" value="">
                 </div>
                 <div id="<?=$sid?>">
                 <? $gid=0;

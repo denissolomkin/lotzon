@@ -818,9 +818,7 @@ class PlayersDBProcessor implements IProcessor
             ));
 
         } catch (PDOException $e) {
-            $file=fopen(PATH_ROOT."../error.log", "a+");
-            fwrite($file,$e->getMessage()."\r\n");
-            fclose($file);
+            error_log($e->getMessage());
             throw new ModelException("Error processing storage query", 500);
         }
 

@@ -184,6 +184,32 @@
           </div>
         </form> 
     </div>
+    <div class="row-fluid">
+        <h4>Случайная игра</h4>
+    </div>
+    <div class="row-fluid">
+        <form class="form-inline" role="form" data-game="quickgame">
+            <div class="form-group">
+                <label class="sr-only">Название</label>
+                <input type="text" class="form-control" name="title" placeholder="Название игры" value="<?=@$games['quickgame']->getGameTitle()?>">
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="sr-only"></label>
+                    <input type="text" name="minFrom" class="form-control" placeholder="Периодичность" value="<?=@$games['quickgame']->getMinFrom()?>">
+                </div>
+            </div>
+            мин.
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="sr-only"></label>
+                    <button class="btn btn-md btn-success save-game"> Сохранить</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <hr />
     </div>
 </div>
 
@@ -223,6 +249,10 @@
         game.minFrom = form.find('input[name="minFrom"]').val();
         game.minTo = form.find('input[name="minTo"]').val();
         game.pointsWin = form.find('input[name="pointsWin"]').val();
+          break;
+      case 'quickgame' :
+          game.title = form.find('input[name="title"]').val();
+          game.minFrom = form.find('input[name="minFrom"]').val();
       break;
       case 33 : 
       case 44 :

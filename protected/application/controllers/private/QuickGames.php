@@ -46,7 +46,6 @@ class QuickGames extends PrivateArea
             $game->setId($post['Id'])
                 ->setTitle($post['Title'])
                 ->setDescription($post['Description'])
-                ->setBanner($post['Banner'])
                 ->setPrizes($post['Prizes'])
                 ->setField($post['Field'])
                 ->setEnabled($post['Enabled']?true:false);
