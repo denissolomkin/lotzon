@@ -57,11 +57,23 @@ class QuickGamesProcessor
 
     public function getRandomGame()
     {
-        $sql = "SELECT * FROM `QuickGames` WHERE Enabled=1 ORDER BY RAND() LIMIT 1";
 
+        $sql = "SELECT Id FROM `QuickGames` WHERE Enabled=1";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        $id= $sth->fetchAll();
+        shuffle($id);
+        $id=array_values($id)[0]['Id'];
+
+        $sql = "SELECT * FROM `QuickGames` WHERE Id=:id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array('id'=>$id));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
