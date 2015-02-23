@@ -112,6 +112,7 @@ class Game extends \AjaxController
 
             $game->setUserId($player->getId())
                 ->setTime(time())
+                ->setLang($player->getLang())
                 ->setUid(uniqid())
                 ->loadPrizes()
                 ->saveGame();

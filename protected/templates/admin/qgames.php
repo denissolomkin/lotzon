@@ -24,7 +24,9 @@
                         <div class="row-fluid title">
                             <div class="form-group">
                                 <label class="sr-only">Название</label>
-                                <input type="text" class="form-control" name="game[Title]" placeholder="Название игры" value="">
+                                <? foreach ($langs as $lang) { ?>
+                                <input type="text" class="form-control" name="game[Title][<?=$lang?>]" placeholder="Название игры" value="">
+                                <? } ?>
                                 <input type="hidden" class="form-control" name="game[Id]" value="0">
                             </div>
                             <div class="form-group">
@@ -32,7 +34,14 @@
                             </div>
                         </div>
                         <div class="row-fluid description">
-                            <textarea class="form-control" rows=5 name="game[Description]" placeholder="Описание игры"></textarea>
+                            <? foreach ($langs as $lang) { ?>
+                            <textarea class="form-control" rows=5 name="game[Description][<?=$lang?>]" placeholder="Описание игры"></textarea>
+                            <? } ?>
+                        </div>
+                        <div class="row-fluid banner">
+                            <? foreach ($langs as $lang) { ?>
+                            <button type="button" class="btn btn-md lang btn-default" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
+                        <? } ?>
                         </div>
                         <!--div class="row-fluid banner">
                             <textarea class="form-control" name="game[Banner]" placeholder="Баннер"></textarea>
@@ -173,6 +182,7 @@
 
         function genGame(game){
             holder=$("#editGame").find('form');
+            holder.find('.lang').first().click();
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
             holder.find('.h').val(game.Field.h);
@@ -181,8 +191,16 @@
             holder.find('.b').val(typeof game.Field.b !== "undefined" && game.Field.b?game.Field.b:0).trigger('input');
             holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));
             holder.find('[name="game[Id]"]').val(game.Id);
-            holder.find('[name="game[Title]"]').val(game.Title);
-            holder.find('[name="game[Description]"]').text(game.Description);
+            holder.find('[name^="game[Title]"], [name^="game[Description]"]').val('');
+            $.isPlainObject(game.Title) && $.each(game.Title, function (lang, text) {
+                holder.find('[name="game[Title]['+lang+']"]').val(text);
+            });
+            $.isPlainObject(game.Description) && $.each(game.Description, function (lang, text) {
+                holder.find('[name="game[Description]['+lang+']"]').val(text);
+            });
+
+            //holder.find('[name="game[Title]"]').val(game.Title);
+            //holder.find('[name="game[Description]"]').text(game.Description);
 
 
             holder.find('.prize').remove();
@@ -210,6 +228,7 @@
                 $('.game-builds').prepend($('<div class="game-build" data-id="'+game.Id+'">' +
                     '<div class="t"></div>' +
                     '<div class="d"></div>' +
+                    '<div class="c"></div>' +
                     '<ul></ul>' +
                 '</div>'));
             }
@@ -223,7 +242,7 @@
             for(y1=1;y1<=game.Field.y;y1++)
                 for(x1=1;x1<=game.Field.x;x1++)
                     html+="<li style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+(x1!=game.Field.x?game.Field.r:0)+"px "+(y1!=game.Field.y?game.Field.b:0)+"px 0;'></li>"
-            holder.find('.t').text(game.Title).next().text(game.Description).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
+            holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang?>).next().text(game.Description.<?=\Config::instance()->defaultLang?>).next().text(game.Field.c).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
 
 
             var i=0;
@@ -351,6 +370,13 @@
     });
 
 
+        $('.lang').on('click', function() {
+            lang=$(this).data('lang');
+            $('.lang').removeClass('active');
+            $(this).addClass('active');
+            $('input[name^="game[Title]"], textarea[name^="game[Description]"]',$('#editGame')).hide();
+            $('input[name="game[Title]['+lang+']"], textarea[name="game[Description]['+lang+']"]',$('#editGame')).fadeIn(200);
+        });
   $('.save-game').on('click', function() {
 
     var button = $(this);

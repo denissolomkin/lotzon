@@ -9,8 +9,8 @@ class QuickGamesProcessor
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $game->getId(),
-                ':t'     => $game->getTitle(),
-                ':d'     => $game->getDescription(),
+                ':t'     => @serialize($game->getTitle()),
+                ':d'     => @serialize($game->getDescription()),
                 ':p'     => @serialize($game->getPrizes()),
                 ':f'     => @serialize($game->getField()),
                 ':e'     => $game->isEnabled(),
@@ -39,20 +39,11 @@ class QuickGamesProcessor
             $games[$gameData['Id']] = $gameData;
             $games[$gameData['Id']]['Field'] = @unserialize($gameData['Field']);
             $games[$gameData['Id']]['Prizes'] = @unserialize($gameData['Prizes']);
+            $games[$gameData['Id']]['Title'] = @unserialize($gameData['Title']);
+            $games[$gameData['Id']]['Description'] = @unserialize($gameData['Description']);
         }
         return $games;
 
-
-        foreach ($data as $gameData) {
-            $game = new QuickGame();
-            $game->setId($gameData['Id'])
-                ->setPrizes(@unserialize($gameData['Prizes']))
-                ->setTitle($gameData['Title'])
-                ->setField(@unserialize($gameData['Field']))
-                ->setEnabled($gameData['Enabled']);
-            $games[$game->getId()] = $game;
-        }
-        return $games;
     }
 
     public function getRandomGame()
@@ -81,8 +72,8 @@ class QuickGamesProcessor
 
         $game = new QuickGame();
         $game->setId($data['Id'])
-            ->setTitle($data['Title'])
-            ->setDescription($data['Description'])
+            ->setTitle(@unserialize($data['Title']))
+            ->setDescription(@unserialize($data['Description']))
             ->setPrizes(@unserialize($data['Prizes']))
             ->setField(@unserialize($data['Field']))
             ->setEnabled($data['Enabled']);

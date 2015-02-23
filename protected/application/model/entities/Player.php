@@ -53,6 +53,7 @@ class Player extends Entity
     private $_dateLastChance = '';
     private $_dateAdBlocked  = '';
     private $_country        = '';
+    private $_lang        = '';
 
     private $_generatedPassword = '';
 
@@ -380,7 +381,18 @@ class Player extends Entity
         }
         
         return $date;
-    }  
+    }
+
+    public function setLang($country)
+    {
+        $this->_lang = (in_array($country, \Config::instance()->langs)?$country:\Config::instance()->defaultLang);
+        return $this;
+    }
+
+    public function getLang()
+    {
+        return $this->_lang;
+    }
 
     public function setCountry($country)
     {
@@ -1291,6 +1303,7 @@ class Player extends Entity
                  ->setDateLastNotice($data['DateNoticed'])
                  ->setDateLastChance($data['DateChanced'])
                  ->setCountry($data['Country'])
+                 ->setLang($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setAgent($data['Agent'])
                  ->setReferer($data['Referer'])

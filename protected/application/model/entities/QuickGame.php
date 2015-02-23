@@ -7,6 +7,7 @@ class QuickGame extends Entity
     private $_uid = '';
     private $_title = '';
     private $_over = 0;
+    private $_lang = '';
     private $_description = '';
     private $_enabled = true;
     private $_prizes = array();
@@ -31,6 +32,17 @@ class QuickGame extends Entity
         return $this->_id;
     }
 
+    public function setLang($lang)
+    {
+        $this->_lang = $lang;
+
+        return $this;
+    }
+
+    public function getLang()
+    {
+        return $this->_lang;
+    }
     public function setUid($uid)
     {
         $this->_uid = $uid;
@@ -109,9 +121,12 @@ class QuickGame extends Entity
         return $this;
     }
 
-    public function getDescription()
+    public function getDescription($lang=null)
     {
-        return $this->_description;
+        if($lang)
+            return $this->_description[$lang];
+        else
+            return $this->_description;
     }
 
     public function setOver($over)
@@ -133,9 +148,12 @@ class QuickGame extends Entity
         return $this;
     }
 
-    public function getTitle()
+    public function getTitle($lang=null)
     {
-        return $this->_title;
+        if($lang)
+            return $this->_title[$lang];
+        else
+            return $this->_title;
     }
 
     public function setTime($time)
@@ -179,8 +197,8 @@ class QuickGame extends Entity
     function getStat() {
         $field = $this->getField();
         $field['c']-=count($this->getGameField());
-        return array('Title'=>$this->getTitle(),
-            'Description'=>$this->getDescription(),
+        return array('Title'=>$this->getTitle($this->getLang()),
+            'Description'=>$this->getDescription($this->getLang()),
             'Uid'=>$this->getUid(),
             'Field' => $field,
             'GameField' => $this->getGameField());
