@@ -103,10 +103,8 @@ class GameSettings
 
     public function addGameSettings($settings)
     {
-        echo $settings['StartTime'];
         if (isset($settings['StartTime']) && !is_numeric($settings['StartTime'])) {
             $settings['StartTime'] = strtotime($settings['StartTime'], 0);
-            echo $settings['StartTime'];
         }
 
         $this->_gameSettings[] = $settings;
