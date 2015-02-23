@@ -180,10 +180,9 @@
             holder.find('.r').val(typeof game.Field.r !== "undefined" && game.Field.r?game.Field.r:0);
             holder.find('.b').val(typeof game.Field.b !== "undefined" && game.Field.b?game.Field.b:0).trigger('input');
             holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));
-            holder.find('[name="game[Title]"]').val(game.Title);
             holder.find('[name="game[Id]"]').val(game.Id);
+            holder.find('[name="game[Title]"]').val(game.Title);
             holder.find('[name="game[Description]"]').text(game.Description);
-            holder.find('[name="game[Banner]"]').text(game.Banner);
 
 
             holder.find('.prize').remove();

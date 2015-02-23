@@ -9,10 +9,13 @@ class GameSettingsDBProcessor
             "TRUNCATE TABLE `LotterySettings`",
         );
 
-        $timesSql = "INSERT INTO `GamesSettings` (`StartTime`) VALUES %s";
+        $timesSql = "INSERT INTO `GamesSettings` (`StartTime`,`Tries`,`Balls`) VALUES %s";
         $parts = array();
-        foreach ($settings->getGameTimes() as $time) {
-            $parts[] = sprintf("(%s)", DB::Connect()->quote($time));
+        /*foreach ($settings->getGameTimes() as $time) {
+            $parts[] = sprintf("(%s,%s,%s)", array(DB::Connect()->quote($time),DB::Connect()->quote($time),DB::Connect()->quote($time)));
+        }*/
+        foreach ($settings->getGameSettings() as $time) {
+            $parts[] = vsprintf("(%s,%s,%s)", array(DB::Connect()->quote($time['StartTime']),DB::Connect()->quote($time['Tries']),DB::Connect()->quote($time['Balls'])));
         }
         $timesSql = sprintf($timesSql, join(",", $parts));
 
@@ -44,6 +47,7 @@ class GameSettingsDBProcessor
 
             DB::Connect()->query($timesSql);
             DB::Connect()->query($prizesSql);
+            DB::Connect()->commit();
         } catch (PDOException $e) {
             DB::Connect()->rollback();
 
@@ -69,8 +73,10 @@ class GameSettingsDBProcessor
 
         $times = $times->fetchAll();
         foreach ($times as $time) {
-            $settings->addGameTime($time['StartTime']);
+              $settings->addGameTime($time['StartTime']);
+              $settings->addGameSettings($time);
         }
+
 
         $lots = $lots->fetchAll();
         $prizes = array();

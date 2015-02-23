@@ -31,7 +31,6 @@ class Index extends \SlimController\SlimController
 
     public function indexAction($page='tickets')
     {
-
         $session = new Session();
         // validate registration
         if ($vh = $this->request()->get('vh')) {
@@ -113,6 +112,7 @@ class Index extends \SlimController\SlimController
        if (!$session->has('MomentChanseLastDate') || time() - $session->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
              $session->set('MomentChanseLastDate', time());
        }
+
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
@@ -136,7 +136,6 @@ class Index extends \SlimController\SlimController
         $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
         $reviews = ReviewsModel::instance()->getList(1, self::REVIEWS_PER_PAGE);
         $notices = NoticesModel::instance()->getPlayerUnreadNotices($session->get(Player::IDENTITY));
-
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($session->get(Player::IDENTITY));
         $this->render('production/game_new', array(
             'page'        => ($seo['pages']?$page:0),
@@ -157,6 +156,10 @@ class Index extends \SlimController\SlimController
             'seo' => $seo,
             'chanceGames'  => $chanceGames,
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
+            'quickGame' => array(
+                'current'=>$session->has('QuickGame'),
+                'title'=>$chanceGames['quickgame']->getGameTitle(),
+                'timer'=>$session->get('QuickGameLastDate') + $chanceGames['quickgame']->getMinFrom()  * 60 - time()),
             'playerTransactions' => $playerTransactions,
             'banners'      => $banners
         ));

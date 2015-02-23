@@ -11,8 +11,7 @@
 		if(!file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
 		{
 			file_put_contents($tmp, '');
-
-            HoldLotteryAndCheck(0, 40, 50);
+            HoldLotteryAndCheck(0, ($gameSettings['Balls']?:40), ($gameSettings['Tries']?:50));
 
             unlink($tmp);
 		}

@@ -1151,6 +1151,7 @@ class Player extends Entity
             throw new EntityException("ACCESS_DENIED", 403);
         }
 
+
         if ($this->getPassword() !== $this->compilePassword($password)) {
             $this->writeLog(array('action'=>'INVALID_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'danger'));
             throw new EntityException("INVALID_PASSWORD", 403);
@@ -1162,6 +1163,9 @@ class Player extends Entity
         if(!$_COOKIE[self::PLAYERID_COOKIE])
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
+        $session = new Session();
+        $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))?$this->getDateLastLogin():time()));
+
         $this->setDateLastLogin(time())
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
@@ -1170,7 +1174,6 @@ class Player extends Entity
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update();
 
-        $session = new Session();
         $session->set(Player::IDENTITY, $this);
 
         return $this;

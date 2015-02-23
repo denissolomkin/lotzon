@@ -33,6 +33,14 @@ class Game extends \PrivateArea
         ));
     }
 
+
+    public function simulationAction()
+    {
+        require_once(PATH_ROOT.'shedule/lottery.inc.php');
+        HoldLotteryAndCheck(0,
+            $this->request()->post('Balls', 0),
+            $this->request()->post('Tries', 0), 0, 'MoneyTotal', true);
+    }
     public function saveAction()
     {
         if ($this->request()->isAjax()) {
@@ -66,7 +74,8 @@ class Game extends \PrivateArea
             }
 
             foreach ($lotteries as $time) {
-                $settings->addGameTime($time);
+                //$settings->addGameTime($time);
+                $settings->addGameSettings($time);
             }
 
             try {

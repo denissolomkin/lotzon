@@ -99,25 +99,51 @@ class Game extends \AjaxController
 
     public function startQuickGameAction()
     {
-        if ($this->session->get('QuickGameLastDate') + 30 * 60 > time() AND 0) {
-            $this->ajaxResponse(array(), 0, 'NOT_TIME_YET');
+        //$this->session->remove('QuickGame');
+        $player=$this->session->get(Player::IDENTITY);
+        $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
+        if ($this->session->get('QuickGameLastDate') + $chanceGames['quickgame']->getMinFrom() * 60 > time()) {
+            $this->ajaxResponse(array(), 0, 'NOT_TIME_YET'.$this->session->get('QuickGameLastDate') + $chanceGames['quickgame']->getMinFrom() * 60 > time());
         }
 
-        if($game = QuickGamesModel::instance()->getRandomGame()) {
+        if ($this->session->has('QuickGame') && $game=$this->session->get('QuickGame')) {
+            $resp=$game->getStat();
+        } else if($game = QuickGamesModel::instance()->getRandomGame()) {
 
-            $game->setUserId($this->session->get(Player::IDENTITY)->getId())
+            $game->setUserId($player->getId())
                 ->setTime(time())
+                ->setUid(uniqid())
+                ->loadPrizes()
                 ->saveGame();
 
-            $this->session->set('QuickGameLastDate', time());
             $this->session->set('QuickGame', $game);
-
-            $this->ajaxResponse(
-                array('Title'=>$game->getTitle(),
-                    'Description'=>$game->getDescription(),
-                    'Field' => $game->getField())
-            );
+            $resp = $game->getStat();
         }
+
+        if (isset($game) && is_array(Config::instance()->banners['game' . $game->getId()]))
+            foreach (Config::instance()->banners['game' . $game->getId()] as $group) {
+                if (is_array($group)) {
+                    shuffle($group);
+                    foreach ($group as $banner) {
+                        if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
+                            continue;
+
+                        if (!rand(0, $banner['chance'] - 1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
+                            $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
+                                str_replace('document.write', "$('#mchance .block').append", $banner['div']) .
+                                str_replace('document.write', "$('#mchance .block').append", $banner['script']);
+                        else {
+                            $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
+                                str_replace('document.write', "$('#mchance .block').append", $banner['div']) .
+                                str_replace('document.write', "$('#mchance .block').append", $banner['script']);
+                        }
+                        break;
+                    }
+                }
+            }
+
+        if($this->session->has('QuickGame'))
+            $this->ajaxResponse($resp);
     }
 
     public function quickGamePlayAction()
@@ -130,10 +156,31 @@ class Game extends \AjaxController
             $this->ajaxResponse(array(), 0, 'CELL_NOT_SELECT');
         } elseif(!($game = $this->session->get('QuickGame'))) {
             $this->ajaxResponse(array(), 0, 'WRONG_GAME');
+        } elseif($game->isOver()) {
+            $this->ajaxResponse(array(), 0, 'GAME_IS_OVER');
+            $this->session->remove('QuickGame');
         }
-        $this->ajaxResponse(
-            $game->doMove($cell)
-        );
+
+        $res = $game->doMove($cell);
+
+        if($game->isOver()) {
+            if($game->getGamePrizes())
+                foreach($game->getGamePrizes() as $currency=>$sum)
+                    if(in_array($currency,array(GameSettings::CURRENCY_POINT,GameSettings::CURRENCY_MONEY)) && $sum)
+                        try {
+                            $transaction = new \Transaction();
+                            $transaction->setPlayerId($player->getId())
+                                ->setSum($sum)
+                                ->setCurrency($currency)
+                                ->setDescription("Выигрыш " . $game->getTitle());
+                            $transaction->create();
+                        } catch (EntityException $e) {
+                        }
+            $this->session->set('QuickGameLastDate', time());
+            unset($_SESSION['timer_soon']);
+            $this->session->remove('QuickGame');
+        }
+        $this->ajaxResponse($res);
     }
 
     public function startChanceGameAction($identifier)

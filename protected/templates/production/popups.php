@@ -128,10 +128,10 @@
                             <input type="radio" name="cash" id="yandex" hidden />
                             <label for="yandex">Яндекс деньги</label>
                         </li>
-                        <li>
+                        <!--li>
                             <input type="radio" name="cash" id="p24" hidden />
                             <label for="p24">Приват 24</label>
-                        </li>
+                        </li-->
                     </ul>
                     <script>
                         $('input[name="cash"]').prop('checked', false);
@@ -234,7 +234,7 @@
                     </section>
 
                     <!-- PRIVAT24 FORM -->
-                    <section class="p24 form">
+                    <!--section class="p24 form">
                         <form onsubmit="moneyOutput('private24', this); return false;" method="POST">
                             <div class="inp-bk">
                                 <div class="ph">Номер карты</div>
@@ -252,12 +252,12 @@
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input type="file" class="f_input" name="file" />
-                            </div-->
+                            </div- ->
                             <div class="s-b">
                                 <input type="submit" value="вывести" class="sb_but">
                             </div>
                         </form>
-                    </section>
+                    </section-->
                 </div>
             </section>
         </div>

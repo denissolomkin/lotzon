@@ -417,7 +417,7 @@ class Players extends \AjaxController
 
         $resp = array();
         if ($this->session->has(Player::IDENTITY) && $player=$this->session->get(Player::IDENTITY)) {
-            $resp['player']=true;
+            $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
             $AdBlockDetected=$this->request()->get('online', null);
 
@@ -447,32 +447,33 @@ class Players extends \AjaxController
                 }
             }
 
-            /*
-            $timer=30;
-            //if(!$this->session->has('QuickGameLastDate'))
+            $timer=$chanceGames['quickgame']->getMinFrom();
+            if(!$this->session->has('QuickGameLastDate'))
                 $this->session->set('QuickGameLastDate',time());
-                unset($_SESSION['timer_soon']);
+
 
             if($this->session->get('QuickGameLastDate') +  $timer * 60 > time()) {
+            }
+
                 $diff=$this->session->get('QuickGameLastDate') + $timer  * 60 - time();
-                if( ($diff/60<=5 AND !$_SESSION['timer_soon']['five']) OR
+                if(  $diff<0 OR
+                    ($diff/60<=5 AND !$_SESSION['timer_soon']['five']) OR
                     ($diff/60<=$timer AND !$_SESSION['timer_soon']['start'])) {
 
-                    if($diff/60<$timer)
-                        $_SESSION['timer_soon']['start']=true;
-                    elseif($diff/60<5)
-                        $_SESSION['timer_soon']['five']=true;
 
-                    $resp['soon'] = array(
-                        'name' => 'soon',
-                        'title' => 'Случайная игра',
-                        'txt' => 'Игра будет доступна через <span id="timer_soon"></span> <div class="start">start</div>
-                            <script>$("#timer_soon").countdown({until: ' . ($diff) . ',layout: "{mnn}:{snn}",onExpiry: function(){
-                            $(".notification #soon .badge-block .txt").html("Не пропустите моментальный шанс ' . ' ' . ($diff > 0 ? 'в ближайшие ' . $diff . ($diff > 4 ? 'минут' : $diff > 1 ? 'минуты' : $diff > 0 ? 'минуту' : '') : 'сейчас') . '!");
-                            }})</script>',
+                    if($diff/60<$timer AND !$_SESSION['timer_soon']['start']){
+                        $_SESSION['timer_soon']['start']=true;
+                    }
+                    elseif($diff/60<5 AND !$_SESSION['timer_soon']['five']){
+                        $_SESSION['timer_soon']['five']=true;
+                    }
+
+                    $resp['qgame'] = array(
+                        'timer' => $diff,
+                        'important' => true
                     );
                 }
-            }
+            /*
             */
 
             #delete
@@ -480,7 +481,6 @@ class Players extends \AjaxController
             //unset($_SESSION['chanceGame']);
 
             if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
-                $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
 
                 #delete
                 /*
@@ -548,7 +548,6 @@ class Players extends \AjaxController
                                             $('#mchance .mm-bk-pg').css('height', 'auto').children('div').last().css('position','initial');
                                             startMoment();
                                             </script>";
-
                                     break;
                                 }
                             }
