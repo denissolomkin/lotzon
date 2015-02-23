@@ -70,6 +70,8 @@ function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $r
 		|| current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch()))
 		{
 			DB::Connect()->commit();
+            if(file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
+                unlink($tmp);
 		}
 		else
 		{
@@ -268,6 +270,7 @@ function ApplyLotteryCombination(&$comb)
         $comb['ballsArray']);
 
     DB::Connect()->query($SQL);
+    $comb['id']           = DB::Connect()->lastInsertId();
 
 	$lid = (int)$comb['id'];
 
@@ -340,7 +343,6 @@ function SetLotteryCombination($comb)
 */
     $comb['Combination']  = $Combination;
     $comb['ballsArray']   = $ballsArray;
-	$comb['id']           = DB::Connect()->lastInsertId();
 	$comb['WinnersCount'] = $WinnersCount;
 
 	echo (microtime(true) - $time).PHP_EOL;
