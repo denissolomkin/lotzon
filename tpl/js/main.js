@@ -1495,11 +1495,12 @@ function proccessResult()
         $('#game-process .g-oc-b .goc_li-nb').removeClass('goc-nb-act');
         var tickets=[];
         if($('.tb-slide').length>0)
-            $('.tb-slide.done').each(function( index, el ) {
+            $('.tb-slide').each(function( index, el ) {
                 var ticket=[];
                 $(el).find('.loto-tl_li.select').each(function( i, val ) {
                     ticket.push($(val).text());
                 });
+                if(ticket.length==6)
                 tickets.push(ticket);
             });
         else if($('.yr-tb').length>0)
