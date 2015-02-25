@@ -153,7 +153,6 @@ function Transactions($lid)
 }
 function ApplyLotteryTickets($comb)
 {
-	echo 'ApplyLotteryCombination'.PHP_EOL;
 
 
 	$time = microtime(true);
@@ -254,23 +253,7 @@ function ApplyLotteryCombination(&$comb)
 		return;
 	}
 
-
-
-    $SQL = "INSERT INTO Lotteries
-				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
-			VALUES
-				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
-
-    $SQL = sprintf($SQL,	implode(',', $comb['fields']),
-        time(),
-        $comb['Combination'],
-        $comb['WinnersCount'],
-        $comb['MoneyTotal'],
-        $comb['PointsTotal'],
-        $comb['ballsArray']);
-
-    DB::Connect()->query($SQL);
-    $comb['id']           = DB::Connect()->lastInsertId();
+    echo 'ApplyLotteryCombination'.PHP_EOL;
 
 	$lid = (int)$comb['id'];
 
@@ -284,7 +267,7 @@ function ApplyLotteryCombination(&$comb)
 
 	unset($comb['fields']);
 }
-function SetLotteryCombination($comb)
+function SetLotteryCombination($comb, $simulation)
 {
 	if(!$comb)
 	{
@@ -308,12 +291,11 @@ function SetLotteryCombination($comb)
 	}
 
 	shuffle($Combination);
-	$Combination = serialize($Combination);
+    $comb['Combination'] = $Combination;
 
 
 	$ballsArray = array_flip(range(1, $_ballsCount - 1));
-	$ballsArray = array_intersect_key($comb, $ballsArray);
-	$ballsArray = serialize($ballsArray);
+    $comb['ballsArray'] = array_intersect_key($comb, $ballsArray);
 
 
 	$SQL = 'SELECT
@@ -323,27 +305,27 @@ function SetLotteryCombination($comb)
 			WHERE
 				LotteryId = 0
 				AND ('.implode(' OR ', $where).')';
-	$WinnersCount = current(DB::Connect()->query($SQL)->fetch());
+    $comb['WinnersCount'] = current(DB::Connect()->query($SQL)->fetch());
 
-/*
-	$SQL = "INSERT INTO Lotteries
+    if(!$simulation) {
+
+        $SQL = "INSERT INTO Lotteries
 				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
 			VALUES
 				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
-	$SQL = sprintf($SQL,	implode(',', $comb['fields']),
-							time(),
-							$Combination,
-							$WinnersCount,
-							$comb['MoneyTotal'],
-							$comb['PointsTotal'],
-							$ballsArray);
+        $SQL = sprintf($SQL,	implode(',', $comb['fields']),
+            time(),
+            serialize($Combination),
+            $comb['WinnersCount'],
+            $comb['MoneyTotal'],
+            $comb['PointsTotal'],
+            serialize($ballsArray));
 
-	DB::Connect()->query($SQL);
-*/
-    $comb['Combination']  = $Combination;
-    $comb['ballsArray']   = $ballsArray;
-	$comb['WinnersCount'] = $WinnersCount;
+        DB::Connect()->query($SQL);
+        $comb['id']           = DB::Connect()->lastInsertId();
+    }
+
 
 	echo (microtime(true) - $time).PHP_EOL;
 
@@ -535,9 +517,17 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 			ConverDB();
 			ResetLottery($lid);
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy);
-	$comb = SetLotteryCombination($comb);
-    file_put_contents(__DIR__.'/../lastLottery', json_encode($comb));
+	$comb = SetLotteryCombination($comb, $simulation);
     if($simulation) {print_r($comb);return;}
+    file_put_contents(__DIR__.'/../lastLottery', json_encode(array(
+        'i'=>isset($comb['id'])?$comb['id']:0,
+        'c'=>$comb['Combination'],
+        'pt'=>$comb['PlayersTotal'],
+        'pw'=>$comb['WinnersCount'],
+        'tt'=>$comb['TicketsTotal'],
+        'tw'=>$comb['TicketsCount'],
+        'b'=>$comb['ballsArray']
+    )));
 			ApplyLotteryCombination($comb);
 
 

@@ -85,7 +85,8 @@ class ContentController extends \AjaxController
                             str_replace('document.write',"$('#ticket_video').append",$banner['div']).
                             str_replace('document.write',"$('#ticket_video').append",$banner['script']).
                             "</div>
-                            <script>setTimeout(function(){ $('#ticket_video').show();}, 600);";
+                            <script>$('#ticket_video').show();";
+                        //<script>setTimeout(function(){ $('#ticket_video').show();}, 600);";
 
                         if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled']) {
                             $resp['block'] .= "$('#ticket_video').children().first().css('margin-top','100px').next().css('height','100px').css('overflow','hidden');

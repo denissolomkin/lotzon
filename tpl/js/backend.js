@@ -143,6 +143,17 @@ function loadShop(category, offset, successFunction, failFunction, errorFunction
 }
 
 function getLotteryData(successFunction, failFunction, errorFunction) {
+
+    $.getJSON( "/lastLottery", function( data,status) {
+        if(status=='success')
+            successFunction.call($(this), data);
+        else if(status=='error')
+            errorFunction.call($(this), data);
+        else
+            failFunction.call($(this), data);
+    });
+    return;
+
     $.ajax({
         url: "/game/lastLottery",
         method: 'GET',

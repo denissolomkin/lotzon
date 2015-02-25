@@ -1342,6 +1342,7 @@
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
         var playerCurrency = '<?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?>';
+        var playerCurrencyISO = '<?=$currency;?>';
         var playerId   = <?=$player->getId()?>;
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
