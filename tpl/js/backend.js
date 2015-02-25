@@ -152,8 +152,7 @@ function getLotteryData(successFunction, failFunction, errorFunction) {
         else
             failFunction.call($(this), data);
     });
-    return;
-
+    /*
     $.ajax({
         url: "/game/lastLottery",
         method: 'GET',
@@ -169,7 +168,8 @@ function getLotteryData(successFunction, failFunction, errorFunction) {
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
+    */
 }
 
 function loadNews(offset, successFunction, failFunction, errorFunction) {

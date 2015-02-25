@@ -1535,9 +1535,10 @@ function proccessResult()
         $("#game-process").find('.yr-tb').html(ticketsHtml);
 
 
-        if (data.i > parseInt($('._section.profile-history .ht-bk .lot-container .aw-bt').first().data('lotid'))) {
+        if (data.i > parseInt($('._section.profile-history .ht-bk .lot-container').first().data('lotid'))) {
 
             var ball = '';
+            var lotInterval;
             var combination = $(data.c).get();
             var lotAnimation = function(){
                 ball = combination.shift();
@@ -1563,8 +1564,12 @@ function proccessResult()
                     }, 2000);
                 }
             }
-            lotAnimation();
-            var lotInterval = window.setInterval(lotAnimation, 5000);
+            window.setTimeout(function(){
+                lotAnimation();
+                lotInterval = window.setInterval(lotAnimation, 5000);}
+                , 2000
+            );
+
 
         } else{
             window.setTimeout(proccessResult, (Math.floor(Math.random() * 5)+1)*1000);

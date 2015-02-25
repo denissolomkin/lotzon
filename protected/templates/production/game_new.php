@@ -585,7 +585,7 @@
                                 </div>
                                 <ul class="ht-bk">
                                     <? foreach ($lotteries as $lottery) { ?>
-                                        <li class="lot-container <?=(isset($playerPlayedLotteries[$lottery->getId()]) ? "win" : "")?>">
+                                        <li data-lotid="<?=$lottery->getId()?>" class="lot-container <?=(isset($playerPlayedLotteries[$lottery->getId()]) ? "win" : "")?>">
                                             <div class="dt"><?=$lottery->getDate('d.m.Y')?></div>
                                             <ul class="ht-ct">
                                                 <? foreach ($lottery->getCombination() as $num) { ?>

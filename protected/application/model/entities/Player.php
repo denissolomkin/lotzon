@@ -1213,7 +1213,9 @@ class Player extends Entity
             */
             // add bonuses to inviter and delete invite
             try {
-                $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
+                if(!$this->getReferer()){
+                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
+                }
                 $invite->delete();
             } catch (EntityException $e) {}
 
@@ -1232,9 +1234,11 @@ class Player extends Entity
         // add referal points on first login
         if ($this->getReferalId() && !$this->isReferalPaid()) {
             try {
-                $refPlayer = new Player();
-                $refPlayer->setId($this->getReferalId())->fetch();
-                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
+                if(!$this->getReferer()){
+                    $refPlayer = new Player();
+                    $refPlayer->setId($this->getReferalId())->fetch();
+                    $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
+                }
                 $this->markReferalPaid();
             } catch (EntityException $e) {}
         }
