@@ -1535,7 +1535,7 @@ function proccessResult()
         $("#game-process").find('.yr-tb').html(ticketsHtml);
 
 
-        if (data.i > parseInt($('._section.profile-history .ht-bk .lot-container').first().data('lotid'))) {
+        if (data.i == parseInt($('._section.profile-history .ht-bk .lot-container').first().data('lotid'))+1) {
 
             var ball = '';
             var lotInterval;
@@ -1571,8 +1571,10 @@ function proccessResult()
             );
 
 
-        } else{
+        } else if(data.i == parseInt($('._section.profile-history .ht-bk .lot-container').first().data('lotid'))){
             window.setTimeout(proccessResult, (Math.floor(Math.random() * 5)+1)*1000);
+        } else{
+            location.reload();
         }
 
         /*
