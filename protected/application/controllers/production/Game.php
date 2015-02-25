@@ -173,7 +173,7 @@ class Game extends \AjaxController
                             $transaction->setPlayerId($player->getId())
                                 ->setSum($sum)
                                 ->setCurrency($currency)
-                                ->setDescription("Выигрыш " . $game->getTitle());
+                                ->setDescription("Выигрыш " . $game->getTitle($player->getLang()));
                             $transaction->create();
                         } catch (EntityException $e) {
                         }
