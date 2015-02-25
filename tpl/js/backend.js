@@ -144,7 +144,7 @@ function loadShop(category, offset, successFunction, failFunction, errorFunction
 
 function getLotteryData(successFunction, failFunction, errorFunction) {
 
-    $.getJSON( "/lastLottery", function( data,status) {
+    $.getJSON( "/lastLottery?"+$.now(), function( data,status) {
         if(status=='success')
             successFunction.call($(this), data);
         else if(status=='error')
