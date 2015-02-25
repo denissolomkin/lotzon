@@ -585,7 +585,7 @@
                                 </div>
                                 <ul class="ht-bk">
                                     <? foreach ($lotteries as $lottery) { ?>
-                                        <li class="lot-container <?=(isset($playerPlayedLotteries[$lottery->getId()]) ? "win" : "")?>">
+                                        <li data-lotid="<?=$lottery->getId()?>" class="lot-container <?=(isset($playerPlayedLotteries[$lottery->getId()]) ? "win" : "")?>">
                                             <div class="dt"><?=$lottery->getDate('d.m.Y')?></div>
                                             <ul class="ht-ct">
                                                 <? foreach ($lottery->getCombination() as $num) { ?>
@@ -1250,7 +1250,7 @@
                 </div>
             </div>
 
-            <div class="badge" id="qgame" style="display:none">
+            <div class="badge" id="qgame" style="/*display:none;*/">
                 <div class="bl-pp_td">
                     <section class="badge-block pop-box">
                         <div class="cs"></div>
@@ -1342,6 +1342,7 @@
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
         var playerCurrency = '<?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?>';
+        var playerCurrencyISO = '<?=$currency;?>';
         var playerId   = <?=$player->getId()?>;
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
@@ -1361,7 +1362,7 @@
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
         updateNotices(unreadNotices);
-        <? /* if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
+        <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
 
         $("#timer_soon").countdown(
             {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
@@ -1369,7 +1370,7 @@
         });
         $("#timer_soon").countdown('resume');
         $("#timer_soon").countdown('option', {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>)});
-        */ ?>
+
         var posts = {
             fb : {
                 link : 'http://lotzon.com/?ref=<?=$player->getId()?>',

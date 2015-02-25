@@ -53,6 +53,7 @@ class Player extends Entity
     private $_dateLastChance = '';
     private $_dateAdBlocked  = '';
     private $_country        = '';
+    private $_lang        = '';
 
     private $_generatedPassword = '';
 
@@ -380,7 +381,18 @@ class Player extends Entity
         }
         
         return $date;
-    }  
+    }
+
+    public function setLang($country)
+    {
+        $this->_lang = (in_array($country, \Config::instance()->langs)?$country:\Config::instance()->defaultLang);
+        return $this;
+    }
+
+    public function getLang()
+    {
+        return $this->_lang;
+    }
 
     public function setCountry($country)
     {
@@ -1151,6 +1163,7 @@ class Player extends Entity
             throw new EntityException("ACCESS_DENIED", 403);
         }
 
+
         if ($this->getPassword() !== $this->compilePassword($password)) {
             $this->writeLog(array('action'=>'INVALID_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'danger'));
             throw new EntityException("INVALID_PASSWORD", 403);
@@ -1162,6 +1175,9 @@ class Player extends Entity
         if(!$_COOKIE[self::PLAYERID_COOKIE])
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
+        $session = new Session();
+        $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))?$this->getDateLastLogin():time()));
+
         $this->setDateLastLogin(time())
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
@@ -1170,7 +1186,6 @@ class Player extends Entity
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update();
 
-        $session = new Session();
         $session->set(Player::IDENTITY, $this);
 
         return $this;
@@ -1198,7 +1213,9 @@ class Player extends Entity
             */
             // add bonuses to inviter and delete invite
             try {
-                $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
+                if(!$this->getReferer()){
+                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
+                }
                 $invite->delete();
             } catch (EntityException $e) {}
 
@@ -1217,9 +1234,11 @@ class Player extends Entity
         // add referal points on first login
         if ($this->getReferalId() && !$this->isReferalPaid()) {
             try {
-                $refPlayer = new Player();
-                $refPlayer->setId($this->getReferalId())->fetch();
-                $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
+                if(!$this->getReferer()){
+                    $refPlayer = new Player();
+                    $refPlayer->setId($this->getReferalId())->fetch();
+                    $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
+                }
                 $this->markReferalPaid();
             } catch (EntityException $e) {}
         }
@@ -1288,6 +1307,7 @@ class Player extends Entity
                  ->setDateLastNotice($data['DateNoticed'])
                  ->setDateLastChance($data['DateChanced'])
                  ->setCountry($data['Country'])
+                 ->setLang($data['Country'])
                  ->setAvatar($data['Avatar'])
                  ->setAgent($data['Agent'])
                  ->setReferer($data['Referer'])

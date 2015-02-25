@@ -12,7 +12,8 @@ class GameSettings
     private $_countryPrizes = array();
     private $_total = 0;
     private $_jackpot = false;
-    private $_gameTimes = array(); 
+    private $_gameTimes = array();
+    private $_gameSettings = array();
 
     public function __construct() 
     {
@@ -100,6 +101,20 @@ class GameSettings
         return $this->_countryPrizes;
     }
 
+    public function addGameSettings($settings)
+    {
+        if (isset($settings['StartTime']) && !is_numeric($settings['StartTime'])) {
+            $settings['StartTime'] = strtotime($settings['StartTime'], 0);
+        }
+
+        $this->_gameSettings[] = $settings;
+    }
+
+    public function getGameSettings()
+    {
+        return $this->_gameSettings;
+    }
+
     public function addGameTime($time) 
     {
         if (!is_numeric($time)) {
@@ -138,7 +153,7 @@ class GameSettings
 
     public function validate()
     {
-        $times = $this->getGameTimes();
+        $times = $this->getGameSettings();
         if (!count($times)) {
             throw new GameSettingsException("At least one time point for lottery must be specified", 400);
         }

@@ -143,22 +143,53 @@ function loadShop(category, offset, successFunction, failFunction, errorFunction
 }
 
 function getLotteryData(successFunction, failFunction, errorFunction) {
+
     $.ajax({
-        url: "/game/lastLottery",
+        url: "/lastLottery?"+$.now(),
         method: 'GET',
         async: true,
         dataType: 'json',
         success: function(data) {
-            if (data.status == 1) {
+            if (data.i) {
                 successFunction.call($(this), data);
             } else {
-                failFunction.call($(this), data);
+                failFunction.call($(this));
             }
         },
         error: function() {
+            errorFunction.call($(this));
+        }
+    });
+    /*
+    $.getJSON( "/lastLottery?"+$.now(), function( data,status) {
+        console.log(data);
+        console.log(status);
+        console.log(1);
+        return;
+        if(status=='success')
+            successFunction.call($(this), data);
+        else if(status=='error')
             errorFunction.call($(this), data);
-       }
-    });   
+        else
+            failFunction.call($(this), data);
+    });
+     $.ajax({
+     url: "/game/lastLottery",
+     method: 'GET',
+     async: true,
+     dataType: 'json',
+     success: function(data) {
+     if (data.status == 1) {
+     successFunction.call($(this), data);
+     } else {
+     failFunction.call($(this), data);
+     }
+     },
+     error: function() {
+     errorFunction.call($(this), data);
+     }
+     });
+     */
 }
 
 function loadNews(offset, successFunction, failFunction, errorFunction) {

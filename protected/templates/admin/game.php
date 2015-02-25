@@ -21,7 +21,7 @@
     </div>
     <div class="row-fluid">&nbsp;</div>
     <!-- fst column -->
-    <div class="col-md-4 col-md-offset-2">
+    <div class="col-md-4 col-md-offset-1">
         <h6>Cумма розыгрыша</h6>
         <div class="row">            
             <div class="col-md-9">
@@ -65,10 +65,10 @@
     </div>
     
     <!-- scnd column -->
-    <div class="col-md-5" id="lotteries">
+    <div class="col-md-6" id="lotteries">
         <? $i = 1; ?>
-        <? $cnt = count($settings->getGameTimes()); ?>
-        <? foreach ($settings->getGameTimes() as $time) { ?>
+        <? $cnt = count($settings->getGameSettings()); ?>
+        <? foreach ($settings->getGameSettings() as $time) { ?>
             <div class="form-group">
                 <? if ($i == 1) { ?>
                     <label class="control-label">Количество и время розыгрышей</label>
@@ -79,17 +79,19 @@
                     <div class="col-md-1">
                         <h4>#<?=$i?></h4>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11 flex">
                         <div class="input-group">
                             <span class="input-group-addon">@</span>
-                            <input type="text" class="form-control col-md-3" placeholder="Часы:Минуты" value="<?=date('H:i', $time)?>">
+                            <input type="text" class="form-control col-md-3" name="StartTime" placeholder="Часы:Минуты" value="<?=date('H:i', $time['StartTime'])?>">
                         </div>
-                        
+                        <input type="text" class="col-md-1 form-control " name="Tries" placeholder="Переборы" value="<?=$time['Tries'];?>">
+                        <input type="text" class="col-md-1 form-control" name="Balls" placeholder="Шары" value="<?=$time['Balls'];?>">
+                        <button class="btn btn-default simulate-button">Simulate</button>
                         <button class="btn btn-success add-button" <?=($i < $cnt ? 'style="display:none"' : '')?>><span class="glyphicon glyphicon-plus"></span></button>
                         <? if ($i > 1) { ?>
                             <button class="btn btn-danger remove-button"><span class="glyphicon glyphicon-remove"></span></button>
                         <? } ?>
-                    </div>    
+                    </div>
                 </div>
             </div>
         <? $i++;
@@ -121,11 +123,14 @@
             <div class="col-md-1">
                 <h4>#{num}</h4>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-11 flex">
                 <div class="input-group">
                     <span class="input-group-addon">@</span>
-                    <input type="text" class="form-control col-md-3" placeholder="Часы:Минуты">
+                    <input type="text" class="form-control col-md-3" name="StartTime" placeholder="Часы:Минуты">
                 </div>
+                <input type="text" class="col-md-1 form-control" name="Tries" placeholder="Переборы" value="">
+                <input type="text" class="col-md-1 form-control" name="Balls" placeholder="Шары" value="">
+                <button class="btn btn-default simulate-button">Simulate</button>
                 <button class="btn btn-success add-button"><span class="glyphicon glyphicon-plus"></span></button>
                 <button class="btn btn-danger remove-button"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
@@ -159,6 +164,26 @@
         </form>
     </div>
 </div>
+
+
+<div class="modal fade" id="simulation" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Симуляция розыгрыша</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <pre></pre>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <? 
 $ajaxedSettings = array(
     'lotteryTotal' => array(),
@@ -222,6 +247,31 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         container.find('.form-group').last().find('.add-button').show();        
     }
 
+    $(".simulate-button").on('click', function() {
+
+        button=$(this);
+        var simulation={Balls: button.prev().val(), Tries: button.prev().prev().val()};
+
+
+        $.ajax({
+            url: "/private/game/simulation",
+            method: 'POST',
+            data: simulation,
+            async: true,
+            success: function(data) {
+                console.log(data);
+                $('#simulation').modal().find('.modal-body .row pre').html(data);
+
+            },
+            error: function() {
+                button.find('span').remove();
+                button.prepend($('<span class="glyphicon glyphicon-remove"></span>'));
+                button.removeClass('btn-success').addClass('btn-danger');
+                button.parent().prepend($('<alert class="alert alert-danger">Unexpected server error</alert>'))
+            }
+        });
+    });
+
     $(".save-button").on('click', function() {
         var country = $('.country.active').data('cc');
 
@@ -242,11 +292,19 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         });
 
         gameSettings.lotteries = [];
-        $('#lotteries').find("input").each(function(id, input) {
-            if ($(input).val()) {
-                gameSettings.lotteries.push($(input).val());
-            }
+        //$('#lotteries').find("input").each(function(id, input) {
+        $('#lotteries').find(".form-inline").each(function(id, input) {
+            //if ($(input).val()) {
+            //    gameSettings.lotteries.push($(input).val());
+            //}
+            var game={
+                StartTime:$(input).find('input[name="StartTime"]').val(),
+                Tries:$(input).find('input[name="Tries"]').val(),
+                Balls:$(input).find('input[name="Balls"]').val()
+            };
+            gameSettings.lotteries.push(game);
         });
+
 
         var button = $(this);
         button.find('span').remove();

@@ -128,10 +128,10 @@
                             <input type="radio" name="cash" id="yandex" hidden />
                             <label for="yandex">Яндекс деньги</label>
                         </li>
-                        <li>
+                        <!--li>
                             <input type="radio" name="cash" id="p24" hidden />
                             <label for="p24">Приват 24</label>
-                        </li>
+                        </li-->
                     </ul>
                     <script>
                         $('input[name="cash"]').prop('checked', false);
@@ -234,7 +234,7 @@
                     </section>
 
                     <!-- PRIVAT24 FORM -->
-                    <section class="p24 form">
+                    <!--section class="p24 form">
                         <form onsubmit="moneyOutput('private24', this); return false;" method="POST">
                             <div class="inp-bk">
                                 <div class="ph">Номер карты</div>
@@ -252,12 +252,12 @@
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
                                 <div class="inp-fl-bt">прикрепить</div>
                                 <input type="file" class="f_input" name="file" />
-                            </div-->
+                            </div- ->
                             <div class="s-b">
                                 <input type="submit" value="вывести" class="sb_but">
                             </div>
                         </form>
-                    </section>
+                    </section-->
                 </div>
             </section>
         </div>
@@ -301,11 +301,11 @@
                         </div>
                         <div class="yr-yw-b">
                             <div class="cb">
-                                <div class="yw-t">баллов<br>на счету<b class="player-points"></b></div>
+                                <div class="yw-t">баллов<br>на счету<b class="player-points plPointHolder"></b></div>
                                 <a href="javascript:void(0);" onclick="location.hash='prizes';location.reload();" class="yw-b">обменять</a>
                             </div>
                             <div class="mb">
-                                <div class="yw-t">денег<br>на счету<b class="player-money"></b></div>
+                                <div class="yw-t">денег<br>на счету<b class="player-money plMoneyHolder"></b></div>
                                 <a href="javascript:void(0);" onclick="location.hash='money';location.reload();" class="yw-b">вывести</a>
                             </div>
                         </div>
@@ -399,13 +399,13 @@
         </div>
         <!-- END END BLOCK -->
 <script>
-    $('.g-oc_li').click(function(){
+    /*$('.g-oc_li').click(function(){
         var li = $(this);
         $(this).find('.goc_li-nb').addClass('goc-nb-act');
         setTimeout(function(){
             li.removeClass('goc-tm');
         }, 1000);
-    });
+    });*/
 </script>
 
         </div>

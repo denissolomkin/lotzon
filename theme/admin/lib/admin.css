@@ -134,8 +134,18 @@ min-height: 17px;
 
 .qgames .game-build .t {font-size: 24px;}
 .qgames .game-build .d {margin-bottom: 5px;}
-
-
+.qgames .game-build .c{
+position: absolute;
+right: 0;
+top: 0;
+font-size: 24px;
+padding: 12px;
+background: beige;
+border-radius: 0 10px;
+font-weight: bold;
+z-index: 10;}
+.qgames .game-build .c:before{
+content:"x";}
 
 .qgames .game-build:hover  {opacity: 0.5;cursor: pointer;}
 .qgames .game-build.disabled::after {

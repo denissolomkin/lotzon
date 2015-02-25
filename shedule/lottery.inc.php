@@ -8,7 +8,6 @@ global $_ballsCount;    $_ballsCount    = 6;
 global $_variantsCount; $_variantsCount = 49;
 global $gameSettings;   $gameSettings   = GameSettingsModel::instance()->loadSettings();
 
-
 function timeToRunLottery()
 {
 	global $gameSettings;
@@ -20,10 +19,11 @@ function timeToRunLottery()
 
 	$currentTime = strtotime(date('H:i'), 0);
 
-	foreach($gameSettings->getGameTimes() as $time)
+	foreach($gameSettings->getGameSettings() as $game)
 	{
-		if($currentTime == $time)
+		if($currentTime == $game['StartTime'])
 		{
+            $gameSettings=$game;
 			return true;
 		}
 	}
@@ -33,11 +33,11 @@ function timeToRunLottery()
 
 //////////////////////////////////////////////////
 
-function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
+function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	static $counter = 0;
 
-	$rollBack = function($text) use ($ballsStart, $ballsRange, $rounds, $return, $orderBy,      &$counter)
+	$rollBack = function($text) use ($ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation, &$counter)
 	{
 		$times = 10;
 
@@ -52,7 +52,7 @@ function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $r
 		if( $counter < $times)
 		{
 			sleep(20);
-			HoldLotteryAndCheck($ballsStart, $ballsRange, $rounds, $return, $orderBy);
+			HoldLotteryAndCheck($ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
 		}
 		else
 		{
@@ -64,12 +64,14 @@ function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $r
 
 	try
 	{
-		$data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy);
+		$data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
 
 		if(empty($data)
 		|| current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch()))
 		{
 			DB::Connect()->commit();
+            if(file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
+                unlink($tmp);
 		}
 		else
 		{
@@ -151,7 +153,6 @@ function Transactions($lid)
 }
 function ApplyLotteryTickets($comb)
 {
-	echo 'ApplyLotteryCombination'.PHP_EOL;
 
 
 	$time = microtime(true);
@@ -252,6 +253,8 @@ function ApplyLotteryCombination(&$comb)
 		return;
 	}
 
+    echo 'ApplyLotteryCombination'.PHP_EOL;
+
 	$lid = (int)$comb['id'];
 
 	ApplyLotteryTickets($comb);
@@ -264,7 +267,7 @@ function ApplyLotteryCombination(&$comb)
 
 	unset($comb['fields']);
 }
-function SetLotteryCombination($comb)
+function SetLotteryCombination($comb, $simulation)
 {
 	if(!$comb)
 	{
@@ -288,12 +291,11 @@ function SetLotteryCombination($comb)
 	}
 
 	shuffle($Combination);
-	$Combination = serialize($Combination);
+    $comb['Combination'] = $Combination;
 
 
 	$ballsArray = array_flip(range(1, $_ballsCount - 1));
-	$ballsArray = array_intersect_key($comb, $ballsArray);
-	$ballsArray = serialize($ballsArray);
+    $comb['ballsArray'] = array_intersect_key($comb, $ballsArray);
 
 
 	$SQL = 'SELECT
@@ -303,26 +305,27 @@ function SetLotteryCombination($comb)
 			WHERE
 				LotteryId = 0
 				AND ('.implode(' OR ', $where).')';
-	$WinnersCount = current(DB::Connect()->query($SQL)->fetch());
+    $comb['WinnersCount'] = current(DB::Connect()->query($SQL)->fetch());
 
+    if(!$simulation) {
 
-	$SQL = "INSERT INTO Lotteries
+        $SQL = "INSERT INTO Lotteries
 				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
 			VALUES
 				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
-	$SQL = sprintf($SQL,	implode(',', $comb['fields']),
-							time(),
-							$Combination,
-							$WinnersCount,
-							$comb['MoneyTotal'],
-							$comb['PointsTotal'],
-							$ballsArray);
+        $SQL = sprintf($SQL,	implode(',', $comb['fields']),
+            time(),
+            serialize($Combination),
+            $comb['WinnersCount'],
+            $comb['MoneyTotal'],
+            $comb['PointsTotal'],
+            serialize($ballsArray));
 
-	DB::Connect()->query($SQL);
+        DB::Connect()->query($SQL);
+        $comb['id']           = DB::Connect()->lastInsertId();
+    }
 
-	$comb['id']           = DB::Connect()->lastInsertId();
-	$comb['WinnersCount'] = $WinnersCount;
 
 	echo (microtime(true) - $time).PHP_EOL;
 
@@ -342,7 +345,7 @@ function GetLotteryCombinationStatistics()
 		$fields[]= "COUNT(B$i) as B$i";
 	}
 
-	$SQL    = sprintf('SELECT %s FROM LotteryTickets WHERE LotteryId = 0', implode(',', $fields));
+	$SQL    = sprintf('SELECT COUNT(DISTINCT(PlayerId)) PlayersTotal, COUNT(*) TicketsTotal, %s FROM LotteryTickets WHERE LotteryId = 0', implode(',', $fields));
 	$stats  = DB::Connect()->query($SQL)->fetch();
 
 	asort($stats);
@@ -352,6 +355,7 @@ function GetLotteryCombinationStatistics()
 	$echo = array();
 	foreach($stats as $ball => $count)
 	{
+        if(!in_array($ball,array('PlayersTotal','TicketsTotal')))
 		$echo[]= str_pad($ball, 3, '_', STR_PAD_RIGHT).":$count";
 	}
 	$echo = implode(', ', $echo);
@@ -380,6 +384,12 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 
 		return null;
 	}
+
+    $total=array(
+        'PlayersTotal'=>$stats['PlayersTotal'],
+        'TicketsTotal'=>$stats['TicketsTotal']
+    );
+    unset ($stats['PlayersTotal'],$stats['TicketsTotal']);
 
 	$time = microtime(true);
 	echo 'GetLotteryCombination:'.PHP_EOL;
@@ -443,7 +453,10 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 		$SQL = sprintf($SQL, implode(',', $ballsStatSQL), implode('+', $fields));
 
 		$rountdStats = DB::Connect()->query($SQL)->fetch();
+
 		$rountdStats['combination'] = $balls;
+        $rountdStats+= $total;
+
 
 		$rountdsStats[(int)$rountdStats[$orderBy]] = $rountdStats;
 
@@ -497,14 +510,24 @@ function ResetLottery($lid = null)
 		echo (microtime(true) - $time).PHP_EOL;
 	}
 }
-function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
+function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
 
 			ConverDB();
 			ResetLottery($lid);
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy);
-	$comb = SetLotteryCombination($comb);
+	$comb = SetLotteryCombination($comb, $simulation);
+    if($simulation) {print_r($comb);return;}
+    file_put_contents(__DIR__.'/../lastLottery', json_encode(array(
+        'i'=>isset($comb['id'])?$comb['id']:0,
+        'c'=>$comb['Combination'],
+        'pt'=>$comb['PlayersTotal'],
+        'pw'=>$comb['WinnersCount'],
+        'tt'=>$comb['TicketsTotal'],
+        'tw'=>$comb['TicketsCount'],
+        'b'=>$comb['ballsArray']
+    )));
 			ApplyLotteryCombination($comb);
 
 
