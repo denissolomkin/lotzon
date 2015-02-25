@@ -1256,7 +1256,10 @@
                         <div class="cs"></div>
                         <div class="title"><?=$quickGame['title'];?></div>
                         <div class="txt">
-                            <div>Игра будет доступна через <span id="timer_soon"></span></div>
+                            <div class="timer">
+                                <span id="text_soon">Игра будет доступна через </span>
+                                <span id="timer_soon"></span>
+                            </div>
                             <div class="start">Играть!</div>
                         </div>
                     </section>
