@@ -1319,14 +1319,15 @@ border: 1px solid black;
     display:none;
 }
 
-.notifications .badge#qgame .txt div span{
+.notifications .badge#qgame .txt div span#timer_soon{
     font: 48px/30px Handbook-bold;
     display: inherit;
-    margin-right: 40px;
+    margin-right: 0;
+    float: right;
 }
-
-.notifications .badge#qgame .txt div:first-of-type{
-    display: inline-flex;
+.notifications .badge#qgame .txt div span#text_soon{
+    width: 120px;
+    float: left;
 }
 
 .notifications .badge {float:left;background: rgba(255,228,0,0.95);margin-top: 40px;    border-radius: 5px;
