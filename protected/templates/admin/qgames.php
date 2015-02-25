@@ -187,6 +187,7 @@
             holder.find('.y').val(game.Field.y);
             holder.find('.h').val(game.Field.h);
             holder.find('.w').val(game.Field.w);
+            holder.find('.c').val(game.Field.c);
             holder.find('.r').val(typeof game.Field.r !== "undefined" && game.Field.r?game.Field.r:0);
             holder.find('.b').val(typeof game.Field.b !== "undefined" && game.Field.b?game.Field.b:0).trigger('input');
             holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));
@@ -242,7 +243,7 @@
             for(y1=1;y1<=game.Field.y;y1++)
                 for(x1=1;x1<=game.Field.x;x1++)
                     html+="<li style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+(x1!=game.Field.x?game.Field.r:0)+"px "+(y1!=game.Field.y?game.Field.b:0)+"px 0;'></li>"
-            holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang?>).next().text(game.Description.<?=\Config::instance()->defaultLang?>).next().text(game.Field.c).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
+            holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>).next().text(game.Description.<?=\Config::instance()->defaultLang;?>).next().text(game.Field.c).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
 
 
             var i=0;
