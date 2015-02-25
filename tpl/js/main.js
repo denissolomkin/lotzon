@@ -1571,7 +1571,7 @@ function proccessResult()
             );
 
 
-        } else if(data.i == parseInt($('._section.profile-history .ht-bk .lot-container').first().data('lotid'))){
+        } else if(!data || data.i == parseInt($('._section.profile-history .ht-bk .lot-container').first().data('lotid'))){
             window.setTimeout(proccessResult, (Math.floor(Math.random() * 5)+1)*1000);
         } else{
             location.reload();
@@ -1629,9 +1629,9 @@ function proccessResult()
         }
         */
     }, function(){
-        window.setTimeout(proccessResult, 10*1000);
+        window.setTimeout(proccessResult, (Math.floor(Math.random() * 5)+1)*1000);
     }, function(){
-        window.setTimeout(proccessResult, 10*1000);
+        window.setTimeout(proccessResult, (Math.floor(Math.random() * 5)+1)*1000);
     });
 }
 
