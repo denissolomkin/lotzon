@@ -167,6 +167,13 @@ class Game extends \AjaxController
         if($game->isOver()) {
             if($game->getGamePrizes())
                 foreach($game->getGamePrizes() as $currency=>$sum)
+                    if($sum) {
+                        if ($currency == GameSettings::CURRENCY_MONEY)
+                            $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                        elseif ($currency == GameSettings::CURRENCY_POINT)
+                            $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                    }
+            /*
                     if(in_array($currency,array(GameSettings::CURRENCY_POINT,GameSettings::CURRENCY_MONEY)) && $sum)
                         try {
                             $transaction = new \Transaction();
@@ -177,6 +184,7 @@ class Game extends \AjaxController
                             $transaction->create();
                         } catch (EntityException $e) {
                         }
+            */
             $this->session->set('QuickGameLastDate', time());
             unset($_SESSION['timer_soon']);
             $this->session->remove('QuickGame');
