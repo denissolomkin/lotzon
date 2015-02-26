@@ -10,12 +10,15 @@ class Notice extends Entity
     private $_text  = '';
     private $_type  = '';
     private $_title  = '';
+    private $_country  = null;
+    private $_registeredFrom  = null;
+    private $_registeredUntil = null;
     private $_date  = '';
     
     public function init()
     {
         $this->setModelClass('NoticesModel');
-    }   
+    }
 
     public function setId($id)
     {
@@ -27,6 +30,48 @@ class Notice extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setCountry($country)
+    {
+        $this->_country = $country;
+
+        return $this;
+    }
+
+    public function getCountry()
+    {
+        return $this->_country;
+    }
+
+    public function setRegisteredFrom($from)
+    {
+        if(isset($from) && !is_numeric($from))
+            $from=strtotime($from);
+
+        $this->_registeredFrom = $from;
+
+        return $this;
+    }
+
+    public function getRegisteredFrom()
+    {
+        return $this->_registeredFrom;
+    }
+
+    public function setRegisteredUntil($to)
+    {
+        if(isset($to) && !is_numeric($to))
+            $to=strtotime($to);
+
+        $this->_registeredUntil = $to;
+
+        return $this;
+    }
+
+    public function getRegisteredUntil()
+    {
+        return $this->_registeredUntil;
     }
 
     public function setText($text)

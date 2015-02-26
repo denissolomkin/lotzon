@@ -16,6 +16,23 @@
 .pointer:hover {color:#008cba;}
 .hidden {display: none;}
 .red {color:red;}
+@media (min-width:992px){
+.col-my-1{width: 8.33333333%;}
+.col-my-2{width: 16.66666667%;}
+.col-my-3{width: 25%;}
+.col-my-4{width: 33.33333333%;;}
+.col-my-5{width: 41.66666667%;}
+.col-my-6{width: 50%;}
+.col-my-1,.col-my-2,.col-my-3,.col-my-4,.col-my-5,.col-my-6,.col-my-7,.col-my-8,.col-my-9,.col-my-10,.col-my-11,.col-my-12{
+    float: left;
+    position: relative;
+    min-height: 1px;
+    margin: 0;
+    padding: 0;
+    padding: 0 2px 0 0;
+}
+}
+.datepicker
 
 .banners select{position: absolute;padding: 1px 0 0 0;font-size: 11px;}
 .banners .btn-success{float:right;margin-top: 3px;}

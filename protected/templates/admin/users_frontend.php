@@ -297,7 +297,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <h4>Уведомления</h4>
+                <h4>Фильтр</h4>
                 <hr />
                 <table class="table table-striped points" >
                     <thead>
@@ -368,9 +368,47 @@
                     <div class="form-group">
                         <label class="control-label">Заголовок</label>
                         <input type="text" name="title" value="" placeholder="Заголовок" class="form-control" />
-                        <label class="control-label">Тип</label>
-                        <select name="type" class="form-control" /><option value="Message">Стандартное уведомление</option><option value="AdBlock">Предупреждение об AdBlock</option></select>
+                        <label class="control-label">Настройки</label>
+                        <div class="row-fluid">
+                            <div class="col-my-4">
+
+                        <select name="type" id="notice-type" class="form-control" />
+                            <option value="Message">Стандартное уведомление</option>
+                            <option value="AdBlock">Предупреждение об AdBlock</option>
+                            <option value="Mult">Отказ - Мультиаккаунт</option>
+                            <option value="AdBlock2">Отказ - AdBlock</option>
+                            <option value="Success">Вывод денежных средств</option>
+                        </select>
+                            </div>
+
+                            <div class="col-my-3">
+                                <input type="text" name="registeredFrom" value="" placeholder="Регистрация от" class="form-control datepick" />
+                            </div>
+                            <div class="col-my-3">
+                                <input type="text" name="registeredUntil" id="" value="" placeholder="Регистрация до" class="form-control datepick" />
+                            </div>
+
+
+
+                            <div class="col-my-2">
+                                <select name="country" class="form-control" />
+                                <option value="">Все</option>
+                                <? foreach(\SupportedCountriesModel::instance()->getEnabledCountriesList() as $lang):?>
+                                    <option value="<?=$lang->getCountryCode();?>"><?=$lang->getCountryCode();?></option>
+                                <? endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            $(".datepick").datepicker({format: 'yyyy-mm-dd',
+                                showTimePicker: false,
+                                autoclose: true,
+                                pickTime: false});
+                        </script>
                     </div>
+
+                    <div style="clear: both;"></div>
+
                     <div class="form-group">
                         <label class="control-label">Текст уведомления</label>
                         <div id="text"></div>
@@ -378,7 +416,7 @@
                 </form>
 
                 <div class="row-fluid">
-                    <button class="btn btn-md btn-success save pull-right"> Сохранить</button>
+                    <button class="btn btn-md btn-success save pull-right">Отправить</button>
                     <button class="btn btn-danger cls">Отмена</button>
                 </div>
             </div>
@@ -827,13 +865,28 @@ function showError(message) {
 
 
 /* notice BLOCK */
-$("#add-notice select").on('change', function() {
+$("#add-notice select#notice-type").on('change', function() {
 
 
     texts=  {
+        'Mult': {
+            'text': " Согласно п.п. 4.1.1. п. 4 Участник вправе участвовать в Игре путем регистрации и создания лишь одной учетной записи с соблюдением условий Соглашения.<br><br>По нашим данным Вы играете с нескольких аккаунтов.<br><br>Напишите нам на info@lotzon.com подтверждение или опровержение этой информации.<br><br>В выплате отказано. Денежные средства возвращены на Ваш счет.",
+            'title': "Вывод денежных средств"
+        },
+
         'AdBlock': {
             'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Устраните это нарушение в ближайшее время. Если это нарушение не будет устранено до следующей проверки, мы будем вынуждены заблокировать ваш аккаунт.",
             'title': "Нарушение правил участия"
+        },
+
+        'AdBlock2': {
+            'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Устраните это нарушение в ближайшее время. Если это нарушение не будет устранено до следующей проверки, мы будем вынуждены заблокировать ваш аккаунт.<br><br>В выплате отказано. Денежные средства возвращены на Ваш счет.",
+            'title': "Нарушение правил участия"
+        },
+
+        'Success': {
+            'text': "Поздравляем!<br><br>Ваш счет успешно пополнен.<br>Играйте и не забывайте рассказывать о нас друзьям.<br><br>Желаем удачи!",
+            'title': "Вывод денежных средств"
         }
 
     };
@@ -937,6 +990,9 @@ $("#add-notice select").on('change', function() {
             currentEdit.title = $('input[name="title"]').val();
             currentEdit.playerId = plid;
             currentEdit.text = text;
+            currentEdit.country = $('select[name="country"]').val();
+            currentEdit.registeredFrom = $('input[name="registeredFrom"]').val();
+            currentEdit.registeredUntil = $('input[name="registeredUntil"]').val();
             currentEdit.type =  $('select[name="type"]').val();
 
             $("#errorForm").hide();

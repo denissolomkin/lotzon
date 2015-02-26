@@ -173,18 +173,7 @@ class Game extends \AjaxController
                         elseif ($currency == GameSettings::CURRENCY_POINT)
                             $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
                     }
-            /*
-                    if(in_array($currency,array(GameSettings::CURRENCY_POINT,GameSettings::CURRENCY_MONEY)) && $sum)
-                        try {
-                            $transaction = new \Transaction();
-                            $transaction->setPlayerId($player->getId())
-                                ->setSum($sum)
-                                ->setCurrency($currency)
-                                ->setDescription("Выигрыш " . $game->getTitle($player->getLang()));
-                            $transaction->create();
-                        } catch (EntityException $e) {
-                        }
-            */
+
             $this->session->set('QuickGameLastDate', time());
             unset($_SESSION['timer_soon']);
             $this->session->remove('QuickGame');

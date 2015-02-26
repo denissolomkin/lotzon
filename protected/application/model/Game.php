@@ -320,9 +320,10 @@ class Game
     public function generateMove()
     {
 
-        //$minimum=(rand(1,2)<2?(static::FIELD_SIZE_X*static::FIELD_SIZE_Y)-(self::GAME_MOVES*(self::GAME_PLAYERS+1))):0);
-        // $minimum=( rand(1,5) < 2 ? (static::FIELD_SIZE_X*static::FIELD_SIZE_Y/2):0 );
-        $minimum=0;
+        //$minimum=( rand(1,2) < 2 ? (static::FIELD_SIZE_X*static::FIELD_SIZE_Y)-(self::GAME_MOVES*(self::GAME_PLAYERS+1))):0);
+        //$minimum=( rand(1,5) < 2 ? (static::FIELD_SIZE_X*static::FIELD_SIZE_Y/2):0 );
+        //$minimum=0;
+        $minimum=(!rand(0,5) ? (static::FIELD_SIZE_X * static::FIELD_SIZE_Y) - (self::GAME_MOVES * (self::GAME_PLAYERS + 1)) : 0);
 
         #echo $this->time().' '. "Генерация поля для бота\n";
         do {

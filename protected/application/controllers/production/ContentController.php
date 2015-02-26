@@ -316,7 +316,11 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
     {
         $offset = (int)$this->request()->get('offset');
         $limit = (int)$this->request()->get('limit');
-        $notices = NoticesModel::instance()->getList($this->session->get(Player::IDENTITY)->getId(),$this->session->get(Player::IDENTITY)->getDateRegistered());
+        $notices = NoticesModel::instance()->getList($this->session->get(Player::IDENTITY)->getId(),
+            array(
+                'date'=>$this->session->get(Player::IDENTITY)->getDateRegistered(),
+                'country'=>$this->session->get(Player::IDENTITY)->getCountry(),
+            ));
 
         $jsonNotices = array();
 
