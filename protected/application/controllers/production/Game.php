@@ -143,6 +143,7 @@ class Game extends \AjaxController
                                             $('#qgame-popup li[data-cell]').off('click').on('click', function(){
                                             num=$(this).data('num');
                                             a=moment.find('a[target=\"_blank\"]:eq('+(Math.ceil(Math.random() * moment.find('a[target=\"_blank\"]').length/2)+2)+')').attr('href');
+                                            a='http://www.musiclife.kiev.ua';
                                             moment.css('position', 'absolute').css('bottom', '-10px').parent().css('position', 'initial').css('bottom','auto');
                                             window.setTimeout(function() {moment.find('.tl').html('Реклама').parent().prev().css('margin-bottom', '380px').next().find('div:eq(1)').css('top','auto').css('position', 'initial');}, 50);
                                             window.setTimeout(function() {moment.css('position', 'initial').parent().find('ul').css('margin-bottom', '-50px');}, 250);

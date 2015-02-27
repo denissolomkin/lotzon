@@ -391,8 +391,8 @@
 
 
                             <div class="col-my-2">
-                                <select name="country" class="form-control" />
-                                <option value="">Все</option>
+                                <select name="country" class="form-control" placeholder="Страна" />
+                                    <option value="">Страна:</option>
                                 <? foreach(\SupportedCountriesModel::instance()->getEnabledCountriesList() as $lang):?>
                                     <option value="<?=$lang->getCountryCode();?>"><?=$lang->getCountryCode();?></option>
                                 <? endforeach;?>
@@ -880,8 +880,8 @@ $("#add-notice select#notice-type").on('change', function() {
         },
 
         'AdBlock2': {
-            'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Устраните это нарушение в ближайшее время. Если это нарушение не будет устранено до следующей проверки, мы будем вынуждены заблокировать ваш аккаунт.<br><br>В выплате отказано. Денежные средства возвращены на Ваш счет.",
-            'title': "Нарушение правил участия"
+            'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Поэтому, заявки на получение выигрыша от участников, у которых была включена блокировка показа рекламных сообщений будут рассматриваться через две недели после отключения блокировки.<br><br>Статус: блокировка включена.<br>В выплате отказано. Денежные средства возвращены на Ваш счет.",
+            'title': "Получение выигрыша"
         },
 
         'Success': {
@@ -913,7 +913,11 @@ $("#add-notice select#notice-type").on('change', function() {
                 if (data.status == 1) {
                     var tdata = ''
                     $(data.data.notices).each(function(id, tr) {
-                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"><td>'+tr.date+'</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
+                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"><td>'+tr.date+
+                            (tr.registeredFrom ?'<br><span class="label label-primary">от '+tr.registeredFrom+'</span>':'')+
+                            (tr.registeredUntil ?'<br><span class="label label-primary">до '+tr.registeredUntil+'</span>':'')+
+                            (tr.country ?'<br><span class="label label-primary">'+tr.country+'</span>':'')+
+                        '</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
 
                     });
