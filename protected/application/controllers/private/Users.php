@@ -414,8 +414,8 @@ class Users extends PrivateArea
                         'username' => ($notice->getUserName()?:''),
                         'text' => $notice->getText(),
                         'country' => $notice->getCountry(),
-                        'registeredFrom' => $notice->getRegisteredFrom(),
-                        'registeredUntil' => $notice->getRegisteredUntil(),
+                        'registeredFrom' => ($notice->getRegisteredFrom()? date('d.m.Y',$notice->getRegisteredFrom()) :null),
+                        'registeredUntil' => ($notice->getRegisteredUntil()? date('d.m.Y',$notice->getRegisteredUntil()) :null),
                         'date' => date('d.m.Y H:i:s', $notice->getDate()),
                     );
                 }
