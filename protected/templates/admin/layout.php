@@ -12,6 +12,7 @@
       <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/redmond/jquery-ui.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/theme/admin/datepicker/css/datepicker.css">
       <!--link rel="stylesheet" href="/theme/admin/glyphicons/css/style-new.css"-->
 
 
@@ -29,6 +30,7 @@
 
     <!-- Include Summernote JS file -->
     <script src="/theme/admin/lib/summernote/summernote.js"></script>
+      <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
       <link href="/theme/admin/lib/admin.css" rel="stylesheet">
 
   </head>

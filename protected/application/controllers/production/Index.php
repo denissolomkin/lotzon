@@ -113,6 +113,9 @@ class Index extends \SlimController\SlimController
              $session->set('MomentChanseLastDate', time());
        }
 
+        if (!$session->has('QuickGameLastDate'))
+            $session->set('QuickGameLastDate',time());
+
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,

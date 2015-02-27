@@ -26,6 +26,8 @@ class SeaBattle extends Game
         array(0, -1), array(0, 1),
         array(1, 0),
     );
+    /* protected $_ships = array(
+        5);*/
     protected $_ships = array(
         1, 1, 1, 1, 1,
         2, 2, 2, 2,
@@ -409,7 +411,7 @@ class SeaBattle extends Game
             list($x, $y, $f) = $this->generateHit($cell,array($cell),time());
         } else {
 
-            if($this->getPrice())
+            if($this->getPrice() OR 0)
                 $miss = rand(0, 20);
             else
                 $miss=true;

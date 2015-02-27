@@ -96,8 +96,10 @@ class AuthController extends \SlimController\SlimController {
                 if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
                     $player->setValid(true);
 
-                if(!$this->session->has(Player::IDENTITY))
+                if(!$this->session->has(Player::IDENTITY)){
+                    $this->session->set('QuickGameLastDate',($player->getDateLastLogin() < strtotime(date("Y-m-d"))?$player->getDateLastLogin():time()));
                     $player->setDateLastLogin(time());
+                }
 
                 // try to catch avatar
                 if ($profile->photoURL AND !$player->getAvatar())

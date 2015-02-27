@@ -6,7 +6,8 @@ class NoticesDBProcessor implements IProcessor
 {
     public function create(Entity $notice)
     {
-        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `UserId`, `Type`, `Date`, `Title`, `Text`) VALUES (:id, :playerid, :userid, :type, :date, :title, :text)";
+        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `UserId`, `Type`, `Date`, `Title`, `Text`, `Country`, `RegisteredUntil`, `RegisteredFrom`)
+                VALUES (:id, :playerid, :userid, :type, :date, :title, :text, :country, :reguntil, :regfrom)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -17,6 +18,9 @@ class NoticesDBProcessor implements IProcessor
                 ':title'  => $notice->getTitle(),
                 ':type'  => $notice->getType(),
                 ':text'  => $notice->getText(),
+                ':country'  => $notice->getCountry(),
+                ':reguntil'  => $notice->getRegisteredUntil(),
+                ':regfrom'  => $notice->getRegisteredFrom(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
@@ -66,7 +70,7 @@ class NoticesDBProcessor implements IProcessor
 
     }
 
-    public function getList($playerId = null, $date=null, $limit = null, $offset = null)
+    public function getList($playerId = null, $options=null, $limit = null, $offset = null)
     {
         $sql = "SELECT `PlayerNotices`.*, `Admins`.Login UserName FROM `PlayerNotices` LEFT JOIN `Admins` ON UserId = `Admins`.Id WHERE ";
 
@@ -74,11 +78,17 @@ class NoticesDBProcessor implements IProcessor
 
         // IF EXIST DATE OF REGISTRATION PLAYER
         if (!is_null($playerId)) {
-            $where[]= " (".($date?'`PlayerId` = 0 OR ':'')."`PlayerId` = " . (int)$playerId.')';
-        }
+            $where[]= " (".($options['date']?'`PlayerId` = 0 OR ':'')."`PlayerId` = " . (int)$playerId.')';
 
-        if (!is_null($date)) {
-            $where[]= " (`Date` >= " . (int)$date.")";
+        }
+        if($options['country'])
+            $where[]= " (`Country` IS NULL OR `Country` = '". $options['country'] ."')";
+
+
+        if (!is_null($options['date'])) {
+            $where[]= " (`Date` >= " . (int)$options['date'].")";
+            $where[]= " (`RegisteredFrom` IS NULL OR `RegisteredFrom` <= " . (int)$options['date'].")";
+            $where[]= " (`RegisteredUntil` IS NULL OR `RegisteredUntil` >= " . (int)$options['date'].")";
         }
 
         $sql .= implode(" AND ",$where)." ORDER BY `Date` DESC";
@@ -112,13 +122,20 @@ class NoticesDBProcessor implements IProcessor
 
     public function getPlayerLastUnreadNotice(Entity $player)
     {
-        $sql = "SELECT `Title` FROM `PlayerNotices` WHERE (`Date` >= :dl AND `Date` >= :do) AND (`PlayerId` = 0 OR `PlayerId` = :id) LIMIT 1";
+        $sql = "SELECT `Title` FROM `PlayerNotices`
+                WHERE (`Date` >= :dl AND `Date` >= :do)
+                AND (`RegisteredFrom` IS NULL OR `RegisteredFrom` <= :dr)
+                AND (`RegisteredUntil` IS NULL OR `RegisteredUntil` >= :dr)
+                AND (`Country` IS NULL OR `Country` = :cntr)
+                AND (`PlayerId` = 0 OR `PlayerId` = :id) LIMIT 1";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':dl'  => $player->getDateLastLogin(),
                 ':do'  => $player->getOnlineTime(),
+                ':dr' => $player->getDateRegistered(),
+                ':cntr' => $player->getCountry(),
                 ':id'  => $player->getId(),
             ));
         } catch (PDOException $e) {
@@ -129,13 +146,19 @@ class NoticesDBProcessor implements IProcessor
     }
 
     public function getPlayerUnreadNotices(Player $player) {
-        $sql = "SELECT COUNT(*) FROM `PlayerNotices` WHERE (`Date` >= :dn AND `Date` >= :dr ) AND (`PlayerId` = 0 OR `PlayerId` = :id)";
+        $sql = "SELECT COUNT(*) FROM `PlayerNotices`
+                WHERE (`Date` >= :dn AND `Date` >= :dr )
+                AND (`RegisteredFrom` IS NULL OR `RegisteredFrom` <= :dr)
+                AND (`RegisteredUntil` IS NULL OR `RegisteredUntil` >= :dr)
+                AND (`Country` IS NULL OR `Country` = :cntr)
+                AND (`PlayerId` = 0 OR `PlayerId` = :id)";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':dn' => $player->getDateLastNotice(),
                 ':dr' => $player->getDateRegistered(),
+                ':cntr' => $player->getCountry(),
                 ':id' => $player->getId()
             ));
         } catch (PDOExeption $e) {

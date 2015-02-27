@@ -413,6 +413,9 @@ class Users extends PrivateArea
                         'title' => $notice->getTitle(),
                         'username' => ($notice->getUserName()?:''),
                         'text' => $notice->getText(),
+                        'country' => $notice->getCountry(),
+                        'registeredFrom' => $notice->getRegisteredFrom(),
+                        'registeredUntil' => $notice->getRegisteredUntil(),
                         'date' => date('d.m.Y H:i:s', $notice->getDate()),
                     );
                 }
@@ -427,6 +430,35 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function addNoticeAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $notice = new Notice();
+                $notice->setPlayerId($playerId)
+                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setText($this->request()->post('text'))
+                    ->setTitle($this->request()->post('title'))
+                    ->setType($this->request()->post('type'))
+                    ->setCountry($this->request()->post('country')?:null)
+                    ->setRegisteredFrom($this->request()->post('registeredFrom')?:null)
+                    ->setRegisteredUntil($this->request()->post('registeredUntil')?:null)
+                    ->create();
+            } catch (EntityException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
     public function removeNoticeAction($noticeId)
     {
         if ($this->request()->isAjax()) {
@@ -503,30 +535,4 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
-    public function addNoticeAction($playerId)
-    {
-        if ($this->request()->isAjax()) {
-            $response = array(
-                'status'  => 1,
-                'message' => 'OK',
-                'data'    => array(),
-            );
-            try {
-                $notice = new Notice();
-                $notice->setPlayerId($playerId)
-                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
-                    ->setText($this->request()->post('text'))
-                    ->setTitle($this->request()->post('title'))
-                    ->setType($this->request()->post('type'))
-                    ->create();
-            } catch (EntityException $e) {
-                $response['status'] = 0;
-                $response['message'] = $e->getMessage();
-            }
-
-            die(json_encode($response));
-        }
-
-        $this->redirect('/private');
-    }
 }
