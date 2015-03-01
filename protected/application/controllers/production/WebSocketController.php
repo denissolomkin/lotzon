@@ -401,18 +401,19 @@ class WebSocketController implements MessageComponentInterface {
 
                 case 'update':
 
+                    $date=mktime(0, 0, 0, date("n"), 1);
                     $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
                         (SELECT count(distinct(Id))  FROM `PlayerGames` WHERE `GameId` = :gameid) `All`
                                         FROM `Players`
                                         LEFT JOIN `PlayerGames`
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>1422230400 AND `PlayerGames`.`Price`>0
+                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>:dt AND `PlayerGames`.`Price`>0
                                         LIMIT 1";
                     #echo $this->time() . " SELECT PLAYER INFO" . "\n";
 
                     try {
                         $sth = DB::Connect()->prepare($sql);
-                        $sth->execute(array(':id' => $from->resourceId, ':gameid' => $this->_games[$name]));
+                        $sth->execute(array(':id' => $from->resourceId, ':dt'=>$date, ':gameid' => $this->_games[$name]));
                     } catch (PDOException $e) {
                         throw new ModelException("Error processing storage query", 500);
                     }
@@ -473,7 +474,7 @@ class WebSocketController implements MessageComponentInterface {
                         $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId = :gameid AND g.`Date`>1422230400 AND g.Price>0
+                                where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0
                                 group by g.PlayerId
                                 having T > (SELECT (count(Id) / count(distinct(PlayerId)) / " . $class::GAME_PLAYERS . " ) FROM PlayerGames WHERE GameId = :gameid)
                                 order by R DESC, T DESC
@@ -486,6 +487,7 @@ class WebSocketController implements MessageComponentInterface {
                             $sth->execute(
                                 array(
                                     ':gameid' => $this->_games[$name],
+                                    ':dt'   => $date,
                                     ':playerid' => $from->resourceId
                                 ));
                         } catch (PDOException $e) {

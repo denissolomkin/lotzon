@@ -246,6 +246,67 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function profileAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            $player = new Player;
+            $player->setId($playerId)->fetch();
+            try {
+                $response['data'] = array(
+                    'Avatar' => $player->getAvatar(),
+                    'Id' => $player->getId(),
+                    'Nicname' => $player->getNicName(),
+                    'Name' => $player->getName(),
+                    'Surname' => $player->getSurname(),
+                    'Country' => $player->getCountry(),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
+    public function updateProfileAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            $player = new Player;
+            $player->setId($playerId)->fetch();
+            try {
+                $player->setNicname($this->request()->post('Nicname'))
+                    ->setName($this->request()->post('Name'))
+                    ->setSurName($this->request()->post('Surname'))
+                    ->setCountry($this->request()->post('Country'))
+                    ->update();
+            } catch (EntityException $e){
+                $this->ajaxResponse(array(), 0, $e->getMessage());
+            }
+            if ($pwd = $this->request()->post('Password')) {
+                $pwd=trim($pwd);
+                $player->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$player->hidePassword($pwd),'status'=>'info'))
+                    ->changePassword($pwd);
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function ticketsAction($playerId)
     {
         if ($this->request()->isAjax()) {
@@ -414,8 +475,8 @@ class Users extends PrivateArea
                         'username' => ($notice->getUserName()?:''),
                         'text' => $notice->getText(),
                         'country' => $notice->getCountry(),
-                        'registeredFrom' => $notice->getRegisteredFrom(),
-                        'registeredUntil' => $notice->getRegisteredUntil(),
+                        'registeredFrom' => ($notice->getRegisteredFrom()? date('d.m.Y',$notice->getRegisteredFrom()) :null),
+                        'registeredUntil' => ($notice->getRegisteredUntil()? date('d.m.Y',$notice->getRegisteredUntil()) :null),
                         'date' => date('d.m.Y H:i:s', $notice->getDate()),
                     );
                 }

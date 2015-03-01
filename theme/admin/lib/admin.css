@@ -32,7 +32,20 @@
     padding: 0 2px 0 0;
 }
 }
-.datepicker
+#profile-holder .modal-body > div {
+    width: 100%;
+}
+#profile-holder .modal-body img{
+    float:left;padding:0 10px 10px 0;width:30%;
+}
+
+#profile-holder .modal-body .input-group{
+    width:70%;
+}
+
+#profile-holder .modal-body .input-group-addon{
+    width:100px;
+}
 
 .banners select{position: absolute;padding: 1px 0 0 0;font-size: 11px;}
 .banners .btn-success{float:right;margin-top: 3px;}

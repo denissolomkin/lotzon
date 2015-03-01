@@ -20,9 +20,12 @@
             <div class="modal-header">
                 <h4 class="modal-title" id="confirmLabel">Profile information</h4>
             </div>
+            <form>
             <div class="modal-body">
             </div>
+            </form>
             <div class="modal-footer">
+                <button class="btn btn-success add">Сохранить</button>
                 <button type="button" class="btn btn-default cls">Закрыть</button>
             </div>
         </div>
@@ -391,8 +394,8 @@
 
 
                             <div class="col-my-2">
-                                <select name="country" class="form-control" />
-                                <option value="">Все</option>
+                                <select name="country" class="form-control" placeholder="Страна" />
+                                    <option value="">Страна:</option>
                                 <? foreach(\SupportedCountriesModel::instance()->getEnabledCountriesList() as $lang):?>
                                     <option value="<?=$lang->getCountryCode();?>"><?=$lang->getCountryCode();?></option>
                                 <? endforeach;?>
@@ -599,6 +602,10 @@
 </div>
 
 <script>
+
+<? foreach(\SupportedCountriesModel::instance()->getEnabledCountriesList() as $lang)
+$langs[$lang->getCountryCode()]=$lang->getTitle();?>
+langs=<?=json_encode($langs);?>;
 
 /* OEDERS BLOCK */
 $('.orders-trigger').on('click', function() {
@@ -880,8 +887,8 @@ $("#add-notice select#notice-type").on('change', function() {
         },
 
         'AdBlock2': {
-            'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Устраните это нарушение в ближайшее время. Если это нарушение не будет устранено до следующей проверки, мы будем вынуждены заблокировать ваш аккаунт.<br><br>В выплате отказано. Денежные средства возвращены на Ваш счет.",
-            'title': "Нарушение правил участия"
+            'text': "Согласно п.п. 9.1.7. п. 9 Участник обязан отключить все системы блокировки показа рекламных сообщений (AdBlock и подобные).<br><br>Поэтому, заявки на получение выигрыша от участников, у которых была включена блокировка показа рекламных сообщений будут рассматриваться через две недели после отключения блокировки.<br><br>Статус: блокировка включена.<br>В выплате отказано. Денежные средства возвращены на Ваш счет.",
+            'title': "Получение выигрыша"
         },
 
         'Success': {
@@ -913,7 +920,11 @@ $("#add-notice select#notice-type").on('change', function() {
                 if (data.status == 1) {
                     var tdata = ''
                     $(data.data.notices).each(function(id, tr) {
-                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"><td>'+tr.date+'</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
+                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"><td>'+tr.date+
+                            (tr.registeredFrom ?'<br><span class="label label-primary">от '+tr.registeredFrom+'</span>':'')+
+                            (tr.registeredUntil ?'<br><span class="label label-primary">до '+tr.registeredUntil+'</span>':'')+
+                            (tr.country ?'<br><span class="label label-primary">'+tr.country+'</span>':'')+
+                        '</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
 
                     });
@@ -1027,6 +1038,77 @@ $("#add-notice select#notice-type").on('change', function() {
     }
 /* END NOTICE BLOCK */
 
+/* REVIEW BLOCK */
+$('.profile-trigger').on('click', function() {
+    plid=$(this).data('id');
+    $.ajax({
+        url: "/private/users/profile/" + plid,
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                user=data.data;
+
+                html='<img src="'+(user.Avatar?'../filestorage/avatars/'+Math.ceil(user.Id / 100) + '/'+user.Avatar:'../tpl/img/but-upload-review.png')+'">' +
+                '<div>'+
+                '<div class="input-group"><span class="input-group-addon">Ник</span><input type="text" class="form-control" name="Nicname" placeholder="Ник" value="'+user.Nicname+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">Имя</span><input type="text" class="form-control" name="Name" placeholder="Имя" value="'+user.Name+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">Фамилия</span><input type="text" class="form-control" name="Surname" placeholder="Фамилия" value="'+user.Surname+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">Страна</span>' +
+                '<select class="form-control" name="Country">';
+
+                if(!(user.Country in langs))
+                    html+='<option value="'+user.Country+'" selected>'+user.Country+'</option>';
+                $.each(langs, function(code,country){
+                    html+='<option value="'+code+'" '+(code==user.Country?' selected':'')+'>'+country+'</option>';
+                });
+
+                html+='</select></div>' +
+                '<div class="input-group"><span class="input-group-addon">Пароль</span><input type="text" class="form-control col-md-12" name="Password" placeholder="Пароль" value=""></div>' +
+                '</div>';
+
+
+                $("#profile-holder").find('.modal-body').html(html);
+                $("#profile-holder").modal();
+                $("#profile-holder").find('.cls').on('click', function() {
+                    $("#profile-holder").modal('hide');
+                })
+                $("#profile-holder").find('.add').off('click').on('click', function() {
+                    updateProfile(plid);
+                });
+
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+/* END REVIEW BLOCK */
+
+function updateProfile(plid){
+    $.ajax({
+        url: "/private/users/profile/" + plid,
+        method: 'POST',
+        async: true,
+        data: $('#profile-holder form').serialize(),
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                $("#profile-holder").modal('hide');
+                alert('Профиль изменен');
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+}
 /* REVIEW BLOCK */
 $('.reviews-trigger').on('click', function() {
     $.ajax({

@@ -164,7 +164,10 @@ class Notice extends Entity
                  ->setDate($data['Date'])
                  ->setUserName($data['UserName'])
                  ->setTitle($data['Title'])
-                 ->setText($data['Text']);
+                 ->setText($data['Text'])
+                ->setCountry($data['Country'])
+                ->setRegisteredUntil($data['RegisteredUntil'])
+                ->setRegisteredFrom($data['RegisteredFrom']);
         }
 
         return $this;

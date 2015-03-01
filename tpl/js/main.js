@@ -1669,6 +1669,8 @@ $(document).on('click','#qgame .start',function () {
             })
         }
 
+        activateQuickGame();
+
         if (data.res.block) {
             $("#qgame-popup").find('.block').show().html('<div class="tl">Реклама</div>' + data.res.block);
         }
@@ -1681,71 +1683,82 @@ $(document).on('click','#qgame .start',function () {
 
 });
 
-$(document).on('click','#qgame-popup li[data-cell]', function() {
-    var cell = $(this);
-    if(quickGame.Field.c<1){console.log('MOVES_IS_OUT');return false;}
-    if(cell.hasClass('m')){console.log('CELL_IS_PLAYED');return false;}
-    else cell.addClass('m');
-    playQuickGame($(this).data('cell'), function(data) {
-        var game=data.res;
-        console.log(game);
-        if(game.error){return;}
-        quickGame.Field.c--;
-
-        if (prize=game.Prize) {
-            if (prize.t != 'item')
-                cell.addClass(prize.t).html(
-                    '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
-                    '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
-            else {
-                cell.addClass(prize.t).html('<div><img src="/filestorage/shop/'+prize.s+'"></div>');
-            }
-        } else {
-            cell.addClass('los');
+function activateQuickGame()
+{
+    $('#qgame-popup li[data-cell]').off('click').on('click', function () {
+        var cell = $(this);
+        if (quickGame.Field.c < 1) {
+            console.log('MOVES_IS_OUT');
+            return false;
         }
+        if (cell.hasClass('m')) {
+            console.log('CELL_IS_PLAYED');
+            return false;
+        }
+        else cell.addClass('m');
+        playQuickGame($(this).data('cell'), function (data) {
+            var game = data.res;
+            console.log(game);
+            if (game.error) {
+                return;
+            }
+            quickGame.Field.c--;
 
-        if (game.GameField) {
-            holder=$('#qgame-popup');
-            window.setTimeout(function() {
-            $.each(game.GameField, function( index, prize ) {
-                var cell = holder.find('li[data-cell="'+index+'"]');
-                if(cell.html() || !prize)
-                    return;
-
-                cell.addClass('blink');
+            if (prize = game.Prize) {
                 if (prize.t != 'item')
                     cell.addClass(prize.t).html(
                         '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
                         '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
                 else {
-                    cell.addClass(prize.t).html('<div><img src="/filestorage/shop/'+prize.s+'"></div>');
+                    cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
                 }
-            })
-                holder.find('li.blink').css('opacity',0.5);
+            } else {
+                cell.addClass('los');
+            }
 
-            var blinkCount = 2;
-                var blinkInterval = window.setInterval(function () {
-                    if (blinkCount == 0) {
-                        window.clearInterval(blinkInterval);
-                        holder.find('.qg-msg').css('height', holder.find('.qg-tbl').css('height')).show().find('.txt').show().next().hide();
-                        if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
-                            holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!'+(game.GamePrizes.MONEY?'<br>Деньги: '+game.GamePrizes.MONEY:'')+(game.GamePrizes.POINT?'<br>Баллы: '+game.GamePrizes.POINT:'')+(game.GamePrizes.ITEM?'<br>Приз: '+game.GamePrizes.ITEM:''));
-                        } else {
-                            holder.find('.qg-msg').removeClass('win').find('.txt').text('Повезет в следующий раз');
+            if (game.GameField) {
+                holder = $('#qgame-popup');
+                window.setTimeout(function () {
+                    $.each(game.GameField, function (index, prize) {
+                        var cell = holder.find('li[data-cell="' + index + '"]');
+                        if (cell.html() || !prize)
+                            return;
+
+                        cell.addClass('blink');
+                        if (prize.t != 'item')
+                            cell.addClass(prize.t).html(
+                                '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
+                                '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
+                        else {
+                            cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
                         }
-                        return;
-                    }
-                    blinkCount--;
-                    holder.find('li.blink').toggleClass('prize');
+                    })
+                    holder.find('li.blink').css('opacity', 0.5);
+
+                    var blinkCount = 2;
+                    var blinkInterval = window.setInterval(function () {
+                        if (blinkCount == 0) {
+                            window.clearInterval(blinkInterval);
+                            holder.find('.qg-msg').css('height', holder.find('.qg-tbl').css('height')).show().find('.txt').show().next().hide();
+                            if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
+                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
+                            } else {
+                                holder.find('.qg-msg').removeClass('win').find('.txt').text('Повезет в следующий раз');
+                            }
+                            return;
+                        }
+                        blinkCount--;
+                        holder.find('li.blink').toggleClass('prize');
+                    }, 600);
                 }, 600);
-            }, 600);
-        }
+            }
 
-    }, function() {
+        }, function () {
 
-    }, function() {});
-});
-
+        }, function () {
+        });
+    });
+}
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
     hideAllGames();
