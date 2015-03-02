@@ -1453,11 +1453,13 @@ function showWinPopup(data)
     });
 
     $("#game-won").find('.g-oc-b').html(lotteryHtml);
-    updateMoney(playerMoney+wonMoney);
-    updatePoints(playerPoints+wonPoints);
+    $("#game-won").find('.plPointHolder').text(wonPoints);
+    $("#game-won").find('.plMoneyHolder').text(wonMoney);
 
     return false;
 
+    updateMoney(playerMoney+wonMoney);
+    updatePoints(playerPoints+wonPoints);
     $("#game-process").hide();
     $("#game-won").show();
     var ticketsHtml = '';
