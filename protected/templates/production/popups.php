@@ -301,11 +301,11 @@
                         </div>
                         <div class="yr-yw-b">
                             <div class="cb">
-                                <div class="yw-t">баллов<br>на счету<b class="player-points plPointHolder"></b></div>
+                                <div class="yw-t">баллов<br>выиграно<b class="player-points plPointHolder"></b></div>
                                 <a href="javascript:void(0);" onclick="location.hash='prizes';location.reload();" class="yw-b">обменять</a>
                             </div>
                             <div class="mb">
-                                <div class="yw-t">денег<br>на счету<b class="player-money plMoneyHolder"></b></div>
+                                <div class="yw-t">денег<br>выиграно<b class="player-money plMoneyHolder"></b></div>
                                 <a href="javascript:void(0);" onclick="location.hash='money';location.reload();" class="yw-b">вывести</a>
                             </div>
                         </div>

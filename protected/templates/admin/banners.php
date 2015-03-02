@@ -1,3 +1,19 @@
+<div class="modal fade banners" id="banner-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Banner preview</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid banners">
     <form role="form" action="/private/banners" method="POST">
     <div class="row-fluid">
@@ -60,10 +76,10 @@
                             <textarea placeholder="Title" rows=1 class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][title]"><?=$banner['title'];?></textarea>
                             </div>
                         <div class="col-md-3">
-                               <textarea placeholder="Div" rows=1  class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][div]"><?=$banner['div'];?></textarea>
+                               <textarea placeholder="Div" rows=1  class="form-control-banner input-md div" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][div]"><?=$banner['div'];?></textarea>
                             </div>
                         <div class="col-md-3">
-                               <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][script]"><?=$banner['script'];?></textarea>
+                               <textarea placeholder="Script" rows=1 class="form-control-banner input-md script" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][script]"><?=$banner['script'];?></textarea>
                             </div>
                         <div class="col-md-1">
                             <input placeholder="Chance"  class="form-control-banner input-md" name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][chance]" value="<?=$banner['chance'];?>">
@@ -119,10 +135,10 @@
         '   <textarea placeholder="Title" rows=1 class="form-control-banner input-md" name=banners['+sid+']['+gid+']['+bid+'][title]></textarea>' +
         '</div>' +
         '<div class="col-md-3">' +
-        '   <textarea placeholder="Div" rows=1 class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][div]"></textarea>' +
+        '   <textarea placeholder="Div" rows=1 class="form-control-banner input-md div" name="banners['+sid+']['+gid+']['+bid+'][div]"></textarea>' +
         '</div>' +
         '<div class="col-md-3">' +
-        '   <textarea placeholder="Script" rows=1 class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][script]"></textarea>' +
+        '   <textarea placeholder="Script" rows=1 class="form-control-banner input-md script" name="banners['+sid+']['+gid+']['+bid+'][script]"></textarea>' +
         '</div>' +
         '<div class="col-md-1">' +
         '<input placeholder="Chance" class="form-control-banner input-md" name="banners['+sid+']['+gid+']['+bid+'][chance]">' +
@@ -162,9 +178,34 @@
     $(document ).on( "click",".del-banner", function( event ) {
         $(this).parent().parent().remove();
     });
-    /*
-    $(document ).on( "click",".del-banner", function( event ) {
-        $(this).parent().parent().remove();
+
+    $(document ).on( "click",".view-banner", function( event ) {
+
+        $("#banner-holder").find('.modal-body').html($(this).parent().parent().find('.div').text());
+        el=document.getElementsByClassName("modal-body");
+
+        //console.log($($(this).parent().parent().find('.script').text()).attr('src'));
+        //console.log($($(this).parent().parent().find('.script').text()));
+        $.each($($(this).parent().parent().find('.script').text()), function(id,val){
+            if($(val).prop("tagName")=='SCRIPT'){
+                if(url=$(val).attr('src')) {
+                    var script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.src = url;
+                    el[0].appendChild(script);
+                } else {
+                    var script   = document.createElement("script");
+                    script.type  = "text/javascript";
+                    script.text  = $(val).text();
+                    el[0].appendChild(script);
+                }
+            }
+        })
+
+        $("#banner-holder").modal();
+        $("#banner-holder").find('.cls').on('click', function() {
+            $("#banner-holder").modal('hide');
+        })
     });
 /*
     $( "form" ).on( "submit", function( event ) {
