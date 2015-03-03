@@ -75,13 +75,14 @@ class PlayersDBProcessor implements IProcessor
 
     public function writeLogin(Entity $player)
     {
-        $sql = "INSERT INTO `PlayerLogins` (`PlayerId`, `Agent`, `Date`)
-                VALUES (:id, :agnt, :tm)";
+        $sql = "INSERT INTO `PlayerLogins` (`PlayerId`, `Agent`, `Ip`, `Date`)
+                VALUES (:id, :agnt, :ip, :tm)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'      => $player->getId(),
                 ':agnt'      => $player->getAgent(),
+                ':ip'      => $player->getIp(),
                 ':tm'      => time()
             ));
         } catch (PDOException $e) {
