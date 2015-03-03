@@ -121,7 +121,7 @@ class AuthController extends \SlimController\SlimController {
                     ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
                     ->setAgent($_SERVER['HTTP_USER_AGENT'])
                     ->update()
-                    ->wtireLogin();
+                    ->writeLogin();
 
                 $loggedIn = true;
 
