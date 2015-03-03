@@ -70,6 +70,9 @@ class QuickGamesProcessor
         }
         $data = $sth->fetch();
 
+        if(!$data)
+            return false;
+
         $game = new QuickGame();
         $game->setId($data['Id'])
             ->setTitle(@unserialize($data['Title']))
@@ -77,6 +80,7 @@ class QuickGamesProcessor
             ->setPrizes(@unserialize($data['Prizes']))
             ->setField(@unserialize($data['Field']))
             ->setEnabled($data['Enabled']);
+
         return $game;
     }
 

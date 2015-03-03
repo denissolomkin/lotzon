@@ -1834,7 +1834,7 @@ $('li[data-coord]').on('click', function() {
                 }
                 blinkCount--;
 
-                $('li.blink').toggleClass('prize');
+                $('li.blink').toggleClass('true');
             }, 600);
             $('.msg-tb.los').find('.bt span').text(cell.parents('.gm-tb').data('price'));
             $('.msg-tb.los').find('.bt').off('click').on('click', function() {
