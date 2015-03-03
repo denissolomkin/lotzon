@@ -53,6 +53,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getLog($playerId, $action);
     }
 
+    public function getLogins($playerId)
+    {
+        return $this->getProcessor()->getLogins($playerId);
+    }
+
     public function getReviews($playerId)
     {
         return $this->getProcessor()->getReviews($playerId);
@@ -102,6 +107,12 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->writeLog($player, $options);
     }
+
+    public function writeLogin(Entity $player)
+    {
+        return $this->getProcessor()->writeLogin($player);
+    }
+
 
     public function reportTrouble(Entity $player, $trouble)
     {

@@ -732,6 +732,19 @@ class Player extends Entity
         return $this;   
     }
 
+    public function writeLogin()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->getProcessor()->writeLogin($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
     public function writeLog($options=array())
     {
         $model = $this->getModelClass();
@@ -1184,7 +1197,8 @@ class Player extends Entity
             ->payReferal()
             ->updateIp(Common::getUserIp())
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
-            ->update();
+            ->update()
+            ->writeLogin();
 
         $session->set(Player::IDENTITY, $this);
 

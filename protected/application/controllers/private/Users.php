@@ -307,6 +307,29 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function loginsAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'logins' => PlayersModel::instance()->getLogins($playerId),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function ticketsAction($playerId)
     {
         if ($this->request()->isAjax()) {

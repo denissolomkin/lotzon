@@ -131,8 +131,7 @@
                             <?if($player->getCounters()['Inviter']>1) {?> <span class="label label-info"><?=$player->getCounters()['Inviter']?></span>
                             <?}?>
                             <?=$player->getInviterId() ? "#" . $player->getInviterId() : "&nbsp;"?></td>
-
-                        <td class="<?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>">
+                        <td class="logins-trigger pointer <?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>"  data-id="<?=$player->getId()?>">
                             <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
                         </td>
 
