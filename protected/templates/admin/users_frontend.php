@@ -99,6 +99,7 @@
                     <thead>
                     <th>Дата</th>
                     <th>Agent</th>
+                    <th>Ip</th>
                     </thead>
                     <tbody>
                     </tbody>
@@ -743,6 +744,7 @@ $('.logins-trigger').on('click', function() {
                     tdata += '<tr>' +
                     '<td>'+login.Date+'</td>' +
                     '<td>'+login.Agent+'</td>' +
+                    '<td>'+login.Ip+'</td>' +
                     '</tr>'
                 });
                 $("#logins-holder").find('tbody').html(tdata);
