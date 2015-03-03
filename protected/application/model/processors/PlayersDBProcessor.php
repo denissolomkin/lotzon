@@ -73,6 +73,24 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function writeLogin(Entity $player)
+    {
+        $sql = "INSERT INTO `PlayerLogins` (`PlayerId`, `Agent`, `Date`)
+                VALUES (:id, :agnt, :tm)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'      => $player->getId(),
+                ':agnt'      => $player->getAgent(),
+                ':tm'      => time()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
     public function reportTrouble(Entity $player, $trouble)
     {
         $sql = "REPLACE INTO `PlayerTroubles` (`PlayerId`, `Trouble`, `Time`)
@@ -381,7 +399,7 @@ class PlayersDBProcessor implements IProcessor
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
             elseif($search['where'] AND $search['where']=='CookieId')
-                $sql .= ' WHERE CookieId = '.$search['query'];
+                $sql .= ' WHERE CookieId  IN ('.$search['query'].')';
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $sql .= ' WHERE ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Online')
@@ -566,6 +584,28 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $players;
+    }
+
+    public function getLogins($playerId)
+    {
+        $sql = "SELECT * FROM `PlayerLogins` WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $logins = array();
+        foreach ($res->fetchAll() as $loginData) {
+            $loginData['Date']=date('d.m.Y H:i:s', $loginData['Date']);
+            $logins[] = $loginData;
+        }
+
+        return $logins;
     }
 
     public function getReviews($playerId)

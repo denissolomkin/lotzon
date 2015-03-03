@@ -120,7 +120,8 @@ class AuthController extends \SlimController\SlimController {
                     ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                     ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
                     ->setAgent($_SERVER['HTTP_USER_AGENT'])
-                    ->update();
+                    ->update()
+                    ->wtireLogin();
 
                 $loggedIn = true;
 

@@ -88,6 +88,28 @@
     </div>
 </div>
 
+<div class="modal fade users" id="logins-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Login information</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Дата</th>
+                    <th>Agent</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade users" id="tickets-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -704,6 +726,40 @@ $('.tickets-trigger').on('click', function() {
     });
 });
 /* END TICKETS BLOCK */
+
+/* LOGINS BLOCK */
+$('.logins-trigger').on('click', function() {
+
+    $.ajax({
+        url: "/private/users/logins/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = ''
+                $(data.data.logins).each(function(id, login) {
+
+                    tdata += '<tr>' +
+                    '<td>'+login.Date+'</td>' +
+                    '<td>'+login.Agent+'</td>' +
+                    '</tr>'
+                });
+                $("#logins-holder").find('tbody').html(tdata);
+                $("#logins-holder").modal();
+                $("#logins-holder").find('.cls').on('click', function() {
+                    $("#logins-holder").modal('hide');
+                })
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+/* END LOGINS BLOCK */
 
 /* STATS BLOCK */
     $('.stats-trigger').on('click', function() {
