@@ -131,6 +131,25 @@
              fjs.parentNode.insertBefore(js, fjs);
            }(document, 'script', 'facebook-jssdk'));
     </script>
+
+    <?php $antiblock_layer_id = chr(98 + mt_rand(0,24)) . substr(md5(time()), 0, 3); ?><?php $antiblock_html_elements = array (  0 => 'div',  1 => 'span',  2 => 'b',  3 => 'i',  4 => 'font',  5 => 'strong',  6 => 'center',); $antiblock_html_element = $antiblock_html_elements[array_rand($antiblock_html_elements)]; ?>
+    <style>#<?php echo $antiblock_layer_id; ?>{position:fixed !important;position:absolute;top:<?php echo mt_rand(-3, 3); ?>px;top:expression((t=document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop)+"px");left:<?php echo mt_rand(-3, 3); ?>px;width:<?php echo mt_rand(98, 103); ?>%;height:<?php echo mt_rand(98, 103); ?>%;background-color:#fff;opacity:.95;filter:alpha(opacity=90);display:block;padding:20% 0}#<?php echo $antiblock_layer_id; ?> *{text-align:center;margin:0 auto;display:block;filter:none;font:15px/50px Handbook-bold;text-decoration:none}#<?php echo $antiblock_layer_id; ?> ~ *{display:none}</style>
+    <div id="<?php echo $antiblock_layer_id; ?>"><<?php echo $antiblock_html_element; ?>>Пожалуйста, включите Javascript!</<?php echo $antiblock_html_element; ?>></div>
+    <script>window.document.getElementById("<?php echo $antiblock_layer_id; ?>").parentNode.removeChild(window.document.getElementById("<?php echo $antiblock_layer_id; ?>"));(function(l,m){function n(a){a&&<?php echo $antiblock_layer_id; ?>.nextFunction()}var h=l.document,p=["i","s","u"];n.prototype={
+            rand:function(a){return Math.floor(Math.random()*a)},
+            getElementBy:function(a,b){return a?h.getElementById(a):h.getElementsByTagName(b)},
+            getStyle:function(a){var b=h.defaultView;return b&&b.getComputedStyle?b.getComputedStyle(a,null):a.currentStyle},
+            deferExecution:function(a){setTimeout(a,2E3)},
+            insert:function(a,b){var e=h.createElement("<?php echo $antiblock_html_element; ?>"),d=h.body,c=d.childNodes.length,g=d.style,f=0,k=0;if("<?php echo $antiblock_layer_id; ?>"==b){e.setAttribute("id",b);g.margin=g.padding=0;g.height="100%";for(c=this.rand(c);f<c;f++)1==d.childNodes[f].nodeType&&(k=Math.max(k,parseFloat(this.getStyle(d.childNodes[f]).zIndex)||0));k&&(e.style.zIndex=k+1);c++}e.innerHTML=a;d.insertBefore(e,d.childNodes[c-1])},
+            displayMessage:function(a){var b=this;a="abisuq".charAt(b.rand(5));b.insert("<"+a+'><img src=tpl/img/please.png>'+
+            '<a href="/" class="bt please">Обновить страницу</a><a href="http://ru.wikihow.com/%D0%BE%D1%82%D0%BA%D0%BB%D1%8E%D1%87%D0%B8%D1%82%D1%8C-Adblock" target="_blank" class="bt please">Как отключить AdBlock</a> '+("</"+a+">"),"<?php echo $antiblock_layer_id; ?>");h.addEventListener&&b.deferExecution(function(){b.getElementBy("<?php echo $antiblock_layer_id; ?>").addEventListener("DOMNodeRemoved",function(){b.displayMessage()},!1)})},
+            i:function(){for(var a="<?php
+        echo implode(",", array_merge(array_rand(array_flip(array('AdMiddle','adsense-new','adsense1','mainAdUnit','ad','adsense','AD_gallery','Ad3Right','Ad3TextAd','Ad728x90','AdBar','AdPopUp','AdRectangle','AdSenseDiv','AdServer','AdSquare02','Ad_Block','Ad_Right1','Ad_Top','Adbanner','Ads_BA_SKY','AdvHeader','AdvertPanel','BigBoxAd','BodyAd','GoogleAd1','GoogleAd3','HEADERAD','HomeAd1','Home_AdSpan','JuxtapozAds','LeftAdF1','LeftAdF2','LftAd','MPUAdSpace','OpenXAds','RgtAd1','SkyAd','SpecialAds','SponsoredAd','TopAdBox','ad-300x250','ad-300x60-1','ad-728','ad-ads','ad-banner','ad-banner-1','ad-box2','ad-boxes','ad-bs','ad-campaign','ad-center','ad-halfpage','ad-lrec','ad-mpu','ad-mpu2','ad-north','ad-one','ad-row','ad-section','ad-side','ad-sidebar','ad-sky','ad-sky-btf','ad-space-2','ad-splash','ad-squares','ad-top-wrap','ad-two','ad-typ1','ad-wrapper1','ad-zone-2','ad02','ad125BL','ad125TR','ad125x125','ad160x600','ad1Sp','ad300_x_250','ad300b','ad300x600','ad336','ad728Top','ad728x90_1','adBadges','adBanner10','adBanner9','adBannerTop','adBlocks','adBox16','adBox350','adCol','adColumn3','adFiller','adLB','adLabel','adLink300','adMPU','adMedRect','adMeld','adMpuBottom','adPlacer','adPosOne','adRight3','adSidebar','adSidebarSq','adSlot01','adSlot2','adSpace','adSpace0','adSpace1','adSpace11','adSpace13','adSpace16','adSpace2','adSpace21','adSpace23','adSpace25','adSpace5','adSquare','adStaticA','adStrip','adSuperAd','adTag1','adTile','adTop','adTop2','adTower1','adUnit','adValue','adZoneTop','ad_300','ad_300_250','ad_300c','ad_300x250','ad_300x90','ad_500','ad_940','ad_984','ad_A','ad_C','ad_G','ad_H','ad_I','ad_K','ad_O','ad_block_1','ad_block_2','ad_bottom','ad_box','ad_branding','ad_bs_area','ad_buttons','ad_feature','ad_h3','ad_img','ad_in_arti','ad_label','ad_lastpost','ad_layer2','ad_left','ad_lnk','ad_message','ad_mpuav','ad_place','ad_play_300','ad_post','ad_post_300','ad_promoAd','ad_rect','ad_rect2','ad_sec_div','ad_sgd','ad_sidebar','ad_sidebar1','ad_sidebar2','ad_sky','ad_ss','ad_wide_box','adbForum','adbig','adblade_ad','adbnr','adbox1','adbutton','adcell','adclose','adcode2','adcode4','adhead_g','adheader','adhomepage','adl_250x250','adl_300x100','adl_300x250','adlabel','adlayerad','adlrec','adposition1','adposition2','adposition4','adright2','adrighthome','ads-468','ads-block','ads-dell','ads-header','ads-king','ads-rhs','ads-vers7','ads125','ads160left','ads300','ads300x250','ads315','adsDiv5','ads_01','ads_300','ads_banner','ads_button','ads_catDiv','ads_center','ads_header','ads_lb','ads_space','ads_text','ads_top','ads_wrapper','ads_zone27','adsense-top','adsense05','adsense728','adsenseWrap','adsense_box','adserv','adshowtop','adskinright','adsleft1','adspaceBox','adspot-2','adspot-a','adtab','adtag5','adtag8','adtagfooter','adtech_0','adtech_1','adtech_2','adtopHeader','adtophp','adv-300','adv-left','adv-middle','adv-preroll','adv-x36','adv300top','advWrapper','adv_728','adv_mpu1','adver3','adver4','adver6','advert-1','advert-text','advert-top','advert_1','advertbox2','advertbox3','advertise1','advertisers','advertorial','advheader','advtext','adwin_rec','adwith','adxBigAd','adxSponLink','adxtop2','adzerk2','anchorAd','ap_adframe','apolload','area1ads','article-ad','asideads','babAdTop','backad','bannerAdTop','bbccom_mpu','bigadbox','bigadframe','bigadspot','blog-ad','body_728_ad','botad','bottomAd','bottom_ad','box1ad','boxAd','boxad','boxad2','boxad4','boxtube-ad','bpAd','browsead','btnAds','buttonad','c_ad_sky','catad','centerads','cmn_ad_box','cnnTopAd','cnnVPAd','colRightAd','companionad','content_ad','contentads','contextad','coverads','ctl00_topAd','ctr-ad','dAdverts','divFooterAd','divLeftAd12','divadfloat','dlads','dp_ads1','ds-mpu','dvAd2Center','editorsmpu','elite-ads','flAdData6','floatingAd','floatingAds','footad','footerAdDiv','four_ads','ft-ad','ft-ad-1','ft-ads','g_ad','g_adsense','gallery-ad','google-ads','googleAd','googleAds','grid_ad','gtopadvts','halfPageAd','hd-ads','hdr-ad','head-ads','headAd','head_advert','header_ads','headerads','headline_ad','hiddenadAC','hideads','homeMPU','houseAd','hp-mpu','iframeTopAd','inadspace','iqadtile9','js_adsense','layerad','leaderad','left-ad-1','left-ad-2','left-ad-col','leftAds','live-ad','lower_ad','lowerads','main-advert','main-tj-ad','mastAdvert','medRecAd','medrectad','menu-ads','midadvert','middle_mpu','midrect_ad','midstrip_ad','monsterAd','mpu-cont','mpuAd','mpu_banner','mpu_holder','multi_ad','name-advert','nba300Ad','nbaVid300Ad','ng_rtcol_ad','northad','ns_ad1','oanda_ads','onespot-ads','ovadsense','page-top-ad','pageAds','pageAdvert','pinball_ad','player_ad','player_ads','post_ad','print_ads','qm-dvdad','rail_ad','rail_ad2','rectangleAd','rhapsodyAd','rhsadvert','right-ad1','right-ads-3','rightAd_rdr','rightAdsDiv','rightColAd','right_ad','rightad','rightads','rightinfoad','rtmod_ad','sAdsBox','sb_ad_links','sb_advert','search_ad','sec_adspace','sew-ad1','shortads','show-ad','showAd','side-ad','sideBarAd','side_ad','sidead','sideadzone','sidebar-ad','sidebarAd','single-ad-2','single-mpu','singlead','site_top_ad','sitead','sky_advert','smallerAd','some-ads','speeds_ads','spl_ad','sponlink','sponsAds','sponsored1','spotlightad','squareAd','square_ad','story-ad-a','story-ad-b','storyAd','storyAdWrap','swfAd5','synch-ad','tblAd','tcwAd','text-ads','textAds','text_ads','thefooterad','tileAds','top-ads','top728ad','topAdsG','top_ad','top_ad_area','top_ad_zone','top_mpu','topad2','topad_left','topad_right','topadbar','topaddwide','topadsense','topadwrap','topadzone','topbannerad','topcustomad','toprightad','toptextad','tour728Ad','twogamesAd','vertical_ad','view_ads','wall_advert','wrapAdTop','y-ad-units','y708-ad-ysm','yahoo-ads','yahooad-tbl','yatadsky','tads.c')), 7), array("ad", "ads", "adsense")));
+        ?>".split(","),b=a.length,e="",d=this,c=0,g="abisuq".charAt(d.rand(5));c<b;c++)d.getElementBy(a[c])||(e+="<"+g+' id="'+a[c]+'"></'+g+">");d.insert(e);d.deferExecution(function(){for(c=0;c<b;c++)if(null==d.getElementBy(a[c]).offsetParent||"none"==d.getStyle(d.getElementBy(a[c])).display)return d.displayMessage("#"+a[c]+"("+c+")");d.nextFunction()})},
+            s:function(){var a={'pagead2.googlesyndic':'google_ad_client','js.adscale.de/getads':'adscale_slot_id','get.mirando.de/miran':'adPlaceId'},b=this,e=b.getElementBy(0,"script"),d=e.length-1,c,g,f,k;h.write=null;for(h.writeln=null;0<=d;--d)if(c=e[d].src.substr(7,20),a[c]!==m){f=h.createElement("script");f.type="text/javascript";f.src=e[d].src;g=a[c];l[g]=m;f.onload=f.onreadystatechange=function(){k=this;l[g]!==m||k.readyState&&"loaded"!==k.readyState&&"complete"!==k.readyState||(l[g]=f.onload=f.onreadystatechange=null,e[0].parentNode.removeChild(f))};e[0].parentNode.insertBefore(f,e[0]);b.deferExecution(function(){if(l[g]===m)return b.displayMessage(f.src);b.nextFunction()});return}b.nextFunction()},
+            u:function(){var a="/adcreative.,/adify_,/ads2.,/ads_sidebar.,/boomad.,/js2.ad/size=,/plugins_ads_,ad=dartad_,_centre_ad.,/468x60v1_".split(","),b=this,e=b.getElementBy(0,"img"),d,c;e[0]!==m&&e[0].src!==m&&(d=new Image,d.onload=function(){c=this;c.onload=null;c.onerror=function(){p=null;b.displayMessage(c.src)};c.src=e[0].src+"#"+a.join("")},d.src=e[0].src);b.deferExecution(function(){b.nextFunction()})},
+            nextFunction:function(){var a=p[0];a!==m&&(p.shift(),this[a]())}};l.<?php echo $antiblock_layer_id; ?>=<?php echo $antiblock_layer_id; ?>=new n;h.addEventListener?l.addEventListener("load",n,!1):l.attachEvent("onload",n)})(window);</script>
+
     <div class="wrap">
         <header>
             <div class="hr-br">
@@ -850,16 +869,23 @@
                     <div class="ngm-bt" data-game="SeaBattle"><img src="tpl/img/game-sea-battle.jpg"></div>
                 </div>
                 <div class="td r">
+
                     <!--div class="gm-if-bk">
                         <div class="l">Скоро</div>
                         <div class="r"></div>
                     </div-->
                     <img src="tpl/img/game-dots.png">
+
+                <!--div class="gm-if-bk">
+                    <div class="l">Пять в ряд</div>
+                    <div class="r"></div>
                 </div>
+                <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/game-dots.png"></div-->
             </div>
         </div>
+    </div>
 
-        <!-- CHANCE GAME -->
+    <!-- CHANCE GAME -->
         <div class="game-bk" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
@@ -1047,6 +1073,15 @@
                                         </ul>
                                     </div>
 
+                                    <div data-game="FiveLine">
+                                        <ul class="mx FiveLine">
+                                            <? for($i=1;$i<=24;$i++)
+                                                for($j=1;$j<=24;$j++)
+                                                    echo "<li data-cell='{$j}x{$i}'></li>";
+                                            ?>
+                                        </ul>
+                                    </div>
+
                                     <div data-game="SeaBattle">
                                         <ul class="mx SeaBattle m">
                                             <? for($i=1;$i<=24;$i++)
@@ -1076,6 +1111,12 @@
                                         Поле состоит из 49 ячеек за каждой из которых скрыта цифра от 1 до 49. Игрок выбирает свою ставку. Каждому игроку дается возможность открыть шесть ячеек.
                                         <br/><br/>
                                         По итогам шести ходов сравнивается количество набраных очков каждым игроком, побеждает тот у кого их больше и он забирает ставку противника.
+                                    </div>
+                                    <div data-game="FiveLine">
+                                        Выберите ставку и нажмите кнопку «Играть»<br/><br/>
+                                        Игра для двух участников, цель которой первым потопить корабли соперника.
+                                        <br/><br/>
+                                        Цель - выстроить линию из 5 ячеек.
                                     </div>
                                     <div data-game="SeaBattle">
                                         Выберите ставку и нажмите кнопку «Играть»<br/><br/>

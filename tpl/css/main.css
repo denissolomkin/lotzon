@@ -910,6 +910,14 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.m.last {opacity:1;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.o.last {opacity:1;}
 
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine {list-style:none;margin:0;padding:0;overflow:hidden;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li {width:19px;height:19px;margin:0 1px 1px 0;background-color: #b2d0d4;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li:nth-child(24n+24) {margin-right:0;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.m {background:#ffe400;opacity:0.6;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.o {background:#f68e56;opacity:0.6;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.m.last {opacity:1;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.o.last {opacity:1;}
+
 .ngm-bk .ngm-gm .gm-mx div.place div.but {width:130px;height:40px;font:15px/40px Handbook-bold;margin-top: 20px;text-transform:uppercase;text-align:center;cursor:pointer;background-color:#ffe400;border:1px solid #ffe400;}
 .ngm-bk .ngm-gm .gm-mx div.place div.but:hover {background-color:#000;color:#fff;border:1px solid #000;}
 .ngm-bk .ngm-gm .gm-mx div.place .sb-wait{height: 40px;font: 15px/40px Handbook-bold;margin-top: 20px;text-transform: uppercase;}
@@ -1551,6 +1559,13 @@ border: 1px solid black;
 #game-process .g-oc-b .g-oc_li .goc_li-sh2 {width:105px;height:105px;position:absolute;top: 0;left:0;z-index:3;background:url("../img/bg-gis-1.png") no-repeat 0 0;}
 #game-process .g-oc-b .g-oc_li .goc_li-sh {width:105px;height:105px;position:absolute;top: 0;left:0;z-index:1;background:url("../img/bg-bame-number.png") no-repeat 0 0;}
 #game-process .g-oc-b .g-oc_li .g-oc_span {display:inline-block;position:relative;left:-2px;}
+
+/* please */
+.please.bt {
+    display: inline-block !important;margin-left: 20px !important;
+    width:250px;height:50px;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;
+}
+.please.bt:hover {background-color:#000!important;color:#fff;}
 
 
 /* ==========================================================================
