@@ -152,8 +152,8 @@ class Game extends \AjaxController
                                         </script>";
                         else {
                             $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
-                                str_replace('document.write', "$('#qgame .block').append", $banner['div']) .
-                                str_replace('document.write', "$('#qgame .block').append", $banner['script']);
+                                str_replace('document.write', "$('#qgame-popup .block').append", $banner['div']) .
+                                str_replace('document.write', "$('#qgame-popup .block').append", $banner['script']);
                         }
                         break;
                     }

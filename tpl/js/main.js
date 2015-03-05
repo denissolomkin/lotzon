@@ -1745,7 +1745,7 @@ function activateQuickGame()
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
                                 holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                             } else {
-                                holder.find('.qg-msg').removeClass('win').find('.txt').text('Повезет в следующий раз');
+                                holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
                             }
                             return;
                         }

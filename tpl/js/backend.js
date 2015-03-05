@@ -561,7 +561,7 @@ function requestForMoney(data, successFunction, failFunction, errorFunction) {
 
 function sendPartnersFeedback(post, successFunction, failFunction, errorFunction) {
     $.ajax({
-        url: "/feedback",
+        url: "/feedback/",
         method: 'POST',
         data: {
             'email' : post.email,
@@ -708,7 +708,7 @@ function startMoment() {
                         window.clearInterval(blinkInterval);
                         //$("#mchance").hide();
                         $('.pz-ifo-bk').hide();
-                        $("#mchance .mm-msg").show().find('.txt').text('Повезет в следующий раз');
+                        $("#mchance .mm-msg").show().find('.txt').text('В этот раз не повезло');
                         //$('.pz-rt-bk').text("Повезет в следующий раз").show().parents('#shop-items-popup').show();
 
                         /*
