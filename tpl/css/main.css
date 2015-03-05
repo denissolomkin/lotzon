@@ -1561,11 +1561,8 @@ border: 1px solid black;
 #game-process .g-oc-b .g-oc_li .g-oc_span {display:inline-block;position:relative;left:-2px;}
 
 /* please */
-.please.bt {
-    display: inline-block !important;margin-left: 20px !important;
-    width:250px;height:50px;background-color:#ffe400;font:15px/50px Handbook-bold;color:#000;text-transform:uppercase;cursor:pointer;
-}
-.please.bt:hover {background-color:#000!important;color:#fff;}
+a.please {background-color:#ffe400;color:#000;cursor:pointer;}
+a.please:hover {background-color:#000!important;color:#fff;}
 
 
 /* ==========================================================================
