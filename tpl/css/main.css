@@ -1351,7 +1351,7 @@ border: 1px solid black;
     background: url("../img/but-arrow-right.png") no-repeat left center;}
 
 .notifications .badge.parent{display:none;}
-.notifications {width:290px;margin: 0 0 40px 60px;position:fixed;bottom: 0;}
+.notifications {width:290px;margin: 0 0 40px 60px;position:fixed;bottom: 0;z-index: 2;}
 .preloader{background-image: url(http://192.168.1.253/tpl/img/preloader.gif);display:none;
     width: 40px;
     height: 40px;margin: 0 auto;}
