@@ -22,8 +22,8 @@ class GameBots extends PrivateArea
     public function indexAction()
     {
         $list = Config::instance()->gameBots;
-        $ids = PlayersModel::instance()->getAvailableIds();
-        $ids = array_diff($ids,array_keys($list));
+        if(is_array($ids = PlayersModel::instance()->getAvailableIds()))
+            $ids = array_diff($ids,array_keys($list));
 
         $this->render('admin/gamebots', array(
             'title'      => 'Боты для игры',
