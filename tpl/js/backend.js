@@ -561,7 +561,7 @@ function requestForMoney(data, successFunction, failFunction, errorFunction) {
 
 function sendPartnersFeedback(post, successFunction, failFunction, errorFunction) {
     $.ajax({
-        url: "/feedback",
+        url: "/feedback/",
         method: 'POST',
         data: {
             'email' : post.email,
