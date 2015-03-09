@@ -178,6 +178,11 @@ function appSeaBattleCallback(receiveData)
                  $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
                  $('.gm-pr.r .pr-cl').hide();
 
+                 price=receiveData.res.appMode.split('-');
+                 $('.gm-pr .pr-pr').show().html("<b>"+
+                 (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+                 "</b><span>"+
+                 (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
                  $.each(receiveData.res.players, function( index, value ) {
                      var player=value.pid;
@@ -241,6 +246,12 @@ function appSeaBattleCallback(receiveData)
 
              updateTimeOut(receiveData.res.timeout);
 
+             price=receiveData.res.appMode.split('-');
+             $('.gm-pr .pr-pr').show().html("<b>"+
+             (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+             "</b><span>"+
+             (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+
              $.each(receiveData.res.players, function( index, value ) {
                  var player=value.pid;
                  var class_player=player==playerId?'l':'r';
@@ -283,6 +294,11 @@ function appSeaBattleCallback(receiveData)
              $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
              $('ul.mx.SeaBattle.m div').remove();
 
+             price=receiveData.res.appMode.split('-');
+             $('.gm-pr .pr-pr').show().html("<b>"+
+             (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+             "</b><span>"+
+             (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
          $.each(receiveData.res.players, function( index, value ) {
              var player=value.pid;
@@ -435,8 +451,7 @@ function appSeaBattleCallback(receiveData)
                      $('.msg.winner').fadeIn(200);
                      class_player=receiveData.res.winner==playerId?'l':'r';
 
-
-                     $('.gm-pr .pr-cl').hide();
+                     $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
                      (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
                      "</b><span>"+
@@ -712,6 +727,8 @@ $('.ch-gm-tbl .ngm-bt').click(function(){
     appName=$(this).data('game');
     $('.ngm-rls .gm-if-bk .l').text($(this).parent().find('.l').text());
     $('.ngm-rls .rls-txt-bk').html($('#newgame-rules').find('div[data-game="'+appName+'"]').html());
+
+    $('.ngm-rls .rls-r .rls-r-prs').html('<div class="preloader"></div>').find('div').show();
     WebSocketAjaxClient('update/'+appName);
     $('.ch-bk').fadeOut(200);
     window.setTimeout(function(){
@@ -924,7 +941,234 @@ $('.ngm-bk .bk-bt').on('click', function() {
         });
     }
 
-// game
+// FiveLine
+    function appFiveLineCallback(receiveData)
+    {
+        if($.cookie("audio")==1)
+            if($('#a-'+appName+'-'+receiveData.res.action).length)
+                $('#a-'+appName+'-'+receiveData.res.action).play();
+
+        switch (receiveData.res.action) {
+
+            case 'ready':
+                $('.re').hide();
+                $('.ot-exit').html('Ожидаем соперника').show();
+                break;
+
+            case 'stack':
+
+                break;
+
+            case 'start':
+                hideAllGames();
+                runGame();
+
+                $('.gm-pr .pr-cl').css('opacity','100').show().html("<b>0</b><span>ходов<br>осталось</span>");
+                $('.gm-pr .pr-pt').css('opacity','100').show().html("<b>0</b><span>очков<br>набрано</span>");
+
+                appTimeOut=receiveData.res.timeout;
+
+
+                $('.ngm-rls').fadeOut(200);
+                $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();
+
+                price=receiveData.res.appMode.split('-');
+                $('.gm-pr .pr-pr').show().html("<b>"+
+                (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+                "</b><span>"+
+                (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+
+                $.each(receiveData.res.players, function( index, value ) {
+                    var class_player=value.pid==playerId?'l':'r';
+                    $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves);
+                    $('.gm-pr.'+class_player+' .pr-pt b').html(value.points);
+
+                    if(value.avatar)
+                        value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
+                    else
+                        value.avatar = "url('../tpl/img/default.jpg')";
+
+                    $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
+
+                    if(value.pid!=playerId && value.name){
+                        $('.gm-pr.r .pr-nm').html(value.name);
+                    }
+                });
+
+                if(receiveData.res.current!=playerId)
+                {
+                    $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                    $('.gm-pr.r').addClass('move');
+                    $('.gm-pr.l').removeClass('move');
+                }
+                else
+                {
+                    $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                    $('.gm-pr.l').addClass('move');
+                    $('.gm-pr.r').removeClass('move');
+                }
+
+                if(appTimeOut<1)
+                {
+                    onTimeOut();
+                } else{
+                    $(".ngm-bk .tm").countdown({
+                        until: (appTimeOut),
+                        layout: '{mnn}<span>:</span>{snn}',
+                        onExpiry: onTimeOut
+                    });
+                    $(".ngm-bk .tm").countdown('resume');
+                    $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
+                }
+
+                $.each(receiveData.res.field, function( x, cells ) {
+                    $.each(cells, function( y, cell) {
+                        if(cell.player==playerId) {
+                            var class_cell='m';
+                        }
+                        else
+                        {
+                            var class_cell='o';
+                        }
+
+                        $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                            removeClass('last');
+
+                        $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+cell.coord+'"]').
+                            html('<div></div>').
+                            addClass((is_numeric(class_cell)?'s':class_cell)+' last').fadeIn(100);
+                    });
+                });
+                break;
+
+            case 'move':
+
+                if(receiveData.res.cell)
+                {
+                    if(receiveData.res.cell.player==playerId)
+                        var class_cell='m';
+                    else
+                        var class_cell='o';
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                        removeClass('last');
+
+                    cell=$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]');
+
+
+                    cell
+                        .html('<div style="display:none;"></div>')
+                        .find('div').fadeIn(200);
+                        //.find('div').toggle('clip').parent()
+                        cell.addClass(class_cell+' last').fadeIn(300);
+
+                        //.html(receiveData.res.cell.points)
+                        //.css('background-color',cell.css('background-color')).addClass(class_cell+' last').flip({direction:'tb',color:cell.css('background-color'),onEnd:function(){cell.removeAttr('style')}});
+
+                }
+
+                if(receiveData.res.extra) {
+                    var equal = $('.ngm-bk .msg.equal');
+                    window.setTimeout(function(){
+                        equal.fadeIn(200);
+                    }, 500);
+                    window.setTimeout(function(){
+                        equal.fadeOut(200);
+                    }, 2500);
+                }
+
+                if(receiveData.res.current)
+                    if(receiveData.res.current!=playerId)
+                    {
+                        $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                        $('.gm-pr.r').addClass('move');
+                        $('.gm-pr.l').removeClass('move');
+                    }
+                    else
+                    {
+                        $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                        $('.gm-pr.l').addClass('move');
+                        $('.gm-pr.r').removeClass('move');
+                    }
+
+                if(receiveData.res.players)
+                    $.each(receiveData.res.players, function( index, value ) {
+                        var class_player=value.pid==playerId?'l':'r';
+                        $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves).hide().fadeIn(200);
+                        $('.gm-pr.'+class_player+' .pr-pt b').html(value.points).hide().fadeIn(200);
+                    });
+
+                if(!receiveData.res.winner) {
+                    if (receiveData.res.timeout < 1) {
+                        onTimeOut();
+                    } else
+                        $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
+                }
+
+                if(receiveData.res.line) {
+                    $.each(receiveData.res.line, function (x, cells) {
+                        $.each(cells, function (y, cell) {
+                            $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + x + 'x' + y + '"]').
+                                addClass('w').addClass('last');
+                        });
+                    });
+                }
+
+                if(receiveData.res.winner){
+                    $('.ngm-bk .tm').countdown('pause');
+                    $('.ngm-bk .msg').hide();
+
+                    $('.gm-pr').removeClass('move');
+                    $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx li.w div').effect('pulsate',{times:10});
+
+                    setTimeout(function(){
+                        $('.msg.winner').fadeIn(200);
+                        class_player=receiveData.res.winner==playerId?'l':'r';
+
+                        $('.gm-pr .pr-cl').css('opacity',0);
+                        $('.gm-pr .pr-pr').hide();
+
+                        $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
+                        (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                        "</b><span>"+
+                        (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+
+                        $('.gm-pr.'+class_player).addClass('winner');
+                    }, 3600);
+
+                    $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
+                    $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
+                    $('.ngm-bk .ot-exit').hide();
+                }
+                break;
+
+            case 'quit':
+                if(receiveData.res.quit!=playerId){
+                    $('.ngm-bk .re').hide();
+                    $('.ngm-bk .ot-exit').html('Соперник вышел').show();
+                }
+                appId=0;
+                break;
+
+
+            case 'error':
+                $("#report-popup").show().find(".txt").text(errors[receiveData.res.error]?errors[receiveData.res.error]:receiveData.res.error).fadeIn(200);
+                $("#report-popup").show().fadeIn(200);
+                if(receiveData.res.appId==0) {
+                    $('.ngm-bk .tm').countdown('pause');
+                    appId = receiveData.res.appId;
+                    $('.ngm-bk .prc-but-cover').hide();
+                    $('.ngm-rls').fadeIn(200);
+                }
+                break;
+
+
+        }
+    }
+
+// WhoMore
 function appWhoMoreCallback(receiveData)
 {
     if($.cookie("audio")==1)
@@ -955,6 +1199,11 @@ function appWhoMoreCallback(receiveData)
             $('.ngm-rls').fadeOut(200);
             $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();
 
+            price=receiveData.res.appMode.split('-');
+            $('.gm-pr .pr-pr').show().html("<b>"+
+            (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+            "</b><span>"+
+            (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
             $.each(receiveData.res.players, function( index, value ) {
                 var class_player=value.pid==playerId?'l':'r';
@@ -1087,8 +1336,9 @@ function appWhoMoreCallback(receiveData)
                     $('.msg.winner').fadeIn(200);
                     class_player=receiveData.res.winner==playerId?'l':'r';
 
+                    $('.gm-pr .pr-cl').css('opacity',0);
+                    $('.gm-pr .pr-pr').hide();
 
-                    $('.gm-pr .pr-cl').css('opacity','0');
                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
                     "</b><span>"+

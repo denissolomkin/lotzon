@@ -228,13 +228,17 @@ content:"x";}
 }
 .qgames .thumbnail .caption{white-space: nowrap;overflow: hidden;    padding: 5px;}
 
+.ogames .title > div:not(:last-of-type),
 .qgames .title > div:not(:last-of-type) {margin-right: 10px;}
-.qgames .title input {width: 500px;  }
+.ogames .title input,
+.qgames .title input {width: 500px;}
 .qgames .title button {width: 190px;}
+.ogames .description, .ogames .banner,
 .qgames .description, .qgames .banner {width: 100%;padding: 0 8px;}
+.ogames .description textarea, .ogames .banner textarea,
 .qgames .description textarea, .qgames .banner textarea {width: 100%;}
 .qgames .holder {width: 100px;margin:0px;}
-.qgames  .tab#prizes > div:not(:last-of-type){margin-right:30px;}
+.qgames .tab#prizes > div:not(:last-of-type){margin-right:30px;}
 .qgames .holder button:first-of-type{width: 100px;}
 .qgames .item-holder input{
     font-size: 30px;
@@ -267,6 +271,7 @@ content:"x";}
     background: #ccc;
     margin: -15px;
     padding: 0 0 5px 5px;}
+.ogames form .row-fluid,
 .qgames form .row-fluid {
     margin: 10px 0;
 }
@@ -303,6 +308,12 @@ content:"x";}
 .qgames .form-inline .form-group{vertical-align: top;}
 .qgames ul {list-style:none;display:table;padding:0;margin: 0 auto;}
 
+.qgames .field .input-group,
+.ogames .field .input-group {
+    vertical-align: middle;
+    margin-top: 5px;
+    width: 45%;
+}
 .images .image-trigger:hover img {opacity: 0.5;}
 .images .image-trigger:hover::after {
     position: absolute;
@@ -327,15 +338,17 @@ content:"x";}
     /*border: 1px solid gray;*/
     border-radius: 5px;
 }
+.ogames#editGame #image:hover,
 #image .modal-body div:hover img{
     opacity: 0.5;
 }
-
+.ogames#editGame #image:hover,
 #image .modal-body div{
     cursor: pointer;
     display:inline-block;
     position: relative;
 }
+.ogames#editGame #image:hover::after,
 #image .modal-body div:hover::after {
     position: absolute;
     margin: -20px;

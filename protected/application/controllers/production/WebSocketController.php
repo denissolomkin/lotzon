@@ -10,15 +10,17 @@
  Application::import(PATH_APPLICATION . '/model/entities/GameSettings.php');
  Application::import(PATH_APPLICATION . '/model/games/WhoMore.php');
  Application::import(PATH_APPLICATION . '/model/games/NewGame.php');
+ Application::import(PATH_APPLICATION . '/model/games/FiveLine.php');
  Application::import(PATH_APPLICATION . '/model/games/SeaBattle.php');
+ require_once dirname(__DIR__) . '/../../system/Cache.php';
  require_once dirname(__DIR__) . '/../../system/DB.php';
  require_once dirname(__DIR__) . '/../../system/Config.php';
  require_once dirname(__DIR__) . '/../../../protected/configs/config.php';
 
 class WebSocketController implements MessageComponentInterface {
 
-    const   MIN_WAIT_TIME = 15;
-    const   MAX_WAIT_TIME = 600;
+    const   MIN_WAIT_TIME = 15;//15;
+    const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;
     const   CONNECTION_TIMER = 1800;
 
@@ -33,6 +35,7 @@ class WebSocketController implements MessageComponentInterface {
         'WhoMore' => 1,
         'NewGame' => 1,
         'SeaBattle' => 2,
+        'FiveLine' => 3,
     );
     private $_modes=array('POINT-0','POINT-25','POINT-50','POINT-75','POINT-100','MONEY-0.1','MONEY-0.25','MONEY-0.5','MONEY-1');
 

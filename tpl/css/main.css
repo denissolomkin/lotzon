@@ -888,6 +888,9 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-pr .pr-pt {margin-top:15px;}
 .ngm-bk .ngm-gm .gm-pr .pr-pt > b {font:60px/1 Handbook-bold;text-transform:uppercase;color:#000;display:block;}
 .ngm-bk .ngm-gm .gm-pr .pr-pt > span {font:12px/1 Handbook-bold;text-transform:uppercase;color:rgba(0, 0, 0, 0.5);display:block;}
+.ngm-bk .ngm-gm .gm-pr .pr-pr {margin-top:15px;}
+.ngm-bk .ngm-gm .gm-pr .pr-pr > b {font:60px/1 Handbook-bold;text-transform:uppercase;color:#000;display:block;}
+.ngm-bk .ngm-gm .gm-pr .pr-pr > span {font:12px/1 Handbook-bold;text-transform:uppercase;color:rgba(0, 0, 0, 0.5);display:block;}
 .ngm-bk .ngm-gm .gm-pr .pr-surr {width:110px;height:40px;background-color:#ffe400;font:15px/40px Handbook-bold;text-transform:uppercase;color:#000;margin:67px auto 0 auto;cursor:pointer;}
 .ngm-bk .ngm-gm .gm-pr .pr-surr:hover {background-color:#000;color:#fff;}
 
@@ -911,12 +914,20 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li.o.last {opacity:1;}
 
 .ngm-bk .ngm-gm .gm-mx ul.FiveLine {list-style:none;margin:0;padding:0;overflow:hidden;}
-.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li {width:19px;height:19px;margin:0 1px 1px 0;background-color: #b2d0d4;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li {width:19px;height:19px;margin:0 1px 1px 0;background-color: #d8e7e9;float:left;cursor:pointer;font:36px/60px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
 .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li:nth-child(24n+24) {margin-right:0;}
-.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.m {background:#ffe400;opacity:0.6;}
-.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.o {background:#f68e56;opacity:0.6;}
-.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.m.last {opacity:1;}
-.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.o.last {opacity:1;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.m div {background:#000;opacity:0.6;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    margin: 2px;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.o div {background:#ff0000;opacity:0.6;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    margin: 2px;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.m.last div {opacity:1;}
+.ngm-bk .ngm-gm .gm-mx ul.FiveLine > li.o.last div {opacity:1;}
 
 .ngm-bk .ngm-gm .gm-mx div.place div.but {width:130px;height:40px;font:15px/40px Handbook-bold;margin-top: 20px;text-transform:uppercase;text-align:center;cursor:pointer;background-color:#ffe400;border:1px solid #ffe400;}
 .ngm-bk .ngm-gm .gm-mx div.place div.but:hover {background-color:#000;color:#fff;border:1px solid #000;}

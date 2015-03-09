@@ -682,7 +682,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено!</span></div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено! Баллы за такие приглашения не начисляются.</span></div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -874,14 +874,14 @@
                     <!--div class="gm-if-bk">
                         <div class="l">Скоро</div>
                         <div class="r"></div>
-                    </div-->
-                    <img src="tpl/img/game-dots.png">
+                    </div>
+                    <img src="tpl/img/game-dots.png"-->
 
-                <!--div class="gm-if-bk">
+                <div class="gm-if-bk">
                     <div class="l">Пять в ряд</div>
                     <div class="r"></div>
                 </div>
-                <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/game-dots.png"></div-->
+                <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.jpg"></div>
             </div>
         </div>
     </div>
@@ -1187,6 +1187,11 @@
                         <b>0</b>
                         <span>очков<br/>набрано</span>
                     </div>
+                    <div class="pr-pr">
+                        <b>0</b>
+                        <span>очков<br/>на кону</span>
+                    </div>
+
                     <!--div class="pr-surr">сдаться</div-->
                 </div>
 
