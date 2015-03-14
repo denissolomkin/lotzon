@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \ChanceGamesModel;
+use \Application, \Config, \Player, \EntityException, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -414,10 +414,10 @@ class Players extends \AjaxController
 
     public function pingAction()
     {
-
         $resp = array();
         if ($this->session->has(Player::IDENTITY) && $player=$this->session->get(Player::IDENTITY)) {
             $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
+            $settings=GameSettingsModel::instance()->getList();
 
             $AdBlockDetected=$this->request()->get('online', null);
 
@@ -447,32 +447,30 @@ class Players extends \AjaxController
                 }
             }
 
-            $timer=$chanceGames['quickgame']->getMinFrom();
-            if(!$this->session->has('QuickGameLastDate'))
-                $this->session->set('QuickGameLastDate',time());
+            $key='QuickGame';
+            $timer=$settings[$key]->getOption('timer');
 
+            if(!$this->session->has($key.'LastDate'))
+                $this->session->set($key.'LastDate',time());
 
-            if($this->session->get('QuickGameLastDate') +  $timer * 60 > time()) {
-            }
+            if($this->session->get($key.'LastDate') +  $timer * 60 > time()) {}
 
-                $diff=$this->session->get('QuickGameLastDate') + $timer  * 60 - time();
-                if(  $diff<0 OR
-                    ($diff/60<=5 AND !$_SESSION['timer_soon']['five']) OR
-                    ($diff/60<=$timer AND !$_SESSION['timer_soon']['start'])) {
+            $diff=$this->session->get($key.'LastDate') + $timer  * 60 - time();
+            if ($diff<0 OR ($diff/60<=5 AND !$_SESSION['timer_soon']['five'])
+                // OR ($diff/60<=$timer AND !$_SESSION['timer_soon']['start'])
+            ) {
 
-
-                    if($diff/60<$timer AND !$_SESSION['timer_soon']['start']){
-                        $_SESSION['timer_soon']['start']=true;
-                    }
-                    elseif($diff/60<5 AND !$_SESSION['timer_soon']['five']){
-                        $_SESSION['timer_soon']['five']=true;
-                    }
-
-                    $resp['qgame'] = array(
-                        'timer' => $diff,
-                        'important' => true
-                    );
+                if ($diff / 60 < $timer AND !$_SESSION['timer_soon']['start']) {
+                    $_SESSION['timer_soon']['start'] = true;
+                } elseif ($diff / 60 < 5 AND !$_SESSION['timer_soon']['five']) {
+                    $_SESSION['timer_soon']['five'] = true;
                 }
+
+                $resp['qgame'] = array(
+                    'timer' => $diff,
+                    'important' => true
+                );
+            }
             /*
             */
 
@@ -480,7 +478,9 @@ class Players extends \AjaxController
             //$resp['moment'] = 1;
             //unset($_SESSION['chanceGame']);
 
-            if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame']) {
+            $key='Moment';
+
+            if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame'] && isset($settings[$key])) {
 
                 #delete
                 /*
@@ -499,11 +499,11 @@ class Players extends \AjaxController
                 }
                 */
 
-                if ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 <= time() &&
-                    $this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo() * 60 >= time()) {
-                    if ( ($rnd = mt_rand(0, 100)) <= 100 / ($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo()) ) {
+                if ($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('min') * 60 <= time() &&
+                    $this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('max') * 60 >= time()) {
+                    if ( ($rnd = mt_rand(0, 100)) <= 100 / ($settings[$key]->getOption('max') - $settings[$key]->getOption('min')) ) {
                         $resp['moment'] = 1;
-                    } elseif ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 120) {
+                    } elseif ($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('max') * 60 - time() < 120) {
                         // if not fired randomly  - fire at last minute
                         $resp['moment'] = 1;
                     }
@@ -568,10 +568,10 @@ class Players extends \AjaxController
 // ????             $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
                 }
 
-                if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 - time() < 0)
+                if($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('max') * 60 - time() < 0)
                     $this->session->set('MomentChanseLastDate', time());
 
-                $resp['test'] = ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom()  * 60 - time());
+                $resp['test'] = ($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('min')  * 60 - time());
             } else
                 $resp['game']=true;
         }

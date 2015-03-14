@@ -92,7 +92,8 @@ vertical-align: middle;}
     position: absolute;
     background: #ccc;
     margin-left: -15px;
-    padding-right: 5px;}
+    padding-right: 5px;
+    width: 100%}
 
 .bots #bots > div{
     margin: 0;
