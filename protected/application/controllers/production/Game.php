@@ -104,6 +104,10 @@ class Game extends \AjaxController
         $player = $this->session->get(Player::IDENTITY);
         $settings = GameSettingsModel::instance()->getList()[$key];
 
+        if (!$settings) {
+            $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
+        }
+
         if ($this->session->get($key.'LastDate') + $settings->getOption('min') * 60 > time()) {
             $this->ajaxResponse(array(), 0, 'NOT_TIME_YET');
         }

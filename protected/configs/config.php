@@ -7,7 +7,6 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-
 Config::instance()->cacheEnabled = false;
 
 // init memcache connection
@@ -19,11 +18,9 @@ try {
 }
 
 // init database connection
-try{
+try {
     DB::Connect('default', Config::instance()->dbConnectionProperties);
-}catch (\EntityException $e){
-
-}
+}catch (\EntityException $e) {}
 
 Config::instance()->newsCacheCount = 18;
 Config::instance()->langs = array('RU', 'UA', 'EN');
