@@ -4,7 +4,7 @@ class Transaction extends Entity
 {
     private $_id = 0;
     private $_playerId = 0;
-    private $_currency = GameSettings::CURRENCY_POINT;
+    private $_currency = LotterySettings::CURRENCY_POINT;
     private $_sum = 0;
     private $_balance = 0;
     private $_description = '';

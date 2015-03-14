@@ -1,13 +1,13 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin, \SupportedCountriesModel,  \Session2;
+use \Application, \PrivateArea, \Config, \ShopModel, \OnlineGame, \OnlineGamesModel, \EntityException, \Admin, \SupportedCountriesModel,  \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
-class QuickGames extends PrivateArea
+class OnlineGames extends PrivateArea
 {
-    public $activeMenu = 'qgames';
+    public $activeMenu = 'ogames';
 
     public function init()
     {
@@ -19,16 +19,14 @@ class QuickGames extends PrivateArea
     }
 
     public function indexAction()
-    {   
-       $shopItems = ShopModel::instance()->getAllItems(false);
-       $games = QuickGamesModel::instance()->getGamesSettings();
+    {
+       $games = OnlineGamesModel::instance()->getList();
        $langs=Config::instance()->langs;
 
-        $this->render('admin/qgames', array(
-            'title'      => 'Конструктор игр',
+        $this->render('admin/ogames', array(
+            'title'      => 'Онлайн-игры',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
-            'shopItems'  => $shopItems,
             'games'      => $games,
             'langs' => $langs,
         ));
@@ -43,14 +41,16 @@ class QuickGames extends PrivateArea
                 'data'    => array(),
             );
             $post=$this->request()->post('game');
-            $game = new QuickGame();
+            $game = new OnlineGame();
 
             $game->setId($post['Id'])
+                ->setKey($post['Key'])
                 ->setTitle($post['Title'])
                 ->setDescription($post['Description'])
-                ->setPrizes($post['Prizes'])
-                ->setField($post['Field'])
+                ->setModes($post['Prizes'])
+                ->setOptions($post['Field'])
                 ->setEnabled($post['Enabled']?true:false);
+
             try {
                 $game->save();
                 $response['data'] = array('Id'  => $game->getId());

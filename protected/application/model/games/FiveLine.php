@@ -1,18 +1,9 @@
-﻿<?php
+<?php
 
 Application::import(PATH_APPLICATION . 'model/Game.php');
 
 class FiveLine extends Game
 {
-    const   STACK_PLAYERS = 2;
-    const   GAME_PLAYERS = 2;
-    const   TIME_OUT = 30;
-    const   FIELD_SIZE_X = 24;
-    const   FIELD_SIZE_Y = 24;
-    const   WIN_POINTS = 5;
-    const   GAME_MOVES = 6;
-    const   BOT_ENABLED = 0;
-
     protected $_matrix = array(
         array( array(-1,-1), array(1,1) ), # \
         array( array(0,-1),  array(0,1) ), # |
@@ -20,9 +11,6 @@ class FiveLine extends Game
         array( array(-1,0),  array(1,0) ), # -
 
     );
-
-    protected $_gameid = 3;
-    protected $_gameTitle = '"Пять в ряд"';
 
     public function doMove($cell)
     {
@@ -52,7 +40,7 @@ class FiveLine extends Game
             $line=array($x=>array($y=>'w'));
             foreach ($mx as $dir) {
                 $x1=$x; $y1=$y;
-                while($x1+$dir[0]>0 && $x1+$dir[0]<=static::FIELD_SIZE_X && $y1+$dir[1]>0 && $y1+$dir[1]<=static::FIELD_SIZE_Y && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
+                while($x1+$dir[0]>0 && $x1+$dir[0]<=$this->getOption('x') && $y1+$dir[1]>0 && $y1+$dir[1]<=$this->getOption('y') && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
                     $x1+=$dir[0];
                     $y1+=$dir[1];
                     $line[$x1][$y1]='w';
@@ -60,7 +48,7 @@ class FiveLine extends Game
                 }
             }
             $max=max($max,$count);
-            if($max==self::WIN_POINTS){
+            if($max==$this->getOption('w')){
                 $this->setCallback(array(
                     'line' => $line,
                 ));
@@ -74,10 +62,10 @@ class FiveLine extends Game
 
     public function checkWinner()
     {
-        #echo $this->time().' '. "Проверка победителя \n";
+        echo $this->time().' '. "Проверка победителя \n";
         $current = $this->getPlayers()[$this->getClient()->id];
 
-        if ($current['points'] >= static::WIN_POINTS OR $current['moves'] <= 0) {
+        if ($current['points'] >= $this->getOption('w') OR $current['moves'] <= 0) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 
@@ -113,8 +101,8 @@ class FiveLine extends Game
     public function generateField()
     {
         $gameField=array();
-        for ($i = 1; $i <= static::FIELD_SIZE_X ; ++$i) {
-            for ($j = 1; $j <= static::FIELD_SIZE_Y; ++$j) {
+        for ($i = 1; $i <= $this->getOption('x'); ++$i) {
+            for ($j = 1; $j <= $this->getOption('y'); ++$j) {
                 $gameField[$i][$j]['player'] = null;
                 $gameField[$i][$j]['coord'] = $i.'x'.$j;
             }
@@ -126,8 +114,8 @@ class FiveLine extends Game
     {
         #echo $this->time().' '. "Генерация поля для бота\n";
         do {
-            $x = rand(1, static::FIELD_SIZE_X);
-            $y = rand(1, static::FIELD_SIZE_Y);
+            $x = rand(1, $this->getOption('x'));
+            $y = rand(1, $this->getOption('y'));
         } while($this->_field[$x][$y]['player']);
         return array($x, $y);
     }

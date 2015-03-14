@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \GameSettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
+use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -245,7 +245,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == GameSettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$this->session->get(Player::IDENTITY)->getCountry()]) : '',
+                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$this->session->get(Player::IDENTITY)->getCountry()]) : '',
                 );
             }
         }
@@ -294,10 +294,10 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
     {
         $offset = (int)$this->request()->get('offset');
 
-        if ($currency == GameSettings::CURRENCY_POINT) {
+        if ($currency == LotterySettings::CURRENCY_POINT) {
             $transactions = TransactionsModel::instance()->playerPointsHistory($this->session->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
         }
-        if ($currency == GameSettings::CURRENCY_MONEY) {
+        if ($currency == LotterySettings::CURRENCY_MONEY) {
             $transactions = TransactionsModel::instance()->playerMoneyHistory($this->session->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
         }
         $jsonTransactions = array();

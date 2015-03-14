@@ -149,6 +149,7 @@
         <? foreach ($supportedCountries as $country) { ?>'<option value="<?=$country->getCountryCode()?>"><?=$country->getCountryCode()?></option>'+
         <? } ?>
         '</select>' +
+        '<button type="button" class="btn btn-info btn-xs view-banner right"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>'+
         '</div>' +
         '</div>');
     });
@@ -181,12 +182,41 @@
 
     $(document ).on( "click",".view-banner", function( event ) {
 
-        $("#banner-holder").find('.modal-body').html($(this).parent().parent().find('.div').text());
+        var dat = {
+            div: $(this).parent().parent().find('.div').text(),
+            script: $(this).parent().parent().find('.script').text(),
+        };
+
+        //console.log(dat);
+        $.ajax({
+            url: "/private/banner/",
+            method: 'POST',
+            data: dat,
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                $("#banner-holder").find('.modal-body').html(data.res);//.append($(data.res));
+
+                $("#banner-holder").modal();
+                $("#banner-holder").find('.cls').on('click', function() {
+                    $("#banner-holder").modal('hide');
+                })
+            },
+            error: function() {
+
+            }
+        });
+
+        return;
+
+        //$("#banner-holder").find('.modal-body').html($(this).parent().parent().find('.div').text());
         el=document.getElementsByClassName("modal-body");
 
+        $("#banner-holder").find('.modal-body').append($($(this).parent().parent().find('.div').text()));
+        eval($(this).parent().parent().find('.div').text());
         //console.log($($(this).parent().parent().find('.script').text()).attr('src'));
         //console.log($($(this).parent().parent().find('.script').text()));
-        $.each($($(this).parent().parent().find('.script').text()), function(id,val){
+        $.each($($(this).parent().parent().find('.div,.script').text()), function(id,val){
             if($(val).prop("tagName")=='SCRIPT'){
                 if(url=$(val).attr('src')) {
                     var script = document.createElement("script");

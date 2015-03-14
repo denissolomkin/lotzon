@@ -150,8 +150,8 @@ class QuickGame extends Entity
 
     public function getTitle($lang=null)
     {
-        if($lang)
-            return $this->_title[$lang];
+        if(isset($lang))
+            return $this->_title[$lang]?:$this->_title[0];
         else
             return $this->_title;
     }
@@ -318,6 +318,20 @@ class QuickGame extends Entity
             }
 
             $this->setPrizes($prizes);
+        }
+
+        return $this;
+    }
+
+    public function formatFrom($from, $data)
+    {
+        if ($from == 'DB') {
+            $this->setId($data['Id'])
+                ->setTitle(@unserialize($data['Title']))
+                ->setDescription(@unserialize($data['Description']))
+                ->setPrizes(@unserialize($data['Prizes']))
+                ->setField(@unserialize($data['Field']))
+                ->setEnabled($data['Enabled']);
         }
 
         return $this;

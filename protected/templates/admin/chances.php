@@ -24,6 +24,7 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid">
     <div class="row-fluid">
         <h2>Моментальные шансы</h2>
@@ -214,6 +215,7 @@
 </div>
 
 <script>
+
   $('.items-modal').on('click', function() {
     var container = $(this).parents('form').parent();
     var gameId = container.find('form').data('game');

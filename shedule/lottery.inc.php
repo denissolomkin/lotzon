@@ -6,7 +6,7 @@ ini_set('memory_limit', -1);
 
 global $_ballsCount;    $_ballsCount    = 6;
 global $_variantsCount; $_variantsCount = 49;
-global $gameSettings;   $gameSettings   = GameSettingsModel::instance()->loadSettings();
+global $gameSettings;   $gameSettings   = LotterySettingsModel::instance()->loadSettings();
 
 function timeToRunLottery()
 {
@@ -19,7 +19,7 @@ function timeToRunLottery()
 
 	$currentTime = strtotime(date('H:i'), 0);
 
-	foreach($gameSettings->getGameSettings() as $game)
+	foreach($gameSettings->getLotterySettings() as $game)
 	{
 		if($currentTime == $game['StartTime'])
 		{

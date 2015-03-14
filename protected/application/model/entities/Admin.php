@@ -9,33 +9,35 @@ class Admin extends Entity
     static $PAGES = array(
 
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
-        'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-up'),
+        'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-o-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
-        'admins'=>array('name'=>'Администраторы','icon'=>'user','css'=>'pull-right'),
+        'admins'=>array('name'=>'Администраторы','icon'=>'user-secret','css'=>'pull-right'),
 
-        'Настройки'=>array('icon'=>'cog',
+        'Настройки'=>array('icon'=>'cogs',
             'pages'=>array(
-                'blacklist'=>array('icon'=>'minus-sign','name'=>'Blacklist'),
-                'game'=>array('icon'=>'gift','name'=>'Розыгрыши'),
-                'chances'=>array('icon'=>'star-empty','name'=>'Шансы'),
-                'seo'=>array('icon'=>'screenshot','name'=>'SEO'),
+                'blacklist'=>array('icon'=>'minus-circle','name'=>'Blacklist'),
+                'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
+                'seo'=>array('icon'=>'crosshairs','name'=>'SEO'),
                 'texts'=>array('icon'=>'globe','name'=>'Тексты'),
-                'rights'=>array('icon'=>'cog','name'=>'Права доступа'),
+                'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
             )),
 
         'Контент'=>array('icon'=>'th-list',
             'pages'=>array(
-                'banners'=>array('icon'=>'bold','name'=>'Баннеры'),
-                'images'=>array('icon'=>'picture','name'=>'Изображения'),
+                'banners'=>array('icon'=>'code','name'=>'Баннеры'),
+                'images'=>array('icon'=>'image','name'=>'Изображения'),
                 'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
                 'news'=>array('icon'=>'calendar','name'=>'Новости'),
                 'shop'=>array('icon'=>'shopping-cart','name'=>'Товары'),
             )),
 
-        'Игры'=>array('icon'=>'star',
+        'Игры'=>array('icon'=>'trophy',
             'pages'=>array(
-                'gamebots'=>array('icon'=>'user','name'=>'Боты'),
-                'qgames'=>array('icon'=>'star-empty','name'=>'Конструктор игр'),
+                'games'=>array('icon'=>'cog','name'=>'Настройки'),
+                'qgames'=>array('icon'=>'puzzle-piece','name'=>'Конструктор игр'),
+                'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
+                'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
+                'chances'=>array('icon'=>'star-o','name'=>'Шансы'),
                 /*'gameoptions'=>array('name'=>'Настройки'),
                 'gamestats'=>array('name'=>'Статистика'),*/
             )),

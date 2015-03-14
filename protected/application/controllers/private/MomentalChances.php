@@ -24,7 +24,7 @@ class MomentalChances extends PrivateArea
        $games = ChanceGamesModel::instance()->getGamesSettings();
 
         $this->render('admin/chances', array(
-            'title'      => 'Моментальные шансы',
+            'title'      => 'Настройка игр',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'shopItems'  => $shopItems,

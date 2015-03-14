@@ -603,8 +603,8 @@
             <div class="modal-body">
                 <div class="row-fluid">
                     <select class="input-md form-control" name="currency">
-                        <option value="<?=GameSettings::CURRENCY_POINT?>">Баллы</option>
-                        <option value="<?=GameSettings::CURRENCY_MONEY?>">Деньги</option>
+                        <option value="<?=LotterySettings::CURRENCY_POINT?>">Баллы</option>
+                        <option value="<?=LotterySettings::CURRENCY_MONEY?>">Деньги</option>
                     </select>
                </div>
                <div class="row-fluid">

@@ -2,7 +2,7 @@
 namespace controllers\admin;
 
 use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice, \NotesModel, \Note, \Session2, \Admin;
-use \GameSettings, \ShopOrdersModel, \MoneyOrderModel, \Config;
+use \LotterySettings, \ShopOrdersModel, \MoneyOrderModel, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/PlayersModel.php');
@@ -141,7 +141,7 @@ class Users extends PrivateArea
                 $player = new Player();
                 $player->setId($transaction->getPlayerId())->fetch();
                 
-                if ($transaction->getCurrency() == GameSettings::CURRENCY_POINT) {
+                if ($transaction->getCurrency() == LotterySettings::CURRENCY_POINT) {
                     $player->addPoints($transaction->getSum() * -1, $this->request()->post('description'));
                 } else {
                     $player->addMoney($transaction->getSum() * -1, $this->request()->post('description'));
@@ -170,7 +170,7 @@ class Users extends PrivateArea
                 $player = new Player();
                 $player->setId($playerId)->fetch();
                 
-                if ($this->request()->post('currency') == GameSettings::CURRENCY_POINT) {
+                if ($this->request()->post('currency') == LotterySettings::CURRENCY_POINT) {
                     $player->addPoints($this->request()->post('sum'), $this->request()->post('description'));
                 } else {
                     $player->addMoney($this->request()->post('sum'), $this->request()->post('description'));

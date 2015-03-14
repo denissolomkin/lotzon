@@ -12,7 +12,7 @@ class LotteryTicket extends Entity
     private $_dateCreated = null;
 
     private $_ticketWin = 0;
-    private $_ticketWinCurrency = GameSettings::CURRENCY_POINT;
+    private $_ticketWinCurrency = LotterySettings::CURRENCY_POINT;
 
     public function init()
     {

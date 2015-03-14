@@ -1,12 +1,12 @@
 <?php
 
 namespace controllers\production;
-use \GameSettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \OnlineGamesModel, \LotterySettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \PlayersModel, \ShopModel, \NewsModel;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
+Application::import(PATH_APPLICATION . '/model/models/LotterySettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
 Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
@@ -103,10 +103,11 @@ class Index extends \SlimController\SlimController
         $session = new Session();
         $session->get(Player::IDENTITY)->fetch();
         $banners          = Config::instance()->banners;
-        $gameSettings          = GameSettingsModel::instance()->loadSettings();
+        $gameSettings          = LotterySettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($session->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
+        $onlineGames           = OnlineGamesModel::instance()->getList();
         $currentChanceGame     = $_SESSION['chanceGame'];
 
        if (!$session->has('MomentChanseLastDate') || time() - $session->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
@@ -127,8 +128,8 @@ class Index extends \SlimController\SlimController
         );
 
         $playerTransactions = array(
-        //    GameSettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
-        //    GameSettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+        //    LotterySettings::CURRENCY_POINT => TransactionsModel::instance()->playerPointsHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
+        //    LotterySettings::CURRENCY_MONEY => TransactionsModel::instance()->playerMoneyHistory($session->get(Player::IDENTITY)->getId(), self::TRANSACTIONS_PER_PAGE),
         );
 
         if(is_array(Config::instance()->blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], Config::instance()->blockedReferers) && !$session->has('REFERER'))
@@ -157,6 +158,7 @@ class Index extends \SlimController\SlimController
             'lotteries'   => $lotteries,
             'playerPlayedLotteries' => $playerPlayedLotteries,
             'seo' => $seo,
+            'onlineGames'  => $onlineGames,
             'chanceGames'  => $chanceGames,
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
             'quickGame' => array(
@@ -179,7 +181,7 @@ class Index extends \SlimController\SlimController
         }
 
         $seo = SEOModel::instance()->getSEOSettings();
-        $gameSettings = GameSettingsModel::instance()->loadSettings();
+        $gameSettings = LotterySettingsModel::instance()->loadSettings();
         $comments = CommentsModel::instance()->getList();
 
         $gameInfo = array(
@@ -262,7 +264,7 @@ class Index extends \SlimController\SlimController
             $this->country = Config::instance()->defaultLang;
             $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
         }
-        $gameSettings = GameSettingsModel::instance()->loadSettings();
+        $gameSettings = LotterySettingsModel::instance()->loadSettings();
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => Common::viewNumberFormat(PlayersModel::instance()->getPlayersCount()),

@@ -1,18 +1,21 @@
 <?php
 
-class QuickGamesProcessor
+class OnlineGamesDBProcessor
 {
     public function save(Entity $game)
     {
-        $sql = "REPLACE INTO `QuickGames` (`Id`, `Title`, `Description`, `Prizes`, `Field`, `Enabled`) VALUES (:id, :t, :d, :p, :f, :e)";
+        $sql = "REPLACE INTO `OnlineGames`
+                (`Id`, `Key`, `Title`, `Description`, `Modes`, `Options`, `Enabled`)
+                VALUES (:id, :k, :t, :d, :m, :f, :e)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $game->getId(),
+                ':k'     => $game->getKey(),
                 ':t'     => @serialize($game->getTitle()),
                 ':d'     => @serialize($game->getDescription()),
-                ':p'     => @serialize($game->getPrizes()),
-                ':f'     => @serialize($game->getField()),
+                ':m'     => @serialize($game->getModes()),
+                ':f'     => @serialize($game->getOptions()),
                 ':e'     => $game->isEnabled(),
             ));
         } catch (PDOException $e) {
@@ -23,68 +26,47 @@ class QuickGamesProcessor
         return $game;
     }
 
-    public function getGamesSettings()
+    public function getList()
     {
-        $sql = "SELECT * FROM `QuickGames`";
+        $sql = "SELECT * FROM `OnlineGames`";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);   
+            throw new ModelException("Error processing storage query", 500);
         }
+
         $games = array();
         $data = $sth->fetchAll();
         foreach ($data as $gameData) {
-            $games[$gameData['Id']] = $gameData;
-            $games[$gameData['Id']]['Field'] = @unserialize($gameData['Field']);
-            $games[$gameData['Id']]['Prizes'] = @unserialize($gameData['Prizes']);
-            $games[$gameData['Id']]['Title'] = @unserialize($gameData['Title']);
-            $games[$gameData['Id']]['Description'] = @unserialize($gameData['Description']);
+
+            $game=new OnlineGame();
+            $game->formatFrom('DB', $gameData);
+            $games[$gameData['Key']]=$game;
         }
         return $games;
-
     }
 
-    public function getRandomGame()
+    public function getGame($key)
     {
-
-        $sql = "SELECT Id FROM `QuickGames` WHERE Enabled=1";
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute();
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-        $id= $sth->fetchAll();
-        shuffle($id);
-        $id=array_values($id)[0]['Id'];
-
-        $sql = "SELECT * FROM `QuickGames` WHERE Id=:id";
+        $sql = "SELECT * FROM `OnlineGames` WHERE `Key`= :k";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array('id'=>$id));
+            $sth->execute(array(':k'=>$key));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
+
         $data = $sth->fetch();
-
-        if(!$data)
-            return false;
-
-        $game = new QuickGame();
-        $game->setId($data['Id'])
-            ->setTitle(@unserialize($data['Title']))
-            ->setDescription(@unserialize($data['Description']))
-            ->setPrizes(@unserialize($data['Prizes']))
-            ->setField(@unserialize($data['Field']))
-            ->setEnabled($data['Enabled']);
-
+        $game=new OnlineGame();
+        $game->formatFrom('DB', $data);
         return $game;
+
     }
 
-    public function logWin($game, $combination, $clicks, $player, $prize) 
+    public function logWin($game, $combination, $clicks, $player, $prize)
     {
         $sql = "INSERT INTO `ChanceGameWins` (`GameId`, `Combination`, `Clicks`, `Date`, `PlayerId`, `ItemId`) VALUES (:gid, :comb, :clicks, :date, :plid, :iid)";
 

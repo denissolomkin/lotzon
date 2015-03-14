@@ -1,38 +1,61 @@
 <?php
 
+Application::import(PATH_INTERFACES . 'IProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/BaseCacheProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameSettingsDBProcessor.php');
 
-class GameSettingsCacheProcessor extends BaseCacheProcessor
+class GameSettingsCacheProcessor extends BaseCacheProcessor implements IProcessor
 {
 
-    const SETTINGS_CACHE_KEY = "game::settings";
+    const LIST_CACHE_KEY = "games::settings";
 
     public function init()
     {
         $this->setBackendProcessor(new GameSettingsDBProcessor());
     }
 
-    public function saveSettings(GameSettings $settings)
+    public function create(Entity $game)
     {
-        $settings = $this->getBackendProcessor()->saveSettings($settings);
-
-        if (!Cache::init()->set(self::SETTINGS_CACHE_KEY, $settings)) {
-            throw new ModelException("Unable to cache storage data", 500);            
-        }
-
-        return $settings;
+        $game = $this->getBackendProcessor()->create($game);
+        $this->getList(true);
+        return $game;
     }
 
-    public function loadSettings()
+    public function getList($recache=false)
     {
-        if (($settings = Cache::init()->get(self::SETTINGS_CACHE_KEY)) !== false) {
-            return $settings;
+        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false OR $recache) {
+            $list = $this->getBackendProcessor()->getList();
+            if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
+                throw new ModelException("Unable to cache storage data", 500);
+            }
         }
-
-        $settings = $this->getBackendProcessor()->loadSettings();
-        Cache::init()->set(self::SETTINGS_CACHE_KEY, $settings);
-
-        return $settings;
+        return $list;
     }
+
+    public function getGame($key)
+    {
+        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false) {
+            $list = $this->getBackendProcessor()->getList();
+            if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
+                throw new ModelException("Unable to cache storage data", 500);
+            }
+        }
+        return $list[$key];
+    }
+
+    public function update(Entity $game) {
+        $game = $this->getBackendProcessor()->update($game);
+        $this->getList(true);
+        return $game;
+    }
+
+
+    public function delete(Entity $player)
+    {
+    }
+
+    public function fetch(Entity $player)
+    {
+    }
+
 }

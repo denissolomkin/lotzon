@@ -175,7 +175,7 @@
                                             <li class="i_li"></li>
                                         <? } ?>
                                     </ul>
-                                    <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == GameSettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                    <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
                                 </li>
                             <? } ?>
                         </ul>

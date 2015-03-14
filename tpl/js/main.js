@@ -289,12 +289,11 @@ $(function(){
         $('.pz-rt-bk').hide();
     }
 
-
     $('.pz-ifo-bk .pz-ifo-bt').on('click', function(){
         var price =  parseInt($('#shop-items-popup').find('.item-price').text().replace(/\s*/g, ""));
         if (price > playerPoints) {
             $('.pz-ifo-bk').hide();
-            $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();
+            $('.pz-rt-bk').text(getText('INSUFFICIENT_FUNDS')).show();
         } else {
             $('.pz-ifo-bk').hide();
             $('.pz-fm-bk').show();
@@ -326,7 +325,7 @@ $(function(){
         }, function(data){
             if (data.message == 'INSUFFICIENT_FUNDS') {
                 $('.pz-fm-bk').hide();
-                $('.pz-rt-bk').text("Недостаточно баллов для заказа товара!").show();    
+                $('.pz-rt-bk').text(getText(data.message)).show();
             }
             switch (data.message) {
                 case 'ORDER_INVALID_NAME' :
@@ -882,15 +881,15 @@ $(function(){
                 switch (data.message) {
                     case 'NICKNAME_BUSY' :
                         form.find('input[name="nick"]').parent().addClass('error');
-                        form.find('input[name="nick"]').parent().find('.ph').text('Ник уже занят');
+                        form.find('input[name="nick"]').parent().find('.ph').text(getText(data.message));
                     break;
                     case 'INVALID_PHONE_FORMAT' :
                         form.find('input[name="phone"]').parent().addClass('error');
-                        form.find('input[name="phone"]').parent().find('.ph').text('Неверный формат');
+                        form.find('input[name="phone"]').parent().find('.ph').text(getText(data.message));
                     break;
                     case 'INVALID_DATE_FORMAT' :
                         form.find('input[name="bd"]').parent().addClass('error');
-                        form.find('input[name="bd"]').parent().find('.ph').text('Неверный формат даты');
+                        form.find('input[name="bd"]').parent().find('.ph').text(getText(data.message));
                     break;
                 }
             },
@@ -1299,7 +1298,7 @@ function moneyOutput(type, form) {
     requestForMoney(data, function(){
         updateMoney(playerMoney-parseFloat($("#cash-output-popup section.form:visible input[name=summ]").val()));
         $("#cash-output-popup").hide();
-        $("#report-popup").find(".txt").text("Денежные средства списаны и поступят на Ваш счет в течение 7 рабочих дней.");
+        $("#report-popup").find(".txt").text(getText('MONEY_ORDER_COMPLETE'));
         $("#report-popup").show();
     }, function(data){
         alert(data.message);
@@ -1678,9 +1677,7 @@ $(document).on('click','#qgame .start',function () {
         }
 
     }, function(data) {
-        if (data.message=="NOT_TIME_YET") {
-            $('#report-popup').show().find('.txt').text("Время игры еще не настало!");
-        }
+            $('#report-popup').show().find('.txt').text(getText(data.message));
     }, function() {});
 
 });
@@ -1787,10 +1784,10 @@ $('.ch-gm-tbl .gm-bt').click(function(){
             updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
             btn.parents('.play').hide();
         }, function(data) {
-            if (data.message=="INSUFFICIENT_FUNDS") {
-                $('.pz-ifo-bk').hide();
-                $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
-            }
+
+            $('.pz-ifo-bk').hide();
+            $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
+
         }, function() {});
     });
 });
@@ -1846,10 +1843,10 @@ $('li[data-coord]').on('click', function() {
                     $('li[data-coord]').removeClass('true').removeClass('blink');
                     $('.game-bk .rw-b .tb:visible').find('.td').removeClass('sel').first().addClass('sel');
                 }, function (data) {
-                    if (data.message == "INSUFFICIENT_FUNDS") {
-                        $('.pz-ifo-bk').hide();
-                        $('.pz-rt-bk').text("Недостаточно баллов для игры в шанс!").show().parents('#shop-items-popup').show();
-                    }
+
+                    $('.pz-ifo-bk').hide();
+                    $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
+
                 }, function () {
                 });
             });
@@ -2124,6 +2121,10 @@ function activateTicket() {
         }
     });
 };
+
+function getText(key) {
+    return(texts[key]?texts[key]:key);
+}
 
 function randomCachedNum() {
     var rand = Math.floor((Math.random() * 49) + 1);

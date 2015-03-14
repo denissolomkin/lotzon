@@ -1,14 +1,14 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \GameSettings, \GameSettingsException, \GameSettingsModel, \Admin, \Config;
+use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \LotterySettings, \LotterySettingsException, \LotterySettingsModel, \Admin, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
-Application::import(PATH_APPLICATION . '/model/entities/GameSettings.php');
+Application::import(PATH_APPLICATION . '/model/entities/LotterySettings.php');
 
-class Game extends \PrivateArea
+class Lottery extends \PrivateArea
 {
-    public $activeMenu = 'game';
+    public $activeMenu = 'lottery';
 
     public function init()
     {
@@ -22,11 +22,11 @@ class Game extends \PrivateArea
     public function indexAction()
     {
         $supportedCountries = SupportedCountriesModel::instance()->getEnabledCountriesList();
-        $settings = GameSettingsModel::instance()->loadSettings();
+        $settings = LotterySettingsModel::instance()->loadSettings();
 
-        $this->render('admin/game', array(
+        $this->render('admin/lottery', array(
             'layout'             => 'admin/layout.php',
-            'title'              => 'Game settings',
+            'title'              => 'Lottery settings',
             'activeMenu'         => $this->activeMenu,
             'supportedCountries' => $supportedCountries,
             'settings'           => $settings,
@@ -50,7 +50,7 @@ class Game extends \PrivateArea
                 'data'    => array(),
             );
 
-            $settings = new GameSettings();
+            $settings = new LotterySettings();
 
             $totalSum = $this->request()->post('lotteryTotal', 0);
             $jackpot = $this->request()->post('isJackpot', 0);
@@ -75,12 +75,12 @@ class Game extends \PrivateArea
 
             foreach ($lotteries as $time) {
                 //$settings->addGameTime($time);
-                $settings->addGameSettings($time);
+                $settings->addLotterySettings($time);
             }
 
             try {
                 $settings->saveSettings();
-            } catch (GameSettingsException $e) {
+            } catch (LotterySettingsException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
             }
