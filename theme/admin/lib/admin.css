@@ -171,7 +171,7 @@ min-height: 17px;
 
 /* ONLINE + QUICK GAMES + ALLGAMES */
 .ogames#audio-modal li .fa {padding: 8px;}
-.ogames#audio-modal li .fa-play-circle {background: wheat;}
+.ogames#audio-modal li .fa-play-circle {background: wheat;margin-right: -1px;}
 .ogames#audio-modal li{list-style: none;
     background: seashell;
     display: inline-table;
