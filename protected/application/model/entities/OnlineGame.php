@@ -7,20 +7,9 @@ class OnlineGame extends Entity
     private $_title = '';
     private $_description = '';
     private $_options = '';
-    private $_prices = '';
+    private $_modes = '';
+    private $_audio = '';
     private $_enabled = true;
-/*  private $_stackPlayers = 0;
-    private $_players = 0;
-    private $_maxPlayers = 0;
-    private $_fieldSizeX = 0;
-    private $_fieldSizeY = 0;
-    private $_timeout = 0;
-    private $_moves = 0;
-    private $_maxPoints = 0;
-    private $_prices = '';
-    private $_botEnabled = true;
-*/
-
     public function init()
     {
         $this->setModelClass('OnlineGamesModel');
@@ -229,6 +218,17 @@ class OnlineGame extends Entity
         return isset($this->getModes()[$mode[0]][$mode[1]]);
     }
 
+    public function setAudio($array)
+    {
+        $this->_audio=$array;
+        return $this;
+    }
+
+    public function getAudio()
+    {
+        return $this->_audio;
+    }
+
     public function setEnabled($bool)
     {
         $this->_enabled=(bool) $bool;
@@ -261,6 +261,7 @@ class OnlineGame extends Entity
                 ->setDescription(@unserialize($data['Description']))
                 ->setModes(@unserialize($data['Modes']))
                 ->setOptions(@unserialize($data['Options']))
+                ->setAudio(@unserialize($data['Audio']))
                 ->setEnabled($data['Enabled']);
         }
 

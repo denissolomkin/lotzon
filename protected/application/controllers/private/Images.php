@@ -86,6 +86,24 @@ class Images extends PrivateArea
         $this->redirect('/private/'); 
     }
 
+    public function audioAction()
+    {
+        $saveDir = "tpl/audio/";
+
+        try {
+            move_uploaded_file($_FILES['audio']['tmp_name'], PATH_ROOT . $saveDir . basename($_FILES['audio']['name']));
+        } catch (EntityException $e) {
+            $response['status'] = 0;
+            $response['message'] = $e->getMessage();
+        }
+
+        $data = array(
+            'audioName' => basename($_FILES['audio']['name']),
+        );
+
+        die(json_encode($data));
+    }
+
     public function uploadAction()
     {
             $folder = $this->request()->get('folder', false);

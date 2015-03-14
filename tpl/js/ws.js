@@ -42,9 +42,6 @@ var conn;
                         $("#report-popup").show().find(".txt").text(getText(data.error)).fadeIn(200);
                     else {
 
-                        if(data.res.action && $.cookie("audio")==1 && $('#a-'+appName+'-'+data.res.action).length)
-                            $('#a-'+appName+'-'+data.res.action).play();
-
                         if(data.res.appName)
                             appName=data.res.appName;
 
@@ -53,6 +50,8 @@ var conn;
 
                         if(data.res.appId)
                             appId=data.res.appId;
+
+                        playAudio([appName, data.res.action]);
 
                         eval(data.path.replace('\\', '') + 'Callback')(data);
                         //window[data.path.replace('\\', '') + 'Callback'](data);
@@ -359,9 +358,8 @@ function appSeaBattleCallback(receiveData)
              {
                  class_cell = (receiveData.res.cell.coord.split("x")[2]== playerId ? 'm' : 'o');
 
-                 if($.cookie("audio")==1)
-                     if($('#a-'+appName+'-'+receiveData.res.cell.class).length)
-                         $('#a-'+appName+'-'+receiveData.res.cell.class).play();
+                 if(move=receiveData.res.cell.class=='e'?1:receiveData.res.cell.class=='d'?2:receiveData.res.cell.class=='k'?3:null)
+                    playAudio([appName, 'Move-' + class_cell + '-' + move]);
 
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                      removeClass('last');
@@ -955,9 +953,8 @@ $('.ngm-bk .bk-bt').on('click', function() {
 // FiveLine
     function appFiveLineCallback(receiveData)
     {
-        if($.cookie("audio")==1)
-            if($('#a-'+appName+'-'+receiveData.res.action).length)
-                $('#a-'+appName+'-'+receiveData.res.action).play();
+
+        playAudio([appName, receiveData.res.action]);
 
         switch (receiveData.res.action) {
 
@@ -1060,6 +1057,8 @@ $('.ngm-bk .bk-bt').on('click', function() {
                         var class_cell='m';
                     else
                         var class_cell='o';
+
+                    playAudio([appName, 'Move-'+class_cell+'-1']);
 
                     $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                         removeClass('last');
@@ -1182,9 +1181,8 @@ $('.ngm-bk .bk-bt').on('click', function() {
 // WhoMore
 function appWhoMoreCallback(receiveData)
 {
-    if($.cookie("audio")==1)
-        if($('#a-'+appName+'-'+receiveData.res.action).length)
-            $('#a-'+appName+'-'+receiveData.res.action).play();
+
+    playAudio([appName, receiveData.res.action]);
 
     switch (receiveData.res.action) {
 
@@ -1287,6 +1285,8 @@ function appWhoMoreCallback(receiveData)
                     var class_cell='m';
                 else
                     var class_cell='o';
+
+                playAudio([appName, 'Move-'+class_cell+'-1']);
 
                 $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                     removeClass('last');
@@ -1391,9 +1391,7 @@ function appWhoMoreCallback(receiveData)
 // Mines
     function appMinesCallback(receiveData)
     {
-        if($.cookie("audio")==1)
-            if($('#a-'+appName+'-'+receiveData.res.action).length)
-                $('#a-'+appName+'-'+receiveData.res.action).play();
+        playAudio([appName, receiveData.res.action]);
 
         switch (receiveData.res.action) {
 
@@ -1495,6 +1493,8 @@ function appWhoMoreCallback(receiveData)
                         var class_cell='m';
                     else
                         var class_cell='o';
+
+                    playAudio([appName, 'Move-'+class_cell+'-1']);
 
                     $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                         removeClass('last');

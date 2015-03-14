@@ -217,6 +217,9 @@ Config::instance()->privateResources =  array(
         'delete' => 'controllers\admin\Images:delete',
         'post' => 'controllers\admin\Images:upload',
     ),
+    '/private/audio/' => array(
+        'post' => 'controllers\admin\Images:audio',
+    ),
     '/private/gamestats/'      => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',
 

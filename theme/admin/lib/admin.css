@@ -170,6 +170,14 @@ min-height: 17px;
 .toggle.btn {height: 39px !important;}
 
 /* ONLINE + QUICK GAMES + ALLGAMES */
+.ogames#audio-modal li .fa {padding: 8px;}
+.ogames#audio-modal li .fa-play-circle {background: wheat;}
+.ogames#audio-modal li{list-style: none;
+    background: seashell;
+    display: inline-table;
+    margin: 1px;
+    cursor: pointer;
+    border: 1px solid wheat;}
 .ogames .toggle.btn {width: 100% !important;;}
 .ogames .game-build .t, .qgames .game-build .t {font-size: 24px;}
 .ogames .game-build .d, .qgames .game-build .d {margin-bottom: 5px;}

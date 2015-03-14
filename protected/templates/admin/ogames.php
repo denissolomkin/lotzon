@@ -10,6 +10,9 @@
                 <button type="button" class="btn btn-md btn-success tab" data-tab="image">
                     <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                 </button>
+                <button type="button" class="btn btn-md btn-success tab" data-tab="audio">
+                    <span class="fa fa-volume-up" aria-hidden="true"></span>
+                </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="field">
                     <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 </button>
@@ -58,6 +61,25 @@
                         <div class="row-fluid tab" id="image">
                             <img class="i">
                         </div>
+
+                        <div class="row-fluid tab" id="audio">
+                            <? $audio=array('Start','Timeout','Win','Lose','Move-m-1','Move-o-1','Move-m-2','Move-o-2','Move-m-3','Move-o-3');
+                            while($key= each ($audio)) {
+                                $key=array_shift($key);?>
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><?=$key;?></span>
+                                        <input type="text" class="form-control" name="game[Audio][<?=$key;?>]" value="http://192.168.1.253/tpl/audio/complete.ogg">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default audio-play"><i class="fa fa-play-circle"></i></button>
+                                            <button type="button" class="btn btn-default audio-refresh"><i class="fa fa-refresh"></i></button>
+                                            <button type="button" class="btn btn-danger audio-remove"><i class="fa fa-remove"></i></button>
+                                        </div>
+                                    </div><!-- /.input-group -->
+                                </div>
+                            <? } ?>
+                        </div>
+
 
                         <div class="row-fluid tab" id="field">
                                 <div class="row-fluid field">
@@ -129,6 +151,27 @@
     </div>
 </div>
 
+<div class="modal fade ogames" id="audio-modal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Выбор аудио
+                    <button type="button" class="btn btn-success add-audio"><i class="fa fa-plus"></i> Добавить</button></h4>
+            </div>
+            <div class="modal-body">
+               <ul><?$openDir=opendir(dirname(__FILE__).'/../../../tpl/audio/');
+                   while(($file=readdir($openDir)) !== false)
+                   if($file != "." && $file != "..") {
+                       echo '<li data-file="'.$file.'"><i class="fa fa-file-audio-o"> '.$file.' </i><i class="fa fa-play-circle audio-play"></i></li>';
+                   }?></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade ogames" id="price-modal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -164,12 +207,33 @@
     <div class="game-builds">
     </div>
 
-
 </div>
 <script src="/theme/admin/lib/jquery.damnUploader.min.js"></script>
 <script>
 
     $(function() {
+
+        $(document).on('click','.audio-play',function() {
+            if($(this).prop("tagName")=='I')
+                $('<audio src=""></audio>').attr('src', '../../../tpl/audio/' + $.trim($(this).parent().text())).trigger("play");
+            else if($(this).parent().prev().val()) {
+                $('<audio src=""></audio>').attr('src', '../../../tpl/audio/' + $(this).parent().prev().val()).trigger("play");
+            }
+        });
+
+        $('.audio-remove').on('click',function() {
+            $(this).parent().prev().val('');
+        });
+
+        $('.audio-refresh').on('click',function() {
+            var holder = $("#audio-modal");
+            var input = $(this).parent().prev();
+            holder.modal();
+            $('li .fa-file-audio-o', holder).off().on('click', function(){
+                input.val($.trim($(this).text()));
+                holder.modal('hide');
+            });
+        });
 
         games=<?
         foreach ($games as $game)
@@ -180,6 +244,7 @@
             'Description'   =>  $game->getDescription(),
             'Field'     => $game->getOptions(),
             'Prizes'    =>  $game->getModes(),
+            'Audio'    =>  $game->getAudio(),
             'Enabled'   =>  $game->isEnabled()
             );
         echo json_encode($list, JSON_PRETTY_PRINT)?>;
@@ -236,6 +301,14 @@
                 holder.find('[name="game[Description]['+lang+']"]').val(text);
             });
 
+
+            holder.find('#audio input').val('');
+
+            if(game.Audio) {
+                $.each(game.Audio, function (i, f) {
+                    holder.find('#audio input[name="game[Audio]['+i+']"]').val(f);
+                });
+            }
 
             holder.find('.prize').remove();
             if(game.Prizes) {
@@ -305,6 +378,8 @@
                 });
                 */
         };
+
+
 
 
     $(document).on('click','.remove', function() {
@@ -451,6 +526,28 @@
 
             form.find('input[type="file"]').click();
         }
+
+        $('#audio-modal .add-audio').on('click', function () {
+
+            // create form
+            var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="audio"/></form>');
+            var input = form.find('input[type="file"]').damnUploader({
+                url: '/private/audio',
+                fieldName: 'audio',
+                dataType: 'json'
+            });
+
+            input.off('du.add').on('du.add', function(e) {
+                e.uploadItem.completeCallback = function(succ, data, status) {
+                    $('#audio-modal ul li[data-file="'+ data.audioName+'"]').remove();
+                    $('#audio-modal ul').append('<li data-file="'+ data.audioName+'"><i class="fa fa-file-audio-o"> '+ data.audioName +' </i><i class="fa fa-play-circle audio-play"></i></li>');
+                };
+                e.uploadItem.progressCallback = function(perc) {}
+                e.uploadItem.upload();
+            });
+
+            form.find('input[type="file"]').click();
+        });
 
     });
 </script>

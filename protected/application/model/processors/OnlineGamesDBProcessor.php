@@ -5,8 +5,8 @@ class OnlineGamesDBProcessor
     public function save(Entity $game)
     {
         $sql = "REPLACE INTO `OnlineGames`
-                (`Id`, `Key`, `Title`, `Description`, `Modes`, `Options`, `Enabled`)
-                VALUES (:id, :k, :t, :d, :m, :f, :e)";
+                (`Id`, `Key`, `Title`, `Description`, `Modes`, `Options`, `Audio`, `Enabled`)
+                VALUES (:id, :k, :t, :d, :m, :f, :a, :e)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -16,6 +16,7 @@ class OnlineGamesDBProcessor
                 ':d'     => @serialize($game->getDescription()),
                 ':m'     => @serialize($game->getModes()),
                 ':f'     => @serialize($game->getOptions()),
+                ':a'     => @serialize($game->getAudio()),
                 ':e'     => $game->isEnabled(),
             ));
         } catch (PDOException $e) {

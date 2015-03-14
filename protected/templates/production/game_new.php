@@ -1384,13 +1384,6 @@
         <div id="ads">ads</div>
 
 */ ?>
-        <audio id="a-WhoMore-start" src="/tpl/audio/complete.ogg"></audio>
-        <audio id="a-WhoMore-win" src="/tpl/audio/metal.ogg"></audio>
-        <audio id="a-SeaBattle-start" src="/tpl/audio/complete.ogg"></audio>
-        <audio id="a-SeaBattle-win" src="/tpl/audio/metal.ogg"></audio>
-        <audio id="a-SeaBattle-d" src="/tpl/audio/a-SeaBattle-d.ogg"></audio>
-        <audio id="a-SeaBattle-e" src="/tpl/audio/a-SeaBattle-e.ogg"></audio>
-        <audio id="a-SeaBattle-k" src="/tpl/audio/a-SeaBattle-k.ogg"></audio>
         </div>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/backend.js"></script>
@@ -1444,16 +1437,19 @@
         var appId   = 0;
         var appName   = '';
         var appMode   = 0;
-        var appModes = <?
-        foreach ($onlineGames as $game)
+        <? foreach ($onlineGames as $game){
             if(is_array($game->getModes()))
-            foreach ($game->getModes() as $cur=>$m)
-                foreach ($m as $v=>$p)
-                    $games[$game->getKey()][$cur][] = $v;
-        echo json_encode($games, JSON_PRETTY_PRINT); ?>;
+                foreach ($game->getModes() as $cur=>$m)
+                    foreach ($m as $v=>$p)
+                        $modes[$game->getKey()][$cur][] = $v;
+
+            if(is_array($game->getAudio()))
+                foreach ($game->getAudio() as $k=>$f)
+                    $audio[$game->getKey()][$k] = $f;
+            } ?>
+        var appModes = <?=json_encode($modes, JSON_PRETTY_PRINT); ?>;
+        var appAudio = <?=json_encode($audio, JSON_PRETTY_PRINT); ?>;
         var unreadNotices = <?=$notices?>;
-        <?php /*var bannerTicketLast = (<?=json_encode((is_array($banners['TicketLast']) && $ticketBanner=(array_shift($banners['TicketLast'])[0]))?$ticketBanner['div'].$ticketBanner['script']:'');?>);
-        var bannerTicketLastTimer = <?=(is_numeric($ticketBanner['title'])?$ticketBanner['title']:30)?>;*/ ?>
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
         updateNotices(unreadNotices);

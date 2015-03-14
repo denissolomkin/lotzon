@@ -49,6 +49,7 @@ class OnlineGames extends PrivateArea
                 ->setDescription($post['Description'])
                 ->setModes($post['Prizes'])
                 ->setOptions($post['Field'])
+                ->setAudio($post['Audio'])
                 ->setEnabled($post['Enabled']?true:false);
 
             try {
