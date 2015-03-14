@@ -23,6 +23,11 @@ class GameSettingsModel extends Model
         return $this->getProcessor()->save($chanceGame);
     }
 
+    public function getSettings($key)
+    {
+        return $this->getProcessor()->getList()[$key];
+    }
+
     public function getList()
     {
         return $this->getProcessor()->getList();

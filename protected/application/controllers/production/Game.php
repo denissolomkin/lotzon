@@ -102,7 +102,7 @@ class Game extends \AjaxController
         //$this->session->remove('QuickGame');
 
         $player = $this->session->get(Player::IDENTITY);
-        $settings = GameSettingsModel::instance()->getList()[$key];
+        $settings = GameSettingsModel::instance()->getSettings($key);
 
         if (!$settings) {
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
