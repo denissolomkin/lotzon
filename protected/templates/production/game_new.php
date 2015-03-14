@@ -1445,7 +1445,8 @@
 
             if(is_array($game->getAudio()))
                 foreach ($game->getAudio() as $k=>$f)
-                    $audio[$game->getKey()][$k] = $f;
+                    if($f)
+                        $audio[$game->getKey()][$k] = $f;
             } ?>
         var appModes = <?=json_encode($modes, JSON_PRETTY_PRINT); ?>;
         var appAudio = <?=json_encode($audio, JSON_PRETTY_PRINT); ?>;
