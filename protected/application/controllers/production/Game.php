@@ -108,7 +108,7 @@ class Game extends \AjaxController
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
         }
 
-        if ($this->session->get($key.'LastDate') + $settings->getOption('min') * 60 > time()) {
+        if ($settings->getOption('timer') && $this->session->get($key.'LastDate') + $settings->getOption('timer') * 60 > time()) {
             $this->ajaxResponse(array(), 0, 'NOT_TIME_YET');
         }
 

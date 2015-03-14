@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \OnlineGamesModel, \LotterySettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettingsModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -163,8 +163,8 @@ class Index extends \SlimController\SlimController
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
             'quickGame' => array(
                 'current'=>$session->has('QuickGame'),
-                'title'=>$chanceGames['quickgame']->getGameTitle(),
-                'timer'=>$session->get('QuickGameLastDate') + $chanceGames['quickgame']->getMinFrom()  * 60 - time()),
+                'title'=>GameSettingsModel::instance()->getSettings('QuickGame')->getTitle(),
+                'timer'=>$session->get('QuickGameLastDate') + GameSettingsModel::instance()->getSettings('QuickGame')->getOption('timer')  * 60 - time()),
             'playerTransactions' => $playerTransactions,
             'banners'      => $banners
         ));
