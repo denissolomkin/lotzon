@@ -2127,7 +2127,7 @@ function getText(key) {
 }
 
 function playAudio(key) {
-    if ($.cookie("audio")==1 && (file=appAudio[key[0]][key[1]]))
+    if ($.cookie("audio")==1 && appAudio && (file=appAudio[key[0]][key[1]]))
             $('<audio src=""></audio>').attr('src', 'tpl/audio/' + file).trigger("play");
 }
 

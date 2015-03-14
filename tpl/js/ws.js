@@ -553,22 +553,6 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', functi
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt.hidden').removeClass('hidden').show();
     $(this).addClass('hidden').hide().next().show().children(':not([style$="display: none;"])').last().addClass('active');
     $('.ngm-bk .ngm-go').removeClass('button-disabled').attr('disabled',false);
-/*
-    $('.prc-sel').each(function() {
-        if( $(this).find('.prc-vl').length){
-            var mode = $(this);
-            $(this).find('.prc-vl').each(function() {
-                if ($.inArray($(this).data('price'), appModes[appName])>0)
-                {
-                    $(this).show();
-                }
-            });
-            if(!(mode.find('.prc-vl:not([style$="display: none;"])').length))
-                mode.prev().hide();
-        }
-    });
-*/
-
 
 });
 
@@ -601,7 +585,7 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
 
     $('.prc-sel .prc-vl').remove();
 
-    if(appModes[appName])
+    if(appModes && appModes[appName])
     $.each(appModes[appName], function (c, m) {
         $.each(m, function (i,v) {
             if(v>0)
