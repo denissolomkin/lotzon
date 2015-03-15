@@ -66,125 +66,15 @@ class OnlineGame extends Entity
     {
         if($lang) {
             if(isset($this->_description[$lang]) && $this->_description[$lang])
-                $description = $this->_description[$lang];
+                $description = str_replace("\n",'<br>',$this->_description[$lang]);
             else
-                $description = $this->_description[\Config::instance()->defaultLang];
+                $description = str_replace("\n",'<br>',$this->_description[0]);;
         } else
             $description = $this->_description;
 
         return $description;
     }
-/*
-    public function setStackPlayers($stackPlayers)
-    {
-        $this->_stackPlayers = $stackPlayers;
-        return $this;
-    }
 
-    public function getStackPlayers()
-    {
-        return $this->_stackPlayers;
-    }
-
-    public function setPlayers($int)
-    {
-        return $this->_players = (int )$int;
-        return $this;
-    }
-
-    public function getPlayers()
-    {
-        return $this->_players;
-    }
-
-    public function setMaxPlayers($int)
-    {
-        $this->_maxPlayers = (int )$int;
-        return $this;
-    }
-
-    public function getMaxPlayers()
-    {
-        return $this->_maxPlayers;
-    }
-
-    public function setFieldSizeX($int)
-    {
-        $this->_fieldSizeX = (int) $int;
-        return $this;
-    }
-
-    public function getFieldSizeX()
-    {
-        return $this->_fieldSizeX;
-    }
-
-    public function setFieldSizeY($int)
-    {
-        $this->_fieldSizeY = (int) $int;
-        return $this;
-    }
-
-    public function getFieldSizeY()
-    {
-        return $this->_fieldSizeY;
-    }
-
-    public function setTimeOut($int)
-    {
-        $this->_timeout = (int) $int;
-        return $this;
-    }
-
-    public function getTimeOut()
-    {
-        return $this->_timeout;
-    }
-
-    public function setMoves($int)
-    {
-        $this->_moves = (int) $int;;
-        return $this;
-    }
-
-    public function getMoves()
-    {
-        return $this->_moves;
-    }
-
-    public function setMaxPoints($int)
-    {
-        $this->_maxPoints = (int) $int;;
-        return $this;
-    }
-
-    public function getMaxPoints()
-    {
-        return $this->_maxPoints;
-    }
-
-    public function setPrices($array)
-    {
-        $this->_prices=$array;
-        return $this;
-    }
-
-    public function getPrices()
-    {
-        return $this->_prices;
-    }
-
-    public function setBotEnabled($bool)
-    {
-        $this->_botEnabled=(bool) $bool;
-        return $this;
-    }
-
-    public function isBotEnabled()
-    {
-        return $this->_botEnabled;
-    }
-*/
     public function setOptions($array)
     {
         $this->_options=$array;

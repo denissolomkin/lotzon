@@ -21,12 +21,16 @@ class Mines extends Game
         $this->_field[$x][$y]['player'] = $playerId;
         $this->_fieldPlayed[$x][$y] = $this->_field[$x][$y];
 
-        $this->_cells++;
 
         if($this->_field[$x][$y]['mine']=='m') {
             $this->updatePlayer(array('moves' => -1), $playerId);
-        }
-        else {
+            //$this->_mines--;
+            echo "Мина\n";
+        } else {
+
+            $this->_cells++;
+            echo $x.'x'. $y."\n";
+
             $this->updatePlayer(array('points' => 1), $playerId);
             if (!isset($this->_field[$x][$y]['mine']) && $empty=$this->getEmpty($cell, $playerId))
                 $this->setCallback(array('field' => $empty));
@@ -54,12 +58,16 @@ class Mines extends Game
 
                     #echo $this->time().' '. "Проверка $x1 x $y1 \n";
 
+                    echo $x1.'x'. $y1."\n";
                     $ignore[]=array($x1,$y1);
-                    $this->_cells++;
-                    $this->_field[$x1][$y1]['player'] = $playerId;
-                    $empty[$x1][$y1] = $this->_fieldPlayed[$x1][$y1] = $this->_field[$x1][$y1];
 
-                    if(!$this->_field[$x+$dir[0]][$y+$dir[1]]['mine'])
+                    if(!$this->_field[$x1][$y1]['player']) {
+                        $this->_cells++;
+                        $this->_field[$x1][$y1]['player'] = $playerId;
+                        $empty[$x1][$y1] = $this->_fieldPlayed[$x1][$y1] = $this->_field[$x1][$y1];
+                    }
+
+                    if(!$this->_field[$x1][$y1]['mine'])
                         $this->getEmpty(array($x1,$y1), $playerId, $empty, $ignore);
                 }
 
@@ -72,8 +80,8 @@ class Mines extends Game
     {
         echo $this->time().' '. "Проверка победителя \n";
         $current = $this->getPlayers()[$this->getClient()->id];
-echo $this->getOption('x') * $this->getOption('y') - $this->_cells;
-        if (($this->getOption('w') && $current['points'] >= $this->getOption('w')) OR $current['moves'] <= 0 OR (($this->getOption('x') * $this->getOption('y')) - $this->_cells <=0)) {
+echo ($this->getOption('x') * $this->getOption('y')) - $this->_cells - $this->_mines.' = '.$this->getOption('x') * $this->getOption('y').'-'.$this->_cells .' + '. $this->_mines."\n";
+        if (($this->getOption('w') && $current['points'] >= $this->getOption('w')) OR $current['moves'] <= 0 OR (($this->getOption('x') * $this->getOption('y')) - $this->_mines == $this->_cells)) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 

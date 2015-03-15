@@ -1391,8 +1391,8 @@ function appWhoMoreCallback(receiveData)
                 hideAllGames();
                 runGame();
 
-                $('.gm-pr .pr-cl').css('opacity','100').show().html("<b>0</b><span>жизней<br>осталось</span>");
-                $('.gm-pr .pr-pt').css('opacity','100').show().html("<b>0</b><span>ячеек<br>разминировано</span>");
+                $('.gm-pr .pr-cl').css('opacity','100').show().html("<b>0</b><span>попыток<br>осталось</span>");
+                $('.gm-pr .pr-pt').css('opacity','100').show().html("<b>0</b><span>успешных<br>ходов</span>");
 
                 appTimeOut=receiveData.res.timeout;
 
