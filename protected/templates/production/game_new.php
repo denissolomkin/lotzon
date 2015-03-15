@@ -111,7 +111,7 @@
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
                 font: <?=(490-($onlineGames['WhoMore']->getOption('y')*10)) / 1.6 / $onlineGames['WhoMore']->getOption('y')?>px/<?=(490-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px Handbook-bold;
                 width: <?=(480-(($onlineGames['WhoMore']->getOption('x')-1)*10)) / $onlineGames['WhoMore']->getOption('x')?>px;
-                height: <?=(490-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px;
+                height: <?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px;
                 margin:0 10px 10px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
             }
 
@@ -120,10 +120,12 @@
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
                 font:   <?=(490-($onlineGames['Mines']->getOption('y')*1)) / 1.6 / $onlineGames['Mines']->getOption('y')?>px/<?=(490-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px Handbook-bold;
                 width:  <?=(480-(($onlineGames['Mines']->getOption('x')-1)*1)) / $onlineGames['Mines']->getOption('x')?>px;
-                height: <?=(490-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px;
+                height: <?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px;
                 margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
             }
-            .ngm-bk .ngm-gm .gm-mx ul.Mines > li.d {background:url("tpl/img/games/damage.png") #d8e7ea no-repeat 0 0/ 100% 100%;}
+
+            .ngm-bk .ngm-gm .gm-mx ul.Mines > li img {margin: 10%;width: 80%;height: 80%;}
+            /*.ngm-bk .ngm-gm .gm-mx ul.Mines > li.m {background:url("tpl/img/games/bomb.png") #d8e7ea no-repeat 0 0/ 100% 100%;}*/
 
             ul.SeaBattle.mx > li {
                 width:  <?=(220-($onlineGames['SeaBattle']->getOption('x')*1)) / $onlineGames['SeaBattle']->getOption('x')?>px;
@@ -894,7 +896,7 @@
                 <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
             </div>
         </div>
-            <!--div class="ch-gm-tbl">
+            <div class="ch-gm-tbl">
                 <div class="td l">
                     <div class="gm-if-bk">
                         <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
@@ -902,7 +904,7 @@
                     </div>
                     <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
                 </div>
-            </div-->
+            </div>
     </div>
 
     <!-- CHANCE GAME -->

@@ -10,6 +10,9 @@ class Mines extends Game
         array(1, -1),  array(1, 0),  array(1, 1),
     );
 
+    protected $_mines = 0;
+    protected $_cells = 0;
+
     public function doMove($cell)
     {
         list($x,$y)=$cell;
@@ -18,10 +21,16 @@ class Mines extends Game
         $this->_field[$x][$y]['player'] = $playerId;
         $this->_fieldPlayed[$x][$y] = $this->_field[$x][$y];
 
-        if($this->_field[$x][$y]['mine']=='m')
+        $this->_cells++;
+
+        if($this->_field[$x][$y]['mine']=='m') {
             $this->updatePlayer(array('moves' => -1), $playerId);
-        else
+        }
+        else {
             $this->updatePlayer(array('points' => 1), $playerId);
+            if (!isset($this->_field[$x][$y]['mine']) && $empty=$this->getEmpty($cell, $playerId))
+                $this->setCallback(array('field' => $empty));
+        }
 
         //echo $this->time().' '. "следующий игрок";
         $this->nextPlayer();
@@ -29,42 +38,42 @@ class Mines extends Game
         return $this;
     }
 
-    public function maxLine($cell, $playerId)
+    public function getEmpty($cell, $playerId, &$empty=array(),&$ignore=array())
     {
-        list($x, $y) = $cell; $max=0; $field=$this->getFieldPlayed();
+        list($x, $y) = $cell;
+        $ignore[]=$cell;
 
-        #echo $this->time().' '. "Проверка $x x $y \n";
-        foreach ($this->_matrix as $mx) {
-            $count=1;
-            $line=array($x=>array($y=>'w'));
-            foreach ($mx as $dir) {
-                $x1=$x; $y1=$y;
-                while($x1+$dir[0]>0 && $x1+$dir[0]<=$this->getOption('x') && $y1+$dir[1]>0 && $y1+$dir[1]<=$this->getOption('y') && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
-                    $x1+=$dir[0];
-                    $y1+=$dir[1];
-                    $line[$x1][$y1]='w';
-                    $count++;
+        foreach ($this->_matrix as $dir) {
+                while(
+                    $x+$dir[0]>0 && $x+$dir[0]<=$this->getOption('x')
+                    && $y+$dir[1]>0 && $y+$dir[1]<=$this->getOption('y')
+                    && !in_array(array($x+$dir[0],$y+$dir[1]),$ignore)
+                ){
+                    $x1=$x+$dir[0];
+                    $y1=$y+$dir[1];
+
+                    #echo $this->time().' '. "Проверка $x1 x $y1 \n";
+
+                    $ignore[]=array($x1,$y1);
+                    $this->_cells++;
+                    $this->_field[$x1][$y1]['player'] = $playerId;
+                    $empty[$x1][$y1] = $this->_fieldPlayed[$x1][$y1] = $this->_field[$x1][$y1];
+
+                    if(!$this->_field[$x+$dir[0]][$y+$dir[1]]['mine'])
+                        $this->getEmpty(array($x1,$y1), $playerId, $empty, $ignore);
                 }
-            }
-            $max=max($max,$count);
-            if($max==$this->getOption('w')){
-                $this->setCallback(array(
-                    'line' => $line,
-                ));
-                return $max;
-            }
+
             #else echo $this->time().' '. "Игнор $x1 x $y1 \n";
         }
-
-        return $max;
+        return $empty;
     }
 
     public function checkWinner()
     {
         echo $this->time().' '. "Проверка победителя \n";
         $current = $this->getPlayers()[$this->getClient()->id];
-
-        if ($current['points'] >= $this->getOption('w') OR $current['moves'] <= 0) {
+echo $this->getOption('x') * $this->getOption('y') - $this->_cells;
+        if (($this->getOption('w') && $current['points'] >= $this->getOption('w')) OR $current['moves'] <= 0 OR (($this->getOption('x') * $this->getOption('y')) - $this->_cells <=0)) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 
@@ -110,13 +119,14 @@ class Mines extends Game
             }
         }
 
-        $mines = (int)($this->getOption('x') * $this->getOption('y') / 2);
+        $this->_mines = $mines = (int)($this->getOption('x') * $this->getOption('y') / 5);
+        $this->_cells = 0;
 
         do {
             do {
                 $x = rand(1, $this->getOption('x'));
                 $y = rand(1, $this->getOption('y'));
-            } while (isset($this->_field[$x][$y]['mine']));
+            } while ($gameField[$x][$y]['mine']=='m');
 
             $mines--;
             $gameField[$x][$y]['mine'] = 'm';

@@ -594,9 +594,8 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     });
 
     $('.prc-sel').each(function() {
-        console.log($(this).data('currency'));
         if(!$(this).find('.prc-vl').length)
-            if($(this).data('currency')!='FREE' || !appModes[appName] || !appModes[appName]['POINT'] || $.inArray(0, appModes[appName]['POINT'])<0)
+            if($(this).data('currency')!='FREE' || (appModes && (!appModes[appName] || !appModes[appName]['POINT'] || $.inArray(0, appModes[appName]['POINT'])<0)))
                 $(this).prev().hide();
     });
 
@@ -1475,7 +1474,7 @@ function appWhoMoreCallback(receiveData)
                 {
                     if(receiveData.res.cell.player==playerId)
                         var class_cell='m';
-                    else
+                    else if(receiveData.res.cell.player)
                         var class_cell='o';
 
                     playAudio([appName, 'Move-'+class_cell+'-1']);
@@ -1484,12 +1483,28 @@ function appWhoMoreCallback(receiveData)
                         removeClass('last');
 
                     $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]')
-                        .html('<div style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]').css('background')+';width:100%;height:100%;"></div>')
+                        .addClass(class_cell+' last')
+                        .html('<div style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]').css('background')+';width:100%;height:100%;">'+
+                        (is_numeric(receiveData.res.cell.mine)?receiveData.res.cell.mine:receiveData.res.cell.mine=='m'?'<img src="tpl/img/games/bomb.png">':'')+'</div>')
                         /*.find('div').toggle('explode', {pieces: 4 }, 500).parent()*/
+                        //.html(receiveData.res.cell.mine)
+                        .fadeIn(300);
 
-                        .html(receiveData.res.cell.mine)
-                        .addClass(class_cell+' last').fadeIn(300);
+                }
 
+                if(receiveData.res.field) {
+                    $.each(receiveData.res.field, function (x, cells) {
+                        $.each(cells, function (y, cell) {
+                            class_cell = (cell.player == playerId ? 'm' : 'o');
+
+                            $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]')
+                                .addClass(class_cell)
+                                .html('<div style="background:' + $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]').css('background') + ';width:100%;height:100%;">' +
+                                (is_numeric(cell.mine) ? cell.mine : cell.mine == 'm' ? '<img src="tpl/img/games/bomb.png">' : '') + '</div>')
+                                .fadeIn(300);
+
+                        });
+                    });
                 }
 
                 if(receiveData.res.extra) {
