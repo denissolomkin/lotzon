@@ -68,12 +68,14 @@ Config::instance()->errorMessages = array(
     'PLAYER_NOT_FOUND' => 'Учетная запись не найдена',
     'INVALID_PASSWORD' => 'Неверный пароль',
     'ALREADY_INVITED'  => 'На этот email уже было отправлено приглашение',
-    'EMAIL_NOT_VALIDATED' => 'Завершите процесс регистрации через свой email.',
+    'EMAIL_NOT_VALIDATED' => 'Перейдите в Ваш почтовый ящик и завершите процесс регистрации',
     'BLOCKED_EMAIL_DOMAIN' => 'Регистрация с этого email-домена запрещена',
+    'BLOCKED_IP'        => 'Регистрация пользователя запрещена',
+    'ACCESS_DENIED'        => 'Доступ запрещен',
 );
 
 Config::instance()->privateResources =  array(
-    '/private/' => 'controllers\admin\Game:index',
+    '/private/' => 'controllers\admin\Reviews:index',
     '/private/login/' => array(
         'get'  => 'controllers\admin\Login:index',
         'post' => 'controllers\admin\Login:auth'
@@ -82,6 +84,9 @@ Config::instance()->privateResources =  array(
     '/private/game/' => array(
         'get'  => 'controllers\admin\Game:index',
         'post' => 'controllers\admin\Game:save',
+    ),
+    '/private/game/simulation' => array(
+        'post' => 'controllers\admin\Game:simulation',
     ),
     '/private/game/addcountry' => array(
         'post' => 'controllers\admin\Game:addcountry',
@@ -141,6 +146,10 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\MomentalChances:index',
         'post' => 'controllers\admin\MomentalChances:save',
     ),
+    '/private/qgames' => array(
+        'get' => 'controllers\admin\QuickGames:index',
+        'post' => 'controllers\admin\QuickGames:save',
+    ),
     '/private/seo' => array(
         'get' => 'controllers\admin\SEO:index',
         'post' => 'controllers\admin\SEO:save',
@@ -159,10 +168,13 @@ Config::instance()->privateResources =  array(
     '/private/reviews/delete/:id' => 'controllers\admin\Reviews:delete',
 
     '/private/monetisation' => 'controllers\admin\Monetisation:index',
-    '/private/monetisation/approve/:id' => 'controllers\admin\Monetisation:approve',
-    '/private/monetisation/decline/:id' => 'controllers\admin\Monetisation:decline',
+    '/private/monetisation/status/:id' => 'controllers\admin\Monetisation:status',
 
     '/private/users'        => 'controllers\admin\Users:index',
+    '/private/users/profile/:playerId' => array(
+        'get' => 'controllers\admin\Users:profile',
+        'post' => 'controllers\admin\Users:updateProfile'
+    ),
     '/private/users/stats/:playerId' => 'controllers\admin\Users:stats',
     '/private/users/rmNotice/:trid' => array(
         'post' => 'controllers\admin\Users:removeNotice'
@@ -171,6 +183,20 @@ Config::instance()->privateResources =  array(
         'post' => 'controllers\admin\Users:addNotice'
     ),
     '/private/users/notices/:playerId' => 'controllers\admin\Users:notices',
+    '/private/users/rmNote/:trid' => array(
+        'post' => 'controllers\admin\Users:removeNote'
+    ),
+    '/private/users/addNote/:playerId' => array(
+        'post' => 'controllers\admin\Users:addNote'
+    ),
+    '/private/users/notes/:playerId' => 'controllers\admin\Users:notes',
+    '/private/users/delete/:playerId' => 'controllers\admin\Users:delete',
+    '/private/users/ban/:playerId' => 'controllers\admin\Users:ban',
+    '/private/users/logs/:playerId' => 'controllers\admin\Users:logs',
+    '/private/users/reviews/:playerId' => 'controllers\admin\Users:reviews',
+    '/private/users/logins/:playerId' => 'controllers\admin\Users:logins',
+    '/private/users/orders/:playerId' => 'controllers\admin\Users:orders',
+    '/private/users/tickets/:playerId' => 'controllers\admin\Users:tickets',
     '/private/users/rmTransaction/:trid' => array(
         'post' => 'controllers\admin\Users:removeTransaction'
     ),
@@ -178,15 +204,42 @@ Config::instance()->privateResources =  array(
         'post' => 'controllers\admin\Users:addTransaction'
     ),
     '/private/users/transactions/:playerId' => 'controllers\admin\Users:transactions',
-    '/private/banners'      => 'controllers\admin\ComingSoon:index',
-    '/private/ogames'       => 'controllers\admin\ComingSoon:index',
-    '/private/ogames'       => 'controllers\admin\ComingSoon:index',
+    '/private/banners/'      => array(
+        'get' => 'controllers\admin\Banners:index',
+        'post' => 'controllers\admin\Banners:save',
+    ),
+    '/private/blacklist/'      => array(
+        'get' => 'controllers\admin\Blacklist:index',
+        'post' => 'controllers\admin\Blacklist:save',
+    ),
+    '/private/rights/'      => array(
+        'get' => 'controllers\admin\Rights:index',
+        'post' => 'controllers\admin\Rights:save',
+    ),
+    '/private/gamebots/'      => array(
+        'get' => 'controllers\admin\GameBots:index',
+        'post' => 'controllers\admin\GameBots:save',
+    ),
+    '/private/gamebots/uploadPhoto' => array(
+        'post'    => 'controllers\admin\GameBots:uploadPhoto',
+    ),
+    '/private/gameoptions/'      => array(
+        'get' => 'controllers\admin\ComingSoon:index',
+        'post' => 'controllers\admin\GameOptions:save',
+    ),
+    '/private/images/' => array(
+    'get' => 'controllers\admin\Images:index',
+    'delete' => 'controllers\admin\Images:delete',
+    'post' => 'controllers\admin\Images:upload',
+    ),
+    '/private/gamestats/'      => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',
 
 );
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/:page' => 'controllers\production\Index:index',
     '/vkproxy/' => 'controllers\production\Index:VKProxy',
     '/feedback/' => 'controllers\production\Index:feedback',
     '/trailer/' => array(
@@ -209,6 +262,7 @@ Config::instance()->publicResources = array(
     ),
     '/auth/:provider' => 'controllers\production\AuthController:auth',
     '/auth/endpoint/' => 'controllers\production\AuthController:endpoint',
+    '/players/trouble/:trouble' => 'controllers\production\Players:trouble',
     '/players/disableSocial/:provider' => 'controllers\production\Players:disableSocial',
     '/players/logout/' => 'controllers\production\Players:logout',
     '/players/social/' => 'controllers\production\Players:social',
@@ -226,6 +280,7 @@ Config::instance()->publicResources = array(
     '/game/lastLottery/'  => 'controllers\production\Game:lastLottery',
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
+    '/content/banner/:sector'      => 'controllers\production\ContentController:banner',
     '/content/news/'      => 'controllers\production\ContentController:news',
     '/content/reviews/'      => 'controllers\production\ContentController:reviews',
     '/order/item/'        => 'controllers\production\OrdersController:orderItem',
@@ -246,18 +301,24 @@ Config::instance()->publicResources = array(
     '/chance/play/:identifier' => array(
         'post' => 'controllers\production\Game:chanceGamePlay',
     ),
+    '/quickgame/build/' => array(
+        'get' => 'controllers\production\Game:startQuickGame',
+    ),
+    '/quickgame/play/' => array(
+        'post' => 'controllers\production\Game:quickGamePlay',
+    ),
 );
 
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
-Config::instance()->generatorNumTries = 5;
+Config::instance()->generatorNumTries = 10;
 
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
 //    "base_url" => "http://testbed.lotzon.com/auth/endpoint/",
 //    "base_url" => "http://lotzon.test/auth/endpoint/",
-    "base_url" => "http://lotzon.com/auth/endpoint/",
+    "base_url" => "http://".(isset($_SERVER['SERVER_NAME'])?$_SERVER['SERVER_NAME']:'lotzon.com')."/auth/endpoint/",
 
     "providers" => array (
 
@@ -274,7 +335,7 @@ Config::instance()->hybridAuth = array(
 
         "Odnoklassniki" => array (
             "enabled" => true,
-            "keys" => array ( "id" => "1112461056", "secret" => "149DA72E626CF26CFCC436A3" ),
+            "keys" => array ( "id" => "1117952512", "secret" => "D721378D1D8978B3F0918327", "key"=>"CBALJDKDEBABABABA" ),
             'scope' => 'email'),
 
         "Vkontakte" => array (
@@ -322,3 +383,11 @@ Config::instance()->blockedEmails = array(
     'objectmail.com', 'proxymail.eu', 'rcpt.at', 'trash-mail.at', 'trashmail.at', 'trashmail.me',
     'trashmail.net', 'wegwerfmail.de', 'wegwerfmail.net', 'wegwerfmail.org', 'jourrapide.com'
 );
+
+// init config from DB
+$sth = DB::Connect()->prepare("SELECT * FROM `Config`");
+$sth->execute();
+if ($sth->rowCount())
+    foreach ($sth->fetchAll() as $config)
+        Config::instance()->$config['Key']=unserialize($config['Value']);
+
