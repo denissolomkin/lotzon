@@ -46,10 +46,10 @@ class OnlineGame extends Entity
     public function getTitle($lang=false)
     {
         if($lang) {
-            if(isset($this->_title[$lang]) && $this->_title[$lang])
+            if(isset($this->_title[$lang]) && $this->_title[$lang] && $this->_title[$lang]!='')
                 $title = $this->_title[$lang];
             else
-                $title = $this->_title[\Config::instance()->defaultLang];
+                $title = reset($this->_title);
         } else
             $title = $this->_title;
 
@@ -64,11 +64,12 @@ class OnlineGame extends Entity
 
     public function getDescription($lang=false)
     {
+
         if($lang) {
-            if(isset($this->_description[$lang]) && $this->_description[$lang])
+            if(isset($this->_description[$lang]) && $this->_description[$lang] && $this->_description[$lang]!='')
                 $description = nl2br($this->_description[$lang]);
             else
-                $description = nl2br($this->_description[0]);;
+                $description = nl2br(reset($this->_description));;
         } else
             $description = $this->_description;
 

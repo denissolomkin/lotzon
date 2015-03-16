@@ -1038,7 +1038,7 @@
 
                         <div class="prc-bl">
                             <div class="prc-txt-bk">
-                                <div class="all">Выберите тип и размер ставки или играйте бесплатно</div>
+                                <div class="all">Выберите тип и размер ставки</div>
                             </div>
                             <div class="prc-but-cover"></div>
                             <div class="prc-but-bk">
@@ -1046,21 +1046,11 @@
                                 <div class="prc-bt">баллы</div>
                                 <div class="prc-sel" data-currency="POINT">
                                     <div class="prc-tl">баллы</div>
-                                    <!--div class="prc-vl" data-price='POINT-500'>500</div>
-                                    <div class="prc-vl" data-price='POINT-200'>200</div>
-                                    <div class="prc-vl" data-price='POINT-100'>100</div>
-                                    <div class="prc-vl" data-price='POINT-75'>75</div>
-                                    <div class="prc-vl" data-price='POINT-50'>50</div>
-                                    <div class="prc-vl" data-price='POINT-25'>25</div-->
                                 </div>
 
                                 <div class="prc-bt">деньги</div>
                                 <div class="prc-sel" data-currency="MONEY">
                                     <div class="prc-tl">деньги</div>
-                                    <!--div class="prc-vl" data-price='MONEY-1'><?=(1*$gameInfo['coefficient'])?></div>
-                                    <div class="prc-vl" data-price='MONEY-0.5'><?=(0.5*$gameInfo['coefficient'])?></div>
-                                    <div class="prc-vl" data-price='MONEY-0.25'><?=(0.25*$gameInfo['coefficient'])?></div>
-                                    <div class="prc-vl" data-price='MONEY-0.1'><?=(0.1*$gameInfo['coefficient'])?></div-->
                                 </div>
 
                                 <div class="prc-bt">бесплатно</div>
