@@ -21,7 +21,7 @@
                     <? foreach ($page['pages'] as $name => $pg) :?>
                         <tr>
 
-                            <td><?= (isset($pg['icon'])?'<span class="glyphicon glyphicon-'.$pg['icon'].'" aria-hidden="true"></span> ':'') ?><?= $pg['name'] ?></td>
+                            <td><?= (isset($pg['icon'])?'<span class="fa fa-'.$pg['icon'].'"></span> ':'') ?><?= $pg['name'] ?></td>
                             <? foreach ($roles as $role) : ?>
                                 <td><input name="rights<?='['.$role.']['.$name.']'?>" <?=($rights[$role][$name]?'checked':'')?> type="checkbox"></td>
                             <? endforeach ?>
@@ -29,7 +29,7 @@
                     <? endforeach ?>
                 <? } else {?>
                 <tr>
-                    <td><?= (isset($page['icon'])?'<span class="glyphicon glyphicon-'.$page['icon'].'" aria-hidden="true"></span> ':'') ?><?= $page['name'] ?></td>
+                    <td><?= (isset($page['icon'])?'<span class="fa fa-'.$page['icon'].'"></span> ':'') ?><?= $page['name'] ?></td>
                     <? foreach ($roles as $role) : ?>
                         <td><input name="rights<?='['.$role.']['.$key.']'?>" <?=($rights[$role][$key]?'checked':'')?> type="checkbox"></td>
                     <? endforeach ?>

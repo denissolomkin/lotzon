@@ -475,7 +475,7 @@
                 <div class="padd">
 
                     <!-- BONUSES BLOCK -->
-                    <div id="bonuses-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_POINT?>">
+                    <div id="bonuses-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm">баллы</div>
                             <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
@@ -484,8 +484,8 @@
                             </div> */?>
                         </div>
                         <div class="tb">
-                            <? if(is_array($playerTransactions[GameSettings::CURRENCY_POINT]))
-                                foreach ($playerTransactions[GameSettings::CURRENCY_POINT] as $transaction) { ?>
+                            <? if(is_array($playerTransactions[LotterySettings::CURRENCY_POINT]))
+                                foreach ($playerTransactions[LotterySettings::CURRENCY_POINT] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum()))?></div>
@@ -493,7 +493,7 @@
                                 </div>
                             <? } ?>
                         </div>
-                        <? if (count($playerTransactions[GameSettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                        <? if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
                             <div class="pz-more-bt">ПОКАЗАТЬ ЕЩЕ</div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl">свернуть</div>
@@ -503,7 +503,7 @@
                     </div>
 
                     <!-- CASH BLOCK -->
-                    <div id="cash-h" class="bblock" data-currency="<?=GameSettings::CURRENCY_MONEY?>">
+                    <div id="cash-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_MONEY?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
                             <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
@@ -513,8 +513,8 @@
                             </div>*/?>
                         </div>
                         <div class="tb">
-                            <? if(is_array($playerTransactions[GameSettings::CURRENCY_MONEY]))
-                                foreach ($playerTransactions[GameSettings::CURRENCY_MONEY] as $transaction) { ?>
+                            <? if(is_array($playerTransactions[LotterySettings::CURRENCY_MONEY]))
+                                foreach ($playerTransactions[LotterySettings::CURRENCY_MONEY] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=Common::viewNumberFormat($transaction->getSum())?></div>
@@ -522,7 +522,7 @@
                                 </div>
                             <? } ?>
                         </div>
-                        <? if (count($playerTransactions[GameSettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                        <? if (count($playerTransactions[LotterySettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
                             <div class="pz-more-bt">загрузить еще</div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl">свернуть</div>

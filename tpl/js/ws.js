@@ -2,16 +2,6 @@ $(function(){
 var ships = [];
 var game_ships = [];
 var conn;
-var errors = {
-    'INSUFFICIENT_FUNDS' : 'Недостаточно средств для начала игры',
-    'NOT_YOUR_MOVE' : 'Сейчас не Ваша очередь ходить',
-    'APPLICATION_DOESNT_EXISTS' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
-    'CELL_IS_PLAYED' : 'Ячейка уже сыграла',
-    'ENOUGH_MOVES' : 'У Вас закончились ходы',
-    'SHIP_TOO_CLOSE' : 'Корабли расположены слишком близко',
-    'ERROR_COORDINATES' : 'Неверные координаты корабля',
-    'CHOICE_BET' : 'Выберите ставку',
-};
         function WebSocketAjaxClient(path, data, stop) {
             if(!conn || conn.readyState !== 1)
             {
@@ -49,11 +39,8 @@ var errors = {
                     WebSocketStatus('<b style="color:purple">receive',e.data)
                     data=$.parseJSON(e.data);
                     if(data.error)
-                        $("#report-popup").show().find(".txt").text(errors[data.error]?errors[data.error]:data.error).fadeIn(200);
+                        $("#report-popup").show().find(".txt").text(getText(data.error)).fadeIn(200);
                     else {
-
-                        if(data.res.action && $.cookie("audio")==1 && $('#a-'+appName+'-'+data.res.action).length)
-                            $('#a-'+appName+'-'+data.res.action).play();
 
                         if(data.res.appName)
                             appName=data.res.appName;
@@ -63,6 +50,8 @@ var errors = {
 
                         if(data.res.appId)
                             appId=data.res.appId;
+
+                        playAudio([appName, data.res.action]);
 
                         eval(data.path.replace('\\', '') + 'Callback')(data);
                         //window[data.path.replace('\\', '') + 'Callback'](data);
@@ -84,6 +73,14 @@ function WebSocketStatus(action, data) {
 /****************************************************
  *      WebSocketAjaxClient CallBack's              *
  ****************************************************/
+
+
+
+function stackCallback(receiveData) {
+    $('.ngm-bk .rls-r-ts').show();
+    $('.ngm-bk .rls-r-t').hide();
+    $('.ngm-bk .prc-but-cover').show();
+}
 
 // chat
 function updateCallback(receiveData)
@@ -180,7 +177,7 @@ function appSeaBattleCallback(receiveData)
 
                  price=receiveData.res.appMode.split('-');
                  $('.gm-pr .pr-pr').show().html("<b>"+
-                 (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+                 (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
                  "</b><span>"+
                  (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -248,7 +245,7 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-             (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+            (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
              "</b><span>"+
              (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -296,7 +293,7 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-             (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+            (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
              "</b><span>"+
              (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -361,9 +358,8 @@ function appSeaBattleCallback(receiveData)
              {
                  class_cell = (receiveData.res.cell.coord.split("x")[2]== playerId ? 'm' : 'o');
 
-                 if($.cookie("audio")==1)
-                     if($('#a-'+appName+'-'+receiveData.res.cell.class).length)
-                         $('#a-'+appName+'-'+receiveData.res.cell.class).play();
+                 if(move=receiveData.res.cell.class=='e'?1:receiveData.res.cell.class=='d'?2:receiveData.res.cell.class=='k'?3:null)
+                    playAudio([appName, 'Move-' + class_cell + '-' + move]);
 
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                      removeClass('last');
@@ -453,7 +449,7 @@ function appSeaBattleCallback(receiveData)
 
                      $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
-                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient):receiveData.res.price )+
                      "</b><span>"+
                      (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
 
@@ -475,7 +471,7 @@ function appSeaBattleCallback(receiveData)
 
 
          case 'error':
-             $("#report-popup").show().find(".txt").text(errors[receiveData.res.error]?errors[receiveData.res.error]:receiveData.res.error).fadeIn(200);
+             $("#report-popup").show().find(".txt").text(getText(receiveData.res.error)).fadeIn(200);
              $("#report-popup").show().fadeIn(200);
              if(receiveData.res.appId==0) {
                  $('.ngm-bk .tm').countdown('pause');
@@ -503,24 +499,21 @@ $(document).on('click', '#chatButton', function(e){
 // game new
 $(document).on('click', '.ngm-bk .ngm-go', function(e){
 
-    if(appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').data('price')) {
+    if(appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').attr('data-price')) {
         price = appMode.split('-');
         if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < parseFloat(price[1]).toFixed(2) * coefficient)) {
 
-            $("#report-popup").show().find(".txt").text(errors['INSUFFICIENT_FUNDS']).fadeIn(200);
+            $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
 
         } else {
 
-            $('.ngm-bk .rls-r-ts').show();
-            $('.ngm-bk .rls-r-t').hide();
-            $('.ngm-bk .prc-but-cover').show();
             var path = 'app/' + appName + '/' + appId;
             var data = {'action': 'start', 'mode': appMode};
             WebSocketAjaxClient(path, data);
 
         }
     } else {
-        $("#report-popup").show().find(".txt").text(errors['CHOICE_BET']).fadeIn(200);
+        $("#report-popup").show().find(".txt").text(getText('CHOICE_BET')).fadeIn(200);
     }
 });
 
@@ -557,25 +550,9 @@ $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', functi
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
-    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
-    $(this).hide().next().show().children(':not([style$="display: none;"])').last().addClass('active');
+    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt.hidden').removeClass('hidden').show();
+    $(this).addClass('hidden').hide().next().show().children(':not([style$="display: none;"])').last().addClass('active');
     $('.ngm-bk .ngm-go').removeClass('button-disabled').attr('disabled',false);
-
-    $('.prc-sel').each(function() {
-        if( $(this).find('.prc-vl').length){
-            var mode = $(this);
-            $(this).find('.prc-vl').each(function() {
-                if ($.inArray($(this).data('price'), appModes[appName])>0)
-                {
-                    $(this).show();
-                }
-            });
-            if(!(mode.find('.prc-vl:not([style$="display: none;"])').length))
-                mode.prev().hide();
-        }
-    });
-
-
 
 });
 
@@ -596,7 +573,7 @@ $(document).on('click', '.ngm-bk .bk-bt-rl', function(e){
 });
 
 
-// switch price block
+// open price block
 $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $('.ngm-bk .rls-l').hide();
     $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
@@ -604,20 +581,22 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk').find('active').removeClass('active');
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
     $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').hide();
-    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').show();
+    $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').removeClass('hidden').show();
+
+    $('.prc-sel .prc-vl').remove();
+
+    if(appModes && appModes[appName])
+    $.each(appModes[appName], function (c, m) {
+        $.each(m, function (i,v) {
+            if(v>0)
+                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(parseFloat(v)*coefficient)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
+        });
+    });
 
     $('.prc-sel').each(function() {
-        if( $(this).find('.prc-vl').length){
-            var mode = $(this);
-            $(this).find('.prc-vl').each(function() {
-                if ($.inArray($(this).data('price'), appModes[appName])>0) {
-                    $(this).show();
-                }
-            });
-
-            if(!(mode.find('.prc-vl:not([style$="display: none;"])').length))
-            mode.prev().hide();
-        }
+        if(!$(this).find('.prc-vl').length)
+            if($(this).data('currency')!='FREE' || (appModes && (!appModes[appName] || !appModes[appName]['POINT'] || $.inArray(0, appModes[appName]['POINT'])<0)))
+                $(this).prev().hide();
     });
 
     $('.ngm-bk .prc-l').fadeIn(200);
@@ -700,17 +679,17 @@ $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot', function(e)
 $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
 
     if(parseInt($('.gm-pr.l .pr-cl b').html())<=0){
-    //    $("#report-popup").find(".txt").text(errors['ENOUGH_MOVES']);
+    //    $("#report-popup").find(".txt").text(getText('ENOUGH_MOVES'));
     //    $("#report-popup").show().fadeIn(200);
     }
     else if(!($('.gm-pr.l').hasClass('move')))
     {
-    //    $("#report-popup").find(".txt").text(errors['NOT_YOUR_MOVE']);
+    //    $("#report-popup").find(".txt").text(getText('NOT_YOUR_MOVE'));
     //    $("#report-popup").show().fadeIn(200);
     }
     else if($(this).hasClass('m') || $(this).hasClass('o') || $(this).hasClass('b'))
     {
-        //    $("#report-popup").find(".txt").text(errors['CELL_IS_PLAYED']);
+        //    $("#report-popup").find(".txt").text(getText('CELL_IS_PLAYED'));
         //    $("#report-popup").show().fadeIn(200);
     }
     else{
@@ -746,8 +725,11 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
 
     function checkFieldSeaBattle(newship,id) {
-        size_x = 11;
-        size_y = 24;
+
+        var size=$('.mx.SeaBattle:eq(1) li').last().attr('data-coor').split('x');
+        var size_x = size[0];
+        var size_y = size[1];
+
         matrix = [
             [-1, -1], [-1, 0], [-1, 1],
             [0, -1], [0, 0], [0, 1],
@@ -813,10 +795,13 @@ $('.ngm-bk .bk-bt').on('click', function() {
         return true;
     }
 
-        function genFieldSeaBattle(){
+    function genFieldSeaBattle(){
     window.ships=[];
-    size_x = 11;
-    size_y = 24;
+
+    var size=$('.mx.SeaBattle:eq(1) li').last().attr('data-coor').split('x');
+    var size_x = size[0];
+    var size_y = size[1];
+
     matrix=[
         [-1,-1],[-1,0], [-1,1],
         [0,-1], [0,0],  [0,1],
@@ -873,9 +858,16 @@ $('.ngm-bk .bk-bt').on('click', function() {
             iterration++;
 
     }
+        var wid=parseFloat($('.mx.SeaBattle:eq(1) li').last().css('width'));
+        var hei=parseFloat($('.mx.SeaBattle:eq(1) li').last().css('height'));
     var html='';
     $.each(window.ships, function( index,ship) {
-        html+='<div data-id="'+index+'" style="top:'+(ship[0][1]*20-20)+'px;left:'+(ship[0][0]*20-20)+'px;'+(ship[1] ? 'width: '+(ship[2]*20)+'px;height:20px;':'height: '+(ship[2]*20)+'px;width:20px;')+'" class="s '+(ship[1]?'h':'')+' drag"></div>';
+        html+='<div data-id="'+index+'" ' +
+        'style="' +
+        'top:'+ (ship[0][1]*(hei+1)-(hei+1))+'px;' +
+        'left:'+(ship[0][0]*(wid+1)-(wid+1))+'px;'+(ship[1]
+            ?'width: '+(ship[2]*(wid+1))+'px;height:'+(hei+1)+'px;'
+            :'height: '+(ship[2]*(hei+1))+'px;width:'+(wid+1)+'px;')+'" class="s '+(ship[1]?'h':'')+' drag"></div>';
     });
 
     $('ul.mx.SeaBattle.m div').remove();
@@ -903,19 +895,19 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
     });
 
-    $( ".drag" ).draggable({containment: "parent",  grid: [ 20, 20 ],
+    $( ".drag" ).draggable({containment: "parent",  grid: [ wid+1,hei+1 ],
         revert:function() {
 
             var ship=[].concat(window.ships[$(this).data('id')]);
             ship[0] = [
-                (parseInt($(this).css('left'))+20)/20,
-                (parseInt($(this).css('top'))+20)/20
+                (parseInt($(this).css('left'))+(wid+1))/(wid+1),
+                (parseInt($(this).css('top'))+(hei+1))/(hei+1)
             ];
 
             if(checkFieldSeaBattle(ship,$(this).data('id'))){
                 window.ships[$(this).data('id')][0]=[
-                    (parseInt($(this).css('left'))+20)/20,
-                    (parseInt($(this).css('top'))+20)/20
+                    (parseInt($(this).css('left'))+(wid+1))/(wid+1),
+                    (parseInt($(this).css('top'))+(hei+1))/(hei+1)
                 ];
                 return false
             } else return true;
@@ -944,9 +936,8 @@ $('.ngm-bk .bk-bt').on('click', function() {
 // FiveLine
     function appFiveLineCallback(receiveData)
     {
-        if($.cookie("audio")==1)
-            if($('#a-'+appName+'-'+receiveData.res.action).length)
-                $('#a-'+appName+'-'+receiveData.res.action).play();
+
+        playAudio([appName, receiveData.res.action]);
 
         switch (receiveData.res.action) {
 
@@ -974,7 +965,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                 price=receiveData.res.appMode.split('-');
                 $('.gm-pr .pr-pr').show().html("<b>"+
-                (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+               (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
                 "</b><span>"+
                 (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -1049,6 +1040,8 @@ $('.ngm-bk .bk-bt').on('click', function() {
                         var class_cell='m';
                     else
                         var class_cell='o';
+
+                    playAudio([appName, 'Move-'+class_cell+'-1']);
 
                     $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                         removeClass('last');
@@ -1154,7 +1147,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
 
             case 'error':
-                $("#report-popup").show().find(".txt").text(errors[receiveData.res.error]?errors[receiveData.res.error]:receiveData.res.error).fadeIn(200);
+                $("#report-popup").show().find(".txt").text(getText(receiveData.res.error)).fadeIn(200);
                 $("#report-popup").show().fadeIn(200);
                 if(receiveData.res.appId==0) {
                     $('.ngm-bk .tm').countdown('pause');
@@ -1171,9 +1164,8 @@ $('.ngm-bk .bk-bt').on('click', function() {
 // WhoMore
 function appWhoMoreCallback(receiveData)
 {
-    if($.cookie("audio")==1)
-        if($('#a-'+appName+'-'+receiveData.res.action).length)
-            $('#a-'+appName+'-'+receiveData.res.action).play();
+
+    playAudio([appName, receiveData.res.action]);
 
     switch (receiveData.res.action) {
 
@@ -1201,7 +1193,7 @@ function appWhoMoreCallback(receiveData)
 
             price=receiveData.res.appMode.split('-');
             $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+           (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
             "</b><span>"+
             (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -1277,11 +1269,15 @@ function appWhoMoreCallback(receiveData)
                 else
                     var class_cell='o';
 
+                playAudio([appName, 'Move-'+class_cell+'-1']);
+
                 $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                     removeClass('last');
 
-                $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]')
-                    .html('<div style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]').css('background')+';width:60px;height:60px;"></div>')
+                cell=$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]');
+
+                cell
+                    .html('<div style="background:'+cell.css('background')+';width:'+cell.css('width')+';height:'+cell.css('height')+';"></div>')
                     .find('div').toggle('explode', {pieces: 4 }, 500).parent()
 
                     .html(receiveData.res.cell.points)
@@ -1363,7 +1359,7 @@ function appWhoMoreCallback(receiveData)
 
 
         case 'error':
-            $("#report-popup").show().find(".txt").text(errors[receiveData.res.error]?errors[receiveData.res.error]:receiveData.res.error).fadeIn(200);
+            $("#report-popup").show().find(".txt").text(getText(receiveData.res.error)).fadeIn(200);
             $("#report-popup").show().fadeIn(200);
             if(receiveData.res.appId==0) {
                 $('.ngm-bk .tm').countdown('pause');
@@ -1376,6 +1372,230 @@ function appWhoMoreCallback(receiveData)
 
     }
 }
+
+// Mines
+    function appMinesCallback(receiveData)
+    {
+        playAudio([appName, receiveData.res.action]);
+
+        switch (receiveData.res.action) {
+
+            case 'ready':
+                $('.re').hide();
+                $('.ot-exit').html('Ожидаем соперника').show();
+                break;
+
+            case 'stack':
+
+                break;
+
+            case 'start':
+                hideAllGames();
+                runGame();
+
+                $('.gm-pr .pr-cl').css('opacity','100').show().html("<b>0</b><span>попыток<br>осталось</span>");
+                $('.gm-pr .pr-pt').css('opacity','100').show().html("<b>0</b><span>успешных<br>ходов</span>");
+
+                appTimeOut=receiveData.res.timeout;
+
+                $('.ngm-rls').fadeOut(200);
+                $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();
+
+                price=receiveData.res.appMode.split('-');
+                $('.gm-pr .pr-pr').show().html("<b>"+
+               (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+                "</b><span>"+
+                (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+
+                $.each(receiveData.res.players, function( index, value ) {
+                    var class_player=value.pid==playerId?'l':'r';
+                    $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves);
+                    $('.gm-pr.'+class_player+' .pr-pt b').html(value.points);
+
+                    if(value.avatar)
+                        value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
+                    else
+                        value.avatar = "url('../tpl/img/default.jpg')";
+
+                    $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
+
+                    if(value.pid!=playerId && value.name){
+                        $('.gm-pr.r .pr-nm').html(value.name);
+                    }
+                });
+
+                if(receiveData.res.current!=playerId)
+                {
+                    $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                    $('.gm-pr.r').addClass('move');
+                    $('.gm-pr.l').removeClass('move');
+                }
+                else
+                {
+                    $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                    $('.gm-pr.l').addClass('move');
+                    $('.gm-pr.r').removeClass('move');
+                }
+
+                if(appTimeOut<1)
+                {
+                    onTimeOut();
+                } else{
+                    $(".ngm-bk .tm").countdown({
+                        until: (appTimeOut),
+                        layout: '{mnn}<span>:</span>{snn}',
+                        onExpiry: onTimeOut
+                    });
+                    $(".ngm-bk .tm").countdown('resume');
+                    $(".ngm-bk .tm").countdown('option', {until: (appTimeOut)});
+                }
+
+                $.each(receiveData.res.field, function( x, cells ) {
+                    $.each(cells, function( y, cell) {
+                        if(cell.player==playerId) {
+                            var class_cell='m';
+                        }
+                        else
+                        {
+                            var class_cell='o';
+                        }
+
+                        $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                            removeClass('last');
+
+                        $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+cell.coord+'"]').
+                            html(cell.points).
+                            addClass((is_numeric(class_cell)?'s':class_cell)+' last').fadeIn(100);
+                    });
+                });
+                break;
+
+            case 'move':
+
+                if(receiveData.res.cell)
+                {
+                    if(receiveData.res.cell.player==playerId)
+                        var class_cell='m';
+                    else if(receiveData.res.cell.player)
+                        var class_cell='o';
+
+                    playAudio([appName, 'Move-'+class_cell+'-1']);
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
+                        removeClass('last');
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]')
+                        .addClass(class_cell+' last')
+                        .html('<div style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]').css('background')+';width:100%;height:100%;">'+
+                        (is_numeric(receiveData.res.cell.mine)?receiveData.res.cell.mine:receiveData.res.cell.mine=='m'?'<img src="tpl/img/games/bomb.png">':'')+'</div>')
+                        /*.find('div').toggle('explode', {pieces: 4 }, 500).parent()*/
+                        //.html(receiveData.res.cell.mine)
+                        .fadeIn(300);
+
+                }
+
+                if(receiveData.res.field) {
+                    $.each(receiveData.res.field, function (x, cells) {
+                        $.each(cells, function (y, cell) {
+                            class_cell = (cell.player == playerId ? 'm' : 'o');
+
+                            $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]')
+                                .addClass(class_cell)
+                                .html('<div style="background:' + $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]').css('background') + ';width:100%;height:100%;">' +
+                                (is_numeric(cell.mine) ? cell.mine : cell.mine == 'm' ? '<img src="tpl/img/games/bomb.png">' : '') + '</div>')
+                                .fadeIn(300);
+
+                        });
+                    });
+                }
+
+                if(receiveData.res.extra) {
+                    var equal = $('.ngm-bk .msg.equal');
+                    equal.fadeIn(200);
+                    window.setTimeout(function(){
+                        equal.fadeOut(200);
+                    }, 2000);
+                }
+
+                if(receiveData.res.current)
+                    if(receiveData.res.current!=playerId)
+                    {
+                        $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                        $('.gm-pr.r').addClass('move');
+                        $('.gm-pr.l').removeClass('move');
+                    }
+                    else
+                    {
+                        $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                        $('.gm-pr.l').addClass('move');
+                        $('.gm-pr.r').removeClass('move');
+                    }
+
+                if(receiveData.res.players)
+                    $.each(receiveData.res.players, function( index, value ) {
+                        var class_player=value.pid==playerId?'l':'r';
+                        $('.gm-pr.'+class_player+' .pr-cl b').html(value.moves).hide().fadeIn(200);
+                        $('.gm-pr.'+class_player+' .pr-pt b').html(value.points).hide().fadeIn(200);
+                    });
+
+                if(!receiveData.res.winner) {
+                    if (receiveData.res.timeout < 1) {
+                        onTimeOut();
+                    } else
+                        $(".ngm-bk .tm").countdown('option', {until: (receiveData.res.timeout)});
+                }
+
+                if(receiveData.res.winner){
+                    $('.ngm-bk .tm').countdown('pause');
+                    $('.ngm-bk .msg').hide();
+
+                    $('.gm-pr').removeClass('move');
+                    $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
+
+                    setTimeout(function(){
+                        $('.msg.winner').fadeIn(200);
+                        class_player=receiveData.res.winner==playerId?'l':'r';
+
+                        $('.gm-pr .pr-cl').css('opacity',0);
+                        $('.gm-pr .pr-pr').hide();
+
+                        $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
+                        (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                        "</b><span>"+
+                        (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+
+                        $('.gm-pr.'+class_player).addClass('winner');
+                    }, 1200);
+
+                    $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
+                    $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
+                    $('.ngm-bk .ot-exit').hide();
+                }
+                break;
+
+            case 'quit':
+                if(receiveData.res.quit!=playerId){
+                    $('.ngm-bk .re').hide();
+                    $('.ngm-bk .ot-exit').html('Соперник вышел').show();
+                }
+                appId=0;
+                break;
+
+
+            case 'error':
+                $("#report-popup").show().find(".txt").text(getText(receiveData.res.error)).fadeIn(200);
+                $("#report-popup").show().fadeIn(200);
+                if(receiveData.res.appId==0) {
+                    $('.ngm-bk .tm').countdown('pause');
+                    appId = receiveData.res.appId;
+                    $('.ngm-bk .prc-but-cover').hide();
+                    $('.ngm-rls').fadeIn(200);
+                }
+                break;
+
+
+        }
+    }
 
 
     function runGame(){

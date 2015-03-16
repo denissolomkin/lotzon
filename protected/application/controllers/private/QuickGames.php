@@ -51,7 +51,6 @@ class QuickGames extends PrivateArea
                 ->setPrizes($post['Prizes'])
                 ->setField($post['Field'])
                 ->setEnabled($post['Enabled']?true:false);
-
             try {
                 $game->save();
                 $response['data'] = array('Id'  => $game->getId());

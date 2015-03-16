@@ -1,178 +1,91 @@
-<?php
+<?php 
 
-class GameSettings
+class GameSettings extends Entity
 {
-    const CURRENCY_POINT = 'POINT';
-    const CURRENCY_MONEY = 'MONEY';
+    private $_key = '';
+    private $_title = array();
+    private $_options = array();
+    private $_games = array();
 
-    private $_model = null;
 
-    private $_countryCoefficients = array();
-    private $_countryRates = array();
-    private $_countryPrizes = array();
-    private $_total = 0;
-    private $_jackpot = false;
-    private $_gameTimes = array();
-    private $_gameSettings = array();
-
-    public function __construct() 
+    public function init()
     {
-        $this->_model = GameSettingsModel::instance();
+        $this->setModelClass('GameSettingsModel');
     }
 
-
-    public function setTotalWinSum($sum)
+    public function setKey($string)
     {
-        $this->_total = $sum;
+        $this->_key = $string;
 
         return $this;
     }
 
-    public function getTotalWinSum()
-    {   
-        return $this->_total;
-    }
-
-    public function setJackpot($jackpot)
+    public function getKey()
     {
-        $this->_jackpot = $jackpot;
+        return $this->_key;
     }
 
-    public function getJackpot()
+    public function setTitle($string)
     {
-        return $this->_jackpot;
-    }
-
-    public function setCountryCoefficient($country, $coof) {
-        $this->_countryCoefficients[$country] = $coof;
+        $this->_title = $string;
 
         return $this;
     }
 
-    public function getCountryCoefficient($country)
+    public function getTitle()
     {
-        return @$this->_countryCoefficients[$country];
+        return $this->_title;
     }
 
-    public function setCountryRate($country, $rate) {
-        $this->_countryRates[$country] = $rate;
+    public function setOptions($array)
+    {
+        $this->_options = $array;
 
         return $this;
     }
 
-    public function getCountryRate($country)
+    public function getOptions()
     {
-        return @$this->_countryRates[$country];
+        return $this->_options;
     }
 
-    public function setPrizes($country, array $prizes)
+    public function getOption($key)
     {
-        if (count($prizes)) {
-            if (!isset($this->_countryPrizes[$country])) {
-                $this->_countryPrizes[$country] = array();    
-            }
+        return isset($this->_options[$key])?$this->_options[$key]:null;
+    }
 
-            foreach ($prizes as $ballsCount => $prize) {
-                if (!empty($prize['ballsCount'])) {
-                    $ballsCount = $prize['ballsCount'];
-                }
-                $prize['currency'] = strtoupper($prize['currency']);
-
-                if (!in_array($prize['currency'], array(self::CURRENCY_MONEY, self::CURRENCY_POINT))) {
-                    throw new GameSettingsException("Invalid prize internal currency", 400);
-                }
-
-                $this->_countryPrizes[$country][$ballsCount] = array(
-                    'sum' => $prize['sum'],
-                    'currency' => $prize['currency'],
-                );
-            }
-        }
+    public function setGames($array)
+    {
+        $this->_games = $array;
 
         return $this;
     }
 
-    public function getPrizes($country = null)
+    public function getGames()
     {
-        if (!empty($country)) {
-            return $this->_countryPrizes[$country];
-        }
-
-        return $this->_countryPrizes;
+        return $this->_games;
     }
 
-    public function addGameSettings($settings)
+    public function getRandomGame()
     {
-        if (isset($settings['StartTime']) && !is_numeric($settings['StartTime'])) {
-            $settings['StartTime'] = strtotime($settings['StartTime'], 0);
-        }
+        return is_array($this->_games) && !empty($this->_games) ? array_rand($this->_games) : null;
 
-        $this->_gameSettings[] = $settings;
-    }
-
-    public function getGameSettings()
-    {
-        return $this->_gameSettings;
-    }
-
-    public function addGameTime($time) 
-    {
-        if (!is_numeric($time)) {
-            $time = strtotime($time, 0);
-        }
-
-        $this->_gameTimes[] = $time;
-    }
-
-    public function getGameTimes($nearest = false)
-    {
-        // sort dates asc
-        sort($this->_gameTimes, SORT_NUMERIC);
-        if ($nearest) {
-            $now = strtotime(date('H:i'), 0);
-            $nearest = 0;
-            foreach ($this->_gameTimes as $time) {
-                if ($time > $now) {
-                    $nearest = $time;
-                    break;
-                }
-            }
-            if (!$nearest) {
-                $nearest = array_shift($this->_gameTimes) + 86400;
-            }
-            return $nearest;
-        }
-
-        return $this->_gameTimes;
-    }
-
-    public function getNearestGame()
-    {
-        return $this->getGameTimes(true);
     }
 
     public function validate()
     {
-        $times = $this->getGameSettings();
-        if (!count($times)) {
-            throw new GameSettingsException("At least one time point for lottery must be specified", 400);
-        }
+        return true;
     }
 
-    public function saveSettings()
+    public function formatFrom($from, $data)
     {
-        $this->validate();
-        try {
-            $this->_model->saveSettings($this);
-        } catch (ModelException $e) {
-            throw new GameSettingsException($e->getMessage(), $e->getCode());
+        if ($from == 'DB') {
+            $this->setKey($data['Key'])
+                ->setTitle($data['Title'])
+                ->setOptions(@unserialize($data['Options']))
+                ->setGames(@unserialize($data['Games']));
         }
 
         return $this;
     }
-}
-
-class GameSettingsException extends Exception 
-{
-
 }

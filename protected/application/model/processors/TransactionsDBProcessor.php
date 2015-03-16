@@ -77,13 +77,13 @@ class TransactionsDBProcessor implements IProcessor
 
     public function playerPointsHistory($playerId, $limit = 0, $offset = 0)
     {
-        return $this->playerHistory($playerId, GameSettings::CURRENCY_POINT, $limit, $offset);
+        return $this->playerHistory($playerId, LotterySettings::CURRENCY_POINT, $limit, $offset);
     }
 
 
     public function playerMoneyHistory($playerId, $limit = 0, $offset = 0)
     {
-        return $this->playerHistory($playerId, GameSettings::CURRENCY_MONEY, $limit, $offset);
+        return $this->playerHistory($playerId, LotterySettings::CURRENCY_MONEY, $limit, $offset);
     }
 
     public function playerHistory($playerId, $currency, $limit, $offset) 

@@ -39,7 +39,7 @@ global $_variantsCount; $_variantsCount = 49;
 
 $gt = microtime(true);
 
-Application::import(PATH_APPLICATION . '/model/models/GameSettingsModel.php');
+Application::import(PATH_APPLICATION . '/model/models/LotterySettingsModel.php');
 Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
 Application::import(PATH_APPLICATION . '/model/entities/Lottery.php');
 
@@ -48,7 +48,7 @@ messageLn(" [done] -> " . number_format((microtime(true) - $gt),3) . " s.");
 
 message("Get settings");
 $time = microtime(true);
-$gameSettings = GameSettingsModel::instance()->loadSettings();
+$gameSettings = LotterySettingsModel::instance()->loadSettings();
 $gamePrizes   = $gameSettings->getPrizes();
 messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
 
@@ -139,7 +139,7 @@ if (timeToRunLottery()) {
 //                        continue 2;
 //                    }
 
-                    if ($gamePrizes['UA'][$compare]['currency'] == GameSettings::CURRENCY_MONEY)
+                    if ($gamePrizes['UA'][$compare]['currency'] == LotterySettings::CURRENCY_MONEY)
                         @$combinationsWeight[$id] += $gamePrizes['UA'][$compare]['sum'];
                 }
 
@@ -213,7 +213,7 @@ if (timeToRunLottery()) {
                     $playersWinned[$ticket->getPlayerId()] = $ticket->getPlayerId();
                 }
                 // calculate point or UA money total
-                if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
+                if ($gamePrizes['UA'][$compares]['currency'] == LotterySettings::CURRENCY_MONEY) {
                     $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];                    
                 } else {
                     $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
@@ -304,13 +304,13 @@ if (timeToRunLottery()) {
             }
 
             $win = 0;
-            $currency = GameSettings::CURRENCY_POINT;
+            $currency = LotterySettings::CURRENCY_POINT;
             if ($ticketCompare > 0) {
                 $win = $gamePrizes[$pcountry][$ticketCompare]['sum'];
                 $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];    
             }
 
-            if ($currency == GameSettings::CURRENCY_MONEY) {
+            if ($currency == LotterySettings::CURRENCY_MONEY) {
                 $playerMoney += $win; 
             } else {
                 $playerPoints += $win;
@@ -328,7 +328,7 @@ if (timeToRunLottery()) {
         if ($playerMoney > 0) {
             $transactionsSql[] = vsprintf("(%s,%s,%s,%s,%s)", array(
                 DB::Connect()->quote($playerId),
-                DB::Connect()->quote(GameSettings::CURRENCY_MONEY),
+                DB::Connect()->quote(LotterySettings::CURRENCY_MONEY),
                 DB::Connect()->quote($playerMoney),
                 DB::Connect()->quote("Выигрыш в розыгрыше"),
                 DB::Connect()->quote(time()),
@@ -337,7 +337,7 @@ if (timeToRunLottery()) {
         if ($playerPoints > 0) {
             $transactionsSql[] = vsprintf("(%s,%s,%s,%s,%s)", array(
                 DB::Connect()->quote($playerId),
-                DB::Connect()->quote(GameSettings::CURRENCY_POINT),
+                DB::Connect()->quote(LotterySettings::CURRENCY_POINT),
                 DB::Connect()->quote($playerPoints),
                 DB::Connect()->quote("Выигрыш в розыгрыше"),
                 DB::Connect()->quote(time()),
@@ -476,7 +476,7 @@ function recompile(){
 
     message("Get settings");
     $time = microtime(true);
-    $gameSettings = GameSettingsModel::instance()->loadSettings();
+    $gameSettings = LotterySettingsModel::instance()->loadSettings();
     $gamePrizes   = $gameSettings->getPrizes();
     messageLn(" [done]  -> " . number_format((microtime(true) - $time),3) . " s.");
 
@@ -547,7 +547,7 @@ function recompile(){
             foreach ($lotteryCombinations as $id => $combination)
                 foreach ($tickets as $ticket)
                     if($compare=count(array_intersect((array)$ticket->getCombination(),$combination))) {
-                        if ($gamePrizes['UA'][$compare]['currency'] == GameSettings::CURRENCY_MONEY)
+                        if ($gamePrizes['UA'][$compare]['currency'] == LotterySettings::CURRENCY_MONEY)
                             @$combinationsWeight[$id] += $gamePrizes['UA'][$compare]['sum'];
                     }
 
@@ -606,7 +606,7 @@ function recompile(){
                         $playersWinned[$ticket->getPlayerId()] = $ticket->getPlayerId();
                     }
                     // calculate point or UA money total
-                    if ($gamePrizes['UA'][$compares]['currency'] == GameSettings::CURRENCY_MONEY) {
+                    if ($gamePrizes['UA'][$compares]['currency'] == LotterySettings::CURRENCY_MONEY) {
                         $moneyWonTotal += $gamePrizes['UA'][$compares]['sum'];
                     } else {
                         $pointsWonTotal += $gamePrizes['UA'][$compares]['sum'];
@@ -682,13 +682,13 @@ function recompile(){
                 }
 
                 $win = 0;
-                $currency = GameSettings::CURRENCY_POINT;
+                $currency = LotterySettings::CURRENCY_POINT;
                 if ($ticketCompare > 0) {
                     $win = $gamePrizes[$pcountry][$ticketCompare]['sum'];
                     $currency = $gamePrizes[$pcountry][$ticketCompare]['currency'];
                 }
 
-                if ($currency == GameSettings::CURRENCY_MONEY) {
+                if ($currency == LotterySettings::CURRENCY_MONEY) {
                     $playerMoney += $win;
                 } else {
                     $playerPoints += $win;
@@ -706,7 +706,7 @@ function recompile(){
             if ($playerMoney > 0) {
                 $transactionsSql[] = vsprintf("(%s,%s,%s,%s,%s)", array(
                     DB::Connect()->quote($playerId),
-                    DB::Connect()->quote(GameSettings::CURRENCY_MONEY),
+                    DB::Connect()->quote(LotterySettings::CURRENCY_MONEY),
                     DB::Connect()->quote($playerMoney),
                     DB::Connect()->quote("Выигрыш в розыгрыше"),
                     DB::Connect()->quote(time()),
@@ -715,7 +715,7 @@ function recompile(){
             if ($playerPoints > 0) {
                 $transactionsSql[] = vsprintf("(%s,%s,%s,%s,%s)", array(
                     DB::Connect()->quote($playerId),
-                    DB::Connect()->quote(GameSettings::CURRENCY_POINT),
+                    DB::Connect()->quote(LotterySettings::CURRENCY_POINT),
                     DB::Connect()->quote($playerPoints),
                     DB::Connect()->quote("Выигрыш в розыгрыше"),
                     DB::Connect()->quote(time()),

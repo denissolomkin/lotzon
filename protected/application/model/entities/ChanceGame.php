@@ -350,4 +350,5 @@ class ChanceGame extends Entity
 
         return $candidat;
     }
+
 }

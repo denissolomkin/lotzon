@@ -2,13 +2,16 @@
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
 Application::import(PATH_APPLICATION . 'model/entities/QuickGame.php');
-Application::import(PATH_APPLICATION . 'model/processors/QuickGamesProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/QuickGamesDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/QuickGamesCacheProcessor.php');
 
 class QuickGamesModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(new QuickGamesProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new QuickGamesCacheProcessor() : new QuickGamesDBProcessor());
+        $this->setProcessor(new QuickGamesCacheProcessor());
+
     }
 
     public static function myClassName()
@@ -25,6 +28,11 @@ class QuickGamesModel extends Model
    {
       return $this->getProcessor()->getGamesSettings();
    }
+
+    public function getList()
+    {
+        return $this->getProcessor()->getList();
+    }
 
     public function getRandomGame()
     {

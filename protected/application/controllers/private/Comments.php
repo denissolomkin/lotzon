@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \GameSettings, \GameSettingsException, \GameSettingsModel, \CommentsModel, \Comment, \WideImage, \Admin, \Config;
+use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \LotterySettings, \LotterySettingsException, \LotterySettingsModel, \CommentsModel, \Comment, \WideImage, \Admin, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/CommentsModel.php');

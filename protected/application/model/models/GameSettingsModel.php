@@ -1,16 +1,16 @@
 <?php
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
-Application::import(PATH_APPLICATION . 'model/processors/GameSettingsCacheProcessor.php');
+Application::import(PATH_APPLICATION . 'model/entities/GameSettings.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameSettingsDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/GameSettingsCacheProcessor.php');
 
 class GameSettingsModel extends Model
 {
     public function init()
     {
-        parent::init();
-
-        $this->setProcessor(Config::instance()->cacheEnabled ? new GameSettingsCacheProcessor() : new GameSettingsDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new GameSettingsCacheProcessor() : new GameSettingsDBProcessor());
+        $this->setProcessor(new GameSettingsCacheProcessor());
     }
 
     public static function myClassName()
@@ -18,34 +18,19 @@ class GameSettingsModel extends Model
         return __CLASS__;
     }
 
-    public function saveSettings(GameSettings $settings)
+    public function save(Entity $chanceGame)
     {
-        return $this->getProcessor()->saveSettings($settings);
+        return $this->getProcessor()->save($chanceGame);
     }
 
-    public function loadSettings()
+    public function getSettings($key)
     {
-        return $this->getProcessor()->loadSettings();   
+        return $this->getProcessor()->getList()[$key];
     }
 
-    public function create(Entity $object) 
+    public function getList()
     {
-        throw new ModelException("Direct settings manupilation disabled", 500);
-        
+        return $this->getProcessor()->getList();
     }
 
-    public function fetch(Entity $object)
-    {
-        throw new ModelException("Direct settings manupilation disabled", 500);
-    }   
-
-    public function update(Entity $object)
-    {
-        throw new ModelException("Direct settings manupilation disabled", 500);
-    }
-
-    public function delete(Entity $object)
-    {
-        throw new ModelException("Direct settings manupilation disabled", 500);
-    }
 }

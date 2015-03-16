@@ -47,7 +47,7 @@
                 <div class="input-group pull-right" data-balls="<?=$i?>">
                     <input type="text" class="form-control input-md" value="<?=@$settings->getPrizes('UA')[$i]['sum']?>"> 
                     <span class="input-group-addon">
-                        <input type="checkbox" <?=(@$settings->getPrizes('UA')[$i]['currency'] == GameSettings::CURRENCY_MONEY || $i > 3 ? 'checked' : '')?>>
+                        <input type="checkbox" <?=(@$settings->getPrizes('UA')[$i]['currency'] == LotterySettings::CURRENCY_MONEY || $i > 3 ? 'checked' : '')?>>
                     </span>
                 </div>
             </div>
@@ -67,8 +67,8 @@
     <!-- scnd column -->
     <div class="col-md-6" id="lotteries">
         <? $i = 1; ?>
-        <? $cnt = count($settings->getGameSettings()); ?>
-        <? foreach ($settings->getGameSettings() as $time) { ?>
+        <? $cnt = count($settings->getLotterySettings()); ?>
+        <? foreach ($settings->getLotterySettings() as $time) { ?>
             <div class="form-group">
                 <? if ($i == 1) { ?>
                     <label class="control-label">Количество и время розыгрышей</label>
@@ -254,7 +254,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
 
 
         $.ajax({
-            url: "/private/game/simulation",
+            url: "/private/lottery/simulation",
             method: 'POST',
             data: simulation,
             async: true,
@@ -311,7 +311,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         button.parent().find('alert').remove();
 
         $.ajax({
-            url: "/private/game/",
+            url: "/private/lottery/",
             method: 'POST',
             data: gameSettings,
             async: true,
@@ -364,7 +364,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
             countryData.lang = form.find('select[name="lang"]').val();
 
             $.ajax({
-                url: "/private/game/addcountry",
+                url: "/private/lottery/addcountry",
                 method: 'POST',
                 data: countryData,
                 async: true,
@@ -402,7 +402,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         gameSettings.prizes[prevCountry] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             var won = $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val();
-            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? '<?=GameSettings::CURRENCY_MONEY?>' : '<?=GameSettings::CURRENCY_POINT?>';
+            var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? '<?=LotterySettings::CURRENCY_MONEY?>' : '<?=LotterySettings::CURRENCY_POINT?>';
 
             gameSettings.prizes[prevCountry][ballsCount] = {
                 'sum' : won,
@@ -417,7 +417,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             if (gameSettings.prizes[currentCountry] != undefined) {
                 $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val(gameSettings.prizes[currentCountry][ballsCount].sum);
-                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.prizes[currentCountry][ballsCount].currency == '<?=GameSettings::CURRENCY_MONEY?>');
+                $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.prizes[currentCountry][ballsCount].currency == '<?=LotterySettings::CURRENCY_MONEY?>');
             } else {
                 $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val("0");
                 $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', ballsCount > 3 ? true : false);

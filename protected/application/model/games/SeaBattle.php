@@ -4,45 +4,33 @@ Application::import(PATH_APPLICATION . 'model/Game.php');
 
 class SeaBattle extends Game
 {
-    const   STACK_PLAYERS = 2;
-    const   GAME_PLAYERS = 2;
-    const   TIME_OUT = 15;
     const   START_TIME_OUT = 90;
-    const   FIELD_SIZE_X = 11;
-    const   FIELD_SIZE_Y = 24;
-    const   GAME_MOVES = 6;
-    const   BOT_ENABLED = 1;
-
-    protected $_gameid = 2;
-    protected $_gameTitle = '"Морской бой"';
 
     protected $_matrix = array(
         array(-1, -1), array(-1, 0), array(-1, 1),
-        array(0, -1), array(0, 0), array(0, 1),
-        array(1, -1), array(1, 0), array(1, 1),
+        array(0, -1),  array(0, 0),  array(0, 1),
+        array(1, -1),  array(1, 0),  array(1, 1),
     );
     protected $_hit_matrix = array(
-        array(-1, 0),
-        array(0, -1), array(0, 1),
-        array(1, 0),
+                    array(-1, 0),
+        array(0, -1),               array(0, 1),
+                    array(1, 0),
     );
+
     /* protected $_ships = array(
         5);*/
+
     protected $_ships = array(
         1, 1, 1, 1, 1,
         2, 2, 2, 2,
         3, 3, 3,
         4, 4,
         5);
+
     protected $_playerShips = array();
     protected $_destroy = array();
 
-
-    public function init()
-    {
-        $this->setIdentifier(uniqid())
-            ->setTime(time());
-    }
+    public function init() {}
 
     public function startAction($data = null)
     {
@@ -53,7 +41,7 @@ class SeaBattle extends Game
             #echo $this->time().' '. "Первичная установка игроков\n";
             $this->setPlayers($this->getClients());
             $this->updatePlayer(array(
-                'timeout' => static::START_TIME_OUT-static::TIME_OUT,
+                'timeout' => static::START_TIME_OUT - $this->getOption('t'),
                 'ships' => array_count_values($this->_ships)
             ));
             $this->_isOver = 0;
@@ -125,7 +113,6 @@ class SeaBattle extends Game
 
     public function fieldAction($data)
     {
-
         if (!($error = $this->checkField($data->field))) {
             if (count($this->getField()) == count($this->getClients())) {
                 $this->nextPlayer();
@@ -268,10 +255,9 @@ class SeaBattle extends Game
                 ->setField(array())
                 ->setPlayers($this->getClients())
                 ->updatePlayer(array(
-                    'timeout' => static::START_TIME_OUT-static::TIME_OUT,
+                    'timeout' => static::START_TIME_OUT - $this->getOption('t'),
                     'ships' => array_count_values($this->_ships)
                     ))
-                //->updatePlayer(array('timeout' => static::START_TIME_OUT))
                 ->setTime(time())
                 ->startAction();
         } else {
@@ -411,26 +397,14 @@ class SeaBattle extends Game
             list($x, $y, $f) = $this->generateHit($cell,array($cell),time());
         } else {
 
-            if($this->getPrice() OR 0)
-                $miss = rand(0, 20);
-            else
-                $miss=true;
+            $miss = $this->getMode() ? rand(0, $this->getMode()) : true;
             $i=0;
-            /*
-            $miss=rand(0,1);
-            $x=0;
-            $y=1;*/
+
             do {
                 $i++;
-                /*
-                $x++;
-                if ($x>static::FIELD_SIZE_X) {
-                    $x=1;
-                    $y++;
-                }
-                */
-                $x = rand(1, static::FIELD_SIZE_X);
-                $y = rand(1, static::FIELD_SIZE_Y);
+
+                $x = rand(1, $this->getOption('x'));
+                $y = rand(1, $this->getOption('y'));
                 if ($i>1000) {
                     echo $this->time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
                     print_r($this->getPlayers());
@@ -574,11 +548,11 @@ class SeaBattle extends Game
 
         echo "\n";
         echo "\n   ";
-        for ($i = 1; $i <= static::FIELD_SIZE_X; ++$i)
+        for ($i = 1; $i <= $this->getOption('x'); ++$i)
             echo sprintf("%02d", $i) . " ";
-        for ($j = 1; $j <= static::FIELD_SIZE_Y; ++$j) {
+        for ($j = 1; $j <= $this->getOption('y'); ++$j) {
             echo "\n" . sprintf("%02d", $j) . "";
-            for ($i = 1; $i <= static::FIELD_SIZE_X; ++$i)
+            for ($i = 1; $i <= $this->getOption('x'); ++$i)
                 echo isset($field[$i][$j]) ? "  " . $field[$i][$j] : '   ';
         }
     }
@@ -588,7 +562,7 @@ class SeaBattle extends Game
         list($x, $y) = $cell;
         foreach ($this->_matrix as $mx) {
             list($x1, $y1) = $mx;
-            if ($x + $x1 > 0 && $x + $x1 <= self::FIELD_SIZE_X || $y + $y1 > 0 || $y + $y1 <= self::FIELD_SIZE_Y)
+            if ($x + $x1 > 0 && $x + $x1 <= $this->getOption('x') || $y + $y1 > 0 || $y + $y1 <= $this->getOption('y'))
                 if (isset($field[$x + $x1][$y + $y1]))
                     return false;
             }
@@ -619,8 +593,8 @@ class SeaBattle extends Game
 
         while (count($ships) != count($this->_ships)) {
 
-            $x = rand(1, static::FIELD_SIZE_X);
-            $y = rand(1, static::FIELD_SIZE_Y);
+            $x = rand(1, $this->getOption('x'));
+            $y = rand(1, $this->getOption('y'));
             $v = rand(0,1);
             $ship=array();
 
@@ -645,18 +619,6 @@ class SeaBattle extends Game
 
             }
         }
-/*
-                        echo "\n";
-                        echo "\n   ";
-                        for ($i = 1; $i <= static::FIELD_SIZE_X ; ++$i)
-                            echo sprintf("%02d",$i)." ";
-                        for ($j = 1; $j <= static::FIELD_SIZE_Y; ++$j){
-                            echo "\n".sprintf("%02d",$j)."";
-                        for ($i = 1; $i <= static::FIELD_SIZE_X ; ++$i)
-                                echo isset($field[$i][$j])?" $i$j":'   ';}
-*/
-        //if($playerId)
-        //    $this->_playerShips[$playerId]=$player_ships;
         return $field;
     }
 

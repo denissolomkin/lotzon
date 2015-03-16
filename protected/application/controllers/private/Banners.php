@@ -35,6 +35,22 @@ class Banners extends PrivateArea
         ));
     }
 
+    public function bannerAction()
+    {
+        if ($this->request()->isAjax()) {
+
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'res'    => str_replace('document.write', "$('#banner-holder .modal-body').append", implode('',$_POST))
+            );
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private/');
+    }
+
     public function saveAction()
     {
 
