@@ -109,7 +109,7 @@
             .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li:nth-child(<?=$onlineGames['WhoMore']->getOption('x');?>n+<?=$onlineGames['WhoMore']->getOption('x');?>){margin-right: 0px;}
             .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li {
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
-                font: <?=(490-($onlineGames['WhoMore']->getOption('y')*10)) / 1.6 / $onlineGames['WhoMore']->getOption('y')?>px/<?=(490-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px Handbook-bold;
+                font: <?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / 1.6 / $onlineGames['WhoMore']->getOption('y')?>px/<?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px Handbook-bold;
                 width: <?=(480-(($onlineGames['WhoMore']->getOption('x')-1)*10)) / $onlineGames['WhoMore']->getOption('x')?>px;
                 height: <?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px;
                 margin:0 10px 10px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
@@ -118,7 +118,7 @@
             .ngm-bk .ngm-gm .gm-mx ul.Mines > li:nth-child(<?=$onlineGames['Mines']->getOption('x');?>n+<?=$onlineGames['Mines']->getOption('x');?>){margin-right: 0px;}
             .ngm-bk .ngm-gm .gm-mx ul.Mines > li {
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
-                font:   <?=(490-($onlineGames['Mines']->getOption('y')*1)) / 1.6 / $onlineGames['Mines']->getOption('y')?>px/<?=(490-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px Handbook-bold;
+                font:   <?=(480-($onlineGames['Mines']->getOption('y')*1)) / 1.6 / $onlineGames['Mines']->getOption('y')?>px/<?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px Handbook-bold;
                 width:  <?=(480-(($onlineGames['Mines']->getOption('x')-1)*1)) / $onlineGames['Mines']->getOption('x')?>px;
                 height: <?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px;
                 margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
@@ -144,15 +144,15 @@
                 border-radius: <?=
                 max((480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x'),
                 (490-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')); ?>px;
-                margin: <?=(490-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.1?>px <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.1?>px;
+                margin: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.1?>px <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.1?>px;
                 width: <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.8?>px;
-                height: <?=(490-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.8?>px;
+                height: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.8?>px;
             }
             .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li {
                 background-color: #d8e7e9;
-                font: <?=(490-($onlineGames['FiveLine']->getOption('y')*1)) / 1.6 / $onlineGames['FiveLine']->getOption('y')?>px/<?=(490-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px Handbook-bold;
+                font: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / 1.6 / $onlineGames['FiveLine']->getOption('y')?>px/<?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px Handbook-bold;
                 width: <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x')?>px;
-                height: <?=(490-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px;
+                height: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px;
                 margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
             }
         </style>
@@ -1212,7 +1212,7 @@
                     </div>
                     <div class="pr-pr">
                         <b>0</b>
-                        <span>очков<br/>на кону</span>
+                        <span>ваша<br/>ставка</span>
                     </div>
 
                     <!--div class="pr-surr">сдаться</div-->

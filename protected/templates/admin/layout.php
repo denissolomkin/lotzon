@@ -88,10 +88,10 @@
   <script>
       function assignByPath(obj,path,value){
           if (path.length == 1) {
-              obj[path[0]] = value;
+              obj[path[0].replace(':','.')] = value;
               return obj;
           } else if (obj[path[0]] === undefined) {
-              obj[path[0]] = {};
+              obj[path[0].replace(':','.')] = {};
           }
           return assignByPath(obj[path.shift()],path,value);
       }
@@ -102,7 +102,7 @@
           $.each( this.serializeArray(), function(i,o){
               var n = o.name,
                   v = o.value;
-              path = n.replace(/\]\[/g,'.').replace(/\[/g,'.').replace(']','').split('.');
+              path = n.replace('.',':').replace(/\]\[/g,'.').replace(/\[/g,'.').replace(']','').split('.');
 
               assignByPath(obj,path,v);
           });
@@ -122,6 +122,13 @@
           }
           return replaceString;
       };
+
+      function nl2br( str ) {	// Inserts HTML line breaks before all newlines in a string
+          //
+          // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+
+          return str.replace(/([^>])\n/g, '$1<br/>');
+      }
 
       jQuery.fn.sortElements = (function(){
           var sort = [].sort;
@@ -166,7 +173,8 @@
 
           };
 
-      })();
+      });
+
   </script>
   </body>
 </html>

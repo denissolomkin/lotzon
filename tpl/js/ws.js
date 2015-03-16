@@ -177,7 +177,7 @@ function appSeaBattleCallback(receiveData)
 
                  price=receiveData.res.appMode.split('-');
                  $('.gm-pr .pr-pr').show().html("<b>"+
-                 (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+                 (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
                  "</b><span>"+
                  (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -245,7 +245,7 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-             (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+            (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
              "</b><span>"+
              (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -293,7 +293,7 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-             (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+            (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
              "</b><span>"+
              (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -449,7 +449,7 @@ function appSeaBattleCallback(receiveData)
 
                      $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
-                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient):receiveData.res.price )+
                      "</b><span>"+
                      (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
 
@@ -589,7 +589,7 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $.each(appModes[appName], function (c, m) {
         $.each(m, function (i,v) {
             if(v>0)
-                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+v+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
+                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(parseFloat(v)*coefficient)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
         });
     });
 
@@ -965,7 +965,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                 price=receiveData.res.appMode.split('-');
                 $('.gm-pr .pr-pr').show().html("<b>"+
-                (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+               (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
                 "</b><span>"+
                 (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -1193,7 +1193,7 @@ function appWhoMoreCallback(receiveData)
 
             price=receiveData.res.appMode.split('-');
             $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+           (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
             "</b><span>"+
             (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 
@@ -1274,8 +1274,10 @@ function appWhoMoreCallback(receiveData)
                 $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                     removeClass('last');
 
-                $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]')
-                    .html('<div style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]').css('background')+';width:60px;height:60px;"></div>')
+                cell=$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+receiveData.res.cell.coord+'"]');
+
+                cell
+                    .html('<div style="background:'+cell.css('background')+';width:'+cell.css('width')+';height:'+cell.css('height')+';"></div>')
                     .find('div').toggle('explode', {pieces: 4 }, 500).parent()
 
                     .html(receiveData.res.cell.points)
@@ -1401,7 +1403,7 @@ function appWhoMoreCallback(receiveData)
 
                 price=receiveData.res.appMode.split('-');
                 $('.gm-pr .pr-pr').show().html("<b>"+
-                (price[0]=='MONEY'?parseFloat(price[1]*coefficient).toFixed(2):price[1])+
+               (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
                 "</b><span>"+
                 (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
 

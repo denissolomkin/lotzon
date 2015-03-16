@@ -24,7 +24,7 @@
             </div>
             <div class="modal-body">
                 <div class="row" style="text-align: center;">
-                    <form class="form-inline" role="form" data-game="new">
+                    <form class="form-inline" role="form" data-game="new" onsubmit="return false;">
 
                     <div class="row-fluid tab" id="text">
                         <div class="row-fluid title">
@@ -116,6 +116,11 @@
                                         <span class="input-group-addon"><i class="fa fa-laptop"></i></span>
                                         <input type="checkbox" name='game[Field][b]' data-toggle="toggle">
                                     </div>
+                                </div>
+
+                                <div class="row-fluid ships">
+                                    Корабли: <button class="btn btn-md btn-success add-ship" ><i class="fa fa-plus-circle"></i></button>
+                                    <ul></ul>
                                 </div>
                             </div>
 
@@ -213,6 +218,31 @@
 
     $(function() {
 
+        $('#field .ships .add-ship').on('click',function() {
+            $('#field .ships ul').first().append('<li class="ship"><i class="fa fa-minus"></i><ul></ul><i class="fa fa-plus"></i><input name="game[Field][ships][]" type=hidden value=1></li>').find('input').trigger('change');
+        });
+
+        $(document).on('click','#field .ships .fa-minus',function() {
+            ship=$(this).parent().find('input');
+            parseInt(ship.val())==1 && $(this).parent().remove() || ship.val(parseInt(ship.val())-1).trigger('change');
+
+        });
+
+        $(document).on('click','#field .ships .fa-plus',function() {
+            ship=$(this).parent().find('input');
+            ship.val(parseInt(ship.val())+1).trigger('change');
+        });
+
+        $(document).on('change','#field .ships input',function() {
+            $(this).parent().find('ul li').remove();
+            html=new Array(parseInt($(this).val())+1).join('<li></li>');
+            $(this).parent().find('ul').html(html);
+
+            $('#field .ships li').sortElements(function(a, b){
+                return parseFloat($('input', a).val()) > parseFloat($('input', b).val()) ? 1 : -1;
+            });
+        });
+
         $(document).on('click','.audio-play',function() {
             if($(this).prop("tagName")=='I')
                 $('<audio src=""></audio>').attr('src', '../../../tpl/audio/' + $.trim($(this).parent().text())).trigger("play");
@@ -256,6 +286,8 @@
         function genGame(game){
             $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
             $('#editGame').find('div.tab').hide().first().show();
+            $('#editGame').find('h3').text($.isPlainObject(game.Title)?game.Title[0]:'*New game');
+
 
             holder=$("#editGame").find('form');
             holder.find('.lang').first().click();
@@ -310,11 +342,24 @@
                 });
             }
 
+            holder.find('#field .ships').hide();
+            holder.find('#field .ships ul li').remove();
+
+
+            if(game.Key=='SeaBattle') {
+                holder.find('#field .ships').show();
+                if(game.Field.ships)
+                    $.each(game.Field.ships, function (i, ship) {
+                        holder.find('#ships ul').first.append('<li data-ship="'+ship+'"><i class="fa fa-minus"><ul><ul><i class="fa fa-plus"> <input name="game[Field][ships][]" value='+ship+'></li>').val(ship);
+                    });
+            }
+
             holder.find('.prize').remove();
             if(game.Prizes) {
                 $.each(game.Prizes, function (index, t) {
                     var button=holder.find('.' + index + '-holder').prev();
                     $.each(t, function (v, p) {
+                        console.log(v);
 
                         var html = $('<div class="prize row-fluid" id="' + index + '-' + v + '">' +
                         '<input type="hidden" name="game[Prizes][' + index + '][' + v + ']" value="' + p + '" >' +
@@ -351,7 +396,7 @@
             holder.addClass('disabled');
 
             holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>)
-                .next().text(game.Description.<?=\Config::instance()->defaultLang;?>)
+                .next().html(nl2br(game.Description.<?=\Config::instance()->defaultLang;?>))
                 .next().html(
                 '<i class="fa fa-users"></i>'+game.Field.s+
                 ' <i class="fa fa-user"></i>'+game.Field.p+
@@ -405,7 +450,9 @@
                     alert('Выберите ставку!');
                     return false;
                 }
-                price=button.parent().next().find('#'+button.data('type') + '-'+ holder.find('.v').val());
+
+                id=button.data('type') + '-'+ holder.find('.v').val().replace('.','\\.');
+                price=button.parent().next().find('#'+id);
                 if(!price.length) {
                     var img = $('<div class="prize row-fluid" id="' + button.data('type') + '-' + holder.find('.v').val() + '">' +
                     '<input type="hidden" name="game[Prizes][' + button.data('type') + '][' + parseFloat(holder.find('.v').val()) + ']" value="' + holder.find('.p').val() + '" >' +
@@ -425,10 +472,10 @@
                     price.find('input.p').first().val(holder.find('.p').val());
                 }
 
-                button.parent().next().find('div.prize').sortElements(function(a, b){
-                    console.log(parseFloat($('.v', a).val())>parseFloat($('.v', b).val()));
+                button.parent().next().find('div.prize').sort(function(a, b){
+                    console.log(parseFloat($('.v', a).val()) > parseFloat($('.v', b).val()) ? 1 : -1);
                     return parseFloat($('.v', a).val()) > parseFloat($('.v', b).val()) ? 1 : -1;
-                });
+                }).appendTo( button.parent().next().find('div.prize').parent());
 
                 holder.modal('hide');
 
@@ -477,6 +524,7 @@
         success: function(data) {
             if (data.status == 1) {
                 $("#editGame").modal('hide');
+                console.log(form.serializeObject());
                 post=form.serializeObject();
                 game=post.game;
                 game.Id=data.data.Id;

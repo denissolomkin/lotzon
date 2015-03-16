@@ -591,6 +591,7 @@ window.setInterval(function() {
         success: function(data) {
 
             if (data.res) {
+
                 if(data.res.moment == 1) {
                     // if main game screen is visible
                     var gw = $(".ngm-bk .rls-r-ts:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
@@ -611,8 +612,8 @@ window.setInterval(function() {
                         if (data.res.block) {
                             $("#mchance").find('.block').show().html('<div class="tl">Реклама</div>' + data.res.block);
                         }
-
                     }
+
                 }
 
                 /*
@@ -623,19 +624,19 @@ window.setInterval(function() {
                         $(".notifications").append(badge);
                     }
                 }*/
-                if(data.res.qgame) {
-                    if($(".notifications .badge#soon:visible").length || data.res.qgame.important) {
+
+                if(QuickGame = data.res.qgame) {
+                    if($(".notifications .badge#soon:visible").length || QuickGame.important) {
                         badge = $(".notifications .badge#qgame");
                         badge.fadeIn(1200);
                         if(data.res.qgame.timer>0){
-                            $("#timer_soon").countdown({until: (data.res.qgame.timer) ,layout: "{mnn}:{snn}",
+                            $("#timer_soon").countdown({until: (QuickGame.timer) ,layout: "{mnn}:{snn}",
                                 onExpiry: showQuickGameStart});
                             $("#timer_soon").countdown('resume');
-                            $("#timer_soon").countdown('option', {until: (data.res.qgame.timer)});
+                            $("#timer_soon").countdown('option', {until: (QuickGame.timer)});
                         } else {
                             showQuickGameStart();
                         }
-
                     }
                 }
 

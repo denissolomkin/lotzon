@@ -351,6 +351,9 @@ min-height: 17px;
 
 .ogames form .holder .row-fluid{margin: -1px 0 0 0;}
 .ogames form .row-fluid, .qgames form .row-fluid {margin: 10px 0;}
+.ogames #field .ships ul > li > ul > li {width:20px;height:20px;background: coral;margin-right: 1px; float: left}
+.ogames #field .ships ul li * {float: left}
+.ogames #field .ships ul {list-style: none;}
 .qgames .holder .row-fluid div:nth-child(n+1)  {margin-top: 10px;position: relative;background: antiquewhite;border-radius: 5px;}
 .qgames .holder div .glyphicon {margin: 5px;position: absolute;top: 0px;right: 0;cursor: pointer;}
 .qgames .ul {clear: both;}

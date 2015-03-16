@@ -1758,6 +1758,7 @@ function activateQuickGame()
         });
     });
 }
+
 <!-- CHANCE PREVIEW -->
 $('.ch-gm-tbl .gm-bt').click(function(){
     hideAllGames();

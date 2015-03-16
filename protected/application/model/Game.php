@@ -355,7 +355,7 @@ class Game
         $this->_players[(current($this->_players)['pid'])]['timeout']=time()+$this->getOption('t');
 
         if(isset($this->_clients[(current($this->_players)['pid'])]->bot))
-            $this->_botTimer = rand(5,30)/10; // 0.1;
+            $this->_botTimer = rand(8,30)/10; // 0.1;
         else
             $this->_botTimer = 0;
 

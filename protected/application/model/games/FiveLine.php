@@ -48,7 +48,7 @@ class FiveLine extends Game
                 }
             }
             $max=max($max,$count);
-            if($max==$this->getOption('w')){
+            if($max>=$this->getOption('w')){
                 $this->setCallback(array(
                     'line' => $line,
                 ));
