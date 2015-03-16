@@ -429,9 +429,7 @@
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
-
                         <? echo getBanners($banners['Video'],$player,$bannerScript); ?>
-
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
@@ -470,7 +468,7 @@
                     </section>
                 </div>
 
-                <!--div class="i-rbk">
+                <? /* <div class="i-rbk">
                     <section class="news">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl">новости</div>
@@ -491,7 +489,7 @@
                             <div class="mr">ЧИТАТЬ ЕЩЕ</div>
                         </div>
                     </section>
-                </div-->
+                </div> */ ?>
 
                 <div class="i-rbk">
                     <section class="reviews">
@@ -713,35 +711,12 @@
                                             <? if(count($player->getAdditionalData())<5) {?>
                                             <div class="txt">Привязать соцсеть и получить бонус 40 баллов за каждую.</div>
                                             <? } ?>
-                                            <? if(array_key_exists('Facebook', $player->getAdditionalData())
-                                                && $player->getAdditionalData()['Facebook']['enabled'])
-                                                echo '<div data-provider="Facebook" class="cs-int-bt fb int"></div>';
-                                            else
-                                                echo '<a href="./auth/Facebook?method=link"><div class="cs-int-bt fb"></div></a>';
-                                            ?>
-                                            <? if(array_key_exists('Vkontakte', $player->getAdditionalData())
-                                                && $player->getAdditionalData()['Vkontakte']['enabled'])
-                                                echo '<div data-provider="Vkontakte" class="cs-int-bt vk int"></div>';
-                                            else
-                                                echo '<a href="./auth/Vkontakte?method=link"><div class="cs-int-bt vk"></div></a>';
-                                            ?>
-                                            <? if(array_key_exists('Odnoklassniki', $player->getAdditionalData())
-                                                && $player->getAdditionalData()['Odnoklassniki']['enabled'])
-                                                echo '<div data-provider="Odnoklassniki" class="cs-int-bt ok int"></div>';
-                                            else
-                                                echo '<a href="./auth/Odnoklassniki?method=link"><div class="cs-int-bt ok"></div></a>';
-                                            ?>
-                                            <? if(array_key_exists('Google', $player->getAdditionalData())
-                                                && $player->getAdditionalData()['Google']['enabled'])
-                                                echo '<div data-provider="Google" class="cs-int-bt gp int"></div>';
-                                            else
-                                                echo '<a href="./auth/Google?method=link"><div class="cs-int-bt gp"></div></a>';
-                                            ?>
-                                            <? if(array_key_exists('Twitter', $player->getAdditionalData())
-                                                && $player->getAdditionalData()['Twitter']['enabled'])
-                                                echo '<div data-provider="Twitter" class="cs-int-bt tw int"></div>';
-                                            else
-                                                echo '<a href="./auth/Twitter?method=link"><div class="cs-int-bt tw"></div></a>';
+                                            <? $socials=array('Facebook'=>'fb','Vkontakte'=>'vk', 'Odnoklassniki'=>'ok','Google'=>'gp','Twitter'=>'tw' );
+                                            foreach($socials as $key=>$class)
+                                                if(array_key_exists($key, $player->getAdditionalData()) && $player->getAdditionalData()[$key]['enabled'])
+                                                    echo "<div data-provider='{$key}' class='cs-int-bt {$class} int'></div>";
+                                                else
+                                                    echo "<a href=''./auth/{$key}?method=link'><div class='cs-int-bt {$class}'></div></a>";
                                             ?>
                                         </div>
                                     </div>
@@ -896,6 +871,7 @@
                 <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
             </div>
         </div>
+            <? /*
             <div class="ch-gm-tbl">
                 <div class="td l">
                     <div class="gm-if-bk">
@@ -905,6 +881,7 @@
                     <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
                 </div>
             </div>
+            */ ?>
     </div>
 
     <!-- CHANCE GAME -->
@@ -1398,7 +1375,7 @@
         });
 
         filledTicketsCount = <?=($filledTicketsCount?:0);?>;
-        var playerFavorite = [];
+        var playerFavorite = [<?=implode(',',$player->getFavoriteCombination());?>];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
         var playerCurrency = '<?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?>';
@@ -1469,9 +1446,6 @@
             }
         }
 
-        <? foreach ($player->getFavoriteCombination() as $num) { ?>
-        playerFavorite.push(<?=$num?>);
-        <? } ?>
         $(function(){
             var ios;
             var mac = navigator.userAgent.indexOf('Mac OS');
