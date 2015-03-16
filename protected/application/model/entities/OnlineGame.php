@@ -66,9 +66,9 @@ class OnlineGame extends Entity
     {
         if($lang) {
             if(isset($this->_description[$lang]) && $this->_description[$lang])
-                $description = str_replace("\n",'<br>',$this->_description[$lang]);
+                $description = nl2br($this->_description[$lang]);
             else
-                $description = str_replace("\n",'<br>',$this->_description[0]);;
+                $description = nl2br($this->_description[0]);;
         } else
             $description = $this->_description;
 

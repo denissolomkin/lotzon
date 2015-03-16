@@ -87,6 +87,7 @@
     <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
   <script>
       function assignByPath(obj,path,value){
+          console.log(path[0]);
           if (path.length == 1) {
               obj[path[0].replace(':','.')] = value;
               return obj;

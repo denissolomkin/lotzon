@@ -43,6 +43,7 @@ class OnlineGames extends PrivateArea
             $post=$this->request()->post('game');
             $game = new OnlineGame();
 
+
             $game->setId($post['Id'])
                 ->setKey($post['Key'])
                 ->setTitle($post['Title'])

@@ -301,7 +301,6 @@
             holder.find('[name="game[Field][b]"]').bootstrapToggle({on: 'Enabled',
                 off: 'Disabled'}).bootstrapToggle((game.Field.b==1 || game.Field.b=='on'?'on':'off'));
 
-            console.log(game.Key);
             if(game.Key){
                 $('#editGame button[data-tab="text"]').next().attr('data-tab','image');
                 holder.find('.k').val(game.Key);
@@ -376,7 +375,13 @@
 
                         holder.find('.' + index + '-holder').append(html);
                     });
+
+                    holder.find('.' + index + '-holder').find('div.prize').sort(function(a, b){
+                        return parseFloat($('.v', a).val()) > parseFloat($('.v', b).val()) ? 1 : -1;
+                    }).appendTo( holder.find('.' + index + '-holder').find('div.prize').parent());
+
                 });
+
             }
         }
 
@@ -473,7 +478,6 @@
                 }
 
                 button.parent().next().find('div.prize').sort(function(a, b){
-                    console.log(parseFloat($('.v', a).val()) > parseFloat($('.v', b).val()) ? 1 : -1);
                     return parseFloat($('.v', a).val()) > parseFloat($('.v', b).val()) ? 1 : -1;
                 }).appendTo( button.parent().next().find('div.prize').parent());
 
