@@ -589,7 +589,7 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $.each(appModes[appName], function (c, m) {
         $.each(m, function (i,v) {
             if(v>0)
-                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(c=='MONEY'?(parseFloat(v)*coefficient):v)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
+                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(c=='MONEY'?(round(parseFloat(v)*coefficient),2):v)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
         });
     });
 

@@ -19,6 +19,10 @@ function registerPlayer(playerData, successFunction, failFunction, errorFunction
        }
     });
 }
+function round(a,b) {
+    b=b||0;
+    return parseFloat(a.toFixed(b));
+}
 
 function is_numeric(mixed_var) {
     //   example 1: is_numeric(186.31); returns 1: true
