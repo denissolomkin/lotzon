@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \ChanceGamesModel;
+use \Application, \Config, \Player, \EntityException, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
