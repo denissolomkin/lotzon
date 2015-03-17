@@ -138,16 +138,15 @@ class Game extends \AjaxController
 
                         if ($banner['chance'] AND !rand(0, $banner['chance'] - 1) AND Config::instance()->banners['settings']['enabled'])
                             $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
-                                str_replace('document.write', "$('#qgame-popup .block').append", $banner['div']) .
-                                str_replace('document.write', "$('#qgame-popup .block').append", $banner['script']).
+                                str_replace('document.write', "$('#{$key}-popup .block').append", $banner['div']) .
+                                str_replace('document.write', "$('#{$key}-popup .block').append", $banner['script']).
                                 "<script>
-                                            moment=$('#qgame-popup').find('.block');
-                                            $('#qgame-popup .qg-bk-pg').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
+                                            moment=$('#{$key}-popup').find('.block');
+                                            $('#{$key}-popup .qg-bk-pg').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
                                             moment.find('.tl').html('Загрузка...').next().css('top','200px').css('position','absolute').css('overflow','hidden');
                                             window.setTimeout(function(){moment.parent().parent().css('height',moment.children().first().next().height()+101+moment.prev().height()+moment.parent().prev().height()+moment.parent().prev().prev().height()+'px');
-                                            console.log(moment.children().first().next().height()+24+moment.prev().height()+moment.parent().prev().height());
                                             },300);
-                                            $('#qgame-popup li[data-cell]').off('click').on('click', function(){
+                                            $('#{$key}-popup li[data-cell]').off('click').on('click', function(){
                                             num=$(this).data('num');
                                             a=moment.find('a[target=\"_blank\"]:eq('+(Math.ceil(Math.random() * moment.find('a[target=\"_blank\"]').length/2)+2)+')').attr('href');
                                             moment.css('position', 'absolute').css('bottom', '-10px').parent().css('position', 'initial').css('bottom','auto');
@@ -155,12 +154,12 @@ class Game extends \AjaxController
                                             window.setTimeout(function() {moment.css('position', 'initial').parent().find('ul').css('margin-bottom', '-50px');}, 250);
                                             window.setTimeout(function() {moment.parent().find('ul').css('margin-bottom', 'auto').parent().parent().css('height','auto');}, 400);
                                             if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() { var win = window.open (a,'_blank');win.blur();window.focus();return false;}, 1000);
-                                            activateQuickGame();});
+                                            activateQuickGame('{$key}');});
                                         </script>";
                         else {
                             $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
-                                str_replace('document.write', "$('#qgame-popup .block').append", $banner['div']) .
-                                str_replace('document.write', "$('#qgame-popup .block').append", $banner['script']);
+                                str_replace('document.write', "$('#{$key}-popup .block').append", $banner['div']) .
+                                str_replace('document.write', "$('#{$key}-popup .block').append", $banner['script']);
                         }
                         break;
                     }
