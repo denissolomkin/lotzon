@@ -1,34 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-Config::instance()->cacheEnabled = false;
-Config::instance()->newsCacheCount = 18;
-
-Config::instance()->dbConnectionProperties = array(
-/*    // testbed
-    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
-        'user' => 'testbed',
-        'password' => '2p9G808CVn17P',
-
-    // local
-       'dsn' => 'mysql:host=localhost;dbname=lotzone',
-        'user' => 'root',
-        'password' => '1234',
-*/
-    // public
-    'dsn' => 'mysql:host=127.0.0.1;dbname=lotzone',
-    'user' => 'lotzone_user',
-    'password' => '63{_Tc252!#UoQq',
-
-
-    'options' => array(
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'',
-    ),
-);
-=======
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
 Config::instance()->cacheConnectionProperties = array(
     'host'       => 'localhost',
     'port'       => 11211,
@@ -66,21 +37,6 @@ Config::instance()->langCurrencies = array(
     'EN' => 'usd',
 );
 
-<<<<<<< HEAD
-// init memcache connection
-try {
-    if (Config::instance()->cacheEnabled) {
-        Cache::init('default', Config::instance()->cacheConnectionProperties);
-    }
-} catch (CacheException $e) {
-    Config::instance()->cacheEnabled = false;
-}
-
-// init database connection
-DB::Connect('default', Config::instance()->dbConnectionProperties);
-
-=======
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
 Config::instance()->errorMessages = array(
     'AGREE_WITH_RULES' => 'Вы должны ознакомиться с правилами',
     'EMPTY_EMAIL'      => 'Введите email',
@@ -90,16 +46,6 @@ Config::instance()->errorMessages = array(
     'PLAYER_NOT_FOUND' => 'Учетная запись не найдена',
     'INVALID_PASSWORD' => 'Неверный пароль',
     'ALREADY_INVITED'  => 'На этот email уже было отправлено приглашение',
-<<<<<<< HEAD
-    'EMAIL_NOT_VALIDATED' => 'Перейдите в Ваш почтовый ящик и завершите процесс регистрации',
-    'BLOCKED_EMAIL_DOMAIN' => 'Регистрация с этого email-домена запрещена',
-    'BLOCKED_IP'        => 'Регистрация пользователя запрещена',
-    'ACCESS_DENIED'        => 'Доступ запрещен',
-);
-
-Config::instance()->privateResources =  array(
-    '/private/' => 'controllers\admin\Reviews:index',
-=======
     'EMAIL_NOT_VALIDATED' => 'Завершите процесс регистрации через свой email',
     'BLOCKED_EMAIL_DOMAIN' => 'Регистрация с этого email-домена запрещена',
     'BLOCKED_IP'        => 'Регистрация пользователя запрещена',
@@ -108,7 +54,6 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->privateResources =  array(
     '/private/' => 'controllers\admin\Users:index',
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
     '/private/login/' => array(
         'get'  => 'controllers\admin\Login:index',
         'post' => 'controllers\admin\Login:auth'
@@ -121,16 +66,8 @@ Config::instance()->privateResources =  array(
     '/private/lottery/simulation' => array(
         'post' => 'controllers\admin\Lottery:simulation',
     ),
-<<<<<<< HEAD
-    '/private/game/simulation' => array(
-        'post' => 'controllers\admin\Game:simulation',
-    ),
-    '/private/game/addcountry' => array(
-        'post' => 'controllers\admin\Game:addcountry',
-=======
     '/private/lottery/addcountry' => array(
         'post' => 'controllers\admin\Lottery:addcountry',
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
     ),
     '/private/admins/' => array(
         'get'   => 'controllers\admin\Admins:index',
@@ -191,13 +128,10 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\QuickGames:index',
         'post' => 'controllers\admin\QuickGames:save',
     ),
-<<<<<<< HEAD
-=======
     '/private/ogames' => array(
         'get' => 'controllers\admin\OnlineGames:index',
         'post' => 'controllers\admin\OnlineGames:save',
     ),
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
     '/private/seo' => array(
         'get' => 'controllers\admin\SEO:index',
         'post' => 'controllers\admin\SEO:save',
@@ -256,12 +190,9 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\Banners:index',
         'post' => 'controllers\admin\Banners:save',
     ),
-<<<<<<< HEAD
-=======
     '/private/banner/'      => array(
               'post' => 'controllers\admin\Banners:banner',
     ),
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
     '/private/blacklist/'      => array(
         'get' => 'controllers\admin\Blacklist:index',
         'post' => 'controllers\admin\Blacklist:save',
@@ -277,16 +208,6 @@ Config::instance()->privateResources =  array(
     '/private/gamebots/uploadPhoto' => array(
         'post'    => 'controllers\admin\GameBots:uploadPhoto',
     ),
-<<<<<<< HEAD
-    '/private/gameoptions/'      => array(
-        'get' => 'controllers\admin\ComingSoon:index',
-        'post' => 'controllers\admin\GameOptions:save',
-    ),
-    '/private/images/' => array(
-    'get' => 'controllers\admin\Images:index',
-    'delete' => 'controllers\admin\Images:delete',
-    'post' => 'controllers\admin\Images:upload',
-=======
     '/private/games/'      => array(
         'get' => 'controllers\admin\Games:index',
         'post' => 'controllers\admin\Games:save',
@@ -298,7 +219,6 @@ Config::instance()->privateResources =  array(
     ),
     '/private/audio/' => array(
         'post' => 'controllers\admin\Images:audio',
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
     ),
     '/private/gamestats/'      => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',
@@ -379,22 +299,12 @@ Config::instance()->publicResources = array(
 
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
-<<<<<<< HEAD
-Config::instance()->generatorNumTries = 10;
-=======
 Config::instance()->generatorNumTries = 20;
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
 
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
-<<<<<<< HEAD
-//    "base_url" => "http://testbed.lotzon.com/auth/endpoint/",
-//    "base_url" => "http://lotzon.test/auth/endpoint/",
-    "base_url" => "http://".(isset($_SERVER['SERVER_NAME'])?$_SERVER['SERVER_NAME']:'lotzon.com')."/auth/endpoint/",
-=======
     "base_url" => "http://".(isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'lotzon.com')."/auth/endpoint/",
->>>>>>> e3bbde34a4c61bc4c52c93a93c83110734dfcae6
 
     "providers" => array (
 
