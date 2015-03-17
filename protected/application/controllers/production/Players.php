@@ -449,7 +449,6 @@ class Players extends \AjaxController
 
             $key='QuickGame';
             $timer=$settings[$key]->getOption('timer');
-            echo $timer;
 
             if(!$this->session->has($key.'LastDate'))
                 $this->session->set($key.'LastDate',time());
