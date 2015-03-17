@@ -10,7 +10,8 @@ class ReviewsModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new ReviewsCacheProcessor() : new ReviewsDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new ReviewsCacheProcessor() : new ReviewsDBProcessor());
+        $this->setProcessor(new ReviewsDBProcessor());
     }
 
     public static function myClassName()

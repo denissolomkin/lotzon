@@ -10,7 +10,8 @@ class NotesModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new NotesCacheProcessor() : new NotesDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new NotesCacheProcessor() : new NotesDBProcessor());
+        $this->setProcessor(new NotesDBProcessor());
     }
 
     public static function myClassName()

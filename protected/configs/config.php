@@ -7,11 +7,10 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-Config::instance()->cacheEnabled = false;
 
 // init memcache connection
 try {
-    if (Config::instance()->cacheEnabled OR 1)
+    if (Config::instance()->cacheEnabled)
         Cache::init('default', Config::instance()->cacheConnectionProperties);
 } catch (CacheException $e) {
     Config::instance()->cacheEnabled = false;
@@ -289,10 +288,10 @@ Config::instance()->publicResources = array(
     '/chance/play/:identifier' => array(
         'post' => 'controllers\production\Game:chanceGamePlay',
     ),
-    '/quickgame/build/' => array(
+    '/quickgame/build/:key' => array(
         'get' => 'controllers\production\Game:startQuickGame',
     ),
-    '/quickgame/play/' => array(
+    '/quickgame/play/:key' => array(
         'post' => 'controllers\production\Game:quickGamePlay',
     ),
 );

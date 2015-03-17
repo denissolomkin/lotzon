@@ -9,8 +9,7 @@ class GameSettingsModel extends Model
 {
     public function init()
     {
-        //$this->setProcessor(Config::instance()->cacheEnabled ? new GameSettingsCacheProcessor() : new GameSettingsDBProcessor());
-        $this->setProcessor(new GameSettingsCacheProcessor());
+        $this->setProcessor(Config::instance()->cacheEnabled ? new GameSettingsCacheProcessor() : new GameSettingsDBProcessor());
     }
 
     public static function myClassName()

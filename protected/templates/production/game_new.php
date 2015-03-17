@@ -119,7 +119,7 @@
             .ngm-bk .ngm-gm .gm-mx ul.Mines > li {
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
                 font:   <?=(480-($onlineGames['Mines']->getOption('y')*1)) / 1.6 / $onlineGames['Mines']->getOption('y')?>px/<?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px Handbook-bold;
-                width:  <?=(480-(($onlineGames['Mines']->getOption('x')-1)*1)) / $onlineGames['Mines']->getOption('x')?>px;
+                width:  <?=(480-($onlineGames['Mines']->getOption('x')*1)) / $onlineGames['Mines']->getOption('x')?>px;
                 height: <?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px;
                 margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
             }
@@ -1424,11 +1424,12 @@
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
         updateNotices(unreadNotices);
         <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
-
-        $("#timer_soon").countdown(
-            {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
+        $('#qgame').hide();
+        setTimeout(function(){$('#qgame').fadeIn(200)},1800);
+        $("#timer_soon").countdown({until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
             onExpiry: showQuickGameStart
         });
+
         $("#timer_soon").countdown('resume');
         $("#timer_soon").countdown('option', {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>)});
 

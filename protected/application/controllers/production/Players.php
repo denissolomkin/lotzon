@@ -416,7 +416,7 @@ class Players extends \AjaxController
     {
         $resp = array();
         if ($this->session->has(Player::IDENTITY) && $player=$this->session->get(Player::IDENTITY)) {
-            $chanceGames = ChanceGamesModel::instance()->getGamesSettings();
+            //$chanceGames = ChanceGamesModel::instance()->getGamesSettings();
             $settings=GameSettingsModel::instance()->getList();
 
             $AdBlockDetected=$this->request()->get('online', null);
@@ -443,7 +443,7 @@ class Players extends \AjaxController
             if ($_SESSION['chanceGame']['moment']) {
                 if ($_SESSION['chanceGame']['moment']['start'] + 180 < time()) {
                     unset($_SESSION['chanceGame']['moment']);
-                    $this->session->set('MomentChanseLastDate',time());
+                    $this->session->set('MomentLastDate',time());
                 }
             }
 
@@ -455,7 +455,7 @@ class Players extends \AjaxController
 
             if($this->session->get($key.'LastDate') +  $timer * 60 > time()) {}
 
-            $diff=$this->session->get($key.'LastDate') + $timer  * 60 - time();
+            $diff = $this->session->get($key.'LastDate') + $timer  * 60 - time();
             if ($diff<0 OR ($diff/60<=5 AND !$_SESSION['timer_soon']['five'])
                 // OR ($diff/60<=$timer AND !$_SESSION['timer_soon']['start'])
             ) {
@@ -471,8 +471,6 @@ class Players extends \AjaxController
                     'important' => true
                 );
             }
-            /*
-            */
 
             #delete
             //$resp['moment'] = 1;
@@ -480,18 +478,18 @@ class Players extends \AjaxController
 
             $key='Moment';
 
-            if ($this->session->get('MomentChanseLastDate') && !$_SESSION['chanceGame'] && isset($settings[$key])) {
+            if ($this->session->get('MomentLastDate') && !$_SESSION['chanceGame'] && isset($settings[$key])) {
 
                 #delete
                 /*
-                 if($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
+                 if($this->session->get('MomentLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
                     $diff=($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo());
                     //if(($diff<5 AND !$_SESSION['timer_soon']['five']) OR ($diff<$chanceGames['moment']->getMinFrom() AND !$_SESSION['timer_soon']['start']) OR $diff<)
                     $resp['soon'] = array(
                         'name' => 'soon',
                         'title' => 'Моментальный шанс',
                         'txt' => 'Шанс будет доступен через  '.$diff.'<span id="timer_soon"></span><script>
-                    $("#timer_soon").countdown({until: ' . ($this->session->get('MomentChanseLastDate') + $chanceGames['moment']->getMinFrom() * 60 - time()) . ',layout: "{mnn}:{snn}",
+                    $("#timer_soon").countdown({until: ' . ($this->session->get('MomentLastDate') + $chanceGames['moment']->getMinFrom() * 60 - time()) . ',layout: "{mnn}:{snn}",
                     onExpiry: function(){
                     $(".notification #soon .badge-block .txt").html("Не пропустите моментальный шанс ' . ' ' .($diff>0?'в ближайшие '. $diff .($diff>4 ? 'минут':$diff>1?'минуты':$diff>0?'минуту':''):'сейчас') . '!");}
                      })</script>',
@@ -499,11 +497,11 @@ class Players extends \AjaxController
                 }
                 */
 
-                if ($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('min') * 60 <= time() &&
-                    $this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('max') * 60 >= time()) {
-                    if ( ($rnd = mt_rand(0, 100)) <= 100 / ($settings[$key]->getOption('max') - $settings[$key]->getOption('min')) ) {
+                if ($this->session->get('MomentLastDate') + $settings[$key]->getOption('min') * 60 <= time() &&
+                    $this->session->get('MomentLastDate') + $settings[$key]->getOption('max') * 60 >= time()) {
+                    if ( ($rnd = mt_rand(0, 100)) <= 100 / (($settings[$key]->getOption('max') - $settings[$key]->getOption('min'))?:1) ) {
                         $resp['moment'] = 1;
-                    } elseif ($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('max') * 60 - time() < 120) {
+                    } elseif ($this->session->get('MomentLastDate') + $settings[$key]->getOption('max') * 60 - time() < 120) {
                         // if not fired randomly  - fire at last minute
                         $resp['moment'] = 1;
                     }
@@ -513,7 +511,9 @@ class Players extends \AjaxController
                 //$resp['moment'] = 0;
 
                 if (isset($resp['moment']) && $resp['moment']) {
+                    $this->session->set('MomentLastDate', time());
 
+                    /*
                     if(is_array(Config::instance()->banners['Moment']))
                         foreach(Config::instance()->banners['Moment'] as $group) {
                             if (is_array($group)) {
@@ -564,14 +564,13 @@ class Players extends \AjaxController
                         ),
                     );
 
-                    $this->session->set('MomentChanseLastDate', time());
-// ????             $this->session->set('MomentChanseLastDate', time() + $chanceGames['moment']->getMinTo()  * 60);
+                    */
                 }
 
-                if($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('max') * 60 - time() < 0)
-                    $this->session->set('MomentChanseLastDate', time());
+                if($this->session->get('MomentLastDate') + $settings[$key]->getOption('max') * 60 - time() < 0)
+                    $this->session->set('MomentLastDate', time());
 
-                $resp['test'] = ($this->session->get('MomentChanseLastDate') + $settings[$key]->getOption('min')  * 60 - time());
+                $resp['test'] = ($this->session->get('MomentLastDate') + $settings[$key]->getOption('min')  * 60 - time());
             } else
                 $resp['game']=true;
         }
@@ -611,6 +610,5 @@ class Players extends \AjaxController
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
         }
-
     }
 }

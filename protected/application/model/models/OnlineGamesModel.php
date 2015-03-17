@@ -10,8 +10,7 @@ class OnlineGamesModel extends Model
 {
     public function init()
     {
-        //$this->setProcessor(Config::instance()->cacheEnabled ? new PlayersCacheProcessor() : new PlayersDBProcessor());
-        $this->setProcessor(new OnlineGamesCacheProcessor());
+        $this->setProcessor(Config::instance()->cacheEnabled ? new OnlineGamesCacheProcessor() : new OnlineGamesDBProcessor());
     }
 
     public function getList()

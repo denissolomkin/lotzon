@@ -6,7 +6,6 @@ Application::import(PATH_APPLICATION . 'model/processors/GameSettingsDBProcessor
 
 class GameSettingsCacheProcessor extends BaseCacheProcessor implements IProcessor
 {
-
     const LIST_CACHE_KEY = "games::settings";
 
     public function init()
@@ -30,17 +29,6 @@ class GameSettingsCacheProcessor extends BaseCacheProcessor implements IProcesso
             }
         }
         return $list;
-    }
-
-    public function getGame($key)
-    {
-        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false) {
-            $list = $this->getBackendProcessor()->getList();
-            if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
-                throw new ModelException("Unable to cache storage data", 500);
-            }
-        }
-        return $list[$key];
     }
 
     public function update(Entity $game) {

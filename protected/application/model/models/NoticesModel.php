@@ -10,7 +10,8 @@ class NoticesModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new NoticesCacheProcessor() : new NoticesDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new NoticesCacheProcessor() : new NoticesDBProcessor());
+        $this->setProcessor(new NoticesDBProcessor());
     }
 
     public static function myClassName()

@@ -328,9 +328,12 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
     });   
 }
 
-function startQuickGame(successFunction, failFunction, errorFunction) {
+function startQuickGame(key, successFunction, failFunction, errorFunction) {
+
+    $('#'+key+'-popup').show().find('.qg-msg .txt').hide().next().show();
+
     $.ajax({
-        url: "/quickgame/build/",
+        url: "/quickgame/build/"+key,
         method: 'GET',
         async: true,
         dataType: 'json',
@@ -342,17 +345,17 @@ function startQuickGame(successFunction, failFunction, errorFunction) {
             }
         },
         error: function() {
-            errorFunction.call($(this), data);
+            errorFunction.call($(this));
         }
     });
 }
 
-function playQuickGame(cell, successFunction, failFunction, errorFunction) {
+function playQuickGame(key, cell, successFunction, failFunction, errorFunction) {
     var data = {
         cell: cell
     };
     $.ajax({
-        url: "/quickgame/play/",
+        url: "/quickgame/play/"+key,
         method: 'POST',
         data: data,
         async: true,
@@ -597,10 +600,16 @@ window.setInterval(function() {
             if (data.res) {
 
                 if(data.res.moment == 1) {
+
                     // if main game screen is visible
-                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#QuickGame-popup:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
                     if (!gw) {
 
+                        startQuickGame('Moment',
+                            buildQuickGame,
+                            function(data) {$('#report-popup').show().find('.txt').text(getText(data.message));},
+                            function() {alert('error')});
+                        /*
                         $("#mchance ul li").removeClass();
                         $("#mchance .mm-msg").hide();
 
@@ -616,6 +625,7 @@ window.setInterval(function() {
                         if (data.res.block) {
                             $("#mchance").find('.block').show().html('<div class="tl">Реклама</div>' + data.res.block);
                         }
+                         */
                     }
 
                 }
@@ -659,7 +669,7 @@ window.setInterval(function() {
         },
         error: function() {}
     });   
-}, 60 * 1000);
+}, 60 * 1000 / 10);
 
 function showQuickGameStart(){
     $(".notifications #qgame .badge-block .txt div").first().hide().next().fadeIn(200).parents('.badge-block').find('.cs').hide();

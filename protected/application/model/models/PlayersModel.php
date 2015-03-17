@@ -10,7 +10,8 @@ class PlayersModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new PlayersCacheProcessor() : new PlayersDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new PlayersCacheProcessor() : new PlayersDBProcessor());
+        $this->setProcessor(new PlayersDBProcessor());
     }
 
     public static function myClassName()

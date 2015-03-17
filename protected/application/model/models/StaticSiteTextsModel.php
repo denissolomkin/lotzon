@@ -10,7 +10,8 @@ class StaticSiteTextsModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new StaticSiteTextCacheProcessor() : new StaticSiteTextDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new StaticSiteTextCacheProcessor() : new StaticSiteTextDBProcessor());
+        $this->setProcessor(new StaticSiteTextDBProcessor());
     }
 
     public static function myClassName()

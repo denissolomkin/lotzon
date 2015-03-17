@@ -10,7 +10,8 @@ class TicketsModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new TicketsCacheProcessor() : new TicketsDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new TicketsCacheProcessor() : new TicketsDBProcessor());
+        $this->setProcessor(new TicketsDBProcessor());
     }
 
     public static function myClassName()

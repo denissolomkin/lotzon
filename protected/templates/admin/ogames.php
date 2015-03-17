@@ -283,7 +283,7 @@
             buildGame(game);
         });
 
-        function genGame(game){
+        function editGame(game){
             $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
             $('#editGame').find('div.tab').hide().first().show();
             $('#editGame').find('h3').text($.isPlainObject(game.Title)?game.Title[0]:'*New game');
@@ -401,7 +401,7 @@
             holder.addClass('disabled');
 
             holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>)
-                .next().html(nl2br(game.Description.<?=\Config::instance()->defaultLang;?>))
+                .next()//.html(nl2br(game.Description.<?=\Config::instance()->defaultLang;?>))
                 .next().html(
                 '<i class="fa fa-users"></i>'+game.Field.s+
                 ' <i class="fa fa-user"></i>'+game.Field.p+
@@ -490,11 +490,11 @@
 
     $('.add-game').on('click', function() {
         var game = {Id:0,Title:'',Key:'',Description:'',Field:{x:6,y:1,b:1,r:1,w:95,h:95,c:1}};
-        genGame(game);
+        editGame(game);
     });
 
     $(document).on('click','.game-build', function() {
-        genGame(games[$(this).data('id')]);
+        editGame(games[$(this).data('id')]);
     });
 
 

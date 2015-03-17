@@ -5,6 +5,7 @@ class QuickGame extends Entity
 {
     private $_id = '';
     private $_uid = '';
+    private $_key = '';
     private $_title = '';
     private $_over = 0;
     private $_lang = '';
@@ -30,6 +31,18 @@ class QuickGame extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setKey($key)
+    {
+        $this->_key = $key;
+
+        return $this;
+    }
+
+    public function getKey()
+    {
+        return $this->_key;
     }
 
     public function setLang($lang)
@@ -117,16 +130,21 @@ class QuickGame extends Entity
     public function setDescription($description)
     {
         $this->_description = $description;
-
         return $this;
     }
 
-    public function getDescription($lang=null)
+    public function getDescription($lang=false)
     {
-        if($lang)
-            return $this->_description[$lang];
-        else
-            return $this->_description;
+
+        if($lang) {
+            if(isset($this->_description[$lang]) && $this->_description[$lang] && $this->_description[$lang]!='')
+                $description = nl2br($this->_description[$lang]);
+            else
+                $description = nl2br(reset($this->_description));;
+        } else
+            $description = $this->_description;
+
+        return $description;
     }
 
     public function setOver($over)
@@ -148,12 +166,18 @@ class QuickGame extends Entity
         return $this;
     }
 
-    public function getTitle($lang=null)
+
+    public function getTitle($lang=false)
     {
-        if(isset($lang))
-            return $this->_title[$lang]?:$this->_title[0];
-        else
-            return $this->_title;
+        if($lang) {
+            if(isset($this->_title[$lang]) && $this->_title[$lang] && $this->_title[$lang]!='')
+                $title = $this->_title[$lang];
+            else
+                $title = reset($this->_title);
+        } else
+            $title = $this->_title;
+
+        return $title;
     }
 
     public function setTime($time)
@@ -200,6 +224,7 @@ class QuickGame extends Entity
         return array('Title'=>$this->getTitle($this->getLang()),
             'Description'=>$this->getDescription($this->getLang()),
             'Uid'=>$this->getUid(),
+            'Key'=>$this->getKey(),
             'Field' => $field,
             'GameField' => $this->getGameField());
     }
