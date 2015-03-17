@@ -57,7 +57,7 @@ $(function(){
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
             if($(event.target).closest("#mchance").length)return false;
-            if($(event.target).closest("#qgame-popup").length)return false;
+            if($(event.target).closest("#QuickGame-popup").length)return false;
             if($(event.target).closest("#mail-conf").length)return false;
             if($(event.target).closest("#game-itself").length)document.location.reload();
             if($(event.target).closest(".popup").hasClass('chance'))return false;
@@ -1638,53 +1638,57 @@ function proccessResult()
 
 
 $(document).on('click','#qgame .start',function () {
-    holder=$('#qgame-popup');
-    holder.show().find('.qg-msg .txt').hide().next().show();
-
-    startQuickGame(function(data) {
-        holder.find('.qg-msg').hide().find('.txt').next().hide();
-        quickGame=data.res;
-
-        var html='';
-        for(y1=1;y1<=quickGame.Field.y;y1++)
-            for(x1=1;x1<=quickGame.Field.x;x1++)
-                html+="<li data-cell='"+x1+"x"+y1+"' style='width: "+quickGame.Field.w+"px;height: "+quickGame.Field.h+"px;margin: 0 "+(x1!=quickGame.Field.x?quickGame.Field.r:0)+"px "+(y1!=quickGame.Field.y?quickGame.Field.b:0)+"px 0;'></li>";
-        width=((parseInt(quickGame.Field.w)+parseInt(quickGame.Field.r))*parseInt(quickGame.Field.x)-parseInt(quickGame.Field.r));
-        holder.find('.qg-bk-tl').text(quickGame.Title).next().text(quickGame.Description).next().find('ul').css('width',width).html(html).parents('section').css('width',width+80);
-
-        if (quickGame.GameField) {
-            $.each(quickGame.GameField, function (index, prize) {
-                var cell = holder.find('li[data-cell="' + index + '"]');
-
-                if (prize) {
-                    if (prize.t != 'item')
-                        cell.addClass(prize.t).html(
-                            '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
-                            '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
-                    else {
-                        cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
-                    }
-                } else {
-                    cell.addClass('los');
-                }
-            })
-        }
-
-        activateQuickGame();
-
-        if (data.res.block) {
-            $("#qgame-popup").find('.block').show().html('<div class="tl">Реклама</div>' + data.res.block);
-        }
-
-    }, function(data) {
-            $('#report-popup').show().find('.txt').text(getText(data.message));
-    }, function() {});
+    startQuickGame('QuickGame',
+        buildQuickGame,
+        function(data) {$('#report-popup').show().find('.txt').text(getText(data.message));},
+        function() {alert('error')});
 
 });
 
-function activateQuickGame()
+function buildQuickGame(data) {
+    quickGame=data.res;
+    holder=$('#'+quickGame.Key+'-popup');
+    holder.show().find('.qg-msg .txt').hide().next().show();
+    holder.find('.qg-msg').hide().find('.txt').next().hide();
+
+    var html='';
+    for(y1=1;y1<=quickGame.Field.y;y1++)
+        for(x1=1;x1<=quickGame.Field.x;x1++)
+            html+="<li data-cell='"+x1+"x"+y1+"' style='width: "+quickGame.Field.w+"px;height: "+quickGame.Field.h+"px;margin: 0 "+(x1!=quickGame.Field.x?quickGame.Field.r:0)+"px "+(y1!=quickGame.Field.y?quickGame.Field.b:0)+"px 0;'></li>";
+    width=((parseInt(quickGame.Field.w)+parseInt(quickGame.Field.r))*parseInt(quickGame.Field.x)-parseInt(quickGame.Field.r));
+    holder.find('.qg-bk-tl').text(quickGame.Title).next().text(quickGame.Description).next().find('ul').css('width',width).html(html).parents('section').css('width',width+80);
+
+    if (quickGame.GameField) {
+        $.each(quickGame.GameField, function (index, prize) {
+            var cell = holder.find('li[data-cell="' + index + '"]');
+
+            if (prize) {
+                if (prize.t != 'item')
+                    cell.addClass(prize.t).html(
+                        '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
+                        '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
+                else {
+                    cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
+                }
+            } else {
+                cell.addClass('los');
+            }
+        })
+    }
+
+    activateQuickGame(quickGame.Key);
+
+    if (data.res.block) {
+        holder.find('.block').show().html('<div class="tl">Реклама</div>' + data.res.block);
+    }
+}
+
+function activateQuickGame(key)
 {
-    $('#qgame-popup li[data-cell]').off('click').on('click', function () {
+    key = key || 'QuickGame';
+
+    holder = $('#'+key+'-popup');
+    $('li[data-cell]', holder).off('click').on('click', function () {
         var cell = $(this);
         if (quickGame.Field.c < 1) {
             console.log('MOVES_IS_OUT');
@@ -1695,7 +1699,7 @@ function activateQuickGame()
             return false;
         }
         else cell.addClass('m');
-        playQuickGame($(this).data('cell'), function (data) {
+        playQuickGame(key,$(this).data('cell'), function (data) {
             var game = data.res;
             console.log(game);
             if (game.error) {
@@ -1716,7 +1720,6 @@ function activateQuickGame()
             }
 
             if (game.GameField) {
-                holder = $('#qgame-popup');
                 window.setTimeout(function () {
                     $.each(game.GameField, function (index, prize) {
                         var cell = holder.find('li[data-cell="' + index + '"]');

@@ -98,20 +98,20 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
-
         $seo = SEOModel::instance()->getSEOSettings();
         $session = new Session();
         $session->get(Player::IDENTITY)->fetch();
-        $banners          = Config::instance()->banners;
-        $gameSettings          = LotterySettingsModel::instance()->loadSettings();
+        $banners               = Config::instance()->banners;
+        $lotterySettings       = LotterySettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($session->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
         $onlineGames           = OnlineGamesModel::instance()->getList();
+        $gameSettings          = GameSettingsModel::instance()->getList();
         $currentChanceGame     = $_SESSION['chanceGame'];
 
-       if (!$session->has('MomentChanseLastDate') || time() - $session->get('MomentChanseLastDate') > $chanceGames['moment']->getMinTo() * 60) {
-             $session->set('MomentChanseLastDate', time());
+       if (!$session->has('MomentLastDate') || time() - $session->get('MomentLastDate') > $gameSettings['Moment']->getOption('max') * 60) {
+             $session->set('MomentLastDate', time());
        }
 
         if (!$session->has('QuickGameLastDate'))
@@ -120,11 +120,11 @@ class Index extends \SlimController\SlimController
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $gameSettings->getCountryCoefficient($this->country),
-            'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            'lotteryWins'  => $gameSettings->getPrizes($this->country),
-            'rate'         => $gameSettings->getCountryRate($this->country),
-            'coefficient'  => $gameSettings->getCountryCoefficient($this->country),
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $lotterySettings->getCountryCoefficient($this->country),
+            'nextLottery'  => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'lotteryWins'  => $lotterySettings->getPrizes($this->country),
+            'rate'         => $lotterySettings->getCountryRate($this->country),
+            'coefficient'  => $lotterySettings->getCountryCoefficient($this->country),
         );
 
         $playerTransactions = array(
@@ -137,7 +137,7 @@ class Index extends \SlimController\SlimController
 
         $staticTexts = $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
         $shop = ShopModel::instance()->loadShop();
-        $news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
+        $news = array(); //$news = NewsModel::instance()->getList($this->promoLang, self::NEWS_PER_PAGE);
         $reviews = ReviewsModel::instance()->getList(1, self::REVIEWS_PER_PAGE);
         $notices = NoticesModel::instance()->getPlayerUnreadNotices($session->get(Player::IDENTITY));
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($session->get(Player::IDENTITY));
@@ -163,8 +163,8 @@ class Index extends \SlimController\SlimController
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
             'quickGame' => array(
                 'current'=>$session->has('QuickGame'),
-                'title'=>GameSettingsModel::instance()->getSettings('QuickGame')->getTitle(),
-                'timer'=>$session->get('QuickGameLastDate') + GameSettingsModel::instance()->getSettings('QuickGame')->getOption('timer')  * 60 - time()),
+                'title'=>$gameSettings['QuickGame']->getTitle(),
+                'timer'=>$session->get('QuickGameLastDate') +  $gameSettings['QuickGame']->getOption('timer')  * 60 - time()),
             'playerTransactions' => $playerTransactions,
             'banners'      => $banners
         ));
@@ -181,15 +181,15 @@ class Index extends \SlimController\SlimController
         }
 
         $seo = SEOModel::instance()->getSEOSettings();
-        $gameSettings = LotterySettingsModel::instance()->loadSettings();
+        $lotterySettings = LotterySettingsModel::instance()->loadSettings();
         $comments = CommentsModel::instance()->getList();
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD) * $gameSettings->getCountryCoefficient($this->country),
-            'nextLottery'  => $gameSettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            'lotteryWins'  => $gameSettings->getPrizes($this->country),
+            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD) * $lotterySettings->getCountryCoefficient($this->country),
+            'nextLottery'  => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'lotteryWins'  => $lotterySettings->getPrizes($this->country),
         );
 
         if (count($comments) > self::COMMENTS_PER_PAGE) {
@@ -264,7 +264,7 @@ class Index extends \SlimController\SlimController
             $this->country = Config::instance()->defaultLang;
             $this->promoLang = Config::instance()->countryLangs[Config::instance()->defaultLang];
         }
-        $gameSettings = LotterySettingsModel::instance()->loadSettings();
+        $lotterySettings = LotterySettingsModel::instance()->loadSettings();
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => Common::viewNumberFormat(PlayersModel::instance()->getPlayersCount()),

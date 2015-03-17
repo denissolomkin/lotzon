@@ -289,10 +289,10 @@ Config::instance()->publicResources = array(
     '/chance/play/:identifier' => array(
         'post' => 'controllers\production\Game:chanceGamePlay',
     ),
-    '/quickgame/build/' => array(
+    '/quickgame/build/:key' => array(
         'get' => 'controllers\production\Game:startQuickGame',
     ),
-    '/quickgame/play/' => array(
+    '/quickgame/play/:key' => array(
         'post' => 'controllers\production\Game:quickGamePlay',
     ),
 );

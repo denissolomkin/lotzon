@@ -118,6 +118,7 @@ class Game extends \AjaxController
 
             $game->setUserId($player->getId())
                 ->setTime(time())
+                ->setKey($key)
                 ->setLang($player->getLang())
                 ->setUid(uniqid())
                 ->loadPrizes()
@@ -261,7 +262,7 @@ class Game extends \AjaxController
                 if(!$player->updateLastChance()) {
                     $responseData = array(
                         'status' => 'error',
-                        'error' => 'Игра не засчитана, Вы уже принимали участие за последние '.ChanceGamesModel::instance()->getGamesSettings()['moment']->getMinFrom().' минут'
+                        'error' => 'Игра не засчитана, Вы уже принимали участие за последние '.GameSettingsModel::instance()->getSettings('Moment')->getOption('min').' минут'
                     );
                     $player->writeLog(array('action' => 'CHEAT', 'desc' => 'MOMENTAL_CHANCE', 'status' => 'danger'));
                     $this->ajaxResponse($responseData);

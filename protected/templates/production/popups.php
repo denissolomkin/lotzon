@@ -578,11 +578,40 @@
     </div>
 </div>
 
+<!--=========================================================================
+                            MOMENT GAME POPUP CODE
+    ==========================================================================-->
+<div class="bl-pp-bk popup" id="Moment-popup" style="display: none;">
+    <div class="bl-pp_table">
+        <div class="bl-pp_td">
+            <section class="quickgame pop-box">
+                <div class="cs" onclick="location.reload();"></div>
+                <div class="qg-bk-pg" style="position:relative;">
+                    <div class="qg-bk-tl">МОМЕНТАЛЬНЫЙ ШАНС</div>
+                    <div class="qg-txt"></div>
+                    <div>
+                        <div class="qg-msg">
+                            <div class="td">
+                                <div class="txt">Поздравляем, выигрыш зачислен на Ваш баланс</div>
+                                <div class="preloader"></div>
+                            </div>
+                        </div>
+                        <ul class="qg-tbl" style="position: relative;">
+
+                        </ul>
+                        <div class="block" style="display:none;" >Загрузка...</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
 
 <!--=========================================================================
                             QUICK GAME POPUP CODE
     ==========================================================================-->
-<div class="bl-pp-bk popup" id="qgame-popup" style="display: none;">
+<div class="bl-pp-bk popup" id="QuickGame-popup" style="display: none;">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="quickgame pop-box">
