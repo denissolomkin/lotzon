@@ -10,7 +10,8 @@ class NewsModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new NewsCacheProcessor() : new NewsDBProcessor());
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new NewsCacheProcessor() : new NewsDBProcessor());
+        $this->setProcessor(new NewsDBProcessor());
     }
 
     public static function myClassName()

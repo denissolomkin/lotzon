@@ -610,6 +610,5 @@ class Players extends \AjaxController
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
         }
-
     }
 }

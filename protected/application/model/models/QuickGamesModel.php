@@ -5,13 +5,12 @@ Application::import(PATH_APPLICATION . 'model/entities/QuickGame.php');
 Application::import(PATH_APPLICATION . 'model/processors/QuickGamesDBProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/QuickGamesCacheProcessor.php');
 
+
 class QuickGamesModel extends Model
 {
     public function init()
     {
-        //$this->setProcessor(Config::instance()->cacheEnabled ? new QuickGamesCacheProcessor() : new QuickGamesDBProcessor());
-        $this->setProcessor(new QuickGamesCacheProcessor());
-
+        $this->setProcessor(Config::instance()->cacheEnabled ? new QuickGamesCacheProcessor() : new QuickGamesDBProcessor());
     }
 
     public static function myClassName()

@@ -7,11 +7,10 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-Config::instance()->cacheEnabled = false;
 
 // init memcache connection
 try {
-    if (Config::instance()->cacheEnabled OR 1)
+    if (Config::instance()->cacheEnabled)
         Cache::init('default', Config::instance()->cacheConnectionProperties);
 } catch (CacheException $e) {
     Config::instance()->cacheEnabled = false;

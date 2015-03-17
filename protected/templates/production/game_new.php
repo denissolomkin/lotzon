@@ -1424,11 +1424,12 @@
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
         updateNotices(unreadNotices);
         <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
-
-        $("#timer_soon").countdown(
-            {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
+        $('#qgame').hide();
+        setTimeout(function(){$('#qgame').fadeIn(200)},1800);
+        $("#timer_soon").countdown({until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
             onExpiry: showQuickGameStart
         });
+
         $("#timer_soon").countdown('resume');
         $("#timer_soon").countdown('option', {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>)});
 
