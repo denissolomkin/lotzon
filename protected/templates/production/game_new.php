@@ -119,7 +119,7 @@
             .ngm-bk .ngm-gm .gm-mx ul.Mines > li {
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
                 font:   <?=(480-($onlineGames['Mines']->getOption('y')*1)) / 1.6 / $onlineGames['Mines']->getOption('y')?>px/<?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px Handbook-bold;
-                width:  <?=(480-($onlineGames['Mines']->getOption('x')*1)) / $onlineGames['Mines']->getOption('x')?>px;
+                width:  <?=floor((480-(($onlineGames['Mines']->getOption('x')-1)*1)) / $onlineGames['Mines']->getOption('x'))?>px;
                 height: <?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px;
                 margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
             }
@@ -128,8 +128,8 @@
             /*.ngm-bk .ngm-gm .gm-mx ul.Mines > li.m {background:url("tpl/img/games/bomb.png") #d8e7ea no-repeat 0 0/ 100% 100%;}*/
 
             ul.SeaBattle.mx > li {
-                width:  <?=(220-($onlineGames['SeaBattle']->getOption('x')*1)) / $onlineGames['SeaBattle']->getOption('x')?>px;
-                height: <?=(440-($onlineGames['SeaBattle']->getOption('y')*1)) / $onlineGames['SeaBattle']->getOption('y')?>px;
+                width:  <?=floor((220-($onlineGames['SeaBattle']->getOption('x')*1)) / $onlineGames['SeaBattle']->getOption('x'))?>px;
+                height: <?=floor((440-($onlineGames['SeaBattle']->getOption('y')*1)) / $onlineGames['SeaBattle']->getOption('y'))?>px;
                 margin:0 1px 1px 0;background-color: #d8e7ea;float:left;
                 font:19px/19px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
             /*.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li:nth-child(<?=$onlineGames['SeaBattle']->getOption('x');?>n+<?=$onlineGames['SeaBattle']->getOption('x');?>) {margin-right:0;}*/
@@ -143,7 +143,7 @@
             .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li div{
                 border-radius: <?=
                 max((480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x'),
-                (490-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')); ?>px;
+                (480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')); ?>px;
                 margin: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.1?>px <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.1?>px;
                 width: <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.8?>px;
                 height: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.8?>px;
@@ -151,8 +151,8 @@
             .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li {
                 background-color: #d8e7e9;
                 font: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / 1.6 / $onlineGames['FiveLine']->getOption('y')?>px/<?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px Handbook-bold;
-                width: <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x')?>px;
-                height: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px;
+                width: <?=floor((480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x'))?>px;
+                height: <?=floor((480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y'))?>px;
                 margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
             }
         </style>
@@ -1425,7 +1425,7 @@
         updateNotices(unreadNotices);
         <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
         $('#qgame').hide();
-        setTimeout(function(){$('#qgame').fadeIn(200)},1800);
+        setTimeout(function(){$('#qgame').fadeIn(200)},1200);
         $("#timer_soon").countdown({until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
             onExpiry: showQuickGameStart
         });
