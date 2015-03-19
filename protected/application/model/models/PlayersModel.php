@@ -34,9 +34,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getAvailableIds();
     }
 
-    public function updateLastChance(Entity $player)
+    public function checkLastGame($key, Entity $player)
     {
-        return $this->getProcessor()->updateLastChance($player);
+        return $this->getProcessor()->checkLastGame($key, $player);
     }
 
     public function updateCookieId(Entity $player, $cookie)
@@ -74,9 +74,14 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkNickname($player);   
     }
 
-    public function updateCounters(Entity $player)
+    public function initCounters(Entity $player)
     {
-        return $this->getProcessor()->updateCounters($player);
+        return $this->getProcessor()->initCounters($player);
+    }
+
+    public function initDates(Entity $player)
+    {
+        return $this->getProcessor()->initDates($player);
     }
 
     public function updateSocial(Entity $player)

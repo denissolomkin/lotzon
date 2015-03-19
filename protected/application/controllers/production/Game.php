@@ -106,17 +106,16 @@ class Game extends \AjaxController
 
         if (!$settings) {
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
-        }
-
-        if ($settings->getOption('timer') && $this->session->get($key.'LastDate') + $settings->getOption('timer') * 60 > time()) {
-            $this->ajaxResponse(array(), 0, 'NOT_TIME_YET');
-        }
-
-        if ($this->session->has($key) && $game=$this->session->get($key)) {
+        } elseif ($settings->getOption('min') && $this->session->get($key.'LastDate') + $settings->getOption('min') * 60 > time()) {
+            $this->ajaxResponse(array(), 0, 'TIME_NOT_YET');
+        } elseif ($this->session->has($key) && $game=$this->session->get($key)) {
             $resp = $game->getStat();
-        } elseif(is_array($settings->getGames()) && $game = QuickGamesModel::instance()->getList()[$settings->getGames()[array_rand($settings->getGames())]]) {
+        } elseif(
+            is_array($settings->getGames())
+            && $game = QuickGamesModel::instance()->getList()[$settings->getGames()[array_rand($settings->getGames())]]) {
 
             $game->setUserId($player->getId())
+                ->setTimeout($settings->getOption('timeout'))
                 ->setTime(time())
                 ->setKey($key)
                 ->setLang($player->getLang())
@@ -190,19 +189,27 @@ class Game extends \AjaxController
         $res = $game->doMove($cell);
 
         if($game->isOver()) {
-            if($game->getGamePrizes())
-                foreach($game->getGamePrizes() as $currency=>$sum)
-                    if($sum) {
-                        if ($currency == LotterySettings::CURRENCY_MONEY)
-                            $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
-                        elseif ($currency == LotterySettings::CURRENCY_POINT)
-                            $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
-                    }
 
             $this->session->set($key.'LastDate', time());
-            unset($_SESSION['timer_soon']);
             $this->session->remove($key);
+            $this->session->remove($key.'Important');
+
+            if($player->checkLastGame($key)) {
+                if ($game->getGamePrizes())
+                    foreach ($game->getGamePrizes() as $currency => $sum)
+                        if ($sum) {
+                            if ($currency == LotterySettings::CURRENCY_MONEY)
+                                $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            elseif ($currency == LotterySettings::CURRENCY_POINT)
+                                $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                        }
+            } else {
+                $player->writeLog(array('action' => 'CHEAT', 'desc' => $key, 'status' => 'danger'));
+                $this->ajaxResponse(array(), 0, 'CHEAT_GAME');
+            }
+
         }
+
         $this->ajaxResponse($res);
     }
 

@@ -599,7 +599,7 @@ $(function(){
             $('#cash-exchange-popup div.form').show();
             $('#cash-exchange-popup input').focus();
         } else {
-            $("#report-popup").find(".txt").text("Недостаточно средств для обмена!");
+            $("#report-popup").find(".txt").text(getText('INSUFFICIENT_FUNDS'));
             $("#report-popup").show();
         }
 
@@ -1640,7 +1640,9 @@ function proccessResult()
 $(document).on('click','#qgame .start',function () {
     startQuickGame('QuickGame',
         buildQuickGame,
-        function(data) {$('#report-popup').show().find('.txt').text(getText(data.message));},
+        function(data) {
+            $('#report-popup .cs').on('click', function() {location.reload();});
+            $('#report-popup').show().find('.txt').text(getText(data.message));},
         function() {alert('error')});
 
 });
@@ -1657,6 +1659,10 @@ function buildQuickGame(data) {
             html+="<li data-cell='"+x1+"x"+y1+"' style='width: "+quickGame.Field.w+"px;height: "+quickGame.Field.h+"px;margin: 0 "+(x1!=quickGame.Field.x?quickGame.Field.r:0)+"px "+(y1!=quickGame.Field.y?quickGame.Field.b:0)+"px 0;'></li>";
     width=((parseInt(quickGame.Field.w)+parseInt(quickGame.Field.r))*parseInt(quickGame.Field.x)-parseInt(quickGame.Field.r));
     holder.find('.qg-bk-tl').text(quickGame.Title).next().text(quickGame.Description).next().find('ul').css('width',width).html(html).parents('section').css('width',width+80);
+
+    if (quickGame.Timeout) {
+        window.setTimeout(function(){ location.reload(); },quickGame.Timeout * 1000);
+    }
 
     if (quickGame.GameField) {
         $.each(quickGame.GameField, function (index, prize) {
@@ -1701,7 +1707,6 @@ function activateQuickGame(key)
         else cell.addClass('m');
         playQuickGame(key,$(this).data('cell'), function (data) {
             var game = data.res;
-            console.log(game);
             if (game.error) {
                 return;
             }
@@ -1755,10 +1760,13 @@ function activateQuickGame(key)
                 }, 600);
             }
 
-        }, function () {
-
-        }, function () {
-        });
+        },
+            function(data) {
+                if(data.message=='CHEAT_GAME' || data.message=='TIME_NOT_YET')
+                    $('#report-popup .cs').on('click', function() {location.reload();});
+                    $('#report-popup').show().find('.txt').text(getText(data.message));},
+            function() {alert('error')}
+        );
     });
 }
 

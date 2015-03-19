@@ -57,7 +57,7 @@
                 <th class="icon"><?=sortIcon('CountReferal', $currentSort, $pager, $search, 'user')?></th>
                 <th class="icon"><?=sortIcon('CountInviter', $currentSort, $pager, $search, 'envelope')?></th>
                 <th>Login / Ping <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
-                <th class="icon"><?=sortIcon('GamesPlayed', $currentSort, $pager, $search, 'gift')?></th>
+                <th>Games <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th class="icon"><?=sortIcon('TicketsFilled', $currentSort, $pager, $search, 'tags')?></th>
                 <th class="icon"><?=sortIcon('AdBlock', $currentSort, $pager, $search ,'exclamation-sign')?></th>
                 <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
@@ -78,7 +78,7 @@
                             </div>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
-                            <?=($player->getNicName())?><?=($player->isOnline()?'<i class="online right">•</i>':'');?>
+                            <?=($player->getNicName())?><?=($player->getOnlineTime()>time()-5*60?'<i class="online right">•</i>':'');?>
                             </div>
                         </td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
@@ -135,8 +135,28 @@
                             <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
                         </td>
 
-                        <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer success" data-id='.$player->getId().'"':'class="danger"')?>><?=($player->getGamesPlayed()?:'нет')?></td>
-                        <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?> <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?></td>
+                        <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer success" data-id='.$player->getId().'"':'class="danger"')?>>
+
+                            <? if($player->getGamesPlayed()){?> <i class="fa fa-gift <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"><?=$player->getGamesPlayed()?></i><?}?>
+
+                            <? if($player->getDateLastQuickGame()){?>
+                            <i class="fa fa-puzzle-piece <?=
+                            ($player->getDateLastQuickGame() > strtotime('-2 day', time()) ? 'text-success' :
+                                ($player->getDateLastQuickGame() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                            )?>"></i>
+                            <?}?>
+
+                            <? if($player->getDateLastMoment()){?>
+                            <i class="fa fa-rocket <?=
+                            ($player->getDateLastMoment() > strtotime('-2 day', time()) ? 'text-success' :
+                                ($player->getDateLastMoment() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                            )?>"></i>
+                            <?}?>
+
+                        </td>
+                        <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?>
+                            <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?>
+                        </td>
                         <td>
                             <? if($player->getDateAdBlocked()) :?>
                             <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">

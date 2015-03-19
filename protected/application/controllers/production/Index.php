@@ -110,12 +110,13 @@ class Index extends \SlimController\SlimController
         $gameSettings          = GameSettingsModel::instance()->getList();
         $currentChanceGame     = $_SESSION['chanceGame'];
 
-       if (!$session->has('MomentLastDate') || time() - $session->get('MomentLastDate') > $gameSettings['Moment']->getOption('max') * 60) {
-             $session->set('MomentLastDate', time());
-       }
+
+        if (!$session->has('MomentLastDate'))
+            $session->set('MomentLastDate', time());
 
         if (!$session->has('QuickGameLastDate'))
             $session->set('QuickGameLastDate',time());
+
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getPlayersCount(),
@@ -164,7 +165,7 @@ class Index extends \SlimController\SlimController
             'quickGame' => array(
                 'current'=>$session->has('QuickGame'),
                 'title'=>$gameSettings['QuickGame']->getTitle(),
-                'timer'=>$session->get('QuickGameLastDate') +  $gameSettings['QuickGame']->getOption('timer')  * 60 - time()),
+                'timer'=>$session->get('QuickGameLastDate') +  $gameSettings['QuickGame']->getOption('min')  * 60 - time()),
             'playerTransactions' => $playerTransactions,
             'banners'      => $banners
         ));

@@ -51,6 +51,7 @@ class Player extends Entity
     private $_dateLastLogin  = '';
     private $_dateLastNotice = '';
     private $_dateLastChance = '';
+    private $_dateLastQuickGame = '';
     private $_dateAdBlocked  = '';
     private $_country        = '';
     private $_lang        = '';
@@ -64,7 +65,7 @@ class Player extends Entity
     private $_invitesCount = 0;
     private $_socialPostsCount = 0;
 
-    private $_online     = 0;
+    //private $_online     = 0;
     private $_onlineTime = 0;
     private $_adBlock    = 0;
     private $_webSocket  = 0;
@@ -329,6 +330,42 @@ class Player extends Entity
         return $date;
     }
 
+    public function setDateLastMoment($date)
+    {
+        $this->_dateLastMoment = $date;
+
+        return $this;
+    }
+
+    public function getDateLastMoment($format = null)
+    {
+        $date = $this->_dateLastMoment;
+
+        if (!is_null($format)) {
+            $date = date($format, $this->_dateLastMoment);
+        }
+
+        return $date;
+    }
+
+    public function setDateLastQuickGame($date)
+    {
+        $this->_dateLastQuickGame = $date;
+
+        return $this;
+    }
+
+    public function getDateLastQuickGame($format = null)
+    {
+        $date = $this->_dateLastQuickGame;
+
+        if (!is_null($format)) {
+            $date = date($format, $this->_dateLastQuickGame);
+        }
+
+        return $date;
+    }
+
     public function setDateLastChance($dateLastChance)
     {
         $this->_dateLastChance = $dateLastChance;
@@ -521,7 +558,7 @@ class Player extends Entity
 
         return $date;
     }
-
+/*
     public function setOnline($online)
     {
         $this->_online = $online;
@@ -533,7 +570,7 @@ class Player extends Entity
     {
         return $this->_online;
     }
-
+*/
     public function decrementInvitesCount()
     {
         $this->setInvitesCount($this->getInvitesCount() - 1);
@@ -549,22 +586,17 @@ class Player extends Entity
     }
 
 
-    public function updateLastChance()
+    public function checkLastGame($key)
     {
         $model = $this->getModelClass();
-        $check=false;
 
         try {
-            if($model::instance()->updateLastChance($this)) {
-                $this->setDateLastChance(time());
-                $check=true;
-            }
+            return $model::instance()->checkLastGame($key, $this);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
 
-        return $check;
-
+        return false;
     }
 
 
@@ -939,12 +971,40 @@ class Player extends Entity
         return $this->_counters=$counters;
     }
 
-    public function updateCounters()
+    public function initDates($data=null)
+    {
+
+        if(!$data) {
+            $model = $this->getModelClass();
+
+            try {
+                $data = $model::instance()->initDates($this);
+
+
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+
+            }
+        }
+
+        $this
+            ->setDateLastChance($data['Cnance'])
+            ->setDateLastMoment($data['Moment'])
+            ->setDateLastQuickGame($data['QuickGame'])
+            ->setOnlineTime($data['Ping'])
+            ->setAdBlock($data['AdBlockLast'])
+            ->setDateAdBlocked($data['AdBlocked'])
+            ->setWebSocket($data['WSocket']);
+
+        return $this;
+    }
+
+    public function initCounters()
     {
         $model = $this->getModelClass();
 
         try {
-            $counters=$model::instance()->updateCounters($this);
+            $counters=$model::instance()->initCounters($this);
             $this->setCounters($counters);
         } catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
@@ -952,7 +1012,6 @@ class Player extends Entity
         }
 
         return $counters;
-
     }
 
     public function updateCookieId($cookie)
@@ -1189,7 +1248,7 @@ class Player extends Entity
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
         $session = new Session();
-        $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))?$this->getDateLastLogin():time()));
+        // $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))? $this->getDateLastLogin() : time()));
 
         $this->setDateLastLogin(time())
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
@@ -1290,7 +1349,7 @@ class Player extends Entity
 
     public function markOnline()
     {
-        $this->setOnline(true)
+        $this//->setOnline(true)
              ->setOnlineTime(time());
 
         $model = $this->getModelClass();
@@ -1319,7 +1378,13 @@ class Player extends Entity
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
                  ->setDateLastNotice($data['DateNoticed'])
-                 ->setDateLastChance($data['DateChanced'])
+                 //->setDateLastChance($data['Cnance'])
+                 //->setDateLastMoment($data['Moment'])
+                 //->setOnline($data['Online'])
+                 //->setOnlineTime($data['OnlineTime'])
+                 //->setAdBlock($data['AdBlock'])
+                 //->setDateAdBlocked($data['DateAdBlocked'])
+                 //->setWebSocket($data['WebSocket'])
                  ->setCountry($data['Country'])
                  ->setLang($data['Country'])
                  ->setAvatar($data['Avatar'])
@@ -1332,11 +1397,6 @@ class Player extends Entity
                  ->setGamesPlayed($data['GamesPlayed'])
                  ->setInvitesCount($data['InvitesCount'])
                  ->setSocialPostsCount($data['SocialPostsCount'])
-                 ->setOnline($data['Online'])
-                 ->setOnlineTime($data['OnlineTime'])
-                 ->setAdBlock($data['AdBlock'])
-                 ->setDateAdBlocked($data['DateAdBlocked'])
-                 ->setWebSocket($data['WebSocket'])
                  ->setCookieId($data['CookieId'])
                  ->setIp($data['Ip'])
                  ->setLastIp($data['LastIp'])
@@ -1349,6 +1409,10 @@ class Player extends Entity
 
             if ($data['TicketsFilled']) {
                 $this->_isTicketsFilled = $data['TicketsFilled'];
+            }
+
+            if (isset($data['Logined'])) {
+                $this->initDates($data);
             }
 
             if (isset($data['CountIp'])) {

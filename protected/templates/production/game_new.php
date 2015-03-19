@@ -1384,6 +1384,7 @@
         var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
         var texts = {
+            'CHEAT_GAME'      : 'Игра не может запускаться с нескольких открытых вкладок, пожалуйста, закройте лишние вкладки c игрой',
             'TIME_NOT_YET'      : 'Время игры еще не настало!',
             'GAME_NOT_ENABLED'  : 'Игра не доступна',
             'GAME_NOT_FOUND'    : 'Игра не найдена',
