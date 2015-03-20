@@ -34,6 +34,18 @@ class PlayersDBProcessor implements IProcessor
 
         $player->setId(DB::Connect()->lastInsertId());
 
+        $sql = "INSERT INTO `PlayerDates` (`PlayerId`,`Logined`) VALUES (:id, :dl)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'       => (int)$player->getId(),
+                ':dl'       => (int)$player->getDateLastLogin(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+
         try {
             $player->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                 ->updateCookieId($player->getCookieId())
@@ -234,8 +246,6 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-
-
     public function getAvailableIds()
     {
 
@@ -320,7 +330,7 @@ class PlayersDBProcessor implements IProcessor
     public function delete(Entity $player)
     {
         $sql = "
-        DELETE `Players`, `PlayerLogs`, `EmailInvites`, `LotteryTickets`, `ChanceGameWins`, `PlayerLotteryWins`, `MoneyOrders`, `PlayerNotes`, `PlayerCookies`, `PlayerNotices`, `PlayerReviews`,  `PlayerSocials`, `ShopOrders`, `Transactions`
+        DELETE `Players`, `PlayerLogs`, `EmailInvites`, `LotteryTickets`, `ChanceGameWins`, `PlayerLotteryWins`, `MoneyOrders`, `PlayerNotes`, `PlayerCookies`, `PlayerNotices`, `PlayerReviews`,  `PlayerSocials`, `PlayerDates`, `ShopOrders`, `Transactions`
         FROM `Players`
         LEFT JOIN `ChanceGameWins`    ON `Players`.`id` = `ChanceGameWins`.`PlayerId`
         LEFT JOIN `EmailInvites`    ON `Players`.`id` = `EmailInvites`.`InviterId`
@@ -333,6 +343,7 @@ class PlayersDBProcessor implements IProcessor
         LEFT JOIN `PlayerNotices`    ON `Players`.`id` = `PlayerNotices`.`PlayerId`
         LEFT JOIN `PlayerReviews`    ON `Players`.`id` = `PlayerReviews`.`PlayerId`
         LEFT JOIN `PlayerSocials`    ON `Players`.`id` = `PlayerSocials`.`PlayerId`
+        LEFT JOIN `PlayerDates` ON  `Players`.`Id` = `PlayerDates` . `PlayerId`
         LEFT JOIN `ShopOrders`    ON `Players`.`id` = `ShopOrders`.`PlayerId`
         LEFT JOIN `Transactions`    ON `Players`.`id` = `Transactions`.`PlayerId`
         WHERE `Players`.`Id` = :id";
@@ -373,13 +384,10 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersStats()
     {
-        $sql = "SELECT SUM(Money/(SELECT `Coefficient` FROM `LotterySettings` WHERE `CountryCode`=`Players`.`Country` LIMIT 1) ) Money, SUM(Points) Points,SUM(Online) Online, (SELECT COUNT( * )
-                FROM (
-                SELECT 1
-                FROM LotteryTickets
-                WHERE LotteryId =0
-                GROUP BY PlayerId) t
-                ) Tickets
+        $sql = "SELECT
+                SUM(Money/(SELECT `Coefficient` FROM `LotterySettings` WHERE `CountryCode`=`Players`.`Country` LIMIT 1) ) Money, SUM(Points) Points,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-Config::instance()->playerOfflineTimeout).") o) Online,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
 
@@ -400,11 +408,11 @@ class PlayersDBProcessor implements IProcessor
             if($search['where'] AND $search['where']=='Id')
                 $sql .= ' WHERE Id = '.$search['query'];
             elseif($search['where'] AND $search['where']=='CookieId')
-                $sql .= ' WHERE CookieId  IN ('.$search['query'].')';
+                $sql .= ' WHERE CookieId IN ('.$search['query'].')';
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $sql .= ' WHERE ReferalId = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='Online')
-                $sql .= ' WHERE Online = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='Ping')
+                $sql .= ' WHERE `PlayerDates`.Ping > '.time()-Config::instance()->playerOfflineTimeout;
             elseif($search['where'] AND $search['where']=='Ip')
                 $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -423,7 +431,7 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function updateCounters(Player $player)
+    public function initCounters(Player $player)
     {
 
         $sql = "SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')";
@@ -477,6 +485,22 @@ class PlayersDBProcessor implements IProcessor
 
     }
 
+    public function initDates(Player $player)
+    {
+
+        $sql = "SELECT * FROM `PlayerDates` WHERE PlayerId = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'    => $player->getId(),
+            ));
+            return $sth->fetch();
+        } catch (PDOException $e) {echo $e->getMessage();
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
+
     public function getList($limit = 0, $offset = 0, array $sort, $search=null)
     {
 
@@ -487,8 +511,8 @@ class PlayersDBProcessor implements IProcessor
                 $search = ' WHERE `Players`.CookieId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $search = ' WHERE `Players`.ReferalId = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='Online')
-                $search = ' WHERE `Players`.Online = '.$search['query'];
+            elseif($search['where'] AND $search['where']=='Ping')
+                $search = ' WHERE `PlayerDates`.Ping > '.time()-Config::instance()->playerOfflineTimeout;
             elseif($search['where'] AND $search['where']=='Ip')
                 $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -534,10 +558,11 @@ class PlayersDBProcessor implements IProcessor
                 LEFT JOIN `PlayerLogs` ON `PlayerLogs` . `PlayerId` = `Players`.`Id`
                 LEFT JOIN `MoneyOrders` ON `MoneyOrders` . `PlayerId` = `Players`.`Id`
                 LEFT JOIN `ShopOrders` ON `ShopOrders` . `PlayerId` = `Players`.`Id`
+                LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Players`.`Id`
                 {$search}
                 GROUP BY `Players`.`Id`";
 
-        $sql = "SELECT `Players`.*,
+        $sql = "SELECT `Players`.*,`PlayerDates`.*,
                 (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) CountNote,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) CountNotice,
@@ -553,7 +578,9 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) CountReview,
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
-                {$search}";
+                LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Players`.`Id`
+                {$search}
+                GROUP BY `Players`.`Id`";
 
         if (count($sort)) {
             if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
@@ -774,8 +801,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function updateCookieId(Entity $player, $cookie)
     {
-        $sql = "REPLACE INTO `PlayerCookies` (`PlayerId`, `CookieId`, `Time`)
-                VALUES (:id, :cookie, :tm)";
+        $sql = "REPLACE INTO `PlayerCookies` (`PlayerId`, `CookieId`, `Time`) VALUES (:id, :cookie, :tm)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -808,15 +834,15 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function updateLastChance(Entity $player)
+    public function checkLastGame($key, Entity $player)
     {
-        $sql = "UPDATE `Players` SET `DateChanced` = :date WHERE  `Id` = :id AND `DateChanced` < :min";
+        $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE  `PlayerId` = :id AND `{$key}` < :min";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':date'  => time(),
-                ':min'  => time() - GameSettingsModel::instance()->getSettings('Moment')->getOption('min')*60,
+                ':min'  => time() - GameSettingsModel::instance()->getSettings($key)->getOption('min')*60,
                 ':id'  => $player->getId(),
             ));
         } catch (PDOException $e) {
@@ -845,6 +871,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function markOnline(Entity $player)
     {
+        /*
         $sql = "UPDATE `Players` SET `DateAdBlocked` = :dtadb, `AdBlock` = :adb, `WebSocket` = :ws, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
 
         try {
@@ -854,6 +881,24 @@ class PlayersDBProcessor implements IProcessor
                 ':onlt'  => (int)$player->getOnlineTime(),
                 ':adb'   => (int)$player->getAdBlock(),
                 ':dtadb' => (int)$player->getDateAdBlocked(),
+                ':ws'    => ($player->getWebSocket()?time():0),
+                ':plid'  => $player->getId(),
+            ));
+        */
+
+        $sql = "UPDATE `PlayerDates`
+                SET `AdBlockLast` = :adbl,
+                    `AdBlocked` = :adb,
+                    `WSocket` = :ws,
+                    `Ping` = :onl
+                WHERE `PlayerId` = :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':onl'   => (int)$player->getOnlineTime(),
+                ':adbl'   => (int)$player->getAdBlock(),
+                ':adb'  => (int)$player->getDateAdBlocked(),
                 ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));

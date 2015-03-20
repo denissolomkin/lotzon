@@ -7,6 +7,8 @@ class QuickGame extends Entity
     private $_uid = '';
     private $_key = '';
     private $_title = '';
+    private $_time = '';
+    private $_timeout = '';
     private $_over = 0;
     private $_lang = '';
     private $_description = '';
@@ -182,13 +184,24 @@ class QuickGame extends Entity
 
     public function setTime($time)
     {
-        $this->_time=$time;
+        $this->_time=$time?:time();
         return $this;
     }
 
     public function getTime()
     {
         return $this->_time;
+    }
+
+    public function setTimeout($time)
+    {
+        $this->_timeout=$time;
+        return $this;
+    }
+
+    public function getTimeout()
+    {
+        return $this->_timeout;
     }
 
     public function setUserId($id)
@@ -221,10 +234,12 @@ class QuickGame extends Entity
     function getStat() {
         $field = $this->getField();
         $field['c']-=count($this->getGameField());
-        return array('Title'=>$this->getTitle($this->getLang()),
+        return array(
+            'Title'=>$this->getTitle($this->getLang()),
             'Description'=>$this->getDescription($this->getLang()),
             'Uid'=>$this->getUid(),
             'Key'=>$this->getKey(),
+            'Timeout'=> $this->getTimeout() ? ($this->getTimeout() * 60 + $this->getTime()) - time(): false,
             'Field' => $field,
             'GameField' => $this->getGameField());
     }

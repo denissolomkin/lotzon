@@ -20,7 +20,7 @@
                 <input name="key" type="hidden" value="<?=$key?>">
                 <div class="t"><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Случайная игра'?>"></div>
             <div class="o">
-                <i class="fa fa-clock-o"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('timer'):null?>" name="options[timer]">
+                <i class="fa fa-clock-o"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('min'):null?>" name="options[min]">
                 <span class="btn btn-success save-game"><i class="fa fa-save"></i></span>
             </div>
             <ul class="draggable">
@@ -38,6 +38,7 @@
                 <div class="t"><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Моментальный шанс'?>"></div>
             <div class="o">
                 <i class="fa fa-clock-o"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('min'):null?>" name="options[min]">-<input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('max'):null?>" name="options[max]">
+                <i class="fa fa-history"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('timeout'):null?>" name="options[timeout]">
                 <span class="btn btn-success save-game"><i class="fa fa-save"></i></span>
             </div>
             <ul class="draggable">
