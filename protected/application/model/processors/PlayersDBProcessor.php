@@ -523,7 +523,7 @@ class PlayersDBProcessor implements IProcessor
 
 
         $sql = "SELECT `Players`.*,
-                group_concat(DISTINCT(`PlayerCookie`.Cookies)) CookieId,
+                group_concat(DISTINCT(`PlayerCookies`.CookieId)) CookieId,
                 count(DISTINCT(c.PlayerId)) CountCookieId,
                 (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CountIp,
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) CountNote,
@@ -537,8 +537,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) CountReview,
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
-                    LEFT JOIN `PlayerCookies` ON `PlayerCookie`.PlayerId=`Players`.Id
-                    INNER JOIN `PlayerCookies`c ON c.CookieId=`PlayerCookie`.CookieId
+                    LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId=`Players`.Id
+                    INNER JOIN `PlayerCookies`c ON `PlayerCookies`.CookieId=c.CookieId
                 {$search}
                 GROUP BY `Players`.Id";
 

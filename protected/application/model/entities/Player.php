@@ -422,7 +422,7 @@ class Player extends Entity
 
     public function setLang($country)
     {
-        $this->_lang = (in_array($country, \Config::instance()->langs)?$country:\Config::instance()->defaultLang);
+        $this->_lang = (in_array($country, \Config::instance()->langs) ? $country : \Config::instance()->defaultLang);
         return $this;
     }
 
@@ -980,10 +980,8 @@ class Player extends Entity
             try {
                 $data = $model::instance()->initDates($this);
 
-
             } catch (ModelException $e) {
                 throw new EntityException($e->getMessage(), $e->getCode());
-
             }
         }
 
@@ -1248,7 +1246,7 @@ class Player extends Entity
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
         $session = new Session();
-        // $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))? $this->getDateLastLogin() : time()));
+        $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))? $this->getDateLastLogin() : time() ));
 
         $this->setDateLastLogin(time())
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
@@ -1411,7 +1409,7 @@ class Player extends Entity
                 $this->_isTicketsFilled = $data['TicketsFilled'];
             }
 
-            if (isset($data['Logined'])) {
+            if (isset($data['Ping'])) {
                 $this->initDates($data);
             }
 

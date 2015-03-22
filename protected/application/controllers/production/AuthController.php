@@ -97,7 +97,7 @@ class AuthController extends \SlimController\SlimController {
                     $player->setValid(true);
 
                 if(!$this->session->has(Player::IDENTITY)){
-                    $this->session->set('QuickGameLastDate',($player->getDateLastLogin() < strtotime(date("Y-m-d"))?$player->getDateLastLogin():time()));
+                    $this->session->set('QuickGameLastDate',($player->getDateLastLogin() < strtotime(date("Y-m-d")) ? $player->getDateLastLogin() : time()));
                     $player->setDateLastLogin(time());
                 }
 
