@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \OnlineGamesModel, \LotterySettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettingsModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \TicketsModel, \LotteriesModel, \SEOModel, \ChanceGamesModel, \GameSettingsModel, \QuickGamesModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -107,6 +107,7 @@ class Index extends \SlimController\SlimController
         $playerPlayedLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($session->get(Player::IDENTITY)->getId(), self::LOTTERIES_PER_PAGE);
         $chanceGames           = ChanceGamesModel::instance()->getGamesSettings();
         $onlineGames           = OnlineGamesModel::instance()->getList();
+        $quickGames            = QuickGamesModel::instance()->getList();
         $gameSettings          = GameSettingsModel::instance()->getList();
         $currentChanceGame     = $_SESSION['chanceGame'];
 
@@ -161,6 +162,8 @@ class Index extends \SlimController\SlimController
             'seo' => $seo,
             'onlineGames'  => $onlineGames,
             'chanceGames'  => $chanceGames,
+            'quickGames'    => $quickGames,
+            'gameSettings'  => $gameSettings,
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
             'quickGame' => array(
                 'current'=>$session->has('QuickGame'),

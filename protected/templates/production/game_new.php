@@ -898,6 +898,7 @@
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
+
                     <div data-game="33">
                         <?=$staticTexts['chance-game-33'][$lang]->getText()?>
                     </div>
@@ -1401,6 +1402,8 @@
             'ERROR_COORDINATES' : 'Неверные координаты',
             'CHOICE_BET' : 'Выберите ставку',
         };
+
+        var chanceGames = <?=json_encode($modes, JSON_PRETTY_PRINT); ?>;
         var quickGame = {};
         var online = 1;
         var page = <?=($page?1:0)?>;

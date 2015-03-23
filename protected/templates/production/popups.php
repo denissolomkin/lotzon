@@ -637,7 +637,7 @@
     </div>
 </div>
 
-
+<?/*
 <!--=========================================================================
                             MOMENTUM POPUP CODE
     ==========================================================================-->
@@ -646,10 +646,10 @@
         <div class="bl-pp_td">
             <section class="momentum pop-box">
                 <div class="cs" onclick="location.reload();"></div>
-                <div class="mm-bk-pg" style="position:relative;/*height:440px*/">
+                <div class="mm-bk-pg" style="position:relative;">
                     <div class="mm-bk-tl">Моментальный шанс</div>
                     <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
-                    <div style="/*bottom:0;position: absolute;*/">
+                    <div>
                         <div class="mm-msg">
                             <div class="td">
                                 <div class="txt">Поздравляем, баллы зачислены на Ваш баланс</div>
@@ -669,7 +669,7 @@
     </div>
 </div>
 
-
+*/ ?>
 
 <!--=========================================================================
                             REPORT POPUP CODE

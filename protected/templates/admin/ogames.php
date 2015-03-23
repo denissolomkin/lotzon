@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="confirmLabel">Редактирование игры
+                <h3 class="modal-title" id="confirmLabel"><span>Редактирование игры</span>
                     <span style="float: right;margin-bottom: 10px;">
                 <button type="button" class="btn btn-md btn-success tab" data-tab="text">
                     <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="row-fluid tab" id="audio">
-                            <? $audio=array('start','stack','field','start','ready','Timer','Win','Lose','Move-m-1','Move-o-1','Move-m-2','Move-o-2','Move-m-3','Move-o-3');
+                            <? $audio=array('start','stack','field','timeout','ready','Timer','Win','Lose','Move-m-1','Move-o-1','Move-m-2','Move-o-2','Move-m-3','Move-o-3');
                             while($key= each ($audio)) {
                                 $key=array_shift($key);?>
                                 <div class="col-lg-6">
@@ -286,7 +286,7 @@
         function editGame(game){
             $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
             $('#editGame').find('div.tab').hide().first().show();
-            $('#editGame').find('h3').text($.isPlainObject(game.Title)?game.Title[0]:'*New game');
+            $('#editGame').find('h3 span').first().text($.isPlainObject(game.Title)?game.Title[Object.keys(game.Title)[0]]:'Новая игра');
 
 
             holder=$("#editGame").find('form');
@@ -305,18 +305,6 @@
                 $('#editGame button[data-tab="text"]').next().attr('data-tab','image');
                 holder.find('.k').val(game.Key);
                 holder.find('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
-/*
-                $.ajax({
-                    url: 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()),
-                    type: 'HEAD',
-                    error: function () {
-                        holder.find('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/but-upload-review.png');
-                    },
-                    success: function () {
-                        holder.find('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
-                    }
-                });
-                */
             } else {
                 $('#editGame button[data-tab="text"]').next().attr('data-tab','key');
                 holder.find('.k').val('');
@@ -402,33 +390,17 @@
 
             holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>)
                 .next()//.html(nl2br(game.Description.<?=\Config::instance()->defaultLang;?>))
-                .next().html(
-                '<i class="fa fa-users"></i>'+game.Field.s+
+                .next().html('<i class="fa fa-users"></i>'+game.Field.s+
                 ' <i class="fa fa-user"></i>'+game.Field.p+
                 ' <i class="fa fa-clock-o"></i>'+game.Field.t+
                 ' <i class="fa fa-paw"></i>'+game.Field.m+
                 ' <i class="fa fa-arrows-h"></i>'+game.Field.x+
                 ' <i class="fa fa-arrows-v"></i>'+game.Field.y+
                 ' <i class="fa fa-trophy"></i>'+game.Field.w+
-                (game.Field.b ? '<i class="fa fa-laptop"></i>':'<span class="fa-stack fa-lg"><i class="fa fa-laptop fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')
-                );//.next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
-
+                (game.Field.b ? '<i class="fa fa-laptop"></i>':'<span class="fa-stack fa-lg"><i class="fa fa-laptop fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>'));
                 holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
 
-/*
-                $.ajax({
-                    url: 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()),
-                    type: 'HEAD',
-                    error: function () {
-                        holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/but-upload-review.png');
-                    },
-                    success: function () {
-                        holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
-                    }
-                });
-                */
         };
-
 
 
 
