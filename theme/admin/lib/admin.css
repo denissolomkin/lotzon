@@ -180,7 +180,7 @@ min-height: 17px;
     border: 1px solid wheat;}
 .ogames .toggle.btn {width: 100% !important;;}
 .ogames .game-build .t, .qgames .game-build .t {font-size: 24px;}
-.ogames .game-build .d, .qgames .game-build .d {margin-bottom: 5px;}
+.ogames .game-build .d, .qgames .game-build .d {margin-bottom: 5px;display: none;}
 .agames .game-build .save-game {border-radius: 5px;float: right;}
 
 .agames #games i{display: none;}
