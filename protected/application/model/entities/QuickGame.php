@@ -263,6 +263,7 @@ class QuickGame extends Entity
 
         $res['Prize']=$gameField[$cell]=false;
         $res['Cell']=$cell;
+        $res['Moves']=$this->getField()['c']-count($gameField);
 
         $gamePrizes=$this->getGamePrizes();
 

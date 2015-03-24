@@ -60,11 +60,39 @@
 
                                     <div id="comb">
 
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-diamond fa-2x"></i></span>
-                                            <input class="form-control p" type="text" name="game[Field][p]" value="" placeholder="Цена" value="">
-                                        </div>
+                                        <script>
+                                            $(function() {
+                                                // run the currently selected effect
+                                                function runEffect() {
+                                                    // get effect type from
 
+                                                    cell=$("li", $('#field ul').last());
+                                                    cell.first().removeClass('points').next().removeClass('los');
+
+                                                    var selectedEffect='';
+                                                    if(!(selectedEffect = $( "#effectTypes" ).val()))
+                                                        return;
+
+                                                    // most effect types need no options passed by default
+                                                    var options = {};
+                                                    // some effects have required parameters
+                                                    if ( selectedEffect === "scale" ) {
+                                                        options = { percent: 0 };
+                                                    } else if ( selectedEffect === "size" ) {
+                                                        options = { to: { width: 0, height: 0 } };
+                                                    }
+
+                                                    // run the effect
+                                                cell.first().html($('<div></div>').css('height','100%').css('background',cell.first().css('background'))).addClass('points').find('div').effect( selectedEffect, options, 300,function(){this.remove();} );
+                                                cell.first().next().html($('<div></div>').css('height','100%').css('background',cell.first().next().css('background'))).addClass('los').find('div').effect( selectedEffect, options, 300,function(){this.remove();} );
+                                                };
+
+                                                // set effect from select menu value
+                                                $( "#effectTypes" ).on('input', function() {
+                                                    runEffect();
+                                                });
+                                            });
+                                        </script>
                                         <div>
                                             <button class="btn btn-default" data-combination="line">
                                                 <ul>
@@ -93,6 +121,37 @@
                                     </div>
 
                                     <div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-diamond fa-2x"></i></span>
+                                            <input class="form-control p" type="text" name="game[Field][p]" value="" placeholder="Цена" value="">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-toggle-on fa-2x"></i></span>
+                                            <select name="game[Field][e]" class="form-control e" style="width: 100px;" id="effectTypes">
+                                                <option value=""></option>
+                                                <option value="clip">Clip</option>
+                                                <option value="drop">Drop</option>
+                                                <option value="puff">Puff</option>
+                                                <option value="bounce">Bounce</option>
+                                                <option value="pulsate">Pulsate</option>
+                                                <!--option value="explode">Explode</option-->
+                                                <option value="blind">Blind</option>
+                                                <option value="scale">Scale</option>
+                                                <option value="highlight">Highlight</option>
+                                                <option value="shake">Shake</option>
+                                                <option value="size">Size</option>
+                                                <option value="slide">Slide</option>
+                                                <option value="fold">Fold</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-paw fa-2x"></i></span>
+                                            <input class="form-control c" type="text" name="game[Field][c]"  value="1" placeholder="Количество ходов" value="">
+                                        </div>
+                                        <br>
+
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-long-arrow-right fa-2x"></i></span>
                                             <input class="form-control r" type="text" name="game[Field][r]" value="1" placeholder="Справа" value="">
@@ -116,10 +175,6 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-arrows-h fa-2x"></i></span>
                                             <input class="form-control y" type="text" name="game[Field][y]"  value="1" placeholder="По вертикали" value="">
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-paw fa-2x"></i></span>
-                                            <input class="form-control c" type="text" name="game[Field][c]"  value="1" placeholder="Количество ходов" value="">
                                         </div>
                                             <ul></ul>
                                         <span id="field-size">1213</span>
@@ -275,6 +330,7 @@
             holder.find('.h').val(game.Field.h);
             holder.find('.w').val(game.Field.w);
             holder.find('.c').val(game.Field.c);
+            holder.find('.e').val(game.Field.e).change();
             holder.find('.r').val(typeof game.Field.r !== "undefined" && game.Field.r?game.Field.r:0);
             holder.find('.b').val(typeof game.Field.b !== "undefined" && game.Field.b?game.Field.b:0).trigger('input');
             holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));

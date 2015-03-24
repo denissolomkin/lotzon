@@ -1729,22 +1729,27 @@ function activateQuickGame(key)
 
 //                return;
 
-            quickGame.Field.c--;
+            quickGame.Field.c = game.Moves;
+            //quickGame.Field.c--;
 
-                var html='';
-                var clas='los';
+                cell.parents('ul').removeClass('wait');
+                var cell_html='';
+                var cell_class='los';
             if (prize = game.Prize) {
-                html = prize.t != 'item'
+                cell_class = (prize.t);
+                cell_html = prize.t != 'item'
                     ? '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
                       '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>'
                     : '<div><img src="/filestorage/shop/' + prize.s + '"></div>';
-
-                //$('div', cell).on('effect', function(){ this.parent().html(html);});
-
-                clas = (prize.t);
             }
 
-                cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+clas).find('div').effect('clip',function(){cell.html(html)}).parents('ul').removeClass('wait');
+
+
+            if(quickGame.Field.e){
+                var options = quickGame.Field.e === "scale" ? { percent: 0 } : (( quickGame.Field.e === "size" ) ? { to: { width: 0, height: 0 } } : {} );
+                cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+cell_class).find('div').effect(quickGame.Field.e,options,300,function(){this.remove();cell.html(cell_html)})
+            }else
+                cell.html(cell_html).addClass('m '+cell_class);
 
             if (game.GameField) {
                 window.setTimeout(function () {
