@@ -110,7 +110,7 @@
 
 
 
-        <? if($games = $gameSettings['ChanceGame']->getGames())
+        <? if(isset($gameSettings['ChanceGame']) && $games = $gameSettings['ChanceGame']->getGames())
             foreach($games as $game): ?>
             .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> {
                 width:<?=($quickGames[$game]->getOption('w')+$quickGames[$game]->getOption('r'))*$quickGames[$game]->getOption('x')-1?>px;
@@ -841,7 +841,7 @@
                 <div class="slide-wrap">
 
 
-                <? if($games = $gameSettings['ChanceGame']->getGames())
+                <? if(isset($games))
                     foreach($games as $game): ?>
 
                         <div class="td slide-item">
@@ -950,7 +950,7 @@
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
-                <? if($games = $gameSettings['ChanceGame']->getGames())
+                <? if(isset($games))
                     foreach($games as $game): ?>
                     <div data-game="<?=$game?>">
                         <?=$quickGames[$game]->getDescription($player->getLang())?>
@@ -1029,10 +1029,10 @@
                 </div>
                 <div class="ul-hld">
                 </div>
-                <? if($games = $gameSettings['ChanceGame']->getGames())
+                <? if(isset($games))
                     foreach($games as $game): ?>
                 <!-- CHANCE<?=$game?> -->
-                <ul class="gm-tb chance<?=$game?>" data-game="<?=$game?>" data-price="<?=$quickGames[$game]->getOption('p')?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == $game ? 'block' : 'none')?>">
+                <ul class="gm-tb chance<?=$game?>" data-game="<?=$game?>" data-price="<?=$quickGames[$game]->getOption('p')?>" style="display:none">
                     <? for($y = 1; $y <=$quickGames[$game]->getOption('y'); ++$y) { ?>
                         <? for($x = 1; $x <=$quickGames[$game]->getOption('x'); ++$x) { ?>
                             <li data-cell="<?=$x?>x<?=$y?>"></li>
