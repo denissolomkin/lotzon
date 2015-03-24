@@ -1636,7 +1636,6 @@ function proccessResult()
     });
 }
 
-
 $(document).on('click','#qgame .start',function () {
     startQuickGame('QuickGame', null,
         buildQuickGame,
@@ -1794,6 +1793,43 @@ function activateQuickGame(key)
 }
 
 <!-- CHANCE PREVIEW -->
+
+$(function(){
+    if($('.slide-list').length) {
+        $('.slide-list').each(function(){
+            var slider = $(this);
+            var slideWrap =  slider.find('.slide-wrap'),
+                nextLink = slider.find('.next-slide'),
+                prevLink = slider.find('.prev-slide'),
+                slideWidth = slider.find('.slide-item').outerWidth(),
+                scrollSlider = slideWrap.position().left - slideWidth;
+
+            nextLink.click(function(){
+                if(!slideWrap.is(':animated')) {
+                    slideWrap.animate({left: scrollSlider}, 500, function(){
+                        slideWrap
+                            .find('.slide-item:first')
+                            .appendTo(slideWrap)
+                            .parent()
+                            .css({'left': 0});
+                    });
+                }
+            });
+
+            prevLink.click(function(){
+                if(!slideWrap.is(':animated')) {
+                    slideWrap
+                        .css({'left': scrollSlider})
+                        .find('.slide-item:last')
+                        .prependTo(slideWrap)
+                        .parent()
+                        .animate({left: 0}, 500);
+                }
+            });
+        });
+    }
+});
+
 $('.ch-gm-tbl .gm-bt').click(function(){
     hideAllGames();
     $('.game-bk .play').show();
