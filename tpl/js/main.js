@@ -1650,6 +1650,7 @@ function buildQuickGame(data) {
     quickGame=data.res;
     var holder=$('#'+quickGame.Key+'-popup');
     holder.show().find('.qg-msg').hide().find('.td').children().hide();
+    $('.qg-tbl',holder).removeClass('wait');
     //holder.find('.qg-msg').hide().find('.txt').next().hide();
 
     var html='';
@@ -1726,7 +1727,8 @@ function activateQuickGame(key)
                 return;
             }
 
-            cell.html('').addClass('m').parent().removeClass('wait');
+            cell.addClass('m').html($('<div></div>').css('background',cell.css('background')).css('height','100%')).find('div').effect('clip').parents('ul').removeClass('wait');
+//                return;
 
             quickGame.Field.c--;
 
