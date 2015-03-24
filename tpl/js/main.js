@@ -1727,22 +1727,24 @@ function activateQuickGame(key)
                 return;
             }
 
-            cell.addClass('m').html($('<div></div>').css('background',cell.css('background')).css('height','100%')).find('div').effect('clip').parents('ul').removeClass('wait');
 //                return;
 
             quickGame.Field.c--;
 
+                var html='';
+                var clas='los';
             if (prize = game.Prize) {
-                if (prize.t != 'item')
-                    cell.addClass(prize.t).html(
-                        '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
-                        '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
-                else {
-                    cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
-                }
-            } else {
-                cell.addClass('los');
+                html = prize.t != 'item'
+                    ? '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
+                      '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>'
+                    : '<div><img src="/filestorage/shop/' + prize.s + '"></div>';
+
+                //$('div', cell).on('effect', function(){ this.parent().html(html);});
+
+                clas = (prize.t);
             }
+
+                cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+clas).find('div').effect('clip',function(){cell.html(html)}).parents('ul').removeClass('wait');
 
             if (game.GameField) {
                 window.setTimeout(function () {
