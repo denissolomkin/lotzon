@@ -238,7 +238,7 @@ min-height: 17px;
     z-index: 10;}
 
 .agames .game-build input{background: none;border: 0;width: 30px;font-size: 24px;}
-.agames .game-build input[name=title]{background: none;border: 0;width: 100%;}
+.agames .game-build input[name=title]{background: none;border: 0;width: 100%;padding-left: 35px;}
 .agames .game-build textarea[name=d]{background: none;border: 0;width: 100%;}
 
 .ogames .game-build img {padding-bottom: 40px;}
@@ -350,6 +350,7 @@ min-height: 17px;
 
 .qgames #chance-prizes .empty-prize{   width: 100px; height: 100px; background: url("/theme/admin/img/photo-icon-plus.png") no-repeat 0 0 / 100% 100%;margin-top: 10px; cursor: pointer;}
 .qgames .prize input:last-of-type {text-align: right;}
+.agames .t .fa {position: absolute;left:10px;top:12px;}
 .agames .game-builds,.ogames .game-builds,.qgames .game-builds {
     width: 100%;
     float: left;

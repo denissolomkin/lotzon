@@ -153,6 +153,12 @@
                             )?>"></i>
                             <?}?>
 
+                            <? if($player->getDateLastChance()){?>
+                                <i class="fa fa-star <?=
+                                ($player->getDateLastChance() > strtotime('-2 day', time()) ? 'text-success' :
+                                    ($player->getDateLastChance() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                )?>"></i>
+                            <?}?>
                         </td>
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?>
                             <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?>

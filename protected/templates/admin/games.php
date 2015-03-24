@@ -18,7 +18,7 @@
         <div class="game-build">
             <form> <? $key='QuickGame'; ?>
                 <input name="key" type="hidden" value="<?=$key?>">
-                <div class="t"><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Случайная игра'?>"></div>
+                <div class="t"><i class="fa fa-puzzle-piece fa-2x"></i><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Случайная игра'?>"></div>
             <div class="o">
                 <i class="fa fa-clock-o"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('min'):null?>" name="options[min]">
                 <span class="btn btn-success save-game"><i class="fa fa-save"></i></span>
@@ -35,7 +35,7 @@
         <div class="game-build">
             <form> <? $key='Moment'; ?>
                 <input name="key" type="hidden" value="<?=$key?>">
-                <div class="t"><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Моментальный шанс'?>"></div>
+                 <div class="t"><i class="fa fa-rocket fa-2x"></i><input name="title" type="text" value="<?=isset($games[$key])?$games[$key]->getTitle():'Моментальный шанс'?>"></div>
             <div class="o">
                 <i class="fa fa-clock-o"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('min'):null?>" name="options[min]">-<input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('max'):null?>" name="options[max]">
                 <i class="fa fa-history"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('timeout'):null?>" name="options[timeout]">
@@ -53,7 +53,7 @@
         <div class="game-build">
             <form> <? $key='ChanceGame'; ?>
                 <input name="key" type="hidden" value="<?=$key?>">
-                <div class="t"><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Шансы'?>"></div>
+                <div class="t"><i class="fa fa-star fa-2x"></i><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Шансы'?>"></div>
             <div class="o">
                 <span class="btn btn-success save-game"><i class="fa fa-save"></i></span>
             </div>
@@ -69,7 +69,7 @@
         <div class="game-build">
             <form> <? $key='OnlineGame'; ?>
                 <input name="key" type="hidden" value="<?=$key?>">
-                <div class="t"><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Онлайн-игры'?>"></div>
+                <div class="t"><i class="fa fa-gamepad fa-2x"></i><input name="title" type="text"  value="<?=isset($games[$key])?$games[$key]->getTitle():'Онлайн-игры'?>"></div>
                 <div class="d"></div>
                 <div class="o">
                     <i class="fa fa-clock-o"></i><input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('min'):null?>" style="width:16px;" name="options[min]">-<input type="text" value="<?=isset($games[$key])?$games[$key]->getOption('max'):null?>" name="options[max]">
