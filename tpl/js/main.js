@@ -1659,7 +1659,7 @@ function buildQuickGame(data) {
     width=((parseInt(quickGame.Field.w)+parseInt(quickGame.Field.r))*parseInt(quickGame.Field.x)-parseInt(quickGame.Field.r));
     quickGame.Field.p = quickGame.Field.p || 0;
     $('.qg-bk-tl',holder).text(quickGame.Title);
-    $('.qg-txt', holder).text(quickGame.Description);
+    $('.qg-txt', holder).html(quickGame.Description);
     $('.qg-tbl', holder).css('width',width).html(html).parents('section.pop-box').css('width',width+80);
     $('.qg-bk-pr',holder).text(quickGame.Field.p);
     $('.qg-msg .bt', holder).text(getText('PLAY_ONE_MORE_TIME').format(quickGame.Field.p)).attr('data-game',quickGame.Id).attr('data-key',quickGame.Key);
