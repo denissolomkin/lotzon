@@ -100,7 +100,7 @@ class Game extends \AjaxController
     public function startQuickGameAction($key='QuickGame')
     {
         //$this->session->remove('QuickGame');
-
+        $id = $key=='ChanceGame' ? $this->request()->get('id', null) : null;
         $player = $this->session->get(Player::IDENTITY);
         $settings = GameSettingsModel::instance()->getSettings($key);
 
@@ -110,9 +110,14 @@ class Game extends \AjaxController
             $this->ajaxResponse(array(), 0, 'TIME_NOT_YET');
         } elseif ($this->session->has($key) && $game=$this->session->get($key)) {
             $resp = $game->getStat();
-        } elseif(
-            is_array($settings->getGames())
-            && $game = QuickGamesModel::instance()->getList()[$settings->getGames()[array_rand($settings->getGames())]]) {
+        } elseif(is_array($settings->getGames()) &&
+            $game = QuickGamesModel::instance()->getList()[$id?:$settings->getGames()[array_rand($settings->getGames())]] ) {
+
+            if($game->getOption('p'))
+                if($player->getBalance()['Points'] < $game->getOption('p'))
+                    $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
+                else
+                    $player->addPoints($game->getOption('p')*-1, $game->getTitle($player->getLang()));
 
             $game->setUserId($player->getId())
                 ->setTimeout($settings->getOption('timeout'))

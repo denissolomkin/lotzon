@@ -165,6 +165,7 @@ class Index extends \SlimController\SlimController
             'quickGames'    => $quickGames,
             'gameSettings'  => $gameSettings,
             'currentChanceGame' => $currentChanceGame ? array_shift($currentChanceGame) : null,
+            'chanceGame' => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,
             'quickGame' => array(
                 'current'=>$session->has('QuickGame'),
                 'title'=>$gameSettings['QuickGame']->getTitle(),

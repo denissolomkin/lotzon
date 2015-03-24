@@ -1638,7 +1638,7 @@ function proccessResult()
 
 
 $(document).on('click','#qgame .start',function () {
-    startQuickGame('QuickGame',
+    startQuickGame('QuickGame', null,
         buildQuickGame,
         function(data) {
             $('#report-popup .cs').on('click', function() {location.reload();});
@@ -1649,16 +1649,21 @@ $(document).on('click','#qgame .start',function () {
 
 function buildQuickGame(data) {
     quickGame=data.res;
-    holder=$('#'+quickGame.Key+'-popup');
-    holder.show().find('.qg-msg .txt').hide().next().show();
-    holder.find('.qg-msg').hide().find('.txt').next().hide();
+    var holder=$('#'+quickGame.Key+'-popup');
+    holder.show().find('.qg-msg').hide().find('.td').children().hide();
+    //holder.find('.qg-msg').hide().find('.txt').next().hide();
 
     var html='';
     for(y1=1;y1<=quickGame.Field.y;y1++)
         for(x1=1;x1<=quickGame.Field.x;x1++)
             html+="<li data-cell='"+x1+"x"+y1+"' style='width: "+quickGame.Field.w+"px;height: "+quickGame.Field.h+"px;margin: 0 "+(x1!=quickGame.Field.x?quickGame.Field.r:0)+"px "+(y1!=quickGame.Field.y?quickGame.Field.b:0)+"px 0;'></li>";
     width=((parseInt(quickGame.Field.w)+parseInt(quickGame.Field.r))*parseInt(quickGame.Field.x)-parseInt(quickGame.Field.r));
-    holder.find('.qg-bk-tl').text(quickGame.Title).next().text(quickGame.Description).next().find('ul').css('width',width).html(html).parents('section').css('width',width+80);
+    quickGame.Field.p = quickGame.Field.p || 0;
+    $('.qg-bk-tl',holder).text(quickGame.Title);
+    $('.qg-txt', holder).text(quickGame.Description);
+    $('.qg-tbl', holder).css('width',width).html(html).parents('section.pop-box').css('width',width+80);
+    $('.qg-bk-pr',holder).text(quickGame.Field.p);
+    $('.qg-msg .bt', holder).text(getText('PLAY_ONE_MORE_TIME').format(quickGame.Field.p)).attr('data-game',quickGame.Id).attr('data-key',quickGame.Key);
 
     if (quickGame.Timeout) {
         window.setTimeout(function(){ location.reload(); },quickGame.Timeout * 1000);
@@ -1666,18 +1671,18 @@ function buildQuickGame(data) {
 
     if (quickGame.GameField) {
         $.each(quickGame.GameField, function (index, prize) {
-            var cell = holder.find('li[data-cell="' + index + '"]');
+            var cell = $('.qg-tbl li[data-cell="' + index + '"]',holder);
 
             if (prize) {
                 if (prize.t != 'item')
-                    cell.addClass(prize.t).html(
+                    cell.addClass(prize.t+' m').html(
                         '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
                         '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
                 else {
-                    cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
+                    cell.addClass(prize.t+' m').html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
                 }
             } else {
-                cell.addClass('los');
+                cell.addClass('los m');
             }
         })
     }
@@ -1693,23 +1698,37 @@ function activateQuickGame(key)
 {
     key = key || 'QuickGame';
 
-    holder = $('#'+key+'-popup');
+    var holder = $('#'+key+'-popup');
     $('li[data-cell]', holder).off('click').on('click', function () {
         var cell = $(this);
         if (quickGame.Field.c < 1) {
             console.log('MOVES_IS_OUT');
             return false;
-        }
-        if (cell.hasClass('m')) {
+        } else if (cell.hasClasses('w, m')) {
             console.log('CELL_IS_PLAYED');
             return false;
+        } else if (cell.parent().hasClass('wait')) {
+            console.log('WAITING_FOR_SERVER');
+            return false;
+        } else {
+            cell.addClass('w').parent().addClass('wait');
+            window.setTimeout(function(){
+                cell.removeClass('w');
+                cell.parent().removeClass('wait');
+            }, 5000);
+
         }
-        else cell.addClass('m');
+
+        cell.html('<div class="preloader"></div>');
+
         playQuickGame(key,$(this).data('cell'), function (data) {
             var game = data.res;
             if (game.error) {
                 return;
             }
+
+            cell.html('').addClass('m').parent().removeClass('wait');
+
             quickGame.Field.c--;
 
             if (prize = game.Prize) {
@@ -1727,7 +1746,7 @@ function activateQuickGame(key)
             if (game.GameField) {
                 window.setTimeout(function () {
                     $.each(game.GameField, function (index, prize) {
-                        var cell = holder.find('li[data-cell="' + index + '"]');
+                        var cell = $('.qg-tbl li[data-cell="' + index + '"]',holder);
                         if (cell.html() || !prize)
                             return;
 
@@ -1742,16 +1761,20 @@ function activateQuickGame(key)
                     })
                     holder.find('li.blink').css('opacity', 0.5);
 
-                    var blinkCount = 2;
+                    var blinkCount = holder.find('li.blink').length ? 2 : 0;
                     var blinkInterval = window.setInterval(function () {
                         if (blinkCount == 0) {
                             window.clearInterval(blinkInterval);
-                            holder.find('.qg-msg').css('height', holder.find('.qg-tbl').css('height')).show().find('.txt').show().next().hide();
+                            holder.find('.qg-msg').css('height',holder.find('.qg-tbl').css('height')).show().find('.txt').first().show().parent().find('.preloader').hide();
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
                                 holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                             } else {
                                 holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
                             }
+
+                            if(game.Price)
+                                $('.qg-msg .bt', holder).show();
+
                             return;
                         }
                         blinkCount--;
@@ -1775,7 +1798,9 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     hideAllGames();
     $('.game-bk .play').show();
     var gi = $(this).data('game');
-    $('.game-bk .gm-tb[data-game="'+gi+'"]').show();
+    var quick = $(this).data('quick');
+    $('#ChanceGame-popup .qg-msg').hide();
+    $('#ChanceGame-popup .ul-hld').html($('.game-bk .gm-tb[data-game="'+gi+'"]').last().clone().addClass('qg-tbl').show());
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
 
     if (gi == 55) {
@@ -1790,22 +1815,62 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     }, 200);
 
     $('.game-bk .play .bt').off('click').on('click', function() {
-        winChance = false;
+
         var btn = $(this);
-        startChanceGame(gi, function(data) {
-            updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
+
+        if(quick) {
+
             btn.parents('.play').hide();
-        }, function(data) {
+            startQuickGame('ChanceGame', gi,
+                function (data) {
+                    updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
+                    buildQuickGame(data)
+                },
+                function (data) {
+                    $('.pz-ifo-bk').hide();
+                    $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
+                    /*$('#report-popup').show().find('.txt').text(getText(data.message));*/
+                },
+                function () {
+                    alert('error')
+                });
 
-            $('.pz-ifo-bk').hide();
-            $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
+        } else {
 
-        }, function() {});
+            winChance = false;
+            var btn = $(this);
+            startChanceGame(gi, function (data) {
+                updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
+                btn.parents('.play').hide();
+            }, function (data) {
+
+
+            }, function () {
+            });
+
+        }
     });
 });
 
+$(document).on('click','.quickgame .qg-msg .bt', function() {
+    var btn = $(this);
+        startQuickGame(btn.attr('data-key'),btn.attr('data-game'),
+            function (data) {
+                updatePoints(playerPoints - parseInt($('.game-bk').find('.gm-if-bk .r b').text()));
+                buildQuickGame(data)
+            },
+            function (data) {
+                $('.pz-ifo-bk').hide();
+                $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
+            },
+            function () {
+                alert('error')
+            });
+
+});
+
 <!-- CHANCE GAME COORD CLICK -->
-$('li[data-coord]').on('click', function() {
+$(document).on('click', 'li[data-coord]', function() {
     var cell = $(this);
     playChanceGame($(this).parent().data('game'), $(this).data('coord'), function(data) {
         if (data.res.status == 'win') {

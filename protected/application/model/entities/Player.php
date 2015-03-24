@@ -986,9 +986,9 @@ class Player extends Entity
         }
 
         $this
-            ->setDateLastChance($data['Cnance'])
             ->setDateLastMoment($data['Moment'])
             ->setDateLastQuickGame($data['QuickGame'])
+            ->setDateLastChance($data['ChanceGame'])
             ->setOnlineTime($data['Ping'])
             ->setAdBlock($data['AdBlockLast'])
             ->setDateAdBlocked($data['AdBlocked'])
@@ -1376,7 +1376,7 @@ class Player extends Entity
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])
                  ->setDateLastNotice($data['DateNoticed'])
-                 //->setDateLastChance($data['Cnance'])
+                 //->setDateLastChance($data['ChanceGame'])
                  //->setDateLastMoment($data['Moment'])
                  //->setOnline($data['Online'])
                  //->setOnlineTime($data['OnlineTime'])

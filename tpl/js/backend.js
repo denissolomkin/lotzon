@@ -1,4 +1,47 @@
 document.write = function(html){ $(document.body).append(html); };
+
+function round(a,b) {
+    b=b||0;
+    return parseFloat(a.toFixed(b));
+}
+
+function is_numeric(mixed_var) {
+    //   example 1: is_numeric(186.31); returns 1: true
+    //   example 2: is_numeric('Kevin van Zonneveld'); returns 2: false
+    //   example 3: is_numeric(' +186.31e2'); returns 3: true
+    //   example 4: is_numeric(''); returns 4: false
+    //   example 5: is_numeric([]); returns 5: false
+    //   example 6: is_numeric('1 '); returns 6: false
+    var whitespace =
+        " \n\r\t\f\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
+    return (typeof mixed_var === 'number' || (typeof mixed_var === 'string' && whitespace.indexOf(mixed_var.slice(-1)) === -
+        1)) && mixed_var !== '' && !isNaN(mixed_var);
+}
+
+String.prototype.format = function() {
+    var formatted = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+        formatted = formatted.replace(regexp, arguments[i]);
+    }
+    return formatted;
+};
+
+$.fn.extend({
+    hasClasses: function( selector ) {
+        var classNamesRegex = new RegExp("( " + selector.replace(/ +/g,"").replace(/,/g, " | ") + " )"),
+            rclass = /[\n\t\r]/g,
+            i = 0,
+            l = this.length;
+        for ( ; i < l; i++ ) {
+            if ( this[i].nodeType === 1 && classNamesRegex.test((" " + this[i].className + " ").replace(rclass, " "))) {
+                return true;
+            }
+        }
+        return false;
+    }
+});
+
 function registerPlayer(playerData, successFunction, failFunction, errorFunction)
 {
     $.ajax({
@@ -18,23 +61,6 @@ function registerPlayer(playerData, successFunction, failFunction, errorFunction
             errorFunction.call(playerData, data);
        }
     });
-}
-function round(a,b) {
-    b=b||0;
-    return parseFloat(a.toFixed(b));
-}
-
-function is_numeric(mixed_var) {
-    //   example 1: is_numeric(186.31); returns 1: true
-    //   example 2: is_numeric('Kevin van Zonneveld'); returns 2: false
-    //   example 3: is_numeric(' +186.31e2'); returns 3: true
-    //   example 4: is_numeric(''); returns 4: false
-    //   example 5: is_numeric([]); returns 5: false
-    //   example 6: is_numeric('1 '); returns 6: false
-    var whitespace =
-        " \n\r\t\f\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
-    return (typeof mixed_var === 'number' || (typeof mixed_var === 'string' && whitespace.indexOf(mixed_var.slice(-1)) === -
-        1)) && mixed_var !== '' && !isNaN(mixed_var);
 }
 
 function loginPlayer(authData, successFunction, failFunction, errorFunction) 
@@ -328,12 +354,12 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
     });   
 }
 
-function startQuickGame(key, successFunction, failFunction, errorFunction) {
+function startQuickGame(key, id, successFunction, failFunction, errorFunction) {
 
-    $('#'+key+'-popup').show().find('.qg-msg .txt').hide().next().show();
+    $('#'+key+'-popup').show().find('.qg-msg').css('height','').show().find('.txt, .bt').hide().parent().find('.preloader').show();
 
     $.ajax({
-        url: "/quickgame/build/"+key,
+        url: "/quickgame/build/"+key+(id?'?id='+id:''),
         method: 'GET',
         async: true,
         dataType: 'json',
@@ -605,7 +631,7 @@ window.setInterval(function() {
                     var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#QuickGame-popup:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
                     if (!gw) {
 
-                        startQuickGame('Moment',
+                        startQuickGame('Moment', null,
                             buildQuickGame,
                             function(data) {$('#report-popup').show().find('.txt').text(getText(data.message));},
                             function() {alert('error')});

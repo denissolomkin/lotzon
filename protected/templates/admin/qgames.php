@@ -59,6 +59,12 @@
                                 <div class="row-fluid field">
 
                                     <div id="comb">
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-diamond fa-2x"></i></span>
+                                            <input class="form-control p" type="text" name="game[Field][p]" value="" placeholder="Цена" value="">
+                                        </div>
+
                                         <div>
                                             <button class="btn btn-default" data-combination="line">
                                                 <ul>
@@ -263,6 +269,7 @@
 
             holder=$("#editGame").find('form');
             holder.find('.lang').first().click();
+            holder.find('.p').val(game.Field.p);
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
             holder.find('.h').val(game.Field.h);

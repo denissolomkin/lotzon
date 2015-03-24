@@ -681,19 +681,16 @@ $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
     if(parseInt($('.gm-pr.l .pr-cl b').html())<=0){
     //    $("#report-popup").find(".txt").text(getText('ENOUGH_MOVES'));
     //    $("#report-popup").show().fadeIn(200);
-    }
-    else if(!($('.gm-pr.l').hasClass('move')))
-    {
+    } else if(!($('.gm-pr.l').hasClass('move'))) {
     //    $("#report-popup").find(".txt").text(getText('NOT_YOUR_MOVE'));
     //    $("#report-popup").show().fadeIn(200);
-    }
-    else if($(this).hasClass('m') || $(this).hasClass('o') || $(this).hasClass('b'))
-    {
+    } else if($(this).hasClass('m') || $(this).hasClass('o') || $(this).hasClass('b')) {
         //    $("#report-popup").find(".txt").text(getText('CELL_IS_PLAYED'));
         //    $("#report-popup").show().fadeIn(200);
-    }
-    else{
+    } else {
         $(this).addClass('b');
+        window.setTimeout(function(){$(this).removeClass('b');},1000);
+
         var path='app/'+appName+'/'+appId;
         var data={'action':'move','cell':$(this).data('cell')}
         WebSocketAjaxClient(path,data);
