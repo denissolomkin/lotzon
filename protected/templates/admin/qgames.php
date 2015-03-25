@@ -59,40 +59,6 @@
                                 <div class="row-fluid field">
 
                                     <div id="comb">
-
-                                        <script>
-                                            $(function() {
-                                                // run the currently selected effect
-                                                function runEffect() {
-                                                    // get effect type from
-
-                                                    cell=$("li", $('#field ul').last());
-                                                    cell.first().removeClass('points').next().removeClass('los');
-
-                                                    var selectedEffect='';
-                                                    if(!(selectedEffect = $( "#effectTypes" ).val()))
-                                                        return;
-
-                                                    // most effect types need no options passed by default
-                                                    var options = {};
-                                                    // some effects have required parameters
-                                                    if ( selectedEffect === "scale" ) {
-                                                        options = { percent: 0 };
-                                                    } else if ( selectedEffect === "size" ) {
-                                                        options = { to: { width: 0, height: 0 } };
-                                                    }
-
-                                                    // run the effect
-                                                cell.first().html($('<div></div>').css('height','100%').css('background',cell.first().css('background'))).addClass('points').find('div').effect( selectedEffect, options, 300,function(){this.remove();} );
-                                                cell.first().next().html($('<div></div>').css('height','100%').css('background',cell.first().next().css('background'))).addClass('los').find('div').effect( selectedEffect, options, 300,function(){this.remove();} );
-                                                };
-
-                                                // set effect from select menu value
-                                                $( "#effectTypes" ).on('input', function() {
-                                                    runEffect();
-                                                });
-                                            });
-                                        </script>
                                         <div>
                                             <button class="btn btn-default" data-combination="line">
                                                 <ul>
@@ -148,7 +114,11 @@
                                         </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-paw fa-2x"></i></span>
-                                            <input class="form-control c" type="text" name="game[Field][c]"  value="1" placeholder="Количество ходов" value="">
+                                            <input class="form-control c" type="text" name="game[Field][c]"  value="1" placeholder="Ходов" value="">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-times-circle-o fa-2x"></i></span>
+                                            <input class="form-control m" type="text" name="game[Field][m]"  value="1" placeholder="Промахов" value="">
                                         </div>
                                         <br>
 
@@ -288,6 +258,36 @@
     $(function() {
 
 
+        function runEffect() {
+            // get effect type from
+
+            cell=$("li", $('#field ul').last());
+            cell.first().removeClass('points').next().removeClass('los');
+
+            var selectedEffect='';
+            if(!(selectedEffect = $( "#effectTypes" ).val()))
+                return;
+
+            // most effect types need no options passed by default
+            var options = {};
+            // some effects have required parameters
+            if ( selectedEffect === "scale" ) {
+                options = { percent: 0 };
+            } else if ( selectedEffect === "size" ) {
+                options = { to: { width: 0, height: 0 } };
+            }
+
+            // run the effect
+            cell.first().html($('<div></div>').css('height','100%').css('background',cell.first().css('background'))).addClass('points').find('div').effect( selectedEffect, options, 400,function(){this.remove();} );
+            cell.first().next().html($('<div></div>').css('height','100%').css('background',cell.first().next().css('background'))).addClass('los').find('div').effect( selectedEffect, options, 400,function(){this.remove();} );
+        };
+
+        // set effect from select menu value
+        $( "#effectTypes" ).on('input', function() {
+            runEffect();
+        });
+
+
         $('button[data-combination]').on('click', function() {
 
             $(this).toggleClass('active');
@@ -325,6 +325,7 @@
             holder=$("#editGame").find('form');
             holder.find('.lang').first().click();
             holder.find('.p').val(game.Field.p);
+            holder.find('.m').val(game.Field.m);
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
             holder.find('.h').val(game.Field.h);

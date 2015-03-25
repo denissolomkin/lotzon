@@ -1241,20 +1241,15 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     line-height: 1.5;}
+
 .quickgame .qg-bk-pg .qg-tbl > li.m {cursor: default;}
 .quickgame .qg-bk-pg .qg-tbl > li:last-child {margin:0;}
 .quickgame .qg-bk-pg .qg-tbl > li.item img{width:100%;height:100%;}
-.quickgame .qg-bk-pg .qg-tbl > li.prize:before {
-    background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;
-width: 100%;
-height: 100%;
-right: 0;
-position: absolute;
-content: " ";
-}
+.quickgame .qg-bk-pg .qg-tbl > li.prize:before {background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;width: 100%;height: 100%;right: 0;position: absolute;content: " ";}
 .quickgame .qg-bk-pg .qg-tbl > li.los {border-color:#707070;background-image: url("../img/bg-chanse-game-x.png");}
 .quickgame .qg-bk-pg .qg-tbl > li.won {background-color:#ffe400;border-color:#ffe400;background-image:none;font:24px/1 Handbook-medium;color:#000;}
 .quickgame .qg-bk-pg .qg-tbl > li.won > b {font:69px/1 Handbook-medium;display:block;margin:10px 0 5px;}
+.quickgame .qg-bk-pg .qg-tbl > li.hit {border-color: #ffe400;background-image: url("../img/bg-chanse-game-lot.png");}
 
 .quickgame .qg-bk-pg .qg-tbl > li.money,.quickgame .qg-bk-pg .qg-tbl > li.points,.quickgame .qg-bk-pg .qg-tbl > li.math {
     background:rgb(255,228,0);

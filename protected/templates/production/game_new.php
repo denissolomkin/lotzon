@@ -60,7 +60,6 @@
         <script src="/tpl/js/lib/jquery.min.js"></script>
         <script src="/tpl/js/lib/jquery-ui.min.js"></script>
         <script src="/tpl/js/lib/slick.min.js"></script>
-        <script src="/tpl/js/lib/slider.js"></script>
         <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
         <script src="/tpl/js/lib/jquery.cookie.js"></script>
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
@@ -734,7 +733,7 @@
                                                 if(array_key_exists($key, $player->getAdditionalData()) && $player->getAdditionalData()[$key]['enabled'])
                                                     echo "<div data-provider='{$key}' class='cs-int-bt {$class} int'></div>";
                                                 else
-                                                    echo "<a href=''./auth/{$key}?method=link'><div class='cs-int-bt {$class}'></div></a>";
+                                                    echo "<a href='./auth/{$key}?method=link'><div class='cs-int-bt {$class}'></div></a>";
                                             ?>
                                         </div>
                                     </div>
@@ -875,9 +874,9 @@
                     <div class="gm-bt" data-game="55"><img src="tpl/img/game-5x5.png"></div>
                 </div>
                 </div>
-                <div class="clear"></div>
+                <!--div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
-                <div name="next" class="navy next-slide"></div>
+                <div name="next" class="navy next-slide"></div-->
 
             </div>
 
@@ -909,18 +908,18 @@
                     <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
                 </div>
 
-                <div class="td slide-item">
+                <!--div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
                         <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
-                </div>
+                </div-->
 
             </div>
-                <div class="clear"></div>
+                <!--div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
-                <div name="next" class="navy next-slide"></div>
+                <div name="next" class="navy next-slide"></div-->
 
             </div>
             <? /*

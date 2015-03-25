@@ -1666,24 +1666,17 @@ function buildQuickGame(data) {
     $('.qg-msg .bt', holder).text(getText('PLAY_ONE_MORE_TIME').format(quickGame.Field.p)).attr('data-game',quickGame.Id).attr('data-key',quickGame.Key);
 
     if (quickGame.Timeout) {
-        window.setTimeout(function(){ location.reload(); },quickGame.Timeout * 1000);
+        window.setTimeout(function(){ location.reload(); },(quickGame.Timeout>0 ? quickGame.Timeout * 1000 : 1));
     }
 
     if (quickGame.GameField) {
         $.each(quickGame.GameField, function (index, prize) {
             var cell = $('.qg-tbl li[data-cell="' + index + '"]',holder);
 
-            if (prize) {
-                if (prize.t != 'item')
-                    cell.addClass(prize.t+' m').html(
-                        '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
-                        '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
-                else {
-                    cell.addClass(prize.t+' m').html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
-                }
-            } else {
-                cell.addClass('los m');
-            }
+            if (prize)
+                cell.addClass('m '+prize.t).html(genQuickGamePrize(prize));
+            else
+                cell.addClass('m los');
         })
     }
 
@@ -1724,32 +1717,25 @@ function activateQuickGame(key)
         playQuickGame(key,$(this).data('cell'), function (data) {
             var game = data.res;
             if (game.error) {
+                cell.html('');
                 return;
             }
 
-//                return;
-
             quickGame.Field.c = game.Moves;
+            cell.parents('ul').removeClass('wait');
             //quickGame.Field.c--;
 
-                cell.parents('ul').removeClass('wait');
-                var cell_html='';
-                var cell_class='los';
-            if (prize = game.Prize) {
-                cell_class = (prize.t);
-                cell_html = prize.t != 'item'
-                    ? '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
-                      '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>'
-                    : '<div><img src="/filestorage/shop/' + prize.s + '"></div>';
+            var cell_class='los';
+            var cell_prize='';
+
+            if (game.Prize) {
+                cell_class = (game.Prize.t);
+                cell_prize = genQuickGamePrize(game.Prize);
             }
 
-
-
-            if(quickGame.Field.e){
-                var options = quickGame.Field.e === "scale" ? { percent: 0 } : (( quickGame.Field.e === "size" ) ? { to: { width: 0, height: 0 } } : {} );
-                cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+cell_class).find('div').effect(quickGame.Field.e,options,300,function(){this.remove();cell.html(cell_html)})
-            }else
-                cell.html(cell_html).addClass('m '+cell_class);
+            quickGame.Field.e = quickGame.Field.e || 'clip';
+            var options = quickGame.Field.e === "scale" ? { percent: 0 } : (( quickGame.Field.e === "size" ) ? { to: { width: 0, height: 0 } } : {} );
+            cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+cell_class).find('div').effect(quickGame.Field.e,options,300,function(){this.remove();cell.html(cell_prize)})
 
             if (game.GameField) {
                 window.setTimeout(function () {
@@ -1757,16 +1743,8 @@ function activateQuickGame(key)
                         var cell = $('.qg-tbl li[data-cell="' + index + '"]',holder);
                         if (cell.html() || !prize)
                             return;
-
-                        cell.addClass('blink');
-                        if (prize.t != 'item')
-                            cell.addClass(prize.t).html(
-                                '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
-                                '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>');
-                        else {
-                            cell.addClass(prize.t).html('<div><img src="/filestorage/shop/' + prize.s + '"></div>');
-                        }
-                    })
+                        cell.addClass('blink '+prize.t).html(genQuickGamePrize(prize));
+                    });
                     holder.find('li.blink').css('opacity', 0.5);
 
                     var blinkCount = holder.find('li.blink').length ? 2 : 0;
@@ -1793,12 +1771,30 @@ function activateQuickGame(key)
 
         },
             function(data) {
+                cell.html('');
                 if(data.message=='CHEAT_GAME' || data.message=='TIME_NOT_YET')
                     $('#report-popup .cs').on('click', function() {location.reload();});
                     $('#report-popup').show().find('.txt').text(getText(data.message));},
-            function() {alert('error')}
+            function() {
+                cell.html('');
+                alert('error')}
         );
     });
+}
+
+function genQuickGamePrize(prize) {
+    switch(prize.t){
+        case 'hit':
+            return '<div></div>';
+            break;
+        case 'item':
+            return '<div><img src="/filestorage/shop/' + prize.s + '"></div>';
+            break;
+        default:
+            return '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
+            '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>';
+            break;
+    }
 }
 
 <!-- CHANCE PREVIEW -->

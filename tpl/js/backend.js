@@ -393,8 +393,9 @@ function playQuickGame(key, cell, successFunction, failFunction, errorFunction) 
                 failFunction.call($(this), data);
             }
         },
-        error: function() {
-            errorFunction.call($(this), data);
+        error: function(data) {
+            console.log(data.responseText);
+            //errorFunction.call($(this), data);
         }
     });
 }
