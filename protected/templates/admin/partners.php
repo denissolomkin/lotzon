@@ -91,7 +91,7 @@ padding: 5px;">
         $("#image").modal();
         var size=$(this).parent().children(':eq(1)').html().split('x');
 
-        tdata=$(this).clone().removeAttr('style').css('width',size[0]).css('height',size[1]);
+        tdata=$(this).clone().removeAttr('style').removeAttr('class').css('width',size[0]).css('height',size[1]);
 
         $("#image .modal-title").text($(this).parent().children(':eq(0)').html());
         $("#image input#width").val(size[0]);
@@ -139,10 +139,11 @@ padding: 5px;">
                     $("#image input#height").val(data.imageHeight);
                     updateCode();
                 } else{
-                    insert=$('<div class="pointer image-trigger">'+
+                    insert=$('<div class="pointer">'+
                     '<div class="name">'+data.imageName+'</div>'+
                     '<div class="size">'+data.imageWidth+'x'+data.imageHeight+'</div>'+
-                    '<img src="http://<?=$_SERVER['SERVER_NAME']?>/'+data.imageWebPath+"?"+(new Date().getTime())+'" style="'+(data.imageHeight>400?'max-height: 300px;':'')+'"/>'+
+                    '<img class="image-trigger" src="http://<?=$_SERVER['SERVER_NAME']?>/'+data.imageWebPath+"?"+(new Date().getTime())+'" style="'+(data.imageHeight>400?'max-height: 300px;':'')+'"/>'+
+                    '<input class="form-control" name="partners['+data.imageName+']" value="">'+
                     '</div>');
                     insert.insertAfter($('.upload').parent());
                 }
