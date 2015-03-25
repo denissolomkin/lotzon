@@ -264,7 +264,8 @@
                     </div>
 
                     <ul class="fb-p-b">
-                        <? foreach($partners as $image=>$href){ ?>
+                        <? if(is_array($partners))
+                            foreach($partners as $image=>$href){ ?>
                         <li class="fb-p-b_li"><a href="<?=$href?>" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
                         <? } ?>
                     </ul>
