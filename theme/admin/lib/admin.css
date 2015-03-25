@@ -404,6 +404,10 @@ min-height: 17px;
 
 
 /* IMAGES */
+.images .pointer{  display: inline-table;
+    margin: 5px;
+    position: relative;}
+.images .pointer .form-control{border: none;}
 .images .image-trigger:hover img {opacity: 0.5;}
 .images .image-trigger:hover::after {
     position: absolute;

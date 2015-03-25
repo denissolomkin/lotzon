@@ -211,6 +211,11 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\Games:index',
         'post' => 'controllers\admin\Games:save',
     ),
+    '/private/partners/' => array(
+        'get' => 'controllers\admin\Partners:index',
+        'delete' => 'controllers\admin\Partners:delete',
+        'post' => 'controllers\admin\Partners:save',
+    ),
     '/private/images/' => array(
         'get' => 'controllers\admin\Images:index',
         'delete' => 'controllers\admin\Images:delete',

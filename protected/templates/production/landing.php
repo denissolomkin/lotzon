@@ -56,10 +56,10 @@
     <script src="/tpl/js/lib/jquery-ui.min.js"></script>
     <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
     <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
+    <script src="/tpl/js/lib/jquery.magnific-popup.min.js"></script>
 
 </head>
 <body>
-<!--!*** 9768326***advMaker.net***17,02,2015 @-@-@@-@-@-TeRRaN###-->
 <header class="display-slide" id="slide1">
     <div class="h-dt-b">
         <div class="t-tr">
@@ -73,7 +73,7 @@
                         <!--a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a-->
                         <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                     </div>
-                    <div class="h-t-tcb-t"><?=$staticTexts['promo-top'][$lang]->getText()?></div>
+                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943<? $staticTexts['promo-top'][$lang]->getText()?>"><div>смотреть ролик</div></div>
                 </div>
             </div>
         </div>
@@ -264,10 +264,9 @@
                     </div>
 
                     <ul class="fb-p-b">
-                        <!-- li style="font:30px/1 Handbook-regular;color:#000;text-transform:uppercase;">стаHьте первым</li -->
-                        <li class="fb-p-b_li"><a href="http://musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/partner-expl/musiclife.png" /></a></li>
-                        <!--li class="fb-p-b_li"><a href="http://muzikant.ua/" target="_blank"><img src="/tpl/img/partner-expl/muzikant.ua.png" /></a></li>
-                        <li class="fb-p-b_li"><a href="http://hypermarket.ua/" target="_blank"><img src="/tpl/img/partner-expl/hypermarket.png" /></a></li-->
+                        <? foreach($partners as $image=>$href){ ?>
+                        <li class="fb-p-b_li"><a href="<?=$href?>" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
+                        <? } ?>
                     </ul>
                 </div>
             </div>
