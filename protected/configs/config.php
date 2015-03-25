@@ -226,7 +226,6 @@ Config::instance()->privateResources =  array(
     ),
     '/private/gamestats/'      => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',
-
 );
 
 Config::instance()->publicResources = array(
