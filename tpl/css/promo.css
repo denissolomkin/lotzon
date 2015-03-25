@@ -115,7 +115,7 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 
 .h-t-mcb {overflow:hidden;width:940px;margin:0 auto 1% auto;}
 .h-t-mcb-l {float:left;padding-top: 30px;}
-.h-t-mcb-l-wm {margin:0 0 20px 0;}
+.h-t-mcb-l-wm {margin:0 0 20px 0;height: 32px;}
 .h-t-mcb-l-wm_b {font:normal 48px/1 Handbook-bold;color:#2f2f2f;display:block;margin-bottom:4px;float: left;}
 .h-t-mcb-l-wm_span {font:18px/1 Handbook-regular;display:block;text-transform:uppercase;letter-spacing:1px;float: left;margin-top: 24px;margin-left: 12px;}
 .h-t-mcb-r {float:right;overflow:hidden;}
