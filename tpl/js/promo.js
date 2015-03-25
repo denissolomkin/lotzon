@@ -27,7 +27,7 @@ $(function(){
             mainClass: 'mfp-fade',
             removalDelay: 160,
             preloader: false,
-            fixedContentPos: false
+            fixedContentPos: true
         });
 
     $('#lb-close').on('click', function(){

@@ -802,7 +802,16 @@ button::-moz-focus-inner {
     width: 100%;
     max-width: 900px; }
 .mfp-iframe-holder .mfp-close {
-    top: -40px; }
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0px;
+    right: -50px;
+    background: transparent url("../img/bg-but-close.png") no-repeat 0 0;
+    cursor: pointer;
+    color: rgba(0,0,0,0);
+    /*top: -40px;*/
+}
 
 .mfp-iframe-scaler {
     width: 100%;
