@@ -93,6 +93,11 @@ class QuickGame extends Entity
         return $this->_field;
     }
 
+    public function getOption($key)
+    {
+        return $this->_field[$key];
+    }
+
     public function setGameField($field)
     {
         $this->_gameField = $field;
@@ -238,6 +243,7 @@ class QuickGame extends Entity
             'Title'=>$this->getTitle($this->getLang()),
             'Description'=>$this->getDescription($this->getLang()),
             'Uid'=>$this->getUid(),
+            'Id'=>$this->getId(),
             'Key'=>$this->getKey(),
             'Timeout'=> $this->getTimeout() ? ($this->getTimeout() * 60 + $this->getTime()) - time(): false,
             'Field' => $field,
@@ -255,55 +261,59 @@ class QuickGame extends Entity
         if(count($gameField)==$this->getField()['c'])
             return $res+array('error'=>'GAME_IS_OVER');
 
-        $prizes=$this->getPrizes();
-        shuffle($prizes);
-
         $res['Prize']=$gameField[$cell]=false;
+        $res['Cell']=$cell;
+        $res['Moves']=$this->getField()['c']-count($gameField);
+
         $gamePrizes=$this->getGamePrizes();
 
-        foreach($prizes as $index=>$prize){
-            if((!rand(0, $prize['p']-1) AND $prize['p']) OR
-                count($prizes) - 1 == ($this->getField()['x']*$this->getField()['y']-count($gameField)) ){
+        if(is_array($prizes=$this->getPrizes()) && !empty($prizes)) {
+            shuffle($prizes);
 
-                unset($prize['p']);
+            foreach ($prizes as $index => $prize) {
+                if ((!rand(0, $prize['p'] - 1) AND $prize['p']) OR
+                    count($prizes) - 1 == ($this->getField()['x'] * $this->getField()['y'] - count($gameField))
+                ) {
 
-                $gamePrizes[$prize['t']][]=$prize;
-                $this->setGamePrizes($gamePrizes);
+                    unset($prize['p']);
 
-                unset($prizes[$index]);
-                $res['Prize']=$gameField[$cell]=$prize;
-                $this->setPrizes($prizes);
+                    $gamePrizes[$prize['t']][] = $prize;
+                    $this->setGamePrizes($gamePrizes);
+                    unset($prizes[$index]);
+                    $res['Prize'] = $gameField[$cell] = $prize;
+                    $this->setPrizes($prizes);
 
-                break;
+                    break;
+                }
             }
         }
 
         $this->setGameField($gameField);
 
         /* end game */
-        if( count($gameField)==$this->getField()['c'] ){
+        if(count($gameField)==$this->getField()['c']){
 
             $xs = range(1, $this->getField()['x']);
             $ys = range(1, $this->getField()['y']);
             shuffle($xs);
             shuffle($ys);
 
-            foreach($prizes as $prize){
-
-                unset($prize['p']);
-                foreach($xs as $x){
-                    foreach($ys as $y){
-                        if(!(isset($gameField[$x.'x'.$y])))
-                        {
-                            $gameField[$x.'x'.$y]=$prize;
-                            break 2;
+            if(!empty($prizes))
+                foreach($prizes as $prize) {
+                    unset($prize['p']);
+                    foreach ($xs as $x) {
+                        foreach ($ys as $y) {
+                            if (!(isset($gameField[$x . 'x' . $y]))) {
+                                $gameField[$x . 'x' . $y] = $prize;
+                                break 2;
+                            }
                         }
                     }
                 }
-            }
 
             $prizes=array();
-            if(!empty($gamePrizes)){
+
+            if(is_array($gamePrizes)){
 
                 if(isset($gamePrizes['points'])) {
                     $prizes['POINT']=0;
@@ -337,6 +347,8 @@ class QuickGame extends Entity
             $this->setGamePrizes($prizes);
             $res['GameField']=$gameField;
             $res['GamePrizes']=$prizes;
+            if($this->getOption('p'))
+                $res['Price']=$this->getOption('p');
             $this->setOver(1);
         }
         return $res;

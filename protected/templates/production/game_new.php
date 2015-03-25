@@ -106,6 +106,23 @@
         }
         ?>
         <style>
+
+
+
+        <? if(isset($gameSettings['ChanceGame']) && $games = $gameSettings['ChanceGame']->getGames())
+            foreach($games as $game): ?>
+            .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> {
+                width:<?=($quickGames[$game]->getOption('w')+$quickGames[$game]->getOption('r'))*$quickGames[$game]->getOption('x')-1?>px;
+                height:<?=($quickGames[$game]->getOption('h')+$quickGames[$game]->getOption('b'))*$quickGames[$game]->getOption('y')?>px;
+            }
+            .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> > li {
+                width:<?=$quickGames[$game]->getOption('w')?>px;
+                height:<?=$quickGames[$game]->getOption('h')?>px;
+                margin:0 <?=$quickGames[$game]->getOption('r')?>px <?=$quickGames[$game]->getOption('b')?>px 0;
+            }
+            .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> > li:nth-child(<?=$quickGames[$game]->getOption('x')?>n+<?=$quickGames[$game]->getOption('x')?>) {margin-right:0;}
+        <?  endforeach ?>
+
             .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li:nth-child(<?=$onlineGames['WhoMore']->getOption('x');?>n+<?=$onlineGames['WhoMore']->getOption('x');?>){margin-right: 0px;}
             .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li {
                 background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
@@ -716,7 +733,7 @@
                                                 if(array_key_exists($key, $player->getAdditionalData()) && $player->getAdditionalData()[$key]['enabled'])
                                                     echo "<div data-provider='{$key}' class='cs-int-bt {$class} int'></div>";
                                                 else
-                                                    echo "<a href=''./auth/{$key}?method=link'><div class='cs-int-bt {$class}'></div></a>";
+                                                    echo "<a href='./auth/{$key}?method=link'><div class='cs-int-bt {$class}'></div></a>";
                                             ?>
                                         </div>
                                     </div>
@@ -816,61 +833,95 @@
         <div class="b-cntrl-block"><span class="glyphicon glyphicon-volume-up audio" aria-hidden="true"></span></div>
 
         <!-- CHANCE PREVIEW -->
-        <div class="ch-bk" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
+        <div class="ch-bk slider" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
-            <div class="ch-gm-tbl">
-                <div class="td l">
+
+            <div class="ch-gm-tbl slide-list">
+                <div class="slide-wrap">
+
+
+                <? if(isset($games))
+                    foreach($games as $game): ?>
+
+                        <div class="td slide-item">
+                            <div class="gm-if-bk">
+                                <div class="l"><?=$quickGames[$game]->getTitle($player->getLang())?></div>
+                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b>баллов</div>
+                            </div>
+                            <div class="gm-bt" data-quick="1" data-game="<?=$game?>"><img src="tpl/img/games/Chance<?=$game?>.png"></div>
+                        </div>
+                    <? endforeach ?>
+
+                <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$chanceGames['33']->getGameTitle();?></div>
                         <div class="r"><b><?=$chanceGames['33']->getGamePrice();?></b>баллов</div>
                     </div>
                     <div class="gm-bt" data-game="33"><img src="tpl/img/game-3x3.png"></div>
                 </div>
-                <div class="td c">
+                <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$chanceGames['44']->getGameTitle();?></div>
                         <div class="r"><b><?=$chanceGames['44']->getGamePrice();?></b>баллов</div>
                     </div>
                     <div class="gm-bt" data-game="44"><img src="tpl/img/game-4x4.png"></div>
                 </div>
-                <div class="td r">
+                <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$chanceGames['55']->getGameTitle();?></div>
                         <div class="r"><b><?=$chanceGames['55']->getGamePrice();?></b>баллов</div>
                     </div>
                     <div class="gm-bt" data-game="55"><img src="tpl/img/game-5x5.png"></div>
                 </div>
+                </div>
+                <!--div class="clear"></div>
+                <div name="prev" class="navy prev-slide"></div>
+                <div name="next" class="navy next-slide"></div-->
+
             </div>
-            <div class="ch-gm-tbl">
-                <div class="td l">
+
+
+            <div class="ch-gm-tbl slide-list">
+            <div class="slide-wrap">
+
+                <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$onlineGames['WhoMore']->getTitle($player->getLang());?></div>
                         <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="WhoMore"><img src="tpl/img/games/WhoMore.png"></div>
                 </div>
-                <div class="td c">
+
+                <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$onlineGames['SeaBattle']->getTitle($player->getLang());?></div>
                         <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="SeaBattle"><img src="tpl/img/games/SeaBattle.png"></div>
                 </div>
-                <div class="td r">
 
-                    <!--div class="gm-if-bk">
-                        <div class="l">Скоро</div>
+                <div class="td slide-item">
+                    <div class="gm-if-bk">
+                        <div class="l"><?=$onlineGames['FiveLine']->getTitle($player->getLang());?></div>
                         <div class="r"></div>
                     </div>
-                    <img src="tpl/img/game-dots.png"-->
-
-                <div class="gm-if-bk">
-                    <div class="l"><?=$onlineGames['FiveLine']->getTitle($player->getLang());?></div>
-                    <div class="r"></div>
+                    <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
                 </div>
-                <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
+
+                <!--div class="td slide-item">
+                    <div class="gm-if-bk">
+                        <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
+                        <div class="r"></div>
+                    </div>
+                    <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
+                </div-->
+
             </div>
-        </div>
+                <!--div class="clear"></div>
+                <div name="prev" class="navy prev-slide"></div>
+                <div name="next" class="navy next-slide"></div-->
+
+            </div>
             <? /*
             <div class="ch-gm-tbl">
                 <div class="td l">
@@ -885,7 +936,7 @@
     </div>
 
     <!-- CHANCE GAME -->
-        <div class="game-bk" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
+        <div class="game-bk"  id="ChanceGame-popup" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
                     <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
@@ -893,12 +944,17 @@
                 <div class="gm-if-bk">
                     <div class="tb">
                         <!-- FIX HERE -->
-                        <div class="l"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
+                        <div class="l qg-bk-tl"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
                         <div class="r"><b><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGamePrice() : '')?></b>баллов</div>
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
-
+                <? if(isset($games))
+                    foreach($games as $game): ?>
+                    <div data-game="<?=$game?>">
+                        <?=$quickGames[$game]->getDescription($player->getLang())?>
+                    </div>
+                    <? endforeach ?>
                     <div data-game="33">
                         <?=$staticTexts['chance-game-33'][$lang]->getText()?>
                     </div>
@@ -909,7 +965,7 @@
                         <?=$staticTexts['chance-game-55'][$lang]->getText()?>
                     </div>
                 </div>
-                <div class="l-bk-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
+                <div class="l-bk-txt qg-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
                 <div class="rw-b">
                     <? foreach (array('33','44','55') as $game) { ?>
                         <? if ($currentChanceGame && $currentChanceGame['id'] != $game) { continue; } ?>
@@ -924,7 +980,7 @@
                     <? } ?>
                 </div>
             </div>
-            <div class="gm-tb-bk">
+            <div class="gm-tb-bk quickgame">
 
                 <!-- Блок "ВЫИГРАЛ" -->
                 <div class="msg-tb won" style="display:none">
@@ -962,6 +1018,28 @@
                     </div>
                 </div-->
 
+                <div class="qg-bk-pg">
+                <div class="qg-msg">
+                    <div class="td">
+                        <div class="txt">Поздравляем, выигрыш зачислен на Ваш баланс</div>
+                        <div class="bt">Играть еще раз за 30 баллов</div>
+                        <div class="preloader"></div>
+                    </div>
+                </div>
+                <div class="ul-hld">
+                </div>
+                <? if(isset($games))
+                    foreach($games as $game): ?>
+                <!-- CHANCE<?=$game?> -->
+                <ul class="gm-tb chance<?=$game?>" data-game="<?=$game?>" data-price="<?=$quickGames[$game]->getOption('p')?>" style="display:none">
+                    <? for($y = 1; $y <=$quickGames[$game]->getOption('y'); ++$y) { ?>
+                        <? for($x = 1; $x <=$quickGames[$game]->getOption('x'); ++$x) { ?>
+                            <li data-cell="<?=$x?>x<?=$y?>"></li>
+                        <? } ?>
+                    <? } ?>
+                </ul>
+                <? endforeach ?>
+
                 <!-- GAME 3x3 -->
                 <ul class="gm-tb g-3x3" data-game="33" data-price="<?=$chanceGames['33']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '33' ? 'block' : 'none')?>">
                     <? for($i = 1; $i <=3; ++$i) { ?>
@@ -995,6 +1073,7 @@
                     <!--li class="los"></li-->
                 </ul>
                 <!-- END GAME 5x5 -->
+            </div>
             </div>
         </div>
 
@@ -1401,9 +1480,9 @@
             'SHIP_TOO_CLOSE' : 'Корабли расположены слишком близко',
             'ERROR_COORDINATES' : 'Неверные координаты',
             'CHOICE_BET' : 'Выберите ставку',
+            'PLAY_ONE_MORE_TIME'      : 'Играть еще раз за {0} баллов',
         };
 
-        var chanceGames = <?=json_encode($modes, JSON_PRETTY_PRINT); ?>;
         var quickGame = {};
         var online = 1;
         var page = <?=($page?1:0)?>;
@@ -1427,6 +1506,12 @@
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
         updateNotices(unreadNotices);
+        <? if($chanceGame):?> $('.gm-bt[data-game="<?=$chanceGame;?>"]').trigger('click');
+        $('.game-bk .play .bt').trigger('click');
+        window.setTimeout(function(){
+            $("html, body").animate({scrollTop: $('.chance').offset().top-60}, 500, 'easeInOutQuint');
+            $('.ngm-bk .msg').hide();
+        }, 300);<? endif;?>
         <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
         $('#qgame').hide();
         setTimeout(function(){$('#qgame').fadeIn(200)},1200);
