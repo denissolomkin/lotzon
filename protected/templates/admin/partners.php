@@ -25,7 +25,7 @@ padding: 5px;">
             <div class="name"><?=$image['name']?></div>
             <?=($image['size']?"<div class='size'>{$image['size'][0]}x{$image['size'][1]}</div>":"")?>
             <img class="image-trigger" src="http://<?=$_SERVER['SERVER_NAME'].$webDir?><?=$image['name']?>" style='<?=$image['size'][1]>400?'max-height: 300px':''?>'/>
-            <input class="form-control" name="partners[<?=$image['name']?>]" value="<?=$list[$image['name']]?>">
+            <input class="form-control" placeholder="ссылка" name="partners[<?=$image['name']?>]" value="<?=$list[$image['name']]?>">
             </div><?
         unset($list[$image['name']]);
         endforeach;?>
@@ -143,7 +143,7 @@ padding: 5px;">
                     '<div class="name">'+data.imageName+'</div>'+
                     '<div class="size">'+data.imageWidth+'x'+data.imageHeight+'</div>'+
                     '<img class="image-trigger" src="http://<?=$_SERVER['SERVER_NAME']?>/'+data.imageWebPath+"?"+(new Date().getTime())+'" style="'+(data.imageHeight>400?'max-height: 300px;':'')+'"/>'+
-                    '<input class="form-control" name="partners['+data.imageName+']" value="">'+
+                    '<input class="form-control" placeholder="ссылка" name="partners['+data.imageName+']" value="">'+
                     '</div>');
                     insert.insertAfter($('.upload').parent());
                 }

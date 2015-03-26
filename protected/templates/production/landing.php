@@ -241,8 +241,8 @@
             <div class="a-dt_tr top">
                 <div class="t_td">
                     <div class="f-tl-b">
-                        <div class="tl-tl">наши партHеры</div>
-                        <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
+                        <!--div class="tl-tl">наши партHеры</div>
+                        <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div-->
                         <div class="tl-tr"><a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a></div>
                     </div>
                 </div>
@@ -263,12 +263,15 @@
                         </form>
                     </div>
 
-                    <ul class="fb-p-b">
+                    <div class="fb-p-b">
+                        <div><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
+                    <ul><li class="fb-p-b_li">наши<br>партНеры</li><li class="fb-p-b_li"></li><li class="fb-p-b_li"></li>
                         <? if(is_array($partners))
                             foreach($partners as $image=>$href){ ?>
-                        <li class="fb-p-b_li"><a href="<?=$href?>" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
+                        <li class="fb-p-b_li"><a href="<?=$href?>" rel="nofollow" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
                         <? } ?>
                     </ul>
+                    </div>
                 </div>
             </div>
         </div>
