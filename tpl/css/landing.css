@@ -195,7 +195,7 @@ article #slide2 ._a-b-b {display:block;width:80px;height:40px;position:absolute;
 .a-cb ._li-cb .cb-ct .ct-t {font:13px/17px Handbook-regular;color:#4f4f4f;}
 article #slide3 ._a-b-b {display:block;width:80px;height:40px;position:absolute;right:0px;bottom:50px;background:transparent url("../img/bg-but-gobot.png") no-repeat bottom center;outline:none;}
 
-
+#slide1, #slide2, #slide3, #slide4 {height: 700px !important;}
 /* ==========================================================================
                             Promo-footer styles
    ========================================================================== */
