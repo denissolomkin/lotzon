@@ -265,7 +265,7 @@
 
                     <div class="fb-p-b">
                         <div><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
-                    <ul><li class="fb-p-b_li">наши<br>партНеры</li><li class="fb-p-b_li"></li><li class="fb-p-b_li"></li>
+                    <ul><li class="fb-p-b_li">Hаши<br>партHеры</li><li class="fb-p-b_li"></li><li class="fb-p-b_li"></li>
                         <? if(is_array($partners))
                             foreach($partners as $image=>$href){ ?>
                         <li class="fb-p-b_li"><a href="<?=$href?>" rel="nofollow" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
