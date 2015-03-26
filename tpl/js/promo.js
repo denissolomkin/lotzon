@@ -20,6 +20,16 @@ $(function(){
         
         $('#login-block').fadeIn(200);
     });
+
+        $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+            disableOn: 700,
+            type: 'iframe',
+            mainClass: 'mfp-fade',
+            removalDelay: 160,
+            preloader: false,
+            fixedContentPos: true
+        });
+
     $('#lb-close').on('click', function(){
         $('#login-block').fadeOut(200);
     });

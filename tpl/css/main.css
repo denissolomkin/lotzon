@@ -1197,8 +1197,8 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
     width: 100%;
 }
 */
-.pop-box{width:570px;}
-.pop-box .qg-bk-pg {padding:35px 40px 40px 40px;min-height: 170px;}
+.quickgame.pop-box {width:570px;}
+.quickgame.pop-box .qg-bk-pg {padding:35px 40px 40px 40px;min-height: 170px;}
 .quickgame .qg-bk-pg .qg-tbl.wait {/*opacity: 0.5*/}
 .quickgame .qg-bk-pg .qg-tbl li .preloader {
     background: url(http://192.168.1.253/tpl/img/preloader.gif) #b2d0d4 no-repeat 50% 50% / 40px 40px;

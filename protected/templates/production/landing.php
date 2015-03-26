@@ -39,7 +39,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <link rel="stylesheet" href="/tpl/css/normalize.css" />
-    <link rel="stylesheet" href="/tpl/css/promo.css" />
+    <link rel="stylesheet" href="/tpl/css/landing.css" />
 
     <link rel="icon" href="/tpl/img/favicon.png" type="image/png" />
     <!--link rel="shortcut icon" href="" type="'image/x-icon"/-->
@@ -56,10 +56,10 @@
     <script src="/tpl/js/lib/jquery-ui.min.js"></script>
     <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
     <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
+    <script src="/tpl/js/lib/jquery.magnific-popup.min.js"></script>
 
 </head>
 <body>
-<!--!*** 9768326***advMaker.net***17,02,2015 @-@-@@-@-@-TeRRaN###-->
 <header class="display-slide" id="slide1">
     <div class="h-dt-b">
         <div class="t-tr">
@@ -73,7 +73,7 @@
                         <!--a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a-->
                         <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                     </div>
-                    <div class="h-t-tcb-t"><?=$staticTexts['promo-top'][$lang]->getText()?></div>
+                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943<? $staticTexts['promo-top'][$lang]->getText()?>"><div>смотреть ролик</div></div>
                 </div>
             </div>
         </div>
@@ -241,8 +241,8 @@
             <div class="a-dt_tr top">
                 <div class="t_td">
                     <div class="f-tl-b">
-                        <div class="tl-tl">наши партHеры</div>
-                        <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
+                        <!--div class="tl-tl">наши партHеры</div>
+                        <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div-->
                         <div class="tl-tr"><a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a></div>
                     </div>
                 </div>
@@ -263,12 +263,15 @@
                         </form>
                     </div>
 
-                    <ul class="fb-p-b">
-                        <!-- li style="font:30px/1 Handbook-regular;color:#000;text-transform:uppercase;">стаHьте первым</li -->
-                        <li class="fb-p-b_li"><a href="http://musiclife.kiev.ua/" target="_blank"><img src="/tpl/img/partner-expl/musiclife.png" /></a></li>
-                        <!--li class="fb-p-b_li"><a href="http://muzikant.ua/" target="_blank"><img src="/tpl/img/partner-expl/muzikant.ua.png" /></a></li>
-                        <li class="fb-p-b_li"><a href="http://hypermarket.ua/" target="_blank"><img src="/tpl/img/partner-expl/hypermarket.png" /></a></li-->
+                    <div class="fb-p-b">
+                        <div><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
+                    <ul><li class="fb-p-b_li">Hаши<br>партHеры</li><li class="fb-p-b_li"></li><li class="fb-p-b_li"></li>
+                        <? if(is_array($partners))
+                            foreach($partners as $image=>$href){ ?>
+                        <li class="fb-p-b_li"><a href="<?=$href?>" rel="nofollow" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
+                        <? } ?>
                     </ul>
+                    </div>
                 </div>
             </div>
         </div>
