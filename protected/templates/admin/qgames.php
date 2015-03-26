@@ -68,7 +68,7 @@
                                                 </ul>
                                             </button>
 
-                                            <button class="btn btn-default" data-combination="snack">
+                                            <button class="btn btn-default" data-combination="snake">
                                                 <ul>
                                                     <li></li><li></li><li></li>
                                                     <li></li><li class="fill"></li><li class="fill"></li>
@@ -318,7 +318,7 @@
         });
 
         function editGame(game){
-
+            console.log(game);
             $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
             $('#editGame').find('div.tab').hide().first().show();
 
@@ -336,7 +336,6 @@
             holder.find('.b').val(typeof game.Field.b !== "undefined" && game.Field.b?game.Field.b:0).trigger('input');
             holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));
             holder.find('[name="game[Id]"]').val(game.Id);
-            console.log(holder.find('[name="game[Id]"]').val());
             holder.find('[name^="game[Title]"], [name^="game[Description]"]').val('');
 
             $('#editGame').find('h3 span').first().text($.isPlainObject(game.Title)?game.Title[Object.keys(game.Title)[0]]:'Новая игра');

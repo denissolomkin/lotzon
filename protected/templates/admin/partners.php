@@ -1,5 +1,4 @@
 <div class="container-fluid images">
-<?print_r($list);?>
     <form role="form" action="/private/partners" method="POST">
     <div class="row-fluid">
         <h2>Партнеры
@@ -7,15 +6,12 @@
         <hr/>
     </div>
 
-
     <div class="row-fluid">&nbsp;</div>
-
     <div class="row-fluid" style="
 background: #ccc;
 margin-left: -15px;
 position: absolute;
 padding: 5px;">
-
 
         <div class="pointer " data-image='' style='display:inline-table;position: relative;margin:5px;'>
             <img src="/theme/admin/img/photo-icon-plus.png" class="upload" alt="click to upload" style="cursor:pointer;">
