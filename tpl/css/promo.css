@@ -227,7 +227,7 @@ footer .fb-p-b {margin:0;padding:0;position:relative;left:0;height:auto;display:
     -o-transition: all 200ms cubic-bezier(0.785, 0.135, 0.15, 0.86);;
     transition: all 200ms cubic-bezier(0.785, 0.135, 0.15, 0.86);;
 }
-footer .fb-p-b div {float: left;width: 35%;}
+footer .fb-p-b > div {float: left;width: 35%;}
 footer .fb-p-b ul {list-style:none;text-transform: uppercase;float: right;margin: 0;width: 55%;}
 footer .fb-p-b.ct-on {display:none;}
 footer .fb-p-b .fb-p-b_li:first-of-type {font-size: 20px;text-align: left;}

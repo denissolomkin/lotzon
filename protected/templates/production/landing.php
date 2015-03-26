@@ -39,7 +39,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <link rel="stylesheet" href="/tpl/css/normalize.css" />
-    <link rel="stylesheet" href="/tpl/css/promo.css" />
+    <link rel="stylesheet" href="/tpl/css/landing.css" />
 
     <link rel="icon" href="/tpl/img/favicon.png" type="image/png" />
     <!--link rel="shortcut icon" href="" type="'image/x-icon"/-->
