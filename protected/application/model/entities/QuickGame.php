@@ -14,6 +14,7 @@ class QuickGame extends Entity
     private $_description = '';
     private $_enabled = true;
     private $_prizes = array();
+    private $_audio= array();
     private $_field= array();
     private $_gameField= array();
     private $_gamePrizes= array();
@@ -60,6 +61,17 @@ class QuickGame extends Entity
         return $this->_key;
     }
 
+    public function setAudio($array)
+    {
+        $this->_audio = $array;
+
+        return $this;
+    }
+
+    public function getAudio()
+    {
+        return $this->_audio;
+    }
     public function setLang($lang)
     {
         $this->_lang = $lang;

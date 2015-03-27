@@ -156,26 +156,6 @@
     </div>
 </div>
 
-<div class="modal fade ogames" id="audio-modal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="confirmLabel">Выбор аудио
-                    <button type="button" class="btn btn-success add-audio"><i class="fa fa-plus"></i> Добавить</button></h4>
-            </div>
-            <div class="modal-body">
-               <ul><?$openDir=opendir(dirname(__FILE__).'/../../../tpl/audio/');
-                   while(($file=readdir($openDir)) !== false)
-                   if($file != "." && $file != "..") {
-                       echo '<li data-file="'.$file.'"><i class="fa fa-file-audio-o"> '.$file.' </i><i class="fa fa-play-circle audio-play"></i></li>';
-                   }?></ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade ogames" id="price-modal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -213,7 +193,7 @@
     </div>
 
 </div>
-<script src="/theme/admin/lib/jquery.damnUploader.min.js"></script>
+
 <script>
 
     $(function() {
@@ -243,28 +223,6 @@
             });
         });
 
-        $(document).on('click','.audio-play',function() {
-            if($(this).prop("tagName")=='I')
-                $('<audio src=""></audio>').attr('src', '../../../tpl/audio/' + $.trim($(this).parent().text())).trigger("play");
-            else if($(this).parent().prev().val()) {
-                $('<audio src=""></audio>').attr('src', '../../../tpl/audio/' + $(this).parent().prev().val()).trigger("play");
-            }
-        });
-
-        $('.audio-remove').on('click',function() {
-            $(this).parent().prev().val('');
-        });
-
-        $('.audio-refresh').on('click',function() {
-            var holder = $("#audio-modal");
-            var input = $(this).parent().prev();
-            holder.modal();
-            $('li .fa-file-audio-o', holder).off().on('click', function(){
-                input.val($.trim($(this).text()));
-                holder.modal('hide');
-            });
-        });
-
         games=<?
         foreach ($games as $game)
             $list[$game->getId()]=array(
@@ -279,17 +237,27 @@
             );
         echo json_encode($list, JSON_PRETTY_PRINT)?>;
 
+        $('.add-game').on('click', function() {
+            var game = {Id:0,Title:'',Key:'',Description:'',Field:{x:6,y:1,b:1,r:1,w:95,h:95,c:1}};
+            editGame(game);
+        });
+
+        $(document).on('click','.game-build', function() {
+            editGame(games[$(this).data('id')]);
+        });
+
+
         $.each(games, function(index, game) {
             buildGame(game);
         });
 
-        function editGame(game){
+        function editGame(game) {
             $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
             $('#editGame').find('div.tab').hide().first().show();
-            $('#editGame').find('h3 span').first().text($.isPlainObject(game.Title)?game.Title[Object.keys(game.Title)[0]]:'Новая игра');
+            $('#editGame').find('h3 span').first().text($.isPlainObject(game.Title) ? game.Title[Object.keys(game.Title)[0]] : 'Новая игра');
 
 
-            holder=$("#editGame").find('form');
+            holder = $("#editGame").find('form');
             holder.find('.lang').first().click();
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
@@ -298,34 +266,36 @@
             holder.find('.s').val(game.Field.s);
             holder.find('.p').val(game.Field.p);
             holder.find('.m').val(game.Field.m);
-            holder.find('[name="game[Field][b]"]').bootstrapToggle({on: 'Enabled',
-                off: 'Disabled'}).bootstrapToggle((game.Field.b==1 || game.Field.b=='on'?'on':'off'));
+            holder.find('[name="game[Field][b]"]').bootstrapToggle({
+                on: 'Enabled',
+                off: 'Disabled'
+            }).bootstrapToggle((game.Field.b == 1 || game.Field.b == 'on' ? 'on' : 'off'));
 
-            if(game.Key){
-                $('#editGame button[data-tab="text"]').next().attr('data-tab','image');
+            if (game.Key) {
+                $('#editGame button[data-tab="text"]').next().attr('data-tab', 'image');
                 holder.find('.k').val(game.Key);
                 holder.find('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
             } else {
-                $('#editGame button[data-tab="text"]').next().attr('data-tab','key');
+                $('#editGame button[data-tab="text"]').next().attr('data-tab', 'key');
                 holder.find('.k').val('');
             }
 
-            holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled==1 || game.Enabled=='on'?'on':'off'));
+            holder.find('[name="game[Enabled]"]').bootstrapToggle((game.Enabled == 1 || game.Enabled == 'on' ? 'on' : 'off'));
             holder.find('[name="game[Id]"]').val(game.Id);
             holder.find('[name^="game[Title]"], [name^="game[Description]"]').val('');
             $.isPlainObject(game.Title) && $.each(game.Title, function (lang, text) {
-                holder.find('[name="game[Title]['+lang+']"]').val(text);
+                holder.find('[name="game[Title][' + lang + ']"]').val(text);
             });
             $.isPlainObject(game.Description) && $.each(game.Description, function (lang, text) {
-                holder.find('[name="game[Description]['+lang+']"]').val(text);
+                holder.find('[name="game[Description][' + lang + ']"]').val(text);
             });
 
 
             holder.find('#audio input').val('');
 
-            if(game.Audio) {
+            if (game.Audio) {
                 $.each(game.Audio, function (i, f) {
-                    holder.find('#audio input[name="game[Audio]['+i+']"]').val(f);
+                    holder.find('#audio input[name="game[Audio][' + i + ']"]').val(f);
                 });
             }
 
@@ -333,18 +303,18 @@
             holder.find('#field .ships ul li').remove();
 
 
-            if(game.Key=='SeaBattle') {
+            if (game.Key == 'SeaBattle') {
                 holder.find('#field .ships').show();
-                if(game.Field.ships)
+                if (game.Field.ships)
                     $.each(game.Field.ships, function (i, ship) {
-                        holder.find('#ships ul').first.append('<li data-ship="'+ship+'"><i class="fa fa-minus"><ul><ul><i class="fa fa-plus"> <input name="game[Field][ships][]" value='+ship+'></li>').val(ship);
+                        holder.find('#ships ul').first.append('<li data-ship="' + ship + '"><i class="fa fa-minus"><ul><ul><i class="fa fa-plus"> <input name="game[Field][ships][]" value=' + ship + '></li>').val(ship);
                     });
             }
 
             holder.find('.prize').remove();
-            if(game.Prizes) {
+            if (game.Prizes) {
                 $.each(game.Prizes, function (index, t) {
-                    var button=holder.find('.' + index + '-holder').prev();
+                    var button = holder.find('.' + index + '-holder').prev();
                     $.each(t, function (v, p) {
                         console.log(v);
 
@@ -364,49 +334,44 @@
                         holder.find('.' + index + '-holder').append(html);
                     });
 
-                    holder.find('.' + index + '-holder').find('div.prize').sort(function(a, b){
+                    holder.find('.' + index + '-holder').find('div.prize').sort(function (a, b) {
                         return parseFloat($('.v', a).val()) > parseFloat($('.v', b).val()) ? 1 : -1;
-                    }).appendTo( holder.find('.' + index + '-holder').find('div.prize').parent());
+                    }).appendTo(holder.find('.' + index + '-holder').find('div.prize').parent());
 
                 });
 
             }
         }
 
-        function buildGame(game){
-            if(!$('.game-build[data-id="'+game.Id+'"]').length){
-                $('.game-builds').prepend($('<div class="game-build" data-id="'+game.Id+'">' +
-                    '<div class="t"></div>' +
-                    '<div class="d"></div>' +
-                    '<div class="o"></div>' +
-                    '<img>' +
+        function buildGame(game) {
+            if (!$('.game-build[data-id="' + game.Id + '"]').length) {
+                $('.game-builds').prepend($('<div class="game-build" data-id="' + game.Id + '">' +
+                '<div class="t"></div>' +
+                '<div class="d"></div>' +
+                '<div class="o"></div>' +
+                '<img>' +
                 '</div>'));
             }
-            holder=$('.game-build[data-id="'+game.Id+'"]');
-        if(game.Enabled==1 || game.Enabled=='on')
-            holder.removeClass('disabled');
-        else
-            holder.addClass('disabled');
+            holder = $('.game-build[data-id="' + game.Id + '"]');
+            if (game.Enabled == 1 || game.Enabled == 'on')
+                holder.removeClass('disabled');
+            else
+                holder.addClass('disabled');
 
             holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>)
                 .next()//.html(nl2br(game.Description.<?=\Config::instance()->defaultLang;?>))
-                .next().html('<i class="fa fa-users"></i>'+game.Field.s+
-                ' <i class="fa fa-user"></i>'+game.Field.p+
-                ' <i class="fa fa-clock-o"></i>'+game.Field.t+
-                ' <i class="fa fa-paw"></i>'+game.Field.m+
-                ' <i class="fa fa-arrows-h"></i>'+game.Field.x+
-                ' <i class="fa fa-arrows-v"></i>'+game.Field.y+
-                ' <i class="fa fa-trophy"></i>'+game.Field.w+
-                (game.Field.b ? '<i class="fa fa-laptop"></i>':'<span class="fa-stack fa-lg"><i class="fa fa-laptop fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>'));
-                holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
+                .next().html('<i class="fa fa-users"></i>' + game.Field.s +
+                ' <i class="fa fa-user"></i>' + game.Field.p +
+                ' <i class="fa fa-clock-o"></i>' + game.Field.t +
+                ' <i class="fa fa-paw"></i>' + game.Field.m +
+                ' <i class="fa fa-arrows-h"></i>' + game.Field.x +
+                ' <i class="fa fa-arrows-v"></i>' + game.Field.y +
+                ' <i class="fa fa-trophy"></i>' + game.Field.w +
+                (game.Field.b ? '<i class="fa fa-laptop"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-laptop fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>'));
+            holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
 
         };
 
-
-
-    $(document).on('click','.remove', function() {
-        $(this).parent().remove();
-    });
 
         $('.add-trigger').on('click', function() {
 
@@ -460,32 +425,6 @@
         });
 
 
-    $('.add-game').on('click', function() {
-        var game = {Id:0,Title:'',Key:'',Description:'',Field:{x:6,y:1,b:1,r:1,w:95,h:95,c:1}};
-        editGame(game);
-    });
-
-    $(document).on('click','.game-build', function() {
-        editGame(games[$(this).data('id')]);
-    });
-
-
-    $('#editGame button.tab').on('click', function() {
-        $("#editGame button.tab").removeClass("active");
-        $("#editGame div.tab:visible").hide();
-        $("#editGame div.tab#"+$(this).attr("data-tab")).fadeIn(200);
-
-        $(this).addClass("active");
-    });
-
-
-        $('.lang').on('click', function() {
-            lang=$(this).data('lang');
-            $('.lang').removeClass('active');
-            $(this).addClass('active');
-            $('input[name^="game[Title]"], textarea[name^="game[Description]"]',$('#editGame')).hide();
-            $('input[name="game[Title]['+lang+']"], textarea[name="game[Description]['+lang+']"]',$('#editGame')).fadeIn(200);
-        });
   $('.save-game').on('click', function() {
 
     var button = $(this);
@@ -521,57 +460,9 @@
     return false;
   });
 
-        $('#image').on('click', initUpload);
-        function initUpload() {
-
-            // create form
-            var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-            var image = $(this).find('img');
-            var input = form.find('input[type="file"]').damnUploader({
-                url: '/private/images?folder=games',
-                fieldName: 'image',
-                dataType: 'json'
-            });
-
-            input.off('du.add').on('du.add', function(e) {
-                e.uploadItem.completeCallback = function(succ, data, status) {
-
-                    image.attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/' + data.imageWebPath + "?" + (new Date().getTime()));
-
-
-                    $('.game-build[data-id="'+image.parent().parent().find('input[name="game[Id]"]').val()+'"]').find('img').//$("img[src^=\"http://<?=$_SERVER['SERVER_NAME']?>/"+data.imageWebPath+"\"]").
-                        attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/' + data.imageWebPath + "?" + (new Date().getTime()));
-                };
-
-                e.uploadItem.progressCallback = function(perc) {}
-                e.uploadItem.addPostData('name', image.parent().prev().find('input').val()+'.png');
-                e.uploadItem.upload();
-            });
-
-            form.find('input[type="file"]').click();
-        }
-
-        $('#audio-modal .add-audio').on('click', function () {
-
-            // create form
-            var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="audio"/></form>');
-            var input = form.find('input[type="file"]').damnUploader({
-                url: '/private/audio',
-                fieldName: 'audio',
-                dataType: 'json'
-            });
-
-            input.off('du.add').on('du.add', function(e) {
-                e.uploadItem.completeCallback = function(succ, data, status) {
-                    $('#audio-modal ul li[data-file="'+ data.audioName+'"]').remove();
-                    $('#audio-modal ul').append('<li data-file="'+ data.audioName+'"><i class="fa fa-file-audio-o"> '+ data.audioName +' </i><i class="fa fa-play-circle audio-play"></i></li>');
-                };
-                e.uploadItem.progressCallback = function(perc) {}
-                e.uploadItem.upload();
-            });
-
-            form.find('input[type="file"]').click();
-        });
 
     });
 </script>
+
+<? if($frontend)
+    require_once(PATH_TEMPLATES.$frontend);?>

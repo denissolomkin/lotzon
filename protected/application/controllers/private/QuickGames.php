@@ -31,6 +31,7 @@ class QuickGames extends PrivateArea
             'shopItems'  => $shopItems,
             'games'      => $games,
             'langs' => $langs,
+            'frontend'      => 'admin/games_frontend.php',
         ));
     }
 
@@ -50,6 +51,7 @@ class QuickGames extends PrivateArea
                 ->setDescription($post['Description'])
                 ->setPrizes($post['Prizes'])
                 ->setField($post['Field'])
+                ->setAudio($post['Audio'])
                 ->setEnabled($post['Enabled']?true:false);
             try {
                 $game->save();

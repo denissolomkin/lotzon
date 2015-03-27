@@ -3,12 +3,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="confirmLabel"><span>Редактирование игры</span>
-                    <span style="float: right;margin-bottom: 10px;">
+                    <span style="right: 10px;position: absolute;">
                 <button type="button" class="btn btn-md btn-success tab" data-tab="text">
                     <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="image">
                     <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-md btn-success tab" data-tab="audio">
+                    <span class="fa fa-volume-up" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="field">
                     <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
@@ -51,13 +54,35 @@
                         </div-->
                     </div>
 
+
+                    <div class="row-fluid tab" id="key">
+                        <input value="">
+                    </div>
+
                         <div class="row-fluid tab" id="image">
                             <img class="i">
                         </div>
 
+                    <div class="row-fluid tab" id="audio">
+                        <? $audio=array('start','click','hit','miss','win','lose');
+                        while($key= each ($audio)) {
+                            $key=array_shift($key);?>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><?=ucfirst($key);?></span>
+                                    <input type="text" class="form-control" name="game[Audio][<?=$key;?>]" value="">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default audio-play"><i class="fa fa-play-circle"></i></button>
+                                        <button type="button" class="btn btn-default audio-refresh"><i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-danger audio-remove"><i class="fa fa-remove"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        <? } ?>
+                    </div>
+
                         <div class="row-fluid tab" id="field">
                                 <div class="row-fluid field">
-
                                     <div id="comb">
                                         <div>
                                             <button class="btn btn-default" data-combination="line">
@@ -83,6 +108,25 @@
                                                     <li></li><li class="fill"></li><li></li>
                                                 </ul>
                                             </button>
+
+
+                                            <button class="btn btn-default" disabled data-combination="square">
+                                                <ul>
+                                                    <li class="fill"></li><li class="fill"></li><li></li>
+                                                    <li class="fill"></li><li class="fill"></li><li></li>
+                                                    <li></li><li></li><li></li>
+                                                </ul>
+                                            </button>
+
+
+                                            <button class="btn btn-default" disabled data-combination="star">
+                                                <ul>
+                                                    <li class="fill"></li><li></li><li class="fill"></li>
+                                                    <li></li><li class="fill"></li><li></li>
+                                                    <li class="fill"></li><li></li><li class="fill"></li>
+                                                </ul>
+                                            </button>
+
                                         </div>
                                     </div>
 
@@ -92,10 +136,17 @@
                                             <span class="input-group-addon"><i class="fa fa-diamond fa-2x"></i></span>
                                             <input class="form-control p" type="text" name="game[Field][p]" value="" placeholder="Цена" value="">
                                         </div>
-
                                         <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-circle-o fa-2x"></i></span>
+                                            <input class="form-control c" type="text" name="game[Field][c]"  value="1" placeholder="Ходов" value="">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-times-circle-o fa-2x"></i></span>
+                                            <input class="form-control m" type="text" name="game[Field][m]"  value="1" placeholder="Промахов" value="">
+                                        </div>
+                                        <div class="input-group" style="margin-left: 11px;">
                                             <span class="input-group-addon"><i class="fa fa-toggle-on fa-2x"></i></span>
-                                            <select name="game[Field][e]" class="form-control e" style="width: 100px;" id="effectTypes">
+                                            <select name="game[Field][e]" class="form-control e" style="width: 127px;" id="effectTypes">
                                                 <option value=""></option>
                                                 <option value="clip">Clip</option>
                                                 <option value="drop">Drop</option>
@@ -113,12 +164,8 @@
                                             </select>
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-paw fa-2x"></i></span>
-                                            <input class="form-control c" type="text" name="game[Field][c]"  value="1" placeholder="Ходов" value="">
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-times-circle-o fa-2x"></i></span>
-                                            <input class="form-control m" type="text" name="game[Field][m]"  value="1" placeholder="Промахов" value="">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o fa-2x"></i></span>
+                                            <input class="form-control s" type="text" name="game[Field][s]"  value="1" placeholder="Скорость" value="">
                                         </div>
                                         <br>
 
@@ -131,19 +178,19 @@
                                             <input class="form-control b" type="text" name="game[Field][b]" value="1" placeholder="Снизу" value="">
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-addon">W</span>
+                                            <span class="input-group-addon"><i class="fa fa-arrows-h fa-2x"></i></span>
                                             <input class="form-control w" type="text" name="game[Field][w]" value="95" placeholder="Ширина" value="">
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-addon">H</span>
+                                            <span class="input-group-addon"><i class="fa fa-arrows-v fa-2x"></i></span>
                                             <input class="form-control h" type="text" name="game[Field][h]" value="95" placeholder="Высота" value="">
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-arrows-v fa-2x"></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-align-justify fa-rotate-90 fa-2x"></i></span>
                                             <input class="form-control x" type="text" name="game[Field][x]"  value="6" placeholder="По горизонтали" value="">
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-arrows-h fa-2x"></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-align-justify fa-2x"></i></span>
                                             <input class="form-control y" type="text" name="game[Field][y]"  value="1" placeholder="По вертикали" value="">
                                         </div>
                                             <ul></ul>
@@ -154,55 +201,77 @@
 
                             <div class="row-fluid tab" id="prizes">
 
+
+                                <div id="format">
+                                    <div>
+                                        <button class="btn btn-default" data-format="cell">
+                                            <ul>
+                                                <li class="points"><div>10</div><div>грн</div></li>
+                                                <li class="points"><div>5</div><div>баллов</div></li>
+                                                <li class="item"><img alt="Видеорегистратор Highscreen" src="/filestorage/shop/54465c39ba029.jpg" width="100%" height="100%"></li>
+                                            </ul>
+                                        </button>
+
+                                        <button class="btn btn-default" data-format="hit">
+                                            <ul>
+                                                <li class="fill"></li><li class="fill"></li><li class="fill"></li>
+                                            </ul>
+                                        </button>
+
+                                        <button class="btn btn-default" data-format="miss">
+                                            <ul>
+                                                <li class="fill"></li><li class="fill"></li><li class="los"></li>
+                                            </ul>
+                                        </button>
+
+                                    </div>
+                                    <input value="" name="game[Field][f]" type="hidden">
+                                </div>
+
                                 <div id="chance-prizes">
                                     <div class="row-fluid">
-                                        <div class="col-md-3 col-md-offset-3">Товары</div>
-                                        <div class="col-md-3">Деньги</div>
-                                        <div class="col-md-3">Баллы</div>
+                                        <div class="col-md-3"><span class="label label-primary">Условие</span></div>
+                                        <div class="col-md-3"><span class="label label-primary">Товары</span></div>
+                                        <div class="col-md-3"><span class="label label-primary">Деньги</span></div>
+                                        <div class="col-md-3"><span class="label label-primary">Баллы</span></div>
                                     </div>
                                 </div>
 
                                 <div id="quick-prizes">
-                                    <div class="form-group holder">
-                                        <div class="input-group">
-                                            <label class="sr-only"></label>
-                                            <button class="btn btn-md btn-warning items-modal" data-type="items">Товары</button>
-                                        </div>
-                                        <div class="row-fluid item-holder">
+                                    <div class="row-fluid">
+
+                                    <div class="form-group holder col-md-3">
+                                        <div class="label-primary label">Функции</div>
+                                        <div class="row-fluid math-holder" data-type="math">
+                                            <div class="empty-prize add-trigger"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group holder">
-                                        <div class="input-group">
-                                            <label class="sr-only"></label>
-                                            <button class="btn btn-md btn-warning add-trigger" data-type="money">Деньги</button>
-                                        </div>
-                                        <div class="row-fluid money-holder">
+                                    <div class="form-group holder col-md-3">
+                                        <span class="label label-primary">Товары</span>
+                                        <div class="row-fluid item-holder" data-type="item">
+                                            <div class="empty-prize add-trigger"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group holder">
-                                        <div class="input-group">
-                                            <label class="sr-only"></label>
-                                            <button class="btn btn-md btn-warning add-trigger" data-type="points">Баллы</button>
-                                        </div>
-                                        <div class="row-fluid points-holder">
+                                    <div class="form-group holder col-md-3">
+                                        <div class="label-primary label">Деньги</div>
+                                        <div class="row-fluid money-holder" data-type="money">
+                                            <div class="empty-prize add-trigger"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group holder">
-                                        <div class="input-group">
-                                            <label class="sr-only"></label>
-                                            <button class="btn btn-md btn-warning add-trigger" data-type="math">Функции</button>
+                                    <div class="form-group holder col-md-3">
+                                        <div class="label-primary label">Баллы</div>
+                                        <div class="row-fluid points-holder" data-type="points">
+                                            <div class="empty-prize add-trigger"></div>
                                         </div>
-                                        <div class="row-fluid math-holder">
-                                        </div>
+                                    </div>
+
                                     </div>
                                 </div>
 
                             </div>
-
-
                     </form>
                 </div>
 
@@ -214,6 +283,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="modal fade qgames" id="itemsModal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -252,40 +322,33 @@
 
 </div>
 
-<script src="/theme/admin/lib/jquery.damnUploader.min.js"></script>
 <script>
 
     $(function() {
 
-
         function runEffect() {
-            // get effect type from
-
-            cell=$("li", $('#field ul').last());
-            cell.first().removeClass('points').next().removeClass('los');
 
             var selectedEffect='';
             if(!(selectedEffect = $( "#effectTypes" ).val()))
                 return;
 
-            // most effect types need no options passed by default
+            cell=$("li", $('#field ul').last());
+            cell.first().removeClass('points').next().removeClass('los');
+
+            speed = parseInt($('#editGame form input.s').val()) || 400;
+
             var options = {};
-            // some effects have required parameters
             if ( selectedEffect === "scale" ) {
                 options = { percent: 0 };
             } else if ( selectedEffect === "size" ) {
                 options = { to: { width: 0, height: 0 } };
             }
-
-            // run the effect
-            cell.first().html($('<div></div>').css('height','100%').css('background',cell.first().css('background'))).addClass('points').find('div').effect( selectedEffect, options, 400,function(){this.remove();} );
-            cell.first().next().html($('<div></div>').css('height','100%').css('background',cell.first().next().css('background'))).addClass('los').find('div').effect( selectedEffect, options, 400,function(){this.remove();} );
+            cell.first().html($('<div></div>').css('height','100%').css('background',cell.first().css('background'))).addClass('points').find('div').effect( selectedEffect, options, speed,function(){this.remove();} );
+            cell.first().next().html($('<div></div>').css('height','100%').css('background',cell.first().next().css('background'))).addClass('los').find('div').effect( selectedEffect, options, speed,function(){this.remove();} );
         };
 
-        // set effect from select menu value
-        $( "#effectTypes" ).on('input', function() {
-            runEffect();
-        });
+
+        $( "#effectTypes" ).on('input', function() { runEffect();});
 
 
         $('button[data-combination]').on('click', function() {
@@ -297,18 +360,31 @@
                 $('#field input[value="'+$(this).data('combination')+'"]', holder).remove();
             else
                 $('#field',holder).append($('<input type=hidden name="game[Field][combination][]" value="'+$(this).data('combination')+'">'));
+        });
 
 
-            if($('#field input[name="game[Field][combination][]"]', holder).length){
-                $('#chance-prizes').show();
-                $('#quick-prizes').hide().find('.prize').remove();
-            }else{
-                $('#chance-prizes').hide().find('.row-prize').remove();
-                $('#quick-prizes').show();
-            }
+        $('button[data-format]').on('click', function() {
+
+            $('button[data-format]').removeClass('active');
+            $(this).toggleClass('active');
+
+            holder=$("#editGame").find('form');
+            format=$(this).data('format');
+            $('#format input[name="game[Field][f]"]',holder).val(format);
 
             genChancePrizes();
 
+        });
+
+
+        $('.add-game').on('click', function() {
+            var game = {Id:0,Title:'',Key:'',Description:'',Field:{x:6,y:1,b:1,r:1,w:95,h:95,c:1}};
+            editGame(game);
+        });
+
+
+        $(document).on('click','.game-build', function() {
+            editGame(games[$(this).data('id')]);
         });
 
 
@@ -317,6 +393,7 @@
             buildGame(game);
         });
 
+
         function editGame(game){
             console.log(game);
             $('#editGame').modal().find('button.tab').removeClass('active').first().addClass('active');
@@ -324,12 +401,14 @@
 
             holder=$("#editGame").find('form');
             holder.find('.lang').first().click();
+            holder.find('.k').val('Chance'+game.Id);
             holder.find('.p').val(game.Field.p);
             holder.find('.m').val(game.Field.m);
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
             holder.find('.h').val(game.Field.h);
             holder.find('.w').val(game.Field.w);
+            holder.find('.s').val(game.Field.s);
             holder.find('.c').val(game.Field.c);
             holder.find('.e').val(game.Field.e).change();
             holder.find('.r').val(typeof game.Field.r !== "undefined" && game.Field.r?game.Field.r:0);
@@ -348,27 +427,34 @@
             });
 
 
+            holder.find('#audio input').val('');
+            if (game.Audio) {
+                $.each(game.Audio, function (i, f) {
+                    holder.find('#audio input[name="game[Audio][' + i + ']"]').val(f);
+                });
+            }
+
             $('#field input[name="game[Field][combination][]"]', holder).remove();
             $('[data-combination]', holder).removeClass('active');
             $('#chance-prizes .row-prize').remove();
 
             if(game.Field.combination){
-
                 $.each(game.Field.combination, function (index, value) {
                     $('[data-combination="'+value+'"]', holder).click();
                 });
-
-                genChancePrizes();
-
-            } else {
-                $('#chance-prizes').hide();
-                $('#quick-prizes').show();
             }
+
+
             //holder.find('[name="game[Title]"]').val(game.Title);
             //holder.find('[name="game[Description]"]').text(game.Description);
 
             $('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/Chance' + game.Id + ".png?" + (new Date().getTime()));
 
+            if(game.Field.f){
+                $('[data-format="'+game.Field.f+'"]', holder).click();
+            } else {
+                $('[data-format]', holder).first().click();
+            }
 
             holder.find('.prize').remove();
             if(game.Prizes) {
@@ -382,36 +468,72 @@
 
                     if (prize.t == 'item'){
                         html.find('input:eq(1)').attr('type','hidden');
-                        html.prepend($('.thumbnail[data-id="' + prize.v + '"] img').clone().attr('width','100').attr('height','100'));
+                        html.append($('.thumbnail[data-id="' + prize.v + '"] img').clone().attr('width','100').attr('height','100'));
                     }
-                    if(game.Field.combination)
+                    if(game.Field.f && game.Field.f!='cell')
                         holder.find('.row-prize[data-click="'+index+'"] [data-type="'+prize.t+'"]').html(html);
                     else
-                        holder.find('.'+prize.t+'-holder').append(html);
+                        holder.find('.'+prize.t+'-holder').prepend(html);
                 });
             }
+
         }
 
         function genChancePrizes() {
 
-                var clicks = $("#editGame").find('form').find('.c').val();
+            var holder=$("#editGame #prizes");
+            var format=$('input[name="game[Field][f]"]',holder).val();
+            var hit = parseInt($("#editGame").find('form').find('.c').val());
+            var miss = parseInt($("#editGame").find('form').find('.m').val());
 
-                    while ((c=(parseInt($('.row-prize').last().attr('data-click'))?parseInt($('.row-prize').last().attr('data-click')):0)+1) <= clicks)
-                        $('#chance-prizes').append(genChancePrize(c));
+                if(format!='cell'){
+
+                    var clicks = (format=='hit') ? hit : miss;
+
+                    while ((c=(parseInt($('.row-prize').last().attr('data-click')) ? parseInt($('.row-prize').last().attr('data-click')) : 0) +1) <= clicks) {
+                        html = genChancePrize(c);
+                        if(p=$('.prize[data-id="' + c + '"]', holder).detach())
+                            html.find('div.'+ p.find('input[type="hidden"]').val()+'-holder').html(p);
+                        $('#chance-prizes').append(html);
+                    }
 
                     while ($('.row-prize').last().attr('data-click') > clicks)
                         $('.row-prize').last().remove();
 
 
+                    $('#chance-prizes .row-prize').each(function (i, html) {
+                        id=i+1;
+                        ul = new Array(format=='hit' ? id+1 : hit+1 ).join('<li class=fill></li>') + new Array(format=='hit'? 0:miss-id+1).join('<li class=los></li>');
+                        $('ul', html).html(ul);
+                    });
+
+
+                    $('#chance-prizes').show();
+                    $('#quick-prizes').hide().find('.prize').remove();
+
+                } else {
+
+                    $('#chance-prizes .prize').each(function (i, html) {
+                        holder.find('#quick-prizes .'+$(html).find('input[type="hidden"]').val()+'-holder').prepend(html);
+                    });
+
+                    $('#chance-prizes').hide().find('.row-prize').remove();
+                    $('#quick-prizes').show();
+
+                }
+
+
         }
 
         function genChancePrize(id) {
-            return '<div class="row-fluid row-prize" data-click="' + id + '">' +
-            '<div class="col-md-3"><ul>' + new Array(id+1).join('<li class=fill></li>') + '</ul></div>' +
+
+
+            return $('<div class="row-fluid row-prize" data-click="' + id + '">' +
+            '<div class="col-md-3"><ul>' + '</ul></div>' +
             '<div class="col-md-3 item-holder" data-type="item"><div class="empty-prize add-trigger"></div></div>' +
-            '<div class="col-md-3" data-type="money"><div class="empty-prize add-trigger"></div></div>' +
-            '<div class="col-md-3" data-type="points"><div class="empty-prize add-trigger"></div></div>' +
-            '</div>';
+            '<div class="col-md-3 money-holder" data-type="money"><div class="empty-prize add-trigger"></div></div>' +
+            '<div class="col-md-3 points-holder" data-type="points"><div class="empty-prize add-trigger"></div></div>' +
+            '</div>');
         }
 
         function buildGame(game){
@@ -458,6 +580,7 @@
         };
 
 
+        $(document).on('input','.m,.c',genChancePrizes);
         $(document).on('input','.w,.h,.x,.y,.r,.b,.c',function(){
 
             holder=$(this).parents('form');
@@ -475,50 +598,8 @@
             holder.find('#field ul').last().css('width',((w+r)*x-r)).html(html);
             $("#field-size").text(((w+r)*x-r)+'x'+((h+b)*y-b)+'px');
             holder.find('.save-game').addClass('btn-success');
-            genChancePrizes();
         });
 
-
-    $(document).on('click','.remove', function() {
-        if($(this).parents('.row-prize').length)
-            $(this).parent().parent().html($('<div class="empty-prize add-trigger"></div>'));
-        else
-            $(this).parent().remove();
-    });
-
-
-        $('.items-modal').on('click', function() {
-
-            var form = $("#editGame").find('form');
-            if(form.find('.prize').length>=form.find('li').length){
-                alert('Призов не может быть больше, чем ячеек!');
-                return false;
-            }
-
-            holder= $(this).parent();
-            var id = 0;
-            $(this).parent().parent().parent().find('div.prize').each(function(i,n){
-                var check = $(n).attr('data-id');
-                if(check>id) id = check;
-            });
-            id++;
-
-
-            $('#itemsModal').modal();
-            $('#itemsModal').find('.thumbnail').off('click').on('click', function() {
-                var img = $('<div class="prize" data-id="'+id+'">'+
-                '<span class="glyphicon glyphicon-remove remove" aria-hidden="true"></span>'+
-                '<input type="hidden" name="game[Prizes]['+id+'][t]" value="item" >' +
-                '<input type="hidden" class="form-control value" name="game[Prizes]['+id+'][v]" placeholder="Значение" value="'+$(this).data('id')+'">' +
-                '<img src="' + $(this).find('img').attr('src') + '" width="100" height="100"/>'+
-                '<input type="text" class="form-control" name="game[Prizes]['+id+'][p]" placeholder="Вероятность" value="">' +
-                '</div>');
-                holder.next().append(img);
-                $('#itemsModal').modal('hide');
-            });
-
-            return false;
-        });
 
 
     $(document).on('click','.add-trigger', function() {
@@ -530,7 +611,7 @@
         }
 
         var type = ($(this).attr('data-type')?$(this).attr('data-type'):$(this).parent().attr('data-type'));
-        var holder= $(this).parent();
+        var holder= $(this);
 
         if (!(id = $(this).parent().parent().attr('data-click'))) {
             id = 0;
@@ -542,11 +623,12 @@
         } else {
                 $('.row-prize[data-click="'+id+'"] .prize',form).parent().html($('<div class="empty-prize add-trigger"></div>'));
         }
+        var img = '';
         if(type=='item'){
 
             $('#itemsModal').modal();
             $('#itemsModal').find('.thumbnail').off('click').on('click', function() {
-                var img = $('<div class="prize" data-id="'+id+'">'+
+                 img = $('<div class="prize" data-id="'+id+'">'+
                 '<span class="glyphicon glyphicon-remove remove" aria-hidden="true"></span>'+
                 '<input type="hidden" name="game[Prizes]['+id+'][t]" value="item" >' +
                 '<input type="hidden" class="form-control value" name="game[Prizes]['+id+'][v]" placeholder="Значение" value="'+$(this).data('id')+'">' +
@@ -554,10 +636,10 @@
                 '<input type="text" class="form-control" name="game[Prizes]['+id+'][p]" placeholder="Вероятность" value="">' +
                 '</div>');
 
-                if ($('#field input[name="game[Field][combination][]"]').length)
-                    holder.html(img);
+                if ($('#format input[name="game[Field][f]"]').val()!='cell')
+                    holder.parent().html(img);
                 else
-                    holder.next().append(img);
+                    img.insertBefore(holder);
 
 
                 $('#itemsModal').modal('hide');
@@ -565,50 +647,21 @@
 
         } else {
 
-            var img = $('<div class="prize" data-id="' + id + '">' +
+            img = $('<div class="prize" data-id="' + id + '">' +
             '<span class="glyphicon glyphicon-remove remove" aria-hidden="true"></span>' +
             '<input type="hidden" name="game[Prizes][' + id + '][t]" value="' + type + '" >' +
             '<input type="text" class="form-control value" name="game[Prizes][' + id + '][v]" placeholder="Значение" value="">' +
             '<input type="text" class="form-control" name="game[Prizes][' + id + '][p]" placeholder="Вероятность" value="">' +
             '</div>');
-
-            if ($('#field input[name="game[Field][combination][]"]').length)
-                holder.html(img);
+            if ($('#format input[name="game[Field][f]"]').val()!='cell')
+                holder.parent().html(img);
             else
-                holder.next().append(img);
+                img.insertBefore(holder);
 
         }
 
         });
 
-
-
-    $('.add-game').on('click', function() {
-        editGame({Id:0,Title:'',Description:'',Banner:'',Field:{x:6,y:1,b:1,r:1,w:95,h:95,c:1}});
-    });
-
-    $(document).on('click','.game-build', function() {
-        editGame(games[$(this).data('id')]);
-    });
-
-
-
-    $('#editGame button.tab').on('click', function() {
-        $("#editGame button.tab").removeClass("active");
-        $("#editGame div.tab:visible").hide();
-        $("#editGame div.tab#"+$(this).data("tab")).fadeIn(200);
-
-        $(this).addClass("active");
-    });
-
-
-        $('.lang').on('click', function() {
-            lang=$(this).data('lang');
-            $('.lang').removeClass('active');
-            $(this).addClass('active');
-            $('input[name^="game[Title]"], textarea[name^="game[Description]"]',$('#editGame')).hide();
-            $('input[name="game[Title]['+lang+']"], textarea[name="game[Description]['+lang+']"]',$('#editGame')).fadeIn(200);
-        });
 
   $('.save-game').on('click', function() {
 
@@ -648,51 +701,10 @@
     });
     return false;
   });
-        $('#image').on('click', initUpload);
-        function initUpload() {
 
-            // create form
-            var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-            var image = $(this).find('img');
-            var input = form.find('input[type="file"]').damnUploader({
-                url: '/private/images?folder=games',
-                fieldName: 'image',
-                dataType: 'json'
-            });
-
-            input.off('du.add').on('du.add', function(e) {
-                e.uploadItem.completeCallback = function(succ, data, status) {
-                    image.attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/' + data.imageWebPath + "?" + (new Date().getTime()));
-                };
-
-                e.uploadItem.progressCallback = function(perc) {}
-                e.uploadItem.addPostData('name', 'Chance'+image.parents('form').find('input[name="game[Id]"]').val()+'.png');
-                e.uploadItem.upload();
-            });
-
-            form.find('input[type="file"]').click();
-        }
-
-        $('#audio-modal .add-audio').on('click', function () {
-
-            // create form
-            var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="audio"/></form>');
-            var input = form.find('input[type="file"]').damnUploader({
-                url: '/private/audio',
-                fieldName: 'audio',
-                dataType: 'json'
-            });
-
-            input.off('du.add').on('du.add', function(e) {
-                e.uploadItem.completeCallback = function(succ, data, status) {
-                    $('#audio-modal ul li[data-file="'+ data.audioName+'"]').remove();
-                    $('#audio-modal ul').append('<li data-file="'+ data.audioName+'"><i class="fa fa-file-audio-o"> '+ data.audioName +' </i><i class="fa fa-play-circle audio-play"></i></li>');
-                };
-                e.uploadItem.progressCallback = function(perc) {}
-                e.uploadItem.upload();
-            });
-
-            form.find('input[type="file"]').click();
-        });
     });
 </script>
+
+
+<? if($frontend)
+    require_once(PATH_TEMPLATES.$frontend);?>
