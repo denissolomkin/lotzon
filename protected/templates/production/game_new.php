@@ -936,7 +936,7 @@
     </div>
 
     <!-- CHANCE GAME -->
-        <div class="game-bk"  id="ChanceGame-popup" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
+        <div class="game-bk quickgame"  id="ChanceGame-popup" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
                     <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>

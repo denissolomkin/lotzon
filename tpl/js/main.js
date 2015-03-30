@@ -1680,6 +1680,13 @@ function buildQuickGame(data) {
         })
     }
 
+    if (quickGame.Prizes) {
+        $('.qg-txt', holder).append('<br>');
+        $.each(quickGame.Prizes, function (index, prize) {
+            $('.qg-txt', holder).append(previewQuickGamePrize(prize));
+        })
+    }
+
     activateQuickGame(quickGame.Key);
 
     if (data.res.block) {
@@ -1729,6 +1736,7 @@ function activateQuickGame(key)
             var cell_prize='';
 
             if (game.Prize) {
+                holder.find('.prize-holder.'+game.Prize.t+'-holder:not(.w):contains("'+game.Prize.v+'")').first().addClass('w');
                 cell_class = (game.Prize.t);
                 cell_prize = genQuickGamePrize(game.Prize);
             }
@@ -1782,6 +1790,16 @@ function activateQuickGame(key)
     });
 }
 
+function previewQuickGamePrize(prize) {
+    switch(prize.t){
+        case 'item':
+            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><img src="/filestorage/shop/' + prize.s + '"></div>';
+            break;
+        default:
+            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + (prize.t=='money' ? '<small> '+playerCurrencyISO+'</small>':'' )+'</span></div>';
+            break;
+    }
+}
 function genQuickGamePrize(prize) {
     switch(prize.t){
         case 'hit':

@@ -56,7 +56,7 @@
 
 
                     <div class="row-fluid tab" id="key">
-                        <input value="">
+                        <input class="k" value="">
                     </div>
 
                         <div class="row-fluid tab" id="image">
@@ -193,7 +193,7 @@
                                             <span class="input-group-addon"><i class="fa fa-align-justify fa-2x"></i></span>
                                             <input class="form-control y" type="text" name="game[Field][y]"  value="1" placeholder="По вертикали" value="">
                                         </div>
-                                            <ul></ul>
+                                            <ul id="field-ul"></ul>
                                         <span id="field-size">1213</span>
                                     </div>
                                 </div>
@@ -605,7 +605,7 @@
     $(document).on('click','.add-trigger', function() {
 
         var form = $("#editGame").find('form');
-        if (form.find('.prize').length >= form.find('li').length) {
+        if (form.find('.prize').length >= form.find('#field-ul li').length) {
             alert('Призов не может быть больше, чем ячеек!');
             return false;
         }
@@ -668,7 +668,7 @@
     var button = $(this);
     var form = $(this).parent().parent().find('form');
 
-      if(form.find('.prize').length>form.find('li').length){
+      if(form.find('.prize').length>form.find('#field-ul li').length){
           alert('Призов не может быть больше, чем ячеек!');
           return false;
       }
