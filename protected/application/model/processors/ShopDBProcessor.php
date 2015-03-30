@@ -206,12 +206,12 @@ class ShopDBProcessor
         $shop = $this->loadShop();
 
         foreach ($shop as $category) {
-            foreach ($category->getItems() as $id=>$item) {
+            foreach ($category->getItems() as $item) {
                 if ($excludeQuantibleItems && $item->getQuantity() > 0) {
                     continue;
                 }
 
-                $items[$id] = $item;
+                $items[$item->getId()] = $item;
             }
         }
 
