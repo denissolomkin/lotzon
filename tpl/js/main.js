@@ -1767,7 +1767,7 @@ function activateQuickGame(key)
                             window.clearInterval(blinkInterval);
                             holder.find('.qg-msg').css('height',holder.find('.qg-tbl').css('height')).show().find('.txt').first().show().parent().find('.preloader').hide();
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
-                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
+                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY*coefficient : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                                 playAudio(quickGame.Audio.win);
                             } else {
                                 holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
@@ -1804,7 +1804,7 @@ function previewQuickGamePrize(prize) {
             return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><img src="/filestorage/shop/' + prize.s + '"></div>';
             break;
         default:
-            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + (prize.t=='money' ? '<small> '+playerCurrencyISO+'</small>':'' )+'</span></div>';
+            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? prize.v*coefficient : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+playerCurrencyISO+'</small>':'' )+'</span></div>';
             break;
     }
 }
@@ -1817,7 +1817,7 @@ function genQuickGamePrize(prize) {
             return '<div><img src="/filestorage/shop/' + prize.s + '"></div>';
             break;
         default:
-            return '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? prize.v.replaceArray(["[*]", "\/"], ["x", "÷"]) : 0) + '</div>' +
+            return '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? (prize.t=='money' ? prize.v*coefficient : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + '</div>' +
             '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>';
             break;
     }

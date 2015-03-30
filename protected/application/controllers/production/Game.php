@@ -99,7 +99,8 @@ class Game extends \AjaxController
 
     public function startQuickGameAction($key='QuickGame')
     {
-        //$this->session->remove('QuickGame');
+        $this->session->remove('ChanceGame');
+        $this->session->remove('QuickGame');
         $id = $key=='ChanceGame' ? $this->request()->get('id', null) : null;
         $player = $this->session->get(Player::IDENTITY);
         $settings = GameSettingsModel::instance()->getSettings($key);
@@ -128,8 +129,11 @@ class Game extends \AjaxController
                 ->loadPrizes()
                 ->saveGame();
 
-            $this->session->set($key, $game);
+            while(!$this->session->has($key))
+                $this->session->set($key, $game);
+
             $resp = $game->getStat();
+
         }
 
         if (isset($game) && is_array(Config::instance()->banners['game' . $game->getId()]))
@@ -196,15 +200,17 @@ class Game extends \AjaxController
         if($game->isOver()) {
 
             $this->session->set($key.'LastDate', time());
-            $this->session->remove($key);
-            $this->session->remove($key.'Important');
+            //$this->session->remove($key);
+            //$this->session->remove($key.'Important');
 
             if($player->checkLastGame($key)) {
                 if ($game->getGamePrizes())
                     foreach ($game->getGamePrizes() as $currency => $sum)
                         if ($sum) {
-                            if ($currency == LotterySettings::CURRENCY_MONEY)
+                            if ($currency == LotterySettings::CURRENCY_MONEY) {
+                                $sum*=LotterySettingsModel::instance()->loadSettings()->getCountryCoefficient((in_array($player->getCountry(), Config::instance()->langs) ? $player->getCountry() : Config::instance()->defaultLang ));
                                 $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            }
                             elseif ($currency == LotterySettings::CURRENCY_POINT)
                                 $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
                         }
