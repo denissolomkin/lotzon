@@ -7,7 +7,6 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-
 // init memcache connection
 try {
     if (Config::instance()->cacheEnabled)
