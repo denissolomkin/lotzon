@@ -281,7 +281,9 @@ class QuickGame extends Entity
             }
         }
 
+        if(is_array($this->getGamePrizes()))
         foreach($this->getGamePrizes() as $gamePrizes)
+            if(is_array($gamePrizes))
             foreach($gamePrizes as $prize){
                 if($prize['v'])
                     $prizes[]=$prize;
