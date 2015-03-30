@@ -69,8 +69,8 @@ class Players extends \AjaxController
             // check invites
             $player->payInvite();
 
-            if ($player->getId() <= 1000) {
-                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+            if ($player->getId() <= 100000) {
+                $player->addPoints(200, 'Бонус за регистрацию');
             }
 
             if($this->session->has('SOCIAL_IDENTITY'))

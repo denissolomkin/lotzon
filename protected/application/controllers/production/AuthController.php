@@ -163,6 +163,10 @@ class AuthController extends \SlimController\SlimController {
                                 ->setDateLastLogin(time())
                                 ->create();
 
+                            if ($player->getId() <= 100000) {
+                                $player->addPoints(200, 'Бонус за регистрацию');
+                            }
+
                             if(!$player->isSocialUsed()) // If Social Id didn't use earlier
                                 $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
 
