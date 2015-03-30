@@ -11,7 +11,6 @@ class ShopModel extends Model
     public function init()
     {
         $this->setProcessor(Config::instance()->cacheEnabled ? new ShopCacheProcessor() : new ShopDBProcessor());
-        // $this->setProcessor(new ShopDBProcessor());
     }
 
     public static function myClassName()

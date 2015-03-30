@@ -306,7 +306,6 @@ Config::instance()->publicResources = array(
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
 Config::instance()->generatorNumTries = 20;
-
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
