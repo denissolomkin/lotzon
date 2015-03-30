@@ -1197,7 +1197,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
     width: 100%;
 }
 */
-.quickgame .prize-holder { font-size: 20px;height: 50px;width: 50px;opacity: 0.5;display: inline-table; text-align: center; color: white; text-shadow: 1px 1px 1px rgba(100, 100, 100, 1); margin: 0 5px 5px 0;}
+.quickgame .prize-holder { font-size: 20px;height: 50px;width: 50px;opacity: 0.5;display: inline-table; text-align: center; color: white; text-shadow: 1px 1px 1px rgba(100, 100, 100, 1); }
 .quickgame .prize-holder.w {opacity: 1;}
 .quickgame .points-holder{ background: url('../img/points-holder.jpg') no-repeat 0 0 / 100% 100%; }
 .quickgame .math-holder{ background: url('../img/math-holder.jpg') no-repeat 0 0 / 100% 100%; }

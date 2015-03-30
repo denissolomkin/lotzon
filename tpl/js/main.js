@@ -1681,7 +1681,6 @@ function buildQuickGame(data) {
     }
 
     if (quickGame.Prizes) {
-        $('.qg-txt', holder).append('<br>');
         $.each(quickGame.Prizes, function (index, prize) {
             $('.qg-txt', holder).append(previewQuickGamePrize(prize));
         })
