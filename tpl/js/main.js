@@ -1767,7 +1767,7 @@ function activateQuickGame(key)
                             window.clearInterval(blinkInterval);
                             holder.find('.qg-msg').css('height',holder.find('.qg-tbl').css('height')).show().find('.txt').first().show().parent().find('.preloader').hide();
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
-                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY*coefficient : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
+                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>' + game.GamePrizes.MONEY*coefficient +' '+playerCurrency: '') + (game.GamePrizes.POINT ? '<br> ' + game.GamePrizes.POINT+' баллов' : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                                 playAudio(quickGame.Audio.win);
                             } else {
                                 holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
