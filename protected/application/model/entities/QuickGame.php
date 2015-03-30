@@ -745,6 +745,7 @@ class QuickGame extends Entity
             $this->setId($data['Id'])
                 ->setTitle(@unserialize($data['Title']))
                 ->setDescription(@unserialize($data['Description']))
+                ->setAudio(@unserialize($data['Audio']))
                 ->setPrizes(@unserialize($data['Prizes']))
                 ->setField(@unserialize($data['Field']))
                 ->setEnabled($data['Enabled']);

@@ -1669,6 +1669,8 @@ function buildQuickGame(data) {
         window.setTimeout(function(){ location.reload(); },(quickGame.Timeout>0 ? quickGame.Timeout * 1000 : 1));
     }
 
+    playAudio(quickGame.Audio.start);
+
     if (quickGame.GameField) {
         $.each(quickGame.GameField, function (index, prize) {
             var cell = $('.qg-tbl li[data-cell="' + index + '"]',holder);
@@ -1727,6 +1729,8 @@ function activateQuickGame(key)
                 return;
             }
 
+            playAudio(quickGame.Audio.move);
+
             quickGame.Field.c = game.Moves;
             cell.parents('ul').removeClass('wait');
             //quickGame.Field.c--;
@@ -1735,14 +1739,17 @@ function activateQuickGame(key)
             var cell_prize='';
 
             if (game.Prize) {
+                playAudio(quickGame.Audio.hit);
                 holder.find('.prize-holder.'+game.Prize.t+'-holder:not(.w):contains("'+game.Prize.v+'")').first().addClass('w');
                 cell_class = (game.Prize.t);
                 cell_prize = genQuickGamePrize(game.Prize);
-            }
+            } else
+                playAudio(quickGame.Audio.miss);
 
             quickGame.Field.e = quickGame.Field.e || 'clip';
+            quickGame.Field.s = quickGame.Field.s || 300;
             var options = quickGame.Field.e === "scale" ? { percent: 0 } : (( quickGame.Field.e === "size" ) ? { to: { width: 0, height: 0 } } : {} );
-            cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+cell_class).find('div').effect(quickGame.Field.e,options,300,function(){this.remove();cell.html(cell_prize)})
+            cell.html($('<div></div>').css('background',cell.css('background')).css('height','100%')).addClass('m '+cell_class).find('div').effect(quickGame.Field.e,options,quickGame.Field.s,function(){this.remove();cell.html(cell_prize)})
 
             if (game.GameField) {
                 window.setTimeout(function () {
@@ -1761,8 +1768,10 @@ function activateQuickGame(key)
                             holder.find('.qg-msg').css('height',holder.find('.qg-tbl').css('height')).show().find('.txt').first().show().parent().find('.preloader').hide();
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
                                 holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>Деньги: ' + game.GamePrizes.MONEY : '') + (game.GamePrizes.POINT ? '<br>Баллы: ' + game.GamePrizes.POINT : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
+                                playAudio(quickGame.Audio.win);
                             } else {
                                 holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
+                                playAudio(quickGame.Audio.lose);
                             }
 
                             if(game.Price)
@@ -2262,8 +2271,14 @@ function getText(key) {
 }
 
 function playAudio(key) {
-    if ($.cookie("audio")==1 && appAudio && appAudio[key[0]] && (file=appAudio[key[0]][key[1]]))
-            $('<audio src=""></audio>').attr('src', 'tpl/audio/' + file).trigger("play");
+    if ($.cookie("audio")==1) {
+        if ($.isArray(key)){
+            if(appAudio && appAudio[key[0]] && (file = appAudio[key[0]][key[1]]))
+                $('<audio src=""></audio>').attr('src', 'tpl/audio/' + file).trigger("play");
+        } else if (key) {
+            $('<audio src=""></audio>').attr('src', 'tpl/audio/' + key).trigger("play");
+        }
+    }
 }
 
 function randomCachedNum() {
