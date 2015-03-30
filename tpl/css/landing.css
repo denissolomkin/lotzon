@@ -91,7 +91,7 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
 .h-t {background-color:rgba(255, 228, 0, 0.9);padding:30px 0 0 0;}
 .h-t-tcb {width:940px;margin:30px auto 0 auto;}
 .h-t-tcb-l {width:238px;height:60px;float:left;}
-.h-t-tcb-t {  font: 18px/19px Handbook-bold;cursor: pointer;text-transform: uppercase;margin-right: 50px;width: 190px;height: 88px;border: 1px solid #000;float: right;}
+.h-t-tcb-t {  font: 20px/19px Handbook-bold;cursor: pointer;text-transform: uppercase;margin-right: 50px;width: 190px;height: 88px;border: 1px solid #000;float: right;}
 .h-t-tcb-t div {   padding: 25px 0 25px 80px;float: left;}
 .h-t-tcb-t:after {
     content: "";

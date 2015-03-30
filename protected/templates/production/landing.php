@@ -73,7 +73,7 @@
                         <!--a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a-->
                         <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                     </div>
-                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943<? $staticTexts['promo-top'][$lang]->getText()?>"><div>промо ролик</div></div>
+                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943<? $staticTexts['promo-top'][$lang]->getText()?>"><div>промо<br>ролик</div></div>
                 </div>
             </div>
         </div>

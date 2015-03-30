@@ -296,7 +296,10 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\Game:startQuickGame',
     ),
     '/quickgame/play/:key' => array(
-        'post' => 'controllers\production\Game:quickGamePlay',
+        'post' => 'controllers\production\Game:playQuickGame',
+    ),
+    '/quickgame/preview/:key' => array(
+        'post' => 'controllers\production\Game:previewQuickGame',
     ),
 );
 

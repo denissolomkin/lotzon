@@ -57,7 +57,7 @@ $(function(){
         if (!$(event.target).closest(".pop-box").length){
             if($(event.target).closest(".popup").find('#game-process:visible').length)return false;
             if($(event.target).closest("#mchance").length)return false;
-            if($(event.target).closest("#QuickGame-popup").length)return false;
+            if($(event.target).closest("#QuickGame-holder").length)return false;
             if($(event.target).closest("#mail-conf").length)return false;
             if($(event.target).closest("#game-itself").length)document.location.reload();
             if($(event.target).closest(".popup").hasClass('chance'))return false;
@@ -1648,7 +1648,7 @@ $(document).on('click','#qgame .start',function () {
 
 function buildQuickGame(data) {
     quickGame=data.res;
-    var holder=$('#'+quickGame.Key+'-popup');
+    var holder=$('#'+quickGame.Key+'-holder');
     holder.show().find('.qg-msg').hide().find('.td').children().hide();
     $('.qg-tbl',holder).removeClass('wait');
     //holder.find('.qg-msg').hide().find('.txt').next().hide();
@@ -1683,8 +1683,9 @@ function buildQuickGame(data) {
     }
 
     if (quickGame.Prizes) {
+        $('.qg-prz', holder).html('');
         $.each(quickGame.Prizes, function (index, prize) {
-            $('.qg-txt', holder).append(previewQuickGamePrize(prize));
+            $('.qg-prz', holder).append(previewQuickGamePrize(prize));
         })
     }
 
@@ -1699,7 +1700,7 @@ function activateQuickGame(key)
 {
     key = key || 'QuickGame';
 
-    var holder = $('#'+key+'-popup');
+    var holder = $('#'+key+'-holder');
     $('li[data-cell]', holder).off('click').on('click', function () {
         var cell = $(this);
         if (quickGame.Field.c < 1) {
@@ -1768,6 +1769,10 @@ function activateQuickGame(key)
                             holder.find('.qg-msg').css('height',holder.find('.qg-tbl').css('height')).show().find('.txt').first().show().parent().find('.preloader').hide();
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
                                 holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>' + game.GamePrizes.MONEY*coefficient +' '+playerCurrency: '') + (game.GamePrizes.POINT ? '<br> ' + game.GamePrizes.POINT+' баллов' : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
+                                if(game.GamePrizes.MONEY)
+                                    updateMoney(playerMoney+parseFloat(game.GamePrizes.MONEY));
+                                if(game.GamePrizes.POINT)
+                                    updatePoints(playerPoints+parseFloat(game.GamePrizes.POINT));
                                 playAudio(quickGame.Audio.win);
                             } else {
                                 holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
@@ -1808,6 +1813,7 @@ function previewQuickGamePrize(prize) {
             break;
     }
 }
+
 function genQuickGamePrize(prize) {
     switch(prize.t){
         case 'hit':
@@ -1866,14 +1872,15 @@ $('.ch-gm-tbl .gm-bt').click(function(){
     $('.game-bk .play').show();
     var gi = $(this).data('game');
     var quick = $(this).data('quick');
-    $('#ChanceGame-popup .qg-msg').hide();
-    $('#ChanceGame-popup .ul-hld').html($('.game-bk .gm-tb[data-game="'+gi+'"]').last().clone().addClass('qg-tbl').show());
+    $('#ChanceGame-holder .qg-msg').hide();
+    $('#ChanceGame-holder .ul-hld').html($('.game-bk .gm-tb[data-game="'+gi+'"]').last().clone().addClass('qg-tbl').show());
     $('.game-bk .rw-b .tb[data-game="'+gi+'"]').show();
 
     if (gi == 55) {
         $('.game-bk .rw-b .tb[data-game="'+gi+'"]').find('.td').removeClass('sel').first().addClass('sel');
     }
-    $('.game-bk .l-bk-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
+    $('.game-bk .l-bk-txt.qg-txt').html($('.game-bk').find("#game-rules").find('div[data-game="'+gi+'"]').html());
+    $('.game-bk .l-bk-txt.qg-prz').html($('.game-bk').find("#game-prizes").find('div[data-game="'+gi+'"]').html());
     $('.game-bk').find('.gm-if-bk .l').html($(this).parent().find('.gm-if-bk .l').html());
     $('.game-bk').find('.gm-if-bk .r').html($(this).parent().find('.gm-if-bk .r').html());
     $('.ch-bk').fadeOut(200);

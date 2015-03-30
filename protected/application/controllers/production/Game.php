@@ -97,6 +97,29 @@ class Game extends \AjaxController
         $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
     }
 
+    public function previewQuickGameAction($key='QuickGame')
+    {
+        $id = $key=='ChanceGame' ? $this->request()->get('id', null) : null;
+        $settings = GameSettingsModel::instance()->getSettings($key);
+        $player = $this->session->get(Player::IDENTITY);
+
+        if (!$settings) {
+            $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
+        } elseif(is_array($settings->getGames()) &&
+            $game = QuickGamesModel::instance()->getList()[$id?:$settings->getGames()[array_rand($settings->getGames())]] ) {
+
+            $game->setKey($key)
+                ->setLang($player->getLang())
+                ->loadPrizes();
+
+            $resp = $game->getStat();
+            $this->ajaxResponse($resp);
+
+        }
+
+        $this->ajaxResponse(array(), 0, 'GAME_NOT_FOUND');
+    }
+
     public function startQuickGameAction($key='QuickGame')
     {
         //$this->session->remove('ChanceGame');
@@ -180,7 +203,7 @@ class Game extends \AjaxController
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
     }
 
-    public function quickGamePlayAction($key='QuickGame')
+    public function playQuickGameAction($key='QuickGame')
     {
         if (!($player = $this->session->get(Player::IDENTITY))){
             $this->ajaxResponse(array(), 0, 'PLAYER_NOT_FOUND');

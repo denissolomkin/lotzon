@@ -581,7 +581,7 @@
 <!--=========================================================================
                             MOMENT GAME POPUP CODE
     ==========================================================================-->
-<div class="bl-pp-bk popup" id="Moment-popup" style="display: none;">
+<div class="bl-pp-bk popup" id="Moment-holder" style="display: none;">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="quickgame pop-box">
@@ -611,7 +611,7 @@
 <!--=========================================================================
                             QUICK GAME POPUP CODE
     ==========================================================================-->
-<div class="bl-pp-bk popup" id="QuickGame-popup" style="display: none;">
+<div class="bl-pp-bk popup" id="QuickGame-holder" style="display: none;">
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="quickgame pop-box">
