@@ -841,6 +841,17 @@
                 <div class="slide-wrap">
 
 
+                <? if(isset($games) && is_array($games))
+                    foreach($games as $game): ?>
+                        <div class="td slide-item">
+                            <div class="gm-if-bk">
+                                <div class="l"><?=$quickGames[$game]->getTitle($player->getLang())?></div>
+                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b>баллов</div>
+                            </div>
+                            <div class="gm-bt" data-quick="1" data-game="<?=$game?>"><img src="tpl/img/games/Chance<?=$game?>.png"></div>
+                        </div>
+                    <? endforeach ?>
+
                 <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$chanceGames['33']->getGameTitle();?></div>
@@ -862,18 +873,6 @@
                     </div>
                     <div class="gm-bt" data-game="55"><img src="tpl/img/game-5x5.png"></div>
                 </div>
-                    
-                    <? if(isset($games) && is_array($games))
-                        foreach($games as $game): ?>
-                            <div class="td slide-item">
-                                <div class="gm-if-bk">
-                                    <div class="l"><?=$quickGames[$game]->getTitle($player->getLang())?></div>
-                                    <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b>баллов</div>
-                                </div>
-                                <div class="gm-bt" data-quick="1" data-game="<?=$game?>"><img src="tpl/img/games/Chance<?=$game?>.png"></div>
-                            </div>
-                        <? endforeach ?>
-
                 </div>
                 <!--div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
