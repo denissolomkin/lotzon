@@ -396,7 +396,7 @@
                         <input type="text" name="title" value="" placeholder="Заголовок" class="form-control" />
                         <label class="control-label">Настройки</label>
                         <div class="row-fluid">
-                            <div class="col-my-4">
+                            <div class="col-my-5">
 
                         <select name="type" id="notice-type" class="form-control" />
                             <option value="Message">Стандартное уведомление</option>
@@ -407,11 +407,14 @@
                         </select>
                             </div>
 
-                            <div class="col-my-3">
-                                <input type="text" name="registeredFrom" value="" placeholder="Регистрация от" class="form-control datepick" />
+                            <div class="col-my-1">
+                                <input type="text" name="minLotteries" value="" placeholder="Игр" class="form-control" />
                             </div>
-                            <div class="col-my-3">
-                                <input type="text" name="registeredUntil" id="" value="" placeholder="Регистрация до" class="form-control datepick" />
+                            <div class="col-my-2">
+                                <input type="text" name="registeredFrom" value="" placeholder="От" class="form-control datepick" />
+                            </div>
+                            <div class="col-my-2">
+                                <input type="text" name="registeredUntil" id="" value="" placeholder="До" class="form-control datepick" />
                             </div>
 
 
@@ -950,9 +953,9 @@ $("#add-notice select#notice-type").on('change', function() {
         },
 
         'Success': {
-            'text': "Поздравляем!<br><br>Ваш счет успешно пополнен.<br>Играйте и не забывайте рассказывать о нас друзьям.<br><br>Желаем удачи!",
+            'text': 'Поздравляем!<br><br>Ваш счет успешно пополнен.<br>Играйте и рассказывайте о своем выигрыше в наших группах <a href="https://vk.com/lotzon" target="_blank">ВКонтакте</a>,&nbsp;<a href="https://www.facebook.com/pages/Lotzon/714221388659166?ref=hl" target="_blank">Facebook</a>,&nbsp;<a href="http://ok.ru/lotzon" target="_blank">Одноклассники</a>.<br><br>Желаем удачи!',
             'title': "Вывод денежных средств"
-        }
+        },
 
     };
 
@@ -982,6 +985,7 @@ $("#add-notice select#notice-type").on('change', function() {
                             (tr.registeredFrom ?'<br><span class="label label-primary">от '+tr.registeredFrom+'</span>':'')+
                             (tr.registeredUntil ?'<br><span class="label label-primary">до '+tr.registeredUntil+'</span>':'')+
                             (tr.country ?'<br><span class="label label-primary">'+tr.country+'</span>':'')+
+                        (tr.minLotteries ?'<br><span class="label label-primary"><i class="fa fa-gift "></i> '+tr.minLotteries+'</span>':'')+
                         '</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
 
@@ -1060,6 +1064,7 @@ $("#add-notice select#notice-type").on('change', function() {
             currentEdit.playerId = plid;
             currentEdit.text = text;
             currentEdit.country = $('select[name="country"]').val();
+            currentEdit.minLotteries = $('input[name="minLotteries"]').val();
             currentEdit.registeredFrom = $('input[name="registeredFrom"]').val();
             currentEdit.registeredUntil = $('input[name="registeredUntil"]').val();
             currentEdit.type =  $('select[name="type"]').val();
@@ -1233,7 +1238,7 @@ $('.logs-trigger').on('click', function() {
 });
 /* END LOG BLOCK */
 
-/* DELETE USER BLOCK */
+/* BAN USER BLOCK */
 $('.ban-trigger').on('click', function() {
 
     var plid = $(this).data('id');

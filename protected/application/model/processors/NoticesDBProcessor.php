@@ -6,8 +6,8 @@ class NoticesDBProcessor implements IProcessor
 {
     public function create(Entity $notice)
     {
-        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `UserId`, `Type`, `Date`, `Title`, `Text`, `Country`, `RegisteredUntil`, `RegisteredFrom`)
-                VALUES (:id, :playerid, :userid, :type, :date, :title, :text, :country, :reguntil, :regfrom)";
+        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `UserId`, `Type`, `Date`, `Title`, `Text`, `Country`, `MinLotteries`, `RegisteredUntil`, `RegisteredFrom`)
+                VALUES (:id, :playerid, :userid, :type, :date, :title, :text, :country, :minlot, :reguntil, :regfrom)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -19,6 +19,7 @@ class NoticesDBProcessor implements IProcessor
                 ':type'  => $notice->getType(),
                 ':text'  => $notice->getText(),
                 ':country'  => $notice->getCountry(),
+                ':minlot'  => $notice->getMinLotteries(),
                 ':reguntil'  => $notice->getRegisteredUntil(),
                 ':regfrom'  => $notice->getRegisteredFrom(),
             ));
@@ -81,8 +82,13 @@ class NoticesDBProcessor implements IProcessor
             $where[]= " (".($options['date']?'`PlayerId` = 0 OR ':'')."`PlayerId` = " . (int)$playerId.')';
 
         }
+
         if($options['country'])
             $where[]= " (`Country` IS NULL OR `Country` = '". $options['country'] ."')";
+
+
+        if($options['played'])
+            $where[]= " (`MinLotteries` IS NULL OR `MinLotteries` <= {$options['played']})";
 
 
         if (!is_null($options['date'])) {
@@ -124,6 +130,7 @@ class NoticesDBProcessor implements IProcessor
     {
         $sql = "SELECT `Title` FROM `PlayerNotices`
                 WHERE (`Date` >= :dl AND `Date` >= :do)
+                AND (`MinLotteries` IS NULL OR `MinLotteries` <= :ml)
                 AND (`RegisteredFrom` IS NULL OR `RegisteredFrom` <= :dr)
                 AND (`RegisteredUntil` IS NULL OR `RegisteredUntil` >= :dr)
                 AND (`Country` IS NULL OR `Country` = :cntr)
@@ -134,6 +141,7 @@ class NoticesDBProcessor implements IProcessor
             $sth->execute(array(
                 ':dl'  => $player->getDateLastLogin(),
                 ':do'  => $player->getOnlineTime(),
+                ':ml' => $player->getGamesPlayed(),
                 ':dr' => $player->getDateRegistered(),
                 ':cntr' => $player->getCountry(),
                 ':id'  => $player->getId(),
@@ -148,6 +156,7 @@ class NoticesDBProcessor implements IProcessor
     public function getPlayerUnreadNotices(Player $player) {
         $sql = "SELECT COUNT(*) FROM `PlayerNotices`
                 WHERE (`Date` >= :dn AND `Date` >= :dr )
+                AND (`MinLotteries` IS NULL OR `MinLotteries` <= :ml)
                 AND (`RegisteredFrom` IS NULL OR `RegisteredFrom` <= :dr)
                 AND (`RegisteredUntil` IS NULL OR `RegisteredUntil` >= :dr)
                 AND (`Country` IS NULL OR `Country` = :cntr)
@@ -156,6 +165,7 @@ class NoticesDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
+                ':ml' => $player->getGamesPlayed(),
                 ':dn' => $player->getDateLastNotice(),
                 ':dr' => $player->getDateRegistered(),
                 ':cntr' => $player->getCountry(),
