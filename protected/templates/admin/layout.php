@@ -89,13 +89,16 @@
       function assignByPath(obj,path,value){
           console.log(path[0]);
           if (path.length == 1) {
-              obj[path[0].replace(':','.')] = value;
+              if(path[0])
+                obj[path[0].replace(':','.')] = value;
+              else obj[value]=value;
               return obj;
           } else if (obj[path[0]] === undefined) {
               obj[path[0].replace(':','.')] = {};
           }
           return assignByPath(obj[path.shift()],path,value);
       }
+
 
       $.fn.serializeObject = function(){
           var obj = {};

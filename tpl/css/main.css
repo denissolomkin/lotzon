@@ -790,6 +790,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk .tb {display:table;width:100%;}
 .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk.gm > .l, .chance .ch-lot-bk .game-bk .l-bk .gm-if-bk.gm > .r {margin:0;}
 .chance .ch-lot-bk .game-bk .l-bk .l-bk-txt {font:18px/19px Handbook-regular;color:#000;display:table-row;}
+.chance .ch-lot-bk .game-bk .l-bk .l-bk-txt.qg-prz {text-align: center;bottom: 50px;width: inherit;position: absolute;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b {display:table-row;height:150px;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b .tb {display:table;width:100%;}
 .chance .ch-lot-bk .game-bk .l-bk .rw-b .tb .td {display:table-cell;width:33%;height:150px;vertical-align:middle;}
@@ -947,7 +948,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx div.place {margin:0;padding:40px;overflow:hidden;width:140px;float: left;font:18px/20px Handbook-regular;}
 
 .ngm-bk .ngm-gm .gm-mx ul.SeaBattle {list-style:none;margin:0;padding:0;overflow:hidden;width: 220px;float: left;}
-.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o {display:none;cursor:crosshair;cursor: url('http://192.168.1.253/tpl/img/games/Crosshair.cur') 12 12, crosshair;}
+.ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o {display:none;cursor:crosshair;cursor: url('../img/games/Crosshair.cur') 12 12, crosshair;}
 .ngm-bk .ngm-gm .gm-mx ul.SeaBattle:first-of-type {margin-right: 40px;}
 /*.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li {width:19px;height:19px;margin:0 1px 1px 0;background-color: #d8e7ea;float:left;font:19px/19px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
 .ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li:nth-child(11n+11) {margin-right:0;}
@@ -1197,6 +1198,19 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
     width: 100%;
 }
 */
+.quickgame .prize-holder { font-size: 24px;height: 100px;width: 100px;display: inline-table;margin-left: -3px; text-align: center; color: white; /*text-shadow: 1px 1px 1px rgba(100, 100, 100, 1);*/ }
+.quickgame .prize-holder.l {opacity: 0.5;}
+.quickgame .points-holder{ background: url('../img/points-holder.jpg') no-repeat 0 0 / 100% 100%; }
+.quickgame .math-holder{ background: url('../img/math-holder.jpg') no-repeat 0 0 / 100% 100%; }
+.quickgame .money-holder{ background: url('../img/money-holder.jpg') no-repeat 0 0 / 100% 100%; }
+.quickgame .prize-holder span {
+vertical-align: middle;
+margin: 0 auto !important;
+display: table-cell;
+position: relative;}
+.quickgame .prize-holder img {
+    width: 100%;
+    height:100%;}
 .quickgame.pop-box {width:570px;}
 .quickgame.pop-box .qg-bk-pg {padding:35px 40px 40px 40px;min-height: 170px;}
 .quickgame .qg-bk-pg .qg-tbl.wait {/*opacity: 0.5*/}

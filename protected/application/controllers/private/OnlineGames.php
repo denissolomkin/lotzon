@@ -29,6 +29,7 @@ class OnlineGames extends PrivateArea
             'activeMenu' => $this->activeMenu,
             'games'      => $games,
             'langs' => $langs,
+            'frontend'      => 'admin/games_frontend.php',
         ));
     }
 

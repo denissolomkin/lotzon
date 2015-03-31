@@ -7,6 +7,7 @@ class ShopCacheProcessor extends BaseCacheProcessor
 {
 
     const CACHE_KEY = "shop::categories";
+    const ITEMS_KEY = "shop::items";
 
     public function init()
     {
@@ -57,7 +58,46 @@ class ShopCacheProcessor extends BaseCacheProcessor
             throw new ModelException("Unable to cache storage data", 500);            
         }
 
+        $this->recacheItems();
+
         return $shop;    
+    }
+
+    public function recacheItems()
+    {
+        $items = array();
+        $shop = $this->loadShop();
+
+        foreach ($shop as $category) {
+            foreach ($category->getItems() as $item) {
+                $items[(int)$item->getId()] = $item;
+            }
+        }
+
+        if (!Cache::init()->set(self::ITEMS_KEY, $items)) {
+            throw new ModelException("Unable to cache storage data", 500);
+        }
+
+        return $items;
+    }
+
+    public function fetchItem($item)
+    {
+        $itemData = $this->getAllItems()[$item->getId()];
+
+        $item->setTitle($itemData->getTitle())
+            ->setPrice($itemData->getPrice())
+            ->setQuantity($itemData->getQuantity())
+            ->setCountries($itemData->getCountries())
+            ->setImage($itemData->getImage())
+            ->setCategory($itemData->getCategory());
+
+        return $item;
+    }
+
+    public function getAllItems($excludeQuantibleItems = true)
+    {
+            return Cache::init()->get(self::ITEMS_KEY) ? : $this->recacheItems();
     }
 
     public function loadShop()

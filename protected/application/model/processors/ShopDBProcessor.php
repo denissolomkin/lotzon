@@ -211,7 +211,7 @@ class ShopDBProcessor
                     continue;
                 }
 
-                $items[] = $item;
+                $items[$item->getId()] = $item;
             }
         }
 

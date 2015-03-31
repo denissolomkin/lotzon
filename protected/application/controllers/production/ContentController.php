@@ -316,10 +316,12 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
     {
         $offset = (int)$this->request()->get('offset');
         $limit = (int)$this->request()->get('limit');
-        $notices = NoticesModel::instance()->getList($this->session->get(Player::IDENTITY)->getId(),
+        $player = $this->session->get(Player::IDENTITY);
+        $notices = NoticesModel::instance()->getList($player->getId(),
             array(
-                'date'=>$this->session->get(Player::IDENTITY)->getDateRegistered(),
-                'country'=>$this->session->get(Player::IDENTITY)->getCountry(),
+                'date'=>$player->getDateRegistered(),
+                'country'=>$player->getCountry(),
+                'played'=>$player->getGamesPlayed(),
             ));
 
         $jsonNotices = array();
@@ -329,10 +331,10 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                 'title' => $notice->getTitle(),
                 'text' => $notice->getText(),
                 'date'  => date('d.m.Y', $notice->getDate()),
-                'unread' => ($notice->getDate()>$this->session->get(Player::IDENTITY)->getDateLastNotice()?:false)
+                'unread' => ($notice->getDate()>$player->getDateLastNotice()?:false)
             );
         }
-        $this->session->get(Player::IDENTITY)->updateLastNotice();
+        $player->updateLastNotice();
         $this->ajaxResponse($jsonNotices);
     }
 }

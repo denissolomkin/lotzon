@@ -11,6 +11,7 @@ class Notice extends Entity
     private $_type  = '';
     private $_title  = '';
     private $_country  = null;
+    private $_minLotteries  = null;
     private $_registeredFrom  = null;
     private $_registeredUntil = null;
     private $_date  = '';
@@ -72,6 +73,18 @@ class Notice extends Entity
     public function getRegisteredUntil()
     {
         return $this->_registeredUntil;
+    }
+
+    public function setMinLotteries($int)
+    {
+        $this->_minLotteries = $int;
+
+        return $this;
+    }
+
+    public function getMinLotteries()
+    {
+        return $this->_minLotteries;
     }
 
     public function setText($text)
@@ -166,6 +179,7 @@ class Notice extends Entity
                  ->setTitle($data['Title'])
                  ->setText($data['Text'])
                 ->setCountry($data['Country'])
+                ->setMinLotteries($data['MinLotteries'])
                 ->setRegisteredUntil($data['RegisteredUntil'])
                 ->setRegisteredFrom($data['RegisteredFrom']);
         }

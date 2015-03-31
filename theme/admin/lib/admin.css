@@ -214,18 +214,32 @@ min-height: 17px;
 }
 .qgames #chance-prizes .row-prize{
     display: flex;
-    border-top: 1px solid #dcdcdc;
-    padding: 5px 0;
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 20px;
     clear: both;
+    margin: 0;
 }
 
+.qgames #format ul {width: 147px;height: 48px;margin: 0;padding: 0px;}
+.qgames #format li{width: 47px;height: 47px;margin: 0 1px 1px 0;padding: 0px;vertical-align: text-top;}
+.qgames #format li div:last-of-type{font-size: 24px;}
+.qgames #format li div:last-of-type{font-size: 8px;margin-top: -6px;}
 .qgames #comb ul {width: 47px;height: 48px;margin: 0;padding: 0px;}
-.qgames #comb li {width: 15px;height: 15px;margin: 0 1px 1px 0;padding: 0px;}
-.qgames #chance-prizes li{width: 38px;height: 38px;margin: 0 1px 1px 0;padding: 0px;border: 0;}
-
-.qgames #chance-prizes li.fill,.qgames #comb li.fill {background:url("../../../tpl/img/bg-chanse-game-lot.png") no-repeat 0 0 / 100% 100%;}
-.qgames #comb {margin: -20px 0 10px;}
-.qgames #comb li:nth-child(3n+3){margin-right: 0px;}
+.qgames #comb li {width: 15px;height: 15px;margin: 0 1px 1px 0;padding: 0px;vertical-align: text-top;}
+.qgames #chance-prizes li{width: 36px;height: 36px;margin: 0 1px 1px 0;padding: 0px;}
+.qgames #format button.active::after, .qgames #comb button.active::after{  position: absolute;
+    color: green;
+    font: normal normal normal 40px/1 FontAwesome;
+    font-size: 24px;
+    content: "\f00c";
+    opacity: 0.8;
+    margin: -42px -16px;
+    padding: 5px;
+    background: white;
+    border-radius: 50px;}
+.qgames #format li.fill, .qgames #chance-prizes li.fill,.qgames #comb li.fill {background:url("../../../tpl/img/bg-chanse-game-lot.png") no-repeat 0 0 / 100% 100%;border: none;}
+.qgames #format, .qgames #comb {margin: -20px 0 10px;}
+.qgames #format li:nth-child(3n+3), .qgames #comb li:nth-child(3n+3){margin-right: 0px;}
 .agames .game-build .o, .ogames .game-build .o, .qgames .game-build .c{
     position: absolute;
     right: 0;
@@ -316,7 +330,6 @@ min-height: 17px;
 .ogames .description textarea, .ogames .banner textarea,
 .qgames .description textarea, .qgames .banner textarea {width: 100%;}
 .ogames .holder {vertical-align: top;width: 48%;margin: 0px 2px;}
-.qgames .holder {width: 100px;margin:0px;}
 .qgames .tab#prizes #quick-prizes > div:not(:last-of-type){margin-right:30px;}
 .qgames .holder button:first-of-type{width: 100px;}
 .qgames .prize {width: 100px;height: 100px;}
@@ -332,23 +345,32 @@ min-height: 17px;
     border: 0;
     color: black;
     box-shadow: none;
+    padding-top: 50px;
+    text-align: center;
 }
-.qgames #chance-prizes {max-height: 400px;overflow: auto;}
-.qgames #chance-prizes .prize input {background: rgba(255,255,255,0.5);}
+
+.qgames #chance-prizes .prize input:last-of-type, .qgames .math-holder input:last-of-type, .qgames .points-holder input:last-of-type, .qgames .money-holder input:last-of-type{
+    text-align:right;
+    margin-top: 10px;
+    padding-top: 0px;
+    background: rgba(255,255,255,0.5);}
+.qgames #quick-prizes, .qgames #chance-prizes {max-height: 400px;overflow: auto;}
+.qgames #chance-prizes .item-holder .prize input {background: rgba(255,255,255,0.5);}
 .qgames .item-holder input{
     font-size: 30px;
-    background: rgba(255,255,255,0.5);
     border: 0;
     color: black;
     box-shadow: none;
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
     left: 0;
     height:50px;
+    padding-top: 0px;
+    background: rgba(255,255,255,0.5);
     width: 100%;
 }
-
-.qgames #chance-prizes .empty-prize{   width: 100px; height: 100px; background: url("/theme/admin/img/photo-icon-plus.png") no-repeat 0 0 / 100% 100%;margin-top: 10px; cursor: pointer;}
+.qgames #prizes .label {width: 100%;display: block;}
+.qgames #prizes .empty-prize{   width: 100px; height: 100px; background: url("/theme/admin/img/photo-icon-plus.png") no-repeat 0 0 / 100% 100%;margin-top: 10px; cursor: pointer;}
 .qgames .prize input:last-of-type {text-align: right;}
 .agames .t .fa {position: absolute;left:10px;top:12px;}
 .agames .game-builds,.ogames .game-builds,.qgames .game-builds {
@@ -363,19 +385,26 @@ min-height: 17px;
 .ogames #field .ships ul > li > ul > li {width:20px;height:20px;background: coral;margin-right: 1px; float: left}
 .ogames #field .ships ul {list-style: none;}
 .ogames #field .ships + ul {float: left}
-.qgames #chance-prizes .prize, .qgames .holder .row-fluid div:nth-child(n+1)  {margin-top: 10px;position: relative;background: rgb(255,228,0);}
+.qgames #chance-prizes .prize, .qgames .holder .row-fluid div:nth-child(n+1)  {margin-top: 10px;position: relative;}
+
+.qgames .math-holder .prize {  background: url('../../../tpl/img/math-holder.jpg') no-repeat 0 0 / 100% 100%;}
+.qgames .money-holder .prize {  background: url('../../../tpl/img/money-holder.jpg') no-repeat 0 0 / 100% 100%;}
+.qgames .points-holder .prize {  background: url('../../../tpl/img/points-holder.jpg') no-repeat 0 0 / 100% 100%;}
+
 .qgames #chance-prizes .prize .glyphicon, .qgames .holder div .glyphicon {margin: 5px;position: absolute;top: 0px;right: 0;cursor: pointer;}
 .qgames .ul {clear: both;}
 /*.qgames .field{width: 100%;margin: 10px 0; }*/
 .qgames .field div.input-group{margin-right: -5px;margin-bottom: 10px;}
 .qgames .field div:last-of-type {margin-right: 0px;}
-.qgames .field .input-group-addon, .qgames .field .form-control {width: 42px;font-size: 9px;}
+.qgames .field .input-group-addon, .qgames .field .form-control {width: 46px;font-size: 9px;}
+.qgames .field button {margin-left:7px}
+.qgames #chance-prizes ul{margin-top: 10px;}
 .qgames ul > li {width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../../../tpl/img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;
     color:transparent;
     position: relative;
     color:black;
     font-weight: bold;}
-.qgames ul > li.los {border-color:#707070;background-image: url("../../../tpl/img/bg-chanse-game-x.png");}
+.qgames ul > li.los {border-color:#707070;background-image: url("../../../tpl/img/bg-chanse-game-x.png");  background-color: white;}
 .qgames ul > li.money,.qgames ul > li.points,.qgames ul > li.math {
     background:rgb(255,228,0);
     border:0;
@@ -390,7 +419,7 @@ min-height: 17px;
     padding: 5px;
     font-size: 10px;
 }
-.qgames ul li div {float: inherit;width: 100%;}
+.qgames ul li div {float: inherit;width: 100%;font-size: 24px;}
 .qgames .form-inline .form-group{vertical-align: top;}
 .qgames ul {list-style:none;display:table;padding:0;margin: 0 auto;}
 .ogames .holder > div:first-of-type{width: 100%;}

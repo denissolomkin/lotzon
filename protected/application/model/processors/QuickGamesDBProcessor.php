@@ -4,7 +4,7 @@ class QuickGamesDBProcessor
 {
     public function save(Entity $game)
     {
-        $sql = "REPLACE INTO `QuickGames` (`Id`, `Title`, `Description`, `Prizes`, `Field`, `Enabled`) VALUES (:id, :t, :d, :p, :f, :e)";
+        $sql = "REPLACE INTO `QuickGames` (`Id`, `Title`, `Description`, `Prizes`, `Field`, `Audio`, `Enabled`) VALUES (:id, :t, :d, :p, :f, :a, :e)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -13,6 +13,7 @@ class QuickGamesDBProcessor
                 ':d'     => @serialize($game->getDescription()),
                 ':p'     => @serialize($game->getPrizes()),
                 ':f'     => @serialize($game->getField()),
+                ':a'     => @serialize($game->getAudio()),
                 ':e'     => $game->isEnabled(),
             ));
         } catch (PDOException $e) {
@@ -38,6 +39,7 @@ class QuickGamesDBProcessor
         foreach ($data as $gameData) {
             $games[$gameData['Id']] = $gameData;
             $games[$gameData['Id']]['Field'] = @unserialize($gameData['Field']);
+            $games[$gameData['Id']]['Audio'] = @unserialize($gameData['Audio']);
             $games[$gameData['Id']]['Prizes'] = @unserialize($gameData['Prizes']);
             $games[$gameData['Id']]['Title'] = @unserialize($gameData['Title']);
             $games[$gameData['Id']]['Description'] = @unserialize($gameData['Description']);

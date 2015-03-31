@@ -498,6 +498,7 @@ class Users extends PrivateArea
                         'username' => ($notice->getUserName()?:''),
                         'text' => $notice->getText(),
                         'country' => $notice->getCountry(),
+                        'minLotteries' => ($notice->getMinLotteries()?:null),
                         'registeredFrom' => ($notice->getRegisteredFrom()? date('d.m.Y',$notice->getRegisteredFrom()) :null),
                         'registeredUntil' => ($notice->getRegisteredUntil()? date('d.m.Y',$notice->getRegisteredUntil()) :null),
                         'date' => date('d.m.Y H:i:s', $notice->getDate()),
@@ -530,6 +531,7 @@ class Users extends PrivateArea
                     ->setTitle($this->request()->post('title'))
                     ->setType($this->request()->post('type'))
                     ->setCountry($this->request()->post('country')?:null)
+                    ->setMinLotteries($this->request()->post('minLotteries')?:null)
                     ->setRegisteredFrom($this->request()->post('registeredFrom')?:null)
                     ->setRegisteredUntil($this->request()->post('registeredUntil')?:null)
                     ->create();

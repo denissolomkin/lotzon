@@ -109,7 +109,7 @@
 
 
 
-        <? if(isset($gameSettings['ChanceGame']) && $games = $gameSettings['ChanceGame']->getGames())
+        <? if(isset($gameSettings['ChanceGame']) && $games = $gameSettings['ChanceGame']->getGames()){}
             foreach($games as $game): ?>
             .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> {
                 width:<?=($quickGames[$game]->getOption('w')+$quickGames[$game]->getOption('r'))*$quickGames[$game]->getOption('x')-1?>px;
@@ -936,7 +936,7 @@
     </div>
 
     <!-- CHANCE GAME -->
-        <div class="game-bk"  id="ChanceGame-popup" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
+        <div class="game-bk quickgame"  id="ChanceGame-holder" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
             <div class="l-bk">
                 <div class="rw-t">
                     <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
@@ -965,7 +965,34 @@
                         <?=$staticTexts['chance-game-55'][$lang]->getText()?>
                     </div>
                 </div>
+
+                <div style="display:none" id="game-prizes">
+                    <? if(isset($games))
+                        foreach($games as $game): ?>
+                            <div data-game="<?=$game?>">
+                                <? foreach($quickGames[$game]->loadPrizes()->getPrizes() as $prize):
+                                    if($prize['v'])
+                                    switch ($prize['t']){
+                                        case 'item': ?>
+                                <div class="<?=$prize['t']?>-holder prize-holder"><img src="/filestorage/shop/<?=$prize['s']?>"></div>
+                                <?          break;
+                                        default: ?>
+                                <div class="<?=$prize['t']?>-holder prize-holder"><span><?=
+                                        ($prize['v']
+                                            ? ($prize['t'] =='money' ? $prize['v'] * $gameInfo['coefficient'] : str_replace(["[*]", "\/"], ["x", "÷"],$prize['v']))
+                                            : 0).
+                                        ($prize['t'] =='money'
+                                            ? '<small> '.$currency.'</small>'
+                                            : '');?></span></div>
+                                <?          break;
+                                    }
+                                endforeach; ?>
+
+                            </div>
+                        <? endforeach; ?>
+                </div>
                 <div class="l-bk-txt qg-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
+                <div class="l-bk-txt qg-prz"></div>
                 <div class="rw-b">
                     <? foreach (array('33','44','55') as $game) { ?>
                         <? if ($currentChanceGame && $currentChanceGame['id'] != $game) { continue; } ?>

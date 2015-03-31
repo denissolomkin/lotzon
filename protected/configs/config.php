@@ -7,7 +7,6 @@ Config::instance()->cacheConnectionProperties = array(
     'persistent' => true
 );
 
-
 // init memcache connection
 try {
     if (Config::instance()->cacheEnabled)
@@ -296,14 +295,16 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\Game:startQuickGame',
     ),
     '/quickgame/play/:key' => array(
-        'post' => 'controllers\production\Game:quickGamePlay',
+        'post' => 'controllers\production\Game:playQuickGame',
+    ),
+    '/quickgame/preview/:key' => array(
+        'post' => 'controllers\production\Game:previewQuickGame',
     ),
 );
 
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 Config::instance()->playerOfflineTimeout = 5 * 60;
 Config::instance()->generatorNumTries = 20;
-
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)

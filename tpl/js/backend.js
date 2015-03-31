@@ -356,7 +356,7 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
 
 function startQuickGame(key, id, successFunction, failFunction, errorFunction) {
 
-    $('#'+key+'-popup').show().find('.qg-msg').css('height','').show().find('.txt, .bt').hide().parent().find('.preloader').show();
+    $('#'+key+'-holder').show().find('.qg-msg').css('height','').show().find('.txt, .bt').hide().parent().find('.preloader').show();
 
     $.ajax({
         url: "/quickgame/build/"+key+(id?'?id='+id:''),
@@ -367,6 +367,7 @@ function startQuickGame(key, id, successFunction, failFunction, errorFunction) {
             if (data.status == 1) {
                 successFunction.call($(this), data);
             } else {
+                $('#'+key+'-holder').show().find('.qg-msg').hide().parent().find('.preloader').hide();
                 failFunction.call($(this), data);
             }
         },
@@ -629,7 +630,7 @@ window.setInterval(function() {
                 if(data.res.moment == 1) {
 
                     // if main game screen is visible
-                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#QuickGame-popup:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#ChanceGame-holder:visible").length|| $("#QuickGame-holder:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
                     if (!gw) {
 
                         startQuickGame('Moment', null,

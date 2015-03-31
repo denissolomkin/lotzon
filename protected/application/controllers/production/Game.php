@@ -97,8 +97,32 @@ class Game extends \AjaxController
         $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
     }
 
+    public function previewQuickGameAction($key='QuickGame')
+    {
+        $id = $key=='ChanceGame' ? $this->request()->get('id', null) : null;
+        $settings = GameSettingsModel::instance()->getSettings($key);
+        $player = $this->session->get(Player::IDENTITY);
+
+        if (!$settings) {
+            $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
+        } elseif(is_array($settings->getGames()) &&
+            $game = QuickGamesModel::instance()->getList()[$id?:$settings->getGames()[array_rand($settings->getGames())]] ) {
+
+            $game->setKey($key)
+                ->setLang($player->getLang())
+                ->loadPrizes();
+
+            $resp = $game->getStat();
+            $this->ajaxResponse($resp);
+
+        }
+
+        $this->ajaxResponse(array(), 0, 'GAME_NOT_FOUND');
+    }
+
     public function startQuickGameAction($key='QuickGame')
     {
+        //$this->session->remove('ChanceGame');
         //$this->session->remove('QuickGame');
         $id = $key=='ChanceGame' ? $this->request()->get('id', null) : null;
         $player = $this->session->get(Player::IDENTITY);
@@ -128,8 +152,11 @@ class Game extends \AjaxController
                 ->loadPrizes()
                 ->saveGame();
 
-            $this->session->set($key, $game);
+            while(!$this->session->has($key))
+                $this->session->set($key, $game);
+
             $resp = $game->getStat();
+
         }
 
         if (isset($game) && is_array(Config::instance()->banners['game' . $game->getId()]))
@@ -176,7 +203,7 @@ class Game extends \AjaxController
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
     }
 
-    public function quickGamePlayAction($key='QuickGame')
+    public function playQuickGameAction($key='QuickGame')
     {
         if (!($player = $this->session->get(Player::IDENTITY))){
             $this->ajaxResponse(array(), 0, 'PLAYER_NOT_FOUND');
@@ -203,8 +230,10 @@ class Game extends \AjaxController
                 if ($game->getGamePrizes())
                     foreach ($game->getGamePrizes() as $currency => $sum)
                         if ($sum) {
-                            if ($currency == LotterySettings::CURRENCY_MONEY)
+                            if ($currency == LotterySettings::CURRENCY_MONEY) {
+                                $sum*=LotterySettingsModel::instance()->loadSettings()->getCountryCoefficient((in_array($player->getCountry(), Config::instance()->langs) ? $player->getCountry() : Config::instance()->defaultLang ));
                                 $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            }
                             elseif ($currency == LotterySettings::CURRENCY_POINT)
                                 $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
                         }
