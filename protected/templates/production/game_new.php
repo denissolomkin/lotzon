@@ -110,6 +110,7 @@
 
 
         <? if(isset($gameSettings['ChanceGame']) && $games = $gameSettings['ChanceGame']->getGames()){}
+            if(is_array($games))
             foreach($games as $game): ?>
             .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> {
                 width:<?=($quickGames[$game]->getOption('w')+$quickGames[$game]->getOption('r'))*$quickGames[$game]->getOption('x')-1?>px;
@@ -840,7 +841,7 @@
                 <div class="slide-wrap">
 
 
-                <? if(isset($games))
+                <? if(isset($games) && is_array($games))
                     foreach($games as $game): ?>
 
                         <div class="td slide-item">
@@ -949,7 +950,7 @@
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
-                <? if(isset($games))
+                <? if(isset($games) && is_array($games))
                     foreach($games as $game): ?>
                     <div data-game="<?=$game?>">
                         <?=$quickGames[$game]->getDescription($player->getLang())?>
@@ -967,7 +968,7 @@
                 </div>
 
                 <div style="display:none" id="game-prizes">
-                    <? if(isset($games))
+                <? if(isset($games) && is_array($games))
                         foreach($games as $game): ?>
                             <div data-game="<?=$game?>">
                                 <? foreach($quickGames[$game]->loadPrizes()->getPrizes() as $prize):
@@ -1055,7 +1056,7 @@
                 </div>
                 <div class="ul-hld">
                 </div>
-                <? if(isset($games))
+                <? if(isset($games) && is_array($games))
                     foreach($games as $game): ?>
                 <!-- CHANCE<?=$game?> -->
                 <ul class="gm-tb chance<?=$game?>" data-game="<?=$game?>" data-price="<?=$quickGames[$game]->getOption('p')?>" style="display:none">
