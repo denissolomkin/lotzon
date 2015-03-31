@@ -120,7 +120,7 @@ class Index extends \SlimController\SlimController
 
 
         $gameInfo = array(
-            'participants' => PlayersModel::instance()->getPlayersCount(),
+            'participants' => PlayersModel::instance()->getMaxId(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
             'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD ) * $lotterySettings->getCountryCoefficient($this->country),
             'nextLottery'  => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
@@ -190,7 +190,7 @@ class Index extends \SlimController\SlimController
         $comments = CommentsModel::instance()->getList();
 
         $gameInfo = array(
-            'participants' => PlayersModel::instance()->getPlayersCount(),
+            'participants' => PlayersModel::instance()->getMaxId(),
             'winners'      => LotteriesModel::instance()->getWinnersCount() + self::WINNERS_ADD,
             'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD) * $lotterySettings->getCountryCoefficient($this->country),
             'nextLottery'  => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
@@ -273,7 +273,7 @@ class Index extends \SlimController\SlimController
         $lotterySettings = LotterySettingsModel::instance()->loadSettings();
         if ($this->request()->isAjax()) {
             $info = array(
-                'participants' => Common::viewNumberFormat(PlayersModel::instance()->getPlayersCount()),
+                'participants' => Common::viewNumberFormat(PlayersModel::instance()->getMaxId()),
                 'winners'      => Common::viewNumberFormat(LotteriesModel::instance()->getWinnersCount()  + self::WINNERS_ADD),
                 'win'          => Common::viewNumberFormat(round(LotteriesModel::instance()->getMoneyTotalWin() + self::MONEY_ADD)) . ' <span>' . Config::instance()->langCurrencies[$this->country] . '</span>',
             );
