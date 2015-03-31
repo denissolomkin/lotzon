@@ -1770,9 +1770,9 @@ function activateQuickGame(key)
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
                                 holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>' + game.GamePrizes.MONEY*coefficient +' '+playerCurrency: '') + (game.GamePrizes.POINT ? '<br> ' + game.GamePrizes.POINT+' баллов' : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                                 if(game.GamePrizes.MONEY)
-                                    updateMoney(playerMoney+parseFloat(game.GamePrizes.MONEY));
+                                    updateMoney(playerMoney+parseFloat(game.GamePrizes.MONEY*coefficient));
                                 if(game.GamePrizes.POINT)
-                                    updatePoints(playerPoints+parseFloat(game.GamePrizes.POINT));
+                                    updatePoints(playerPoints+parseInt(game.GamePrizes.POINT));
                                 playAudio(quickGame.Audio.win);
                             } else {
                                 holder.find('.qg-msg').removeClass('win').find('.txt').text('В этот раз не повезло');
