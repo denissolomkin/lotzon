@@ -400,6 +400,19 @@ class PlayersDBProcessor implements IProcessor
         }
     }
 
+    public function getMaxId()
+    {
+        $sql = "SELECT MAX(Id) FROM  `Players`";
+
+        try {
+            $res = DB::Connect()->query($sql);
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $res->fetchColumn(0);
+    }
+
     public function getPlayersCount($search=null)
     {
         $sql = "SELECT COUNT(Id) as `counter` FROM `Players`";

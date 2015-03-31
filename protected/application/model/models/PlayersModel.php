@@ -24,6 +24,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getPlayersCount($search);
     }
 
+    public function getMaxId()
+    {
+        return $this->getProcessor()->getMaxId();
+    }
+
     public function getPlayersStats()
     {
         return $this->getProcessor()->getPlayersStats();
