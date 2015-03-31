@@ -367,6 +367,7 @@ function startQuickGame(key, id, successFunction, failFunction, errorFunction) {
             if (data.status == 1) {
                 successFunction.call($(this), data);
             } else {
+                $('#'+key+'-holder').show().find('.qg-msg').hide().parent().find('.preloader').hide();
                 failFunction.call($(this), data);
             }
         },

@@ -1901,6 +1901,7 @@ $('.ch-gm-tbl .gm-bt').click(function(){
                     buildQuickGame(data)
                 },
                 function (data) {
+                    btn.parents('.play').show();
                     $('.pz-ifo-bk').hide();
                     $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
                     /*$('#report-popup').show().find('.txt').text(getText(data.message));*/
@@ -1934,6 +1935,7 @@ $(document).on('click','.quickgame .qg-msg .bt', function() {
                 buildQuickGame(data)
             },
             function (data) {
+                btn.parents('.quickgame').find('.play').show();
                 $('.pz-ifo-bk').hide();
                 $('.pz-rt-bk').text(getText(data.message)).show().parents('#shop-items-popup').show();
             },
