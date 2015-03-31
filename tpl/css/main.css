@@ -1198,12 +1198,13 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
     width: 100%;
 }
 */
-.quickgame .prize-holder { font-size: 24px;height: 100px;width: 100px;display: inline-table;margin-left: -3px; text-align: center; color: white; /*text-shadow: 1px 1px 1px rgba(100, 100, 100, 1);*/ }
+.quickgame .prize-holder { height: 100px;width: 100px;display: inline-table;margin-left: -3px; text-align: center; color: white; /*text-shadow: 1px 1px 1px rgba(100, 100, 100, 1);*/ }
 .quickgame .prize-holder.l {opacity: 0.5;}
 .quickgame .points-holder{ background: url('../img/points-holder.jpg') no-repeat 0 0 / 100% 100%; }
 .quickgame .math-holder{ background: url('../img/math-holder.jpg') no-repeat 0 0 / 100% 100%; }
 .quickgame .money-holder{ background: url('../img/money-holder.jpg') no-repeat 0 0 / 100% 100%; }
 .quickgame .prize-holder span {
+font: 24px/1 Handbook-bold;
 vertical-align: middle;
 margin: 0 auto !important;
 display: table-cell;
