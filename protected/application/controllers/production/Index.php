@@ -110,7 +110,7 @@ class Index extends \SlimController\SlimController
     {
 
         $seo                   = SEOModel::instance()->getSEOSettings();
-        $seo['page']           = ($seo['pages']?$page:0);
+        $seo['pages']           = ($seo['pages']?$page:0);
         $session               = new Session();
         $player                = $session->get(Player::IDENTITY)->fetch();
         $banners               = Config::instance()->banners;

@@ -255,15 +255,15 @@
         <nav class="top-nav">
             <div class="tn-box">
                 <div id="logo-gotop"></div>
-                <? if($seo['page']) :?>
+                <? if($seo['pages']) :?>
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($seo['page']=='tickets'?' now':'')?>"><a href="/tickets"><?=\StaticTextsModel::instance()->getText('menu-lottery')?></a></li>
-                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($seo['page']=='prizes'?' now':'')?>"><a href="/prizes"><?=\StaticTextsModel::instance()->getText('menu-prizes')?></a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($seo['pages']=='tickets'?' now':'')?>"><a href="/tickets"><?=\StaticTextsModel::instance()->getText('menu-lottery')?></a></li>
+                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($seo['pages']=='prizes'?' now':'')?>"><a href="/prizes"><?=\StaticTextsModel::instance()->getText('menu-prizes')?></a></li>
                     <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=\StaticTextsModel::instance()->getText('menu-news')?></a></li-->
-                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($seo['page']=='reviews'?' now':'')?>"><a href="/reviews"><?=\StaticTextsModel::instance()->getText('menu-reviews')?></a></li>
-                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($seo['page']=='rules'?' now':'')?>"><a href="/rules"><?=\StaticTextsModel::instance()->getText('menu-rules')?></a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($seo['page']=='profile'?' now':'')?>"><a href="/profile"><?=\StaticTextsModel::instance()->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($seo['page']=='chance'?' now':'')?>"><a href="/chance"><?=\StaticTextsModel::instance()->getText('menu-games')?></a></li>
+                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($seo['pages']=='reviews'?' now':'')?>"><a href="/reviews"><?=\StaticTextsModel::instance()->getText('menu-reviews')?></a></li>
+                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($seo['pages']=='rules'?' now':'')?>"><a href="/rules"><?=\StaticTextsModel::instance()->getText('menu-rules')?></a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($seo['pages']=='profile'?' now':'')?>"><a href="/profile"><?=\StaticTextsModel::instance()->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($seo['pages']=='chance'?' now':'')?>"><a href="/chance"><?=\StaticTextsModel::instance()->getText('menu-games')?></a></li>
                     <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('menu-logout')?></a></li>
                 </ul>
                 <? else :?>
@@ -289,7 +289,7 @@
         <!--=====================================================================
                                 TIKETS & PRIZES BLOCK
         ======================================================================-->
-        <? if(in_array($seo['page'],array('prizes','tickets')) OR !$seo['page']) :?>
+        <? if(in_array($seo['pages'],array('prizes','tickets')) OR !$seo['pages']) :?>
             <section class="wings">
                 <aside class="lbs">
 
@@ -302,7 +302,7 @@
 
                 </aside>
                 <div class="w-ct">
-                    <? if($seo['page']=='tickets' OR !$seo['page']) :?>
+                    <? if($seo['pages']=='tickets' OR !$seo['pages']) :?>
                     <section class="tickets">
                         <? $filledTicketsCount = count($tickets); ?>
                         <? if (count($tickets) < 5) { ?>
@@ -397,7 +397,7 @@
                     </section>
                     <? endif ?>
 
-                    <? if($seo['page']=='prizes' OR !$seo['page']) :?>
+                    <? if($seo['pages']=='prizes' OR !$seo['pages']) :?>
                     <section class="prizes">
                         <div class="sbk-tl-bk">
                             <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-prizes')?></div>
@@ -462,7 +462,7 @@
         <!--=====================================================================
                                 NEWS & RULEZ BLOCK
         ======================================================================-->
-        <? if(in_array($seo['page'],array('reviews','rules'))) :?>
+        <? if(in_array($seo['pages'],array('reviews','rules'))) :?>
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
@@ -603,7 +603,7 @@
         <!--=====================================================================
                                 PROFILE BLOCK
         ======================================================================-->
-        <? if($seo['page']=='profile' OR !$seo['page']) :?>
+        <? if($seo['pages']=='profile' OR !$seo['pages']) :?>
             <section class="profile">
                 <div class="p-bk">
                     <div class="p-tl-bk">
@@ -792,7 +792,7 @@
                                                     <? } ?>
                                                 </ul>
                                             </div>
-                                            <div class="fc-tl"><?=\StaticTextsModel::instance()->getText('favourite-combinatiob')?></div>
+                                            <div class="fc-tl"><?=\StaticTextsModel::instance()->getText('favourite-combination')?></div>
                                             <ul class="fc-nrch-bk">
                                                 <? for ($i=0; $i<6;++$i) {?>
                                                     <li>
@@ -840,7 +840,7 @@
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
-        <? if($seo['page']=='chance' OR !$seo['page']) :?>
+        <? if($seo['pages']=='chance' OR !$seo['pages']) :?>
         <section class="chance">
         <div class="ch-br-bk">
 
@@ -1071,7 +1071,7 @@
                                 <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=\StaticTextsModel::instance()->getText('placeholder-free')?></div></div>
 
                                 <!--div class="ngm-cncl">отмена</div-->
-                                <div class="ngm-go"><?=\StaticTextsModel::instance()->getText('burron-play')?></div>
+                                <div class="ngm-go"><?=\StaticTextsModel::instance()->getText('button-play')?></div>
                             </div>
                         </div>
 
@@ -1627,7 +1627,7 @@
         <? } ?>
         var quickGame = {};
         var online = 1;
-        var page = <?=($seo['page']?1:0)?>;
+        var page = <?=($seo['pages']?1:0)?>;
         var appId   = 0;
         var appName   = '';
         var appMode   = 0;
