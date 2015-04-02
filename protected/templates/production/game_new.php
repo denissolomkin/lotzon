@@ -207,7 +207,7 @@
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <? foreach ($lotteries as $lottery) { ?>
-                                <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-ottery-from')?><br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-lottery-from')?><br/><?=date('d.m.Y', $lottery->getDate())?></div>
                                 <ul class="rt-bk">
                                     <? foreach ($lottery->getCombination() as $num) { ?>
                                         <li class="rt-bk_li"><?=$num?></li>

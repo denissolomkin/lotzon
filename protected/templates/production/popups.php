@@ -14,14 +14,14 @@
                     <div class="pz-tl-bk">
                         <div class="pz-tl item-title">Кикерный стол</div>
                         <div class="pz-ps"><b class="item-price">2000</b> баллов</div>
-                        <div class="px-des"><?=$staticTexts['prizes-popup-text'][$lang]->getText();?> </div>
+                        <div class="px-des"><?=\StaticTextsModel::instance()->getText('prizes-popup-text')?></div>
                         <div class="pz-ifo-bt">обменять</div>
                     </div>
                 </div>
 
                 <!-- Prize info block -->
                 <div class="pz-fm-bk">
-                    <div class="fm-txt"><?=$staticTexts['prizes-order-popup'][$lang]->getText();?></div>
+                    <div class="fm-txt"><?=\StaticTextsModel::instance()->getText('prizes-order-popup')?></div>
                     <div class="fm-inps-bk">
                         <div class="pi-inp-bk">
                             <div class="ph">Фамилия</div>
@@ -52,7 +52,7 @@
                 </div>
 
                 <!-- Prize report block -->
-                <div class="pz-rt-bk" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>"></div>
+                <div class="pz-rt-bk" data-default="<?=\StaticTextsModel::instance()->getText('prizes-popup-success')?>"></div>
             </section>
         </div>
     </div>
@@ -109,7 +109,7 @@
             <section class="csh-ch-bk pop-box">
                 <div class="cl-bt cs"></div>
                 <div class="padd">
-                    <p id="csh-ch-txt"><?=$staticTexts['vivod-deneg'][$lang]->getText()?></p>
+                    <p id="csh-ch-txt"><?=\StaticTextsModel::instance()->getText('holder-money-output')?></p>
                     <p>Выберите способ вывода денежных стредств:</p>
                     <ul class="csh-ch-lst">
                         <li>
@@ -285,7 +285,7 @@
                         <ul class="yr-tb">
                         </ul>
                         <div class="gw-sep"></div>
-                        <div class="yr-b-fb"><?=$staticTexts['game-popup-win'][$lang]->getText()?></div>
+                        <div class="yr-b-fb"><?=\StaticTextsModel::instance()->getText('game-popup-win')?></div>
                     </div>
                     <div class="yr-s-i">
                         <div class="sb" style="visibility:hidden;">
@@ -330,7 +330,7 @@
                         <div class="yr-b-fb"></div>
                     </div>
                     <div class="yr-s-i">
-                        <?=$staticTexts['game-popup-fail'][$lang]->getText()?>
+                        <?=\StaticTextsModel::instance()->getText('game-popup-fail')?>
                     </div>
                     <div class="b-cl-block"></div>
                 </div>
@@ -539,7 +539,7 @@
                 <div class="cs"></div>
                 <div class="rb-pg">
                     <h2>УСЛОВИЯ<br/>УЧАСТИЯ</h2>
-                    <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
+                    <?=\StaticTextsModel::instance()->getText('promo-login-rules')?>
                 </div>
             </section>
         </div>
@@ -558,10 +558,10 @@
             <section class="logout-bk pop-box">
                 <div class="cs"></div>
                 <div class="cnt">
-                    <div class="txt"><?=$staticTexts['logout'][$lang]->getText();?></div>
+                    <div class="txt"><?=\StaticTextsModel::instance()->getText('logout')?></div>
                     <div class="buts">
-                        <div class="exit">выйти</div>
-                        <div class="back">остаться</div>
+                        <div class="exit"><?=\StaticTextsModel::instance()->getText('button-logout')?></div>
+                        <div class="back"><?=\StaticTextsModel::instance()->getText('button-stay')?></div>
                     </div>
                 </div>
             </section>
@@ -637,7 +637,7 @@
             <section class="report-block pop-box">
                 <div class="cs"></div>
                 <!-- Prize report block -->
-                <div class="txt" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>"></div>
+                <div class="txt" data-default="<?=\StaticTextsModel::instance()->getText('prizes-popup-success')?>"></div>
             </section>
         </div>
     </div>
