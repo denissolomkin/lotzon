@@ -4,7 +4,7 @@ class SEODBProcessor
 {
     public function updateSEO($seo)
     {
-        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Debug`, `Multilanguage`) VALUES (:id, :title, :desc, :kw, :dbg, :pages, :ml)";
+        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Debug`, `Multilanguage`) VALUES (:id, :title, :desc, :kw, :pages, :dbg, :ml)";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
