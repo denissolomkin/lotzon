@@ -24,6 +24,13 @@
                     <option value="1" <?=$seo['pages']?' selected':''?>>Многостраничный</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="multilanguage">Мультиязычность</label>
+                <select name="multilanguage" class="form-control">
+                    <option value="0">Отключена</option>
+                    <option value="1" <?=$seo['multilanguage']?' selected':''?>>Включена</option>
+                </select>
+            </div>
           <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </div>

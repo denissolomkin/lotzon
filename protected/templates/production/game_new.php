@@ -191,17 +191,23 @@
             </aside>
             </div>
             <div class="hr-io-bk">
+                <? if($seo['multilanguage'] && is_array($langs)){?>
+                    <div class="multilanguage">
+                    <? foreach($langs as $lang){?>
+                        <div data-lang="<?=($lang)?>" class="flag flag-<?=strtolower($lang)?>"></div>
+                <?}?></div>
+                <?}?>
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Джекпот<br/><br/></div>
+                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-jack-pot')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][6]['sum'])?> <span><?=$currency['iso']?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <? foreach ($lotteries as $lottery) { ?>
-                                <div class="tl">розыгрыш от<br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-ottery-from')?><br/><?=date('d.m.Y', $lottery->getDate())?></div>
                                 <ul class="rt-bk">
                                     <? foreach ($lottery->getCombination() as $num) { ?>
                                         <li class="rt-bk_li"><?=$num?></li>
@@ -212,19 +218,19 @@
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">участников<br/><br/></div>
+                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-total-players')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Денежные выигрыши<br/><br/></div>
+                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-money-win')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
+                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-total-win')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency['iso']?></span></b>
                         </div>
                     </div>
@@ -236,31 +242,31 @@
         <nav class="top-nav">
             <div class="tn-box">
                 <div id="logo-gotop"></div>
-                <? if($page) :?>
+                <? if($seo['page']) :?>
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($page=='tickets'?' now':'')?>"><a href="/tickets">РОЗЫГРЫШ</a></li>
-                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($page=='prizes'?' now':'')?>"><a href="/prizes">призы</a></li>
-                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
-                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($page=='reviews'?' now':'')?>"><a href="/reviews">комментарии</a></li>
-                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($page=='rules'?' now':'')?>"><a href="/rules">правила</a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($page=='profile'?' now':'')?>"><a href="/profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($page=='chance'?' now':'')?>"><a href="/chance">Игры</a></li>
-                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($seo['page']=='tickets'?' now':'')?>"><a href="/tickets"><?=\StaticTextsModel::instance()->getText('menu-lottery')?></a></li>
+                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($seo['page']=='prizes'?' now':'')?>"><a href="/prizes"><?=\StaticTextsModel::instance()->getText('menu-prizes')?></a></li>
+                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=\StaticTextsModel::instance()->getText('menu-news')?></a></li-->
+                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($seo['page']=='reviews'?' now':'')?>"><a href="/reviews"><?=\StaticTextsModel::instance()->getText('menu-reviews')?></a></li>
+                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($seo['page']=='rules'?' now':'')?>"><a href="/rules"><?=\StaticTextsModel::instance()->getText('menu-rules')?></a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($seo['page']=='profile'?' now':'')?>"><a href="/profile"><?=\StaticTextsModel::instance()->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($seo['page']=='chance'?' now':'')?>"><a href="/chance"><?=\StaticTextsModel::instance()->getText('menu-games')?></a></li>
+                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('menu-logout')?></a></li>
                 </ul>
                 <? else :?>
                     <ul class="tn-mbk">
-                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">РОЗЫГРЫШ</a></li>
-                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
-                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
-                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews">комментарии</a></li>
-                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
-                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
-                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Игры</a></li>
-                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
+                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets"><?=\StaticTextsModel::instance()->getText('menu-lottery')?></a></li>
+                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes"><?=\StaticTextsModel::instance()->getText('menu-prizes')?></a></li>
+                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=\StaticTextsModel::instance()->getText('menu-news')?></a></li-->
+                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews"><?=\StaticTextsModel::instance()->getText('menu-reviews')?></a></li>
+                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules"><?=\StaticTextsModel::instance()->getText('menu-rules')?></a></li>
+                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile"><?=\StaticTextsModel::instance()->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance"><?=\StaticTextsModel::instance()->getText('menu-games')?></a></li>
+                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('menu-logout')?></a></li>
                     </ul>
                 <? endif ?>
                 <div class="tn-tr-bk">
-                    <div class="tn-tr-tt">До розыгрыша<br/>осталось</div>
+                    <div class="tn-tr-tt"><?=\StaticTextsModel::instance()->getText('placeholder-until-lottery')?></div>
                     <div id="countdownHolder" class="tn-tr"></div>
                 </div>
             </div>
@@ -270,7 +276,7 @@
         <!--=====================================================================
                                 TIKETS & PRIZES BLOCK
         ======================================================================-->
-        <? if(in_array($page,array('prizes','tickets')) OR !$page) :?>
+        <? if(in_array($seo['page'],array('prizes','tickets')) OR !$seo['page']) :?>
             <section class="wings">
                 <aside class="lbs">
 
@@ -283,7 +289,7 @@
 
                 </aside>
                 <div class="w-ct">
-                    <? if($page=='tickets' OR !$page) :?>
+                    <? if($seo['page']=='tickets' OR !$seo['page']) :?>
                     <section class="tickets">
                         <? $filledTicketsCount = count($tickets); ?>
                         <? if (count($tickets) < 5) { ?>
@@ -298,7 +304,7 @@
                                         $nums = $ticket->getCombination();
                                     }
                                 } ?>
-                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span>Билет </span>#<?=$i?></a></li>
+                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span><?=\StaticTextsModel::instance()->getText('ticket-holder')?> </span>#<?=$i?></a></li>
                                 <? $fst = false; ?>
                             <? } ?>
                             </ul>
@@ -322,23 +328,23 @@
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">
                                                     A
-                                                    <div class="after">автозаполнение</div>
+                                                    <div class="after"><?=\StaticTextsModel::instance()->getText('button-auto-fill')?></div>
                                                 </li>
                                                 <li class="loto-tl_li heart ticket-favorite">
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
                                                     <div class="after">
-                                                        <b>любимая комбинация</b>
-                                                        <span>Настраивается в <i data-href="profile">кабинете</i></span>
+                                                        <b><?=\StaticTextsModel::instance()->getText('placeholder-favourite-combination')?></b>
+                                                        <span><?=\StaticTextsModel::instance()->getText('placeholder-set-in-profile')?></i></span>
                                                     </div>
                                                 </li>
                                             </ul>
                                             <? } ?>
                                             <div class="tb-st-bk">
                                                 <? if (count($nums) == 6) { ?>
-                                                    <div class="tb-st-done">подтвержден и принят к розыгрышу</div>
+                                                    <div class="tb-st-done"><?=\StaticTextsModel::instance()->getText('placeholder-approved-and-ready')?></div>
                                                 <? } else { ?>
-                                                    <div class="sm-but add-ticket">подтвердить</div>
-                                                    <div class="tb-ifo">еще <b><?=(6 - count($nums))?></b> номера</div>
+                                                    <div class="sm-but add-ticket"><?=\StaticTextsModel::instance()->getText('button-approve')?></div>
+                                                    <div class="tb-ifo"><?=\StaticTextsModel::instance()->getText('placeholder-yet')?> <b><?=(6 - count($nums))?></b> <?=\StaticTextsModel::instance()->getText('placeholder-numbers')?></div>
                                                 <? } ?>
                                             </div>
                                             <div class="b-cl-block"></div>
@@ -349,8 +355,8 @@
                             <div class="atd-bk">
 
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подтверждены и приняты к розыгрышу</div>
-                                    <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
+                                    <div class="ttl"><?=\StaticTextsModel::instance()->getText('placeholder-all-tickets-approved')?></div>
+                                    <div class="txt"><?=\StaticTextsModel::instance()->getText('placeholder-tickets-complete')?></div>
                                 </div>
                             </div>
                         <? } else { ?>
@@ -360,7 +366,7 @@
                                         <? $ticket = array_shift($tickets);
                                            $nums = $ticket->getCombination(); ?>
                                         <li class="yr-tt">
-                                            <div class="yr-tt-tn">Билет #<?=$i?></div>
+                                            <div class="yr-tt-tn"><?=\StaticTextsModel::instance()->getText('holder-ticket')?> #<?=$i?></div>
                                             <ul class="yr-tt-tr">
                                                 <? foreach ($nums as $num) { ?>
                                                     <li class="yr-tt-tr_li"><?=$num?></li>
@@ -370,22 +376,22 @@
                                     <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подтверждены и приняты к розыгрышу</div>
-                                    <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
+                                    <div class="ttl"><?=\StaticTextsModel::instance()->getText('placeholder-all-tickets-approved')?></div>
+                                    <div class="txt"><?=\StaticTextsModel::instance()->getText('placeholder-tickets-complete')?></div>
                                 </div>
                             </div>
                         <? } ?>
                     </section>
                     <? endif ?>
 
-                    <? if($page=='prizes' OR !$page) :?>
+                    <? if($seo['page']=='prizes' OR !$seo['page']) :?>
                     <section class="prizes">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">Призы</div>
+                            <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-prizes')?></div>
                             <div class="pbk-pi">на счету <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов</div>
                         </div>
                         <div class="pbk-ct">
-                            <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
+                            <div class="ptt"><?=\StaticTextsModel::instance()->getText('main-prizes')?></div>
                             <ul class="pz-nav">
                                 <? $fst = true; ?>
                                 <? foreach ($shop as $category) {?>
@@ -412,15 +418,15 @@
                                     <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
-                                                <span>ограниченное количество</span>
-                                                <b><?=$item->getQuantity()?> шт</b>
+                                                <span><?=\StaticTextsModel::instance()->getText('placeholder-limited-quantity')?></span>
+                                                <b><?=$item->getQuantity()?> <?=\StaticTextsModel::instance()->getText('placeholder-pieces')?></b>
                                             </div>
                                         <? } ?>
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
                                         <div class="im-tl"><?=$item->getTitle()?></div>
                                         <div class="im-bn">
                                             <b><?=Common::viewNumberFormat($item->getPrice())?></b>
-                                            <span>обменять на баллов</span>
+                                            <span><?=\StaticTextsModel::instance()->getText('placeholder-change-for-points')?></span>
                                         </div>
                                     </li>
                                     <? $i++; ?>
@@ -428,10 +434,10 @@
                                 </ul>
                                 <? $fst = false; ?>
                             <? } ?>
-                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">ПОКАЗАТЬ ЕЩЕ</div>
+                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
                             <div class="mr-cl-bt-bk">
-                                <div class="cl scrollto" data-href="prizes">свернуть</div>
-                                <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
+                                <div class="cl scrollto" data-href="prizes"><?=\StaticTextsModel::instance()->getText('button-cut')?></div>
+                                <div class="mr"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
                             </div>
                         </div>
                     </section>
@@ -443,7 +449,7 @@
         <!--=====================================================================
                                 NEWS & RULEZ BLOCK
         ======================================================================-->
-        <? if(in_array($page,array('reviews','rules'))) :?>
+        <? if(in_array($seo['page'],array('reviews','rules'))) :?>
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
@@ -451,13 +457,13 @@
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">правила и часто задаваемые вопросы</div>
+                            <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-rules')?></div>
                         </div>
                         <div class="rules-ct">
                             <div class="win-tbl">
                                 <div class="c-l">
                                     <div class="wt-t">
-                                        <?=$staticTexts['main-rules'][$lang]->getText()?>
+                                        <?=\StaticTextsModel::instance()->getText('main-rules')?>
                                     </div>
                                 </div>
                                 <ul class="c-r">
@@ -478,10 +484,10 @@
                                 <div class="b-cl-block"></div>
                             </div>
                             <ul class="faq">
-                                <?=$staticTexts['main-faq'][$lang]->getText()?>
+                                <?=\StaticTextsModel::instance()->getText('main-faq')?>
                             </ul>
-                            <div class="r-add-but more">ЧИТАТЬ ДАЛЬШЕ</div>
-                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;">спрятать</div>
+                            <div class="r-add-but more"><?=\StaticTextsModel::instance()->getText('button-read')?></div>
+                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;"><?=\StaticTextsModel::instance()->getText('button-hide')?></div>
                         </div>
                     </section>
                 </div>
@@ -512,7 +518,7 @@
                 <div class="i-rbk">
                     <section class="reviews">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">Комментарии</div>
+                            <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-reviews')?></div>
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
@@ -536,17 +542,17 @@
                                 <? } ?>
                             </div>
                         </div>
-                        <div class="rv-add-but">ЧИТАТЬ ЕЩЕ</div>
+                        <div class="rv-add-but"><?=\StaticTextsModel::instance()->getText('button-read')?></div>
                         <div class="rv-mr-cl-bt-bk">
-                            <div class="cl scrollto" data-href="reviews">свернуть</div>
-                            <div class="mr">ЧИТАТЬ ЕЩЕ</div>
+                            <div class="cl scrollto" data-href="reviews"><?=\StaticTextsModel::instance()->getText('button-cut')?></div>
+                            <div class="mr"><?=\StaticTextsModel::instance()->getText('button-read')?></div>
                         </div>
 
                         <div class="rv-add-frm">
                             <div class="rv-image">
                                 <img class="upload">
                             </div>
-                            <div class="rv-sc">Ваш комментарий отправлен на премодерацию</div>
+                            <div class="rv-sc"><?=\StaticTextsModel::instance()->getText('review-approved')?></div>
                             <div class="rv-form">
                                 <div class="rv-usr-avtr">
                                     <? if ($player->getAvatar()) {?>
@@ -564,7 +570,7 @@
                                     <img src="/tpl/img/but-upload-review.png">
                                 </div>
                                 <div class="rv-but-add">
-                                    отправить
+                                    <?=\StaticTextsModel::instance()->getText('button-send')?>
                                 </div>
                             </div>
                         </div>
@@ -584,38 +590,38 @@
         <!--=====================================================================
                                 PROFILE BLOCK
         ======================================================================-->
-        <? if($page=='profile' OR !$page) :?>
+        <? if($seo['page']=='profile' OR !$seo['page']) :?>
             <section class="profile">
                 <div class="p-bk">
                     <div class="p-tl-bk">
-                        <div class="p-tl-nm">кабинет</div>
+                        <div class="p-tl-nm"><?=\StaticTextsModel::instance()->getText('header-profile')?></div>
                         <!--div class="p-exit-bt">выйти</div-->
                         <div class="p-tl-ml" id="profile_email"><?=$player->getEmail()?></div>
                     </div>
                     <div class="p-cnt">
                         <aside>
                             <ul>
-                                <li class="ul_li now" data-link="profile-history">история розыгрышей</li>
-                                <li class="ul_li" data-link="profile-bonuses">бонусы</li>
-                                <li class="ul_li" data-link="profile-info">мои данные</li>
-                                <li class="ul_li" data-link="profile-notice">уведомления<span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
+                                <li class="ul_li now" data-link="profile-history"><?=\StaticTextsModel::instance()->getText('menu-history')?></li>
+                                <li class="ul_li" data-link="profile-bonuses"><?=\StaticTextsModel::instance()->getText('menu-bonuses')?></li>
+                                <li class="ul_li" data-link="profile-info"><?=\StaticTextsModel::instance()->getText('menu-info')?></li>
+                                <li class="ul_li" data-link="profile-notice"><?=\StaticTextsModel::instance()->getText('menu-notices')?><span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
                             </ul>
 
 
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов на счету</div>
-                                    <div class="bt" id="exchange" data-href="prizes">обменять</div>
+                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> <?=\StaticTextsModel::instance()->getText('holder-points-balance')?></div>
+                                    <div class="bt" id="exchange" data-href="prizes"><?=\StaticTextsModel::instance()->getText('button-change')?></div>
                                 </div>
 
                                 <div class="hand" id="cash-exchange"><img src="/tpl/img/but-exchange.png"></div>
 
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$currency['many']?> на счету</div>
-                                    <div class="bt" id="cash-output">вывести</div>
+                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$currency['many']?> <?=\StaticTextsModel::instance()->getText('holder-cash-balance')?></div>
+                                    <div class="bt" id="cash-output"><?=\StaticTextsModel::instance()->getText('button-output')?></div>
                                 </div>
-                                <div class="st-hy-bt"><span>история транзакций</span></div>
+                                <div class="st-hy-bt"><span><?=\StaticTextsModel::instance()->getText('button-transactions')?></span></div>
                             </div>
                         </aside>
 
@@ -623,13 +629,13 @@
 
                             <section class="_section profile-history">
                                 <ul class="ph-fr-bk">
-                                    <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
-                                    <li class="bt-all sel"><a href="javascript:void(0)">все</a></li>
+                                    <li class="bt-om"><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('button-only-me')?></a></li>
+                                    <li class="bt-all sel"><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('button-all')?></a></li>
                                 </ul>
                                 <div class="ht-tl-bk">
-                                    <div class="dt-tl">дата<br/>розыгрыша</div>
-                                    <div class="wc-tl">выигрышная<br/>комбинация</div>
-                                    <div class="nw-tl">количество<br/>победителей</div>
+                                    <div class="dt-tl"><?=\StaticTextsModel::instance()->getText('holder-date-lottery')?></div>
+                                    <div class="wc-tl"><?=\StaticTextsModel::instance()->getText('holder-win-combination')?></div>
+                                    <div class="nw-tl"><?=\StaticTextsModel::instance()->getText('holder-total-winners')?></div>
                                 </div>
                                 <ul class="ht-bk">
                                     <? foreach ($lotteries as $lottery) { ?>
@@ -651,17 +657,17 @@
                                 </ul>
 
                                 <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
-                                <div class="mr-bt">ПОКАЗАТЬ ЕЩЕ</div>
+                                <div class="mr-bt"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
 
                                 <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
                                 <div class="mr-cl-bt-bl">
-                                    <div class="cl scrollto" data-href="profile">свернуть</div>
-                                    <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
+                                    <div class="cl scrollto" data-href="profile"><?=\StaticTextsModel::instance()->getText('button-hide')?></div>
+                                    <div class="mr"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
                                 </div>
                             </section>
 
                             <section class="_section profile-bonuses">
-                                <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
+                                <div class="pb-txt"><?=\StaticTextsModel::instance()->getText('profile-bonus')?></div>
                                 <div class="if-bk">
                                     <div class="if-tl"><nobr>Пригласить друга +<?=EmailInvite::INVITE_COST?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
                                     <div class="fm-bk">
@@ -740,30 +746,30 @@
                                     </div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Никнейм">Никнейм</div>
+                                            <div class="ph" data-default="Никнейм"><?=\StaticTextsModel::instance()->getText('placeholder-nickname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Фамилия">Фамилия</div>
+                                            <div class="ph" data-default="Фамилия"><?=\StaticTextsModel::instance()->getText('placeholder-surname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="surname" data-valid="<?=$player->getSurname()?>" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Имя">Имя</div>
+                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-name')?>"><?=\StaticTextsModel::instance()->getText('placeholder-name')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="name" data-valid="<?=$player->getName()?>" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="Телефон">Телефон</div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Телефон" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
+                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-phone')?>"><?=\StaticTextsModel::instance()->getText('placeholder-phone')?></div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=\StaticTextsModel::instance()->getText('placeholder-phone')?>" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="Дата рождения">Дата рождения</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-birthday')?>"><?=\StaticTextsModel::instance()->getText('placeholder-birthday')?></div>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=\StaticTextsModel::instance()->getText('placeholder-birthday')?>" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="Пароль">Пароль</div>
+                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-password')?>"><?=\StaticTextsModel::instance()->getText('placeholder-password')?></div>
                                             <input type="text" name="plug" data-valid="" style="display: none;"/>
                                             <input type="password" name="plug" data-valid="" style="display: none;"/>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" value="*********" name="password" data-valid="" />
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=\StaticTextsModel::instance()->getText('placeholder-password')?>" type="password" value="*********" name="password" data-valid="" />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -773,7 +779,7 @@
                                                     <? } ?>
                                                 </ul>
                                             </div>
-                                            <div class="fc-tl">любимая комбинация</div>
+                                            <div class="fc-tl"><?=\StaticTextsModel::instance()->getText('favourite-combinatiob')?></div>
                                             <ul class="fc-nrch-bk">
                                                 <? for ($i=0; $i<6;++$i) {?>
                                                     <li>
@@ -787,10 +793,10 @@
                                     <div class="save-bk">
                                         <div class="sb-ch-td">
                                             <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
-                                            <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
+                                            <label for="rulcheck"><?=\StaticTextsModel::instance()->getText('text-show-my-name')?></label>
                                         </div>
                                         <div class="sb-ch-td">
-                                            <div class="but" onclick="$(this).parents('form').submit(); return false;">сохранить</div>
+                                            <div class="but" onclick="$(this).parents('form').submit(); return false;"><?=\StaticTextsModel::instance()->getText('button-save')?></div>
                                         </div>
                                     </div>
                                 </form>
@@ -821,7 +827,7 @@
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
-        <? if($page=='chance' OR !$page) :?>
+        <? if($seo['page']=='chance' OR !$seo['page']) :?>
         <section class="chance">
         <div class="ch-br-bk">
 
@@ -830,12 +836,12 @@
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
-        <div class="sbk-tl">игры</div>
+        <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-games')?></div>
         <div class="b-cntrl-block"><span class="glyphicon glyphicon-volume-up audio" aria-hidden="true"></span></div>
 
         <!-- CHANCE PREVIEW -->
         <div class="ch-bk slider" style="display:block">
-            <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
+            <div class="ch-txt"><?=\StaticTextsModel::instance()->getText('chance-game')?></div>
 
             <div class="ch-gm-tbl slide-list">
                 <div class="slide-wrap">
@@ -845,7 +851,7 @@
                         <div class="td slide-item">
                             <div class="gm-if-bk">
                                 <div class="l"><?=$quickGames[$game]->getTitle($player->getLang())?></div>
-                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b>баллов</div>
+                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
                             </div>
                             <div class="gm-bt" data-quick="1" data-game="<?=$game?>"><img src="tpl/img/games/Chance<?=$game?>.png"></div>
                         </div>
@@ -905,13 +911,13 @@
         <div class="game-bk quickgame"  id="ChanceGame-holder" style="display:none">
             <div class="l-bk">
                 <div class="rw-t">
-                    <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
+                    <div class="bk-bt"><spn><?=\StaticTextsModel::instance()->getText('button-back-to-games')?></spn></div>
                 </div>
                 <div class="gm-if-bk">
                     <div class="tb">
                         <!-- FIX HERE -->
                         <div class="l qg-bk-tl"></div>
-                        <div class="r"><b></b>баллов</div>
+                        <div class="r"><b></b><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
@@ -948,7 +954,7 @@
                             </div>
                         <? endforeach; ?>
                 </div>
-                <div class="l-bk-txt qg-txt">Описание</div>
+                <div class="l-bk-txt qg-txt"><?=\StaticTextsModel::instance()->getText('holder-description')?></div>
                 <div class="l-bk-txt qg-prz"></div>
 
             </div>
@@ -1025,7 +1031,7 @@
 
                     <div class="prc-l">
                         <div class="rw-t">
-                            <div class="bk-bt-rl"><spn>назад<br/>к описанию игры</spn></div>
+                            <div class="bk-bt-rl"><spn><?=\StaticTextsModel::instance()->getText('button-back-to-description')?></spn></div>
                         </div>
                         <div class="gm-if-bk">
                             <div class="l"></div>
@@ -1033,26 +1039,26 @@
 
                         <div class="prc-bl">
                             <div class="prc-txt-bk">
-                                <div class="all">Выберите тип и размер ставки</div>
+                                <div class="all"><?=\StaticTextsModel::instance()->getText('holder-choose-bet')?></div>
                             </div>
                             <div class="prc-but-cover"></div>
                             <div class="prc-but-bk">
 
-                                <div class="prc-bt">баллы</div>
+                                <div class="prc-bt"><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
                                 <div class="prc-sel" data-currency="POINT">
-                                    <div class="prc-tl">баллы</div>
+                                    <div class="prc-tl"><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
                                 </div>
 
-                                <div class="prc-bt">деньги</div>
+                                <div class="prc-bt"><?=\StaticTextsModel::instance()->getText('placeholder-money')?></div>
                                 <div class="prc-sel" data-currency="MONEY">
-                                    <div class="prc-tl">деньги</div>
+                                    <div class="prc-tl"><?=\StaticTextsModel::instance()->getText('placeholder-money')?></div>
                                 </div>
 
-                                <div class="prc-bt">бесплатно</div>
-                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'>бесплатно</div></div>
+                                <div class="prc-bt"><?=\StaticTextsModel::instance()->getText('placeholder-free')?></div>
+                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=\StaticTextsModel::instance()->getText('placeholder-free')?></div></div>
 
                                 <!--div class="ngm-cncl">отмена</div-->
-                                <div class="ngm-go">играть</div>
+                                <div class="ngm-go"><?=\StaticTextsModel::instance()->getText('burron-play')?></div>
                             </div>
                         </div>
 
@@ -1060,7 +1066,7 @@
 
                     <div class="rls-l">
                         <div class="rw-t">
-                            <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
+                            <div class="bk-bt"><spn><?=\StaticTextsModel::instance()->getText('button-back-to-games')?></spn></div>
                         </div>
                         <div class="gm-if-bk">
                             <div class="l"></div>
@@ -1135,12 +1141,12 @@
                                 </div>
 
                                 <div class="l">
-                                    <div class="ngm-price">ставка</div>
+                                    <div class="ngm-price"><?=\StaticTextsModel::instance()->getText('placeholder-bet')?></div>
                                 </div>
 
                                 <div class="r">
-                                    <div class="online">игроков онлайн <i>&bull;</i> <span></span></div>
-                                    <div class="all">всего сыграно игр <b>:</b> <span></span></div>
+                                    <div class="online"><?=\StaticTextsModel::instance()->getText('placeholder-players-online')?> <i>&bull;</i> <span></span></div>
+                                    <div class="all"><?=\StaticTextsModel::instance()->getText('placeholder-total-games-played')?> <b>:</b> <span></span></div>
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
@@ -1151,12 +1157,12 @@
 
                     <div class="rls-r">
 
-                        <div class="rls-r-t">ВЫ <b>|</b> 0 <b>|</b> 0</div>
-                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b>Поиск</b></div><div class="ngm-cncl">отмена</div></div>
+                        <div class="rls-r-t"><?=\StaticTextsModel::instance()->getText('placeholder-you')?> <b>|</b> 0 <b>|</b> 0</div>
+                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=\StaticTextsModel::instance()->getText('placeholder-search')?></b></div><div class="ngm-cncl"><?=\StaticTextsModel::instance()->getText('button-cancel')?></div></div>
 
                         <div class="rls-r-ws">
-                            <b>победители</b>
-                            <span>рейтиHг <b>|</b> сыграHо игр <b>|</b> побед</span>
+                            <b><?=\StaticTextsModel::instance()->getText('placeholder-winners')?></b>
+                            <span><?=\StaticTextsModel::instance()->getText('placeholder-rating')?> <b>|</b> <?=\StaticTextsModel::instance()->getText('placeholder-games-played')?> <b>|</b> <?=\StaticTextsModel::instance()->getText('placeholder-wins')?></span>
                         </div>
 
                         <ul class="rls-r-prs"></ul>
@@ -1286,10 +1292,10 @@
                         <div class="title"><?=$quickGame['title'];?></div>
                         <div class="txt">
                             <div class="timer">
-                                <span id="text_soon">Игра будет доступна через </span>
+                                <span id="text_soon"><?=\StaticTextsModel::instance()->getText('placeholder-game-will-be-able-until')?> </span>
                                 <span id="timer_soon"></span>
                             </div>
-                            <div class="start">Играть!</div>
+                            <div class="start"><?=\StaticTextsModel::instance()->getText('button-play')?></div>
                         </div>
                     </section>
                 </div>
@@ -1306,7 +1312,7 @@
                 <img src="/tpl/img/baners/goroskop.jpg?<?=(strtotime(date("md")))?>" width="1280" height="257">
             </section>
             <div class="fr-cnt-bk">
-                <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Условия участия</a>
+                <a href="javascript:void(0)" class="ts-lk" id="terms-bt"><?=\StaticTextsModel::instance()->getText('placeholder-terms')?></a>
                 <div class="ct-bk">
                     <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
                     <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
@@ -1395,7 +1401,7 @@
 
         var quickGame = {};
         var online = 1;
-        var page = <?=($page?1:0)?>;
+        var page = <?=($seo['page']?1:0)?>;
         var appId   = 0;
         var appName   = '';
         var appMode   = 0;

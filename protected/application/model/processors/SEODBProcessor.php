@@ -16,6 +16,7 @@ class SEODBProcessor
                 ':ml'    => $seo['multilanguage'],
             ));
         } catch (PDOException $e) {
+            echo $e->getMessage();
             throw new ModelException("Error processing storage query", 500);
         }
 

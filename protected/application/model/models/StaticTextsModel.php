@@ -1,0 +1,62 @@
+<?php
+
+Application::import(PATH_APPLICATION . 'model/Model.php');
+Application::import(PATH_APPLICATION . 'model/entities/StaticText.php');
+Application::import(PATH_APPLICATION . 'model/processors/StaticTextDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/StaticTextCacheProcessor.php');
+
+
+class StaticTextsModel extends Model
+{
+    private $_lang = '';
+    private $_list = '';
+
+    public function init()
+    {
+        //$this->setProcessor(Config::instance()->cacheEnabled ? new StaticSiteTextCacheProcessor() : new StaticSiteTextDBProcessor());
+        $this->setProcessor(new StaticTextDBProcessor());
+    }
+
+    public static function myClassName()
+    {
+        return __CLASS__;
+    }
+
+    public function setLang($lang=null)
+    {
+        return $this->_lang = $lang?:\CountriesModel::instance()->defaultLang();
+    }
+
+    public function getText($key)
+    {
+        if(!$this->_list)
+            $this->_list=$this->getList();
+
+        if(!$this->_lang)
+            $this->setLang();
+
+        if (isset($this->_list[$key])){
+            return $this->_list[$key]->getText($this->_lang);
+        } else
+            return $key;
+    }
+
+    public function getList()
+    {
+
+        if(!$this->_list)
+            $this->_list=$this->getProcessor()->getList();
+        return $this->_list;
+    }
+
+    public function getCategory($category=null)
+    {
+        $list=$this->getProcessor()->getList();
+        if($category)
+            if (isset($list[$category]))
+                return $list[$category];
+
+        else
+            return false;
+    }
+}

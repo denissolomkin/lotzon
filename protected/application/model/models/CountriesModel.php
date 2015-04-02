@@ -3,6 +3,7 @@
 Application::import(PATH_APPLICATION . 'model/Model.php');
 Application::import(PATH_APPLICATION . 'model/entities/Country.php');
 Application::import(PATH_APPLICATION . 'model/processors/CountriesDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/CountriesCacheProcessor.php');
 
 class CountriesModel extends Model
 {
@@ -10,7 +11,7 @@ class CountriesModel extends Model
     {
         parent::init();
 
-        $this->setProcessor(new CountriesDBProcessor());
+        $this->setProcessor(Config::instance()->cacheEnabled ? new CountriesCacheProcessor() : new CountriesDBProcessor());
     }
 
     public static function myClassName()
@@ -20,15 +21,12 @@ class CountriesModel extends Model
 
     public function getList()
     {
-        $countries = $this->getProcessor()->getList();
-
-        return $countries;
+        return $this->getProcessor()->getList();
     }
 
     public function isCountry($code=null)
     {
-        $countries = $this->getList();
-        return isset($countries[$code]);
+        return in_array($code, $this->getCountries());
     }
 
     public function isLang($code=null)
@@ -39,16 +37,15 @@ class CountriesModel extends Model
     public function getCountry($code=null)
     {
         $countries = $this->getList();
-
         if(isset($countries[$code])) {
-            return $countries[$code];
+            $country = $countries[$code];
         } elseif(is_array($countries) && !empty($countries)) {
-            return reset($countries);
+            $country = reset($countries);
         } else {
-            $default = new Country;
+            $country = $this->getDefault();
         }
 
-        return $default;
+        return $country;
     }
 
     public function defaultLang()
@@ -57,12 +54,10 @@ class CountriesModel extends Model
             if ($default = (reset($countries)))
                 return $default->getLang();
         } else {
-            $default = new Country;
+            return $this->getDefault()->getLang();
         }
-        return $default->getLang();
-
-
     }
+
     public function defaultCountry()
     {
 
@@ -70,30 +65,47 @@ class CountriesModel extends Model
             if ($default = (reset($countries)))
                 return $default->getCode();
         } else {
-            $default = new Country;
+            return $this->getDefault()->getCode();
         }
-        return $default->getCode();
-
-    }
-
-    public function getCountries()
-    {
-        $countries = $this->getProcessor()->getCountries();
-
-        return $countries;
     }
 
     public function getAvailabledCountries()
     {
-        $countries = $this->getProcessor()->getAvailabledCountries();
+        return $this->getProcessor()->getAvailabledCountries();
+    }
+
+    public function getCountries()
+    {
+
+        $countries = $this->getProcessor()->getCountries();
+        if(empty($countries)) {
+            $country = $this->getDefault();
+            $countries[] = $country->getCode();
+        }
 
         return $countries;
     }
 
     public function getLangs()
     {
-        $countries = $this->getProcessor()->getLangs();
+        $langs = $this->getProcessor()->getLangs();
+        if(empty($langs)) {
+            $country = $this->getDefault();
+            $langs[] = $country->getLang();
+        }
 
-        return $countries;
+        return $langs;
+
     }
+
+    public function getDefault(){
+
+        $default = new Country;
+        $default->setId(1)
+            ->setLang('RU')
+            ->setCode('RU')
+            ->setCurrency(1);
+        return $default;
+    }
+
 }

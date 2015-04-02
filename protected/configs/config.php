@@ -93,6 +93,15 @@ Config::instance()->privateResources =  array(
     '/private/texts/:identifier' => array(
         'delete'    => 'controllers\admin\Texts:delete',
     ),
+    '/private/statictexts/' => array(
+        'get'    => 'controllers\admin\StaticTexts:index',
+        'post'   => 'controllers\admin\StaticTexts:save',
+    ),
+
+    '/private/statictexts/:identifier' => array(
+        'get'    => 'controllers\admin\StaticTexts:get',
+        'delete'    => 'controllers\admin\StaticTexts:delete',
+    ),
     '/private/news/' => array(
         'get'    => 'controllers\admin\News:index',
     ),
@@ -294,6 +303,7 @@ Config::instance()->publicResources = array(
     '/content/notices/'  => 'controllers\production\ContentController:notices',
 
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
+    '/language/:lang' => 'controllers\production\Players:changeLanguage',
     '/chance/build/:identifier' => array(
         'get' => 'controllers\production\Game:startChanceGame',
     ),

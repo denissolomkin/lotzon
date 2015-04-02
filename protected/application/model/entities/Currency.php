@@ -5,10 +5,10 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 class Currency extends Entity
 {
     private $_id          = 0;
-    private $_code        = 'RUB';
-    private $_title       = array('iso'=>'руб','one'=>'','few'=>'','many'=>'');
-    private $_coefficient = 1;
-    private $_rate        = 1;
+    private $_code        = '';
+    private $_title       = array();
+    private $_coefficient = 0;
+    private $_rate        = 0;
 
  
     public function init()
@@ -31,9 +31,7 @@ class Currency extends Entity
 
     public function setCode($char)
     {
-        if($char)
-            $this->_code = $char;
-
+        $this->_code = $char;
         return $this;
     }
 
@@ -44,8 +42,7 @@ class Currency extends Entity
 
     public function setTitle($array)
     {
-        if($array)
-            $this->_title = $array;
+        $this->_title = $array;
 
         return $this;
     }
@@ -66,8 +63,7 @@ class Currency extends Entity
 
     public function setCoefficient($float)
     {
-        if($float)
-            $this->_coefficient = $float;
+        $this->_coefficient = $float;
 
         return $this;
     }
@@ -79,8 +75,7 @@ class Currency extends Entity
 
     public function setRate($int)
     {
-        if($int)
-            $this->_rate = (int) $int;
+        $this->_rate = (int) $int;
 
         return $this;
     }
@@ -175,6 +170,13 @@ class Currency extends Entity
                      ->setRate($data['Rate'])
                      ->setCoefficient($data['Coefficient']);
             break;
+            case 'CLASS' :
+                $this->setId($data->getId())
+                    ->setCode($data->getCode())
+                    ->setTitle($data->getTitle())
+                    ->setRate($data->getRate())
+                    ->setCoefficient($data->getCoefficient());
+                break;
         }
 
         return $this;

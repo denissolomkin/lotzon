@@ -88,6 +88,11 @@ class Index extends \SlimController\SlimController
                     ? $session->get(Player::IDENTITY)->getCountry()
                     : CountriesModel::instance()->defaultCountry());
 
+                $this->lang = (
+                CountriesModel::instance()->isLang($session->get(Player::IDENTITY)->getLang())
+                    ? $session->get(Player::IDENTITY)->getLang()
+                    : CountriesModel::instance()->defaultLang());
+
                 $this->game($page);
                 $session->get(Player::IDENTITY)->markOnline();
             } catch (EntityException $e) {
@@ -104,9 +109,10 @@ class Index extends \SlimController\SlimController
     protected function game($page)
     {
 
-        $seo = SEOModel::instance()->getSEOSettings();
-        $session = new Session();
-        $player = $session->get(Player::IDENTITY)->fetch();
+        $seo                   = SEOModel::instance()->getSEOSettings();
+        $seo['page']           = ($seo['pages']?$page:0);
+        $session               = new Session();
+        $player                = $session->get(Player::IDENTITY)->fetch();
         $banners               = Config::instance()->banners;
         $lotterySettings       = LotterySettingsModel::instance()->loadSettings();
         $lotteries             = LotteriesModel::instance()->getPublishedLotteriesList(self::LOTTERIES_PER_PAGE);
@@ -114,7 +120,9 @@ class Index extends \SlimController\SlimController
         $onlineGames           = OnlineGamesModel::instance()->getList();
         $quickGames            = QuickGamesModel::instance()->getList();
         $gameSettings          = GameSettingsModel::instance()->getList();
+        $langs                 = $seo['multilanguage'] ? CountriesModel::instance()->getLangs() : null;
 
+        \StaticTextsModel::instance()->setLang($this->lang);
 
         if (!$session->has('MomentLastDate'))
             $session->set('MomentLastDate', time());
@@ -145,7 +153,6 @@ class Index extends \SlimController\SlimController
         $notices = NoticesModel::instance()->getPlayerUnreadNotices($player);
         $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($player);
         $this->render('production/game_new', array(
-            'page'        => ($seo['pages']?$page:0),
             'gameInfo'    => $gameInfo,
             'country'     => $this->country,
             'shop'        => $shop,
@@ -162,6 +169,7 @@ class Index extends \SlimController\SlimController
             'playerPlayedLotteries' => $playerPlayedLotteries,
             'seo'         => $seo,
             'onlineGames' => $onlineGames,
+            'langs'       => $langs,
             'quickGames'  => $quickGames,
             'gameSettings'=> $gameSettings,
             'chanceGame'  => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,

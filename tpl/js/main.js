@@ -767,6 +767,22 @@ $(function(){
         }
     });
 
+    $('.multilanguage .flag').on('click', function(){
+        var btn = $(this);
+        changeLanguage(btn.attr('data-lang'),
+            function (data) {
+                location.reload();
+            },
+            function (data) {
+                $("#report-popup").find(".txt").text(getText(data.message));
+                $("#report-popup").show();
+            },
+            function (data) {
+                alert('error')
+            });
+
+    });
+
     // PROFILE HISTORY //
 
     $('.ph-fr-bk li').on('click', function(){
@@ -2113,8 +2129,6 @@ $('.st-hy-bt').on('click', function(){
 });
 
 
-
-
 $('.fb-share').on('click', function() {
     fbPost(posts.fb);
 });
@@ -2342,20 +2356,6 @@ function randomCachedNum() {
     return rand;
 }
 
-/*
-String.prototype.replaceArray = function (find, replace) {
-    var replaceString = this;
-    for (var i = 0; i < find.length; i++) {
-        // global replacement
-        var pos = replaceString.indexOf(find[i]);
-        while (pos > -1) {
-            replaceString = replaceString.replace(find[i], replace[i]);
-            pos = replaceString.indexOf(find[i]);
-        }
-    }
-    return replaceString;
-};
- */
 String.prototype.replaceArray = function(find, replace) {
     var replaceString = this;
     var replaceMatch = replace;

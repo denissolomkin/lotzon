@@ -1578,7 +1578,6 @@ function appWhoMoreCallback(receiveData)
                 appId=0;
                 break;
 
-
             case 'error':
                 $("#report-popup").show().find(".txt").text(getText(receiveData.res.error)).fadeIn(200);
                 $("#report-popup").show().fadeIn(200);
@@ -1589,8 +1588,6 @@ function appWhoMoreCallback(receiveData)
                     $('.ngm-rls').fadeIn(200);
                 }
                 break;
-
-
         }
     }
 
@@ -1629,9 +1626,9 @@ function appWhoMoreCallback(receiveData)
         }
     }
 
-    function onTimeOut(){
+    function onTimeOut() {
         var path='app/'+appName+'/'+appId;
-        var data={'action':'timeout'}
+        var data={'action':'timeout'};
         WebSocketAjaxClient(path,data);
     }
 });

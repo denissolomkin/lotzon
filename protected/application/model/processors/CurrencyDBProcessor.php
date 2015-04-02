@@ -18,7 +18,7 @@ class CurrencyDBProcessor implements IProcessor
         foreach ($currencyData as $data) {
             $cur = new Currency();
             $cur->formatFrom('DB', $data);
-            $currency[$cur->getCode()] = $cur;
+            $currency[$cur->getId()] = $cur;
         }
 
         return $currency;
@@ -39,7 +39,11 @@ class CurrencyDBProcessor implements IProcessor
             throw new ModelException("Unable to execute storage query", 500);
         }
 
-        $currency->formatFrom('DB', $sth->fetch());
+        if (!$sth->rowCount())
+            throw new ModelException("Currency not found", 404);
+        else
+            $currency->formatFrom('DB', $sth->fetch());
+
         return $currency;
     }
 

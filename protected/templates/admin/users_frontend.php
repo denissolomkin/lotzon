@@ -629,12 +629,14 @@
 
 <script>
 
-<? foreach(\CountriesModel::instance()->getLangs() as $lang)
-$langs[$lang]=$lang;?>
+<? $langs=array();
+foreach(\CountriesModel::instance()->getLangs() as $lang)
+    $langs[$lang]=$lang;?>
 langs=<?=json_encode($langs);?>;
 
-<? foreach(\CountriesModel::instance()->getCountries() as $lang)
-$countries[$lang]=$lang;?>
+<? $countries=array();
+foreach(\CountriesModel::instance()->getCountries() as $lang)
+    $countries[$lang]=$lang;?>
 countries=<?=json_encode($countries);?>;
 
 /* OEDERS BLOCK */

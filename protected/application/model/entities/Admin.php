@@ -13,11 +13,12 @@ class Admin extends Entity
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
         'admins'=>array('name'=>'Администраторы','icon'=>'user-secret','css'=>'pull-right'),
 
-        'Страны'=>array('icon'=>'globe',
+        'Мультиязычность'=>array('icon'=>'globe',
             'pages'=>array(
                 'countries'=>array('icon'=>'globe','name'=>'Страны'),
                 'currencies'=>array('icon'=>'money','name'=>'Валюты'),
-                'texts'=>array('icon'=>'language','name'=>'Переводы'),
+                'statictexts'=>array('icon'=>'language','name'=>'Переводы'),
+                'texts'=>array('icon'=>'language','name'=>'Тексты'),
             )),
 
         'Настройки'=>array('icon'=>'cogs',

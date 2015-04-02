@@ -251,6 +251,18 @@ class Players extends \AjaxController
         }
     }
 
+    public function changeLanguageAction($lang)
+    {
+        if(!($lang=substr($lang,0,2)) || !(CountriesModel::instance()->isLang($lang))) {
+            $this->ajaxResponse(array(), 0, 'LANGUAGE_ERROR');
+        } else if (!$this->session->get(Player::IDENTITY) || !$player=$this->session->get(Player::IDENTITY)) {
+            $this->ajaxResponse(array(), 0, 'FRAUD');
+        } else {
+            $player->setLang($lang)->update();
+            $this->ajaxResponse(array(), 1, 'READY');
+        }
+    }
+
     public function removeAvatarAction()
     {
         if ($this->session->get(Player::IDENTITY)->getAvatar()) {

@@ -386,9 +386,11 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersStats()
     {
-        return array('Points'=>0,'Money'=>0,'Online'=>0,'Tickets'=>0);
+        // return array('Points'=>0,'Money'=>0,'Online'=>0,'Tickets'=>0);
+
         $sql = "SELECT
-                SUM(Money/(SELECT `Coefficient` FROM `LotterySettings` WHERE `CountryCode`=`Players`.`Country` LIMIT 1) ) Money, SUM(Points) Points,
+                SUM(Money / IFNULL((SELECT `Coefficient` FROM `Countries` cn LEFT JOIN `Currency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
+                SUM(Points) Points,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-Config::instance()->playerOfflineTimeout).") o) Online,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
@@ -418,7 +420,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersCount($search=null)
     {
-        $sql = "SELECT COUNT(Id) as `counter` FROM `Players`";
+        $sql = "SELECT COUNT(*) as `counter` FROM `Players`";
 
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
