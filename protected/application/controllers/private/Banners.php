@@ -1,10 +1,9 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Admin,  \SupportedCountriesModel, \QuickGamesModel, \Session2;
+use \Application, \PrivateArea, \Config, \Admin,  \CountriesModel, \QuickGamesModel, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
 
 class Banners extends PrivateArea
 {
@@ -23,7 +22,7 @@ class Banners extends PrivateArea
     {
         $list = Config::instance()->banners;
         $games = QuickGamesModel::instance()->getGamesSettings();
-        $supportedCountries = SupportedCountriesModel::instance()->getEnabledCountriesList();
+        $supportedCountries = CountriesModel::instance()->getCountries();
 
         $this->render('admin/banners', array(
             'title'      => 'Баннеры на сайте',

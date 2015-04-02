@@ -77,7 +77,7 @@
     <div class="row-fluid">
         <div class="btn-group">
             <? $fst = true; ?>
-            <? foreach (Config::instance()->langs as $lang) { ?>
+            <? foreach ($langs as $lang) { ?>
                 <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
             <? $fst = false;} ?>
         </div>

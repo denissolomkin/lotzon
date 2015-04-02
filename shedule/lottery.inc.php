@@ -158,7 +158,7 @@ function ApplyLotteryTickets($comb)
 	$time = microtime(true);
 	echo '  Update win tickets: ';
 
-	$defaultCountry  = Config::instance()->defaultLang;
+	$defaultCountry  = 'RU'; //Config::instance()->defaultLang;
 	$select = $where = array();
 
 	$SQL = "SELECT

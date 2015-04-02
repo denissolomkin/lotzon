@@ -42,6 +42,7 @@ class SEO extends PrivateArea
         $seo['desc'] = $this->request()->post('description');
         $seo['kw'] = $this->request()->post('kw');
         $seo['pages'] = $this->request()->post('pages');
+        $seo['multilanguage'] = $this->request()->post('multilanguage');
 
         SEOModel::instance()->updateSEO($seo);
 

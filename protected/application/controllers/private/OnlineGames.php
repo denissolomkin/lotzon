@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \ShopModel, \OnlineGame, \OnlineGamesModel, \EntityException, \Admin, \SupportedCountriesModel,  \Session2;
+use \Application, \PrivateArea, \Config, \CountriesModel, \OnlineGame, \OnlineGamesModel, \EntityException, \Admin, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -21,15 +21,17 @@ class OnlineGames extends PrivateArea
     public function indexAction()
     {
        $games = OnlineGamesModel::instance()->getList();
-       $langs=Config::instance()->langs;
+       $langs = CountriesModel::instance()->getLangs();
+        $defaultLang = CountriesModel::instance()->defaultLang();
 
         $this->render('admin/ogames', array(
             'title'      => 'Онлайн-игры',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'games'      => $games,
-            'langs' => $langs,
-            'frontend'      => 'admin/games_frontend.php',
+            'langs'      => $langs,
+            'defaultLang'=> $defaultLang,
+            'frontend'   => 'admin/games_frontend.php',
         ));
     }
 

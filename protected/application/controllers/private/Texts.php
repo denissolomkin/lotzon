@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \StaticSiteText, \StaticSiteTextsModel, \Config, \Session2, \Admin;
+use \Application, \PrivateArea, \StaticSiteText, \CountriesModel, \StaticSiteTextsModel, \Config, \Session2, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
@@ -23,11 +23,13 @@ class Texts extends PrivateArea
     public function indexAction()
     {
         $list = StaticSiteTextsModel::instance()->getListGroupedByIdentifier();
+        $langs = CountriesModel::instance()->getLangs();
 
         $this->render('admin/texts', array(
             'title'      => 'Тексты на сайте',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
+            'langs'     => $langs,
             'list'       => $list,
         ));
     }

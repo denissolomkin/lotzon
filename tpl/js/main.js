@@ -1435,7 +1435,7 @@ function showWinPopup(data)
         if(won=$(ticketsHtml).find('ul[data-ticket="'+i+'"] li.won').length) {
             ticketsHtml += '<div class="yr-tt-tc">' + nominals[won - 1] + '</div>';
             nominal=nominals[won - 1].split(" ");
-            if(nominal[1]==playerCurrencyISO)
+            if(nominal[1]=getCurrency())
                 wonMoney+=parseFloat(nominal[0]);
             else
                 wonPoints+=parseInt(nominal[0]);
@@ -1768,7 +1768,7 @@ function activateQuickGame(key)
                             window.clearInterval(blinkInterval);
                             holder.find('.qg-msg').css('height',holder.find('.qg-tbl').css('height')).show().find('.txt').first().show().parent().find('.preloader').hide();
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
-                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>' + game.GamePrizes.MONEY*coefficient +' '+playerCurrency: '') + (game.GamePrizes.POINT ? '<br> ' + game.GamePrizes.POINT+' баллов' : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
+                                holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>' + getCurrency(game.GamePrizes.MONEY): '') + (game.GamePrizes.POINT ? '<br> ' + game.GamePrizes.POINT+' баллов' : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                                 if(game.GamePrizes.MONEY)
                                     updateMoney(playerMoney+parseFloat(game.GamePrizes.MONEY*coefficient));
                                 if(game.GamePrizes.POINT)
@@ -1809,7 +1809,7 @@ function previewQuickGamePrize(prize) {
             return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><img src="/filestorage/shop/' + prize.s + '"></div>';
             break;
         default:
-            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? prize.v*coefficient : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+playerCurrencyISO+'</small>':'' )+'</span></div>';
+            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? getCurrency(prize.v) : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+getCurrency()+'</small>':'' )+'</span></div>';
             break;
     }
 }
@@ -1823,8 +1823,8 @@ function genQuickGamePrize(prize) {
             return '<div><img src="/filestorage/shop/' + prize.s + '"></div>';
             break;
         default:
-            return '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? (prize.t=='money' ? prize.v*coefficient : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + '</div>' +
-            '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? playerCurrency : '') + '</div>';
+            return '<div style="margin: 0 0 -' + parseInt(quickGame.Field.h) / 15 + 'px 0;font-size:' + parseInt(quickGame.Field.h) / (prize.t == 'math' ? 1.7 : 2) + 'px;">' + (prize.v ? (prize.t=='money' ? getCurrency(prize.v,1) : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + '</div>' +
+            '<div style="margin-top:-' + parseInt(quickGame.Field.h) / 10 + 'px;font-size:' + parseInt(quickGame.Field.h) / 5 + 'px;">' + (prize.t == 'points' ? 'баллов' : prize.t == 'money' ? getCurrency(prize.v,2) : '') + '</div>';
             break;
     }
 }
@@ -2063,7 +2063,7 @@ $('.st-hy-bt').on('click', function(){
 
     // update history on open popup
     $( "div.bblock" ).each(function( index ) {
-        currency=$( this ).data('currency');
+        var currency=$( this ).data('currency');
         var div=$( this );
         getTransactions(0, currency, function(data) {
             if (data.res.length) {
@@ -2274,6 +2274,48 @@ function activateTicket() {
         }
     });
 };
+
+function getCurrency(value, part) {
+
+    var format=null;
+
+    if ($.inArray(part, ["iso","one","few","many"])>=0){
+        var format=part;
+        part=null;
+    }
+
+    if(!value || value=='' || value=='undefined')
+        value=null;
+
+
+    switch (value){
+        case null:
+            return currency['iso'];
+            break;
+        case 'coefficient':
+        case 'rate':
+            return (currency[value]?currency[value]:1);
+            break;
+        case 'iso':
+        case 'one':
+        case 'few':
+        case 'many':
+            return (currency[value]?currency[value]:currency['iso']);
+            break;
+        default:
+            value = round((parseFloat(value)*currency['coefficient']),2);
+            if((format=='many' || (!format && value>=5)) && currency['many']){
+                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['many']:'');
+            } else if((format=='few' || (!format && (value>1 || value<1))) && currency['few']){
+                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['few']:'');
+            } else if((format=='one' || (!format && value == 1)) && currency['one']){
+                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['one']:'');
+            } else {
+                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['iso']:'');
+            }
+            break;
+    }
+}
 
 function getText(key) {
     return(texts[key]?texts[key]:key);

@@ -72,7 +72,7 @@ class StaticSiteText extends Entity
                     throw new EntityException("Invalid identifier format", 400);   
                 }
 
-                if (!$this->getLang() || !in_array($this->getLang(), Config::instance()->langs)) {
+                if (!$this->getLang() || !\CountriesModel::instance()->isLang($this->getLang())) {
                     throw new EntityException("Invalid lang", 400);      
                 }
             break;

@@ -1,9 +1,8 @@
 <?php
 namespace controllers\admin;
-use \PrivateArea, \Application, \ShopModel, \ShopCategory, \SupportedCountriesModel, \Session2, \Admin, \ShopItem, \WideImage, \EntityException, \Config;
+use \PrivateArea, \Application, \ShopModel, \ShopCategory, \CountriesModel, \Session2, \Admin, \ShopItem, \WideImage, \EntityException, \Config;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
 Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
 Application::import(PATH_APPLICATION . '/model/entities/ShopCategory.php');
 Application::import(PATH_APPLICATION . '/model/entities/ShopItem.php');
@@ -25,7 +24,7 @@ class Shop extends PrivateArea
     public function indexAction($id = '')
     {
 
-        $supportedCountries = SupportedCountriesModel::instance()->getEnabledCountriesList();
+        $supportedCountries = CountriesModel::instance()->getCountries();
         $shop = ShopModel::instance()->loadShop();
         $this->render('admin/shop', array(
             'title'      => 'Товары',

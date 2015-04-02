@@ -1245,7 +1245,7 @@ position: relative;}
 .quickgame .qg-bk-pg .qg-msg .td {display:table-cell;vertical-align:middle;text-align:center;}
 .quickgame .qg-bk-pg .qg-bk-tl {color:#2f2f2f;font:30px/1 Handbook-bold;margin-bottom:10px;text-transform:uppercase;}
 .quickgame .qg-bk-pg .qg-txt {color:#404040;font:18px/19px Handbook-regular;margin-bottom:30px;}
-.quickgame .qg-bk-pg .qg-tbl {list-style:none;display:table;width:100%;margin:0;padding:0;}
+.quickgame .qg-bk-pg .qg-tbl {list-style:none;display:inline-block;width:100%;margin:0;padding:0;}
 
 .quickgame .qg-bk-pg .qg-tbl > li {
     width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;

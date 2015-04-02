@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Config,  \Hybrid_Auth, \Player, \EntityException, \WideImage,  \Common;
+use \Config, \Hybrid_Auth, \Player, \EntityException, \CountriesModel, \WideImage,  \Common;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -140,7 +140,7 @@ class AuthController extends \SlimController\SlimController {
                             $player->setCountry($profile->country);
                         }
                         else {
-                            $player->setCountry(Config::instance()->defaultLang);
+                            $player->setCountry(CountriesModel::instance()->defaultCountry());
                         }
                     }
 
@@ -159,13 +159,10 @@ class AuthController extends \SlimController\SlimController {
 
                         if($profile->email) {
 
+                            $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
                             $player->setValid(true)
                                 ->setDateLastLogin(time())
                                 ->create();
-
-                            if ($player->getId() <= 100000) {
-                                $player->addPoints(200, 'Бонус за регистрацию');
-                            }
 
                             if(!$player->isSocialUsed()) // If Social Id didn't use earlier
                                 $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
@@ -180,8 +177,8 @@ class AuthController extends \SlimController\SlimController {
                             if ($profile->photoURL)
                                 $player->uploadAvatar($profile->photoURL);
 
-                            if ($player->getId() <= 1000) {
-                                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+                            if ($player->getId() <= 100000) {
+                                $player->addPoints(200, 'Бонус за регистрацию');
                             }
 
                         }

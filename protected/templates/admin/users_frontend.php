@@ -422,8 +422,8 @@
                             <div class="col-my-2">
                                 <select name="country" class="form-control" placeholder="Страна" />
                                     <option value="">Страна:</option>
-                                <? foreach(\SupportedCountriesModel::instance()->getEnabledCountriesList() as $lang):?>
-                                    <option value="<?=$lang->getCountryCode();?>"><?=$lang->getCountryCode();?></option>
+                                <? foreach(\CountriesModel::instance()->getCountries() as $lang):?>
+                                    <option value="<?=$lang;?>"><?=$lang;?></option>
                                 <? endforeach;?>
                                 </select>
                             </div>
@@ -629,9 +629,13 @@
 
 <script>
 
-<? foreach(\SupportedCountriesModel::instance()->getEnabledCountriesList() as $lang)
-$langs[$lang->getCountryCode()]=$lang->getTitle();?>
+<? foreach(\CountriesModel::instance()->getLangs() as $lang)
+$langs[$lang]=$lang;?>
 langs=<?=json_encode($langs);?>;
+
+<? foreach(\CountriesModel::instance()->getCountries() as $lang)
+$countries[$lang]=$lang;?>
+countries=<?=json_encode($countries);?>;
 
 /* OEDERS BLOCK */
 $('.orders-trigger').on('click', function() {
@@ -688,7 +692,9 @@ $('.filter-trigger').on('click', function() {
 
 /* TICKETS BLOCK */
 $('.tickets-trigger').on('click', function() {
-    currency=($(this).parent().find('td.country').text()=='UA'?'грн':'руб');
+    var currency=($(this).parent().find('td.transactions-trigger').first().text());
+    currency = currency.split(' ');
+    currency=currency[1];
     $.ajax({
         url: "/private/users/tickets/" + $(this).data('id'),
         method: 'GET',
@@ -1121,10 +1127,18 @@ $('.profile-trigger').on('click', function() {
                 '<div class="input-group"><span class="input-group-addon">Страна</span>' +
                 '<select class="form-control" name="Country">';
 
-                if(!(user.Country in langs))
+                if(!(user.Country in countries))
                     html+='<option value="'+user.Country+'" selected>'+user.Country+'</option>';
-                $.each(langs, function(code,country){
+                $.each(countries, function(code,country){
                     html+='<option value="'+code+'" '+(code==user.Country?' selected':'')+'>'+country+'</option>';
+                });
+
+                html+='</select></div>' +
+                '<div class="input-group"><span class="input-group-addon">Язык</span>' +
+                '<select class="form-control" name="Lang">';
+
+                $.each(langs, function(code,country){
+                    html+='<option value="'+code+'" '+(code==user.Lang?' selected':'')+'>'+country+'</option>';
                 });
 
                 html+='</select></div>' +

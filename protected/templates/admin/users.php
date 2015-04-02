@@ -170,7 +170,7 @@
                             <? endif ?>
                         </td>
 
-                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> </td>
                         <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?></td>
                         <td><div class="right nobr">
 

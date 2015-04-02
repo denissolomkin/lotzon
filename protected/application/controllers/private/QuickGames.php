@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin, \SupportedCountriesModel,  \Session2;
+use \Application, \PrivateArea, \CountriesModel, \Config, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin,  \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -20,9 +20,10 @@ class QuickGames extends PrivateArea
 
     public function indexAction()
     {   
-       $shopItems = ShopModel::instance()->getAllItems(false);
-       $games = QuickGamesModel::instance()->getGamesSettings();
-       $langs=Config::instance()->langs;
+        $shopItems = ShopModel::instance()->getAllItems(false);
+        $games = QuickGamesModel::instance()->getGamesSettings();
+        $langs = CountriesModel::instance()->getLangs();
+        $defaultLang = CountriesModel::instance()->defaultLang();
 
         $this->render('admin/qgames', array(
             'title'      => 'Конструктор игр',
@@ -30,7 +31,8 @@ class QuickGames extends PrivateArea
             'activeMenu' => $this->activeMenu,
             'shopItems'  => $shopItems,
             'games'      => $games,
-            'langs' => $langs,
+            'langs'      => $langs,
+            'defaultLang'=> $defaultLang,
             'frontend'      => 'admin/games_frontend.php',
         ));
     }

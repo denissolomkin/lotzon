@@ -21,6 +21,8 @@ try {
 }catch (\EntityException $e) {}
 
 Config::instance()->newsCacheCount = 18;
+
+/*
 Config::instance()->langs = array('RU', 'UA', 'EN');
 Config::instance()->countryLangs = array(
     'UA' => 'UA',
@@ -34,7 +36,7 @@ Config::instance()->langCurrencies = array(
     'BY' => 'руб',
     'EN' => 'usd',
 );
-
+*/
 Config::instance()->errorMessages = array(
     'AGREE_WITH_RULES' => 'Вы должны ознакомиться с правилами',
     'EMPTY_EMAIL'      => 'Введите email',
@@ -60,6 +62,14 @@ Config::instance()->privateResources =  array(
     '/private/lottery/' => array(
         'get'  => 'controllers\admin\Lottery:index',
         'post' => 'controllers\admin\Lottery:save',
+    ),
+    '/private/countries/' => array(
+        'get'  => 'controllers\admin\Countries:index',
+        'post' => 'controllers\admin\Countries:save',
+    ),
+    '/private/currencies/' => array(
+        'get'  => 'controllers\admin\Currencies:index',
+        'post' => 'controllers\admin\Currencies:save',
     ),
     '/private/lottery/simulation' => array(
         'post' => 'controllers\admin\Lottery:simulation',
@@ -267,7 +277,6 @@ Config::instance()->publicResources = array(
     '/game/ticket/' => array(
         'post'  => 'controllers\production\Game:createTicket',
     ),
-    '/game/lastLottery/'  => 'controllers\production\Game:lastLottery',
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
     '/content/banner/:sector'      => 'controllers\production\ContentController:banner',

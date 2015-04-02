@@ -136,7 +136,7 @@
                             </div>
 
                         </td>
-                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso');?></td>
                         <td><?=$order->getItem()->getTitle()?></br><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice().' баллов')?></td>
 
 
@@ -302,7 +302,7 @@
                             </div>
 
                         </td>
-                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso');?></td>
                         <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                         <span class="label label-danger" ><?=$order->getCount()+1?></span>

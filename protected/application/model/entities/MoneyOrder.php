@@ -270,9 +270,7 @@ class MoneyOrder extends Entity
                         $this->setNumber($cardNumber);
                     break;
                     case self::GATEWAY_POINTS:
-                        $rate=LotterySettingsModel::instance()->loadSettings()->getCountryRate($this->getPlayer()->getCountry())?:
-                            LotterySettingsModel::instance()->loadSettings()->getCountryRate(Config::instance()->defaultLang);
-
+                        $rate=CountriesModel::instance()->getCountry($this->getPlayer()->getCountry())->loadCurrency()->getRate();
                         $this->setStatus(1)
                             ->setText('Конвертация денег')
                             ->getPlayer()

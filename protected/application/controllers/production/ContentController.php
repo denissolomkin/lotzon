@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
+use \Application, \Config, \Player, \EntityException, \CountriesModel, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -226,8 +226,8 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             'tickets' => array(),
         );
 
-        $langs = array();
         /*
+        $langs = array();
         foreach ($lotteryDetails['winners'] as $player) {
             $responseData['winners'][] = array(
                 'id'      => $player->getId(),
@@ -240,12 +240,13 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
         }
         */
         //print_r($lotteryDetails['tickets']);
+        $currency = CountriesModel::instance()->getCountry($this->session->get(Player::IDENTITY)->getCountry())->loadCurrency()->getTitle('iso');
         foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
             $response['tickets'][$playerId] = array();
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$this->session->get(Player::IDENTITY)->getCountry()]) : '',
+                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency) : '',
                 );
             }
         }

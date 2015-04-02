@@ -13,12 +13,17 @@ class Admin extends Entity
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
         'admins'=>array('name'=>'Администраторы','icon'=>'user-secret','css'=>'pull-right'),
 
+        'Страны'=>array('icon'=>'globe',
+            'pages'=>array(
+                'countries'=>array('icon'=>'globe','name'=>'Страны'),
+                'currencies'=>array('icon'=>'money','name'=>'Валюты'),
+                'texts'=>array('icon'=>'language','name'=>'Переводы'),
+            )),
+
         'Настройки'=>array('icon'=>'cogs',
             'pages'=>array(
                 'blacklist'=>array('icon'=>'minus-circle','name'=>'Blacklist'),
-                'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
                 'seo'=>array('icon'=>'crosshairs','name'=>'SEO'),
-                'texts'=>array('icon'=>'globe','name'=>'Тексты'),
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
             )),
 
@@ -34,12 +39,13 @@ class Admin extends Entity
 
         'Игры'=>array('icon'=>'trophy',
             'pages'=>array(
-                'games'=>array('icon'=>'cog','name'=>'Настройки'),
+                'games'=>array('icon'=>'cog','name'=>'Публикация игр'),
                 'qgames'=>array('icon'=>'puzzle-piece','name'=>'Конструктор игр'),
                 'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
                 'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
-                'chances'=>array('icon'=>'star-o','name'=>'Шансы'),
+                'lottery'=>array('icon'=>'gift','name'=>'Настройка лотереи'),
                 /*'gameoptions'=>array('name'=>'Настройки'),
+                'chances'=>array('icon'=>'star-o','name'=>'Шансы'),
                 'gamestats'=>array('name'=>'Статистика'),*/
             )),
 

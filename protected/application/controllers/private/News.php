@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \Admin, \Session2;
+use \Application, \PrivateArea, \NewsModel, \Config, \Admin, \Session2, \CountriesModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/NewsModel.php');
@@ -25,7 +25,7 @@ class News extends PrivateArea
     public function indexAction($lang = '')
     {   
         if (empty($lang)) {
-            $lang = Config::instance()->defaultLang;
+            $lang = CountriesModel::instance()->defaultLang();
         }
         $page = $this->request()->get('page', 1);
 

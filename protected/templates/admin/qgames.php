@@ -556,7 +556,7 @@
             for(y1=1;y1<=game.Field.y;y1++)
                 for(x1=1;x1<=game.Field.x;x1++)
                     html+="<li style='width: "+game.Field.w+"px;height: "+game.Field.h+"px;margin: 0 "+(x1!=game.Field.x?game.Field.r:0)+"px "+(y1!=game.Field.y?game.Field.b:0)+"px 0;'></li>"
-            holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>).next().text(game.Description.<?=\Config::instance()->defaultLang;?>).next().text(game.Field.c).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
+            holder.find('.t').text(game.Title.<?=$defaultLang;?>).next().text(game.Description.<?=$defaultLang;?>).next().text(game.Field.c).next().css('width',((parseInt(game.Field.w)+parseInt(game.Field.r))*parseInt(game.Field.x)-parseInt(game.Field.r))).html(html);
 
 
             var i=0;

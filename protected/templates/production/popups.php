@@ -398,15 +398,6 @@
             </section>
         </div>
         <!-- END END BLOCK -->
-<script>
-    /*$('.g-oc_li').click(function(){
-        var li = $(this);
-        $(this).find('.goc_li-nb').addClass('goc-nb-act');
-        setTimeout(function(){
-            li.removeClass('goc-tm');
-        }, 1000);
-    });*/
-</script>
 
         </div>
     </div>
@@ -425,19 +416,19 @@
                 <div class="padd">
                     <!-- exchange BLOCK -->
                         <div class="ttl-bk">
-                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/>на счету</i></div>
                             <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
 
                         </div>
 
                         <div class="fm-txt">
-                              <p>Введите сумму, которую хотите конвертировать в баллы.<br>Курс конвертации  1 <?=$currency?> = <span id="rate"><?=($gameInfo['rate'])?></span> баллов
+                              <p>Введите сумму, которую хотите конвертировать в баллы.<br>Курс конвертации  1 <?=$currency['iso']?> = <span id="rate"><?=($currency['rate'])?></span> баллов
                         </div>
 
 
                         <div class="ttl-bk" id="exchange-input">
                             <div class="pi-inp-bk l">
-                                <div class="ph"><?=$currency?></div>
+                                <div class="ph"><?=$currency['iso']?></div>
                                 <input autocomplete="off" spellcheck="false"  class="m_input" type="text" data-type="number" id="summ_exchange" name="summ" value="">
                             </div>
 
@@ -506,7 +497,7 @@
                     <div id="cash-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_MONEY?>">
                         <div class="ttl-bk">
                             <div class="nm">деньги</div>
-                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
+                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/>на счету</i></div>
                             <?/* <div class="bt">
                               <!--  <div class="if-bt money-exchange" onclick="$('#ta-his-popup').hide();$('#cash-exchange').click();">обменять</div> -->
                                 <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
@@ -636,40 +627,6 @@
         </div>
     </div>
 </div>
-
-<?/*
-<!--=========================================================================
-                            MOMENTUM POPUP CODE
-    ==========================================================================-->
-<div class="bl-pp-bk popup" id="mchance" data-points-win="<b><?=$chanceGames['moment']->getPointsWin()?></b> баллов">
-    <div class="bl-pp_table">
-        <div class="bl-pp_td">
-            <section class="momentum pop-box">
-                <div class="cs" onclick="location.reload();"></div>
-                <div class="mm-bk-pg" style="position:relative;">
-                    <div class="mm-bk-tl">Моментальный шанс</div>
-                    <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
-                    <div>
-                        <div class="mm-msg">
-                            <div class="td">
-                                <div class="txt">Поздравляем, баллы зачислены на Ваш баланс</div>
-                                <!--div class="rld" onclick="location.reload();">обновить страницу</div-->
-                            </div>
-                        </div>
-                        <ul class="mm-tbl" style="position: relative;">
-                            <li class="" data-num="1"></li>
-                            <li class="" data-num="2"></li>
-                            <li class="" data-num="3"></li>
-                        </ul>
-                        <div class="block" style="display:none;" >Загрузка...</div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-
-*/ ?>
 
 <!--=========================================================================
                             REPORT POPUP CODE

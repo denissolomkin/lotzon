@@ -420,9 +420,14 @@ class Player extends Entity
         return $date;
     }
 
-    public function setLang($country)
+    public function setLang($lang)
     {
-        $this->_lang = (in_array($country, \Config::instance()->langs) ? $country : \Config::instance()->defaultLang);
+
+        $this->_lang =
+            \CountriesModel::instance()->isLang($lang)
+                ? $lang
+                : \CountriesModel::instance()->defaultLang();
+
         return $this;
     }
 
@@ -1384,7 +1389,7 @@ class Player extends Entity
                  //->setDateAdBlocked($data['DateAdBlocked'])
                  //->setWebSocket($data['WebSocket'])
                  ->setCountry($data['Country'])
-                 ->setLang($data['Country'])
+                 ->setLang($data['Lang'])
                  ->setAvatar($data['Avatar'])
                  ->setAgent($data['Agent'])
                  ->setReferer($data['Referer'])

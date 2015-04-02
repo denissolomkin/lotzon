@@ -4,7 +4,7 @@ class SEODBProcessor
 {
     public function updateSEO($seo)
     {
-        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`) VALUES (:id, :title, :desc, :kw, :pages)";
+        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Multilanguage`) VALUES (:id, :title, :desc, :kw, :pages, :ml)";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
@@ -12,7 +12,8 @@ class SEODBProcessor
                 ':title' => $seo['title'],
                 ':desc'  => $seo['desc'],
                 ':kw'    => $seo['kw'],
-                ':pages'    => $seo['pages'],
+                ':pages' => $seo['pages'],
+                ':ml'    => $seo['multilanguage'],
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -36,6 +37,7 @@ class SEODBProcessor
             'desc'  => '',
             'kw'    => '',
             'pages'    => '',
+            'multilanguage'    => '',
         );
         if ($sth->rowCount()) {
             $row = $sth->fetch();
@@ -46,6 +48,7 @@ class SEODBProcessor
                 'desc'  => $row['Description'],
                 'kw'    => $row['Keywords'],
                 'pages'    => $row['Pages'],
+                'multilanguage'    => $row['Multilanguage'],
             );
         }
 
