@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \Session2, \SEOModel, \Admin;
+use \Application, \PrivateArea, \Config, \Session2, \SEOModel, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/SEOModel.php');
@@ -42,6 +42,7 @@ class SEO extends PrivateArea
         $seo['desc'] = $this->request()->post('description');
         $seo['kw'] = $this->request()->post('kw');
         $seo['pages'] = $this->request()->post('pages');
+        $seo['debug'] = $this->request()->post('debug');
         $seo['multilanguage'] = $this->request()->post('multilanguage');
 
         SEOModel::instance()->updateSEO($seo);

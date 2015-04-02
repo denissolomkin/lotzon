@@ -65,8 +65,21 @@
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
-
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <? if($debug){ ?>
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
+
+            <!-- Include Summernote JS file -->
+            <script src="/theme/admin/lib/summernote/summernote.js"></script>
+            <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
+
+            <!-- Latest compiled and minified CSS -->
+            <link href="/theme/admin/lib/admin.css" rel="stylesheet">
+            <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+            <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <? } ?>
 
         <? echo getScripts($banners['HeaderScripts'],$player); ?>
 
@@ -1351,6 +1364,71 @@
         <div id="ads">ads</div>
 
 */ ?>
+
+        <? if($debug){
+            $categories = array(
+            'nav'=>array('t'=>'Меню, кнопки и навигация', 'i'=>'sitemap'),
+            'text'=>array('t'=>'Тексты, описания', 'i'=>'paragraph'),
+            'popup'=>array('t'=>'Всплывающие сообщения', 'i'=>'comments'),
+            'error'=>array('t'=>'Ошибки, предупре- ждения', 'i'=>'exclamation-triangle'),
+            'seo'=>array('t'=>'SEO', 'i'=>'crosshairs'),
+            'bonus'=>array('t'=>'Бонусы и выигрыши', 'i'=>'gift'),
+            'promo'=>array('t'=>'Промо-страница', 'i'=>'home'),
+            'holder'=>array('t'=>'Поля, заголовки, холдеры', 'i'=>'terminal'),
+            'promo'=>array('t'=>'Тексты на промо', 'i'=>'home'),
+        ); ?>
+        <div class="modal fade texts" id="text-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="confirmLabel">Edit Text</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row-fluid" id="addForm">
+                            <form class="form">
+                                <input name="id" type="hidden">
+                                <div>
+                                    <? foreach ($categories as $category => $options) { ?>
+                                        <div data-category="<?=$category;?>" class="metal-gradient pointer category-trigger xs">
+                                            <i class='fa fa-<?= $options['i'] ?>'></i>
+                                            <span><?= $options['t'] ?></span>
+                                        </div>
+                                    <? } ?>
+                                </div>
+                                <div class="row-fluid clear">&nbsp;</div>
+                                <div class="form-group">
+                                    <label class="control-label">Идентификатор</label>
+                                    <input type="text" name="key" value="" placeholder="Идентификатор" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Текст</label>
+                                    <div id="text"></div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="btn-group">
+                                <? $fst = true; ?>
+                                <? foreach ($langs as $lang) { ?>
+                                    <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
+                                    <? $fst = false;} ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-success save">Сохранить</button>
+                        <button type="button" class="btn btn-default cls">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <? } ?>
+
         </div>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/backend.js"></script>
@@ -1399,6 +1477,154 @@
             'PLAY_ONE_MORE_TIME'      : 'Играть еще раз за {0} баллов',
         };
 
+        <? if($debug){ ?>
+
+    var currentEdit = {
+        id : 0,
+        key : '',
+        category : '',
+        texts : {}
+    };
+
+
+        $(document).on('click', '.category-trigger', function() {
+            currentEdit.category = $(this).data('category');
+            $('.category-trigger').removeClass('active');
+            $(this).addClass('active');
+        });
+
+    $(document).on('click', '.text-trigger', function() {
+
+        modal = $("#text-holder");
+        currentEdit.texts = {};
+        currentEdit.id = 0;
+        currentEdit.key = '';
+        currentEdit.category = '';
+        $('#text').code('');
+        $('input[name="id"]',modal).val(0);
+        $('input[name="key"]',modal).val('');
+
+        modal.modal().find('input:visible, textarea').val('');
+        modal.find('.cls').off('click').on('click', function() {modal.modal('hide');});
+
+        $('.lang', modal).removeClass('active');
+        $('.lang', modal).first().addClass('active');
+        $('.category-trigger', modal).removeClass('active');
+
+        if($(this).data('key')) {
+
+            $.ajax({
+                url: "/private/statictexts/" + $(this).data('key'),
+                method: 'GET',
+                async: true,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        currentEdit.texts = data.data.texts ? data.data.texts : {};
+                        currentEdit.id = data.data.id;
+                        currentEdit.category = data.data.category ? data.data.category : '';
+                        currentEdit.key = data.data.key;
+
+                        $('.category-trigger[data-category="'+currentEdit.category+'"]', modal).addClass('active');
+                        $('input[name="key"]',modal).val(currentEdit.key);
+
+                        if(currentEdit.texts && currentEdit.texts[$('.lang.active', modal).data('lang')])
+                            $('#text').code(currentEdit.texts[$('.lang.active', modal).data('lang')]);
+                        if(currentEdit.id)
+                            $('input[name="id"]',modal).val(currentEdit.id);
+
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function () {
+                    alert('Unexpected server error');
+                }
+            });
+        }
+        return false;
+    });
+
+    $(document).ready(function() {
+        $('#text').summernote({height: 200});
+        $('#text').code('');
+    });
+
+    $('.lang').on('click', function() {
+        var prevLang = $('.lang.active').data('lang');
+        var currentLang = $(this).data('lang');
+
+        currentEdit.texts[prevLang] = $('#text').code();
+
+        $('.lang').removeClass('active');
+        $(this).addClass('active');
+
+        if (currentEdit.texts[currentLang]) {
+            $('#text').code(currentEdit.texts[currentLang]);
+        } else {
+            $('#text').code('');
+        }
+    });
+
+    $('.save').on('click', function() {
+
+        var currentLang = $('.lang.active').data('lang');
+
+        $("#errorForm").hide();
+        $(this).find('.glyphicon').remove();
+
+        var prevKey=currentEdit.key;
+        currentEdit.id = $('input[name="id"]').val();
+
+        //currentEdit.category = $('.category-trigger.active').data('category');
+
+        currentEdit.key = $('input[name="key"]').val();
+        currentEdit.texts[currentLang] = $('#text').code();
+
+        if (!currentEdit.id) {
+            showError('Identifier can\'t be empty');
+            return false;
+        }
+
+        if (!currentEdit.texts[currentLang]) {
+            showError('Text can\'t be empty');
+            return false;
+        }
+
+        $.ajax({
+            url: "/private/statictexts/",
+            method: 'POST',
+            data: currentEdit,
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+
+                    $("#text-holder").modal('hide');
+                    text = currentEdit.texts[Object.keys(currentEdit.texts)[0]];
+                    if((div = $('.debug.text-trigger[data-key="'+prevKey+'"]')).length) {
+                        div.attr('data-key',currentEdit.key).html(text);
+                    }
+
+                } else {
+                    showError(data.message);
+                }
+
+            },
+            error: function() {
+                showError('Unexpected server error');
+           }
+        });
+    });
+
+    function showError(message) {
+        $(".error-container").text(message);
+        $("#errorForm").show();
+
+        $('.save').removeClass('btn-success').addClass('btn-danger');
+        $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
+    }
+        <? } ?>
         var quickGame = {};
         var online = 1;
         var page = <?=($seo['page']?1:0)?>;

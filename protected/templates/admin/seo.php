@@ -18,7 +18,7 @@
             <input type="text" class="form-control" id="kw" name="kw" placeholder="Keywords" value="<?=$seo['kw']?>">
           </div>
             <div class="form-group">
-                <label for="kw">Формат сайта</label>
+                <label for="pages">Формат сайта</label>
                 <select name="pages" class="form-control">
                     <option value="0">Одностраничный</option>
                     <option value="1" <?=$seo['pages']?' selected':''?>>Многостраничный</option>
@@ -29,6 +29,13 @@
                 <select name="multilanguage" class="form-control">
                     <option value="0">Отключена</option>
                     <option value="1" <?=$seo['multilanguage']?' selected':''?>>Включена</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="debug">Режим отладки</label>
+                <select name="debug" class="form-control">
+                    <option value="0">Отключен</option>
+                    <option value="1" <?=$seo['debug']?' selected':''?>>Включен</option>
                 </select>
             </div>
           <button type="submit" class="btn btn-success">Сохранить</button>

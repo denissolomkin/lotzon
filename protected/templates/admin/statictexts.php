@@ -38,7 +38,7 @@
     foreach ($categories as $category => $options) {
         ?>
         <a href="?category=<?=$category;?>">
-            <div class="metal-gradient category-trigger<?=$curCategory?' small':'';?>" <?=$curCategory==$category?' style="background: gray !important;"':'';?>>
+            <div class="metal-gradient <?=$curCategory?' small':'';?>" <?=$curCategory==$category?' style="background: gray !important;"':'';?>>
 
                 <i class='fa fa-<?= $options['i'] ?>'></i>
                 <span><?= $options['t'] ?></span>
@@ -84,11 +84,20 @@
                     <div class="row-fluid" id="addForm">
                         <form class="form">
                             <input name="id" type="hidden">
-                            <div class="form-group">
+                            <div>
+                            <? foreach ($categories as $category => $options) { ?>
+                                <div data-category="<?=$category;?>" class="metal-gradient pointer category-trigger xs<?=$curCategory==$category?' active':'';?>">
+                                    <i class='fa fa-<?= $options['i'] ?>'></i>
+                                    <span><?= $options['t'] ?></span>
+                                </div>
+                            <? } ?>
+                            </div>
+                            <div class="row-fluid clear">&nbsp;</div>
+                            <div>
                                 <label class="control-label">Идентификатор</label>
                                 <input type="text" name="key" value="" placeholder="Идентификатор" class="form-control" />
                             </div>
-                            <div class="form-group">
+                            <div>
                                 <label class="control-label">Текст</label>
                                 <div id="text"></div>
                             </div>
@@ -125,12 +134,20 @@
         texts : {}
     };
 
+    $(document).on('click', '.category-trigger', function() {
+        currentEdit.category = $(this).data('category');
+        $('.category-trigger').removeClass('active');
+        $(this).addClass('active');
+    });
+
     $(document).on('click', '.text-trigger', function() {
 
         modal = $("#text-holder");
         currentEdit.texts = {};
         currentEdit.id = 0;
         currentEdit.key = '';
+        currentEdit.category = '<?=$curCategory;?>';
+        category = currentEdit.category;
         $('#text').code('');
         $('input[name="id"]',modal).val(0);
         $('input[name="key"]',modal).val('');
@@ -143,6 +160,8 @@
         $('.lang', modal).removeClass('active');
         $('.lang', modal).first().addClass('active');
 
+        $('.category-trigger', modal).removeClass('active');
+        $('.category-trigger[data-category="<?=$curCategory;?>"]', modal).addClass('active');
 
         if($(this).data('key')) {
 
@@ -155,6 +174,7 @@
                     if (data.status == 1) {
                         currentEdit.texts = data.data.texts;
                         currentEdit.id = data.data.id;
+                        currentEdit.category = data.data.category;
                         currentEdit.key = data.data.key;
                         $('#text').code(currentEdit.texts[$('.lang.active', modal).data('lang')]);
                         $('input[name="id"]',modal).val(currentEdit.id);
@@ -224,6 +244,11 @@
                 if (data.status == 1) {
 
                     $("#text-holder").modal('hide');
+                    if(category!=currentEdit.category){
+                        if((div = $('tr[data-key="'+prevKey+'"]')).length) {
+                            div.remove();
+                        }
+                    } else {
                     text = currentEdit.texts[Object.keys(currentEdit.texts)[0]];
 
                     if((div = $('tr[data-key="'+prevKey+'"]')).length) {
@@ -233,6 +258,7 @@
                             '<td><strong>'+currentEdit.key+'</strong></td>'+
                             '<td><div class="text">'+text+'</div></td>'+
                             '</tr>').appendTo($('table.texts tbody'));
+                    }
                 } else {
                     showError(data.message);
                 }

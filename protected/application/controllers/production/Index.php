@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \OnlineGamesModel, \LotterySettingsModel, \StaticSiteTextsModel, \Application, \Config, \Player, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \CountriesModel, \SEOModel, \ChanceGamesModel, \GameSettingsModel, \QuickGamesModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \ChanceGamesModel, \GameSettingsModel, \QuickGamesModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -121,6 +121,7 @@ class Index extends \SlimController\SlimController
         $quickGames            = QuickGamesModel::instance()->getList();
         $gameSettings          = GameSettingsModel::instance()->getList();
         $langs                 = $seo['multilanguage'] ? CountriesModel::instance()->getLangs() : null;
+        $debug                 = \Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false;
 
         \StaticTextsModel::instance()->setLang($this->lang);
 
@@ -170,6 +171,7 @@ class Index extends \SlimController\SlimController
             'seo'         => $seo,
             'onlineGames' => $onlineGames,
             'langs'       => $langs,
+            'debug'       => $debug,
             'quickGames'  => $quickGames,
             'gameSettings'=> $gameSettings,
             'chanceGame'  => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,

@@ -34,6 +34,8 @@
       <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
       <link href="/theme/admin/lib/admin.css" rel="stylesheet">
 
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
   </head>
   <body style="">
       <div class="container-fluid text-center">
@@ -83,8 +85,6 @@
         </div>
       </div>
       <?=$yield?>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
   <script>
       function assignByPath(obj,path,value){
           console.log(path[0]);

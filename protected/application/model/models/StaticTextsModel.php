@@ -36,9 +36,15 @@ class StaticTextsModel extends Model
             $this->setLang();
 
         if (isset($this->_list[$key])){
-            return $this->_list[$key]->getText($this->_lang);
+            $text = $this->_list[$key]->getText($this->_lang);
         } else
-            return $key;
+            $text = $key;
+
+        if(\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug']){
+            $text="<div class='debug text-trigger' data-key='{$key}'>{$text}</div>";
+        }
+
+        return $text;
     }
 
     public function getList()

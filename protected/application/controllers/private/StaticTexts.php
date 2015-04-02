@@ -47,7 +47,16 @@ class StaticTexts extends PrivateArea
                     array(
                         'id'  => $text->getId(),
                         'key'  => $text->getKey(),
+                        'category'  => $text->getCategory(),
                         'texts'    => $text->getText()
+                    ));
+        else
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    =>
+                    array(
+                        'key'  => $key,
                     ));
 
         die(json_encode($response));

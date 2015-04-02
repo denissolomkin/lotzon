@@ -4,7 +4,7 @@ class SEODBProcessor
 {
     public function updateSEO($seo)
     {
-        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Multilanguage`) VALUES (:id, :title, :desc, :kw, :pages, :ml)";
+        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Debug`, `Multilanguage`) VALUES (:id, :title, :desc, :kw, :dbg, :pages, :ml)";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
@@ -12,6 +12,7 @@ class SEODBProcessor
                 ':title' => $seo['title'],
                 ':desc'  => $seo['desc'],
                 ':kw'    => $seo['kw'],
+                ':dbg'    => $seo['debug'],
                 ':pages' => $seo['pages'],
                 ':ml'    => $seo['multilanguage'],
             ));
@@ -37,6 +38,7 @@ class SEODBProcessor
             'title' => '',
             'desc'  => '',
             'kw'    => '',
+            'debug'    => '',
             'pages'    => '',
             'multilanguage'    => '',
         );
@@ -48,6 +50,7 @@ class SEODBProcessor
                 'title' => $row['Title'],
                 'desc'  => $row['Description'],
                 'kw'    => $row['Keywords'],
+                'debug'    => $row['Debug'],
                 'pages'    => $row['Pages'],
                 'multilanguage'    => $row['Multilanguage'],
             );
