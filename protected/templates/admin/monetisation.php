@@ -1,4 +1,4 @@
-<div class="container-fluid">    
+<div class="container-fluid users">
     <div class="row-fluid" id="items">
         <h2>Запросы на вывод товаров (<span id="shopCount"><?=$shopCount?></span>) <button class="btn btn-info" onclick="location.href='#money'"><i class="glyphicon glyphicon-hand-down"></i></button>
 

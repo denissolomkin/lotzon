@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h2>Счетчики</h2>
+        <hr />
+    </div>
+
+    <div class="row-fluid">
+        <form role="form" action="/private/counters" method="POST">
+            <? foreach(
+                array(
+                    'MONEY_ADD_INCREMENT'=>'Добавление к общей сумме выигрыша (ежедневное увеличение)',
+                    'MONEY_ADD'=>'Добавление к общей сумме выигрыша',
+                    'WINNERS_ADD'=>'Добавление к общему количеству победителей',
+                    'PLAYER_TIMEOUT'=>'Таймаут, через который игрок считается оффлайн (сек)',
+                    'NEWS_PER_PAGE'=>'Новостей на странице',
+                    'SHOP_PER_PAGE'=>'Товаров на странице',
+                    'LOTTERIES_PER_PAGE'=>'Лотерей на странице',
+                    'PLAYERS_PER_PAGE'=>'Пользователей на странице',
+                    'ORDERS_PER_PAGE'=>'Заявок на странице',
+                    'TRANSACTIONS_PER_PAGE'=>'Транзакций на странице',
+                    'COMMENTS_PER_PAGE'=>'Комментариев на странице',
+                    'REVIEWS_PER_PAGE'=>'Отзывов на странице') as $index => $title) { ?>
+                <div class="form-group">
+                    <label for="title"><?=$title;?></label>
+                    <input type="text" class="form-control" name="counters[<?=$index?>]" value="<?=$list[$index]?>">
+                </div>
+            <? } ?>
+
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+
+<? if($frontend) include($frontend.'_frontend.php') ?>

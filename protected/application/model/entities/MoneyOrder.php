@@ -8,12 +8,12 @@ class MoneyOrder extends Entity
 
     const FOR_UPDATE = true;
     
-    const GATEWAY_PHONE     = 'phone';
+    const GATEWAY_PHONE    = 'phone';
     const GATEWAY_QIWI     = 'qiwi';
     const GATEWAY_WEBMONEY = 'webmoney';
     const GATEWAY_YANDEX   = 'yandex';
     const GATEWAY_P24      = 'private24';
-    const GATEWAY_POINTS      = 'points';
+    const GATEWAY_POINTS   = 'points';
 
     private $_id       = 0;
     private $_type     = '';

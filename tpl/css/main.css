@@ -1143,7 +1143,7 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt.hover, .csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt.check {background-color:#000;color:#ffe400;}
 .csh-ch-bk .padd .form .inp-fl-bk .f_input {width:220px;height:30px;position:absolute;top:0;right:0;opacity:0;}
 .csh-ch-bk .padd .form .s-b {margin:50px 0 40px 0;}
-.csh-ch-bk .padd .form .s-b .sb_but {width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
+.csh-ch-bk .padd .form .s-b .sb_but {box-sizing: border-box;width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
 .csh-ch-bk .padd .form .s-b .sb_but:hover {border-color:#000;color:#000;}
 .csh-ch-bk .padd .form .purse-ch-bk {overflow:hidden;margin-bottom:30px;}
 .csh-ch-bk .padd .form .purse-ch-bk .ps-ch-tl {width:155px;float:left;font:18px/20px Handbook-regular;color:#000;}

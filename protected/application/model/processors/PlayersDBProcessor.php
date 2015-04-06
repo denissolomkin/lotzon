@@ -391,7 +391,7 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                 SUM(Money / IFNULL((SELECT `Coefficient` FROM `Countries` cn LEFT JOIN `Currency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
                 SUM(Points) Points,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-Config::instance()->playerOfflineTimeout).") o) Online,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
@@ -430,7 +430,7 @@ class PlayersDBProcessor implements IProcessor
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $sql .= ' WHERE ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ping')
-                $sql .= ' WHERE `PlayerDates`.Ping > '.time()-Config::instance()->playerOfflineTimeout;
+                $sql .= ' WHERE `PlayerDates`.Ping > '.(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300));
             elseif($search['where'] AND $search['where']=='Ip')
                 $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -530,7 +530,7 @@ class PlayersDBProcessor implements IProcessor
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $search = ' WHERE `Players`.ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ping')
-                $search = ' WHERE `PlayerDates`.Ping > '.time()-Config::instance()->playerOfflineTimeout;
+                $search = ' WHERE `PlayerDates`.Ping > '.(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300));
             elseif($search['where'] AND $search['where']=='Ip')
                 $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])

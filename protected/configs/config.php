@@ -18,11 +18,16 @@ try {
 // init database connection
 try {
     DB::Connect('default', Config::instance()->dbConnectionProperties);
-}catch (\EntityException $e) {}
+} catch (\EntityException $e) {}
 
-Config::instance()->newsCacheCount = 18;
+
+Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 
 /*
+Config::instance()->newsCacheCount = 18;
+Config::instance()->playerOfflineTimeout = 5 * 60;
+Config::instance()->generatorNumTries = 20;
+
 Config::instance()->langs = array('RU', 'UA', 'EN');
 Config::instance()->countryLangs = array(
     'UA' => 'UA',
@@ -36,7 +41,6 @@ Config::instance()->langCurrencies = array(
     'BY' => 'руб',
     'EN' => 'usd',
 );
-*/
 Config::instance()->errorMessages = array(
     'AGREE_WITH_RULES' => 'Вы должны ознакомиться с правилами',
     'EMPTY_EMAIL'      => 'Введите email',
@@ -51,6 +55,7 @@ Config::instance()->errorMessages = array(
     'BLOCKED_IP'        => 'Регистрация пользователя запрещена',
     'ACCESS_DENIED'        => 'Доступ запрещен'
 );
+*/
 
 Config::instance()->privateResources =  array(
     '/private/' => 'controllers\admin\Users:index',
@@ -210,6 +215,14 @@ Config::instance()->privateResources =  array(
     '/private/banner/'      => array(
               'post' => 'controllers\admin\Banners:banner',
     ),
+    '/private/bonuses/' => array(
+        'get'  => 'controllers\admin\Bonuses:index',
+        'post' => 'controllers\admin\Bonuses:save',
+    ),
+    '/private/counters/' => array(
+        'get'  => 'controllers\admin\Counters:index',
+        'post' => 'controllers\admin\Counters:save',
+    ),
     '/private/blacklist/'      => array(
         'get' => 'controllers\admin\Blacklist:index',
         'post' => 'controllers\admin\Blacklist:save',
@@ -321,9 +334,6 @@ Config::instance()->publicResources = array(
     ),
 );
 
-Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
-Config::instance()->playerOfflineTimeout = 5 * 60;
-Config::instance()->generatorNumTries = 20;
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
@@ -361,6 +371,7 @@ Config::instance()->hybridAuth = array(
     )
 );
 
+/*
 Config::instance()->vkCredentials = array(
     'appId'        => '4617228',
     'secret'       => 'hbTNQKCHQ03tk5XLISmy',
@@ -392,11 +403,13 @@ Config::instance()->blockedEmails = array(
     'objectmail.com', 'proxymail.eu', 'rcpt.at', 'trash-mail.at', 'trashmail.at', 'trashmail.me',
     'trashmail.net', 'wegwerfmail.de', 'wegwerfmail.net', 'wegwerfmail.org', 'jourrapide.com'
 );
+*/
 
+/*
 // init config from DB
 $sth = DB::Connect()->prepare("SELECT * FROM `Config`");
 $sth->execute();
 if ($sth->rowCount())
     foreach ($sth->fetchAll() as $config)
         Config::instance()->$config['Key']=unserialize($config['Value']);
-
+*/

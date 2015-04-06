@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \PrivateArea, \Application, \ShopModel, \ShopCategory, \CountriesModel, \Session2, \Admin, \ShopItem, \WideImage, \EntityException, \Config;
+use \PrivateArea, \Application, \ShopModel, \ShopCategory, \CountriesModel, \Session2, \Admin, \ShopItem, \WideImage, \EntityException, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
@@ -16,9 +16,9 @@ class Shop extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction($id = '')

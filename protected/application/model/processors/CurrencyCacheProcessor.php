@@ -40,7 +40,7 @@ class CurrencyCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function fetch(Entity $currency) {
 
         $list = $this->getList();
-        if(isset($list[$currency->getId]) && $currency->formatFrom('CLASS',$list[$currency->getId])) {
+        if(isset($list[$currency->getId()]) && $currency->formatFrom('CLASS',$list[$currency->getId()])) {
             return $currency;
         } elseif(is_array($list) && !empty($list) && $currency->formatFrom('CLASS',reset($list))) {
             return $currency;

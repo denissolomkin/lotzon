@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \PrivateArea, \Application, \Session2, \Admin, \WideImage, \EntityException, \Config;
+use \PrivateArea, \Application, \Session2, \Admin, \SettingsModel;
 
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
@@ -13,9 +13,9 @@ class Partners extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
@@ -35,7 +35,7 @@ class Partners extends PrivateArea
                             array_unshift($images,array('name'=>$file,'size'=>($size? array($size[0],$size[1]):false)));
                     }
 
-        $list = Config::instance()->partners;
+        $list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
         $this->render('admin/partners', array(
             'title'      => 'Партнеры',
             'layout'     => 'admin/layout.php',
@@ -51,7 +51,7 @@ class Partners extends PrivateArea
     {
         if($partners=$this->request()->post('partners')) {
             $partners=array_filter($partners);
-            Config::instance()->save('partners', $partners);
+            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($partners)->create();
         }
 
         $this->redirect('/private/partners');

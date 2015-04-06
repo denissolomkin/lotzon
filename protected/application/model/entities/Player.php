@@ -18,10 +18,6 @@ class Player extends Entity
     const AVATAR_WIDTH  = 160;
     const AVATAR_HEIGHT = 160;
 
-    const REFERAL_INVITE_COST = 20;
-    const SOCIAL_POST_COST = 20;
-    const SOCIAL_PROFILE_COST = 40;
-
     private $_id         = 0;
     private $_email      = '';
     private $_password   = '';
@@ -1071,7 +1067,8 @@ class Player extends Entity
     protected function validIp()
     {
 
-        if (is_array(Config::instance()->blockedIps) && (in_array($this->getIp(), Config::instance()->blockedIps) || $this->getLastIp() && in_array($this->getLastIp(), Config::instance()->blockedIps))) {
+        $blockedIps=SettingsModel::instance()->getSettings('blockedIps')->getValue();
+        if ((in_array($this->getIp(), $blockedIps) || $this->getLastIp() && in_array($this->getLastIp(), $blockedIps))) {
             throw new EntityException('BLOCKED_IP', 400);
         }
 
@@ -1088,7 +1085,7 @@ class Player extends Entity
         } 
 
         $emailDomain = substr(strrchr($this->getEmail(), "@"), 1);
-        if (in_array($emailDomain, Config::instance()->blockedEmails)) {
+        if (in_array($emailDomain, SettingsModel::instance()->getSettings('blockedEmails')->getValue())) {
             throw new EntityException('BLOCKED_EMAIL_DOMAIN', 400);
         }
 
@@ -1289,8 +1286,10 @@ class Player extends Entity
             */
             // add bonuses to inviter and delete invite
             try {
-                if(!$this->getReferer()){
-                    $invite->getInviter()->addPoints(EmailInvite::INVITE_COST, 'Приглашение друга ' . $this->getEmail());
+                if(!$this->getReferer() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_email_invite')){
+                    $invite->getInviter()->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_email_invite'),
+                        StaticTextsModel::instance()->setLang($this->getLang())->getText('bonus_email_invite'). $this->getEmail());
                 }
                 $invite->delete();
             } catch (EntityException $e) {}
@@ -1310,10 +1309,12 @@ class Player extends Entity
         // add referal points on first login
         if ($this->getReferalId() && !$this->isReferalPaid()) {
             try {
-                if(!$this->getReferer()){
+                if(!$this->getReferer() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_referal_invite')){
                     $refPlayer = new Player();
                     $refPlayer->setId($this->getReferalId())->fetch();
-                    $refPlayer->addPoints(Player::REFERAL_INVITE_COST, 'Регистрация по вашей ссылке #'.$this->getId());
+                    $refPlayer->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_referal_invite'),
+                        StaticTextsModel::instance()->setLang($this->getLang())->getText('bonus_referal_invite') .$this->getId());
                 }
                 $this->markReferalPaid();
             } catch (EntityException $e) {}

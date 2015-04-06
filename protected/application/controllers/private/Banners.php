@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Admin,  \CountriesModel, \QuickGamesModel, \Session2;
+use \Application, \PrivateArea, \SettingsModel, \Admin,  \CountriesModel, \QuickGamesModel, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -13,14 +13,14 @@ class Banners extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {
-        $list = Config::instance()->banners;
+        $list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
         $games = QuickGamesModel::instance()->getGamesSettings();
         $supportedCountries = CountriesModel::instance()->getCountries();
 
@@ -53,8 +53,9 @@ class Banners extends PrivateArea
     public function saveAction()
     {
 
-        // print_r($this->request()->post('banners'));
-       Config::instance()->save('banners',$this->request()->post('banners'));
+        if($this->request()->post('banners'))
+            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($this->request()->post('banners'))->create();
+        //Config::instance()->save('banners',$this->request()->post('banners'));
         $this->redirect('/private/banners');/* */
     }
 

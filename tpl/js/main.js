@@ -1657,7 +1657,7 @@ $(document).on('click','#qgame .start',function () {
         buildQuickGame,
         function(data) {
             $('#report-popup .cs').on('click', function() {location.reload();});
-            $('#report-popup').show().find('.txt').text(getText(data.message));},
+            $('#report-popup').show().find('.txt').html(getText(data.message));},
         function() {alert('error')});
 
 });
@@ -1675,11 +1675,11 @@ function buildQuickGame(data) {
             html+="<li data-cell='"+x1+"x"+y1+"' style='width: "+quickGame.Field.w+"px;height: "+quickGame.Field.h+"px;margin: 0 "+(x1!=quickGame.Field.x?quickGame.Field.r:0)+"px "+(y1!=quickGame.Field.y?quickGame.Field.b:0)+"px 0;'></li>";
     width=((parseInt(quickGame.Field.w)+parseInt(quickGame.Field.r))*parseInt(quickGame.Field.x)-parseInt(quickGame.Field.r));
     quickGame.Field.p = quickGame.Field.p || 0;
-    $('.qg-bk-tl',holder).text(quickGame.Title);
+    $('.qg-bk-tl',holder).html(quickGame.Title);
     $('.qg-txt', holder).html(quickGame.Description);
     $('.qg-tbl', holder).css('width',width).html(html).parents('section.pop-box').css('width',width+80);
-    $('.qg-bk-pr',holder).text(quickGame.Field.p);
-    $('.qg-msg .bt', holder).text(getText('PLAY_ONE_MORE_TIME').format(quickGame.Field.p)).attr('data-game',quickGame.Id).attr('data-key',quickGame.Key);
+    $('.qg-bk-pr',holder).html(quickGame.Field.p);
+    $('.qg-msg .bt', holder).html(getText('PLAY_ONE_MORE_TIME').format(quickGame.Field.p)).attr('data-game',quickGame.Id).attr('data-key',quickGame.Key);
 
     if (quickGame.Timeout) {
         window.setTimeout(function(){ location.reload(); },(quickGame.Timeout>0 ? quickGame.Timeout * 1000 : 1));
@@ -1811,7 +1811,7 @@ function activateQuickGame(key)
                 cell.html('');
                 if(data.message=='CHEAT_GAME' || data.message=='TIME_NOT_YET')
                     $('#report-popup .cs').on('click', function() {location.reload();});
-                    $('#report-popup').show().find('.txt').text(getText(data.message));},
+                    $('#report-popup').show().find('.txt').html(getText(data.message));},
             function() {
                 cell.html('');
                 alert('error')}

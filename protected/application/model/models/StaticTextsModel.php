@@ -24,7 +24,8 @@ class StaticTextsModel extends Model
 
     public function setLang($lang=null)
     {
-        return $this->_lang = $lang?:\CountriesModel::instance()->defaultLang();
+        $this->_lang = $lang?:\CountriesModel::instance()->defaultLang();
+        return $this;
     }
 
     public function getText($key)

@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \CurrencyModel, \CountriesModel, \Country, \Admin, \Config;
+use \Session2, \Application, \EntityException, \CurrencyModel, \CountriesModel, \Country, \Admin, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/CountriesModel.php');
@@ -15,9 +15,9 @@ class Countries extends \PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()

@@ -1,8 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Session2, \Admin, \WideImage, \PlayersModel;
-use controllers\production\Players;
+use \Application, \PrivateArea, \SettingsModel, \Session2, \Admin, \WideImage, \PlayersModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -14,16 +13,16 @@ class GameBots extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {
 
         $ids = PlayersModel::instance()->getAvailableIds();
-        if(is_array($list = Config::instance()->gameBots))
+        if(is_array($list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue()))
             $ids = array_diff($ids,array_keys($list));
 
         $this->render('admin/gamebots', array(
@@ -38,7 +37,7 @@ class GameBots extends PrivateArea
     public function saveAction()
     {
         if($this->request()->post('bots'))
-            Config::instance()->save('gameBots',$this->request()->post('bots'));
+            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($this->request()->post('bots'))->create();
 
         $this->redirect('/private/gamebots');
     }

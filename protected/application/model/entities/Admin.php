@@ -7,7 +7,6 @@ class Admin extends Entity
 
     static $ROLES = array('ADMIN','MANAGER','MODERATOR','DEVELOPER');
     static $PAGES = array(
-
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
         'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-o-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
@@ -26,6 +25,8 @@ class Admin extends Entity
                 'blacklist'=>array('icon'=>'minus-circle','name'=>'Blacklist'),
                 'seo'=>array('icon'=>'crosshairs','name'=>'SEO'),
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
+                'bonuses'=>array('icon'=>'','name'=>'Бонусы'),
+                'counters'=>array('icon'=>'','name'=>'Счетчики'),
             )),
 
         'Контент'=>array('icon'=>'th-list',
@@ -44,12 +45,8 @@ class Admin extends Entity
                 'qgames'=>array('icon'=>'puzzle-piece','name'=>'Конструктор игр'),
                 'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
                 'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
-                'lottery'=>array('icon'=>'gift','name'=>'Настройка лотереи'),
-                /*'gameoptions'=>array('name'=>'Настройки'),
-                'chances'=>array('icon'=>'star-o','name'=>'Шансы'),
-                'gamestats'=>array('name'=>'Статистика'),*/
+                'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
             )),
-
     );
 
 

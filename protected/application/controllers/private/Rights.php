@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Session2, \Admin;
+use \Application, \PrivateArea, \Session2, \SettingsModel, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -13,19 +13,21 @@ class Rights extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {;
 
+        $rights    = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
+
         $this->render('admin/rights', array(
             'title'       => 'Права доступа',
             'layout'      => 'admin/layout.php',
             'activeMenu'  => $this->activeMenu,
-            'rights'      => Config::instance()->rights,
+            'rights'      => $rights,
             'pages'       => Admin::$PAGES,
             'roles'       => Admin::$ROLES,
         ));
@@ -34,7 +36,7 @@ class Rights extends PrivateArea
     public function saveAction()
     {
         if($this->request()->post('rights'))
-            Config::instance()->save('rights',$this->request()->post('rights'));
+            SettingsModel::instance()->getSettings('rights')->setValue($this->request()->post('rights'))->create();
 
         $this->redirect('/private/rights');
     }

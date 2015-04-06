@@ -4,14 +4,14 @@
    ========================================================================== */
 .btn-xs {padding: 1px 4px;min-width: 17px;height: 19px;font-size: 12px;margin: -2px 0px;}
 .btn-xs {padding: 1px;}
-.sl-bk {background-size: 125px;float:right;margin: -2px 0;width:20px;height:20px;display:block;background-image:url("../../../tpl/img/bg-profile-repost-social-new.png");background-repeat:no-repeat; opacity: 0.5;}
-.sl-bk.active {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png");}
-.sl-bk:hover {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png"); opacity: 1;}
-.sl-bk.Twitter {background-position:-83px 3px;}
-.sl-bk.Google {background-position:-54px 2px;}
-.sl-bk.Vkontakte {background-position:-20px 3px;}
-.sl-bk.Facebook {background-position:6px 1px;}
-.sl-bk.Odnoklassniki {background-position:-105px 1px;}
+.users .sl-bk {background-size: 125px;float:right;margin: -2px 0;width:20px;height:20px;display:block;background-image:url("../../../tpl/img/bg-profile-repost-social-new.png");background-repeat:no-repeat; opacity: 0.5;}
+.users .sl-bk.active {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png");}
+.users .sl-bk:hover {background-image:url("../../../tpl/img/bg-profile-repost-social-hover-new.png"); opacity: 1;}
+.users .sl-bk.Twitter {background-position:-83px 3px;}
+.users .sl-bk.Google {background-position:-54px 2px;}
+.users .sl-bk.Vkontakte {background-position:-20px 3px;}
+.users .sl-bk.Facebook {background-position:6px 1px;}
+.users .sl-bk.Odnoklassniki {background-position:-105px 1px;}
 .pointer, .upload {cursor:pointer;}
 .pointer:hover {color:#008cba;}
 .hidden {display: none;}
@@ -62,7 +62,7 @@ vertical-align: middle;}
     background-repeat: repeat, repeat, no-repeat;
     background-position: 1px 1px, 0px 0px, center center;
 }
-.debug {background-color: #ffff00;}
+.debug {background-color: #ffff00; cursor: cell;}
 .texts .metal-gradient:hover{opacity: 0.8;  }
 .texts .category-trigger.active{background:#ccc !important;}
 .texts td .text {max-height: 70px;overflow: hidden;}
@@ -70,8 +70,8 @@ vertical-align: middle;}
 .texts .metal-gradient.small span{ display: none;}
 .texts .metal-gradient.small{ width: 50px;height: 50px;padding: 0px;margin: 1px;}
 
-.texts .metal-gradient.xs .fa{font-size: 21px;padding: 5px;width: 100%;}
-.texts .metal-gradient.xs span{ display: none;}
+.texts .metal-gradient.xs .fa{font-size: 21px;padding: 0px;width: 100%;}
+.texts .metal-gradient.xs span{font-size: 9px;font-weight: 100;overflow: hidden;width: 100%;line-height: 1;height: 9px;display: block;margin-top: 1px;}
 .texts .metal-gradient.xs{ width: 40px;height: 40px;padding: 4px;margin: 1px;}
 
 .glyphicon-scale:before {
@@ -411,7 +411,8 @@ min-height: 17px;
 .qgames #prizes .label {width: 100%;display: block;}
 .qgames #prizes .empty-prize{   width: 100px; height: 100px; background: url("/theme/admin/img/photo-icon-plus.png") no-repeat 0 0 / 100% 100%;margin-top: 10px; cursor: pointer;}
 .qgames .prize input:last-of-type {text-align: right;}
-.agames .t .fa {position: absolute;left:10px;top:12px;}
+.agames .t {font-size: 24px;}
+.agames .t .fa {float:left;left:10px;top:12px;font-size: 1.4em;}
 .agames .game-builds,.ogames .game-builds,.qgames .game-builds {
     width: 100%;
     float: left;

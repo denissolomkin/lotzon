@@ -207,20 +207,20 @@
                 <? if($seo['multilanguage'] && is_array($langs)){?>
                     <div class="multilanguage">
                     <? foreach($langs as $lang){?>
-                        <div data-lang="<?=($lang)?>" class="flag flag-<?=strtolower($lang)?>"></div>
+                        <div data-lang="<?=($lang)?>" class="flag <?=$lang==$player->getLang()?'active ':''?>flag-<?=strtolower($lang)?>"></div>
                 <?}?></div>
                 <?}?>
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-jack-pot')?><br/><br/></div>
+                            <div class="tl"><?=$MUI->getText('placeholder-jack-pot')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][6]['sum'])?> <span><?=$currency['iso']?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <? foreach ($lotteries as $lottery) { ?>
-                                <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-lottery-from')?><br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <div class="tl"><?=$MUI->getText('placeholder-lottery-from')?><br/><?=date('d.m.Y', $lottery->getDate())?></div>
                                 <ul class="rt-bk">
                                     <? foreach ($lottery->getCombination() as $num) { ?>
                                         <li class="rt-bk_li"><?=$num?></li>
@@ -231,19 +231,19 @@
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-total-players')?><br/><br/></div>
+                            <div class="tl"><?=$MUI->getText('placeholder-participants')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-money-win')?><br/><br/></div>
+                            <div class="tl"><?=$MUI->getText('placeholder-winners')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl"><?=\StaticTextsModel::instance()->getText('placeholder-total-win')?><br/><br/></div>
+                            <div class="tl"><?=$MUI->getText('placeholder-total-win')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency['iso']?></span></b>
                         </div>
                     </div>
@@ -257,29 +257,29 @@
                 <div id="logo-gotop"></div>
                 <? if($seo['pages']) :?>
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($seo['pages']=='tickets'?' now':'')?>"><a href="/tickets"><?=\StaticTextsModel::instance()->getText('menu-lottery')?></a></li>
-                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($seo['pages']=='prizes'?' now':'')?>"><a href="/prizes"><?=\StaticTextsModel::instance()->getText('menu-prizes')?></a></li>
-                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=\StaticTextsModel::instance()->getText('menu-news')?></a></li-->
-                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($seo['pages']=='reviews'?' now':'')?>"><a href="/reviews"><?=\StaticTextsModel::instance()->getText('menu-reviews')?></a></li>
-                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($seo['pages']=='rules'?' now':'')?>"><a href="/rules"><?=\StaticTextsModel::instance()->getText('menu-rules')?></a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($seo['pages']=='profile'?' now':'')?>"><a href="/profile"><?=\StaticTextsModel::instance()->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($seo['pages']=='chance'?' now':'')?>"><a href="/chance"><?=\StaticTextsModel::instance()->getText('menu-games')?></a></li>
-                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('menu-logout')?></a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($seo['pages']=='tickets'?' now':'')?>"><a href="/tickets"><?=$MUI->getText('menu-lottery')?></a></li>
+                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($seo['pages']=='prizes'?' now':'')?>"><a href="/prizes"><?=$MUI->getText('menu-prizes')?></a></li>
+                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=$MUI->getText('menu-news')?></a></li-->
+                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($seo['pages']=='reviews'?' now':'')?>"><a href="/reviews"><?=$MUI->getText('menu-reviews')?></a></li>
+                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($seo['pages']=='rules'?' now':'')?>"><a href="/rules"><?=$MUI->getText('menu-rules')?></a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($seo['pages']=='profile'?' now':'')?>"><a href="/profile"><?=$MUI->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($seo['pages']=='chance'?' now':'')?>"><a href="/chance"><?=$MUI->getText('menu-games')?></a></li>
+                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=$MUI->getText('menu-logout')?></a></li>
                 </ul>
                 <? else :?>
                     <ul class="tn-mbk">
-                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets"><?=\StaticTextsModel::instance()->getText('menu-lottery')?></a></li>
-                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes"><?=\StaticTextsModel::instance()->getText('menu-prizes')?></a></li>
-                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=\StaticTextsModel::instance()->getText('menu-news')?></a></li-->
-                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews"><?=\StaticTextsModel::instance()->getText('menu-reviews')?></a></li>
-                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules"><?=\StaticTextsModel::instance()->getText('menu-rules')?></a></li>
-                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile"><?=\StaticTextsModel::instance()->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
-                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance"><?=\StaticTextsModel::instance()->getText('menu-games')?></a></li>
-                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('menu-logout')?></a></li>
+                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets"><?=$MUI->getText('menu-lottery')?></a></li>
+                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes"><?=$MUI->getText('menu-prizes')?></a></li>
+                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=$MUI->getText('menu-news')?></a></li-->
+                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews"><?=$MUI->getText('menu-reviews')?></a></li>
+                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules"><?=$MUI->getText('menu-rules')?></a></li>
+                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile"><?=$MUI->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance"><?=$MUI->getText('menu-games')?></a></li>
+                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=$MUI->getText('menu-logout')?></a></li>
                     </ul>
                 <? endif ?>
                 <div class="tn-tr-bk">
-                    <div class="tn-tr-tt"><?=\StaticTextsModel::instance()->getText('placeholder-until-lottery')?></div>
+                    <div class="tn-tr-tt"><?=$MUI->getText('placeholder-until-lottery')?></div>
                     <div id="countdownHolder" class="tn-tr"></div>
                 </div>
             </div>
@@ -317,7 +317,7 @@
                                         $nums = $ticket->getCombination();
                                     }
                                 } ?>
-                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span><?=\StaticTextsModel::instance()->getText('ticket-holder')?> </span>#<?=$i?></a></li>
+                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span><?=$MUI->getText('ticket-holder')?> </span>#<?=$i?></a></li>
                                 <? $fst = false; ?>
                             <? } ?>
                             </ul>
@@ -341,23 +341,23 @@
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">
                                                     A
-                                                    <div class="after"><?=\StaticTextsModel::instance()->getText('button-auto-fill')?></div>
+                                                    <div class="after"><?=$MUI->getText('button-auto-fill')?></div>
                                                 </li>
                                                 <li class="loto-tl_li heart ticket-favorite">
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
                                                     <div class="after">
-                                                        <b><?=\StaticTextsModel::instance()->getText('placeholder-favourite-combination')?></b>
-                                                        <span><?=\StaticTextsModel::instance()->getText('placeholder-set-in-profile')?></i></span>
+                                                        <b><?=$MUI->getText('placeholder-favourite-combination')?></b>
+                                                        <span><?=$MUI->getText('placeholder-set-in-profile')?></i></span>
                                                     </div>
                                                 </li>
                                             </ul>
                                             <? } ?>
                                             <div class="tb-st-bk">
                                                 <? if (count($nums) == 6) { ?>
-                                                    <div class="tb-st-done"><?=\StaticTextsModel::instance()->getText('placeholder-approved-and-ready')?></div>
+                                                    <div class="tb-st-done"><?=$MUI->getText('placeholder-approved-and-ready')?></div>
                                                 <? } else { ?>
-                                                    <div class="sm-but add-ticket"><?=\StaticTextsModel::instance()->getText('button-approve')?></div>
-                                                    <div class="tb-ifo"><?=\StaticTextsModel::instance()->getText('placeholder-yet')?> <b><?=(6 - count($nums))?></b> <?=\StaticTextsModel::instance()->getText('placeholder-numbers')?></div>
+                                                    <div class="sm-but add-ticket"><?=$MUI->getText('button-approve')?></div>
+                                                    <div class="tb-ifo"><?=$MUI->getText('placeholder-yet')?> <b><?=(6 - count($nums))?></b> <?=$MUI->getText('placeholder-numbers')?></div>
                                                 <? } ?>
                                             </div>
                                             <div class="b-cl-block"></div>
@@ -368,8 +368,8 @@
                             <div class="atd-bk">
 
                                 <div class="atd-txt-bk">
-                                    <div class="ttl"><?=\StaticTextsModel::instance()->getText('placeholder-all-tickets-approved')?></div>
-                                    <div class="txt"><?=\StaticTextsModel::instance()->getText('placeholder-tickets-complete')?></div>
+                                    <div class="ttl"><?=$MUI->getText('placeholder-all-tickets-approved')?></div>
+                                    <div class="txt"><?=$MUI->getText('placeholder-tickets-complete')?></div>
                                 </div>
                             </div>
                         <? } else { ?>
@@ -379,7 +379,7 @@
                                         <? $ticket = array_shift($tickets);
                                            $nums = $ticket->getCombination(); ?>
                                         <li class="yr-tt">
-                                            <div class="yr-tt-tn"><?=\StaticTextsModel::instance()->getText('holder-ticket')?> #<?=$i?></div>
+                                            <div class="yr-tt-tn"><?=$MUI->getText('holder-ticket')?> #<?=$i?></div>
                                             <ul class="yr-tt-tr">
                                                 <? foreach ($nums as $num) { ?>
                                                     <li class="yr-tt-tr_li"><?=$num?></li>
@@ -389,8 +389,8 @@
                                     <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
-                                    <div class="ttl"><?=\StaticTextsModel::instance()->getText('placeholder-all-tickets-approved')?></div>
-                                    <div class="txt"><?=\StaticTextsModel::instance()->getText('placeholder-tickets-complete')?></div>
+                                    <div class="ttl"><?=$MUI->getText('placeholder-all-tickets-approved')?></div>
+                                    <div class="txt"><?=$MUI->getText('placeholder-tickets-complete')?></div>
                                 </div>
                             </div>
                         <? } ?>
@@ -400,11 +400,11 @@
                     <? if($seo['pages']=='prizes' OR !$seo['pages']) :?>
                     <section class="prizes">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-prizes')?></div>
-                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов</div>
+                            <div class="sbk-tl"><?=$MUI->getText('header-prizes')?></div>
+                            <div class="pbk-pi"><?=$MUI->getText('plcaeholder-on-balance')?> <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> <?=$MUI->getText('placeholder-points')?></div>
                         </div>
                         <div class="pbk-ct">
-                            <div class="ptt"><?=\StaticTextsModel::instance()->getText('main-prizes')?></div>
+                            <div class="ptt"><?=$MUI->getText('main-prizes')?></div>
                             <ul class="pz-nav">
                                 <? $fst = true; ?>
                                 <? foreach ($shop as $category) {?>
@@ -415,11 +415,11 @@
                             <? $fst = true; ?>
                             <? $showMoreButton = false; ?>
                             <? foreach ($shop as $category) { ?>
-                                <? if ($fst && count($category->getItems()) > controllers\production\Index::SHOP_PER_PAGE) {
+                                <? if ($fst && count($category->getItems()) > SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE')) {
                                     $showMoreButton = true;
                                 } ?>
                                 <ul class="shop-category-items pz-cg" data-category="<?=$category->getId()?>"  <?=(!$fst ? 'style="display:none"':'')?>>
-                                <? $pager = controllers\production\Index::SHOP_PER_PAGE ?>
+                                <? $pager = SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE') ?>
                                 <? $i = 0; ?>
                                 <? foreach ($category->getItems() as $item) { ?>
                                     <? if ($i == $pager) {
@@ -431,15 +431,15 @@
                                     <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
-                                                <span><?=\StaticTextsModel::instance()->getText('placeholder-limited-quantity')?></span>
-                                                <b><?=$item->getQuantity()?> <?=\StaticTextsModel::instance()->getText('placeholder-pieces')?></b>
+                                                <span><?=$MUI->getText('placeholder-limited-quantity')?></span>
+                                                <b><?=$item->getQuantity()?> <?=$MUI->getText('placeholder-pieces')?></b>
                                             </div>
                                         <? } ?>
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
                                         <div class="im-tl"><?=$item->getTitle()?></div>
                                         <div class="im-bn">
                                             <b><?=Common::viewNumberFormat($item->getPrice())?></b>
-                                            <span><?=\StaticTextsModel::instance()->getText('placeholder-change-for-points')?></span>
+                                            <span><?=$MUI->getText('placeholder-change-for-points')?></span>
                                         </div>
                                     </li>
                                     <? $i++; ?>
@@ -447,10 +447,10 @@
                                 </ul>
                                 <? $fst = false; ?>
                             <? } ?>
-                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
+                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bk">
-                                <div class="cl scrollto" data-href="prizes"><?=\StaticTextsModel::instance()->getText('button-cut')?></div>
-                                <div class="mr"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
+                                <div class="cl scrollto" data-href="prizes"><?=$MUI->getText('button-cut')?></div>
+                                <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
                         </div>
                     </section>
@@ -470,13 +470,13 @@
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-rules')?></div>
+                            <div class="sbk-tl"><?=$MUI->getText('header-rules')?></div>
                         </div>
                         <div class="rules-ct">
                             <div class="win-tbl">
                                 <div class="c-l">
                                     <div class="wt-t">
-                                        <?=\StaticTextsModel::instance()->getText('main-rules')?>
+                                        <?=$MUI->getText('main-rules')?>
                                     </div>
                                 </div>
                                 <ul class="c-r">
@@ -497,10 +497,10 @@
                                 <div class="b-cl-block"></div>
                             </div>
                             <ul class="faq">
-                                <?=\StaticTextsModel::instance()->getText('main-faq')?>
+                                <?=$MUI->getText('main-faq')?>
                             </ul>
-                            <div class="r-add-but more"><?=\StaticTextsModel::instance()->getText('button-read')?></div>
-                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;"><?=\StaticTextsModel::instance()->getText('button-hide')?></div>
+                            <div class="r-add-but more"><?=$MUI->getText('button-read')?></div>
+                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;"><?=$MUI->getText('button-hide')?></div>
                         </div>
                     </section>
                 </div>
@@ -531,7 +531,7 @@
                 <div class="i-rbk">
                     <section class="reviews">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-reviews')?></div>
+                            <div class="sbk-tl"><?=$MUI->getText('header-reviews')?></div>
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
@@ -555,17 +555,17 @@
                                 <? } ?>
                             </div>
                         </div>
-                        <div class="rv-add-but"><?=\StaticTextsModel::instance()->getText('button-read')?></div>
+                        <div class="rv-add-but"><?=$MUI->getText('button-read')?></div>
                         <div class="rv-mr-cl-bt-bk">
-                            <div class="cl scrollto" data-href="reviews"><?=\StaticTextsModel::instance()->getText('button-cut')?></div>
-                            <div class="mr"><?=\StaticTextsModel::instance()->getText('button-read')?></div>
+                            <div class="cl scrollto" data-href="reviews"><?=$MUI->getText('button-cut')?></div>
+                            <div class="mr"><?=$MUI->getText('button-read')?></div>
                         </div>
 
                         <div class="rv-add-frm">
                             <div class="rv-image">
                                 <img class="upload">
                             </div>
-                            <div class="rv-sc"><?=\StaticTextsModel::instance()->getText('review-approved')?></div>
+                            <div class="rv-sc"><?=$MUI->getText('review-approved')?></div>
                             <div class="rv-form">
                                 <div class="rv-usr-avtr">
                                     <? if ($player->getAvatar()) {?>
@@ -583,7 +583,7 @@
                                     <img src="/tpl/img/but-upload-review.png">
                                 </div>
                                 <div class="rv-but-add">
-                                    <?=\StaticTextsModel::instance()->getText('button-send')?>
+                                    <?=$MUI->getText('button-send')?>
                                 </div>
                             </div>
                         </div>
@@ -607,34 +607,34 @@
             <section class="profile">
                 <div class="p-bk">
                     <div class="p-tl-bk">
-                        <div class="p-tl-nm"><?=\StaticTextsModel::instance()->getText('header-profile')?></div>
+                        <div class="p-tl-nm"><?=$MUI->getText('header-profile')?></div>
                         <!--div class="p-exit-bt">выйти</div-->
                         <div class="p-tl-ml" id="profile_email"><?=$player->getEmail()?></div>
                     </div>
                     <div class="p-cnt">
                         <aside>
                             <ul>
-                                <li class="ul_li now" data-link="profile-history"><?=\StaticTextsModel::instance()->getText('menu-history')?></li>
-                                <li class="ul_li" data-link="profile-bonuses"><?=\StaticTextsModel::instance()->getText('menu-bonuses')?></li>
-                                <li class="ul_li" data-link="profile-info"><?=\StaticTextsModel::instance()->getText('menu-info')?></li>
-                                <li class="ul_li" data-link="profile-notice"><?=\StaticTextsModel::instance()->getText('menu-notices')?><span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
+                                <li class="ul_li now" data-link="profile-history"><?=$MUI->getText('menu-history')?></li>
+                                <li class="ul_li" data-link="profile-bonuses"><?=$MUI->getText('menu-bonuses')?></li>
+                                <li class="ul_li" data-link="profile-info"><?=$MUI->getText('menu-info')?></li>
+                                <li class="ul_li" data-link="profile-notice"><?=$MUI->getText('menu-notices')?><span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
                             </ul>
 
 
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> <?=\StaticTextsModel::instance()->getText('holder-points-balance')?></div>
-                                    <div class="bt" id="exchange" data-href="prizes"><?=\StaticTextsModel::instance()->getText('button-change')?></div>
+                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> <?=$MUI->getText('holder-points-balance')?></div>
+                                    <div class="bt" id="exchange" data-href="prizes"><?=$MUI->getText('button-change')?></div>
                                 </div>
 
                                 <div class="hand" id="cash-exchange"><img src="/tpl/img/but-exchange.png"></div>
 
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$currency['many']?> <?=\StaticTextsModel::instance()->getText('holder-cash-balance')?></div>
-                                    <div class="bt" id="cash-output"><?=\StaticTextsModel::instance()->getText('button-output')?></div>
+                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$currency['many']?> <?=$MUI->getText('holder-cash-balance')?></div>
+                                    <div class="bt" id="cash-output"><?=$MUI->getText('button-output')?></div>
                                 </div>
-                                <div class="st-hy-bt"><span><?=\StaticTextsModel::instance()->getText('button-transactions')?></span></div>
+                                <div class="st-hy-bt"><span><?=$MUI->getText('button-transactions')?></span></div>
                             </div>
                         </aside>
 
@@ -642,13 +642,13 @@
 
                             <section class="_section profile-history">
                                 <ul class="ph-fr-bk">
-                                    <li class="bt-om"><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('button-only-me')?></a></li>
-                                    <li class="bt-all sel"><a href="javascript:void(0)"><?=\StaticTextsModel::instance()->getText('button-all')?></a></li>
+                                    <li class="bt-om"><a href="javascript:void(0)"><?=$MUI->getText('button-only-me')?></a></li>
+                                    <li class="bt-all sel"><a href="javascript:void(0)"><?=$MUI->getText('button-all')?></a></li>
                                 </ul>
                                 <div class="ht-tl-bk">
-                                    <div class="dt-tl"><?=\StaticTextsModel::instance()->getText('holder-date-lottery')?></div>
-                                    <div class="wc-tl"><?=\StaticTextsModel::instance()->getText('holder-win-combination')?></div>
-                                    <div class="nw-tl"><?=\StaticTextsModel::instance()->getText('holder-total-winners')?></div>
+                                    <div class="dt-tl"><?=$MUI->getText('holder-date-lottery')?></div>
+                                    <div class="wc-tl"><?=$MUI->getText('holder-win-combination')?></div>
+                                    <div class="nw-tl"><?=$MUI->getText('holder-total-winners')?></div>
                                 </div>
                                 <ul class="ht-bk">
                                     <? foreach ($lotteries as $lottery) { ?>
@@ -670,19 +670,19 @@
                                 </ul>
 
                                 <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
-                                <div class="mr-bt"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
+                                <div class="mr-bt"><?=$MUI->getText('button-more')?></div>
 
                                 <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
                                 <div class="mr-cl-bt-bl">
-                                    <div class="cl scrollto" data-href="profile"><?=\StaticTextsModel::instance()->getText('button-hide')?></div>
-                                    <div class="mr"><?=\StaticTextsModel::instance()->getText('button-more')?></div>
+                                    <div class="cl scrollto" data-href="profile"><?=$MUI->getText('button-hide')?></div>
+                                    <div class="mr"><?=$MUI->getText('button-more')?></div>
                                 </div>
                             </section>
 
                             <section class="_section profile-bonuses">
-                                <div class="pb-txt"><?=\StaticTextsModel::instance()->getText('profile-bonus')?></div>
+                                <div class="pb-txt"><?=$MUI->getText('profile-bonus')?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr>Пригласить друга +<?=EmailInvite::INVITE_COST?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
+                                    <div class="if-tl"><nobr>Пригласить друга +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_email_invite')?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -697,7 +697,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)"
                                             onclick="
@@ -729,7 +729,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено! Баллы за такие приглашения не начисляются.</span></div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_referal_invite')?> баллов<br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено! Баллы за такие приглашения не начисляются.</span></div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -746,7 +746,7 @@
                                         </div>
                                         <div class="pi-cs-bk">
                                             <? if(count($player->getAdditionalData())<5) {?>
-                                            <div class="txt">Привязать соцсеть и получить бонус 40 баллов за каждую.</div>
+                                            <div class="txt">Привязать соцсеть и получить бонус <?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile')?> баллов за каждую.</div>
                                             <? } ?>
                                             <? $socials=array('Facebook'=>'fb','Vkontakte'=>'vk', 'Odnoklassniki'=>'ok','Google'=>'gp','Twitter'=>'tw' );
                                             foreach($socials as $key=>$class)
@@ -759,30 +759,30 @@
                                     </div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Никнейм"><?=\StaticTextsModel::instance()->getText('placeholder-nickname')?></div>
+                                            <div class="ph" data-default="Никнейм"><?=$MUI->getText('placeholder-nickname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Фамилия"><?=\StaticTextsModel::instance()->getText('placeholder-surname')?></div>
+                                            <div class="ph" data-default="Фамилия"><?=$MUI->getText('placeholder-surname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="surname" data-valid="<?=$player->getSurname()?>" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-name')?>"><?=\StaticTextsModel::instance()->getText('placeholder-name')?></div>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-name')?>"><?=$MUI->getText('placeholder-name')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="name" data-valid="<?=$player->getName()?>" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-phone')?>"><?=\StaticTextsModel::instance()->getText('placeholder-phone')?></div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="<?=\StaticTextsModel::instance()->getText('placeholder-phone')?>" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-phone')?>"><?=$MUI->getText('placeholder-phone')?></div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-phone')?>" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-birthday')?>"><?=\StaticTextsModel::instance()->getText('placeholder-birthday')?></div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=\StaticTextsModel::instance()->getText('placeholder-birthday')?>" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-birthday')?>"><?=$MUI->getText('placeholder-birthday')?></div>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=$MUI->getText('placeholder-birthday')?>" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="<?=\StaticTextsModel::instance()->getText('placeholder-password')?>"><?=\StaticTextsModel::instance()->getText('placeholder-password')?></div>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-password')?>"><?=$MUI->getText('placeholder-password')?></div>
                                             <input type="text" name="plug" data-valid="" style="display: none;"/>
                                             <input type="password" name="plug" data-valid="" style="display: none;"/>
-                                            <input autocomplete="off" spellcheck="false" placeholder="<?=\StaticTextsModel::instance()->getText('placeholder-password')?>" type="password" value="*********" name="password" data-valid="" />
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-password')?>" type="password" value="*********" name="password" data-valid="" />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -792,7 +792,7 @@
                                                     <? } ?>
                                                 </ul>
                                             </div>
-                                            <div class="fc-tl"><?=\StaticTextsModel::instance()->getText('favourite-combination')?></div>
+                                            <div class="fc-tl"><?=$MUI->getText('favourite-combination')?></div>
                                             <ul class="fc-nrch-bk">
                                                 <? for ($i=0; $i<6;++$i) {?>
                                                     <li>
@@ -806,10 +806,10 @@
                                     <div class="save-bk">
                                         <div class="sb-ch-td">
                                             <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
-                                            <label for="rulcheck"><?=\StaticTextsModel::instance()->getText('text-show-my-name')?></label>
+                                            <label for="rulcheck"><?=$MUI->getText('text-show-my-name')?></label>
                                         </div>
                                         <div class="sb-ch-td">
-                                            <div class="but" onclick="$(this).parents('form').submit(); return false;"><?=\StaticTextsModel::instance()->getText('button-save')?></div>
+                                            <div class="but" onclick="$(this).parents('form').submit(); return false;"><?=$MUI->getText('button-save')?></div>
                                         </div>
                                     </div>
                                 </form>
@@ -849,12 +849,12 @@
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
-        <div class="sbk-tl"><?=\StaticTextsModel::instance()->getText('header-games')?></div>
+        <div class="sbk-tl"><?=$MUI->getText('header-games')?></div>
         <div class="b-cntrl-block"><span class="glyphicon glyphicon-volume-up audio" aria-hidden="true"></span></div>
 
         <!-- CHANCE PREVIEW -->
         <div class="ch-bk slider" style="display:block">
-            <div class="ch-txt"><?=\StaticTextsModel::instance()->getText('chance-game')?></div>
+            <div class="ch-txt"><?=$MUI->getText('chance-game')?></div>
 
             <div class="ch-gm-tbl slide-list">
                 <div class="slide-wrap">
@@ -864,7 +864,7 @@
                         <div class="td slide-item">
                             <div class="gm-if-bk">
                                 <div class="l"><?=$quickGames[$game]->getTitle($player->getLang())?></div>
-                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
+                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b><?=$MUI->getText('placeholder-points')?></div>
                             </div>
                             <div class="gm-bt" data-quick="1" data-game="<?=$game?>"><img src="tpl/img/games/Chance<?=$game?>.png"></div>
                         </div>
@@ -924,13 +924,13 @@
         <div class="game-bk quickgame"  id="ChanceGame-holder" style="display:none">
             <div class="l-bk">
                 <div class="rw-t">
-                    <div class="bk-bt"><spn><?=\StaticTextsModel::instance()->getText('button-back-to-games')?></spn></div>
+                    <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
                 </div>
                 <div class="gm-if-bk">
                     <div class="tb">
                         <!-- FIX HERE -->
                         <div class="l qg-bk-tl"></div>
-                        <div class="r"><b></b><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
+                        <div class="r"><b></b><?=$MUI->getText('placeholder-points')?></div>
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
@@ -967,7 +967,7 @@
                             </div>
                         <? endforeach; ?>
                 </div>
-                <div class="l-bk-txt qg-txt"><?=\StaticTextsModel::instance()->getText('holder-description')?></div>
+                <div class="l-bk-txt qg-txt"><?=$MUI->getText('holder-description')?></div>
                 <div class="l-bk-txt qg-prz"></div>
 
             </div>
@@ -1044,7 +1044,7 @@
 
                     <div class="prc-l">
                         <div class="rw-t">
-                            <div class="bk-bt-rl"><spn><?=\StaticTextsModel::instance()->getText('button-back-to-description')?></spn></div>
+                            <div class="bk-bt-rl"><spn><?=$MUI->getText('button-back-to-description')?></spn></div>
                         </div>
                         <div class="gm-if-bk">
                             <div class="l"></div>
@@ -1052,26 +1052,26 @@
 
                         <div class="prc-bl">
                             <div class="prc-txt-bk">
-                                <div class="all"><?=\StaticTextsModel::instance()->getText('holder-choose-bet')?></div>
+                                <div class="all"><?=$MUI->getText('holder-choose-bet')?></div>
                             </div>
                             <div class="prc-but-cover"></div>
                             <div class="prc-but-bk">
 
-                                <div class="prc-bt"><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
+                                <div class="prc-bt"><?=$MUI->getText('placeholder-points')?></div>
                                 <div class="prc-sel" data-currency="POINT">
-                                    <div class="prc-tl"><?=\StaticTextsModel::instance()->getText('placeholder-points')?></div>
+                                    <div class="prc-tl"><?=$MUI->getText('placeholder-points')?></div>
                                 </div>
 
-                                <div class="prc-bt"><?=\StaticTextsModel::instance()->getText('placeholder-money')?></div>
+                                <div class="prc-bt"><?=$MUI->getText('placeholder-money')?></div>
                                 <div class="prc-sel" data-currency="MONEY">
-                                    <div class="prc-tl"><?=\StaticTextsModel::instance()->getText('placeholder-money')?></div>
+                                    <div class="prc-tl"><?=$MUI->getText('placeholder-money')?></div>
                                 </div>
 
-                                <div class="prc-bt"><?=\StaticTextsModel::instance()->getText('placeholder-free')?></div>
-                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=\StaticTextsModel::instance()->getText('placeholder-free')?></div></div>
+                                <div class="prc-bt"><?=$MUI->getText('placeholder-free')?></div>
+                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=$MUI->getText('placeholder-free')?></div></div>
 
                                 <!--div class="ngm-cncl">отмена</div-->
-                                <div class="ngm-go"><?=\StaticTextsModel::instance()->getText('button-play')?></div>
+                                <div class="ngm-go"><?=$MUI->getText('button-play')?></div>
                             </div>
                         </div>
 
@@ -1079,7 +1079,7 @@
 
                     <div class="rls-l">
                         <div class="rw-t">
-                            <div class="bk-bt"><spn><?=\StaticTextsModel::instance()->getText('button-back-to-games')?></spn></div>
+                            <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
                         </div>
                         <div class="gm-if-bk">
                             <div class="l"></div>
@@ -1154,12 +1154,12 @@
                                 </div>
 
                                 <div class="l">
-                                    <div class="ngm-price"><?=\StaticTextsModel::instance()->getText('placeholder-bet')?></div>
+                                    <div class="ngm-price"><?=$MUI->getText('placeholder-bet')?></div>
                                 </div>
 
                                 <div class="r">
-                                    <div class="online"><?=\StaticTextsModel::instance()->getText('placeholder-players-online')?> <i>&bull;</i> <span></span></div>
-                                    <div class="all"><?=\StaticTextsModel::instance()->getText('placeholder-total-games-played')?> <b>:</b> <span></span></div>
+                                    <div class="online"><?=$MUI->getText('placeholder-players-online')?> <i>&bull;</i> <span></span></div>
+                                    <div class="all"><?=$MUI->getText('placeholder-total-games-played')?> <b>:</b> <span></span></div>
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
@@ -1170,12 +1170,12 @@
 
                     <div class="rls-r">
 
-                        <div class="rls-r-t"><?=\StaticTextsModel::instance()->getText('placeholder-you')?> <b>|</b> 0 <b>|</b> 0</div>
-                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=\StaticTextsModel::instance()->getText('placeholder-search')?></b></div><div class="ngm-cncl"><?=\StaticTextsModel::instance()->getText('button-cancel')?></div></div>
+                        <div class="rls-r-t"><?=$MUI->getText('placeholder-you')?> <b>|</b> 0 <b>|</b> 0</div>
+                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=$MUI->getText('placeholder-search')?></b></div><div class="ngm-cncl"><?=$MUI->getText('button-cancel')?></div></div>
 
                         <div class="rls-r-ws">
-                            <b><?=\StaticTextsModel::instance()->getText('placeholder-winners')?></b>
-                            <span><?=\StaticTextsModel::instance()->getText('placeholder-rating')?> <b>|</b> <?=\StaticTextsModel::instance()->getText('placeholder-games-played')?> <b>|</b> <?=\StaticTextsModel::instance()->getText('placeholder-wins')?></span>
+                            <b><?=$MUI->getText('placeholder-winners')?></b>
+                            <span><?=$MUI->getText('placeholder-rating')?> <b>|</b> <?=$MUI->getText('placeholder-games-played')?> <b>|</b> <?=$MUI->getText('placeholder-wins')?></span>
                         </div>
 
                         <ul class="rls-r-prs"></ul>
@@ -1302,13 +1302,13 @@
                 <div class="bl-pp_td">
                     <section class="badge-block pop-box">
                         <div class="cs"></div>
-                        <div class="title"><?=$quickGame['title'];?></div>
+                        <div class="title"><?=$MUI->getText('title-random')?></div>
                         <div class="txt">
                             <div class="timer">
-                                <span id="text_soon"><?=\StaticTextsModel::instance()->getText('placeholder-game-will-be-able-until')?> </span>
+                                <span id="text_soon"><?=$MUI->getText('placeholder-game-will-be-able-until')?> </span>
                                 <span id="timer_soon"></span>
                             </div>
-                            <div class="start"><?=\StaticTextsModel::instance()->getText('button-play')?></div>
+                            <div class="start"><?=$MUI->getText('button-play')?></div>
                         </div>
                     </section>
                 </div>
@@ -1325,7 +1325,7 @@
                 <img src="/tpl/img/baners/goroskop.jpg?<?=(strtotime(date("md")))?>" width="1280" height="257">
             </section>
             <div class="fr-cnt-bk">
-                <a href="javascript:void(0)" class="ts-lk" id="terms-bt"><?=\StaticTextsModel::instance()->getText('placeholder-terms')?></a>
+                <a href="javascript:void(0)" class="ts-lk" id="terms-bt"><?=$MUI->getText('placeholder-terms')?></a>
                 <div class="ct-bk">
                     <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
                     <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
@@ -1365,69 +1365,6 @@
 
 */ ?>
 
-        <? if($debug){
-            $categories = array(
-            'nav'=>array('t'=>'Меню, кнопки и навигация', 'i'=>'sitemap'),
-            'text'=>array('t'=>'Тексты, описания', 'i'=>'paragraph'),
-            'popup'=>array('t'=>'Всплывающие сообщения', 'i'=>'comments'),
-            'error'=>array('t'=>'Ошибки, предупре- ждения', 'i'=>'exclamation-triangle'),
-            'seo'=>array('t'=>'SEO', 'i'=>'crosshairs'),
-            'bonus'=>array('t'=>'Бонусы и выигрыши', 'i'=>'gift'),
-            'promo'=>array('t'=>'Промо-страница', 'i'=>'home'),
-            'holder'=>array('t'=>'Поля, заголовки, холдеры', 'i'=>'terminal'),
-            'promo'=>array('t'=>'Тексты на промо', 'i'=>'home'),
-        ); ?>
-        <div class="modal fade texts" id="text-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="confirmLabel">Edit Text</h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="row-fluid" id="addForm">
-                            <form class="form">
-                                <input name="id" type="hidden">
-                                <div>
-                                    <? foreach ($categories as $category => $options) { ?>
-                                        <div data-category="<?=$category;?>" class="metal-gradient pointer category-trigger xs">
-                                            <i class='fa fa-<?= $options['i'] ?>'></i>
-                                            <span><?= $options['t'] ?></span>
-                                        </div>
-                                    <? } ?>
-                                </div>
-                                <div class="row-fluid clear">&nbsp;</div>
-                                <div class="form-group">
-                                    <label class="control-label">Идентификатор</label>
-                                    <input type="text" name="key" value="" placeholder="Идентификатор" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Текст</label>
-                                    <div id="text"></div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="row-fluid">
-                            <div class="btn-group">
-                                <? $fst = true; ?>
-                                <? foreach ($langs as $lang) { ?>
-                                    <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
-                                    <? $fst = false;} ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-success save">Сохранить</button>
-                        <button type="button" class="btn btn-default cls">Закрыть</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    <? } ?>
 
         </div>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
@@ -1436,16 +1373,15 @@
         <script src="/tpl/js/ws.js"></script>
         <script src="/tpl/js/ads.js"></script>
 
-        <? include('popups.php') ?>
+    <? include('popups.php'); ?>
+    <? if($debug) include('./protected/templates/admin/statictexts_frontend.php'); ?>
 
-    <? /*echo $_SERVER['HTTP_USER_AGENT'];
-    $browser = get_browser(null, true);
-    print_r($browser);*/
-    echo getScripts($banners['BodyScripts'],$player); ?>
+    <? echo getScripts($banners['BodyScripts'],$player); ?>
 
     <script>
 
-        VK.init({
+        if(window.VK)
+            VK.init({
             apiId: 4617228,
             scope: 'wall,photos'
         });
@@ -1477,154 +1413,6 @@
             'PLAY_ONE_MORE_TIME'      : 'Играть еще раз за {0} баллов',
         };
 
-        <? if($debug){ ?>
-
-    var currentEdit = {
-        id : 0,
-        key : '',
-        category : '',
-        texts : {}
-    };
-
-
-        $(document).on('click', '.category-trigger', function() {
-            currentEdit.category = $(this).data('category');
-            $('.category-trigger').removeClass('active');
-            $(this).addClass('active');
-        });
-
-    $(document).on('click', '.text-trigger', function() {
-
-        modal = $("#text-holder");
-        currentEdit.texts = {};
-        currentEdit.id = 0;
-        currentEdit.key = '';
-        currentEdit.category = '';
-        $('#text').code('');
-        $('input[name="id"]',modal).val(0);
-        $('input[name="key"]',modal).val('');
-
-        modal.modal().find('input:visible, textarea').val('');
-        modal.find('.cls').off('click').on('click', function() {modal.modal('hide');});
-
-        $('.lang', modal).removeClass('active');
-        $('.lang', modal).first().addClass('active');
-        $('.category-trigger', modal).removeClass('active');
-
-        if($(this).data('key')) {
-
-            $.ajax({
-                url: "/private/statictexts/" + $(this).data('key'),
-                method: 'GET',
-                async: true,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.status == 1) {
-                        currentEdit.texts = data.data.texts ? data.data.texts : {};
-                        currentEdit.id = data.data.id;
-                        currentEdit.category = data.data.category ? data.data.category : '';
-                        currentEdit.key = data.data.key;
-
-                        $('.category-trigger[data-category="'+currentEdit.category+'"]', modal).addClass('active');
-                        $('input[name="key"]',modal).val(currentEdit.key);
-
-                        if(currentEdit.texts && currentEdit.texts[$('.lang.active', modal).data('lang')])
-                            $('#text').code(currentEdit.texts[$('.lang.active', modal).data('lang')]);
-                        if(currentEdit.id)
-                            $('input[name="id"]',modal).val(currentEdit.id);
-
-                    } else {
-                        alert(data.message);
-                    }
-                },
-                error: function () {
-                    alert('Unexpected server error');
-                }
-            });
-        }
-        return false;
-    });
-
-    $(document).ready(function() {
-        $('#text').summernote({height: 200});
-        $('#text').code('');
-    });
-
-    $('.lang').on('click', function() {
-        var prevLang = $('.lang.active').data('lang');
-        var currentLang = $(this).data('lang');
-
-        currentEdit.texts[prevLang] = $('#text').code();
-
-        $('.lang').removeClass('active');
-        $(this).addClass('active');
-
-        if (currentEdit.texts[currentLang]) {
-            $('#text').code(currentEdit.texts[currentLang]);
-        } else {
-            $('#text').code('');
-        }
-    });
-
-    $('.save').on('click', function() {
-
-        var currentLang = $('.lang.active').data('lang');
-
-        $("#errorForm").hide();
-        $(this).find('.glyphicon').remove();
-
-        var prevKey=currentEdit.key;
-        currentEdit.id = $('input[name="id"]').val();
-
-        //currentEdit.category = $('.category-trigger.active').data('category');
-
-        currentEdit.key = $('input[name="key"]').val();
-        currentEdit.texts[currentLang] = $('#text').code();
-
-        if (!currentEdit.id) {
-            showError('Identifier can\'t be empty');
-            return false;
-        }
-
-        if (!currentEdit.texts[currentLang]) {
-            showError('Text can\'t be empty');
-            return false;
-        }
-
-        $.ajax({
-            url: "/private/statictexts/",
-            method: 'POST',
-            data: currentEdit,
-            async: true,
-            dataType: 'json',
-            success: function(data) {
-                if (data.status == 1) {
-
-                    $("#text-holder").modal('hide');
-                    text = currentEdit.texts[Object.keys(currentEdit.texts)[0]];
-                    if((div = $('.debug.text-trigger[data-key="'+prevKey+'"]')).length) {
-                        div.attr('data-key',currentEdit.key).html(text);
-                    }
-
-                } else {
-                    showError(data.message);
-                }
-
-            },
-            error: function() {
-                showError('Unexpected server error');
-           }
-        });
-    });
-
-    function showError(message) {
-        $(".error-container").text(message);
-        $("#errorForm").show();
-
-        $('.save').removeClass('btn-success').addClass('btn-danger');
-        $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
-    }
-        <? } ?>
         var quickGame = {};
         var online = 1;
         var page = <?=($seo['pages']?1:0)?>;

@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \PrivateArea, \Application, \Session2, \Admin, \WideImage, \EntityException, \Config;
+use \PrivateArea, \Application, \Session2, \Admin, \EntityException, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_PROTECTED . '/external/wi/WideImage.php');
@@ -13,15 +13,15 @@ class Images extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {
         $folder = $this->request()->get('folder', false);
-        $webDir="tpl/img/".($folder?$folder.'/':''); # папка, которую нужно прочитать
+        $webDir="tpl/img/".($folder?$folder.'/':'');
         $saveDir = PATH_ROOT.$webDir;
         if($openDir=opendir($saveDir))
         {
@@ -37,14 +37,6 @@ class Images extends PrivateArea
                         } else {
                         $folders[]=array('name'=>$file);
                     }
-/*
-                    echo "<div style='display:inline-table;position: relative;margin:5px;'>".
-                        ($size?"<div style='position:absolute;margin: 1px;padding:5px;background: rgba(255,255,255,0.5);border-radius: 5px 0 0 0;font:13px/13px Handbook-regular;'>{$size[0]}x{$size[1]}</div>":"").
-                        "<div style='position:absolute;right:0;top:0;padding:5px;'>
-                        <button class='btn btn-xs btn-info notes-trigger' data-type='Note' data-id='20028'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></div>".
-                        "<div style='position:absolute;right:0;bottom:0;margin: 1px;padding:5px;background: rgba(255,255,255,0.5);border-radius: 0 0 5px 0;font:13px/13px Handbook-regular;'>{$file}</div>".
-                        "<img src='{$webDir}{$file}' style='max-width:500px;max-height: 100px;min-height: 100px;padding:5px;border:1px solid gray;border-radius: 5px;'/></div>";
-*/
                 }
         }
 
@@ -116,11 +108,7 @@ class Images extends PrivateArea
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
             }
-            /*
 
-                    $image = WideImage::loadFromUpload('image');
-                    $image->saveToFile(PATH_ROOT.$saveDir . $imageName, 100);
-            */
             $size = getimagesize(PATH_ROOT . $saveDir . $imageName);
             $data = array(
                 'imageName' => $imageName,

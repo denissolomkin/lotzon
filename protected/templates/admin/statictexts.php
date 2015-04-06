@@ -1,3 +1,6 @@
+
+<? if($frontend) include($frontend.'_frontend.php') ?>
+
 <div class="modal fade" id="deleteConfirm" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -18,25 +21,14 @@
 
 <div class="container-fluid texts">
     <div class="row-fluid">
-        <h2>Список текстов на сайте    <?if ($curCategory) {?>
-                <button class="btn btn-md btn-primary" onClick="location.href='/private/<?=$activeMenu;?>'"><i class="fa fa-arrow-left"></i> Назад</button>
+        <h2>Список текстов на сайте <?if ($curCategory) {?>
+            <button class="btn btn-md btn-primary" onClick="location.href='/private/<?=$activeMenu;?>'"><i class="fa fa-arrow-left"></i> Назад</button>
             <button class="btn btn-md btn-success text-trigger"><i class="glyphicon glyphicon-plus"></i> Добавить</button><? } ?></h2>
         <hr />
     </div>
 
-    <? $categories = array(
-        'nav'=>array('t'=>'Меню, кнопки и навигация', 'i'=>'sitemap'),
-        'text'=>array('t'=>'Тексты, описания', 'i'=>'paragraph'),
-        'popup'=>array('t'=>'Всплывающие сообщения', 'i'=>'comments'),
-        'error'=>array('t'=>'Ошибки, предупре- ждения', 'i'=>'exclamation-triangle'),
-        'seo'=>array('t'=>'SEO', 'i'=>'crosshairs'),
-        'bonus'=>array('t'=>'Бонусы и выигрыши', 'i'=>'gift'),
-        'promo'=>array('t'=>'Промо-страница', 'i'=>'home'),
-        'holder'=>array('t'=>'Поля, заголовки, холдеры', 'i'=>'terminal'),
-        'promo'=>array('t'=>'Тексты на промо', 'i'=>'home'),
-    );
-    foreach ($categories as $category => $options) {
-        ?>
+    <? if(is_array($categories))
+        foreach ($categories as $category => $options) { ?>
         <a href="?category=<?=$category;?>">
             <div class="metal-gradient <?=$curCategory?' small':'';?>" <?=$curCategory==$category?' style="background: gray !important;"':'';?>>
 
@@ -44,8 +36,7 @@
                 <span><?= $options['t'] ?></span>
             </div>
         </a>
-    <?
-    }
+    <? }
 
     if ($curCategory) { ?>
     <div class="row-fluid">&nbsp;</div>
@@ -70,63 +61,10 @@
 
     <? } ?>
 
-
-
-
-    <div class="modal fade users" id="text-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="confirmLabel">Edit Text</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="row-fluid" id="addForm">
-                        <form class="form">
-                            <input name="id" type="hidden">
-                            <div>
-                            <? foreach ($categories as $category => $options) { ?>
-                                <div data-category="<?=$category;?>" class="metal-gradient pointer category-trigger xs<?=$curCategory==$category?' active':'';?>">
-                                    <i class='fa fa-<?= $options['i'] ?>'></i>
-                                    <span><?= $options['t'] ?></span>
-                                </div>
-                            <? } ?>
-                            </div>
-                            <div class="row-fluid clear">&nbsp;</div>
-                            <div>
-                                <label class="control-label">Идентификатор</label>
-                                <input type="text" name="key" value="" placeholder="Идентификатор" class="form-control" />
-                            </div>
-                            <div>
-                                <label class="control-label">Текст</label>
-                                <div id="text"></div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="btn-group">
-                            <? $fst = true; ?>
-                            <? foreach ($langs as $lang) { ?>
-                                <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
-                                <? $fst = false;} ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-success save">Сохранить</button>
-                    <button type="button" class="btn btn-default cls">Закрыть</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </div>
 
 <script>
-
+/*
     var currentEdit = {
         id : 0,
         key : '',
@@ -277,4 +215,5 @@
         $('.save').removeClass('btn-success').addClass('btn-danger');
         $('.save').prepend($('<i class="glyphicon glyphicon-remove"></i>'));
     }
+    */
 </script>

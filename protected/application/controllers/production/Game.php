@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \LotteryTicket, \CountriesModel, \LotteriesModel, \TicketsModel, \LotterySettings, \LotterySettingsModel, \QuickGamesModel;
+use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \LotteriesModel, \TicketsModel, \LotterySettings, \LotterySettingsModel, \QuickGamesModel;
 use \ChanceGamesModel, \GameSettingsModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -161,15 +161,16 @@ class Game extends \AjaxController
 
         }
 
-        if (isset($game) && is_array(Config::instance()->banners['game' . $game->getId()]))
-            foreach (Config::instance()->banners['game' . $game->getId()] as $group) {
+        ;
+        if (isset($game) && ($banners = SettingsModel::instance()->getSettings('banners')->getValue()) && is_array($banners['game' . $game->getId()]))
+            foreach ($banners['game' . $game->getId()] as $group) {
                 if (is_array($group)) {
                     shuffle($group);
                     foreach ($group as $banner) {
                         if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
                             continue;
 
-                        if ($banner['chance'] AND !rand(0, $banner['chance'] - 1) AND Config::instance()->banners['settings']['enabled'])
+                        if ($banner['chance'] AND !rand(0, $banner['chance'] - 1) AND $banners['settings']['enabled'])
                             $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['div']) .
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['script']).

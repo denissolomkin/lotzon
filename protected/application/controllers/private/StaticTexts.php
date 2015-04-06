@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \StaticText, \CountriesModel, \StaticTextsModel, \Config, \Session2, \Admin;
+use \Application, \PrivateArea, \StaticText, \CountriesModel, \StaticTextsModel, \SettingsModel, \Session2, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/StaticTextsModel.php');
@@ -15,23 +15,22 @@ class StaticTexts extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {
         $curCategory = $this->request()->get('category', false);
         $list = StaticTextsModel::instance()->getCategory($curCategory);
-        $langs = CountriesModel::instance()->getLangs();
 
         $this->render('admin/statictexts', array(
             'title'      => 'Тексты на сайте',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
-            'curCategory' => $curCategory,
-            'langs'     => $langs,
+            'curCategory'=> $curCategory,
+            'frontend'   => 'statictexts',
             'list'       => $list,
         ));
     }

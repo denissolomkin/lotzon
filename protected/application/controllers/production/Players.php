@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \CountriesModel, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
+use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -79,8 +79,10 @@ class Players extends \AjaxController
                 $social=$this->session->get('SOCIAL_IDENTITY');
                 $this->session->remove('SOCIAL_IDENTITY');
 
-                if(!$social->isSocialUsed()) // If Social Id didn't use earlier
-                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $social->getSocialName());
+                if(!$social->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) // If Social Id didn't use earlier
+                    $player->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration'),
+                        StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_registration'). $social->getSocialName());
 
                 $player->setAdditionalData($social->getAdditionalData())
                     ->setName($social->getName())
@@ -137,8 +139,10 @@ class Players extends \AjaxController
                     $social=$this->session->get('SOCIAL_IDENTITY');
 
                     // If Social Id didn't use earlier And This Provider Link First Time
-                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->isSocialUsed())
-                        $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети ' . $social->getSocialName());
+                    if(!array_key_exists($social->getSocialName(), $player->getAdditionalData()) AND !$social->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'))
+                        $player->addPoints(
+                            SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'),
+                            StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_profile'). $social->getSocialName());
 
                     if (!$player->getAvatar() AND $photoURL=$social->getAdditionalData()[$social->getSocialName()]['photoURL'])
                         $this->saveAvatarAction($photoURL);
@@ -502,7 +506,12 @@ class Players extends \AjaxController
     {
         if ($this->session->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
             $this->session->get(Player::IDENTITY)->decrementSocialPostsCount();
-            $this->session->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
+
+            if(SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'))
+            $this->session->get(Player::IDENTITY)->addPoints(
+                SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'),
+                StaticTextsModel::instance()->setLang($this->session->get(Player::IDENTITY)->getLang())->getText('bonus_social_post'));
+
             $this->ajaxResponse(array(
                 'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount(),
             ));

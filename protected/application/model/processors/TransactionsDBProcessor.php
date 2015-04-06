@@ -86,13 +86,13 @@ class TransactionsDBProcessor implements IProcessor
         return $this->playerHistory($playerId, LotterySettings::CURRENCY_MONEY, $limit, $offset);
     }
 
-    public function playerHistory($playerId, $currency, $limit, $offset) 
+    public function playerHistory($playerId, $currency, $limit=null, $offset=null)
     {   
         $sql = "SELECT * FROM `Transactions` WHERE `PlayerId` = :plid AND `Currency` = :curr ORDER BY `Date` DESC";
-        if ($limit > 0) {
+        if (!is_null($limit)) {
             $sql .= " LIMIT " . (int) $limit;
         }
-        if ($offset > 0) {
+        if (!is_null($offset)) {
             $sql .= " OFFSET " . (int) $offset;
         }
         try {

@@ -2,7 +2,7 @@
 
 class EmailInvite extends Entity
 {
-    const INVITE_COST = 20;
+
 
     private $_id    = 0;
     private $_email = 0;

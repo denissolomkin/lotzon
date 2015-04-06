@@ -21,8 +21,7 @@ class CurrencyModel extends Model
 
     public function getList()
     {
-        $list = $this->getProcessor()->getList();
-        return $list;
+        return $this->getProcessor()->getList();
     }
 
     public function fetch(Entity $currency) {
