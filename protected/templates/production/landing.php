@@ -353,7 +353,7 @@
                                     <a href="javascript:void(0)" id="rec-pass" class="r-p"><?=$MUI->getText('button-remind-password')?></a>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Играть" />
+                                    <input type="submit" class="sb_but disabled" disabled value="<?=$MUI->getText('button-play')?>" />
                                 </div>
                                 <div class="sl-bk">
                                     <a href="./auth/Facebook?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>

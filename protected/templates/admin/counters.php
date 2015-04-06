@@ -11,15 +11,21 @@
                     'MONEY_ADD_INCREMENT'=>'Добавление к общей сумме выигрыша (ежедневное увеличение)',
                     'MONEY_ADD'=>'Добавление к общей сумме выигрыша',
                     'WINNERS_ADD'=>'Добавление к общему количеству победителей',
+
                     'PLAYER_TIMEOUT'=>'Таймаут, через который игрок считается оффлайн (сек)',
+
                     'NEWS_PER_PAGE'=>'Новостей на странице',
                     'SHOP_PER_PAGE'=>'Товаров на странице',
                     'LOTTERIES_PER_PAGE'=>'Лотерей на странице',
-                    'PLAYERS_PER_PAGE'=>'Пользователей на странице',
-                    'ORDERS_PER_PAGE'=>'Заявок на странице',
                     'TRANSACTIONS_PER_PAGE'=>'Транзакций на странице',
                     'COMMENTS_PER_PAGE'=>'Комментариев на странице',
-                    'REVIEWS_PER_PAGE'=>'Отзывов на странице') as $index => $title) { ?>
+                    'REVIEWS_PER_PAGE'=>'Отзывов на странице',
+
+                    'TRANSACTIONS_PER_ADMIN'=>'Транзакций в админке',
+                    'PLAYERS_PER_ADMIN'=>'Пользователей в админке',
+                    'ORDERS_PER_ADMIN'=>'Заявок в админке',
+                    'REVIEWS_PER_ADMIN'=>'Отзывов в админке',
+                ) as $index => $title) { ?>
                 <div class="form-group">
                     <label for="title"><?=$title;?></label>
                     <input type="text" class="form-control" name="counters[<?=$index?>]" value="<?=$list[$index]?>">

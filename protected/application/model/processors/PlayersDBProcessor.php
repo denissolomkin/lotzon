@@ -420,7 +420,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersCount($search=null)
     {
-        $sql = "SELECT COUNT(*) as `counter` FROM `Players`";
+        $sql = "SELECT COUNT(*) as `counter` FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id";
 
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')

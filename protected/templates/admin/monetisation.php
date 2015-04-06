@@ -44,7 +44,8 @@
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
                         </td>
-                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>"><?=$player->getCountry()?></td>
+                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>"><?=$player->getCountry()?>
+                            <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -208,7 +209,8 @@
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
                         </td>
-                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>"><?=$player->getCountry()?></td>
+                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>"><?=$player->getCountry()?>
+                            <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {

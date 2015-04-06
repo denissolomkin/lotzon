@@ -14,7 +14,7 @@ class Monetisation extends PrivateArea
     public function init()
     {
         parent::init();
-        self::$PER_PAGE = SettingsModel::instance()->getSettings('counters')->getValue('ORDERS_PER_PAGE') ? : 10;
+        self::$PER_PAGE = SettingsModel::instance()->getSettings('counters')->getValue('ORDERS_PER_ADMIN') ? : 10;
 
         if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');

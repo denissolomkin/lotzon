@@ -325,7 +325,7 @@
             <div class="modal-body">
                 <h4>Фильтр</h4>
                 <hr />
-                <table class="table table-striped points" >
+                <table class="table table-striped" >
                     <thead>
                     <th>#ID</th>
                     <th>Дата</th>
@@ -357,7 +357,7 @@
             <div class="modal-body">
                 <h4>Уведомления</h4>
                 <hr />
-                <table class="table table-striped points" >
+                <table class="table table-striped" >
                     <thead>
                     <th>Дата</th>
                     <th>Уведомление</th>
@@ -498,7 +498,7 @@
             <div class="modal-body">
                 <h4>Комментарии</h4>
                 <hr />
-                <table class="table table-striped points" >
+                <table class="table table-striped" >
                     <thead>
                     <th>Дата</th>
                     <th>Комментарий</th>
@@ -527,7 +527,7 @@
             <div class="modal-body">
                 <h4>Заметки</h4>
                 <hr />
-                <table class="table table-striped points" >
+                <table class="table table-striped" >
                     <thead>
                     <th>Дата</th>
                     <th>Автор</th>
@@ -694,9 +694,10 @@ $('.filter-trigger').on('click', function() {
 
 /* TICKETS BLOCK */
 $('.tickets-trigger').on('click', function() {
+
     var currency=($(this).parent().find('td.transactions-trigger').first().text());
     currency = currency.split(' ');
-    currency=currency[1];
+    currency = currency[1];
     $.ajax({
         url: "/private/users/tickets/" + $(this).data('id'),
         method: 'GET',
@@ -723,6 +724,7 @@ $('.tickets-trigger').on('click', function() {
                     '<td>'+(ticket.LotteryId>0?ticket.TicketWin+(ticket.TicketWin>0?' '+(ticket.TicketWinCurrency=='MONEY'?currency:'баллов'):''):'')+'</td>' +
                     '</tr>'
                 });
+
                 $("#tickets-holder").find('tbody').html(tdata);
                 $("#tickets-holder").modal();
                 $("#tickets-holder").find('.cls').on('click', function() {
@@ -1332,31 +1334,71 @@ $('.delete-trigger').on('click', function() {
 /* END DELETE BLOCK */
 
 /* TRANSACTIONS BLOCK */
-    $('.transactions-trigger').on('click', function() {
+    $(document).on('click', '.transactions-trigger', function() {
         var plid = $(this).data('id');
+        var offset = parseInt($(this).attr('data-offset')) || 0;
+        var currency = $(this).attr('data-currency') || null;
+
+
         $.ajax({
-            url: "/private/users/transactions/" + $(this).data('id'),
+            url: "/private/users/transactions/" + $(this).data('id') +'?offset='+offset+(currency ?'&currency='+currency :''),
             method: 'GET',
             async: true,
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
+
                     var tdata = '';
                     temp_bal = '';
-                    $(data.data.points).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+((temp_bal)!=parseFloat(tr.bal) && id!=0?'<span class=red>':'')+tr.bal+'</td>'
-                        tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
-                        temp_bal=parseFloat(tr.bal)-parseFloat(tr.sum);
-                    });
-                    $("#transactions-holder").find('.points tbody').html(tdata);
+
+
+                    if(data.data.points && (data.data.points).length) {
+
+                        $(data.data.points).each(function (id, tr) {
+                            tdata += '<tr><td>' + tr.id + '</td><td>' + tr.date + '</td><td>' + tr.desc + '</td><td>' + (tr.sum < 0 ? '<span class=red>' : '') + tr.sum + '</td><td>' + ((temp_bal) != parseFloat(tr.bal) && id != 0 ? '<span class=red>' : '') + tr.bal + '</td>'
+                            tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction(' + tr.id + ');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
+                            temp_bal = parseFloat(tr.bal) - parseFloat(tr.sum);
+                        });
+
+                        if(offset) {
+                            $("#transactions-holder").find('.points tbody button').parents('tr').first().before(tdata);
+                            $("#transactions-holder").find('.points tbody button').attr('data-offset',(offset + (data.data.points).length));
+                        } else {
+                            tdata += '<tr><td></td><td></td><td><button class="transactions-trigger" data-currency="points" data-id="'+plid+'" data-offset="'+(offset + (data.data.points).length)+ '">показать еще</button></td><td></td><td></td></tr>';
+                            $("#transactions-holder").find('.points tbody').html(tdata);
+                        }
+
+                        console.log(data.data.limit , (data.data.points).length)
+                        if(data.data.limit > (data.data.points).length)
+                            $("#transactions-holder").find('.points tbody button').parents('tr').first().remove();
+                    }
+
+
                     tdata = '';
                     temp_bal = 0;
-                    $(data.data.money).each(function(id, tr) {
-                        tdata += '<tr><td>'+tr.id+'</td><td>'+tr.date+'</td><td>'+tr.desc+'</td><td>'+(tr.sum<0?'<span class=red>':'')+tr.sum+'</td><td>'+((temp_bal)!=parseFloat(tr.bal) && id!=0?'<span class=red>':'')+tr.bal+'</td>'
-                        tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
-                        temp_bal=parseFloat(tr.bal)-parseFloat(tr.sum);
-                    });
-                    $("#transactions-holder").find('.money tbody').html(tdata);
+
+                    if(data.data.money && (data.data.money).length) {
+                        console.log((data.data.money).length);
+
+                        $(data.data.money).each(function (id, tr) {
+                            tdata += '<tr><td>' + tr.id + '</td><td>' + tr.date + '</td><td>' + tr.desc + '</td><td>' + (tr.sum < 0 ? '<span class=red>' : '') + tr.sum + '</td><td>' + ((temp_bal) != parseFloat(tr.bal) && id != 0 ? '<span class=red>' : '') + tr.bal + '</td>'
+                            tdata += '<td><button class="btn btn-md btn-danger" onclick="removeTransaction(' + tr.id + ');"><i class="glyphicon glyphicon-remove"></i></td></td></tr>'
+                            temp_bal = parseFloat(tr.bal) - parseFloat(tr.sum);
+                        });
+
+                        if(offset) {
+                            $("#transactions-holder").find('.money tbody button').parents('tr').first().before(tdata);
+                            $("#transactions-holder").find('.money tbody button').attr('data-offset',(offset + (data.data.money).length));
+                        } else {
+                            tdata += '<tr><td></td><td></td><td><button class="transactions-trigger" data-currency="money" data-id="'+plid+'" data-offset="'+(offset + (data.data.money).length)+ '">показать еще</button></td><td></td><td></td></tr>';
+                            $("#transactions-holder").find('.money tbody').html(tdata);
+                        }
+
+                        if(data.data.limit > (data.data.money).length)
+                            $("#transactions-holder").find('.money tbody button').parents('tr').first().remove();
+                    }
+
+
                     $("#transactions-holder").modal();
                     $("#transactions-holder").find('.cls').on('click', function() {
                         $("#transactions-holder").modal('hide');

@@ -21,7 +21,7 @@
                     <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
                 </span><span class="label label-info"><b><?=$stats['Points']?></b></span>
                 </div>
-                <div class="pointer" onclick="location.href='?search[where]=Online&search[query]=1'">
+                <div class="pointer" onclick="location.href='?search[where]=Ping&search[query]=1'">
                 <span>
                     <span class="label label-md label-default"><i class="online" style="vertical-align: top;margin: 0 2px;">•</i></span></span><span class="label label-info"><b><?=$stats['Online']?></b></span>
                 </div>
@@ -78,7 +78,7 @@
                             </div>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
-                            <?=($player->getNicName())?><?=($player->getOnlineTime()>time()-5*60?'<i class="online right">•</i>':'');?>
+                            <?=($player->getNicName())?><?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?>
                             </div>
                         </td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
@@ -256,7 +256,7 @@ $('.search-users').on('click', function() {
         '<option value="NicName">Ник</option>' +
         '<option value="ReferalId">Реферал</option>' +
         '<option value="CookieId">Cookie</option>' +
-        '<option value="Online">Online</option>' +
+        '<option value="Ping">Online</option>' +
         '<option value="CONCAT(`Surname`,`Name`)">Фио</option>' +
         '<option value="Email">Email</option></select>');
         var sccButton = $('<button class="btn btn-md btn-success search-form"><i class="glyphicon glyphicon-ok"></i></button>')
