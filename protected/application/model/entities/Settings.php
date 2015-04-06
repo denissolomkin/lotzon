@@ -86,7 +86,7 @@ class Settings extends Entity
         switch ($from) {
             case 'DB' :
                 $this->setKey($data['Key'])
-                     ->setValue(unserialize($data['Value']));
+                     ->setValue(@unserialize($data['Value']));
             break;
             case 'CLASS' :
                 $this->setKey($data->getKey())

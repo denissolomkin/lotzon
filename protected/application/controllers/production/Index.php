@@ -264,7 +264,8 @@ class Index extends \SlimController\SlimController
             $info = array(
                 'participants' => Common::viewNumberFormat(PlayersModel::instance()->getMaxId()),
                 'winners'      => Common::viewNumberFormat(LotteriesModel::instance()->getWinnersCount()  + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD')),
-                'win'          => Common::viewNumberFormat(round(LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD'))) . ' <span>' .
+                'win'          => Common::viewNumberFormat(
+                        round(LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient()) . ' <span>' .
                     CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getTitle('iso') . '</span>',
             );
 

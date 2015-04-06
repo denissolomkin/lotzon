@@ -7,6 +7,7 @@ Application::import(PATH_APPLICATION . 'model/processors/SettingsCacheProcessor.
 
 class SettingsModel extends Model
 {
+    private $_list;
     public function init()
     {
         parent::init();
