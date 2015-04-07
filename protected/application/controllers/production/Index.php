@@ -150,7 +150,7 @@ class Index extends \SlimController\SlimController
             'playerPlayedLotteries' => LotteriesModel::instance()->getPlayerPlayedLotteries($player->getId(),SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
             'seo'         => $seo,
             'onlineGames' => OnlineGamesModel::instance()->getList(),
-            'langs'       => ($seo['multilanguage'] ? CountriesModel::instance()->getLangs() : null),
+            'langs'       => ($seo['multilanguage'] ? \LanguagesModel::instance()->getList() : null),
             'debug'       => (\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
             'quickGames'  => QuickGamesModel::instance()->getList(),
             'gameSettings'=> $gameSettings,

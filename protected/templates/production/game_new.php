@@ -207,7 +207,7 @@
                 <? if($seo['multilanguage'] && is_array($langs)){?>
                     <div class="multilanguage">
                     <? foreach($langs as $lang){?>
-                        <div data-lang="<?=($lang)?>" class="flag <?=$lang==$player->getLang()?'active ':''?>flag-<?=strtolower($lang)?>"></div>
+                        <div data-lang="<?=($lang->getCode())?>" class="flag <?=$lang->getCode()==$player->getLang()?'active ':''?>flag-<?=strtolower($lang->getCode())?>"></div>
                 <?}?></div>
                 <?}?>
                 <div id="hr-io-slider">

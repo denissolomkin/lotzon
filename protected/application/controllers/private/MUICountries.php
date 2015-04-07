@@ -1,11 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \CurrencyModel, \CountriesModel, \Country, \Admin, \SettingsModel;
-
-Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/CountriesModel.php');
-Application::import(PATH_APPLICATION . '/model/models/CurrencyModel.php');
-Application::import(PATH_APPLICATION . '/model/entities/Country.php');
+use \Session2, \EntityException, \CurrencyModel, \LanguagesModel, \CountriesModel, \Country, \Admin, \SettingsModel;
 
 class Countries extends \PrivateArea
 {
@@ -24,7 +19,7 @@ class Countries extends \PrivateArea
     {
         $countries = CountriesModel::instance()->getList();
         $availabledCountries = CountriesModel::instance()->getAvailabledCountries();
-        $langs = CountriesModel::instance()->getLangs();
+        $langs = LanguagesModel::instance()->getList();
         $currencies = CurrencyModel::instance()->getList();
 
         $this->render('admin/countries', array(

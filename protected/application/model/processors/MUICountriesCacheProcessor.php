@@ -2,7 +2,7 @@
 
 Application::import(PATH_INTERFACES . 'IProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/BaseCacheProcessor.php');
-Application::import(PATH_APPLICATION . 'model/processors/CountriesDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUICountriesDBProcessor.php');
 
 class CountriesCacheProcessor extends BaseCacheProcessor implements IProcessor
 {

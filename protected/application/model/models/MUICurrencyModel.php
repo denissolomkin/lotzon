@@ -1,9 +1,9 @@
 <?php
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
-Application::import(PATH_APPLICATION . 'model/entities/Currency.php');
-Application::import(PATH_APPLICATION . 'model/processors/CurrencyDBProcessor.php');
-Application::import(PATH_APPLICATION . 'model/processors/CurrencyCacheProcessor.php');
+Application::import(PATH_APPLICATION . 'model/entities/MUICurrency.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUICurrencyDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUICurrencyCacheProcessor.php');
 
 class CurrencyModel extends Model
 {

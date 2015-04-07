@@ -1,11 +1,6 @@
 <?php
 namespace controllers\admin;
-
-use \Application, \PrivateArea, \StaticText, \CountriesModel, \StaticTextsModel, \SettingsModel, \Session2, \Admin;
-
-Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/StaticTextsModel.php');
-Application::import(PATH_APPLICATION . '/model/entities/StaticText.php');
+use \PrivateArea, \StaticText, \StaticTextsModel, \SettingsModel, \Session2, \Admin;
 
 class StaticTexts extends PrivateArea
 {

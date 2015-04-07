@@ -1,9 +1,9 @@
 <?php
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
-Application::import(PATH_APPLICATION . 'model/entities/Country.php');
-Application::import(PATH_APPLICATION . 'model/processors/CountriesDBProcessor.php');
-Application::import(PATH_APPLICATION . 'model/processors/CountriesCacheProcessor.php');
+Application::import(PATH_APPLICATION . 'model/entities/MUICountry.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUICountriesDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUICountriesCacheProcessor.php');
 
 class CountriesModel extends Model
 {

@@ -1,10 +1,9 @@
 <?php
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
-Application::import(PATH_APPLICATION . 'model/entities/StaticText.php');
-Application::import(PATH_APPLICATION . 'model/processors/StaticTextDBProcessor.php');
-Application::import(PATH_APPLICATION . 'model/processors/StaticTextCacheProcessor.php');
-
+Application::import(PATH_APPLICATION . 'model/entities/MUIText.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUITextsDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUITextsCacheProcessor.php');
 
 class StaticTextsModel extends Model
 {

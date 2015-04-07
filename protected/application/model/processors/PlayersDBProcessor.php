@@ -389,7 +389,7 @@ class PlayersDBProcessor implements IProcessor
         // return array('Points'=>0,'Money'=>0,'Online'=>0,'Tickets'=>0);
 
         $sql = "SELECT
-                SUM(Money / IFNULL((SELECT `Coefficient` FROM `Countries` cn LEFT JOIN `Currency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
+                SUM(Money / IFNULL((SELECT `Coefficient` FROM `MUICountries` cn LEFT JOIN `MUICurrency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
                 SUM(Points) Points,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets

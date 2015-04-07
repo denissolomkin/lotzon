@@ -46,8 +46,8 @@
                         <div class="row-fluid">
                             <div class="btn-group">
                                 <? $fst = true; ?>
-                                <? foreach (\CountriesModel::instance()->getLangs() as $lang) { ?>
-                                    <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
+                                <? foreach (\LanguagesModel::instance()->getList() as $lang) { ?>
+                                    <button type="button" class="btn btn-md lang btn-default<?=($fst ? ' active' : '')?>" data-lang="<?=$lang->getCode()?>"><?=strtoupper($lang->getCode())?></button>
                                     <? $fst = false;} ?>
                             </div>
                         </div>

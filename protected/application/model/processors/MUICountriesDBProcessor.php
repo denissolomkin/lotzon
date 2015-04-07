@@ -6,7 +6,7 @@ class CountriesDBProcessor implements IProcessor
 {
     public function getList()
     {
-        $sql = "SELECT * FROM `Countries` ORDER BY Id";
+        $sql = "SELECT * FROM `MUICountries` ORDER BY Id";
 
         try {
             $countriesData = DB::Connect()->query($sql)->fetchAll();
@@ -27,7 +27,7 @@ class CountriesDBProcessor implements IProcessor
 
     public function getCountries()
     {
-        $sql = "SELECT Code FROM `Countries` ORDER BY Id";
+        $sql = "SELECT Code FROM `MUICountries` ORDER BY Id";
 
         try {
             $countriesData = DB::Connect()->query($sql)->fetchAll();
@@ -45,7 +45,7 @@ class CountriesDBProcessor implements IProcessor
 
     public function getLangs()
     {
-        $sql = "SELECT DISTINCT(Lang) FROM `Countries`";
+        $sql = "SELECT DISTINCT(Lang) FROM `MUICountries`";
 
         try {
             $countriesData = DB::Connect()->query($sql)->fetchAll();
@@ -80,7 +80,7 @@ class CountriesDBProcessor implements IProcessor
     public function fetch(Entity $country)
     {
 
-        $sql = "SELECT * FROM `Countries` WHERE Code = :code LIMIT 1";
+        $sql = "SELECT * FROM `MUICountries` WHERE Code = :code LIMIT 1";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -98,7 +98,7 @@ class CountriesDBProcessor implements IProcessor
 
     public function create(Entity $country)
     {
-        $sql = "REPLACE INTO `Countries` (`Id`, `Code`, `Lang`, `Currency`) VALUES (:id, :code, :lang, :cur)";
+        $sql = "REPLACE INTO `MUICountries` (`Id`, `Code`, `Lang`, `Currency`) VALUES (:id, :code, :lang, :cur)";
 
         try {
             $sth = DB::Connect()->prepare($sql);

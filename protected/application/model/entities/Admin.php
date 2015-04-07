@@ -16,8 +16,8 @@ class Admin extends Entity
             'pages'=>array(
                 'countries'=>array('icon'=>'globe','name'=>'Страны'),
                 'currencies'=>array('icon'=>'money','name'=>'Валюты'),
-                'statictexts'=>array('icon'=>'language','name'=>'Переводы'),
-                'texts'=>array('icon'=>'language','name'=>'Тексты'),
+                'languages'=>array('icon'=>'language','name'=>'Языки'),
+                'statictexts'=>array('icon'=>'font','name'=>'Переводы'),
             )),
 
         'Настройки'=>array('icon'=>'cogs',

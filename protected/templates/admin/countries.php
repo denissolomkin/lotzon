@@ -30,8 +30,8 @@
                 <span class="input-group-addon"><i class="fa fa-language fa-2x"></i></span>
                 <select class="form-control c" name="Lang">
                     <option></option>
-                    <? if(is_array($availabledCountries))
-                        foreach($availabledCountries as $country):?><option value="<?=$country['Country'];?>"><?=$country['Country'];?></option><? endforeach; ?>
+                    <? if(is_array($langs))
+                        foreach($langs as $lang):?><option value="<?=$lang->getCode();?>"><?=$lang->getTitle();?></option><? endforeach; ?>
                 </select>
             </div>
 

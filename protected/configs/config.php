@@ -76,6 +76,10 @@ Config::instance()->privateResources =  array(
         'get'  => 'controllers\admin\Currencies:index',
         'post' => 'controllers\admin\Currencies:save',
     ),
+    '/private/languages/' => array(
+        'get'  => 'controllers\admin\Languages:index',
+        'post' => 'controllers\admin\Languages:save',
+    ),
     '/private/lottery/simulation' => array(
         'post' => 'controllers\admin\Lottery:simulation',
     ),

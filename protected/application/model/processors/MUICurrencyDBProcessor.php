@@ -6,7 +6,7 @@ class CurrencyDBProcessor implements IProcessor
 {
     public function getList()
     {
-        $sql = "SELECT * FROM `Currency` ORDER BY Id DESC";
+        $sql = "SELECT * FROM `MUICurrency` ORDER BY Id DESC";
 
         try {
             $currencyData = DB::Connect()->query($sql)->fetchAll();
@@ -27,7 +27,7 @@ class CurrencyDBProcessor implements IProcessor
     public function fetch(Entity $currency)
     {
 
-        $sql = "SELECT * FROM `Currency` WHERE Id = :id LIMIT 1";
+        $sql = "SELECT * FROM `MUICurrency` WHERE Id = :id LIMIT 1";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -49,7 +49,7 @@ class CurrencyDBProcessor implements IProcessor
 
     public function create(Entity $currency)
     {
-        $sql = "REPLACE INTO `Currency` (`Id`, `Code`, `Title`, `Rate`, `Coefficient`) VALUES (:id, :code, :title, :rate, :coef)";
+        $sql = "REPLACE INTO `MUICurrency` (`Id`, `Code`, `Title`, `Rate`, `Coefficient`) VALUES (:id, :code, :title, :rate, :coef)";
 
         try {
             $sth = DB::Connect()->prepare($sql);

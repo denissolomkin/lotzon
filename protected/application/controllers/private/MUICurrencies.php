@@ -1,10 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \CurrencyModel, \Currency, \Admin, \SettingsModel;
-
-Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/CurrencyModel.php');
-Application::import(PATH_APPLICATION . '/model/entities/Currency.php');
+use \Session2, \EntityException, \CurrencyModel, \Currency, \Admin, \SettingsModel;
 
 class Currencies extends \PrivateArea
 {

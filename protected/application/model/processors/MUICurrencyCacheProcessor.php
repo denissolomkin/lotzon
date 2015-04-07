@@ -2,7 +2,7 @@
 
 Application::import(PATH_INTERFACES . 'IProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/BaseCacheProcessor.php');
-Application::import(PATH_APPLICATION . 'model/processors/CurrencyDBProcessor.php');
+Application::import(PATH_APPLICATION . 'model/processors/MUICurrencyDBProcessor.php');
 
 class CurrencyCacheProcessor extends BaseCacheProcessor implements IProcessor
 {
