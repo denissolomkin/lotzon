@@ -74,9 +74,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getTickets($playerId,$lotteryId);
     }
 
-    public function checkNickname(Entity $player) 
+    public function checkNickname(Entity $player)
     {
-        return $this->getProcessor()->checkNickname($player);   
+        return $this->getProcessor()->checkNickname($player);
     }
 
     public function initCounters(Entity $player)
@@ -135,22 +135,22 @@ class PlayersModel extends Model
         return $this->getProcessor()->ban($player,$status);
     }
 
-    public function saveAvatar(Entity $player) 
+    public function saveAvatar(Entity $player)
     {
-        return $this->getProcessor()->saveAvatar($player);   
+        return $this->getProcessor()->saveAvatar($player);
     }
 
-    public function changePassword(Entity $player) 
+    public function changePassword(Entity $player)
     {
-        return $this->getProcessor()->changePassword($player);      
+        return $this->getProcessor()->changePassword($player);
     }
 
-    public function decrementInvitesCount(Entity $player) 
+    public function decrementInvitesCount(Entity $player)
     {
-        return $this->getProcessor()->decrementInvitesCount($player);      
+        return $this->getProcessor()->decrementInvitesCount($player);
     }
 
-    public function decrementSocialPostsCount(Entity $player) 
+    public function decrementSocialPostsCount(Entity $player)
     {
         return $this->getProcessor()->decrementSocialPostsCount($player);
     }
@@ -167,7 +167,7 @@ class PlayersModel extends Model
 
     public function markOnline(Entity $player)
     {
-        return $this->getProcessor()->markOnline($player);   
+        return $this->getProcessor()->markOnline($player);
     }
 
     public function validateHash($hash)

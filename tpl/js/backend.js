@@ -56,14 +56,14 @@ function registerPlayer(playerData, successFunction, failFunction, errorFunction
             } else {
                 failFunction.call(playerData, data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call(playerData, data);
        }
     });
 }
 
-function loginPlayer(authData, successFunction, failFunction, errorFunction) 
+function loginPlayer(authData, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/players/login/",
@@ -77,11 +77,11 @@ function loginPlayer(authData, successFunction, failFunction, errorFunction)
             } else {
                 failFunction.call(authData, data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call(authData, data);
        }
-    });   
+    });
 }
 
 function updatePlayerProfile(playerData, successFunction, failFunction, errorFunction)
@@ -98,21 +98,21 @@ function updatePlayerProfile(playerData, successFunction, failFunction, errorFun
             } else {
                 failFunction.call(playerData, data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call(playerData, data);
        }
     });
 }
 
-function addTicket(tickNum, combination, successFunction, failFunction, errorFunction) 
+function addTicket(tickNum, combination, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/game/ticket/",
         method: 'POST',
         data: {
             'tnum' : tickNum,
-            'combination' : combination,   
+            'combination' : combination,
         },
         async: true,
         dataType: 'json',
@@ -126,7 +126,7 @@ function addTicket(tickNum, combination, successFunction, failFunction, errorFun
         error: function() {
             errorFunction.call(combination, data);
        }
-    });   
+    });
 }
 
 function changeLanguage(lang, successFunction, failFunction, errorFunction)
@@ -169,7 +169,7 @@ function loadLotteries(offset, onlyMine, successFunction, failFunction, errorFun
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function loadShop(category, offset, successFunction, failFunction, errorFunction)
@@ -189,7 +189,7 @@ function loadShop(category, offset, successFunction, failFunction, errorFunction
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function getLotteryData(successFunction, failFunction, errorFunction) {
@@ -258,7 +258,7 @@ function loadNews(offset, successFunction, failFunction, errorFunction) {
         error: function() {
             errorFunction.call($(this), data);
        }
-    });      
+    });
 }
 
 function loadReviews(offset, successFunction, failFunction, errorFunction) {
@@ -280,7 +280,7 @@ function loadReviews(offset, successFunction, failFunction, errorFunction) {
     });
 }
 
-function createItemOrder(order, successFunction, failFunction, errorFunction) 
+function createItemOrder(order, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/order/item/",
@@ -299,7 +299,7 @@ function createItemOrder(order, successFunction, failFunction, errorFunction)
         error: function() {
             errorFunction.call(order, data);
        }
-    });   
+    });
 }
 
 function loadLotteryDetails(lotteryId, deps, successFunction, failFunction, errorFunction) {
@@ -329,7 +329,7 @@ function loadLotteryDetails(lotteryId, deps, successFunction, failFunction, erro
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function removePlayerAvatar(successFunction, failFunction, errorFunction) {
@@ -371,7 +371,7 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function startQuickGame(key, id, successFunction, failFunction, errorFunction) {
@@ -433,7 +433,7 @@ function startChanceGame(gi, successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
@@ -456,7 +456,7 @@ function playChanceGame(gi, choose, successFunction, failFunction, errorFunction
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
@@ -476,14 +476,14 @@ function getLandingStats(successFunction, failFunction, errorFunction)
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
     });
 }
 
-function resendPassword(email, successFunction, failFunction, errorFunction) 
+function resendPassword(email, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/players/resendPassword",
@@ -499,11 +499,11 @@ function resendPassword(email, successFunction, failFunction, errorFunction)
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function getTransactions(offset, currency, successFunction, failFunction, errorFunction) {
@@ -521,11 +521,11 @@ function getTransactions(offset, currency, successFunction, failFunction, errorF
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function getNotices(offset, successFunction, failFunction, errorFunction) {
@@ -550,6 +550,26 @@ function getNotices(offset, successFunction, failFunction, errorFunction) {
     });
 }
 
+function socialRefPost(socialName) {
+    $.ajax({
+        url: "/players/social/"+socialName,
+        method: 'POST',
+        data: {},
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
+
 function socialSuccessPost(successFunction, failFunction, errorFunction) {
     $.ajax({
         url: "/players/social/",
@@ -563,11 +583,11 @@ function socialSuccessPost(successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
@@ -585,11 +605,11 @@ function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    }); 
+    });
 }
 
 function requestForMoney(data, successFunction, failFunction, errorFunction) {
@@ -607,7 +627,7 @@ function requestForMoney(data, successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
@@ -630,11 +650,11 @@ function sendPartnersFeedback(post, successFunction, failFunction, errorFunction
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    }); 
+    });
 }
 
 window.setInterval(function() {
@@ -716,9 +736,80 @@ window.setInterval(function() {
             }
         },
         error: function() {}
-    });   
+    });
 }, 60 * 1000);
 
 function showQuickGameStart(){
     $(".notifications #qgame .badge-block .txt div").first().hide().next().fadeIn(200).parents('.badge-block').find('.cs').hide();
+}
+
+function startMoment() {
+    $("#mchance").find('li').off('click').on('click', function () {
+        var li = $(this);
+        playChanceGame('moment', $(this).data('num'), function (data) {
+            if (data.res.status == 'win') {
+                li.html($("#mchance").data('pointsWin'));
+                li.addClass('won');
+
+                window.setTimeout(function () {
+                 $("#mchance .mm-msg").addClass('win').show().find('.txt').text('Поздравляем, выигранные баллы зачислены на счет');
+                    //$("#mchance").hide();
+                    $('.pz-ifo-bk').hide();
+                    //$('.pz-rt-bk').text("Поздравляем, выигранные баллы зачислены на счет.").show().parents('#shop-items-popup').show();
+                }, 1000)
+                /*
+                window.setTimeout(function () {
+                    location.reload();
+                }, 4000);
+                */
+            } else if (data.res.status == 'error') {
+
+                //$("#mchance").hide();
+                $('.pz-ifo-bk').hide();
+                $("#mchance .mm-msg").show().find('.txt').text(data.res.error);
+                /*
+                $('.pz-rt-bk').text(data.res.error).show().parents('#shop-items-popup').show();
+
+
+                window.setTimeout(function () {
+                    location.reload();
+                }, 4000);
+ */
+            } else {
+                li.addClass('los');
+
+                for (var i in data.res.field) {
+                    if (data.res.field[i] == 1) {
+                        var num = parseInt(i) + 1;
+                        $('li[data-num="' + num + '"]').addClass('blink');
+                    }
+                }
+                $('li.blink').html($("#mchance").data('pointsWin'));
+                var blinkCount = 3;
+                var blinkInterval = window.setInterval(function () {
+                    if (blinkCount == 0) {
+                        window.clearInterval(blinkInterval);
+                        //$("#mchance").hide();
+                        $('.pz-ifo-bk').hide();
+                        $("#mchance .mm-msg").show().find('.txt').text('В этот раз не повезло');
+                        //$('.pz-rt-bk').text("Повезет в следующий раз").show().parents('#shop-items-popup').show();
+
+                        /*
+                        window.setTimeout(function () {
+                            location.reload();
+                        }, 4000);
+                        */
+                        return;
+                    }
+                    blinkCount--;
+
+                    $('li.blink').toggleClass('true');
+                }, 600);
+            }
+        },
+            function (data) {
+                $("#mchance .mm-msg").show().find('.txt').text(data.message);
+            }
+        )
+    });
 }

@@ -801,6 +801,14 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    /**
+     * Сохранение в базу массива счётчиков остатка оплачиваемых реф.постов в соц.сетях
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  object $player
+     * @return object
+     */
     public function decrementSocialPostsCount(Entity $player)
     {
         $sql = "UPDATE `Players` SET `SocialPostsCount` = :ic WHERE  `Id` = :plid";
@@ -808,7 +816,7 @@ class PlayersDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':ic'  => $player->getSocialPostsCount(),
+                ':ic'   => is_array($player->getSocialPostsCount()) ? serialize($player->getSocialPostsCount()) : '',
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {

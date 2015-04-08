@@ -11,7 +11,7 @@ function fbPost(postObject) {
                     $('.sposts-count').text(data.res.postsCount);
                 }, function(data) {}, function() {});
             }
-        });   
+        });
     }, postObject);
 }
 function vkPost(postObject) {
@@ -25,18 +25,18 @@ function vkPost(postObject) {
                         VK.Api.call('wall.post', {
                             message: post.message + "\n" + post.link,
                             attachments: photo.id
-                        }, function(pr) {      
-                            console.log(pr);                          
+                        }, function(pr) {
+                            console.log(pr);
                             if (pr && !pr.error) {
                                 socialSuccessPost(function(data) {
                                     $('.sposts-count').text(data.res.postsCount);
-                                }, function(data) {}, function() {});    
-                            }                                
+                                }, function(data) {}, function() {});
+                            }
                         });
                     });
                 }, function() {}, function() {});
             }
-        }); 
+        });
     }, postObject);
 }
 function getVkLogin(callback, callbackInput) {

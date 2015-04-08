@@ -34,8 +34,9 @@
         <!-- Open Graph data -->
         <meta property="og:title" content="<?=$seo['Title']?>" />
         <meta property="og:type" content="article" />
-        <!--meta property="og:url" content="http://www.lotzon.com/" /-->
+        <meta property="og:url" content="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" />
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
+        <link rel="image_src" href="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
@@ -55,6 +56,10 @@
         <!-- For iPhone: -->
         <link rel="apple-touch-icon-precomposed" href="">
 
+        <!-- social_likes -->
+        <link rel="stylesheet" href="/tpl/css/social-likes_flat.css" />
+
+
         <script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
         <script src="/tpl/js/lib/modernizr.js"></script>
         <script src="/tpl/js/lib/jquery.min.js"></script>
@@ -65,6 +70,10 @@
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
+
+        <!-- social_likes -->
+        <script src="/tpl/js/lib/social-likes.min.js"></script>
+
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <? if($debug){ ?>
             <!-- Latest compiled and minified JavaScript -->
@@ -697,35 +706,22 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
-                                    <div class="rp-sl-bk">
-                                        <!--a href="javascript:void(0)"
-                                            onclick="
-                                                window.open(
-                                                'http://twitter.com/share?url=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>',
-                                                'twitter-share-dialog',
-                                                'width=500,height=436');
-                                                return false;"
-                                             class="tw"></a-->
-                                        <!--a href="javascript:void(0)"
-                                            onclick="
-                                                window.open(
-                                                'https://plus.google.com/share?url=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>',
-                                                'googleplus-share-dialog',
-                                                'width=500,height=436');
-                                                return false;"
-                                                class="gp"></a-->
-                                        <!--div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="twitter,gplus"></div-->
-                                        <!--a  href="javascript:void(0)"
-                                            onclick="
-                                                window.open(
-                                                'https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>',
-                                                'facebook-share-dialog',
-                                                'width=626,height=436');
-                                                return false;"
-                                            class="fb fb-share">
-                                        </a-->
-                                        <a href="javascript:void(0)" class="vk vk-share"></a>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов</div>
+                                    <div class="rp-sl-bk" style="padding-right:0px;">
+
+                                    <div class="social-likes social-likes_vertical" data-counters="no" data-url="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" data-title="Играл и буду играть">
+                                        <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>
+                                        <div class="twitter" data-related="Играл и буду играть" title="Поделиться ссылкой в Твиттере">Twitter</div>
+                                        <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</div>
+                                        <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</div>
+                                        <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</div>
+                                    </div>
+                                    <script>
+                                        $('.social-likes').on('popup_closed.social-likes', function(event, service) {
+                                            socialRefPost(service);
+                                        });
+                                    </script>
+
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
