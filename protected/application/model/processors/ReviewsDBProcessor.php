@@ -109,7 +109,7 @@ class ReviewsDBProcessor implements IProcessor
 
     public function getList($status=1, $limit = null, $offset = null)
     {
-        $sql = "SELECT `PlayerReviews`.*, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
+        $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`

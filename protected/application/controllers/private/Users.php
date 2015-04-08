@@ -48,7 +48,7 @@ class Users extends PrivateArea
         $this->render('admin/users', array(
             'title'        => 'Пользователи',
             'layout'       => 'admin/layout.php',
-            'frontend'      => 'admin/users_frontend.php',
+            'frontend'      => 'users',
             'activeMenu'   => $this->activeMenu,
             'list'         => $list,
             'playersCount' => $count,

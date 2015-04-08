@@ -6,7 +6,7 @@ class CurrencyDBProcessor implements IProcessor
 {
     public function getList()
     {
-        $sql = "SELECT * FROM `MUICurrency` ORDER BY Id DESC";
+        $sql = "SELECT * FROM `MUICurrency` ORDER BY Id";
 
         try {
             $currencyData = DB::Connect()->query($sql)->fetchAll();

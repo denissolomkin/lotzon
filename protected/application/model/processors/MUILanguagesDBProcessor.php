@@ -6,7 +6,7 @@ class LanguagesDBProcessor implements IProcessor
 {
     public function getList()
     {
-        $sql = "SELECT * FROM `MUILanguages` ORDER BY Id DESC";
+        $sql = "SELECT * FROM `MUILanguages` ORDER BY Id";
 
         try {
             $languageData = DB::Connect()->query($sql)->fetchAll();

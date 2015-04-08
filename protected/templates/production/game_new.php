@@ -204,12 +204,6 @@
             </aside>
             </div>
             <div class="hr-io-bk">
-                <? if($seo['multilanguage'] && is_array($langs)){?>
-                    <div class="multilanguage">
-                    <? foreach($langs as $lang){?>
-                        <div data-lang="<?=($lang->getCode())?>" class="flag <?=$lang->getCode()==$player->getLang()?'active ':''?>flag-<?=strtolower($lang->getCode())?>"></div>
-                <?}?></div>
-                <?}?>
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
@@ -808,6 +802,17 @@
                                             <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
                                             <label for="rulcheck"><?=$MUI->getText('text-show-my-name')?></label>
                                         </div>
+
+                                        <? if($seo['multilanguage'] && is_array($langs)){?>
+                                            <div class="sb-ch-td">
+                                                <label for="multilanguage"><?=$MUI->getText('label-multilanguage')?></label>
+                                                <select id="multilanguage" class="multilanguage">
+                                                <? foreach($langs as $lang){?>
+                                                    <option <?=$lang->getCode()==$player->getLang()?'selected ':''?>value="<?=($lang->getCode())?>"><?=($lang->getTitle())?></option>
+                                                <?}?>
+                                                </select>
+                                            </div>
+                                        <?}?>
                                         <div class="sb-ch-td">
                                             <div class="but" onclick="$(this).parents('form').submit(); return false;"><?=$MUI->getText('button-save')?></div>
                                         </div>
@@ -1436,12 +1441,23 @@
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
         updateNotices(unreadNotices);
-        <? if($chanceGame):?> $('.gm-bt[data-game="<?=$chanceGame;?>"]').trigger('click');
+
+        /*
+        $('a[target="_blank"]').length
+        $(document).on('click',function(){
+            $(document).off();
+            window.open('http://192.168.1.253','_blank');
+        })
+        */
+        <? if($chanceGame):?>
+        $('.gm-bt[data-game="<?=$chanceGame;?>"]').trigger('click');
         $('.game-bk .play .bt').trigger('click');
         window.setTimeout(function(){
             $("html, body").animate({scrollTop: $('.chance').offset().top-60}, 500, 'easeInOutQuint');
             $('.ngm-bk .msg').hide();
-        }, 300);<? endif;?>
+        }, 300);
+        <? endif;?>
+
         <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
         $('#qgame').hide();
         setTimeout(function(){$('#qgame').fadeIn(200)},1200);

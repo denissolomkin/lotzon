@@ -25,10 +25,12 @@ class Monetisation extends PrivateArea
     {
 
         $shopPage = $this->request()->get('shopPage', 1);
-        $moneyPage = $this->request()->get('moneyPage', 1);
         $shopStatus = $this->request()->get('shopStatus', 0);
+
+        $moneyPage = $this->request()->get('moneyPage', 1);
         $moneyType = $this->request()->get('moneyType', 0);
         $moneyStatus = $this->request()->get('moneyStatus', 0);
+
         $search = $this->request()->get('search', null);
         $sort = array(
             'field' => $this->request()->get('sortField', 'Id'),
@@ -62,7 +64,7 @@ class Monetisation extends PrivateArea
         $this->render('admin/monetisation', array(
             'title'      => 'Вывод средств',
             'layout'     => 'admin/layout.php',
-            'frontend'      => 'admin/users_frontend.php',
+            'frontend'      => 'users',
             'activeMenu' => $this->activeMenu,
             'shopOrders' => $shopOrders,
             'moneyOrders'=> $moneyOrders,

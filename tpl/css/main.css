@@ -611,8 +611,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-info .pi-et-bk .fc-bk .fc-nrch-bk > li:last-child {margin:0;}
 
 .profile-info .save-bk {margin-top:60px;display:table;width:100%;}
-.profile-info .save-bk .sb-ch-td {display:table-cell;vert-align:bottom;}
-.profile-info .save-bk .sb-ch-td {vertical-align:bottom;}
+.profile-info .save-bk .sb-ch-td {display:table-cell;vertical-align:bottom;}
 .profile-info .save-bk .sb-ch-td .but {width:128px;height:48px;text-align:center;border:1px solid #000;font:15px/48px Handbook-bold;text-transform:uppercase;margin:0 0 0 auto;cursor:default;opacity:0.35;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
@@ -1684,9 +1683,8 @@ border: 1px solid black;
                             Flag styles
    ========================================================================== */
 .multilanguage {
-    position: absolute;
-    z-index: 10;
-    right: 5px;}
+    border: 0;
+    padding: 5px;}
 .flag {
     float: right;
     margin-left: 5px;

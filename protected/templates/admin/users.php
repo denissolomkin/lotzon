@@ -361,5 +361,4 @@ function WebSocketStatus(action, data) {
     }
 ?>
 
-<? if($frontend)
-    require_once(PATH_TEMPLATES.$frontend);?>
+<? if($frontend) require_once($frontend.'_frontend.php') ?>

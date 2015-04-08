@@ -26,7 +26,6 @@
                 <!--th>#ID</th-->
                 <th width="50">Дата</th>
                 <th width="10%">Игрок</th>
-                <th width="20"></th>
                 <th width="20%">Информация</th>
                 <th width="50">Баланс</th>
                 <th>Данные</th>
@@ -38,14 +37,43 @@
                     <tr id="shop<?=$order->getId()?>">
 
                         <?$player=$order->getPlayer();?>
-                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
-                        <td class="pointer<?=$player->getBan()?' danger':''?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>">
-                            <div  <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
-                                <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <b\r> H:m:s', $order->getDateOrdered())?></td>
+                        <td class="" style="position: relative;" >
+                            <div onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
+                                <?=$player->getNicname()?>
+                                <br>
+                                <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
+
+                            </div>
+                            <div class="right" style="position: absolute;right: 5px;">
+                                <div style="position: relative;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
+                                    <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
+                                    <?=$player->getCountry()?>
+                                </div>
+                                <? if($player->getGamesPlayed()){?> <i data-id="<?=$player->getId()?>" class="fa fa-gift pointer stats-trigger <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"><?=$player->getGamesPlayed()?></i><?}?>
+
+                                <? if($player->getDateLastQuickGame()){?>
+                                    <i class="fa fa-puzzle-piece <?=
+                                    ($player->getDateLastQuickGame() > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDateLastQuickGame() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    )?>"></i>
+                                <?}?>
+
+                                <? if($player->getDateLastMoment()){?>
+                                    <i class="fa fa-rocket <?=
+                                    ($player->getDateLastMoment() > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDateLastMoment() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    )?>"></i>
+                                <?}?>
+
+                                <? if($player->getDateLastChance()){?>
+                                    <i class="fa fa-star <?=
+                                    ($player->getDateLastChance() > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDateLastChance() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    )?>"></i>
+                                <?}?>
                             </div>
                         </td>
-                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>"><?=$player->getCountry()?>
-                            <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -133,7 +161,6 @@
                                     </button>
                                 <? endif ?>
 
-                                <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
                             </div>
 
                         </td>
@@ -192,7 +219,6 @@
                 <!--th>#ID</th-->
                 <th width="50">Дата</th>
                 <th width="10%">Игрок</th>
-                <th width="20"></th>
                 <th width="20%">Информация</th>
                 <th width="100">Баланс</th>
                 <th>Номер</th>
@@ -203,14 +229,43 @@
                 <? foreach ($moneyOrders as $order) { ?>
                     <tr id="money<?=$order->getId()?>">
                         <?$player=$order->getPlayer();?>
-                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <br> H:m:s', $order->getDateOrdered())?></td>
-                        <td class="pointer<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>" onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')">
-                            <div  <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
-                                <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <b\r> H:m:s', $order->getDateOrdered())?></td>
+                        <td class="" style="position: relative;" >
+                            <div onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
+                                <?=$player->getNicname()?>
+                                <br>
+                                <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
+
+                            </div>
+                            <div class="right" style="position: absolute;right: 5px;">
+                                <div style="position: relative;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
+                                    <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
+                                    <?=$player->getCountry()?>
+                                </div>
+                                <? if($player->getGamesPlayed()){?> <i data-id="<?=$player->getId()?>" class="fa fa-gift pointer stats-trigger <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"><?=$player->getGamesPlayed()?></i><?}?>
+
+                                <? if($player->getDateLastQuickGame()){?>
+                                    <i class="fa fa-puzzle-piece <?=
+                                    ($player->getDateLastQuickGame() > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDateLastQuickGame() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    )?>"></i>
+                                <?}?>
+
+                                <? if($player->getDateLastMoment()){?>
+                                    <i class="fa fa-rocket <?=
+                                    ($player->getDateLastMoment() > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDateLastMoment() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    )?>"></i>
+                                <?}?>
+
+                                <? if($player->getDateLastChance()){?>
+                                    <i class="fa fa-star <?=
+                                    ($player->getDateLastChance() > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDateLastChance() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    )?>"></i>
+                                <?}?>
                             </div>
                         </td>
-                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>"><?=$player->getCountry()?>
-                            <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -299,8 +354,6 @@
                                         <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters()['Log']>1?$player->getCounters()['Log']:''?>
                                     </button><? endif ?>
 
-                                <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button>
-
                             </div>
 
                         </td>
@@ -381,5 +434,4 @@
     });
 </script>
 
-<? if($frontend)
-    require_once(PATH_TEMPLATES.$frontend);?>
+<? if($frontend) require_once($frontend.'_frontend.php') ?>

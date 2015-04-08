@@ -767,9 +767,9 @@ $(function(){
         }
     });
 
-    $('.multilanguage .flag').on('click', function(){
+    $('.multilanguage').on('input', function(){
         var btn = $(this);
-        changeLanguage(btn.attr('data-lang'),
+        changeLanguage(btn.val(),
             function (data) {
                 location.reload();
             },

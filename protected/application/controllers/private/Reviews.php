@@ -50,6 +50,7 @@ class Reviews extends PrivateArea
             'status'     => $status,
             'pager'        => $pager,
             'currentSort'  => $sort,
+            'frontend'      => 'users',
         ));
 
 
