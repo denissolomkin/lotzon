@@ -21,7 +21,7 @@
     </div>
     <div class="row-fluid">
         <div class="btn-group">
-            <? foreach (Config::instance()->langs as $lang) { ?>
+            <? foreach (\CountriesModel::instance()->getLangs() as $lang) { ?>
                 <button onclick="document.location.href='/private/news/<?=$lang?>'" type="button" class="btn btn-md lang btn-default<?=($pageLang == $lang ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
             <? } ?>
         </div>

@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \Session2, \Admin;
+use \Application, \PrivateArea, \SettingsModel, \Session2, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -12,18 +12,15 @@ class Blacklist extends PrivateArea
     public function init()
     {
         parent::init();
-
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
     }
 
     public function indexAction()
     {
-        $list['blockedIps']    = Config::instance()->blockedIps;
-        // $list['blockedSites'] = Config::instance()->blockedSites;
-        $list['blockedEmails'] = Config::instance()->blockedEmails;
-        $list['blockedReferers'] = Config::instance()->blockedReferers;
+
+        foreach(array('blockedIps','blockedEmails','blockedReferers') as $key)
+        $list[$key]    = SettingsModel::instance()->getSettings($key)->getValue();
 
         $this->render('admin/blacklist', array(
             'title'      => 'Черный список',
@@ -35,14 +32,15 @@ class Blacklist extends PrivateArea
 
     public function saveAction()
     {
+
         if($this->request()->post('blockedEmails'))
-            Config::instance()->save('blockedEmails',$this->request()->post('blockedEmails'));
+            SettingsModel::instance()->getSettings('blockedEmails')->setValue($this->request()->post('blockedEmails'))->create();
         elseif($this->request()->post('blockedIps'))
-            Config::instance()->save('blockedIps',$this->request()->post('blockedIps'));
+            SettingsModel::instance()->getSettings('blockedIps')->setValue($this->request()->post('blockedIps'))->create();
         elseif($this->request()->post('blockedSites'))
-            Config::instance()->save('blockedSites',$this->request()->post('blockedSites'));
+            SettingsModel::instance()->getSettings('blockedSites')->setValue($this->request()->post('blockedSites'))->create();
         elseif($this->request()->post('blockedReferers'))
-            Config::instance()->save('blockedReferers',$this->request()->post('blockedReferers'));
+            SettingsModel::instance()->getSettings('blockedReferers')->setValue($this->request()->post('blockedReferers'))->create();
 
         $this->redirect('/private/blacklist');
     }

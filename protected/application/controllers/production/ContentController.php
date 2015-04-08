@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
+use \Application, \SettingsModel, \Player, \EntityException, \CountriesModel, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -29,7 +29,7 @@ class ContentController extends \AjaxController
         try {
 
             if (!$onlyMine) {
-                $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(Index::LOTTERIES_PER_PAGE, $offset);
+                $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE'), $offset);
                 $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->session->get(Player::IDENTITY)->getId());
                 foreach ($playerLotteries as $lottery) {
                     if (isset($lotteries[$lottery->getId()])) {
@@ -37,7 +37,7 @@ class ContentController extends \AjaxController
                     }
                 }
             } else {
-                $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->session->get(Player::IDENTITY)->getId(), Index::LOTTERIES_PER_PAGE, $offset);
+                $lotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->session->get(Player::IDENTITY)->getId(), SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE'), $offset);
             }
 
         } catch (EntityException $e) {
@@ -58,7 +58,7 @@ class ContentController extends \AjaxController
                 );
             }
         }
-        if (count($lotteries) < Index::LOTTERIES_PER_PAGE) {
+        if (count($lotteries) < SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')) {
             $response['keepButtonShow'] = false;
         }
         $response['offset'] = $offset;
@@ -69,8 +69,9 @@ class ContentController extends \AjaxController
     public function bannerAction($sector)
     {
         $resp=array();
-        if(is_array(Config::instance()->banners[$sector]))
-            foreach(Config::instance()->banners[$sector] as $group) {
+        $banners = SettingsModel::instance()->getSettings('banners')->getValue();
+        if( is_array($banners[$sector]))
+            foreach($banners[$sector] as $group) {
                 if (is_array($group)) {
                     shuffle($group);
                     foreach ($group as $banner) {
@@ -88,7 +89,7 @@ class ContentController extends \AjaxController
                             <script>$('#ticket_video').show();";
                         //<script>setTimeout(function(){ $('#ticket_video').show();}, 600);";
 
-                        if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled']) {
+                        if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND $banners['settings']['enabled']) {
                             $resp['block'] .= "$('#ticket_video').children().first().css('margin-top','100px').next().css('height','100px').css('overflow','hidden');
 $('.tb-loto-tl li.loto-tl_li, .ticket-random, .ticket-favorite').off().on('click',function(event){
 $('#timer_videobanner{$id}').countdown({until: {$banner['title']},layout: 'осталось {snn} сек'}).parent().css('margin-top','390px').next().css('height','auto').css('overflow','hidden').css('margin-top','auto');
@@ -131,7 +132,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                 $i++;
                 continue;
             }
-            if (count($items) >= Index::SHOP_PER_PAGE) {
+            if (count($items) >= SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE')) {
                 break;
             }
             $items[] = array(
@@ -146,7 +147,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
         $data = array(
             'category' => $category,
             'items'    => $items,
-            'keepButtonShow' => count($items) >= Index::SHOP_PER_PAGE,
+            'keepButtonShow' => count($items) >= SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE'),
         );
 
         $this->ajaxResponse($data);
@@ -156,7 +157,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
     {
         $offset = (int)$this->request()->get('offset');
 
-        $reviews = ReviewsModel::instance()->getList(1, Index::REVIEWS_PER_PAGE, $offset);
+        $reviews = ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE'), $offset);
         $responseData = array(
             'reviews'           => array(),
             'keepButtonShow' => false,
@@ -173,7 +174,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                 'text'  => $reviewItem->getText(),
             );
         }
-        if (count($reviews) >= Index::REVIEWS_PER_PAGE) {
+        if (count($reviews) >= SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE')) {
             $responseData['keepButtonShow'] = true;
         }
 
@@ -184,7 +185,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
     {
         $offset = (int)$this->request()->get('offset');
 
-        $news = NewsModel::instance()->getList($this->session->get(Player::IDENTITY)->getCountry(), Index::NEWS_PER_PAGE, $offset);
+        $news = NewsModel::instance()->getList($this->session->get(Player::IDENTITY)->getCountry(), SettingsModel::instance()->getSettings('counters')->getValue('NEWS_PER_PAGE'), $offset);
         $responseData = array(
             'news'           => array(),
             'keepButtonShow' => false,
@@ -197,7 +198,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                 'text'  => $newsItem->getText(),
             );
         }
-        if (count($news) >= Index::NEWS_PER_PAGE) {
+        if (count($news) >= SettingsModel::instance()->getSettings('counters')->getValue('NEWS_PER_PAGE')) {
             $responseData['keepButtonShow'] = true;
         }
 
@@ -226,8 +227,8 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             'tickets' => array(),
         );
 
-        $langs = array();
         /*
+        $langs = array();
         foreach ($lotteryDetails['winners'] as $player) {
             $responseData['winners'][] = array(
                 'id'      => $player->getId(),
@@ -240,12 +241,13 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
         }
         */
         //print_r($lotteryDetails['tickets']);
+        $currency = CountriesModel::instance()->getCountry($this->session->get(Player::IDENTITY)->getCountry())->loadCurrency()->getTitle('iso');
         foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
             $response['tickets'][$playerId] = array();
             foreach ($ticketData as $ticket) {
                 $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
                     'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : Config::instance()->langCurrencies[$this->session->get(Player::IDENTITY)->getCountry()]) : '',
+                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency) : '',
                 );
             }
         }
@@ -295,10 +297,10 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
         $offset = (int)$this->request()->get('offset');
 
         if ($currency == LotterySettings::CURRENCY_POINT) {
-            $transactions = TransactionsModel::instance()->playerPointsHistory($this->session->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+            $transactions = TransactionsModel::instance()->playerPointsHistory($this->session->get(Player::IDENTITY)->getId(), SettingsModel::instance()->getSettings('counters')->getValue('TRANSACTIONS_PER_PAGE'), $offset);
         }
         if ($currency == LotterySettings::CURRENCY_MONEY) {
-            $transactions = TransactionsModel::instance()->playerMoneyHistory($this->session->get(Player::IDENTITY)->getId(), Index::TRANSACTIONS_PER_PAGE, $offset);
+            $transactions = TransactionsModel::instance()->playerMoneyHistory($this->session->get(Player::IDENTITY)->getId(), SettingsModel::instance()->getSettings('counters')->getValue('TRANSACTIONS_PER_PAGE'), $offset);
         }
         $jsonTransactions = array();
         foreach ($transactions as $transaction) {

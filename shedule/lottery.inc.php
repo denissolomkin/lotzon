@@ -158,7 +158,7 @@ function ApplyLotteryTickets($comb)
 	$time = microtime(true);
 	echo '  Update win tickets: ';
 
-	$defaultCountry  = Config::instance()->defaultLang;
+	$defaultCountry  = 'RU'; //Config::instance()->defaultLang;
 	$select = $where = array();
 
 	$SQL = "SELECT
@@ -264,6 +264,12 @@ function ApplyLotteryCombination(&$comb)
 	PlayerCounter($lid);
 
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
+
+    if(SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD_INCREMENT')){
+        $counters=SettingsModel::instance()->getSettings('counters')->getValue();
+        $counters['MONEY_ADD']+=$counters['MONEY_ADD_INCREMENT'];
+        SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
+    }
 
 	unset($comb['fields']);
 }

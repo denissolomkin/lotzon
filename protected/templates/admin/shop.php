@@ -82,7 +82,7 @@
                     <button class="btn btn-md btn-default" onclick="$('#slct-cntrs').show();$(this).hide();"><i class="glyphicon glyphicon-globe"></i> Страны</button>
                 <select style="width:100%;display: none;" id="slct-cntrs" name="countries" size="3" multiple="multiple" class="form-control input-sm" value="" placeholder="Страны" />
                     <? foreach ($supportedCountries as $country) { ?>
-                        <option value="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></option>
+                        <option value="<?=$country?>"><?=$country?></option>
                     <? } ?>
                 </select>
                 </div>
@@ -344,7 +344,7 @@
         var countries = $(this).parents('.caption').data('countries').split(' ');
         var supportedCountries = {
             <? foreach ($supportedCountries as $country) { ?>
-            "<?=$country->getCountryCode()?>": "<?=$country->getTitle()?>",
+            "<?=$country?>": "<?=$country?>",
             <? } ?>
         };
 

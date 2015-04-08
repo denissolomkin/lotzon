@@ -1,9 +1,8 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \EntityException, \SupportedCountriesModel, \SupportedCountry, \LotterySettings, \LotterySettingsException, \LotterySettingsModel, \Admin, \Config;
+use \Session2, \Application, \EntityException, \CountriesModel, \SupportedCountry, \LotterySettings, \LotterySettingsException, \LotterySettingsModel, \Admin, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
-Application::import(PATH_APPLICATION . '/model/models/SupportedCountriesModel.php');
 Application::import(PATH_APPLICATION . '/model/entities/LotterySettings.php');
 
 class Lottery extends \PrivateArea
@@ -14,14 +13,14 @@ class Lottery extends \PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {
-        $supportedCountries = SupportedCountriesModel::instance()->getEnabledCountriesList();
+        $supportedCountries = CountriesModel::instance()->getCountries();
         $settings = LotterySettingsModel::instance()->loadSettings();
 
         $this->render('admin/lottery', array(

@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \LotteryTicket, \LotteriesModel, \TicketsModel, \LotterySettings, \LotterySettingsModel, \QuickGamesModel;
+use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \LotteriesModel, \TicketsModel, \LotterySettings, \LotterySettingsModel, \QuickGamesModel;
 use \ChanceGamesModel, \GameSettingsModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -41,6 +41,7 @@ class Game extends \AjaxController
         $this->ajaxResponse($respData);
     }
 
+    /*
     public function lastLotteryAction()
     {
         $lottery = LotteriesModel::instance()->getLastPlayedLottery();
@@ -81,7 +82,7 @@ class Game extends \AjaxController
                     if ($prize['currency'] == LotterySettings::CURRENCY_POINT) {
                         $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " баллов";
                     } else {
-                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " " . Config::instance()->langCurrencies[$this->session->get(Player::IDENTITY)->getCountry()];
+                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " " . \CountriesModel::instance()->getCountry($this->session->get(Player::IDENTITY)->getCountry())->loadCurrency()->getTitle('iso');;
                     }
                 } else {
                     $data['ticketWins'][] = 0;
@@ -96,6 +97,7 @@ class Game extends \AjaxController
         }
         $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
     }
+    */
 
     public function previewQuickGameAction($key='QuickGame')
     {
@@ -159,15 +161,16 @@ class Game extends \AjaxController
 
         }
 
-        if (isset($game) && is_array(Config::instance()->banners['game' . $game->getId()]))
-            foreach (Config::instance()->banners['game' . $game->getId()] as $group) {
+        ;
+        if (isset($game) && ($banners = SettingsModel::instance()->getSettings('banners')->getValue()) && is_array($banners['game' . $game->getId()]))
+            foreach ($banners['game' . $game->getId()] as $group) {
                 if (is_array($group)) {
                     shuffle($group);
                     foreach ($group as $banner) {
                         if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
                             continue;
 
-                        if ($banner['chance'] AND !rand(0, $banner['chance'] - 1) AND Config::instance()->banners['settings']['enabled'])
+                        if ($banner['chance'] AND !rand(0, $banner['chance'] - 1) AND $banners['settings']['enabled'])
                             $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['div']) .
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['script']).
@@ -231,7 +234,10 @@ class Game extends \AjaxController
                     foreach ($game->getGamePrizes() as $currency => $sum)
                         if ($sum) {
                             if ($currency == LotterySettings::CURRENCY_MONEY) {
-                                $sum*=LotterySettingsModel::instance()->loadSettings()->getCountryCoefficient((in_array($player->getCountry(), Config::instance()->langs) ? $player->getCountry() : Config::instance()->defaultLang ));
+                                // echo $player->getCountry();echo CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCode();echo CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
+                                $sum*=
+                                    CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
+                                    //LotterySettingsModel::instance()->loadSettings()->getCountryCoefficient((in_array($player->getCountry(), Config::instance()->langs) ? $player->getCountry() : Config::instance()->defaultLang ));
                                 $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
                             }
                             elseif ($currency == LotterySettings::CURRENCY_POINT)
@@ -246,7 +252,7 @@ class Game extends \AjaxController
 
         $this->ajaxResponse($res);
     }
-
+/*
     public function startChanceGameAction($identifier)
     {
         $games = ChanceGamesModel::instance()->getGamesSettings();
@@ -430,4 +436,5 @@ class Game extends \AjaxController
 
 
     }
+*/
 }

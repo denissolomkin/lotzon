@@ -2,17 +2,18 @@
 
 Application::import(PATH_INTERFACES . 'IProcessor.php');
 
-class StaticSiteTextDBProcessor implements IProcessor
+class StaticTextDBProcessor implements IProcessor
 {
     public function create(Entity $text)
     {
-        $sql = "REPLACE INTO `SiteStaticTexts` (`Id`, `Lang`, `Text`) VALUES (:id, :lang, :text)";
+        $sql = "REPLACE INTO `MUITexts` (`Id`, `Key`, `Category`, `Text`) VALUES (:id, :key, :cat, :text)";
 
         try {
-            $sth = DB::Connect()->prepare($sql)->execute(array(
+            DB::Connect()->prepare($sql)->execute(array(
                 ':id'   => $text->getId(),
-                ':lang' => $text->getLang(),
-                ':text' => $text->getText(),
+                ':key'   => $text->getKey(),
+                ':cat'  => $text->getCategory(),
+                ':text' => serialize($text->getText()),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
@@ -28,7 +29,7 @@ class StaticSiteTextDBProcessor implements IProcessor
 
     public function delete(Entity $text)
     {
-        $sql = "DELETE FROM `SiteStaticTexts` WHERE `Id` = :id";
+        $sql = "DELETE FROM `MUITexts` WHERE `Id` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -51,7 +52,8 @@ class StaticSiteTextDBProcessor implements IProcessor
 
     public function getList()
     {
-        $sql = "SELECT * FROM `SiteStaticTexts`";
+
+        $sql = "SELECT * FROM `MUITexts`";
         try {
             $sth = DB::Connect()->query($sql);
         } catch (PDOExeption $e) {
@@ -63,9 +65,17 @@ class StaticSiteTextDBProcessor implements IProcessor
         $list = $sth->fetchAll();
         if (count($list)) {
             foreach ($list as $textData) {
-                $text = new StaticSiteText();
-                $texts[] = $text->formatFrom('DB', $textData);   
+                $text = new StaticText();
+                $text->formatFrom('DB', $textData);
+
+                if (!isset($texts[$text->getCategory()]))
+                    $texts[$text->getCategory()] = array();
+
+                $texts[$text->getCategory()][$text->getKey()] = $text;
+                $texts[$text->getKey()] = $text;
+
             }
+
         }
 
         return $texts;

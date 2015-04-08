@@ -177,9 +177,9 @@ function appSeaBattleCallback(receiveData)
 
                  price=receiveData.res.appMode.split('-');
                  $('.gm-pr .pr-pr').show().html("<b>"+
-                 (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+                 (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
                  "</b><span>"+
-                 (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+                 (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
                  $.each(receiveData.res.players, function( index, value ) {
                      var player=value.pid;
@@ -245,9 +245,9 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+            (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
              "</b><span>"+
-             (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+             (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
              $.each(receiveData.res.players, function( index, value ) {
                  var player=value.pid;
@@ -293,9 +293,9 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+            (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
              "</b><span>"+
-             (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+             (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
          $.each(receiveData.res.players, function( index, value ) {
              var player=value.pid;
@@ -449,9 +449,9 @@ function appSeaBattleCallback(receiveData)
 
                      $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
-                     (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient):receiveData.res.price )+
+                     (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price):receiveData.res.price )+
                      "</b><span>"+
-                     (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+                     (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
                      $('.gm-pr.'+class_player).addClass('winner');
                  }, (receiveData.res.winner==playerId?1200:3600));
@@ -501,7 +501,7 @@ $(document).on('click', '.ngm-bk .ngm-go', function(e){
 
     if(appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').attr('data-price')) {
         price = appMode.split('-');
-        if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < parseFloat(price[1]).toFixed(2) * coefficient)) {
+        if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
 
             $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
 
@@ -589,7 +589,7 @@ $(document).on('click', '.ngm-bk .ngm-price', function(e){
     $.each(appModes[appName], function (c, m) {
         $.each(m, function (i,v) {
             if(v>0)
-                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(c=='MONEY'?(round(parseFloat(v)*coefficient,2)):v)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
+                $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(c=='MONEY'?getCurrency(v,'iso'):v)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
         });
     });
 
@@ -962,9 +962,9 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                 price=receiveData.res.appMode.split('-');
                 $('.gm-pr .pr-pr').show().html("<b>"+
-               (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+               (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
                 "</b><span>"+
-                (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+                (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
                 $.each(receiveData.res.players, function( index, value ) {
                     var class_player=value.pid==playerId?'l':'r';
@@ -1121,9 +1121,9 @@ $('.ngm-bk .bk-bt').on('click', function() {
                         $('.gm-pr .pr-pr').hide();
 
                         $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                        (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                        (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price,1).toFixed(2):receiveData.res.price )+
                         "</b><span>"+
-                        (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+                        (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
                         $('.gm-pr.'+class_player).addClass('winner');
                     }, 3600);
@@ -1190,9 +1190,9 @@ function appWhoMoreCallback(receiveData)
 
             price=receiveData.res.appMode.split('-');
             $('.gm-pr .pr-pr').show().html("<b>"+
-           (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+           (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
             "</b><span>"+
-            (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+            (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
             $.each(receiveData.res.players, function( index, value ) {
                 var class_player=value.pid==playerId?'l':'r';
@@ -1333,9 +1333,9 @@ function appWhoMoreCallback(receiveData)
                     $('.gm-pr .pr-pr').hide();
 
                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                    (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                    (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price).toFixed(2):receiveData.res.price )+
                     "</b><span>"+
-                    (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+                    (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
                     $('.gm-pr.'+class_player).addClass('winner');
                 }, 1200);
@@ -1400,9 +1400,9 @@ function appWhoMoreCallback(receiveData)
 
                 price=receiveData.res.appMode.split('-');
                 $('.gm-pr .pr-pr').show().html("<b>"+
-               (price[0]=='MONEY'?parseFloat(price[1]*coefficient):price[1])+
+               (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
                 "</b><span>"+
-                (price[0]=='MONEY'?playerCurrency:'баллов')+"<br>ставка</span>");
+                (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
                 $.each(receiveData.res.players, function( index, value ) {
                     var class_player=value.pid==playerId?'l':'r';
@@ -1557,9 +1557,9 @@ function appWhoMoreCallback(receiveData)
                         $('.gm-pr .pr-pr').hide();
 
                         $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                        (receiveData.res.currency=='MONEY'?parseFloat(receiveData.res.price*coefficient).toFixed(2):receiveData.res.price )+
+                        (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price).toFixed(2):receiveData.res.price )+
                         "</b><span>"+
-                        (receiveData.res.currency=='MONEY'?playerCurrency:'баллов')+"<br>выиграно</span>");
+                        (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
                         $('.gm-pr.'+class_player).addClass('winner');
                     }, 1200);
@@ -1578,7 +1578,6 @@ function appWhoMoreCallback(receiveData)
                 appId=0;
                 break;
 
-
             case 'error':
                 $("#report-popup").show().find(".txt").text(getText(receiveData.res.error)).fadeIn(200);
                 $("#report-popup").show().fadeIn(200);
@@ -1589,8 +1588,6 @@ function appWhoMoreCallback(receiveData)
                     $('.ngm-rls').fadeIn(200);
                 }
                 break;
-
-
         }
     }
 
@@ -1629,9 +1626,9 @@ function appWhoMoreCallback(receiveData)
         }
     }
 
-    function onTimeOut(){
+    function onTimeOut() {
         var path='app/'+appName+'/'+appId;
-        var data={'action':'timeout'}
+        var data={'action':'timeout'};
         WebSocketAjaxClient(path,data);
     }
 });

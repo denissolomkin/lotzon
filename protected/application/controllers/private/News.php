@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \Admin, \Session2;
+use \Application, \PrivateArea, \NewsModel, \SettingsModel, \Admin, \Session2, \CountriesModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/NewsModel.php');
@@ -9,33 +9,34 @@ Application::import(PATH_APPLICATION . '/model/entities/News.php');
 
 class News extends PrivateArea 
 {
-    const NEWS_PER_PAGE = 10;
+
 
     public $activeMenu = 'news';
+    static $PER_PAGE;
 
     public function init()
     {
         parent::init();
-
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        self::$PER_PAGE = SettingsModel::instance()->getSettings('counters')->getValue('NEWS_PER_PAGE') ? : 10;
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction($lang = '')
     {   
         if (empty($lang)) {
-            $lang = Config::instance()->defaultLang;
+            $lang = CountriesModel::instance()->defaultLang();
         }
         $page = $this->request()->get('page', 1);
 
-        $list = NewsModel::instance()->getList($lang, self::NEWS_PER_PAGE, $page == 1 ? 0 : self::NEWS_PER_PAGE * $page - self::NEWS_PER_PAGE);
+        $list = NewsModel::instance()->getList($lang, self::$PER_PAGE, $page == 1 ? 0 : self::$PER_PAGE * $page - self::$PER_PAGE);
         $rowsCount = NewsModel::instance()->getCount($lang);
 
         $pager = array(
             'page' => $page,
             'rows' => $rowsCount,
-            'per_page' => self::NEWS_PER_PAGE,
+            'per_page' => self::$PER_PAGE,
             'pages' => 0,
         );
 

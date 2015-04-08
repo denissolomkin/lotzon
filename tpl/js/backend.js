@@ -129,6 +129,26 @@ function addTicket(tickNum, combination, successFunction, failFunction, errorFun
     });   
 }
 
+function changeLanguage(lang, successFunction, failFunction, errorFunction)
+{
+    $.ajax({
+        url: "/language/"+lang,
+        method: 'POST',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call(this, data);
+            } else {
+                failFunction.call(this, data);
+            }
+        },
+        error: function() {
+            errorFunction.call(this, data);
+        }
+    });
+}
+
 function loadLotteries(offset, onlyMine, successFunction, failFunction, errorFunction)
 {
     if (!onlyMine) {
@@ -701,75 +721,4 @@ window.setInterval(function() {
 
 function showQuickGameStart(){
     $(".notifications #qgame .badge-block .txt div").first().hide().next().fadeIn(200).parents('.badge-block').find('.cs').hide();
-}
-
-function startMoment() {
-    $("#mchance").find('li').off('click').on('click', function () {
-        var li = $(this);
-        playChanceGame('moment', $(this).data('num'), function (data) {
-            if (data.res.status == 'win') {
-                li.html($("#mchance").data('pointsWin'));
-                li.addClass('won');
-
-                window.setTimeout(function () {
-                 $("#mchance .mm-msg").addClass('win').show().find('.txt').text('Поздравляем, выигранные баллы зачислены на счет');
-                    //$("#mchance").hide();
-                    $('.pz-ifo-bk').hide();
-                    //$('.pz-rt-bk').text("Поздравляем, выигранные баллы зачислены на счет.").show().parents('#shop-items-popup').show();
-                }, 1000)
-                /*
-                window.setTimeout(function () {
-                    location.reload();
-                }, 4000);
-                */
-            } else if (data.res.status == 'error') {
-
-                //$("#mchance").hide();
-                $('.pz-ifo-bk').hide();
-                $("#mchance .mm-msg").show().find('.txt').text(data.res.error);
-                /*
-                $('.pz-rt-bk').text(data.res.error).show().parents('#shop-items-popup').show();
-
-
-                window.setTimeout(function () {
-                    location.reload();
-                }, 4000);
- */
-            } else {
-                li.addClass('los');
-
-                for (var i in data.res.field) {
-                    if (data.res.field[i] == 1) {
-                        var num = parseInt(i) + 1;
-                        $('li[data-num="' + num + '"]').addClass('blink');
-                    }
-                }
-                $('li.blink').html($("#mchance").data('pointsWin'));
-                var blinkCount = 3;
-                var blinkInterval = window.setInterval(function () {
-                    if (blinkCount == 0) {
-                        window.clearInterval(blinkInterval);
-                        //$("#mchance").hide();
-                        $('.pz-ifo-bk').hide();
-                        $("#mchance .mm-msg").show().find('.txt').text('В этот раз не повезло');
-                        //$('.pz-rt-bk').text("Повезет в следующий раз").show().parents('#shop-items-popup').show();
-
-                        /*
-                        window.setTimeout(function () {
-                            location.reload();
-                        }, 4000);
-                        */
-                        return;
-                    }
-                    blinkCount--;
-
-                    $('li.blink').toggleClass('true');
-                }, 600);
-            }
-        },
-            function (data) {
-                $("#mchance .mm-msg").show().find('.txt').text(data.message);
-            }
-        )
-    });
 }

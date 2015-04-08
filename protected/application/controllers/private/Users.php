@@ -2,7 +2,7 @@
 namespace controllers\admin;
 
 use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice, \NotesModel, \Note, \Session2, \Admin;
-use \LotterySettings, \ShopOrdersModel, \MoneyOrderModel, \Config;
+use \LotterySettings, \ShopOrdersModel, \MoneyOrderModel, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 Application::import(PATH_APPLICATION . '/model/models/PlayersModel.php');
@@ -11,17 +11,18 @@ Application::import(PATH_APPLICATION . '/model/entities/Player.php');
 
 class Users extends PrivateArea 
 {
-    const PLAYERS_PER_PAGE = 100;
+    static $PER_PAGE;
 
     public $activeMenu = 'users';
 
     public function init()
     {
         parent::init();
+        self::$PER_PAGE = SettingsModel::instance()->getSettings('counters')->getValue('PLAYERS_PER_ADMIN') ? : 100;
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
@@ -33,13 +34,13 @@ class Users extends PrivateArea
             'direction' => $this->request()->get('sortDirection', 'desc'),
         );
 
-        $list = PlayersModel::instance()->getList(self::PLAYERS_PER_PAGE, $page == 1 ? 0 : self::PLAYERS_PER_PAGE * $page - self::PLAYERS_PER_PAGE, $sort, $search);
+        $list = PlayersModel::instance()->getList(self::$PER_PAGE, $page == 1 ? 0 : self::$PER_PAGE * $page - self::$PER_PAGE, $sort, $search);
         $count = PlayersModel::instance()->getPlayersCount($search);
 
         $pager = array(
             'page' => $page,
             'rows' => $count,
-            'per_page' => self::PLAYERS_PER_PAGE,
+            'per_page' => self::$PER_PAGE,
             'pages' => 0,
         );
         $pager['pages'] = ceil($pager['rows'] / $pager['per_page']);
@@ -87,6 +88,9 @@ class Users extends PrivateArea
     public function transactionsAction($playerId) 
     {
         if ($this->request()->isAjax()) {
+            $limit = SettingsModel::instance()->getSettings('counters')->getValue('TRANSACTIONS_PER_ADMIN')?:20;
+            $offset = $this->request()->get('offset')?:0;
+            $currency = $this->request()->get('currency')?:null;
             $response = array(
                 'status'  => 1,
                 'message' => 'OK',
@@ -94,27 +98,30 @@ class Users extends PrivateArea
             );
             try {
                 $response['data'] = array(
-                    'points' => TransactionsModel::instance()->playerPointsHistory($playerId),
-                    'money'  => TransactionsModel::instance()->playerMoneyHistory($playerId),
+                    'points' => (!$currency || $currency=='points' ? TransactionsModel::instance()->playerPointsHistory($playerId, $limit, $offset) : null),
+                    'money'  => (!$currency || $currency=='money' ? TransactionsModel::instance()->playerMoneyHistory($playerId,$limit, $offset) : null),
+                    'limit' => $limit,
                 );
-                foreach ($response['data']['points'] as &$transaction) {
-                    $transaction = array(
-                        'id' => $transaction->getId(),
-                        'sum' => $transaction->getSum(),
-                        'bal' => $transaction->getBalance(),
-                        'desc' => $transaction->getDescription(),
-                        'date' => date('d.m.Y H:i:s', $transaction->getDate()),
-                    );
-                }
-                foreach ($response['data']['money'] as &$transaction) {
-                    $transaction = array(
-                        'id' => $transaction->getId(),
-                        'sum' => $transaction->getSum(),
-                        'bal' => $transaction->getBalance(),
-                        'desc' => $transaction->getDescription(),
-                        'date' => date('d.m.Y H:i:s', $transaction->getDate()),
-                    );
-                }
+                if(is_array($response['data']['points']))
+                    foreach ($response['data']['points'] as &$transaction) {
+                        $transaction = array(
+                            'id' => $transaction->getId(),
+                            'sum' => $transaction->getSum(),
+                            'bal' => $transaction->getBalance(),
+                            'desc' => $transaction->getDescription(),
+                            'date' => date('d.m.Y H:i:s', $transaction->getDate()),
+                        );
+                    }
+                if(is_array($response['data']['money']))
+                    foreach ($response['data']['money'] as &$transaction) {
+                        $transaction = array(
+                            'id' => $transaction->getId(),
+                            'sum' => $transaction->getSum(),
+                            'bal' => $transaction->getBalance(),
+                            'desc' => $transaction->getDescription(),
+                            'date' => date('d.m.Y H:i:s', $transaction->getDate()),
+                        );
+                    }
             } catch (ModelException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();

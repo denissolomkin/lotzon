@@ -65,8 +65,21 @@
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
-
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <? if($debug){ ?>
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
+
+            <!-- Include Summernote JS file -->
+            <script src="/theme/admin/lib/summernote/summernote.js"></script>
+            <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
+
+            <!-- Latest compiled and minified CSS -->
+            <link href="/theme/admin/lib/admin.css" rel="stylesheet">
+            <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+            <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <? } ?>
 
         <? echo getScripts($banners['HeaderScripts'],$player); ?>
 
@@ -191,17 +204,23 @@
             </aside>
             </div>
             <div class="hr-io-bk">
+                <? if($seo['multilanguage'] && is_array($langs)){?>
+                    <div class="multilanguage">
+                    <? foreach($langs as $lang){?>
+                        <div data-lang="<?=($lang->getCode())?>" class="flag <?=$lang->getCode()==$player->getLang()?'active ':''?>flag-<?=strtolower($lang->getCode())?>"></div>
+                <?}?></div>
+                <?}?>
                 <div id="hr-io-slider">
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Джекпот<br/><br/></div>
-                            <b class="n"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][6]['sum'])?> <span><?=$currency?></span></b>
+                            <div class="tl"><?=$MUI->getText('placeholder-jack-pot')?><br/><br/></div>
+                            <b class="n"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][6]['sum'])?> <span><?=$currency['iso']?></span></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
                             <? foreach ($lotteries as $lottery) { ?>
-                                <div class="tl">розыгрыш от<br/><?=date('d.m.Y', $lottery->getDate())?></div>
+                                <div class="tl"><?=$MUI->getText('placeholder-lottery-from')?><br/><?=date('d.m.Y', $lottery->getDate())?></div>
                                 <ul class="rt-bk">
                                     <? foreach ($lottery->getCombination() as $num) { ?>
                                         <li class="rt-bk_li"><?=$num?></li>
@@ -212,20 +231,20 @@
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">участников<br/><br/></div>
+                            <div class="tl"><?=$MUI->getText('placeholder-participants')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">Денежные выигрыши<br/><br/></div>
+                            <div class="tl"><?=$MUI->getText('placeholder-winners')?><br/><br/></div>
                             <b class="n"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
                         </div>
                     </div>
                     <div class="pw-gm-rt">
                         <div class="ct">
-                            <div class="tl">ОБЩАЯ СУММА ВЫИГРЫША<br/><br/></div>
-                            <b class="n"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></b>
+                            <div class="tl"><?=$MUI->getText('placeholder-total-win')?><br/><br/></div>
+                            <b class="n"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency['iso']?></span></b>
                         </div>
                     </div>
                 </div>
@@ -236,31 +255,31 @@
         <nav class="top-nav">
             <div class="tn-box">
                 <div id="logo-gotop"></div>
-                <? if($page) :?>
+                <? if($seo['pages']) :?>
                 <ul class="tn-mbk">
-                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($page=='tickets'?' now':'')?>"><a href="/tickets">РОЗЫГРЫШ</a></li>
-                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($page=='prizes'?' now':'')?>"><a href="/prizes">призы</a></li>
-                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
-                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($page=='reviews'?' now':'')?>"><a href="/reviews">комментарии</a></li>
-                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($page=='rules'?' now':'')?>"><a href="/rules">правила</a></li>
-                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($page=='profile'?' now':'')?>"><a href="/profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
-                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($page=='chance'?' now':'')?>"><a href="/chance">Игры</a></li>
-                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
+                    <li id="tickets-but" data-href="tickets" class="tn-mbk_li<?=($seo['pages']=='tickets'?' now':'')?>"><a href="/tickets"><?=$MUI->getText('menu-lottery')?></a></li>
+                    <li id="prizes-but" data-href="prizes" class="tn-mbk_li<?=($seo['pages']=='prizes'?' now':'')?>"><a href="/prizes"><?=$MUI->getText('menu-prizes')?></a></li>
+                    <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=$MUI->getText('menu-news')?></a></li-->
+                    <li id="reviews-but" data-href="reviews" class="tn-mbk_li<?=($seo['pages']=='reviews'?' now':'')?>"><a href="/reviews"><?=$MUI->getText('menu-reviews')?></a></li>
+                    <li id="rules-but" data-href="rules" class="tn-mbk_li<?=($seo['pages']=='rules'?' now':'')?>"><a href="/rules"><?=$MUI->getText('menu-rules')?></a></li>
+                    <li id="profile-but" data-href="profile" class="tn-mbk_li<?=($seo['pages']=='profile'?' now':'')?>"><a href="/profile"><?=$MUI->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                    <li id="chance-but" data-href="chance" class="tn-mbk_li<?=($seo['pages']=='chance'?' now':'')?>"><a href="/chance"><?=$MUI->getText('menu-games')?></a></li>
+                    <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=$MUI->getText('menu-logout')?></a></li>
                 </ul>
                 <? else :?>
                     <ul class="tn-mbk">
-                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets">РОЗЫГРЫШ</a></li>
-                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes">призы</a></li>
-                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news">новости</a></li-->
-                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews">комментарии</a></li>
-                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules">правила</a></li>
-                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile">кабинет<span class='notice-unread'><?=$notices?></span></a></li>
-                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance">Игры</a></li>
-                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)">Выйти</a></li>
+                        <li id="tickets-but" data-href="tickets" class="tn-mbk_li"><a href="#tickets"><?=$MUI->getText('menu-lottery')?></a></li>
+                        <li id="prizes-but" data-href="prizes" class="tn-mbk_li"><a href="#prizes"><?=$MUI->getText('menu-prizes')?></a></li>
+                        <!--li id="news-but" data-href="news" class="tn-mbk_li"><a href="#news"><?=$MUI->getText('menu-news')?></a></li-->
+                        <li id="reviews-but" data-href="reviews" class="tn-mbk_li"><a href="#reviews"><?=$MUI->getText('menu-reviews')?></a></li>
+                        <li id="rules-but" data-href="rules" class="tn-mbk_li"><a href="#rules"><?=$MUI->getText('menu-rules')?></a></li>
+                        <li id="profile-but" data-href="profile" class="tn-mbk_li"><a href="#profile"><?=$MUI->getText('menu-profile')?><span class='notice-unread'><?=$notices?></span></a></li>
+                        <li id="chance-but" data-href="chance" class="tn-mbk_li"><a href="#chance"><?=$MUI->getText('menu-games')?></a></li>
+                        <li id="logout" class="tn-mbk_li exit" data-href="logout" ><a href="javascript:void(0)"><?=$MUI->getText('menu-logout')?></a></li>
                     </ul>
                 <? endif ?>
                 <div class="tn-tr-bk">
-                    <div class="tn-tr-tt">До розыгрыша<br/>осталось</div>
+                    <div class="tn-tr-tt"><?=$MUI->getText('placeholder-until-lottery')?></div>
                     <div id="countdownHolder" class="tn-tr"></div>
                 </div>
             </div>
@@ -270,7 +289,7 @@
         <!--=====================================================================
                                 TIKETS & PRIZES BLOCK
         ======================================================================-->
-        <? if(in_array($page,array('prizes','tickets')) OR !$page) :?>
+        <? if(in_array($seo['pages'],array('prizes','tickets')) OR !$seo['pages']) :?>
             <section class="wings">
                 <aside class="lbs">
 
@@ -283,7 +302,7 @@
 
                 </aside>
                 <div class="w-ct">
-                    <? if($page=='tickets' OR !$page) :?>
+                    <? if($seo['pages']=='tickets' OR !$seo['pages']) :?>
                     <section class="tickets">
                         <? $filledTicketsCount = count($tickets); ?>
                         <? if (count($tickets) < 5) { ?>
@@ -298,7 +317,7 @@
                                         $nums = $ticket->getCombination();
                                     }
                                 } ?>
-                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span>Билет </span>#<?=$i?></a></li>
+                                <li class="tb-tabs_li<?=($fst ? " now" : "")?><?=(count($nums) ? " done" : "")?>" data-ticket="<?=$i?>"><a href="javascript:void(0)"><span><?=$MUI->getText('ticket-holder')?> </span>#<?=$i?></a></li>
                                 <? $fst = false; ?>
                             <? } ?>
                             </ul>
@@ -322,23 +341,23 @@
                                             <ul class="tb-fs-tl">
                                                 <li class="loto-tl_li ticket-random">
                                                     A
-                                                    <div class="after">автозаполнение</div>
+                                                    <div class="after"><?=$MUI->getText('button-auto-fill')?></div>
                                                 </li>
                                                 <li class="loto-tl_li heart ticket-favorite">
                                                     <img src="/tpl/img/ticket-heart-but.png" width="16" height="14">
                                                     <div class="after">
-                                                        <b>любимая комбинация</b>
-                                                        <span>Настраивается в <i data-href="profile">кабинете</i></span>
+                                                        <b><?=$MUI->getText('placeholder-favourite-combination')?></b>
+                                                        <span><?=$MUI->getText('placeholder-set-in-profile')?></i></span>
                                                     </div>
                                                 </li>
                                             </ul>
                                             <? } ?>
                                             <div class="tb-st-bk">
                                                 <? if (count($nums) == 6) { ?>
-                                                    <div class="tb-st-done">подтвержден и принят к розыгрышу</div>
+                                                    <div class="tb-st-done"><?=$MUI->getText('placeholder-approved-and-ready')?></div>
                                                 <? } else { ?>
-                                                    <div class="sm-but add-ticket">подтвердить</div>
-                                                    <div class="tb-ifo">еще <b><?=(6 - count($nums))?></b> номера</div>
+                                                    <div class="sm-but add-ticket"><?=$MUI->getText('button-approve')?></div>
+                                                    <div class="tb-ifo"><?=$MUI->getText('placeholder-yet')?> <b><?=(6 - count($nums))?></b> <?=$MUI->getText('placeholder-numbers')?></div>
                                                 <? } ?>
                                             </div>
                                             <div class="b-cl-block"></div>
@@ -349,8 +368,8 @@
                             <div class="atd-bk">
 
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подтверждены и приняты к розыгрышу</div>
-                                    <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
+                                    <div class="ttl"><?=$MUI->getText('placeholder-all-tickets-approved')?></div>
+                                    <div class="txt"><?=$MUI->getText('placeholder-tickets-complete')?></div>
                                 </div>
                             </div>
                         <? } else { ?>
@@ -360,7 +379,7 @@
                                         <? $ticket = array_shift($tickets);
                                            $nums = $ticket->getCombination(); ?>
                                         <li class="yr-tt">
-                                            <div class="yr-tt-tn">Билет #<?=$i?></div>
+                                            <div class="yr-tt-tn"><?=$MUI->getText('holder-ticket')?> #<?=$i?></div>
                                             <ul class="yr-tt-tr">
                                                 <? foreach ($nums as $num) { ?>
                                                     <li class="yr-tt-tr_li"><?=$num?></li>
@@ -370,22 +389,22 @@
                                     <? } ?>
                                 </ul>
                                 <div class="atd-txt-bk">
-                                    <div class="ttl">все 5 билетов подтверждены и приняты к розыгрышу</div>
-                                    <div class="txt"><?=$staticTexts['tickets-complete-text'][$lang]->getText()?></div>
+                                    <div class="ttl"><?=$MUI->getText('placeholder-all-tickets-approved')?></div>
+                                    <div class="txt"><?=$MUI->getText('placeholder-tickets-complete')?></div>
                                 </div>
                             </div>
                         <? } ?>
                     </section>
                     <? endif ?>
 
-                    <? if($page=='prizes' OR !$page) :?>
+                    <? if($seo['pages']=='prizes' OR !$seo['pages']) :?>
                     <section class="prizes">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">Призы</div>
-                            <div class="pbk-pi">на счету <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов</div>
+                            <div class="sbk-tl"><?=$MUI->getText('header-prizes')?></div>
+                            <div class="pbk-pi"><?=$MUI->getText('plcaeholder-on-balance')?> <b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> <?=$MUI->getText('placeholder-points')?></div>
                         </div>
                         <div class="pbk-ct">
-                            <div class="ptt"><?=$staticTexts['main-prizes'][$lang]->getText()?></div>
+                            <div class="ptt"><?=$MUI->getText('main-prizes')?></div>
                             <ul class="pz-nav">
                                 <? $fst = true; ?>
                                 <? foreach ($shop as $category) {?>
@@ -396,11 +415,11 @@
                             <? $fst = true; ?>
                             <? $showMoreButton = false; ?>
                             <? foreach ($shop as $category) { ?>
-                                <? if ($fst && count($category->getItems()) > controllers\production\Index::SHOP_PER_PAGE) {
+                                <? if ($fst && count($category->getItems()) > SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE')) {
                                     $showMoreButton = true;
                                 } ?>
                                 <ul class="shop-category-items pz-cg" data-category="<?=$category->getId()?>"  <?=(!$fst ? 'style="display:none"':'')?>>
-                                <? $pager = controllers\production\Index::SHOP_PER_PAGE ?>
+                                <? $pager = SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE') ?>
                                 <? $i = 0; ?>
                                 <? foreach ($category->getItems() as $item) { ?>
                                     <? if ($i == $pager) {
@@ -412,15 +431,15 @@
                                     <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
                                         <? if ($item->getQuantity()) {?>
                                             <div class="pz-lim">
-                                                <span>ограниченное количество</span>
-                                                <b><?=$item->getQuantity()?> шт</b>
+                                                <span><?=$MUI->getText('placeholder-limited-quantity')?></span>
+                                                <b><?=$item->getQuantity()?> <?=$MUI->getText('placeholder-pieces')?></b>
                                             </div>
                                         <? } ?>
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
                                         <div class="im-tl"><?=$item->getTitle()?></div>
                                         <div class="im-bn">
                                             <b><?=Common::viewNumberFormat($item->getPrice())?></b>
-                                            <span>обменять на баллов</span>
+                                            <span><?=$MUI->getText('placeholder-change-for-points')?></span>
                                         </div>
                                     </li>
                                     <? $i++; ?>
@@ -428,10 +447,10 @@
                                 </ul>
                                 <? $fst = false; ?>
                             <? } ?>
-                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>">ПОКАЗАТЬ ЕЩЕ</div>
+                            <div class="pz-more-bt" style="display:<?=$showMoreButton ? 'block' : 'none'?>"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bk">
-                                <div class="cl scrollto" data-href="prizes">свернуть</div>
-                                <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
+                                <div class="cl scrollto" data-href="prizes"><?=$MUI->getText('button-cut')?></div>
+                                <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
                         </div>
                     </section>
@@ -443,7 +462,7 @@
         <!--=====================================================================
                                 NEWS & RULEZ BLOCK
         ======================================================================-->
-        <? if(in_array($page,array('reviews','rules'))) :?>
+        <? if(in_array($seo['pages'],array('reviews','rules'))) :?>
             <section class="infos">
                 <div class="i-lbk">
                     <section class="i-v-bk">
@@ -451,13 +470,13 @@
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">правила и часто задаваемые вопросы</div>
+                            <div class="sbk-tl"><?=$MUI->getText('header-rules')?></div>
                         </div>
                         <div class="rules-ct">
                             <div class="win-tbl">
                                 <div class="c-l">
                                     <div class="wt-t">
-                                        <?=$staticTexts['main-rules'][$lang]->getText()?>
+                                        <?=$MUI->getText('main-rules')?>
                                     </div>
                                 </div>
                                 <ul class="c-r">
@@ -471,17 +490,17 @@
                                                     <li class="tb_li"></li>
                                                 <? } ?>
                                             </ul>
-                                            <div class="tb-t"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                            <div class="tb-t"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency['iso'])?></div>
                                         </li>
                                     <? } ?>
                                 </ul>
                                 <div class="b-cl-block"></div>
                             </div>
                             <ul class="faq">
-                                <?=$staticTexts['main-faq'][$lang]->getText()?>
+                                <?=$MUI->getText('main-faq')?>
                             </ul>
-                            <div class="r-add-but more">ЧИТАТЬ ДАЛЬШЕ</div>
-                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;">спрятать</div>
+                            <div class="r-add-but more"><?=$MUI->getText('button-read')?></div>
+                            <div class="r-add-but less scrollto" data-href="rules" style="display:none;"><?=$MUI->getText('button-hide')?></div>
                         </div>
                     </section>
                 </div>
@@ -512,7 +531,7 @@
                 <div class="i-rbk">
                     <section class="reviews">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl">Комментарии</div>
+                            <div class="sbk-tl"><?=$MUI->getText('header-reviews')?></div>
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
@@ -536,17 +555,17 @@
                                 <? } ?>
                             </div>
                         </div>
-                        <div class="rv-add-but">ЧИТАТЬ ЕЩЕ</div>
+                        <div class="rv-add-but"><?=$MUI->getText('button-read')?></div>
                         <div class="rv-mr-cl-bt-bk">
-                            <div class="cl scrollto" data-href="reviews">свернуть</div>
-                            <div class="mr">ЧИТАТЬ ЕЩЕ</div>
+                            <div class="cl scrollto" data-href="reviews"><?=$MUI->getText('button-cut')?></div>
+                            <div class="mr"><?=$MUI->getText('button-read')?></div>
                         </div>
 
                         <div class="rv-add-frm">
                             <div class="rv-image">
                                 <img class="upload">
                             </div>
-                            <div class="rv-sc">Ваш комментарий отправлен на премодерацию</div>
+                            <div class="rv-sc"><?=$MUI->getText('review-approved')?></div>
                             <div class="rv-form">
                                 <div class="rv-usr-avtr">
                                     <? if ($player->getAvatar()) {?>
@@ -564,7 +583,7 @@
                                     <img src="/tpl/img/but-upload-review.png">
                                 </div>
                                 <div class="rv-but-add">
-                                    отправить
+                                    <?=$MUI->getText('button-send')?>
                                 </div>
                             </div>
                         </div>
@@ -584,38 +603,38 @@
         <!--=====================================================================
                                 PROFILE BLOCK
         ======================================================================-->
-        <? if($page=='profile' OR !$page) :?>
+        <? if($seo['pages']=='profile' OR !$seo['pages']) :?>
             <section class="profile">
                 <div class="p-bk">
                     <div class="p-tl-bk">
-                        <div class="p-tl-nm">кабинет</div>
+                        <div class="p-tl-nm"><?=$MUI->getText('header-profile')?></div>
                         <!--div class="p-exit-bt">выйти</div-->
                         <div class="p-tl-ml" id="profile_email"><?=$player->getEmail()?></div>
                     </div>
                     <div class="p-cnt">
                         <aside>
                             <ul>
-                                <li class="ul_li now" data-link="profile-history">история розыгрышей</li>
-                                <li class="ul_li" data-link="profile-bonuses">бонусы</li>
-                                <li class="ul_li" data-link="profile-info">мои данные</li>
-                                <li class="ul_li" data-link="profile-notice">уведомления<span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
+                                <li class="ul_li now" data-link="profile-history"><?=$MUI->getText('menu-history')?></li>
+                                <li class="ul_li" data-link="profile-bonuses"><?=$MUI->getText('menu-bonuses')?></li>
+                                <li class="ul_li" data-link="profile-info"><?=$MUI->getText('menu-info')?></li>
+                                <li class="ul_li" data-link="profile-notice"><?=$MUI->getText('menu-notices')?><span class='notice-unread' id="notice-unread"><?=$notices?></span></li>
                             </ul>
 
 
                             <div class="p-stat-bk">
                                 <!--div class="gm-st"><b><?=$player->getGamesPlayed();?></b>игр сыграно</div-->
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> баллов на счету</div>
-                                    <div class="bt" id="exchange" data-href="prizes">обменять</div>
+                                    <div class="ifo"><b class="plPointHolder"><?=Common::viewNumberFormat($player->getPoints())?></b> <?=$MUI->getText('holder-points-balance')?></div>
+                                    <div class="bt" id="exchange" data-href="prizes"><?=$MUI->getText('button-change')?></div>
                                 </div>
 
                                 <div class="hand" id="cash-exchange"><img src="/tpl/img/but-exchange.png"></div>
 
                                 <div class="cr-st-bk">
-                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?> на счету</div>
-                                    <div class="bt" id="cash-output">вывести</div>
+                                    <div class="ifo"><b class="plMoneyHolder"><?=Common::viewNumberFormat($player->getMoney())?></b><?=$currency['many']?> <?=$MUI->getText('holder-cash-balance')?></div>
+                                    <div class="bt" id="cash-output"><?=$MUI->getText('button-output')?></div>
                                 </div>
-                                <div class="st-hy-bt"><span>история транзакций</span></div>
+                                <div class="st-hy-bt"><span><?=$MUI->getText('button-transactions')?></span></div>
                             </div>
                         </aside>
 
@@ -623,13 +642,13 @@
 
                             <section class="_section profile-history">
                                 <ul class="ph-fr-bk">
-                                    <li class="bt-om"><a href="javascript:void(0)">только мои</a></li>
-                                    <li class="bt-all sel"><a href="javascript:void(0)">все</a></li>
+                                    <li class="bt-om"><a href="javascript:void(0)"><?=$MUI->getText('button-only-me')?></a></li>
+                                    <li class="bt-all sel"><a href="javascript:void(0)"><?=$MUI->getText('button-all')?></a></li>
                                 </ul>
                                 <div class="ht-tl-bk">
-                                    <div class="dt-tl">дата<br/>розыгрыша</div>
-                                    <div class="wc-tl">выигрышная<br/>комбинация</div>
-                                    <div class="nw-tl">количество<br/>победителей</div>
+                                    <div class="dt-tl"><?=$MUI->getText('holder-date-lottery')?></div>
+                                    <div class="wc-tl"><?=$MUI->getText('holder-win-combination')?></div>
+                                    <div class="nw-tl"><?=$MUI->getText('holder-total-winners')?></div>
                                 </div>
                                 <ul class="ht-bk">
                                     <? foreach ($lotteries as $lottery) { ?>
@@ -651,19 +670,19 @@
                                 </ul>
 
                                 <!-- КНОПКА ЗАГРУЗИТЬ ЕЩЕ -->
-                                <div class="mr-bt">ПОКАЗАТЬ ЕЩЕ</div>
+                                <div class="mr-bt"><?=$MUI->getText('button-more')?></div>
 
                                 <!-- КНОПКИ СВЕРНУТЬ И ЗАГРУЗИТЬ ЕЩЕ-->
                                 <div class="mr-cl-bt-bl">
-                                    <div class="cl scrollto" data-href="profile">свернуть</div>
-                                    <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
+                                    <div class="cl scrollto" data-href="profile"><?=$MUI->getText('button-hide')?></div>
+                                    <div class="mr"><?=$MUI->getText('button-more')?></div>
                                 </div>
                             </section>
 
                             <section class="_section profile-bonuses">
-                                <div class="pb-txt"><?=$staticTexts['profile-bonus'][$lang]->getText()?></div>
+                                <div class="pb-txt"><?=$MUI->getText('profile-bonus')?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr>Пригласить друга +<?=EmailInvite::INVITE_COST?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
+                                    <div class="if-tl"><nobr>Пригласить друга +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_email_invite')?> баллов</nobr><br/><nobr>(приглашений на этой неделе <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -678,7 +697,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)"
                                             onclick="
@@ -710,7 +729,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=Player::REFERAL_INVITE_COST?> баллов<br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено! Баллы за такие приглашения не начисляются.</span></div>
+                                    <div class="rp-txt">Регистрация по вашей ссылке +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_referal_invite')?> баллов<br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено! Баллы за такие приглашения не начисляются.</span></div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -727,7 +746,7 @@
                                         </div>
                                         <div class="pi-cs-bk">
                                             <? if(count($player->getAdditionalData())<5) {?>
-                                            <div class="txt">Привязать соцсеть и получить бонус 40 баллов за каждую.</div>
+                                            <div class="txt">Привязать соцсеть и получить бонус <?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile')?> баллов за каждую.</div>
                                             <? } ?>
                                             <? $socials=array('Facebook'=>'fb','Vkontakte'=>'vk', 'Odnoklassniki'=>'ok','Google'=>'gp','Twitter'=>'tw' );
                                             foreach($socials as $key=>$class)
@@ -740,30 +759,30 @@
                                     </div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Никнейм">Никнейм</div>
+                                            <div class="ph" data-default="Никнейм"><?=$MUI->getText('placeholder-nickname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Фамилия">Фамилия</div>
+                                            <div class="ph" data-default="Фамилия"><?=$MUI->getText('placeholder-surname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="surname" data-valid="<?=$player->getSurname()?>" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Имя">Имя</div>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-name')?>"><?=$MUI->getText('placeholder-name')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="name" data-valid="<?=$player->getName()?>" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="Телефон">Телефон</div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Телефон" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-phone')?>"><?=$MUI->getText('placeholder-phone')?></div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-phone')?>" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="Дата рождения">Дата рождения</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-birthday')?>"><?=$MUI->getText('placeholder-birthday')?></div>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=$MUI->getText('placeholder-birthday')?>" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="Пароль">Пароль</div>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-password')?>"><?=$MUI->getText('placeholder-password')?></div>
                                             <input type="text" name="plug" data-valid="" style="display: none;"/>
                                             <input type="password" name="plug" data-valid="" style="display: none;"/>
-                                            <input autocomplete="off" spellcheck="false" placeholder="Пароль" type="password" value="*********" name="password" data-valid="" />
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-password')?>" type="password" value="*********" name="password" data-valid="" />
                                         </div>
                                         <div class="fc-bk">
                                             <div class="fc-nbs-bk">
@@ -773,7 +792,7 @@
                                                     <? } ?>
                                                 </ul>
                                             </div>
-                                            <div class="fc-tl">любимая комбинация</div>
+                                            <div class="fc-tl"><?=$MUI->getText('favourite-combination')?></div>
                                             <ul class="fc-nrch-bk">
                                                 <? for ($i=0; $i<6;++$i) {?>
                                                     <li>
@@ -787,10 +806,10 @@
                                     <div class="save-bk">
                                         <div class="sb-ch-td">
                                             <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
-                                            <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
+                                            <label for="rulcheck"><?=$MUI->getText('text-show-my-name')?></label>
                                         </div>
                                         <div class="sb-ch-td">
-                                            <div class="but" onclick="$(this).parents('form').submit(); return false;">сохранить</div>
+                                            <div class="but" onclick="$(this).parents('form').submit(); return false;"><?=$MUI->getText('button-save')?></div>
                                         </div>
                                     </div>
                                 </form>
@@ -821,7 +840,7 @@
         <!--=====================================================================
                                 CHANCE BLOCK
         ======================================================================-->
-        <? if($page=='chance' OR !$page) :?>
+        <? if($seo['pages']=='chance' OR !$seo['pages']) :?>
         <section class="chance">
         <div class="ch-br-bk">
 
@@ -830,56 +849,32 @@
         </div>
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
-        <div class="sbk-tl">игры</div>
+        <div class="sbk-tl"><?=$MUI->getText('header-games')?></div>
         <div class="b-cntrl-block"><span class="glyphicon glyphicon-volume-up audio" aria-hidden="true"></span></div>
 
         <!-- CHANCE PREVIEW -->
-        <div class="ch-bk slider" style="display:<?=($currentChanceGame && in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
-            <div class="ch-txt"><?=$staticTexts['chance-game'][$lang]->getText()?></div>
+        <div class="ch-bk slider" style="display:block">
+            <div class="ch-txt"><?=$MUI->getText('chance-game')?></div>
 
             <div class="ch-gm-tbl slide-list">
                 <div class="slide-wrap">
-
 
                 <? if(isset($games) && is_array($games))
                     foreach($games as $game): ?>
                         <div class="td slide-item">
                             <div class="gm-if-bk">
                                 <div class="l"><?=$quickGames[$game]->getTitle($player->getLang())?></div>
-                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b>баллов</div>
+                                <div class="r"><b class="qg-bk-pr"><?=$quickGames[$game]->getOption('p')?></b><?=$MUI->getText('placeholder-points')?></div>
                             </div>
                             <div class="gm-bt" data-quick="1" data-game="<?=$game?>"><img src="tpl/img/games/Chance<?=$game?>.png"></div>
                         </div>
                     <? endforeach ?>
 
-                <div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$chanceGames['33']->getGameTitle();?></div>
-                        <div class="r"><b><?=$chanceGames['33']->getGamePrice();?></b>баллов</div>
-                    </div>
-                    <div class="gm-bt" data-game="33"><img src="tpl/img/game-3x3.png"></div>
-                </div>
-                <div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$chanceGames['44']->getGameTitle();?></div>
-                        <div class="r"><b><?=$chanceGames['44']->getGamePrice();?></b>баллов</div>
-                    </div>
-                    <div class="gm-bt" data-game="44"><img src="tpl/img/game-4x4.png"></div>
-                </div>
-                <div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$chanceGames['55']->getGameTitle();?></div>
-                        <div class="r"><b><?=$chanceGames['55']->getGamePrice();?></b>баллов</div>
-                    </div>
-                    <div class="gm-bt" data-game="55"><img src="tpl/img/game-5x5.png"></div>
-                </div>
                 </div>
                 <!--div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
                 <div name="next" class="navy next-slide"></div-->
-
             </div>
-
 
             <div class="ch-gm-tbl slide-list">
             <div class="slide-wrap">
@@ -908,44 +903,34 @@
                     <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
                 </div>
 
-                <!--div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
-                        <div class="r"></div>
-                    </div>
-                    <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
-                </div-->
-
-            </div>
-                <!--div class="clear"></div>
-                <div name="prev" class="navy prev-slide"></div>
-                <div name="next" class="navy next-slide"></div-->
-
-            </div>
-            <? /*
-            <div class="ch-gm-tbl">
-                <div class="td l">
+                <div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
                         <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
                 </div>
+
             </div>
-            */ ?>
+                <div class="clear"></div>
+                <div name="prev" class="navy prev-slide"></div>
+                <div name="next" class="navy next-slide"></div>
+
+            </div>
+
     </div>
 
     <!-- CHANCE GAME -->
-        <div class="game-bk quickgame"  id="ChanceGame-holder" style="display:<?=(!$currentChanceGame || !in_array($currentChanceGame['id'], array('33','44','55')) ? 'none' : 'block')?>;">
+        <div class="game-bk quickgame"  id="ChanceGame-holder" style="display:none">
             <div class="l-bk">
                 <div class="rw-t">
-                    <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
+                    <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
                 </div>
                 <div class="gm-if-bk">
                     <div class="tb">
                         <!-- FIX HERE -->
-                        <div class="l qg-bk-tl"><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGameTitle() : '')?></div>
-                        <div class="r"><b><?=($currentChanceGame ? $chanceGames[$currentChanceGame['id']]->getGamePrice() : '')?></b>баллов</div>
+                        <div class="l qg-bk-tl"></div>
+                        <div class="r"><b></b><?=$MUI->getText('placeholder-points')?></div>
                     </div>
                 </div>
                 <div style="display:none" id="game-rules">
@@ -955,15 +940,6 @@
                         <?=$quickGames[$game]->getDescription($player->getLang())?>
                     </div>
                     <? endforeach ?>
-                    <div data-game="33">
-                        <?=$staticTexts['chance-game-33'][$lang]->getText()?>
-                    </div>
-                    <div data-game="44">
-                        <?=$staticTexts['chance-game-44'][$lang]->getText()?>
-                    </div>
-                    <div data-game="55">
-                        <?=$staticTexts['chance-game-55'][$lang]->getText()?>
-                    </div>
                 </div>
 
                 <div style="display:none" id="game-prizes">
@@ -979,10 +955,10 @@
                                         default: ?>
                                 <div class="<?=$prize['t']?>-holder prize-holder"><span><?=
                                         ($prize['v']
-                                            ? ($prize['t'] =='money' ? $prize['v'] * $gameInfo['coefficient'] : str_replace(["[*]", "\/"], ["x", "÷"],$prize['v']))
+                                            ? ($prize['t'] =='money' ? $prize['v'] * $currency['coefficient'] : str_replace(["[*]", "\/"], ["x", "÷"],$prize['v']))
                                             : 0).
                                         ($prize['t'] =='money'
-                                            ? '<small> '.$currency.'</small>'
+                                            ? '<small> '.$currency['iso'].'</small>'
                                             : '');?></span></div>
                                 <?          break;
                                     }
@@ -991,21 +967,9 @@
                             </div>
                         <? endforeach; ?>
                 </div>
-                <div class="l-bk-txt qg-txt">Описание. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing libero magna, vel venenatis nisl adipiscing id. Aenean ipsum lorem, laoree. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing </div>
+                <div class="l-bk-txt qg-txt"><?=$MUI->getText('holder-description')?></div>
                 <div class="l-bk-txt qg-prz"></div>
-                <div class="rw-b">
-                    <? foreach (array('33','44','55') as $game) { ?>
-                        <? if ($currentChanceGame && $currentChanceGame['id'] != $game) { continue; } ?>
-                        <div class="tb" style="display:<?=(!$currentChanceGame ? 'none' : '')?>" data-game="<?=$game?>">
-                            <? $order = array('l', 'c', 'r'); ?>
-                            <? foreach ($chanceGames[$game]->loadPrizes() as $prize) { ?>
-                                <div class="td <?=($game == '55' ? array_shift($order) : 'c')?> sel">
-                                    <img src="/filestorage/shop/<?=$prize->getImage();?>" />
-                                </div>
-                            <? } ?>
-                        </div>
-                    <? } ?>
-                </div>
+
             </div>
             <div class="gm-tb-bk quickgame">
 
@@ -1024,7 +988,7 @@
                 </div>
 
                 <!-- Кнопка "Играть" -->
-                <div class="msg-tb play" <?=($currentChanceGame ? 'style="display:none"' : '')?>>
+                <div class="msg-tb play">
                     <div class="td">
                         <div class="bt">играть</div>
                     </div>
@@ -1053,8 +1017,8 @@
                         <div class="preloader"></div>
                     </div>
                 </div>
-                <div class="ul-hld">
-                </div>
+                <div class="ul-hld"></div>
+
                 <? if(isset($games) && is_array($games))
                     foreach($games as $game): ?>
                 <!-- CHANCE<?=$game?> -->
@@ -1067,43 +1031,9 @@
                 </ul>
                 <? endforeach ?>
 
-                <!-- GAME 3x3 -->
-                <ul class="gm-tb g-3x3" data-game="33" data-price="<?=$chanceGames['33']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '33' ? 'block' : 'none')?>">
-                    <? for($i = 1; $i <=3; ++$i) { ?>
-                        <? for($j = 1; $j <=3; ++$j) { ?>
-                            <li data-coord="<?=$i?>x<?=$j?>"></li>
-                        <? } ?>
-                    <? } ?>
-                    <!--li class="won"></li-->
-                    <!--li class="los"></li-->
-                </ul>
-                <!-- END GAME 3x3 -->
-
-                <!-- GAME 4x4 -->
-                <ul class="gm-tb g-4x4" data-game="44" data-price="<?=$chanceGames['44']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '44' ? 'block' : 'none')?>">
-                    <? for($i = 1; $i <= 4; ++$i) { ?>
-                        <? for($j = 1; $j <= 4; ++$j) { ?>
-                            <li data-coord="<?=$i?>x<?=$j?>"></li>
-                        <? } ?>
-                    <? } ?>
-                </ul>
-                <!-- END GAME 4x4 -->
-
-                <!-- GAME 5x5 -->
-                <ul class="gm-tb g-5x5" data-game="55" data-price="<?=$chanceGames['55']->getGamePrice()?>" style="display:<?=($currentChanceGame && $currentChanceGame['id'] == '55' ? 'block' : 'none')?>">
-                    <? for($i = 1; $i <= 5; ++$i) { ?>
-                        <? for($j = 1; $j <= 5; ++$j) { ?>
-                            <li data-coord="<?=$i?>x<?=$j?>"></li>
-                        <? } ?>
-                    <? } ?>
-                    <!--li class="won"></li-->
-                    <!--li class="los"></li-->
-                </ul>
-                <!-- END GAME 5x5 -->
             </div>
             </div>
         </div>
-
 
 
         <!-- NEW GAME CODE -->
@@ -1114,7 +1044,7 @@
 
                     <div class="prc-l">
                         <div class="rw-t">
-                            <div class="bk-bt-rl"><spn>назад<br/>к описанию игры</spn></div>
+                            <div class="bk-bt-rl"><spn><?=$MUI->getText('button-back-to-description')?></spn></div>
                         </div>
                         <div class="gm-if-bk">
                             <div class="l"></div>
@@ -1122,26 +1052,26 @@
 
                         <div class="prc-bl">
                             <div class="prc-txt-bk">
-                                <div class="all">Выберите тип и размер ставки</div>
+                                <div class="all"><?=$MUI->getText('holder-choose-bet')?></div>
                             </div>
                             <div class="prc-but-cover"></div>
                             <div class="prc-but-bk">
 
-                                <div class="prc-bt">баллы</div>
+                                <div class="prc-bt"><?=$MUI->getText('placeholder-points')?></div>
                                 <div class="prc-sel" data-currency="POINT">
-                                    <div class="prc-tl">баллы</div>
+                                    <div class="prc-tl"><?=$MUI->getText('placeholder-points')?></div>
                                 </div>
 
-                                <div class="prc-bt">деньги</div>
+                                <div class="prc-bt"><?=$MUI->getText('placeholder-money')?></div>
                                 <div class="prc-sel" data-currency="MONEY">
-                                    <div class="prc-tl">деньги</div>
+                                    <div class="prc-tl"><?=$MUI->getText('placeholder-money')?></div>
                                 </div>
 
-                                <div class="prc-bt">бесплатно</div>
-                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'>бесплатно</div></div>
+                                <div class="prc-bt"><?=$MUI->getText('placeholder-free')?></div>
+                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=$MUI->getText('placeholder-free')?></div></div>
 
                                 <!--div class="ngm-cncl">отмена</div-->
-                                <div class="ngm-go">играть</div>
+                                <div class="ngm-go"><?=$MUI->getText('button-play')?></div>
                             </div>
                         </div>
 
@@ -1149,7 +1079,7 @@
 
                     <div class="rls-l">
                         <div class="rw-t">
-                            <div class="bk-bt"><spn>назад<br/>к списку игр</spn></div>
+                            <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
                         </div>
                         <div class="gm-if-bk">
                             <div class="l"></div>
@@ -1205,34 +1135,31 @@
                                             ?>
                                         </ul>
                                     </div>
+
                                 </div>
 
                                 <div style="display:none" id="newgame-rules">
                                     <div data-game="WhoMore">
-                                        Выберите ставку и нажмите кнопку «Играть»<br/><br/>
                                         <?=$onlineGames['WhoMore']->getDescription($player->getLang());?>
                                     </div>
                                     <div data-game="FiveLine">
-                                        Выберите ставку и нажмите кнопку «Играть»<br/><br/>
                                         <?=$onlineGames['FiveLine']->getDescription($player->getLang());?>
                                     </div>
                                     <div data-game="SeaBattle">
-                                        Выберите ставку и нажмите кнопку «Играть»<br/><br/>
                                         <?=$onlineGames['SeaBattle']->getDescription($player->getLang());?>
                                     </div>
                                     <div data-game="Mines">
-                                        Выберите ставку и нажмите кнопку «Играть»<br/><br/>
                                         <?=$onlineGames['SeaBattle']->getDescription($player->getLang());?>
                                     </div>
                                 </div>
 
                                 <div class="l">
-                                    <div class="ngm-price">ставка</div>
+                                    <div class="ngm-price"><?=$MUI->getText('placeholder-bet')?></div>
                                 </div>
 
                                 <div class="r">
-                                    <div class="online">игроков онлайн <i>&bull;</i> <span></span></div>
-                                    <div class="all">всего сыграно игр <b>:</b> <span></span></div>
+                                    <div class="online"><?=$MUI->getText('placeholder-players-online')?> <i>&bull;</i> <span></span></div>
+                                    <div class="all"><?=$MUI->getText('placeholder-total-games-played')?> <b>:</b> <span></span></div>
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
@@ -1241,33 +1168,27 @@
                         </div>
                     </div>
 
-
-
-
                     <div class="rls-r">
 
-                        <div class="rls-r-t">ВЫ <b>|</b> 0 <b>|</b> 0</div>
-                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b>Поиск</b></div><div class="ngm-cncl">отмена</div></div>
-
+                        <div class="rls-r-t"><?=$MUI->getText('placeholder-you')?> <b>|</b> 0 <b>|</b> 0</div>
+                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=$MUI->getText('placeholder-search')?></b></div><div class="ngm-cncl"><?=$MUI->getText('button-cancel')?></div></div>
 
                         <div class="rls-r-ws">
-                            <b>победители</b>
-                            <span>рейтиHг <b>|</b> сыграHо игр <b>|</b> побед</span>
+                            <b><?=$MUI->getText('placeholder-winners')?></b>
+                            <span><?=$MUI->getText('placeholder-rating')?> <b>|</b> <?=$MUI->getText('placeholder-games-played')?> <b>|</b> <?=$MUI->getText('placeholder-wins')?></span>
                         </div>
-                        <ul class="rls-r-prs">
 
-                        </ul>
+                        <ul class="rls-r-prs"></ul>
+
                     </div>
 
                     <div class="b-cl-block"></div>
                 </div>
             </div>
 
-
             <div class="ngm-gm">
                 <div class="tm" id="tm">00:55</div>
 
-                <!-- класс для (gm-pr) "move" если ход, Класс "winner" если победитель -->
                 <div class="gm-pr l">
                     <div class="pr-ph-bk">
                         <div class="mt">ход</div>
@@ -1295,8 +1216,6 @@
                 <div class="gm-mx">
                     <div class="gm-fld">
                     <!-- MATRIX -->
-
-
                     </div>
 
                     <!-- Equal massage-->
@@ -1334,7 +1253,6 @@
                     </div>
                 </div>
 
-
                 <!-- класс для (gm-pr) "move" если ход, Класс "winner" если победитель -->
                 <div class="gm-pr r">
                     <div class="pr-ph-bk">
@@ -1360,25 +1278,11 @@
 
         <!-- END GAME CODE -->
 
-
-
         </div>
         </div>
         <div class="b-cl-block"></div>
         </section>
         <? endif ?>
-
-
-
-        <script>
-            $('.ch-gm-tbl .gm-bt').click(function(){
-                $(this).closest('.ch-bk').fadeOut(200);
-                setTimeout(function(){
-                    $('.game-bk').fadeIn(200);
-                }, 200);
-            });
-        </script>
-
 
         <!--=========================================================================
                                     NOTIFICATIONS POPUP CODE
@@ -1398,13 +1302,13 @@
                 <div class="bl-pp_td">
                     <section class="badge-block pop-box">
                         <div class="cs"></div>
-                        <div class="title"><?=$quickGame['title'];?></div>
+                        <div class="title"><?=$MUI->getText('title-random')?></div>
                         <div class="txt">
                             <div class="timer">
-                                <span id="text_soon">Игра будет доступна через </span>
+                                <span id="text_soon"><?=$MUI->getText('placeholder-game-will-be-able-until')?> </span>
                                 <span id="timer_soon"></span>
                             </div>
-                            <div class="start">Играть!</div>
+                            <div class="start"><?=$MUI->getText('button-play')?></div>
                         </div>
                     </section>
                 </div>
@@ -1421,7 +1325,7 @@
                 <img src="/tpl/img/baners/goroskop.jpg?<?=(strtotime(date("md")))?>" width="1280" height="257">
             </section>
             <div class="fr-cnt-bk">
-                <a href="javascript:void(0)" class="ts-lk" id="terms-bt">Условия участия</a>
+                <a href="javascript:void(0)" class="ts-lk" id="terms-bt"><?=$MUI->getText('placeholder-terms')?></a>
                 <div class="ct-bk">
                     <a target="_blank" href="https://www.facebook.com/pages/Lotzon/714221388659166" class="ct-sl fb"></a>
                     <a target="_blank" href="http://vk.com/lotzon" class="ct-sl vk"></a>
@@ -1460,6 +1364,8 @@
         <div id="ads">ads</div>
 
 */ ?>
+
+
         </div>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/backend.js"></script>
@@ -1467,16 +1373,15 @@
         <script src="/tpl/js/ws.js"></script>
         <script src="/tpl/js/ads.js"></script>
 
-        <? include('popups.php') ?>
+    <? include('popups.php'); ?>
+    <? if($debug) include('./protected/templates/admin/statictexts_frontend.php'); ?>
 
-    <? /*echo $_SERVER['HTTP_USER_AGENT'];
-    $browser = get_browser(null, true);
-    print_r($browser);*/
-    echo getScripts($banners['BodyScripts'],$player); ?>
+    <? echo getScripts($banners['BodyScripts'],$player); ?>
 
     <script>
 
-        VK.init({
+        if(window.VK)
+            VK.init({
             apiId: 4617228,
             scope: 'wall,photos'
         });
@@ -1485,10 +1390,8 @@
         var playerFavorite = [<?=implode(',',$player->getFavoriteCombination());?>];
         var playerPoints   = <?=$player->getPoints()?>;
         var playerMoney   = <?=$player->getMoney()?>;
-        var playerCurrency = '<?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?>';
-        var playerCurrencyISO = '<?=$currency;?>';
+        var currency =  <?=json_encode($currency); ?>;
         var playerId   = <?=$player->getId()?>;
-        var coefficient   = <?=$gameInfo['coefficient']?>;
         var ws = 0;
         var texts = {
             'CHEAT_GAME'      : 'Игра не может запускаться с нескольких открытых вкладок, пожалуйста, закройте лишние вкладки c игрой',
@@ -1512,7 +1415,7 @@
 
         var quickGame = {};
         var online = 1;
-        var page = <?=($page?1:0)?>;
+        var page = <?=($seo['pages']?1:0)?>;
         var appId   = 0;
         var appName   = '';
         var appMode   = 0;

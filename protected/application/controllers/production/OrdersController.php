@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
+use \Application, \Player, \EntityException, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');

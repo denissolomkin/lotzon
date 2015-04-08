@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Config, \ShopModel, \OnlineGame, \OnlineGamesModel, \EntityException, \Admin, \SupportedCountriesModel,  \Session2;
+use \Application, \PrivateArea, \SettingsModel, \CountriesModel, \OnlineGame, \OnlineGamesModel, \EntityException, \Admin, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -13,23 +13,25 @@ class OnlineGames extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {
        $games = OnlineGamesModel::instance()->getList();
-       $langs=Config::instance()->langs;
+       $langs = CountriesModel::instance()->getLangs();
+        $defaultLang = CountriesModel::instance()->defaultLang();
 
         $this->render('admin/ogames', array(
             'title'      => 'Онлайн-игры',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'games'      => $games,
-            'langs' => $langs,
-            'frontend'      => 'admin/games_frontend.php',
+            'langs'      => $langs,
+            'defaultLang'=> $defaultLang,
+            'frontend'   => 'admin/games_frontend.php',
         ));
     }
 

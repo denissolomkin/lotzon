@@ -22,7 +22,7 @@
     <div class="row-fluid">&nbsp;</div>
     <!-- fst column -->
     <div class="col-md-4 col-md-offset-1">
-        <h6>Cумма розыгрыша</h6>
+        <!--h6>Cумма розыгрыша</h6>
         <div class="row">            
             <div class="col-md-9">
                 <input type="text" name="sum" value="<?=$settings->getTotalWinSum()?>" placeholder="Сумма розыгрыша" class="form-control" />    
@@ -30,8 +30,7 @@
             <div class="col-md-3">
                 <button class="btn <?=$settings->getJackpot() ? 'btn-success' : 'btn-default'?> btn-md jackpot">JACKPOT!</button>
             </div>
-        </div>
-        <div class="row">&nbsp;</div>
+        </div-->
         <h6>Настройка призов<span class="pull-right  glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Установите флажок, для того чтобы указать что приз денежный" style="color:#428BCA;cursor:help;">&nbsp;</span></h6>
         <? for ($i = 1; $i <= 6; ++$i) { ?>
         <div class="row">
@@ -53,15 +52,7 @@
             </div>
         </div>  
         <? } ?>
-        <div class="row">
-            <div class="col-md-6">
-                <h6>Коэфициент суммы розыграша </h6>
-                <input type="text" class="form-control input-md" name="coof" value="<?=$settings->getCountryCoefficient('UA')?>"> 
-            </div>
-            <div class="col-md-6"> <h6>Курс обмена (баллов за 1 ед.)</h6>
-                <input type="text" class="form-control input-md" name="rate" value="<?=$settings->getCountryRate('UA')?>">
-            </div>
-        </div>
+
     </div>
     
     <!-- scnd column -->
@@ -100,12 +91,12 @@
 </div>
 <div class="row-fluid">&nbsp;</div>
 <div class="row-fluid">
-    <div class="col-md-6">
-        <button type="button" class="btn btn-md btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button>
-        <span class="pull-right">&nbsp;</span>
-        <div class="btn-group pull-right">
+    <div class="col-md-offset-1 col-md-6">
+        <!--button type="button" class="btn btn-md btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button-->
+
+        <div class="btn-group">
             <? foreach ($supportedCountries as $country) { ?>
-                <button type="button" class="btn btn-md country btn-default<?=($country->getCountryCode() == 'UA' ? ' active' : '') ?>" data-cc="<?=$country->getCountryCode()?>"><?=$country->getTitle()?></button>
+                <button type="button" class="btn btn-md country btn-default<?=($country == 'UA' ? ' active' : '') ?>" data-cc="<?=$country?>"><?=$country?></button>
             <? } ?>
         </div>
     </div>
@@ -138,7 +129,7 @@
     </div>
 </div>
 
-<div class="add-country-template" style="display:none">
+<!--div class="add-country-template" style="display:none">
     <div class="row-fluid">
         <form class="form form-inline pull-right">
             <div class="form-group">
@@ -152,7 +143,7 @@
             <div class="form-group">
                 <label class="sr-only"></label>
                 <select class="input input-md form-control col-md-1" name="lang" placeholder="Язык">
-                    <? foreach (Config::instance()->langs as $lang) { ?>
+                    <? foreach ($supportedCountries as $lang) { ?>
                         <option value="<?=$lang?>"><?=$lang?></option>
                     <? } ?>
                 </select>
@@ -163,7 +154,7 @@
             </div>
         </form>
     </div>
-</div>
+</div-->
 
 
 <div class="modal fade" id="simulation" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
@@ -196,8 +187,8 @@ $ajaxedSettings['lotteryTotal'] = $settings->getTotalWinSum();
 $ajaxedSettings['isJackpot']  = $settings->getJackpot();
 
 foreach ($supportedCountries as $country) {
-    @$ajaxedSettings['countryCoefficients'][$country->getCountryCode()] = @$settings->getCountryCoefficient($country->getCountryCode());
-    @$ajaxedSettings['countryRates'][$country->getCountryCode()] = @$settings->getCountryRate($country->getCountryCode());
+    @$ajaxedSettings['countryCoefficients'][$country] = @$settings->getCountryCoefficient($country);
+    @$ajaxedSettings['countryRates'][$country] = @$settings->getCountryRate($country);
 }
 $ajaxedSettings['countryCoefficients'] = (object)$ajaxedSettings['countryCoefficients'];
 $ajaxedSettings['countryRates'] = (object)$ajaxedSettings['countryRates'];
@@ -247,7 +238,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         container.find('.form-group').last().find('.add-button').show();        
     }
 
-    $(".simulate-button").on('click', function() {
+    $(document).on('click', '.simulate-button', function() {
 
         button=$(this);
         var simulation={Balls: button.prev().val(), Tries: button.prev().prev().val()};

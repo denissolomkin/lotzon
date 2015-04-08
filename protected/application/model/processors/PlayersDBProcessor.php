@@ -6,7 +6,7 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`,`Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
                 VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent,:referer)";
 
         try {
@@ -17,6 +17,7 @@ class PlayersDBProcessor implements IProcessor
                 ':dr'       => time(),
                 ':dl'       => (int)$player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
+                ':cc'       => $player->getLang(),
                 ':vis'      => 1,
                 ':ip'       => $player->getIP(),
                 ':hash'     => $player->getHash(),
@@ -189,7 +190,7 @@ class PlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
         $sql = "UPDATE `Players` SET
-                    `DateLogined` = :dl, `Country` = :cc, `CookieId` = :ckid,
+                    `DateLogined` = :dl, `Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `Ip` = :ip, `LastIp` = :lip, `Agent` = :agent
@@ -200,6 +201,7 @@ class PlayersDBProcessor implements IProcessor
             $sth->execute(array(
                 ':dl'       => $player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
+                ':lang'     => $player->getLang(),
                 ':nic'      => $player->getNicname(),
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
@@ -384,9 +386,12 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersStats()
     {
+        // return array('Points'=>0,'Money'=>0,'Online'=>0,'Tickets'=>0);
+
         $sql = "SELECT
-                SUM(Money/(SELECT `Coefficient` FROM `LotterySettings` WHERE `CountryCode`=`Players`.`Country` LIMIT 1) ) Money, SUM(Points) Points,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-Config::instance()->playerOfflineTimeout).") o) Online,
+                SUM(Money / IFNULL((SELECT `Coefficient` FROM `MUICountries` cn LEFT JOIN `MUICurrency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
+                SUM(Points) Points,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
@@ -415,7 +420,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getPlayersCount($search=null)
     {
-        $sql = "SELECT COUNT(Id) as `counter` FROM `Players`";
+        $sql = "SELECT COUNT(*) as `counter` FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id";
 
         if (is_array($search) AND $search['query']) {
             if($search['where'] AND $search['where']=='Id')
@@ -425,7 +430,7 @@ class PlayersDBProcessor implements IProcessor
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $sql .= ' WHERE ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ping')
-                $sql .= ' WHERE `PlayerDates`.Ping > '.time()-Config::instance()->playerOfflineTimeout;
+                $sql .= ' WHERE `PlayerDates`.Ping > '.(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300));
             elseif($search['where'] AND $search['where']=='Ip')
                 $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -525,7 +530,7 @@ class PlayersDBProcessor implements IProcessor
             elseif($search['where'] AND $search['where']=='ReferalId')
                 $search = ' WHERE `Players`.ReferalId = '.$search['query'];
             elseif($search['where'] AND $search['where']=='Ping')
-                $search = ' WHERE `PlayerDates`.Ping > '.time()-Config::instance()->playerOfflineTimeout;
+                $search = ' WHERE `PlayerDates`.Ping > '.(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300));
             elseif($search['where'] AND $search['where']=='Ip')
                 $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
             elseif($search['where'])
@@ -674,7 +679,9 @@ class PlayersDBProcessor implements IProcessor
     public function getTickets($playerId, $lotteryId)
     {
         $sql = "SELECT `Lotteries`.`Date`, `Lotteries`.`Combination` WinCombination,
-              `LotteryTickets`.`TicketWinCurrency`, `LotteryTickets`.`TicketWin`, `LotteryTickets`.`TicketWin`, `LotteryTickets`.`TicketNum`, `LotteryTickets`.`Combination`, `LotteryTickets`.`PlayerId`, `LotteryTickets`.`LotteryId`, `LotteryTickets`.`Id`, `LotteryTickets`.`DateCreated`
+              `LotteryTickets`.`TicketWinCurrency`, `LotteryTickets`.`TicketWin`, `LotteryTickets`.`TicketWin`,
+              `LotteryTickets`.`TicketNum`, `LotteryTickets`.`Combination`, `LotteryTickets`.`PlayerId`,
+              `LotteryTickets`.`LotteryId`, `LotteryTickets`.`Id`, `LotteryTickets`.`DateCreated`
               FROM `LotteryTickets`
               LEFT JOIN `Lotteries` ON `LotteryTickets`.`LotteryId`=`Lotteries`.`Id`
               WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
@@ -690,7 +697,6 @@ class PlayersDBProcessor implements IProcessor
 
         $tickets = array();
         foreach ($res->fetchAll() as $ticketData) {
-            //print_r(unserialize($ticketData['WinCombination']));
             $ticketData['DateCreated']=date('d.m.Y H:i:s', $ticketData['DateCreated']);
             $ticketData['Date']=date('d.m', $ticketData['Date']);
             $ticketData['Combination']=unserialize($ticketData['Combination']);

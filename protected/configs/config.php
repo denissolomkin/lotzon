@@ -18,9 +18,16 @@ try {
 // init database connection
 try {
     DB::Connect('default', Config::instance()->dbConnectionProperties);
-}catch (\EntityException $e) {}
+} catch (\EntityException $e) {}
 
+
+Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
+
+/*
 Config::instance()->newsCacheCount = 18;
+Config::instance()->playerOfflineTimeout = 5 * 60;
+Config::instance()->generatorNumTries = 20;
+
 Config::instance()->langs = array('RU', 'UA', 'EN');
 Config::instance()->countryLangs = array(
     'UA' => 'UA',
@@ -34,7 +41,6 @@ Config::instance()->langCurrencies = array(
     'BY' => 'руб',
     'EN' => 'usd',
 );
-
 Config::instance()->errorMessages = array(
     'AGREE_WITH_RULES' => 'Вы должны ознакомиться с правилами',
     'EMPTY_EMAIL'      => 'Введите email',
@@ -49,6 +55,7 @@ Config::instance()->errorMessages = array(
     'BLOCKED_IP'        => 'Регистрация пользователя запрещена',
     'ACCESS_DENIED'        => 'Доступ запрещен'
 );
+*/
 
 Config::instance()->privateResources =  array(
     '/private/' => 'controllers\admin\Users:index',
@@ -60,6 +67,18 @@ Config::instance()->privateResources =  array(
     '/private/lottery/' => array(
         'get'  => 'controllers\admin\Lottery:index',
         'post' => 'controllers\admin\Lottery:save',
+    ),
+    '/private/countries/' => array(
+        'get'  => 'controllers\admin\Countries:index',
+        'post' => 'controllers\admin\Countries:save',
+    ),
+    '/private/currencies/' => array(
+        'get'  => 'controllers\admin\Currencies:index',
+        'post' => 'controllers\admin\Currencies:save',
+    ),
+    '/private/languages/' => array(
+        'get'  => 'controllers\admin\Languages:index',
+        'post' => 'controllers\admin\Languages:save',
     ),
     '/private/lottery/simulation' => array(
         'post' => 'controllers\admin\Lottery:simulation',
@@ -82,6 +101,15 @@ Config::instance()->privateResources =  array(
     ),
     '/private/texts/:identifier' => array(
         'delete'    => 'controllers\admin\Texts:delete',
+    ),
+    '/private/statictexts/' => array(
+        'get'    => 'controllers\admin\StaticTexts:index',
+        'post'   => 'controllers\admin\StaticTexts:save',
+    ),
+
+    '/private/statictexts/:identifier' => array(
+        'get'    => 'controllers\admin\StaticTexts:get',
+        'delete'    => 'controllers\admin\StaticTexts:delete',
     ),
     '/private/news/' => array(
         'get'    => 'controllers\admin\News:index',
@@ -191,6 +219,14 @@ Config::instance()->privateResources =  array(
     '/private/banner/'      => array(
               'post' => 'controllers\admin\Banners:banner',
     ),
+    '/private/bonuses/' => array(
+        'get'  => 'controllers\admin\Bonuses:index',
+        'post' => 'controllers\admin\Bonuses:save',
+    ),
+    '/private/counters/' => array(
+        'get'  => 'controllers\admin\Counters:index',
+        'post' => 'controllers\admin\Counters:save',
+    ),
     '/private/blacklist/'      => array(
         'get' => 'controllers\admin\Blacklist:index',
         'post' => 'controllers\admin\Blacklist:save',
@@ -267,7 +303,6 @@ Config::instance()->publicResources = array(
     '/game/ticket/' => array(
         'post'  => 'controllers\production\Game:createTicket',
     ),
-    '/game/lastLottery/'  => 'controllers\production\Game:lastLottery',
     '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
     '/content/shop/'      => 'controllers\production\ContentController:shop',
     '/content/banner/:sector'      => 'controllers\production\ContentController:banner',
@@ -285,6 +320,7 @@ Config::instance()->publicResources = array(
     '/content/notices/'  => 'controllers\production\ContentController:notices',
 
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
+    '/language/:lang' => 'controllers\production\Players:changeLanguage',
     '/chance/build/:identifier' => array(
         'get' => 'controllers\production\Game:startChanceGame',
     ),
@@ -302,9 +338,6 @@ Config::instance()->publicResources = array(
     ),
 );
 
-Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
-Config::instance()->playerOfflineTimeout = 5 * 60;
-Config::instance()->generatorNumTries = 20;
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
@@ -342,6 +375,7 @@ Config::instance()->hybridAuth = array(
     )
 );
 
+/*
 Config::instance()->vkCredentials = array(
     'appId'        => '4617228',
     'secret'       => 'hbTNQKCHQ03tk5XLISmy',
@@ -373,11 +407,13 @@ Config::instance()->blockedEmails = array(
     'objectmail.com', 'proxymail.eu', 'rcpt.at', 'trash-mail.at', 'trashmail.at', 'trashmail.me',
     'trashmail.net', 'wegwerfmail.de', 'wegwerfmail.net', 'wegwerfmail.org', 'jourrapide.com'
 );
+*/
 
+/*
 // init config from DB
 $sth = DB::Connect()->prepare("SELECT * FROM `Config`");
 $sth->execute();
 if ($sth->rowCount())
     foreach ($sth->fetchAll() as $config)
         Config::instance()->$config['Key']=unserialize($config['Value']);
-
+*/

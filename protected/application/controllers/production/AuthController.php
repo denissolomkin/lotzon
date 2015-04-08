@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Config,  \Hybrid_Auth, \Player, \EntityException, \WideImage,  \Common;
+use \Config, \Hybrid_Auth, \Player, \EntityException, \CountriesModel, \StaticTextsModel, \SettingsModel, \WideImage,  \Common;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -105,8 +105,10 @@ class AuthController extends \SlimController\SlimController {
                 if ($profile->photoURL AND !$player->getAvatar())
                     $player->uploadAvatar($profile->photoURL);
 
-                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed())
-                    $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за привязку социальной сети '.$provider);
+                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'))
+                    $player->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'),
+                        StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_profile').$provider);
 
                 if(!$_COOKIE[Player::PLAYERID_COOKIE] OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getId() OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getCookieId() OR !$player->getCookieId())
                     $player->updateCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId());
@@ -140,7 +142,7 @@ class AuthController extends \SlimController\SlimController {
                             $player->setCountry($profile->country);
                         }
                         else {
-                            $player->setCountry(Config::instance()->defaultLang);
+                            $player->setCountry(CountriesModel::instance()->defaultCountry());
                         }
                     }
 
@@ -159,16 +161,15 @@ class AuthController extends \SlimController\SlimController {
 
                         if($profile->email) {
 
+                            $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
                             $player->setValid(true)
                                 ->setDateLastLogin(time())
                                 ->create();
 
-                            if ($player->getId() <= 100000) {
-                                $player->addPoints(200, 'Бонус за регистрацию');
-                            }
-
-                            if(!$player->isSocialUsed()) // If Social Id didn't use earlier
-                                $player->addPoints(Player::SOCIAL_PROFILE_COST, 'Бонус за регистрацию через социальную сеть ' . $provider);
+                            if(!$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) // If Social Id didn't use earlier
+                                $player->addPoints(
+                                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration'),
+                                    StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_registration').$provider);
 
                             $player->updateSocial()
                                 ->payInvite()
@@ -180,8 +181,8 @@ class AuthController extends \SlimController\SlimController {
                             if ($profile->photoURL)
                                 $player->uploadAvatar($profile->photoURL);
 
-                            if ($player->getId() <= 1000) {
-                                $player->addPoints(300, 'Бонус за регистрацию в первой тысяче участников');
+                            if ($player->getId() <= 100000) {
+                                $player->addPoints(200, 'Бонус за регистрацию');
                             }
 
                         }

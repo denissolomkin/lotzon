@@ -1,4 +1,4 @@
-<div class="container-fluid">    
+<div class="container-fluid users">
     <div class="row-fluid" id="items">
         <h2>Запросы на вывод товаров (<span id="shopCount"><?=$shopCount?></span>) <button class="btn btn-info" onclick="location.href='#money'"><i class="glyphicon glyphicon-hand-down"></i></button>
 
@@ -44,7 +44,8 @@
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
                         </td>
-                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>"><?=$player->getCountry()?></td>
+                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>"><?=$player->getCountry()?>
+                            <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -136,7 +137,7 @@
                             </div>
 
                         </td>
-                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso');?></td>
                         <td><?=$order->getItem()->getTitle()?></br><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice().' баллов')?></td>
 
 
@@ -208,7 +209,8 @@
                                 <?=$player->getNicname()?><br><?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
                             </div>
                         </td>
-                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>"><?=$player->getCountry()?></td>
+                        <td class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>"><?=$player->getCountry()?>
+                            <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -302,7 +304,7 @@
                             </div>
 
                         </td>
-                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?><?=$player->getCountry()=='UA'?' грн':' руб'?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso');?></td>
                         <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                         <span class="label label-danger" ><?=$order->getCount()+1?></span>

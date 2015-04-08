@@ -358,8 +358,8 @@
             else
                 holder.addClass('disabled');
 
-            holder.find('.t').text(game.Title.<?=\Config::instance()->defaultLang;?>)
-                .next()//.html(nl2br(game.Description.<?=\Config::instance()->defaultLang;?>))
+            holder.find('.t').text(game.Title.<?=$defaultLang;?>)
+                .next()//.html(nl2br(game.Description.<?=$defaultLang;?>))
                 .next().html('<i class="fa fa-users"></i>' + game.Field.s +
                 ' <i class="fa fa-user"></i>' + game.Field.p +
                 ' <i class="fa fa-clock-o"></i>' + game.Field.t +

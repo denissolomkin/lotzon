@@ -7,19 +7,26 @@ class Admin extends Entity
 
     static $ROLES = array('ADMIN','MANAGER','MODERATOR','DEVELOPER');
     static $PAGES = array(
-
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
         'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-o-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
         'admins'=>array('name'=>'Администраторы','icon'=>'user-secret','css'=>'pull-right'),
 
+        'Мультиязычность'=>array('icon'=>'globe',
+            'pages'=>array(
+                'countries'=>array('icon'=>'globe','name'=>'Страны'),
+                'currencies'=>array('icon'=>'money','name'=>'Валюты'),
+                'languages'=>array('icon'=>'language','name'=>'Языки'),
+                'statictexts'=>array('icon'=>'font','name'=>'Переводы'),
+            )),
+
         'Настройки'=>array('icon'=>'cogs',
             'pages'=>array(
                 'blacklist'=>array('icon'=>'minus-circle','name'=>'Blacklist'),
-                'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
                 'seo'=>array('icon'=>'crosshairs','name'=>'SEO'),
-                'texts'=>array('icon'=>'globe','name'=>'Тексты'),
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
+                'bonuses'=>array('icon'=>'','name'=>'Бонусы'),
+                'counters'=>array('icon'=>'','name'=>'Счетчики'),
             )),
 
         'Контент'=>array('icon'=>'th-list',
@@ -34,15 +41,12 @@ class Admin extends Entity
 
         'Игры'=>array('icon'=>'trophy',
             'pages'=>array(
-                'games'=>array('icon'=>'cog','name'=>'Настройки'),
+                'games'=>array('icon'=>'cog','name'=>'Публикация игр'),
                 'qgames'=>array('icon'=>'puzzle-piece','name'=>'Конструктор игр'),
                 'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
                 'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
-                'chances'=>array('icon'=>'star-o','name'=>'Шансы'),
-                /*'gameoptions'=>array('name'=>'Настройки'),
-                'gamestats'=>array('name'=>'Статистика'),*/
+                'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
             )),
-
     );
 
 

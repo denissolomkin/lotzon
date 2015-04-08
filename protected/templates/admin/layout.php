@@ -34,6 +34,8 @@
       <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
       <link href="/theme/admin/lib/admin.css" rel="stylesheet">
 
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
   </head>
   <body style="">
       <div class="container-fluid text-center">
@@ -43,11 +45,12 @@
 
                 <li class="pull-right"><a href="/private/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
 
-                <? foreach(Admin::$PAGES as $key=>$pages) : ?>
+                <? $rights = SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole());
+                foreach(Admin::$PAGES as $key=>$pages) : ?>
                     <? if(is_array($pages['pages'])) {
                         $menu=array();
                         foreach($pages['pages'] as $link=>$page)
-                            if(Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$link]) :
+                            if(array_key_exists($link, $rights)) :
                                 $menu[]='
                                 <li'.($activeMenu == $link ? ' class="active"' : '').'><a href="/private/'.$link.'">'.
                                     (isset($page['icon'])?'<span class="fa fa-'.$page['icon'].'"></span> ':'').
@@ -68,7 +71,7 @@
                                 </ul>
                             </div>
                         </li>';
-                    } elseif(Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$key]) { ?>
+                    } elseif(array_key_exists($key, $rights)) { ?>
 
                         <li class="<?=($activeMenu == $key ? 'active ' : '')?><?=$pages['css']?:''?>"><a href="/private/<?=$key?>">
                                 <? if($pages['icon']): ?> <span class="fa fa-<?=$pages['icon']?>"></span>  <? endif ?>
@@ -83,8 +86,6 @@
         </div>
       </div>
       <?=$yield?>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
   <script>
       function assignByPath(obj,path,value){
           console.log(path[0]);

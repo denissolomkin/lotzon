@@ -77,7 +77,7 @@ class LotteriesModelDBProcessor implements IProcessor
         return $lottery;
     }
 
-    public function getPublishedLotteriesList($limit, $offset = 0) 
+    public function getPublishedLotteriesList($limit, $offset = 0)
     {
         $sql = "SELECT * FROM `Lotteries` WHERE `Ready` = 1 ORDER BY `Date` DESC";
         if ($limit > -1) {

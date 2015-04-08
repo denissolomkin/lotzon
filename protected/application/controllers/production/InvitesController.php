@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Config, \Player, \EntityException, \EmailInvites, \EmailInvite, \Common;
+use \Application, \Player, \EntityException, \EmailInvites, \EmailInvite, \Common;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');

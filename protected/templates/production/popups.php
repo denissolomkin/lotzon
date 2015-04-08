@@ -12,47 +12,47 @@
                         <img class="item-preview" src="/tpl/img/preview/catalog-img-6.jpg" />
                     </div>
                     <div class="pz-tl-bk">
-                        <div class="pz-tl item-title">Кикерный стол</div>
-                        <div class="pz-ps"><b class="item-price">2000</b> баллов</div>
-                        <div class="px-des"><?=$staticTexts['prizes-popup-text'][$lang]->getText();?> </div>
-                        <div class="pz-ifo-bt">обменять</div>
+                        <div class="pz-tl item-title"></div>
+                        <div class="pz-ps"><b class="item-price"></b> <?=$MUI->getText('placeholder-points')?></div>
+                        <div class="px-des"><?=$MUI->getText('prizes-popup-text')?></div>
+                        <div class="pz-ifo-bt"><?=$MUI->getText('button-change')?></div>
                     </div>
                 </div>
 
                 <!-- Prize info block -->
                 <div class="pz-fm-bk">
-                    <div class="fm-txt"><?=$staticTexts['prizes-order-popup'][$lang]->getText();?></div>
+                    <div class="fm-txt"><?=$MUI->getText('prizes-order-popup')?></div>
                     <div class="fm-inps-bk">
                         <div class="pi-inp-bk">
-                            <div class="ph">Фамилия</div>
+                            <div class="ph"><?=$MUI->getText('placeholder-surname')?></div>
                             <input autocomplete="off" spellcheck="false" type="text" name="surname" value="<?=$player->getSurname();?>">
                         </div>
                         <div class="pi-inp-bk">
-                            <div class="ph">Имя</div>
+                            <div class="ph"><?=$MUI->getText('placeholder-name')?></div>
                             <input autocomplete="off" spellcheck="false" type="text" name="name" value="<?=$player->getName();?>">
                         </div>
                         <div class="pi-inp-bk">
-                            <div class="ph">Область</div>
+                            <div class="ph"><?=$MUI->getText('placeholder-region')?></div>
                             <input autocomplete="off" spellcheck="false" type="text" name="region">
                         </div>
                         <div class="pi-inp-bk td">
-                            <div class="ph">Город / Село / Поселок</div>
-                            <input autocomplete="off" spellcheck="false" type="text" name="city" placeholder="Город / Село / Поселок">
+                            <div class="ph"><?=$MUI->getText('placeholder-city')?></div>
+                            <input autocomplete="off" spellcheck="false" type="text" name="city" placeholder="<?=$MUI->getText('placeholder-city')?>">
                         </div>
                         <div class="pi-inp-bk td">
-                            <div class="ph">Адрес</div>
-                            <input autocomplete="off" spellcheck="false" type="text" name="addr" placeholder="Адрес">
+                            <div class="ph"><?=$MUI->getText('placeholder-address')?></div>
+                            <input autocomplete="off" spellcheck="false" type="text" name="addr" placeholder="<?=$MUI->getText('placeholder-address')?>">
                         </div>
                         <div class="pi-inp-bk td">
-                            <div class="ph">Телефон</div>
-                            <input autocomplete="off" spellcheck="false" type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="Телефон">
+                            <div class="ph"><?=$MUI->getText('placeholder-phone')?></div>
+                            <input autocomplete="off" spellcheck="false" type="tel" name="phone" value="<?=$player->getPhone();?>" data-type="phone" placeholder="<?=$MUI->getText('placeholder-phone')?>">
                         </div>
                     </div>
-                    <div class="pz-ifo-bt">получить приз</div>
+                    <div class="pz-ifo-bt"><?=$MUI->getText('button-get-prize')?></div>
                 </div>
 
                 <!-- Prize report block -->
-                <div class="pz-rt-bk" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>"></div>
+                <div class="pz-rt-bk" data-default="<?=$MUI->getText('prizes-popup-success')?>"></div>
             </section>
         </div>
     </div>
@@ -74,7 +74,7 @@
                     <div class="ws-pf-tl">
                         <time class="ws-dt">22.08.2014</time>
                         <div class="yr-tt">
-                            <div class="yr-tt-tn">лототрон</div>
+                            <div class="yr-tt-tn"><?=$MUI->getText('placeholder-lototron')?></div>
                             <ul class="yr-tt-tr loto-holder">
                             </ul>
                         </div>
@@ -109,8 +109,8 @@
             <section class="csh-ch-bk pop-box">
                 <div class="cl-bt cs"></div>
                 <div class="padd">
-                    <p id="csh-ch-txt"><?=$staticTexts['vivod-deneg'][$lang]->getText()?></p>
-                    <p>Выберите способ вывода денежных стредств:</p>
+                    <p id="csh-ch-txt"><?=$MUI->getText('title-money-output')?></p>
+                    <p><?=$MUI->getText('holder-choose-method')?>:</p>
                     <ul class="csh-ch-lst">
                         <li>
                             <input type="radio" name="cash" id="cards" hidden />
@@ -285,7 +285,7 @@
                         <ul class="yr-tb">
                         </ul>
                         <div class="gw-sep"></div>
-                        <div class="yr-b-fb"><?=$staticTexts['game-popup-win'][$lang]->getText()?></div>
+                        <div class="yr-b-fb"><?=$MUI->getText('game-popup-win')?></div>
                     </div>
                     <div class="yr-s-i">
                         <div class="sb" style="visibility:hidden;">
@@ -301,12 +301,12 @@
                         </div>
                         <div class="yr-yw-b">
                             <div class="cb">
-                                <div class="yw-t">баллов<br>выиграно<b class="player-points plPointHolder"></b></div>
-                                <a href="javascript:void(0);" onclick="location.hash='prizes';location.reload();" class="yw-b">обменять</a>
+                                <div class="yw-t"><?=$MUI->getText('holder-points-win')?><b class="player-points plPointHolder"></b></div>
+                                <a href="javascript:void(0);" onclick="location.hash='prizes';location.reload();" class="yw-b"><?=$MUI->getText('button-change')?></a>
                             </div>
                             <div class="mb">
-                                <div class="yw-t">денег<br>выиграно<b class="player-money plMoneyHolder"></b></div>
-                                <a href="javascript:void(0);" onclick="location.hash='money';location.reload();" class="yw-b">вывести</a>
+                                <div class="yw-t"><?=$MUI->getText('holder-money-win')?><b class="player-money plMoneyHolder"></b></div>
+                                <a href="javascript:void(0);" onclick="location.hash='money';location.reload();" class="yw-b"><?=$MUI->getText('button-output')?></a>
                             </div>
                         </div>
                     </div>
@@ -330,7 +330,7 @@
                         <div class="yr-b-fb"></div>
                     </div>
                     <div class="yr-s-i">
-                        <?=$staticTexts['game-popup-fail'][$lang]->getText()?>
+                        <?=$MUI->getText('game-popup-fail')?>
                     </div>
                     <div class="b-cl-block"></div>
                 </div>
@@ -398,15 +398,6 @@
             </section>
         </div>
         <!-- END END BLOCK -->
-<script>
-    /*$('.g-oc_li').click(function(){
-        var li = $(this);
-        $(this).find('.goc_li-nb').addClass('goc-nb-act');
-        setTimeout(function(){
-            li.removeClass('goc-tm');
-        }, 1000);
-    });*/
-</script>
 
         </div>
     </div>
@@ -425,35 +416,35 @@
                 <div class="padd">
                     <!-- exchange BLOCK -->
                         <div class="ttl-bk">
-                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
-                            <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
+                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
+                            <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i><?=$MUI->getText('placeholder-points')?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
 
                         </div>
 
                         <div class="fm-txt">
-                              <p>Введите сумму, которую хотите конвертировать в баллы.<br>Курс конвертации  1 <?=$currency?> = <span id="rate"><?=($gameInfo['rate'])?></span> баллов
+                              <p><?=$MUI->getText('placeholder-input-sum-rate-is')?> <?=$currency['iso']?> = <span id="rate"><?=($currency['rate'])?></span> <?=$MUI->getText('placeholder-points')?>
                         </div>
 
 
                         <div class="ttl-bk" id="exchange-input">
                             <div class="pi-inp-bk l">
-                                <div class="ph"><?=$currency?></div>
+                                <div class="ph"><?=$currency['iso']?></div>
                                 <input autocomplete="off" spellcheck="false"  class="m_input" type="text" data-type="number" id="summ_exchange" name="summ" value="">
                             </div>
 
-                            <div class="if r"><span id="points">0</span> <i><br/>баллов</i></div>
+                            <div class="if r"><span id="points">0</span> <i><br/><?=$MUI->getText('placeholder-points')?></i></div>
 
 
                         </div>
 
                         <div class="hidden" id="exchange-result">
                             <div class="fm-txt">
-                                <p>Готово! Денежные средства сконвертированы в баллы.</p>
+                                <p><?=$MUI->getText('text-ready-money-convert-to-points')?></p>
                             </div>
                         </div>
 
                         <div class="bt">
-                            <button class="if-bt" id="exchange-submit" onclick="moneyExchange();">Подтвердить</button>
+                            <button class="if-bt" id="exchange-submit" onclick="moneyExchange();"><?=$MUI->getText('button-approve')?></button>
                         </div>
 
                 </div>
@@ -477,58 +468,51 @@
                     <!-- BONUSES BLOCK -->
                     <div id="bonuses-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
-                            <div class="nm">баллы</div>
-                            <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i>баллов<br/>на счету</i></div>
-                           <?/*<div class="bt">
-                                <div class="if-bt points-get" onclick="$('#ta-his-popup').hide();$('#exchange').click();">обменять</div>
-                            </div> */?>
+                            <div class="nm"><?=$MUI->getText('title-points')?></div>
+                            <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i><?=$MUI->getText('placeholder-points')?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
                         </div>
                         <div class="tb">
-                            <? if(is_array($playerTransactions[LotterySettings::CURRENCY_POINT]))
+                            <? /* if(is_array($playerTransactions[LotterySettings::CURRENCY_POINT]))
                                 foreach ($playerTransactions[LotterySettings::CURRENCY_POINT] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum()))?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
-                            <? } ?>
+                            <? } */ ?>
                         </div>
-                        <? if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
-                            <div class="pz-more-bt">ПОКАЗАТЬ ЕЩЕ</div>
+                        <? /* if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                            <div class="pz-more-bt"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bl">
-                                <div class="cl">свернуть</div>
-                                <div class="mr">ПОКАЗАТЬ ЕЩЕ</div>
+                                <div class="cl"><?=$MUI->getText('button-hide')?></div>
+                                <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
-                        <? } ?>
+                        <? } */ ?>
                     </div>
 
                     <!-- CASH BLOCK -->
                     <div id="cash-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_MONEY?>">
                         <div class="ttl-bk">
-                            <div class="nm">деньги</div>
-                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$player->getCountry() == 'UA' ? 'гривен' : 'рублей'?><br/>на счету</i></div>
-                            <?/* <div class="bt">
-                              <!--  <div class="if-bt money-exchange" onclick="$('#ta-his-popup').hide();$('#cash-exchange').click();">обменять</div> -->
-                                <div class="if-bt  money-get" onclick="$('#ta-his-popup').hide();$('#cash-output').click();">вывести</div>
-                            </div>*/?>
+                            <div class="nm"><?=$MUI->getText('title-money')?></div>
+                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
                         </div>
                         <div class="tb">
-                            <? if(is_array($playerTransactions[LotterySettings::CURRENCY_MONEY]))
+                            <? /* if(is_array($playerTransactions[LotterySettings::CURRENCY_MONEY]))
                                 foreach ($playerTransactions[LotterySettings::CURRENCY_MONEY] as $transaction) { ?>
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=Common::viewNumberFormat($transaction->getSum())?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
-                            <? } ?>
+                            <? } */ ?>
                         </div>
-                        <? if (count($playerTransactions[LotterySettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
-                            <div class="pz-more-bt">загрузить еще</div>
+                        <? /* if (count($playerTransactions[LotterySettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                            <div class="pz-more-bt"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bl">
-                                <div class="cl">свернуть</div>
-                                <div class="mr">загрузить еще</div>
+                                <div class="cl"><?=$MUI->getText('button-hide')?></div>
+                                <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
-                        <? } ?>
+                        <? } */ ?>
                     </div>
                 </div>
             </section>
@@ -547,8 +531,8 @@
             <section class="rules-bk">
                 <div class="cs"></div>
                 <div class="rb-pg">
-                    <h2>УСЛОВИЯ<br/>УЧАСТИЯ</h2>
-                    <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
+                    <h2><?=$MUI->getText('placeholder-terms')?></h2>
+                    <?=$MUI->getText('promo-login-rules')?>
                 </div>
             </section>
         </div>
@@ -567,10 +551,10 @@
             <section class="logout-bk pop-box">
                 <div class="cs"></div>
                 <div class="cnt">
-                    <div class="txt"><?=$staticTexts['logout'][$lang]->getText();?></div>
+                    <div class="txt"><?=$MUI->getText('title-logout')?></div>
                     <div class="buts">
-                        <div class="exit">выйти</div>
-                        <div class="back">остаться</div>
+                        <div class="exit"><?=$MUI->getText('button-logout')?></div>
+                        <div class="back"><?=$MUI->getText('button-stay')?></div>
                     </div>
                 </div>
             </section>
@@ -587,19 +571,19 @@
             <section class="quickgame pop-box">
                 <div class="cs" onclick="location.reload();"></div>
                 <div class="qg-bk-pg" style="position:relative;">
-                    <div class="qg-bk-tl">МОМЕНТАЛЬНЫЙ ШАНС</div>
+                    <div class="qg-bk-tl"><?=$MUI->getText('title-moment')?></div>
                     <div class="qg-txt"></div>
                     <div>
                         <div class="qg-msg">
                             <div class="td">
-                                <div class="txt">Поздравляем, выигрыш зачислен на Ваш баланс</div>
+                                <div class="txt"></div>
                                 <div class="preloader"></div>
                             </div>
                         </div>
                         <ul class="qg-tbl" style="position: relative;">
 
                         </ul>
-                        <div class="block" style="display:none;" >Загрузка...</div>
+                        <div class="block" style="display:none;" ><?=$MUI->getText('placeholder-loading')?></div>
                     </div>
                 </div>
             </section>
@@ -617,59 +601,25 @@
             <section class="quickgame pop-box">
                 <div class="cs" onclick="location.reload();"></div>
                 <div class="qg-bk-pg" style="position:relative;">
-                    <div class="qg-bk-tl">СЛУЧАЙНАЯ ИГРА</div>
+                    <div class="qg-bk-tl"><?=$MUI->getText('title-random')?></div>
                     <div class="qg-txt"></div>
                     <div>
                         <div class="qg-msg">
                             <div class="td">
-                                <div class="txt">Поздравляем, выигрыш зачислен на Ваш баланс</div>
+                                <div class="txt"></div>
                                 <div class="preloader"></div>
                             </div>
                         </div>
                         <ul class="qg-tbl" style="position: relative;">
 
                         </ul>
-                        <div class="block" style="display:none;" >Загрузка...</div>
+                        <div class="block" style="display:none;" ><?=$MUI->getText('placeholder-loading')?></div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
 </div>
-
-<?/*
-<!--=========================================================================
-                            MOMENTUM POPUP CODE
-    ==========================================================================-->
-<div class="bl-pp-bk popup" id="mchance" data-points-win="<b><?=$chanceGames['moment']->getPointsWin()?></b> баллов">
-    <div class="bl-pp_table">
-        <div class="bl-pp_td">
-            <section class="momentum pop-box">
-                <div class="cs" onclick="location.reload();"></div>
-                <div class="mm-bk-pg" style="position:relative;">
-                    <div class="mm-bk-tl">Моментальный шанс</div>
-                    <div class="mm-txt"><?=$staticTexts['moment-chance'][$lang]->getText();?></div>
-                    <div>
-                        <div class="mm-msg">
-                            <div class="td">
-                                <div class="txt">Поздравляем, баллы зачислены на Ваш баланс</div>
-                                <!--div class="rld" onclick="location.reload();">обновить страницу</div-->
-                            </div>
-                        </div>
-                        <ul class="mm-tbl" style="position: relative;">
-                            <li class="" data-num="1"></li>
-                            <li class="" data-num="2"></li>
-                            <li class="" data-num="3"></li>
-                        </ul>
-                        <div class="block" style="display:none;" >Загрузка...</div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-
-*/ ?>
 
 <!--=========================================================================
                             REPORT POPUP CODE
@@ -680,7 +630,7 @@
             <section class="report-block pop-box">
                 <div class="cs"></div>
                 <!-- Prize report block -->
-                <div class="txt" data-default="<?=$staticTexts['prizes-popup-success'][$lang]->getText()?>"></div>
+                <div class="txt" data-default="<?=$MUI->getText('prizes-popup-success')?>"></div>
             </section>
         </div>
     </div>

@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><?=$seo['title']?></title>
-    <meta name="description" content="<?=$seo['desc']?>">
-    <meta name="keywords" content="<?=$seo['kw']?>" />
+    <meta name="description" content="<?=$MUI->getText('seo-description')?>">
+    <meta name="keywords" content="<?=$MUI->getText('seo-keywords')?>" />
     <meta name="robots" content="all" />
     <meta name="publisher" content="" />
     <meta http-equiv="reply-to" content="" />
@@ -16,19 +16,19 @@
     <meta name="revisit-after" content="1 days" />
 
     <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="<?=$seo['Title']?>">
+    <meta itemprop="name" content="<?=$MUI->getText('seo-title')?>">
     <meta itemprop="description" content="Играл, играю и буду играть.">
     <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
-    <meta name="twitter:title" content="<?=$seo['Title']?>">
+    <meta name="twitter:title" content="<?=$MUI->getText('seo-title')?>">
     <meta name="twitter:description" content="Играл, играю и буду играть.">
     <!-- Twitter summary card with large image must be at least 280x150px -->
     <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="<?=$seo['Title']?>" />
+    <meta property="og:title" content="<?=$MUI->getText('seo-title')?>" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="http://www.lotzon.com/" />
     <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
@@ -73,7 +73,7 @@
                         <!--a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a-->
                         <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                     </div>
-                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943<? $staticTexts['promo-top'][$lang]->getText()?>"><div>промо<br>ролик</div></div>
+                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943"><span><?=$MUI->getText('promo-clip')?></span></div>
                 </div>
             </div>
         </div>
@@ -83,22 +83,22 @@
                     <div class="h-t-mcb-l">
                         <div class="h-t-mcb-l-wm">
                             <b class="h-t-mcb-l-wm_b" id="winners"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
-                            <span class="h-t-mcb-l-wm_span">Победителей</span>
+                            <span class="h-t-mcb-l-wm_span"><?=$MUI->getText('placeholder-winners')?></span>
                         </div>
                         <div class="h-t-mcb-l-wm">
                             <b class="h-t-mcb-l-wm_b" id="participants"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
-                            <span class="h-t-mcb-l-wm_span">участhиков</span>
+                            <span class="h-t-mcb-l-wm_span"><?=$MUI->getText('placeholder-participants')?></span>
                         </div>
                     </div>
                     <div class="h-t-mcb-r">
-                        <div class="h-t-mcb-r-n">Общая сумма выигрыша</div>
+                        <div class="h-t-mcb-r-n"><?=$MUI->getText('placeholder-total-win')?></div>
                         <div class="h-t-mcb-r-i" id="win"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></div>
                     </div>
                 </div>
                 <div class="h-t-bcb">
-                    <div class="h-t-bcb-l"><?=$staticTexts['promo-top-2'][$lang]->getText()?></div>
+                    <div class="h-t-bcb-l"><?=$MUI->getText('promo-top-2')?></div>
                     <div class="h-t-bcb-r">
-                        <a href="javascript:void(0)" class="h-t-bcb-r-b go-play">Играть</a>
+                        <a href="javascript:void(0)" class="h-t-bcb-r-b go-play"><?=$MUI->getText('button-play')?></a>
                     </div>
                 </div>
             </div>
@@ -108,12 +108,12 @@
                 <div class="h-b">
                     <div class="h-b-c">
                         <div class="h-b-c-tb">
-                            <div class="h-b-c-tb-l">До розыгрыша<br/>осталось</div>
+                            <div class="h-b-c-tb-l"><?=$MUI->getText('placeholder-until-lottery')?></div>
                             <div id="countdownHolder" class="h-b-c-tb-r"></div>
                         </div>
-                        <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span">как играть</span></a>
+                        <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span"><?=$MUI->getText('button-how-play')?></span></a>
                         <div class="h-b-c-lg">
-                            <div class="h-b-c-lg-t">розыгрыш от <?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
+                            <div class="h-b-c-lg-t"><?=$MUI->getText('placeholder-lottery-from')?><?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
                             <ul class="h-b-c-lg_ul">
                                 <? if ($lastLottery) { ?>
                                     <? foreach ($lastLottery->getCombination() as $num) { ?>
@@ -135,10 +135,10 @@
             <div class="a-dt_tr top">
                 <div class="t_td">
                     <div class="a-tb">
-                        <div class="a-tb-tl">МехаHика<br/>игры</div>
-                        <div class="a-tb-dr"><?=$staticTexts['promo-game-mechanic'][$lang]->getText()?></div>
+                        <div class="a-tb-tl"><?=$MUI->getText('title-game-mechanic')?></div>
+                        <div class="a-tb-dr"><?=$MUI->getText('promo-game-mechanic')?></div>
                         <div class="a-tb-tr">
-                            <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
+                            <a href="javascript:void(0)" class="a-tb-bt go-play"><?=$MUI->getText('button-play')?></a>
                         </div>
                     </div>
                 </div>
@@ -149,19 +149,19 @@
                         <ul class="l_ul">
                             <li class="n_li">
                                 <div class="n"><b>1</b></div>
-                                <div class="t"><?=$staticTexts['promo-game-mechanic-1'][$lang]->getText()?></div>
+                                <div class="t"><?=$MUI->getText('promo-game-mechanic-1')?></div>
                             </li>
                             <li class="n_li">
                                 <div class="n"><b>2</b></div>
-                                <div class="t"><?=$staticTexts['promo-game-mechanic-2'][$lang]->getText()?></div>
+                                <div class="t"><?=$MUI->getText('promo-game-mechanic-2')?></div>
                             </li>
                             <li class="n_li">
                                 <div class="n"><b>3</b></div>
-                                <div class="t"><?=$staticTexts['promo-game-mechanic-3'][$lang]->getText()?></div>
+                                <div class="t"><?=$MUI->getText('promo-game-mechanic-3')?></div>
                             </li>
                             <li class="n_li">
                                 <div class="n"><b>4</b></div>
-                                <div class="t"><?=$staticTexts['promo-game-mechanic-4'][$lang]->getText()?></div>
+                                <div class="t"><?=$MUI->getText('promo-game-mechanic-4')?></div>
                             </li>
                         </ul>
                         <ul class="r_ul">
@@ -175,7 +175,7 @@
                                             <li class="i_li"></li>
                                         <? } ?>
                                     </ul>
-                                    <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency)?></div>
+                                    <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? $MUI->getText('holder-points') : $currency)?></div>
                                 </li>
                             <? } ?>
                         </ul>
@@ -190,10 +190,10 @@
             <div class="a-dt_tr top">
                 <div class="t_td">
                     <div class="a-tb">
-                        <div class="a-tb-tl">отзывы<br/>игроков</div>
-                        <div class="a-tb-dr"><?=$staticTexts['promo-comments'][$lang]->getText()?></div>
+                        <div class="a-tb-tl"><?=$MUI->getText('title-comments')?></div>
+                        <div class="a-tb-dr"><?=$MUI->getText('promo-comments')?></div>
                         <div class="a-tb-tr">
-                            <a href="javascript:void(0)" class="a-tb-bt go-play">Играть</a>
+                            <a href="javascript:void(0)" class="a-tb-bt go-play"><?=$MUI->getText('button-play')?></a>
                         </div>
                     </div>
                 </div>
@@ -241,9 +241,7 @@
             <div class="a-dt_tr top">
                 <div class="t_td">
                     <div class="f-tl-b">
-                        <!--div class="tl-tl">наши партHеры</div>
-                        <div class="tl-tt"><?=$staticTexts['promo-partners'][$lang]->getText()?></div-->
-                        <div class="tl-tr"><a href="javascript:void(0)" class="tl-bt" id="cf-ab">связаться с нами</a></div>
+                        <div class="tl-tr"><a href="javascript:void(0)" class="tl-bt" id="cf-ab"><?=$MUI->getText('button-contact-us')?></a></div>
                     </div>
                 </div>
             </div>
@@ -254,18 +252,18 @@
                     <div class="fb-f-b">
                         <form name="feed-back-form">
                             <div class="m-b">
-                                <textarea id="cti" class="i-b_ta" placeholder="Сообщение" value="" maxlength="600"></textarea>
+                                <textarea id="cti" class="i-b_ta" placeholder="<?=$MUI->getText('placeholder-message')?>" value="" maxlength="600"></textarea>
                             </div>
                             <div class="m-m-b">
                                 <input autocomplete="off" spellcheck="false" type="email" name="mail" class="mmb_input" placeholder="Ваш email" />
                             </div>
-                            <input type="submit" value="Отправить" class="fb-f-s" />
+                            <input type="submit" value="<?=$MUI->getText('button-send')?>" class="fb-f-s" />
                         </form>
                     </div>
 
                     <div class="fb-p-b">
-                        <div><?=$staticTexts['promo-partners'][$lang]->getText()?></div>
-                    <ul><li class="fb-p-b_li">Hаши<br>партHеры</li><li class="fb-p-b_li"></li><li class="fb-p-b_li"></li>
+                        <div><?=$MUI->getText('promo-partners')?></div>
+                    <ul><li class="fb-p-b_li"><?=$MUI->getText('title-partners')?></li><li class="fb-p-b_li"></li><li class="fb-p-b_li"></li>
                         <? if(is_array($partners))
                             foreach($partners as $image=>$href){ ?>
                         <li class="fb-p-b_li"><a href="<?=$href?>" rel="nofollow" target="_blank"><img src="/tpl/img/partner-expl/<?=$image;?>" /></a></li>
@@ -275,7 +273,7 @@
                 </div>
             </div>
         </div>
-        <a href="javascript:void(0)" class="b-g-t to-slide" data-slide="1">К началу</a>
+        <a href="javascript:void(0)" class="b-g-t to-slide" data-slide="1"><?=$MUI->getText('menu-begin')?></a>
     </div>
 </footer>
 
@@ -295,37 +293,33 @@
                         <div class="rules-bk">
                             <div class="rb-cs-bt"></div>
                             <div class="rb-pg">
-                                <h2>правила<br/>участия</h2>
-                                <?=$staticTexts['promo-login-rules'][$lang]->getText()?>
+                                <h2><?=$MUI->getText('title-rules')?></h2>
+                                <?=$MUI->getText('promo-login-rules')?>
                             </div>
                         </div>
 
                         <!-- add class "registration" or "login" -->
                         <div class="t-b">
-                            <a href="javascript:void(0)" class="tb_a-l swap-form">вход</a>
-                            <a href="javascript:void(0)" class="tb_a-r swap-form">регистрация</a>
+                            <a href="javascript:void(0)" class="tb_a-l swap-form"><?=$MUI->getText('button-enter')?></a>
+                            <a href="javascript:void(0)" class="tb_a-r swap-form"><?=$MUI->getText('button-registration')?></a>
                         </div>
                         <!-- REGISTRATION FORM -->
                         <form name="register" data-ref="<?=$ref?>">
                             <div id="reg-form">
-                                <div class="rf-txt">Укажите Ваш email. На него будет выслана информация для завершения регистрации.<!--br><br><span style="color:red;font: 14px/1 Handbook-bold;;">Внимание! Имеются временные сложности с доставкой писем на MAIL.RU, LIST.RU, BK.RU, INBOX.RU. Для регистрации используйте почтовый ящик на другом сервисе.</span--></div>
+                                <div class="rf-txt"><?=$MUI->getText('text-input-email')?></div>
                                 <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
+                                    <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
-                                    <div class="e-t">Этот email уже зарегистрирован</div>
+                                    <div class="e-t"><?=$MUI->getText('message-email-exists')?></div>
                                 </div>
 
 
                                 <div class="s-b">
-                                    <input type="submit" disabled class="sb_but disabled" value="Зарегистрироваться" />
+                                    <input type="submit" disabled class="sb_but disabled" value="<?=$MUI->getText('button-register')?>" />
                                 </div>
                                 <!-- Add class "disabled" -->
                                 <div class="sl-bk">
-                                    <div class="sl-bk-tl">Зарегистрироваться через социальную сеть:</div>
-                                    <!--div>
-                                        <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
-
-                                    </div-->
+                                    <div class="sl-bk-tl"><?=$MUI->getText('text-register-by-social')?></div>
                                     <div>
                                         <a href="./auth/Facebook?method=user<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>
                                         <a href="./auth/Vkontakte?method=user<?=($ref?'&ref='.$ref:'')?>" class="vk"></a>
@@ -334,48 +328,39 @@
                                         <a href="./auth/Twitter?method=user<?=($ref?'&ref='.$ref:'')?>" class="tw"></a>
                                     </div>
                                 </div>
-                                <div class="ch-b">Регистрируясь, Вы соглашаетесь с <a href="javascript:void(0)" class="rs-sw">правилами участия</a>.</div>
-                                <!--div class="ch-b">
-                                Регистрируясь, Вы соглашаетесь с правилами участия.
-                                    <div class="e-t"></div>
-                                    <input type="checkbox" id="rulcheck" hidden />
-                                    <label for="rulcheck">Я ознакомился и согласен с <a href="javascript:void(0)" class="rs-sw">правилами участия</a></label>
-                                </div-->
+                                <div class="ch-b"><?=$MUI->getText('text-you-accept-rules')?></div>
                             </div>
-                            <div class="hidden" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email. </div>
+                            <div class="hidden" id="reg-succ-txt"><?=$MUI->getText('message-information-sent-to-email')?></div>
                         </form>
+
                         <!-- LOGIN FORM -->
                         <form id="login-block-form" name="login" <?=$showEmail || $showLoginScreen ? 'style="display:block"' : ''?>>
                             <div id="login-form">
                                 <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
+                                    <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
                                 </div>
                                 <div class="ib-p">
-                                    <div class="ph">Пароль</div>
+                                    <div class="ph"><?=$MUI->getText('placeholder-password')?></div>
                                     <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
                                 </div>
                                 <div class="ch-b-bk">
-                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                    <div class="e-t"><?=$MUI->getText('message-email-not-found')?></div>
                                     <div class="ch-b">
                                         <input type="checkbox" id="remcheck" hidden />
-                                        <label for="remcheck">Запомнить<br/>меня</a></label>
+                                        <label for="remcheck"><?=$MUI->getText('holder-remember-me')?></a></label>
                                     </div>
-                                    <a href="javascript:void(0)" id="rec-pass" class="r-p">Я забыл пароль</a>
+                                    <a href="javascript:void(0)" id="rec-pass" class="r-p"><?=$MUI->getText('button-remind-password')?></a>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Играть" />
+                                    <input type="submit" class="sb_but disabled" disabled value="<?=$MUI->getText('button-play')?>" />
                                 </div>
-                                <!--div class="sl-bk" style="margin:40px 0 -20px 0;">
-                                    <a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a>
-                                </div-->
                                 <div class="sl-bk">
                                     <a href="./auth/Facebook?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>
                                     <a href="./auth/Vkontakte?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="vk"></a>
                                     <a href="./auth/Odnoklassniki?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="ok"></a>
                                     <a href="./auth/Google?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="gp"></a>
                                     <a href="./auth/Twitter?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="tw"></a>
-                                    <!--a href="/players/login/vk" class="vk" style="margin:auto;float:none;"></a-->
                                 </div>
                             </div>
                         </form>
@@ -383,17 +368,17 @@
                         <!-- REPASSWORD FORM -->
                         <form name="rec-pass">
                             <div id="pass-rec-form">
-                                <div class="rf-txt">Укажите ваш email. Hа него будет выслан новый пароль.<!--br><br><span style="color:red;font: 14px/1 Handbook-bold;;">Внимание! Имеются временные сложности с доставкой писем на MAIL.RU, LIST.RU, BK.RU, INBOX.RU. Для регистрации используйте почтовый ящик на другом сервисе.</span--></div>
+                                <div class="rf-txt"><?=$MUI->getText('text-input-email')?></div>
                                 <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
+                                    <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="<?=$MUI->getText('placeholder-your-email')?>" />
                                     <div class="e-t"></div>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Отправить пароль" />
+                                    <input type="submit" class="sb_but disabled" disabled value="<?=$MUI->getText('button-send-password')?>" />
                                 </div>
                             </div>
-                            <div class="hidden" id="pass-rec-txt">Новый пароль выслан на указанный email. </div>
+                            <div class="hidden" id="pass-rec-txt"><?=$MUI->getText('message-new-password-sent')?></div>
                         </form>
                     </div>
                 </div>
@@ -403,6 +388,22 @@
 </div>
 <script src="/tpl/js/backend.js"></script>
 <script src="/tpl/js/promo.js"></script>
+<? if($debug) { ?>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Include Summernote JS file -->
+    <script src="/theme/admin/lib/summernote/summernote.js"></script>
+    <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="/theme/admin/lib/admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+    <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <? include('./protected/templates/admin/statictexts_frontend.php');
+}?>
+
 <script>
     $(function(){
         var ios;
@@ -479,16 +480,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <!--=========================================================================
                             Game-3.5.2-Email-Confirmation.psd
 ==========================================================================-->
@@ -545,17 +536,17 @@
             <section class="ml-cn pop-box">
                 <div class="pu-b-c" id="mb-close"></div>
                 <div class="ml-cn-padd">
-                    <div class="ml-cn-txt">Для завершения регистрации введите свой email.</div>
+                    <div class="ml-cn-txt"><?=$MUI->getText('text-input-email')?></div>
                     <div class="pi-inp-bk td">
-                        <div class="ph">Email</div>
+                        <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
                         <input type="text" placeholder="Email" name="addr" spellcheck="false" autocomplete="off">
                     </div>
                     <div class="pi-inp-bk td" style="display:none">
-                        <div class="ph">Пароль</div>
-                        <input type="text" placeholder="Пароль" name="addr" spellcheck="false" autocomplete="off">
+                        <div class="ph"><?=$MUI->getText('placeholder-password')?></div>
+                        <input type="text" placeholder="<?=$MUI->getText('placeholder-password')?>" name="addr" spellcheck="false" autocomplete="off">
                     </div>
                     <div class="e-t"></div>
-                    <div class="ml-cn-but disabled">подтвердить</div>
+                    <div class="ml-cn-but disabled"><?=$MUI->getText('button-approve')?></div>
                 </div>
             </section>
         </div>
@@ -652,20 +643,20 @@
 
 
                         <div class="t-b">
-                            Для завершения регистрации через <?=($socialIdentity?$socialIdentity->getSocialName():'')?> введите свой email
+                            <?=$MUI->getText('text-input-email')?>
                         </div>
                         <!-- MAIL FORM -->
                         <form id="mail-block-form" name="mail" style="display:block;">
                             <div id="mail-form">
                                 <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>" />
+                                    <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="<?=$MUI->getText('placeholder-your-email')?>" value="<?=$showEmail?>" />
                                 </div>
                                 <div class="ch-b-bk">
-                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                    <div class="e-t"><?=$MUI->getText('message-email-not-found')?></div>
                                 </div>
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but disabled" disabled value="Зарегистрироваться" />
+                                    <input type="submit" class="sb_but disabled" disabled value="<?=$MUI->getText('button-register')?>" />
                                 </div>
                             </div>
                         </form>
@@ -674,19 +665,19 @@
                         <form id="mail-block-form" name="login" style="display:none;">
                             <div id="mail-form">
                                 <div class="ib-l">
-                                    <div class="ph">Ваш email</div>
-                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="<?=$showEmail?>">
+                                    <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
+                                    <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="<?=$MUI->getText('placeholder-your-email')?>" value="<?=$showEmail?>">
                                 </div>
                                 <div class="ib-p">
-                                    <div class="ph">Пароль</div>
-                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="Пароль" />
+                                    <div class="ph"><?=$MUI->getText('placeholder-password')?></div>
+                                    <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password"  placeholder="<?=$MUI->getText('placeholder-password')?>" />
                                 </div>
                                 <div class="ch-b-bk">
-                                    <div class="e-t">Такой email не зарегистрирован или пароль не верен</div>
+                                    <div class="e-t"><?=$MUI->getText('message-email-not-found')?></div>
                                 </div>
                                 <div class="s-b">
 
-                                    <input type="submit" class="sb_but disabled" disabled value="Войти" />
+                                    <input type="submit" class="sb_but disabled" disabled value="<?=$MUI->getText('button-enter')?>" />
                                 </div>
                             </div>
                         </form>

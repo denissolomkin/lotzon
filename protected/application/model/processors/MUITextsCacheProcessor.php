@@ -3,13 +3,13 @@
 Application::import(PATH_INTERFACES . 'IProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/BaseCacheProcessor.php');
 
-class StaticSiteTextCacheProcessor extends BaseCacheProcessor implements IProcessor
+class StaticTextCacheProcessor extends BaseCacheProcessor implements IProcessor
 {
     const LIST_CACHE_KEY = "static::texts";
 
     public function init()
     {
-        $this->setBackendProcessor(new StaticSiteTextDBProcessor());
+        $this->setBackendProcessor(new StaticTextDBProcessor());
     }
 
     public function create(Entity $object)

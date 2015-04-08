@@ -97,7 +97,9 @@ class News extends Entity
 
                 $this->setTitle(htmlspecialchars(strip_tags($this->getTitle())));
 
-                if (!$this->getLang() || !in_array($this->getLang(), Config::instance()->langs)) {
+            ;
+
+                if (!$this->getLang() || !\CountriesModel::instance()->isLang($this->getLang())) {
                     throw new EntityException("Invalid lang", 400);      
                 }
             break;

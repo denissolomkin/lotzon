@@ -1,22 +1,23 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \ReviewsModel, \Review, \EntityException, \Session2, \Admin, \Config;
+use \Application, \PrivateArea, \ReviewsModel, \Review, \EntityException, \Session2, \Admin, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
 class Reviews extends PrivateArea
 {
     public $activeMenu = 'reviews';
-    const REVIEWS_PER_PAGE = 10;
+    static $PER_PAGE;
 
     public function init()
     {
         parent::init();
+        self::$PER_PAGE = SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_ADMIN') ? : 10;
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
@@ -30,13 +31,13 @@ class Reviews extends PrivateArea
             'direction' => $this->request()->get('sortDirection', 'desc'),
         );
 
-        $list = ReviewsModel::instance()->getList($status, self::REVIEWS_PER_PAGE, $page == 1 ? 0 : self::REVIEWS_PER_PAGE * $page - self::REVIEWS_PER_PAGE);//, $sort, $search
+        $list = ReviewsModel::instance()->getList($status, self::$PER_PAGE, $page == 1 ? 0 : self::$PER_PAGE * $page - self::$PER_PAGE);//, $sort, $search
         $count = ReviewsModel::instance()->getCount($status);
 
         $pager = array(
             'page' => $page,
             'rows' => $count,
-            'per_page' => self::REVIEWS_PER_PAGE,
+            'per_page' => self::$PER_PAGE,
             'pages' => 0,
         );
         $pager['pages'] = ceil($pager['rows'] / $pager['per_page']);

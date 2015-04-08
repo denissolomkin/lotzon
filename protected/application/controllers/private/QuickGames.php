@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin, \SupportedCountriesModel,  \Session2;
+use \Application, \PrivateArea, \CountriesModel, \SettingsModel, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin,  \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -13,16 +13,17 @@ class QuickGames extends PrivateArea
     {
         parent::init();
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
     {   
-       $shopItems = ShopModel::instance()->getAllItems(false);
-       $games = QuickGamesModel::instance()->getGamesSettings();
-       $langs=Config::instance()->langs;
+        $shopItems = ShopModel::instance()->getAllItems(false);
+        $games = QuickGamesModel::instance()->getGamesSettings();
+        $langs = CountriesModel::instance()->getLangs();
+        $defaultLang = CountriesModel::instance()->defaultLang();
 
         $this->render('admin/qgames', array(
             'title'      => 'Конструктор игр',
@@ -30,7 +31,8 @@ class QuickGames extends PrivateArea
             'activeMenu' => $this->activeMenu,
             'shopItems'  => $shopItems,
             'games'      => $games,
-            'langs' => $langs,
+            'langs'      => $langs,
+            'defaultLang'=> $defaultLang,
             'frontend'      => 'admin/games_frontend.php',
         ));
     }

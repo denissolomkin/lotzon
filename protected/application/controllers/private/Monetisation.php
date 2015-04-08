@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \NewsModel, \Config, \ShopModel, \ChanceGame, \ChanceGamesModel, \EntityException, \Session2, \Admin;
+use \Application, \PrivateArea, \SettingsModel, \EntityException, \Session2, \Admin;
 use \ShopOrdersModel, \ShopItemOrder, \MoneyOrderModel, \MoneyOrder;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
@@ -9,15 +9,16 @@ Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 class Monetisation extends PrivateArea 
 {
     public $activeMenu = 'monetisation';
-    const ORDERS_PER_PAGE = 50;
+    static $PER_PAGE;
 
     public function init()
     {
         parent::init();
+        self::$PER_PAGE = SettingsModel::instance()->getSettings('counters')->getValue('ORDERS_PER_ADMIN') ? : 10;
 
-        if (!Config::instance()->rights[Session2::connect()->get(Admin::SESSION_VAR)->getRole()][$this->activeMenu]) {
+        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
-        }
+
     }
 
     public function indexAction()
@@ -34,25 +35,25 @@ class Monetisation extends PrivateArea
             'direction' => $this->request()->get('sortDirection', 'desc'),
         );
 
-        $shopOrders = ShopOrdersModel::instance()->getOrdersToProcess(self::ORDERS_PER_PAGE, $shopPage == 1 ? 0 : self::ORDERS_PER_PAGE * $shopPage - self::ORDERS_PER_PAGE, null, $shopStatus);
+        $shopOrders = ShopOrdersModel::instance()->getOrdersToProcess(self::$PER_PAGE, $shopPage == 1 ? 0 : self::$PER_PAGE * $shopPage - self::$PER_PAGE, null, $shopStatus);
         $shopCount = ShopOrdersModel::instance()->getOrdersToProcessCount($shopStatus);
 
         $shopPager = array(
             'page' => $shopPage,
             'rows' => $shopCount,
-            'per_page' => self::ORDERS_PER_PAGE,
+            'per_page' => self::$PER_PAGE,
             'pages' => 0,
         );
 
         $shopPager['pages'] = ceil($shopPager['rows'] / $shopPager['per_page']);
 
-        $moneyOrders = MoneyOrderModel::instance()->getOrdersToProcess(self::ORDERS_PER_PAGE, $moneyPage == 1 ? 0 : self::ORDERS_PER_PAGE * $moneyPage - self::ORDERS_PER_PAGE, null, $moneyStatus, $moneyType);
+        $moneyOrders = MoneyOrderModel::instance()->getOrdersToProcess(self::$PER_PAGE, $moneyPage == 1 ? 0 : self::$PER_PAGE * $moneyPage - self::$PER_PAGE, null, $moneyStatus, $moneyType);
         $moneyCount = MoneyOrderModel::instance()->getOrdersToProcessCount($moneyStatus, $moneyType);
 
         $moneyPager = array(
             'page' => $moneyPage,
             'rows' => $moneyCount,
-            'per_page' => self::ORDERS_PER_PAGE,
+            'per_page' => self::$PER_PAGE,
             'pages' => 0,
         );
 
