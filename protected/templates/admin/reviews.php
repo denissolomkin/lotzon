@@ -5,14 +5,16 @@
         <button onclick="document.location.href='/private/reviews?status=2&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-md btn-danger <?=($status==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ban-circle"></i> Отклоненные</button>
         <button onclick="document.location.href='/private/reviews?status=1&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right  btn-md btn-success <?=($status==1 ? 'active' : '')?>"><i class="glyphicon glyphicon-ok"></i> Одобренные</button>
         <button onclick="document.location.href='/private/reviews?status=0&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-warning btn-md <?=(!$status ? 'active' : '')?>"><i class="glyphicon glyphicon-time"></i> На рассмотрении</button>
-        <h2>Отзывы</h2>
+        <h2>Отзывы
+            <button type="button" data-sector="<?=$key?>" class="btn btn-success edit-trigger"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+        </h2>
         <hr/>
     </div>
     <? if ($pager['pages'] > 1) {?>
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/reviews?status=<?=$status?>&page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="document.location.href='/private/reviews?status=<?=$status?>&page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
@@ -27,10 +29,11 @@
                 <th style="width: 146px;">Options</th>
             </thead>
             <tbody>
-                <? foreach ($list as $review) {
+                <? foreach ($list as $reviews)
+                    foreach ($reviews as $review) {
                     $player = new Player;
-                    $player->setId($review->getPlayerId())->fetch()->initDates();?>
-                    <tr data-id="<?=$review->getId()?>">
+                    $player->setId($review->getPlayerId())->fetch()->initDates()->initCounters();?>
+                    <tr data-id="<?=$review->getId()?>" data-playerid="<?=$review->getPlayerId()?>" data-ispromo="<?=$review->isPromo()?>" data-reviewid="<?=$review->getReviewId()?>">
                         <td><?=$review->getDate('d.m.Y <b\r> H:m:s')?></td>
                         <td class="" style="position: relative;" >
                             <div onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
@@ -158,9 +161,9 @@
                             </div>
 
                         </td>
-                        <td><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
+                        <td class="text"><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
                         <td>
-                            <button class="btn btn-md btn-warning answer-trigger" data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-md btn-primary edit-trigger"><i class="glyphicon glyphicon-edit"></i></button>
                             <button class="btn btn-md btn-warning status-trigger<?=($status==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
                             <button class="btn btn-md btn-success status-trigger<?=($status==1 ? ' hidden' : '' )?>" data-status='1' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
                             <button class="btn btn-md btn-danger status-trigger<?=($status==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
@@ -175,7 +178,7 @@
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/reviews?status=<?=$status?>&page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-md <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="document.location.href='/private/reviews?status=<?=$status?>&page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
@@ -183,33 +186,189 @@
 </div>
 
 
+
+<div class="modal fade" id="edit-review" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Редактирование отзыва</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid" id="errorForm" style="display:none">
+                    <div class="alert alert-danger" role="alert">
+                        <span class="error-container"></span>
+                    </div>
+                </div>
+
+                <form class="form">
+                    <input type="hidden" name="edit[Id]" id="edit-id" value="" />
+                    <input type="hidden" name="edit[ReviewId]" id="edit-reviewid" value="" />
+                    <input type="hidden" name="add[ReviewId]" id="add-reviewid" value="" />
+                    <input type="hidden" name="add[Status]" value="1" />
+
+                    <div class="form-group">
+
+                        <div id="edit-sector">
+                        <div class="row-fluid">
+
+                            <div class="col-my-4">
+                                <label>Id пользователя</label>
+                                <input type="input" class="form-control" name="edit[PlayerId]" id="edit-playerid" value="" />
+                            </div>
+
+                            <div class="col-my-4">
+                                <label>Опубликовать в промо</label>
+                                <select name="edit[IsPromo]" id="edit-ispromo" class="form-control"/>
+                                <option value="0">Нет</option>
+                                <option value="1">Да</option>
+                                </select>
+                            </div>
+
+                            <div class="col-my-4">
+                                <label>Статус</label>
+                                <select name="edit[Status]" id="edit-status" class="form-control"/>
+                                    <option value="1">Одобрен</option>
+                                    <option value="0">На рассмотрении</option>
+                                    <option value="2">Отклонен</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    <div class="row-fluid">
+                    <div class="form-group">
+                        <label class="control-label">Текст отзыва</label>
+                        <textarea name="edit[Text]" class="form-control" id="edit-text"></textarea>
+                    </div>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <hr/>
+                        </div>
+
+                    <div class="row-fluid">
+                        <div class="col-my-4">
+                            <label>Id пользователя</label>
+                            <input type="input" class="form-control" name="add[PlayerId]" id="add-playerid" value="<?=\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT');?>"/>
+                        </div>
+                        <div class="col-my-4">
+                            <label>Опубликовать в промо</label>
+                            <select name="add[IsPromo]" class="form-control"/>
+                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                            </select>
+                        </div>
+                    </div>
+
+                        <div style="clear: both;"></div>
+
+                    <div class="row-fluid">
+                        <div class="form-group">
+                            <label class="control-label">Текст ответа</label>
+                            <textarea name="add[Text]" class="form-control" id="add-text"></textarea>
+                        </div>
+                    </div>
+
+                    </div>
+                </form>
+
+                <div class="row-fluid">
+                    <button class="btn btn-md btn-success save pull-right">Сохранить</button>
+                    <button class="btn btn-danger cls">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
+
+
+    $('.status-trigger').on('click', function() {
+        location.href = '/private/reviews/status/' + $(this).data('id') + '?status=<?=$status?>&setstatus=' + $(this).data('status');
+    });
+
+    $('.edit-trigger').on('click', function() {
+
+        var button = $(this);
+        var tr = button.parents('tr').first();
+
+        $("#edit-review").modal();
+        $("#edit-review").find('.cls').off('click').on('click', function () {
+            $("#edit-review").modal('hide');
+        });
+
+
+        if (!tr.length) {
+            $('#edit-sector').hide();
+            $('#edit-text').val('');
+        }else{
+            $('#edit-sector').show();
+            $('#edit-id').val(tr.data('id'));
+            $('#edit-text').val(tr.find('.text').text());
+            $('#edit-playerid').val(tr.data('playerid'));
+            $('#edit-ispromo').val(tr.data('ispromo') ? tr.data('ispromo') : 0).change();
+
+        }
+
+        $('#add-reviewid').val(tr.data('reviewid') ? tr.data('reviewid') : (tr.data('id') ? tr.data('id') : null));
+        $('#add-text').val('');
+
+
+
+
+
+        $("#edit-review").find('.save').off('click').on('click', function() {
+            var button =$(this);
+            button.find('.fa').hide().parent().prepend($('<i class="fa fa-spinner fa-pulse"></i>'));
+            var form =  $("#edit-review").find('form');
+
+            $.ajax({
+                url: "/private/reviews",
+                method: 'POST',
+                data: form.serialize(),
+                async: true,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        button.find('.fa').first().remove();
+                        button.removeClass('btn-danger btn-success').addClass('btn-default').prepend($('<i class="fa fa-check"></i>'));
+                        button.find('.fa').fadeOut(500);
+                        window.setTimeout(function () {
+                            button.find('.fa').show().filter(':not(.fa-save)').remove();
+                        }, 500);
+
+                        $('[name="Id"]', form).val(data.data.Id);
+                        form.removeClass('label-danger');
+                        location.href = '/private/reviews/?status=<?=$status?>';
+
+                    } else {
+                        button.find('.fa').first().remove();
+                        button.removeClass('btn-success').addClass('btn-danger');
+                        button.find('.fa').show().filter(':not(.fa-save)').remove();
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+                    button.find('.fa').first().remove();
+                    button.removeClass('btn-success').addClass('btn-danger');
+                    button.find('.fa').show().filter(':not(.fa-save)').remove();
+                    alert('Unexpected server error');
+                    console.log(data.responseText);
+                }
+            });
+        });
+
+    });
+
+    $('.delete-trigger').on('click', function() {
+        location.href = '/private/reviews/delete/' + $(this).data('id');
+    });
 
     $('.status-trigger').on('click', function() {
         location.href = '/private/reviews/status/' + $(this).data('id') + '?status=<?=$status?>&setstatus=' + $(this).data('status');
     });
 
 </script>
-<?php
 
-    function sortIcon($currentField, $currentSort, $pager)
-    {
-        $icon = '<a href="/private/users?page=1&sortField=%s&sortDirection=%s"><i class="glyphicon glyphicon-chevron-%s"></i></a>';
-        if ($currentField == $currentSort['field']) {
-            $icon = vsprintf($icon, array(
-                $currentField,
-                $currentSort['direction'] == 'desc' ? 'asc' : 'desc',
-                $currentSort['direction'] == 'desc' ? 'down' : 'up',
-            ));
-        } else {
-            $icon = vsprintf($icon, array(
-                $currentField,
-                'desc',
-                'up',
-            ));
-        }
-
-        return $icon;
-    }
-?>
 <? if($frontend) require_once($frontend.'_frontend.php') ?>

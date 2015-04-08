@@ -19,8 +19,8 @@ class ReviewsModel extends Model
         return __CLASS__;
     }
 
-    public function getList($status=1, $limit = null, $offset = null) {
-        return $this->getProcessor()->getList($status, $limit, $offset);
+    public function getList($status=1, $limit = null, $offset = null, $ignore = false) {
+        return $this->getProcessor()->getList($status, $limit, $offset, $ignore);
     }
 
     public function imageExists($image) {

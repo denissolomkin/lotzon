@@ -293,6 +293,22 @@ class PlayersDBProcessor implements IProcessor
 
     }
 
+    public function isExists($id){
+
+        $sql = "SELECT Id FROM `Players`
+                WHERE `Id` = :id";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'    => $id,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->rowCount();
+    }
+
     public function fetch(Entity $player)
     {
         $sql = "SELECT p.* FROM `Players` p
@@ -407,7 +423,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getMaxId()
     {
-        $sql = "SELECT MAX(Id) FROM  `Players`";
+        $sql = "SELECT MAX(Id) FROM `Players`";
 
         try {
             $res = DB::Connect()->query($sql);

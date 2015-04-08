@@ -474,13 +474,13 @@ $(function(){
 
     $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
         var reviewsBlock = $('.reviews');
-        loadReviews(reviewsBlock.find('.rv-item').length, function(data) {
+        loadReviews(reviewsBlock.find('.rv-item:not(.rv-answer)').length, function(data) {
             if (data.res.reviews.length) {
                 reviewsBlock.addClass('b-ha');
                 var html = '';
 
                 $(data.res.reviews).each(function(id, review) {
-                    html += '<div class="rv-item"><div class="rv-i-avtr">';
+                    html += '<div class="rv-item'+(review.answer?" rv-answer":"")+'"><div class="rv-i-avtr">';
 
                     if(review.playerAvatar)
                         html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'">';

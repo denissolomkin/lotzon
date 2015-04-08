@@ -95,18 +95,10 @@ Config::instance()->privateResources =  array(
         'put'    => 'controllers\admin\Admins:update',
         'delete' => 'controllers\admin\Admins:delete',
     ),
-    '/private/texts/' => array(
-        'get'    => 'controllers\admin\Texts:index',
-        'post'   => 'controllers\admin\Texts:save',
-    ),
-    '/private/texts/:identifier' => array(
-        'delete'    => 'controllers\admin\Texts:delete',
-    ),
     '/private/statictexts/' => array(
         'get'    => 'controllers\admin\StaticTexts:index',
         'post'   => 'controllers\admin\StaticTexts:save',
     ),
-
     '/private/statictexts/:identifier' => array(
         'get'    => 'controllers\admin\StaticTexts:get',
         'delete'    => 'controllers\admin\StaticTexts:delete',
@@ -171,7 +163,10 @@ Config::instance()->privateResources =  array(
     ),
     '/private/results' => 'controllers\admin\LotteryResult:index',
 
-    '/private/reviews/' => 'controllers\admin\Reviews:index',
+    '/private/reviews/'       => array(
+        'get' => 'controllers\admin\Reviews:index',
+        'post' => 'controllers\admin\Reviews:save',
+    ),
     '/private/reviews/status/:id' => 'controllers\admin\Reviews:status',
     '/private/reviews/delete/:id' => 'controllers\admin\Reviews:delete',
 

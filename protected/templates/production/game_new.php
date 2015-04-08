@@ -538,8 +538,9 @@
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
-                                <? foreach ($reviews as $reviewItem) { ?>
-                                    <div class="rv-item">
+                                <? foreach ($reviews as $reviewData)
+                                    foreach ($reviewData as $reviewItem) { ?>
+                                    <div class="rv-item<?=($reviewItem->getReviewId()?' rv-answer':'');?>">
                                         <div class="rv-i-avtr">
                                             <? if ($reviewItem->getPlayerAvatar()) {?>
                                                 <img src="/filestorage/avatars/<?=ceil($reviewItem->getPlayerId() / 100)?>/<?=$reviewItem->getPlayerAvatar()?>">
@@ -547,7 +548,7 @@
                                                 <img src="/tpl/img/default.jpg">
                                             <? } ?>
                                         </div>
-                                        <div class="rv-i-tl"><?=$reviewItem->getPlayerName()?> • <?=date('d.m.Y', $reviewItem->getDate())?></div>
+                                        <div class="rv-i-tl"><?=$reviewItem->getPlayerName()?> • <?=date('d.m.Y H:i', $reviewItem->getDate())?></div>
                                         <div class="rv-i-txt"><?=$reviewItem->getText()?></div>
                                             <? if ($reviewItem->getImage()) {?>
                                             <div class="rv-i-img">

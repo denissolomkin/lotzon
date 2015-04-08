@@ -3,20 +3,22 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Review extends Entity
 {
-    const IMAGE_WIDTH = 480;
-    const IMAGE_HEIGHT = 150;
+    const IMAGE_WIDTH = 960;//480;
+    const IMAGE_HEIGHT = 600;//150;
 
-    private $_id    = '';
-    private $_status = '';
-    private $_image = '';
-    private $_text  = '';
-    private $_playerName = '';
+    private $_id            = 0;
+    private $_reviewId      = null;
+    private $_status        = '';
+    private $_image         = '';
+    private $_text          = '';
+    private $_playerName    = '';
     private $_playerAvatar  = '';
-    private $_playerId  = '';
-    private $_playerEmail  = '';
-    private $_userId    = 0;
-    private $_userName = '';
-    private $_date  = '';
+    private $_playerId      = '';
+    private $_playerEmail   = '';
+    private $_userId        = 0;
+    private $_isPromo        = 0;
+    private $_userName      = '';
+    private $_date          = '';
     
     public function init()
     {
@@ -33,6 +35,30 @@ class Review extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setReviewId($id)
+    {
+        $this->_reviewId = $id;
+
+        return $this;
+    }
+
+    public function getReviewId()
+    {
+        return $this->_reviewId;
+    }
+
+    public function setPromo($bool)
+    {
+        $this->_isPromo = $bool;
+
+        return $this;
+    }
+
+    public function isPromo()
+    {
+        return $this->_isPromo;
     }
 
     public function setUserId($id)
@@ -162,9 +188,12 @@ class Review extends Entity
 
     public function formatFrom($from, $data) 
     {
+
         if ($from == 'DB') {
             $this->setId($data['Id'])
+                 ->setReviewId($data['ReviewId'])
                  ->setStatus($data['Status'])
+                 ->setPromo($data['IsPromo'])
                  ->setPlayerId($data['PlayerId'])
                  ->setPlayerEmail($data['PlayerEmail'])
                  ->setUserId($data['UserId'])
@@ -187,7 +216,6 @@ class Review extends Entity
                 if (!$this->getText()) {
                     throw new EntityException("Text can not be empty", 400);
                 }
-
                 $this->setText(htmlspecialchars(strip_tags($this->getText())));
 
             break;

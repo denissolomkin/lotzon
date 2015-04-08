@@ -6,15 +6,17 @@ class ReviewsDBProcessor implements IProcessor
 {
     public function create(Entity $review)
     {
-        $sql = "INSERT INTO `PlayerReviews` (`Id`, `PlayerId`, `Text`, `Date`, `Image`, `Status`) VALUES (:id, :playerid, :text, :date, :image, :status)";
+        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ReviewId`,`PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`) VALUES (:id, :reviewid, :playerid, :text, :date, :image, :ispromo, :status)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $review->getId(),
                 ':playerid'  => $review->getPlayerId(),
+                ':reviewid'  => $review->getReviewId(),
                 ':text'  => $review->getText(),
                 ':date'  => time(),
                 ':image' => $review->getImage(),
+                ':ispromo' => $review->isPromo(),
                 ':status' => $review->getStatus(),
             ));
         } catch (PDOExeption $e) {
@@ -102,19 +104,17 @@ class ReviewsDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
 
-        return $sth->fetchColumn(0);;
+        return $sth->fetchColumn(0);
     }
 
 
 
-    public function getList($status=1, $limit = null, $offset = null)
+    public function getList($status=1, $limit = null, $offset = null, $ignore = false)
     {
-        $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
+        $sql = "SELECT Id
                 FROM `PlayerReviews`
-                LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
-                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
-                WHERE `Status` = :status 
-                ORDER BY `Date` DESC";
+                WHERE `Status` = :status ".($ignore ? null : 'AND (`ReviewId` IS NULL OR `ReviewId` = 0)').
+                "ORDER BY `Date` DESC";
         if (!is_null($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }
@@ -131,13 +131,35 @@ class ReviewsDBProcessor implements IProcessor
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
+        if($sth->rowCount()) {
+
+            $ids = array();
+            foreach ($sth->fetchAll() as $id)
+                $ids[] = $id['Id'];
+            $ids = implode(',', $ids);
+
+            $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
+                FROM `PlayerReviews`
+                LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
+                WHERE `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ReviewId IN ({$ids})
+                ORDER BY `Date` DESC";
+
+            try {
+                $sth = DB::Connect()->prepare($sql);
+                $sth->execute();
+            } catch (PDOExeption $e) {
+                throw new ModelException("Unable to proccess storage query", 500);
+            }
+        }
+
         $reviews = array();
 
         $list = $sth->fetchAll();
         if (count($list)) {
             foreach ($list as $reviewData) {
                 $reviewObj = new Review();
-                $reviews[] = $reviewObj->formatFrom('DB', $reviewData);
+                $reviews[$reviewData['ReviewId']?:$reviewData['Id']][] = $reviewObj->formatFrom('DB', $reviewData);
             }
         }
 

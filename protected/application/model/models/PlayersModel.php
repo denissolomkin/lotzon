@@ -155,6 +155,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->decrementSocialPostsCount($player);
     }
 
+    public function isExists($id)
+    {
+        return $this->getProcessor()->isExists($id);
+    }
+
     public function updateIp(Entity $player, $ip)
     {
         return $this->getProcessor()->updateIp($player, $ip);
