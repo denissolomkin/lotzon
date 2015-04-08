@@ -700,7 +700,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> баллов</div>
                                     <div class="rp-sl-bk" style="padding-right:0px;">
 
                                     <div class="social-likes social-likes_vertical" data-counters="no" data-url="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" data-title="Играл и буду играть">
