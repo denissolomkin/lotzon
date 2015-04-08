@@ -606,13 +606,22 @@ class Players extends \AjaxController
         $this->ajaxResponse(array());
     }
 
-    public function socialAction()
+    /**
+     * Проверяет количество оставшихся оплачиваемых реф.постов в соц.сети $provider
+     * Если пост оплачиваемый - уменшает счётчик оставшихся постов для конкретной соц.сети и добавляет очки
+     * Отвечает ajax'ом счётчик остатка оплачиваемых постов
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param string $provider Имя социальной сети
+     */
+    public function socialAction($provider)
     {
-        if ($this->session->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
-            $this->session->get(Player::IDENTITY)->decrementSocialPostsCount();
-            $this->session->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой");
+        if ($this->session->get(Player::IDENTITY)->getSocialPostsCount($provider) > 0) {
+            $this->session->get(Player::IDENTITY)->decrementSocialPostsCount($provider);
+            $this->session->get(Player::IDENTITY)->addPoints(Player::SOCIAL_POST_COST, "Пост с реферальной ссылкой в соц.сети ".$provider);
             $this->ajaxResponse(array(
-                'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount(),
+                'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount($provider),
             ));
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');

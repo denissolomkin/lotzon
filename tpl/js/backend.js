@@ -56,14 +56,14 @@ function registerPlayer(playerData, successFunction, failFunction, errorFunction
             } else {
                 failFunction.call(playerData, data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call(playerData, data);
        }
     });
 }
 
-function loginPlayer(authData, successFunction, failFunction, errorFunction) 
+function loginPlayer(authData, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/players/login/",
@@ -77,11 +77,11 @@ function loginPlayer(authData, successFunction, failFunction, errorFunction)
             } else {
                 failFunction.call(authData, data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call(authData, data);
        }
-    });   
+    });
 }
 
 function updatePlayerProfile(playerData, successFunction, failFunction, errorFunction)
@@ -98,21 +98,21 @@ function updatePlayerProfile(playerData, successFunction, failFunction, errorFun
             } else {
                 failFunction.call(playerData, data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call(playerData, data);
        }
     });
 }
 
-function addTicket(tickNum, combination, successFunction, failFunction, errorFunction) 
+function addTicket(tickNum, combination, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/game/ticket/",
         method: 'POST',
         data: {
             'tnum' : tickNum,
-            'combination' : combination,   
+            'combination' : combination,
         },
         async: true,
         dataType: 'json',
@@ -126,7 +126,7 @@ function addTicket(tickNum, combination, successFunction, failFunction, errorFun
         error: function() {
             errorFunction.call(combination, data);
        }
-    });   
+    });
 }
 
 function loadLotteries(offset, onlyMine, successFunction, failFunction, errorFunction)
@@ -149,7 +149,7 @@ function loadLotteries(offset, onlyMine, successFunction, failFunction, errorFun
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function loadShop(category, offset, successFunction, failFunction, errorFunction)
@@ -169,7 +169,7 @@ function loadShop(category, offset, successFunction, failFunction, errorFunction
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function getLotteryData(successFunction, failFunction, errorFunction) {
@@ -238,7 +238,7 @@ function loadNews(offset, successFunction, failFunction, errorFunction) {
         error: function() {
             errorFunction.call($(this), data);
        }
-    });      
+    });
 }
 
 function loadReviews(offset, successFunction, failFunction, errorFunction) {
@@ -260,7 +260,7 @@ function loadReviews(offset, successFunction, failFunction, errorFunction) {
     });
 }
 
-function createItemOrder(order, successFunction, failFunction, errorFunction) 
+function createItemOrder(order, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/order/item/",
@@ -279,7 +279,7 @@ function createItemOrder(order, successFunction, failFunction, errorFunction)
         error: function() {
             errorFunction.call(order, data);
        }
-    });   
+    });
 }
 
 function loadLotteryDetails(lotteryId, deps, successFunction, failFunction, errorFunction) {
@@ -309,7 +309,7 @@ function loadLotteryDetails(lotteryId, deps, successFunction, failFunction, erro
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function removePlayerAvatar(successFunction, failFunction, errorFunction) {
@@ -351,7 +351,7 @@ function addEmailInvite(email, successFunction, failFunction, errorFunction)
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function startQuickGame(key, id, successFunction, failFunction, errorFunction) {
@@ -413,7 +413,7 @@ function startChanceGame(gi, successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
@@ -436,7 +436,7 @@ function playChanceGame(gi, choose, successFunction, failFunction, errorFunction
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
@@ -456,14 +456,14 @@ function getLandingStats(successFunction, failFunction, errorFunction)
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
     });
 }
 
-function resendPassword(email, successFunction, failFunction, errorFunction) 
+function resendPassword(email, successFunction, failFunction, errorFunction)
 {
     $.ajax({
         url: "/players/resendPassword",
@@ -479,11 +479,11 @@ function resendPassword(email, successFunction, failFunction, errorFunction)
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function getTransactions(offset, currency, successFunction, failFunction, errorFunction) {
@@ -501,11 +501,11 @@ function getTransactions(offset, currency, successFunction, failFunction, errorF
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function getNotices(offset, successFunction, failFunction, errorFunction) {
@@ -530,6 +530,26 @@ function getNotices(offset, successFunction, failFunction, errorFunction) {
     });
 }
 
+function socialRefPost(socialName) {
+    $.ajax({
+        url: "/players/social/"+socialName,
+        method: 'POST',
+        data: {},
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
+
 function socialSuccessPost(successFunction, failFunction, errorFunction) {
     $.ajax({
         url: "/players/social/",
@@ -543,11 +563,11 @@ function socialSuccessPost(successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    });   
+    });
 }
 
 function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
@@ -565,11 +585,11 @@ function uploadVkPhoto(url, successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    }); 
+    });
 }
 
 function requestForMoney(data, successFunction, failFunction, errorFunction) {
@@ -587,7 +607,7 @@ function requestForMoney(data, successFunction, failFunction, errorFunction) {
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
@@ -610,11 +630,11 @@ function sendPartnersFeedback(post, successFunction, failFunction, errorFunction
             } else {
                 failFunction.call($(this), data);
             }
-        }, 
+        },
         error: function() {
             errorFunction.call($(this), data);
        }
-    }); 
+    });
 }
 
 window.setInterval(function() {
@@ -696,7 +716,7 @@ window.setInterval(function() {
             }
         },
         error: function() {}
-    });   
+    });
 }, 60 * 1000);
 
 function showQuickGameStart(){

@@ -153,7 +153,7 @@ $(function(){
                     var html = '<ul class="yr-tb">';
                     $(filledTickets).each(function(id, ticket) {
                         html += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (id + 1) + '</div><ul class="yr-tt-tr">';
-                        $(ticket).each(function(tid, num) {    
+                        $(ticket).each(function(tid, num) {
                             html += '<li class="yr-tt-tr_li">' + num + '</li>';
                         });
                         html += '</ul></li>';
@@ -162,7 +162,7 @@ $(function(){
                     $('.atd-bk').prepend($(html));
                     $('.atd-bk').show();
                 } else {
-                    $('.tb-tabs_li:not(.done)').first().click();                     
+                    $('.tb-tabs_li:not(.done)').first().click();
                 }
                 $(this).data('disabled',false);
             }, function(data){
@@ -187,7 +187,7 @@ $(function(){
         addEmailInvite(email, function(data){
             button.parent().find('.it-msg-bk').remove();
             button.parents('.if-bk').find('.invites-count').text(data.res.invitesCount);
-            button.parent().find('input[name="email"]').hide();            
+            button.parent().find('input[name="email"]').hide();
             button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">Приглашение отправлено</span>');
             setTimeout(function(){
                 button.parent().find('.it-msg-bk').fadeOut(300);
@@ -282,7 +282,7 @@ $(function(){
 
         $('#shop-items-popup').find('.item-preview').attr('src', $(this).find('.im-ph img').attr('src'));
         $('#shop-items-popup').find('.item-title').text($(this).find('.im-tl').text());
-        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());        
+        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());
         $('#shop-items-popup').fadeIn(200);
         $('.pz-ifo-bk').show();
         $('.pz-fm-bk').hide();
@@ -329,26 +329,26 @@ $(function(){
             }
             switch (data.message) {
                 case 'ORDER_INVALID_NAME' :
-                    form.find('input[name="name"]').parent().addClass('error');                    
+                    form.find('input[name="name"]').parent().addClass('error');
                     form.find('input[name="name"]').focus();
                 break;
                 case 'ORDER_INVALID_SURNAME' :
-                    form.find('input[name="surname"]').parent().addClass('error');                    
+                    form.find('input[name="surname"]').parent().addClass('error');
                     form.find('input[name="surname"]').focus();
                 break;
                 case 'ORDER_INVALID_PHONE' :
                 case 'INVALID_PHONE_FORMAT' :
-                    form.find('input[name="phone"]').parent().addClass('error');                    
+                    form.find('input[name="phone"]').parent().addClass('error');
                     form.find('input[name="phone"]').focus();
                 break;
                 case 'ORDER_INVALID_CITY' :
-                    form.find('input[name="city"]').parent().addClass('error');                    
+                    form.find('input[name="city"]').parent().addClass('error');
                     form.find('input[name="city"]').focus();
-                break; 
+                break;
                 case 'ORDER_INVALID_ADRESS' :
-                    form.find('input[name="addr"]').parent().addClass('error');                    
+                    form.find('input[name="addr"]').parent().addClass('error');
                     form.find('input[name="addr"]').focus();
-                break; 
+                break;
             }
         }, function(){})
 
@@ -580,12 +580,12 @@ $(function(){
     // CASE OUTPUT POPUP //
     $('#cash-output').on('click', function(){
         if (playerMoney >= 10) {
-            $('#cash-output-popup').fadeIn(200);    
+            $('#cash-output-popup').fadeIn(200);
         } else {
             $('.pz-ifo-bk').hide();
             $('.pz-rt-bk').text("Недостаточно средств для вывода!").show().parents('#shop-items-popup').show();
         }
-        
+
     });
 
 
@@ -639,7 +639,7 @@ $(function(){
         $('.profile ._section').hide();
         $('.'+link).fadeIn(200);
         if(link == 'profile-info'){
-            $('.pi-inp-bk input').each(function(){                
+            $('.pi-inp-bk input').each(function(){
                 $(this).val($(this).attr('data-valid'))
             });
         }
@@ -789,10 +789,10 @@ $(function(){
 
     function processLotteryResults (data) {
         if (data.res.offset > 0) {
-            $('.mr-cl-bt-bl').show();           
-            if (!data.res.keepButtonShow) {               
+            $('.mr-cl-bt-bl').show();
+            if (!data.res.keepButtonShow) {
                 $('.mr-cl-bt-bl').find('.mr').hide();
-            } else {               
+            } else {
                 $('.mr-cl-bt-bl').find('.mr').show();
             }
         }
@@ -809,7 +809,7 @@ $(function(){
                     html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
                 }
                 html += '</li>';
-            };  
+            };
 
             $('.profile-history').find('.ht-bk').append(html);
 
@@ -924,7 +924,7 @@ $(function(){
         }
 
         input.off('du.add').on('du.add', function(e) {
-            
+
             e.uploadItem.completeCallback = function(succ, data, status) {
                 image.attr('src', data.res.imageWebPath);
 
@@ -939,13 +939,13 @@ $(function(){
                         $('form[name="profile"]').find('.pi-ph').removeClass('true');
                     }, function() {}, function() {});
                 });
-            }; 
+            };
 
             e.uploadItem.progressCallback = function(perc) {}
             e.uploadItem.upload();
         });
 
-        form.find('input[type="file"]').click();    
+        form.find('input[type="file"]').click();
     })
     $('.profile-history .ht-bk .aw-bt').on('click', showLotteryDetails);
 
@@ -1012,7 +1012,7 @@ $(function(){
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
                 ticketsHtml += '<li class="yr-tt">';
-                
+
                 ticketsHtml += '<div class="yr-tt-tn">Билет #'+i+'</div><ul class="yr-tt-tr">';
 
                 if (tickets[i]) {
@@ -1023,7 +1023,7 @@ $(function(){
                 } else {
                     ticketsHtml += '<li class="null">не заполнен</li></ul>';
                 }
-                
+
                 ticketsHtml += '</li>';
             }
 
@@ -1349,7 +1349,7 @@ function showGameProccessPopup(){
     } else {
         location.reload();
     }
-    
+
 }
 
 function showFailPopup(data)
@@ -2006,7 +2006,7 @@ $(document).on('click', 'li[data-coord]', function() {
         } else if (data.res.status == 'process') {
             if (data.res.cell == 0) {
                 if (!data.res.dublicate) {
-                    $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');    
+                    $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');
                 }
             }
         }
@@ -2025,7 +2025,7 @@ $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);
     window.setTimeout(function(){
         $('.ch-bk').fadeIn(200);
-    }, 200); 
+    }, 200);
 });
 
 <!-- NOTICES -->
@@ -2090,7 +2090,7 @@ $('.st-hy-bt').on('click', function(){
                 button.parents('.bblock').find('.tb').append($(html));
 
                 if (button.hasClass('pz-more-bt')) {
-                    button.hide();    
+                    button.hide();
                 }
                 button.parents('.bblock').find('.mr-cl-bt-bl').show();
 

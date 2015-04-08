@@ -63,7 +63,11 @@ class Player extends Entity
     private $_gamesPlayed = 0;
 
     private $_invitesCount = 0;
-    private $_socialPostsCount = 0;
+
+    /**
+     * @var array Счётчик оставшихся оплачиваемых реф.ссылок в соц.сетях [имя соц.сети]=>[количество]
+     */
+    private $_socialPostsCount = array();
 
     //private $_online     = 0;
     private $_onlineTime = 0;
@@ -292,7 +296,7 @@ class Player extends Entity
     public function getPhone()
     {
         return $this->_phone;
-    }    
+    }
 
     public function setBirthday($birthday)
     {
@@ -304,13 +308,13 @@ class Player extends Entity
     public function getBirthday($format = null)
     {
         $date = $this->_birthday;
-        
+
         if (!is_null($format)) {
             $date = date($format, $this->_birthday);
         }
 
         return $date;
-    }  
+    }
 
     public function setDateRegistered($dateRegistered)
     {
@@ -416,7 +420,7 @@ class Player extends Entity
         if (!is_null($format)) {
             $date = date($format, $this->_dateLastLogin);
         }
-        
+
         return $date;
     }
 
@@ -441,7 +445,7 @@ class Player extends Entity
     public function getCountry()
     {
         return $this->_country;
-    }  
+    }
 
     public function setAvatar($avatar)
     {
@@ -492,7 +496,7 @@ class Player extends Entity
     public function getPoints()
     {
         return $this->_points;
-    }  
+    }
 
     public function setMoney($money)
     {
@@ -516,7 +520,7 @@ class Player extends Entity
     public function getGamesPlayed()
     {
         return $this->_gamesPlayed;
-    }  
+    }
 
     public function getInvitesCount()
     {
@@ -530,19 +534,43 @@ class Player extends Entity
         return $this;
     }
 
-    public function getSocialPostsCount()
+    /**
+     * Возвращает счётчик остатка оплачиваемых постов для соц.сети $provider
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  string|null     $provider Имя социальной сети | Весь массив счётчиков
+     * @return int|array|false           Количество оставшихся постов | Весь массив | не найден счётчик для соц.сети $provider
+     */
+    public function getSocialPostsCount($provider = null)
     {
-        return $this->_socialPostsCount;
+        if ($provider === null) {
+            return $this->_socialPostsCount;
+        }
+        if (isset($this->_socialPostsCount[$provider])) {
+            return $this->_socialPostsCount[$provider];
+        } else {
+            return false;
+        }
     }
 
+    /**
+     * Устанавливает счётчик остатка оплачиваемых постов для соц.сетей
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  mixed[] $sp Массив [имя счётчика => количество оставшихся постов]
+     * @return object      this
+     */
     public function setSocialPostsCount($sp)
     {
-        $this->_socialPostsCount = $sp;
-
+        foreach ($sp as $key => $value) {
+            $this->_socialPostsCount[$key] = $value;
+        }
         return $this;
     }
 
-    public function setOnlineTime($time) 
+    public function setOnlineTime($time)
     {
         $this->_onlineTime  = $time;
         return $this;
@@ -581,7 +609,7 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
+
         return $this;
     }
 
@@ -599,10 +627,17 @@ class Player extends Entity
         return false;
     }
 
-
-    public function decrementSocialPostsCount()
+    /**
+     * Декремент счётчика оплачиваемых реф.ссылок в соц.сети $provider
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  string $provider Имя социальной сети
+     * @return object           this
+     */
+    public function decrementSocialPostsCount($provider)
     {
-        $this->setSocialPostsCount($this->getSocialPostsCount() - 1);
+        $this->setSocialPostsCount(array($provider => ($this->getSocialPostsCount($provider) - 1)));
         $model = $this->getModelClass();
 
         try {
@@ -610,11 +645,11 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;
-    } 
 
-    public function setValid($valid) 
+        return $this;
+    }
+
+    public function setValid($valid)
     {
         $this->_valid = $valid;
 
@@ -663,7 +698,7 @@ class Player extends Entity
         return $this->_webSocket;
     }
 
-    public function setHash($hash) 
+    public function setHash($hash)
     {
         $this->_hash = $hash;
 
@@ -673,9 +708,9 @@ class Player extends Entity
     public function getHash()
     {
         return $this->_hash;
-    }    
+    }
 
-    public function setIP($ip) 
+    public function setIP($ip)
     {
         $this->_ip = $ip;
 
@@ -714,7 +749,7 @@ class Player extends Entity
         return $this->_inviterId;
     }
 
-    public function setReferalId($referalId) 
+    public function setReferalId($referalId)
     {
         $this->_referalId = $referalId;
 
@@ -760,8 +795,8 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;   
+
+        return $this;
     }
 
     public function writeLogin()
@@ -850,11 +885,11 @@ class Player extends Entity
 
     public function compilePassword($password)
     {
-        if (!$this->getSalt()) 
+        if (!$this->getSalt())
         {
             $this->setSalt(uniqid());
         }
-        
+
         return md5($this->getSalt() . sha1($password));
     }
 
@@ -901,7 +936,7 @@ class Player extends Entity
                     throw new EntityException("INVALID_PHONE_FORMAT", 400);
                 }
             break;
-            
+
             default:
                 # code...
             break;
@@ -948,7 +983,7 @@ class Player extends Entity
 
     }
 
-    public function saveAvatar() 
+    public function saveAvatar()
     {
         $model = $this->getModelClass();
 
@@ -957,8 +992,8 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;   
+
+        return $this;
     }
 
     public function getCounters()
@@ -1054,10 +1089,10 @@ class Player extends Entity
             $model::instance()->checkNickname($this);
         } catch (ModelException $e) {
             if ($e->getCode() == 403) {
-                throw new EntityException("NICKNAME_BUSY", 400);    
+                throw new EntityException("NICKNAME_BUSY", 400);
             }
             throw new EntityException($e->getMessage(), $e->getCode());
-            
+
         }
 
         return true;
@@ -1080,7 +1115,7 @@ class Player extends Entity
             if ($throwException) {
                 throw new EntityException('INVALID_EMAIL', 400);
             }
-        } 
+        }
 
         $emailDomain = substr(strrchr($this->getEmail(), "@"), 1);
         if (in_array($emailDomain, Config::instance()->blockedEmails)) {
@@ -1180,7 +1215,7 @@ class Player extends Entity
         if ($inplaceUpdate) {
             $this->updateBalance('Money', $quantity);
         }
-    
+
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
                     ->setSum($quantity)
@@ -1188,7 +1223,7 @@ class Player extends Entity
                     ->setCurrency(LotterySettings::CURRENCY_MONEY)
                     ->setDescription($description);
         $transaction->create();
-        
+
         return $this;
     }
 
@@ -1317,7 +1352,7 @@ class Player extends Entity
         return $this;
     }
 
-    public function changePassword($password) 
+    public function changePassword($password)
     {
         $this->setSalt("");
         $this->setPassword($this->compilePassword($password));
@@ -1329,8 +1364,8 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;   
+
+        return $this;
     }
 
     public function updateLastNotice()
@@ -1359,7 +1394,7 @@ class Player extends Entity
         }
     }
 
-    public function formatFrom($from, $data) 
+    public function formatFrom($from, $data)
     {
         if ($from == 'DB') {
             $this->setId($data['Id'])
@@ -1394,7 +1429,7 @@ class Player extends Entity
                  ->setMoney($data['Money'])
                  ->setGamesPlayed($data['GamesPlayed'])
                  ->setInvitesCount($data['InvitesCount'])
-                 ->setSocialPostsCount($data['SocialPostsCount'])
+                 ->setSocialPostsCount(!empty($data['SocialPostsCount']) ? @unserialize($data['SocialPostsCount']) : array())
                  ->setCookieId($data['CookieId'])
                  ->setIp($data['Ip'])
                  ->setLastIp($data['LastIp'])
