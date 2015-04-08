@@ -69,12 +69,10 @@
         <script src="/tpl/js/lib/jquery.cookie.js"></script>
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
+        <script src="/tpl/js/social.js" charset="utf-8"></script>
 
         <!-- social_likes -->
         <script src="/tpl/js/lib/social-likes.min.js"></script>
-
-        <!-- YaSocial !-->
-        <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
