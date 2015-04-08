@@ -291,7 +291,7 @@ Config::instance()->publicResources = array(
     '/players/trouble/:trouble' => 'controllers\production\Players:trouble',
     '/players/disableSocial/:provider' => 'controllers\production\Players:disableSocial',
     '/players/logout/' => 'controllers\production\Players:logout',
-    '/players/social/' => 'controllers\production\Players:social',
+    '/players/social/:provider' => 'controllers\production\Players:social',
     '/players/update/' => array(
         'post'  => 'controllers\production\Players:update',
     ),
