@@ -24,7 +24,7 @@
             <thead>
                 <th>Дата</th>
                 <th style="min-width: 170px;">Игрок </th>
-                <th>Информация </th>
+                <th style="min-width: 200px;">Информация </th>
                 <th>Отзыв</th>
                 <th style="width: 146px;">Options</th>
             </thead>
