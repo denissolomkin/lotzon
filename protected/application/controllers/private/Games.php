@@ -46,7 +46,6 @@ class Games extends PrivateArea
             );
             $game = new GameSettings();
             $game->setKey($this->request()->post('key'))
-                ->setTitle($this->request()->post('title'))
                 ->setOptions($this->request()->post('options'))
                 ->setGames($this->request()->post('games'));
 

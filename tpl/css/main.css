@@ -426,12 +426,38 @@ article .infos {padding:40px 20px 0 20px;}
 }
 .infos .i-rbk .reviews.b-ha .rv-items:after {display:none;}
 .infos .i-rbk .reviews .rv-items .rv-ic-bk {display:none;}
-.infos .i-rbk .reviews .rv-items .rv-item {margin-bottom:30px;}
+.infos .i-rbk .reviews .rv-items .rv-item {padding:15px 0;}
 .infos .i-rbk .reviews .rv-items .rv-item:last-child {margin-bottom:0;}
-.infos .i-rbk .reviews .rv-item.rv-answer {padding-left: 65px;}
+.infos .i-rbk .reviews .rv-answer {margin-left: 65px !important;}
 .infos .i-rbk .reviews .rv-item .rv-i-avtr {float:left;  width: 50px;}
 .infos .i-rbk .reviews .rv-item .rv-i-avtr img {float:right;max-height: 50px;max-width: 50px;}
 .infos .i-rbk .reviews .rv-item .rv-i-tl {font:15px/1 Handbook-bold;color:#000;margin-bottom:4px;padding-left: 65px;}
+.infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-dt {font:14px/1 Handbook-regular;color:#999;}
+.infos .i-rbk .reviews .rv-ans-tmpl {display: none;}
+.infos .i-rbk .reviews .rv-ans { display: block; background: #eee; margin-top: 15px; padding: 15px;position: relative;}
+.infos .i-rbk .reviews .rv-ans img {width: 100%}
+.infos .i-rbk .reviews .rv-ans [contenteditable]{ background: #eee; border: 1px solid #b2d0d4; height: 25px;
+    margin-left: 50px;
+    margin-right: 125px;
+    outline: none;
+    font: 14px/25px Handbook-regular;
+    padding: 0 5px;}
+.infos .i-rbk .reviews .rv-ans .btn-ans{background: #eee; border: 1px solid #b2d0d4; height: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    outline: none;
+    font: 14px/25px Handbook-bold;
+    padding: 0 5px;}
+.infos .i-rbk .reviews .rv-ans .rv-usr-avtr{float:left;width: 25px;height: 25px}
+
+.infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans {display: none;font:14px/1 Handbook-regular;color:#00f;}
+.infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans:hover {cursor: pointer;text-decoration: underline;}
+.infos .i-rbk .reviews .rv-item:hover .rv-i-tl .rv-i-ans {display: inline;}
 .infos .i-rbk .reviews .rv-item .rv-i-txt {font:15px/17px Handbook-regular;color:#4f4f4f;padding-left: 65px;}
 .infos .i-rbk .reviews .rv-item .rv-i-img {padding-top: 10px;padding-left: 65px;}
 .infos .i-rbk .reviews .rv-item .rv-i-txt a {color:#c51e1e;}

@@ -41,10 +41,10 @@
         <link rel="image_src" href="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
 
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
+        <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
 
         <link rel="icon" href="/tpl/img/favicon.png" type="image/png" />
         <!--link rel="shortcut icon" href="" type="'image/x-icon"/-->
@@ -538,9 +538,10 @@
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
+                                <div class="rv-ans-tmpl"><div contenteditable></div><div class="btn-ans"><?=$MUI->getText('button-answer')?></div></div>
                                 <? foreach ($reviews as $reviewData)
                                     foreach ($reviewData as $reviewItem) { ?>
-                                    <div class="rv-item<?=($reviewItem->getReviewId()?' rv-answer':'');?>">
+                                    <div data-id="<?=$reviewItem->getReviewId()?:$reviewItem->getId();?>" class="rv-item<?=($reviewItem->getReviewId()?' rv-answer':'');?>">
                                         <div class="rv-i-avtr">
                                             <? if ($reviewItem->getPlayerAvatar()) {?>
                                                 <img src="/filestorage/avatars/<?=ceil($reviewItem->getPlayerId() / 100)?>/<?=$reviewItem->getPlayerAvatar()?>">
@@ -548,7 +549,7 @@
                                                 <img src="/tpl/img/default.jpg">
                                             <? } ?>
                                         </div>
-                                        <div class="rv-i-tl"><?=$reviewItem->getPlayerName()?> • <?=date('d.m.Y H:i', $reviewItem->getDate())?></div>
+                                        <div class="rv-i-tl"><span class="rv-i-pl"><?=$reviewItem->getPlayerName()?></span> • <span class="rv-i-dt"><?=date('d.m.Y H:i', $reviewItem->getDate())?></span> <span class="rv-i-ans"> <?=$MUI->getText('button-answer')?></span></div>
                                         <div class="rv-i-txt"><?=$reviewItem->getText()?></div>
                                             <? if ($reviewItem->getImage()) {?>
                                             <div class="rv-i-img">

@@ -471,6 +471,15 @@ $(function(){
             }
     }
 
+    $(document).on('click', '.rv-i-ans', function(){
+        var review = $(this).parents('.rv-item').first();
+        $('.rv-ans').remove();
+        var answer = $('div.rv-ans-tmpl').clone();
+        $('.rv-usr-avtr').clone().prependTo(answer);
+        answer.attr('class',review.attr('class')).removeClass('rv-item').addClass('rv-ans').find('[contenteditable]').attr('id','textControl').html(review.find('.rv-i-pl').text()+',&nbsp;');
+        answer.insertAfter(review);
+        moveToEnd(document.getElementById("textControl"));
+    });
 
     $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
         var reviewsBlock = $('.reviews');
@@ -478,6 +487,7 @@ $(function(){
             if (data.res.reviews.length) {
                 reviewsBlock.addClass('b-ha');
                 var html = '';
+                var textAnswer = $('.rv-i-ans').first().text();
 
                 $(data.res.reviews).each(function(id, review) {
                     html += '<div class="rv-item'+(review.answer?" rv-answer":"")+'"><div class="rv-i-avtr">';
@@ -486,8 +496,7 @@ $(function(){
                         html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'">';
                     else
                         html += '<img src="/tpl/img/default.jpg">';
-
-                    html+='</div><div class="rv-i-tl">'+review.playerName+' • '+review.date+'</div><div class="rv-i-txt">'+review.text+'</div>';
+                    html+='</div><div class="rv-i-tl"><span class="rv-i-pl">'+review.playerName+'</span> • <span class="rv-i-dt">'+review.date+'</span> <span class="rv-i-ans">'+textAnswer+'</span></div><div class="rv-i-txt">'+review.text+'</div>';
 
                     if(review.image)
                         html += '<div class="rv-i-img"><img src="/filestorage/reviews/'+review.image+'"></div>';
@@ -2354,6 +2363,23 @@ function randomCachedNum() {
         }
     });
     return rand;
+}
+
+function moveToEnd(target) {
+    var rng, sel;
+    if ( document.createRange ) {
+        rng = document.createRange();
+        rng.selectNodeContents(target);
+        rng.collapse(false); // схлопываем в конечную точку
+        sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange( rng );
+    } else { // для IE нужно использовать TextRange
+        var rng = document.body.createTextRange();
+        rng.moveToElementText( target );
+        rng.collapseToEnd();
+        rng.select();
+    }
 }
 
 String.prototype.replaceArray = function(find, replace) {
