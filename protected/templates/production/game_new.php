@@ -25,26 +25,26 @@
         <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Twitter Card data -->
-        <meta name="twitter:card" content="summary">
+        <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
         <meta name="twitter:title" content="<?=$seo['Title']?>">
         <meta name="twitter:description" content="Играл, играю и буду играть.">
-        <meta name="twitter:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
+        <!-- Twitter summary card with large image must be at least 280x150px -->
+        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Open Graph data -->
         <meta property="og:title" content="<?=$seo['Title']?>" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" />
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
+        <link rel="image_src" href="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
-        <link rel="image_src" href="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
-
         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
-        <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
 
         <link rel="icon" href="/tpl/img/favicon.png" type="image/png" />
         <!--link rel="shortcut icon" href="" type="'image/x-icon"/-->
@@ -85,7 +85,6 @@
 
             <!-- Latest compiled and minified CSS -->
             <link href="/theme/admin/lib/admin.css" rel="stylesheet">
-            <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
             <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <? } ?>
