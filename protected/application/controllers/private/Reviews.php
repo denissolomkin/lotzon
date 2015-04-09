@@ -90,9 +90,10 @@ class Reviews extends PrivateArea
                     throw new \ModelException("Error processing storage query", 500);
 
                 $review = new Review;
-                $review->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
-                    ->setId($data['Id'])
+                $review->setId($data['Id'])
                     ->fetch()
+                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setPlayerId($data['PlayerId'])
                     ->setText($data['Text'])
                     ->setStatus($data['Status'])
                     ->setPromo($data['IsPromo'])

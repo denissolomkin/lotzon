@@ -14,7 +14,7 @@ class ReviewsDBProcessor implements IProcessor
                 ':playerid'  => $review->getPlayerId(),
                 ':reviewid'  => $review->getReviewId(),
                 ':text'  => $review->getText(),
-                ':date'  => time(),
+                ':date'  => $review->getDate()?:time(),
                 ':image' => $review->getImage(),
                 ':ispromo' => $review->isPromo(),
                 ':status' => $review->getStatus(),
