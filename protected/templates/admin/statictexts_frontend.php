@@ -1,16 +1,17 @@
 ﻿<? $categories = array(
-    'menu'=>array('t'=>'Меню и навигация', 'i'=>'sitemap'),
+    'menu'=>array('t'=>'Меню', 'i'=>'sitemap'),
     'button'=>array('t'=>'Кнопки', 'i'=>'hand-o-up'),
-    'text'=>array('t'=>'Тексты, описания', 'i'=>'paragraph'),
+    'text'=>array('t'=>'Тексты', 'i'=>'paragraph'),
     'popup'=>array('t'=>'Всплывающие сообщения', 'i'=>'comments'),
-    'error'=>array('t'=>'Ошибки, предупре- ждения', 'i'=>'exclamation-triangle'),
+    'error'=>array('t'=>'Ошибки', 'i'=>'exclamation-triangle'),
+    'message'=>array('t'=>'Сообщения', 'i'=>'exclamation-triangle'),
     'seo'=>array('t'=>'SEO', 'i'=>'crosshairs'),
-    'bonus'=>array('t'=>'Бонусы и выигрыши', 'i'=>'gift'),
-    'promo'=>array('t'=>'Промо-страница', 'i'=>'home'),
-    'holder'=>array('t'=>'Холдеры', 'i'=>'terminal'),
-    'title'=>array('t'=>'Титулы', 'i'=>'terminal'),
+    'bonus'=>array('t'=>'Бонусы', 'i'=>'gift'),
+    'promo'=>array('t'=>'Промо', 'i'=>'home'),
+    'label'=>array('t'=>'Лейблы', 'i'=>'terminal'),
+    'title'=>array('t'=>'Заголовки', 'i'=>'terminal'),
     'placeholder'=>array('t'=>'Поля', 'i'=>'terminal'),
-    'promo'=>array('t'=>'Тексты на промо', 'i'=>'home'),
+    'promo'=>array('t'=>'Промо', 'i'=>'home'),
 ); ?>
         <div class="modal fade texts" id="text-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
             <div class="modal-dialog">

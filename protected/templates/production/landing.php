@@ -73,7 +73,7 @@
                         <!--a target="_blank" href="https://plus.google.com/112273863200721967076/about" class="h-t-tcb-sb-gp"></a-->
                         <a target="_blank" href="https://twitter.com/LOTZON_COM" class="h-t-tcb-sb-tw"></a>
                     </div>
-                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943"><span><?=$MUI->getText('promo-clip')?></span></div>
+                    <div class="h-t-tcb-t popup-vimeo" href="https://vimeo.com/114883943"><span><?=$MUI->getText('label-promo-clip')?></span></div>
                 </div>
             </div>
         </div>
@@ -83,20 +83,20 @@
                     <div class="h-t-mcb-l">
                         <div class="h-t-mcb-l-wm">
                             <b class="h-t-mcb-l-wm_b" id="winners"><?=Common::viewNumberFormat($gameInfo['winners'])?></b>
-                            <span class="h-t-mcb-l-wm_span"><?=$MUI->getText('placeholder-winners')?></span>
+                            <span class="h-t-mcb-l-wm_span"><?=$MUI->getText('label-winners')?></span>
                         </div>
                         <div class="h-t-mcb-l-wm">
                             <b class="h-t-mcb-l-wm_b" id="participants"><?=Common::viewNumberFormat($gameInfo['participants'])?></b>
-                            <span class="h-t-mcb-l-wm_span"><?=$MUI->getText('placeholder-participants')?></span>
+                            <span class="h-t-mcb-l-wm_span"><?=$MUI->getText('label-participants')?></span>
                         </div>
                     </div>
                     <div class="h-t-mcb-r">
-                        <div class="h-t-mcb-r-n"><?=$MUI->getText('placeholder-total-win')?></div>
+                        <div class="h-t-mcb-r-n"><?=$MUI->getText('label-total-win')?></div>
                         <div class="h-t-mcb-r-i" id="win"><?=Common::viewNumberFormat(round($gameInfo['win']))?> <span><?=$currency?></span></div>
                     </div>
                 </div>
                 <div class="h-t-bcb">
-                    <div class="h-t-bcb-l"><?=$MUI->getText('promo-top-2')?></div>
+                    <div class="h-t-bcb-l"><?=$MUI->getText('text-promo-top-2')?></div>
                     <div class="h-t-bcb-r">
                         <a href="javascript:void(0)" class="h-t-bcb-r-b go-play"><?=$MUI->getText('button-play')?></a>
                     </div>
@@ -108,12 +108,12 @@
                 <div class="h-b">
                     <div class="h-b-c">
                         <div class="h-b-c-tb">
-                            <div class="h-b-c-tb-l"><?=$MUI->getText('placeholder-until-lottery')?></div>
+                            <div class="h-b-c-tb-l"><?=$MUI->getText('label-until-lottery')?></div>
                             <div id="countdownHolder" class="h-b-c-tb-r"></div>
                         </div>
                         <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span"><?=$MUI->getText('button-how-play')?></span></a>
                         <div class="h-b-c-lg">
-                            <div class="h-b-c-lg-t"><?=$MUI->getText('placeholder-lottery-from')?><?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
+                            <div class="h-b-c-lg-t"><?=$MUI->getText('label-lottery-from')?><?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
                             <ul class="h-b-c-lg_ul">
                                 <? if ($lastLottery) { ?>
                                     <? foreach ($lastLottery->getCombination() as $num) { ?>
@@ -175,7 +175,7 @@
                                             <li class="i_li"></li>
                                         <? } ?>
                                     </ul>
-                                    <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? $MUI->getText('holder-points') : $currency)?></div>
+                                    <div class="ri-e"><?=Common::viewNumberFormat($gameInfo['lotteryWins'][$i]['sum'])?> <?=($gameInfo['lotteryWins'][$i]['currency'] == LotterySettings::CURRENCY_POINT ? $MUI->getText('label-points') : $currency)?></div>
                                 </li>
                             <? } ?>
                         </ul>
@@ -294,7 +294,7 @@
                             <div class="rb-cs-bt"></div>
                             <div class="rb-pg">
                                 <h2><?=$MUI->getText('title-rules')?></h2>
-                                <?=$MUI->getText('promo-login-rules')?>
+                                <?=$MUI->getText('text-rules')?>
                             </div>
                         </div>
 
@@ -308,7 +308,7 @@
                             <div id="reg-form">
                                 <div class="rf-txt"><?=$MUI->getText('text-input-email')?></div>
                                 <div class="ib-l">
-                                    <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
+                                    <div class="ph"><?=$MUI->getText('label-your-email')?></div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" />
                                     <div class="e-t"><?=$MUI->getText('message-email-exists')?></div>
                                 </div>
@@ -348,7 +348,7 @@
                                     <div class="e-t"><?=$MUI->getText('message-email-not-found')?></div>
                                     <div class="ch-b">
                                         <input type="checkbox" id="remcheck" hidden />
-                                        <label for="remcheck"><?=$MUI->getText('holder-remember-me')?></a></label>
+                                        <label for="remcheck"><?=$MUI->getText('label-remember-me')?></a></label>
                                     </div>
                                     <a href="javascript:void(0)" id="rec-pass" class="r-p"><?=$MUI->getText('button-remind-password')?></a>
                                 </div>
