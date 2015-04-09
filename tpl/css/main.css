@@ -436,13 +436,13 @@ article .infos {padding:40px 20px 0 20px;}
 .infos .i-rbk .reviews .rv-ans-tmpl {display: none;}
 .infos .i-rbk .reviews .rv-ans { display: block; background: #eee; margin-top: 15px; padding: 15px;position: relative;}
 .infos .i-rbk .reviews .rv-ans img {width: 100%}
-.infos .i-rbk .reviews .rv-ans [contenteditable]{ background: #eee; border: 1px solid #b2d0d4; min-height: 25px; height: auto;
+.infos .i-rbk .reviews .rv-ans [contenteditable]{ background: #eee; border: 1px solid #b2d0d4; min-height: 20px; height: auto;
     margin-left: 50px;
     margin-right: 125px;
     outline: none;
-    font: 15px/1 Handbook-regular;
-    padding: 0 5px 5px 5px;}
-.infos .i-rbk .reviews .rv-ans .btn-ans{background: #eee; border: 1px solid #b2d0d4; height: 25px;
+    font: 14px/1 Handbook-regular;
+    padding: 5px;}
+.infos .i-rbk .reviews .rv-ans .btn-ans{background: #eee; border: 1px solid #b2d0d4; height: 30px;
     text-align: center;
     text-transform: uppercase;
     cursor: pointer;
@@ -451,9 +451,9 @@ article .infos {padding:40px 20px 0 20px;}
     top: 15px;
     right: 15px;
     outline: none;
-    font: 14px/25px Handbook-bold;
+    font: 13px/30px Handbook-bold;
     padding: 0 5px;}
-.infos .i-rbk .reviews .rv-ans .rv-usr-avtr{float:left;width: 25px;height: 25px}
+.infos .i-rbk .reviews .rv-ans .rv-usr-avtr{float:left;width: 30px;height: 30px}
 
 .infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans {display: none;font:14px/1 Handbook-regular;color:#00f;}
 .infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans:hover {cursor: pointer;text-decoration: underline;}
