@@ -25,20 +25,20 @@
         <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Twitter Card data -->
-        <meta name="twitter:card" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
+        <meta name="twitter:card" content="summary">
         <meta name="twitter:title" content="<?=$seo['Title']?>">
         <meta name="twitter:description" content="Играл, играю и буду играть.">
-        <!-- Twitter summary card with large image must be at least 280x150px -->
-        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
+        <meta name="twitter:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Open Graph data -->
         <meta property="og:title" content="<?=$seo['Title']?>" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" />
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
-        <link rel="image_src" href="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
+
+        <link rel="image_src" href="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
