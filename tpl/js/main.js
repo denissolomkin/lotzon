@@ -476,7 +476,7 @@ $(function(){
         $('.rv-ans').remove();
         var answer = $('div.rv-ans-tmpl').clone();
         $('.rv-usr-avtr').clone().prependTo(answer);
-        answer.attr('class',review.attr('class')).removeClass('rv-item').addClass('rv-ans').find('[contenteditable]').attr('id','textControl').html(review.find('.rv-i-pl').text()+',&nbsp;');
+        answer.attr('class',review.attr('class')).removeClass('rv-item').addClass('rv-ans rv-answer').find('[contenteditable]').attr('id','textControl').html(review.find('.rv-i-pl').text()+',&nbsp;');
         answer.insertAfter(review);
         moveToEnd(document.getElementById("textControl"));
     });
