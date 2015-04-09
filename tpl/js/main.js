@@ -484,8 +484,9 @@ $(function(){
     $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
         var reviewsBlock = $('.reviews');
         loadReviews(reviewsBlock.find('.rv-item:not(.rv-answer)').length, function(data) {
+            reviewsBlock.addClass('b-ha');
+            $('.rv-add-but').hide();
             if (data.res.reviews.length) {
-                reviewsBlock.addClass('b-ha');
                 var html = '';
                 var textAnswer = $('.rv-i-ans').first().text();
 
@@ -505,13 +506,15 @@ $(function(){
                 });
                 $('.rv-items .h-ch').append(html);
 
-                $('.rv-items').height($('.rv-items .h-ch').height());
-                $('.rv-add-but').hide();
-                if (!data.res.keepButtonShow) {
-                    $('.rv-mr-cl-bt-bk .mr').hide();
-                }
-                reviewsBlock.find('.rv-mr-cl-bt-bk').show();
             }
+
+            if (!data.res.keepButtonShow) {
+                $('.rv-mr-cl-bt-bk .mr').hide();
+            }
+            reviewsBlock.find('.rv-mr-cl-bt-bk').show();
+
+            $('.rv-items').height($('.rv-items .h-ch').height());
+
         }, function() {}, function() {});
     });
 
