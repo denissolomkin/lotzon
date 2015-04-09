@@ -143,7 +143,7 @@ class ReviewsDBProcessor implements IProcessor
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
                 WHERE `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ReviewId IN ({$ids})
-                ORDER BY `Date` DESC";
+                ORDER BY `Id`";
 
             try {
                 $sth = DB::Connect()->prepare($sql);
