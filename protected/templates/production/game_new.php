@@ -1059,18 +1059,18 @@
                             <div class="prc-but-cover"></div>
                             <div class="prc-but-bk">
 
-                                <div class="prc-bt"><?=$MUI->getText('label-points')?></div>
+                                <div class="prc-bt"><?=$MUI->getText('button-points')?></div>
                                 <div class="prc-sel" data-currency="POINT">
-                                    <div class="prc-tl"><?=$MUI->getText('label-points')?></div>
+                                    <div class="prc-tl"><?=$MUI->getText('button-points')?></div>
                                 </div>
 
-                                <div class="prc-bt"><?=$MUI->getText('label-money')?></div>
+                                <div class="prc-bt"><?=$MUI->getText('button-money')?></div>
                                 <div class="prc-sel" data-currency="MONEY">
-                                    <div class="prc-tl"><?=$MUI->getText('label-money')?></div>
+                                    <div class="prc-tl"><?=$MUI->getText('button-money')?></div>
                                 </div>
 
-                                <div class="prc-bt"><?=$MUI->getText('label-free')?></div>
-                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=$MUI->getText('label-free')?></div></div>
+                                <div class="prc-bt"><?=$MUI->getText('button-free')?></div>
+                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=$MUI->getText('button-free')?></div></div>
 
                                 <!--div class="ngm-cncl">отмена</div-->
                                 <div class="ngm-go"><?=$MUI->getText('button-play')?></div>
