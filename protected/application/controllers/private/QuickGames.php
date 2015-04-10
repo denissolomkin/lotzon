@@ -22,7 +22,7 @@ class QuickGames extends PrivateArea
     {   
         $shopItems = ShopModel::instance()->getAllItems(false);
         $games = QuickGamesModel::instance()->getGamesSettings();
-        $langs = LanguagesModel::instance()->getLangs();
+        $langs = LanguagesModel::instance()->getList();
         $defaultLang = LanguagesModel::instance()->defaultLang();
 
         $this->render('admin/qgames', array(

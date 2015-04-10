@@ -21,7 +21,7 @@ class OnlineGames extends PrivateArea
     public function indexAction()
     {
        $games = OnlineGamesModel::instance()->getList();
-       $langs = LanguagesModel::instance()->getLangs();
+       $langs = LanguagesModel::instance()->getList();
        $defaultLang = LanguagesModel::instance()->defaultLang();
 
         $this->render('admin/ogames', array(
