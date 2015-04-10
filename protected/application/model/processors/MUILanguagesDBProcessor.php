@@ -14,14 +14,14 @@ class LanguagesDBProcessor implements IProcessor
             throw new ModelException("Unable to execute storage query", 500);
         }
 
-        $language = array();
+        $languages = array();
         foreach ($languageData as $data) {
-            $cur = new language();
-            $cur->formatFrom('DB', $data);
-            $language[$cur->getId()] = $cur;
+            $language = new Language;
+            $language->formatFrom('DB', $data);
+            $languages[$language->getCode()] = $language;
         }
 
-        return $language;
+        return $languages;
     }
 
     public function fetch(Entity $language)

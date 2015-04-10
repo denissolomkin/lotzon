@@ -537,7 +537,7 @@
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
-                                <div class="rv-ans-tmpl"><div contenteditable></div><div class="btn-ans"><?=$MUI->getText('button-answer')?></div></div>
+                                <div class="rv-ans-tmpl"><div class="rv-form"><div contenteditable></div><div class="btn-ans"><?=$MUI->getText('button-answer')?></div></div><div class="rv-sc"><?=$MUI->getText('message-review-approved')?></div></div>
                                 <? foreach ($reviews as $reviewData)
                                     foreach ($reviewData as $reviewItem) { ?>
                                     <div data-id="<?=$reviewItem->getReviewId()?:$reviewItem->getId();?>" class="rv-item<?=($reviewItem->getReviewId()?' rv-answer':'');?>">
@@ -1173,10 +1173,10 @@
                     <div class="rls-r">
 
                         <div class="rls-r-t"><?=$MUI->getText('label-you')?> <b>|</b> 0 <b>|</b> 0</div>
-                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=$MUI->getText('placeholder-search')?></b></div><div class="ngm-cncl"><?=$MUI->getText('button-cancel')?></div></div>
+                        <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=$MUI->getText('label-search')?></b></div><div class="ngm-cncl"><?=$MUI->getText('button-cancel')?></div></div>
 
                         <div class="rls-r-ws">
-                            <b><?=$MUI->getText('label-winners')?></b>
+                            <b><?=$MUI->getText('label-best-players')?></b>
                             <span><?=$MUI->getText('text-rating')?> <b>|</b> <?=$MUI->getText('label-games-played')?> <b>|</b> <?=$MUI->getText('label-wins')?></span>
                         </div>
 

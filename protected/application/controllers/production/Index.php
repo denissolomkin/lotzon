@@ -1,8 +1,8 @@
 <?php
 
 namespace controllers\production;
-use \OnlineGamesModel, \LotterySettingsModel, \SettingsModel, \StaticSiteTextsModel, \Application, \StaticTextsModel, \Player, \PlayersModel, \ShopModel, \NewsModel;
-use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \ChanceGamesModel, \GameSettingsModel, \QuickGamesModel, \LotterySettings, \TransactionsModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \OnlineGamesModel, \LotterySettingsModel, \SettingsModel, \StaticSiteTextsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
+use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \GameSettingsModel, \QuickGamesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -91,7 +91,7 @@ class Index extends \SlimController\SlimController
                     : CountriesModel::instance()->defaultCountry());
 
                 $this->lang = (
-                CountriesModel::instance()->isLang($session->get(Player::IDENTITY)->getLang())
+                LanguagesModel::instance()->isLang($session->get(Player::IDENTITY)->getLang())
                     ? $session->get(Player::IDENTITY)->getLang()
                     : CountriesModel::instance()->defaultLang());
 

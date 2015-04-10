@@ -142,12 +142,12 @@ class ReviewsDBProcessor implements IProcessor
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
-                WHERE `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ReviewId IN ({$ids})
+                WHERE `Status` = :status AND ( `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ReviewId IN ({$ids}))
                 ORDER BY `Id`";
 
             try {
                 $sth = DB::Connect()->prepare($sql);
-                $sth->execute();
+                $sth->execute(array(':status' => $status));
             } catch (PDOExeption $e) {
                 throw new ModelException("Unable to proccess storage query", 500);
             }

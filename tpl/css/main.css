@@ -139,7 +139,7 @@ header {width:1280px;max-height:135px;margin:auto;overflow:hidden;}
    ========================================================================== */
 nav.top-nav {width:100%;margin-bottom:-55px;}
 nav.top-nav.fixed {position:fixed;top:0;z-index:1000;}
-.tn-box {width:1280px;height:55px;margin:auto;background:#f2efed url("../img/Lotzon-Logo.svg") no-repeat 15px 15px / auto 24px;}
+.tn-box {width:1280px;height:55px;margin:auto;position:relative;background:#f2efed url("../img/Lotzon-Logo.svg") no-repeat 15px 15px / auto 24px;}
 #logo-gotop {width:170px;height:55px;float:left;cursor:pointer;}
 .tn-mbk {list-style:none;margin:0px 0 0 0px;padding:5px 0 0 0;overflow:hidden;float:left;}
 .tn-mbk .tn-mbk_li {float:left;height:45px;font:15px/45px Handbook-bold;text-transform:uppercase;text-align:center;color:rgba(0, 0, 0, 0.3);background-color:transparent;
@@ -157,7 +157,7 @@ nav.top-nav.fixed {position:fixed;top:0;z-index:1000;}
 .tn-mbk .tn-mbk_li.exit:hover {background-color:#c51e1e;}
 .tn-mbk .tn-mbk_li.exit:hover > a {color:#f3d2d2;}
 .tn-mbk .tn-mbk_li > a {color:rgba(0, 0, 0, 0.8);text-decoration:none;padding:0 30px;display:block;}
-.tn-tr-bk {float:right;margin-right:40px;width:250px;}
+.tn-tr-bk {float:right;margin-right:40px;width:250px;position: absolute;right: 0;}
 .tn-tr-bk .tn-tr-tt {float:left;max-width:125px;font:12px/1 Handbook-bold;color:#404040;text-transform:uppercase;margin-top:14px;}
 .tn-tr-bk .tn-tr {font:36px/1 Handbook-bold;color:#2f2f2f;float:right;margin-top:9px;}
 .tn-tr-bk .tn-tr > span {position:relative;top:-3px;}
@@ -469,6 +469,9 @@ article .infos {padding:40px 20px 0 20px;}
     -o-transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+
+.infos .i-rbk .reviews .rv-ans .rv-form {display: block;}
+.infos .i-rbk .reviews .rv-ans .rv-sc {text-align: center;font: 15px/40px Handbook-bold;color: #4c4c4c;text-transform: uppercase;width: 100%;display: none;}
 /*.reviews .n-add-but:hover {background-color:#b2d0d4;}*/
 .reviews.b-ha .rv-add-but {margin-top:40px;}
 .font-fix .rules .rv-add-but {line-height:41px;}

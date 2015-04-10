@@ -424,7 +424,7 @@ class Player extends Entity
     {
 
         $this->_lang =
-            \CountriesModel::instance()->isLang($lang)
+            \LanguagesModel::instance()->isLang($lang)
                 ? $lang
                 : \CountriesModel::instance()->defaultLang();
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
+use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -257,7 +257,7 @@ class Players extends \AjaxController
 
     public function changeLanguageAction($lang)
     {
-        if(!($lang=substr($lang,0,2)) || !(CountriesModel::instance()->isLang($lang))) {
+        if(!($lang=substr($lang,0,2)) || !(LanguagesModel::instance()->isLang($lang))) {
             $this->ajaxResponse(array(), 0, 'LANGUAGE_ERROR');
         } else if (!$this->session->get(Player::IDENTITY) || !$player=$this->session->get(Player::IDENTITY)) {
             $this->ajaxResponse(array(), 0, 'FRAUD');

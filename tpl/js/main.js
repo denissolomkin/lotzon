@@ -363,7 +363,14 @@ $(function(){
     var currentReview = {
         image: '',
         text: '',
-        id: '',
+        id: 0,
+    };
+
+    var answerReview = {
+        image: '',
+        text: '',
+        id: 0,
+        reviewId: null,
     };
 
     $(".reviews .rv-but-add").on('click', function() {
@@ -404,7 +411,6 @@ $(function(){
             });
         }
     });
-
         function initReviewUpload() {
 
             var image = $('.reviews .rv-image');
@@ -471,14 +477,58 @@ $(function(){
             }
     }
 
+
+    $(document).on('click', '.reviews .rv-ans .btn-ans', function() {
+
+        holder=$(this).parents('.rv-ans').first();
+
+        answerReview.text=$('#answer-review-text').text();
+        if(answerReview.text && !$(this).attr('data-disabled')) {
+            $(this).attr('data-disabled',true);
+            $.ajax({
+                url: "/review/save/",
+                method: 'POST',
+                async: true,
+                data: answerReview,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        answerReview.image = null;
+
+                        $('.rv-form',holder).hide();
+                        $('.rv-image',holder).css('background', '#e1ecee').css('opacity', '1');
+                        $('.rv-upld-img img',holder).attr('src', '/tpl/img/but-upload-review.png');
+                        $('.rv-sc', holder).fadeIn(200);
+
+                        window.setTimeout(function () {
+                            holder.fadeOut(200)
+                            window.setTimeout(function () {
+                                holder.remove();
+                            }, 200);
+                        }, 2400);
+
+                    } else {
+                        $(this).data('disabled',false);
+                        alert(data.message);
+                    }
+                },
+                error: function () {
+                    alert('Unexpected server error');
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.rv-i-ans', function(){
         var review = $(this).parents('.rv-item').first();
+        var answer = $('.rv-ans-tmpl').clone();
+        answerReview.reviewId=review.attr('data-id');
         $('.rv-ans').remove();
-        var answer = $('div.rv-ans-tmpl').clone();
-        $('.rv-usr-avtr').clone().prependTo(answer);
-        answer.attr('class',review.attr('class')).removeClass('rv-item').addClass('rv-ans rv-answer').find('[contenteditable]').attr('id','textControl').html(review.find('.rv-i-pl').text()+',&nbsp;');
+        $('.rv-usr-avtr').clone().prependTo($('.rv-form',answer));
+        answer.attr('class',review.attr('class')).removeClass('rv-item').addClass('rv-ans rv-answer');
+        answer.find('[contenteditable]').attr('id','answer-review-text').html(review.find('.rv-i-pl').text()+',&nbsp;');
         answer.insertAfter(review);
-        moveToEnd(document.getElementById("textControl"));
+        moveToEnd(document.getElementById("answer-review-text"));
     });
 
     $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
