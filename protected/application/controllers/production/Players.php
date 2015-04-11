@@ -331,7 +331,7 @@ class Players extends \AjaxController
             && $player->getGamesPlayed() >= \SettingsModel::instance()->getSettings('counters')->getValue('TEASER_CLICK_MIN_GAME')
             && $player->getDates('TeaserClick') - time() < \SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')){
                 if($player->checkDate('TeaserClick')) {
-                    $resp['callback'] = "if($('.teaser a[target=\"_blank\"] img').length){ var a=[]; $('.teaser a[target=\"_blank\"] img').parent().each(function(id, num) { a.push($(num).attr('href')); }); a = a [Math.floor(Math.random()*items.length)]; $(document).one('click',function(){ window.open(a,'_blank'); });}";
+                    $resp['callback'] = "if($('.teaser a[target=\"_blank\"] img').length){ var a=[]; $('.teaser a[target=\"_blank\"] img').parent().each(function(id, num) { a.push($(num).attr('href')); }); a = a [Math.floor(Math.random()*a.length)]; $(document).one('click',function(){ window.open(a,'_blank'); });}";
                 } else
                     $player->initDates();
             }

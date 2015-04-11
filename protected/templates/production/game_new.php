@@ -104,7 +104,7 @@
                         ' . $banner['script'];
                             $res .= '<!-- ' . $banner['title'] . ' -->
                         <div' .
-                        ($banner['chance'] AND !rand(0, $banner['chance'] - 1)?' class="teaser"':'') .'>'.$banner['div'].'</div>';
+                        (($banner['chance'] AND !rand(0, $banner['chance'] - 1))?' class="teaser"':'').'>'.$banner['div'].'</div>';
                             break;
                         }
                     }

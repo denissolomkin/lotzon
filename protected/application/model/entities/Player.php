@@ -324,18 +324,23 @@ class Player extends Entity
         return $this;
     }
 
-    public function getDates($key=false)
+    public function getDates($key = null, $format = null)
     {
         if($key){
 
             if(isset($this->_dates[$key])){
-                return $this->_dates[$key];
+                if (!is_null($format)) {
+                    return date($format, $this->_dates[$key]);
+                } else {
+                    return $this->_dates[$key];
+                }
             } else {
                 return false;
             }
 
         } else
             return $this->_dates;
+
     }
 
     public function setDateRegistered($dateRegistered)
