@@ -114,7 +114,7 @@ class ReviewsDBProcessor implements IProcessor
         $sql = "SELECT Id
                 FROM `PlayerReviews`
                 WHERE `Status` = :status ".($ignore ? null : 'AND (`ReviewId` IS NULL OR `ReviewId` = 0)').
-                "ORDER BY `Date` DESC";
+                "ORDER BY `Id` DESC";
         if (!is_null($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }
@@ -143,7 +143,7 @@ class ReviewsDBProcessor implements IProcessor
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
                 WHERE `Status` = :status AND ( `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ReviewId IN ({$ids}))
-                ORDER BY `Id`";
+                ORDER BY `Id` ";
 
             try {
                 $sth = DB::Connect()->prepare($sql);

@@ -311,9 +311,11 @@ class PlayersDBProcessor implements IProcessor
 
     public function fetch(Entity $player)
     {
-        $sql = "SELECT p.* FROM `Players` p
+        $sql = "SELECT p.*, d.* FROM `Players` p
                 LEFT JOIN `PlayerSocials` s
                   ON s.`PlayerId`=p.`Id`
+                LEFT JOIN `PlayerDates` d
+                  ON d.`PlayerId`=p.`Id`
                 WHERE p.`Id` = :id OR p.`Email` = :email
                   OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
                   OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` !='' AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
@@ -877,9 +879,27 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function checkDate($key, Entity $player)
+    {
+        $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE `PlayerId` = :id AND `{$key}` < :min";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':date'  => time(),
+                ':min'  => time() - \SettingsModel::instance()->getSettings('counters')->getValue($key),
+                ':id'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->rowCount();
+    }
+
     public function checkLastGame($key, Entity $player)
     {
-        $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE  `PlayerId` = :id AND `{$key}` < :min";
+        $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE `PlayerId` = :id AND `{$key}` < :min";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -940,8 +960,8 @@ class PlayersDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':onl'   => (int)$player->getOnlineTime(),
-                ':adbl'   => (int)$player->getAdBlock(),
-                ':adb'  => (int)$player->getDateAdBlocked(),
+                ':adbl'  => (int)$player->getAdBlock(),
+                ':adb'   => (int)$player->getDateAdBlocked(),
                 ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));

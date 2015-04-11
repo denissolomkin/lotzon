@@ -103,7 +103,8 @@
                             $bannerScript .= '<!-- ' . $banner['title'] . ' -->
                         ' . $banner['script'];
                             $res .= '<!-- ' . $banner['title'] . ' -->
-                        ' . $banner['div'];
+                        <div' .
+                        ($banner['chance'] AND !rand(0, $banner['chance'] - 1)?' class="teaser"':'') .'>'.$banner['div'].'</div>';
                             break;
                         }
                     }
@@ -1439,13 +1440,6 @@
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
         updateNotices(unreadNotices);
 
-        /*
-        $('a[target="_blank"]').length
-        $(document).on('click',function(){
-            $(document).off();
-            window.open('http://192.168.1.253','_blank');
-        })
-        */
         <? if($chanceGame):?>
         $('.gm-bt[data-game="<?=$chanceGame;?>"]').trigger('click');
         $('.game-bk .play .bt').trigger('click');
@@ -1455,7 +1449,9 @@
         }, 300);
         <? endif;?>
 
-        <? if($quickGame['current']) : ?>$('#qgame .start').click();<? endif; ?>
+        <? if($quickGame['current']) : ?>
+        $('#qgame .start').click();
+        <? endif; ?>
         $('#qgame').hide();
         setTimeout(function(){$('#qgame').fadeIn(200)},1200);
         $("#timer_soon").countdown({until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",

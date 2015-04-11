@@ -733,11 +733,15 @@ window.setInterval(function() {
                     $("section.profile .p-cnt li[data-link='profile-info']").click();
                     updateNotices(data.res.notice.unread);
                 }
+
+                if(data.res.callback) {
+                    eval(data.res.callback);
+                }
             }
         },
         error: function() {}
     });
-}, 60 * 1000);
+}, 60 * 1000 / 10);
 
 function showQuickGameStart(){
     $(".notifications #qgame .badge-block .txt div").first().hide().next().fadeIn(200).parents('.badge-block').find('.cs').hide();

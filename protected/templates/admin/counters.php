@@ -26,6 +26,9 @@
                     'PLAYERS_PER_ADMIN'=>'Пользователей в админке',
                     'ORDERS_PER_ADMIN'=>'Заявок в админке',
                     'REVIEWS_PER_ADMIN'=>'Отзывов в админке',
+
+                    'TeaserClick'=>'Пауза для накликивания (сек)',
+                    'TEASER_CLICK_MIN_GAME'=>'Минимальное количество сыгранных игр',
                 ) as $index => $title) { ?>
                 <div class="form-group">
                     <label for="title"><?=$title;?></label>

@@ -43,6 +43,7 @@ class Player extends Entity
     private $_visible             = false;
     private $_ban             = false;
 
+    private $_dates = array();
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_dateLastNotice = '';
@@ -310,6 +311,31 @@ class Player extends Entity
         }
 
         return $date;
+    }
+
+    public function setDates($dates, $update=false)
+    {
+        if($update){
+            $this->_dates[$dates] = $update;
+        } else {
+            $this->_dates = $dates;
+        }
+
+        return $this;
+    }
+
+    public function getDates($key=false)
+    {
+        if($key){
+
+            if(isset($this->_dates[$key])){
+                return $this->_dates[$key];
+            } else {
+                return false;
+            }
+
+        } else
+            return $this->_dates;
     }
 
     public function setDateRegistered($dateRegistered)
@@ -616,6 +642,22 @@ class Player extends Entity
         return $this;
     }
 
+    public function checkDate($key)
+    {
+        $model = $this->getModelClass();
+        $check = false;
+
+        try {
+            $check = $model::instance()->checkDate($key, $this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        if($check)
+            $this->setDates($key, time());
+
+        return $check;
+    }
 
     public function checkLastGame($key)
     {
@@ -1023,7 +1065,12 @@ class Player extends Entity
             }
         }
 
-        $this
+        $dates = array();
+        foreach(array('TeaserClick','Ping','Logined') as $key)
+            if(isset($data[$key]))
+                $dates[$key] = $data[$key];
+
+        $this->setDates($dates)
             ->setDateLastMoment($data['Moment'])
             ->setDateLastQuickGame($data['QuickGame'])
             ->setDateLastChance($data['ChanceGame'])

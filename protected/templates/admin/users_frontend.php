@@ -630,8 +630,8 @@
 <script>
 
 <? $langs=array();
-foreach(\CountriesModel::instance()->getLangs() as $lang)
-    $langs[$lang]=$lang;?>
+foreach(\LanguagesModel::instance()->getList() as $lang)
+    $langs[$lang->getCode()]=$lang->getCode();?>
 langs=<?=json_encode($langs);?>;
 
 <? $countries=array();
