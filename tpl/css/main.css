@@ -750,12 +750,12 @@ article .infos {padding:40px 20px 0 20px;}
 .profile .yashare-auto-init .b-share__handle.b-share-btn__twitter > span {background-position:-122px 3px;}
 
 
-.profile-bonuses .rp-bk .rp-sl-bk > a {float:right;width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social-new.png");background-repeat:no-repeat;}
-.profile-bonuses .rp-bk .rp-sl-bk > a:hover {background-image:url("../img/bg-profile-repost-social-hover-new.png");}
-.profile-bonuses .rp-bk .rp-sl-bk .tw {background-position:-122px 3px;margin-left:38px;}
-.profile-bonuses .rp-bk .rp-sl-bk .gp {background-position:-80px 2px;margin-left:40px;}
-.profile-bonuses .rp-bk .rp-sl-bk .vk {background-position:-31px 3px;margin-left:40px;}
-.profile-bonuses .rp-bk .rp-sl-bk .fb {background-position:11px 1px;margin-left:38px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes > div {float:right;width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social-new.png");background-repeat:no-repeat;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes > div:hover {background-image:url("../img/bg-profile-repost-social-hover-new.png");}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_twitter {background-position:-122px 3px;margin-left:38px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_plusone {background-position:-80px 2px;margin-left:40px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_vkontakte {background-position:-31px 3px;margin-left:40px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_facebook {background-position:11px 1px;margin-left:38px;}
 
 
 
