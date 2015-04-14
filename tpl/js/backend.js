@@ -741,7 +741,7 @@ window.setInterval(function() {
         },
         error: function() {}
     });
-}, 60 * 1000 / 10);
+}, 60 * 1000);
 
 function showQuickGameStart(){
     $(".notifications #qgame .badge-block .txt div").first().hide().next().fadeIn(200).parents('.badge-block').find('.cs').hide();

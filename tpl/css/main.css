@@ -731,7 +731,7 @@ article .infos {padding:40px 20px 0 20px;}
 .profile-bonuses .rp-bk {display:table;width:100%;margin-top:50px;}
 .profile-bonuses .rp-bk.ref {margin-top:20px;}
 .profile-bonuses .rp-bk .rp-txt {display:table-cell;width:400px;font:18px/19px Handbook-regular;color:#000;}
-.profile-bonuses .rp-bk .rp-sl-bk {display:table-cell;vertical-align:middle;text-align:right;padding-right:90px;}
+.profile-bonuses .rp-bk .rp-sl-bk {display:table-cell;vertical-align:middle;text-align:right;}
 .profile-bonuses .rp-bk.ref .rp-sl-bk {padding:0;}
 
 
@@ -750,13 +750,13 @@ article .infos {padding:40px 20px 0 20px;}
 .profile .yashare-auto-init .b-share__handle.b-share-btn__twitter > span {background-position:-122px 3px;}
 
 
-.profile-bonuses .rp-bk .rp-sl-bk .social-likes > div {float:right;width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social-new.png");background-repeat:no-repeat;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes > div {float:right;width:30px;height:30px;display:block;background-image:url("../img/bg-profile-repost-social-new.png");background-repeat:no-repeat;cursor: pointer;}
 .profile-bonuses .rp-bk .rp-sl-bk .social-likes > div:hover {background-image:url("../img/bg-profile-repost-social-hover-new.png");}
-.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_twitter {background-position:-122px 3px;margin-left:38px;}
-.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_plusone {background-position:-80px 2px;margin-left:40px;}
-.profile-bonuses .rp-bk .rp-sl-bk .social-likes .vk {background-position:-31px 3px;margin-left:40px;}
-.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_facebook {background-position:11px 1px;margin-left:38px;}
-.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_odnoklassniki {background-position:-155px 1px;margin-left:38px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_twitter {background-position:-122px 3px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_plusone {background-position:-80px 2px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .vk {background-position:-31px 3px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_facebook {background-position:11px 1px;}
+.profile-bonuses .rp-bk .rp-sl-bk .social-likes .social-likes__widget_odnoklassniki {background-position:-155px 1px;}
 
 
 

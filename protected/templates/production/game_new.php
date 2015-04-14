@@ -700,7 +700,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt"><?=$MUI->getText('text-post-referal')?> +<?=SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> <?=$MUI->getText('label-points')?></div>
+                                    <div class="rp-txt"><?=$MUI->getText('text-post-referal')?> +<?=SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> <?=$MUI->getText('label-points')?> <?=$MUI->getText('text-post-referal-after')?></div>
                                     <div class="rp-sl-bk">
 
                                     <div class="social-likes social-likes_vertical" data-counters="no" data-url="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" data-title="Играл и буду играть">
@@ -752,11 +752,11 @@
                                     </div>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Никнейм"><?=$MUI->getText('placeholder-nickname')?></div>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-nickname')?>"><?=$MUI->getText('placeholder-nickname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
-                                            <div class="ph" data-default="Фамилия"><?=$MUI->getText('placeholder-surname')?></div>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-surname')?>"><?=$MUI->getText('placeholder-surname')?></div>
                                             <input autocomplete="off" spellcheck="false" type="text" name="surname" data-valid="<?=$player->getSurname()?>" value="<?=$player->getSurname()?>"/>
                                         </div>
                                         <div class="pi-inp-bk">

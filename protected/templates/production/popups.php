@@ -481,13 +481,13 @@
                                 </div>
                             <? } */ ?>
                         </div>
-                        <? /* if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                        <? /* if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?> <? } */ ?>
                             <div class="pz-more-bt"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl"><?=$MUI->getText('button-hide')?></div>
                                 <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
-                        <? } */ ?>
+
                     </div>
 
                     <!-- CASH BLOCK -->
@@ -498,21 +498,21 @@
                         </div>
                         <div class="tb">
                             <? /* if(is_array($playerTransactions[LotterySettings::CURRENCY_MONEY]))
-                                foreach ($playerTransactions[LotterySettings::CURRENCY_MONEY] as $transaction) { ?>
+                                foreach ($playerTransactions[LotterySettings::CURRENCY_MONEY] as $transaction) { ?><? }
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=Common::viewNumberFormat($transaction->getSum())?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
-                            <? } */ ?>
+                            */ ?>
                         </div>
                         <? /* if (count($playerTransactions[LotterySettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                        <? } */ ?>
                             <div class="pz-more-bt"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl"><?=$MUI->getText('button-hide')?></div>
                                 <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
-                        <? } */ ?>
                     </div>
                 </div>
             </section>

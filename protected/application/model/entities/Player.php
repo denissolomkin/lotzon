@@ -14,9 +14,12 @@ class Player extends Entity
     // 3 months
     const AUTOLOGIN_COOKIE_TTL = 7776000;
 
-
     const AVATAR_WIDTH  = 160;
     const AVATAR_HEIGHT = 160;
+
+    static $MASK = array(
+        'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Logined'),
+        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','Order','Review','CookieId'));
 
     private $_id         = 0;
     private $_email      = '';
@@ -311,36 +314,6 @@ class Player extends Entity
         }
 
         return $date;
-    }
-
-    public function setDates($dates, $update=false)
-    {
-        if($update){
-            $this->_dates[$dates] = $update;
-        } else {
-            $this->_dates = $dates;
-        }
-
-        return $this;
-    }
-
-    public function getDates($key = null, $format = null)
-    {
-        if($key){
-
-            if(isset($this->_dates[$key])){
-                if (!is_null($format)) {
-                    return date($format, $this->_dates[$key]);
-                } else {
-                    return $this->_dates[$key];
-                }
-            } else {
-                return false;
-            }
-
-        } else
-            return $this->_dates;
-
     }
 
     public function setDateRegistered($dateRegistered)
@@ -1046,14 +1019,53 @@ class Player extends Entity
         return $this;
     }
 
-    public function getCounters()
+    public function initCounters($data=null)
     {
-        return $this->_counters;
+
+        if(!$data) {
+            $model = $this->getModelClass();
+
+            try {
+                $data = $model::instance()->initCounters($this);
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+
+            }
+        }
+
+        $counters = array();
+        foreach(self::$MASK['counters'] as $key)
+            if(isset($data['Counter'.$key]))
+                $counters[$key] = $data['Counter'.$key];
+            elseif(isset($data[$key]))
+                $counters[$key] = $data[$key];
+
+        $this->setCounters($counters);
+
+        return $this;
     }
 
-    public function setCounters($counters)
+    public function getCounters($key=null)
     {
-        return $this->_counters=$counters;
+        if($key){
+            if(isset($this->_counters[$key])){
+                return $this->_counters[$key];
+            } else {
+                return false;
+            }
+        } else
+            return $this->_counters;
+    }
+
+    public function setCounters($counters, $update=false)
+    {
+        if($update){
+            $this->_counters[$counters] = $update;
+        } else {
+            $this->_counters = $counters;
+        }
+
+        return $this;
     }
 
     public function initDates($data=null)
@@ -1071,7 +1083,7 @@ class Player extends Entity
         }
 
         $dates = array();
-        foreach(array('TeaserClick','Ping','Logined') as $key)
+        foreach(self::$MASK['dates'] as $key)
             if(isset($data[$key]))
                 $dates[$key] = $data[$key];
 
@@ -1087,19 +1099,34 @@ class Player extends Entity
         return $this;
     }
 
-    public function initCounters()
+    public function setDates($dates, $update=false)
     {
-        $model = $this->getModelClass();
-
-        try {
-            $counters=$model::instance()->initCounters($this);
-            $this->setCounters($counters);
-        } catch (ModelException $e) {
-            throw new EntityException($e->getMessage(), $e->getCode());
-
+        if($update){
+            $this->_dates[$dates] = $update;
+        } else {
+            $this->_dates = $dates;
         }
 
-        return $counters;
+        return $this;
+    }
+
+    public function getDates($key = null, $format = null)
+    {
+        if($key){
+
+            if(isset($this->_dates[$key])){
+                if (!is_null($format)) {
+                    return date($format, $this->_dates[$key]);
+                } else {
+                    return $this->_dates[$key];
+                }
+            } else {
+                return false;
+            }
+
+        } else
+            return $this->_dates;
+
     }
 
     public function updateCookieId($cookie)
@@ -1508,21 +1535,8 @@ class Player extends Entity
                 $this->initDates($data);
             }
 
-            if (isset($data['CountIp'])) {
-                $this->setCounters(array(
-                    'Notice' => $data['CountNotice'],
-                    'Note' => $data['CountNote'],
-                    'AdBlock' => $data['CountAdBlock'],
-                    'Log' => $data['CountLog'],
-                    'Ip' => $data['CountIp'],
-                    'MyReferal' => $data['CountMyReferal'],
-                    'Referal' => $data['CountReferal'],
-                    'MyInviter' => $data['CountMyInviter'],
-                    'Inviter' => $data['CountInviter'],
-                    'Order' => ($data['CountMoneyOrder']+$data['CountShopOrder']),
-                    'Review' => $data['CountReview'],
-                    'CookieId' => $data['CountCookieId'],
-                ));
+            if (isset($data['MyReferal'])) {
+                $this->initCounters($data);
             }
         }
 

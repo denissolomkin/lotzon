@@ -1887,7 +1887,7 @@ function previewQuickGamePrize(prize) {
             return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><img src="/filestorage/shop/' + prize.s + '"></div>';
             break;
         default:
-            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? getCurrency(prize.v) : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+getCurrency()+'</small>':'' )+'</span></div>';
+            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? getCurrency(prize.v,1) : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+getCurrency()+'</small>':'' )+'</span></div>';
             break;
     }
 }
