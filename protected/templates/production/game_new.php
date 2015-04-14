@@ -29,7 +29,7 @@
         <meta name="twitter:title" content="<?=$seo['Title']?>">
         <meta name="twitter:description" content="Играл, играю и буду играть.">
         <!-- Twitter summary card with large image must be at least 280x150px -->
-        <meta name="twitter:image:src" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
+        <meta name="twitter:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Open Graph data -->
         <meta property="og:title" content="<?=$seo['Title']?>" />
@@ -704,13 +704,15 @@
                                     <div class="rp-sl-bk">
 
                                     <div class="social-likes social-likes_vertical" data-counters="no" data-url="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" data-title="Играл и буду играть">
+                                        <div href="javascript:void(0)" class="vk vk-share"></div>
                                         <div class="facebook" title="Поделиться ссылкой на Фейсбуке"></div>
                                         <div class="twitter" data-related="Играл и буду играть" title="Поделиться ссылкой в Твиттере"></div>
-                                        <div class="vkontakte" title="Поделиться ссылкой во Вконтакте"></div>
+                                        <!--div class="vkontakte" title="Поделиться ссылкой во Вконтакте"></div!-->
                                         <!--div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках"></div!-->
                                         <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе"></div>
 
                                     </div>
+
                                     <script>
                                         $('.social-likes').on('popup_closed.social-likes', function(event, service) {
                                             socialRefPost(service);

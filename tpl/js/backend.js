@@ -572,7 +572,7 @@ function socialRefPost(socialName) {
 
 function socialSuccessPost(successFunction, failFunction, errorFunction) {
     $.ajax({
-        url: "/players/social/",
+        url: "/players/social/vkontakte",
         method: 'POST',
         data: {},
         async: true,
