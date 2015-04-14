@@ -708,7 +708,7 @@
                                         <div class="facebook" title="Поделиться ссылкой на Фейсбуке"></div>
                                         <div class="twitter" data-related="Играл и буду играть" title="Поделиться ссылкой в Твиттере"></div>
                                         <!--div class="vkontakte" title="Поделиться ссылкой во Вконтакте"></div!-->
-                                        <!--div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках"></div!-->
+                                        <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках"></div>
                                         <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе"></div>
 
                                     </div>
