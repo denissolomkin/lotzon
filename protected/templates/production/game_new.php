@@ -473,13 +473,13 @@
                     </section>
                     <section class="rules">
                         <div class="sbk-tl-bk">
-                            <div class="sbk-tl"><?=$MUI->getText('title-rules')?></div>
+                            <div class="sbk-tl"><?=$MUI->getText('title-faq')?></div>
                         </div>
                         <div class="rules-ct">
                             <div class="win-tbl">
                                 <div class="c-l">
                                     <div class="wt-t">
-                                        <?=$MUI->getText('text-rules')?>
+                                        <?=$MUI->getText('text-faq-short')?>
                                     </div>
                                 </div>
                                 <ul class="c-r">
@@ -1396,24 +1396,25 @@
         var currency =  <?=json_encode($currency); ?>;
         var playerId   = <?=$player->getId()?>;
         var ws = 0;
+        var one = false;
         var texts = {
-            'CHEAT_GAME'      : 'Игра не может запускаться с нескольких открытых вкладок, пожалуйста, закройте лишние вкладки c игрой',
+            'CHEAT_GAME'        : 'Игра не может запускаться с нескольких открытых вкладок, пожалуйста, закройте лишние вкладки c игрой',
             'TIME_NOT_YET'      : 'Время игры еще не настало!',
             'GAME_NOT_ENABLED'  : 'Игра не доступна',
             'GAME_NOT_FOUND'    : 'Игра не найдена',
-            'INSUFFICIENT_FUNDS'    : 'На балансе недостаточно средств',
+            'INSUFFICIENT_FUNDS': 'На балансе недостаточно средств',
             'NICKNAME_BUSY'     : 'Ник уже занят',
-            'INVALID_PHONE_FORMAT'     : 'Неверный формат',
-            'INVALID_DATE_FORMAT'     : 'Неверный формат даты',
+            'INVALID_PHONE_FORMAT'  : 'Неверный формат',
+            'INVALID_DATE_FORMAT'   : 'Неверный формат даты',
             'MONEY_ORDER_COMPLETE'  : 'Денежные средства списаны и поступят на Ваш счет в течение 7 рабочих дней.',
-            'NOT_YOUR_MOVE' : 'Сейчас не Ваша очередь ходить',
+            'NOT_YOUR_MOVE'     : 'Сейчас не Ваша очередь ходить',
             'APPLICATION_DOESNT_EXISTS' : 'Потеря связи со стороны сервера, средства с баланса не списаны',
-            'CELL_IS_PLAYED' : 'Ячейка уже сыграла',
-            'ENOUGH_MOVES' : 'У Вас закончились ходы',
-            'SHIP_TOO_CLOSE' : 'Корабли расположены слишком близко',
+            'CELL_IS_PLAYED'    : 'Ячейка уже сыграла',
+            'ENOUGH_MOVES'      : 'У Вас закончились ходы',
+            'SHIP_TOO_CLOSE'    : 'Корабли расположены слишком близко',
             'ERROR_COORDINATES' : 'Неверные координаты',
-            'CHOICE_BET' : 'Выберите ставку',
-            'PLAY_ONE_MORE_TIME'      : 'Играть еще раз за {0} баллов',
+            'CHOICE_BET'        : 'Выберите ставку',
+            'PLAY_ONE_MORE_TIME': 'Играть еще раз за {0} баллов',
         };
 
         var quickGame = {};
