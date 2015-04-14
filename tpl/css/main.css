@@ -456,7 +456,7 @@ article .infos {padding:40px 20px 0 20px;}
     padding: 0 5px;}
 .infos .i-rbk .reviews .rv-ans .rv-usr-avtr{float:left;width: 40px;height: 40px}
 
-.infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans {display: none;font:14px/1 Handbook-regular;color:#00f;}
+.infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans {display: none;font:14px/1 Handbook-regular;color:#00f;position: absolute;margin-left: 5px;}
 .infos .i-rbk .reviews .rv-item .rv-i-tl .rv-i-ans:hover {cursor: pointer;text-decoration: underline;}
 .infos .i-rbk .reviews .rv-item:hover .rv-i-tl .rv-i-ans {display: inline;}
 .infos .i-rbk .reviews .rv-item .rv-i-txt {font:15px/17px Handbook-regular;color:#4f4f4f;padding-left: 65px;min-height: 30px;}
