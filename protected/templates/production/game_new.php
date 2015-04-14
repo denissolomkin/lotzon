@@ -688,7 +688,7 @@
                                     <div class="if-tl"><nobr><?=$MUI->getText('text-invite-friend', array($bonuses->getValue('bonus_email_invite'), $player->getInvitesCount()))?></nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
-                                            <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
+                                            <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-friend-email');?>" />
                                         </div>
                                         <div class="if-bt send-invite"><?=$MUI->getText('button-invite')?></div>
                                     </div>

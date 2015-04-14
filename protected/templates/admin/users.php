@@ -107,7 +107,7 @@
                         </td>
 
 
-                        <td class="country"><?=$player->getCountry()?></td>
+                        <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
                         <td class="nobr<?=($player->getReferer()?' danger':'')?>">
                             <?if($player->getReferer()) {?><div data-toggle="tooltip" data-placement="right" title="<?=$player->getReferer()?>" class=""><span class="label label-danger">!</span><?}?>
                             <?=$player->getDateRegistered('d.m.Y H:i')?>
@@ -135,9 +135,13 @@
                             <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
                         </td>
 
-                        <td <?=($player->getGamesPlayed()?'class="stats-trigger pointer success" data-id='.$player->getId().'"':'class="danger"')?>>
+                        <td <?=($player->getGamesPlayed()?'':'class="danger"')?>>
 
-                            <? if($player->getGamesPlayed()){?> <span><i class="fa fa-gift <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"></i><?=$player->getGamesPlayed()?></span><?}?>
+                            <? if($player->getGamesPlayed()){?>
+                            <span class="stats-trigger pointer success" data-id="<?=$player->getId()?>">
+                                <i class="fa fa-gift <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"></i><?=$player->getGamesPlayed()?>
+                            </span>
+                            <?}?>
 
                             <? if($player->getDates('QuickGame')){?>
                             <i class="fa fa-puzzle-piece <?=
@@ -162,12 +166,14 @@
 
                             <? if($player->getCounters('WhoMore')){?>
                                 <span <?=($player->getCounters('WhoMore')*100 > SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MAX_WIN') || $player->getCounters('WhoMore')*100 < SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MIN_WIN')? 'class="text-danger"' : '' )?>>
-                                    <i class="fa fa-sort-numeric-asc"></i><?=ceil($player->getCounters('WhoMore')*100).'%'?>
+                                    <nobr><i class="fa fa-sort-numeric-asc"></i><?=ceil($player->getCounters('WhoMore')*100).'%'?></nobr>
                                 </span>
                             <?}?>
 
                             <? if($player->getCounters('SeaBattle')){?>
-                                <i class="fa fa-ship"></i><?=ceil($player->getCounters('SeaBattle')*100).'%'?>
+                                <span <?=($player->getCounters('SeaBattle')*100 > SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MAX_WIN') || $player->getCounters('SeaBattle')*100 < SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MIN_WIN')? 'class="text-danger"' : '' )?>>
+                                    <nobr><i class="fa fa-ship"></i><?=ceil($player->getCounters('SeaBattle')*100).'%'?></nobr>
+                                </span>
                             <?}?>
                         </td>
                         <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?>
