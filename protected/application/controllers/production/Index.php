@@ -146,6 +146,7 @@ class Index extends \SlimController\SlimController
             'tickets'     => TicketsModel::instance()->getPlayerUnplayedTickets($player),
             'MUI'         => StaticTextsModel::instance()->setLang($this->lang),
             'layout'      => false,
+            'bonuses'     => SettingsModel::instance()->getSettings('bonuses'),
             'lotteries'   => LotteriesModel::instance()->getPublishedLotteriesList(SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
             'playerPlayedLotteries' => LotteriesModel::instance()->getPlayerPlayedLotteries($player->getId(),SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
             'seo'         => $seo,

@@ -27,7 +27,7 @@ class StaticTextsModel extends Model
         return $this;
     }
 
-    public function getText($key)
+    public function getText($key, $args=null)
     {
         if(!$this->_list)
             $this->_list=$this->getList();
@@ -39,6 +39,10 @@ class StaticTextsModel extends Model
             $text = $this->_list[$key]->getText($this->_lang);
         } else
             $text = $key;
+
+        if(isset($args)){
+            $text=call_user_func_array('sprintf', array_merge((array)(str_replace(array('{0}','{s}'),array('%d','%s'),$text)), (array)$args));
+        }
 
         if(\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug']){
             $text="<div class='debug text-trigger' data-key='{$key}'>{$text}</div>";

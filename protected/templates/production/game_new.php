@@ -685,7 +685,7 @@
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$MUI->getText('text-profile-bonus')?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr><?=$MUI->getText('text-invite-friend')?> +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_email_invite')?> <?=$MUI->getText('label-points')?></nobr><br/><nobr>(<?=$MUI->getText('text-invites-on-week')?> <span class="invites-count"><?=$player->getInvitesCount()?></span>)</nobr></div>
+                                    <div class="if-tl"><nobr><?=$MUI->getText('text-invite-friend', array($bonuses->getValue('bonus_email_invite'), $player->getInvitesCount()))?></nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="Email друга" />
@@ -700,7 +700,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt"><?=$MUI->getText('text-post-referal')?> +<?=SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')?> <?=$MUI->getText('label-points')?> <?=$MUI->getText('text-post-referal-after')?></div>
+                                    <div class="rp-txt"><?=$MUI->getText('text-post-referal', $bonuses->getValue('bonus_social_post'))?></div>
                                     <div class="rp-sl-bk">
 
                                     <div class="social-likes social-likes_vertical" data-counters="no" data-url="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" data-title="Играл и буду играть">
@@ -722,7 +722,7 @@
                                     </div>
                                 </div>
                                 <div class="rp-bk ref">
-                                    <div class="rp-txt"><?=$MUI->getText('text-register-by-link')?> +<?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_referal_invite')?> <?=$MUI->getText('label-points')?><br><span style="font-size: 15px;"><span style="color:red">Внимание!</span> Приглашать участников через CAP системы (буксы) категорически запрещено! Баллы за такие приглашения не начисляются.</span></div>
+                                    <div class="rp-txt"><?=$MUI->getText('text-register-by-link', $bonuses->getValue('bonus_referal_invite'));?></div>
                                     <div class="rp-sl-bk">http://lotzon.com/?ref=<?=$player->getId()?></div>
                                 </div>
                             </section>
@@ -739,7 +739,7 @@
                                         </div>
                                         <div class="pi-cs-bk">
                                             <? if(count($player->getAdditionalData())<5) {?>
-                                            <div class="txt"><?=$MUI->getText('text-link-social')?> <?=\SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile')?> <?=$MUI->getText('label-points')?>.</div>
+                                            <div class="txt"><?=$MUI->getText('text-link-social', $bonuses->getValue('bonus_social_profile'))?></div>
                                             <? } ?>
                                             <? $socials=array('Facebook'=>'fb','Vkontakte'=>'vk', 'Odnoklassniki'=>'ok','Google'=>'gp','Twitter'=>'tw' );
                                             foreach($socials as $key=>$class)
