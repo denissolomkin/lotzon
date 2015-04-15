@@ -709,7 +709,7 @@
                                         <div class="twitter" data-related="Играл и буду играть" title="Поделиться ссылкой в Твиттере"></div>
                                         <!--div class="vkontakte" title="Поделиться ссылкой во Вконтакте"></div!-->
                                         <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках"></div>
-                                        <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе"></div>
+                                        <!--div class="plusone" title="Поделиться ссылкой в Гугл-плюсе"></div-->
 
                                     </div>
 
@@ -907,18 +907,18 @@
                     <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
                 </div>
 
-                <div class="td slide-item">
+                <!--div class="td slide-item">
                     <div class="gm-if-bk">
                         <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
                         <div class="r"></div>
                     </div>
                     <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
-                </div>
+                </div-->
 
             </div>
-                <div class="clear"></div>
+                <!--div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
-                <div name="next" class="navy next-slide"></div>
+                <div name="next" class="navy next-slide"></div-->
 
             </div>
 
@@ -1153,7 +1153,7 @@
                                         <?=$onlineGames['SeaBattle']->getDescription($player->getLang());?>
                                     </div>
                                     <div data-game="Mines">
-                                        <?=$onlineGames['SeaBattle']->getDescription($player->getLang());?>
+                                        <?=$onlineGames['Mines']->getDescription($player->getLang());?>
                                     </div>
                                 </div>
 

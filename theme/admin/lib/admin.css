@@ -36,7 +36,7 @@ vertical-align: middle;}
 }
 }
 .contact-information{position: relative}
-.social-holder{position: absolute;right: 0;top: 0;padding: 4px;background: inherit;}
+.social-holder{position: absolute;right: 0;top: 0;padding: 8px 4px 0 4px;background: inherit;}
 .games-holder{position: absolute;right: 5px;padding: 0 5px;background: inherit;}
 .metal-gradient .fa{
     font-size: 56px;

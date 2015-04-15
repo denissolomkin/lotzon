@@ -45,7 +45,7 @@
                                 <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
 
                             </div>
-                            <div style="position: relative;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
+                            <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
                                 <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
                                 <?=$player->getCountry()?>
                             </div>
@@ -256,7 +256,7 @@
                                 <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
 
                             </div>
-                            <div style="position: relative;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
+                            <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
                                 <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
                                 <?=$player->getCountry()?>
                             </div>
