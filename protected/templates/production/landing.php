@@ -113,7 +113,7 @@
                         </div>
                         <a href="javascript:void(0)" class="h-b-c-bhg to-slide" data-slide="2"><span class="h-b-c-bhg_span"><?=$MUI->getText('button-how-play')?></span></a>
                         <div class="h-b-c-lg">
-                            <div class="h-b-c-lg-t"><?=$MUI->getText('label-lottery-from')?><?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
+                            <div class="h-b-c-lg-t"><?=$MUI->getText('label-lottery-from')?><br/><?=($lastLottery ? date('d.m.Y', $lastLottery->getDate()) : '')?></div>
                             <ul class="h-b-c-lg_ul">
                                 <? if ($lastLottery) { ?>
                                     <? foreach ($lastLottery->getCombination() as $num) { ?>
