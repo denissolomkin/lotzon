@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice, \NotesModel, \Note, \Session2, \Admin;
+use \Application, \PrivateArea,  \EntityException, \Player, \PlayersModel, \ModelException, \LotteriesModel, \TransactionsModel, \Transaction, \NoticesModel, \Notice, \NotesModel, \Note, \Session2, \Admin;
 use \LotterySettings, \ShopOrdersModel, \MoneyOrderModel, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
@@ -270,7 +270,13 @@ class Users extends PrivateArea
                     'Nicname' => $player->getNicName(),
                     'Name' => $player->getName(),
                     'Surname' => $player->getSurname(),
+                    'Birthday' => $player->getBirthday()?$player->getBirthday('d.m.Y'):'',
+                    'Phone' => $player->getPhone()?:'',
+                    'Qiwi' => $player->getQiwi()?:'',
+                    'YandexMoney' => $player->getYandexMoney()?:'',
+                    'WebMoney' => $player->getWebMoney()?:'',
                     'Country' => $player->getCountry(),
+                    'Lang' => $player->getLang(),
                 );
 
             } catch (ModelException $e) {
@@ -295,13 +301,35 @@ class Users extends PrivateArea
             $player = new Player;
             $player->setId($playerId)->fetch();
             try {
+
+                if ($this->request()->post('bd') && (!strtotime($this->request()->post('bd')) || !preg_match('/[0-3][0-9].[0-1][0-2].[1,2][0-9][0-9]{2}/', $this->request()->post('bd')))) {
+                    throw new EntityException("INVALID_DATE_FORMAT", 400);
+                }
+
+                if($this->request()->post('phone'))
+                    $player->setPhone($this->request()->post('phone'));
+                if($this->request()->post('qiwi'))
+                    $player->setQiwi($this->request()->post('qiwi'));
+                if($this->request()->post('webmoney'))
+                    $player->setWebMoney($this->request()->post('webmoney'));
+                if($this->request()->post('yandexmoney'))
+                    $player->setYandexMoney($this->request()->post('yandexmoney'));
+                if($this->request()->post('bd'))
+                    $player->setBirthday(strtotime($this->request()->post('bd')));
+
                 $player->setNicname($this->request()->post('Nicname'))
                     ->setName($this->request()->post('Name'))
                     ->setSurName($this->request()->post('Surname'))
                     ->setCountry($this->request()->post('Country'))
+                    ->setLang($this->request()->post('Lang'))
                     ->update();
+
             } catch (EntityException $e){
-                $this->ajaxResponse(array(), 0, $e->getMessage());
+                die(json_encode(array(
+                    'status'  => 0,
+                    'message' => $e->getMessage(),
+                    'data'    => array(),
+                    )));
             }
             if ($pwd = $this->request()->post('Password')) {
                 $pwd=trim($pwd);

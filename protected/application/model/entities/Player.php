@@ -1003,7 +1003,7 @@ class Player extends Entity
                 }
 
                 if ($this->getWebMoney()){
-                    if(!preg_match('/^[RZUB][0-9]{12}$/', $this->getWebMoney()))
+                    if(!preg_match('/^[RZUBE][0-9]{12}$/', $this->getWebMoney()))
                         throw new EntityException("INVALID_WEBMONEY_FORMAT", 400);
                     $this->checkWebMoney();
                 }

@@ -205,9 +205,11 @@ class Players extends \AjaxController
             $player = $this->session->get(Player::IDENTITY);
 
             try {
-                if ($this->request()->post('bd') && !strtotime($this->request()->post('bd'))) {
+
+                if ($this->request()->post('bd') && (!strtotime($this->request()->post('bd')) || !preg_match('/^[0-3][0-9].[0-1][0-2].[1,2][0-9][0-9]{2}$/', $this->request()->post('bd')))) {
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
+
                 if(!$player->getPhone() && $this->request()->post('phone'))
                     $player->setPhone($this->request()->post('phone'));
                 if(!$player->getQiwi() && $this->request()->post('qiwi'))
@@ -230,6 +232,29 @@ class Players extends \AjaxController
 
                 $this->session->set(Player::IDENTITY, $player);
             } catch (EntityException $e){
+
+                /* rollback */
+                switch($e->getMessage()){
+                    case 'INVALID_DATE_FORMAT':
+                        $player->setBirthday(null);
+                        break;
+                    case 'INVALID_PHONE_FORMAT':
+                    case 'PHONE_BUSY':
+                        $player->setPhone(null);
+                        break;
+                    case 'INVALID_QIWI_FORMAT':
+                    case 'QIWI_BUSY':
+                        $player->setQiwi(null);
+                        break;
+                    case 'INVALID_WEBMONEY_FORMAT':
+                    case 'WEBMONEY_BUSY':
+                        $player->setWebMoney(null);
+                        break;
+                    case 'INVALID_YANDEXMONEY_FORMAT':
+                    case 'YANDEXMONEY_BUSY':
+                        $player->setYandexMoney(null);
+                        break;
+                }
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
             if ($pwd = $this->request()->post('password')) {

@@ -1127,7 +1127,12 @@ $('.profile-trigger').on('click', function() {
                 '<div>'+
                 '<div class="input-group"><span class="input-group-addon">Ник</span><input type="text" class="form-control" name="Nicname" placeholder="Ник" value="'+user.Nicname+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Имя</span><input type="text" class="form-control" name="Name" placeholder="Имя" value="'+user.Name+'"></div>' +
-                '<div class="input-group"><span class="input-group-addon">Фамилия</span><input type="text" class="form-control" name="Surname" placeholder="Фамилия" value="'+user.Surname+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">Фамилия</span><input type="text" class="form-control" name="Surname" placeholder="Surname" value="'+user.Surname+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">День рождения</span><input type="text" class="form-control" name="bd" placeholder="День рождения" value="'+user.Birthday+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">Телефон</span><input type="text" class="form-control" name="phone" placeholder="Телефон" value="'+user.Phone+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">Qiwi</span><input type="text" class="form-control" name="qiwi" placeholder="Qiwi" value="'+user.Qiwi+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">WebMoney</span><input type="text" class="form-control" name="webmoney" placeholder="WebMoney" value="'+user.WebMoney+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">YandexMoney</span><input type="text" class="form-control" name="yandexmoney" placeholder="YandexMoney" value="'+user.YandexMoney+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Страна</span>' +
                 '<select class="form-control" name="Country">';
 

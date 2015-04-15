@@ -1547,7 +1547,7 @@
         $('[type="tel"][name="qiwi"]').inputmasks(maskOpts);
         $('[type="text"][name="bd"]').inputmask("d.m.y",{autoUnmask: false});
         $('[type="text"][name="yandexmoney"]').inputmask('Regex', {regex: "41001[0-9]{7,10}$"});
-        $('[type="text"][name="webmoney"]').inputmask('Regex', {regex: "[RZBU][0-9]{12}$"});
+        $('[type="text"][name="webmoney"]').inputmask('Regex', {regex: "[RZBUE][0-9]{12}$"});
 
 
         $("#timer_soon").countdown('resume');
