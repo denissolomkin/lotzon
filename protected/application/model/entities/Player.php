@@ -39,10 +39,10 @@ class Player extends Entity
     private $_agent     = '';
     private $_referer     = '';
 
-    private $_phone      = '';
-    private $_yandexMoney     = '';
-    private $_qiwi       = '';
-    private $_webMoney   = '';
+    private $_phone      = null;
+    private $_yandexMoney = null;
+    private $_qiwi       = null;
+    private $_webMoney   = null;
     private $_birthday   = '';
 
     private $_favoriteCombination = array();
@@ -997,13 +997,13 @@ class Player extends Entity
                 }
 
                 if ($this->getYandexMoney()){
-                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getYandexMoney()))
+                    if(!preg_match('/^41001[0-9]{7,10}$/', $this->getYandexMoney()))
                         throw new EntityException("INVALID_YANDEXMONEY_FORMAT", 400);
                     $this->checkYandexMoney();
                 }
 
                 if ($this->getWebMoney()){
-                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getWebMoney()))
+                    if(!preg_match('/^[RZUB][0-9]{12}$/', $this->getWebMoney()))
                         throw new EntityException("INVALID_WEBMONEY_FORMAT", 400);
                     $this->checkWebMoney();
                 }

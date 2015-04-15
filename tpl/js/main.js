@@ -957,7 +957,7 @@ $(function(){
         updatePlayerProfile(playerData,
             function(data) {
                 $('input[name="password"]',form).val('');
-                $('input.complete',form).attr('disabled','disabled');
+                $('.complete input',form).attr('disabled','disabled');
             },
             function(data) {
                 switch (data.message) {

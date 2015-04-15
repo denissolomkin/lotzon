@@ -208,21 +208,22 @@ class Players extends \AjaxController
                 if ($this->request()->post('bd') && !strtotime($this->request()->post('bd'))) {
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
-                if(!$player->getPhone())
+                if(!$player->getPhone() && $this->request()->post('phone'))
                     $player->setPhone($this->request()->post('phone'));
-                if(!$player->getQiwi())
+                if(!$player->getQiwi() && $this->request()->post('qiwi'))
                     $player->setQiwi($this->request()->post('qiwi'));
-                if(!$player->getWebMoney())
+                if(!$player->getWebMoney() && $this->request()->post('webmoney'))
                     $player->setWebMoney($this->request()->post('webmoney'));
-                if(!$player->getYandexMoney())
+                if(!$player->getYandexMoney() && $this->request()->post('yandexmoney'))
                     $player->setYandexMoney($this->request()->post('yandexmoney'));
+                if(!$player->getBirthday() && $this->request()->post('bd'))
+                    $player->setBirthday(strtotime($this->request()->post('bd')));
 
                 $favs = $this->request()->post('favs', array());
                 $player->setNicname($this->request()->post('nick'))
                     ->setName($this->request()->post('name'))
                     ->setSurName($this->request()->post('surname'))
                     ->setSecondName($this->request()->post('secondname'))
-                    ->setBirthday(strtotime($this->request()->post('bd')))
                     ->setVisibility($this->request()->post('visible', false))
                     ->setFavoriteCombination($favs)
                     ->update();
