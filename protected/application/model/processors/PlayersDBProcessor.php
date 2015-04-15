@@ -7,7 +7,7 @@ class PlayersDBProcessor implements IProcessor
     public function create(Entity $player)
     {
         $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`,`Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent,:referer)";
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -192,7 +192,8 @@ class PlayersDBProcessor implements IProcessor
         $sql = "UPDATE `Players` SET
                     `DateLogined` = :dl, `Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
-                    `Phone` = :phone, `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
+                    `Phone` = :phone, `Qiwi` = :qiwi, `YandexMoney` = :ym, `WebMoney` = :wm,
+                    `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `Ip` = :ip, `LastIp` = :lip, `Agent` = :agent
                 WHERE `Id` = :id OR `Email` = :email";
 
@@ -207,6 +208,9 @@ class PlayersDBProcessor implements IProcessor
                 ':surname'  => $player->getSurname(),
                 ':secname'  => $player->getSecondName(),
                 ':phone'    => $player->getPhone(),
+                ':qiwi'     => $player->getQiwi(),
+                ':wm'       => $player->getWebMoney(),
+                ':ym'       => $player->getYandexMoney(),
                 ':bd'       => $player->getBirthday(),
                 ':avatar'   => $player->getAvatar(),
                 ':id'       => $player->getId(),
@@ -766,6 +770,90 @@ class PlayersDBProcessor implements IProcessor
 
         if ($sth->rowCount()) {
             throw new ModelException('NICKNAME_BUSY', 403);
+        }
+
+        return true;
+    }
+
+    public function checkPhone(Entity $player)
+    {
+        $sql = "SELECT * FROM `Players` WHERE `Phone` = :uid AND `Id` != :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':uid'  => $player->getPhone(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if ($sth->rowCount()) {
+            throw new ModelException('PHONE_BUSY', 403);
+        }
+
+        return true;
+    }
+
+    public function checkQiwi(Entity $player)
+    {
+        $sql = "SELECT * FROM `Players` WHERE `Qiwi` = :uid AND `Id` != :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':uid'  => $player->getQiwi(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if ($sth->rowCount()) {
+            throw new ModelException('QIWI_BUSY', 403);
+        }
+
+        return true;
+    }
+
+    public function checkWebMoney(Entity $player)
+    {
+        $sql = "SELECT * FROM `Players` WHERE `WebMoney` = :uid AND `Id` != :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':uid'  => $player->getWebMoney(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if ($sth->rowCount()) {
+            throw new ModelException('WEBMONEY_BUSY', 403);
+        }
+
+        return true;
+    }
+
+    public function checkYandexMoney(Entity $player)
+    {
+        $sql = "SELECT * FROM `Players` WHERE `YandexMoney` = :uid AND `Id` != :plid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':uid'  => $player->getYandexMoney(),
+                ':plid' => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if ($sth->rowCount()) {
+            throw new ModelException('YANDEXMONEY_BUSY', 403);
         }
 
         return true;

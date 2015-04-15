@@ -40,6 +40,9 @@ class Player extends Entity
     private $_referer     = '';
 
     private $_phone      = '';
+    private $_yandexMoney     = '';
+    private $_qiwi       = '';
+    private $_webMoney   = '';
     private $_birthday   = '';
 
     private $_favoriteCombination = array();
@@ -128,6 +131,42 @@ class Player extends Entity
     public function getReferer()
     {
         return $this->_referer;
+    }
+
+    public function setWebmoney($val)
+    {
+        $this->_webMoney = $val;
+
+        return $this;
+    }
+
+    public function getWebMoney()
+    {
+        return $this->_webMoney;
+    }
+
+    public function setQiwi($val)
+    {
+        $this->_qiwi = $val;
+
+        return $this;
+    }
+
+    public function getQiwi()
+    {
+        return $this->_qiwi;
+    }
+
+    public function setYandexMoney($val)
+    {
+        $this->_yandexMoney = $val;
+
+        return $this;
+    }
+
+    public function getYandexMoney()
+    {
+        return $this->_yandexMoney;
     }
 
     public function setAgent($agent)
@@ -948,16 +987,37 @@ class Player extends Entity
             break;
             case 'update' :
                 $this->validEmail();
-
                 $this->setNicName(trim(htmlspecialchars(strip_tags($this->getNicName()))));
                 $this->checkNickname();
+
+                if ($this->getPhone()){
+                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getPhone()))
+                        throw new EntityException("INVALID_PHONE_FORMAT", 400);
+                    $this->checkPhone();
+                }
+
+                if ($this->getYandexMoney()){
+                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getYandexMoney()))
+                        throw new EntityException("INVALID_YANDEXMONEY_FORMAT", 400);
+                    $this->checkYandexMoney();
+                }
+
+                if ($this->getWebMoney()){
+                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getWebMoney()))
+                        throw new EntityException("INVALID_WEBMONEY_FORMAT", 400);
+                    $this->checkWebMoney();
+                }
+
+                if ($this->getQiwi()){
+                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getQiwi()))
+                        throw new EntityException("INVALID_QIWI_FORMAT", 400);
+                    $this->checkQiwi();
+                }
+
                 $this->setName(trim(htmlspecialchars(strip_tags($this->getName()))));
                 $this->setSurname(trim(htmlspecialchars(strip_tags($this->getSurname()))));
                 $this->setSecondName(trim(htmlspecialchars(strip_tags($this->getSecondName()))));
 
-                if ($this->getPhone() && !preg_match('/^[+0-9\- ()]*$/', $this->getPhone())) {
-                    throw new EntityException("INVALID_PHONE_FORMAT", 400);
-                }
             break;
 
             default:
@@ -1172,6 +1232,74 @@ class Player extends Entity
         } catch (ModelException $e) {
             if ($e->getCode() == 403) {
                 throw new EntityException("NICKNAME_BUSY", 400);
+            }
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return true;
+    }
+
+    protected function checkPhone()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->checkPhone($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 403) {
+                throw new EntityException("PHONE_BUSY", 400);
+            }
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return true;
+    }
+
+    protected function checkQiwi()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->checkQiwi($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 403) {
+                throw new EntityException("QIWI_BUSY", 400);
+            }
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return true;
+    }
+
+    protected function checkWebMoney()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->checkWebMoney($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 403) {
+                throw new EntityException("WEBMONEY_BUSY", 400);
+            }
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return true;
+    }
+
+    protected function checkYandexMoney()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->checkYandexMoney($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 403) {
+                throw new EntityException("YANDEXMONEY_BUSY", 400);
             }
             throw new EntityException($e->getMessage(), $e->getCode());
 
@@ -1494,6 +1622,9 @@ class Player extends Entity
                  ->setSurname($data['Surname'])
                  ->setSecondName($data['SecondName'])
                  ->setPhone($data['Phone'])
+                 ->setQiwi($data['Qiwi'])
+                 ->setYandexMoney($data['YandexMoney'])
+                 ->setWebMoney($data['WebMoney'])
                  ->setBirthday($data['Birthday'])
                  ->setDateRegistered($data['DateRegistered'])
                  ->setDateLastLogin($data['DateLogined'])

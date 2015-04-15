@@ -84,6 +84,26 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkNickname($player);
     }
 
+    public function checkQiwi(Entity $player)
+    {
+        return $this->getProcessor()->checkQiwi($player);
+    }
+
+    public function checkPhone(Entity $player)
+    {
+        return $this->getProcessor()->checkPhone($player);
+    }
+
+    public function checkYandexMoney(Entity $player)
+    {
+        return $this->getProcessor()->checkYandexMoney($player);
+    }
+
+    public function checkWebMoney(Entity $player)
+    {
+        return $this->getProcessor()->checkWebMoney($player);
+    }
+
     public function initCounters(Entity $player)
     {
         return $this->getProcessor()->initCounters($player);

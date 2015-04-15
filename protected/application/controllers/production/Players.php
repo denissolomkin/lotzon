@@ -208,12 +208,20 @@ class Players extends \AjaxController
                 if ($this->request()->post('bd') && !strtotime($this->request()->post('bd'))) {
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
+                if(!$player->getPhone())
+                    $player->setPhone($this->request()->post('phone'));
+                if(!$player->getQiwi())
+                    $player->setQiwi($this->request()->post('qiwi'));
+                if(!$player->getWebMoney())
+                    $player->setWebMoney($this->request()->post('webmoney'));
+                if(!$player->getYandexMoney())
+                    $player->setYandexMoney($this->request()->post('yandexmoney'));
+
                 $favs = $this->request()->post('favs', array());
                 $player->setNicname($this->request()->post('nick'))
                     ->setName($this->request()->post('name'))
                     ->setSurName($this->request()->post('surname'))
                     ->setSecondName($this->request()->post('secondname'))
-                    ->setPhone($this->request()->post('phone'))
                     ->setBirthday(strtotime($this->request()->post('bd')))
                     ->setVisibility($this->request()->post('visible', false))
                     ->setFavoriteCombination($favs)

@@ -920,6 +920,9 @@ $(function(){
         var form = $(this);
         var playerData = {};
 
+        if($('.incomplete',form).length)
+            return false;
+
         form.find('.pi-inp-bk input').each(function(){
             var val = $(this).val();
             $(this).attr('data-valid', val);
@@ -953,7 +956,8 @@ $(function(){
         playerData.visible = form.find('input[name="visible"]:checked').length ? 1 : 0;
         updatePlayerProfile(playerData,
             function(data) {
-                form.find('input[name="password"]').val('');
+                $('input[name="password"]',form).val('');
+                $('input.complete',form).attr('disabled','disabled');
             },
             function(data) {
                 switch (data.message) {
@@ -969,10 +973,35 @@ $(function(){
                         form.find('input[name="bd"]').parent().addClass('error');
                         form.find('input[name="bd"]').parent().find('.ph').text(getText(data.message));
                     break;
+                    case 'INVALID_PHONE_FORMAT' :
+                    case 'PHONE_BUSY' :
+                        form.find('input[name="phone"]').parent().addClass('error');
+                        form.find('input[name="phone"]').parent().find('.ph').text(getText(data.message));
+                        break;
+                    case 'INVALID_QIWI_FORMAT' :
+                    case 'QIWI_BUSY' :
+                        form.find('input[name="qiwi"]').parent().addClass('error');
+                        form.find('input[name="qiwi"]').parent().find('.ph').text(getText(data.message));
+                        break;
+                    case 'INVALID_WEBMONEY_FORMAT' :
+                    case 'WEBMONEY_BUSY' :
+                        form.find('input[name="webmoney"]').parent().addClass('error');
+                        form.find('input[name="webmoney"]').parent().find('.ph').text(getText(data.message));
+                        break;
+                    case 'INVALID_YANDEXMONEY_FORMAT' :
+                    case 'YANDEXMONEY_BUSY' :
+                        form.find('input[name="yandexmoney"]').parent().addClass('error');
+                        form.find('input[name="yandexmoney"]').parent().find('.ph').text(getText(data.message));
+                        break;
+                    default :
+                        $("#report-popup").find(".txt").text(getText(data.message));
+                        $("#report-popup").show();
+                    break;
                 }
             },
             function (data) {
-
+                $("#report-popup").find(".txt").text(getText(data.message));
+                $("#report-popup").show();
             }
         );
         return false;

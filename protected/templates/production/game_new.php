@@ -41,7 +41,9 @@
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+        <!--link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css"-->
+        <!-- Include Summernote CSS files -->
+        <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
@@ -62,12 +64,16 @@
         <script src="/tpl/js/lib/modernizr.js"></script>
         <script src="/tpl/js/lib/jquery.min.js"></script>
         <script src="/tpl/js/lib/jquery-ui.min.js"></script>
+        <script src="/tpl/js/lib/jquery.inputmask.js"></script>
+        <script src="/tpl/js/lib/jquery.bind-first-0.1.min.js"></script>
+        <script src="/tpl/js/lib/jquery.inputmask-multi.js"></script>
         <script src="/tpl/js/lib/slick.min.js"></script>
         <script src="/tpl/js/lib/jquery.plugin.min.js"></script>
         <script src="/tpl/js/lib/jquery.cookie.js"></script>
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
+
 
         <!-- social_likes -->
         <script src="/tpl/js/lib/social-likes.min.js"></script>
@@ -764,12 +770,24 @@
                                             <input autocomplete="off" spellcheck="false" type="text" name="name" data-valid="<?=$player->getName()?>" value="<?=$player->getName()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-birthday')?>"><?=$MUI->getText('placeholder-birthday')?></div>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=$MUI->getText('placeholder-birthday')?>" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk td">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-phone')?>"><?=$MUI->getText('placeholder-phone')?></div>
                                             <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-phone')?>" type="tel" name="phone" data-valid="<?=$player->getPhone()?>" value="<?=$player->getPhone()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
-                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-birthday')?>"><?=$MUI->getText('placeholder-birthday')?></div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=$MUI->getText('placeholder-birthday')?>" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-qiwi')?>"><?=$MUI->getText('placeholder-qiwi')?></div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-qiwi')?>" type="tel" name="qiwi" <?=$player->getQiwi()?'disabled':''?> data-valid="<?=$player->getQiwi()?>" value="<?=$player->getQiwi()?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk td">
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-webmoney')?>"><?=$MUI->getText('placeholder-webmoney')?></div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-webmoney')?>" type="text" name="webmoney" <?=$player->getWebMoney()?'disabled':''?> data-valid="<?=$player->getWebMoney()?>" value="<?=$player->getWebMoney()?>"/>
+                                        </div>
+                                        <div class="pi-inp-bk td">
+                                            <div class="ph" data-default="<?=$MUI->getText('placeholder-yandex')?>"><?=$MUI->getText('placeholder-yandex')?></div>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-yandex')?>" type="text" name="yandexmoney" <?=$player->getYandexMoney()?'disabled':''?> data-valid="<?=$player->getYandexMoney()?>" value="<?=$player->getYandexMoney()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-password')?>"><?=$MUI->getText('placeholder-password')?></div>
@@ -854,7 +872,7 @@
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl"><?=$MUI->getText('title-games')?></div>
-        <div class="b-cntrl-block"><span class="glyphicon glyphicon-volume-up audio" aria-hidden="true"></span></div>
+        <div class="b-cntrl-block"><span class="fa fa-volume-up audio" aria-hidden="true"></span></div>
 
         <!-- CHANCE PREVIEW -->
         <div class="ch-bk slider" style="display:block">
@@ -1459,6 +1477,78 @@
         $("#timer_soon").countdown({until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
             onExpiry: showQuickGameStart
         });
+
+
+        <? /* $(".tel").intlTelInput({
+            preferredCountries: <?
+            foreach(\CountriesModel::instance()->getList() as $country)
+                $arr[]=strtolower($country->getCode());
+            echo json_encode($arr)?>}); */ ?>
+
+
+        $.extend($.inputmask.defaults,{
+            definitions: {
+                '9': {
+                    validator: "[0-9]",
+                    cardinality: 1,
+                    definitionSymbol: "*"
+                },
+                "a": {
+                    validator: "[RrUuZzEeBb]",
+                    cardinality: 1,
+                    casing: "upper"
+                },
+                'd': { //basic day
+                    validator: "0[1-9]|[12][0-9]|3[01]",
+                    cardinality: 2,
+                    prevalidator: [{ validator: "[0-3]", cardinality: 1 }]
+                },
+                'm': { //basic month
+                    validator: "0[1-9]|1[012]",
+                    cardinality: 2,
+                    prevalidator: [{ validator: "[01]", cardinality: 1 }]
+                },
+                'y': { //basic year
+                    validator: "(19|20)\\d{2}",
+                    cardinality: 4,
+                    prevalidator: [
+                        { validator: "[12]", cardinality: 1 },
+                        { validator: "(19|20)", cardinality: 2 },
+                        { validator: "(19|20)\\d", cardinality: 3 }
+                    ]
+                }
+            },
+            onincomplete: function () {$(this).val() && $(this).parent().addClass('incomplete error').removeClass('complete'); },
+            oncomplete: function () { $(this).parent().removeClass('incomplete error').addClass('complete')},
+            oncleared: function () { $(this).parent().removeClass('incomplete error complete');},
+            autoUnmask: true,
+            showMaskOnHover: false,
+        });
+
+        var maskList = $.masksSort($.masksLoad(), ['#'], /[0-9]|#/, "mask");
+        var maskOpts = {
+            inputmask: {
+                definitions: {
+                    '#': {
+                        validator: "[0-9]",
+                        cardinality: 1
+                    }
+                },
+            },
+            match: /[0-9]/,
+            replace: '#',
+            list: maskList,
+            listKey: "mask"
+        };
+
+
+
+        $('[type="tel"][name="phone"]').inputmasks(maskOpts);
+        $('[type="tel"][name="qiwi"]').inputmasks(maskOpts);
+        $('[type="text"][name="bd"]').inputmask("d.m.y",{autoUnmask: false});
+        $('[type="text"][name="yandexmoney"]').inputmask("[41001#########]", maskOpts.inputmask);
+        $('[type="text"][name="webmoney"]').inputmask("[a999999999999]");
+
 
         $("#timer_soon").countdown('resume');
         $("#timer_soon").countdown('option', {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>)});

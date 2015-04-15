@@ -64,7 +64,7 @@ var conn;
 WebSocketAjaxClient();
 
     if(!$.cookie("audio")) {
-        $('.sbk-tl-bk .b-cntrl-block').parent().find('.glyphicon').removeClass('glyphicon-volume-up').addClass('glyphicon-volume-off');
+        $('.sbk-tl-bk .b-cntrl-block').parent().find('.audio').removeClass('fa-volume-up').addClass('fa-volume-off');
     }
 
 function WebSocketStatus(action, data) {
@@ -648,9 +648,9 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
     $(document).on('click', '.chance .sbk-tl-bk .b-cntrl-block .audio', function(e){
     if($.cookie("audio")){
         $.removeCookie("audio");
-        $(this).parent().find('.glyphicon').removeClass('glyphicon-volume-up').addClass('glyphicon-volume-off');
+        $(this).parent().find('.audio').removeClass('fa-volume-up').addClass('fa-volume-off');
     } else {
-        $(this).parent().find('.glyphicon').addClass('glyphicon-volume-up').removeClass('glyphicon-volume-off');
+        $(this).parent().find('.audio').addClass('fa-volume-up').removeClass('fa-volume-off');
         $.cookie("audio", 1, { expires : 100 });
     }
     });
