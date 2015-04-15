@@ -368,7 +368,7 @@
                         <!-- REPASSWORD FORM -->
                         <form name="rec-pass">
                             <div id="pass-rec-form">
-                                <div class="rf-txt"><?=$MUI->getText('text-input-email')?></div>
+                                <div class="rf-txt"><?=$MUI->getText('text-input-email-for-new-password')?></div>
                                 <div class="ib-l">
                                     <div class="ph"><?=$MUI->getText('placeholder-your-email')?></div>
                                     <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="<?=$MUI->getText('placeholder-your-email')?>" />
