@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \ModelException, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
+use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -257,7 +257,7 @@ class Players extends \AjaxController
 
     public function changeLanguageAction($lang)
     {
-        if(!($lang=substr($lang,0,2)) || !(CountriesModel::instance()->isLang($lang))) {
+        if(!($lang=substr($lang,0,2)) || !(LanguagesModel::instance()->isLang($lang))) {
             $this->ajaxResponse(array(), 0, 'LANGUAGE_ERROR');
         } else if (!$this->session->get(Player::IDENTITY) || !$player=$this->session->get(Player::IDENTITY)) {
             $this->ajaxResponse(array(), 0, 'FRAUD');
@@ -312,7 +312,6 @@ class Players extends \AjaxController
     {
         $resp = array();
         if ($this->session->has(Player::IDENTITY) && $player=$this->session->get(Player::IDENTITY)) {
-            //$chanceGames = ChanceGamesModel::instance()->getGamesSettings();
             $gameSettings=GameSettingsModel::instance()->getList();
 
             if($title=NoticesModel::instance()->getPlayerLastUnreadNotice($player))
@@ -327,6 +326,15 @@ class Players extends \AjaxController
 
             if(($player->getAdBlock() && !$AdBlockDetected) || (!$player->getAdBlock() && $AdBlockDetected))
                 $player->writeLog(array('action'=>'AdBlock','desc'=>($AdBlockDetected?'ADBLOCK_DETECTED':'ADBLOCK_DISABLED'),'status'=>($AdBlockDetected?'danger':'warning')));
+
+            if(\SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')
+            && $player->getGamesPlayed() >= \SettingsModel::instance()->getSettings('counters')->getValue('TEASER_CLICK_MIN_GAME')
+            && $player->getDates('TeaserClick') - time() < \SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')){
+                if($player->checkDate('TeaserClick')) {
+                    $resp['callback'] = "if($('.teaser a[target=\"_blank\"] img').length && !one){ one=true;var a=[]; $('.teaser a[target=\"_blank\"] img').parent().each(function(id, num) { a.push($(num).attr('href')); }); a = a [Math.floor(Math.random()*a.length)]; $(document).one('click',function(){ one=false;window.open(a,'_blank'); });}";
+                } else
+                    $player->initDates();
+            }
 
             $player->setWebSocket($this->request()->get('ws', null))
                 ->setDateAdBlocked(($AdBlockDetected?time():null))
@@ -354,49 +362,19 @@ class Players extends \AjaxController
                 );
             }
 
-            #delete
-            //$resp['moment'] = 1;
-            //unset($_SESSION['chanceGame']);
 
             $key='Moment';
 
             // check for moment chance
             // if not already played chance game
 
-            if (
-                (!$this->session->has($key) && time() - $this->session->get('MomentLastDate') > $gameSettings['Moment']->getOption('max') * 60)
-                ||
-                ($this->session->has($key) && $this->session->get($key)->getTime() + $this->session->get($key)->getTimeout() * 60 < time() && $this->session->remove($key))
-            ){
+            if ((!$this->session->has($key) && time() - $this->session->get('MomentLastDate') > $gameSettings['Moment']->getOption('max') * 60) ||
+                ($this->session->has($key) && $this->session->get($key)->getTime() + $this->session->get($key)->getTimeout() * 60 < time() && $this->session->remove($key))){
                 $this->session->set('MomentLastDate', time());
             }
 
-/*
-            if ($_SESSION['chanceGame']['moment']) {
-                if ($_SESSION['chanceGame']['moment']['start'] + 180 < time()) {
-                    unset($_SESSION['chanceGame']['moment']);
-                    $this->session->set($key.'LastDate',time());
-                }
-            }
-*/
             if ($this->session->get($key.'LastDate') && !$this->session->has($key) && isset($gameSettings[$key])) {
 
-                #delete
-                /*
-                 if($this->session->get('MomentLastDate') + $chanceGames['moment']->getMinTo()  * 60 > time()) {
-                    $diff=($chanceGames['moment']->getMinFrom() - $chanceGames['moment']->getMinTo());
-                    //if(($diff<5 AND !$_SESSION['timer_soon']['five']) OR ($diff<$chanceGames['moment']->getMinFrom() AND !$_SESSION['timer_soon']['start']) OR $diff<)
-                    $resp['soon'] = array(
-                        'name' => 'soon',
-                        'title' => 'Моментальный шанс',
-                        'txt' => 'Шанс будет доступен через  '.$diff.'<span id="timer_soon"></span><script>
-                    $("#timer_soon").countdown({until: ' . ($this->session->get('MomentLastDate') + $chanceGames['moment']->getMinFrom() * 60 - time()) . ',layout: "{mnn}:{snn}",
-                    onExpiry: function(){
-                    $(".notification #soon .badge-block .txt").html("Не пропустите моментальный шанс ' . ' ' .($diff>0?'в ближайшие '. $diff .($diff>4 ? 'минут':$diff>1?'минуты':$diff>0?'минуту':''):'сейчас') . '!");}
-                     })</script>',
-                    );
-                }
-                */
 
                 if ($this->session->get($key.'LastDate') + $gameSettings[$key]->getOption('min') * 60 <= time() &&
                     $this->session->get($key.'LastDate') + $gameSettings[$key]->getOption('max') * 60 >= time()) {
@@ -408,75 +386,13 @@ class Players extends \AjaxController
                     }
                 }
 
-                #delete
-                //$resp['moment'] = 0;
-
-                //if (isset($resp['moment']) && $resp['moment']) {
-                    //$this->session->set($key.'LastDate', time());
-
-                    /*
-                    if(is_array(Config::instance()->banners['Moment']))
-                        foreach(Config::instance()->banners['Moment'] as $group) {
-                            if (is_array($group)) {
-                                shuffle($group);
-                                foreach ($group as $banner) {
-                                    if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
-                                        continue;
-
-                                    if(!rand(0,$banner['chance']-1) AND $banner['chance'] AND Config::instance()->banners['settings']['enabled'])
-                                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
-                                            str_replace('document.write',"$('#mchance .block').append",$banner['div']).
-                                            str_replace('document.write',"$('#mchance .block').append",$banner['script']).
-                                            "<script>
-                                            $('#mchance .mm-bk-pg').css('height','450px').css('overflow','hidden').children('div').last().css('position', 'absolute').css('bottom', '0');
-                                            moment=$('#mchance').find('.block');
-                                            moment.find('.tl').html('Загрузка...').next().css('top','200px').css('position','absolute').css('overflow','hidden');
-                                            $('#mchance').find('li').off('click').on('click', function(){
-                                            num=$(this).data('num');
-                                            href=moment.find('a[target=\"_blank\"]:eq('+((moment.find('a[target=\"_blank\"]').length-6)+num*2-1)+')').attr('href');
-                                            moment.css('position', 'absolute').css('bottom', '-10px').parent().css('position', 'initial').css('bottom','auto');
-                                            window.setTimeout(function() {moment.find('.tl').html('Реклама').parent().prev().css('margin-bottom', '380px').next().find('div:eq(1)').css('top','auto').css('position', 'initial');}, 50);
-                                            window.setTimeout(function() {moment.css('position', 'initial').parent().find('ul').css('margin-bottom', '-50px');}, 150);
-                                            window.setTimeout(function() {moment.parent().find('ul').css('margin-bottom', 'auto').parent().parent().css('height','auto');}, 200);
-                                            if(moment.find('a[target=\"_blank\"]').length>=3) window.setTimeout(function() { var win = window.open (href,'_blank');win.blur();window.focus();return false;}, 1000);
-                                            startMoment();});
-                                        </script>";
-                                    else
-                                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
-                                            str_replace('document.write',"$('#mchance .block').append",$banner['div']).
-                                            str_replace('document.write',"$('#mchance .block').append",$banner['script']).
-                                            "<script>
-                                            $('#mchance .mm-bk-pg').css('height', 'auto').children('div').last().css('position','initial');
-                                            startMoment();
-                                            </script>";
-                                    break;
-                                }
-                            }
-                        }
-
-                    $gameField = $chanceGames['moment']->generateGame();
-                    $_SESSION['chanceGame']=array(
-                        'moment' => array(
-                            'id'     => 'moment',
-                            'start'  => time(),
-                            'field'  => $gameField,
-                            'clicks' => array(),
-                            'status' => 'process',
-                        ),
-                    );
-
-                    */
-                //}
-
-                //if($this->session->get($key.'LastDate') + $gameSettings[$key]->getOption('max') * 60 + 5*60 < time())
-                //    $this->session->set($key.'LastDate', time());
-
             } elseif($this->session->has($key)) {
                 $resp['game'] = 1;
             }
-
                 $resp['test'] = ($this->session->get($key.'LastDate') + $gameSettings[$key]->getOption('min')  * 60 - time());
+
         }
+        
         $this->ajaxResponse($resp);
     }
 
@@ -502,18 +418,26 @@ class Players extends \AjaxController
         $this->ajaxResponse(array());
     }
 
-    public function socialAction()
+    /**
+     * Проверяет количество оставшихся оплачиваемых реф.постов в соц.сети $provider
+     * Если пост оплачиваемый - уменшает счётчик оставшихся постов для конкретной соц.сети и добавляет очки
+     * Отвечает ajax'ом счётчик остатка оплачиваемых постов
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param string $provider Имя социальной сети
+     */
+    public function socialAction($provider)
     {
-        if ($this->session->get(Player::IDENTITY)->getSocialPostsCount() > 0) {
-            $this->session->get(Player::IDENTITY)->decrementSocialPostsCount();
-
-            if(SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'))
-            $this->session->get(Player::IDENTITY)->addPoints(
-                SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'),
-                StaticTextsModel::instance()->setLang($this->session->get(Player::IDENTITY)->getLang())->getText('bonus_social_post'));
-
+        if ($this->session->get(Player::IDENTITY)->getSocialPostsCount($provider) > 0) {
+            $this->session->get(Player::IDENTITY)->decrementSocialPostsCount($provider);
+            if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')) {
+                $this->session->get(Player::IDENTITY)->addPoints(
+                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'),
+                    StaticTextsModel::instance()->setLang($this->session->get(Player::IDENTITY)->getLang())->getText('bonus_social_post')." ".$provider);
+            }
             $this->ajaxResponse(array(
-                'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount(),
+                'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount($provider),
             ));
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');

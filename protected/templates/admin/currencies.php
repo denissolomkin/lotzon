@@ -1,4 +1,4 @@
-
+<link href="/theme/admin/lib/country.css" rel="stylesheet">
 <div class="container-fluid">
     <div class="row-fluid">
         <h2>Валюты
@@ -14,6 +14,8 @@
     <div class="row-fluid">
         <form class="form form-inline col-md-12">
 
+            <div class="input-group"><div class="flag f16"></div>
+            </div>
             <input type="hidden" name="Id"  value="">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-money fa-2x"></i></span>
@@ -77,12 +79,18 @@
         $('[name="Coefficient"]',$template).val(country['Coefficient']);
         $('[name="Rate"]',$template).val(country['Rate']);
         $('[name="Id"]',$template).val(country['Id']);
+        $('.f16',$template).addClass(country['Code'].toLowerCase());
         $('[name="Code"]',$template).val(country['Code']);
         $.each(country['Title'], function(format, title) {
             $('[name="Title['+format+']"]',$template).val(title);
         });
     });
 
+
+    $(document).on('input','[name="Code"]', function() {
+        $(this).parents('.form-inline').find('.flag').removeClass().addClass('flag f16 '+$(this).val().toLowerCase());
+
+    });
 
     $('.add-currency').on('click', function() {
         var template = $('.add-currency-template').html();

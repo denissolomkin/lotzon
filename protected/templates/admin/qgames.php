@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label class="sr-only">Название</label>
                                 <? foreach ($langs as $lang) { ?>
-                                <input type="text" class="form-control" name="game[Title][<?=$lang?>]" placeholder="Название игры" value="">
+                                <input type="text" class="form-control" name="game[Title][<?=$lang->getCode()?>]" placeholder="Название игры" value="">
                                 <? } ?>
                                 <input type="hidden" class="form-control" name="game[Id]" value="0">
                             </div>
@@ -41,12 +41,12 @@
                         </div>
                         <div class="row-fluid description">
                             <? foreach ($langs as $lang) { ?>
-                            <textarea class="form-control" rows=5 name="game[Description][<?=$lang?>]" placeholder="Описание игры"></textarea>
+                            <textarea class="form-control" rows=5 name="game[Description][<?=$lang->getCode()?>]" placeholder="Описание игры"></textarea>
                             <? } ?>
                         </div>
                         <div class="row-fluid banner">
                             <? foreach ($langs as $lang) { ?>
-                            <button type="button" class="btn btn-md lang btn-default" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
+                            <button type="button" class="btn btn-md lang btn-default" data-lang="<?=$lang->getCode()?>"><?=strtoupper($lang->getCode())?></button>
                         <? } ?>
                         </div>
                         <!--div class="row-fluid banner">

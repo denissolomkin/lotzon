@@ -21,8 +21,8 @@
     </div>
     <div class="row-fluid">
         <div class="btn-group">
-            <? foreach (\CountriesModel::instance()->getLangs() as $lang) { ?>
-                <button onclick="document.location.href='/private/news/<?=$lang?>'" type="button" class="btn btn-md lang btn-default<?=($pageLang == $lang ? ' active' : '')?>" data-lang="<?=$lang?>"><?=strtoupper($lang)?></button>
+            <? foreach (\LanguagesModel::instance()->getList() as $lang) { ?>
+                <button onclick="document.location.href='/private/news/<?=$lang->getCode()?>'" type="button" class="btn btn-md lang btn-default<?=($pageLang == $lang->getCode() ? ' active' : '')?>" data-lang="<?=$lang->getCode()?>"><?=strtoupper($lang->getCode())?></button>
             <? } ?>
         </div>
         <button class="btn btn-md btn-success pull-right"  onclick="document.location.href='/private/news/<?=$pageLang?>#addForm';"><i class="glyphicon glyphicon-plus"></i> Добавить</button>

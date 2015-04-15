@@ -7,6 +7,7 @@ Application::import(PATH_APPLICATION . 'model/processors/MUILanguagesCacheProces
 
 class LanguagesModel extends Model
 {
+
     public function init()
     {
         parent::init();
@@ -31,9 +32,7 @@ class LanguagesModel extends Model
         } catch (ModelException $e) {
 
             if($e->getCode()=='404')
-                $language->setId(1)
-                    ->setCode('RU')
-                    ->setTitle('Русский');
+                $language->formatForm('CLASS',$this->getDefault());
             else
                 throw new EntityException("Model Error", 500);
         }
@@ -41,4 +40,28 @@ class LanguagesModel extends Model
         return $language;
     }
 
+    public function isLang($code=null)
+    {
+        return isset($this->getList()[$code]);
+    }
+
+
+    public function defaultLang()
+    {
+        if(is_array($languages=$this->getList()) && !empty($languages)) {
+            if ($default = (reset($languages)))
+                return $default->getCode();
+        } else {
+            return $this->getDefault()->getCode();
+        }
+    }
+
+    public function getDefault(){
+
+        $default = new Language;
+        $default->setId(1)
+            ->setCode('RU')
+            ->setTitle('русский');
+        return $default;
+    }
 }

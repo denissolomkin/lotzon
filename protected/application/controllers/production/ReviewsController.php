@@ -28,24 +28,19 @@ class ReviewsController extends \AjaxController
                 'data'    => array(),
             );
 
-            $id = $this->request()->post('id', false);
             $playerId = $this->session->get(Player::IDENTITY)->getId();
             $text = $this->request()->post('text');
+            $reviewId = $this->request()->post('reviewId');
             $image = $this->request()->post('image');
 
             $reviewObj = new Review;
-            $reviewObj ->setId($id)
-                ->setPlayerId($playerId)
+            $reviewObj->setPlayerId($playerId)
                 ->setText($text)
+                ->setReviewId($reviewId)
                 ->setImage($image);
 
             try {
-                if ($reviewObj->getId()) {
-                    $reviewObj->update();
-                } else {
-                    $reviewObj->create();
-                }
-
+                $reviewObj->create();
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();

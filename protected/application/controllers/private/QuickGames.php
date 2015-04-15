@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \CountriesModel, \SettingsModel, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin,  \Session2;
+use \Application, \PrivateArea, \LanguagesModel, \SettingsModel, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin,  \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -22,8 +22,8 @@ class QuickGames extends PrivateArea
     {   
         $shopItems = ShopModel::instance()->getAllItems(false);
         $games = QuickGamesModel::instance()->getGamesSettings();
-        $langs = CountriesModel::instance()->getLangs();
-        $defaultLang = CountriesModel::instance()->defaultLang();
+        $langs = LanguagesModel::instance()->getList();
+        $defaultLang = LanguagesModel::instance()->defaultLang();
 
         $this->render('admin/qgames', array(
             'title'      => 'Конструктор игр',

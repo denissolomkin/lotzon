@@ -163,17 +163,18 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             'keepButtonShow' => false,
         );
 
-        foreach ($reviews as $reviewItem) {
-            $responseData['reviews'][] = array(
-                'date'  => date('d.m.Y', $reviewItem->getDate()),
-                'playerId' => $reviewItem->getPlayerId(),
-                'playerAvatar' => $reviewItem->getPlayerAvatar(),
-                'playerName' => $reviewItem->getPlayerName(),
-                'text'  => $reviewItem->getText(),
-                'image' => $reviewItem->getImage(),
-                'text'  => $reviewItem->getText(),
-            );
-        }
+        foreach ($reviews as $reviewData)
+            foreach ($reviewData as $reviewItem) {
+                $responseData['reviews'][] = array(
+                    'date' => date('d.m.Y H:i', $reviewItem->getDate()),
+                    'playerId' => $reviewItem->getPlayerId(),
+                    'playerAvatar' => $reviewItem->getPlayerAvatar(),
+                    'playerName' => $reviewItem->getPlayerName(),
+                    'text' => $reviewItem->getText(),
+                    'image' => $reviewItem->getImage(),
+                    'answer' => $reviewItem->getReviewId(),
+                );
+            }
         if (count($reviews) >= SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE')) {
             $responseData['keepButtonShow'] = true;
         }

@@ -153,7 +153,7 @@ $(function(){
                     var html = '<ul class="yr-tb">';
                     $(filledTickets).each(function(id, ticket) {
                         html += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (id + 1) + '</div><ul class="yr-tt-tr">';
-                        $(ticket).each(function(tid, num) {    
+                        $(ticket).each(function(tid, num) {
                             html += '<li class="yr-tt-tr_li">' + num + '</li>';
                         });
                         html += '</ul></li>';
@@ -162,7 +162,7 @@ $(function(){
                     $('.atd-bk').prepend($(html));
                     $('.atd-bk').show();
                 } else {
-                    $('.tb-tabs_li:not(.done)').first().click();                     
+                    $('.tb-tabs_li:not(.done)').first().click();
                 }
                 $(this).data('disabled',false);
             }, function(data){
@@ -187,7 +187,7 @@ $(function(){
         addEmailInvite(email, function(data){
             button.parent().find('.it-msg-bk').remove();
             button.parents('.if-bk').find('.invites-count').text(data.res.invitesCount);
-            button.parent().find('input[name="email"]').hide();            
+            button.parent().find('input[name="email"]').hide();
             button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">Приглашение отправлено</span>');
             setTimeout(function(){
                 button.parent().find('.it-msg-bk').fadeOut(300);
@@ -282,7 +282,7 @@ $(function(){
 
         $('#shop-items-popup').find('.item-preview').attr('src', $(this).find('.im-ph img').attr('src'));
         $('#shop-items-popup').find('.item-title').text($(this).find('.im-tl').text());
-        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());        
+        $('#shop-items-popup').find('.item-price').text ($(this).find('.im-bn b').text());
         $('#shop-items-popup').fadeIn(200);
         $('.pz-ifo-bk').show();
         $('.pz-fm-bk').hide();
@@ -329,26 +329,26 @@ $(function(){
             }
             switch (data.message) {
                 case 'ORDER_INVALID_NAME' :
-                    form.find('input[name="name"]').parent().addClass('error');                    
+                    form.find('input[name="name"]').parent().addClass('error');
                     form.find('input[name="name"]').focus();
                 break;
                 case 'ORDER_INVALID_SURNAME' :
-                    form.find('input[name="surname"]').parent().addClass('error');                    
+                    form.find('input[name="surname"]').parent().addClass('error');
                     form.find('input[name="surname"]').focus();
                 break;
                 case 'ORDER_INVALID_PHONE' :
                 case 'INVALID_PHONE_FORMAT' :
-                    form.find('input[name="phone"]').parent().addClass('error');                    
+                    form.find('input[name="phone"]').parent().addClass('error');
                     form.find('input[name="phone"]').focus();
                 break;
                 case 'ORDER_INVALID_CITY' :
-                    form.find('input[name="city"]').parent().addClass('error');                    
+                    form.find('input[name="city"]').parent().addClass('error');
                     form.find('input[name="city"]').focus();
-                break; 
+                break;
                 case 'ORDER_INVALID_ADRESS' :
-                    form.find('input[name="addr"]').parent().addClass('error');                    
+                    form.find('input[name="addr"]').parent().addClass('error');
                     form.find('input[name="addr"]').focus();
-                break; 
+                break;
             }
         }, function(){})
 
@@ -363,7 +363,14 @@ $(function(){
     var currentReview = {
         image: '',
         text: '',
-        id: '',
+        id: 0,
+    };
+
+    var answerReview = {
+        image: '',
+        text: '',
+        id: 0,
+        reviewId: null,
     };
 
     $(".reviews .rv-but-add").on('click', function() {
@@ -404,7 +411,6 @@ $(function(){
             });
         }
     });
-
         function initReviewUpload() {
 
             var image = $('.reviews .rv-image');
@@ -472,22 +478,76 @@ $(function(){
     }
 
 
+    $(document).on('click', '.reviews .rv-ans .btn-ans', function() {
+
+        holder=$(this).parents('.rv-ans').first();
+
+        answerReview.text=$('#answer-review-text').text();
+        if(answerReview.text && !$(this).attr('data-disabled')) {
+            $(this).attr('data-disabled',true);
+            $.ajax({
+                url: "/review/save/",
+                method: 'POST',
+                async: true,
+                data: answerReview,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        answerReview.image = null;
+
+                        $('.rv-form',holder).hide();
+                        $('.rv-image',holder).css('background', '#e1ecee').css('opacity', '1');
+                        $('.rv-upld-img img',holder).attr('src', '/tpl/img/but-upload-review.png');
+                        $('.rv-sc', holder).fadeIn(200);
+
+                        window.setTimeout(function () {
+                            holder.fadeOut(200)
+                            window.setTimeout(function () {
+                                holder.remove();
+                            }, 200);
+                        }, 2400);
+
+                    } else {
+                        $(this).data('disabled',false);
+                        alert(data.message);
+                    }
+                },
+                error: function () {
+                    alert('Unexpected server error');
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.rv-i-ans', function(){
+        var review = $(this).parents('.rv-item').first();
+        var answer = $('.rv-ans-tmpl').clone();
+        answerReview.reviewId=review.attr('data-id');
+        $('.rv-ans').remove();
+        $('.rv-usr-avtr').clone().prependTo($('.rv-form',answer));
+        answer.attr('class',review.attr('class')).removeClass('rv-item').addClass('rv-ans rv-answer');
+        answer.find('[contenteditable]').attr('id','answer-review-text').html(review.find('.rv-i-pl').text()+',&nbsp;');
+        answer.insertAfter(review);
+        moveToEnd(document.getElementById("answer-review-text"));
+    });
+
     $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
         var reviewsBlock = $('.reviews');
-        loadReviews(reviewsBlock.find('.rv-item').length, function(data) {
+        loadReviews(reviewsBlock.find('.rv-item:not(.rv-answer)').length, function(data) {
+            reviewsBlock.addClass('b-ha');
+            $('.rv-add-but').hide();
             if (data.res.reviews.length) {
-                reviewsBlock.addClass('b-ha');
                 var html = '';
+                var textAnswer = $('.rv-i-ans').first().text();
 
                 $(data.res.reviews).each(function(id, review) {
-                    html += '<div class="rv-item"><div class="rv-i-avtr">';
+                    html += '<div class="rv-item'+(review.answer?" rv-answer":"")+'"><div class="rv-i-avtr">';
 
                     if(review.playerAvatar)
                         html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'">';
                     else
                         html += '<img src="/tpl/img/default.jpg">';
-
-                    html+='</div><div class="rv-i-tl">'+review.playerName+' • '+review.date+'</div><div class="rv-i-txt">'+review.text+'</div>';
+                    html+='</div><div class="rv-i-tl"><span class="rv-i-pl">'+review.playerName+'</span> • <span class="rv-i-dt">'+review.date+'</span> <span class="rv-i-ans">'+textAnswer+'</span></div><div class="rv-i-txt">'+review.text+'</div>';
 
                     if(review.image)
                         html += '<div class="rv-i-img"><img src="/filestorage/reviews/'+review.image+'"></div>';
@@ -496,13 +556,15 @@ $(function(){
                 });
                 $('.rv-items .h-ch').append(html);
 
-                $('.rv-items').height($('.rv-items .h-ch').height());
-                $('.rv-add-but').hide();
-                if (!data.res.keepButtonShow) {
-                    $('.rv-mr-cl-bt-bk .mr').hide();
-                }
-                reviewsBlock.find('.rv-mr-cl-bt-bk').show();
             }
+
+            if (!data.res.keepButtonShow) {
+                $('.rv-mr-cl-bt-bk .mr').hide();
+            }
+            reviewsBlock.find('.rv-mr-cl-bt-bk').show();
+
+            $('.rv-items').height($('.rv-items .h-ch').height());
+
         }, function() {}, function() {});
     });
 
@@ -580,12 +642,12 @@ $(function(){
     // CASE OUTPUT POPUP //
     $('#cash-output').on('click', function(){
         if (playerMoney >= 10) {
-            $('#cash-output-popup').fadeIn(200);    
+            $('#cash-output-popup').fadeIn(200);
         } else {
             $('.pz-ifo-bk').hide();
             $('.pz-rt-bk').text("Недостаточно средств для вывода!").show().parents('#shop-items-popup').show();
         }
-        
+
     });
 
 
@@ -639,7 +701,7 @@ $(function(){
         $('.profile ._section').hide();
         $('.'+link).fadeIn(200);
         if(link == 'profile-info'){
-            $('.pi-inp-bk input').each(function(){                
+            $('.pi-inp-bk input').each(function(){
                 $(this).val($(this).attr('data-valid'))
             });
         }
@@ -805,10 +867,10 @@ $(function(){
 
     function processLotteryResults (data) {
         if (data.res.offset > 0) {
-            $('.mr-cl-bt-bl').show();           
-            if (!data.res.keepButtonShow) {               
+            $('.mr-cl-bt-bl').show();
+            if (!data.res.keepButtonShow) {
                 $('.mr-cl-bt-bl').find('.mr').hide();
-            } else {               
+            } else {
                 $('.mr-cl-bt-bl').find('.mr').show();
             }
         }
@@ -825,7 +887,7 @@ $(function(){
                     html += '<div class="aw-bt" data-lotid="'+lottery.id+'"><a href="javascript:void(0)"></a></div>';
                 }
                 html += '</li>';
-            };  
+            };
 
             $('.profile-history').find('.ht-bk').append(html);
 
@@ -940,7 +1002,7 @@ $(function(){
         }
 
         input.off('du.add').on('du.add', function(e) {
-            
+
             e.uploadItem.completeCallback = function(succ, data, status) {
                 image.attr('src', data.res.imageWebPath);
 
@@ -955,13 +1017,13 @@ $(function(){
                         $('form[name="profile"]').find('.pi-ph').removeClass('true');
                     }, function() {}, function() {});
                 });
-            }; 
+            };
 
             e.uploadItem.progressCallback = function(perc) {}
             e.uploadItem.upload();
         });
 
-        form.find('input[type="file"]').click();    
+        form.find('input[type="file"]').click();
     })
     $('.profile-history .ht-bk .aw-bt').on('click', showLotteryDetails);
 
@@ -1028,7 +1090,7 @@ $(function(){
             var ticketsHtml = '';
             for (var i=1; i<=5; ++i) {
                 ticketsHtml += '<li class="yr-tt">';
-                
+
                 ticketsHtml += '<div class="yr-tt-tn">Билет #'+i+'</div><ul class="yr-tt-tr">';
 
                 if (tickets[i]) {
@@ -1039,7 +1101,7 @@ $(function(){
                 } else {
                     ticketsHtml += '<li class="null">не заполнен</li></ul>';
                 }
-                
+
                 ticketsHtml += '</li>';
             }
 
@@ -1365,7 +1427,7 @@ function showGameProccessPopup(){
     } else {
         location.reload();
     }
-    
+
 }
 
 function showFailPopup(data)
@@ -1825,7 +1887,7 @@ function previewQuickGamePrize(prize) {
             return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><img src="/filestorage/shop/' + prize.s + '"></div>';
             break;
         default:
-            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? getCurrency(prize.v) : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+getCurrency()+'</small>':'' )+'</span></div>';
+            return '<div class="'+(prize.w?'w ':'')+prize.t+'-holder prize-holder"><span>' + (prize.v ? (prize.t=='money' ? getCurrency(prize.v,1) : prize.v.replaceArray(["[*]", "\/"], ["x", "÷"])) : 0) + (prize.t=='money' ? '<small> '+getCurrency()+'</small>':'' )+'</span></div>';
             break;
     }
 }
@@ -2022,7 +2084,7 @@ $(document).on('click', 'li[data-coord]', function() {
         } else if (data.res.status == 'process') {
             if (data.res.cell == 0) {
                 if (!data.res.dublicate) {
-                    $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');    
+                    $('.rw-b').find('.tb:visible').find('.td.sel').removeClass('sel').next().addClass('sel');
                 }
             }
         }
@@ -2041,7 +2103,7 @@ $('.game-bk .bk-bt').on('click', function() {
     $('.game-bk').fadeOut(200);
     window.setTimeout(function(){
         $('.ch-bk').fadeIn(200);
-    }, 200); 
+    }, 200);
 });
 
 <!-- NOTICES -->
@@ -2106,7 +2168,7 @@ $('.st-hy-bt').on('click', function(){
                 button.parents('.bblock').find('.tb').append($(html));
 
                 if (button.hasClass('pz-more-bt')) {
-                    button.hide();    
+                    button.hide();
                 }
                 button.parents('.bblock').find('.mr-cl-bt-bl').show();
 
@@ -2354,6 +2416,23 @@ function randomCachedNum() {
         }
     });
     return rand;
+}
+
+function moveToEnd(target) {
+    var rng, sel;
+    if ( document.createRange ) {
+        rng = document.createRange();
+        rng.selectNodeContents(target);
+        rng.collapse(false); // схлопываем в конечную точку
+        sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange( rng );
+    } else { // для IE нужно использовать TextRange
+        var rng = document.body.createTextRange();
+        rng.moveToElementText( target );
+        rng.collapseToEnd();
+        rng.select();
+    }
 }
 
 String.prototype.replaceArray = function(find, replace) {

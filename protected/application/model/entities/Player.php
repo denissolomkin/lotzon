@@ -14,9 +14,12 @@ class Player extends Entity
     // 3 months
     const AUTOLOGIN_COOKIE_TTL = 7776000;
 
-
     const AVATAR_WIDTH  = 160;
     const AVATAR_HEIGHT = 160;
+
+    static $MASK = array(
+        'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Logined'),
+        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','Order','Review','CookieId'));
 
     private $_id         = 0;
     private $_email      = '';
@@ -43,6 +46,7 @@ class Player extends Entity
     private $_visible             = false;
     private $_ban             = false;
 
+    private $_dates = array();
     private $_dateRegistered = '';
     private $_dateLastLogin  = '';
     private $_dateLastNotice = '';
@@ -59,7 +63,11 @@ class Player extends Entity
     private $_gamesPlayed = 0;
 
     private $_invitesCount = 0;
-    private $_socialPostsCount = 0;
+
+    /**
+     * @var array Счётчик оставшихся оплачиваемых реф.ссылок в соц.сетях [имя соц.сети]=>[количество]
+     */
+    private $_socialPostsCount = array();
 
     //private $_online     = 0;
     private $_onlineTime = 0;
@@ -288,7 +296,7 @@ class Player extends Entity
     public function getPhone()
     {
         return $this->_phone;
-    }    
+    }
 
     public function setBirthday($birthday)
     {
@@ -300,13 +308,13 @@ class Player extends Entity
     public function getBirthday($format = null)
     {
         $date = $this->_birthday;
-        
+
         if (!is_null($format)) {
             $date = date($format, $this->_birthday);
         }
 
         return $date;
-    }  
+    }
 
     public function setDateRegistered($dateRegistered)
     {
@@ -412,7 +420,7 @@ class Player extends Entity
         if (!is_null($format)) {
             $date = date($format, $this->_dateLastLogin);
         }
-        
+
         return $date;
     }
 
@@ -420,7 +428,7 @@ class Player extends Entity
     {
 
         $this->_lang =
-            \CountriesModel::instance()->isLang($lang)
+            \LanguagesModel::instance()->isLang($lang)
                 ? $lang
                 : \CountriesModel::instance()->defaultLang();
 
@@ -442,7 +450,7 @@ class Player extends Entity
     public function getCountry()
     {
         return $this->_country;
-    }  
+    }
 
     public function setAvatar($avatar)
     {
@@ -493,7 +501,7 @@ class Player extends Entity
     public function getPoints()
     {
         return $this->_points;
-    }  
+    }
 
     public function setMoney($money)
     {
@@ -517,7 +525,7 @@ class Player extends Entity
     public function getGamesPlayed()
     {
         return $this->_gamesPlayed;
-    }  
+    }
 
     public function getInvitesCount()
     {
@@ -531,19 +539,45 @@ class Player extends Entity
         return $this;
     }
 
-    public function getSocialPostsCount()
+    /**
+     * Возвращает счётчик остатка оплачиваемых постов для соц.сети $provider
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  string|null     $provider Имя социальной сети | Весь массив счётчиков
+     * @return int|array|false           Количество оставшихся постов | Весь массив | не найден счётчик для соц.сети $provider
+     */
+    public function getSocialPostsCount($provider = null)
     {
-        return $this->_socialPostsCount;
+        if ($provider === null) {
+            return $this->_socialPostsCount;
+        }
+        if (isset($this->_socialPostsCount[$provider])) {
+            return $this->_socialPostsCount[$provider];
+        } else {
+            return false;
+        }
     }
 
+    /**
+     * Устанавливает счётчик остатка оплачиваемых постов для соц.сетей
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  mixed[] $sp Массив [имя счётчика => количество оставшихся постов]
+     * @return object      this
+     */
     public function setSocialPostsCount($sp)
     {
-        $this->_socialPostsCount = $sp;
-
+        if (is_array($sp)) {
+            foreach ($sp as $key => $value) {
+                $this->_socialPostsCount[$key] = $value;
+            }
+        }
         return $this;
     }
 
-    public function setOnlineTime($time) 
+    public function setOnlineTime($time)
     {
         $this->_onlineTime  = $time;
         return $this;
@@ -582,10 +616,26 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
+
         return $this;
     }
 
+    public function checkDate($key)
+    {
+        $model = $this->getModelClass();
+        $check = false;
+
+        try {
+            $check = $model::instance()->checkDate($key, $this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        if($check)
+            $this->setDates($key, time());
+
+        return $check;
+    }
 
     public function checkLastGame($key)
     {
@@ -600,10 +650,17 @@ class Player extends Entity
         return false;
     }
 
-
-    public function decrementSocialPostsCount()
+    /**
+     * Декремент счётчика оплачиваемых реф.ссылок в соц.сети $provider
+     *
+     * @author subsan <subsan@online.ua>
+     *
+     * @param  string $provider Имя социальной сети
+     * @return object           this
+     */
+    public function decrementSocialPostsCount($provider)
     {
-        $this->setSocialPostsCount($this->getSocialPostsCount() - 1);
+        $this->setSocialPostsCount(array($provider => ($this->getSocialPostsCount($provider) - 1)));
         $model = $this->getModelClass();
 
         try {
@@ -611,11 +668,11 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;
-    } 
 
-    public function setValid($valid) 
+        return $this;
+    }
+
+    public function setValid($valid)
     {
         $this->_valid = $valid;
 
@@ -664,7 +721,7 @@ class Player extends Entity
         return $this->_webSocket;
     }
 
-    public function setHash($hash) 
+    public function setHash($hash)
     {
         $this->_hash = $hash;
 
@@ -674,9 +731,9 @@ class Player extends Entity
     public function getHash()
     {
         return $this->_hash;
-    }    
+    }
 
-    public function setIP($ip) 
+    public function setIP($ip)
     {
         $this->_ip = $ip;
 
@@ -715,7 +772,7 @@ class Player extends Entity
         return $this->_inviterId;
     }
 
-    public function setReferalId($referalId) 
+    public function setReferalId($referalId)
     {
         $this->_referalId = $referalId;
 
@@ -761,8 +818,8 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;   
+
+        return $this;
     }
 
     public function writeLogin()
@@ -851,11 +908,11 @@ class Player extends Entity
 
     public function compilePassword($password)
     {
-        if (!$this->getSalt()) 
+        if (!$this->getSalt())
         {
             $this->setSalt(uniqid());
         }
-        
+
         return md5($this->getSalt() . sha1($password));
     }
 
@@ -902,7 +959,7 @@ class Player extends Entity
                     throw new EntityException("INVALID_PHONE_FORMAT", 400);
                 }
             break;
-            
+
             default:
                 # code...
             break;
@@ -949,7 +1006,7 @@ class Player extends Entity
 
     }
 
-    public function saveAvatar() 
+    public function saveAvatar()
     {
         $model = $this->getModelClass();
 
@@ -958,18 +1015,57 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;   
+
+        return $this;
     }
 
-    public function getCounters()
+    public function initCounters($data=null)
     {
-        return $this->_counters;
+
+        if(!$data) {
+            $model = $this->getModelClass();
+
+            try {
+                $data = $model::instance()->initCounters($this);
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+
+            }
+        }
+
+        $counters = array();
+        foreach(self::$MASK['counters'] as $key)
+            if(isset($data['Counter'.$key]))
+                $counters[$key] = $data['Counter'.$key];
+            elseif(isset($data[$key]))
+                $counters[$key] = $data[$key];
+
+        $this->setCounters($counters);
+
+        return $this;
     }
 
-    public function setCounters($counters)
+    public function getCounters($key=null)
     {
-        return $this->_counters=$counters;
+        if($key){
+            if(isset($this->_counters[$key])){
+                return $this->_counters[$key];
+            } else {
+                return false;
+            }
+        } else
+            return $this->_counters;
+    }
+
+    public function setCounters($counters, $update=false)
+    {
+        if($update){
+            $this->_counters[$counters] = $update;
+        } else {
+            $this->_counters = $counters;
+        }
+
+        return $this;
     }
 
     public function initDates($data=null)
@@ -986,7 +1082,12 @@ class Player extends Entity
             }
         }
 
-        $this
+        $dates = array();
+        foreach(self::$MASK['dates'] as $key)
+            if(isset($data[$key]))
+                $dates[$key] = $data[$key];
+
+        $this->setDates($dates)
             ->setDateLastMoment($data['Moment'])
             ->setDateLastQuickGame($data['QuickGame'])
             ->setDateLastChance($data['ChanceGame'])
@@ -998,19 +1099,34 @@ class Player extends Entity
         return $this;
     }
 
-    public function initCounters()
+    public function setDates($dates, $update=false)
     {
-        $model = $this->getModelClass();
-
-        try {
-            $counters=$model::instance()->initCounters($this);
-            $this->setCounters($counters);
-        } catch (ModelException $e) {
-            throw new EntityException($e->getMessage(), $e->getCode());
-
+        if($update){
+            $this->_dates[$dates] = $update;
+        } else {
+            $this->_dates = $dates;
         }
 
-        return $counters;
+        return $this;
+    }
+
+    public function getDates($key = null, $format = null)
+    {
+        if($key){
+
+            if(isset($this->_dates[$key])){
+                if (!is_null($format)) {
+                    return date($format, $this->_dates[$key]);
+                } else {
+                    return $this->_dates[$key];
+                }
+            } else {
+                return false;
+            }
+
+        } else
+            return $this->_dates;
+
     }
 
     public function updateCookieId($cookie)
@@ -1055,10 +1171,10 @@ class Player extends Entity
             $model::instance()->checkNickname($this);
         } catch (ModelException $e) {
             if ($e->getCode() == 403) {
-                throw new EntityException("NICKNAME_BUSY", 400);    
+                throw new EntityException("NICKNAME_BUSY", 400);
             }
             throw new EntityException($e->getMessage(), $e->getCode());
-            
+
         }
 
         return true;
@@ -1082,7 +1198,7 @@ class Player extends Entity
             if ($throwException) {
                 throw new EntityException('INVALID_EMAIL', 400);
             }
-        } 
+        }
 
         $emailDomain = substr(strrchr($this->getEmail(), "@"), 1);
         if (in_array($emailDomain, SettingsModel::instance()->getSettings('blockedEmails')->getValue())) {
@@ -1182,7 +1298,7 @@ class Player extends Entity
         if ($inplaceUpdate) {
             $this->updateBalance('Money', $quantity);
         }
-    
+
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
                     ->setSum($quantity)
@@ -1190,7 +1306,7 @@ class Player extends Entity
                     ->setCurrency(LotterySettings::CURRENCY_MONEY)
                     ->setDescription($description);
         $transaction->create();
-        
+
         return $this;
     }
 
@@ -1323,7 +1439,7 @@ class Player extends Entity
         return $this;
     }
 
-    public function changePassword($password) 
+    public function changePassword($password)
     {
         $this->setSalt("");
         $this->setPassword($this->compilePassword($password));
@@ -1335,8 +1451,8 @@ class Player extends Entity
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-        
-        return $this;   
+
+        return $this;
     }
 
     public function updateLastNotice()
@@ -1365,7 +1481,7 @@ class Player extends Entity
         }
     }
 
-    public function formatFrom($from, $data) 
+    public function formatFrom($from, $data)
     {
         if ($from == 'DB') {
             $this->setId($data['Id'])
@@ -1400,7 +1516,7 @@ class Player extends Entity
                  ->setMoney($data['Money'])
                  ->setGamesPlayed($data['GamesPlayed'])
                  ->setInvitesCount($data['InvitesCount'])
-                 ->setSocialPostsCount($data['SocialPostsCount'])
+                 ->setSocialPostsCount(!empty($data['SocialPostsCount']) ? @unserialize($data['SocialPostsCount']) : array())
                  ->setCookieId($data['CookieId'])
                  ->setIp($data['Ip'])
                  ->setLastIp($data['LastIp'])
@@ -1419,21 +1535,8 @@ class Player extends Entity
                 $this->initDates($data);
             }
 
-            if (isset($data['CountIp'])) {
-                $this->setCounters(array(
-                    'Notice' => $data['CountNotice'],
-                    'Note' => $data['CountNote'],
-                    'AdBlock' => $data['CountAdBlock'],
-                    'Log' => $data['CountLog'],
-                    'Ip' => $data['CountIp'],
-                    'MyReferal' => $data['CountMyReferal'],
-                    'Referal' => $data['CountReferal'],
-                    'MyInviter' => $data['CountMyInviter'],
-                    'Inviter' => $data['CountInviter'],
-                    'Order' => ($data['CountMoneyOrder']+$data['CountShopOrder']),
-                    'Review' => $data['CountReview'],
-                    'CookieId' => $data['CountCookieId'],
-                ));
+            if (isset($data['MyReferal'])) {
+                $this->initCounters($data);
             }
         }
 

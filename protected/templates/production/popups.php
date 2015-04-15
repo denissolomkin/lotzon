@@ -13,15 +13,15 @@
                     </div>
                     <div class="pz-tl-bk">
                         <div class="pz-tl item-title"></div>
-                        <div class="pz-ps"><b class="item-price"></b> <?=$MUI->getText('placeholder-points')?></div>
-                        <div class="px-des"><?=$MUI->getText('prizes-popup-text')?></div>
+                        <div class="pz-ps"><b class="item-price"></b> <?=$MUI->getText('label-points')?></div>
+                        <div class="px-des"><?=$MUI->getText('text-prizes-popup')?></div>
                         <div class="pz-ifo-bt"><?=$MUI->getText('button-change')?></div>
                     </div>
                 </div>
 
                 <!-- Prize info block -->
                 <div class="pz-fm-bk">
-                    <div class="fm-txt"><?=$MUI->getText('prizes-order-popup')?></div>
+                    <div class="fm-txt"><?=$MUI->getText('text-prizes-order-popup')?></div>
                     <div class="fm-inps-bk">
                         <div class="pi-inp-bk">
                             <div class="ph"><?=$MUI->getText('placeholder-surname')?></div>
@@ -52,7 +52,7 @@
                 </div>
 
                 <!-- Prize report block -->
-                <div class="pz-rt-bk" data-default="<?=$MUI->getText('prizes-popup-success')?>"></div>
+                <div class="pz-rt-bk" data-default="<?=$MUI->getText('message-prizes-popup-success')?>"></div>
             </section>
         </div>
     </div>
@@ -74,7 +74,7 @@
                     <div class="ws-pf-tl">
                         <time class="ws-dt">22.08.2014</time>
                         <div class="yr-tt">
-                            <div class="yr-tt-tn"><?=$MUI->getText('placeholder-lototron')?></div>
+                            <div class="yr-tt-tn"><?=$MUI->getText('label-lototron')?></div>
                             <ul class="yr-tt-tr loto-holder">
                             </ul>
                         </div>
@@ -109,8 +109,8 @@
             <section class="csh-ch-bk pop-box">
                 <div class="cl-bt cs"></div>
                 <div class="padd">
-                    <p id="csh-ch-txt"><?=$MUI->getText('title-money-output')?></p>
-                    <p><?=$MUI->getText('holder-choose-method')?>:</p>
+                    <p id="csh-ch-txt"><?=$MUI->getText('title-money-output-popup')?></p>
+                    <p><?=$MUI->getText('label-choose-method')?>:</p>
                     <ul class="csh-ch-lst">
                         <li>
                             <input type="radio" name="cash" id="cards" hidden />
@@ -285,7 +285,7 @@
                         <ul class="yr-tb">
                         </ul>
                         <div class="gw-sep"></div>
-                        <div class="yr-b-fb"><?=$MUI->getText('game-popup-win')?></div>
+                        <div class="yr-b-fb"><?=$MUI->getText('text-game-popup-win')?></div>
                     </div>
                     <div class="yr-s-i">
                         <div class="sb" style="visibility:hidden;">
@@ -301,11 +301,11 @@
                         </div>
                         <div class="yr-yw-b">
                             <div class="cb">
-                                <div class="yw-t"><?=$MUI->getText('holder-points-win')?><b class="player-points plPointHolder"></b></div>
+                                <div class="yw-t"><?=$MUI->getText('label-points-win')?><b class="player-points plPointHolder"></b></div>
                                 <a href="javascript:void(0);" onclick="location.hash='prizes';location.reload();" class="yw-b"><?=$MUI->getText('button-change')?></a>
                             </div>
                             <div class="mb">
-                                <div class="yw-t"><?=$MUI->getText('holder-money-win')?><b class="player-money plMoneyHolder"></b></div>
+                                <div class="yw-t"><?=$MUI->getText('label-money-win')?><b class="player-money plMoneyHolder"></b></div>
                                 <a href="javascript:void(0);" onclick="location.hash='money';location.reload();" class="yw-b"><?=$MUI->getText('button-output')?></a>
                             </div>
                         </div>
@@ -330,7 +330,7 @@
                         <div class="yr-b-fb"></div>
                     </div>
                     <div class="yr-s-i">
-                        <?=$MUI->getText('game-popup-fail')?>
+                        <?=$MUI->getText('text-game-popup-fail')?>
                     </div>
                     <div class="b-cl-block"></div>
                 </div>
@@ -416,13 +416,13 @@
                 <div class="padd">
                     <!-- exchange BLOCK -->
                         <div class="ttl-bk">
-                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
-                            <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i><?=$MUI->getText('placeholder-points')?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
+                            <div class="if l"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/><?=$MUI->getText('label-on-balance')?></i></div>
+                            <div class="if r"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i><?=$MUI->getText('label-points')?><br/><?=$MUI->getText('label-on-balance')?></i></div>
 
                         </div>
 
                         <div class="fm-txt">
-                              <p><?=$MUI->getText('placeholder-input-sum-rate-is')?> <?=$currency['iso']?> = <span id="rate"><?=($currency['rate'])?></span> <?=$MUI->getText('placeholder-points')?>
+                              <p><?=$MUI->getText('text-input-sum-rate-is')?> <?=$currency['iso']?> = <span id="rate"><?=($currency['rate'])?></span> <?=$MUI->getText('label-points')?>
                         </div>
 
 
@@ -432,14 +432,14 @@
                                 <input autocomplete="off" spellcheck="false"  class="m_input" type="text" data-type="number" id="summ_exchange" name="summ" value="">
                             </div>
 
-                            <div class="if r"><span id="points">0</span> <i><br/><?=$MUI->getText('placeholder-points')?></i></div>
+                            <div class="if r"><span id="points">0</span> <i><br/><?=$MUI->getText('label-points')?></i></div>
 
 
                         </div>
 
                         <div class="hidden" id="exchange-result">
                             <div class="fm-txt">
-                                <p><?=$MUI->getText('text-ready-money-convert-to-points')?></p>
+                                <p><?=$MUI->getText('message-ready-money-convert-to-points')?></p>
                             </div>
                         </div>
 
@@ -469,7 +469,7 @@
                     <div id="bonuses-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_POINT?>">
                         <div class="ttl-bk">
                             <div class="nm"><?=$MUI->getText('title-points')?></div>
-                            <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i><?=$MUI->getText('placeholder-points')?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
+                            <div class="if"><span class='plPointHolder'><?=Common::viewNumberFormat($player->getPoints())?></span> <i><?=$MUI->getText('label-points')?><br/><?=$MUI->getText('label-on-balance')?></i></div>
                         </div>
                         <div class="tb">
                             <? /* if(is_array($playerTransactions[LotterySettings::CURRENCY_POINT]))
@@ -481,38 +481,38 @@
                                 </div>
                             <? } */ ?>
                         </div>
-                        <? /* if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                        <? /* if (count($playerTransactions[LotterySettings::CURRENCY_POINT]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?> <? } */ ?>
                             <div class="pz-more-bt"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl"><?=$MUI->getText('button-hide')?></div>
                                 <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
-                        <? } */ ?>
+
                     </div>
 
                     <!-- CASH BLOCK -->
                     <div id="cash-h" class="bblock" data-currency="<?=LotterySettings::CURRENCY_MONEY?>">
                         <div class="ttl-bk">
                             <div class="nm"><?=$MUI->getText('title-money')?></div>
-                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/><?=$MUI->getText('placeholder-on-balance')?></i></div>
+                            <div class="if"><span class='plMoneyHolder'><?=Common::viewNumberFormat($player->getMoney())?></span> <i><?=$currency['many']?><br/><?=$MUI->getText('label-on-balance')?></i></div>
                         </div>
                         <div class="tb">
                             <? /* if(is_array($playerTransactions[LotterySettings::CURRENCY_MONEY]))
-                                foreach ($playerTransactions[LotterySettings::CURRENCY_MONEY] as $transaction) { ?>
+                                foreach ($playerTransactions[LotterySettings::CURRENCY_MONEY] as $transaction) { ?><? }
                                 <div class="rw">
                                     <div class="nm td"><span><?=$transaction->getDescription()?></span></div>
                                     <div class="if td"><?=($transaction->getSum() > 0 ? '+' : '')?><?=Common::viewNumberFormat($transaction->getSum())?></div>
                                     <div class="dt td"><span><?=date('d.m.Y', $transaction->getDate())?></span></div>
                                 </div>
-                            <? } */ ?>
+                            */ ?>
                         </div>
                         <? /* if (count($playerTransactions[LotterySettings::CURRENCY_MONEY]) == controllers\production\Index::TRANSACTIONS_PER_PAGE OR 1) { ?>
+                        <? } */ ?>
                             <div class="pz-more-bt"><?=$MUI->getText('button-more')?></div>
                             <div class="mr-cl-bt-bl">
                                 <div class="cl"><?=$MUI->getText('button-hide')?></div>
                                 <div class="mr"><?=$MUI->getText('button-more')?></div>
                             </div>
-                        <? } */ ?>
                     </div>
                 </div>
             </section>
@@ -531,8 +531,8 @@
             <section class="rules-bk">
                 <div class="cs"></div>
                 <div class="rb-pg">
-                    <h2><?=$MUI->getText('placeholder-terms')?></h2>
-                    <?=$MUI->getText('promo-login-rules')?>
+                    <h2><?=$MUI->getText('title-rules')?></h2>
+                    <?=$MUI->getText('text-rules')?>
                 </div>
             </section>
         </div>
@@ -583,7 +583,7 @@
                         <ul class="qg-tbl" style="position: relative;">
 
                         </ul>
-                        <div class="block" style="display:none;" ><?=$MUI->getText('placeholder-loading')?></div>
+                        <div class="block" style="display:none;" ><?=$MUI->getText('label-loading')?></div>
                     </div>
                 </div>
             </section>
@@ -613,7 +613,7 @@
                         <ul class="qg-tbl" style="position: relative;">
 
                         </ul>
-                        <div class="block" style="display:none;" ><?=$MUI->getText('placeholder-loading')?></div>
+                        <div class="block" style="display:none;" ><?=$MUI->getText('label-loading')?></div>
                     </div>
                 </div>
             </section>
@@ -630,7 +630,7 @@
             <section class="report-block pop-box">
                 <div class="cs"></div>
                 <!-- Prize report block -->
-                <div class="txt" data-default="<?=$MUI->getText('prizes-popup-success')?>"></div>
+                <div class="txt" data-default="<?=$MUI->getText('text-prizes-popup-success')?>"></div>
             </section>
         </div>
     </div>

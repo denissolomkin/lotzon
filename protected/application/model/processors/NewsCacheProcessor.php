@@ -38,9 +38,9 @@ class NewsCacheProcessor extends BaseCacheProcessor implements IProcessor
 
     private function cacheLatest()
     {
-        foreach (\CountriesModel::instance()->getLangs() as $lang) {
-            $list = $this->getBackendProcessor()->getList($lang, Config::instance()->newsCacheCount);
-            if (!Cache::init()->set(sprintf(self::LIST_CACHE_KEY, $lang) , $list)) {
+        foreach (\CountriesModel::instance()->getList() as $lang) {
+            $list = $this->getBackendProcessor()->getList($lang->getCode(), Config::instance()->newsCacheCount);
+            if (!Cache::init()->set(sprintf(self::LIST_CACHE_KEY, $lang->getCode()) , $list)) {
                 throw new ModelException("Unable to cache storage data", 500);
             }
         }

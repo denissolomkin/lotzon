@@ -630,8 +630,8 @@
 <script>
 
 <? $langs=array();
-foreach(\CountriesModel::instance()->getLangs() as $lang)
-    $langs[$lang]=$lang;?>
+foreach(\LanguagesModel::instance()->getList() as $lang)
+    $langs[$lang->getCode()]=$lang->getCode();?>
 langs=<?=json_encode($langs);?>;
 
 <? $countries=array();
@@ -995,8 +995,8 @@ $("#add-notice select#notice-type").on('change', function() {
                             (tr.registeredFrom ?'<br><span class="label label-primary">от '+tr.registeredFrom+'</span>':'')+
                             (tr.registeredUntil ?'<br><span class="label label-primary">до '+tr.registeredUntil+'</span>':'')+
                             (tr.country ?'<br><span class="label label-primary">'+tr.country+'</span>':'')+
-                        (tr.minLotteries ?'<br><span class="label label-primary"><i class="fa fa-gift "></i> '+tr.minLotteries+'</span>':'')+
-                        '</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
+                            (tr.minLotteries ?'<br><span class="label label-primary"><i class="fa fa-gift "></i> '+tr.minLotteries+'</span>':'')+
+                            '</td><td><b>'+tr.title+'</b>'+(tr.text?'<br>'+tr.text:'')+'</td>';
                         tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNotice('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
 
                     });

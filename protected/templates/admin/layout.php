@@ -11,6 +11,11 @@
 
       <!--link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/redmond/jquery-ui.css" -->
     <!-- Latest compiled and minified CSS -->
+
+      <!-- Fix Bootstrap Background -->
+      <style>
+          .table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th{background: #ffffff;}
+      </style>
     <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
       <link rel="stylesheet" href="/theme/admin/datepicker/css/datepicker.css">
       <!--link rel="stylesheet" href="/theme/admin/glyphicons/css/style-new.css"-->

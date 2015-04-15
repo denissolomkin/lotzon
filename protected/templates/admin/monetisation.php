@@ -25,7 +25,7 @@
             <thead>
                 <!--th>#ID</th-->
                 <th width="50">Дата</th>
-                <th width="10%">Игрок</th>
+                <th width="10%" style="min-width: 170px;">Игрок</th>
                 <th width="20%">Информация</th>
                 <th width="50">Баланс</th>
                 <th>Данные</th>
@@ -45,36 +45,54 @@
                                 <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
 
                             </div>
-                            <div class="right" style="position: absolute;right: 5px;">
-                                <div style="position: relative;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
-                                    <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
-                                    <?=$player->getCountry()?>
-                                </div>
-                                <? if($player->getGamesPlayed()){?> <i data-id="<?=$player->getId()?>" class="fa fa-gift pointer stats-trigger <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"><?=$player->getGamesPlayed()?></i><?}?>
+                            <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
+                                <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
+                                <?=$player->getCountry()?>
+                            </div>
+                            <div class="right games-holder">
 
-                                <? if($player->getDateLastQuickGame()){?>
+                                <? if($player->getGamesPlayed()){?>
+                                    <span class="stats-trigger pointer success" data-id="<?=$player->getId()?>">
+                                        <i class="fa fa-gift <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"></i><?=$player->getGamesPlayed()?>
+                                    </span>
+                                <?}?>
+
+                                <? if($player->getDates('QuickGame')){?>
                                     <i class="fa fa-puzzle-piece <?=
-                                    ($player->getDateLastQuickGame() > strtotime('-2 day', time()) ? 'text-success' :
-                                        ($player->getDateLastQuickGame() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    ($player->getDates('QuickGame') > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDates('QuickGame') > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
                                     )?>"></i>
                                 <?}?>
 
-                                <? if($player->getDateLastMoment()){?>
+                                <? if($player->getDates('Moment')){?>
                                     <i class="fa fa-rocket <?=
-                                    ($player->getDateLastMoment() > strtotime('-2 day', time()) ? 'text-success' :
-                                        ($player->getDateLastMoment() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    ($player->getDates('Moment') > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDates('Moment') > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
                                     )?>"></i>
                                 <?}?>
 
-                                <? if($player->getDateLastChance()){?>
+                                <? if($player->getDates('ChanceGame')){?>
                                     <i class="fa fa-star <?=
-                                    ($player->getDateLastChance() > strtotime('-2 day', time()) ? 'text-success' :
-                                        ($player->getDateLastChance() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    ($player->getDates('ChanceGame') > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDates('ChanceGame') > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
                                     )?>"></i>
+                                <?}?>
+
+                                <? if($player->getCounters('WhoMore')){?>
+                                    <span <?=($player->getCounters('WhoMore')*100 > SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MAX_WIN') || $player->getCounters('WhoMore')*100 < SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MIN_WIN')? 'class="text-danger"' : '' )?>>
+                                    <nobr><i class="fa fa-sort-numeric-asc"></i><?=ceil($player->getCounters('WhoMore')*100).'%'?></nobr>
+                                </span>
+                                <?}?>
+
+                                <? if($player->getCounters('SeaBattle')){?>
+                                    <span <?=($player->getCounters('SeaBattle')*100 > SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MAX_WIN') || $player->getCounters('SeaBattle')*100 < SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MIN_WIN')? 'class="text-danger"' : '' )?>>
+                                    <nobr><i class="fa fa-ship"></i><?=ceil($player->getCounters('SeaBattle')*100).'%'?></nobr>
+                                </span>
                                 <?}?>
                             </div>
                         </td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                            <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
                                 echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
@@ -95,6 +113,7 @@
                                 else echo $info;
                                 echo'</div>';
                             }?>
+                            </div>
                             <br>
 
                             <div class="left">
@@ -218,7 +237,7 @@
             <thead>
                 <!--th>#ID</th-->
                 <th width="50">Дата</th>
-                <th width="10%">Игрок</th>
+                <th width="10%" style="min-width: 170px;">Игрок</th>
                 <th width="20%">Информация</th>
                 <th width="100">Баланс</th>
                 <th>Номер</th>
@@ -237,36 +256,55 @@
                                 <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
 
                             </div>
-                            <div class="right" style="position: absolute;right: 5px;">
-                                <div style="position: relative;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
-                                    <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
-                                    <?=$player->getCountry()?>
-                                </div>
-                                <? if($player->getGamesPlayed()){?> <i data-id="<?=$player->getId()?>" class="fa fa-gift pointer stats-trigger <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"><?=$player->getGamesPlayed()?></i><?}?>
+                            <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
+                                <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
+                                <?=$player->getCountry()?>
+                            </div>
+                            <div class="games-holder right">
 
-                                <? if($player->getDateLastQuickGame()){?>
+                                <? if($player->getGamesPlayed()){?>
+                                    <span class="stats-trigger pointer success" data-id="<?=$player->getId()?>">
+                                        <i class="fa fa-gift <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"></i><?=$player->getGamesPlayed()?>
+                                    </span>
+                                <?}?>
+
+                                <? if($player->getDates('QuickGame')){?>
                                     <i class="fa fa-puzzle-piece <?=
-                                    ($player->getDateLastQuickGame() > strtotime('-2 day', time()) ? 'text-success' :
-                                        ($player->getDateLastQuickGame() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    ($player->getDates('QuickGame') > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDates('QuickGame') > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
                                     )?>"></i>
                                 <?}?>
 
-                                <? if($player->getDateLastMoment()){?>
+                                <? if($player->getDates('Moment')){?>
                                     <i class="fa fa-rocket <?=
-                                    ($player->getDateLastMoment() > strtotime('-2 day', time()) ? 'text-success' :
-                                        ($player->getDateLastMoment() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    ($player->getDates('Moment') > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDates('Moment') > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
                                     )?>"></i>
                                 <?}?>
 
-                                <? if($player->getDateLastChance()){?>
+                                <? if($player->getDates('ChanceGame')){?>
                                     <i class="fa fa-star <?=
-                                    ($player->getDateLastChance() > strtotime('-2 day', time()) ? 'text-success' :
-                                        ($player->getDateLastChance() > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
+                                    ($player->getDates('ChanceGame') > strtotime('-2 day', time()) ? 'text-success' :
+                                        ($player->getDates('ChanceGame') > strtotime('-7 day', time()) ? 'text-warning' : 'text-danger')
                                     )?>"></i>
                                 <?}?>
+
+                                <? if($player->getCounters('WhoMore')){?>
+                                    <span <?=($player->getCounters('WhoMore')*100 > SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MAX_WIN') || $player->getCounters('WhoMore')*100 < SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MIN_WIN')? 'class="text-danger"' : '' )?>>
+                                    <nobr><i class="fa fa-sort-numeric-asc"></i><?=ceil($player->getCounters('WhoMore')*100).'%'?></nobr>
+                                </span>
+                                <?}?>
+
+                                <? if($player->getCounters('SeaBattle')){?>
+                                    <span <?=($player->getCounters('SeaBattle')*100 > SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MAX_WIN') || $player->getCounters('SeaBattle')*100 < SettingsModel::instance()->getSettings('counters')->getValue('DANGER_MIN_WIN')? 'class="text-danger"' : '' )?>>
+                                    <nobr><i class="fa fa-ship"></i><?=ceil($player->getCounters('SeaBattle')*100).'%'?></nobr>
+                                </span>
+                                <?}?>
+
                             </div>
                         </td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                            <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
                                 echo '<a href="javascript:void(0)" class="sl-bk '.$provider.($info['enabled']==1?' active':'').'"></a>
@@ -287,6 +325,7 @@
                                 else echo $info;
                                 echo'</div>';
                             }?>
+                            </div>
                             <br>
                       <!--  <span <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
                         <?if($player->getCounters()['Ip']>1) {?>

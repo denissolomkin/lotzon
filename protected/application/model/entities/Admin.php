@@ -25,8 +25,8 @@ class Admin extends Entity
                 'blacklist'=>array('icon'=>'minus-circle','name'=>'Blacklist'),
                 'seo'=>array('icon'=>'crosshairs','name'=>'SEO'),
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
-                'bonuses'=>array('icon'=>'','name'=>'Бонусы'),
-                'counters'=>array('icon'=>'','name'=>'Счетчики'),
+                'bonuses'=>array('icon'=>'diamond','name'=>'Бонусы'),
+                'counters'=>array('icon'=>'dashboard','name'=>'Счетчики'),
             )),
 
         'Контент'=>array('icon'=>'th-list',

@@ -99,7 +99,7 @@ class News extends Entity
 
             ;
 
-                if (!$this->getLang() || !\CountriesModel::instance()->isLang($this->getLang())) {
+                if (!$this->getLang() || !\LanguagesModel::instance()->isLang($this->getLang())) {
                     throw new EntityException("Invalid lang", 400);      
                 }
             break;
