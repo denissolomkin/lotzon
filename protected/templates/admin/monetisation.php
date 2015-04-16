@@ -226,7 +226,7 @@
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $moneyPager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/monetisation?moneyPage=<?=$i?>&shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=<?=$moneyStatus?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'').'#money'?>'" class="btn btn-default btn-xs <?=($i == $moneyPager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="document.location.href='/private/monetisation?moneyPage=<?=$i?>&shopPage=<?=$shopPager['page']?>&moneyType=<?=$moneyType?>&shopStatus=<?=$shopStatus?>&moneyStatus=<?=$moneyStatus?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction'].($search['query']?'&search[where]='.$search['where'].'&search[query]='.$search['query']:'').'#money'?>'" class="btn btn-default btn-xs <?=($i == $moneyPager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
