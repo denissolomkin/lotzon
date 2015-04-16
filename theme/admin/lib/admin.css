@@ -87,9 +87,11 @@ vertical-align: middle;}
 }
 
 #profile-holder .modal-body .input-group{
-    width:70%;
+    width:70%;float: right;
 }
-
+#profile-holder .modal-footer {
+    clear: both;
+}
 #profile-holder .modal-body .input-group-addon{
     width:100px;
 }

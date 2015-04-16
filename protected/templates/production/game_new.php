@@ -40,8 +40,6 @@
         <meta property="og:description" content="Играл, играю и буду играть." />
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
-        <!-- Latest compiled and minified CSS -->
-        <!--link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css"-->
         <!-- Include Summernote CSS files -->
         <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
@@ -88,9 +86,9 @@
             <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
 
             <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
             <link href="/theme/admin/lib/admin.css" rel="stylesheet">
             <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
-            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <? } ?>
 
         <? echo getScripts($banners['HeaderScripts'],$player); ?>
