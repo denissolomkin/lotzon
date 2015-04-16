@@ -785,7 +785,7 @@
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-yandexmoney')?>"><?=$MUI->getText('placeholder-yandexmoney')?></div>
-                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-yandexmoney')?>" maxlength="15" type="text" name="yandexmoney" <?=$player->getYandexMoney()?'disabled':''?> data-valid="<?=$player->getYandexMoney()?>" value="<?=$player->getYandexMoney()?>"/>
+                                            <input autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-yandexmoney')?>" maxlength="15" type="text" name="yandex" <?=$player->getYandexMoney()?'disabled':''?> data-valid="<?=$player->getYandexMoney()?>" value="<?=$player->getYandexMoney()?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-password')?>"><?=$MUI->getText('placeholder-password')?></div>
@@ -1544,7 +1544,7 @@
         $('[type="tel"][name="phone"]').inputmasks(maskOpts);
         $('[type="tel"][name="qiwi"]').inputmasks(maskOpts);
         $('[type="text"][name="bd"]').inputmask("d.m.y",{autoUnmask: false});
-        $('[type="text"][name="yandexmoney"]').inputmask('Regex', {regex: "41001[0-9]{7,10}$"});
+        $('[type="text"][name="yandex"]').inputmask('Regex', {regex: "41001[0-9]{7,10}$"});
         $('[type="text"][name="webmoney"]').inputmask('Regex', {regex: "[RZBUE][0-9]{12}$"});
 
 

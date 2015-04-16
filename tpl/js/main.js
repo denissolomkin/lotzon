@@ -643,9 +643,11 @@ $(function(){
     $('#cash-output').on('click', function(){
         if (playerMoney >= 10) {
             $('#cash-output-popup').fadeIn(200);
+            $('.csh-ch-bk .form').hide();
+            $('#cash-output-popup input[name="cash"]').prop('checked', false);
         } else {
             $('.pz-ifo-bk').hide();
-            $('.pz-rt-bk').text("Недостаточно средств для вывода!").show().parents('#shop-items-popup').show();
+            $('.pz-rt-bk').text(getText('INSUFFICIENT_FUNDS')).show().parents('#shop-items-popup').show();
         }
 
     });
@@ -990,8 +992,8 @@ $(function(){
                         break;
                     case 'INVALID_YANDEXMONEY_FORMAT' :
                     case 'YANDEXMONEY_BUSY' :
-                        form.find('input[name="yandexmoney"]').parent().addClass('error');
-                        form.find('input[name="yandexmoney"]').parent().find('.ph').text(getText(data.message));
+                        form.find('input[name="yandex"]').parent().addClass('error');
+                        form.find('input[name="yandex"]').parent().find('.ph').text(getText(data.message));
                         break;
                     default :
                         $("#report-popup").find(".txt").text(getText(data.message));
@@ -1213,6 +1215,15 @@ $(function(){
         $('#csh-ch-txt').hide();
         $('.csh-ch-bk .form').hide();
         $('.csh-ch-bk .'+id).show();
+
+        if(!$('form[name="profile"] input[name="'+id+'"][disabled]').length) {
+            $('.csh-ch-bk .'+id+' form').html($('#cash-output-popup .txt-set-number.hidden').clone().removeClass('hidden'));
+            console.log(1);
+        } else {
+            $('.csh-ch-bk .'+id+' form').html($('form[name="profile"] input[name="'+id+'"]').addClass('m_input').parent().clone().removeClass().addClass('focus inp-bk'));
+            $('#cash-output-popup .csh-ch-bk .form.f-sub').show();
+        }
+
     });
 
     /* CHECK TEXT INPUT */
@@ -1381,20 +1392,20 @@ function moneyOutput(type, form) {
     form = $(form);
     var data = {};
 
-    data.type = type;
+    data.type = $('#cash-output-popup input:visible').first().attr('name');//type;
 
-    form.find('input').each(function(id, input) {
+    $('#cash-output-popup input:visible').each(function(id, input) {
         if (!$(input).hasClass('sb_but')) {
             if ($(input).attr('type') != 'radio') {
                 data[$(input).attr('name')] = {
-                    title: $(input).data('title'),
+                    title: ($(input).attr('data-title')?$(input).attr('data-title'):$(input).attr('placeholder')),
                     value: $(input).val()
                 }
             } else {
                 if ($(input).is(":checked")) {
                     data[$(input).attr('name')] = {
-                        title: $(input).data('title'),
-                        value: $(input).data('currency')
+                        title: $(input).attr('data-title'),
+                        value: $(input).attr('data-currency')
                     }
                 }
             }
@@ -1403,7 +1414,7 @@ function moneyOutput(type, form) {
     });
 
     requestForMoney(data, function(){
-        updateMoney(playerMoney-parseFloat($("#cash-output-popup section.form:visible input[name=summ]").val()));
+        updateMoney(playerMoney-parseFloat($("#cash-output-popup .form.f-sub:visible input[name=summ]").val()));
         $("#cash-output-popup").hide();
         $("#report-popup").find(".txt").text(getText('MONEY_ORDER_COMPLETE'));
         $("#report-popup").show();

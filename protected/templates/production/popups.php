@@ -107,45 +107,46 @@
     <div class="bl-pp_table">
         <div class="bl-pp_td">
             <section class="csh-ch-bk pop-box">
+                <div class="txt-set-number tmpl hidden"><?=$MUI->getText('text-first-set-number-in-cabinet')?></div>
                 <div class="cl-bt cs"></div>
                 <div class="padd">
                     <p id="csh-ch-txt"><?=$MUI->getText('title-money-output-popup')?></p>
-                    <p><?=$MUI->getText('label-choose-method')?>:</p>
+                    <p><?=$MUI->getText('text-choose-method')?></p>
                     <ul class="csh-ch-lst">
                         <li>
-                            <input type="radio" name="cash" id="cards" hidden />
-                            <label for="cards">Пополнение мобильного счета</label>
+                            <input type="radio" name="cash" id="phone" hidden />
+                            <label for="phone"><?=$MUI->getText('label-mobile-refill')?></label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="qiwi" hidden />
-                            <label for="qiwi">QIWI</label>
+                            <label for="qiwi"><?=$MUI->getText('label-qiwi')?></label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="webmoney" hidden />
-                            <label for="webmoney">WebMoney</label>
+                            <label for="webmoney"><?=$MUI->getText('label-webmoney')?></label>
                         </li>
                         <li>
                             <input type="radio" name="cash" id="yandex" hidden />
-                            <label for="yandex">Яндекс деньги</label>
+                            <label for="yandex"><?=$MUI->getText('label-yandex')?></label>
                         </li>
                         <!--li>
                             <input type="radio" name="cash" id="p24" hidden />
-                            <label for="p24">Приват 24</label>
+                            <label for="p24"><?=$MUI->getText('label-p24')?></label>
                         </li-->
                     </ul>
                     <script>
-                        $('input[name="cash"]').prop('checked', false);
+
                     </script>
                     <!-- CARDS FORM -->
-                    <section class="cards form">
+                    <section class="phone form">
                         <form onsubmit="moneyOutput('phone', this); return false;" method="POST">
                             <div class="inp-bk">
-                                <div class="ph">Номер телефона</div>
-                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="Номер телефона в международном формате" name="phone" data-title="Телефон" data-type="phone" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-phone')?></div>
+                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="<?=$MUI->getText('placeholder-phone')?>" name="phone" data-title="<?=$MUI->getText('placeholder-phone')?>" data-type="phone" class="m_input">
                             </div>
                             <div class="inp-bk last">
-                                <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" name="summ" data-type="number" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-sum')?></div>
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-sum')?>" data-title="<?=$MUI->getText('placeholder-sum')?>" name="summ" data-type="number" class="m_input">
                             </div>
                             <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -153,7 +154,7 @@
                                 <input type="file" class="f_input" name="file" />
                             </div-->
                             <div class="s-b">
-                                <input type="submit" value="вывести" class="sb_but">
+                                <input type="submit" value="<?=$MUI->getText('button-output')?>" class="sb_but">
                             </div>
                         </form>
                     </section>
@@ -161,12 +162,12 @@
                     <section class="qiwi form">
                         <form onsubmit="moneyOutput('qiwi', this); return false;"  method="POST">
                             <div class="inp-bk">
-                                <div class="ph">Номер телефона</div>
-                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="Номер телефона в международном формате" name="phone" data-title="Телефон" data-type="phone" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-phone')?></div>
+                                <input autocomplete="off" spellcheck="false" type="tel" placeholder="<?=$MUI->getText('placeholder-phone')?>" name="phone" data-title="<?=$MUI->getText('placeholder-phone')?>" data-type="phone" class="m_input">
                             </div>
                             <div class="inp-bk last">
-                                <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" name="summ" data-type="number" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-sum')?></div>
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-sum')?>" data-title="<?=$MUI->getText('placeholder-sum')?>" name="summ" data-type="number" class="m_input">
                             </div>
                             <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -174,7 +175,7 @@
                                 <input type="file" class="f_input" name="file" />
                             </div-->
                             <div class="s-b">
-                                <input type="submit" value="вывести" class="sb_but">
+                                <input type="submit" value="<?=$MUI->getText('button-output')?>" class="sb_but">
                             </div>
                         </form>
                     </section>
@@ -182,7 +183,7 @@
                     <!-- WEBMONEY FORM -->
                     <section class="webmoney form">
                         <form onsubmit="moneyOutput('webmoney', this); return false;"  method="POST">
-                            <div class="purse-ch-bk">
+                            <!--div class="purse-ch-bk">
                                 <div class="ps-ch-tl">Валюта кошелька</div>
                                 <div class="ps-r">
                                     <input type="radio" name="purse" data-currency="WMR" data-title="Валюта кошелька" id="wm-r" hidden />
@@ -192,14 +193,14 @@
                                     <input type="radio" name="purse" data-currency="WMU" data-title="Валюта кошелька" id="wm-u" hidden />
                                     <label for="wm-u">U</label>
                                 </div>
-                            </div>
+                            </div-->
                             <div class="inp-bk">
-                                <div class="ph">Номер кошелька</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер кошелька" data-title="Номер кошелька" name="card-number" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-purse-number')?></div>
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-purse-number')?>" data-title="<?=$MUI->getText('placeholder-purse-number')?>" name="card-number" class="m_input">
                             </div>
                             <div class="inp-bk last">
-                                <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" name="summ" data-type="number" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-sum')?></div>
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-sum')?>" data-title="<?=$MUI->getText('placeholder-sum')?>" name="summ" data-type="number" class="m_input">
                             </div>
                             <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -207,7 +208,7 @@
                                 <input type="file" class="f_input" name="file" />
                             </div-->
                             <div class="s-b">
-                                <input type="submit" value="вывести" class="sb_but">
+                                <input type="submit" value="<?=$MUI->getText('button-output')?>" class="sb_but">
                             </div>
                         </form>
                     </section>
@@ -215,12 +216,12 @@
                     <section class="yandex form">
                         <form onsubmit="moneyOutput('yandex', this); return false;" method="POST">
                             <div class="inp-bk">
-                                <div class="ph">Номер счета</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Номер счета" data-title="Номер счета" name="card-number" data-type="number" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-card-number')?></div>
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-card-number')?>" data-title="<?=$MUI->getText('placeholder-card-number')?>" name="card-number" data-type="number" class="m_input">
                             </div>
                             <div class="inp-bk last">
-                                <div class="ph">Сумма</div>
-                                <input autocomplete="off" spellcheck="false" type="text" placeholder="Сумма" data-title="Cумма" data-type="number" name="summ" class="m_input">
+                                <div class="ph"><?=$MUI->getText('placeholder-sum')?></div>
+                                <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-sum')?>" data-title="<?=$MUI->getText('placeholder-sum')?>" data-type="number" name="summ" class="m_input">
                             </div>
                             <!--div class="inp-fl-bk">
                                 <div class="inp-fl-txt">Прикрепить фото первойстраницы папорта</div>
@@ -228,10 +229,21 @@
                                 <input autocomplete="off" spellcheck="false" type="file" class="f_input" name="file" />
                             </div-->
                             <div class="s-b">
-                                <input autocomplete="off" spellcheck="false" type="submit" value="вывести" class="sb_but">
+                                <input autocomplete="off" spellcheck="false" type="submit" value="<?=$MUI->getText('button-output')?>" class="sb_but">
                             </div>
                         </form>
                     </section>
+
+                    <div class="form f-sub">
+                        <div class="inp-bk last">
+                            <div class="ph"><?=$MUI->getText('placeholder-sum')?></div>
+                            <input autocomplete="off" spellcheck="false" type="text" placeholder="<?=$MUI->getText('placeholder-sum')?>" name="summ" data-type="number" class="m_input">
+                        </div>
+
+                        <div class="s-b">
+                            <button autocomplete="off" spellcheck="false" type="submit" onclick="moneyOutput();" class="sb_but"><?=$MUI->getText('button-output')?></button>
+                        </div>
+                    </div>
 
                     <!-- PRIVAT24 FORM -->
                     <!--section class="p24 form">

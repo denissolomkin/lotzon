@@ -218,39 +218,47 @@ class MoneyOrder extends Entity
                         $data['name']['value'] = htmlspecialchars(strip_tags($data['name']['value']));
                     break;*/
                     case self::GATEWAY_PHONE:
-                    case self::GATEWAY_QIWI:
-                        if (empty($data['phone']['value'])) {
-                            throw new EntityException("EMPTY_PHONE", 400);   
+                        $number = $this->getPlayer()->getPhone();
+                        if (!$number) {
+                            throw new EntityException("EMPTY_PHONE", 400);
                         }
-                        if (!preg_match('/^[+0-9\- ()]*$/', $data['phone']['value'])) {
+                        if (!preg_match('/^[+0-9\- ()]*$/', $number)) {
                             throw new EntityException("INVALID_PHONE_FORMAT", 400);
                         }
-                        $number = preg_replace("/[^0-9]/", "", $data['phone']['value']);
+                        $number = preg_replace("/[^0-9]/", "", $number);
+                        $this->setNumber(($number[0]==0?'38':'').$number);
+                        break;
+                    case self::GATEWAY_QIWI:
+                        $number = $this->getPlayer()->getQiwi();
+                        if (!$number) {
+                            throw new EntityException("EMPTY_QIWI", 400);
+                        }
+                        if (!preg_match('/^[+0-9\- ()]*$/', $number)) {
+                            throw new EntityException("INVALID_QIWI_FORMAT", 400);
+                        }
+                        $number = preg_replace("/[^0-9]/", "", $number);
                         $this->setNumber(($number[0]==0?'38':'').$number);
                     break;
                     case self::GATEWAY_WEBMONEY:
-                        if (empty($data['purse']['value'])) {
-                            throw new EntityException("EMPTY_WEBMONEY_CURRENCY", 400);       
-                        }
-                        if (empty($data['card-number']['value'])) {
+                        $number = $this->getPlayer()->getWebMoney();
+
+                        if (!$number) {
                             throw new EntityException("EMPTY_WEBMONEY_PURSE", 400);          
                         }
-                        if (!in_array(strtolower($data['purse']['value']), array('wmu','wmr','wmb'))) {
-                            throw new EntityException("INVALID_WEBMONEY_CURRENCY", 400);
-                        }
-                        if (!preg_match("/[a-z][0-9]{12}/i", $data['card-number']['value'])) {
+                        if (!preg_match("/[a-z][0-9]{12}/i", $number)) {
                             throw new EntityException("INVALID_WEBMONEY_PURSE", 400);   
                         }
-                        $this->setNumber($data['card-number']['value']);
+                        $this->setNumber($number);
                     break;
                     case self::GATEWAY_YANDEX:
-                        if (empty($data['card-number']['value'])) {
+                        $number = $this->getPlayer()->getYandexMoney();
+                        if (!$number) {
                             throw new EntityException("EMPTY_YANDEX_PURSE", 400);
                         }
-                        if (!preg_match("/[0-9]+/", $data['card-number']['value'])) {
+                        if (!preg_match("/[0-9]+/", $number)) {
                             throw new EntityException("INVALID_YANDEX_PURSE", 400);   
                         }
-                        $this->setNumber($data['card-number']['value']);
+                        $this->setNumber($number);
                     break;
                     case self::GATEWAY_P24:
                         if (empty($data['card-number']['value'])) {

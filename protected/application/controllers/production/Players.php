@@ -216,8 +216,8 @@ class Players extends \AjaxController
                     $player->setQiwi($this->request()->post('qiwi'));
                 if(!$player->getWebMoney() && $this->request()->post('webmoney'))
                     $player->setWebMoney($this->request()->post('webmoney'));
-                if(!$player->getYandexMoney() && $this->request()->post('yandexmoney'))
-                    $player->setYandexMoney($this->request()->post('yandexmoney'));
+                if(!$player->getYandexMoney() && $this->request()->post('yandex'))
+                    $player->setYandexMoney($this->request()->post('yandex'));
                 if(!$player->getBirthday() && $this->request()->post('bd'))
                     $player->setBirthday(strtotime($this->request()->post('bd')));
 
