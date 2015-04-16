@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`,`Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
+                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :cl, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -17,7 +17,7 @@ class PlayersDBProcessor implements IProcessor
                 ':dr'       => time(),
                 ':dl'       => (int)$player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
-                ':cc'       => $player->getLang(),
+                ':cl'       => $player->getLang(),
                 ':vis'      => 1,
                 ':ip'       => $player->getIP(),
                 ':hash'     => $player->getHash(),
