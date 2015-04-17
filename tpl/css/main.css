@@ -462,6 +462,7 @@ article .infos {padding:40px 20px 0 20px;}
 .infos .i-rbk .reviews .rv-item:hover .rv-i-tl .rv-i-ans {display: inline;}
 .infos .i-rbk .reviews .rv-item .rv-i-txt {font:15px/17px Handbook-regular;color:#4f4f4f;padding-left: 65px;min-height: 30px;}
 .infos .i-rbk .reviews .rv-item .rv-i-img {padding-top: 10px;padding-left: 65px;}
+.infos .i-rbk .reviews .rv-item .rv-i-img img {max-width: 100%;max-height: 200px;  }
 .infos .i-rbk .reviews .rv-item .rv-i-txt a {color:#c51e1e;}
 .infos .i-rbk .reviews .rv-item .rv-i-txt a:hover {text-decoration:underline;}
 .reviews .rv-add-but {margin:0px 40px 40px 40px;border:1px solid #b2d0d4;height:38px;text-align:center;font:15px/38px Handbook-bold;color:#4f4f4f;text-transform:uppercase;cursor:pointer;
