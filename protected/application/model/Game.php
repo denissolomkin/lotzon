@@ -455,13 +455,12 @@ class Game
                 $this->_bot=$id;
             }
 
-
             $this->_players[$id] = array(
                 'pid' => $id,
                 'moves' => $this->getOption('m'),
                 'points' => 0,
                 'avatar' => $client->avatar,
-                'lang' => $client->lang,
+                'lang' => isset($client->lang)?$client->lang:'RU',
                 'name' => $client->name,
                 'timeout' => time()+$this->getOption('t')
             );

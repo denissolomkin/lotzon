@@ -135,9 +135,9 @@
                                     </button>
                                 <? endif ?>
 
-                                <? if(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])>1):?>
-                                    <button class="btn btn-xs btn-danger orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=(($player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])?:'')?>
+                                <? if (($orders=$player->getCounters('ShopOrder')+$player->getCounters('MoneyOrder'))>0): ?>
+                                    <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($orders>1?$orders:'');?>
                                     </button>
                                 <? endif ?>
 
@@ -350,9 +350,9 @@
                                     </button>
                                 <? endif ?>
 
-                                <? if(($count=$player->getCounters()['ShopOrder']+$player->getCounters()['MoneyOrder'])):?>
-                                    <button class="btn btn-xs btn-<?=($count>1?'danger':'success')?> orders-trigger" data-id="<?=$player->getId()?>">
-                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($count>1?$count:'')?>
+                                <? if (($orders=$player->getCounters('ShopOrder')+$player->getCounters('MoneyOrder'))>0): ?>
+                                    <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($orders>1?$orders:'');?>
                                     </button>
                                 <? endif ?>
 

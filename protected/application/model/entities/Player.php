@@ -19,7 +19,7 @@ class Player extends Entity
 
     static $MASK = array(
         'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Logined'),
-        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','Order','Review','CookieId'));
+        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','CookieId'));
 
     private $_id         = 0;
     private $_email      = '';

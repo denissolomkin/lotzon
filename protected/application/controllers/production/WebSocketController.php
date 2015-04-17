@@ -18,7 +18,7 @@ class WebSocketController implements MessageComponentInterface {
     const   PERIODIC_TIMER = 2;
     const   CONNECTION_TIMER = 1800;
 
-    private $_class, $_settings, $_loop;
+    private $_class, $_loop;
     private $_clients=array();
     private $_stack=array();
     private $_apps=array();
@@ -33,9 +33,8 @@ class WebSocketController implements MessageComponentInterface {
         $this->_loop=$loop;
         $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->periodicTimer();});
         $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
-        $this->_bots=Config::instance()->gameBots;
+        $this->_bots=\SettingsModel::instance()->getSettings('gameBots')->getValue();
         $this->_clients = array();
-        $this->_settings = LotterySettingsModel::instance()->loadSettings();
     }
 
     public function checkConnections()
@@ -743,7 +742,7 @@ class WebSocketController implements MessageComponentInterface {
             echo $this->time(0,'SQL') . " #$pid points:" . implode(' money:',$balance) . " price:{$currency}-{$price}\n";
 
             if ($currency == 'MONEY'
-                ? $balance['Money'] < $price * $this->_settings->getCountryCoefficient((in_array($this->_players[$pid]['Country'], Config::instance()->langs) ? $this->_players[$pid]['Country'] : Config::instance()->defaultLang))
+                ? $balance['Money'] < $price * \CountriesModel::instance()->getCountry($this->_players[$pid]['Country'])->loadCurrency()->getCoefficient()
                 : $balance['Points'] < $price
             ) {
                 return false;
@@ -840,7 +839,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 $price=($currency=='Money'?
-                    $app->getPrice()*$this->_settings->getCountryCoefficient((in_array($this->_players[$player['pid']]['Country'], Config::instance()->langs) ? $this->_players[$player['pid']]['Country'] : Config::instance()->defaultLang))
+                    $app->getPrice()*\CountriesModel::instance()->getCountry($this->_players[$pid]['Country'])->loadCurrency()->getCoefficient()
                     :$app->getPrice());
 
                 /* update balance after game */

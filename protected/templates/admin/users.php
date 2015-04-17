@@ -215,14 +215,14 @@
                             </button>
                             <? endif ?>
 
-                                <? if ($player->getCounters('Order')>0): ?>
+                                <? if (($orders=$player->getCounters('ShopOrder')+$player->getCounters('MoneyOrder'))>0): ?>
                             <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
-                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($player->getCounters('Order')>1?$player->getCounters('Order'):'');?>
+                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($orders>1?$orders:'');?>
                             </button>
                             <? endif ?>
                             <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
-                            <? if ($player->getCounters()['Log']>0): ?>
+                            <? if ($player->getCounters('Log')>0): ?>
                             <button class="btn btn-xs btn-<?=($player->getCounters('Log')>1?'danger':(($player->getCounters('Log')==1 AND $player->getValid())?'success':'warning'))?> logs-trigger" data-id="<?=$player->getId()?>">
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters('Log')>1?$player->getCounters('Log'):''?>
                             </button>
