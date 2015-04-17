@@ -163,6 +163,10 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             'keepButtonShow' => false,
         );
 
+        if (count($reviews) >= SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE')) {
+            $responseData['keepButtonShow'] = true;
+        }
+
         while ($reviewData = array_pop($reviews))
             foreach ($reviewData as $reviewItem) {
                 $responseData['reviews'][] = array(
@@ -175,9 +179,6 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
                     'answer' => $reviewItem->getReviewId(),
                 );
             }
-        if (count($reviews) >= SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE')) {
-            $responseData['keepButtonShow'] = true;
-        }
 
         $this->ajaxResponse($responseData);
     }

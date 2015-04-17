@@ -20,7 +20,7 @@
         </div>
     <? } ?> 
     <div class="row-fluid">
-        <table class="table table-striped users">
+        <table class="table table-striped users reviews">
             <thead>
                 <th>Дата</th>
                 <th style="min-width: 170px;">Игрок </th>
