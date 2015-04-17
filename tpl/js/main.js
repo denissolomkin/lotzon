@@ -1222,7 +1222,6 @@ $(function(){
 
         if(!$('form[name="profile"] input[name="'+id+'"][disabled]').length) {
             $('.csh-ch-bk .'+id+' form').html($('#cash-output-popup .txt-set-number.hidden').clone().removeClass('hidden'));
-            console.log(1);
         } else {
             $('.csh-ch-bk .'+id+' form').html($('form[name="profile"] input[name="'+id+'"]').addClass('m_input').parent().clone().removeClass().addClass('focus inp-bk'));
             $('#cash-output-popup .csh-ch-bk .form.f-sub').show();
