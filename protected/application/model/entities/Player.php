@@ -608,6 +608,10 @@ class Player extends Entity
      */
     public function setSocialPostsCount($sp)
     {
+        // @TODO разобраться почему на public иногда $this->_socialPostsCount = (int)
+        if (is_array($this->_socialPostsCount)===false) {
+            $this->_socialPostsCount = array();
+        }
         if (is_array($sp)) {
             foreach ($sp as $key => $value) {
                 $this->_socialPostsCount[$key] = $value;
