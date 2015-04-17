@@ -1557,7 +1557,7 @@ function appWhoMoreCallback(receiveData)
                         $('.gm-pr .pr-pr').hide();
 
                         $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                        (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price).toFixed(2):receiveData.res.price )+
+                        (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price,1):receiveData.res.price )+
                         "</b><span>"+
                         (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
