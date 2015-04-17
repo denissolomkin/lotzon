@@ -401,7 +401,7 @@
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                         <span class="label label-danger" ><?=$order->getCount()+1?></span>
                         <? else : ?> <td> <? endif ?>
-                        <img class="right" src="../tpl/img/<?=$order->getType()?>.png"><?=(($order->getType()=='webmoney')?($order->getData()['card-number'] ? $order->getData()['card-number']['value'][0] : $order->getData()[0]['value'][0]):(in_array($order->getType(),array('phone','qiwi'))?'+':''))?><?=($order->getNumber()?:'')?></td>
+                        <img class="right" src="../tpl/img/<?=$order->getType()?>.png"><?=(($order->getType()=='webmoney')?($order->getData()['card-number']['value'].$order->getData()['card-number']['value'][0]):(in_array($order->getType(),array('phone','qiwi'))?'+':''))?><?=($order->getNumber()?:'')?></td>
                         <td>
                             <? foreach ($order->getData() as $key => $data) { ?>
                                 <?=$data['title']?>: <?=$data['value']?> <?=($key=='summ' ? $currency :'');?><br />
