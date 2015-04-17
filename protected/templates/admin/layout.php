@@ -6,41 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?=$title?></title>
 
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-      <!--link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/redmond/jquery-ui.css" -->
-    <!-- Latest compiled and minified CSS -->
 
       <!-- Fix Bootstrap Background -->
       <style>
           .table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th{background: #ffffff;}
       </style>
-    <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
       <link rel="stylesheet" href="/theme/admin/datepicker/css/datepicker.css">
-      <!--link rel="stylesheet" href="/theme/admin/glyphicons/css/style-new.css"-->
-
-
       <link href="/theme/admin/bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
-      <script src="/theme/admin/bootstrap/js/bootstrap-toggle.min.js"></script>
-
-      <!--link href="/theme/admin/jquery-ui/css/jquery-ui.min.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-      <link href="/theme/admin/jquery-ui/css/jquery-ui.structure.min.css" rel="stylesheet"-->
-      <script src="/theme/admin/jquery-ui/js/jquery-ui.min.js"></script>
-
       <!-- Include Summernote CSS files -->
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    
-    <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
-
-    <!-- Include Summernote JS file -->
-    <script src="/theme/admin/lib/summernote/summernote.js"></script>
-      <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
+      <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
+      <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
       <link href="/theme/admin/lib/admin.css" rel="stylesheet">
 
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="/theme/admin/jquery/jquery1.11.1.min.js"></script>
+      <script src="/theme/admin/bootstrap/js/bootstrap-toggle.min.js"></script>
+      <script src="/theme/admin/jquery-ui/js/jquery-ui.min.js"></script>
       <!-- Latest compiled and minified JavaScript -->
       <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
+      <!-- Include Summernote JS file -->
+      <script src="/theme/admin/lib/summernote/summernote.js"></script>
+      <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
   </head>
   <body style="">
       <div class="container-fluid text-center">
