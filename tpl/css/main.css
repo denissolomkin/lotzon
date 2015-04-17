@@ -1251,7 +1251,7 @@ position: relative;}
 .quickgame.pop-box .qg-bk-pg {padding:35px 40px 40px 40px;min-height: 170px;}
 .quickgame .qg-bk-pg .qg-tbl.wait {/*opacity: 0.5*/}
 .quickgame .qg-bk-pg .qg-tbl li .preloader {
-    background: url(http://192.168.1.253/tpl/img/preloader.gif) #b2d0d4 no-repeat 50% 50% / 40px 40px;
+    background: url(../img/preloader.gif) #b2d0d4 no-repeat 50% 50% / 40px 40px;
     width: 100%;
     height: 100%;
     margin: 0 auto;
@@ -1482,7 +1482,7 @@ border: 1px solid black;
 
 .notifications .badge.parent{display:none;}
 .notifications {width:290px;margin: 0 0 40px 60px;position:fixed;bottom: 0;z-index: 5;}
-.preloader{background-image: url(http://192.168.1.253/tpl/img/preloader.gif);display:none;
+.preloader{background-image: url(../img/preloader.gif);display:none;
     width: 40px;
     height: 40px;margin: 0 auto;}
 #logout-popup {}

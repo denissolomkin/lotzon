@@ -839,7 +839,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 $currency=$app->getCurrency()=='MONEY'?'Money':'Points';
                 $price=($currency=='Money'?
-                    $app->getPrice()*\CountriesModel::instance()->getCountry($this->_players[$pid]['Country'])->loadCurrency()->getCoefficient()
+                    $app->getPrice()*\CountriesModel::instance()->getCountry($this->_players[$player['pid']]['Country'])->loadCurrency()->getCoefficient()
                     :$app->getPrice());
 
                 /* update balance after game */

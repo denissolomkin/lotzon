@@ -554,6 +554,7 @@ class Game
 
     public function getMode()
     {
+        echo $this->_gameCurrency.' '.$this->_gamePrice;
         return $this->_gameModes[$this->_gameCurrency][$this->_gamePrice];
     }
 

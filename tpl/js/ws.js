@@ -177,7 +177,7 @@ function appSeaBattleCallback(receiveData)
 
                  price=receiveData.res.appMode.split('-');
                  $('.gm-pr .pr-pr').show().html("<b>"+
-                 (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
+                 (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
                  "</b><span>"+
                  (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
@@ -245,7 +245,7 @@ function appSeaBattleCallback(receiveData)
 
              price=receiveData.res.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
+            (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
              "</b><span>"+
              (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
@@ -1190,7 +1190,7 @@ function appWhoMoreCallback(receiveData)
 
             price=receiveData.res.appMode.split('-');
             $('.gm-pr .pr-pr').show().html("<b>"+
-           (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
+           (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
             "</b><span>"+
             (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
@@ -1400,7 +1400,7 @@ function appWhoMoreCallback(receiveData)
 
                 price=receiveData.res.appMode.split('-');
                 $('.gm-pr .pr-pr').show().html("<b>"+
-               (price[0]=='MONEY'?getCurrency(price[1]):price[1])+
+               (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
                 "</b><span>"+
                 (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
 
