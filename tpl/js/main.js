@@ -532,9 +532,13 @@ $(function(){
     });
 
     $('.rv-add-but, .rv-mr-cl-bt-bk .mr').on('click', function(){
+       if($(this).hasClass('dis')) return false;
+        var button = $(this);
+        button.addClass('dis');
         var reviewsBlock = $('.reviews');
         loadReviews(reviewsBlock.find('.rv-item:not(.rv-answer)').length, function(data) {
             reviewsBlock.addClass('b-ha');
+            button.removeClass('dis');
             $('.rv-add-but').hide();
             if (data.res.reviews.length) {
                 var html = '';
@@ -565,7 +569,7 @@ $(function(){
 
             $('.rv-items').height($('.rv-items .h-ch').height());
 
-        }, function() {}, function() {});
+        }, function() {button.removeClass('dis');}, function() {button.removeClass('dis');});
     });
 
 
