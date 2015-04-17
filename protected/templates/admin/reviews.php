@@ -29,7 +29,7 @@
                 <th style="width: 146px;">Options</th>
             </thead>
             <tbody>
-                <? foreach ($list as $reviews)
+                <? while ($reviews = array_pop($list))
                     foreach ($reviews as $review) {
                     $player = new Player;
                     $player->setId($review->getPlayerId())->fetch()->initDates()->initCounters();?>
@@ -181,7 +181,7 @@
                             </div>
 
                         </td>
-                        <td class="text"><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
+                        <td class="text"><?=$review->getReviewId()?'<i class="fa fa-reply"></i> ':''?><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
                         <td>
                             <button class="btn btn-md btn-primary edit-trigger"><i class="glyphicon glyphicon-edit"></i></button>
                             <button class="btn btn-md btn-warning status-trigger<?=($status==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
