@@ -163,7 +163,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             'keepButtonShow' => false,
         );
 
-        foreach ($reviews as $reviewData)
+        while ($reviewData = array_pop($reviews))
             foreach ($reviewData as $reviewItem) {
                 $responseData['reviews'][] = array(
                     'date' => date('d.m.Y H:i', $reviewItem->getDate()),

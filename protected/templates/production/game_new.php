@@ -7,9 +7,9 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title><?=$seo['title']?></title>
-        <meta name="description" content="<?=$seo['desc']?>">
-        <meta name="keywords" content="<?=$seo['kw']?>" />
+        <title><?=$MUI->getText('seo-title')?></title>
+        <meta name="description" content="<?=$MUI->getText('seo-description')?>">
+        <meta name="keywords" content="<?=$MUI->getText('seo-keywords')?>" />
         <meta name="robots" content="all" />
         <meta name="publisher" content="" />
         <meta http-equiv="reply-to" content="" />
@@ -20,19 +20,19 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         <!-- Schema.org markup for Google+ -->
-        <meta itemprop="name" content="<?=$seo['Title']?>">
+        <meta itemprop="name" content="<?=$MUI->getText('seo-title')?>">
         <meta itemprop="description" content="Играл, играю и буду играть.">
         <meta itemprop="image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Twitter Card data -->
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="<?=$seo['Title']?>">
+        <meta name="twitter:title" content="<?=$MUI->getText('seo-title')?>">
         <meta name="twitter:description" content="Играл, играю и буду играть.">
         <!-- Twitter summary card with large image must be at least 280x150px -->
         <meta name="twitter:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>">
 
         <!-- Open Graph data -->
-        <meta property="og:title" content="<?=$seo['Title']?>" />
+        <meta property="og:title" content="<?=$MUI->getText('seo-title')?>" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="<?php echo 'http://lotzon.com/?ref='.$player->getId(); ?>" />
         <meta property="og:image" content="http://lotzon.com/tpl/img/social-share.jpg?rnd=<?=rand()?>" />
@@ -541,7 +541,7 @@
                         <div class="rv-items">
                             <div class="h-ch">
                                 <div class="rv-ans-tmpl"><div class="rv-form"><div contenteditable></div><div class="btn-ans"><?=$MUI->getText('button-answer')?></div></div><div class="rv-sc"><?=$MUI->getText('message-review-approved')?></div></div>
-                                <? foreach ($reviews as $reviewData)
+                                <? while ($reviewData = array_pop($reviews))
                                     foreach ($reviewData as $reviewItem) { ?>
                                     <div data-id="<?=$reviewItem->getReviewId()?:$reviewItem->getId();?>" class="rv-item<?=($reviewItem->getReviewId()?' rv-answer':'');?>">
                                         <div class="rv-i-avtr">
@@ -818,7 +818,7 @@
                                             <label for="rulcheck"><?=$MUI->getText('label-show-my-name')?></label>
                                         </div>
 
-                                        <? if($seo['multilanguage'] && is_array($langs)){?>
+                                        <? if(is_array($langs)){?>
                                             <div class="sb-ch-td">
                                                 <label for="multilanguage"><?=$MUI->getText('label-multilanguage')?></label>
                                                 <select id="multilanguage" class="multilanguage">

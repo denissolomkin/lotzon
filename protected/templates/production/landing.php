@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><?=$seo['title']?></title>
+    <title><?=$MUI->getText('seo-title')?></title>
     <meta name="description" content="<?=$MUI->getText('seo-description')?>">
     <meta name="keywords" content="<?=$MUI->getText('seo-keywords')?>" />
     <meta name="robots" content="all" />
