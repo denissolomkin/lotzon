@@ -1842,7 +1842,7 @@ function activateQuickGame(key)
 
         }
 
-        cell.html('<div class="preloader"></div>');
+        //cell.html('<div class="preloader"></div>');
 
         playQuickGame(key,$(this).data('cell'), function (data) {
             var game = data.res;
