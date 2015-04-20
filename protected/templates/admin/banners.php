@@ -90,7 +90,7 @@
                         <div class="col-md-2" style="display: flex;">
                         <select name="banners[<?=$sid?>][<?=$gid?>][<?=$bid?>][countries][]" size="1" multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны" />
                         <? foreach ($supportedCountries as $country) {?>
-                            <option <?=(is_array($banner['countries']) && array_search($country,$banner['countries'])!==false?' selected ':'');?> value="<?=$$country?>"><?=$country?></option>
+                            <option <?=(is_array($banner['countries']) && array_search($country,$banner['countries'])!==false?' selected ':'');?> value="<?=$country?>"><?=$country?></option>
                         <? } ?>
                         </select>
                             <button type="button" class="btn btn-info btn-xs view-banner right"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
