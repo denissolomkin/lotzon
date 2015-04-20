@@ -997,25 +997,25 @@ class Player extends Entity
                 if ($this->getPhone()){
                     if(!preg_match('/^[+0-9\- ()]*$/', $this->getPhone()))
                         throw new EntityException("INVALID_PHONE_FORMAT", 400);
-                    $this->checkPhone();
+                    //$this->checkPhone();
                 }
 
                 if ($this->getYandexMoney()){
                     if(!preg_match('/^41001[0-9]{7,10}$/', $this->getYandexMoney()))
                         throw new EntityException("INVALID_YANDEXMONEY_FORMAT", 400);
-                    $this->checkYandexMoney();
+                    //$this->checkYandexMoney();
                 }
 
                 if ($this->getWebMoney()){
                     if(!preg_match('/^[RZUBE][0-9]{12}$/', $this->getWebMoney()))
                         throw new EntityException("INVALID_WEBMONEY_FORMAT", 400);
-                    $this->checkWebMoney();
+                    //$this->checkWebMoney();
                 }
 
                 if ($this->getQiwi()){
                     if(!preg_match('/^[+0-9\- ()]*$/', $this->getQiwi()))
                         throw new EntityException("INVALID_QIWI_FORMAT", 400);
-                    $this->checkQiwi();
+                    //$this->checkQiwi();
                 }
 
                 $this->setName(trim(htmlspecialchars(strip_tags($this->getName()))));

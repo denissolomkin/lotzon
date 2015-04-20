@@ -91,7 +91,7 @@
                                 <?}?>
                             </div>
                         </td>
-                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                        <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -303,7 +303,7 @@
 
                             </div>
                         </td>
-                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                        <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
                             <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
