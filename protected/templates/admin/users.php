@@ -49,7 +49,7 @@
                 <th>ID <?=sortIcon('Id', $currentSort, $pager, $search)?></th>
                 <th>ФИО</th>
                 <th>Никнейм</th>
-                <th class="icon"><?=sortIcon('Country', $currentSort, $pager, $search, 'globe')?></th>
+                <th class="icon"><?/*=sortIcon('Country', $currentSort, $pager, $search, 'globe')*/?></th>
                 <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
                 <th>Регистрация <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
                 <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
@@ -83,7 +83,7 @@
                         </td>
         <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger label-mult"><?=$player->getCounters('Ip')?></div>
+                                <div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
                             <? endif ?><?=$player->getEmail()?>
                             <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
