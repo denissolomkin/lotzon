@@ -302,7 +302,7 @@ class Users extends PrivateArea
             $player->setId($playerId)->fetch();
             try {
 
-                if ($this->request()->post('bd') && (!strtotime($this->request()->post('bd')) || !preg_match('/[0-3][0-9].[0-1][0-2].[1,2][0-9][0-9]{2}/', $this->request()->post('bd')))) {
+                if ($this->request()->post('bd') && (!strtotime($this->request()->post('bd')) || !preg_match('/[0-3][0-9].[0-1][0-9].[1-2][0-9]{3}/', $this->request()->post('bd')))) {
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
 
