@@ -1556,7 +1556,7 @@ function showWinPopup(data)
         if(won=$(ticketsHtml).find('ul[data-ticket="'+i+'"] li.won').length) {
             ticketsHtml += '<div class="yr-tt-tc">' + nominals[won - 1] + '</div>';
             nominal=nominals[won - 1].split(" ");
-            if(nominal[1]=getCurrency())
+            if(nominal[1]==getCurrency())
                 wonMoney+=parseFloat(nominal[0]);
             else
                 wonPoints+=parseInt(nominal[0]);
