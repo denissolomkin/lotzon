@@ -49,8 +49,8 @@
                 <th>ID <?=sortIcon('Id', $currentSort, $pager, $search)?></th>
                 <th>ФИО</th>
                 <th>Никнейм</th>
-                <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
                 <th class="icon"><?=sortIcon('Country', $currentSort, $pager, $search, 'globe')?></th>
+                <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
                 <th>Регистрация <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
                 <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
                 <th class="icon"><?=sortIcon('CountCookieId', $currentSort, $pager, $search, 'flag')?></th>
@@ -81,7 +81,10 @@
                             <?=($player->getNicName())?><?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?>
                             </div>
                         </td>
-                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+        <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
+                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><? if($player->getCounters('Mult')>1) : ?>
+                                <div class="label label-danger label-mult"><?=$player->getCounters('Ip')?></div>
+                            <? endif ?><?=$player->getEmail()?>
                             <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -107,7 +110,6 @@
                         </td>
 
 
-                        <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
                         <td class="nobr<?=($player->getReferer()?' danger':'')?>">
                             <?if($player->getReferer()) {?><div data-toggle="tooltip" data-placement="right" title="<?=$player->getReferer()?>" class=""><span class="label label-danger">!</span><?}?>
                             <?=$player->getDateRegistered('d.m.Y H:i')?>
