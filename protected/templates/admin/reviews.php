@@ -319,24 +319,21 @@
         });
 
 
+        $('#add-reviewid').val(tr.data('reviewid') ? tr.data('reviewid') : (tr.data('id') ? tr.data('id') : null));
+        $('#add-text').val('');
+
         if (!tr.length) {
             $('#edit-sector').hide();
             $('#edit-text').val('');
         }else{
+            var name = ($('td div:eq(0)',tr).html()).split("<br>");
+            $('#add-text').val(name[0].trim()+', ');
             $('#edit-sector').show();
             $('#edit-id').val(tr.data('id'));
             $('#edit-text').val(tr.find('.text').text());
             $('#edit-playerid').val(tr.data('playerid'));
             $('#edit-ispromo').val(tr.data('ispromo') ? tr.data('ispromo') : 0).change();
-
         }
-
-        $('#add-reviewid').val(tr.data('reviewid') ? tr.data('reviewid') : (tr.data('id') ? tr.data('id') : null));
-        $('#add-text').val('');
-
-
-
-
 
         $("#edit-review").find('.save').off('click').on('click', function() {
             var button =$(this);
