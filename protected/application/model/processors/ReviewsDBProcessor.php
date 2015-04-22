@@ -6,18 +6,19 @@ class ReviewsDBProcessor implements IProcessor
 {
     public function create(Entity $review)
     {
-        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ReviewId`,`PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`) VALUES (:id, :reviewid, :playerid, :text, :date, :image, :ispromo, :status)";
+        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ReviewId`,`PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `UserId`) VALUES (:id, :reviewid, :playerid, :text, :date, :image, :ispromo, :status, :userid)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':id'    => $review->getId(),
-                ':playerid'  => $review->getPlayerId(),
-                ':reviewid'  => $review->getReviewId(),
-                ':text'  => $review->getText(),
-                ':date'  => $review->getDate()?:time(),
-                ':image' => $review->getImage(),
-                ':ispromo' => $review->isPromo(),
-                ':status' => $review->getStatus(),
+                ':id'       => $review->getId(),
+                ':playerid' => $review->getPlayerId(),
+                ':reviewid' => $review->getReviewId()?:null,
+                ':text'     => $review->getText(),
+                ':date'     => $review->getDate()?:time(),
+                ':image'    => $review->getImage(),
+                ':ispromo'  => $review->isPromo(),
+                ':status'   => $review->getStatus(),
+                ':userid'   => $review->getUserId(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
@@ -28,13 +29,14 @@ class ReviewsDBProcessor implements IProcessor
 
     public function update(Entity $review)
     {
-        $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Text` = :text WHERE `Id` = :id";
+        $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Text` = :text, `UserId` = :userid WHERE `Id` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $review->getId(),
                 ':status' => $review->getStatus(),
                 ':text'  => $review->getText(),
+                ':userid' => $review->getUserId(),
             ));       
         } catch (PDOexception $e) {
             throw new ModelException("Unable to proccess storage query", 500);    

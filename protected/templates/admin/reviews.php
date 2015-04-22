@@ -318,7 +318,6 @@
             $("#edit-review").modal('hide');
         });
 
-
         $('#add-reviewid').val(tr.data('reviewid') ? tr.data('reviewid') : (tr.data('id') ? tr.data('id') : null));
         $('#add-text').val('');
 
