@@ -329,9 +329,7 @@ function appSeaBattleCallback(receiveData)
              $('.ngm-bk .ngm-gm .tm').css('text-align','right');
              $('.gm-pr.r').addClass('move');
              $('.gm-pr.l').removeClass('move');
-         }
-         else
-         {
+         } else {
              $('ul.mx.SeaBattle.o').css('opacity',1);
              $('ul.mx.SeaBattle.m').css('opacity',0.5);
              $('.ngm-bk .ngm-gm .tm').css('text-align','left');
@@ -408,9 +406,7 @@ function appSeaBattleCallback(receiveData)
                      $('.ngm-bk .ngm-gm .tm').css('text-align','right');
                      $('.gm-pr.r').addClass('move');
                      $('.gm-pr.l').removeClass('move');
-                 }
-                 else
-                 {
+                 } else {
                      $('ul.mx.SeaBattle.o').css('opacity',1);
                      $('ul.mx.SeaBattle.m').css('opacity',0.5);
                      $('.ngm-bk .ngm-gm .tm').css('text-align','left');
@@ -449,7 +445,7 @@ function appSeaBattleCallback(receiveData)
 
                      $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
-                     (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price):receiveData.res.price )+
+                     (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price,1):receiveData.res.price )+
                      "</b><span>"+
                      (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
@@ -1121,7 +1117,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
                         $('.gm-pr .pr-pr').hide();
 
                         $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                        (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price,1).toFixed(2):receiveData.res.price )+
+                        (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price,1):receiveData.res.price )+
                         "</b><span>"+
                         (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
@@ -1333,7 +1329,7 @@ function appWhoMoreCallback(receiveData)
                     $('.gm-pr .pr-pr').hide();
 
                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                    (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price).toFixed(2):receiveData.res.price )+
+                    (receiveData.res.currency=='MONEY'?getCurrency(receiveData.res.price,1):receiveData.res.price )+
                     "</b><span>"+
                     (receiveData.res.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
