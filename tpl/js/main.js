@@ -545,7 +545,7 @@ $(function(){
                 var textAnswer = $('.rv-i-ans').first().text();
 
                 $(data.res.reviews).each(function(id, review) {
-                    html += '<div class="rv-item'+(review.answer?" rv-answer":"")+'"><div class="rv-i-avtr">';
+                    html += '<div data-id="'+review.id+'" class="rv-item'+(review.answer?" rv-answer":"")+'"><div class="rv-i-avtr">';
 
                     if(review.playerAvatar)
                         html += '<img src="/filestorage/avatars/'+(Math.ceil(review.playerId/100))+'/'+review.playerAvatar+'">';

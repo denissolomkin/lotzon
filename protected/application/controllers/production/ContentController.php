@@ -170,6 +170,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
         while ($reviewData = array_pop($reviews))
             foreach ($reviewData as $reviewItem) {
                 $responseData['reviews'][] = array(
+                    'id' => $reviewItem->getReviewId()?:$reviewItem->getId(),
                     'date' => date('d.m.Y H:i', $reviewItem->getDate()+SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600),
                     'playerId' => $reviewItem->getPlayerId(),
                     'playerAvatar' => $reviewItem->getPlayerAvatar(),
