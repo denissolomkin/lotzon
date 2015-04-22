@@ -309,7 +309,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
             $jsonTransactions[] = array(
                 'description' => $transaction->getDescription(),
                 'quantity' => ($transaction->getSum() > 0 ? '+' : '') . ($transaction->getSum() == 0 ? '' : Common::viewNumberFormat($transaction->getSum())),
-                'date'  => date('d.m.Y H:i:s', $transaction->getDate()),
+                'date'  => date('d.m.Y H:i:s', $transaction->getDate()+SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600),
             );
         }
 
