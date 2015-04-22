@@ -103,7 +103,6 @@ class Reviews extends PrivateArea
             if ($this->request()->post('add') && $this->request()->post('add')['Text']){
 
                 $data=$this->request()->post('add');
-var_dump( $data['ReviewId']);
                 if(!\PlayersModel::instance()->isExists($data['PlayerId']))
                     throw new \ModelException("Error processing storage query", 500);
 
@@ -117,7 +116,6 @@ var_dump( $data['ReviewId']);
 
             DB::Connect()->beginTransaction();
             foreach ($reviews as $review) {
-                var_dump( $review->getReviewId());
                 try {
                     $review->create();
                 } catch (EntityException $e) {
