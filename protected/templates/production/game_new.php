@@ -551,7 +551,7 @@
                                                 <img src="/tpl/img/default.jpg">
                                             <? } ?>
                                         </div>
-                                        <div class="rv-i-tl"><span class="rv-i-pl"><?=$reviewItem->getPlayerName()?></span> • <span class="rv-i-dt"><?=date('d.m.Y H:i', $reviewItem->getDate())?></span> <span class="rv-i-ans"> <?=$MUI->getText('button-answer')?></span></div>
+                                        <div class="rv-i-tl"><span class="rv-i-pl"><?=$reviewItem->getPlayerName()?></span> • <span class="rv-i-dt"><?=date('d.m.Y H:i', $reviewItem->getDate()+SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600)?></span> <span class="rv-i-ans"> <?=$MUI->getText('button-answer')?></span></div>
                                         <div class="rv-i-txt"><?=$reviewItem->getText()?></div>
                                             <? if ($reviewItem->getImage()) {?>
                                             <div class="rv-i-img">
