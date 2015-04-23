@@ -89,7 +89,11 @@
 
                             </div>
                         </td>
-                        <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>"><?=$player->getEmail()?>
+                        <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>">
+                            <? if($player->getCounters('Mult')>1) : ?>
+                                <div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                            <? endif ?>
+                            <?=$player->getEmail()?>
                             <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
