@@ -787,6 +787,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance {margin-top:40px;padding:0 20px;}
 .chance .ch-br-bk {width:300px;height:600px;float:left;}
 .chance .ch-lot-bk {width:900px;float:right;height:600px;background-color:#fff;box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.4);}
+.chance .ch-lot-bk *{ -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none;  -o-user-select: none; }
 .chance .ch-lot-bk .ch-bk {padding:0 40px 45px 40px;}
 .chance .ch-lot-bk .ch-bk .ch-txt {font:18px/19px Handbook-regular;color:#000;padding:30px 0 48px 0;}
 .chance .ch-lot-bk .ch-bk .ch-gm-tbl {display:table;}
@@ -879,7 +880,6 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .ch-bk .ngm-bt:hover {/*background-color:#000;color:#fff;*/opacity: 0.5;}
 .chance .ch-lot-bk .ch-bk .td.c .ngm-bt {margin:auto;}
 .chance .ch-lot-bk .ch-bk .td.r .ngm-bt {margin-left:auto;}
-
 
 .ngm-bk {position:relative;display: none;}
 .ngm-bk .ngm-rls {width:900px;height:550px;position:absolute;top:0;left:0;background-color:rgba(255, 255, 255, 1);z-index:50;}
@@ -1014,6 +1014,133 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx ul.Mines > li.o.last {opacity:1;}
 
 
+/*
+.ngm-bk .ngm-gm.cards .gm-pr{width: auto;float: inherit;height: auto;margin: 0;}
+.ngm-bk .ngm-gm.cards .gm-pr .pr-pr > b{}
+.ngm-bk .ngm-gm.cards .gm-pr .pr-ph-bk .pr-ph{margin: 10px;}
+*/
+
+.ngm-bk .ngm-gm.cards #tm {display: none;}
+.ngm-bk .ngm-gm.cards .gm-mx {top: 0; width: 900px; height: 550px; position: absolute;  z-index: 10;  background: url('../img/games/card-table-bg.jpg') #a5adb0 no-repeat 0;overflow: hidden;}
+.ngm-bk .ngm-gm.cards .gm-mx .msg.winner{width: 100%; height: 100%;  background-color: rgba(255, 255, 255, 0.6);}
+.ngm-bk .ngm-gm.cards .gm-mx .msg.winner .re, .ngm-bk .ngm-gm.cards .gm-mx .msg.winner .ot-exit {margin-top: 160px;}
+.ngm-bk .ngm-gm.cards .gm-mx .msg.winner .ch-ot {margin-bottom: 30px;}
+
+.ngm-bk .ngm-gm.cards .gm-mx .players { width: 450px; height:160px;margin: 0 25%;text-align: center;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .card{float: left; margin-right: -20px;}
+
+.ngm-bk .ngm-gm.cards .gm-mx .players .pr-ph-bk .gm-pr {margin: 0;width: auto;  height: auto; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk{  width: auto;height: auto;opacity: 1;z-index:2;position:relative;margin: auto;overflow: visible;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .mt{display: block;background: white;border: 1px solid #ccc;border-radius: 5px;padding: 5px;font-size: 22px;font: 22px/1 Handbook-regular;width: 90%;margin: 5%;box-sizing: border-box;top: 0px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.3);}
+.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .tm{ font: 32px/1 Handbook-regular; padding: 4px; position: absolute; width: 50px; height: 50px; margin: -20px 17px; border-radius: 50px; border: 5px solid rgb(255,228,0); box-sizing: border-box;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .wt{}
+
+.ngm-bk .ngm-gm.cards .gm-mx .players .m {position: absolute;top: 350px;  width: 100%;  height: 200px;  margin-left: -225px; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .card{transform-origin: 50% 100%; margin-right: -40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .card:hover, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 90px;margin: 0; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-ph {width: 70px;height: 70px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 10px;left: 50%;margin-left: -35px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 75px;width: 75px;margin: 8px;float:right;border-radius: 80px;padding: 12px 10px;box-sizing: border-box;bottom:0;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md{margin: 15px 25px;float: right;padding: 16px 5px;width: 38px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md .icon-reload{ display: none; border: 2px solid #888;padding: 16px 5px;border-radius: 5px;color: #888;font-size: 28px;}
+.ngm-bk .ngm-gm.cards .gm-mx .DurakShift .players .m .gm-pr .pr-md .icon-reload{display: block;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr b{    font: 36px/1 Handbook-bold;letter-spacing: -3px;  margin-left: -3px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr span{ font: 13px/1 Handbook-regular; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .pr-pt {position: relative;  float: right;height: 100%;width: 200px;padding: 28px 0;box-sizing: border-box;color: black;text-align: left;margin: 0 0 0 40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .pr-pt .wallet {font-size: 36px;color: black;float: left;margin-right: 20px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-nm { display: none;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .tm {  margin: 10px 0 0 -200px;background: none;color: black;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl { margin: 20px 30px;  float: left; width: 130px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m.current .gm-pr .pr-cl .btn-pass{display: block;}
+
+.ngm-bk .ngm-gm.cards .gm-mx .players .o{width: 150px;float: left;margin-top: 40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-right: -20px;width: 70px; height: 108px; background-position: -1430px 0px; border-radius: 5px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  }
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 84px;  height: 84px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: absolute; box-shadow: 0px 0px 10px;margin: -30px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.4);  color: #ffffff;  bottom: 0;  position: absolute;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 10px 17px;}
+
+.ngm-bk .ngm-gm.cards .gm-mx .deck, .ngm-bk .ngm-gm.cards .gm-mx .table, .ngm-bk .ngm-gm.cards .gm-mx .off {float: left;height: 200px;width: 100px;box-sizing: border-box;}
+.ngm-bk .ngm-gm.cards .gm-mx .table {width: 700px;}
+.ngm-bk .ngm-gm.cards .gm-mx .table > div:nth-of-type(even) {   padding-top: 30px;  transform: rotate(-4deg); }
+.ngm-bk .ngm-gm.cards .gm-mx .table .cards { float: left; width: 110px; height: 200px;  position: relative; }
+.ngm-bk .ngm-gm.cards .gm-mx .table .cards .card{float:left; position: absolute; left: 25px;  margin-top: 5px;  transform: rotate(2deg) scale(0.7,0.7);}
+.ngm-bk .ngm-gm.cards .gm-mx .table .cards div:first-of-type {  left: 0px;  margin-top: 0px;  transform: rotate(-1deg) scale(0.7,0.7);}
+
+.ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7);position: absolute; }
+
+.ngm-bk .ngm-gm.cards .gm-mx .deck {position: relative;  }
+.ngm-bk .ngm-gm.cards .gm-mx .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .card.trump {  left: 0;  top: 80px;transform: rotate(100deg);}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .last{position: absolute;  top:0;  left: 10px; color: #ffffff;}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .lear{ position: absolute;top: 75px;left:10px;width: 50px;height: 50px;background: url('../img/games/card-deck.png') no-repeat;background-position: -138px -227px;border-radius: 50px;}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .lear.card1{background-position: -1491px -531px;}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .lear.card2{background-position: -1438px -480px;}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .lear.card3{background-position: -1438px -531px;}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .lear.card4{background-position: -1491px -480px;}
+
+.ngm-bk .ngm-gm .gm-mx .card{width: 106px; height: 162px; text-align: center; background: url('../img/games/card-deck.png') no-repeat; background-position: -1430px 0px; transform-origin: 50% 20%; border-radius: 10px; box-shadow: 2px 0px 10px 0px rgba(0,0,0,0.2);}
+.ngm-bk .ngm-gm .gm-mx .card.select { margin-top: -20px; box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);  }
+
+.ngm-bk .ngm-gm .gm-mx .card1x2 {background-position: 0px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x3 {background-position: -110px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x4 {background-position: -220px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x5 {background-position: -330px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x6 {background-position: -440px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x7 {background-position: -550px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x8 {background-position: -660px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x9 {background-position: -770px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x10 {background-position: -880px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x11 {background-position: -990px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x12 {background-position: -1100px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x13 {background-position: -1210px -170px;}
+.ngm-bk .ngm-gm .gm-mx .card1x14 {background-position: -1320px -170px;}
+
+.ngm-bk .ngm-gm .gm-mx .card2x2 {background-position: 0px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x3 {background-position: -110px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x4 {background-position: -220px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x5 {background-position: -330px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x6 {background-position: -440px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x7 {background-position: -550px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x8 {background-position: -660px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x9 {background-position: -770px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x10 {background-position: -880px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x11 {background-position: -990px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x12 {background-position: -1100px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x13 {background-position: -1210px 0px;}
+.ngm-bk .ngm-gm .gm-mx .card2x14 {background-position: -1320px 0px;}
+
+.ngm-bk .ngm-gm .gm-mx .card3x2 {background-position: 0px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x3 {background-position: -110px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x4 {background-position: -220px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x5 {background-position: -330px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x6 {background-position: -440px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x7 {background-position: -550px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x8 {background-position: -660px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x9 {background-position: -770px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x10 {background-position: -880px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x11 {background-position: -990px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x12 {background-position: -1100px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x13 {background-position: -1210px -510px;}
+.ngm-bk .ngm-gm .gm-mx .card3x14 {background-position: -1320px -510px;}
+
+.ngm-bk .ngm-gm .gm-mx .card4x2 {background-position: 0px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x3 {background-position: -110px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x4 {background-position: -220px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x5 {background-position: -330px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x6 {background-position: -440px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x7 {background-position: -550px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x8 {background-position: -660px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x9 {background-position: -770px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x10 {background-position: -880px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x11 {background-position: -990px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x12 {background-position: -1100px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x13 {background-position: -1210px -340px;}
+.ngm-bk .ngm-gm .gm-mx .card4x14 {background-position: -1320px -340px;}
+
+
+
 .ngm-bk .ngm-gm .gm-mx .msg {position:absolute;width:480px;height:480px;background-color:rgba(255, 255, 255, 0.95);top:0;left:0;display:none;}
 .ngm-bk .ngm-gm .gm-mx .msg .tbl {display:table;width:100%;height:100%;}
 .ngm-bk .ngm-gm .gm-mx .msg .tbl .td {width:100%;height:100%;vertical-align:middle;text-align:center;display:table-cell;}
@@ -1034,44 +1161,11 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .ngm-cncl:hover {background-color:#000;color:#fff;border:1px solid #000;}
 
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-ts {margin:10px 0 25px 0;display:none;}
-.ngm-bk .rls-r-search{
-background: #ddebec;
-width: 320px;
-height: 40px;
-position: absolute;
-overflow: hidden;
-}
-
-.ngm-bk .rls-r-search b{
-    font: 15px/40px Handbook-bold;
-    text-transform: uppercase;
-    padding: 0 15px;
-    position: absolute;
-}
-.ngm-bk .loader{
-    width: 115px;
-    height: 40px;
-    background: #b3d0d4;
-    position: absolute;
-    -webkit-animation: mymove 3s;  /* Chrome, Safari, Opera */
-    -webkit-animation-iteration-count: infinite;  /* Chrome, Safari, Opera */
-    animation: mymove 3s;
-    animation-iteration-count: infinite;
-}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes mymove {
-    from {left: -115px;}
-    to {left: 320px;}
-}
-
-@keyframes mymove {
-    from {left: -115px;}
-    to {left: 320px;}
-}
-
-
-
+.ngm-bk .rls-r-search{ background: #ddebec; width: 320px; height: 40px; position: absolute; overflow: hidden; }
+.ngm-bk .rls-r-search b{ font: 15px/40px Handbook-bold; text-transform: uppercase; padding: 0 15px; position: absolute; }
+.ngm-bk .loader{ width: 115px; height: 40px; background: #b3d0d4; position: absolute; -webkit-animation: mymove 3s;  /* Chrome, Safari, Opera */ -webkit-animation-iteration-count: infinite;  /* Chrome, Safari, Opera */ animation: mymove 3s; animation-iteration-count: infinite; }
+@-webkit-keyframes mymove { /* Chrome, Safari, Opera */ from {left: -115px;} to {left: 320px;} }
+@keyframes mymove { from {left: -115px;} to {left: 320px;} }
 
 /* ==========================================================================
                             FOOTER profile styles
@@ -1199,41 +1293,6 @@ footer .fr-cnt-bk .ct-bk .mail:hover {text-decoration:underline;}
 .csh-ch-bk .focus input.m_input::-moz-placeholder {opacity:0;}
 .csh-ch-bk .focus input.m_input:-ms-input-placeholder {opacity:0;}
 
-/*
-#ChanceGame-popup ul > li.prize:before {
-    background: url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;
-    width: 100%;
-    height: 100%;
-    right: 0;
-    position: absolute;
-    content: " ";
-}
-#ChanceGame-popup ul > li.money,#ChanceGame-popup ul > li.points,#ChanceGame-popup ul > li.math {
-    background:rgb(255,228,0);
-    border:0;
-    overflow: hidden;
-}
-#ChanceGame-popup ul > li.item img{width:100%;height:100%;}
-#ChanceGame-popup ul > li {
-    position: relative;
-    text-align:center;
-    cursor:pointer;
-    color:black;
-    font-weight: bold;
-    line-height: 1.5;}
-    */
-/*
-#ChanceGame-popup .qg-bk-pg .qg-msg {position:absolute;width:100%;height:130px;text-align: center;padding:0;left:0;background-color: rgba(255,255,255,0.6);z-index: 5;display:table;}
-#ChanceGame-popup .qg-bk-pg .qg-msg .txt {width: 250px;background-color: #fff;font: 15px/18px Handbook-bold;color: #a13b3b;padding: 20px 0;margin: 0 auto;text-align: center;text-transform: uppercase;}
-#ChanceGame-popup .qg-msg.win .txt {color:black;}
-#ChanceGame-popup .qg-bk-pg .qg-msg .rld {width: 250px;background-color: #ffe400;font: 15px/45px Handbook-bold;color: #000;text-transform: uppercase;cursor: pointer;display: inline-block;}
-#ChanceGame-popup .qg-bk-pg .qg-msg .rld:hover {background-color:#000!important;color:#fff;}
-#ChanceGame-popup .qg-bk-pg .qg-msg .td {display:table-cell;vertical-align:middle;text-align:center;}
-#ChanceGame-popup .qg-bk-pg .qg-tbl li div {
-    float: inherit;
-    width: 100%;
-}
-*/
 .quickgame .prize-holder { height: 100px;width: 100px;display: inline-table;margin-left: -3px; text-align: center; color: white; /*text-shadow: 1px 1px 1px rgba(100, 100, 100, 1);*/ }
 .quickgame .prize-holder.l {opacity: 0.5;}
 .quickgame .points-holder{ background: url('../img/points-holder.jpg') no-repeat 0 0 / 100% 100%; }
@@ -1344,7 +1403,7 @@ position: relative;}
 
 }
 
-
+/*
 .momentum {width:570px;background-color:#fff;margin:50px auto;position:relative;}
 .momentum .mm-bk-pg {padding:35px 40px 40px 40px;}
 
@@ -1367,8 +1426,6 @@ position: relative;}
 .momentum .mm-bk-pg .mm-tbl > li.true {background-color:#ffe400;border-color:#ffe400;background-image:none;font:24px/1 Handbook-medium;color:#000;opacity:0.5;}
 .momentum .mm-bk-pg .mm-tbl > li.true > b {font:69px/1 Handbook-medium;display:block;margin:10px 0 5px;}
 .momentum .mm-bk-pg .block {
-    /*margin-bottom: 50px;
-    margin: 30px 10px 10px 10px;*/
     padding-bottom: 15px;
     margin-top: 20px;
     border: 1px solid #d6d6d6;
@@ -1386,7 +1443,7 @@ position: relative;}
     color: #727272;
 
 }
-
+*/
 .prize-info {width:560px;margin:auto;position:relative;background-color:#fff;}
 .prize-info .pz-ifo-bk {overflow:hidden;padding:0 30px 0 40px;}
 .prize-info .pz-ifo-bk .pz-ph {width:210px;height:210px;margin:60px 0 50px 0;float:left;background-color:#b2d0d4;}
@@ -1722,234 +1779,3 @@ border: 1px solid black;
 .multilanguage {
     border: 0;
     padding: 5px;}
-.flag {
-    float: right;
-    margin-left: 5px;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    background:url('../img/flags.png') no-repeat;
-}
-
-.flag.flag-ad {background-position: -32px 0}
-.flag.flag-ae {background-position: -64px 0}
-.flag.flag-af {background-position: -96px 0}
-.flag.flag-ag {background-position: -128px 0}
-.flag.flag-ai {background-position: -160px 0}
-.flag.flag-al {background-position: -192px 0}
-.flag.flag-am {background-position: -224px 0}
-.flag.flag-an {background-position: -256px 0}
-.flag.flag-ao {background-position: -288px 0}
-.flag.flag-ar {background-position: -320px 0}
-.flag.flag-as {background-position: -352px 0}
-.flag.flag-at {background-position: -384px 0}
-.flag.flag-au {background-position: -416px 0}
-.flag.flag-aw {background-position: -448px 0}
-.flag.flag-az {background-position: 0 -32px}
-.flag.flag-ba {background-position: -32px -32px}
-.flag.flag-bb {background-position: -64px -32px}
-.flag.flag-bd {background-position: -96px -32px}
-.flag.flag-be {background-position: -128px -32px}
-.flag.flag-bf {background-position: -160px -32px}
-.flag.flag-bg {background-position: -192px -32px}
-.flag.flag-bh {background-position: -224px -32px}
-.flag.flag-bi {background-position: -256px -32px}
-.flag.flag-bj {background-position: -288px -32px}
-.flag.flag-bm {background-position: -320px -32px}
-.flag.flag-bn {background-position: -352px -32px}
-.flag.flag-bo {background-position: -384px -32px}
-.flag.flag-br {background-position: -416px -32px}
-.flag.flag-bs {background-position: -448px -32px}
-.flag.flag-bt {background-position: 0 -64px}
-.flag.flag-bw {background-position: -32px -64px}
-.flag.flag-by {background-position: -64px -64px}
-.flag.flag-bz {background-position: -96px -64px}
-.flag.flag-ca {background-position: -128px -64px}
-.flag.flag-cd {background-position: -160px -64px}
-.flag.flag-cf {background-position: -192px -64px}
-.flag.flag-cg {background-position: -224px -64px}
-.flag.flag-ch {background-position: -256px -64px}
-.flag.flag-ci {background-position: -288px -64px}
-.flag.flag-ck {background-position: -320px -64px}
-.flag.flag-cl {background-position: -352px -64px}
-.flag.flag-cm {background-position: -384px -64px}
-.flag.flag-cn {background-position: -416px -64px}
-.flag.flag-co {background-position: -448px -64px}
-.flag.flag-cr {background-position: 0 -96px}
-.flag.flag-cu {background-position: -32px -96px}
-.flag.flag-cv {background-position: -64px -96px}
-.flag.flag-cy {background-position: -96px -96px}
-.flag.flag-cz {background-position: -128px -96px}
-.flag.flag-de {background-position: -160px -96px}
-.flag.flag-dj {background-position: -192px -96px}
-.flag.flag-dk {background-position: -224px -96px}
-.flag.flag-dm {background-position: -256px -96px}
-.flag.flag-do {background-position: -288px -96px}
-.flag.flag-dz {background-position: -320px -96px}
-.flag.flag-ec {background-position: -352px -96px}
-.flag.flag-ee {background-position: -384px -96px}
-.flag.flag-eg {background-position: -416px -96px}
-.flag.flag-eh {background-position: -448px -96px}
-.flag.flag-er {background-position: 0 -128px}
-.flag.flag-es {background-position: -32px -128px}
-.flag.flag-et {background-position: -64px -128px}
-.flag.flag-fi {background-position: -96px -128px}
-.flag.flag-fj {background-position: -128px -128px}
-.flag.flag-fm {background-position: -160px -128px}
-.flag.flag-fo {background-position: -192px -128px}
-.flag.flag-fr {background-position: -224px -128px}
-.flag.flag-ga {background-position: -256px -128px}
-.flag.flag-gb {background-position: -288px -128px}
-.flag.flag-gd {background-position: -320px -128px}
-.flag.flag-ge {background-position: -352px -128px}
-.flag.flag-gg {background-position: -384px -128px}
-.flag.flag-gh {background-position: -416px -128px}
-.flag.flag-gi {background-position: -448px -128px}
-.flag.flag-gl {background-position: 0 -160px}
-.flag.flag-gm {background-position: -32px -160px}
-.flag.flag-gn {background-position: -64px -160px}
-.flag.flag-gp {background-position: -96px -160px}
-.flag.flag-gq {background-position: -128px -160px}
-.flag.flag-gr {background-position: -160px -160px}
-.flag.flag-gt {background-position: -192px -160px}
-.flag.flag-gu {background-position: -224px -160px}
-.flag.flag-gw {background-position: -256px -160px}
-.flag.flag-gy {background-position: -288px -160px}
-.flag.flag-hk {background-position: -320px -160px}
-.flag.flag-hn {background-position: -352px -160px}
-.flag.flag-hr {background-position: -384px -160px}
-.flag.flag-ht {background-position: -416px -160px}
-.flag.flag-hu {background-position: -448px -160px}
-.flag.flag-id {background-position: 0 -192px}
-.flag.flag-ie {background-position: -32px -192px}
-.flag.flag-il {background-position: -64px -192px}
-.flag.flag-im {background-position: -96px -192px}
-.flag.flag-in {background-position: -128px -192px}
-.flag.flag-iq {background-position: -160px -192px}
-.flag.flag-ir {background-position: -192px -192px}
-.flag.flag-is {background-position: -224px -192px}
-.flag.flag-it {background-position: -256px -192px}
-.flag.flag-je {background-position: -288px -192px}
-.flag.flag-jm {background-position: -320px -192px}
-.flag.flag-jo {background-position: -352px -192px}
-.flag.flag-jp {background-position: -384px -192px}
-.flag.flag-ke {background-position: -416px -192px}
-.flag.flag-kg {background-position: -448px -192px}
-.flag.flag-kh {background-position: 0 -224px}
-.flag.flag-ki {background-position: -32px -224px}
-.flag.flag-km {background-position: -64px -224px}
-.flag.flag-kn {background-position: -96px -224px}
-.flag.flag-kp {background-position: -128px -224px}
-.flag.flag-kr {background-position: -160px -224px}
-.flag.flag-kw {background-position: -192px -224px}
-.flag.flag-ky {background-position: -224px -224px}
-.flag.flag-kz {background-position: -256px -224px}
-.flag.flag-la {background-position: -288px -224px}
-.flag.flag-lb {background-position: -320px -224px}
-.flag.flag-lc {background-position: -352px -224px}
-.flag.flag-li {background-position: -384px -224px}
-.flag.flag-lk {background-position: -416px -224px}
-.flag.flag-lr {background-position: -448px -224px}
-.flag.flag-ls {background-position: 0 -256px}
-.flag.flag-lt {background-position: -32px -256px}
-.flag.flag-lu {background-position: -64px -256px}
-.flag.flag-lv {background-position: -96px -256px}
-.flag.flag-ly {background-position: -128px -256px}
-.flag.flag-ma {background-position: -160px -256px}
-.flag.flag-mc {background-position: -192px -256px}
-.flag.flag-md {background-position: -224px -256px}
-.flag.flag-me {background-position: -256px -256px}
-.flag.flag-mg {background-position: -288px -256px}
-.flag.flag-mh {background-position: -320px -256px}
-.flag.flag-mk {background-position: -352px -256px}
-.flag.flag-ml {background-position: -384px -256px}
-.flag.flag-mm {background-position: -416px -256px}
-.flag.flag-mn {background-position: -448px -256px}
-.flag.flag-mo {background-position: 0 -288px}
-.flag.flag-mq {background-position: -32px -288px}
-.flag.flag-mr {background-position: -64px -288px}
-.flag.flag-ms {background-position: -96px -288px}
-.flag.flag-mt {background-position: -128px -288px}
-.flag.flag-mu {background-position: -160px -288px}
-.flag.flag-mv {background-position: -192px -288px}
-.flag.flag-mw {background-position: -224px -288px}
-.flag.flag-mx {background-position: -256px -288px}
-.flag.flag-my {background-position: -288px -288px}
-.flag.flag-mz {background-position: -320px -288px}
-.flag.flag-na {background-position: -352px -288px}
-.flag.flag-nc {background-position: -384px -288px}
-.flag.flag-ne {background-position: -416px -288px}
-.flag.flag-ng {background-position: -448px -288px}
-.flag.flag-ni {background-position: 0 -320px}
-.flag.flag-nl {background-position: -32px -320px}
-.flag.flag-no {background-position: -64px -320px}
-.flag.flag-np {background-position: -96px -320px}
-.flag.flag-nr {background-position: -128px -320px}
-.flag.flag-nz {background-position: -160px -320px}
-.flag.flag-om {background-position: -192px -320px}
-.flag.flag-pa {background-position: -224px -320px}
-.flag.flag-pe {background-position: -256px -320px}
-.flag.flag-pf {background-position: -288px -320px}
-.flag.flag-pg {background-position: -320px -320px}
-.flag.flag-ph {background-position: -352px -320px}
-.flag.flag-pk {background-position: -384px -320px}
-.flag.flag-pl {background-position: -416px -320px}
-.flag.flag-pr {background-position: -448px -320px}
-.flag.flag-ps {background-position: 0 -352px}
-.flag.flag-pt {background-position: -32px -352px}
-.flag.flag-pw {background-position: -64px -352px}
-.flag.flag-py {background-position: -96px -352px}
-.flag.flag-qa {background-position: -128px -352px}
-.flag.flag-re {background-position: -160px -352px}
-.flag.flag-ro {background-position: -192px -352px}
-.flag.flag-rs {background-position: -224px -352px}
-.flag.flag-ru {background-position: -256px -352px}
-.flag.flag-rw {background-position: -288px -352px}
-.flag.flag-sa {background-position: -320px -352px}
-.flag.flag-sb {background-position: -352px -352px}
-.flag.flag-sc {background-position: -384px -352px}
-.flag.flag-sd {background-position: -416px -352px}
-.flag.flag-se {background-position: -448px -352px}
-.flag.flag-sg {background-position: 0 -384px}
-.flag.flag-si {background-position: -32px -384px}
-.flag.flag-sk {background-position: -64px -384px}
-.flag.flag-sl {background-position: -96px -384px}
-.flag.flag-sm {background-position: -128px -384px}
-.flag.flag-sn {background-position: -160px -384px}
-.flag.flag-so {background-position: -192px -384px}
-.flag.flag-sr {background-position: -224px -384px}
-.flag.flag-st {background-position: -256px -384px}
-.flag.flag-sv {background-position: -288px -384px}
-.flag.flag-sy {background-position: -320px -384px}
-.flag.flag-sz {background-position: -352px -384px}
-.flag.flag-tc {background-position: -384px -384px}
-.flag.flag-td {background-position: -416px -384px}
-.flag.flag-tg {background-position: -448px -384px}
-.flag.flag-th {background-position: 0 -416px}
-.flag.flag-tj {background-position: -32px -416px}
-.flag.flag-tl {background-position: -64px -416px}
-.flag.flag-tm {background-position: -96px -416px}
-.flag.flag-tn {background-position: -128px -416px}
-.flag.flag-to {background-position: -160px -416px}
-.flag.flag-tr {background-position: -192px -416px}
-.flag.flag-tt {background-position: -224px -416px}
-.flag.flag-tv {background-position: -256px -416px}
-.flag.flag-tw {background-position: -288px -416px}
-.flag.flag-tz {background-position: -320px -416px}
-.flag.flag-ua {background-position: -352px -416px}
-.flag.flag-ug {background-position: -384px -416px}
-.flag.flag-us {background-position: -416px -416px}
-.flag.flag-uy {background-position: -448px -416px}
-.flag.flag-uz {background-position: 0 -448px}
-.flag.flag-va {background-position: -32px -448px}
-.flag.flag-vc {background-position: -64px -448px}
-.flag.flag-ve {background-position: -96px -448px}
-.flag.flag-vg {background-position: -128px -448px}
-.flag.flag-vi {background-position: -160px -448px}
-.flag.flag-vn {background-position: -192px -448px}
-.flag.flag-vu {background-position: -224px -448px}
-.flag.flag-ws {background-position: -256px -448px}
-.flag.flag-ye {background-position: -288px -448px}
-.flag.flag-za {background-position: -320px -448px}
-.flag.flag-zm {background-position: -352px -448px}
-.flag.flag-zw {background-position: -384px -448px}

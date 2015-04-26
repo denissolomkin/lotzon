@@ -78,8 +78,14 @@
                     <span class="btn btn-success save-game"><i class="fa fa-save"></i></span>
                 </div>
                 <ul>
-                    <?php if(!empty($ogames)) foreach($ogames as $game): ?>
-                        <li><input type="hidden" name="games[]" value="<?=$game->getId()?>"><?=$game->getTitle('RU')?></li>
+                    <?
+                    $OnlineGames = array();
+                    if(!empty($ogames))
+                        foreach($ogames as $onlineGame)
+                            $OnlineGames[$onlineGame->getId()]= ($onlineGame->isEnabled()? '':'<i class="fa fa-ban"></i> ').$onlineGame->getTitle('RU');
+                    $ids = array_merge($games[$key]->getGames(), array_diff($games[$key]->getGames(),array_keys($OnlineGames)) );
+                    foreach($ids as $id): ?>
+                        <li><input type="hidden" name="games[]" value="<?=$id?>"><?=$OnlineGames[$id]?></li>
                     <?php endforeach;?>
                 </ul>
             </form>
@@ -103,7 +109,7 @@
         connectToSortable: ".game-build ul.draggable"
     });
 
-    $( document ).on('click', ".game-build ul li i", function(){
+    $( document ).on('click', ".game-build ul li .fa-remove", function(){
         $(this).parent().remove();
     });
 

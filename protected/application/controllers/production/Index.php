@@ -6,27 +6,10 @@ use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admi
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-/*
-Application::import(PATH_APPLICATION . '/model/models/LotterySettingsModel.php');
-Application::import(PATH_APPLICATION . '/model/models/StaticSiteTextsModel.php');
-Application::import(PATH_APPLICATION . '/model/models/ShopModel.php');
-Application::import(PATH_APPLICATION . '/model/models/TicketsModel.php');
-Application::import(PATH_APPLICATION . '/model/models/ChanceGamesModel.php');
-*/
 
 class Index extends \SlimController\SlimController
 {
-    /*
-    const NEWS_PER_PAGE = 6;
-    const SHOP_PER_PAGE = 6;
-    const LOTTERIES_PER_PAGE = 6;
-    const TRANSACTIONS_PER_PAGE = 6;
-    const REVIEWS_PER_PAGE = 8;
-    const COMMENTS_PER_PAGE = 9;
 
-    const MONEY_ADD = 2070;
-    const WINNERS_ADD = 29;
-*/
     public $lang = '';
     public $country = '';
     public $ref     = 0;
@@ -260,7 +243,6 @@ class Index extends \SlimController\SlimController
             $this->lang = CountriesModel::instance()->defaultLang();
         }
 
-        // $lotterySettings = LotterySettingsModel::instance()->loadSettings();
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => Common::viewNumberFormat(PlayersModel::instance()->getMaxId()),

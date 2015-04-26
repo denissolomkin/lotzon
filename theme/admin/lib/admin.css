@@ -224,6 +224,7 @@ min-height: 17px;
 .agames #games i{display: none;}
 .agames ul#games{margin:0;}
 .agames .game-build ul {min-height: 200px;margin-bottom: 50px;list-style: none;margin-right: -10px;}
+.agames .game-build ul:not(.draggable) li .fa{float: right;position: relative;padding: 3px 0 3px 3px;}
 .agames .game-build ul.draggable li {padding-right: 24px;}
 .agames  li{
     width: auto !important;
