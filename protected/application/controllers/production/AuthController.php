@@ -83,7 +83,7 @@ class AuthController extends \SlimController\SlimController {
                 $player->fetch();
 
                 if($player->getBan()){
-                    $this->session->set('ERROR', 'Учетная запись заблокирована');
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('ACCESS_DENIED'));
                     $this->redirect('/');
                 }
 
@@ -117,10 +117,11 @@ class AuthController extends \SlimController\SlimController {
                     setcookie(Player::PLAYERID_COOKIE, $player->getId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
 
                 $player->updateSocial()
+                    ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
+                    ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                     ->setLastIp(Common::getUserIp())
                     ->updateIp(Common::getUserIp())
-                    ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
-                    ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
+                    ->payReferal()
                     ->setAgent($_SERVER['HTTP_USER_AGENT'])
                     ->update()
                     ->writeLogin();
@@ -128,9 +129,12 @@ class AuthController extends \SlimController\SlimController {
                 $loggedIn = true;
 
             } catch (EntityException $e) {
+
+                // fetch more than one player
                 if ($e->getCode() == 500) {
-                    // fetch more than one player
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('SOCIAL_USED'));
                 }
+
                 if ($e->getCode() == 404) {
 
                     try {
@@ -140,8 +144,7 @@ class AuthController extends \SlimController\SlimController {
                     } catch (\Exception $e) {
                         if($profile->country){
                             $player->setCountry($profile->country);
-                        }
-                        else {
+                        } else {
                             $player->setCountry(CountriesModel::instance()->defaultCountry());
                         }
                     }
@@ -181,12 +184,13 @@ class AuthController extends \SlimController\SlimController {
                             if ($profile->photoURL)
                                 $player->uploadAvatar($profile->photoURL);
 
-                            if ($player->getId() <= 100000) {
-                                $player->addPoints(200, 'Бонус за регистрацию');
+                            if ($player->getId() <= 100000 && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration')) {
+                                $player->addPoints(
+                                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration'),
+                                    StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_registration'));
                             }
 
-                        }
-                        else{
+                        } else {
                             $this->session->set('SOCIAL_IDENTITY', $player);
                         }
 

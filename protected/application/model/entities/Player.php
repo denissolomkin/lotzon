@@ -1501,8 +1501,8 @@ class Player extends Entity
         $this->setDateLastLogin(time())
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
-            ->payReferal()
             ->updateIp(Common::getUserIp())
+            ->payReferal()
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update()
             ->writeLogin();
