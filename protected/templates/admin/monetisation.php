@@ -37,7 +37,7 @@
                     <tr id="shop<?=$order->getId()?>">
 
                         <?$player=$order->getPlayer();?>
-                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <b\r> H:m:s', $order->getDateOrdered())?></td>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <b\r> H:i:s', $order->getDateOrdered())?></td>
                         <td class="" style="position: relative;" >
                             <div onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?>
@@ -252,7 +252,7 @@
                 <? foreach ($moneyOrders as $order) { ?>
                     <tr id="money<?=$order->getId()?>">
                         <?$player=$order->getPlayer();?>
-                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <b\r> H:m:s', $order->getDateOrdered())?></td>
+                        <td<?=$player->getBan()?' class="danger"':''?>><?=date('d.m.Y <b\r> H:i:s', $order->getDateOrdered())?></td>
                         <td class="" style="position: relative;" >
                             <div onclick="window.open('users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?>
