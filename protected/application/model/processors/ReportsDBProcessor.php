@@ -61,7 +61,8 @@ class ReportsDBProcessor implements IProcessor
         AND   `DateOrdered` < :to
         AND Type!='points'
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        GROUP BY Date, Type";
+        GROUP BY Date, Type
+        ORDER BY DateOrdered";
 
 
         try {
@@ -83,7 +84,8 @@ class ReportsDBProcessor implements IProcessor
         WHERE  `DateOrdered` > :from
         AND    `DateOrdered` < :to
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        GROUP BY Date, ItemId";
+        GROUP BY Date, ItemId
+        ORDER BY DateOrdered";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -136,7 +138,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
              GROUP BY Month,
             GameId, Mode
-        ORDER BY `Month`, GameId, a.Mode";
+        ORDER BY Date, GameId, a.Mode";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -150,14 +152,12 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
     public function getUserReviews($dateFrom=null, $dateTo=null, $args=null)
     {
         $sql = "
-        SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) Date, COUNT( * ) `Quantity`
+        SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) Month, COUNT( * ) `Quantity`
         FROM   `PlayerReviews`
         WHERE  `Date` > :from
         AND    `Date` < :to
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        GROUP BY
-            MONTH(FROM_UNIXTIME(Date)),
-            YEAR(FROM_UNIXTIME(Date))
+        GROUP BY Month
         ORDER BY Date";
 
         try {
