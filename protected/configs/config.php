@@ -218,6 +218,9 @@ Config::instance()->privateResources =  array(
         'get'  => 'controllers\admin\Bonuses:index',
         'post' => 'controllers\admin\Bonuses:save',
     ),
+    '/private/reports/:identifier' => array(
+        'get' => 'controllers\admin\Reports:index',
+    ),
     '/private/counters/' => array(
         'get'  => 'controllers\admin\Counters:index',
         'post' => 'controllers\admin\Counters:save',

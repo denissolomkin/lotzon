@@ -10,9 +10,9 @@ class Admin extends Entity
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
         'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-o-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
-        'admins'=>array('name'=>'Администраторы','icon'=>'user-secret','css'=>'pull-right'),
+        'admins'=>array('name'=>'Админы','icon'=>'user-secret','css'=>'pull-right'),
 
-        'Мультиязычность'=>array('icon'=>'globe',
+        'Страны'=>array('icon'=>'globe',
             'pages'=>array(
                 'countries'=>array('icon'=>'globe','name'=>'Страны'),
                 'currencies'=>array('icon'=>'money','name'=>'Валюты'),
@@ -46,6 +46,15 @@ class Admin extends Entity
                 'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
                 'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
                 'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
+            )),
+
+        'Отчеты'=>array('icon'=>'bar-chart',
+            'pages'=>array(
+                'reports/MoneyOrders'=>array('icon'=>'money','name'=>'Запросы денег'),
+                'reports/ShopOrders'=>array('icon'=>'shopping-cart','name'=>'Запросы товаров'),
+                'reports/UserRegistrations'=>array('icon'=>'user-plus','name'=>'Регистрации'),
+                'reports/UserReviews'=>array('icon'=>'thumbs-o-up','name'=>'Отзывы'),
+                'reports/OnlineGames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
             )),
     );
 

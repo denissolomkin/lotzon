@@ -6,8 +6,8 @@ class MoneyOrdersDBProcessor implements IProcessor
     public function create(Entity $order) 
     {
         $order->setDateOrdered(time());
-        $sql = "INSERT INTO `MoneyOrders` (`PlayerId`, `DateOrdered`, `Type`, `Number`, `Status`, `Data`) VALUES
-                                         (:plid, :do, :type, :num, :status, :data)";
+        $sql = "INSERT INTO `MoneyOrders` (`PlayerId`, `DateOrdered`, `Type`, `Number`, `Sum`, `ItemId`, `Status`, `Data`) VALUES
+                                         (:plid, :do, :type, :num, :sum, :item, :status, :data)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -15,6 +15,8 @@ class MoneyOrdersDBProcessor implements IProcessor
                 ':do'   => $order->getDateOrdered(),
                 ':type' => $order->getType(),
                 ':num' => $order->getNumber(),
+                ':sum' => $order->getSum(),
+                ':item' => $order->getItem() ? $order->getItem()->getId() : null,
                 ':status'   => $order->getStatus(),
                 ':data'  => is_array($order->getData()) ? serialize($order->getData()) : serialize(array()),
             ));

@@ -15,7 +15,7 @@ class InvitesController extends \AjaxController
             if (!$this->session->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }
-            $this->session->get(Player::IDENTITY)->markOnline();
+            // $this->session->get(Player::IDENTITY)->markOnline();
         }
     }
 

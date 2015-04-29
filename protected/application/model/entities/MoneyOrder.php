@@ -7,7 +7,8 @@ class MoneyOrder extends Entity
     const STATUS_PROCESSED = 1;
 
     const FOR_UPDATE = true;
-    
+
+    const GATEWAY_ITEM    = 'item';
     const GATEWAY_PHONE    = 'phone';
     const GATEWAY_QIWI     = 'qiwi';
     const GATEWAY_WEBMONEY = 'webmoney';
@@ -24,6 +25,8 @@ class MoneyOrder extends Entity
     private $_dateOrdered    = '';
     private $_dateProcessed  = '';
     private $_number       = '';
+    private $_sum       = null;
+    private $_item       = null;
     private $_count       = 0;
     private $_adminProcessed = '';
     private $_status   = self::STATUS_ORDERED;
@@ -45,6 +48,18 @@ class MoneyOrder extends Entity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function setItem($item)
+    {
+        $this->_item = $item;
+
+        return $this;
+    }
+
+    public function getItem()
+    {
+        return $this->_item;
     }
 
     public function setUserId($userid)
@@ -168,6 +183,18 @@ class MoneyOrder extends Entity
         return $this->_number;
     }
 
+    public function setSum($sum)
+    {
+        $this->_sum = $sum;
+
+        return $this;
+    }
+
+    public function getSum()
+    {
+        return $this->_sum;
+    }
+
     public function setData($orderData)
     {
         $this->_orderData = $orderData;
@@ -188,13 +215,13 @@ class MoneyOrder extends Entity
                 if (!$this->getPlayer()) {
                     throw new EntityException("INVALID_PLAYER", 400);
                 }
-                if (!in_array($this->getType(), array(self::GATEWAY_PHONE, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24, self::GATEWAY_POINTS))) {
+                if (!in_array($this->getType(), array(self::GATEWAY_ITEM, self::GATEWAY_PHONE, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24, self::GATEWAY_POINTS))) {
                     throw new EntityException("INVALID_PAYMENT_GATEWAY", 400);
                 }
                 if (!$this->getData()['summ']['value']) {
                     throw new EntityException("EMPTY_SUMM", 400);   
                 }
-                if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 ) {
+                if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 || (SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT') && $this->getData()['summ']['value'] < SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT'))) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
                 if ($this->getData()['summ']['value'] > $this->getPlayer()->getBalance(self::FOR_UPDATE)['Money']) {
@@ -276,14 +303,43 @@ class MoneyOrder extends Entity
                         }
                         $this->setNumber($cardNumber);
                     break;
+
+                    case self::GATEWAY_ITEM:
+
+                        $number = $this->getPlayer()->getPhone();
+                        if (!$number) {
+                            throw new EntityException("EMPTY_PHONE", 400);
+                        }
+
+                        if (!preg_match('/^[+0-9\- ()]*$/', $number)) {
+                            throw new EntityException("INVALID_PHONE_FORMAT", 400);
+                        }
+
+                        $number = preg_replace("/[^0-9]/", "", $number);
+                        $this->setNumber(($number[0]==0?'38':'').$number);
+
+                        $item = new ShopItem();
+                        $item->setId($data['item']['value']);
+
+                        try {
+                            $this->setItem($item->fetch());
+                        } catch (EntityException $e) {
+                            throw new EntityException("INVALID_ITEM", 400);
+                        }
+
+                        $data['item']['title']=$item->getTitle($this->getPlayer()->getCountry());
+                        $data['summ'] = array('title'=>'Сумма','value'=>$item->getSum());
+
+                        break;
                     case self::GATEWAY_POINTS:
-                        $rate=CountriesModel::instance()->getCountry($this->getPlayer()->getCountry())->loadCurrency()->getRate();
+                        $rate = CountriesModel::instance()->getCountry($this->getPlayer()->getCountry())->loadCurrency()->getRate();
                         $this->setStatus(1)
                             ->setText('Конвертация денег')
                             ->getPlayer()
                             ->addPoints((int)(round($this->getData()['summ']['value'],2)*$rate), "Обмен денег на баллы");
                         break;
                 }
+                $this->setSum($data['summ']['value'] / CountriesModel::instance()->getCountry($this->getPlayer()->getCountry())->loadCurrency()->getCoefficient());
                 $this->setData($data);
             break;
             case 'update' :
@@ -313,8 +369,20 @@ class MoneyOrder extends Entity
                  ->setStatus($data['Status'])
                  ->setUserName($data['UserName'])
                  ->setNumber($data['Number'])
+                 ->setSum($data['Sum'])
                  ->setType($data['Type'])
                  ->setData(@unserialize($data['Data']));
+
+            if($data['ItemId']) {
+                $item = new ShopItem();
+                $item->setId($data['ItemId']);
+
+                try {
+                    $this->setItem($item->fetch());
+                } catch (EntityException $e) {
+                    $this->setItem(new ShopItem());
+                }
+            }
 
             if($data['PlayerId']){
                 $player = new Player();
