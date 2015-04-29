@@ -135,10 +135,9 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         GROUP BY GameUid, Date) a
 
         LEFT JOIN OnlineGames o ON o.Id = a.GameId
-
              GROUP BY Month,
             GameId, Mode
-        ORDER BY Date, GameId, a.Mode";
+        ORDER BY YEAR(FROM_UNIXTIME(Date)), MONTH(FROM_UNIXTIME(Date)), GameId, a.Mode";
 
         try {
             $sth = DB::Connect()->prepare($sql);
