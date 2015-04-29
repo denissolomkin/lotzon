@@ -27,7 +27,7 @@ class Reports extends PrivateArea
         $dateTo     = strtotime($this->request()->get('dateTo', date('Y-m-d',time())).' 23:59:59');
         $args     = $this->request()->get('args', null);
         $reports    = ReportsModel::instance()->{('get'.$identifier)}($dateFrom,$dateTo,$args);
-        ReportsModel::instance()->updateMoneyOrders();
+        // ReportsModel::instance()->updateMoneyOrders();
 
         $this->render('admin/reports', array(
             'title'      => Admin::$PAGES['Отчеты']['pages'][$activeMenu]['name'],
