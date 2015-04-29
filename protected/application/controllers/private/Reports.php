@@ -34,6 +34,7 @@ class Reports extends PrivateArea
             'layout'     => 'admin/layout.php',
             'identifier' => $identifier,
             'reports'    => $reports,
+            'activeMenu' => $activeMenu,
             'args'       => $args,
             'dateTo'     =>  date('Y-m-d',$dateTo),
             'dateFrom'   =>  date('Y-m-d',$dateFrom),

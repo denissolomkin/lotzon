@@ -99,14 +99,14 @@ class ReportsDBProcessor implements IProcessor
 
         $sql = "
         SELECT "
-            .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Date' ? "CONCAT(YEAR(FROM_UNIXTIME(DateRegistered)),' ', MONTHNAME(FROM_UNIXTIME(DateRegistered))) Date, " : '')
+            .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Month' ? "CONCAT(YEAR(FROM_UNIXTIME(DateRegistered)),' ', MONTHNAME(FROM_UNIXTIME(DateRegistered))) Month, " : '')
             .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Country' ? 'Country, ' : '').
         " COUNT( * ) `Quantity`
         FROM   `Players`
         WHERE  `DateRegistered` > :from
         AND    `DateRegistered` < :to
-        GROUP BY ".($args['GroupBy'] && $args['GroupBy']!=''?$args['GroupBy']:'Date,Country')."
-        ORDER BY ".($args['GroupBy']!='Country'?'Date,':'')."Quantity Desc";
+        GROUP BY ".($args['GroupBy'] && $args['GroupBy']!=''?$args['GroupBy']:'Month,Country')."
+        ORDER BY ".($args['GroupBy']!='Country'?'`DateRegistered`,':'')."Quantity Desc";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -136,7 +136,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
              GROUP BY Month,
             GameId, Mode
-        ORDER BY a.Date, a.GameId, a.Mode";
+        ORDER BY `Month`, GameId, a.Mode";
 
         try {
             $sth = DB::Connect()->prepare($sql);

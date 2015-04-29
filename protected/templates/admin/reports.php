@@ -36,7 +36,7 @@
         <div class="col-my-1">
             <select name="args[GroupBy]" class="form-control" placeholder="Группировка" />
             <option value=""></option>
-            <? foreach(array('Date','Country') as $groupBy):?>
+            <? foreach(array('Month','Country') as $groupBy):?>
                 <option <?= $args['GroupBy'] && $args['GroupBy']!='' && $groupBy==$args['GroupBy']?'selected':''?> value="<?=$groupBy;?>">by <?=$groupBy;?></option>
             <? endforeach;?>
             </select>
