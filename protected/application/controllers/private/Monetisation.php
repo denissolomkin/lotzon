@@ -103,9 +103,12 @@ class Monetisation extends PrivateArea
                     try {
                         $order->update();
                         // update item
+
+                        /* moved to OrderController
                         if ($order->getItem()->getQuantity() AND $status=1) {
                             $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
                         }
+                        */
                     } catch (EntityException $e) {
 
                     }

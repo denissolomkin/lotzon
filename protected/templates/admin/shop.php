@@ -42,7 +42,7 @@
                 <img src="/filestorage/shop/<?=$item->getImage()?>" data-image="<?=$item->getImage()?>" class="upload" alt="...">
                 <div class="caption clearfix" data-title="<?=$item->getTitle()?>" data-price="<?=$item->getPrice()?>" data-quantity="<?=$item->getQuantity()?>" data-countries="<?=($item->getCountries() ? implode(" ",$item->getCountries()) : null)?>">
                     <h4><?=$item->getTitle()?></h4>
-                    <div class="btn-group pull-left"> <span><?=$item->getPrice()?>/<?=($item->getQuantity() ? $item->getQuantity() : "&infin;")?>
+                    <div class="btn-group pull-left"> <span><?=$item->getPrice()?>/<?=(is_numeric($item->getQuantity()) ? $item->getQuantity() : "&infin;")?>
                         <?=($item->getCountries() ? "</br><span class='label label-primary'>".implode("</span><span class='label label-primary'>",$item->getCountries())."</span>" : null)?></div>
                     <div class="btn-group pull-right">
                         <button class="btn btn-warning btn-sm item-edit"><i class="glyphicon glyphicon-edit"></i></button>

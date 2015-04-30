@@ -41,7 +41,8 @@
         <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
         <!-- Include Summernote CSS files -->
-        <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="/tpl/css/simple-line-icons.css">
         <link rel="stylesheet" href="/tpl/css/normalize.css" />
         <link rel="stylesheet" href="/tpl/css/slick.css" />
         <link rel="stylesheet" href="/tpl/css/main.css" />
@@ -87,6 +88,7 @@
 
             <!-- Latest compiled and minified CSS -->
             <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
             <link href="/theme/admin/lib/admin.css" rel="stylesheet">
             <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
         <? } ?>
@@ -419,6 +421,21 @@
                             </ul>
                             <? $fst = true; ?>
                             <? $showMoreButton = false; ?>
+
+                            <div  class="pz-lim-tpl tpl" style="display: none;">
+                            <div class="pz-lim">
+                                <span><?=$MUI->getText('label-limited-quantity')?></span>
+                                <b><?=$MUI->getText('label-pieces')?></b>
+                            </div>
+                            </div>
+
+                            <div  class="pz-end-tpl tpl" style="display: none;">
+                            <div class="pz-end">
+                                <span><?=$MUI->getText('label-out-of-stock')?></span>
+                                <b><?=$MUI->getText('label-will-be-able-soon')?></b>
+                            </div>
+                            </div>
+
                             <? foreach ($shop as $category) { ?>
                                 <? if ($fst && count($category->getItems()) > SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE')) {
                                     $showMoreButton = true;
@@ -433,11 +450,16 @@
                                     <? if (is_array($item->getCountries()) and !in_array($player->getCountry(),$item->getCountries())) {
                                         continue;
                                     } ?>
-                                    <li class="pz-cg_li" data-item-id="<?=$item->getId()?>">
-                                        <? if ($item->getQuantity()) {?>
+                                    <li class="pz-cg_li<?=is_numeric($item->getQuantity()) && $item->getQuantity()==0?' pz-end':''?>" data-item-id="<?=$item->getId()?>">
+                                        <? if ($item->getQuantity()>0) {?>
                                             <div class="pz-lim">
                                                 <span><?=$MUI->getText('label-limited-quantity')?></span>
                                                 <b><?=$item->getQuantity()?> <?=$MUI->getText('label-pieces')?></b>
+                                            </div>
+                                        <? } else if (is_numeric($item->getQuantity()) && $item->getQuantity()==0) { ?>
+                                            <div class="pz-end">
+                                                <span><?=$MUI->getText('label-out-of-stock')?></span>
+                                                <b><?=$MUI->getText('label-will-be-able-soon')?></b>
                                             </div>
                                         <? } ?>
                                         <div class="im-ph"><img src="/filestorage/shop/<?=$item->getImage()?>" /></div>
@@ -870,7 +892,7 @@
         <div class="ch-lot-bk">
         <div class="sbk-tl-bk">
         <div class="sbk-tl"><?=$MUI->getText('title-games')?></div>
-        <div class="b-cntrl-block"><span class="fa fa-volume-up audio" aria-hidden="true"></span></div>
+        <div class="b-cntrl-block"><span class="icon-volume-2 audio" aria-hidden="true"></span></div>
 
         <!-- CHANCE PREVIEW -->
         <div class="ch-bk slider" style="display:block">
@@ -891,53 +913,47 @@
                     <? endforeach ?>
 
                 </div>
-                <!--div class="clear"></div>
+                <div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
-                <div name="next" class="navy next-slide"></div-->
+                <div name="next" class="navy next-slide"></div>
             </div>
+
+                <?
+                $ogames = array();
+                foreach($onlineGames as $onlineGame)
+                    $ogames[$onlineGame->getId()]=$onlineGame;
+                $ids = array_merge($gameSettings['OnlineGame']->getGames(), array_diff($gameSettings['OnlineGame']->getGames(),array_keys($ogames)) ); ?>
+
 
             <div class="ch-gm-tbl slide-list">
-            <div class="slide-wrap">
+                <div class="slide-wrap">
 
-                <div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$onlineGames['WhoMore']->getTitle($player->getLang());?></div>
-                        <div class="r"></div>
-                    </div>
-                    <div class="ngm-bt" data-game="WhoMore"><img src="tpl/img/games/WhoMore.png"></div>
+                <? while($ogames)
+                    foreach($ids as $id):
+                        $game = $ogames[$id];
+                        unset ($ogames[$id]);
+                        if($game->isEnabled()):?>
+
+                        <div class="td slide-item">
+                            <div class="gm-if-bk">
+                                <div class="l"><?=$game->getTitle($player->getLang());?></div>
+                                <div class="r"></div>
+                            </div>
+                            <div class="ngm-bt" data-game="<?=$game->getKey();?>"><img src="tpl/img/games/<?=$game->getKey();?>.png"></div>
+                        </div>
+
+                <?      endif;
+                    endforeach; ?>
+
                 </div>
 
-                <div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$onlineGames['SeaBattle']->getTitle($player->getLang());?></div>
-                        <div class="r"></div>
-                    </div>
-                    <div class="ngm-bt" data-game="SeaBattle"><img src="tpl/img/games/SeaBattle.png"></div>
-                </div>
-
-                <div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$onlineGames['FiveLine']->getTitle($player->getLang());?></div>
-                        <div class="r"></div>
-                    </div>
-                    <div class="ngm-bt" data-game="FiveLine"><img src="tpl/img/games/FiveLine.png"></div>
-                </div>
-
-                <!--div class="td slide-item">
-                    <div class="gm-if-bk">
-                        <div class="l"><?=$onlineGames['Mines']->getTitle($player->getLang());?></div>
-                        <div class="r"></div>
-                    </div>
-                    <div class="ngm-bt" data-game="Mines"><img src="tpl/img/games/Mines.png"></div>
-                </div-->
-
-            </div>
-                <!--div class="clear"></div>
+                <div class="clear"></div>
                 <div name="prev" class="navy prev-slide"></div>
-                <div name="next" class="navy next-slide"></div-->
+                <div name="next" class="navy next-slide"></div>
 
             </div>
 
+            <script> $('.ch-gm-tbl.slide-list').each(function( index ) { if($('.slide-item',$(this)).length<=3) $('.navy',$(this)).hide(); })</script>
     </div>
 
     <!-- CHANCE GAME -->
@@ -1043,11 +1059,11 @@
                     foreach($games as $game): ?>
                 <!-- CHANCE<?=$game?> -->
                 <ul class="gm-tb chance<?=$game?>" data-game="<?=$game?>" data-price="<?=$quickGames[$game]->getOption('p')?>" style="display:none">
-                    <? for($y = 1; $y <=$quickGames[$game]->getOption('y'); ++$y) { ?>
-                        <? for($x = 1; $x <=$quickGames[$game]->getOption('x'); ++$x) { ?>
-                            <li data-cell="<?=$x?>x<?=$y?>"></li>
-                        <? } ?>
-                    <? } ?>
+<?                  for($y = 1; $y <=$quickGames[$game]->getOption('y'); ++$y) {
+                        for($x = 1; $x <=$quickGames[$game]->getOption('x'); ++$x){ ?>
+                    <li data-cell="<?=$x?>x<?=$y?>"></li>
+<?                      }
+                    } ?>
                 </ul>
                 <? endforeach ?>
 
@@ -1156,21 +1172,34 @@
                                         </ul>
                                     </div>
 
+                                    <div data-game="Durak">
+                                        <div class="mx Durak">
+                                            <div class="players"></div>
+                                            <div class="deck"></div>
+                                            <div class="table"></div>
+                                            <div class="off"></div>
+                                        </div>
+                                    </div>
+
+                                    <div data-game="DurakShift">
+                                        <div class="mx Durak">
+                                            <div class="players"></div>
+                                            <div class="deck"></div>
+                                            <div class="table"></div>
+                                            <div class="off"></div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div style="display:none" id="newgame-rules">
-                                    <div data-game="WhoMore">
-                                        <?=$onlineGames['WhoMore']->getDescription($player->getLang());?>
+                                    <? foreach($onlineGames as $onlineGame):
+                                        if($onlineGame->isEnabled()):?>
+                                    <div data-game="<?=$onlineGame->getKey();?>">
+                                        <?=$onlineGame->getDescription($player->getLang());?>
                                     </div>
-                                    <div data-game="FiveLine">
-                                        <?=$onlineGames['FiveLine']->getDescription($player->getLang());?>
-                                    </div>
-                                    <div data-game="SeaBattle">
-                                        <?=$onlineGames['SeaBattle']->getDescription($player->getLang());?>
-                                    </div>
-                                    <div data-game="Mines">
-                                        <?=$onlineGames['Mines']->getDescription($player->getLang());?>
-                                    </div>
+                                    <?  endif;
+                                    endforeach; ?>
                                 </div>
 
                                 <div class="l">
@@ -1265,9 +1294,9 @@
                         <div class="tbl">
                             <div class="td">
                                 <div class="ot-exit">соперник вышел</div>
-                                <div class="re">Повторить</div>
-                                <div class="ch-ot">другой соперник</div>
-                                <div class="exit">Выйти</div>
+                                <div class="button re">Повторить</div>
+                                <div class="button ch-ot">другой соперник</div>
+                                <div class="button exit">Выйти</div>
                             </div>
                         </div>
                     </div>
@@ -1434,23 +1463,24 @@
             'PLAY_ONE_MORE_TIME': 'Играть еще раз за {0} баллов',
         };
 
-        var quickGame = {};
-        var online = 1;
-        var page = <?=($seo['pages']?1:0)?>;
-        var appId   = 0;
-        var appName   = '';
-        var appMode   = 0;
+        var quickGame   = {};
+        var onlineGame  = {};
+        var online      = 1;
+        var page        = <?=($seo['pages']?1:0)?>;
+        var appId       = 0;
+        var appName     = '';
+        var appMode     = 0;
         <? foreach ($onlineGames as $game){
-            if(is_array($game->getModes()))
-                foreach ($game->getModes() as $cur=>$m)
-                    foreach ($m as $v=>$p)
-                        $modes[$game->getKey()][$cur][] = $v;
+    if(is_array($game->getModes()))
+        foreach ($game->getModes() as $cur=>$m)
+            foreach ($m as $v=>$p)
+                $modes[$game->getKey()][$cur][] = $v;
 
-            if(is_array($game->getAudio()))
-                foreach ($game->getAudio() as $k=>$f)
-                    if($f)
-                        $audio[$game->getKey()][$k] = $f;
-            } ?>
+    if(is_array($game->getAudio()))
+        foreach ($game->getAudio() as $k=>$f)
+            if($f)
+                $audio[$game->getKey()][$k] = $f;
+    } ?>
         var appModes = <?=json_encode($modes, JSON_PRETTY_PRINT); ?>;
         var appAudio = <?=json_encode($audio, JSON_PRETTY_PRINT); ?>;
         var unreadNotices = <?=$notices?>;
@@ -1475,78 +1505,6 @@
         $("#timer_soon").countdown({until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>) ,layout: "{mnn}:{snn}",
             onExpiry: showQuickGameStart
         });
-
-
-        <? /* $(".tel").intlTelInput({
-            preferredCountries: <?
-            foreach(\CountriesModel::instance()->getList() as $country)
-                $arr[]=strtolower($country->getCode());
-            echo json_encode($arr)?>}); */ ?>
-
-
-        $.extend($.inputmask.defaults,{
-            definitions: {
-                '9': {
-                    validator: "[0-9]",
-                    cardinality: 1,
-                    definitionSymbol: "*"
-                },
-                "a": {
-                    validator: "[RrUuZzEeBb]",
-                    cardinality: 1,
-                    casing: "upper"
-                },
-                'd': { //basic day
-                    validator: "0[1-9]|[12][0-9]|3[01]",
-                    cardinality: 2,
-                    prevalidator: [{ validator: "[0-3]", cardinality: 1 }]
-                },
-                'm': { //basic month
-                    validator: "0[1-9]|1[012]",
-                    cardinality: 2,
-                    prevalidator: [{ validator: "[01]", cardinality: 1 }]
-                },
-                'y': { //basic year
-                    validator: "(19|20)\\d{2}",
-                    cardinality: 4,
-                    prevalidator: [
-                        { validator: "[12]", cardinality: 1 },
-                        { validator: "(19|20)", cardinality: 2 },
-                        { validator: "(19|20)\\d", cardinality: 3 }
-                    ]
-                }
-            },
-            onincomplete: function () {$(this).val() && $(this).parent().addClass('incomplete error').removeClass('complete'); },
-            oncomplete: function () { $(this).parent().removeClass('incomplete error').addClass('complete')},
-            oncleared: function () { $(this).parent().removeClass('incomplete error complete');},
-            autoUnmask: true,
-            showMaskOnHover: false,
-        });
-
-        var maskList = $.masksSort($.masksLoad(), ['#'], /[0-9]|#/, "mask");
-        var maskOpts = {
-            inputmask: {
-                definitions: {
-                    '#': {
-                        validator: "[0-9]",
-                        cardinality: 1
-                    }
-                },
-            },
-            match: /[0-9]/,
-            replace: '#',
-            list: maskList,
-            listKey: "mask"
-        };
-
-
-
-        $('[type="tel"][name="phone"]').inputmasks(maskOpts);
-        $('[type="tel"][name="qiwi"]').inputmasks(maskOpts);
-        $('[type="text"][name="bd"]').inputmask("d.m.y",{autoUnmask: false});
-        $('[type="text"][name="yandex"]').inputmask('Regex', {regex: "41001[0-9]{7,10}$"});
-        $('[type="text"][name="webmoney"]').inputmask('Regex', {regex: "[RZBUE][0-9]{12}$"});
-
 
         $("#timer_soon").countdown('resume');
         $("#timer_soon").countdown('option', {until: (<?=($quickGame['timer']>0?$quickGame['timer']:1);?>)});

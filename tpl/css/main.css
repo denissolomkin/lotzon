@@ -287,15 +287,21 @@ article .wings {}
 .prizes .pz-nav .pz-nav_li.now {background-color:#b2d0d4;}
 .prizes .pz-cg {list-style:none;margin:0 0px 0 40px;padding:0;overflow:hidden;}
 .prizes .pz-cg .pz-cg_li {width:210px;float:left;margin:0 20px 40px 0;position:relative;cursor:pointer;}
+.prizes .pz-cg .pz-cg_li.pz-end {cursor:default;}
 .prizes .pz-cg .pz-cg_li .pz-lim {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize-limit.png") no-repeat 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-lim > span {display:block;font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:14px 9px 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-lim > b {display:block;font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:20px 9px 0 0;}
+.prizes .pz-cg .pz-cg_li .pz-end {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize-limit.png") no-repeat 0 -210px;}
+.prizes .pz-cg .pz-cg_li .pz-end > span {display:block;font:20px/1 Handbook-bold;color:white;text-transform:uppercase;margin:14px 9px 0 0;}
+.prizes .pz-cg .pz-cg_li .pz-end > b {display:block;font:20px/1 Handbook-regular;color:white;margin:20px 9px 0 0;}
 .prizes .pz-cg .pz-cg_li .im-ph {height:210px;}
 .prizes .pz-cg .pz-cg_li .im-ph > img {width:210px;height:210px;}
 .prizes .pz-cg .pz-cg_li .im-tl {height:30px;font:15px/30px Handbook-bold;padding-left:22px;color:#000;}
 .font-fix .prizes .pz-cg .pz-cg_li .im-tl {line-height:33px;}
 .prizes .pz-cg .pz-cg_li .im-bn {height:40px;cursor:pointer;background-color:#ffe400;color:#000;}
 .prizes .pz-cg .pz-cg_li:hover .im-bn {background-color:#000;color:#ffe400;}
+.prizes .pz-cg .pz-cg_li.pz-end .im-bn {height:40px;cursor:default;background-color:gainsboro;color:#000;}
+.prizes .pz-cg .pz-cg_li.pz-end:hover .im-bn {background-color:gainsboro;color:#000;}
 .prizes .pz-cg .pz-cg_li .im-bn > b {display:block;margin:5px 10px 0 20px;float:left;font:30px/1 Handbook-bold;}
 .font-fix .prizes .pz-cg .pz-cg_li .im-bn > b {margin-top:7px;}
 .prizes .pz-cg .pz-cg_li .im-bn > span {display:block;float:left;font:11px/1 Handbook-bold;margin-top:9px;width:70px;text-transform:uppercase;}
@@ -1026,7 +1032,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .msg.winner .re, .ngm-bk .ngm-gm.cards .gm-mx .msg.winner .ot-exit {margin-top: 160px;}
 .ngm-bk .ngm-gm.cards .gm-mx .msg.winner .ch-ot {margin-bottom: 30px;}
 
-.ngm-bk .ngm-gm.cards .gm-mx .players { width: 450px; height:160px;margin: 0 25%;text-align: center;}
+.ngm-bk .ngm-gm.cards .gm-mx .players { width: 600px; height:160px;margin: 0 150px;text-align: center;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .card{float: left; margin-right: -20px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .players .pr-ph-bk .gm-pr {margin: 0;width: auto;  height: auto; }
@@ -1035,14 +1041,14 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .tm{ font: 32px/1 Handbook-regular; padding: 4px; position: absolute; width: 50px; height: 50px; margin: -20px 17px; border-radius: 50px; border: 5px solid rgb(255,228,0); box-sizing: border-box;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .wt{}
 
-.ngm-bk .ngm-gm.cards .gm-mx .players .m {position: absolute;top: 350px;  width: 100%;  height: 200px;  margin-left: -225px; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .m {position: absolute;top: 350px;  width: 100%;  height: 200px;  margin-left: -150px; }
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .card{transform-origin: 50% 100%; margin-right: -40px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .card:hover, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 90px;margin: 0; }
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-ph {width: 70px;height: 70px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 10px;left: 50%;margin-left: -35px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 75px;width: 75px;margin: 8px;float:right;border-radius: 80px;padding: 12px 10px;box-sizing: border-box;bottom:0;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md{margin: 15px 25px;float: right;padding: 16px 5px;width: 38px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md .icon-reload{ display: none; border: 2px solid #888;padding: 16px 5px;border-radius: 5px;color: #888;font-size: 28px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md{margin: 15px 25px;float: right;width: 40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md .icon-reload{ display: none; border: 2px solid #888;padding: 16px 3px;border-radius: 5px;color: #888;font-size: 28px;}
 .ngm-bk .ngm-gm.cards .gm-mx .DurakShift .players .m .gm-pr .pr-md .icon-reload{display: block;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr b{    font: 36px/1 Handbook-bold;letter-spacing: -3px;  margin-left: -3px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr span{ font: 13px/1 Handbook-regular; }
@@ -1054,20 +1060,27 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m.current .gm-pr .pr-cl .btn-pass{display: block;}
 
-.ngm-bk .ngm-gm.cards .gm-mx .players .o{width: 150px;float: left;margin-top: 40px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-right: -20px;width: 70px; height: 108px; background-position: -1430px 0px; border-radius: 5px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  }
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 84px;  height: 84px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: absolute; box-shadow: 0px 0px 10px;margin: -30px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o{width: 120px;float: left;margin: 0;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .col1 {padding-left: 260px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .col2 {padding-left: 140px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .col3 {padding-left: 80px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-top: 50px;width: 70px; height: 108px; background-position: -1430px 0px; border-radius: 5px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  margin: 0;  }
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 84px;  height: 84px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: relative; box-shadow: 0px 0px 10px;  margin: 20px 0 0 -10px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.4);  color: #ffffff;  bottom: 0;  position: absolute;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 10px 17px;}
 
+.ngm-bk .ngm-gm.cards .gm-mx .players .current .gm-pr .pr-ph{box-shadow: 0 0 10px 3px rgba(200,0,0,1);}
+.ngm-bk .ngm-gm.cards .gm-mx .players .beater .gm-pr .pr-ph {box-shadow: 0 0 10px 3px rgba(0,150,0,1);}
+
 .ngm-bk .ngm-gm.cards .gm-mx .deck, .ngm-bk .ngm-gm.cards .gm-mx .table, .ngm-bk .ngm-gm.cards .gm-mx .off {float: left;height: 200px;width: 100px;box-sizing: border-box;}
-.ngm-bk .ngm-gm.cards .gm-mx .table {width: 700px;}
+.ngm-bk .ngm-gm.cards .gm-mx .table {width: 780px;}
 .ngm-bk .ngm-gm.cards .gm-mx .table > div:nth-of-type(even) {   padding-top: 30px;  transform: rotate(-4deg); }
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards { float: left; width: 110px; height: 200px;  position: relative; }
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards .card{float:left; position: absolute; left: 25px;  margin-top: 5px;  transform: rotate(2deg) scale(0.7,0.7);}
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards div:first-of-type {  left: 0px;  margin-top: 0px;  transform: rotate(-1deg) scale(0.7,0.7);}
 
+.ngm-bk .ngm-gm.cards .gm-mx .off {width: 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7);position: absolute; }
 
 .ngm-bk .ngm-gm.cards .gm-mx .deck {position: relative;  }
@@ -1779,3 +1792,5 @@ border: 1px solid black;
 .multilanguage {
     border: 0;
     padding: 5px;}
+
+.tpl {display: none;}

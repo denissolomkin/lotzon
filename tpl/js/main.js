@@ -223,15 +223,17 @@ $(function(){
             if (data.res.items.length) {
                 var html = '';
                 $(data.res.items).each(function(id, item) {
-                    html += '<li class="pz-cg_li" data-item-id="'+item.id+'">';
+                    html += '<li class="pz-cg_li'+(item.quantity && item.quantity == 0?' pz-end':'')+'" data-item-id="'+item.id+'">';
                     if (item.quantity > 0) {
-                        html += '<div class="pz-lim"><span>ограниченное количество</span><b>'+item.quantity+' шт</b></div>';
+                        html += $('.tpl.pz-lim-tpl').clone().find('b').prepend(item.quantity+' ').parents('.tpl').html();
+                    } else if (item.quantity && item.quantity == 0) {
+                        html += $('.tpl.pz-end-tpl').html();
                     }
                     html += '<div class="im-ph"><img src="/filestorage/shop/'+item.img+'"></div><div class="im-tl">'+item.title+'</div><div class="im-bn"><b>'+item.price+'</b><span>обменять на баллов</span></div></li>'
                 });
                 $('.shop-category-items:visible').append(html);
                 //reinit listeners
-                $('.shop-category-items li').off('click').on('click', showItemDetails);
+                $('.shop-category-items li:not(.pz-end)').off('click').on('click', showItemDetails);
             }
             if(button.hasClass('pz-more-bt'))button.hide();
             $('.prizes .mr-cl-bt-bk').show();
@@ -275,7 +277,7 @@ $(function(){
         }
     });
 
-    $('.shop-category-items li').on('click', showItemDetails);
+    $('.shop-category-items li:not(.pz-end)').on('click', showItemDetails);
 
     function showItemDetails() {
         currentShowedItem = $(this).data('itemId');
@@ -852,6 +854,68 @@ $(function(){
     });
 
     // PROFILE HISTORY //
+
+    $.extend($.inputmask.defaults,{
+        definitions: {
+            '9': {
+                validator: "[0-9]",
+                cardinality: 1,
+                definitionSymbol: "*"
+            },
+            "a": {
+                validator: "[RrUuZzEeBb]",
+                cardinality: 1,
+                casing: "upper"
+            },
+            'd': { //basic day
+                validator: "0[1-9]|[12][0-9]|3[01]",
+                cardinality: 2,
+                prevalidator: [{ validator: "[0-3]", cardinality: 1 }]
+            },
+            'm': { //basic month
+                validator: "0[1-9]|1[012]",
+                cardinality: 2,
+                prevalidator: [{ validator: "[01]", cardinality: 1 }]
+            },
+            'y': { //basic year
+                validator: "(19|20)\\d{2}",
+                cardinality: 4,
+                prevalidator: [
+                    { validator: "[12]", cardinality: 1 },
+                    { validator: "(19|20)", cardinality: 2 },
+                    { validator: "(19|20)\\d", cardinality: 3 }
+                ]
+            }
+        },
+        onincomplete: function () {$(this).val() && $(this).parent().addClass('incomplete error').removeClass('complete'); },
+        oncomplete: function () { $(this).parent().removeClass('incomplete error').addClass('complete')},
+        oncleared: function () { $(this).parent().removeClass('incomplete error complete');},
+        autoUnmask: true,
+        showMaskOnHover: false,
+    });
+
+    var maskList = $.masksSort($.masksLoad(), ['#'], /[0-9]|#/, "mask");
+    var maskOpts = {
+        inputmask: {
+            definitions: {
+                '#': {
+                    validator: "[0-9]",
+                    cardinality: 1
+                }
+            },
+        },
+        match: /[0-9]/,
+        replace: '#',
+        list: maskList,
+        listKey: "mask"
+    };
+
+    $('[type="tel"][name="phone"]').inputmasks(maskOpts);
+    $('[type="tel"][name="qiwi"]').inputmasks(maskOpts);
+    $('[type="text"][name="bd"]').inputmask("d.m.y",{autoUnmask: false});
+    $('[type="text"][name="yandex"]').inputmask('Regex', {regex: "41001[0-9]{7,10}$"});
+    $('[type="text"][name="webmoney"]').inputmask('Regex', {regex: "[RZBUE][0-9]{12}$"});
+
 
     $('.ph-fr-bk li').on('click', function(){
         $(this).closest('ul.ph-fr-bk').find('li').removeClass('sel');
@@ -2254,15 +2318,16 @@ function updateNotices(notices) {
 }
 
 function updatePoints(points) {
-    playerPoints = points;
-    points=points.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    playerPoints = parseInt(points) || playerPoints;
+    points=playerPoints.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plPointHolder').text(points);
 }
 
 
 function updateMoney(money) {
-    playerMoney = parseFloat(money).toFixed(2);
-    money=parseFloat(money).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    // money = money || playerMoney;
+    playerMoney = parseFloat(money).toFixed(2) || playerMoney;
+    money=parseFloat(playerMoney).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money.replace('.00',''));
 }
 
@@ -2477,6 +2542,14 @@ function moveToEnd(target) {
         rng.select();
     }
 }
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
 String.prototype.replaceArray = function(find, replace) {
     var replaceString = this;

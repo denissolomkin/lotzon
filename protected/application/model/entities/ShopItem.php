@@ -10,7 +10,7 @@ class ShopItem extends Entity
     private $_category = null;
     private $_title    = '';
     private $_price    = 0;
-    private $_quantity = 0;
+    private $_quantity = null;
     private $_countries = array();
     private $_visible  = true;
     private $_image    = '';
@@ -58,7 +58,8 @@ class ShopItem extends Entity
 
     public function setQuantity($quantity)
     {
-        $this->_quantity = (int)$quantity;
+
+        $this->_quantity = is_numeric($quantity) ? $quantity : null;
 
         return $this;
     }

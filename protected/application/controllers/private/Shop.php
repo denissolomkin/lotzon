@@ -79,7 +79,7 @@ class Shop extends PrivateArea
             
             $item->setTitle($this->request()->post('title'))
                  ->setPrice($this->request()->post('price'))
-                 ->setQuantity($this->request()->post('quantity'))
+                 ->setQuantity($this->request()->post('quantity',null))
                  ->setCountries($this->request()->post('countries'))
                  ->setImage($this->request()->post('image'))
                  ->setCategory($categories[$this->request()->post('categoryId')]);
