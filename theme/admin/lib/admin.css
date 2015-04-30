@@ -207,6 +207,9 @@ min-height: 17px;
 }
 .toggle.btn {height: 39px !important;}
 
+#money .label-danger{ position: absolute; border-radius: 20px; padding: 5px; min-width: 21px; right: -8px; top: -8px; }
+#money .btn{position: relative;}
+
 /* ONLINE + QUICK GAMES + ALLGAMES */
 .ogames#audio-modal li .fa {padding: 8px;}
 .ogames#audio-modal li .fa-play-circle {background: wheat;margin-right: -1px;}

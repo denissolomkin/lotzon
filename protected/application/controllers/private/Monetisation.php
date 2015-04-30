@@ -51,6 +51,7 @@ class Monetisation extends PrivateArea
 
         $moneyOrders = MoneyOrderModel::instance()->getOrdersToProcess(self::$PER_PAGE, $moneyPage == 1 ? 0 : self::$PER_PAGE * $moneyPage - self::$PER_PAGE, null, $moneyStatus, $moneyType);
         $moneyCount = MoneyOrderModel::instance()->getOrdersToProcessCount($moneyStatus, $moneyType);
+        $moneyCountByTypes = MoneyOrderModel::instance()->getOrdersToProcessCountByTypes($moneyStatus);
 
         $moneyPager = array(
             'page' => $moneyPage,
@@ -69,6 +70,7 @@ class Monetisation extends PrivateArea
             'shopOrders' => $shopOrders,
             'moneyOrders'=> $moneyOrders,
             'moneyCount' => $moneyCount,
+            'moneyCountByTypes' => $moneyCountByTypes,
             'moneyPager' => $moneyPager,
             'moneyStatus' => $moneyStatus,
             'moneyType'  => $moneyType,

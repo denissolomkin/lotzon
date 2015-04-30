@@ -215,8 +215,9 @@
         <h2>Запросы на вывод денег (<span id="moneyCount"><?=$moneyCount?></span>)
             <button class="btn btn-info" onclick="location.href='#items'" style="margin-right: 10%;"><i class="glyphicon glyphicon-hand-up"></i></button>
             <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=(!$moneyType? 'active' : '' )?>" style="padding: 6px;"><div style="width: 24px;height: 24px"></div></button>
-            <? foreach(array('webmoney','yandex','private24','qiwi','phone') as $type) : ?>
-            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$type?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=($moneyType===$type ? 'active' : '' )?>" style="padding: 6px;"><img src="../tpl/img/<?=$type?>.png"></button>
+            <? foreach(array('webmoney','yandex','private24','qiwi','phone','item') as $type) : ?>
+            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$type?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=$type?> <?=($moneyType===$type ? 'active' : '' )?>" style="padding: 6px;"><img src="../tpl/img/<?=$type?>.png">
+            <? if(isset($moneyCountByTypes[$type]) && $moneyCountByTypes[$type]>0) {?><span class="label label-danger"><?=$moneyCountByTypes[$type]?></span></button><? } ?>
             <? endforeach ?>
             <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$moneyType?>&moneyStatus=2&sortField=Id&sortDirection=desc#money'" class="btn right btn-md btn-danger <?=($moneyStatus==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
             <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$moneyType?>&moneyStatus=1&sortField=Id&sortDirection=desc#money'" class="btn right btn-md btn-success <?=($moneyStatus==1 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ok"></i></button>
@@ -418,9 +419,9 @@
                         </td>
                         <td class="nobr" width="50">
 
-                            <button class="btn btn-md btn-warning status money <?=($moneyStatus==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
-                            <button class="btn btn-md btn-success status money <?=($moneyStatus==1 ? ' hidden' : '' )?>" data-status='1' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button class="btn btn-md btn-danger status money<?=($moneyStatus==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
+                            <button class="btn btn-md btn-warning status money <?=($moneyStatus==0 ? ' hidden' : '' )?>" data-status='0' data-type="<?=$order->getType()?>" data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
+                            <button class="btn btn-md btn-success status money <?=($moneyStatus==1 ? ' hidden' : '' )?>" data-status='1' data-type="<?=$order->getType()?>" data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button class="btn btn-md btn-danger status money<?=($moneyStatus==2 ? ' hidden' : '' )?>" data-status='2' data-type="<?=$order->getType()?>" data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
                             <button class="btn btn-md btn-danger status money<?=($moneyStatus==2 ? ' hidden' : ' hidden' )?>" data-status='3' data-id="<?=$order->getId()?>"><i class="glyphicon glyphicon-remove"></i></button>
 
                         </td>
@@ -435,8 +436,9 @@
 
     $('.status').on('click', function() {
         id= $(this).data('id');
-        status= $(this).data('status');
-        money=($(this).hasClass('money') ? 1 : 0);
+        type = $(this).data('type');
+        status = $(this).data('status');
+        money = ($(this).hasClass('money') ? 1 : 0);
         $.ajax({
             url: "/private/monetisation/status/"+id+"?status="+status+"&money=" + money,
             method: 'GET',
@@ -450,6 +452,7 @@
                             location.reload()
                         $("table tr#money"+id).remove();
                         $("#moneyCount").text(parseInt($("#moneyCount").text())-1);
+                        $("#money .btn."+type+" span").text(parseInt($("#money .btn."+type+" span").text())-1);
 
                     } else {
                         if(($("table tr#shop"+id).parent().children().length)==1 && parseInt($("#shopCount").text())>1)

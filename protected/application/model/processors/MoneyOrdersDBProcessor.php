@@ -151,6 +151,27 @@ class MoneyOrdersDBProcessor implements IProcessor
         return $sth->fetchColumn(0);
     }
 
+    public function getOrdersToProcessCountByTypes($status=null)
+    {
+        if(!$status)
+            $status=ShopItemOrder::STATUS_ORDERED;
+
+        $sql = "SELECT Type, COUNT(*) Count FROM `MoneyOrders` WHERE `Type`!='points' AND `Status` = :status GROUP BY `Type`";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':status' => $status));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $counters = array();
+        foreach($sth->fetchAll() as $counter)
+            $counters[$counter['Type']]=$counter['Count'];
+
+        return $counters;
+    }
+
     public function beginTransaction()
     {
         try {
