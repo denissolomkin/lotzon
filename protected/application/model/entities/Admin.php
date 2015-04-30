@@ -55,6 +55,7 @@ class Admin extends Entity
                 'reports/UserRegistrations'=>array('icon'=>'user-plus','name'=>'Регистрации'),
                 'reports/UserReviews'=>array('icon'=>'thumbs-o-up','name'=>'Отзывы'),
                 'reports/OnlineGames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
+                'reports/BotWins'=>array('icon'=>'plug','name'=>'Выигрыши ботов'),
             )),
     );
 

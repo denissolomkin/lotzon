@@ -1,5 +1,5 @@
 <div class="container-fluid users">
-    <div class="row-fluid" id="items">
+    <div class="row-fluid"">
         <h2>Отчеты | <?=$title?></h2>
         <hr />
     </div>
@@ -14,7 +14,8 @@
             <input type="text" name="dateTo" value="<?=$dateTo?>" placeholder="До" class="form-control datepick" />
         </div>
 <? switch($identifier){
-    case 'OnlineGames': ?>
+    case 'OnlineGames':
+    case 'BotWins': ?>
         <div class="col-my-1">
             <select name="args[GameId]" class="form-control" placeholder="Игра" />
             <option value=""></option>
@@ -64,6 +65,8 @@
                 showTimePicker: false,
                 autoclose: true,
                 pickTime: false});
+
+            $("select").on('input',function(){$("form").submit()});
         </script>
     </div>
 <? if(is_array($reports[0])) { ?>

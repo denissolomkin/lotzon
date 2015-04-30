@@ -148,6 +148,37 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         return $sth->fetchAll();
     }
 
+    public function getBotWins($dateFrom=null, $dateTo=null, $args=null)
+    {
+
+        $sql = "
+
+SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Month`, o.Key, a.Mode, COUNT( * ) `Quantity`, SUM(Price) `Sum` FROM
+        ( SELECT GameId, Date, CONCAT(Currency,'-', Price) Mode, SUM(IFNULL(Prize,Price*Result)) Price
+        FROM   `PlayerGames` g
+        LEFT JOIN Players p ON p.Id=g.PlayerId
+        WHERE  `Date` > :from
+        AND    `Date` < :to
+        AND    `Price` > 0
+        AND    p.`Id` IS NULL
+        ".(is_numeric($args['GameId'])?"AND `GameId` = {$args['GameId']}":'')."
+        ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')."
+        GROUP BY GameUid, Date) a
+
+        LEFT JOIN OnlineGames o ON o.Id = a.GameId
+             GROUP BY Month,
+            GameId, Mode
+        ORDER BY YEAR(FROM_UNIXTIME(Date)), MONTH(FROM_UNIXTIME(Date)), GameId, a.Mode";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
+        }
+        return $sth->fetchAll();
+    }
+
     public function getUserReviews($dateFrom=null, $dateTo=null, $args=null)
     {
         $sql = "

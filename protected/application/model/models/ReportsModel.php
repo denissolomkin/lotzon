@@ -21,28 +21,33 @@ class ReportsModel extends Model
         return $this->getProcessor()->updateMoneyOrders();
     }
 
-    public function getMoneyOrders($dateFrom,$dateTo,$status)
+    public function getMoneyOrders($dateFrom,$dateTo,$args)
     {
-        return $this->getProcessor()->getMoneyOrders($dateFrom,$dateTo,$status);
+        return $this->getProcessor()->getMoneyOrders($dateFrom,$dateTo,$args);
     }
 
-    public function getUserRegistrations($dateFrom,$dateTo,$status)
+    public function getUserRegistrations($dateFrom,$dateTo,$args)
     {
-        return $this->getProcessor()->getUserRegistrations($dateFrom,$dateTo,$status);
+        return $this->getProcessor()->getUserRegistrations($dateFrom,$dateTo,$args);
     }
 
-    public function getUserReviews($dateFrom,$dateTo,$status)
+    public function getUserReviews($dateFrom,$dateTo,$args)
     {
-        return $this->getProcessor()->getUserReviews($dateFrom,$dateTo,$status);
+        return $this->getProcessor()->getUserReviews($dateFrom,$dateTo,$args);
     }
 
-    public function getOnlineGames($dateFrom,$dateTo,$status)
+    public function getOnlineGames($dateFrom,$dateTo,$args)
     {
-        return $this->getProcessor()->getOnlineGames($dateFrom,$dateTo,$status);
+        return $this->getProcessor()->getOnlineGames($dateFrom,$dateTo,$args);
     }
 
-    public function getShopOrders($dateFrom,$dateTo,$status)
+    public function getShopOrders($dateFrom,$dateTo,$args)
     {
-        return $this->getProcessor()->getShopOrders($dateFrom,$dateTo,$status);
+        return $this->getProcessor()->getShopOrders($dateFrom,$dateTo,$args);
+    }
+    
+    public function getBotWins($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getBotWins($dateFrom,$dateTo,$args);
     }
 }
