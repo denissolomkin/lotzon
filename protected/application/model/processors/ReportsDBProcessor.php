@@ -152,21 +152,27 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
     {
 
         $sql = "
+        SELECT Concat('#',p.Id) Id, p.Nicname Name, count(g.Id) Total, sum(g.Win) Win, (sum(g.Win)*25+count(g.Id)) Rating
+                                FROM `PlayerGames` g
+                                JOIN Players p On p.Id=g.PlayerId
+                                LEFT JOIN OnlineGames o ON o.Id = GameId
 
-SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Month`, o.Key, a.Mode, COUNT( * ) `Quantity`, SUM(Price) `Sum` FROM
-        ( SELECT GameId, Date, CONCAT(Currency,'-', Price) Mode, Price
-        FROM   `PlayerGames` g
-        WHERE  `Date` > :from
-        AND    `Date` < :to
-        AND    `Price` > 0
-        ".(is_numeric($args['GameId'])?"AND `GameId` = {$args['GameId']}":'')."
-        ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')."
-        GROUP BY GameUid, Date) a
+                                where g.`Date`>:from AND `Date`<:to AND g.Price>0
+                                AND `GameId` = ".
 
-        LEFT JOIN OnlineGames o ON o.Id = a.GameId
-             GROUP BY Month,
-            GameId, Mode
-        ORDER BY YEAR(FROM_UNIXTIME(Date)), MONTH(FROM_UNIXTIME(Date)), GameId, a.Mode";
+            (is_numeric($args['GameId'])?$args['GameId']:'1').
+            (isset($args['Currency']) && $args['Currency']!=''?" AND `Currency` = '{$args['Currency']}'":'').
+
+                                " group by g.GameId, g.PlayerId
+                                having Total >
+    (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `Date`>:from AND `Date`<:to AND Price>0 AND `GameId` =".
+
+            (is_numeric($args['GameId'])?$args['GameId']:'1').
+            (isset($args['Currency']) && $args['Currency']!=''?" AND `Currency` = '{$args['Currency']}'":'').
+
+            " GROUP BY `GameUid` , `Date` ) `All`) / count(*)
+                                order by Rating DESC, Total DESC
+                                LIMIT 10";
 
         try {
             $sth = DB::Connect()->prepare($sql);

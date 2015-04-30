@@ -15,10 +15,11 @@
         </div>
 <? switch($identifier){
     case 'OnlineGames':
+    case 'TopOnlineGames':
     case 'BotWins': ?>
         <div class="col-my-1">
             <select name="args[GameId]" class="form-control" placeholder="Игра" />
-            <option value=""></option>
+            <?if($identifier!='TopOnlineGames'){?><option value=""></option><?}?>
             <? foreach(\OnlineGamesModel::instance()->getList() as $game):?>
                 <option <?= is_numeric($args['GameId']) && $game->getId()==$args['GameId']?'selected':''?> value="<?=$game->getId();?>"><?=$game->getTitle('default');?></option>
             <? endforeach;?>
