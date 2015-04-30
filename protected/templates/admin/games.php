@@ -83,7 +83,7 @@
                     if(!empty($ogames))
                         foreach($ogames as $onlineGame)
                             $OnlineGames[$onlineGame->getId()]= ($onlineGame->isEnabled()? '':'<i class="fa fa-ban"></i> ').$onlineGame->getTitle('RU');
-                    $ids = array_merge($games[$key]->getGames(), array_diff(is_array($games[$key]->getGames())?$games[$key]->getGames():array(),array_keys($OnlineGames)) );
+                    $ids = array_merge(is_array($games[$key]->getGames())?$games[$key]->getGames():array(), array_diff(is_array($games[$key]->getGames())?$games[$key]->getGames():array(),array_keys($OnlineGames)) );
                     foreach($ids as $id): ?>
                         <li><input type="hidden" name="games[]" value="<?=$id?>"><?=$OnlineGames[$id]?></li>
                     <?php endforeach;?>
