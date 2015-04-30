@@ -41,6 +41,11 @@ class ReportsModel extends Model
         return $this->getProcessor()->getOnlineGames($dateFrom,$dateTo,$args);
     }
 
+    public function getTopOnlineGames($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getTopOnlineGames($dateFrom,$dateTo,$args);
+    }
+
     public function getShopOrders($dateFrom,$dateTo,$args)
     {
         return $this->getProcessor()->getShopOrders($dateFrom,$dateTo,$args);
@@ -49,5 +54,10 @@ class ReportsModel extends Model
     public function getBotWins($dateFrom,$dateTo,$args)
     {
         return $this->getProcessor()->getBotWins($dateFrom,$dateTo,$args);
+    }
+
+    public function getLotteryWins($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getLotteryWins($dateFrom,$dateTo,$args);
     }
 }

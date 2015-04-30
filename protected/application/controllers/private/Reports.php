@@ -22,7 +22,8 @@ class Reports extends PrivateArea
             $this->redirect('/private');
 
         $dateFrom   = strtotime(
-            $this->request()->get('dateFrom', date('Y-m-d',strtotime( "-1 month", time()))));
+            $this->request()->get('dateFrom', date('Y-m-01', time())));
+            //$this->request()->get('dateFrom', date('Y-m-d',strtotime( "-1 month", time()))));
 
         $dateTo     = strtotime($this->request()->get('dateTo', date('Y-m-d',time())).' 23:59:59');
         $args     = $this->request()->get('args', null);

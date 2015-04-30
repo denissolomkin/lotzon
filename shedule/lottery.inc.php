@@ -300,7 +300,8 @@ function SetLotteryCombination($comb, $simulation)
     $comb['Combination'] = $Combination;
 
 
-	$ballsArray = array_flip(range(1, $_ballsCount - 1));
+	$ballsArray = array_flip(range(1, $_ballsCount));
+
     $comb['ballsArray'] = array_intersect_key($comb, $ballsArray);
 
 
@@ -326,7 +327,7 @@ function SetLotteryCombination($comb, $simulation)
             $comb['WinnersCount'],
             $comb['MoneyTotal'],
             $comb['PointsTotal'],
-            serialize($ballsArray));
+            serialize($comb['ballsArray']));
 
         DB::Connect()->query($SQL);
         $comb['id']           = DB::Connect()->lastInsertId();
@@ -401,7 +402,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 	echo 'GetLotteryCombination:'.PHP_EOL;
 
 	$ballsStatSQL = array();
-	for($i = 1; $i < $_ballsCount; $i++)
+	for($i = 1; $i <= $_ballsCount; $i++)
 	{
 		$ballsStatSQL[]= "SUM(IF(stat.BallsCount = $i, stat.cnt, 0)) AS '$i'";
 	}

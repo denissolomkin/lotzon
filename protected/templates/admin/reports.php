@@ -86,7 +86,7 @@
                             $bottom[$title] = null;
                         if(is_numeric($column))
                             $bottom[$title]+=$column; ?>
-                        <td><?=(is_numeric($column) || ($temp[$title]!=$column) || reset($temp) != reset($report)? $column:'').prev($report)?></td>
+                        <td><?=(is_numeric($column) || ($temp[$title]!=$column) || (is_array($temp) && is_array($report) && reset($temp) != reset($report))? $column:'').prev($report)?></td>
                     <? } ?>
                 </tr>
                 <? $temp=$report;
