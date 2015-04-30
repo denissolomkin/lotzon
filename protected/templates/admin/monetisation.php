@@ -214,11 +214,13 @@
     <div class="row-fluid" id="money">
         <h2>Запросы на вывод денег (<span id="moneyCount"><?=$moneyCount?></span>)
             <button class="btn btn-info" onclick="location.href='#items'" style="margin-right: 10%;"><i class="glyphicon glyphicon-hand-up"></i></button>
-            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=(!$moneyType? 'active' : '' )?>" style="padding: 6px;"><div style="width: 24px;height: 24px"></div></button>
-            <? foreach(array('webmoney','yandex','private24','qiwi','phone','item') as $type) : ?>
-            <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$type?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=$type?> <?=($moneyType===$type ? 'active' : '' )?>" style="padding: 6px;"><img src="../tpl/img/<?=$type?>.png">
-            <? if(isset($moneyCountByTypes[$type]) && $moneyCountByTypes[$type]>0) {?><span class="label label-danger"><?=$moneyCountByTypes[$type]?></span></button><? } ?>
-            <? endforeach ?>
+            <div class="types">
+                <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=(!$moneyType? 'active' : '' )?>" style="padding: 6px;"><div style="width: 24px;height: 24px"></div></button>
+                <? foreach(array('webmoney','yandex','private24','qiwi','phone','item') as $type) : ?>
+                <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$type?>&moneyStatus=<?=$moneyStatus?>&sortField=Id&sortDirection=desc#money'" class="btn btn-default btn-md <?=$type?> <?=($moneyType===$type ? 'active' : '' )?>" style="padding: 6px;"><img src="../tpl/img/<?=$type?>.png">
+                <? if(isset($moneyCountByTypes[$type]) && $moneyCountByTypes[$type]>0) {?><span class="label label-danger"><?=$moneyCountByTypes[$type]?></span></button><? } ?>
+                <? endforeach ?>
+            </div>
             <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$moneyType?>&moneyStatus=2&sortField=Id&sortDirection=desc#money'" class="btn right btn-md btn-danger <?=($moneyStatus==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
             <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$moneyType?>&moneyStatus=1&sortField=Id&sortDirection=desc#money'" class="btn right btn-md btn-success <?=($moneyStatus==1 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ok"></i></button>
             <button onclick="document.location.href='/private/monetisation?shopPage=<?=$shopPager['page']?>&shopStatus=<?=$shopStatus?>&moneyType=<?=$moneyType?>&moneyStatus=0&sortField=Id&sortDirection=desc#money'" class="btn right btn-warning btn-md <?=(!$moneyStatus ? 'active' : '' )?>"><i class="glyphicon glyphicon-time"></i></button>
