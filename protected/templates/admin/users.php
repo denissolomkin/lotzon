@@ -141,8 +141,8 @@
                             </span>
                             <?}?>
 
-                            <? if ($player->isTicketsFilled()){?>
-                                <span class="tickets-trigger pointer" data-id="<?=$player->getId()?>"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i>&nbsp;<?=$player->isTicketsFilled()?></span>
+                            <? if ($player->isTicketsFilled() || $player->getGamesPlayed()){?>
+                                <span class="tickets-trigger pointer" data-id="<?=$player->getId()?>"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i>&nbsp;<?$player->isTicketsFilled()?:''?></span>
                             <? } ?>
 
                             <? if($player->getDates('QuickGame')){?>

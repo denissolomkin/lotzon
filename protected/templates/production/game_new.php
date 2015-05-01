@@ -1369,10 +1369,10 @@
                                     FOOTER BLOCK
             ======================================================================-->
         <footer>
-            <img id="ad" src="/tpl/img/baners/ad.gif" />
-            <section class="fr-br-bk">
+
+            <!--section class="fr-br-bk">
                 <img src="/tpl/img/baners/goroskop.jpg?<?=(strtotime(date("md")))?>" width="1280" height="257">
-            </section>
+            </section-->
             <div class="fr-cnt-bk">
                 <a href="javascript:void(0)" class="ts-lk" id="terms-bt"><?=$MUI->getText('text-terms')?></a>
                 <div class="ct-bk">
