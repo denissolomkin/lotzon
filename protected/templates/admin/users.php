@@ -74,8 +74,8 @@
                             <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                             </div>
                         <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
-                        <td class="<?=$player->getValid() ? "success" : "danger"?>"><? if($player->getCounters('Mult')>1) : ?>
-                            <div class="mult-trigger"><div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                        <td class="email-registration <?=$player->getValid() ? "success" : "danger"?>"><? if($player->getCounters('Mult')>1) : ?>
+                            <div class="mult-trigger left pointer"><div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
                             <? endif ?><?=$player->getEmail()?><? if($player->getCounters('Mult')>1) : ?></div><? endif ?>
                             <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
@@ -101,7 +101,7 @@
                             </div>
                             <br>
                             <?if($player->getReferer()) {?><div data-toggle="tooltip" data-placement="right" title="<?=$player->getReferer()?>" class=""><span class="label label-danger">!</span><?}?>
-                                <?=$player->getDateRegistered('d.m.Y H:i')?>
+                                <div class="date-registration"><i class="fa fa-clock-o"></i> <?=$player->getDateRegistered('d.m.Y H:i')?></div>
                                 <?if($player->getReferer()) {?></div><?}?>
                         </td>
 
