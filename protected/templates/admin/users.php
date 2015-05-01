@@ -47,21 +47,16 @@
         <table class="table table-striped users">
             <thead>
                 <th>ID <?=sortIcon('Id', $currentSort, $pager, $search)?></th>
-                <th>ФИО</th>
-                <th>Никнейм</th>
+                <th>Никнейм / ФИО</th>
                 <th class="icon"><?/*=sortIcon('Country', $currentSort, $pager, $search, 'globe')*/?></th>
-                <th>Email <?=sortIcon('Valid', $currentSort, $pager, $search)?></th>
-                <th>Регистрация <?=sortIcon('DateRegistered', $currentSort, $pager, $search)?></th>
+                <th>Email / Регистрация</th>
                 <th style="min-width: 120px;"><?=sortIcon('CountIP', $currentSort, $pager, $search, 'map-marker')?></th>
                 <th class="icon"><?=sortIcon('CountCookieId', $currentSort, $pager, $search, 'flag')?></th>
-                <th class="icon"><?=sortIcon('CountReferal', $currentSort, $pager, $search, 'user')?></th>
-                <th class="icon"><?=sortIcon('CountInviter', $currentSort, $pager, $search, 'envelope')?></th>
+                <th><span class="glyphicon glyphicon-user" aria-hidden="true"></span> / <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></th>
                 <th>Login / Ping <?=sortIcon('DateLogined', $currentSort, $pager, $search)?></th>
                 <th>Games <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
-                <th class="icon"><?=sortIcon('TicketsFilled', $currentSort, $pager, $search, 'tags')?></th>
                 <th class="icon"><?=sortIcon('AdBlock', $currentSort, $pager, $search ,'exclamation-sign')?></th>
-                <th>Денег <?=sortIcon('Money', $currentSort, $pager, $search)?></th>
-                <th>Баллы <?=sortIcon('Points', $currentSort, $pager, $search)?></th>
+                <th>Баланс</th>
                 <th width="100">Options</th>
             </thead>
             <tbody>
@@ -74,17 +69,14 @@
                         </td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
+                            <?=($player->getNicName())?><?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?>
+                            <br>
                             <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                             </div>
-                        <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
-                            <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
-                            <?=($player->getNicName())?><?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?>
-                            </div>
-                        </td>
-        <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
+                        <td class="country"><?=$player->getCountry()?><br><?=$player->getLang()?></td>
                         <td class="<?=$player->getValid() ? "success" : "danger"?>"><? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
-                            <? endif ?><?=$player->getEmail()?>
+                            <div class="mult-trigger"><div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                            <? endif ?><?=$player->getEmail()?><? if($player->getCounters('Mult')>1) : ?></div><? endif ?>
                             <div class="right">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -107,14 +99,13 @@
                                 echo'</div>';
                             }?>
                             </div>
-                        </td>
-
-
-                        <td class="nobr<?=($player->getReferer()?' danger':'')?>">
+                            <br>
                             <?if($player->getReferer()) {?><div data-toggle="tooltip" data-placement="right" title="<?=$player->getReferer()?>" class=""><span class="label label-danger">!</span><?}?>
-                            <?=$player->getDateRegistered('d.m.Y H:i')?>
+                                <?=$player->getDateRegistered('d.m.Y H:i')?>
                                 <?if($player->getReferer()) {?></div><?}?>
                         </td>
+
+
                         <td <?=($player->getLastIP() || $player->getIP()?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>'" class="pointer nobr div-ips">
                             <? if($player->getCounters('Ip')>1) : ?>
                                 <div class="label label-danger label-ips"><?=$player->getCounters('Ip')?></div>
@@ -124,15 +115,20 @@
                             <div data-toggle="tooltip" data-placement="right" title="'.$player->getCookieId().'" >
                             <span class="label label-danger">'.$player->getCounters('CookieId').'</span></div>':($player->getCookieId()?'class="success">':'>'))?>
                         </td>
-                        <td <?=($player->getReferalId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getReferalId().'\';" class="pointer ':' class="')?><?=$player->getReferalId() ? "success" : "danger"?>">
-                            <?if($player->getCounters('Referal')>1) {?> <span class="label label-info"><?=$player->getCounters('Referal');?></span>
-                            <?}?>
-                            <?=$player->getReferalId() ? "#" . $player->getReferalId() : "&nbsp;"?></td>
+                        <td class="<?=$player->getReferalId() || $player->getInviterId() ? "success" : "danger"?>">
+                            <?if ($player->getReferalId()){?>
+                            <div onclick="location.href='?search[where]=Id&search[query]=<?=$player->getReferalId()?>';" class="pointer"><nobr>
+                                <span class="label label-info"><span class="glyphicon glyphicon-user" aria-hidden="true"></span><?if($player->getCounters('Referal')>1) {?><?=$player->getCounters('Referal');?> <?}?></span>&nbsp;<?=$player->getReferalId()?>
+                            </nobr></div><? } ?>
 
-                        <td <?=($player->getInviterId()?'onclick="location.href=\'?search[where]=Id&search[query]='.$player->getInviterId().'\';" class="pointer ':' class="')?><?=$player->getInviterId() ? "success" : "danger"?>">
-                            <?if($player->getCounters('Inviter')>1) {?> <span class="label label-info"><?=$player->getCounters('Inviter')?></span>
-                            <?}?>
-                            <?=$player->getInviterId() ? "#" . $player->getInviterId() : "&nbsp;"?></td>
+                            <?=$player->getReferalId() && $player->getInviterId() ? "<br>" : ""?>
+
+                            <?if ($player->getInviterId()){?>
+                            <div onclick="location.href='?search[where]=Id&search[query]=<?=$player->getInviterId()?>';" class="pointer"><nobr>
+                                <span class="label label-info"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><?if($player->getCounters('Inviter')>1) {?><?=$player->getCounters('Inviter');?> <?}?></span>&nbsp;<?=$player->getInviterId()?>
+                            </nobr></div><? } ?>
+                        </td>
+
                         <td class="logins-trigger pointer <?=($player->getDateLastLogin()?(($player->getDateLastLogin() < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>"  data-id="<?=$player->getId()?>">
                             <?=($player->getOnlineTime()?'<div class="datestamps nobr right">'.($player->getDateLastLogin('d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDateLastLogin('d.m.Y'),'',$player->getOnlineTime('d.m.Y H:i'))).'</div>':($player->getDateLastLogin()?'<div class="right">'.$player->getDateLastLogin('d.m.Y H:i').'</div>':''))?>
                         </td>
@@ -144,6 +140,10 @@
                                 <i class="fa fa-gift <?=($player->getGamesPlayed() ? '' : 'text-danger' )?>"></i><?=$player->getGamesPlayed()?>
                             </span>
                             <?}?>
+
+                            <? if ($player->isTicketsFilled()){?>
+                                <span class="tickets-trigger pointer" data-id="<?=$player->getId()?>"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i>&nbsp;<?=$player->isTicketsFilled()?></span>
+                            <? } ?>
 
                             <? if($player->getDates('QuickGame')){?>
                             <i class="fa fa-puzzle-piece <?=
@@ -178,9 +178,7 @@
                                 </span>
                             <?}?>
                         </td>
-                        <td class="<?=$player->isTicketsFilled() || $player->getGamesPlayed()?"tickets-trigger pointer ":''?>
-                            <?=$player->isTicketsFilled() ? 'success' : 'danger'?>" data-id="<?=$player->getId()?>"><?=$player->isTicketsFilled() ?: 'нет'?>
-                        </td>
+
                         <td>
                             <? if($player->getDateAdBlocked()) :?>
                             <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
@@ -188,8 +186,11 @@
                             <? endif ?>
                         </td>
 
-                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso')?></td>
-                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?></td>
+                        <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>">
+                            <?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?>
+                            <br>
+                            <?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?>&nbsp;<?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso')?>
+                        </td>
                         <td><div class="right nobr">
 
                             <button class="btn btn-xs btn-<?=($player->getCounters('Note')?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">

@@ -209,9 +209,8 @@ min-height: 17px;
 
 #money .label-danger{ position: absolute; border-radius: 20px; padding: 5px; min-width: 21px; right: -8px; top: -8px; }
 #money .types{position: absolute;top: 0;left: 50%;}
-#money .types .btn{float: left;}
+#money .types .btn{float: left;position: relative;margin-right: 8px;}
 #money h2 {position: relative;}
-#money .btn{position: relative;margin-right: 8px;}
 
 /* ONLINE + QUICK GAMES + ALLGAMES */
 .ogames#audio-modal li .fa {padding: 8px;}
