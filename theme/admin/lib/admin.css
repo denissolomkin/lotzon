@@ -14,9 +14,9 @@
 .users .sl-bk.Odnoklassniki {background-position:-105px 1px;}
 .pointer, .upload {cursor:pointer;}
 .pointer:hover {color:#008cba;}
-
+.tooltip.in{opacity: 1;}
 .date-registration {display: none;}
-.email-registration:hover .date-registration {display: block;}
+.email-registration:hover .date-registration {display: inline;}
 .hidden {display: none;}
 .red {color:red;}
 .nav .fa{
