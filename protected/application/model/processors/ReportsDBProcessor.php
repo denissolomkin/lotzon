@@ -101,14 +101,15 @@ class ReportsDBProcessor implements IProcessor
 
         $sql = "
         SELECT "
-            .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Month' ? "CONCAT(YEAR(FROM_UNIXTIME(DateRegistered)),' ', MONTHNAME(FROM_UNIXTIME(DateRegistered))) Month, " : '')
+            .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Month' ? "CONCAT(YEAR(FROM_UNIXTIME(Registration)),' ', MONTHNAME(FROM_UNIXTIME(Registration))) Month, " : '')
             .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Country' ? 'Country, ' : '').
         " COUNT( * ) `Quantity`
         FROM   `Players`
-        WHERE  `DateRegistered` > :from
-        AND    `DateRegistered` < :to
+        LEFT JOIN PlayerDates ON PlayerId = Id
+        WHERE  `Registration` > :from
+        AND    `Registration` < :to
         GROUP BY ".($args['GroupBy'] && $args['GroupBy']!=''?$args['GroupBy']:'Month,Country')."
-        ORDER BY ".($args['GroupBy']!='Country'?'`DateRegistered`,':'')."Quantity Desc";
+        ORDER BY ".($args['GroupBy']!='Country'?'`Registration`,':'')."Quantity Desc";
 
         try {
             $sth = DB::Connect()->prepare($sql);

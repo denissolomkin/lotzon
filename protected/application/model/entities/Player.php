@@ -18,7 +18,7 @@ class Player extends Entity
     const AVATAR_HEIGHT = 160;
 
     static $MASK = array(
-        'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Logined'),
+        'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
         'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','CookieId','Mult'));
 
     private $_id         = 0;
@@ -50,11 +50,6 @@ class Player extends Entity
     private $_ban             = false;
 
     private $_dates = array();
-    private $_dateRegistered = '';
-    private $_dateLastLogin  = '';
-    private $_dateLastNotice = '';
-    private $_dateLastChance = '';
-    private $_dateLastQuickGame = '';
     private $_dateAdBlocked  = '';
     private $_country        = '';
     private $_lang        = '';
@@ -73,7 +68,6 @@ class Player extends Entity
     private $_socialPostsCount = array();
 
     //private $_online     = 0;
-    private $_onlineTime = 0;
     private $_adBlock    = 0;
     private $_webSocket  = 0;
 
@@ -391,78 +385,6 @@ class Player extends Entity
         return $date;
     }
 
-    public function setDateLastQuickGame($date)
-    {
-        $this->_dateLastQuickGame = $date;
-
-        return $this;
-    }
-
-    public function getDateLastQuickGame($format = null)
-    {
-        $date = $this->_dateLastQuickGame;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_dateLastQuickGame);
-        }
-
-        return $date;
-    }
-
-    public function setDateLastChance($dateLastChance)
-    {
-        $this->_dateLastChance = $dateLastChance;
-
-        return $this;
-    }
-
-    public function getDateLastChance($format = null)
-    {
-        $date = $this->_dateLastChance;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_dateLastChance);
-        }
-
-        return $date;
-    }
-
-    public function setDateLastNotice($dateLastNotice)
-    {
-        $this->_dateLastNotice = $dateLastNotice;
-
-        return $this;
-    }
-
-    public function getDateLastNotice($format = null)
-    {
-        $date = $this->_dateLastNotice;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_dateLastNotice);
-        }
-
-        return $date;
-    }
-
-    public function setDateLastLogin($dateLastLogin)
-    {
-        $this->_dateLastLogin = $dateLastLogin;
-
-        return $this;
-    }
-
-    public function getDateLastLogin($format = null)
-    {
-        $date = $this->_dateLastLogin;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_dateLastLogin);
-        }
-
-        return $date;
-    }
-
     public function setLang($lang)
     {
 
@@ -620,35 +542,6 @@ class Player extends Entity
         return $this;
     }
 
-    public function setOnlineTime($time)
-    {
-        $this->_onlineTime  = $time;
-        return $this;
-    }
-
-    public function getOnlineTime($format = null)
-    {
-        $date = $this->_onlineTime;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_onlineTime);
-        }
-
-        return $date;
-    }
-/*
-    public function setOnline($online)
-    {
-        $this->_online = $online;
-
-        return $this;
-    }
-
-    public function isOnline()
-    {
-        return $this->_online;
-    }
-*/
     public function decrementInvitesCount()
     {
         $this->setInvitesCount($this->getInvitesCount() - 1);
@@ -1153,9 +1046,6 @@ class Player extends Entity
 
         $this->setDates($dates)
             ->setDateLastMoment($data['Moment'])
-            ->setDateLastQuickGame($data['QuickGame'])
-            ->setDateLastChance($data['ChanceGame'])
-            ->setOnlineTime($data['Ping'])
             ->setAdBlock($data['AdBlockLast'])
             ->setDateAdBlocked($data['AdBlocked'])
             ->setWebSocket($data['WSocket']);
@@ -1406,6 +1296,7 @@ class Player extends Entity
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
+            ->setDates('Registration',time())
             ->setReferer($session->get('REFERER'));
 
         parent::create();
@@ -1496,15 +1387,16 @@ class Player extends Entity
             setcookie(self::PLAYERID_COOKIE, $this->getId(), time() + self::AUTOLOGIN_COOKIE_TTL, '/');
 
         $session = new Session();
-        $session->set('QuickGameLastDate',($this->getDateLastLogin() < strtotime(date("Y-m-d"))? $this->getDateLastLogin() : time() ));
+        $session->set('QuickGameLastDate',($this->getDates('Login') < strtotime(date("Y-m-d"))? $this->getDates('Login') : time() ));
 
-        $this->setDateLastLogin(time())
+        $this->setDates('Login',time())
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
             ->updateIp(Common::getUserIp())
             ->payReferal()
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update()
+            ->updateLogin()
             ->writeLogin();
 
         $session->set(Player::IDENTITY, $this);
@@ -1587,13 +1479,14 @@ class Player extends Entity
         return $this;
     }
 
-    public function updateLastNotice()
+    public function updateNotice()
     {
-        $this->setDateLastNotice(time());
+        $this->setDates('Notice', time());
+
         $model = $this->getModelClass();
 
         try {
-            $model::instance()->updateLastNotice($this);
+            $model::instance()->updateNotice($this);
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
@@ -1601,8 +1494,7 @@ class Player extends Entity
 
     public function markOnline()
     {
-        $this//->setOnline(true)
-             ->setOnlineTime(time());
+        $this->setDates('Ping',time());
 
         $model = $this->getModelClass();
 
@@ -1630,13 +1522,8 @@ class Player extends Entity
                  ->setYandexMoney($data['YandexMoney'])
                  ->setWebMoney($data['WebMoney'])
                  ->setBirthday($data['Birthday'])
-                 ->setDateRegistered($data['DateRegistered'])
-                 ->setDateLastLogin($data['DateLogined'])
-                 ->setDateLastNotice($data['DateNoticed'])
-                 //->setDateLastChance($data['ChanceGame'])
+                 //->setDateLastNotice($data['DateNoticed'])
                  //->setDateLastMoment($data['Moment'])
-                 //->setOnline($data['Online'])
-                 //->setOnlineTime($data['OnlineTime'])
                  //->setAdBlock($data['AdBlock'])
                  //->setDateAdBlocked($data['DateAdBlocked'])
                  //->setWebSocket($data['WebSocket'])

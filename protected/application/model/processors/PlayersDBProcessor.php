@@ -6,16 +6,14 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `DateRegistered`, `DateLogined`, `Country`, `Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
-                VALUES (:email, :passwd, :salt, :dr, :dl, :cc, :cl, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
+                VALUES (:email, :passwd, :salt, :cc, :cl, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':email'    => $player->getEmail(),
                 ':passwd'   => $player->getPassword(),
                 ':salt'     => $player->getSalt(),
-                ':dr'       => time(),
-                ':dl'       => (int)$player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
                 ':cl'       => $player->getLang(),
                 ':vis'      => 1,
@@ -35,12 +33,13 @@ class PlayersDBProcessor implements IProcessor
 
         $player->setId(DB::Connect()->lastInsertId());
 
-        $sql = "INSERT INTO `PlayerDates` (`PlayerId`,`Logined`) VALUES (:id, :dl)";
+        $sql = "INSERT INTO `PlayerDates` (`PlayerId`,`Login`,`Registration`) VALUES (:id, :dl, :dr)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'       => (int)$player->getId(),
-                ':dl'       => (int)$player->getDateLastLogin(),
+                ':dl'       => (int)$player->getDates('Login'),
+                ':dr'       => (int)$player->getDates('Registration'),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
@@ -190,7 +189,7 @@ class PlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
         $sql = "UPDATE `Players` SET
-                    `DateLogined` = :dl, `Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
+                    `Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Qiwi` = :qiwi, `YandexMoney` = :ym, `WebMoney` = :wm,
                     `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
@@ -200,7 +199,6 @@ class PlayersDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':dl'       => $player->getDateLastLogin(),
                 ':cc'       => $player->getCountry(),
                 ':lang'     => $player->getLang(),
                 ':nic'      => $player->getNicname(),
@@ -440,37 +438,6 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function getPlayersCount($search=null)
-    {
-        $sql = "SELECT COUNT(*) as `counter` FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id";
-
-        if (is_array($search) AND $search['query']) {
-            if($search['where'] AND $search['where']=='Id')
-                $sql .= ' WHERE Id = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='CookieId')
-                $sql .= ' WHERE CookieId IN ('.$search['query'].')';
-            elseif($search['where'] AND $search['where']=='ReferalId')
-                $sql .= ' WHERE ReferalId = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='Ping')
-                $sql .= ' WHERE `PlayerDates`.Ping > '.(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300));
-            elseif($search['where'] AND $search['where']=='Ip')
-                $sql .= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
-            elseif($search['where'])
-                $sql .= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
-            else
-                $sql .= ' WHERE '.(is_numeric($search['query'])?'`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
-        }
-
-
-        try {
-            $res = DB::Connect()->query($sql);
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        return $res->fetchColumn(0);
-    }
-
     public function initCounters(Player $player)
     {
 
@@ -511,7 +478,10 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle
                 FROM `Players`
-                WHERE `Players`.Id = :id";
+                LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId = Id
+                LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
+                WHERE `Players`.Id = :id
+                GROUP BY `Players`.Id";
 
 
         try {
@@ -544,23 +514,64 @@ class PlayersDBProcessor implements IProcessor
         }
     }
 
+    public function getPlayersCount($search=null)
+    {
+        if (is_array($search) AND $search['query']) {
+            if($search['where']) {
+                if ($search['where'] == 'Id')
+                    $search = ' WHERE `Players`.Id = ' . $search['query'];
+                elseif ($search['where'] == 'CookieId')
+                    //$search = ' WHERE `PlayerCookies`.CookieId = ' . $search['query'];
+                    $search  = 'JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = `Players`.Id AND `PlayerCookies`.CookieId IN(SELECT CookieId FROM PlayerCookies WHERE PlayerId='.$search['query'].')';
+                elseif ($search['where'] == 'ReferalId')
+                    $search = ' WHERE `Players`.ReferalId = ' . $search['query'];
+                elseif ($search['where'] == 'InviterId')
+                    $search = ' WHERE `Players`.InviterId = ' . $search['query'];
+                elseif ($search['where'] == 'Ping')
+                    $search = ' WHERE `PlayerDates`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
+                elseif ($search['where'] == 'Ip')
+                    $search  = 'JOIN `PlayerIps` ON `PlayerIps`.PlayerId = `Players`.Id AND `PlayerIps`.Ip IN(SELECT Ip FROM PlayerIps WHERE PlayerId='.$search['query'].')';
+                //$search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
+                else
+                    $search = ' WHERE ' . $search['where'] . ' LIKE "%' . $search['query'] . '%"';
+            } else
+                $search= ' WHERE '.(is_numeric($search['query'])?'`Players`.`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
+        }
+
+        $sql = "SELECT COUNT(*) as `counter` FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id {$search}";
+
+
+        try {
+            $res = DB::Connect()->query($sql);
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $res->fetchColumn(0);
+    }
+
     public function getList($limit = 0, $offset = 0, array $sort, $search=null)
     {
 
         if (is_array($search) AND $search['query']) {
-            if($search['where'] AND $search['where']=='Id')
-                $search = ' WHERE `Players`.Id = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='CookieId')
-                $search = ' WHERE `Players`.CookieId = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='ReferalId')
-                $search = ' WHERE `Players`.ReferalId = '.$search['query'];
-            elseif($search['where'] AND $search['where']=='Ping')
-                $search = ' WHERE `PlayerDates`.Ping > '.(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300));
-            elseif($search['where'] AND $search['where']=='Ip')
-                $search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
-            elseif($search['where'])
-                $search= ' WHERE '.$search['where'].' LIKE "%'.$search['query'].'%"';
-            else
+            if($search['where']) {
+                if ($search['where'] == 'Id')
+                    $search = ' WHERE `Players`.Id = ' . $search['query'];
+                elseif ($search['where'] == 'CookieId')
+                    //$search = ' WHERE `PlayerCookies`.CookieId = ' . $search['query'];
+                    $search  = 'JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = `Players`.Id AND `PlayerCookies`.CookieId IN(SELECT CookieId FROM PlayerCookies WHERE PlayerId='.$search['query'].')';
+                elseif ($search['where'] == 'ReferalId')
+                    $search = ' WHERE `Players`.ReferalId = ' . $search['query'];
+                elseif ($search['where'] == 'InviterId')
+                    $search = ' WHERE `Players`.InviterId = ' . $search['query'];
+                elseif ($search['where'] == 'Ping')
+                    $search = ' WHERE `PlayerDates`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
+                elseif ($search['where'] == 'Ip')
+                    $search  = 'JOIN `PlayerIps` ON `PlayerIps`.PlayerId = `Players`.Id AND `PlayerIps`.Ip IN(SELECT Ip FROM PlayerIps WHERE PlayerId='.$search['query'].')';
+                //$search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
+                else
+                    $search = ' WHERE ' . $search['where'] . ' LIKE "%' . $search['query'] . '%"';
+            } else
                 $search= ' WHERE '.(is_numeric($search['query'])?'`Players`.`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
         }
 
@@ -605,28 +616,10 @@ class PlayersDBProcessor implements IProcessor
                 {$search}
                 GROUP BY `Players`.`Id`";
 
-        $sql = "SELECT `Players`.*,`PlayerDates`.*,
-                (SELECT COUNT(Id) FROM `Players` p WHERE (p.LastIp=`Players` . `LastIp` AND p.LastIp!='') OR (p.Ip=`Players` . `LastIp` AND p.Ip!='') OR (p.LastIp=`Players` . `Ip` AND p.LastIp!='') OR (p.Ip=`Players` . `Ip` AND p.Ip!='')) AS CounterIp,
-                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
-                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
-                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) Referal,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CounterCookieId,
-                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
-                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
-                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
-                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
-                (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
-                (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
-                (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
-                (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
-                FROM `Players`
-                LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Players`.`Id`
-                {$search}
-                GROUP BY `Players`.`Id`";
+
+        $sql = "SELECT Id From Players
+                Left join PlayerDates ON PlayerDates.PlayerId=Id
+                {$search}";
 
         if (count($sort)) {
             if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
@@ -638,8 +631,57 @@ class PlayersDBProcessor implements IProcessor
         if ($limit) {
             $sql .= ' LIMIT ' . (int)$limit;
         }
+
         if ($offset) {
             $sql .= ' OFFSET ' . (int)$offset;
+        }
+
+        $sql ="SELECT GROUP_CONCAT(Id) FROM ({$sql}) p";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute();
+        } catch (PDOException $e) {echo $e->getMessage();
+            throw new ModelException("Error processing storage query", 500);
+        }
+        $ids = $res->fetchColumn(0);
+
+
+
+        $sql = "SELECT `Players`.*,`PlayerDates`.*,
+
+                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
+                (SELECT COUNT(DISTINCT(i.PlayerId))) CounterIp,
+                (SELECT COUNT(DISTINCT(c.PlayerId))) CounterCookieId,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) Referal,
+                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
+                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
+                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
+                (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
+                (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
+                (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
+                (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
+                FROM `Players`
+                LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Id`
+                LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId =  `Players`.Id
+                LEFT JOIN `PlayerIps` i ON i.Ip IN (`PlayerIps`.Ip)
+                LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
+                LEFT JOIN `PlayerCookies` c ON c.CookieId IN (`PlayerCookies`.CookieId)
+                WHERE Id IN ({$ids})
+                GROUP BY `Players`.`Id`";
+
+
+        if (count($sort)) {
+            if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
+                $sql .= ' ORDER BY `' . $sort['field'] . '` ' . $sort['direction'];
+            }
+
         }
 
         try {
@@ -658,6 +700,31 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $players;
+    }
+
+    public function getMults($playerId)
+    {
+        $sql = "SELECT p.Id, p.Nicname, p.Phone, p.Qiwi, p.WebMoney, p.YandexMoney
+                FROM `Players`
+                LEFT JOIN `Players` p ON p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney
+                WHERE `Players`.Id = :pid
+                group by p.Id";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $mults = array();
+        foreach ($res->fetchAll() as $mult) {
+            $mults[] = $mult;
+        }
+
+        return $mults;
     }
 
     public function getLogins($playerId)
@@ -1033,14 +1100,32 @@ class PlayersDBProcessor implements IProcessor
         return $sth->rowCount();
     }
 
-    public function updateLastNotice(Entity $player)
+    public function updateLogin(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `DateNoticed` = :date WHERE  `Id` = :id";
+        $sql = "UPDATE `PlayerDates` SET `Login` = :date WHERE  `PlayerId` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':date'  => $player->getDateLastNotice(),
+                ':date'  => $player->getDates('Login'),
+                ':id'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+    }
+
+    public function updateNotice(Entity $player)
+    {
+
+        $sql = "UPDATE `PlayerDates` SET `Notice` = :date WHERE  `PlayerId` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':date'  => $player->getDates('Notice'),
                 ':id'  => $player->getId(),
             ));
         } catch (PDOException $e) {
@@ -1052,20 +1137,6 @@ class PlayersDBProcessor implements IProcessor
 
     public function markOnline(Entity $player)
     {
-        /*
-        $sql = "UPDATE `Players` SET `DateAdBlocked` = :dtadb, `AdBlock` = :adb, `WebSocket` = :ws, `Online` = :onl, `OnlineTime` = :onlt WHERE `Id` = :plid";
-
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':onl'   => (int)$player->isOnline(),
-                ':onlt'  => (int)$player->getOnlineTime(),
-                ':adb'   => (int)$player->getAdBlock(),
-                ':dtadb' => (int)$player->getDateAdBlocked(),
-                ':ws'    => ($player->getWebSocket()?time():0),
-                ':plid'  => $player->getId(),
-            ));
-        */
 
         $sql = "UPDATE `PlayerDates`
                 SET `AdBlockLast` = :adbl,
@@ -1077,7 +1148,7 @@ class PlayersDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':onl'   => (int)$player->getOnlineTime(),
+                ':onl'   => (int)$player->getDates('Ping'),
                 ':adbl'  => (int)$player->getAdBlock(),
                 ':adb'   => (int)$player->getDateAdBlocked(),
                 ':ws'    => ($player->getWebSocket()?time():0),

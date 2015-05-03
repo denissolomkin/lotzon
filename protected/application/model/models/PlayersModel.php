@@ -69,6 +69,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getLogins($playerId);
     }
 
+    public function getMults($playerId)
+    {
+        return $this->getProcessor()->getMults($playerId);
+    }
+
     public function getReviews($playerId)
     {
         return $this->getProcessor()->getReviews($playerId);
@@ -149,7 +154,6 @@ class PlayersModel extends Model
         return $this->getProcessor()->writeLogin($player);
     }
 
-
     public function reportTrouble(Entity $player, $trouble)
     {
         return $this->getProcessor()->reportTrouble($player, $trouble);
@@ -190,9 +194,14 @@ class PlayersModel extends Model
         return $this->getProcessor()->updateIp($player, $ip);
     }
 
-    public function updateLastNotice(Entity $player)
+    public function updateNotice(Entity $player)
     {
-        return $this->getProcessor()->updateLastNotice($player);
+        return $this->getProcessor()->updateNotice($player);
+    }
+
+    public function updateLogin(Entity $player)
+    {
+        return $this->getProcessor()->updateLogin($player);
     }
 
     public function markOnline(Entity $player)

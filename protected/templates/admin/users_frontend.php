@@ -112,6 +112,33 @@
     </div>
 </div>
 
+<div class="modal fade users" id="mults-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Mults information</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Id</th>
+                    <th>Nic</th>
+                    <th>Phone</th>
+                    <th>Qiwi</th>
+                    <th>WebMoney</th>
+                    <th>YandexMoney</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade users" id="tickets-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -694,10 +721,7 @@ $('.filter-trigger').on('click', function() {
 
 /* TICKETS BLOCK */
 $('.tickets-trigger').on('click', function() {
-
-    var currency=($(this).parent().find('td.transactions-trigger').first().text());
-    currency = currency.split(' ');
-    currency = currency[1];
+    var currency=($(this).parents('tr').find('td.transactions-trigger span').text());
     $.ajax({
         url: "/private/users/tickets/" + $(this).data('id'),
         method: 'GET',
@@ -740,6 +764,44 @@ $('.tickets-trigger').on('click', function() {
     });
 });
 /* END TICKETS BLOCK */
+
+/* MULTS BLOCK */
+$('.mults-trigger').on('click', function() {
+
+    $.ajax({
+        url: "/private/users/mults/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = ''
+                $(data.data.mults).each(function(id, login) {
+
+                    tdata += '<tr>' +
+                    '<td>'+login.Id+'</td>' +
+                    '<td>'+login.Nicname+'</td>' +
+                    '<td>'+(login.Phone?login.Phone:'')+'</td>' +
+                    '<td>'+(login.Qiwi?login.Qiwi:'')+'</td>' +
+                    '<td>'+(login.WebMoney?login.WebMoney:'')+'</td>' +
+                    '<td>'+(login.YandexMoney?login.YandexMoney:'')+'</td>' +
+                    '</tr>'
+                });
+                $("#mults-holder").find('tbody').html(tdata);
+                $("#mults-holder").modal();
+                $("#mults-holder").find('.cls').on('click', function() {
+                    $("#mults-holder").modal('hide');
+                })
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+/* END MULTS BLOCK */
 
 /* LOGINS BLOCK */
 $('.logins-trigger').on('click', function() {

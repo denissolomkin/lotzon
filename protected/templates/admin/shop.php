@@ -42,8 +42,9 @@
                 <img src="/filestorage/shop/<?=$item->getImage()?>" data-image="<?=$item->getImage()?>" class="upload" alt="...">
                 <div class="caption clearfix" data-title="<?=$item->getTitle()?>" data-price="<?=$item->getPrice()?>" data-quantity="<?=$item->getQuantity()?>" data-countries="<?=($item->getCountries() ? implode(" ",$item->getCountries()) : null)?>">
                     <h4><?=$item->getTitle()?></h4>
-                    <div class="btn-group pull-left"> <span><?=$item->getPrice()?>/<?=(is_numeric($item->getQuantity()) ? $item->getQuantity() : "&infin;")?>
-                        <?=($item->getCountries() ? "</br><span class='label label-primary'>".implode("</span><span class='label label-primary'>",$item->getCountries())."</span>" : null)?></div>
+                    <div class="btn-group pull-left"> <span><?=$item->getPrice()?> / <?=(is_numeric($item->getQuantity()) ? $item->getQuantity().' шт' : "&infin;")?>
+                        <?=($item->getCountries() ? "</br><span class='label label-primary'>".implode("</span><span class='label label-primary'>",$item->getCountries())."</span>" : null)?>
+                    <?=(0?' / грн ':'')?></div>
                     <div class="btn-group pull-right">
                         <button class="btn btn-warning btn-sm item-edit"><i class="glyphicon glyphicon-edit"></i></button>
                         <!-- button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-eye-close"></i></button -->
@@ -73,18 +74,25 @@
             <div class="caption">
                 <input type="text" name="title" class="form-control input-sm" placeholder="Название товара" value="" />
                 <div class="form-inline" style="margin-top:10px;">
-                    <input style="width:40%" type="text" name="price" class="form-control input-sm" value="" placeholder="Цена" /> /
-                    <input style="width:25%" type="text" name="quantity" class="form-control input-sm" value="" placeholder="К-во" />
+                    <input style="width:30%" type="text" name="price" class="form-control input-sm" value="" placeholder="Баллы" /> /
+                    <input style="width:20%" type="text" name="quantity" class="form-control input-sm" value="" placeholder="К-во" /> /
+                    <input style="width:20%" type="text" name="sum" class="form-control input-sm" value="" placeholder="Грн" />
                     <button class="btn btn-sm btn-success pull-right save"><i class="glyphicon glyphicon-ok"></i>
                 </div>
 
                 <div class="form-inline" style="margin-top:10px;">
-                    <button class="btn btn-md btn-default" onclick="$('#slct-cntrs').show();$(this).hide();"><i class="glyphicon glyphicon-globe"></i> Страны</button>
-                <select style="width:100%;display: none;" id="slct-cntrs" name="countries" size="3" multiple="multiple" class="form-control input-sm" value="" placeholder="Страны" />
+                    <button style="width: 48%;" class="btn btn-md btn-default" onclick="$('#slct-cntrs').show();$(this).hide();"><i class="glyphicon glyphicon-globe"></i> Страны</button>
+                <select style="width:48%;display: none;" id="slct-cntrs" name="countries" size="3" multiple="multiple" class="form-control input-sm" value="" placeholder="Страны" />
                     <? foreach ($supportedCountries as $country) { ?>
                         <option value="<?=$country?>"><?=$country?></option>
                     <? } ?>
                 </select>
+
+                    <select style="width:50%; height: auto;" name="countries" size="3" class="form-control input-sm" value="" placeholder="Тип" />
+                    <? foreach (array('webmoney','yandex','private24','qiwi','phone','item') as $type) { ?>
+                        <option value="<?=$type?>"><?=$type?></option>
+                    <? } ?>
+                    </select>
                 </div>
             </div>            
         </div>

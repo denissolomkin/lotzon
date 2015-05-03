@@ -139,10 +139,10 @@ class NoticesDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':dl'  => $player->getDateLastLogin(),
-                ':do'  => $player->getOnlineTime(),
+                ':dl'  => $player->getDates('Login'),
+                ':do'  => $player->getDates('Ping'),
                 ':ml' => $player->getGamesPlayed(),
-                ':dr' => $player->getDateRegistered(),
+                ':dr' => $player->getDates('Registration'),
                 ':cntr' => $player->getCountry(),
                 ':id'  => $player->getId(),
             ));
@@ -166,8 +166,8 @@ class NoticesDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':ml' => $player->getGamesPlayed(),
-                ':dn' => $player->getDateLastNotice(),
-                ':dr' => $player->getDateRegistered(),
+                ':dn' => $player->getDates('Notice'),
+                ':dr' => $player->getDates('Registration'),
                 ':cntr' => $player->getCountry(),
                 ':id' => $player->getId()
             ));

@@ -46,7 +46,7 @@
 
                             </div>
                             <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
-                                <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
+                                <?=($player->getDates('Ping')>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
                                 <?=$player->getCountry()?>
                             </div>
                             <div class="right games-holder">
@@ -93,7 +93,7 @@
                         </td>
                         <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>">
                             <? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                                <div class="label label-danger mults-trigger" data-id="<?=$player->getId()?>"><?=$player->getCounters('Mult')?></div>
                             <? endif ?>
                             <?=$player->getEmail()?>
                             <div class="social-holder">
@@ -122,7 +122,7 @@
 
                             <div class="left">
                                 <? if($player->getCounters()['Ip']>1):?>
-                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
+                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getId():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>
                             <? endif ?>
@@ -134,7 +134,7 @@
                                 <? endif ?>
 
                                 <? if(($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1) :?>
-                                    <button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getCookieId();?>')">
+                                    <button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getId();?>')">
                                         <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['CookieId']>1?$player->getCounters()['CookieId']:'';?>
                                     </button>
                                 <? endif ?>
@@ -146,8 +146,6 @@
                                 <? endif ?>
 
                             </div >
-
-
 
                             <div class="right">
 
@@ -264,7 +262,7 @@
 
                             </div>
                             <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
-                                <?=($player->getOnlineTime()>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
+                                <?=($player->getDates('Ping')>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>':'');?>
                                 <?=$player->getCountry()?>
                             </div>
                             <div class="games-holder right">
@@ -312,7 +310,7 @@
                         </td>
                         <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>">
                             <? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                                <div class="label label-danger mults-trigger" data-id="<?=$player->getId()?>"><?=$player->getCounters('Mult')?></div>
                             <? endif ?>
                             <?=$player->getEmail()?>
                             <div class="social-holder">
@@ -337,26 +335,24 @@
                                 echo'</div>';
                             }?>
                             </div>
+
                             <br>
-                      <!--  <span <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');" class="pointer nobr <?=($player->getLastIP()?'warning':'')?>">
-                        <?if($player->getCounters()['Ip']>1) {?>
-                        <span class="label label-danger"><?=$player->getCounters()['Ip']?></span>
-                        <?}?><?=$player->getIP()?></span> -->
 
                             <div class="left">
-                                <? if($player->getCounters()['Ip']>1): ?>
-                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getIP().($player->getLastIP() && $player->getIP()?',':'').$player->getLastIP():'')?>');">
+                                <? if($player->getCounters()['Ip']>1):?>
+                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getId():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>
-                                <? endif ?>
+                            <? endif ?>
 
-                                <? if ($player->getDateAdBlocked()):
-                                    ?><button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
+                                <? if ($player->getDateAdBlocked()):?>
+                                    <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters()['AdBlock']?:'')?>
                                     </button>
                                 <? endif ?>
 
-                                <? if(($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1) :?><button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getCookieId();?>')">
+                                <? if(($player->getCookieId() && $player->getCookieId()!=$player->getId()) || $player->getCounters()['CookieId']>1) :?>
+                                    <button class="btn btn-xs btn-danger" onclick="window.open('users?search[where]=CookieId&search[query]=<?=$player->getId();?>')">
                                         <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><?=$player->getCounters()['CookieId']>1?$player->getCounters()['CookieId']:'';?>
                                     </button>
                                 <? endif ?>
@@ -368,7 +364,6 @@
                                 <? endif ?>
 
                             </div >
-
 
 
                             <div class="right">
