@@ -288,10 +288,10 @@ article .wings {}
 .prizes .pz-cg {list-style:none;margin:0 0px 0 40px;padding:0;overflow:hidden;}
 .prizes .pz-cg .pz-cg_li {width:210px;float:left;margin:0 20px 40px 0;position:relative;cursor:pointer;}
 .prizes .pz-cg .pz-cg_li.pz-end {cursor:default;}
-.prizes .pz-cg .pz-cg_li .pz-lim {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize-limit.png") no-repeat 0 0;}
+.prizes .pz-cg .pz-cg_li .pz-lim {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize.png") no-repeat 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-lim > span {display:block;font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:14px 9px 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-lim > b {display:block;font:20px/1 Handbook-bold;color:#000;text-transform:uppercase;margin:20px 9px 0 0;}
-.prizes .pz-cg .pz-cg_li .pz-end {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize-limit.png") no-repeat 0 -210px;}
+.prizes .pz-cg .pz-cg_li .pz-end {width:210px;height:210px;position:absolute;top:0;right:0;text-align:right;background:transparent url("../img/bg-prize.png") no-repeat 0 -210px;}
 .prizes .pz-cg .pz-cg_li .pz-end > span {display:block;font:20px/1 Handbook-bold;color:white;text-transform:uppercase;margin:14px 9px 0 0;}
 .prizes .pz-cg .pz-cg_li .pz-end > b {display:block;font:20px/1 Handbook-regular;color:white;margin:20px 9px 0 0;}
 .prizes .pz-cg .pz-cg_li .im-ph {height:210px;}
