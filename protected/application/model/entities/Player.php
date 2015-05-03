@@ -1097,6 +1097,21 @@ class Player extends Entity
         return $this;
     }
 
+
+    public function updateLogin()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateLogin($this);
+        } catch (ModelException $e) {
+            throw new EntityException($e->getMessage(), $e->getCode());
+
+        }
+
+        return $this;
+    }
+
     public function updateIp($ip)
     {
 
