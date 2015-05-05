@@ -483,13 +483,38 @@ class PlayersDBProcessor implements IProcessor
                 WHERE `Players`.Id = :id
                 GROUP BY `Players`.Id";
 
+        $sql = "SELECT `Players`.*,
+                (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
+                (SELECT COUNT(DISTINCT(i.PlayerId))) CounterIp,
+                (SELECT COUNT(DISTINCT(c.PlayerId))) CounterCookieId,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId` AND p.`ReferalId`>0) Referal,
+                (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
+                (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
+                (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
+                (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
+                (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
+                (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
+                (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
+                (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
+                FROM `Players`
+                LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Id`
+                LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId =  `Players`.Id
+                LEFT JOIN `PlayerIps` i ON i.Ip IN (`PlayerIps`.Ip)
+                LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
+                LEFT JOIN `PlayerCookies` c ON c.CookieId IN (`PlayerCookies`.CookieId)
+                WHERE `Players`.Id = :id
+                GROUP BY `Players`.`Id`";
+
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':id'    => $player->getId(),
-                ':ip'    => $player->getIP(),
-                ':lip'    => $player->getLastIP()
             ));
             return $sth->fetch();
         } catch (PDOException $e) {echo $e->getMessage();
@@ -538,7 +563,9 @@ class PlayersDBProcessor implements IProcessor
                 $search= ' WHERE '.(is_numeric($search['query'])?'`Players`.`Id`='.$search['query'].' OR ':'').'CONCAT(`Surname`, `Name`) LIKE "%'.$search['query'].'%" OR `NicName` LIKE "%'.$search['query'].'%" OR `Email` LIKE "%' . $search['query'].'%"';
         }
 
-        $sql = "SELECT COUNT(*) as `counter` FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id {$search}";
+        $sql = "SELECT COUNT(DISTINCT(Id)) as `counter`
+                FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id
+                {$search}";
 
 
         try {
@@ -619,7 +646,8 @@ class PlayersDBProcessor implements IProcessor
 
         $sql = "SELECT Id From Players
                 Left join PlayerDates ON PlayerDates.PlayerId=Id
-                {$search}";
+                {$search}
+                GROUP BY Id";
 
         if (count($sort)) {
             if (in_array(strtolower($sort['direction']), array('asc', 'desc'))) {
