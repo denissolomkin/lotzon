@@ -1638,7 +1638,7 @@ function showWinPopup(data)
 
     $("#game-won").find('.g-oc-b').html(lotteryHtml);
     $("#game-won").find('.plPointHolder').text(wonPoints);
-    $("#game-won").find('.plMoneyHolder').text(wonMoney);
+    $("#game-won").find('.plMoneyHolder').text((Math.round((wonMoney)*100)/100));
 
     return false;
 
