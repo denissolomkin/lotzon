@@ -110,6 +110,31 @@ class ReviewsDBProcessor implements IProcessor
     }
 
 
+    public function getReview($id)
+    {
+            $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
+                FROM `PlayerReviews`
+                LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
+                WHERE `PlayerReviews`.Id = :id OR `PlayerReviews`.ReviewId = :id
+                ORDER BY `Id` ";
+
+            try {
+                $sth = DB::Connect()->prepare($sql);
+                $sth->execute(array(':id' => $id));
+            } catch (PDOExeption $e) {
+                throw new ModelException("Unable to proccess storage query", 500);
+            }
+
+
+        $reviews = array();
+        foreach ($sth->fetchAll() as $reviewData) {
+            $reviewData['Date']=date('d.m.Y H:i:s', $reviewData['Date']);
+            $reviews[] = $reviewData;
+        }
+
+        return $reviews;
+    }
 
     public function getList($status=1, $limit = null, $offset = null, $ignore = false)
     {

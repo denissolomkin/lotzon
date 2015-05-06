@@ -23,6 +23,10 @@ class ReviewsModel extends Model
         return $this->getProcessor()->getList($status, $limit, $offset, $ignore);
     }
 
+    public function getReview($id) {
+        return $this->getProcessor()->getReview($id);
+    }
+
     public function imageExists($image) {
         return $this->getProcessor()->imageExists($image);
     }

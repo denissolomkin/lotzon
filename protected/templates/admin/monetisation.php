@@ -93,9 +93,8 @@
                         </td>
                         <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>">
                             <? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger mults-trigger" data-id="<?=$player->getId()?>"><?=$player->getCounters('Mult')?></div>
-                            <? endif ?>
-                            <?=$player->getEmail()?>
+                                <div class="mults-trigger left pointer" data-id="<?=$player->getId()?>"><div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                            <? endif ?><?=$player->getEmail()?><? if($player->getCounters('Mult')>1) : ?></div><? endif ?>
                             <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -310,9 +309,8 @@
                         </td>
                         <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>">
                             <? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger mults-trigger" data-id="<?=$player->getId()?>"><?=$player->getCounters('Mult')?></div>
-                            <? endif ?>
-                            <?=$player->getEmail()?>
+                                <div class="mults-trigger left pointer" data-id="<?=$player->getId()?>"><div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                            <? endif ?><?=$player->getEmail()?><? if($player->getCounters('Mult')>1) : ?></div><? endif ?>
                             <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {

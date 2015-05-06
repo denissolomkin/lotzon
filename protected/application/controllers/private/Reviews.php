@@ -56,6 +56,29 @@ class Reviews extends PrivateArea
 
     }
 
+    public function listAction($id)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'reviews' => ReviewsModel::instance()->getReview($id),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
     public function statusAction($id)
     {
             $review = new Review();

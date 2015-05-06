@@ -167,6 +167,7 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\Reviews:index',
         'post' => 'controllers\admin\Reviews:save',
     ),
+    '/private/reviews/list/:id' => 'controllers\admin\Reviews:list',
     '/private/reviews/status/:id' => 'controllers\admin\Reviews:status',
     '/private/reviews/delete/:id' => 'controllers\admin\Reviews:delete',
 

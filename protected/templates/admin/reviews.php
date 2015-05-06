@@ -91,9 +91,8 @@
                         </td>
                         <td class="contact-information <?=$player->getValid() ? "success" : "danger"?>">
                             <? if($player->getCounters('Mult')>1) : ?>
-                                <div class="label label-danger mults-trigger" data-id="<?=$player->getId()?>"><?=$player->getCounters('Mult')?></div>
-                            <? endif ?>
-                            <?=$player->getEmail()?>
+                                <div class="mults-trigger left pointer" data-id="<?=$player->getId()?>"><div class="label label-danger label-mult"><?=$player->getCounters('Mult')?></div>
+                            <? endif ?><?=$player->getEmail()?><? if($player->getCounters('Mult')>1) : ?></div><? endif ?>
                             <div class="social-holder">
                             <?foreach($player->getAdditionalData() as $provider=>$info)
                             {
@@ -174,8 +173,6 @@
                                     </button>
                                 <? endif ?>
 
-                                <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
                                 <? if ($player->getCounters()['Log']>0): ?>
                                     <button class="btn btn-xs btn-<?=($player->getCounters()['Log']>1?'danger':(($player->getCounters()['Log']==1 AND $player->getValid())?'success':'warning'))?> logs-trigger" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters()['Log']>1?$player->getCounters()['Log']:''?>
@@ -185,7 +182,7 @@
                             </div>
 
                         </td>
-                        <td class="text"><?=$review->getReviewId()?'<i class="fa fa-reply"></i> ':''?><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
+                        <td class="text"><?=$review->getReviewId()?'<i data-id="'.$review->getReviewId().'" class="fa fa-reply pointer replies-trigger"></i> ':''?><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
                         <td>
                             <button class="btn btn-md btn-primary edit-trigger"><i class="glyphicon glyphicon-edit"></i></button>
                             <button class="btn btn-md btn-warning status-trigger<?=($status==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
@@ -307,6 +304,39 @@
 
 <script>
 
+
+    $('.replies-trigger').on('click', function() {
+
+        $.ajax({
+            url: "/private/reviews/list/" + $(this).data('id'),
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    var tdata = '';
+                    $(data.data.reviews).each(function(id, tr) {
+                        tdata += '<tr class="'+(tr.Status==0?'warning':tr.Status==1?'success':'danger')+'">' +
+                        '<td>'+tr.Date+'</td>' +
+                        '<td><i class="fa fa-user"></i> '+tr.PlayerName+'<br>'+(tr.ReviewId?'<i class="fa fa-reply"></i> ':'')+tr.Text+'</td>' +
+                        '<td>'+(tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')+'</td>'
+                    });
+                    $("#reviews-holder").find('tbody').html(tdata);
+
+
+                    $("#reviews-holder").modal();
+                    $("#reviews-holder").find('.cls').on('click', function() {
+                        $("#reviews-holder").modal('hide');
+                    })
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
+    });
 
     $('.status-trigger').on('click', function() {
         location.href = '/private/reviews/status/' + $(this).data('id') + '?status=<?=$status?>&setstatus=' + $(this).data('status');

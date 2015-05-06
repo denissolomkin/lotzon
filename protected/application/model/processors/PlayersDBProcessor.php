@@ -672,8 +672,7 @@ class PlayersDBProcessor implements IProcessor
         } catch (PDOException $e) {echo $e->getMessage();
             throw new ModelException("Error processing storage query", 500);
         }
-        $ids = $res->fetchColumn(0);
-
+        $ids = $res->fetchColumn(0)?:0;
 
 
         $sql = "SELECT `Players`.*,`PlayerDates`.*,
