@@ -318,7 +318,7 @@
                     $(data.data.reviews).each(function(id, tr) {
                         tdata += '<tr class="'+(tr.Status==0?'warning':tr.Status==1?'success':'danger')+'">' +
                         '<td>'+tr.Date+'</td>' +
-                        '<td><i class="fa fa-user"></i> '+tr.PlayerName+'<br>'+(tr.ReviewId?'<i class="fa fa-reply"></i> ':'')+tr.Text+'</td>' +
+                        '<td> <div onclick="window.open(\'/private/users?search[where]=Id&search[query]='+tr.PlayerId+'\')" class="pointer"><i class="fa fa-user"></i> '+tr.PlayerName+'</div>'+tr.Text+'</td>' +
                         '<td>'+(tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')+'</td>'
                     });
                     $("#reviews-holder").find('tbody').html(tdata);

@@ -122,7 +122,7 @@
                 <table class="table table-striped">
                     <thead>
                     <th>Id</th>
-                    <th>Nic</th>
+                    <th>Player</th>
                     <th>Phone</th>
                     <th>Qiwi</th>
                     <th>WebMoney</th>
