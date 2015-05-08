@@ -1303,8 +1303,6 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                 if(!onlineGame.winner) {
 
-                    updateTimeOut(onlineGame.timeout);
-
                     $.each(onlineGame.players, function (index, value) {
 
                         if (index == onlineGame.beater)
@@ -1318,7 +1316,10 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                             if($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 ||
                                 ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 && onlineGame.beater==index)){
-                                if($('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index +' .gm-pr .pr-ph-bk .timer-r').css('-webkit-animation-duration')!=onlineGame.timeout){
+                                console.log($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
+
+                                if($($('#tm').countdown('getTimes')).get(-1) != onlineGame.timeout || !$('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length){
+                                    console.log('remove');
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('-webkit-animation-duration',onlineGame.timeout+'s');
                                 }
@@ -1353,6 +1354,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                     });
 
+                    updateTimeOut(onlineGame.timeout);
 
                 } else {
 

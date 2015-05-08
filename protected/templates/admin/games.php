@@ -79,13 +79,17 @@
                 </div>
                 <ul>
                     <?
-                    $OnlineGames = array();
+                    $onlineGames = array();
                     if(!empty($ogames))
                         foreach($ogames as $onlineGame)
-                            $OnlineGames[$onlineGame->getId()]= ($onlineGame->isEnabled()? '':'<i class="fa fa-ban"></i> ').$onlineGame->getTitle('RU');
-                    $ids = array_merge(is_array($games[$key]->getGames())?$games[$key]->getGames():array(), array_diff(is_array($games[$key]->getGames())?$games[$key]->getGames():array(),array_keys($OnlineGames)) );
+                            $onlineGames[$onlineGame->getId()]= ($onlineGame->isEnabled()? '':'<i class="fa fa-ban"></i> ').$onlineGame->getTitle('RU');
+
+                    $ids = array_merge(
+                        is_array($games[$key]->getGames()) ? $games[$key]->getGames() : array(), 
+                        array_diff( array_keys($onlineGames), is_array($games[$key]->getGames()) ? $games[$key]->getGames() : array()));
+
                     foreach($ids as $id): ?>
-                        <li><input type="hidden" name="games[]" value="<?=$id?>"><?=$OnlineGames[$id]?></li>
+                        <li><input type="hidden" name="games[]" value="<?=$id?>"><?=(in_array($id,$games[$key]->getGames())?'':'<s>').$onlineGames[$id]?></li>
                     <?php endforeach;?>
                 </ul>
             </form>

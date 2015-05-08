@@ -24,7 +24,6 @@ class Games extends PrivateArea
        $ogames = OnlineGamesModel::instance()->getList();
        $games  = GameSettingsModel::instance()->getList();
 
-
         $this->render('admin/games', array(
             'title'      => 'Настройка игр',
             'layout'     => 'admin/layout.php',
