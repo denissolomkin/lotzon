@@ -99,10 +99,13 @@ echo ($this->getOption('x') * $this->getOption('y')) - $this->_cells - $this->_m
 
             if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
                 #echo $this->time().' '. "Победитель #".current($winner)['player']['pid']."\n";
+                $this->setWinner(current($winner)['player']['pid']);
                 $this->updatePlayer(array('result' => -1));
                 $this->updatePlayer(array('result' => 2), current($winner)['player']['pid']);
-                $this->_isOver = 1;
-                $this->_botReplay = 0;
+                $this->setTime(time());
+                $this->_isOver      = 1;
+                $this->_botReplay   = array();
+                $this->_botTimer    = array();
                 return current($winner)['player'];
             } else {
                 #echo $this->time().' '. "Экстра время \n";

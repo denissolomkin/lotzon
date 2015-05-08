@@ -1035,13 +1035,15 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players { width: 600px; height:160px;margin: 0 150px;text-align: center;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .card{float: left; margin-right: -20px;}
 
-.ngm-bk .ngm-gm.cards .gm-mx .players .pr-ph-bk .gm-pr {margin: 0;width: auto;  height: auto; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .pr-ph {box-shadow: 0 0 6px 0px rgba(0,0,0,0.5);}
 .ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk{  width: auto;height: auto;opacity: 1;z-index:2;position:relative;margin: auto;overflow: visible;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .mt{display: block;background: white;border: 1px solid #ccc;border-radius: 5px;padding: 5px;font-size: 22px;font: 22px/1 Handbook-regular;width: 90%;margin: 5%;box-sizing: border-box;top: 0px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.3);}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-ph-bk{  left: 45%;top: 10px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .mt{display: block;background: white;border: 1px solid #ccc;border-radius: 5px;padding: 5px;font-size: 22px;font: 22px/1 Handbook-regular;width: 140%;margin: -20%;box-sizing: border-box;top: 0px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.3);}
 .ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .tm{ font: 32px/1 Handbook-regular; padding: 4px; position: absolute; width: 50px; height: 50px; margin: -20px 17px; border-radius: 50px; border: 5px solid rgb(255,228,0); box-sizing: border-box;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .gm-pr .pr-ph-bk .wt{
     display: none;
-    width: 140px;
+    top: 0;
+    width: 130px;
     background: rgba(216,227,231,0.95);
     height: 50px;
     margin-left: -40px;
@@ -1056,21 +1058,24 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m {position: absolute;top: 350px;  width: 100%;  height: 200px;  margin-left: -150px; }
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .card{transform-origin: 50% 100%; margin-right: -40px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .card:hover, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 90px;margin: 0; }
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-ph {width: 70px;height: 70px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 10px;left: 50%;margin-left: -35px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 75px;width: 75px;margin: 8px;float:right;border-radius: 80px;padding: 12px 10px;box-sizing: border-box;bottom:0;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md{margin: 15px 25px;float: right;width: 40px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md .icon-reload{ display: none; border: 2px solid #888;padding: 16px 3px;border-radius: 5px;color: #888;font-size: 28px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 80px;margin: 0; }
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-ph {width: 60px;height: 60px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 0px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 65px;width: 65px;margin: 8px;float:right;border-radius: 80px;padding: 7px 10px;box-sizing: border-box;bottom:0;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md{margin: 10px 25px;float: right;width: 40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md .icon-reload{ display: none; border: 2px solid #888;padding: 15px 3px;border-radius: 5px;color: #888;font-size: 28px;}
 .ngm-bk .ngm-gm.cards .gm-mx .DurakShift .players .m .gm-pr .pr-md .icon-reload{display: block;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr b{    font: 36px/1 Handbook-bold;letter-spacing: -3px;  margin-left: -3px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr span{ font: 13px/1 Handbook-regular; }
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .pr-pt {position: relative;  float: right;height: 100%;width: 200px;padding: 28px 0;box-sizing: border-box;color: black;text-align: left;margin: 0 0 0 40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr span{ font: 13px/5px Handbook-regular; }
+
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .pr-pt {position: relative;  float: right;height: 100%;width: 200px;padding: 23px 0;box-sizing: border-box;color: black;text-align: left;margin: 0 0 0 40px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .pr-pt .wallet {font-size: 36px;color: black;float: left;margin-right: 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-nm { display: none;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .tm {  margin: 10px 0 0 -200px;background: none;color: black;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl { margin: 20px 30px;  float: left; width: 130px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .tm {  margin: 5px 0 0 -200px;background: none;color: black;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl { margin: 15px 30px;  float: left; width: 130px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m.current .gm-pr .pr-cl .btn-pass{display: block;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-pass{display: block;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .msg-move{width: 100%;display: none;  height: 50px;color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m.starter .gm-pr .pr-cl .msg-move{display: block;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .players .o{width: 120px;float: left;margin: 0;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .col1 {padding-left: 260px;}
@@ -1078,12 +1083,9 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .col3 {padding-left: 80px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-top: 40px;width: 70px; height: 108px; background-position: -1430px 0px; border-radius: 5px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  margin: 0;  }
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 70px;  height: 70px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: relative; box-shadow: 0px 0px 10px;  margin: 30px 0 0 0px;border-radius: 50px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.6);  color: #ffffff;    top: 80px; position: absolute;border-radius: 3px;font: 15px/1 Handbook-regular;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 10px 10px;}
-
-.ngm-bk .ngm-gm.cards .gm-mx .players .current .gm-pr .pr-ph{box-shadow: 0 0 1px 6px rgba(200,0,0,1);}
-.ngm-bk .ngm-gm.cards .gm-mx .players .beater .gm-pr .pr-ph {box-shadow: 0 0 1px 6px rgba(0,150,0,1);}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 60px;  height: 60px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: relative; box-shadow: 0px 0px 10px;  margin: 30px 0 0 0px;border-radius: 50px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.6);  color: #ffffff;    top: 60px; padding:2px; position: absolute;border-radius: 3px;font: 15px/1 Handbook-regular;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 5px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .deck, .ngm-bk .ngm-gm.cards .gm-mx .table, .ngm-bk .ngm-gm.cards .gm-mx .off {float: left;height: 200px;width: 100px;box-sizing: border-box;}
 .ngm-bk .ngm-gm.cards .gm-mx .table {width: 780px;}
@@ -1812,3 +1814,104 @@ border: 1px solid black;
     padding: 5px;}
 
 .tpl {display: none;}
+
+
+/* ==========================================================================
+                            time_circles styles
+   ========================================================================== */
+
+/*.current .circle-timer{background: red;}
+.beater .circle-timer{background: green;}*/
+
+.circle-timer, .circle{
+    width: 74px;
+    height: 74px;
+    left: -7px;
+    top: -7px;
+    position: absolute;
+    -webkit-border-radius: 50%;
+    display: inline-block;
+    transform: scaleX(-1);
+}
+
+.circle {background: red;}
+.beater .circle{background: green;}
+
+@-webkit-keyframes timer-slide {
+    0%   { -webkit-transform: rotate(-225deg);
+        border-top-color: transparent; }
+    50%  { -webkit-transform: rotate(-45deg);
+        border-top-color: transparent;}
+    100% { -webkit-transform: rotate(-45deg);
+        border-top-color: transparent;}
+}
+
+@-webkit-keyframes timer-toggle {
+    0%  { opacity: 0;}
+    50% { opacity: 0;}
+    51% {
+        -webkit-transform: rotate(-45deg);
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(137deg);
+        opacity: 1;
+    }
+}
+
+.timer-l, .timer-r {
+    border-radius: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    width: 60px;
+    height: 60px;
+    margin-left: -37px;
+    margin-top: -37px;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: reverse;
+}
+
+
+
+.timer-l, .timer-r {
+    border: 7px solid #48f;
+    border: 7px solid red;
+    border-left-color: transparent;
+    border-top-color: red;
+}
+
+.beater .timer-l, .beater .timer-r {
+    border: 7px solid green;
+    border-left-color: transparent;
+    border-top-color: green;
+}
+
+.timer-l {
+    -webkit-animation-name: timer-slide;
+    -webkit-animation-timing-function: ease-in;
+    z-index: 5;
+    left: 0;
+}
+
+.timer-r {
+    -webkit-animation-name: timer-toggle;
+    -webkit-animation-timing-function: ease-out;
+}
+
+.timer-slot {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    overflow: hidden;
+}

@@ -12,9 +12,9 @@ class Game
     private $_gameTime = null;
     private $_gameIdentifier = '';
 
-    public  $_bot = 0;
-    public  $_botTimer = 0;
-    public  $_botReplay = false;
+    public  $_bot = array();
+    public  $_botTimer = array();
+    public  $_botReplay = array();
 
     public  $_isOver = 0;
     public  $_isSaved = 0;
@@ -24,6 +24,9 @@ class Game
     private $_client = '';
     private $_callback = array();
     private $_response = '';
+    private $_winner = null;
+    private $_loser = null;
+    private $_current = array();
 
     protected $_field = array();
     protected $_fieldPlayed = array();
@@ -49,16 +52,20 @@ class Game
     {
         #echo $this->time().' '. "Выход из игры\n";
 
-        $playerId = $this->getClient()->id;
-        $this->unsetCallback();
-        $this->setCallback(array(
-            'quit' => $playerId,
-            'action' => 'quit'
-        ));
+        if(!$this->_isOver) {
+            $this->startAction($data);
+        } else{
+            $playerId = $this->getClient()->id;
+            $this->unsetCallback();
+            $this->setCallback(array(
+                'quit' => $playerId,
+                'action' => 'quit'
+            ));
 
-        $this->setResponse($this->getClients());
-        #echo $this->time().' '. "Удаляем из клиентов игры {$playerId}\n";
-        $this->unsetClients($playerId);
+            $this->setResponse($this->getClients());
+            #echo $this->time().' '. "Удаляем из клиентов игры {$playerId}\n";
+            $this->unsetClients($playerId);
+        }
 
         #echo $this->time().' '. "Конец выход из игры\n";
     }
@@ -79,6 +86,8 @@ class Game
             while ($this->currentPlayer()['pid'] == $playerId)
                 $this->nextPlayer();
 
+        $this->setWinner($this->currentPlayer()['pid']);
+
         $this->setCallback(array(
             'winner' => $this->currentPlayer()['pid'],
             'players' => $this->getPlayers(),
@@ -88,50 +97,51 @@ class Game
         ));
 
         $this->setResponse($this->getClients());
-            #echo $this->time().' '. "Конец сдаться\n";
+        #echo $this->time().' '. "Конец сдаться\n";
     }
 
 
     public function replayAction($data=null)
     {
-            #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
+        #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
-            $clientId = $this->getClient()->id;
-            $this->updatePlayer(array('ready' => 1), $clientId );
-            $players = $this->getPlayers();
+        $clientId = $this->getClient()->id;
+        $this->updatePlayer(array('ready' => 1), $clientId );
+        $players = $this->getPlayers();
 
-            if(isset($this->getClient()->bot) AND !$this->_botReplay){
-                $this->_botReplay=1;
-            }
+        if(isset($this->getClient()->bot) AND !in_array($this->getClient()->bot,$this->_botReplay)){
+            $this->_botReplay[]=$this->getClient()->bot;
+        }
 
-            $ready = 0;
-            foreach ($players as $player){
-                if (isset($player['ready']))// || isset($this->getClients()[$player['pid']]->bot))
-                    $ready += 1;
-            }
+        $ready = 0;
+        foreach ($players as $player){
+            if (isset($player['ready']))// || isset($this->getClients()[$player['pid']]->bot))
+                $ready += 1;
+        }
 
-            if ($ready == count($players)) {
-                $this->_isOver = 0;
-                $this->_isSaved = 0;
-                #echo $this->time().' '. "Переустановка игроков\n";
+        if ($ready == count($players)) {
+            $this->_isOver = 0;
+            $this->_isSaved = 0;
+            #echo $this->time().' '. "Переустановка игроков\n";
 
-                $this->unsetFieldPlayed()
-                    ->setField($this->generateField())
-                    ->setPlayers($this->getClients())
-                    ->nextPlayer()
-                    ->setTime(time())
-                    ->startAction();
-            } else {
-                $this->unsetCallback()
-                    ->setResponse($this->getClient())
-                    ->setCallback(array(
+            $this->unsetFieldPlayed()
+                ->setField($this->generateField())
+                ->setPlayers($this->getClients())
+                ->nextPlayer()
+                ->setWinner(null)
+                ->setTime(time())
+                ->startAction();
+        } else {
+            $this->unsetCallback()
+                ->setResponse($this->getClient())
+                ->setCallback(array(
                     'action' => 'ready',
                     'ready' => $ready
                 ));
-            }
+        }
 
-            #echo $this->time().' '. "Конец повтора игры\n";
+        #echo $this->time().' '. "Конец повтора игры\n";
     }
 
     public function startAction($data=null)
@@ -143,9 +153,17 @@ class Game
             #echo $this->time().' '. "Первичная установка игроков\n";
             $this->setPlayers($this->getClients());
             $this->nextPlayer();
-            $this->_isOver=0;
-            $this->_isSaved=0;
+            $this->setWinner(null);
+            $this->_isOver = 0;
+            $this->_isSaved = 0;
         }
+
+        if($this->getWinner())
+            $this->setCallback(array(
+                'winner' => $this->getWinner(),
+                'price' => $this->getPrice(),
+                'currency' => $this->getCurrency()
+            ));
 
         $this->setCallback(array(
             'current'   => $this->currentPlayer()['pid'],
@@ -209,8 +227,8 @@ class Game
 
         #echo $this->time().' '. "Тайм-аут \n";
         $this->unsetCallback();
-        if(!$this->isOver() AND isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout']<=time())
-        {
+        if(!$this->isOver() AND isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout']<=time()) {
+
             #echo $this->time().' '. "Переход хода \n";
             $this->passMove();
             #echo $this->time().' '. 'разница времени после пасса '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
@@ -231,7 +249,7 @@ class Game
             'timeout'   => (isset($currentPlayer['timeout'])?$currentPlayer['timeout']:time()+1)-time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
             'players'   => $this->getPlayers(),
             'action'    => 'move'
-            ));
+        ));
 
         $this->setResponse($this->getClients());
         #echo $this->time().' '. "Конец тайм-аута \n";
@@ -296,7 +314,7 @@ class Game
         #echo $this->time().' '. "Пас хода \n";
         $current=$this->currentPlayer();
         $this->updatePlayer(array(
-                'moves'=>-1), $current['pid']);
+            'moves'=>-1), $current['pid']);
 
         return $this;
     }
@@ -304,18 +322,18 @@ class Game
     public function doMove($cell)
     {
         list($x,$y)=$cell;
-            $playerId = $this->getClient()->id;
-            $points = $this->_field[$x][$y]['points'];
-            $this->_field[$x][$y]['player'] = $playerId;
+        $playerId = $this->getClient()->id;
+        $points = $this->_field[$x][$y]['points'];
+        $this->_field[$x][$y]['player'] = $playerId;
 
-            $this->updatePlayer(array(
-                'points' => $points,
-                'moves' => -1), $playerId);
+        $this->updatePlayer(array(
+            'points' => $points,
+            'moves' => -1), $playerId);
 
-            $this->_fieldPlayed[$x][$y] = $this->_field[$x][$y];
+        $this->_fieldPlayed[$x][$y] = $this->_field[$x][$y];
 
-            $this->nextPlayer();
-            return $this;
+        $this->nextPlayer();
+        return $this;
     }
 
     public function generateMove()
@@ -345,32 +363,55 @@ class Game
 
     public function nextPlayer($skip=false)
     {
-        if(!$skip) {
+
+        if($skip!==true) {
+
+            while((current($this->_players)['pid']!=$this->currentPlayer()['pid'] AND $this->currentPlayer()))
+                if (next($this->_players) === false)
+                    reset($this->_players);
+
             #echo $this->time().' '. "Следующий игрок \n";
-            if (next($this->_players) === false) {
+            if (next($this->_players) === false)
                 reset($this->_players);
+
+            if($skip===false) {
+                $this->currentPlayers(array(current($this->_players)['pid']));
+            } else {
+                return current($this->_players)['pid'];
             }
         }
 
-        $this->_players[(current($this->_players)['pid'])]['timeout']=time()+$this->getOption('t');
+        $this->_botTimer = array();
 
-        if(isset($this->_clients[(current($this->_players)['pid'])]->bot))
-            $this->_botTimer = rand(8,30)/10; // 0.1;
-        else
-            $this->_botTimer = 0;
+        foreach($this->currentPlayers() as $playerId){
+            $this->_players[$playerId]['timeout']=time()+$this->getOption('t');
+            if(isset($this->_clients[$playerId]->bot))
+                $this->_botTimer[$playerId] = rand(8,30)/10; // 0.1;
+        }
 
         return $this;
     }
 
     public function currentPlayer()
     {
-        return current($this->_players);
+        return $this->_players[reset($this->currentPlayers())];
+        /* return current($this->_players); */
+    }
+
+    public function currentPlayers($playerIds=false)
+    {
+        if($playerIds!==false){
+            $this->_current = $playerIds;
+            return $this;
+        } else
+            return $this->_current;
     }
 
     public function checkWinner()
     {
         #echo $this->time().' '. "Проверка победителя \n";
         $current = $this->currentPlayer();
+
         if ($current['moves'] < 1)
         {
             $players=$this->getPlayers();
@@ -387,10 +428,13 @@ class Game
 
             if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
                 #echo $this->time().' '. "Победитель #".current($winner)['player']['pid']."\n";
+                $this->setWinner(current($winner)['player']['pid']);
                 $this->updatePlayer(array('result'=>-1));
                 $this->updatePlayer(array('result'=>2),current($winner)['player']['pid']);
-                $this->_isOver=1;
-                $this->_botReplay=0;
+                $this->setTime(time());
+                $this->_isOver      = 1;
+                $this->_botReplay   = array();
+                $this->_botTimer    = array();
                 return current($winner)['player'];
             } else {
                 #echo $this->time().' '. "Экстра время \n";
@@ -440,30 +484,51 @@ class Game
         return $this;
     }
 
-    public function getPlayers()
+    public function getPlayers($id=false)
     {
-        return $this->_players;
+        if($id){
+            if(isset($this->_players))
+                return $this->_players[$id];
+            else
+                return false;
+        } else
+            return $this->_players;
+
     }
 
-    public function setPlayers($clients)
+    public function unsetPlayers()
     {
-        rand(0,1)?arsort($clients):asort($clients);
+        $this->_players = array();
+        return $this;
+    }
 
+    public function setPlayers($clients, $rand=true)
+    {
+        if($rand)
+            rand(0,1)?arsort($clients):asort($clients);
+
+        $order = 0;
         foreach ($clients as $id => $client){
 
-            if(isset($client->bot)){
-                $this->_bot=$id;
-            }
+            if(count($clients)>2);
+                $order++;
+
+            if(isset($client->bot))
+                $this->_bot[]=$id;
 
             $this->_players[$id] = array(
                 'pid' => $id,
                 'moves' => $this->getOption('m'),
                 'points' => 0,
+                'order' => $order,
                 'avatar' => $client->avatar,
                 'lang' => isset($client->lang)?$client->lang:'RU',
                 'name' => $client->name,
                 'timeout' => time()+$this->getOption('t')
             );
+
+            if($order)
+                $this->_players[$id]['order'] = $order;
         }
 
         #echo $this->time().' '. "Инициализация игроков\n";
@@ -536,13 +601,16 @@ class Game
 
     public function getTitle($lang=null)
     {
+
         if(isset($lang)) {
-            if (isset($this->_gameTitle[$lang]))
-                return $this->_gameTitle[$lang];
+            if(isset($this->_gameTitle[$lang]) && $this->_gameTitle[$lang] && $this->_gameTitle[$lang]!='')
+                $title = $this->_gameTitle[$lang];
             else
-                return $this->_gameTitle[0];
+                $title = reset($this->_gameTitle);
         } else
-            return $this->_gameTitle;
+            $title = $this->_gameTitle;
+
+        return $title;
     }
 
 
@@ -554,7 +622,7 @@ class Game
 
     public function getMode()
     {
-        return $this->_gameModes["$this->_gameCurrency"]["$this->_gamePrice"];
+        return $this->_gameModes[$this->_gameCurrency][$this->_gamePrice];
     }
 
     public function setOptions($array)
@@ -577,6 +645,53 @@ class Game
     public function getKey()
     {
         return $this->_gameKey;
+    }
+
+
+    public function getWinCoefficient()
+    {
+        switch (count($this->getPlayers())) {
+            default:
+            case 2:
+                $coef = 1;
+                break;
+            case 3:
+                $coef = count($this->getWinner()) == 1 ? 0.75 : (count($this->getWinner()) == 2 ? 0.25 : 0);
+                break;
+            case 4:
+                $coef = count($this->getWinner()) == 1 ? 0.75 : (count($this->getWinner()) == 2 ? 0.2 : (count($this->getWinner()) == 3 ? 0.05 : 0));
+                break;
+        }
+
+        return $coef;
+    }
+
+    public function setWinner($key)
+    {
+        $this->_winner = $key;
+        return $this;
+    }
+
+    public function addWinner($key)
+    {
+        $this->_winner[] = $key;
+        return $this;
+    }
+
+    public function getWinner()
+    {
+        return $this->_winner;
+    }
+
+    public function setLoser($key)
+    {
+        $this->_loser = $key;
+        return $this;
+    }
+
+    public function getLoser()
+    {
+        return $this->_loser;
     }
 
     public function setPrice($price)
@@ -630,7 +745,7 @@ class Game
 
     public function setResponse($clients)
     {
-        is_array($clients) ? $this->_response=$clients : $this->_response=array($clients);
+        $this->_response = is_array($clients) ? $clients : array($clients);
         return $this;
     }
 
@@ -656,18 +771,24 @@ class Game
         return $this;
     }
 
-    public function setField($field, $playerId=null)
+    public function setField($field, $key=null)
     {
-        if($playerId)
-            $this->_field[$playerId] = $field;
+        if($key)
+            $this->_field[$key] = $field;
         else
             $this->_field = $field;
         return $this;
     }
 
-    public function getField()
+    public function getField($key=false)
     {
-        return $this->_field;
+        if($key){
+            if(isset($this->_field[$key]))
+                return $this->_field[$key];
+            else
+                return null;
+        } else
+            return $this->_field;
     }
 
     public function generateField() {

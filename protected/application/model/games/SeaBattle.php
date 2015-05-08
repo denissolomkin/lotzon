@@ -17,16 +17,16 @@ class SeaBattle extends Game
                     array(1, 0),
     );
 
-    /* protected $_ships = array(
-        5);*/
-
+    protected $_ships = array(
+        2,3);
+/*
     protected $_ships = array(
         1, 1, 1, 1, 1,
         2, 2, 2, 2,
         3, 3, 3,
         4, 4,
         5);
-
+*/
     protected $_playerShips = array();
     protected $_destroy = array();
 
@@ -44,15 +44,18 @@ class SeaBattle extends Game
                 'timeout' => static::START_TIME_OUT - $this->getOption('t'),
                 'ships' => array_count_values($this->_ships)
             ));
+            $this->setWinner(null);
             $this->_isOver = 0;
             $this->_isSaved = 0;
         }
 
-        if ($this->_bot && !isset($this->getField()[$this->_bot])) {
-            #echo $this->time().' '. "Генерация поля для бота \n";
-            $this->setField($this->generateField($this->_bot), $this->_bot);
-            #if(count($this->getField()==count($this->getClients())))
-            #$this->nextPlayer();
+        foreach($this->_bot as $bot) {
+            if (!isset($this->getField()[$bot])) {
+                #echo $this->time().' '. "Генерация поля для бота \n";
+                $this->setField($this->generateField($bot), $bot);
+                #if(count($this->getField()==count($this->getClients())))
+                #$this->nextPlayer();
+            }
         }
 
         if (count($this->getField()) == count($this->getClients())) {
@@ -75,8 +78,17 @@ class SeaBattle extends Game
                             if ($id != $client->id)
                                 $fields[$id] = $field;
 
+                    if($this->getWinner())
+                        $this->setCallback(array(
+                            'winner' => $this->getWinner(),
+                            'fields' => $this->getField(),
+                            'price' => $this->getPrice(),
+                            'currency' => $this->getCurrency()
+                        ), $client->id);
+
                     $this->setCallback(array(
                         'current' => $this->currentPlayer()['pid'],
+                        'timeout' => (isset($currentPlayer['timeout']) ? $currentPlayer['timeout'] : time() + 1) - time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
                         'appId' => $this->getIdentifier(),
                         'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                         'players' => $this->getPlayers(),
@@ -235,9 +247,9 @@ class SeaBattle extends Game
         $this->updatePlayer(array('ready' => 1), $clientId);
         $players = $this->getPlayers();
 
-        if (isset($this->getClient()->bot) AND !$this->_botReplay) {
-            $this->_botReplay = 1;
-            $this->_botTimer = 0;
+        if (isset($this->getClient()->bot) AND !in_array($this->getClient()->id, $this->_botReplay)) {
+            $this->_botReplay[] = $this->getClient()->id;
+            $this->_botTimer = array();
         }
 
         $ready = 0;
@@ -258,6 +270,7 @@ class SeaBattle extends Game
                     'timeout' => static::START_TIME_OUT - $this->getOption('t'),
                     'ships' => array_count_values($this->_ships)
                     ))
+                ->setWinner(false)
                 ->setTime(time())
                 ->startAction();
         } else {
@@ -277,7 +290,7 @@ class SeaBattle extends Game
         $playerId = $this->getClient()->id;
         list($x, $y, $f) = $cell;
 
-        $hit = (isset($this->_field[$f][$x][$y]) ? 1 : 0);
+        $hit = (isset($this->_field[$f][$x][$y]) ? true : false);
         // $this->_field[$f][$x][$y] = 'h';
 
         $this->_fieldPlayed[$f][$x][$y] = $hit ? 'd' : 'e';
@@ -441,10 +454,13 @@ class SeaBattle extends Game
 
             if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
                 #echo $this->time().' '. "Победитель #".current($winner)['player']['pid']."\n";
+                $this->setWinner(current($winner)['player']['pid']);
                 $this->updatePlayer(array('result' => -1));
                 $this->updatePlayer(array('result' => 2), current($winner)['player']['pid']);
-                $this->_isOver = 1;
-                $this->_botReplay = 0;
+                $this->setTime(time());
+                $this->_isOver      = 1;
+                $this->_botReplay   = array();
+                $this->_botTimer    = array();
                 return current($winner)['player'];
             } else {
                 #echo $this->time().' '. "Экстра время \n";
