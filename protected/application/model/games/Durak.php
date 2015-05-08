@@ -185,8 +185,10 @@ class Durak extends Game
             if ($this->getLoser()){
                 $this->setCallback(array('action' => 'move'));
             } else {
-                foreach ($this->getCallback() as &$callback)
+                $callbackArray = $this->getCallback();
+                foreach ($callbackArray as &$callback)
                     $callback['action']='move';
+                $this->setCallback($callbackArray);
             }
 
 
