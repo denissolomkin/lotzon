@@ -89,7 +89,7 @@
                         array_diff( array_keys($onlineGames), is_array($games[$key]->getGames()) ? $games[$key]->getGames() : array()));
 
                     foreach($ids as $id): ?>
-                        <li><input type="hidden" name="games[]" value="<?=$id?>"><?=(in_array($id,$games[$key]->getGames())?'':'<s>').$onlineGames[$id]?></li>
+                        <li><input type="hidden" name="games[]" value="<?=$id?>"><?=(in_array($id,$games[$key]->getGames())?'':'<s><span>').$onlineGames[$id]?></li>
                     <?php endforeach;?>
                 </ul>
             </form>
@@ -158,6 +158,7 @@
                 button.find('.fa').first().remove();
                 button.removeClass('btn-danger').addClass('btn-success').prepend($(' <i class="fa fa-check"></i> ').css('margin-right','5px'));
                 button.find('.fa').first().fadeOut(500);
+                $('li s span').unwrap();
 
             } else {
                 button.find('.fa').first().remove();
