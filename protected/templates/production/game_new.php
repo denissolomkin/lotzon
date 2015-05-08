@@ -1481,8 +1481,8 @@
             if($f)
                 $audio[$game->getKey()][$k] = $f;
     } ?>
-        var appModes = <?=json_encode($modes, JSON_PRETTY_PRINT); ?>;
-        var appAudio = <?=json_encode($audio, JSON_PRETTY_PRINT); ?>;
+        var appModes = {} <?json_encode($modes, JSON_PRETTY_PRINT); ?>;
+        var appAudio = {} <?json_encode($audio, JSON_PRETTY_PRINT); ?>;
         var unreadNotices = <?=$notices?>;
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
