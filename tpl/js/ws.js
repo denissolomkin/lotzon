@@ -44,7 +44,7 @@ var conn;
 
                         path = data.path;
                         if(onlineGame = data.res) {                            
-                            
+
                             if (onlineGame.appName)
                                 appName = onlineGame.appName;
 
