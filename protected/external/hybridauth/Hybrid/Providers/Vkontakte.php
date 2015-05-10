@@ -94,8 +94,10 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
             $this->token( "access_token"),
             'country,city,interests,music,movies,tv,books,games'
         ));
+
         $info = @json_decode(@file_get_contents($infoUrl), true);
-        $info = array_shift($info['response']);
+
+
 
         //$params['fields'] = 'interests,music,movies,tv,books,games';
         //$info = $this->api->api( "https://api.vk.com/method/users.get", 'GET', $params);
@@ -106,10 +108,14 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 
         $this->user->profile->country       = (property_exists($response,'country'))?$response->country:"";
 
-        $countries=array(1 => 'RU',2 => 'UA',3 => 'BY');
-        $this->user->profile->country=$countries[$info['country']['id']];
-        $this->user->profile->city          = $info['city']['title'];
-        unset($info['id'],$info['first_name'],$info['last_name'], $info['country'],$info['city']);
+        if(is_array($info)) {
+            $info = array_shift($info['response']);
+            $info = array_filter($info);
+            $countries = array(1 => 'RU',2 => 'UA',3 => 'BY', 4=>'KZ',5=>'AZ');
+            $this->user->profile->country = $countries[$info['country']['id']];
+            $this->user->profile->city          = $info['city']['title'];
+            unset($info['id'],$info['first_name'],$info['last_name'], $info['country'],$info['city']);
+        }
 
         $this->user->profile->email    =            $this->token( "email");
         $response = $response->response[0];
@@ -121,7 +127,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
         // $this->user->profile->city          = (property_exists($response,'city'))?$response->city:"";
         $this->user->profile->profileURL    = (property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
-        $this->user->profile->interests    = array_filter($info);//(property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
+        $this->user->profile->interests    = $info;//(property_exists($response,'screen_name'))?"http://vk.com/" . $response->screen_name:"";
 
         if(property_exists($response,'sex')){
             switch ($response->sex){

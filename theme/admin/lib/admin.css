@@ -306,8 +306,8 @@ min-height: 17px;
 .ogames .game-build{min-width: 260px;min-height: 220px;}
 .agames .game-build{width: 24%;min-height: 220px;}
 .agames div > i, .ogames div > i  {
-    margin-left: 6px;
-    margin-right: 1px;}
+    margin-left: 2px;
+    margin-right: 0px;}
 /*.ogames div > span {margin-left: 4px;}*/
 .agames .game-build i:first-of-type, .ogames .game-build i:first-of-type{
     margin-left: 0px;}

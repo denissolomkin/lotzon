@@ -108,6 +108,7 @@
     $(".game-build ul:not(.draggable)").sortable({
         connectWith: "ul:not(.draggable)"
     });
+
     $("#games li").draggable({
         helper: "clone",
         connectToSortable: ".game-build ul.draggable"

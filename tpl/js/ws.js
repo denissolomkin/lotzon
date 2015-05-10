@@ -43,7 +43,10 @@ var conn;
                     else {
 
                         path = data.path;
-                        if(onlineGame = data.res) {                            
+                        if(data.res) {
+
+                            $.each(data.res, function( index, value ){
+                                onlineGame[index]=value;});
 
                             if (onlineGame.appName)
                                 appName = onlineGame.appName;
@@ -55,6 +58,8 @@ var conn;
                                 appId = onlineGame.appId;
                                 data = null;
                             }
+
+                            /* */
 
                             playAudio([appName, onlineGame.action]);
                         }
@@ -82,7 +87,7 @@ function WebSocketStatus(action, data) {
 
 
 
-function stackCallback(receiveData) {
+function stackCallback() {
     if($('.ngm-bk .rls-r-t').is(':visible')) {
         /*
          *  постановка в стек
@@ -100,7 +105,7 @@ function stackCallback(receiveData) {
     }
 }
 
-function cancelCallback(receiveData) {
+function cancelCallback() {
     /*
      *  отказ от ожидания в стеке
      */
@@ -109,7 +114,7 @@ function cancelCallback(receiveData) {
     $('.ngm-bk .prc-but-cover').hide();
 }
 
-function quitCallback(receiveData) {
+function quitCallback() {
     if($('.ngm-bk .ngm-gm .gm-mx .msg.winner .button.exit').hasClass('button-disabled')) {
         /*
          *  выход из игры и возврат к правилам
@@ -122,7 +127,7 @@ function quitCallback(receiveData) {
     }
 }
 
- function backCallback(receiveData) {
+ function backCallback() {
      /*
       *  назад к описанию игры
       */
@@ -1161,7 +1166,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
     function appDurakCallback(action)
     {
 
-        action = action || onlineGame.action;
+        action = action && action.res && action.res.action ? action.res.action : action || onlineGame.action;
 
         switch (action) {
 
@@ -1176,6 +1181,10 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
             case 'start':
             case 'move':
+
+
+                $(".ui-droppable").droppable("destroy");
+                $('.m .card.draggable').draggable("destroy");
 
                 if(onlineGame.action=='start') {
                     hideAllGames();
@@ -1290,9 +1299,10 @@ $('.ngm-bk .bk-bt').on('click', function() {
                             });
                         }
                     });
+
+                    appDurakCallback('premove');
                 }
 
-                appDurakCallback('premove');
 
                 fields = onlineGame.fields;
 
@@ -1388,22 +1398,60 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                 break;
 
-            case 'premove':
+            case 'highlight':
+
                 if(onlineGame.beater == playerId && $('.ngm-gm .gm-mx .table .cards').length){
 
                     if($('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
                         $('.ngm-gm .gm-mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
+
                     if( $('.ngm-gm .gm-mx .players .m .card.select').length){
                         $('.ngm-gm .gm-mx .table .cards').each(function( index ) {
                             if($('.card',this).length==1 && !$(this).hasClass('highlight'))
                                 $(this).addClass('highlight');
+
                         });
-                    }
+                    } else
+                        $('.highlight').removeClass('highlight');
 
                 }
+                break;
+
+            case 'premove':
+
+                appDurakCallback('highlight');
+
+                $(".table"+(playerId==onlineGame.beater?" .cards":'')).droppable({
+                    accept: ".card",
+                    activeClass: 'active',
+                    hoverClass: 'hover',
+                    drop: function(event, ui) {
+
+                        if($(this).attr('data-table'))
+                            $(this).click();
+                        else
+                            $(ui.draggable).click();
+                    }
+                });
+
+                $('.m .card').draggable({
+                    zIndex: 10,
+                    containment:'window',
+
+                    revert:function(event, ui) { return !event; },
+
+                    start: function() {
+
+                        $('.m .card').removeClass('select');
+                        $(this).addClass('select');
+                        appDurakCallback('highlight');
+                    },
+                    stop: function() {}
+                });
 
                 break;
+
             case 'quit':
                 if(onlineGame.quit!=playerId){
                     $('.ngm-bk .re').hide();
@@ -1414,6 +1462,12 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
 
             case 'error':
+
+                console.log($('.ngm-gm .gm-mx .players .m .card.select'));
+                $('.m .card').removeClass('select').css('left',0).css('top',0);
+
+                console.log($('.ngm-gm .gm-mx .players .m .card.select'));
+                appDurakCallback('premove');
                 errorGame();
                 break;
 
@@ -1836,8 +1890,8 @@ function appWhoMoreCallback()
 
     function errorGame(){
 
-        $("#report-popup").show().find(".txt").text(getText(onlineGame.error)).fadeIn(200);
-        $("#report-popup").show().fadeIn(200);
+        // $("#report-popup").show().find(".txt").text(getText(onlineGame.error)).fadeIn(200);
+        // $("#report-popup").show().fadeIn(200);
         if(onlineGame.appId==0) {
             $('.ngm-bk .tm').countdown('pause');
             appId = onlineGame.appId;

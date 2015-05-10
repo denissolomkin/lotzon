@@ -18,6 +18,7 @@ class WebSocketController implements MessageComponentInterface {
     const   PERIODIC_TIMER = 2;
     const   CONNECTION_TIMER = 1800;
     const   DEFAULT_MODE = 'POINT-0';
+    const   EMULATION = true;
 
     // private $_settings = array();
     // private $_bots     = array();
@@ -119,8 +120,8 @@ class WebSocketController implements MessageComponentInterface {
         $this->_class = $class='\\' . $name;
         $app = new $class(OnlineGamesModel::instance()->getGame($name));
         $keys = array_keys($clients);
-        list($currency, $price) = explode("-", $mode);
-        echo $this->time()." $name инициируем приложение $currency-$price: №".implode(', №',$keys)."\n";
+        list($currency, $price, $number) = array_pad(explode("-", $mode),3,2);
+        echo $this->time()." $name инициируем приложение $currency-$price-$number: №".implode(', №',$keys)."\n";
 
         #echo $this->time()." чистим стек\n";
         foreach ($keys as $key) {
@@ -142,8 +143,9 @@ class WebSocketController implements MessageComponentInterface {
         #echo $this->time()." запускаем и кешируем приложение\n";
         $app->setClients($clients)
             ->setClient($id)
+            ->setNumberPlayers($number)
             ->setCurrency($currency)
-            ->setPrice((float)$price);;
+            ->setPrice((float)$price);
         $this->apps($name,$app->getIdentifier(),$app);
         $this->runGame($name,$app->getIdentifier(),'startAction',$id);
     }
@@ -256,23 +258,32 @@ class WebSocketController implements MessageComponentInterface {
             if(isset($_player['appId'])){
                 if(isset($_player['appName']))
                     $this->runGame($_player['appName'],$_player['appId'],'startAction',$_player['Id']);
-                else
-                    echo $this->time(0,'WARNING')." у игрока {$player->getId()} отсутствует appName\n";
-            }
-            /*
-            // EMULATION GAME
-            {
-            $clients=array();
-            $clients[$player->getId()] = (object) array(
-                'time'      =>  time(),
-                'id'        =>  $player->getId(),
-                'avatar'    =>  $player->getAvatar(),
-                'name'      =>  $player->getNicName());;
-            $bot=(object) $this->_bots[array_rand($this->_bots)];
-            $clients[$bot->id] = $bot;
-            $this->initGame($clients,'SeaBattle','POINT-0',$player->getId());
+                else {
+                    unset($_player['appId']);
+                    echo $this->time(0, 'WARNING') . " у игрока {$player->getId()} отсутствует appName\n";
+                    $this->players($player->getId(),$_player);
                 }
-            */
+            }
+
+            // EMULATION GAME
+            if(self::EMULATION){
+                $mode='POINT-0';
+                $name='Durak';
+
+                $this->apps('unset',$name);
+
+                $clients=array();
+                $clients[$player->getId()] = (object) array(
+                    'time'      =>  time(),
+                    'id'        =>  $player->getId(),
+                    'avatar'    =>  $player->getAvatar(),
+                    'name'      =>  $player->getNicName());
+                $bot = (object)SettingsModel::instance()->getSettings('gameBots')->getValue()[array_rand(SettingsModel::instance()->getSettings('gameBots')->getValue())];
+                $clients[$bot->id] = $bot;
+                $this->initGame($clients,$name,$mode,$player->getId());
+
+            }
+
             // $this->_class='chat';
             // $this->sendCallback($this->clients(), array('message'=>$conn->Session->get(Player::IDENTITY)->getNicName().' присоединился'));
         } else
@@ -391,7 +402,7 @@ class WebSocketController implements MessageComponentInterface {
                                                 }
                                             }
 
-                                            if ($success) {
+                                            if ($success || $game->getOption('f')) {
                                                 $this->initGame($clients,$name,$mode,$player->getId());
                                             } else {
 
@@ -1211,7 +1222,11 @@ class WebSocketController implements MessageComponentInterface {
                 if ($first) {
                     if ($first == 'unset' && $second) {
 
-                        unset($array[$second][$third]);
+                        if(!$third)
+                            unset($array[$second]);
+                        else
+                            unset($array[$second][$third]);
+
                         Cache::init()->set('websocket::' . $key, $array);
 
                     } else {
@@ -1237,7 +1252,12 @@ class WebSocketController implements MessageComponentInterface {
                 $array = $this->{$key};
                 if ($first) {
                     if ($first == 'unset' && $second) {
-                        unset($this->{$key}[$second][$third]);
+
+                        if(!$third)
+                            unset($this->{$key}[$second]);
+                        else
+                            unset($this->{$key}[$second][$third]);
+
                     } else {
 
                         if ($second && $third) {

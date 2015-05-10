@@ -113,7 +113,12 @@
                                     </div>
                                     <div class="input-group">
 
-                                        <span class="input-group-addon"><i class="fa fa-laptop"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-flag-checkered"></i></span>
+                                        <input type="checkbox" name='game[Field][f]' data-toggle="toggle">
+                                    </div>
+                                    <div class="input-group">
+
+                                        <span class="input-group-addon"><i class="fa fa-plug"></i></span>
                                         <input type="checkbox" name='game[Field][b]' data-toggle="toggle">
                                     </div>
                                 </div>
@@ -226,14 +231,14 @@
         games=<?
         foreach ($games as $game)
             $list[$game->getId()]=array(
-            'Id'    =>  $game->getId(),
-            'Key'   =>  $game->getKey(),
-            'Title' =>  $game->getTitle(),
-            'Description'   =>  $game->getDescription(),
-            'Field'     => $game->getOptions(),
-            'Prizes'    =>  $game->getModes(),
-            'Audio'    =>  $game->getAudio(),
-            'Enabled'   =>  $game->isEnabled()
+            'Id'            => $game->getId(),
+            'Key'           => $game->getKey(),
+            'Title'         => $game->getTitle(),
+            'Description'   => $game->getDescription(),
+            'Field'         => $game->getOptions(),
+            'Prizes'        => $game->getModes(),
+            'Audio'         => $game->getAudio(),
+            'Enabled'       => $game->isEnabled()
             );
         echo json_encode($list, JSON_PRETTY_PRINT)?>;
 
@@ -270,6 +275,10 @@
                 on: 'Enabled',
                 off: 'Disabled'
             }).bootstrapToggle((game.Field.b == 1 || game.Field.b == 'on' ? 'on' : 'off'));
+            holder.find('[name="game[Field][f]"]').bootstrapToggle({
+                on: 'Enabled',
+                off: 'Disabled'
+            }).bootstrapToggle((game.Field.f == 1 || game.Field.f == 'on' ? 'on' : 'off'));
 
             if (game.Key) {
                 $('#editGame button[data-tab="text"]').next().attr('data-tab', 'image');
@@ -367,7 +376,9 @@
                 ' <i class="fa fa-arrows-h"></i>' + game.Field.x +
                 ' <i class="fa fa-arrows-v"></i>' + game.Field.y +
                 ' <i class="fa fa-trophy"></i>' + game.Field.w +
-                (game.Field.b ? '<i class="fa fa-laptop"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-laptop fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>'));
+                (game.Field.b ? '<i class="fa fa-plug"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-plug fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')+
+                (game.Field.f ? '<i class="fa fa-flag-checkered"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-flag-checkered fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')
+            );
             holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
 
         };
@@ -403,7 +414,7 @@
                     '<input type="text" class="form-control v" value="' + parseFloat(holder.find('.v').val()) + '" readonly>' +
                     '</div>' +
                     '<div class="input-group">' +
-                    '<span class="input-group-addon"><i class="fa fa-laptop"></i></span>' +
+                    '<span class="input-group-addon"><i class="fa fa-plug"></i></span>' +
                     '<input type="text" class="form-control p" value="' + holder.find('.p').val() + '" readonly>' +
                     '</div>' +
                     '<span class="btn btn-danger remove"><i class="fa fa-remove"></i></span>' +

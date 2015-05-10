@@ -9,6 +9,7 @@ class Game
     protected $_gameOptions = array();
     private $_gameCurrency = '';
     private $_gamePrice = null;
+    private $_numberPlayers = null;
     private $_gameTime = null;
     private $_gameIdentifier = '';
 
@@ -694,10 +695,26 @@ class Game
         return $this->_loser;
     }
 
+    public function setNumberPlayers($number)
+    {
+        $this->_numberPlayers = $number;
+        return $this;
+    }
+
+    public function getNumberPlayers()
+    {
+        return $this->_numberPlayers;
+    }
+
     public function setPrice($price)
     {
         $this->_gamePrice = $price;
         return $this;
+    }
+
+    public function getPrice()
+    {
+        return $this->_gamePrice;
     }
 
     public function getTime()
@@ -709,11 +726,6 @@ class Game
     {
         $this->_gameTime = $time;
         return $this;
-    }
-
-    public function getPrice()
-    {
-        return $this->_gamePrice;
     }
 
     public function getCurrency()
