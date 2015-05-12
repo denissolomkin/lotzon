@@ -1078,41 +1078,6 @@
             <div class="ngm-rls">
                 <div class="ngm-rls-bk">
 
-                    <div class="prc-l">
-                        <div class="rw-t">
-                            <div class="bk-bt-rl"><spn><?=$MUI->getText('button-back-to-description')?></spn></div>
-                        </div>
-                        <div class="gm-if-bk">
-                            <div class="l"></div>
-                        </div>
-
-                        <div class="prc-bl">
-                            <div class="prc-txt-bk">
-                                <div class="all"><?=$MUI->getText('text-choose-bet')?></div>
-                            </div>
-                            <div class="prc-but-cover"></div>
-                            <div class="prc-but-bk">
-
-                                <div class="prc-bt"><?=$MUI->getText('button-points')?></div>
-                                <div class="prc-sel" data-currency="POINT">
-                                    <div class="prc-tl"><?=$MUI->getText('button-points')?></div>
-                                </div>
-
-                                <div class="prc-bt"><?=$MUI->getText('button-money')?></div>
-                                <div class="prc-sel" data-currency="MONEY">
-                                    <div class="prc-tl"><?=$MUI->getText('button-money')?></div>
-                                </div>
-
-                                <div class="prc-bt"><?=$MUI->getText('button-free')?></div>
-                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=$MUI->getText('button-free')?></div></div>
-
-                                <!--div class="ngm-cncl">отмена</div-->
-                                <div class="ngm-go"><?=$MUI->getText('button-play')?></div>
-                            </div>
-                        </div>
-
-                    </div>
-
                     <div class="rls-l">
                         <div class="rw-t">
                             <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
@@ -1181,7 +1146,7 @@
                                         </div>
                                     </div>
 
-                                    <div data-game="DurakShift">
+                                    <div data-game="DurakRevert">
                                         <div class="mx Durak">
                                             <div class="players"></div>
                                             <div class="deck"></div>
@@ -1202,13 +1167,10 @@
                                     endforeach; ?>
                                 </div>
 
-                                <div class="l">
-                                    <div class="ngm-price"><?=$MUI->getText('button-bet')?></div>
-                                </div>
-
-                                <div class="r">
-                                    <div class="online"><?=$MUI->getText('label-players-online')?> <i>&bull;</i> <span></span></div>
-                                    <div class="all"><?=$MUI->getText('label-total-games-played')?> <b>:</b> <span></span></div>
+                                <div class="prz-fnd">
+                                    <div class="prz-fnd-ttl"><span class="icon-trophy" aria-hidden="true"></span> <?=$MUI->getText('label-prize-fund')?></div>
+                                    <div><b class="prz-fnd-mon">460</b><i><?=$currency['many']?></i></div>
+                                    <div><b class="prz-fnd-pnt">4760</b><i><?=$MUI->getText('label-points')?></i></div>
                                 </div>
                             </div>
                             <div class="rls-txt-bk">
@@ -1222,13 +1184,70 @@
                         <div class="rls-r-t"><?=$MUI->getText('label-you')?> <b>|</b> 0 <b>|</b> 0</div>
                         <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=$MUI->getText('label-search')?></b></div><div class="ngm-cncl"><?=$MUI->getText('button-cancel')?></div></div>
 
-                        <div class="rls-r-ws">
-                            <b><?=$MUI->getText('label-best-players')?></b>
-                            <span><?=$MUI->getText('text-rating')?> <b>|</b> <?=$MUI->getText('label-games-played')?> <b>|</b> <?=$MUI->getText('label-wins')?></span>
+                        <div class="rls-mn-bk">
+                            <div class="cell">
+                                <div class="bt ngm-games" data-block="now"><?=$MUI->getText('button-online-games')?></div>
+                            </div>
+                            <div class="cell">
+                                <div class="bt ngm-create" data-block="new"><?=$MUI->getText('button-create-game')?></div>
+                            </div>
+                            <div class="cell">
+                                <div class="bt ngm-rating" data-block="top"><?=$MUI->getText('button-rating')?></div>
+                            </div>
                         </div>
 
-                        <ul class="rls-r-prs"></ul>
+                        <div class="blocks">
+                        <div class="new-bl">
+                            <div class="prc-but-cover"></div>
+                            <div class="prc-but-bk">
 
+                                <div class="prc-txt-bk">
+                                    <span class="icon-wallet" aria-hidden="true"></span> <?=$MUI->getText('text-choose-bet')?>
+                                </div>
+                                <div class="prc-bt"><?=$MUI->getText('button-points')?></div>
+                                <div class="prc-sel" data-currency="POINT">
+                                    <div class="prc-tl"><?=$MUI->getText('button-points')?></div>
+                                </div>
+
+                                <div class="prc-bt"><?=$MUI->getText('button-money')?></div>
+                                <div class="prc-sel" data-currency="MONEY">
+                                    <div class="prc-tl"><?=$MUI->getText('button-money')?></div>
+                                </div>
+
+                                <div class="prc-bt"><?=$MUI->getText('button-free')?></div>
+                                <div class="prc-sel" data-currency="FREE"><div data-price='POINT-0'><?=$MUI->getText('button-free')?></div></div>
+
+                                <div class="plr-bt">
+                                    <div class="prc-txt-bk">
+                                        <span class="icon-users" aria-hidden="true"></span> <?=$MUI->getText('text-choose-players')?>
+                                    </div>
+
+                                    <div class="plr-sel">
+                                        <div class="plr-tl"><?=$MUI->getText('button-players')?></div>
+                                    </div>
+                                </div>
+
+                                <!--div class="ngm-cncl">отмена</div-->
+                                <div class="ngm-go"><?=$MUI->getText('button-create')?></div>
+                            </div>
+                        </div>
+
+                        <div class="top-bl">
+                            <!--div class="rls-r-ws">
+                                <b><?=$MUI->getText('label-best-players')?></b>
+                                <span><?=$MUI->getText('text-rating')?> <b>|</b> <?=$MUI->getText('label-games-played')?> <b>|</b> <?=$MUI->getText('label-wins')?></span>
+                            </div-->
+                            <div class="prc-txt-bk"><?=$MUI->getText('button-money')?></div>
+                            <div class="prc-txt-bk"><?=$MUI->getText('button-points')?></div>
+                            <ul class="rls-r-prs top-mon"></ul>
+                            <ul class="rls-r-prs top-pnt"></ul>
+                        </div>
+
+                        <div class="now-bl">
+
+                        </div>
+
+                    </div>
                     </div>
 
                     <div class="b-cl-block"></div>

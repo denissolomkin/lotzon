@@ -17,8 +17,9 @@ class WebSocketController implements MessageComponentInterface {
     const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;
     const   CONNECTION_TIMER = 1800;
-    const   DEFAULT_MODE = 'POINT-0';
-    const   EMULATION = true;
+    const   COMISSION = 10; //percent
+    const   DEFAULT_MODE = 'POINT-0-2';
+    const   EMULATION = false;
 
     // private $_settings = array();
     // private $_bots     = array();
@@ -153,19 +154,20 @@ class WebSocketController implements MessageComponentInterface {
 
     public function runGame($name,$id,$action,$pid=null,$data=null)
     {
-        if($app=&$this->apps($name,$id)) {
+        if($app=$this->apps($name,$id)) {
             $this->_class = $class='\\' . $name;
             echo "###################################################\n".$this->time() . " " . "$name {$app->getIdentifier()} $action ".(empty($app->_bot) || !in_array($pid,$app->_bot) ? "игрок №" : 'бот №').$pid.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
 
-            if (!in_array($pid,$app->_bot) && ($action == 'replayAction' && !$this->checkBalance($pid, $app->getCurrency(), $app->getPrice()))) {
+            if (!in_array($pid,$app->_bot) && (($action == 'replayAction' || $action == 'startAction') && (!$this->checkBalance($pid, $app->getCurrency(), $app->getPrice())))) {
                 #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                if($client=$this->clients($pid))
+                if($client = $this->clients($pid))
                     $client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
                 #echo $this->time() . " " . "прошли проверку, устанавливаем клиента \n";
             } else {
 
-                if(isset($pid))
+                if(isset($pid)){
                     $app->setClient($pid);
+                }
 
                 #echo $this->time() . " " . "пробуем вызвать экшн \n";
                 if(!$app->_isOver OR $action != 'moveAction' ) {
@@ -192,7 +194,7 @@ class WebSocketController implements MessageComponentInterface {
                     if (!$app->isSaved()) {
                         echo $this->time(1) . " $name $id приложение завершилось, записываем данные\n";
                         $this->saveGame($app);
-                    } elseif (count($app->getClients()) < $app->getOption('p')) {
+                    } elseif ((count($app->getClients()) < $app->getOption('p') && !$app->getOption('f')) || !count($app->getClients())) {
                         echo $this->time(1) . " $name $id удаляем приложение \n";
                         $this->apps('unset', $name, $id);
                     }
@@ -251,7 +253,7 @@ class WebSocketController implements MessageComponentInterface {
                         'res' => array(
                             'money' => $balance['Money'],
                             'points' => $balance['Points'],
-                            'appName' => isset($_player['appName']) ? $_player['appName'] : '',
+                            //'appName' => isset($_player['appName']) ? $_player['appName'] : '',
                         )))
             );
 
@@ -267,7 +269,7 @@ class WebSocketController implements MessageComponentInterface {
 
             // EMULATION GAME
             if(self::EMULATION){
-                $mode='POINT-0';
+                $mode='POINT-0-2';
                 $name='Durak';
 
                 $this->apps('unset',$name);
@@ -308,7 +310,12 @@ class WebSocketController implements MessageComponentInterface {
                 if (isset($data->data))
                     $data = $data->data;
                 $action = (isset($data->action) ? $data->action : '') . 'Action';
-                $game = OnlineGamesModel::instance()->getGame($name);
+
+                if(!$game = OnlineGamesModel::instance()->getGame($name)){
+                    $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
+                    return;
+                }
+
                 $mode = ((isset($data->mode) AND $game->isMode($data->mode) ) ? $data->mode : self::DEFAULT_MODE);
 
                 if (!($client = $this->clients($player->getId())) || !($client instanceof ConnectionInterface)) {
@@ -349,7 +356,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                     } elseif ($action == 'startAction') {
 
-                                        list($currency, $price) = explode("-", $mode);
+                                        list($currency, $price, $number) = explode("-", $mode);
 
                                         if($this->checkBalance($player->getId(), $currency, $price)){
 
@@ -366,7 +373,7 @@ class WebSocketController implements MessageComponentInterface {
                                                 echo $this->time() . " " . "{$_player['appName']} Игрок {$from->resourceId} выписался из стека {$_player['appMode']}\n";
                                             }
 
-                                            echo $this->time() . " " . "$name Игрок {$from->resourceId} записался в стек {$currency}-{$price}\n";
+                                            echo $this->time() . " " . "$name Игрок {$from->resourceId} записался в стек $mode\n";
 
                                             $this->stack($name,$mode,$player->getId(),
                                                 (object) array(
@@ -384,8 +391,8 @@ class WebSocketController implements MessageComponentInterface {
 
                                             $stack = $this->stack($name,$mode);
                                             // если насобирали минимальную очередь
-                                            if (count($stack) >= $game->getOption('s')
-                                                AND count($stack) >= $game->getOption('p')) {
+                                            if ((count($stack) >= $game->getOption('s')
+                                                AND count($stack) >= $number) || $game->getOption('f')) {
 
                                                 // перемешали игроков
                                                 $keys = array_keys($stack);
@@ -395,14 +402,14 @@ class WebSocketController implements MessageComponentInterface {
                                                 foreach ($keys as $key) {
                                                     $clients[$key] = $stack[$key];
                                                     // дошли до необходимого числа и прервали
-                                                    if (count($clients) == $game->getOption('p')) {
+                                                    if (count($clients) == $number || $game->getOption('f')) {
                                                         $success = true;
                                                         break;
                                                     }
                                                 }
                                             }
 
-                                            if ($success || $game->getOption('f')) {
+                                            if ($success) {
                                                 $this->initGame($clients,$name,$mode,$player->getId());
                                             } else {
 
@@ -418,7 +425,7 @@ class WebSocketController implements MessageComponentInterface {
                                     }
 
                                     // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
-                                }  elseif (!($this->apps($name,$id))) {
+                                }  elseif (!($app=$this->apps($name,$id))) {
 
                                     if ($action == 'replayAction' || $action == 'quitAction') {
                                         echo $this->time() . " " . "id есть, но приложения $name $id нет, {$from->resourceId} $action заглушка\n";
@@ -434,6 +441,37 @@ class WebSocketController implements MessageComponentInterface {
 
                                     // если нет, сообщаем об ошибке
                                 } else {
+
+                                    if(!in_array($player->getId(),array_keys($app->getClients()))) {
+
+                                        $_player = $this->players($player->getId());
+                                        if (isset($_player['appName']) && isset($_player['appId']) && $this->apps($_player['appName'], $_player['appId'])) {
+
+                                            echo $this->time(0, 'DANGER') . " {$_player['appName']}" . " Игрок {$player->getId()} отправил запрос на новую при активной игре {$_player['appId']}\n";
+                                            $this->runGame($_player['appName'], $_player['appId'], 'startAction', $_player['Id']);
+                                            return;
+
+                                        } else if(!$app->getOption('v') && count($app->getClients())==$app->getNumberPlayers()){
+                                                $client->send(json_encode(array('error' => 'GAME_IS_FULL')));
+                                            return;
+
+                                        } else if(isset($_player['appMode'])) {
+                                            echo $this->time(1) . " {$_player['appName']}" . " Игрок {$player->getId()} запускает другую игру, пребывая в стеке {$_player['appMode']}\n";
+                                            $this->stack('unset', $_player['appName'], $_player['appMode'], $player->getId());
+                                        }
+                                        $_player['appName'] = $name;
+                                        $_player['appMode'] = $app->getMode();
+                                        $_player['appId'] = $id;
+
+                                        $this->players($player->getId(),$_player);
+
+                                        $app->addClient(array($player->getId()=>(object)array(
+                                            'time'      =>  time(),
+                                            'id'        =>  $player->getId(),
+                                            'avatar'    =>  $player->getAvatar(),
+                                            'lang'      =>  $player->getLang(),
+                                            'name'      =>  $player->getNicName())));
+                                    }
 
                                     #echo $this->time() . " " . "приложение нашли $name  $id\n";
                                     $this->runGame($name,$id,$action,$player->getId(),$data);
@@ -459,7 +497,26 @@ class WebSocketController implements MessageComponentInterface {
 
                         $date = mktime(0, 0, 0, date("n"), 1);
 
-                        // (SELECT count(distinct(Id))  FROM `PlayerGames` WHERE `GameId` = :gameid) `All`
+                        $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
+                        $sql = "SELECT SUM(Price) Total, Currency FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a  GROUP BY Currency";
+
+                        try {
+                            $sth = DB::Connect()->prepare($sql);
+                            $sth->execute(
+                                array(
+                                    ':gameid' => $game->getId(),
+                                    ':dt' => $date
+                                ));
+                        } catch (PDOException $e) {
+                            throw new ModelException("Error processing storage query", 500);
+                        }
+
+                        $fund = array();
+                        $comission = (self::COMISSION) / 100;
+                        foreach ($sth->fetchAll() as $data) {
+                            $fund[$data['Currency']] = $data['Currency'] == 'MONEY' ? ceil($data['Total'] * $comission * 100) / 100 : ceil($data['Total'] * $comission);
+                        }
+
 
                         $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`
                                         FROM `Players`
@@ -467,6 +524,7 @@ class WebSocketController implements MessageComponentInterface {
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
                                         WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>:dt AND `PlayerGames`.`Price`>0
                                         LIMIT 1";
+
                         #echo $this->time() . " SELECT PLAYER INFO" . "\n";
 
                         try {
@@ -474,10 +532,10 @@ class WebSocketController implements MessageComponentInterface {
                             $sth = DB::Connect()->prepare($sql);
                             $sth->execute(
                                 array(
-                                    ':id'       => $from->resourceId,
-                                    ':dt'       => $date,
-                                    ':gameid'   => $game->getId()
-                            ));
+                                    ':id' => $from->resourceId,
+                                    ':dt' => $date,
+                                    ':gameid' => $game->getId()
+                                ));
 
                         } catch (PDOException $e) {
                             throw new ModelException("Error processing storage query", 500);
@@ -488,100 +546,96 @@ class WebSocketController implements MessageComponentInterface {
                         }
 
                         $stat = $sth->fetch();
-                        // $stat['All'] /= $game->getOption('p');
+
+
+
+                    #echo $this->time() . " " . "Список текущих игр \n";
+
+                    $modes = $game->getModes();
+                    $res = array(
+                        'key'       => $game->getKey(),
+                        'audio' => array_filter($game->getAudio()),
+                        'modes' => (is_array($modes) && array_walk($modes, function (&$value, $index) {
+                            $value = array_keys($value);
+                        }) ? $modes : null),
+                        'fund'       => $fund,
+                        'count'      => $stat['Count'],
+                        'win'        => $stat['Win']*25,
+                        'maxPlayers' => $game->getOption('p'),
+                        'create'     => $game->getOption('f'),
+                    );
+
+                    $from->send(json_encode(array(
+                        'path' => $type, // 'update'
+                        'res' => $res)));
+
+                        break;
+
+                    case 'now':
+
+                        $games=array();
+
+                        foreach($this->apps($name) as $id => $game) {
+                            $players = array();
+                            foreach ($game->getPlayers() as $player)
+                                $players[] = $player['name'];
+
+                            $games[] = array(
+                                'id' => $id,
+                                'mode' => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                                'players' => $players
+                            );
+                        }
+
+                        foreach($this->stack($name) as $mode=>$clients)
+                            foreach($clients as $id=>$client){
+                                $games[]=array(
+                                    'id'=>0,
+                                    'mode'=>$mode,
+                                    'players'=>array($client->name)
+                                );
+                            }
+
+                        $res = array(
+                            'key'       => $game->getKey(),
+                            'now'       => $games,
+                        );
+
+                        $from->send(json_encode(array(
+                            'path' => $type, // 'now'
+                            'res' => $res)));
+
+                        break;
+
+                    case 'rating':
+
+                        $date = mktime(0, 0, 0, date("n"), 1);
 
                         $_rating = $this->rating($name);
 
                         if ($_rating AND $_rating['timeout'] > time()) {
-                            $top = $_rating['top'];
-                            $all = $_rating['all'];
+                            $top  = $_rating['top'];
                         } else {
 
-                            /*
-                                                    $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`,
-
-                                                    `Players`.`Id`, `Players`.`Nicname`, `Players`.`Avatar`
-                                                    FROM `Players`
-                                                    LEFT JOIN
-                                                    (SELECT count(Id)/count(DISTINCT(PlayerId)) FROM `PlayerGames` WHERE `GameId` = :gameid)
-
-                                                    LEFT JOIN `PlayerGames`
-                                                    ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                                                    WHERE `PlayerGames`.`GameId` = :gameid AND Count >
-                                                    GROUP BY `Players`.`Id`
-                                                    ORDER BY (`Win`/count(`PlayerGames`.`Id`)) DESC
-                                                    LIMIT 10";
-
-                                                    $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I,
-                                                    ( ( count(g.Id) / ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) * ( (sum(g.`Win`) /  count(g.Id) + 1) )
-                                                    +
-                                                    ( ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) / ( count(g.Id) + ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) ) * 1.5 )
-                                                    R
-                                                    FROM `PlayerGames` g
-                                                    LEFT JOIN Players p ON p.Id=g.PlayerId
-                                                    WHERE g.GameId = :gameid
-                                                    group by PlayerId
-                                                    having count(DISTINCT(g.`GameUid`))  > (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) OR g.PlayerId = :playerid
-                                                    ORDER By
-                                                    ( count(g.Id) / ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) * ( (sum(g.`Win`) /  count(g.Id) + 1) )
-                                                    +
-                                                    ( ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) / ( count(g.Id) + ( count(g.Id) + (count(DISTINCT(g.`GameUid`))/count(DISTINCT(g.`PlayerId`))) ) ) ) * 1.5
-                                                    LIMIT 11";
-
-                            $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)/count(g.Id)) R
-                                    FROM `PlayerGames` g
-                                    LEFT JOIN Players p On p.Id=g.PlayerId
-                                    where g.GameId = :gameid
-                                    group by g.PlayerId
-                                    having T > (SELECT (count(Id) / count(distinct(PlayerId)) / " . $class::GAME_PLAYERS . " ) FROM PlayerGames WHERE GameId = :gameid)
-                                    order by R DESC, T DESC
-                                    LIMIT 10";
-
-                            */
-
-
-                            $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
-
-                            try {
-                                $sth = DB::Connect()->prepare($sql);
-                                $sth->execute(
-                                    array(
-                                        ':gameid'   => $game->getId()
-                                    ));
-                            } catch (PDOException $e) {
-                                throw new ModelException("Error processing storage query", 500);
-                            }
-
-                            $all = $sth->fetchColumn(0);
-
-                            /*
-                            $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
-
-                            try {
-                                $sth = DB::Connect()->prepare($sql);
-                                $sth->execute(
-                                    array(
-                                        ':gameid'   => $game->getId()
-                                    ));
-                            } catch (PDOException $e) {
-                                throw new ModelException("Error processing storage query", 500);
-                            }
-
-                            $month = $sth->fetchColumn(0);
-                            */
-
-                            // (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` = :gameid GROUP BY `GameUid` , `Date` ) `All`)
-                             //  (SELECT (count(Id) / count(distinct(PlayerId)) / " . $game->getOption('p'). " ) FROM PlayerGames WHERE GameId = :gameid)
-
-                            $sql = "SELECT sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
+                            $sql = "(SELECT g.Currency Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0
+                                where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0 AND g.Currency='MONEY'
                                 group by g.PlayerId
                                 having T >
-                                (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` = :gameid AND `Date`>:dt GROUP BY `GameUid` , `Date` ) `All`) / count(*)
+                                (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` = :gameid AND `Date`>:dt AND Price>0 AND Currency='MONEY' GROUP BY `GameUid` , `Date` ) `All`) / count(*)
                                 order by R DESC, T DESC
-                                LIMIT 10";
+                                LIMIT 10)
+                                UNION
+                                (SELECT g.Currency Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
+                                FROM `PlayerGames` g
+                                JOIN Players p On p.Id=g.PlayerId
+                                where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0 AND g.Currency='POINT'
+                                group by g.PlayerId
+                                having T >
+                                (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` = :gameid AND `Date`>:dt AND Price>0 AND Currency='POINT' GROUP BY `GameUid`, `Date` ) `All`) / count(*)
+                                order by R DESC, T DESC
+                                LIMIT 10)";
 
                             #echo $this->time() . " SELECT TOP\n";
 
@@ -599,11 +653,11 @@ class WebSocketController implements MessageComponentInterface {
                             $top = array();
                             foreach ($sth->fetchAll() as $player) {
                                 $player['O'] = ((isset($this->players($player['I'])['appName']) && $this->players($player['I'])['appName'] == $name ? 1 : 0));
-                                $top[] = $player;
+                                $cur=$player['Currency'];unset($player['Currency']);
+                                $top[$cur][] = $player;
                             }
 
                             $this->rating($name,array(
-                                'all'     => $all,
                                 'top'     => $top,
                                 'timeout' => time() + 1 * 60
                             ));
@@ -611,20 +665,11 @@ class WebSocketController implements MessageComponentInterface {
                         }
 
                         #echo $this->time() . " " . "Топ + обновление данных игрока\n";
-                        $modes=$game->getModes();
+
                         $from->send(json_encode(array(
-                            'path' => 'update',
+                            'path' => $type, // 'update'
                             'res' => array(
-                                'all'   => $all,
-                                'count' => $stat['Count'],
-                                'win'   => $stat['Win']*25,
-                                'key'   => $game->getKey(),
-                                'audio' => array_filter($game->getAudio()),
-                                'modes' => (is_array($modes) && array_walk($modes, function(&$value, $index){ $value = array_keys($value); }) ? $modes : null),
-                                'online' => // кол-во ожидающих во всех стеках игры - количество стеков из-за рекурсии + кол-во игр * кол-во игроков
-                                    ((($stack = $this->stack($name)) ? count($stack, COUNT_RECURSIVE) - count($stack) : 0) +
-                                        (count($this->apps($name)) * $game->getOption('p'))) + ($game->getOption('b') ? rand(9,11) : 0),
-                                'top' => $top
+                                'top'      => $top,
                             ))));
 
                         break;
@@ -770,9 +815,12 @@ class WebSocketController implements MessageComponentInterface {
             echo $this->time(0,'ERROR')." "."onClose: #{$conn->resourceId} " . $conn->Session->getId() . " без Entity Player \n";
 
         if($this->clients($conn->resourceId)){
-            if($player = $this->players($conn->resourceId) && isset($player['appName']) && isset($player['appMode']) && $this->stack($player['appName'],$player['appMode'],$conn->resourceId)){
-                echo $this->time() . " {$player['appName']}" . "Игрок {$conn->resourceId} удален из стека {$player['appMode']} при выходе\n";
-                $this->stack('unset',$player['appName'],$player['appMode'],$conn->resourceId);
+            $_player = $this->players($conn->resourceId);
+            if(isset($_player['appName']) && isset($_player['appMode']) && $this->stack($_player['appName'],$_player['appMode'],$conn->resourceId)){
+                echo $this->time() . " {$_player['appName']}" . "Игрок {$conn->resourceId} удален из стека {$_player['appMode']} при выходе\n";
+                $this->stack('unset',$_player['appName'],$_player['appMode'],$conn->resourceId);
+                unset($_player['appName'],$_player['appMode']);
+                $this->players($conn->resourceId,$_player);
             }
 
             $this->clients('unset',$conn->resourceId);
@@ -931,8 +979,10 @@ class WebSocketController implements MessageComponentInterface {
         VALUES (?,?,?,?,?,?,?,?,?,?,?)".
             str_repeat(',(?,?,?,?,?,?,?,?,?,?,?)', count($app->getPlayers())-1);
 
-        if($app->getPrice())
+        if($app->getPrice()){
             $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES ";
+            $comission = (100 - self::COMISSION) / 100;
+        }
 
         $results = $transactions = array();
         $players = $app->getPlayers();
@@ -946,6 +996,9 @@ class WebSocketController implements MessageComponentInterface {
                 $win = isset($player['win']) ? $player['win'] : $player['result']*$app->getPrice();
                 if($currency=='Money')
                     $win *= CountriesModel::instance()->getCountry($this->players($player['pid'])['Country'])->loadCurrency()->getCoefficient();
+
+                if($win>0)
+                    $win = $currency=='Money' ? ceil($win * $comission * 100) / 100 : ceil($win * $comission);
 
                 /* update balance after game */
                 $sql="UPDATE Players SET ".$currency." = ".$currency.($win < 0 ? '' : '+').($win)." WHERE Id=".$player['pid'];

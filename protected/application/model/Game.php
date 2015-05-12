@@ -102,7 +102,7 @@ class Game
     }
 
 
-    public function replayAction($data=null)
+    public function readyAction($data=null)
     {
         #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
@@ -111,17 +111,54 @@ class Game
         $this->updatePlayer(array('ready' => 1), $clientId );
         $players = $this->getPlayers();
 
+        if(isset($this->getClient()->bot) AND !in_array($clientId,$this->_botReplay)){
+            $this->_botReplay[]=$clientId;
+        }
+
+        $ready = array();
+        foreach ($players as $player){
+            if (isset($player['ready']))// || isset($this->getClients()[$player['pid']]->bot))
+                $ready[$player['pid']] = $player;
+        }
+
+        if (count($ready) == count($players)) {
+
+            $this->unsetPlayers()
+                ->startAction();
+
+        } else {
+
+            $this->unsetCallback()
+                ->setResponse($this->getClient())
+                ->setCallback(array(
+                    'action' => 'ready',
+                    'ready'  => $ready
+                ));
+        }
+
+        #echo $this->time().' '. "Конец повтора игры\n";
+    }
+
+    public function replayAction($data=null)
+    {
+        #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
+        #echo " REPLAY  \n";
+
+        $clientId = $this->getClient()->id;
+        $this->updatePlayer(array('reply' => 1), $clientId );
+        $players = $this->getPlayers();
+
         if(isset($this->getClient()->bot) AND !in_array($this->getClient()->bot,$this->_botReplay)){
             $this->_botReplay[]=$this->getClient()->bot;
         }
 
-        $ready = 0;
+        $reply = 0;
         foreach ($players as $player){
-            if (isset($player['ready']))// || isset($this->getClients()[$player['pid']]->bot))
-                $ready += 1;
+            if (isset($player['reply']))// || isset($this->getClients()[$player['pid']]->bot))
+                $reply += 1;
         }
 
-        if ($ready == count($players)) {
+        if ($reply == count($players)) {
             $this->_isOver = 0;
             $this->_isSaved = 0;
             #echo $this->time().' '. "Переустановка игроков\n";
@@ -137,8 +174,8 @@ class Game
             $this->unsetCallback()
                 ->setResponse($this->getClient())
                 ->setCallback(array(
-                    'action' => 'ready',
-                    'ready' => $ready
+                    'action' => 'reply',
+                    'reply' => $reply
                 ));
         }
 
@@ -171,12 +208,13 @@ class Game
             'timeout'   => $this->currentPlayer()['timeout']-time(),
             'appId'       => $this->getIdentifier(),
             'appMode' => $this->getCurrency().'-'.$this->getPrice(),
+            'appName' => $this->getKey(),
             'players'   => $this->getPlayers(),
             'field'     => $this->getFieldPlayed(),
             'action'    => 'start'
         ));
 
-        $this->updatePlayer( array('ready','result') );
+        $this->updatePlayer( array('reply','ready','result') );
         $this->setResponse($this->getClients());
     }
 
@@ -511,7 +549,7 @@ class Game
         $order = 0;
         foreach ($clients as $id => $client){
 
-            if(count($clients)>2);
+            if($this->getNumberPlayers()>2);
                 $order++;
 
             if(isset($client->bot))
@@ -521,7 +559,6 @@ class Game
                 'pid' => $id,
                 'moves' => $this->getOption('m'),
                 'points' => 0,
-                'order' => $order,
                 'avatar' => $client->avatar,
                 'lang' => isset($client->lang)?$client->lang:'RU',
                 'name' => $client->name,
@@ -559,6 +596,14 @@ class Game
             unset($this->_clients[$id]);
         else
             unset($this->_clients);
+
+        return $this;
+    }
+
+    public function addClient($clients)
+    {
+        foreach($clients as $id => $client)
+            $this->_clients[$id]=$client;
 
         return $this;
     }

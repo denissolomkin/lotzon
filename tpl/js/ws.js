@@ -45,17 +45,22 @@ var conn;
                         path = data.path;
                         if(data.res) {
 
+                            if(data.res.appId && data.res.appId!=onlineGame.appId)
+                                onlineGame={};
+                            else if(onlineGame.winner)
+                                onlineGame['winner'] = null;
+
                             $.each(data.res, function( index, value ){
                                 onlineGame[index]=value;});
 
-                            if (onlineGame.appName)
-                                appName = onlineGame.appName;
+                            if (data.res.appName)
+                                appName = data.res.appName;
 
-                            if (onlineGame.appMode)
-                                appMode = onlineGame.appMode;
+                            if (data.res.appMode)
+                                appMode = data.res.appMode;
 
-                            if (onlineGame.appId) {
-                                appId = onlineGame.appId;
+                            if (data.res.appId) {
+                                appId = data.res.appId;
                                 data = null;
                             }
 
@@ -84,8 +89,6 @@ function WebSocketStatus(action, data) {
 /****************************************************
  *      WebSocketAjaxClient CallBack's              *
  ****************************************************/
-
-
 
 function stackCallback() {
     if($('.ngm-bk .rls-r-t').is(':visible')) {
@@ -130,53 +133,139 @@ function quitCallback() {
  function backCallback() {
      /*
       *  назад к описанию игры
-      */
+
      $('.ngm-bk .rls-r-ts').hide();
      $('.ngm-bk .rls-r-t').show();
      $('.ngm-bk .prc-but-cover').hide();
      $('.ngm-bk .prc-l').hide();
      $('.ngm-bk .rls-l').fadeIn(200);
+      */
+
+     $('.ngm-bk').fadeOut(200);
+     window.setTimeout(function(){
+         $('.ch-bk').fadeIn(200);
+     }, 200);
  }
+
+    /*
+     *  обновление данных
+     */
+    function ratingCallback(receiveData){
+
+        $('.ngm-rls .rls-r .preloader').remove();
+
+        if(receiveData.res.top){
+
+            html='';
+            if(receiveData.res.top.POINT)
+                $.each(receiveData.res.top.POINT, function( index, value ) {
+                    html+='<li><div class="prs-ph" style="background-image: url(';
+                    if(value.A)
+                        html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.I)/100)+"/"+value.A+"'";
+                    else
+                        html += "'../tpl/img/default.jpg'";
+                    html+=')"></div>' +
+                    '<div class="prs-ifo">' +
+                    '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
+                    '<div class="ifo">'+Math.ceil(value.R)+' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+'</div>   ' +
+                    '</div></li>';
+
+                });
+
+            $('.rls-r .rls-r-prs.top-pnt').html(html);
+
+            html='';
+            if(receiveData.res.top.MONEY)
+                $.each(receiveData.res.top.MONEY, function( index, value ) {
+                    html+='<li><div class="prs-ph" style="background-image: url(';
+                    if(value.A)
+                        html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.I)/100)+"/"+value.A+"'";
+                    else
+                        html += "'../tpl/img/default.jpg'";
+                    html+=')"></div>' +
+                    '<div class="prs-ifo">' +
+                    '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
+                    '<div class="ifo">'+Math.ceil(value.R)+' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+'</div>   ' +
+                    '</div></li>';
+
+                });
+
+            $('.rls-r .rls-r-prs.top-mon').html(html);
+
+        }
+    }
 
     /*
      *  обновление данных
      */
 function updateCallback(receiveData)
 {
+
+    // $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
+    // $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
+
+
     if(receiveData.res.points)
         updatePoints(receiveData.res.points);
+
     if(receiveData.res.money)
         updateMoney(receiveData.res.money);
-    if(receiveData.res.modes) {
+
+    if(receiveData.res.modes)
         appModes[receiveData.res.key] = receiveData.res.modes;
-        $('.ngm-bk .ngm-price').removeClass('button-disabled').removeAttr('disabled');
-    }
+
     if(receiveData.res.audio)
         appAudio[receiveData.res.key]=receiveData.res.audio;
-    if(receiveData.res.top){
-        $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
-        $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
+
+    if(receiveData.res.key) {
+
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+
         (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))+(parseInt(receiveData.res.count))):"0")+' <b>|</b> '+receiveData.res.count+' <b>|</b> '+
         (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))/25):"0")+'');
 
-        html='';
-        $.each(receiveData.res.top, function( index, value ) {
-            html+='<li><div class="prs-ph" style="background-image: url(';
-            if(value.A)
-                html += "'../filestorage/avatars/"+Math.ceil(parseInt(value.I)/100)+"/"+value.A+"'";
-            else
-                html += "'../tpl/img/default.jpg'";
-            html+=')"></div>' +
-            '<div class="prs-ifo">' +
-            '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
-            '<div class="ifo">'+Math.ceil(value.R)+' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+'</div>   ' +
-            '</div></li>';
+        $('.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .bt').removeClass('button-disabled').removeAttr('disabled');
+        $('.ngm-bk .cell .bt').first().click();
+    }
 
-        });
-        $('.rls-r .rls-r-prs').html(html);
+    if(receiveData.res.fund){
+        $('.prz-fnd-mon').text(receiveData.res.fund.MONEY?receiveData.res.fund.MONEY:0);
+        $('.prz-fnd-pnt').text(receiveData.res.fund.POINT?parseInt(receiveData.res.fund.POINT):0);
     }
 }
+
+    /*
+     *  обновление запущенных игр
+     */
+    function nowCallback(receiveData)
+    {
+
+        $('.ngm-rls .rls-r .preloader').remove();
+
+        html='';
+        if(receiveData.res.now && receiveData.res.now.length){
+            $.each(receiveData.res.now, function( index, value ) {
+                mode=value.mode.split('-');
+                number = mode[2];
+
+                html += '<div class="gm-now">' +
+                '<div class="gm-now-md"><b>'+(mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1])+'</b><i>'+(mode[0]=='MONEY'?getCurrency():'баллов')+'</i></div>' +
+                '<div class="gm-now-nmb"><span class="icon-users"></span> '+value.players.length + '/' + mode[2]+'</div>';
+
+                players = [];
+                $.each(value.players, function (i, player) {
+                    players.push(player);
+                });
+
+                html += '<div class="gm-now-plr">'+players.join(', ')+(value.players.length<mode[2]?'<span  data-id="'+value.id+'" data-mode="'+value.mode+'" class="icon-control-play"></span>':'')+"</div></div>";
+            });
+        } else {
+
+            html='<div class="gn-now-create">запущенных игр нет, создайте свою</div>';
+        }
+
+        $('.ngm-rls .rls-r .now-bl').html(html);
+
+    }
 
 
 // chat
@@ -201,7 +290,7 @@ function appSeaBattleCallback()
 {
 
      switch (onlineGame.action) {
-     case 'ready':
+     case 'reply':
          $('.re').hide();
          $('.ot-exit').html('Ожидаем соперника').show();
          break;
@@ -531,11 +620,36 @@ function appSeaBattleCallback()
         WebSocketAjaxClient(path,data);
     });
 
+// присоединиться в запущенную игру
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-plr span', function(e){
+
+        appMode = $(this).attr('data-mode');
+        appId = $(this).attr('data-id');
+
+            price = appMode.split('-');
+
+            if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
+
+                $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
+
+            } else {
+
+                var path = 'app/' + appName + '/' + appId;
+                var data = {'action': 'start', 'mode': appMode};
+                WebSocketAjaxClient(path, data);
+
+            }
+
+    });
+
+
 // записать в игровой стек
     $(document).on('click', '.ngm-bk .ngm-go', function(e){
 
-        if(appMode = $('.ngm-bk .prc-bl .prc-but-bk .prc-sel').find('.active').attr('data-price')) {
+        if(appMode = $('.ngm-bk .rls-r .new-bl .prc-sel').find('.active').attr('data-price')) {
             price = appMode.split('-');
+            appMode+='-'+($('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players')?$('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players'):2);
+
             if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
 
                 $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
@@ -577,12 +691,16 @@ function appSeaBattleCallback()
 
 // выйти из сыгранной игры
     $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .msg.winner .exit', function(e){
+
+        if($(this).hasClass('button-disabled')) return false;
+
         $(this).parent().find('.button').addClass('button-disabled').attr('disabled','disabled');
         var path='app/'+appName+'/'+appId;
         var data={'action':'quit'};
         WebSocketAjaxClient(path,data);
         appId=0;
         WebSocketAjaxClient('update/'+appName);
+
     });
 
 // выписаться из стека
@@ -603,26 +721,56 @@ function appSeaBattleCallback()
         WebSocketAjaxClient('update/'+appName);
     });
 
+// выписаться из стека + вернуться к играм
+    $(document).on('click', '.ngm-bk .bk-bt', function(e){
 
+        if($('.rls-r-t').is(":visible")) {
+            $('.ngm-bk').fadeOut(200);
+            window.setTimeout(function () {
+                $('.ch-bk').fadeIn(200);
+            }, 200);
+        } else {
+            appId = 0;
+            var path = 'app/' + appName + '/' + appId;
+            var data = {'action': 'back'};
+            WebSocketAjaxClient(path, data);
+        }
+    });
+
+// switch game info blocks
+    $(document).on('click', '.ngm-bk .cell .bt', function(e){
+        if($(this).hasClass('button-disabled')) return false;
+        $('.ngm-bk .cell .bt').removeClass('active');
+        $(this).addClass('active');
+        $('.ngm-bk .blocks > div').hide();
+        $('.ngm-bk .blocks .'+$(this).data('block')+'-bl').fadeIn(200);
+    });
 
 // open price block
-    $(document).on('click', '.ngm-bk .ngm-price', function(e){
-        if($('.ngm-bk .ngm-price').hasClass('button-disabled')) return false;
-        $('.ngm-bk .rls-l').hide();
-        $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel > div').removeClass('active');
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk').find('active').removeClass('active');
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').hide();
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt').removeClass('hidden').show();
+    $(document).on('click', '.ngm-bk .ngm-create', function(e){
+        if($(this).hasClass('button-disabled')) return false;
 
-        $('.prc-sel .prc-vl').remove();
+        $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
+        //$('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel > div').removeClass('active');
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl').find('active').removeClass('active');
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel').hide();
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt').removeClass('hidden').show();
+
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl').remove();
+
+        if(onlineGame.maxPlayers  && onlineGame.maxPlayers > 2 || 1) {
+            for(i=2;i<=onlineGame.maxPlayers ;i++)
+                $('<div class="plr-vl" data-players="'+i+'">'+i+'</div>').insertAfter($('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel div').first());
+            $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl').last().click();
+        } else {
+            $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt').hide();
+        }
 
         if(appModes && appModes[appName])
             $.each(appModes[appName], function (c, m) {
                 $.each(m, function (i,v) {
                     if(v>0)
-                        $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(c=='MONEY'?getCurrency(v,1):v)+'</div>').insertAfter($('.prc-sel[data-currency="'+c+'"] div').first());
+                        $('<div class="prc-vl" data-price="'+c+'-'+v+'">'+(c=='MONEY'?getCurrency(v,1):v)+'</div>').insertAfter($('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel[data-currency="'+c+'"] div').first());
                 });
             });
 
@@ -632,26 +780,54 @@ function appSeaBattleCallback()
                     $(this).prev().hide();
         });
 
-        $('.ngm-bk .prc-l').fadeIn(200);
+    });
+
+// open running games block
+    $(document).on('click', '.ngm-bk .ngm-games', function(e){
+        if($(this).hasClass('button-disabled')) return false;
+
+        if(!$('.ngm-rls .rls-r .preloader').length)
+            $('.ngm-rls .rls-r').append('<div class="preloader"></div>').find('.preloader').show();
+
+        WebSocketAjaxClient('now/'+appName);
+    });
+
+
+// open rating block
+    $(document).on('click', '.ngm-bk .ngm-rating', function(e){
+        if($(this).hasClass('button-disabled')) return false;
+
+        if(!$('.ngm-rls .rls-r .preloader').length)
+            $('.ngm-rls .rls-r').append('<div class="preloader"></div>').find('.preloader').show();
+
+        WebSocketAjaxClient('rating/'+appName);
     });
 
 // switch блоков ставок
-    $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt', function(e){
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt', function(e){
 
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').removeClass('active');
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').removeClass('active');
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel').hide();
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-bt.hidden').removeClass('hidden').show();
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl').removeClass('active');
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel').removeClass('active');
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel').hide();
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt.hidden').removeClass('hidden').show();
         $(this).addClass('hidden').hide().next().show().children(':not([style$="display: none;"])').last().addClass('active');
         $('.ngm-bk .ngm-go').removeClass('button-disabled').attr('disabled',false);
 
     });
 
+    
 // выбор ставки
-    $(document).on('click', '.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl', function(e){
-        $('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel .prc-vl').removeClass('active');
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl', function(e){
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl').removeClass('active');
         $(this).addClass('active');
     });
+
+// выбор игроков
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl', function(e){
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl').removeClass('active');
+        $(this).addClass('active');
+    });
+
 
 // сдаться
 $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
@@ -757,27 +933,26 @@ $(document).on('click', '.ngm-gm .gm-mx ul.mx li', function(e){
 <!-- NEW GAMES PREVIEW -->
 $('.ch-gm-tbl .ngm-bt').click(function(){
     hideAllGames();
-    appName=$(this).data('game');
-    $('.ngm-bk .ngm-price').addClass('button-disabled').attr('disabled','disabled');
-    $('.ngm-rls .gm-if-bk .l').text($(this).parent().find('.l').text());
+    appName = $(this).data('game');
+    $('.ngm-bk .blocks > div').hide();
+    $('.ngm-bk .cell .bt.active').removeClass('active');
+    $('.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt').addClass('button-disabled').attr('disabled','disabled');
+    $('.ngm-rls .gm-if-bk .l').text($('.ch-gm-tbl .ngm-bt[data-game="'+appName+'"]').parent().find('.l').text());
     $('.ngm-rls .rls-txt-bk').html($('#newgame-rules').find('div[data-game="'+appName+'"]').html());
-
-    $('.ngm-rls .rls-r .rls-r-prs').html('<div class="preloader"></div>').find('div').show();
+    $('.ngm-bk .ngm-rls-bk .rls-l .prz-fnd b').text('...');
+    if(!$('.ngm-rls .rls-r .preloader').length)
+        $('.ngm-rls .rls-r').append('<div class="preloader"></div>').find('.preloader').show();
     WebSocketAjaxClient('update/'+appName);
     $('.ch-bk').fadeOut(200);
     window.setTimeout(function(){
-        $('.ngm-bk').fadeIn(200);
+        $('.ngm-bk').removeClass().addClass('ngm-bk '+appName).fadeIn(200);
     }, 200);
 });
 
+    /*
 <!-- NEW GAME BACK -->
-$('.ngm-bk .bk-bt').on('click', function() {
-    $('.ngm-bk').fadeOut(200);
-    window.setTimeout(function(){
-        $('.ch-bk').fadeIn(200);
-    }, 200);
-});
-
+$('.ngm-bk .bk-bt').on('click', function() {});
+*/
 
     function checkFieldSeaBattle(newship,id) {
 
@@ -994,7 +1169,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
         switch (onlineGame.action) {
 
-            case 'ready':
+            case 'reply':
                 $('.re').hide();
                 $('.ot-exit').html('Ожидаем соперника').show();
                 break;
@@ -1162,6 +1337,12 @@ $('.ngm-bk .bk-bt').on('click', function() {
         }
     }
 
+// DurakRevert
+    function appDurakRevertCallback(action)
+    {
+        appDurakCallback(action)
+    }
+
 // Durak
     function appDurakCallback(action)
     {
@@ -1170,7 +1351,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
         switch (action) {
 
-            case 'ready':
+            case 'reply':
                 $('.re').hide();
                 $('.ot-exit').html('Ожидаем соперника').show();
                 break;
@@ -1181,36 +1362,45 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
             case 'start':
             case 'move':
+            case 'wait':
 
 
                 $(".ui-droppable").droppable("destroy");
                 $('.m .card.draggable').draggable("destroy");
+                console.log(onlineGame.action);
 
-                if(onlineGame.action=='start') {
+                if(onlineGame.action!='move') {
                     hideAllGames();
                     runGame();
                     $('.ngm-bk .ngm-gm').addClass('cards');
                     $('.ngm-rls').fadeOut(200);
 
-                    console.log('start');
                     fields = [];
-                    if(onlineGame.players){
+                    if(players = onlineGame.players){
+
+                        if(onlineGame.action=='wait'){
+                            var player = {"avatar":"","name":"ждем..."};
+                            for(i=Object.size(players);i<onlineGame.playerNumbers;i++) {
+                                index = 0 - i;
+                                players[index] = player;
+                            }
+                        }
 
                         //players = [];
                         //while(onlineGame.players.length!=players.length){
                         //    $.each(onlineGame.players, function( index, value ) {})
                         // }
 
-                        $.each(onlineGame.players, function( index, value ) {
+                        $.each(players, function( index, value ) {
 
-                            div = '<div class="player' + index + (index == playerId ? ' m' : ' o col'+( Object.size(onlineGame.players)-1)) + '"></div>';
+                            div = '<div class="player' + index + (index == playerId ? ' m' : ' o col'+( Object.size(players)-1)) + '"></div>';
                             if(value.order>onlineGame.players[playerId].order)
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players').append(div);
                             else
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players').prepend(div);
 
 
-                            value.avatar = value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('../tpl/img/default.jpg')";
+                            value.avatar = index < 0 ? "url(../tpl/img/preloader.gif)": (value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('../tpl/img/default.jpg')");
 
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index).append(
                                 '<div class="gm-pr">' +
@@ -1246,7 +1436,6 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
 
                 } else {
-                    console.log('move');
                 }
 
                 if(onlineGame.fields){
@@ -1331,7 +1520,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
                                 if($($('#tm').countdown('getTimes')).get(-1) != onlineGame.timeout || !$('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length){
                                     console.log('remove');
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
-                                    $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('-webkit-animation-duration',onlineGame.timeout+'s');
+                                    $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration',onlineGame.timeout+'s');
                                 }
                             } else {
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
@@ -1402,7 +1591,7 @@ $('.ngm-bk .bk-bt').on('click', function() {
 
                 if(onlineGame.beater == playerId && $('.ngm-gm .gm-mx .table .cards').length){
 
-                    if($('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
+                    if($('.ngm-gm .gm-mx').hasClass('DurakRevert') && $('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
                         $('.ngm-gm .gm-mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
 
@@ -1481,7 +1670,7 @@ function appWhoMoreCallback()
 
     switch (onlineGame.action) {
 
-        case 'ready':
+        case 'reply':
             $('.re').hide();
             $('.ot-exit').html('Ожидаем соперника').show();
             break;
@@ -1696,7 +1885,7 @@ function appWhoMoreCallback()
 
         switch (onlineGame.action) {
 
-            case 'ready':
+            case 'reply':
                 $('.re').hide();
                 $('.ot-exit').html('Ожидаем соперника').show();
                 break;
@@ -1931,8 +2120,8 @@ function appWhoMoreCallback()
     }
     
     function runGame(){
-        $('.ngm-bk .ngm-gm').removeClass().addClass('ngm-gm');
-        $('.ngm-rls .gm-if-bk .l').text($(this).parent().find('.l').text());
+        $('.ngm-bk .ngm-gm').removeClass().addClass('ngm-gm').addClass(appName);
+        $('.ngm-rls .gm-if-bk .l').text($('.ch-gm-tbl .ngm-bt[data-game="'+appName+'"]').parent().find('.l').text());
         $('.ngm-rls .rls-txt-bk').html($('#newgame-rules').find('div[data-game="'+appName+'"]').html());
         $('.ngm-bk .msg').hide();
         $('.ch-bk').fadeOut(200);

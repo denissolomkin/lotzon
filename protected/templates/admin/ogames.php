@@ -113,6 +113,11 @@
                                     </div>
                                     <div class="input-group">
 
+                                        <span class="input-group-addon"><i class="fa fa-eye"></i></span>
+                                        <input type="checkbox" name='game[Field][v]' data-toggle="toggle">
+                                    </div>
+                                    <div class="input-group">
+
                                         <span class="input-group-addon"><i class="fa fa-flag-checkered"></i></span>
                                         <input type="checkbox" name='game[Field][f]' data-toggle="toggle">
                                     </div>
@@ -279,6 +284,10 @@
                 on: 'Enabled',
                 off: 'Disabled'
             }).bootstrapToggle((game.Field.f == 1 || game.Field.f == 'on' ? 'on' : 'off'));
+            holder.find('[name="game[Field][v]"]').bootstrapToggle({
+                on: 'Enabled',
+                off: 'Disabled'
+            }).bootstrapToggle((game.Field.v == 1 || game.Field.v == 'on' ? 'on' : 'off'));
 
             if (game.Key) {
                 $('#editGame button[data-tab="text"]').next().attr('data-tab', 'image');
@@ -377,7 +386,8 @@
                 ' <i class="fa fa-arrows-v"></i>' + game.Field.y +
                 ' <i class="fa fa-trophy"></i>' + game.Field.w +
                 (game.Field.b ? '<i class="fa fa-plug"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-plug fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')+
-                (game.Field.f ? '<i class="fa fa-flag-checkered"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-flag-checkered fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')
+                (game.Field.f ? '<i class="fa fa-flag-checkered"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-flag-checkered fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')+
+                (game.Field.v ? '<i class="fa fa-eye"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-eye fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')
             );
             holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
 

@@ -12,7 +12,7 @@ class Durak extends Game
     );
 
     const   CARDS_ON_THE_HANDS = 6;
-    const   SHIFT_MODE = false;
+    const   REVERT_MODE = false;
 
     protected $_trump = null;
     protected $_trump_card = null;
@@ -66,76 +66,95 @@ class Durak extends Game
         #echo $this->time().' '. "Старт\n";
         $this->unsetCallback();
 
-        if (!$this->getPlayers()) {
-            #echo $this->time().' '. "Первичная установка игроков\n";
-            $this->setPlayers($this->getClients(), false)
-                ->generateField() // перетасовали и расдали карты, назначили козырь
-                ->currentPlayers(array($this->initStarter())) // текущий = первая рука, определили первую руку
-                ->nextPlayer(true) // добавили таймеры
-                ->setBeater($this->nextPlayer('getBeater')) // установили отбивающегося
-                ->setWinner(array()) // обнулили победителя
-                ->setLoser(null) // обнулили победителя
-                ->setTime(time()); // время игры заново
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
-            print_r($this->getPlayers());
-        }
+        if ($this->getNumberPlayers() != count($this->getClients())) {
 
-        $this->setResponse($this->getClients());
-        $fields = $this->getField();
-
-        if ($this->getLoser()){
-            echo "нашли програвшего!!";
+            $this->setPlayers($this->getClients(), false);
+            $this->setResponse($this->getClients());
             $this->setCallback(array(
-                'winner'    => $this->getWinner(),
-                'loser'    => $this->getLoser(),
-                'fields'    => $fields,
-                'price'     => $this->getPrice(),
-                'currency'  => $this->getCurrency(),
-                'appId'     => $this->getIdentifier(),
-                'appMode'   => $this->getCurrency() . '-' . $this->getPrice(),
-                'beater'    => $this->getBeater(),
-                'starter'   => $this->getStarter(),
-                'current'   => $this->currentPlayers(),
-                'timeout'   => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
-                'players'   => $this->getPlayers(),
-                'trump'     => $this->getTrump('full'),
-                'action'    => 'start'
+                'price' => $this->getPrice(),
+                'playerNumbers' => $this->getNumberPlayers(),
+                'currency' => $this->getCurrency(),
+                'appId' => $this->getIdentifier(),
+                'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
+                'appName' => $this->getKey(),
+                'players' => $this->getPlayers(),
+                'action' => 'wait'
             ));
+
         } else {
-            /*
-             * заменяем все хранимые поля-массивы пустыми массивами, за исключением поля "стол"
-             */
-            $count_off = 0;
-            foreach ($fields as $key => &$field) {
-                if (!in_array($key, array('off', 'table')))
-                    $field = array_pad(array(), count($field), null);
-
-                if ($key == 'off' && count($field)) {
-                    foreach ($field as $round)
-                        $count_off += count($round, COUNT_RECURSIVE) - count($round);
-                    $field = array_pad(array(), $count_off, null);
-                }
+            if (!$this->getPlayers() || $this->getNumberPlayers() != count($this->getPlayers())) {
+                #echo $this->time().' '. "Первичная установка игроков\n";
+                $this->setPlayers($this->getClients(), false)
+                    ->generateField()// перетасовали и расдали карты, назначили козырь
+                    ->currentPlayers(array($this->initStarter()))// текущий = первая рука, определили первую руку
+                    ->nextPlayer(true)// добавили таймеры
+                    ->setBeater($this->nextPlayer('getBeater'))// установили отбивающегося
+                    ->setWinner(array())// обнулили победителя
+                    ->setLoser(null)// обнулили победителя
+                    ->setTime(time()); // время игры заново
+                $this->_isOver = 0;
+                $this->_isSaved = 0;
+                print_r($this->getPlayers());
             }
 
-            foreach ($this->getClients() as $client) {
-                if (!isset($client->bot)) {
+            $this->setResponse($this->getClients());
+            $fields = $this->getField();
 
-                    $this->setCallback(array(
-                        'appId'     => $this->getIdentifier(),
-                        'appMode'   => $this->getCurrency() . '-' . $this->getPrice(),
-                        'beater'    => $this->getBeater(),
-                        'starter'   => $this->getStarter(),
-                        'current'   => $this->currentPlayers(),
-                        'timeout'   => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
-                        'players'   => $this->getPlayers(),
-                        'fields'    => array($client->id => $this->getField()[$client->id]) + $fields,
-                        'trump'     => $this->getTrump('full'),
-                        'action'    => 'start'
-                    ), $client->id);
+            if ($this->getLoser()) {
+                echo "нашли програвшего!!";
+                $this->setCallback(array(
+                    'winner' => $this->getWinner(),
+                    'loser' => $this->getLoser(),
+                    'fields' => $fields,
+                    'price' => $this->getPrice(),
+                    'currency' => $this->getCurrency(),
+                    'appId' => $this->getIdentifier(),
+                    'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
+                    'appName' => $this->getKey(),
+                    'beater' => $this->getBeater(),
+                    'starter' => $this->getStarter(),
+                    'current' => $this->currentPlayers(),
+                    'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
+                    'players' => $this->getPlayers(),
+                    'trump' => $this->getTrump('full'),
+                    'action' => 'start'
+                ));
+            } else {
+                /*
+                 * заменяем все хранимые поля-массивы пустыми массивами, за исключением поля "стол"
+                 */
+                $count_off = 0;
+                foreach ($fields as $key => &$field) {
+                    if (!in_array($key, array('off', 'table')))
+                        $field = array_pad(array(), count($field), null);
+
+                    if ($key == 'off' && count($field)) {
+                        foreach ($field as $round)
+                            $count_off += count($round, COUNT_RECURSIVE) - count($round);
+                        $field = array_pad(array(), $count_off, null);
+                    }
                 }
-            }
 
+                foreach ($this->getClients() as $client) {
+                    if (!isset($client->bot)) {
+
+                        $this->setCallback(array(
+                            'appId' => $this->getIdentifier(),
+                            'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
+                            'appName' => $this->getKey(),
+                            'beater' => $this->getBeater(),
+                            'starter' => $this->getStarter(),
+                            'current' => $this->currentPlayers(),
+                            'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
+                            'players' => $this->getPlayers(),
+                            'fields' => array($client->id => $this->getField()[$client->id]) + $fields,
+                            'trump' => $this->getTrump('full'),
+                            'action' => 'start'
+                        ), $client->id);
+                    }
+                }
+
+            }
         }
     }
 
@@ -720,6 +739,8 @@ class Durak extends Game
     }
 
     public function checkRevert($playerId=null, $card=null){ // $check == playerId OR candidate
+
+        if(!self::REVERT_MODE) return false;
 
         $check = false;
         $playerId = $playerId ? : $this->getClient()->id;

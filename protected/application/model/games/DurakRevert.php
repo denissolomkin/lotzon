@@ -2,7 +2,7 @@
 
 Application::import(PATH_APPLICATION . 'model/Games/Durak.php');
 
-class DurakShift extends Durak
+class DurakRevert extends Durak
 {
-    const   SHIFT_MODE = true;
+    const   REVERT_MODE = true;
 }

@@ -91,6 +91,7 @@ class SeaBattle extends Game
                         'timeout' => (isset($currentPlayer['timeout']) ? $currentPlayer['timeout'] : time() + 1) - time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
                         'appId' => $this->getIdentifier(),
                         'appMode' => $this->getCurrency().'-'.$this->getPrice(),
+                        'appName' => $this->getKey(),
                         'players' => $this->getPlayers(),
                         'fields' => $fields,//$this->getField(),// $fields,
                         'action' => 'start'
@@ -104,6 +105,7 @@ class SeaBattle extends Game
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
+                'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
                 'fields' => array($this->getClient()->id => $this->getField()[$this->getClient()->id]),
                 'action' => 'wait',
@@ -115,6 +117,7 @@ class SeaBattle extends Game
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
+                'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
                 'ships' => $this->_ships,
                 'action' => 'field'
@@ -166,25 +169,27 @@ class SeaBattle extends Game
             #echo $this->time().' '. 'разница времени после пасса '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
             $this->nextPlayer();
             #echo $this->time().' '. 'разница времени после перехода '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
-        }
+        } elseif (count($this->getField()) == count($this->getClients())) {
+            if ($winner = $this->checkWinner())
+                $this->setCallback(array(
+                    'winner' => $winner['pid'],
+                    'fields' => $this->getField(),
+                    'price' => $this->getPrice(),
+                    'currency' => $this->getCurrency()));
 
-        if ($winner = $this->checkWinner())
+
+            $currentPlayer = $this->currentPlayer();
+
             $this->setCallback(array(
-                'winner' => $winner['pid'],
-                'fields' => $this->getField(),
-                'price' => $this->getPrice(),
-                'currency' => $this->getCurrency()));
+                'current' => $this->currentPlayer()['pid'],
+                'timeout' => (isset($currentPlayer['timeout']) ? $currentPlayer['timeout'] : time() + 1) - time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
+                'players' => $this->getPlayers(),
+                'action' => 'move'
+            ));
 
-        $currentPlayer = $this->currentPlayer();
-
-        $this->setCallback(array(
-            'current' => $this->currentPlayer()['pid'],
-            'timeout' => (isset($currentPlayer['timeout']) ? $currentPlayer['timeout'] : time() + 1) - time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
-            'players' => $this->getPlayers(),
-            'action' => 'move'
-        ));
-
-        $this->setResponse($this->getClients());
+            $this->setResponse($this->getClients());
+        } else
+            $this->startAction($data);
         #echo $this->time().' '. "Конец тайм-аута \n";
     }
 
