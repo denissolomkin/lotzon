@@ -15,7 +15,7 @@ class WebSocketController implements MessageComponentInterface {
 
     const   MIN_WAIT_TIME = 2;//15;
     const   MAX_WAIT_TIME = 600;//600;
-    const   PERIODIC_TIMER = 200;//2
+    const   PERIODIC_TIMER = 2;//2
     const   CONNECTION_TIMER = 1800;
     const   COMISSION = 10; //percent
     const   DEFAULT_MODE = 'POINT-0-2';
@@ -625,26 +625,28 @@ class WebSocketController implements MessageComponentInterface {
 
                         $games=array();
 
-                        foreach($this->apps($appName) as $id => $game) {
-                            $players = array();
-                            foreach ($game->getPlayers() as $player)
-                                $players[] = $player['name'];
+                        if(is_array($this->apps($appName)))
+                            foreach($this->apps($appName) as $id => $game) {
+                                $players = array();
+                                foreach ($game->getPlayers() as $player)
+                                    $players[] = $player['name'];
 
-                            $games[] = array(
-                                'id' => $id,
-                                'mode' => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
-                                'players' => $players
-                            );
-                        }
-
-                        foreach($this->stack($appName) as $mode=>$clients)
-                            foreach($clients as $id=>$client){
-                                $games[]=array(
-                                    'id'=>0,
-                                    'mode'=>$mode,
-                                    'players'=>array($client->name)
+                                $games[] = array(
+                                    'id' => $id,
+                                    'mode' => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                                    'players' => $players
                                 );
                             }
+
+                        if(is_array($this->stack($appName)))
+                            foreach($this->stack($appName) as $mode=>$clients)
+                                foreach($clients as $id=>$client) {
+                                    $games[] = array(
+                                        'id' => 0,
+                                        'mode' => $mode,
+                                        'players' => array($client->name)
+                                    );
+                                }
 
                         $res = array(
                             'key'       => $game->getKey(),

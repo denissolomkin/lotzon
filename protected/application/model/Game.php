@@ -593,7 +593,7 @@ class Game
 
     public function setClient($client)
     {
-        $this->_client=$this->getClients()[$client];
+        $this->_client=$this->getClients($client);
 
         return $this;
     }
@@ -700,7 +700,7 @@ class Game
 
     public function getOption($key)
     {
-        return $this->_gameOptions[$key];
+        return isset($this->_gameOptions[$key]) ? $this->_gameOptions[$key] : false;
     }
 
     public function setKey($key)
