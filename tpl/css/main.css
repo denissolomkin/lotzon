@@ -894,7 +894,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-l .rw-t,.ngm-bk .ngm-rls-bk .prc-l .rw-t {display:table-row;height:65px;}
 .ngm-bk .ngm-rls-bk .rls-l .bk-bt,.ngm-bk .ngm-rls-bk .prc-l .bk-bt-rl {height:34px;vertical-align:middle;padding-left:20px;background:url("../img/but-arrow-left.png") no-repeat left center;font:12px/15px Handbook-bold;color:#383838;text-transform:uppercase;float:left;cursor:pointer;margin-top:10px;}
 .ngm-bk .ngm-rls-bk .rls-l .bk-bt > span,.ngm-bk .ngm-rls-bk .prc-l .bk-bt-rl > span {display:inline-block;}
-.ngm-bk .ngm-rls-bk .rls-l .gm-if-bk {padding:13px 0 20px 0;overflow:hidden;color:#000;width:100%;text-align:left;display:table;}
+.ngm-bk .ngm-rls-bk .rls-l .gm-if-bk {padding:13px 0 15px 0;overflow:hidden;color:#000;width:100%;text-align:left;display:table;}
 .ngm-bk .ngm-rls-bk .rls-l .gm-if-bk .l {font:20px/1 Handbook-bold;text-transform:uppercase;display:table-cell;vertical-align:top;width:100%;}
 .ngm-bk .ngm-rls-bk .rls-l .gm-if-bk .r {font:11px/1 Handbook-bold;text-transform:uppercase;padding:0 20px 0 5px;text-align:center;display:table-cell;vertical-align:top;height:40px;}
 .ngm-bk .ngm-rls-bk .rls-l .gm-if-bk .r > b {display:block;font-size:30px;margin-top:-5px;}
@@ -923,12 +923,12 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-nmb span{display: block;}
 
 .ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk, .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk {display:table;width:100%;margin-bottom:14px;}
-.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk {padding: 10px;background-color: #efefef;width: 352px;}
+.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk {padding: 10px 10px 0;background-color: #efefef;width: 352px;}
 
 .ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell, .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l, .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r {display:table-cell;vertical-align:middle;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell, .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l {width:130px;}
 
-.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt {width:100%;height:50px;font:15px/15px Handbook-bold;text-transform:uppercase;text-align:left;cursor:pointer;position: relative;  background: url('../img/games/online-games-sprite.png') no-repeat;  background-position: -68px -19px;}
+.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt {width:100%;height:45px;font:15px/15px Handbook-bold;text-transform:uppercase;text-align:left;cursor:pointer;position: relative;  background: url('../img/games/online-games-sprite.png') no-repeat;  background-position: -68px -19px;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt.active{  background: url('../img/games/online-games-sprite.png') no-repeat;background-position: -5px -19px;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt:before{
     width: 35px;
