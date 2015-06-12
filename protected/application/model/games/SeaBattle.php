@@ -47,6 +47,7 @@ class SeaBattle extends Game
             $this->setWinner(null);
             $this->_isOver = 0;
             $this->_isSaved = 0;
+            $this->_isRun = 1;
         }
 
         foreach($this->_bot as $bot) {
@@ -266,6 +267,7 @@ class SeaBattle extends Game
         if ($ready == count($players)) {
             $this->_isOver = 0;
             $this->_isSaved = 0;
+            $this->_isRun = 1;
             #echo $this->time().' '. "Переустановка игроков\n";
 
             $this->unsetFieldPlayed()
@@ -464,6 +466,7 @@ class SeaBattle extends Game
                 $this->updatePlayer(array('result' => 2), current($winner)['player']['pid']);
                 $this->setTime(time());
                 $this->_isOver      = 1;
+                $this->_isRun = 0;
                 $this->_botReplay   = array();
                 $this->_botTimer    = array();
                 return current($winner)['player'];

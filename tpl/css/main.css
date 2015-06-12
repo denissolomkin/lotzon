@@ -413,7 +413,7 @@ article .infos {padding:40px 20px 0 20px;}
 
 .infos .i-rbk .reviews .rv-add-frm .rv-usr-avtr {width: 50px; height:50px;}
 .infos .i-rbk .reviews .rv-add-frm .rv-usr-avtr img{max-width: 50px; max-height:50px; float: right;}
-.infos .i-rbk .reviews .rv-add-frm .rv-upld-img {cursor:pointer}
+.infos .i-rbk .reviews .rv-add-frm .rv-upld-img {cursor:pointer;width: 50px;}
 .infos .i-rbk .reviews .rv-add-frm .rv-image{padding: 40px;width: 550px;height:50px;background:#e1ecee;}
 /*.infos .i-rbk .reviews .rv-add-frm .rv-image{padding: 20px 40px 20px 110px;width: 480px;}
 .infos .i-rbk .reviews .rv-add-frm .rv-image img{display:none;}*/
@@ -1111,7 +1111,7 @@ article .infos {padding:40px 20px 0 20px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .players .m {position: absolute;top: 350px;  width: 100%;  height: 200px;  margin-left: -150px; }
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .card{transform-origin: 50% 100%; margin-right: -40px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .card:hover, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .card:hover, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-ready:hover, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 80px;margin: 0; }
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-ph {width: 60px;height: 60px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 0px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 65px;width: 65px;margin: 8px;float:right;border-radius: 80px;padding: 7px 10px;box-sizing: border-box;bottom:0;}
@@ -1126,8 +1126,8 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-nm { display: none;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .tm {  margin: 5px 0 0 -200px;background: none;color: black;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl { margin: 15px 30px;  float: left; width: 130px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-pass{display: block;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-pass, .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .btn-ready {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-pass, .ngm-bk .ngm-gm.cards .gm-mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-ready{display: block;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-cl .msg-move{width: 100%;display: none;  height: 50px;color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m.starter .gm-pr .pr-cl .msg-move{display: block;}
 
@@ -1135,8 +1135,12 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .col1 {padding-left: 260px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .col2 {padding-left: 140px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .col3 {padding-left: 80px;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .exit {  position: absolute;top: 0;left: 0;margin: 15px;border-radius: 10px;padding: 10px;width: 50px;height: 30px;background-color: rgba(255,255,255,0.3); cursor: pointer;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .exit:hover{background-color: rgba(255,255,255,0.5);}
+.ngm-bk .ngm-gm.cards .gm-mx .players .exit span {color: white;font-size: 30px;}
+
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-top: 40px;width: 70px; height: 108px; background-position: -1430px 0px; border-radius: 5px;}
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  margin: 0;  }
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  margin: 0 0 0 5px;  }
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 60px;  height: 60px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: relative; box-shadow: 0px 0px 10px;  margin: 30px 0 0 0px;border-radius: 50px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.6);  color: #ffffff;    top: 60px; padding:2px; position: absolute;border-radius: 3px;font: 15px/1 Handbook-regular;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 5px;}
@@ -1160,7 +1164,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards.revert.highlight .card {border-color:rgb(200,0,0);}
 
 .ngm-bk .ngm-gm.cards .gm-mx .off {width: 20px;}
-.ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7);position: absolute; }
+.ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7);position: absolute; margin-left: -40px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .deck {position: relative;  }
 .ngm-bk .ngm-gm.cards .gm-mx .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);}

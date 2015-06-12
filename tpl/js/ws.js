@@ -45,13 +45,15 @@ var conn;
                         path = data.path;
                         if(data.res) {
 
-                            if(data.res.appId && data.res.appId!=onlineGame.appId)
-                                onlineGame={};
-                            else if(onlineGame.winner)
+                            if(data.res.appId && data.res.appId!=onlineGame.appId) {
+                                onlineGame = {};
+                            } else if(onlineGame.winner) {
                                 onlineGame['winner'] = null;
+                            }
 
-                            $.each(data.res, function( index, value ){
-                                onlineGame[index]=value;});
+                            $.each(data.res, function( index, value ) {
+                                onlineGame[index]=value;
+                            });
 
                             if (data.res.appName)
                                 appName = data.res.appName;
@@ -118,11 +120,30 @@ function cancelCallback() {
 }
 
 function quitCallback() {
+
+    appId=0;
+    WebSocketAjaxClient('update/'+appName);
+    $('.ngm-bk .tm').countdown('pause');
+
     if($('.ngm-bk .ngm-gm .gm-mx .msg.winner .button.exit').hasClass('button-disabled')) {
+
         /*
          *  выход из игры и возврат к правилам
          */
+
         $('.ngm-bk .ngm-gm .gm-mx .msg.winner .button').removeClass('button-disabled').removeAttr('disabled');
+        $('.ngm-bk .rls-r-ts').hide();
+        $('.ngm-bk .rls-r-t').show();
+        $('.ngm-bk .prc-but-cover').hide();
+        $('.ngm-rls').fadeIn(200);
+
+    } else if($('.ngm-bk .ngm-gm .gm-mx .players .exit').is(":visible")){
+
+        /*
+         *  выход из игры и возврат к правилам
+         */
+
+        $('.ngm-bk .ngm-gm .gm-mx .players .exit').removeClass('button-disabled');
         $('.ngm-bk .rls-r-ts').hide();
         $('.ngm-bk .rls-r-t').show();
         $('.ngm-bk .prc-but-cover').hide();
@@ -698,8 +719,22 @@ function appSeaBattleCallback()
         var path='app/'+appName+'/'+appId;
         var data={'action':'quit'};
         WebSocketAjaxClient(path,data);
-        appId=0;
-        WebSocketAjaxClient('update/'+appName);
+
+    });
+
+// выйти из неначатой игры
+    $(document).on('click', '.ngm-bk .ngm-gm .gm-mx .players .exit', function(e){
+
+        if($(this).hasClass('button-disabled')) return false;
+
+        $(this).addClass('button-disabled');
+
+        window.setTimeout(function () {
+            $(this).removeClass('button-disabled');
+        }, 1000);
+        var path='app/'+appName+'/'+appId;
+        var data={'action':'quit'};
+        WebSocketAjaxClient(path,data);
 
     });
 
@@ -752,8 +787,9 @@ function appSeaBattleCallback()
 
         $('.ngm-bk .ngm-go').addClass('button-disabled').attr('disabled','disabled');
         //$('.ngm-bk .ngm-rls-bk .prc-l .prc-but-bk .prc-sel > div').removeClass('active');
-        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl').find('active').removeClass('active');
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl').find('.active').removeClass('active');
         $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel').hide();
+
         $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt').removeClass('hidden').show();
 
         $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl').remove();
@@ -872,6 +908,15 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
         $(this).parent().find('.audio').addClass('icon-volume-2').removeClass('icon-volume-off');
         $.cookie("audio", 1, { expires : 100 });
     }
+    });
+
+// готов при наборе необходимого количества игроков
+    $(document).on('click', '.ngm-gm .gm-mx .players .m .btn-ready', function(e){
+
+        var path='app/'+appName+'/'+appId;
+        var data={'action':'ready'}
+        WebSocketAjaxClient(path,data);
+
     });
 
 // пасуем в картах
@@ -1361,21 +1406,33 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 break;
 
             case 'start':
+            case 'timeout':
+            case 'pass':
             case 'move':
             case 'wait':
+            case 'ready':
 
 
                 $(".ui-droppable").droppable("destroy");
                 $('.m .card.draggable').draggable("destroy");
                 console.log(onlineGame.action);
+                console.log(onlineGame);
 
-                if(onlineGame.action!='move') {
+                if(($.inArray(onlineGame.action, ['move','timeout','pass']) == -1 &&
+                    (onlineGame.action!='ready' || Object.size(onlineGame.players)==onlineGame.current.length))
+                    || !$('.ngm-bk .ngm-gm .gm-mx .mx .players').children('div').length) {
+
                     hideAllGames();
                     runGame();
+
                     $('.ngm-bk .ngm-gm').addClass('cards');
                     $('.ngm-rls').fadeOut(200);
 
+                    echo('обнулили поля');
+
                     fields = [];
+                    timestamp = null;
+
                     if(players = onlineGame.players){
 
                         if(onlineGame.action=='wait'){
@@ -1424,7 +1481,16 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                                 );
                             }
+
+
                         });
+
+                        if(onlineGame.action=='ready'){
+                            $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + playerId +' .gm-pr .btn-pass').addClass('btn-ready').removeClass('btn-pass').text('готов');
+                        }
+
+                        if(onlineGame.action=='ready' || onlineGame.action=='wait')
+                            $('.ngm-bk .ngm-gm .gm-mx .mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
                     }
 
                     if(onlineGame.trump)
@@ -1432,7 +1498,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             '<div class="lear card' + (onlineGame.trump[0]) + '"></div>'+
                             '<div class="last"></div>'+
                             (onlineGame.fields.deck && onlineGame.fields.deck.length ? '<div class="card trump card' + onlineGame.trump + '"></div>' : '')+
-                            '<div class="card"></div>');
+                            (onlineGame.fields.deck && onlineGame.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
 
 
                 } else {
@@ -1440,6 +1506,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 if(onlineGame.fields){
                     $.each(onlineGame.fields, function( key, field ) {
+                        if(!field)
+                            return;
                         newLen = (field.length ? field.length : Object.size(field));
                         oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
                         //if(is_numeric(key))
@@ -1463,17 +1531,33 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                             if(is_numeric(key))
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key + ' .card').remove();
-                            else
+                            else if(key != 'off' || newLen == 0)
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).html('');
 
                             var idx = 0;
+                            var count = 3;
+
                             $.each(field, function (index, card) {
                                 idx++;
 
+                                if(idx>count)
+                                    return false;
+
+
                                 if (is_numeric(key)) {
+                                    cardsCount = (field.length ? field.length : Object.size(field));
+                                    cardsCount = count;
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key).append(
-                                        '<div style="transform: rotate(' + (idx * ((key == playerId ? 60 : 105) / (field.length ? field.length : Object.size(field))) - (key == playerId ? 30 : 45)) + 'deg);' +
-                                        (key == playerId ? (idx == 1 ? 'margin-left:225px;' : '') + ('margin-right:-' + (110 - 400 / Object.size(field)) + 'px') : '' ) + '"' +
+                                        '<div style="transform: rotate(' +
+                                        ( cardsCount > 1 ?
+                                            (idx * ((key == playerId ? 70 : 105) - (cardsCount>4?0:(4-cardsCount)*15)) / cardsCount) -
+                                                ((key == playerId ? 30 : 45))
+
+
+                                            : 0 ) +
+                                        'deg);' +
+                                        (key == playerId ? (idx == 1 ? 'margin-left:'+(230+(cardsCount>4?0:(6-cardsCount)*30))+'px;' : '') +
+                                        ('margin-right:-' + (110 - 400 / cardsCount) + 'px') : '' ) + '"' +
                                         'class="card ' + (card ? ' card' + card + '" data-card="' + card + '' : '') + '">' +
                                         '</div>');
 
@@ -1483,7 +1567,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div data-table="'+index+'" class="cards">'+cards+'</div>');
 
                                 } else {
-                                    $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div '+(key=='off'?'style="margin-top:'+Math.random()*160+'px;transform: scale(0.7,0.7) rotate('+Math.random()*360+'deg)" ':'')+'class="card' + (card ? ' card' + card : '') + '">' + '</div>');
+                                    if(index >= $('.ngm-bk .ngm-gm .gm-mx .mx .' + key+' .card').length)
+                                        $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div '+(key=='off'?'style="margin-top:'+Math.random()*160+'px;transform: scale(0.7,0.7) rotate('+Math.random()*360+'deg)" ':'')+'class="card' + (card ? ' card' + card : '') + '">' + '</div>');
                                 }
                             });
                         }
@@ -1500,9 +1585,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .mt').hide();
                 $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current beater starter');
 
-                if(!onlineGame.winner) {
 
-                    $.each(onlineGame.players, function (index, value) {
+                    $.each(onlineGame.players, function (index, player) {
 
                         if (index == onlineGame.beater)
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index).addClass('beater');
@@ -1515,72 +1599,93 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                             if($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 ||
                                 ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 && onlineGame.beater==index)){
-                                console.log($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
 
-                                if($($('#tm').countdown('getTimes')).get(-1) != onlineGame.timeout || !$('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length){
+                                // console.log($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
+
+                                if( onlineGame.timestamp && timestamp != onlineGame.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-onlineGame.timeout) > 2
+                                    || !$('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length){
+
                                     console.log('remove');
+
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration',onlineGame.timeout+'s');
                                 }
+
                             } else {
+
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index +' .gm-pr .pr-ph-bk').prepend('<div class="circle"></div>');
+
                             }
 
                         } else {
-
 
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
 
                             if (index == onlineGame.beater)
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index +' .gm-pr .pr-ph-bk').prepend('<div class="circle"></div>');
 
-                            if (value.status) {
+                            if (player.status || player.ready || onlineGame.winner) {
 
                                 var status = '';
                                 // console.log($.inArray(parseInt(index), onlineGame.current), parseInt(index), onlineGame.current);
 
-                                if (value.status == 2 && onlineGame.beater == index)
+                                if (player.status == 2 && onlineGame.beater == index)
                                     status = 'Беру';
-                                else if (value.status == 1 && onlineGame.starter == index)
+                                else if (player.status == 1 && onlineGame.starter == index)
                                     status = 'Пас';
-                                else if (value.status == 2)
+                                else if (player.status == 2)
                                     status = 'Отбой';
+                                else if (player.ready == 1)
+                                    status = 'Готов';
 
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .mt').show().text(status);
                             }
                         }
 
+                        echo(timestamp);
+                        if(onlineGame.timestamp)
+                            timestamp = onlineGame.timestamp;
                     });
 
                     updateTimeOut(onlineGame.timeout);
 
+                if(!onlineGame.winner) {
                 } else {
 
-                    $('.ngm-bk .tm').countdown('pause');
-                    $('.ngm-bk .msg').hide();
+                    // $('.ngm-bk .tm').countdown('pause');
+                    // $('.ngm-bk .msg').hide();
 
-                    $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
-                    $('.ngm-bk .ngm-gm .gm-mx .mx .players > div .tm').remove();
-                    $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current');
+                    // $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
+                    // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div .tm').remove();
+                    // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current');
 
-                    setTimeout(function () {
 
-                        $('.msg.winner').fadeIn(200);
+                        // $('.msg.winner').fadeIn(200);
 
                         $.each(onlineGame.players, function( index, value ) {
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player'+index+' .wt').removeClass('loser').html(
                                 (value.result>0?'Выигрыш':'Проигрыш')+'<br>'+
                                 (onlineGame.currency == 'MONEY' ? getCurrency(value.win, 1) : value.win ) + ' ' +
                                 (onlineGame.currency == 'MONEY' ? getCurrency() : 'баллов')
-                            ).addClass(value.result<0?'loser':'').show();
+                            ).addClass(value.result<0?'loser':'').fadeIn();
                         });
 
-                    }, 1200);
 
-                    $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
-                    $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
-                    $('.ngm-bk .ot-exit').hide();
+                        setTimeout(function () {
+
+                            if($('.ngm-bk .ngm-gm .gm-mx .players .exit').is(":visible")) {
+                                $('.ngm-bk .ngm-gm .gm-mx .mx .card, .ngm-bk .ngm-gm .gm-mx .mx .deck').fadeOut();
+                                $('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').fadeOut();
+                            }
+
+                        }, 2000);
+
+                    // setTimeout(function () {}, 200);
+
+                    // $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
+                    // $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
+                    // $('.ngm-bk .ot-exit').hide();
 
                 }
 
@@ -1645,8 +1750,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 if(onlineGame.quit!=playerId){
                     $('.ngm-bk .re').hide();
                     $('.ngm-bk .ot-exit').html('Соперник вышел').show();
-                }
-                appId=0;
+                } else
+                    appId=0;
+
                 break;
 
 
@@ -2156,6 +2262,7 @@ function appWhoMoreCallback()
     }
 
     function onTimeOut() {
+        $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove()
         var path='app/'+appName+'/'+appId;
         var data={'action':'timeout'};
         WebSocketAjaxClient(path,data);

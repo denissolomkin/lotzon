@@ -15,11 +15,11 @@ class WebSocketController implements MessageComponentInterface {
 
     const   MIN_WAIT_TIME = 2;//15;
     const   MAX_WAIT_TIME = 600;//600;
-    const   PERIODIC_TIMER = 2;
+    const   PERIODIC_TIMER = 200;//2
     const   CONNECTION_TIMER = 1800;
     const   COMISSION = 10; //percent
     const   DEFAULT_MODE = 'POINT-0-2';
-    const   EMULATION = false;
+    const   EMULATION = false; //false;
 
     // private $_settings = array();
     // private $_bots     = array();
@@ -51,17 +51,17 @@ class WebSocketController implements MessageComponentInterface {
     {
         foreach($this->players() as $player)
             if($player['Ping']<time()-self::CONNECTION_TIMER){
-                echo $this->time()." ". "#{$player['Id']} ping timeout\n";
-                $this->quitPlayer($player['Id']);
 
+                echo $this->time()." ". "#{$player['Id']} ping timeout\n";
+
+                /* если отсутствует более положенного времени, сигнализирует об уходе */
+                $this->quitPlayer($player['Id']);
                 $this->players('unset', $player['Id']);
-                //unset($this->_players[$player['Id']]);
 
                 if(($client = $this->clients($player['Id'])) && $client instanceof ConnectionInterface){
                     echo $this->time(0,'CLOSE')." #{$player['Id']} {$client->Session->getId()} \n";
                     $client->close();
-                }
-                else
+                } else
                     echo $this->time(0,'ERROR')." client #{$player['Id']} не найден в коллекции\n";
             }
     }
@@ -88,124 +88,165 @@ class WebSocketController implements MessageComponentInterface {
                     }
                 }
 
-        foreach($this->apps() as $class=>$apps)
+        foreach($this->apps() as $appName=>$apps)
             foreach($apps as $id=>$app) {
                 $current = $app->currentPlayer();
-                if ($app->_isOver && !empty($app->_bot)) {
+                if ($app->isOver() && !empty($app->_bot)) {
                     foreach($app->_bot as $bot) {
                         if ($current['timeout'] - $app->getOption('t') + 10 < time()) {
                             #echo " -- таймер на выход после 10 сек \n";
-                            $this->runGame($class, $app->getIdentifier(), 'quitAction', $bot);
+                            $this->runGame($appName, $app->getIdentifier(), 'quitAction', $bot);
                         } elseif (!in_array($bot,$app->_botReplay) && $current['timeout'] + rand(2, 4) - $app->getOption('t') < time()) {
                             if (rand(1, 5) == 1) {
                                 #echo " -- таймер на случайный выход\n";
-                                $this->runGame($class, $app->getIdentifier(), 'quitAction', $bot);
+                                $this->runGame($appName, $app->getIdentifier(), 'quitAction', $bot);
                             } else {
                                 #echo " -- таймер на повтор \n";
-                                $this->runGame($class, $app->getIdentifier(), 'replayAction', $bot);
+                                $this->runGame($appName, $app->getIdentifier(), 'replayAction', $bot);
                             }
                         }
                     }
-                } elseif (!$app->_isOver && $app->getTime()+$app->getOption('t') < time() && $current['timeout'] < time() && $current['pid']) {
-                    #echo " -- таймер на таймаут \n";
-                    $this->runGame($class, $app->getIdentifier(), 'timeoutAction', $current['pid']);
-                } elseif ($app->_isOver && $current['timeout'] + 60 < time()) {
+                } elseif (!$app->isOver() && $app->isRun() && $app->getTime()+$app->getOption('t') < time() && $current['timeout'] < time() && $current['pid']) {
+                    echo " -- таймер на таймаут \n";
+                    $this->runGame($appName, $app->getIdentifier(), 'timeoutAction', $current['pid']);
+                } elseif (!$app->isOver() && !$app->isRun() && $app->getOption('b') && $app->getNumberPlayers() > count($app->getClients())) {
+
+                    do {
+                        $bot = (object)SettingsModel::instance()->getSettings('gameBots')->getValue()[array_rand(SettingsModel::instance()->getSettings('gameBots')->getValue())];
+                    } while (array_key_exists($bot->id, $clients));
+                    $bot->time = time();
+
+                    $app->addClient(array($bot->id => $bot));
+
+                    $this->runGame($appName, $app->getIdentifier(), 'startAction', $bot->id);
+                    #echo " -- таймер на добавление бота в игру \n";
+
+                } elseif ($app->isOver() && $current['timeout'] + 60 < time()) {
                     #echo " -- таймер на выход \n";
-                    $this->runGame($class, $app->getIdentifier(), 'quitAction', $current['pid']);
+                    $this->runGame($appName, $app->getIdentifier(), 'quitAction', $current['pid']);
                 }
+
             }
     }
 
-    public function initGame($clients,$name,$mode,$id)
+    public function initGame($clients,$appName,$appMode,$clientId)
     {
-        $this->_class = $class='\\' . $name;
-        $app = new $class(OnlineGamesModel::instance()->getGame($name));
+        $this->_class = $class='\\' . $appName;
+        $app = new $class(OnlineGamesModel::instance()->getGame($appName));
         $keys = array_keys($clients);
-        list($currency, $price, $number) = array_pad(explode("-", $mode),3,2);
-        echo $this->time()." $name инициируем приложение $currency-$price-$number: №".implode(', №',$keys)."\n";
+        list($currency, $price, $number) = array_pad(explode("-", $appMode),3,2);
+        echo $this->time()." $appName инициируем приложение $currency-$price-$number: №".implode(', №',$keys)."\n";
 
         #echo $this->time()." чистим стек\n";
-        foreach ($keys as $key) {
-            if($_player=$this->players($key)) {
-                $this->stack('unset',$name,$mode,$key);
+        foreach ($keys as $playerId) {
+            if($_player=$this->players($playerId)) {
+                $this->stack('unset',$appName,$appMode,$playerId);
+                /* игрок уже не сможет записаться, если есть запущенная игра
                 if(isset($_player['appId']))
-                    $this->quitPlayer($key);
-                $_player['appName'] = $name;
+                    $this->quitPlayer($playerId); */
+                $_player['appName'] = $appName;
                 $_player['appId'] = $app->getIdentifier();
-                $this->players($key,$_player);
+                $this->players($playerId,$_player);
             }
-        }
-
-        if ($this->stack($name,$mode) AND count($this->stack($name,$mode)) == 0){
-            $this->stack('unset',$name,$mode);
-            #echo $this->time()." никого не осталось, удаляем стек\n";
         }
 
         #echo $this->time()." запускаем и кешируем приложение\n";
         $app->setClients($clients)
-            ->setClient($id)
+            ->setClient($clientId)
             ->setNumberPlayers($number)
             ->setCurrency($currency)
             ->setPrice((float)$price);
-        $this->apps($name,$app->getIdentifier(),$app);
-        $this->runGame($name,$app->getIdentifier(),'startAction',$id);
+        $this->apps($appName,$app->getIdentifier(),$app);
+        $this->runGame($appName,$app->getIdentifier(),'startAction',$clientId);
     }
 
 
-    public function runGame($name,$id,$action,$pid=null,$data=null)
+    public function runGame($appName,$appId,$action,$playerId=null,$data=null)
     {
-        if($app=$this->apps($name,$id)) {
-            $this->_class = $class='\\' . $name;
-            echo "###################################################\n".$this->time() . " " . "$name {$app->getIdentifier()} $action ".(empty($app->_bot) || !in_array($pid,$app->_bot) ? "игрок №" : 'бот №').$pid.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
+        if($app=$this->apps($appName,$appId)) {
+            $this->_class = $class='\\' . $appName;
+            echo "###################################################\n".$this->time() . " " . "$appName $appId $action ".(empty($app->_bot) || !in_array($playerId,$app->_bot) ? "игрок №" : 'бот №').$playerId.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
 
-            if (!in_array($pid,$app->_bot) && (($action == 'replayAction' || $action == 'startAction') && (!$this->checkBalance($pid, $app->getCurrency(), $app->getPrice())))) {
+            if (isset($playerId) && !isset($app->getClients($playerId)->bot) && (($action == 'replayAction' || $action == 'startAction') && (!$this->checkBalance($playerId, $app->getCurrency(), $app->getPrice())))) {
                 #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                if($client = $this->clients($pid))
-                    $client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                if($_client = $this->clients($playerId))
+                    $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
                 #echo $this->time() . " " . "прошли проверку, устанавливаем клиента \n";
             } else {
 
-                if(isset($pid)){
-                    $app->setClient($pid);
+                if(isset($playerId)){
+                    $app->setClient($playerId);
                 }
 
                 #echo $this->time() . " " . "пробуем вызвать экшн \n";
-                if(!$app->_isOver OR $action != 'moveAction' ) {
+                if($app->isRun() OR $action != 'moveAction' ) {
                     call_user_func(array($app, $action), $data);
                 }
 
                 #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
                 $this->sendCallback($app->getResponse(), $app->getCallback());
 
-                if(!$app->_isOver){
-                    foreach($app->_botTimer as $bot=>$timer) {
-                        unset($app->_botTimer[$bot]);
-                        if (in_array($bot, $app->currentPlayers())) {
-                            $this->_loop->addTimer($timer, function () use ($name, $id, $bot) {
-                                $this->runGame($name, $id, 'moveAction', $bot);
-                                //echo $this->time() . " " . "$name {$this->_apps[$name][$id]->getIdentifier()} moveAction Бот \n";
-                            });
-                        }
+                if (($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId,$app->getClients())){
+
+                    echo $this->time(1) . " отправляем клиенту quit \n";
+                    if($_client = $this->clients($playerId))
+                        $_client->send(json_encode(array('path' => 'quit')));
+
+                    if($_player = $this->players($playerId)) {
+                        echo $this->time(1) . " " . $appName . ' ' . $appId . " удаление appId у игрока №{$playerId}\n";
+                        unset($_player['appId']);
+                        $this->players($playerId, $_player);
                     }
                 }
 
-                if($app->isOver()) {
+                $this->checkGame($app);
 
-                    if (!$app->isSaved()) {
-                        echo $this->time(1) . " $name $id приложение завершилось, записываем данные\n";
-                        $this->saveGame($app);
-                    } elseif ((count($app->getClients()) < $app->getOption('p') && !$app->getOption('f')) || !count($app->getClients())) {
-                        echo $this->time(1) . " $name $id удаляем приложение \n";
-                        $this->apps('unset', $name, $id);
-                    }
-
-                } else {
-                    echo $this->time(1) . " $name $id сохраняем приложение \n";
-                    $this->apps($name,$id, $app);
-                }
             }
         } else {
-            echo $this->time(0,'WARNING')." $name $id для запуска не найден\n";
+
+            $_player = $this->players($playerId);
+            unset($_player['appId']);
+            $this->players($playerId,$_player);
+
+            echo $this->time(0,'WARNING')." $appName $appId для запуска не найден\n";
+        }
+    }
+
+    public function checkGame($app)
+    {
+
+        $appName = $app->getKey();
+        $appId = $app->getIdentifier();
+
+        if(!$app->isOver()){
+            foreach($app->_botTimer as $bot=>$timer) {
+                unset($app->_botTimer[$bot]);
+                if (in_array($bot, $app->currentPlayers())) {
+                    $this->_loop->addTimer($timer, function () use ($appName, $appId, $bot) {
+                        $this->runGame($appName, $appId, 'moveAction', $bot);
+                        //echo $this->time() . " " . "$appName {$this->_apps[$appName][$appId]->getIdentifier()} moveAction Бот \n";
+                    });
+                }
+            }
+        }
+
+        echo "Приложение завершено??? {$app->isOver()} \n";
+        if($app->isOver() && count($app->getClients())) {
+
+            if (!$app->isSaved()) {
+                echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} приложение завершилось, записываем данные\n";
+                $this->saveGame($app);
+            }
+
+        } elseif ( ($app->getOption('b') && count($app->getClients())==count($app->_bot))
+            || (count($app->getClients()) < $app->getOption('p') && !$app->getOption('f'))
+            || !count($app->getClients())
+        ) {
+            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} удаляем приложение \n";
+            $this->apps('unset', $app->getKey(), $app->getIdentifier());
+        } else {
+            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} сохраняем приложение \n";
+            $this->apps($app->getKey(),$app->getIdentifier(), $app);
         }
     }
 
@@ -224,7 +265,7 @@ class WebSocketController implements MessageComponentInterface {
             $this->players($player->getId(), $_player);
             echo $this->time(0,'OPEN')." "."#{$conn->resourceId} " . $conn->Session->getId() . "\n";
 
-            /*
+            /* теперь перезапускаем игру, если переоткрыл окно
             if($this->players($player->getId()))){
                 echo $this->time()." ". "Выход игрока при соединении {$player->getId()}\n";
                 $this->quitPlayer($player->getId());
@@ -272,7 +313,7 @@ class WebSocketController implements MessageComponentInterface {
                 $mode='POINT-0-2';
                 $name='Durak';
 
-                $this->apps('unset',$name);
+                // $this->apps('unset',$name);
 
                 $clients=array();
                 $clients[$player->getId()] = (object) array(
@@ -304,19 +345,19 @@ class WebSocketController implements MessageComponentInterface {
                 //$this->_players[$player->getId()]['Ping'] = time();
 
                 $data = json_decode($msg);
-                list($type, $name, $id) = array_pad(explode("/", $data->path), 3, 0);
+                list($type, $appName, $appId) = array_pad(explode("/", $data->path), 3, 0);
                 echo $this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
-                $this->_class = $class = '\\' . $name;
+                $this->_class = $class = '\\' . $appName;
                 if (isset($data->data))
                     $data = $data->data;
                 $action = (isset($data->action) ? $data->action : '') . 'Action';
 
-                if(!$game = OnlineGamesModel::instance()->getGame($name)){
+                if(!$game = OnlineGamesModel::instance()->getGame($appName)){
                     $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
                     return;
                 }
 
-                $mode = ((isset($data->mode) AND $game->isMode($data->mode) ) ? $data->mode : self::DEFAULT_MODE);
+                $appMode = ((isset($data->mode) AND $game->isMode($data->mode) ) ? $data->mode : self::DEFAULT_MODE);
 
                 if (!($client = $this->clients($player->getId())) || !($client instanceof ConnectionInterface)) {
                     echo $this->time(0, 'WARNING') . "  соединение #{$player->getId()} {$from->Session->getId()} не найдено в коллекции клиентов \n";
@@ -331,7 +372,7 @@ class WebSocketController implements MessageComponentInterface {
 
                                 $_player = $this->players($from->resourceId);
                                 // нет запущенного приложения, пробуем создать новое или просто записаться в очередь
-                                if (!$id) {
+                                if (!$appId) {
                                     #echo $this->time() . " " . "id приложения нет \n";
 
                                     if (isset($_player['appName']) && isset($_player['appId']) && $this->apps($_player['appName'],$_player['appId']) ) {
@@ -344,7 +385,7 @@ class WebSocketController implements MessageComponentInterface {
                                         if (isset($_player['appMode'])) {
 
                                             echo $this->time(1) . " {$_player['appName']}" . " Игрок {$from->resourceId} отказался ждать в стеке {$_player['appMode']}\n";
-                                            $this->stack('unset',$name,$_player['appMode'],$player->getId());
+                                            $this->stack('unset',$appName,$_player['appMode'],$player->getId());
 
                                             unset(
                                                 $_player['appName'],
@@ -356,26 +397,32 @@ class WebSocketController implements MessageComponentInterface {
 
                                     } elseif ($action == 'startAction') {
 
-                                        list($currency, $price, $number) = explode("-", $mode);
+                                        list($currency, $price, $number) = explode("-", $appMode);
 
                                         if($this->checkBalance($player->getId(), $currency, $price)){
 
                                             if( isset($_player['appName']) && isset($_player['appId'])
                                                 && ($app=$this->apps($_player['appName'],$_player['appId'])) && !$app->_isOver){
+
                                                 echo $this->time(0,'ERROR') . " " . "{$_player['appName']} Запуск игроком {$from->resourceId} новой игры при незавершенной {$_player['appId']}\n";
+
                                                 $this->runGame($_player['appName'], $_player['appId'], 'startAction', $_player['Id']);
                                                 return false;
+
                                             }
 
                                             if( isset($_player['appName']) && isset($_player['appMode'])
                                                 && $this->stack($_player['appName'],$_player['appMode'],$player->getId())){
-                                                $this->stack('unset',$_player['appName'],$_player['appMode'],$player->getId());
+
                                                 echo $this->time() . " " . "{$_player['appName']} Игрок {$from->resourceId} выписался из стека {$_player['appMode']}\n";
+
+                                                $this->stack('unset',$_player['appName'],$_player['appMode'],$player->getId());
+
                                             }
 
-                                            echo $this->time() . " " . "$name Игрок {$from->resourceId} записался в стек $mode\n";
+                                            echo $this->time() . " " . "$appName Игрок {$from->resourceId} записался в стек $appMode\n";
 
-                                            $this->stack($name,$mode,$player->getId(),
+                                            $this->stack($appName,$appMode,$player->getId(),
                                                 (object) array(
                                                     'time'      =>  time(),
                                                     'id'        =>  $player->getId(),
@@ -383,13 +430,13 @@ class WebSocketController implements MessageComponentInterface {
                                                     'lang'      =>  $player->getLang(),
                                                     'name'      =>  $player->getNicName()));
 
-                                            $_player['appName'] = $name;
-                                            $_player['appMode'] = $mode;
+                                            $_player['appName'] = $appName;
+                                            $_player['appMode'] = $appMode;
                                             $this->players($from->resourceId,$_player);
 
                                             $success=false;
 
-                                            $stack = $this->stack($name,$mode);
+                                            $stack = $this->stack($appName,$appMode);
                                             // если насобирали минимальную очередь
                                             if ((count($stack) >= $game->getOption('s')
                                                 AND count($stack) >= $number) || $game->getOption('f')) {
@@ -410,14 +457,14 @@ class WebSocketController implements MessageComponentInterface {
                                             }
 
                                             if ($success) {
-                                                $this->initGame($clients,$name,$mode,$player->getId());
+                                                $this->initGame($clients,$appName,$appMode,$player->getId());
                                             } else {
 
                                                 $from->send(json_encode(
                                                     array('path' => 'stack',
                                                         'res' => array(
                                                             'stack' => count($stack),
-                                                            'mode' => $mode)
+                                                            'mode' => $appMode)
                                                     )));
 
                                             }
@@ -425,18 +472,22 @@ class WebSocketController implements MessageComponentInterface {
                                     }
 
                                     // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
-                                }  elseif (!($app=$this->apps($name,$id))) {
+                                }  elseif (!($app=$this->apps($appName,$appId))) {
 
                                     if ($action == 'replayAction' || $action == 'quitAction') {
-                                        echo $this->time() . " " . "id есть, но приложения $name $id нет, {$from->resourceId} $action заглушка\n";
+                                        echo $this->time() . " " . "id есть, но приложения $appName $appId нет, {$from->resourceId} $action заглушка\n";
+                                        $from->send(json_encode(array('path' => 'quit')));
 
                                     } else {
-                                        echo $this->time() . " " . "id есть, но приложения $name $id нет, сообщаем об ошибке, удаляем из активных игроков \n";
+
+                                        echo $this->time() . " " . "id есть, но приложения $appName $appId нет, сообщаем об ошибке, удаляем из активных игроков \n";
                                         $this->sendCallback(array($from->resourceId), array(
                                             'action' => 'error',
                                             'error' => 'APPLICATION_DOESNT_EXISTS',
                                             'appId' => 0));
+
                                         $this->quitPlayer($player->getId());
+                                        $from->send(json_encode(array('path' => 'quit')));
                                     }
 
                                     // если нет, сообщаем об ошибке
@@ -455,13 +506,14 @@ class WebSocketController implements MessageComponentInterface {
                                                 $client->send(json_encode(array('error' => 'GAME_IS_FULL')));
                                             return;
 
-                                        } else if(isset($_player['appMode'])) {
+                                        } else if(isset($_player['appMode']) && in_array($player->getId(),$this->stack($_player['appName'], $_player['appMode']))) {
                                             echo $this->time(1) . " {$_player['appName']}" . " Игрок {$player->getId()} запускает другую игру, пребывая в стеке {$_player['appMode']}\n";
                                             $this->stack('unset', $_player['appName'], $_player['appMode'], $player->getId());
                                         }
-                                        $_player['appName'] = $name;
+                                        
+                                        $_player['appName'] = $appName;
                                         $_player['appMode'] = $app->getMode();
-                                        $_player['appId'] = $id;
+                                        $_player['appId'] = $appId;
 
                                         $this->players($player->getId(),$_player);
 
@@ -473,11 +525,9 @@ class WebSocketController implements MessageComponentInterface {
                                             'name'      =>  $player->getNicName())));
                                     }
 
-                                    #echo $this->time() . " " . "приложение нашли $name  $id\n";
-                                    $this->runGame($name,$id,$action,$player->getId(),$data);
+                                    #echo $this->time() . " " . "приложение нашли $appName  $appId\n";
+                                    $this->runGame($appName,$appId,$action,$player->getId(),$data);
 
-                                    if ($action == 'quitAction')
-                                        $from->send(json_encode(array('path' => $data->action)));
                                 }
 
                                 // если не нашли класс
@@ -575,7 +625,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         $games=array();
 
-                        foreach($this->apps($name) as $id => $game) {
+                        foreach($this->apps($appName) as $id => $game) {
                             $players = array();
                             foreach ($game->getPlayers() as $player)
                                 $players[] = $player['name'];
@@ -587,7 +637,7 @@ class WebSocketController implements MessageComponentInterface {
                             );
                         }
 
-                        foreach($this->stack($name) as $mode=>$clients)
+                        foreach($this->stack($appName) as $mode=>$clients)
                             foreach($clients as $id=>$client){
                                 $games[]=array(
                                     'id'=>0,
@@ -611,7 +661,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         $date = mktime(0, 0, 0, date("n"), 1);
 
-                        $_rating = $this->rating($name);
+                        $_rating = $this->rating($appName);
 
                         if ($_rating AND $_rating['timeout'] > time()) {
                             $top  = $_rating['top'];
@@ -652,12 +702,12 @@ class WebSocketController implements MessageComponentInterface {
 
                             $top = array();
                             foreach ($sth->fetchAll() as $player) {
-                                $player['O'] = ((isset($this->players($player['I'])['appName']) && $this->players($player['I'])['appName'] == $name ? 1 : 0));
+                                $player['O'] = ((isset($this->players($player['I'])['appName']) && $this->players($player['I'])['appName'] == $appName ? 1 : 0));
                                 $cur=$player['Currency'];unset($player['Currency']);
                                 $top[$cur][] = $player;
                             }
 
-                            $this->rating($name,array(
+                            $this->rating($appName,array(
                                 'top'     => $top,
                                 'timeout' => time() + 1 * 60
                             ));
@@ -728,8 +778,8 @@ class WebSocketController implements MessageComponentInterface {
                                         $games .= $app->getIdentifier() . ' [' . $app->getCurrency() . '-' . $app->getPrice() . '] ' . (time() - $app->getTime()) . 's ';
                                         $names = array();
                                         $players = $app->getPlayers();
-                                        foreach ($players as $name)
-                                            $names[] = $name['pid'];
+                                        foreach ($players as $player)
+                                            $names[] = $player['pid'];
                                         $games .= (!empty($names) ? implode(':', $names) . '<br>' : '');
                                     }
                                 }
@@ -816,9 +866,12 @@ class WebSocketController implements MessageComponentInterface {
 
         if($this->clients($conn->resourceId)){
             $_player = $this->players($conn->resourceId);
+
             if(isset($_player['appName']) && isset($_player['appMode']) && $this->stack($_player['appName'],$_player['appMode'],$conn->resourceId)){
+
                 echo $this->time() . " {$_player['appName']}" . "Игрок {$conn->resourceId} удален из стека {$_player['appMode']} при выходе\n";
                 $this->stack('unset',$_player['appName'],$_player['appMode'],$conn->resourceId);
+
                 unset($_player['appName'],$_player['appMode']);
                 $this->players($conn->resourceId,$_player);
             }
@@ -826,6 +879,7 @@ class WebSocketController implements MessageComponentInterface {
             $this->clients('unset',$conn->resourceId);
 
             echo $this->time(0,'OUT')." ". "#{$conn->resourceId} {$conn->Session->getId()}\n";
+
         } else
             echo $this->time(0,'ERROR')." "."onClose: client #{$conn->resourceId} " . $conn->Session->getId() . " не найден в коллекции \n";
     }
@@ -909,61 +963,74 @@ class WebSocketController implements MessageComponentInterface {
 
     public function quitPlayer($playerId) {
 
-        if ($player = $this->players($playerId) && isset($player['appName'])){
-            $class = $player['appName'];
-            $mode = $player['appMode'];
-            if(isset($player['appId'])){
-                echo $this->time(1)." ". $player['appName'].' '. $player['appId']. " удаление appId у игрока №$playerId\n";
-                $id = $player['appId'];
-            }
-        }
+        /*
+         * если есть игрок и у него есть маячок игры, устанавливаем значения переменным, а также удаляем appId
+         */
 
-        // сдаемся и выходим, сохраняем и удаляем игру
-        if (isset($class))
+        if ($_player = $this->players($playerId))
+            if(isset($_player['appName'])) {
+
+                $appName = $_player['appName'];
+                $appMode = $_player['appMode'];
+
+                if (isset($_player['appId'])) {
+                    $appId = $_player['appId'];
+                }
+            }
+
+        if (isset($appName))
         {
-            if($this->stack($class,$mode,$playerId)){
-                $this->stack('unset',$class,$mode,$playerId);
-                echo $this->time(1)." ". "$class Удаление игрока из игрового стека ожидающих \n";
+            
+            /*
+             * если игрок уходит, но у него есть маячок с игрой, то проверяем его наличие в стеке и удаляем из него 
+             */
+
+            if($this->stack($appName,$appMode,$playerId)) {
+
+                echo $this->time(1) . " " . "$appName Удаление игрока из игрового стека ожидающих \n";
+                $this->stack('unset', $appName, $appMode, $playerId);
             }
 
-            //echo $this->time()." ". "Удаление игрока №$playerId из массива игроков \n";
-            //unset($this->_players[$playerId]);
+            /*
+             * если у игрока был appId, то проверяем, есть ли он среди игроков и сдаемся
+             */
 
-            if($this->stack($class,$mode) AND count($this->stack($class,$mode))==0){
-                echo $this->time(1)." ". "$class Удаление стека ожидающих игроков {$class} {$mode}\n";
-                $this->stack('unset',$class,$mode);
-            }
+            if (isset($appId) AND $app = $this->apps($appName,$appId)) {
+                if (array_key_exists($playerId, $app->getClients())) {
 
-            if (isset($id) AND $app = $this->apps($class,$id)) {
+                    //$app = $this->_apps[$appName][$appId];
+                    // если есть игра - сдаемся
+                    $app->setClient($playerId);
 
-                //$app = $this->_apps[$class][$id];
-                // если есть игра - сдаемся
-                $app->setClient($playerId);
+                    if (!$app->isOver() && $app->isRun()) {
+                        echo $this->time(1) . " " . "$appName $appId Игра активная - сдаемся\n";
+                        $app->surrenderAction();
+                        $this->sendCallback($app->getResponse(), $app->getCallback());
+                    }
 
-                if (!$app->isOver()) {
-                    echo $this->time(1)." ". "$class $id Игра активная - сдаемся\n";
-                    $app->passAction();
+                    $this->runGame($appName,$appId,'quitAction',$playerId);
+/*
+                    // сигнализируем об уходе и отключаемся от игры
+                    echo $this->time(1) . " " . "$appName $appId Сигнализируем об уходе\n";
+                    $app->quitAction();
                     $this->sendCallback($app->getResponse(), $app->getCallback());
-                }
 
-                // сигнализируем об уходе и отключаемся от игры
-                echo $this->time(1)." ". "$class $id Сигнализируем об уходе\n";
-                $app->quitAction();
-                $this->sendCallback($app->getResponse(), $app->getCallback());
+                    // если приложение завершилось и не сохранено, сохраняем
+                    if ($app->isOver() && !$app->isSaved() && !$app->isRun()) {
+                        echo $this->time(1) . " " . "$appName $appId Сохраняем результаты" . "\n";
+                        $this->saveGame($app);
+                    }
 
-                // если приложение завершилось и не сохранено, сохраняем
-                if ($app->isOver() && !$app->isSaved()) {
-                    echo $this->time(1)." ". "$class $id Сохраняем результаты"."\n";
-                    $this->saveGame($app);
-                }
-
-                // если приложение завершилось и сохранено, выгружаем из памяти
-                if ($app->isOver() && $app->isSaved()) {
-                    echo $this->time(1) . " $class $id удаляем приложение \n";
-                    //unset($this->_apps[$class][$id]);
-                    $this->apps('unset',$class,$id);
+                    // если приложение завершилось и сохранено, выгружаем из памяти
+                    if ($app->isOver() && $app->isSaved() && !$app->isRun()) {
+                        echo $this->time(1) . " $appName $appId удаляем приложение \n";
+                        //unset($this->_apps[$appName][$appId]);
+                        $this->apps('unset', $appName, $appId);
+                    }
+*/
                 }
             }
+
         }
 
     }
@@ -1200,10 +1267,13 @@ class WebSocketController implements MessageComponentInterface {
                 if ($first) {
                     if ($first == 'unset') {
 
-                        if ($fourth)
+                        if ($fourth){
                             unset($array[$second][$third][$fourth]);
-                        elseif ($third)
+                            if(count($array[$second][$third]) === 0)
+                                unset($array[$second][$third]);
+                        } elseif ($third)
                             unset($array[$second][$third]);
+
                         elseif ($second)
                             unset($array[$second]);
 
@@ -1234,9 +1304,11 @@ class WebSocketController implements MessageComponentInterface {
                 if ($first) {
                     if ($first == 'unset') {
 
-                        if ($fourth)
-                            unset($this->{$key}[$second][$third][$fourth]);
-                        elseif ($third)
+                        if ($fourth){
+                            unset($array[$second][$third][$fourth]);
+                            if(count($array[$second][$third]) === 0)
+                                unset($array[$second][$third]);
+                        }elseif ($third)
                             unset($this->{$key}[$second][$third]);
                         elseif ($second)
                             unset($this->{$key}[$second]);

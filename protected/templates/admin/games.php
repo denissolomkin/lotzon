@@ -87,10 +87,11 @@
                     $ids = array_merge(
                         is_array($games[$key]->getGames()) ? $games[$key]->getGames() : array(), 
                         array_diff( array_keys($onlineGames), is_array($games[$key]->getGames()) ? $games[$key]->getGames() : array()));
-
-                    foreach($ids as $id): ?>
+                    foreach($ids as $id):
+                        if($onlineGames[$id]): ?>
                         <li><input type="hidden" name="games[]" value="<?=$id?>"><?=(in_array($id,$games[$key]->getGames())?'':'<s><span>').$onlineGames[$id]?></li>
-                    <?php endforeach;?>
+                    <?php endif;
+                    endforeach;?>
                 </ul>
             </form>
         </div>

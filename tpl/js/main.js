@@ -2542,6 +2542,9 @@ function moveToEnd(target) {
         rng.select();
     }
 }
+function echo(log) {
+    console.log(log);
+}
 
 Object.size = function(obj) {
     var size = 0, key;

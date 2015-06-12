@@ -4,11 +4,15 @@ Application::import(PATH_APPLICATION . 'model/Game.php');
 
 class Durak extends Game
 {
-    protected $_cards = array(
+    protected $_cards2 = array(
         '1x6', '1x7', '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14', // пики  # числа 2-10 + валет, дама, король, туз
         '2x6', '2x7', '2x8', '2x9', '2x10', '2x11', '2x12', '2x13', '2x14', // треф  # числа 2-10 + валет, дама, король, туз
         '3x6', '3x7', '3x8', '3x9', '3x10', '3x11', '3x12', '3x13', '3x14', // буби  # числа 2-10 + валет, дама, король, туз
         '4x6', '4x7', '4x8', '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
+    );
+
+    protected $_cards = array(
+        '1x6', '1x7', '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
     );
 
     const   CARDS_ON_THE_HANDS = 6;
@@ -61,6 +65,40 @@ class Durak extends Game
         #echo $this->time().' '. "Конец повтора игры\n";
     }
 
+    public function quitAction($data=null)
+    {
+        #echo $this->time().' '. "Выход из игры\n";
+
+        if($this->isRun()) {
+            $this->startAction($data);
+        } else {
+
+            $playerId = $this->getClient()->id;
+            $this->unsetCallback();
+            $this->setCallback(array(
+                'quit' => $playerId,
+                'action' => 'quit'
+            ));
+
+            $this->setResponse($this->getClients());
+            echo $this->time().' '. "Удаляем из клиентов игры {$playerId}\n";
+
+            if(in_array($playerId, $this->_bot))
+                $this->_bot=array_diff($this->_bot,array($playerId));
+
+            $this->unsetClients($playerId);
+            $this->setPlayers($this->getClients(), false)
+                ->currentPlayers(array());
+
+            $this->_isRun = 0;
+            $this->_isOver = 0;
+            $this->_isSaved = 0;
+            $this->startAction();
+        }
+
+        #echo $this->time().' '. "Конец выход из игры\n";
+    }
+
     public function startAction($data = null)
     {
         #echo $this->time().' '. "Старт\n";
@@ -68,6 +106,8 @@ class Durak extends Game
 
         if ($this->getNumberPlayers() != count($this->getClients())) {
 
+            $this->_isRun = 0;
+            $this->setLoser(null);
             $this->setPlayers($this->getClients(), false);
             $this->setResponse($this->getClients());
             $this->setCallback(array(
@@ -78,12 +118,52 @@ class Durak extends Game
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
+                'current' => $this->currentPlayers(),
                 'action' => 'wait'
             ));
 
+        } elseif(!$this->isRun()) {
+
+            if($this->getNumberPlayers() != count($this->getPlayers()))
+                $this->setPlayers($this->getClients(), false)
+                    ->currentPlayers(array_keys($this->getPlayers()));
+            elseif(!count($this->currentPlayers()))
+                $this->currentPlayers(array_keys($this->getPlayers()));
+
+            $this->setResponse($this->getClients());
+
+            $callback = array(
+                'appId' => $this->getIdentifier(),
+                'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
+                'appName' => $this->getKey(),
+                'price' => $this->getPrice(),
+                'playerNumbers' => $this->getNumberPlayers(),
+                'currency' => $this->getCurrency(),
+                'players' => $this->getPlayers(),
+                'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
+                'timestamp' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time()),
+                'current' => $this->currentPlayers(),
+                'starter' => null,
+                'beater' => null,
+                'action' => 'ready'
+            );
+
+            if ($this->getLoser()) {
+                echo "нашли програвшего!!";
+                $callback += array(
+                    'trump' => $this->getTrump('full'),
+                    'winner' => $this->getWinner(),
+                    'loser' => $this->getLoser(),
+                    'fields' => $this->getField(),
+                );
+            }
+
+            $this->setCallback($callback);
+
         } else {
+
             if (!$this->getPlayers() || $this->getNumberPlayers() != count($this->getPlayers())) {
-                #echo $this->time().' '. "Первичная установка игроков\n";
+                echo $this->time().' '. "Первичная установка игроков\n";
                 $this->setPlayers($this->getClients(), false)
                     ->generateField()// перетасовали и расдали карты, назначили козырь
                     ->currentPlayers(array($this->initStarter()))// текущий = первая рука, определили первую руку
@@ -93,11 +173,12 @@ class Durak extends Game
                     ->setLoser(null)// обнулили победителя
                     ->setTime(time()); // время игры заново
                 $this->_isOver = 0;
+                $this->_isRun = 1;
                 $this->_isSaved = 0;
-                print_r($this->getPlayers());
             }
 
-            $this->setResponse($this->getClients());
+            $this->setResponse(isset($data['response']) ? $data['response'] : $this->getClients());
+
             $fields = $this->getField();
 
             if ($this->getLoser()) {
@@ -117,12 +198,14 @@ class Durak extends Game
                     'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
                     'players' => $this->getPlayers(),
                     'trump' => $this->getTrump('full'),
-                    'action' => 'start'
+                    'action' => 'move'
                 ));
             } else {
+
                 /*
                  * заменяем все хранимые поля-массивы пустыми массивами, за исключением поля "стол"
                  */
+
                 $count_off = 0;
                 foreach ($fields as $key => &$field) {
                     if (!in_array($key, array('off', 'table')))
@@ -142,14 +225,15 @@ class Durak extends Game
                             'appId' => $this->getIdentifier(),
                             'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                             'appName' => $this->getKey(),
+                            'action' => $data['action']?:'start',
+                            'timeout' => (isset($this->currentPlayer()['timeout']) && $this->currentPlayer()['timeout'] > time()? $this->currentPlayer()['timeout'] : time() + 1) - time(),
+                            'timestamp' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time()),
                             'beater' => $this->getBeater(),
                             'starter' => $this->getStarter(),
                             'current' => $this->currentPlayers(),
-                            'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time() + 1) - time(),
                             'players' => $this->getPlayers(),
                             'fields' => array($client->id => $this->getField()[$client->id]) + $fields,
                             'trump' => $this->getTrump('full'),
-                            'action' => 'start'
                         ), $client->id);
                     }
                 }
@@ -194,13 +278,14 @@ class Durak extends Game
         } else {
 
 
-            print_r($cell);
-            print_r($table);
+            // print_r($cell);
+            // print_r($table);
 
             #echo $this->time().' '. "делаем ход\n";
             $this->doMove($cell, $table);
-            $this->startAction();
+            $this->startAction(array('action'=>'move'));
 
+            /*
             if ($this->getLoser()){
                 $this->setCallback(array('action' => 'move'));
             } else {
@@ -209,6 +294,7 @@ class Durak extends Game
                     $callback['action']='move';
                 $this->setCallback($callbackArray);
             }
+            */
 
 
         }
@@ -249,24 +335,45 @@ class Durak extends Game
             $this->updatePlayer(array('status' => $this->initStatus($playerId)), $playerId);
 
             $this->doMove();
-            $this->startAction();
+            $this->startAction(array('action'=>'pass'));
         }
     }
 
     public function timeoutAction($data = null)
     {
 
-        if(!$this->isOver() && (isset($this->currentPlayer()['timeout']) && $this->currentPlayer()['timeout']<=time())){
-            foreach ($this->currentPlayers() as $playerId) {
+        if((isset($this->currentPlayer()['timeout']) && $this->currentPlayer()['timeout']<=time())) {
 
-                if(!in_array($this->getClient()->id,$this->currentPlayers()) || $this->getPlayers($playerId)['timeout']>time())
-                    continue;
 
-                $this->updatePlayer(array('status' => $this->initStatus($playerId)), $playerId);
+            echo $this->time() . "время истекло\n";
+            if ($this->isRun()) {
+
+                foreach ($this->currentPlayers() as $playerId) {
+
+                    if (!in_array($this->getClient()->id, $this->currentPlayers()) || $this->getPlayers($playerId)['timeout'] > time())
+                        continue;
+
+                    $this->updatePlayer(array('status' => $this->initStatus($playerId)), $playerId);
+                }
+
+                $this->doMove();
+
+            } else {
+
+                echo $this->time() . "не нажали на готов \n";
+                foreach ($this->getPlayers() as $player) {
+                    if (!isset($player['ready']))
+                        $this->unsetClients($player['pid']);
+                }
+                $this->startAction(array('action' => 'timeout'));
             }
 
-            $this->doMove();
-            $this->startAction();
+            $this->startAction(array('action' => 'timeout'));
+
+        } else { // && $this->getNumberPlayers() == count($this->getClients()))
+
+            echo $this->time() . "время не истекло\n";
+            $this->startAction(array('action'=>'timeout','response'=>$this->getClient()->id));
         }
 
     }
@@ -279,7 +386,7 @@ class Durak extends Game
 
         /* если первая рука, то возможно как первичное "пас", так и окончательное "отбой" */
         elseif ($playerId == $this->getStarter())
-            $status = ($this->getPlayers($playerId)['status'] ? 2 : 1);
+            $status = (isset($this->getPlayers($playerId)['status']) ? 2 : 1);
 
         /* для подкидывающих только окончательный "отбой" */
         else
@@ -408,12 +515,14 @@ class Durak extends Game
 
 
             if((count($this->_field['table'],COUNT_RECURSIVE)-count($this->_field['table']))/2==count($this->_field['table'])){
-                // отбился
-                echo "отбился \r\n";
-                $this->_field['off'][] = $this->_field['table'];
 
+                // отбился
+                echo "отбился либо пропуск без карт \r\n";
+                if(count($this->_field['table']))
+                    $this->_field['off'][] = $this->_field['table'];
 
             } else {
+
                 //взял
                 echo "взял \r\n";
                 foreach($this->_field['table'] as $table)
@@ -469,10 +578,13 @@ class Durak extends Game
 
         $players = $this->getStarter() && $this->_isOver == 0 ? $this->sortPlayers($this->getStarter()) : $this->getPlayers();
 
-        echo "расдаем карты на руки игрокам:";print_r($players);
+        echo "расдаем карты на руки игрокам:"; print_r($players);
 
         if(count($this->getField()['deck']))
             foreach($players as $player) {
+
+                if(!isset($this->_field[$player['pid']]))
+                    $this->_field[$player['pid']] = array();
 
                 if(count($this->getField($player['pid'])) < self::CARDS_ON_THE_HANDS && count($this->getField('deck'))) {
                     $count = 0;
@@ -644,13 +756,23 @@ class Durak extends Game
 
                 if(count($this->getWinner())==count($this->getPlayers())-1){
                     $this->setTime(time());
-                    $this->_isOver      = 1;
+                    $this->_isOver = 1;
+                    $this->_isRun = 0;
                     $this->_botReplay   = array();
                     $this->_botTimer    = array();
                     $loser = current(array_diff(array_keys($this->getPlayers()),$this->getWinner()));
+
                     $this->setLoser($loser)
-                        ->updatePlayer(array('result' => -1, 'win' => $this->getPrice()*-1), $loser);
+                        ->setStarter(null)
+                        ->setBeater(null)
+                        ->setTrump(null);
+
+                    $this->updatePlayer(array('result' => -1, 'win' => $this->getPrice()*-1), $loser)
+                        ->updatePlayer(array('status'))
+                        ->currentPlayers(array());
+
                     print_r($this->getPlayers($loser));
+
                     return $this;
                 }
             }
@@ -782,7 +904,7 @@ class Durak extends Game
         if($card)
             echo $this->time().' '. "Проверка хода\n";
         else
-            echo $this->time().' '. "Генерация хода для бота\n";
+            echo $this->time().' '. "Генерация хода для бота или проверка возможностей текущих игроков\n";
 
         $check = false;
         $playerId = $playerId ? : $this->getClient()->id;
@@ -810,7 +932,7 @@ class Durak extends Game
             $check = $this->checkThrow($playerId, $card);
 
         // пробуем либо перевести, либо отбиться
-        } elseif ($playerId == $this->getBeater()) {
+        } elseif ($playerId == $this->getBeater() && isset($this->getField()['table']) && count($this->getField()['table'])) {
             $revert = $table === null || $table=='revert' ? $this->checkRevert($playerId, $card) : false;
             $check = $revert ? : ($table === null || $table!='revert' ? $this->checkBeat($playerId, $card, $table) : false);
         }
