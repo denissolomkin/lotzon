@@ -90,7 +90,7 @@ class WebSocketController implements MessageComponentInterface {
 
         foreach($this->apps() as $appName=>$apps)
             foreach($apps as $id=>$app) {
-                $current = $app->currentPlayer();
+                $current = count($app->currentPlayers()) ? $app->currentPlayer() : array();
                 if ($app->isOver() && !empty($app->_bot)) {
                     foreach($app->_bot as $bot) {
                         if ($current['timeout'] - $app->getOption('t') + 10 < time()) {
@@ -420,44 +420,56 @@ class WebSocketController implements MessageComponentInterface {
 
                                             }
 
-                                            echo $this->time() . " " . "$appName Игрок {$from->resourceId} записался в стек $appMode\n";
+                                            $client = (object) array(
+                                                    'time' => time(),
+                                                    'id' => $player->getId(),
+                                                    'avatar' => $player->getAvatar(),
+                                                    'lang' => $player->getLang(),
+                                                    'name' => $player->getNicName());
 
-                                            $this->stack($appName,$appMode,$player->getId(),
-                                                (object) array(
-                                                    'time'      =>  time(),
-                                                    'id'        =>  $player->getId(),
-                                                    'avatar'    =>  $player->getAvatar(),
-                                                    'lang'      =>  $player->getLang(),
-                                                    'name'      =>  $player->getNicName()));
+                                            if ($game->getOption('f')){
 
-                                            $_player['appName'] = $appName;
-                                            $_player['appMode'] = $appMode;
-                                            $this->players($from->resourceId,$_player);
+                                                $clients[$player->getId()] = $client;
+                                                $success = true;
 
-                                            $success=false;
+                                            } else {
 
-                                            $stack = $this->stack($appName,$appMode);
-                                            // если насобирали минимальную очередь
-                                            if ((count($stack) >= $game->getOption('s')
-                                                AND count($stack) >= $number) || $game->getOption('f')) {
+                                                echo $this->time() . " " . "$appName Игрок {$from->resourceId} записался в стек $appMode\n";
 
-                                                // перемешали игроков
-                                                $keys = array_keys($stack);
-                                                shuffle($keys);
+                                                $this->stack($appName, $appMode, $player->getId(), $client);
 
-                                                // начали проверять стек на игру, так как могут быть те, кто не желает играть друг с другом
-                                                foreach ($keys as $key) {
-                                                    $clients[$key] = $stack[$key];
-                                                    // дошли до необходимого числа и прервали
-                                                    if (count($clients) == $number || $game->getOption('f')) {
-                                                        $success = true;
-                                                        break;
+                                                $_player['appName'] = $appName;
+                                                $_player['appMode'] = $appMode;
+                                                $this->players($from->resourceId, $_player);
+
+                                                $success = false;
+
+                                                $stack = $this->stack($appName, $appMode);
+                                                // если насобирали минимальную очередь
+                                                if ((count($stack) >= $game->getOption('s')
+                                                        AND count($stack) >= $number) || $game->getOption('f')
+                                                ) {
+
+                                                    // перемешали игроков
+                                                    $keys = array_keys($stack);
+                                                    shuffle($keys);
+
+                                                    // начали проверять стек на игру, так как могут быть те, кто не желает играть друг с другом
+                                                    foreach ($keys as $key) {
+                                                        $clients[$key] = $stack[$key];
+                                                        // дошли до необходимого числа и прервали
+                                                        if (count($clients) == $number || $game->getOption('f')) {
+                                                            $success = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                             }
 
                                             if ($success) {
+
                                                 $this->initGame($clients,$appName,$appMode,$player->getId());
+
                                             } else {
 
                                                 $from->send(json_encode(
@@ -1307,9 +1319,9 @@ class WebSocketController implements MessageComponentInterface {
                     if ($first == 'unset') {
 
                         if ($fourth){
-                            unset($array[$second][$third][$fourth]);
-                            if(count($array[$second][$third]) === 0)
-                                unset($array[$second][$third]);
+                            unset($this->{$key}[$second][$third][$fourth]);
+                            if(count($this->{$key}[$second][$third]) === 0)
+                                unset($this->{$key}[$second][$third]);
                         }elseif ($third)
                             unset($this->{$key}[$second][$third]);
                         elseif ($second)

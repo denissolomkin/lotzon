@@ -240,9 +240,9 @@ function updateCallback(receiveData)
 
     if(receiveData.res.key) {
 
-        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t").html('ВЫ<b>:</b> '+
-        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))+(parseInt(receiveData.res.count))):"0")+' <b>|</b> '+receiveData.res.count+' <b>|</b> '+
-        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))/25):"0")+'');
+        $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating .rls-r-t-rating-points").text(
+        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))+(parseInt(receiveData.res.count))):"0"));
+//        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))/25):"0")+'');
 
         $('.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .bt').removeClass('button-disabled').removeAttr('disabled');
         $('.ngm-bk .cell .bt').first().click();

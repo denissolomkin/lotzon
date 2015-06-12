@@ -1181,7 +1181,26 @@
 
                     <div class="rls-r">
 
-                        <div class="rls-r-t"><?=$MUI->getText('label-you')?> <b>|</b> 0 <b>|</b> 0</div>
+                        <div class="rls-r-t">
+                            <div class="rls-r-t-avatar" style="background-image: url(
+                                <? if ($player->getAvatar()) {?>
+                                    '/filestorage/avatars/<?=ceil($player->getId() / 100)?>/<?=$player->getAvatar()?>'
+                                <? } else { ?>
+                                    '/tpl/img/default.jpg'
+                                <? } ?>
+                                )">
+                            </div>
+                            <div class="rls-r-t-rating">
+                                <div class="icon-star"></div>
+                                <div class="rls-r-t-rating-points"></div>
+                            </div>
+                            <div class="rls-r-t-balance">
+                                <div class="icon-wallet wallet"></div>
+                                <div><span class="plMoneyHolder">1176</span> грн</div>
+                                <div><span class="plMoneyPoints">24324</span> баллов</div>
+                            </div>
+                        </div>
+
                         <div class="rls-r-ts"><div class="rls-r-search"><div class="loader"></div><b><?=$MUI->getText('label-search')?></b></div><div class="ngm-cncl"><?=$MUI->getText('button-cancel')?></div></div>
 
                         <div class="rls-mn-bk">
