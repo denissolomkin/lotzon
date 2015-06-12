@@ -125,6 +125,7 @@ function quitCallback() {
     WebSocketAjaxClient('update/'+appName);
     $('.ngm-bk .tm').countdown('pause');
 
+
     if($('.ngm-bk .ngm-gm .gm-mx .msg.winner .button.exit').hasClass('button-disabled')) {
 
         /*
@@ -132,10 +133,6 @@ function quitCallback() {
          */
 
         $('.ngm-bk .ngm-gm .gm-mx .msg.winner .button').removeClass('button-disabled').removeAttr('disabled');
-        $('.ngm-bk .rls-r-ts').hide();
-        $('.ngm-bk .rls-r-t').show();
-        $('.ngm-bk .prc-but-cover').hide();
-        $('.ngm-rls').fadeIn(200);
 
     } else if($('.ngm-bk .ngm-gm .gm-mx .players .exit').is(":visible")){
 
@@ -144,11 +141,12 @@ function quitCallback() {
          */
 
         $('.ngm-bk .ngm-gm .gm-mx .players .exit').removeClass('button-disabled');
-        $('.ngm-bk .rls-r-ts').hide();
-        $('.ngm-bk .rls-r-t').show();
-        $('.ngm-bk .prc-but-cover').hide();
-        $('.ngm-rls').fadeIn(200);
     }
+
+    $('.ngm-bk .rls-r-ts').hide();
+    $('.ngm-bk .rls-r-t').show();
+    $('.ngm-bk .prc-but-cover').hide();
+    $('.ngm-rls').fadeIn(200);
 }
 
  function backCallback() {
@@ -2248,16 +2246,18 @@ function appWhoMoreCallback()
 
     function updateTimeOut(time, format) {
         format = format || '{mnn}<span>:</span>{snn}';
-        if (time < 1) {
-            onTimeOut();
-        } else {
-            $(".ngm-bk .tm").countdown({
-                until: (time),
-                layout: format
-            });
-            $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
-            $(".ngm-bk .tm").countdown('resume');
-            $(".ngm-bk .tm").countdown('option', {until: (time)});
+        if(time) {
+            if (time < 1) {
+                onTimeOut();
+            } else {
+                $(".ngm-bk .tm").countdown({
+                    until: (time),
+                    layout: format
+                });
+                $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
+                $(".ngm-bk .tm").countdown('resume');
+                $(".ngm-bk .tm").countdown('option', {until: (time)});
+            }
         }
     }
 

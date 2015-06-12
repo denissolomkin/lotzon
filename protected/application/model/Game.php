@@ -130,6 +130,7 @@ class Game
 
         } else {
 
+            $this->_isOver = 0;
             $this->currentPlayers(array_values(array_diff($this->currentPlayers(),array($playerId))));
             $this->startAction();
             /*
@@ -154,8 +155,8 @@ class Game
         $this->updatePlayer(array('reply' => 1), $clientId );
         $players = $this->getPlayers();
 
-        if(isset($this->getClient()->bot) AND !in_array($this->getClient()->bot,$this->_botReplay)){
-            $this->_botReplay[]=$this->getClient()->bot;
+        if(isset($this->getClient()->bot) AND !in_array($clientId,$this->_botReplay)){
+            $this->_botReplay[]=$clientId;
         }
 
         $reply = 0;
@@ -166,6 +167,7 @@ class Game
 
         if ($reply == count($players)) {
             $this->_isSaved = 0;
+            $this->_isOver = 0;
             $this->_isRun = 1;
             #echo $this->time().' '. "Переустановка игроков\n";
 
@@ -177,7 +179,6 @@ class Game
                 ->setTime(time())
                 ->startAction();
         } else {
-            $this->_isOver = 0;
             $this->unsetCallback()
                 ->setResponse($this->getClient())
                 ->setCallback(array(

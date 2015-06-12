@@ -976,7 +976,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl.active, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl.active {color:#b2d0d4;background-color: #333}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl, .ngm-bk .ngm-rls-bk .rls-r .prc-sel, .ngm-bk .ngm-rls-bk .rls-r .prc-but-bk .ngm-cncl {display:none;}
 
-.ngm-bk .ngm-rls-bk .rls-r .rls-r-t {font:18px/1 Handbook-regular;color:black;}
+.ngm-bk .ngm-rls-bk .rls-r .rls-r-t {font:18px/1 Handbook-regular;color:black;height: 65px}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t > b {position:relative;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-avatar  {width: 50px;height: 50px;background-repeat: no-repeat;background-size: contain;float: left;border-radius: 70px;margin: 0px;margin-left: 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating {float: left;width: 90px;padding: 15px;}

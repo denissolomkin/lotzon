@@ -91,6 +91,9 @@ class WebSocketController implements MessageComponentInterface {
         foreach($this->apps() as $appName=>$apps)
             foreach($apps as $id=>$app) {
                 $current = count($app->currentPlayers()) ? $app->currentPlayer() : array();
+
+                echo "ТАЙМЕР ".$current['timeout'];
+
                 if ($app->isOver() && !empty($app->_bot)) {
                     foreach($app->_bot as $bot) {
                         if ($current['timeout'] - $app->getOption('t') + 10 < time()) {
@@ -121,9 +124,11 @@ class WebSocketController implements MessageComponentInterface {
                     $this->runGame($appName, $app->getIdentifier(), 'startAction', $bot->id);
                     #echo " -- таймер на добавление бота в игру \n";
 
-                } elseif ($app->isOver() && $current['timeout'] + 60 < time()) {
+                } elseif (!$app->isRun() && ((isset($current['timeout']) && $current['timeout'] + 60 < time()) || (!isset($current['timeout']) && $app->getTime() + 120 < time()))) {
                     #echo " -- таймер на выход \n";
-                    $this->runGame($appName, $app->getIdentifier(), 'quitAction', $current['pid']);
+                    foreach($app->getPlayers() as $player)
+                        $this->quitPlayer($player['pid']);
+                        // $this->runGame($appName, $app->getIdentifier(), 'quitAction', $current['pid']);
                 }
 
             }
@@ -231,22 +236,24 @@ class WebSocketController implements MessageComponentInterface {
         }
 
         echo "Приложение завершено??? {$app->isOver()} \n";
-        if($app->isOver() && count($app->getClients())) {
+        if($app->isOver() && count($app->getClients()) && !$app->isSaved()) {
 
-            if (!$app->isSaved()) {
-                echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} приложение завершилось, записываем данные\n";
-                $this->saveGame($app);
-            }
+            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} приложение завершилось, записываем данные\n";
+            $this->saveGame($app);
 
         } elseif ( ($app->getOption('b') && count($app->getClients())==count($app->_bot))
             || (count($app->getClients()) < $app->getOption('p') && !$app->getOption('f'))
             || !count($app->getClients())
         ) {
+
             echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} удаляем приложение \n";
             $this->apps('unset', $app->getKey(), $app->getIdentifier());
+
         } else {
+
             echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} сохраняем приложение \n";
             $this->apps($app->getKey(),$app->getIdentifier(), $app);
+
         }
     }
 
@@ -481,6 +488,8 @@ class WebSocketController implements MessageComponentInterface {
 
                                             }
                                         }
+                                    } else {
+                                        $from->send(json_encode(array('path' => 'quit')));
                                     }
 
                                     // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
