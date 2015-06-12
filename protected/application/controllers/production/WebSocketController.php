@@ -92,8 +92,6 @@ class WebSocketController implements MessageComponentInterface {
             foreach($apps as $id=>$app) {
                 $current = count($app->currentPlayers()) ? $app->currentPlayer() : array();
 
-                echo "ТАЙМЕР ".$current['timeout'];
-
                 if ($app->isOver() && !empty($app->_bot)) {
                     foreach($app->_bot as $bot) {
                         if ($current['timeout'] - $app->getOption('t') + 10 < time()) {
