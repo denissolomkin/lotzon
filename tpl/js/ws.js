@@ -1538,7 +1538,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             $.each(field, function (index, card) {
                                 idx++;
 
-                                if(idx>count)
+                                if(idx>count && 0)
                                     return false;
 
 

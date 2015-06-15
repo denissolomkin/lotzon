@@ -690,7 +690,8 @@ class Game
 
     public function getMode()
     {
-        return $this->_gameModes[$this->_gameCurrency][$this->_gamePrice];
+        return isset($this->_gameModes[$this->_gameCurrency]) && isset($this->_gameModes[$this->_gameCurrency][$this->_gamePrice])
+            ? $this->_gameModes[$this->_gameCurrency][$this->_gamePrice] : false;
     }
 
     public function setOptions($array)
