@@ -1469,9 +1469,13 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
 
                             if(index==playerId){
+
                                 bet = price=onlineGame.appMode.split('-');
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index +' .gm-pr').prepend(
-                                    '<div class="pr-cl"><div class="btn-pass">пас</div><div class="msg-move">ваш ход</div></div>'
+                                    '<div class="pr-cl">' +
+                                        '<div class="btn-pass">пас</div>' +
+                                        '<div class="msg-move">ваш ход</div>' +
+                                    '</div>'
                                 ).append(
                                     '<div class="pr-md"><i class="icon-reload"></i></div>'+
                                     '<div class="pr-pr"><b>'+(bet[0]=='MONEY'?getCurrency(bet[1],1):bet[1])+'</b><span>'+(bet[0]=='MONEY'?getCurrency(bet[1],2):'баллов')+'</span></div>'+
@@ -1533,7 +1537,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).html('');
 
                             var idx = 0;
-                            var count = 3;
+                            var count = 2;
 
                             $.each(field, function (index, card) {
                                 idx++;
@@ -1544,18 +1548,17 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                                 if (is_numeric(key)) {
                                     cardsCount = (field.length ? field.length : Object.size(field));
-                                    cardsCount = count;
+                                    //cardsCount = count;
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key).append(
                                         '<div style="transform: rotate(' +
                                         ( cardsCount > 1 ?
-                                            (idx * ((key == playerId ? 70 : 105) - (cardsCount>4?0:(4-cardsCount)*15)) / cardsCount) -
+                                            (idx * ((key == playerId ? 60 : 105) - (cardsCount>4?0:(4-cardsCount)*15)) / cardsCount) -
                                                 ((key == playerId ? 30 : 45))
-
-
                                             : 0 ) +
                                         'deg);' +
                                         (key == playerId ? (idx == 1 ? 'margin-left:'+(230+(cardsCount>4?0:(6-cardsCount)*30))+'px;' : '') +
-                                        ('margin-right:-' + (110 - 400 / cardsCount) + 'px') : '' ) + '"' +
+                                        (cardsCount>6?('margin-right:-' + (110 - 400 / cardsCount) + 'px'):'')
+                                         : '' ) + '"' +
                                         'class="card ' + (card ? ' card' + card + '" data-card="' + card + '' : '') + '">' +
                                         '</div>');
 
@@ -1585,6 +1588,20 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
 
                     $.each(onlineGame.players, function (index, player) {
+
+
+                        if (index==playerId && onlineGame.action!='ready') {
+                            var status = '';
+
+                            if (index == onlineGame.beater)
+                                status = 'Беру';
+                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.players[onlineGame.beater].status==2)
+                                status = 'Пас';
+                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1)
+                                status = 'Отбой';
+
+                            $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + playerId +' .gm-pr .btn-pass').text(status);
+                        }
 
                         if (index == onlineGame.beater)
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index).addClass('beater');
