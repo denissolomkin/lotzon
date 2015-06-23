@@ -1731,7 +1731,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 appDurakCallback('highlight');
 
-                $(".table"+(playerId==onlineGame.beater?" .cards":'')).droppable({
+                $(".table"+(playerId==onlineGame.beater?" .cards:not(:has(.card:eq(1)))":'')).droppable({
                     accept: ".card",
                     activeClass: 'active',
                     hoverClass: 'hover',
