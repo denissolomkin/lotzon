@@ -461,7 +461,8 @@ class Durak extends Game
             if ((!isset($player['status']) || $player['status'] != 2)
                 && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater())) || ($this->getClient()->id == $player['pid'] && $card))
                 && !in_array($player['pid'],$currentIds)
-            //    && ($hasMove || ($this->getBeater() != $player['pid']) && !empty($this->_field[$player['pid']]))
+                && !empty($this->_field[$player['pid']])
+            //    && ($hasMove || ($this->getBeater() != $player['pid']))
             ) { //
                 echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
