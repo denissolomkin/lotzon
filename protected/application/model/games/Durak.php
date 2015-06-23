@@ -387,14 +387,14 @@ class Durak extends Game
 
         /* если первая рука, то возможно как первичное "пас", так и окончательное "отбой" */
         elseif ($playerId == $this->getStarter())
-            $status = $this->getNumberPlayers()-count($this->getWinner()) > 2 ? 1 : 2; //(isset($this->getPlayers($playerId)['status']) ? 2 : 1);
+            $status = $this->getNumberPlayers()-count($this->getWinner()) > 2 && !isset($this->getPlayers($playerId)['status']) ? 1 : 2; //(isset($this->getPlayers($playerId)['status']) ? 2 : 1);
 
 
         /* для подкидывающих только окончательный "отбой" */
         else
             $status = 2;
 
-        return $status;
+        return (isset($this->getPlayers($playerId)['status']) ? $status - $this->getPlayers($playerId)['status'] : $status);
     }
 
     public function revertMove(){
@@ -447,6 +447,18 @@ class Durak extends Game
 
         $currentIds = $this->currentPlayers();
 
+        // если бот пробовал походить, но не нашло возможности и он в текущих
+        if (!$card && isset($this->getClient()->bot) && in_array($this->getClient()->id,$currentIds)){
+
+            // если это заходящий и он еще не пасовал
+            if($this->getClient()->id == $this->getStarter() && !isset($this->getPlayers()[$this->getClient()->id]['status'])){
+                $card = true;
+            }
+
+            echo $this->time() . ' ' . "Обновили статус #{$this->getClient()->id} на ".($this->initStatus($this->getClient()->id))."\n";
+            $this->updatePlayer(array('status' => $this->initStatus($this->getClient()->id)), $this->getClient()->id);
+        }
+
         // добавляем тех, у кого появилась возможность, удаляем тех, кто спасовал
         foreach ($this->getPlayers() as $player) {
 
@@ -455,17 +467,23 @@ class Durak extends Game
 
                 // если нет статуса пропуска или пропуск не окончательный AND не текущий игрок или текущий и есть карта AND есть возможность походить и еще не в текущих
                 // если игрое не текущий клиент и является либо отбивающимся, либо заходящим, или заходящий уже спасовал
-                // и есть ход либо не является бъющим
+                // и есть ход либо не является бъющим и ботом
                 // и есть карты на руках
 
             if ((!isset($player['status']) || $player['status'] != 2)
-                && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater())) || ($this->getClient()->id == $player['pid'] && $card))
+                && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater()))
+                    || ($this->getClient()->id == $player['pid'] && $card))
                 && !in_array($player['pid'],$currentIds)
                 && !empty($this->_field[$player['pid']])
-            //    && ($hasMove || ($this->getBeater() != $player['pid']))
-            ) { //
+                && ($hasMove || ($this->getBeater() != $player['pid']))
+            ) {
                 echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
+
+                // если бот, то для переназначения botTimer
+                if($this->getClients($player['pid'])->bot && !$card)
+                    $card = true;
+
 
                 // если спасовал
             } else if (isset($player['status'])
@@ -482,7 +500,12 @@ class Durak extends Game
                 unset($currentIds[array_search($player['pid'],$currentIds)]);
 
                 // если текущий бот и не может отбиться и будет брать
-            } else if (isset($this->getClients($player['pid'])->bot) && ($player['pid'] == $this->getBeater()) && !empty($this->getField()['table']) && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0) && !$hasMove){
+            } else if (isset($this->getClients($player['pid'])->bot)
+                && ($player['pid'] == $this->getBeater())
+                && !empty($this->getField()['table'])
+                && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0)
+                && !$hasMove){
+
                 echo $this->time() . ' ' . "Не может отбиться, будет брать #{$player['pid']}\n";
 
                 if(!isset($player['status']))
@@ -490,11 +513,6 @@ class Durak extends Game
 
                 if(in_array($player['pid'],$currentIds))
                     unset($currentIds[array_search($player['pid'],$currentIds)]);
-
-                // если бот пробовал походить, но не нашло возможности
-            } else if(!$card && $player['pid']==$this->getClient()->id && isset($this->getClient()->bot) && in_array($player['pid'],$currentIds)){
-                echo $this->time() . ' ' . "Бот, удаляем из текущих #{$player['pid']}\n";
-                unset($currentIds[array_search($player['pid'],$currentIds)]);
 
             }
         }
