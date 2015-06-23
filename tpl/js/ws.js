@@ -1537,7 +1537,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).html('');
 
                             var idx = 0;
-                            var count = 2;
+                            var count = 16;
 
                             $.each(field, function (index, card) {
                                 idx++;
@@ -1548,7 +1548,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                                 if (is_numeric(key)) {
                                     cardsCount = (field.length ? field.length : Object.size(field));
-                                    //cardsCount = count;
+                                    // cardsCount = count;
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key).append(
                                         '<div style="transform: rotate(' +
                                         ( cardsCount > 1 ?
@@ -1556,8 +1556,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                                 ((key == playerId ? 30 : 45))
                                             : 0 ) +
                                         'deg);' +
-                                        (key == playerId ? (idx == 1 ? 'margin-left:'+(230+(cardsCount>4?0:(6-cardsCount)*30))+'px;' : '') +
-                                        (cardsCount>6?('margin-right:-' + (110 - 400 / cardsCount) + 'px'):'')
+                                        (key == playerId ? (idx == 1 ? 'margin-left:'+(230+(cardsCount>4?(cardsCount>8?-160:''):(6-cardsCount)*30))+'px;' : '') +
+                                        (cardsCount>6?('margin-right:-' + (110 - (cardsCount>8?750:400) / cardsCount) + 'px'):'')
                                          : '' ) + '"' +
                                         'class="card ' + (card ? ' card' + card + '" data-card="' + card + '' : '') + '">' +
                                         '</div>');
