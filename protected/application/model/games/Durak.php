@@ -387,7 +387,8 @@ class Durak extends Game
 
         /* если первая рука, то возможно как первичное "пас", так и окончательное "отбой" */
         elseif ($playerId == $this->getStarter())
-            $status = 1; //(isset($this->getPlayers($playerId)['status']) ? 2 : 1);
+            $status = $this->getNumberPlayers()-count($this->getWinner()) > 2 ? 1 : 2; //(isset($this->getPlayers($playerId)['status']) ? 2 : 1);
+
 
         /* для подкидывающих только окончательный "отбой" */
         else
@@ -460,7 +461,8 @@ class Durak extends Game
             if ((!isset($player['status']) || $player['status'] != 2)
                 && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater())) || ($this->getClient()->id == $player['pid'] && $card))
                 && !in_array($player['pid'],$currentIds)
-                && ($hasMove || ($this->getBeater() != $player['pid']) && !empty($this->_field[$player['pid']]))) { //
+            //    && ($hasMove || ($this->getBeater() != $player['pid']) && !empty($this->_field[$player['pid']]))
+            ) { //
                 echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
 
@@ -478,8 +480,8 @@ class Durak extends Game
                 echo $this->time() . ' ' . "Отбился, больше нечего ждать #{$player['pid']}\n";
                 unset($currentIds[array_search($player['pid'],$currentIds)]);
 
-                // если текущий не может отбиться и будет брать
-            } else if (($player['pid'] == $this->getBeater()) && !empty($this->getField()['table']) && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0) && !$hasMove){
+                // если текущий бот и не может отбиться и будет брать
+            } else if (isset($this->getClients($player['pid'])->bot) && ($player['pid'] == $this->getBeater()) && !empty($this->getField()['table']) && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0) && !$hasMove){
                 echo $this->time() . ' ' . "Не может отбиться, будет брать #{$player['pid']}\n";
 
                 if(!isset($player['status']))
