@@ -467,15 +467,19 @@ class Durak extends Game
 
                 // если нет статуса пропуска или пропуск не окончательный AND не текущий игрок или текущий и есть карта AND есть возможность походить и еще не в текущих
                 // если игрое не текущий клиент и является либо отбивающимся, либо заходящим, или заходящий уже спасовал
-                // и есть ход либо не является бъющим и ботом
                 // и есть карты на руках
+                // и есть ход либо не является бъющим либо бъющийся и есть неотбитые карты
 
             if ((!isset($player['status']) || $player['status'] != 2)
                 && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater()))
                     || ($this->getClient()->id == $player['pid'] && $card))
                 && !in_array($player['pid'],$currentIds)
                 && !empty($this->_field[$player['pid']])
-                && ($hasMove || ($this->getBeater() != $player['pid']))
+                && ($hasMove || ($this->getBeater() != $player['pid']) ||
+                    ($this->getBeater() == $player['pid']
+                        && !empty($this->getField()['table'])
+                        && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0)))
+
             ) {
                 echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
