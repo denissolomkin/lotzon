@@ -387,7 +387,7 @@ class Durak extends Game
 
         /* если первая рука, то возможно как первичное "пас", так и окончательное "отбой" */
         elseif ($playerId == $this->getStarter())
-            $status = (isset($this->getPlayers($playerId)['status']) ? 2 : 1);
+            $status = 1; //(isset($this->getPlayers($playerId)['status']) ? 2 : 1);
 
         /* для подкидывающих только окончательный "отбой" */
         else
@@ -454,19 +454,26 @@ class Durak extends Game
 
                 // если нет статуса пропуска или пропуск не окончательный AND не текущий игрок или текущий и есть карта AND есть возможность походить и еще не в текущих
                 // если игрое не текущий клиент и является либо отбивающимся, либо заходящим, или заходящий уже спасовал
+                // и есть ход либо не является бъющим
+
             if ((!isset($player['status']) || $player['status'] != 2)
                 && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater())) || ($this->getClient()->id == $player['pid'] && $card))
-                && $hasMove && !in_array($player['pid'],$currentIds)) {
+                && !in_array($player['pid'],$currentIds)
+                && ($hasMove || $this->getBeater() != $player['pid'])) { //
                 echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
 
                 // если спасовал
-            } else if (isset($player['status']) && in_array($player['pid'],$currentIds)){
+            } else if (isset($player['status'])
+                && ($player['status']==2 || $player['pid']!=$this->getStarter())
+                && in_array($player['pid'],$currentIds)){
                 echo $this->time() . ' ' . "Пас или таймаут, удаляем из текущих #{$player['pid']}\n";
                 unset($currentIds[array_search($player['pid'],$currentIds)]);
 
                 // если текущий всё отбил
-            } else if (($player['pid'] == $this->getBeater()) && !empty($this->getField()['table']) && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) == 0) && in_array($player['pid'],$currentIds)){
+            } else if (($player['pid'] == $this->getBeater()) && !empty($this->getField()['table'])
+                && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) == 0)
+                && in_array($player['pid'],$currentIds)){
                 echo $this->time() . ' ' . "Отбился, больше нечего ждать #{$player['pid']}\n";
                 unset($currentIds[array_search($player['pid'],$currentIds)]);
 

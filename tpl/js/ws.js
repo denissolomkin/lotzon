@@ -1595,9 +1595,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                             if (index == onlineGame.beater)
                                 status = 'Беру';
-                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.players[onlineGame.beater].status==2)
+                            else if (($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.players[onlineGame.beater].status == 2) && (onlineGame.players[playerId].status != 1))
                                 status = 'Пас';
-                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1)
+                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 || onlineGame.players[playerId].status == 1)
                                 status = 'Отбой';
 
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + playerId +' .gm-pr .btn-pass').text(status);
