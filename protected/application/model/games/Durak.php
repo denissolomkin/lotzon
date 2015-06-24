@@ -451,7 +451,7 @@ class Durak extends Game
         if (!$card && isset($this->getClient()->bot) && in_array($this->getClient()->id,$currentIds)){
 
             // если это заходящий и он еще не пасовал
-            if($this->getClient()->id == $this->getStarter() && !isset($this->getPlayers()[$this->getClient()->id]['status'])){
+            if($this->getClient()->id == $this->getStarter() && !isset($this->getPlayers($this->getClient()->id)['status'])){
                 $card = true;
             }
 
@@ -471,7 +471,7 @@ class Durak extends Game
                 // и есть ход либо не является бъющим либо бъющийся и есть неотбитые карты
 
             if ((!isset($player['status']) || $player['status'] != 2)
-                && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers()[$this->getStarter()]['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater()))
+                && (($this->getClient()->id != $player['pid'] && (isset($this->getPlayers($this->getStarter())['status']) || $player['pid']==$this->getStarter() || $player['pid']==$this->getBeater()))
                     || ($this->getClient()->id == $player['pid'] && $card))
                 && !in_array($player['pid'],$currentIds)
                 && !empty($this->_field[$player['pid']])

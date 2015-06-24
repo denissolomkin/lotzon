@@ -1441,19 +1441,46 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             }
                         }
 
-                        //players = [];
-                        //while(onlineGame.players.length!=players.length){
-                        //    $.each(onlineGame.players, function( index, value ) {})
-                        // }
+
+                        if(onlineGame.action=='start'){
+
+                            var orders = Object.keys(players);
+
+                            var order = players[playerId].order;
+
+                            orders.sort(function (a, b) {
+
+                                a = players[a].order;
+                                b = players[b].order;
+
+                                check = a == order ? 1 : (
+                                    b == order ? -1 : (
+                                        (a < order && b < order ) || (a > order && b > order ) ? (a - b) : (b - a) ))
+
+                                return check;
+                            });
+
+
+
+
+                            //players = {};
+                            $.each(orders, function (index, value) {
+                                div = '<div class="player' + value + (value == playerId ? ' m' : ' o col' + ( Object.size(players) - 1)) + '"></div>';
+                                $('.ngm-bk .ngm-gm .gm-mx .mx .players').append(div);
+                                //players[value] = onlineGame.players[value];
+                            })
+                            console.log(orders);
+                        }
 
                         $.each(players, function( index, value ) {
 
-                            div = '<div class="player' + index + (index == playerId ? ' m' : ' o col'+( Object.size(players)-1)) + '"></div>';
-                            if(value.order>onlineGame.players[playerId].order)
+                            if(onlineGame.action!='start') {
+                                div = '<div class="player' + index + (index == playerId ? ' m' : ' o col' + ( Object.size(players) - 1)) + '"></div>';
+                                //if(value.order>onlineGame.players[playerId].order)
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players').append(div);
-                            else
-                                $('.ngm-bk .ngm-gm .gm-mx .mx .players').prepend(div);
-
+                                //else
+                                //    $('.ngm-bk .ngm-gm .gm-mx .mx .players').prepend(div);
+                            }
 
                             value.avatar = index < 0 ? "url(../tpl/img/preloader.gif)": (value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('../tpl/img/default.jpg')");
 
@@ -1596,10 +1623,10 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             if (index == onlineGame.beater)
                                 status = 'Беру';
                             else if (
-                                ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.starter == playerId || onlineGame.players[onlineGame.beater].status == 2)
+                                ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.starter == playerId || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[onlineGame.beater].status == 2))
                                 && (onlineGame.players[playerId].status != 1))
                                 status = 'Пас';
-                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 || onlineGame.players[playerId].status == 1)
+                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[playerId].status == 1))
                                 status = 'Отбой';
 
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + playerId +' .gm-pr .btn-pass').text(status);
@@ -1775,10 +1802,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
             case 'error':
 
-                console.log($('.ngm-gm .gm-mx .players .m .card.select'));
                 $('.m .card').removeClass('select').css('left',0).css('top',0);
 
-                console.log($('.ngm-gm .gm-mx .players .m .card.select'));
                 appDurakCallback('premove');
                 errorGame();
                 break;

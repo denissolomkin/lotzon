@@ -523,7 +523,7 @@ $(function(){
 
     $(document).on('click', '.rv-i-ans', function(){
         var review = $(this).parents('.rv-item').first();
-        var answer = $('.rv-ans-tmpl').clone();
+        var answer = $(getTpl.comments.answer());
         answerReview.reviewId=review.attr('data-id');
         $('.rv-ans').remove();
         $('.rv-usr-avtr').clone().prependTo($('.rv-form',answer));
@@ -542,6 +542,7 @@ $(function(){
             reviewsBlock.addClass('b-ha');
             button.removeClass('dis');
             $('.rv-add-but').hide();
+            /*
             if (data.res.reviews.length) {
                 var html = '';
                 var textAnswer = $('.rv-i-ans').first().text();
@@ -563,6 +564,9 @@ $(function(){
                 $('.rv-items .h-ch').append(html);
 
             }
+            */
+
+            appendReviews(data.res.reviews);
 
             if (!data.res.keepButtonShow) {
                 $('.rv-mr-cl-bt-bk .mr').hide();

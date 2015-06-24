@@ -280,6 +280,10 @@ function loadReviews(offset, successFunction, failFunction, errorFunction) {
     });
 }
 
+function appendReviews(data) {
+    $('.rv-items .h-ch').append(getTpl.comments.comment(data));
+}
+
 function createItemOrder(order, successFunction, failFunction, errorFunction)
 {
     $.ajax({

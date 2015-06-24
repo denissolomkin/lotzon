@@ -119,7 +119,36 @@ class Index extends \SlimController\SlimController
         if(is_array($blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], $blockedReferers) && !$session->has('REFERER'))
             $session->set('REFERER',parse_url($_SERVER['HTTP_REFERER'])['host']);
 
+
+
+
+
+
+
+
+
+        $reviews = ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE'));
+
+        while ($reviewData = array_pop($reviews))
+            foreach ($reviewData as $reviewItem) {
+                $responseData[] = array(
+                    'id' => $reviewItem->getReviewId()?:$reviewItem->getId(),
+                    'date' => date('d.m.Y H:i', $reviewItem->getDate()+SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600),
+                    'playerId' => $reviewItem->getPlayerId(),
+                    'playerAvatar' => $reviewItem->getPlayerAvatar(),
+                    'playerName' => $reviewItem->getPlayerName(),
+                    'text' => $reviewItem->getText(),
+                    'image' => $reviewItem->getImage(),
+                    'answer' => $reviewItem->getReviewId(),
+                );
+            }
+
+        $templates = array(
+            'Reviews'=> $responseData
+        );
+
         $this->render('production/game_new', array(
+            'templates'   => $templates,
             'gameInfo'    => $gameInfo,
             'shop'        => ShopModel::instance()->loadShop(),
             'currency'    => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),

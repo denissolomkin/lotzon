@@ -72,6 +72,7 @@
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/social.js" charset="utf-8"></script>
+        <script src="/tpl/js/lib/doT.min.js"></script>
 
 
         <!-- social_likes -->
@@ -562,8 +563,8 @@
                         </div>
                         <div class="rv-items">
                             <div class="h-ch">
-                                <div class="rv-ans-tmpl"><div class="rv-form"><div contenteditable></div><div class="btn-ans"><?=$MUI->getText('button-answer')?></div></div><div class="rv-sc"><?=$MUI->getText('message-review-approved')?></div></div>
-                                <? while ($reviewData = array_pop($reviews))
+                                <? /*
+                                    while ($reviewData = array_pop($reviews))
                                     foreach ($reviewData as $reviewItem) { ?>
                                     <div data-id="<?=$reviewItem->getReviewId()?:$reviewItem->getId();?>" class="rv-item<?=($reviewItem->getReviewId()?' rv-answer':'');?>">
                                         <div class="rv-i-avtr">
@@ -581,7 +582,7 @@
                                             </div>
                                             <? }?>
                                     </div>
-                                <? } ?>
+                                <? } */ ?>
                             </div>
                         </div>
                         <div class="rv-add-but"><?=$MUI->getText('button-read')?></div>
@@ -1196,8 +1197,8 @@
                             </div>
                             <div class="rls-r-t-balance">
                                 <div class="icon-wallet wallet"></div>
-                                <div><span class="plMoneyHolder">1176</span> грн</div>
-                                <div><span class="plMoneyPoints">24324</span> баллов</div>
+                                <div><span class="plMoneyHolder">...</span> грн</div>
+                                <div><span class="plPointHolder">...</span> баллов</div>
                             </div>
                         </div>
 
@@ -1456,6 +1457,7 @@
         </div>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
         <script src="/tpl/js/backend.js"></script>
+        <script src="/tpl/js/template.js"></script>
         <script src="/tpl/js/main.js"></script>
         <script src="/tpl/js/ws.js"></script>
         <script src="/tpl/js/ads.js"></script>
@@ -1508,7 +1510,7 @@
         var appId       = 0;
         var appName     = '';
         var appMode     = 0;
-        <? foreach ($onlineGames as $game){
+        <? /* foreach ($onlineGames as $game){
     if(is_array($game->getModes()))
         foreach ($game->getModes() as $cur=>$m)
             foreach ($m as $v=>$p)
@@ -1518,13 +1520,17 @@
         foreach ($game->getAudio() as $k=>$f)
             if($f)
                 $audio[$game->getKey()][$k] = $f;
-    } ?>
-        var appModes = {} <?json_encode($modes, JSON_PRETTY_PRINT); ?>;
-        var appAudio = {} <?json_encode($audio, JSON_PRETTY_PRINT); ?>;
+        <?json_encode($modes, JSON_PRETTY_PRINT); ?>;
+        <?json_encode($audio, JSON_PRETTY_PRINT); ?>;
+    } */ ?>
+        var appModes = {}
+        var appAudio = {}
         var unreadNotices = <?=$notices?>;
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
+
         updateNotices(unreadNotices);
+        getTpl.init(<?=json_encode($templates)?>);
 
         <? if($chanceGame):?>
         $('.gm-bt[data-game="<?=$chanceGame;?>"]').trigger('click');
@@ -1645,6 +1651,8 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
+
     </script>
     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
     <?=$bannerScript;?>
