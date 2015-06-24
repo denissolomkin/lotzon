@@ -127,24 +127,10 @@ class Index extends \SlimController\SlimController
 
 
 
-        $reviews = ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE'));
-
-        while ($reviewData = array_pop($reviews))
-            foreach ($reviewData as $reviewItem) {
-                $responseData[] = array(
-                    'id' => $reviewItem->getReviewId()?:$reviewItem->getId(),
-                    'date' => date('d.m.Y H:i', $reviewItem->getDate()+SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600),
-                    'playerId' => $reviewItem->getPlayerId(),
-                    'playerAvatar' => $reviewItem->getPlayerAvatar(),
-                    'playerName' => $reviewItem->getPlayerName(),
-                    'text' => $reviewItem->getText(),
-                    'image' => $reviewItem->getImage(),
-                    'answer' => $reviewItem->getReviewId(),
-                );
-            }
+        $reviews = ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE'), null, false, 'json');
 
         $templates = array(
-            'Reviews'=> $responseData
+            'Reviews'=> $reviews
         );
 
         $this->render('production/game_new', array(
