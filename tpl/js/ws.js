@@ -247,7 +247,7 @@ function updateCallback(receiveData)
     }
 
     if(receiveData.res.fund){
-        $('.prz-fnd-mon').text(receiveData.res.fund.MONEY?receiveData.res.fund.MONEY:0);
+        $('.prz-fnd-mon').text(receiveData.res.fund.MONEY?getCurrency(receiveData.res.fund.MONEY,1):0);
         $('.prz-fnd-pnt').text(receiveData.res.fund.POINT?parseInt(receiveData.res.fund.POINT):0);
     }
 }
