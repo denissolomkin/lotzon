@@ -1705,29 +1705,30 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current');
 
 
+                    if(!$('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').is(":visible")) {
 
                     playAudio([appName, ($.inArray(playerId, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
 
                         // $('.msg.winner').fadeIn(200);
 
-                        $.each(onlineGame.players, function( index, value ) {
-                            $('.ngm-bk .ngm-gm .gm-mx .mx .players .player'+index+' .wt').removeClass('loser').html(
-                                (value.result>0?'Выигрыш':'Проигрыш')+'<br>'+
+                        $.each(onlineGame.players, function (index, value) {
+                            $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .wt').removeClass('loser').html(
+                                (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
                                 (onlineGame.currency == 'MONEY' ? getCurrency(value.win, 1) : value.win ) + ' ' +
                                 (onlineGame.currency == 'MONEY' ? getCurrency() : 'баллов')
-                            ).addClass(value.result<0?'loser':'').fadeIn();
+                            ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
                         });
 
 
                         setTimeout(function () {
 
-                            if($('.ngm-bk .ngm-gm .gm-mx .players .exit').is(":visible")) {
+                            if ($('.ngm-bk .ngm-gm .gm-mx .players .exit').is(":visible")) {
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .card, .ngm-bk .ngm-gm .gm-mx .mx .deck').fadeOut();
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').fadeOut();
                             }
 
                         }, 2000);
-
+                    }
                     // setTimeout(function () {}, 200);
 
                     // $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
