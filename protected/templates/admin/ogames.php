@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="row-fluid tab" id="audio">
-                            <? $audio=array('start','stack','field','timeout','ready','Timer','Win','Lose','Move-m-1','Move-o-1','Move-m-2','Move-o-2','Move-m-3','Move-o-3');
+                            <? $audio=array('start','stack','field','timeout','ready','wait','Win','Lose','Move-m-1','Move-o-1','Move-m-2','Move-o-2','Move-m-3','Move-o-3');
                             while($key= each ($audio)) {
                                 $key=array_shift($key);?>
                                 <div class="col-lg-6">

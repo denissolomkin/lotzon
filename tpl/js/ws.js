@@ -1705,6 +1705,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current');
 
 
+
+                    playAudio([appName, ($.inArray(playerId, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
+
                         // $('.msg.winner').fadeIn(200);
 
                         $.each(onlineGame.players, function( index, value ) {
