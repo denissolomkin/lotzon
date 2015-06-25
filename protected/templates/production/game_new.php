@@ -1198,7 +1198,7 @@
                             <div class="rls-r-t-balance">
                                 <div class="icon-wallet wallet"></div>
                                 <div><span class="plMoneyHolder">...</span> <?=$currency['iso']?></div>
-                                <div><span class="plPointHolder">...</span> <?=$MUI->getText('label-points-balance')?></div>
+                                <div><span class="plPointHolder">...</span> <?=$MUI->getText('label-points')?></div>
                             </div>
                         </div>
 
