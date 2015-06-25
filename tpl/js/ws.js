@@ -1506,7 +1506,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 ).append(
                                     '<div class="pr-md"><i class="icon-reload"></i></div>'+
                                     '<div class="pr-pr"><b>'+(bet[0]=='MONEY'?getCurrency(bet[1],1):bet[1])+'</b><span>'+(bet[0]=='MONEY'?getCurrency(bet[1],2):'баллов')+'</span></div>'+
-                                    '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">'+getCurrency(playerMoney,1)+'</span> '+getCurrency()+'</div><div><span class="plMoneyPoints">'+playerPoints+'</span> баллов</div></div>'
+                                    '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">'+playerMoney+'</span> '+getCurrency()+'</div><div><span class="plMoneyPoints">'+playerPoints+'</span> баллов</div></div>'
 
                                 );
                             }
@@ -1717,6 +1717,10 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 (onlineGame.currency == 'MONEY' ? getCurrency(value.win, 1) : value.win ) + ' ' +
                                 (onlineGame.currency == 'MONEY' ? getCurrency() : 'баллов')
                             ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
+
+                            if(index==playerId){
+                                onlineGame.currency == 'MONEY' ? updateMoney(getCurrency(value.win, 1)) : updatePoints(value.win)
+                            }
                         });
 
 
