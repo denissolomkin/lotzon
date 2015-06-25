@@ -929,11 +929,10 @@
             <div class="ch-gm-tbl slide-list">
                 <div class="slide-wrap">
 
-                <? while($ogames)
-                    foreach($ids as $id):
+                <? foreach($ids as $id):
                         $game = $ogames[$id];
                         unset ($ogames[$id]);
-                        if($game->isEnabled()):?>
+                        if($game && $game->isEnabled()):?>
 
                         <div class="td slide-item">
                             <div class="gm-if-bk">
