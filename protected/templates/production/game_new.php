@@ -1083,9 +1083,6 @@
                         <div class="rw-t">
                             <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
                         </div>
-                        <div class="gm-if-bk">
-                            <div class="l"></div>
-                        </div>
 
                         <div class="rls-bl">
                             <div class="rls-bt-bk">
@@ -1170,10 +1167,15 @@
 
                                 <div class="prz-fnd">
                                     <div class="prz-fnd-ttl"><span class="icon-trophy" aria-hidden="true"></span> <?=$MUI->getText('label-prize-fund')?></div>
-                                    <div><b class="prz-fnd-mon">460</b><i><?=$currency['many']?></i></div>
-                                    <div><b class="prz-fnd-pnt">4760</b><i><?=$MUI->getText('label-points')?></i></div>
+                                    <div><b class="prz-fnd-mon">...</b><i><?=$currency['many']?></i></div>
+                                    <div><b class="prz-fnd-pnt">...</b><i><?=$MUI->getText('label-points')?></i></div>
                                 </div>
                             </div>
+
+                            <div class="gm-if-bk">
+                                <div class="l"></div>
+                            </div>
+
                             <div class="rls-txt-bk">
 
                             </div>

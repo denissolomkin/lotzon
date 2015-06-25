@@ -812,7 +812,7 @@ article .infos {padding:40px 20px 0 20px;}
 .chance .ch-lot-bk .ch-bk .gm-5x5 {margin:0 0 0 auto;}
 .chance .ch-lot-bk .ch-bk .gm-5x5 > li {width:42px;height:42px;margin:0 5px 5px 0;}
 .chance .ch-lot-bk .ch-bk .gm-5x5 > li:nth-child(5n+5) {margin-right:0;}
-.chance .ch-lot-bk .gm-if-bk {padding:13px 0 26px 0;overflow:hidden;color:#000;width:240px;text-align:left;display:table;display: none;}
+.chance .ch-lot-bk .gm-if-bk {padding:13px 0 26px 0;overflow:hidden;color:#000;width:240px;text-align:left;display:table;}
 .chance .ch-lot-bk .ch-bk .td.c .gm-if-bk {margin:auto;}
 .chance .ch-lot-bk .ch-bk .td.r .gm-if-bk {margin-left:auto;}
 .chance .ch-lot-bk .gm-if-bk .l {font:20px/1 Handbook-bold;text-transform:uppercase;display:table-cell;vertical-align:top;width:100%;}
