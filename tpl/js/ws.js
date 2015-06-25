@@ -1748,7 +1748,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 if(onlineGame.beater == playerId && $('.ngm-gm .gm-mx .table .cards').length){
 
-                    if($('.ngm-gm .gm-mx').hasClass('DurakRevert') && $('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
+                    if($('.ngm-gm').hasClass('DurakRevert') && $('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
                         $('.ngm-gm .gm-mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
 

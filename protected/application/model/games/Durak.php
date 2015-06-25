@@ -897,7 +897,8 @@ class Durak extends Game
 
     public function checkRevert($playerId=null, $card=null){ // $check == playerId OR candidate
 
-        if(!self::REVERT_MODE) return false;
+        var_dump(static::REVERT_MODE);
+        if(!static::REVERT_MODE) return false;
 
         $check = false;
         $playerId = $playerId ? : $this->getClient()->id;

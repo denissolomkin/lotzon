@@ -1132,7 +1132,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 65px;width: 65px;margin: 8px;float:right;border-radius: 80px;padding: 7px 10px;box-sizing: border-box;bottom:0;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md{margin: 10px 25px;float: right;width: 40px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-md .icon-reload{ display: none; border: 2px solid #888;padding: 15px 3px;border-radius: 5px;color: #888;font-size: 28px;}
-.ngm-bk .ngm-gm.cards .gm-mx .DurakRevert .players .m .gm-pr .pr-md .icon-reload{display: block;}
+.ngm-bk .ngm-gm.cards.DurakRevert .gm-mx .players .m .gm-pr .pr-md .icon-reload{display: block;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr b{    font: 36px/1 Handbook-bold;letter-spacing: -3px;  margin-left: -3px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .m .gm-pr .pr-pr span{ font: 13px/5px Handbook-regular; }
 
