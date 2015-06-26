@@ -2499,7 +2499,7 @@ function getCurrency(value, part) {
             } else if((format=='one' || (!format && value == 1)) && currency['one']){
                 return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['one']:'');
             } else {
-                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['iso']:'');
+                return (!part || part==1?parseFloat(value):'') + (!part?' ':'') + (!part || part==2 ? currency['iso']:'');
             }
             break;
     }
