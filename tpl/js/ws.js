@@ -1525,7 +1525,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 }
 
                 if(onlineGame.fields){
-                    var playAudio = null;
+                    var sample = null;
                     $.each(onlineGame.fields, function( key, field ) {
                         if(!field)
                             return;
@@ -1553,17 +1553,17 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             if(is_numeric(key)){
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key + ' .card').remove();
 
-                                if(!playAudio){
+                                if(!sample){
                                     if(newLen<oldLen) // походил
-                                        playAudio = (key==playerId ? 'Move-m-1' : 'Move-m-2'); // я | противник
+                                        sample = (key==playerId ? 'Move-m-1' : 'Move-m-2'); // я | противник
                                     else // взял
-                                        playAudio='Move-o-2';
+                                        sample='Move-o-2';
                                 }
 
                             } else if(key != 'off' || newLen == 0){
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).html('');
                             } else if(key == 'off'){
-                                playAudio = 'Move-o-3'; // отбой
+                                sample = 'Move-o-3'; // отбой
                             }
 
                             var idx = 0;
@@ -1605,7 +1605,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         }
                     });
 
-                    playAudio([appName, playAudio]);
+                    sample && playAudio([appName, sample]);
                     appDurakCallback('premove');
                 }
 
