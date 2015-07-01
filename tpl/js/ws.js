@@ -1428,8 +1428,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                     echo('обнулили поля');
 
-                    var fields = [];
-                    var statuses = [];
+                    fields = [];
+                    statuses = [];
 
                     timestamp = null;
 
