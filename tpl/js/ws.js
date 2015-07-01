@@ -1428,7 +1428,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                     echo('обнулили поля');
 
-                    fields = [];
+                    var fields = [];
+                    var statuses = [];
+
                     timestamp = null;
 
                     if(players = onlineGame.players){
@@ -1524,8 +1526,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 } else {
                 }
 
+                var sample = null;
+
                 if(onlineGame.fields){
-                    var sample = null;
                     $.each(onlineGame.fields, function( key, field ) {
                         if(!field)
                             return;
@@ -1605,13 +1608,11 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         }
                     });
 
-                    sample && playAudio([appName, sample]);
                     appDurakCallback('premove');
                 }
 
 
                 fields = onlineGame.fields;
-
 
 
                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .mt').hide();
@@ -1642,6 +1643,11 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index).addClass('beater');
                         else if(index == onlineGame.starter && !$('.ngm-bk .ngm-gm .gm-mx .mx .table .cards').length)
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index).addClass('starter');
+
+                        if (!sample && (!statuses[index] || statuses[index]!=player.status) && player.status)
+                            sample = (index == onlineGame.beater) ? 'Move-o-1' : 'Move-m-3';
+
+                        statuses[index] = player.status ? player.status : null;
 
                         if ($.inArray(parseInt(index), onlineGame.current) != -1) {
 
@@ -1701,6 +1707,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     updateTimeOut(onlineGame.timeout);
 
                 if(!onlineGame.winner) {
+
+                    sample && playAudio([appName, sample]);
+
                 } else {
 
                     // $('.ngm-bk .tm').countdown('pause');
