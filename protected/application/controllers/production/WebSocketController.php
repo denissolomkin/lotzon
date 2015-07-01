@@ -114,7 +114,7 @@ class WebSocketController implements MessageComponentInterface {
 
                     do {
                         $bot = (object)SettingsModel::instance()->getSettings('gameBots')->getValue()[array_rand(SettingsModel::instance()->getSettings('gameBots')->getValue())];
-                    } while (array_key_exists($bot->id, $clients));
+                    } while (array_key_exists($bot->id, $app->getClients()));
                     $bot->time = time();
 
                     $app->addClient(array($bot->id => $bot));
@@ -566,7 +566,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         $date = mktime(0, 0, 0, date("n"), 1);
 
-                        $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
+                        // $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
                         $sql = "SELECT SUM(Price) Total, Currency FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a  GROUP BY Currency";
 
                         try {
@@ -1290,7 +1290,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         if ($fourth){
                             unset($array[$second][$third][$fourth]);
-                            if(count($array[$second][$third]) === 0)
+                            if(isset($array[$second]) && isset($array[$second][$third]) && count($array[$second][$third]) === 0)
                                 unset($array[$second][$third]);
                         } elseif ($third)
                             unset($array[$second][$third]);
@@ -1327,7 +1327,7 @@ class WebSocketController implements MessageComponentInterface {
 
                         if ($fourth){
                             unset($this->{$key}[$second][$third][$fourth]);
-                            if(count($this->{$key}[$second][$third]) === 0)
+                            if(isset($this->{$key}[$second]) && isset($this->{$key}[$second][$third]) && count($this->{$key}[$second][$third]) === 0)
                                 unset($this->{$key}[$second][$third]);
                         }elseif ($third)
                             unset($this->{$key}[$second][$third]);

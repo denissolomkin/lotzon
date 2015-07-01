@@ -485,7 +485,7 @@ class Durak extends Game
                 $currentIds[] = $player['pid'];
 
                 // если бот, то для переназначения botTimer
-                if($this->getClients($player['pid'])->bot && !$card)
+                if(isset($this->getClients($player['pid'])->bot) && !$card)
                     $card = true;
 
 

@@ -1445,7 +1445,6 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         if(onlineGame.action=='start'){
 
                             var orders = Object.keys(players);
-
                             var order = players[playerId].order;
 
                             orders.sort(function (a, b) {
@@ -1460,26 +1459,18 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 return check;
                             });
 
-
-
-
-                            //players = {};
                             $.each(orders, function (index, value) {
                                 div = '<div class="player' + value + (value == playerId ? ' m' : ' o col' + ( Object.size(players) - 1)) + '"></div>';
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players').append(div);
-                                //players[value] = onlineGame.players[value];
                             })
-                            console.log(orders);
+
                         }
 
                         $.each(players, function( index, value ) {
 
                             if(onlineGame.action!='start') {
                                 div = '<div class="player' + index + (index == playerId ? ' m' : ' o col' + ( Object.size(players) - 1)) + '"></div>';
-                                //if(value.order>onlineGame.players[playerId].order)
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players').append(div);
-                                //else
-                                //    $('.ngm-bk .ngm-gm .gm-mx .mx .players').prepend(div);
                             }
 
                             value.avatar = index < 0 ? "url(../tpl/img/preloader.gif)": (value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('../tpl/img/default.jpg')");
@@ -1534,6 +1525,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 }
 
                 if(onlineGame.fields){
+                    var playAudio = null;
                     $.each(onlineGame.fields, function( key, field ) {
                         if(!field)
                             return;
@@ -1558,10 +1550,21 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                         } else {
 
-                            if(is_numeric(key))
+                            if(is_numeric(key)){
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key + ' .card').remove();
-                            else if(key != 'off' || newLen == 0)
+
+                                if(!playAudio){
+                                    if(newLen<oldLen) // походил
+                                        playAudio = (key==playerId ? 'Move-m-1' : 'Move-m-2'); // я | противник
+                                    else // взял
+                                        playAudio='Move-o-2';
+                                }
+
+                            } else if(key != 'off' || newLen == 0){
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).html('');
+                            } else if(key == 'off'){
+                                playAudio = 'Move-o-3'; // отбой
+                            }
 
                             var idx = 0;
                             var count = 16;
@@ -1594,7 +1597,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                     $.each(card, function (i, c) { cards += '<div class="card' + (c ? ' card' + c : '') + '">' + '</div>';});
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div data-table="'+index+'" class="cards">'+cards+'</div>');
 
-                                } else {
+                                } else if (key == 'off')  {
                                     if(index >= $('.ngm-bk .ngm-gm .gm-mx .mx .' + key+' .card').length)
                                         $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div '+(key=='off'?'style="margin-top:'+Math.random()*160+'px;transform: scale(0.7,0.7) rotate('+Math.random()*360+'deg)" ':'')+'class="card' + (card ? ' card' + card : '') + '">' + '</div>');
                                 }
@@ -1602,6 +1605,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         }
                     });
 
+                    playAudio([appName, playAudio]);
                     appDurakCallback('premove');
                 }
 
@@ -1624,9 +1628,11 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 status = 'Беру';
                             else if (
                                 ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.starter == playerId || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[onlineGame.beater].status == 2))
-                                && (onlineGame.players[playerId].status != 1))
+                                && (onlineGame.players[playerId].status != 1)
+                                || (onlineGame.beater && onlineGame.players[onlineGame.beater].status))
                                 status = 'Пас';
-                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[playerId].status == 1))
+                            else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1
+                                || (onlineGame.players[playerId].status == 1))
                                 status = 'Отбой';
 
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + playerId +' .gm-pr .btn-pass').text(status);
