@@ -170,7 +170,7 @@ class WebSocketController implements MessageComponentInterface {
             $this->_class = $class='\\' . $appName;
             echo "###################################################\n".$this->time() . " " . "$appName $appId $action ".(empty($app->_bot) || !in_array($playerId,$app->_bot) ? "игрок №" : 'бот №').$playerId.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
 
-            if (isset($playerId)
+            if (isset($playerId) && $app->getClients($playerId)
                 && !isset($app->getClients($playerId)->bot)
                 && (in_array($action, array('replayAction', 'startAction', 'readyAction')) && (!$this->checkBalance($playerId, $app->getCurrency(), $app->getPrice())))) {
                 #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
@@ -184,7 +184,7 @@ class WebSocketController implements MessageComponentInterface {
                 }
 
                 #echo $this->time() . " " . "пробуем вызвать экшн \n";
-                if($app->isRun() OR $action != 'moveAction' ) {
+                if($app->getClient() && ($app->isRun() || $action != 'moveAction' )) {
                     call_user_func(array($app, $action), $data);
                 }
 
@@ -193,9 +193,10 @@ class WebSocketController implements MessageComponentInterface {
 
                 if (($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId,$app->getClients())){
 
-                    echo $this->time(1) . " отправляем клиенту quit \n";
-                    if($_client = $this->clients($playerId))
+                    if($_client = $this->clients($playerId)){
+                        echo $this->time(1) . " отправляем клиенту quit \n";
                         $_client->send(json_encode(array('path' => 'quit')));
+                    }
 
                     if($_player = $this->players($playerId)) {
                         echo $this->time(1) . " " . $appName . ' ' . $appId . " удаление appId у игрока №{$playerId}\n";
@@ -223,7 +224,7 @@ class WebSocketController implements MessageComponentInterface {
         $appName = $app->getKey();
         $appId = $app->getIdentifier();
 
-        if(!$app->isOver()){
+        if($app->isRun() && !$app->isOver()){
             foreach($app->_botTimer as $bot=>$timer) {
                 unset($app->_botTimer[$bot]);
                 if (in_array($bot, $app->currentPlayers())) {
@@ -235,7 +236,7 @@ class WebSocketController implements MessageComponentInterface {
             }
         }
 
-        echo "Приложение завершено??? {$app->isOver()} \n";
+        echo "Приложение завершено??? {$app->isOver()} Приложение запущено??? {$app->isRun()}  \n";
         if($app->isOver() && count($app->getClients()) && !$app->isSaved()) {
 
             echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} приложение завершилось, записываем данные\n";

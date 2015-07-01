@@ -607,7 +607,7 @@ class Game
     public function getClients($id=null)
     {
         if($id)
-            return $this->_clients[$id];
+            return isset($this->_clients[$id])?$this->_clients[$id]:false;
         else
             return $this->_clients;
     }
