@@ -106,7 +106,7 @@ class OnlineGame extends Entity
     public function isMode($mode)
     {
         $mode=explode('-',$mode);
-        return (isset($this->getModes()[$mode[0]][$mode[1]]) && $mode[2]>=2 && $mode[2]<=$this->getOption('p'));
+        return (isset($this->getModes()[$mode[0]][$mode[1]]) && (!isset($mode[2]) || ($mode[2]>=2 && $mode[2]<=$this->getOption('p'))));
     }
 
     public function setAudio($array)

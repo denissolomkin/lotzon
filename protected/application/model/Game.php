@@ -419,7 +419,7 @@ class Game
 
         if($skip!==true) {
 
-            while((current($this->_players)['pid']!=$this->currentPlayer()['pid'] AND $this->currentPlayer()))
+            while($this->currentPlayer() && current($this->_players)['pid']!=$this->currentPlayer()['pid'])
                 if (next($this->_players) === false)
                     reset($this->_players);
 
@@ -447,7 +447,7 @@ class Game
 
     public function currentPlayer()
     {
-        return $this->_players[reset($this->currentPlayers())];
+        return count($this->currentPlayers()) ? $this->_players[reset($this->currentPlayers())] : false;
         /* return current($this->_players); */
     }
 
