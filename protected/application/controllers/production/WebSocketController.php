@@ -186,10 +186,11 @@ class WebSocketController implements MessageComponentInterface {
                 #echo $this->time() . " " . "пробуем вызвать экшн \n";
                 if($app->getClient() && ($app->isRun() || $action != 'moveAction' )) {
                     call_user_func(array($app, $action), $data);
+
+                    #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
+                    $this->sendCallback($app->getResponse(), $app->getCallback());
                 }
 
-                #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
-                $this->sendCallback($app->getResponse(), $app->getCallback());
 
                 if (($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId,$app->getClients())){
 
@@ -300,9 +301,10 @@ class WebSocketController implements MessageComponentInterface {
             $conn->send(json_encode(
                     array('path' => 'update',
                         'res' => array(
-                            'money' => $balance['Money'],
-                            'points' => $balance['Points'],
-                            //'appName' => isset($_player['appName']) ? $_player['appName'] : '',
+                            'money'     => $balance['Money'],
+                            'points'    => $balance['Points'],
+                            'appName'   => isset($_player['appName']) ? $_player['appName'] : null,
+                            'audio'     => isset($_player['appId']) && isset($_player['appName']) ? array_filter(OnlineGamesModel::instance()->getGame($_player['appName'])->getAudio()) : null
                         )))
             );
 

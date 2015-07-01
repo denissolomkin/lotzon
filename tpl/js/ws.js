@@ -234,12 +234,12 @@ function updateCallback(receiveData)
         appModes[receiveData.res.key] = receiveData.res.modes;
 
     if(receiveData.res.audio)
-        appAudio[receiveData.res.key]=receiveData.res.audio;
+        appAudio[receiveData.res.key ? receiveData.res.key : receiveData.res.appName]=receiveData.res.audio;
 
     if(receiveData.res.key) {
 
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating .rls-r-t-rating-points").text(
-        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))+(parseInt(receiveData.res.count))):"0"));
+        (receiveData.res.count>0 ? Math.ceil((parseInt(receiveData.res.win))+(parseInt(receiveData.res.count))) : "0"));
 //        (receiveData.res.count>0?Math.ceil((parseInt(receiveData.res.win))/25):"0")+'');
 
         $('.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .bt').removeClass('button-disabled').removeAttr('disabled');
