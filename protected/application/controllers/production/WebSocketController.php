@@ -170,7 +170,9 @@ class WebSocketController implements MessageComponentInterface {
             $this->_class = $class='\\' . $appName;
             echo "###################################################\n".$this->time() . " " . "$appName $appId $action ".(empty($app->_bot) || !in_array($playerId,$app->_bot) ? "игрок №" : 'бот №').$playerId.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
 
-            if (isset($playerId) && !isset($app->getClients($playerId)->bot) && (($action == 'replayAction' || $action == 'startAction') && (!$this->checkBalance($playerId, $app->getCurrency(), $app->getPrice())))) {
+            if (isset($playerId)
+                && !isset($app->getClients($playerId)->bot)
+                && (in_array($action, array('replayAction', 'startAction', 'readyAction')) && (!$this->checkBalance($playerId, $app->getCurrency(), $app->getPrice())))) {
                 #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
                 if($_client = $this->clients($playerId))
                     $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
@@ -1078,15 +1080,20 @@ class WebSocketController implements MessageComponentInterface {
         foreach($players as $player)
         {
             if($app->getPrice() AND $player['result']!=0 AND !isset($app->getClients()[$player['pid']]->bot)) {
-                $sql_transactions_players[]='(?,?,?,?,?,?)';
 
                 $currency = $app->getCurrency()=='MONEY'?'Money':'Points';
                 $win = isset($player['win']) ? $player['win'] : $player['result']*$app->getPrice();
+
                 if($currency=='Money')
                     $win *= CountriesModel::instance()->getCountry($this->players($player['pid'])['Country'])->loadCurrency()->getCoefficient();
 
                 if($win>0)
                     $win = $currency=='Money' ? ceil($win * $comission * 100) / 100 : ceil($win * $comission);
+
+                if($win==0)
+                    continue;
+
+                $sql_transactions_players[]='(?,?,?,?,?,?)';
 
                 /* update balance after game */
                 $sql="UPDATE Players SET ".$currency." = ".$currency.($win < 0 ? '' : '+').($win)." WHERE Id=".$player['pid'];

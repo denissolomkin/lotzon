@@ -911,9 +911,20 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
 // готов при наборе необходимого количества игроков
     $(document).on('click', '.ngm-gm .gm-mx .players .m .btn-ready', function(e){
 
-        var path='app/'+appName+'/'+appId;
-        var data={'action':'ready'}
-        WebSocketAjaxClient(path,data);
+
+        price = appMode.split('-');
+
+        if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
+
+            $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
+
+        } else {
+
+            var path='app/'+appName+'/'+appId;
+            var data={'action':'ready'}
+            WebSocketAjaxClient(path,data);
+
+        }
 
     });
 
@@ -1528,7 +1539,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 var sample = null;
 
-                if(onlineGame.fields){
+                if($.inArray(onlineGame.action, ['ready','wait']) == -1
+                    && onlineGame.fields){
+
                     $.each(onlineGame.fields, function( key, field ) {
                         if(!field)
                             return;
@@ -1732,12 +1745,12 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         $.each(onlineGame.players, function (index, value) {
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .wt').removeClass('loser').html(
                                 (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                                (onlineGame.currency == 'MONEY' ? getCurrency(value.win, 1) : value.win ) + ' ' +
+                                (onlineGame.currency == 'MONEY' ? getCurrency(value.win, 1) : parseInt(value.win) ) + ' ' +
                                 (onlineGame.currency == 'MONEY' ? getCurrency() : 'баллов')
                             ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
 
                             if(index==playerId){
-                                onlineGame.currency == 'MONEY' ? updateMoney(getCurrency(value.win, 1)) : updatePoints(value.win)
+                                onlineGame.currency == 'MONEY' ? updateMoney(playerMoney+getCurrency(value.win, 1)) : updatePoints(playerPoints+parseInt(value.win))
                             }
                         });
 
