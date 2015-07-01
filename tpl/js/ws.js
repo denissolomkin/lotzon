@@ -1708,7 +1708,10 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 if(!onlineGame.winner) {
 
-                    sample && playAudio([appName, sample]);
+                    if(sample) {
+                        console.log(sample);
+                        playAudio([appName, sample]);
+                    }
 
                 } else {
 
