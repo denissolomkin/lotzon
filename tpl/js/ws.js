@@ -160,6 +160,11 @@ function quitCallback() {
      $('.ngm-bk .rls-l').fadeIn(200);
       */
 
+     if(!$('.ngm-bk .rls-r-t').is(':visible')){
+         cancelCallback();
+     }
+
+
      $('.ngm-bk').fadeOut(200);
      window.setTimeout(function(){
          $('.ch-bk').fadeIn(200);
@@ -268,7 +273,7 @@ function updateCallback(receiveData)
 
                 html += '<div class="gm-now">' +
                 '<div class="gm-now-md"><b>'+(mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1])+'</b><i>'+(mode[0]=='MONEY'?getCurrency():'баллов')+'</i></div>' +
-                '<div class="gm-now-nmb"><span class="icon-users"></span> '+value.players.length + '/' + mode[2]+'</div>';
+                '<div class="gm-now-nmb"><span class="icon-users"></span> '+value.players.length + '/' + (mode[2] ? mode[2] : 2) + '</div>';
 
                 players = [];
                 $.each(value.players, function (i, player) {
@@ -593,9 +598,9 @@ function appSeaBattleCallback()
 
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.o li.s:not(.d,.k)').effect('pulsate',{times:10});
 
+                 class_player=onlineGame.winner==playerId?'l':'r';
                  setTimeout(function(){
                      $('.msg.winner').fadeIn(200);
-                     class_player=onlineGame.winner==playerId?'l':'r';
 
                      $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
@@ -1941,9 +1946,9 @@ function appWhoMoreCallback()
                 $('.gm-pr').removeClass('move');
                 $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
+                class_player=onlineGame.winner==playerId?'l':'r';
                 setTimeout(function(){
                     $('.msg.winner').fadeIn(200);
-                    class_player=onlineGame.winner==playerId?'l':'r';
 
                     $('.gm-pr .pr-cl').css('opacity',0);
                     $('.gm-pr .pr-pr').hide();
@@ -2028,9 +2033,9 @@ function appWhoMoreCallback()
                 $('.gm-pr').removeClass('move');
                 $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
+                class_player=onlineGame.winner==playerId?'l':'r';
                 setTimeout(function(){
                     $('.msg.winner').fadeIn(200);
-                    class_player=onlineGame.winner==playerId?'l':'r';
 
                     $('.gm-pr .pr-cl').css('opacity',0);
                     $('.gm-pr .pr-pr').hide();
@@ -2229,9 +2234,9 @@ function appWhoMoreCallback()
                     $('.gm-pr').removeClass('move');
                     $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
+                    class_player=onlineGame.winner==playerId?'l':'r';
                     setTimeout(function(){
                         $('.msg.winner').fadeIn(200);
-                        class_player=onlineGame.winner==playerId?'l':'r';
 
                         $('.gm-pr .pr-cl').css('opacity',0);
                         $('.gm-pr .pr-pr').hide();
@@ -2286,9 +2291,9 @@ function appWhoMoreCallback()
 
         $('.ngm-bk .ngm-gm .gm-mx ul.mx li.w div').effect('pulsate',{times:10});
 
+        class_player=onlineGame.winner==playerId?'l':'r';
         setTimeout(function(){
             $('.msg.winner').fadeIn(200);
-            class_player=onlineGame.winner==playerId?'l':'r';
 
             $('.gm-pr .pr-cl').css('opacity',0);
             $('.gm-pr .pr-pr').hide();
