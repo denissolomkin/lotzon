@@ -1082,10 +1082,11 @@
                         <div class="rw-t">
                             <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
                         </div>
-                        
+
                         <div class="gm-if-bk">
                             <div class="l"></div>
                         </div>
+                        <div style="clear: both;"></div>
 
                         <div class="rls-bl">
                             <div class="rls-bt-bk">

@@ -103,8 +103,8 @@ echo ($this->getOption('x') * $this->getOption('y')) - $this->_cells - $this->_m
                 $this->updatePlayer(array('result' => -1));
                 $this->updatePlayer(array('result' => 2), current($winner)['player']['pid']);
                 $this->setTime(time());
-                $this->_isOver      = 1;
-                $this->_isRun = 0;
+                $this->_isOver = 1;
+                $this->_isRun  = 0;
                 $this->_botReplay   = array();
                 $this->_botTimer    = array();
                 return current($winner)['player'];
