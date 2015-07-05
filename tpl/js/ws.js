@@ -652,17 +652,17 @@ function appSeaBattleCallback()
 
             price = appMode.split('-');
 
-            if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
+        if ((price[0] == 'POINT' && parseInt(playerPoints) < parseInt(price[1])) || (price[0] == 'MONEY' && parseFloat(playerMoney) < getCurrency(price[1],1))) {
 
-                $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
+            $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
 
-            } else {
+        } else {
 
-                var path = 'app/' + appName + '/' + appId;
-                var data = {'action': 'start', 'mode': appMode};
-                WebSocketAjaxClient(path, data);
+            var path = 'app/' + appName + '/' + appId;
+            var data = {'action': 'start', 'mode': appMode};
+            WebSocketAjaxClient(path, data);
 
-            }
+        }
 
     });
 

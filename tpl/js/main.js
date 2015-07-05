@@ -2322,7 +2322,7 @@ function updateNotices(notices) {
 }
 
 function updatePoints(points) {
-    playerPoints = parseInt(points) || playerPoints;
+    playerPoints = parseInt(points) || parseInt(playerPoints)
     points=playerPoints.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plPointHolder').text(points);
 }
@@ -2330,8 +2330,8 @@ function updatePoints(points) {
 
 function updateMoney(money) {
     // money = money || playerMoney;
-    playerMoney = parseFloat(money).toFixed(2) || playerMoney;
-    money=parseFloat(playerMoney).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    playerMoney = parseFloat(money).toFixed(2) || parseFloat(playerMoney).toFixed(2);
+    money=playerMoney.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money.replace('.00',''));
 }
 
