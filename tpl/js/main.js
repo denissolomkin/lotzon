@@ -2322,7 +2322,7 @@ function updateNotices(notices) {
 }
 
 function updatePoints(points) {
-    playerPoints = parseInt(points) || parseInt(playerPoints)
+    playerPoints = parseInt(points) || playerPoints;
     points=playerPoints.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plPointHolder').text(points);
 }
@@ -2330,8 +2330,8 @@ function updatePoints(points) {
 
 function updateMoney(money) {
     // money = money || playerMoney;
-    playerMoney = parseFloat(money).toFixed(2) || parseFloat(playerMoney).toFixed(2);
-    money=playerMoney.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    playerMoney = parseFloat(money).toFixed(2) || playerMoney;
+    money=parseFloat(playerMoney).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money.replace('.00',''));
 }
 
@@ -2493,13 +2493,13 @@ function getCurrency(value, part) {
         default:
             value = round((parseFloat(value)*currency['coefficient']),2);
             if((format=='many' || (!format && value>=5)) && currency['many']){
-                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['many']:'');
+                return (!part || part==1 ? value : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['many'] : null);
             } else if((format=='few' || (!format && (value>1 || value<1))) && currency['few']){
-                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['few']:'');
+                return (!part || part==1 ? value : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['few'] : null);
             } else if((format=='one' || (!format && value == 1)) && currency['one']){
-                return (!part || part==1?value:'') + (!part?' ':'') + (!part || part==2 ? currency['one']:'');
+                return (!part || part==1 ? value : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['one'] : null);
             } else {
-                return (!part || part==1?parseFloat(value):'') + (!part?' ':'') + (!part || part==2 ? currency['iso']:'');
+                return (!part || part==1 ? parseFloat(value) : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['iso'] : null);
             }
             break;
     }
