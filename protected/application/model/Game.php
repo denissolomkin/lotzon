@@ -777,7 +777,7 @@ class Game
         $coef *= ($this->getOption('h') ? (100 - $this->getOption('h')) / 100 : 1) * $this->getPrice();
 
         if($coef>0)
-            $coef = $this->getCurrency()=='Money' ? ceil($coef * 100) / 100 : ceil($coef);
+            $coef = $this->getCurrency()=='MONEY' ? ceil($coef * 100) / 100 : ceil($coef);
 
 
         return $coef;
