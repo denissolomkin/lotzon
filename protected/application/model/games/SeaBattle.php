@@ -462,8 +462,12 @@ class SeaBattle extends Game
             if (isset(current($winner)['count']) && current($winner)['count'] == 1) {
                 #echo $this->time().' '. "Победитель #".current($winner)['player']['pid']."\n";
                 $this->setWinner(current($winner)['player']['pid']);
-                $this->updatePlayer(array('result' => -1));
-                $this->updatePlayer(array('result' => 2), current($winner)['player']['pid']);
+                $this->updatePlayer(array(
+                    'result' => -1,
+                    'win' => $this->getPrice()*-1));
+                $this->updatePlayer(array(
+                    'result' => 2,
+                    'win' => $this->getPrice()+$this->getWinCoefficient()),current($winner)['player']['pid']);
                 $this->setTime(time());
                 $this->_isOver      = 1;
                 $this->_isRun = 0;

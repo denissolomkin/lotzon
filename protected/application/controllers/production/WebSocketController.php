@@ -17,7 +17,7 @@ class WebSocketController implements MessageComponentInterface {
     const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;//2
     const   CONNECTION_TIMER = 1800;
-    const   COMISSION = 10; //percent
+    // const   COMISSION = 10; //percent
     const   DEFAULT_MODE = 'POINT-0-2';
     const   EMULATION = false; //false;
 
@@ -586,7 +586,7 @@ class WebSocketController implements MessageComponentInterface {
                         }
 
                         $fund = array();
-                        $comission = (self::COMISSION) / 100;
+                        $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0; //(self::COMISSION) / 100;
                         foreach ($sth->fetchAll() as $data) {
                             $fund[$data['Currency']] = $data['Currency'] == 'MONEY' ? ceil($data['Total'] * $comission * 100) / 100 : ceil($data['Total'] * $comission);
                         }
@@ -1074,7 +1074,7 @@ class WebSocketController implements MessageComponentInterface {
 
         if($app->getPrice()){
             $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES ";
-            $comission = (100 - self::COMISSION) / 100;
+            $comission = 1; //(100 - self::COMISSION) / 100;
         }
 
         $results = $transactions = array();
@@ -1090,8 +1090,8 @@ class WebSocketController implements MessageComponentInterface {
                 if($currency=='Money')
                     $win *= CountriesModel::instance()->getCountry($this->players($player['pid'])['Country'])->loadCurrency()->getCoefficient();
 
-                if($win>0)
-                    $win = $currency=='Money' ? ceil($win * $comission * 100) / 100 : ceil($win * $comission);
+                //if($win>0)
+                //    $win = $currency=='Money' ? ceil($win * $comission * 100) / 100 : ceil($win * $comission);
 
                 if($win==0)
                     continue;

@@ -599,12 +599,13 @@ function appSeaBattleCallback()
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.o li.s:not(.d,.k)').effect('pulsate',{times:10});
 
                  class_player=onlineGame.winner==playerId?'l':'r';
+                 win = onlineGame.players[onlineGame.winner].win;
                  setTimeout(function(){
                      $('.msg.winner').fadeIn(200);
 
                      $('.gm-pr .pr-cl, .gm-pr .pr-pr').hide();
                      $('.gm-pr.'+class_player+' .pr-cl').show().html("<b>"+
-                     (onlineGame.currency=='MONEY'?getCurrency(onlineGame.price,1):onlineGame.price )+
+                     (onlineGame.currency=='MONEY'?getCurrency(win,1):win )+
                      "</b><span>"+
                      (onlineGame.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
@@ -1943,6 +1944,7 @@ function appWhoMoreCallback()
                 $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
                 class_player=onlineGame.winner==playerId?'l':'r';
+                win = onlineGame.players[onlineGame.winner].win;
                 setTimeout(function(){
                     $('.msg.winner').fadeIn(200);
 
@@ -1950,7 +1952,7 @@ function appWhoMoreCallback()
                     $('.gm-pr .pr-pr').hide();
 
                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                    (onlineGame.currency=='MONEY'?getCurrency(onlineGame.price,1):onlineGame.price )+
+                    (onlineGame.currency=='MONEY'?getCurrency(win,1):win )+
                     "</b><span>"+
                     (onlineGame.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
@@ -2030,6 +2032,7 @@ function appWhoMoreCallback()
                 $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
                 class_player=onlineGame.winner==playerId?'l':'r';
+                win = onlineGame.players[onlineGame.winner].win;
                 setTimeout(function(){
                     $('.msg.winner').fadeIn(200);
 
@@ -2037,7 +2040,7 @@ function appWhoMoreCallback()
                     $('.gm-pr .pr-pr').hide();
 
                     $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                    (onlineGame.currency=='MONEY'?getCurrency(onlineGame.price,1):onlineGame.price )+
+                    (onlineGame.currency=='MONEY'?getCurrency(win,1):win )+
                     "</b><span>"+
                     (onlineGame.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
@@ -2231,6 +2234,7 @@ function appWhoMoreCallback()
                     $('.ngm-bk .ngm-gm .gm-pr .pr-surr').hide();
 
                     class_player=onlineGame.winner==playerId?'l':'r';
+                    win = onlineGame.players[onlineGame.winner].win;
                     setTimeout(function(){
                         $('.msg.winner').fadeIn(200);
 
@@ -2238,7 +2242,7 @@ function appWhoMoreCallback()
                         $('.gm-pr .pr-pr').hide();
 
                         $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').html("<b>"+
-                        (onlineGame.currency=='MONEY'?getCurrency(onlineGame.price,1):onlineGame.price )+
+                        (onlineGame.currency=='MONEY'?getCurrency(win,1):win )+
                         "</b><span>"+
                         (onlineGame.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 
@@ -2288,6 +2292,7 @@ function appWhoMoreCallback()
         $('.ngm-bk .ngm-gm .gm-mx ul.mx li.w div').effect('pulsate',{times:10});
 
         class_player=onlineGame.winner==playerId?'l':'r';
+        win = onlineGame.players[onlineGame.winner].win;
         setTimeout(function(){
             $('.msg.winner').fadeIn(200);
 
@@ -2295,7 +2300,7 @@ function appWhoMoreCallback()
             $('.gm-pr .pr-pr').hide();
 
             $('.gm-pr.'+class_player+' .pr-cl').css('opacity','100').show().html("<b>"+
-            (onlineGame.currency=='MONEY'?getCurrency(onlineGame.price,1):onlineGame.price )+
+            (onlineGame.currency=='MONEY'?getCurrency(win,1):win )+
             "</b><span>"+
             (onlineGame.currency=='MONEY'?getCurrency():'баллов')+"<br>выиграно</span>");
 

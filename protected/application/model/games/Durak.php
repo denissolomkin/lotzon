@@ -821,7 +821,7 @@ class Durak extends Game
 
                 if (($loser || !count($this->getField()[$player['pid']])) && !in_array($player['pid'], $this->getWinner()) && $player['pid'] != $loser) {
                     $this->addWinner($player['pid'])
-                        ->updatePlayer(array('result' => 1, 'win' => $this->getPrice() * ($winCoefficient?:$this->getWinCoefficient())), $player['pid']);
+                        ->updatePlayer(array('result' => 1, 'win' => ($winCoefficient?:$this->getWinCoefficient())), $player['pid']);
                     print_r($this->getPlayers($player['pid']));
                 }
 
@@ -849,40 +849,6 @@ class Durak extends Game
             }
 
         }
-
-        /* else if(!count($this->getField()['deck'])){
-            foreach($this->getPlayers() as $player){
-
-                if(!count($this->getField()[$player['pid']]) && !in_array($player['pid'],$this->getWinner())) {
-                    $this->addWinner($player['pid'])
-                        ->updatePlayer(array('result' => 1, 'win' => $this->getPrice() * $this->getWinCoefficient()), $player['pid']);
-                    print_r($this->getPlayers($player['pid']));
-                }
-
-                if(count($this->getWinner())==count($this->getPlayers())-1){
-                    $this->setTime(time());
-                    $this->_isOver = 1;
-                    $this->_isRun = 0;
-                    $this->_botReplay   = array();
-                    $this->_botTimer    = array();
-                    $loser = current(array_diff(array_keys($this->getPlayers()),$this->getWinner()));
-
-                    $this->setLoser($loser)
-                        ->setStarter(null)
-                        ->setBeater(null)
-                        ->setTrump(null);
-
-                    $this->updatePlayer(array('result' => -1, 'win' => $this->getPrice()*-1), $loser)
-                        ->updatePlayer(array('status'))
-                        ->currentPlayers(array());
-
-                    print_r($this->getPlayers($loser));
-
-                    return $this;
-                }
-            }
-        }
-        */
 
         return $this;
     }

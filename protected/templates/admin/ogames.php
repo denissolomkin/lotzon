@@ -85,11 +85,11 @@
                                 <div class="row-fluid field">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                                        <input class="form-control s" type="text" name="game[Field][s]" value="1" placeholder="Стек" value="">
+                                        <input class="form-control s" type="text" name="game[Field][s]" value="1" placeholder="Мин. стек" value="">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input class="form-control p" type="text" name="game[Field][p]" value="1" placeholder="Игроков" value="">
+                                        <input class="form-control p" type="text" name="game[Field][p]" value="1" placeholder="Макс. игроков" value="">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-paw"></i></span>
-                                        <input class="form-control m" type="text" name="game[Field][m]" value="6" placeholder="Ходов" value="">
+                                        <input class="form-control m" type="text" name="game[Field][m]" value="6" placeholder="Лимит ходов" value="">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
@@ -109,7 +109,15 @@
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-trophy"></i></span>
-                                        <input class="form-control w" type="text" name="game[Field][w]"  value="1" placeholder="Очки" value="">
+                                        <input class="form-control w" type="text" name="game[Field][w]"  value="1" placeholder="Очки для досрочной победы" value="">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-star-half"></i></span>
+                                        <input class="form-control h" type="text" name="game[Field][h]"  value="1" placeholder="Комиссия на выигрыш" value="">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-gift"></i></span>
+                                        <input class="form-control r" type="text" name="game[Field][r]"  value="1" placeholder="Комиссия в фонд" value="">
                                     </div>
                                     <div class="input-group">
 
@@ -276,6 +284,8 @@
             holder.find('.s').val(game.Field.s);
             holder.find('.p').val(game.Field.p);
             holder.find('.m').val(game.Field.m);
+            holder.find('.h').val(game.Field.h);
+            holder.find('.r').val(game.Field.r);
             holder.find('[name="game[Field][b]"]').bootstrapToggle({
                 on: 'Enabled',
                 off: 'Disabled'
@@ -385,6 +395,9 @@
                 ' <i class="fa fa-arrows-h"></i>' + game.Field.x +
                 ' <i class="fa fa-arrows-v"></i>' + game.Field.y +
                 ' <i class="fa fa-trophy"></i>' + game.Field.w +
+                ' <i class="fa fa-star-half"></i>' + (game.Field.h?game.Field.h:0) + '%' +
+                ' <i class="fa fa-gift"></i>' + (game.Field.r?game.Field.r:0) + '%' +
+                '<br>' +
                 (game.Field.b ? '<i class="fa fa-plug"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-plug fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')+
                 (game.Field.f ? '<i class="fa fa-flag-checkered"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-flag-checkered fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')+
                 (game.Field.v ? '<i class="fa fa-eye"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-eye fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')
