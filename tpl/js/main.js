@@ -2493,13 +2493,13 @@ function getCurrency(value, part) {
         default:
             value = round((parseFloat(value)*currency['coefficient']),2);
             if((format=='many' || (!format && value>=5)) && currency['many']){
-                return (!part || part==1 ? value : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['many'] : null);
+                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['many']);
             } else if((format=='few' || (!format && (value>1 || value<1))) && currency['few']){
-                return (!part || part==1 ? value : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['few'] : null);
+                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['few']);
             } else if((format=='one' || (!format && value == 1)) && currency['one']){
-                return (!part || part==1 ? value : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['one'] : null);
+                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['one']);
             } else {
-                return (!part || part==1 ? parseFloat(value) : null) + (!part ? ' ' : null) + (!part || part==2 ? currency['iso'] : null);
+                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['iso']);
             }
             break;
     }

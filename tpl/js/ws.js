@@ -1725,10 +1725,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 if(!onlineGame.winner) {
 
-                    if(sample) {
-                        console.log(sample);
-                        playAudio([appName, sample]);
-                    }
+                    sample && playAudio([appName, sample]);
 
                 } else {
 
@@ -1766,7 +1763,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').fadeOut();
                             }
 
-                        }, 2000);
+                        }, 5000);
                     }
                     // setTimeout(function () {}, 200);
 
