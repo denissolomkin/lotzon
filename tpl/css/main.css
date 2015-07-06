@@ -1184,8 +1184,8 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7); -webkit-transform: rotate(-4deg) scale(0.7,0.7);position: absolute; margin-left: -40px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .deck {position: relative;  }
-.ngm-bk .ngm-gm.cards .gm-mx .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);}
-.ngm-bk .ngm-gm.cards .gm-mx .deck .card.trump {  left: 0;  top: 80px;transform: rotate(100deg);}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);-webkit-transform: rotate(10deg);}
+.ngm-bk .ngm-gm.cards .gm-mx .deck .card.trump {  left: 0;  top: 80px;transform: rotate(100deg);-webkit-transform: rotate(100deg);}
 .ngm-bk .ngm-gm.cards .gm-mx .deck .last{position: absolute;  top:0;  left: 10px; color: #ffffff;}
 .ngm-bk .ngm-gm.cards .gm-mx .deck .lear{ position: absolute;top: 75px;left:10px;width: 50px;height: 50px;background: url('../img/games/card-deck.png') no-repeat;background-position: -138px -227px;border-radius: 50px;}
 .ngm-bk .ngm-gm.cards .gm-mx .deck .lear.card1{background-position: -1491px -531px;}
