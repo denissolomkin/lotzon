@@ -1911,10 +1911,11 @@ border: 1px solid black;
     left: -7px;
     top: -7px;
     position: absolute;
+    display: inline-block;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    display: inline-block;
     transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
 }
 
 .circle {background: #FF4242;}
