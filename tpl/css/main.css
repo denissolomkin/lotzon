@@ -915,7 +915,9 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .prz-fnd b{font: 30px/15px Handbook-regular;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .prz-fnd i {text-decoration: none;text-transform: uppercase;font-style: normal;display: block;font: 16px/15px Handbook-regular;}
 
-.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now {  width: 100%;height: 20px;margin-bottom: 20px;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now {  width: 100%;height: 20px;margin-bottom: 0px;padding: 10px 0;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available {cursor:pointer;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available:hover {background-color: aliceblue;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now div{float: left;width: 12%;text-align: center;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-md b{font: 20px/15px Handbook-bold;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-md i {text-decoration: none;text-transform: uppercase;font-style: normal;display: block;font: 10px/8px Handbook-regular;}
@@ -1162,10 +1164,10 @@ article .infos {padding:40px 20px 0 20px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .deck, .ngm-bk .ngm-gm.cards .gm-mx .table, .ngm-bk .ngm-gm.cards .gm-mx .off {float: left;height: 200px;width: 100px;box-sizing: border-box;}
 .ngm-bk .ngm-gm.cards .gm-mx .table {width: 780px;}
-.ngm-bk .ngm-gm.cards .gm-mx .table > div:nth-of-type(even) {   padding-top: 30px;  transform: rotate(-4deg); }
+.ngm-bk .ngm-gm.cards .gm-mx .table > div:nth-of-type(even) {   padding-top: 30px;  transform: rotate(-4deg);-webkit-transform: rotate(-4deg); }
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards { float: left; width: 110px; height: 120px;  position: relative; }
-.ngm-bk .ngm-gm.cards .gm-mx .table .cards .card{float:left; position: absolute; left: 25px;  margin-top: 5px;  transform: rotate(2deg) scale(0.7,0.7);}
-.ngm-bk .ngm-gm.cards .gm-mx .table .cards div:first-of-type {  left: 0px;  margin-top: 0px;  transform: rotate(-1deg) scale(0.7,0.7);}
+.ngm-bk .ngm-gm.cards .gm-mx .table .cards .card{float:left; position: absolute; left: 25px;  margin-top: 5px;  transform: rotate(2deg) scale(0.7,0.7);-webkit-transform: rotate(2deg) scale(0.7,0.7);}
+.ngm-bk .ngm-gm.cards .gm-mx .table .cards div:first-of-type {  left: 0px;  margin-top: 0px;  transform: rotate(-1deg) scale(0.7,0.7);-webkit-transform: rotate(-1deg) scale(0.7,0.7);}
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards.highlight div:first-of-type {
     -webkit-animation: pulsate 1s linear infinite;
     animation: pulsate 1s linear infinite; }
@@ -1179,7 +1181,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .table .cards.revert.highlight .card {border-color:rgb(200,0,0);}
 
 .ngm-bk .ngm-gm.cards .gm-mx .off {width: 20px;}
-.ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7);position: absolute; margin-left: -40px;}
+.ngm-bk .ngm-gm.cards .gm-mx .off .card {  transform: rotate(-4deg) scale(0.7,0.7); -webkit-transform: rotate(-4deg) scale(0.7,0.7);position: absolute; margin-left: -40px;}
 
 .ngm-bk .ngm-gm.cards .gm-mx .deck {position: relative;  }
 .ngm-bk .ngm-gm.cards .gm-mx .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);}

@@ -271,7 +271,7 @@ function updateCallback(receiveData)
                 mode=value.mode.split('-');
                 number = mode[2];
 
-                html += '<div class="gm-now">' +
+                html += '<div class="gm-now'+(value.players.length<mode[2]?' available':'')+'">' +
                 '<div class="gm-now-md"><b>'+(mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1])+'</b><i>'+(mode[0]=='MONEY'?getCurrency():'баллов')+'</i></div>' +
                 '<div class="gm-now-nmb"><span class="icon-users"></span> '+value.players.length + '/' + (mode[2] ? mode[2] : 2) + '</div>';
 
@@ -280,7 +280,7 @@ function updateCallback(receiveData)
                     players.push(player);
                 });
 
-                html += '<div class="gm-now-plr">'+players.join(', ')+(value.players.length<mode[2]?'<span  data-id="'+value.id+'" data-mode="'+value.mode+'" class="icon-control-play"></span>':'')+"</div></div>";
+                html += '<div class="gm-now-plr">'+players.join(', ')+(value.players.length<mode[2]?'<span data-id="'+value.id+'" data-mode="'+value.mode+'" class="icon-control-play"></span>':'')+"</div></div>";
             });
         } else {
 
@@ -646,12 +646,12 @@ function appSeaBattleCallback()
     });
 
 // присоединиться в запущенную игру
-    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-plr span', function(e){
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available', function(e){
 
-        appMode = $(this).attr('data-mode');
-        appId = $(this).attr('data-id');
+        appMode = $('.gm-now-plr span', this).attr('data-mode');
+        appId = $('.gm-now-plr span', this).attr('data-id');
 
-            price = appMode.split('-');
+        price = appMode.split('-');
 
         if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
 
@@ -1600,13 +1600,14 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 if (is_numeric(key)) {
                                     cardsCount = (field.length ? field.length : Object.size(field));
                                     // cardsCount = count;
+
+                                    var deg = ( cardsCount > 1 ?
+                                    (idx * ((key == playerId ? 60 : 105) - (cardsCount>4?0:(4-cardsCount)*15)) / cardsCount) -
+                                    ((key == playerId ? 30 : 45))
+                                        : 0 );
+
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key).append(
-                                        '<div style="transform: rotate(' +
-                                        ( cardsCount > 1 ?
-                                            (idx * ((key == playerId ? 60 : 105) - (cardsCount>4?0:(4-cardsCount)*15)) / cardsCount) -
-                                                ((key == playerId ? 30 : 45))
-                                            : 0 ) +
-                                        'deg);' +
+                                        '<div style="transform: rotate(' + deg + 'deg); -webkit-transform: rotate(' + deg + 'deg);' +
                                         (key == playerId ? (idx == 1 ? 'margin-left:'+(230+(cardsCount>4?(cardsCount>8?-160:''):(6-cardsCount)*30))+'px;' : '') +
                                         (cardsCount>6?('margin-right:-' + (110 - (cardsCount>8?750:400) / cardsCount) + 'px'):'')
                                          : '' ) + '"' +
@@ -1619,8 +1620,10 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div data-table="'+index+'" class="cards">'+cards+'</div>');
 
                                 } else if (key == 'off')  {
-                                    if(index >= $('.ngm-bk .ngm-gm .gm-mx .mx .' + key+' .card').length)
-                                        $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div '+(key=='off'?'style="margin-top:'+Math.random()*160+'px;transform: scale(0.7,0.7) rotate('+Math.random()*360+'deg)" ':'')+'class="card' + (card ? ' card' + card : '') + '">' + '</div>');
+                                    if(index >= $('.ngm-bk .ngm-gm .gm-mx .mx .' + key+' .card').length){
+                                        var deg = Math.random()*360;
+                                        $('.ngm-bk .ngm-gm .gm-mx .mx .' + key).append('<div '+(key=='off'?'style="margin-top:'+Math.random()*160+'px;transform: scale(0.7,0.7) rotate('+deg+'deg);-webkit-transform: scale(0.7,0.7) rotate('+deg+'deg)" ':'')+'class="card' + (card ? ' card' + card : '') + '">' + '</div>');
+                                    }
                                 }
                             });
                         }
