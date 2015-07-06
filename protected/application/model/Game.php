@@ -367,7 +367,7 @@ class Game
         #echo $this->time().' '. "Пас хода \n";
         $current=$this->currentPlayer();
         $this->updatePlayer(array(
-            'moves'=>-1), $current['pid']);
+            'moves' => -1), $current['pid']);
 
         return $this;
     }
@@ -720,15 +720,52 @@ class Game
     public function getWinCoefficient()
     {
         switch (count($this->getPlayers())) {
+
             default:
             case 2:
                 $coef = 1;
                 break;
+
             case 3:
-                $coef = count($this->getWinner()) == 1 ? 0.75 : (count($this->getWinner()) == 2 ? 0.25 : 0);
+
+                switch (count($this->getWinner())) {
+
+                    case 1:
+                        $coef = !$this->getLoser() ? 0.75 : 0.25;
+                        break;
+
+                    case 2:
+                        $coef = 0.25;
+                        break;
+
+                    default:
+                        $coef = !$this->getLoser() ? 0 : 1 / 2;
+                        break;
+                }
+
                 break;
+
             case 4:
-                $coef = count($this->getWinner()) == 1 ? 0.75 : (count($this->getWinner()) == 2 ? 0.2 : (count($this->getWinner()) == 3 ? 0.05 : 0));
+
+                switch (count($this->getWinner())) {
+
+                    case 1:
+                        $coef = !$this->getLoser() ? 0.75 : 0.25 / 2;
+                        break;
+
+                    case 2:
+                        $coef = !$this->getLoser() ? 0.2 : 0.05;
+                        break;
+
+                    case 3:
+                        $coef = 0.05;
+                        break;
+
+                    default:
+                        $coef = !$this->getLoser() ? 0 : 1 / 3;
+                        break;
+                }
+
                 break;
         }
 
