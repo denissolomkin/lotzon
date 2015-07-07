@@ -274,8 +274,9 @@ class Durak extends Game
 
         if(!$error && (!$cell AND isset($this->getClient()->bot)) OR $cell) {
 
-            if (isset($this->getClient()->bot))
+            if (isset($this->getClient()->bot)) {
                 #echo $this->time() . ' ' . "ход бота\n";
+            }
 
             if(!($cell = $this->generateMove(null, $cell, $table)) && !isset($this->getClient()->bot)){
                 $error = 'WRONG_MOVE';
