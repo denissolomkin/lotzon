@@ -1505,8 +1505,10 @@
             'ENOUGH_MOVES'      : 'У Вас закончились ходы',
             'SHIP_TOO_CLOSE'    : 'Корабли расположены слишком близко',
             'ERROR_COORDINATES' : 'Неверные координаты',
-            'CHOICE_BET'        : 'Выберите ставку',
-            'PLAY_ONE_MORE_TIME': 'Играть еще раз за {0} баллов',
+            'CHOICE_BET'                : 'Выберите ставку',
+            'PLAY_ONE_MORE_TIME'        : 'Играть еще раз за {0} баллов',
+            'button-answer'             : '<?=$MUI->getText('button-answer')?>',
+            'message-review-approved'   : '<?=$MUI->getText('message-review-approved')?>',
         };
 
         var quickGame   = {};

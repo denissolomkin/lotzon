@@ -915,7 +915,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .prz-fnd b{font: 30px/15px Handbook-regular;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .prz-fnd i {text-decoration: none;text-transform: uppercase;font-style: normal;display: block;font: 16px/15px Handbook-regular;}
 
-.ngm-bk .ngm-rls-bk .rls-r .now-bl .filter {list-style:none;margin:0;padding:0;overflow:hidden;font:12px/30px Handbook-bold;text-transform:uppercase;  margin-bottom: 14px;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .filter {list-style:none;padding:0;overflow:hidden;font:12px/30px Handbook-bold;text-transform:uppercase;   margin: -5px 5px 10px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .filter {line-height:32px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .filter li { text-align: center;float:left;cursor:pointer;padding:0 20px;height:30px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .filter > li > a {color:#010101;text-shadow: 0 1px 0  rgba(255,255,255,0.4);}
