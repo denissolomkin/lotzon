@@ -96,7 +96,7 @@ class Durak extends Game
             ));
 
             $this->setResponse($this->getClients());
-            echo $this->time().' '. "Удаляем из клиентов игры {$playerId}\n";
+            #echo $this->time().' '. "Удаляем из клиентов игры {$playerId}\n";
 
             if(in_array($playerId, $this->_bot))
                 $this->_bot=array_diff($this->_bot,array($playerId));
@@ -165,7 +165,7 @@ class Durak extends Game
             );
 
             if ($this->getLoser()) {
-                echo "нашли програвшего!!";
+                #echo "нашли програвшего!!";
                 $callback += array(
                     'trump' => $this->getTrump('full'),
                     'winner' => $this->getWinner(),
@@ -179,7 +179,7 @@ class Durak extends Game
         } else {
 
             if (!$this->getPlayers() || $this->getNumberPlayers() != count($this->getPlayers())) {
-                echo $this->time().' '. "Первичная установка игроков\n";
+                #echo $this->time().' '. "Первичная установка игроков\n";
                 $this->setPlayers($this->getClients(), false)
                     ->generateField()// перетасовали и расдали карты, назначили козырь
                     ->currentPlayers(array($this->initStarter()))// текущий = первая рука, определили первую руку
@@ -198,7 +198,7 @@ class Durak extends Game
             $fields = $this->getField();
 
             if ($this->getLoser()) {
-                echo "нашли програвшего!!";
+                #echo "нашли програвшего!!";
                 $this->setCallback(array(
                     'winner' => $this->getWinner(),
                     'loser' => $this->getLoser(),
@@ -275,7 +275,7 @@ class Durak extends Game
         if(!$error && (!$cell AND isset($this->getClient()->bot)) OR $cell) {
 
             if (isset($this->getClient()->bot))
-                echo $this->time() . ' ' . "ход бота\n";
+                #echo $this->time() . ' ' . "ход бота\n";
 
             if(!($cell = $this->generateMove(null, $cell, $table)) && !isset($this->getClient()->bot)){
                 $error = 'WRONG_MOVE';
@@ -288,14 +288,14 @@ class Durak extends Game
 
 
         if ($error) {
-            echo $error;
+            #echo $error;
             $this->setCallback(array('action' => 'error','error' => $error))
                 ->setResponse($this->getClient());
         } else {
 
 
-            // print_r($cell);
-            // print_r($table);
+            // #print_r($cell);
+            // #print_r($table);
 
             #echo $this->time().' '. "делаем ход\n";
             $this->doMove($cell, $table);
@@ -322,7 +322,7 @@ class Durak extends Game
     public function checkError($card, $table=null)
     {
         list($x,$y)=$card;
-        echo $this->time().' '. "Проверка ошибок \n";
+        #echo $this->time().' '. "Проверка ошибок \n";
         if (!$this->isMove()){
             #echo " NOT_YOUR_MOVE\n";
             return 'NOT_YOUR_MOVE';
@@ -361,7 +361,7 @@ class Durak extends Game
         if((isset($this->currentPlayer()['timeout']) && $this->currentPlayer()['timeout']<=time())) {
 
 
-            echo $this->time() . "время истекло\n";
+            #echo $this->time() . "время истекло\n";
             if ($this->isRun()) {
 
                 foreach ($this->currentPlayers() as $playerId) {
@@ -382,7 +382,7 @@ class Durak extends Game
 
             } else {
 
-                echo $this->time() . "не нажали на готов \n";
+                #echo $this->time() . "не нажали на готов \n";
                 foreach ($this->getPlayers() as $player) {
                     if (!isset($player['ready']))
                         $this->unsetClients($player['pid']);
@@ -394,7 +394,7 @@ class Durak extends Game
 
         } else { // && $this->getNumberPlayers() == count($this->getClients()))
 
-            echo $this->time() . "время не истекло\n";
+            #echo $this->time() . "время не истекло\n";
             $this->startAction(array('action'=>'timeout','response'=>$this->getClient()->id));
         }
 
@@ -420,7 +420,7 @@ class Durak extends Game
 
     public function revertMove(){
 
-        echo $this->time() . ' ' . "#{$this->getClient()->id} переводит ход на {$this->getBeater()}\n";
+        #echo $this->time() . ' ' . "#{$this->getClient()->id} переводит ход на {$this->getBeater()}\n";
 
         $this->currentPlayers(array($this->getBeater())) //установили текущим отбивающегося
             ->setBeater($this->nextBeater()); // установили отбивающимся следующего с картами на руках за текущим игроком
@@ -443,8 +443,8 @@ class Durak extends Game
             $beaterId = $this->getBeater();
             $tables = $table && is_numeric($table) && array_key_exists($table,$this->getField('table')) ? array($table=>$this->getField('table')[$table]): $this->getField('table');
 
-            echo $this->time() . ' ' . "Делает ход #$playerId \n";
-            print_r(implode('x',$card));
+            #echo $this->time() . ' ' . "Делает ход #$playerId \n";
+            #print_r(implode('x',$card));
 
             unset($this->_field[$playerId][array_search($x . 'x' . $y, $this->_field[$playerId])]);
 
@@ -452,7 +452,7 @@ class Durak extends Game
 
                 foreach ($tables as $key => $table) {
                     if ($this->checkBeat(null, $card, $key)) {
-                        echo " бъемся картой на столе $key \r\n";
+                        #echo " бъемся картой на столе $key \r\n";
                         $this->_field['table'][$key][] = $x . 'x' . $y;
                         break;
                     }
@@ -461,7 +461,7 @@ class Durak extends Game
                 $this->_field['table'][] = array($x . 'x' . $y);
             }
 
-            print_r($this->_field['table']);
+            #print_r($this->_field['table']);
 
         }
 
@@ -476,14 +476,14 @@ class Durak extends Game
                 $card = true;
             }
 
-            echo $this->time() . ' ' . "Обновили статус #{$this->getClient()->id} на ".($this->initStatus($this->getClient()->id))."\n";
+            #echo $this->time() . ' ' . "Обновили статус #{$this->getClient()->id} на ".($this->initStatus($this->getClient()->id))."\n";
             $this->updatePlayer(array('status' => $this->initStatus($this->getClient()->id)), $this->getClient()->id);
         }
 
         // добавляем тех, у кого появилась возможность, удаляем тех, кто спасовал
         foreach ($this->getPlayers() as $player) {
 
-            echo $this->time() . ' ' . "Проверка на возможность походить #{$player['pid']}\n";
+            #echo $this->time() . ' ' . "Проверка на возможность походить #{$player['pid']}\n";
             $hasMove = $this->generateMove($player['pid']);
 
                 // если нет статуса пропуска или пропуск не окончательный AND не текущий игрок или текущий и есть карта AND есть возможность походить и еще не в текущих
@@ -502,7 +502,7 @@ class Durak extends Game
                         && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0)))
 
             ) {
-                echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
+                #echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
 
                 // если бот, то для переназначения botTimer
@@ -514,14 +514,14 @@ class Durak extends Game
             } else if (isset($player['status'])
                 && ($player['status']==2 || $player['pid']!=$this->getStarter())
                 && in_array($player['pid'],$currentIds)){
-                echo $this->time() . ' ' . "Пас или таймаут, удаляем из текущих #{$player['pid']}\n";
+                #echo $this->time() . ' ' . "Пас или таймаут, удаляем из текущих #{$player['pid']}\n";
                 unset($currentIds[array_search($player['pid'],$currentIds)]);
 
                 // если текущий всё отбил
             } else if (($player['pid'] == $this->getBeater()) && !empty($this->getField()['table'])
                 && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) == 0)
                 && in_array($player['pid'],$currentIds)){
-                echo $this->time() . ' ' . "Отбился, больше нечего ждать #{$player['pid']}\n";
+                #echo $this->time() . ' ' . "Отбился, больше нечего ждать #{$player['pid']}\n";
                 unset($currentIds[array_search($player['pid'],$currentIds)]);
 
                 // если текущий бот и не может отбиться и будет брать
@@ -531,7 +531,7 @@ class Durak extends Game
                 && (count($this->getField()['table'],COUNT_RECURSIVE) - (count($this->getField()['table']) * 3) != 0)
                 && !$hasMove){
 
-                echo $this->time() . ' ' . "Не может отбиться, будет брать #{$player['pid']}\n";
+                #echo $this->time() . ' ' . "Не может отбиться, будет брать #{$player['pid']}\n";
 
                 if(!isset($player['status']))
                     $this->updatePlayer(array('status'=>2),$player['pid']);
@@ -549,11 +549,11 @@ class Durak extends Game
 
         // даем ходить только тем, у кого есть возможные варианты походить
         foreach ($this->getPlayers() as $player) {
-            echo $this->time() . ' ' . "Проверка на возможность походить #{$player['pid']}\n";
+            #echo $this->time() . ' ' . "Проверка на возможность походить #{$player['pid']}\n";
             if ((!isset($player['status']) || $player['status'] != 2)
                 && ($this->getClient()->id != $player['pid'] || ($this->getClient()->id == $player['pid'] && $card))
                 && $this->generateMove($player['pid'])) {
-                echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
+                #echo $this->time() . ' ' . "Добавляем в текущие #{$player['pid']}\n";
                 $currentIds[] = $player['pid'];
             }
         }
@@ -562,7 +562,7 @@ class Durak extends Game
 
         $this->currentPlayers(array_values($currentIds));
         // все спасовали или согласились на отбой, больше некому ходить
-        print_r ($this->currentPlayers());
+        #print_r ($this->currentPlayers());
 
         if(!count($this->currentPlayers())) {
 
@@ -573,14 +573,14 @@ class Durak extends Game
             if((count($this->_field['table'],COUNT_RECURSIVE)-count($this->_field['table']))/2==count($this->_field['table'])){
 
                 // отбился
-                echo "отбился либо пропуск без карт \r\n";
+                #echo "отбился либо пропуск без карт \r\n";
                 if(count($this->_field['table']))
                     $this->_field['off'][] = $this->_field['table'];
 
             } else {
 
                 //взял
-                echo "взял \r\n";
+                #echo "взял \r\n";
                 foreach($this->_field['table'] as $table)
                     foreach($table as $card){
                         $this->_field[$this->getBeater()][]=$card;
@@ -598,7 +598,7 @@ class Durak extends Game
                 ->updatePlayer(array('status'));
 
             while(!count($this->getField(reset($this->currentPlayers())))) {
-                echo "перебираем, пока на руках не будет карт\n";
+                #echo "перебираем, пока на руках не будет карт\n";
                 $this->nextPlayer();
             }
 
@@ -634,7 +634,7 @@ class Durak extends Game
 
         $players = $this->getStarter() && $this->_isOver == 0 ? $this->sortPlayers($this->getStarter()) : $this->getPlayers();
 
-        echo "расдаем карты на руки игрокам:"; print_r($players);
+        #echo "расдаем карты на руки игрокам:"; #print_r($players);
 
         if(count($this->getField()['deck']))
             foreach($players as $player) {
@@ -651,7 +651,7 @@ class Durak extends Game
                         $this->_fieldPlayed[array_search($card, $this->_fieldPlayed)] = $player['pid'];
                     }
 
-                    echo $this->time()." дорасдали $count карт игроку {$player['pid']}\n";
+                    #echo $this->time()." дорасдали $count карт игроку {$player['pid']}\n";
 
                     $this->sortCards($player['pid']);
 
@@ -698,7 +698,7 @@ class Durak extends Game
             if (next($this->_players) === false)
                 reset($this->_players);
 
-            // echo " установили указатель на текущего игрока";
+            // #echo " установили указатель на текущего игрока";
         }
 
         // один раз перешагнули
@@ -706,7 +706,7 @@ class Durak extends Game
             if (next($this->_players) === false)
                 reset($this->_players);
 
-            // echo " и перешагнули, пока на руках не будет карт \n";
+            // #echo " и перешагнули, пока на руках не будет карт \n";
         } while(!count($this->getField(current($this->_players)['pid'])));
 
         return current($this->_players)['pid'];
@@ -803,13 +803,13 @@ class Durak extends Game
     {
         if(($loser = $this->getLoser()) || !count($this->getField()['deck'])){
 
-            echo $this->time().' '. "Расдаем выигрыши \n";
+            #echo $this->time().' '. "Расдаем выигрыши \n";
 
             $winCoefficient = $loser ? $this->getWinCoefficient() : null;
 
             foreach($this->getPlayers() as $player) {
 
-                echo $this->time().' '. "Расдаем выигрыши ".$player['pid']."\n";
+                #echo $this->time().' '. "Расдаем выигрыши ".$player['pid']."\n";
                 $print = array(
                     $loser,
                     !count($this->getField()[$player['pid']]),
@@ -817,12 +817,12 @@ class Durak extends Game
                     $player['pid'] != $loser
                     );
 
-                print_r($print);
+                #print_r($print);
 
                 if (($loser || !count($this->getField()[$player['pid']])) && !in_array($player['pid'], $this->getWinner()) && $player['pid'] != $loser) {
                     $this->addWinner($player['pid'])
                         ->updatePlayer(array('result' => 1, 'win' => ($winCoefficient?:$this->getWinCoefficient())), $player['pid']);
-                    print_r($this->getPlayers($player['pid']));
+                    #print_r($this->getPlayers($player['pid']));
                 }
 
                 if (count($this->getWinner()) == count($this->getPlayers()) - 1) {
@@ -842,7 +842,7 @@ class Durak extends Game
                         ->updatePlayer(array('status'))
                         ->currentPlayers(array());
 
-                    print_r($this->getPlayers($loser));
+                    #print_r($this->getPlayers($loser));
 
                     return $this;
                 }
@@ -878,7 +878,7 @@ class Durak extends Game
             }
         }
 
-        echo $this->time().' '. "Возможность подкинуть: ".($check?'да':'нет')."\n";
+        #echo $this->time().' '. "Возможность подкинуть: ".($check?'да':'нет')."\n";
         return $check;
 
     }
@@ -892,7 +892,7 @@ class Durak extends Game
         foreach ($tables as $id=>$table) {
             if (count($table) == 1) {
 
-                echo $this->time().' '. "Проверяем стол $id \n";
+                #echo $this->time().' '. "Проверяем стол $id \n";
 
                 $check[$id]=null;
                 $waiting = reset($table);
@@ -915,17 +915,17 @@ class Durak extends Game
                 /*
                 // вторая проблема
                 if(!$check){
-                    echo $this->time().' '. "Возможность отбиться: ".($check?'да':'нет')."\n";
+                    #echo $this->time().' '. "Возможность отбиться: ".($check?'да':'нет')."\n";
                     return false;
                 } elseif($card){
-                    echo $this->time().' '. "Возможность отбиться: ".($check?'да':'нет')."\n";
+                    #echo $this->time().' '. "Возможность отбиться: ".($check?'да':'нет')."\n";
                     return $check;
                 }
                 */
             }
         }
 
-        echo $this->time().' '. "Возможность отбиться: ".(count($check)==count(array_filter($check))?'да':'нет')."\n";
+        #echo $this->time().' '. "Возможность отбиться: ".(count($check)==count(array_filter($check))?'да':'нет')."\n";
 
         return (count($check) >= ($card ? 1 : count(array_filter($check)))) ? reset($check) : false;
 
@@ -946,7 +946,7 @@ class Durak extends Game
         if ($playerId == $this->getBeater() && $count == count($tables,COUNT_RECURSIVE) / 2 && $count < count($this->getField($this->nextBeater($this->getBeater())))) {
             foreach ($tables as $id => $table) {
 
-                echo $this->time() . ' ' . "Проверяем стол $id \n";
+                #echo $this->time() . ' ' . "Проверяем стол $id \n";
 
                 $waiting = reset($table);
                 $waiting = explode('x', $waiting);
@@ -965,7 +965,7 @@ class Durak extends Game
             }
         }
 
-        echo $this->time().' '. "Возможность перевести: ".($check?'да':'нет')."\n";
+        #echo $this->time().' '. "Возможность перевести: ".($check?'да':'нет')."\n";
 
         return $check;
 
@@ -973,10 +973,11 @@ class Durak extends Game
 
     public function generateMove($playerId=null,$card=null,$table=null)
     {
-        if($card)
-            echo $this->time().' '. "Проверка хода\n";
-        else
-            echo $this->time().' '. "Генерация хода для бота или проверка возможностей текущих игроков\n";
+        if($card){
+            #echo $this->time().' '. "Проверка хода\n";
+        } else {
+            #echo $this->time().' '. "Генерация хода для бота или проверка возможностей текущих игроков\n";
+        }
 
         $check = false;
         $playerId = $playerId ? : $this->getClient()->id;
@@ -995,7 +996,7 @@ class Durak extends Game
                         || (($candidate[0] == $check[0] || $candidate[0] != $this->getTrump()) && $check[1] > $candidate[1]))
                         $check = $candidate;
                 }
-                echo $this->time().' '. "Возможность первого хода: ".($check?'да':'нет')."\n";
+                #echo $this->time().' '. "Возможность первого хода: ".($check?'да':'нет')."\n";
             } else
                 $check = $card;
 

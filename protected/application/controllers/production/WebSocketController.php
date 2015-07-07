@@ -362,7 +362,7 @@ class WebSocketController implements MessageComponentInterface {
                     $data = $data->data;
                 $action = (isset($data->action) ? $data->action : '') . 'Action';
 
-                if(!$game = OnlineGamesModel::instance()->getGame($appName)){
+                if($type!='stats' && !$game = OnlineGamesModel::instance()->getGame($appName)){
                     $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
                     return;
                 }
