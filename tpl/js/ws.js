@@ -81,7 +81,7 @@ var conn;
 // try start websocket
 WebSocketAjaxClient();
 
-    if(!$.cookie("audio")) {
+    if($.cookie("audio-off")) {
         $('.sbk-tl-bk .b-cntrl-block').parent().find('.audio').removeClass('icon-volume-2').addClass('icon-volume-off');
     }
 
@@ -931,12 +931,12 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
 
 // audio
     $(document).on('click', '.chance .sbk-tl-bk .b-cntrl-block .audio', function(e){
-    if($.cookie("audio")){
-        $.removeCookie("audio");
-        $(this).parent().find('.audio').removeClass('icon-volume-2').addClass('icon-volume-off');
-    } else {
+    if($.cookie("audio-off")){
+        $.removeCookie("audio-off");
         $(this).parent().find('.audio').addClass('icon-volume-2').removeClass('icon-volume-off');
-        $.cookie("audio", 1, { expires : 100 });
+    } else {
+        $(this).parent().find('.audio').removeClass('icon-volume-2').addClass('icon-volume-off');
+        $.cookie("audio-off", 1, { expires : 100 });
     }
     });
 
