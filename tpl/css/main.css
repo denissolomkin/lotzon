@@ -1001,7 +1001,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-prs.top-pnt {float: right;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li {display:table;width:100%;padding:0;margin:0;float:left;margin-bottom:10px;}
 /*.ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li:nth-child(2n) {width:200px;margin-left:20px;}*/
-.ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li .prs-ph {display:table-cell;width:30px;height:30px;border-radius:100%;background-repeat:no-repeat;background-size:contain;vertical-align:middle;}
+.ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li .prs-ph {display:table-cell;width:30px;height:30px;border-radius:100%;background-repeat:no-repeat;background-size:cover;vertical-align:middle;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li .prs-ifo {display:table-cell;padding-left:10px;vertical-align:middle;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li .prs-ifo .nm {font:14px/10px Handbook-bold;color:#4f4f4f;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-prs > li .prs-ifo .nm > b {font-size:20px;color:#1acf34;}

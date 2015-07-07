@@ -17,16 +17,16 @@ class SeaBattle extends Game
                     array(1, 0),
     );
 
-    protected $_ships = array(
+    protected $_ships2 = array(
         2,3);
-/*
+
     protected $_ships = array(
         1, 1, 1, 1, 1,
         2, 2, 2, 2,
         3, 3, 3,
         4, 4,
         5);
-*/
+
     protected $_playerShips = array();
     protected $_destroy = array();
 
