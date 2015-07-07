@@ -957,7 +957,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt.ngm-games:before{
     background: url('../img/games/online-games-sprite.png') no-repeat;
     background-position: -11px -79px;}
-.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt.button-disabled{border: 0 !important;color: #4f4f4f !important; /*border-bottom: 2px solid #ffe400 !important;*/}
+.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .cell .bt.button-disabled{  border: 1px solid #b2d0d4 !important;color: #4f4f4f !important;}
 
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .l .ngm-price:hover {background-color:#000;color:#fff;border:1px solid #000;}
 .ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online {color:#4f4f4f;font:15px/1 Handbook-bold;text-transform:uppercase;opacity:0.7;}
