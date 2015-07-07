@@ -191,7 +191,10 @@ function quitCallback() {
                     html+=')"></div>' +
                     '<div class="prs-ifo">' +
                     '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
-                    '<div class="ifo">'+Math.ceil(value.R)+' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+'</div>   ' +
+                    '<div class="ifo">'+
+                    '<div class="icon-star"></div> '+
+                    Math.ceil(value.R)+ // ' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+
+                    '</div>' +
                     '</div></li>';
 
                 });
@@ -209,7 +212,10 @@ function quitCallback() {
                     html+=')"></div>' +
                     '<div class="prs-ifo">' +
                     '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
-                    '<div class="ifo">'+Math.ceil(value.R)+' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+'</div>   ' +
+                    '<div class="ifo">'+
+                    '<div class="icon-star"></div> '+
+                    Math.ceil(value.R)+ // ' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+
+                    '</div>' +
                     '</div></li>';
 
                 });
