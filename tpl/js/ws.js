@@ -269,18 +269,20 @@ function updateCallback(receiveData)
         if(receiveData.res.now && receiveData.res.now.length){
             $.each(receiveData.res.now, function( index, value ) {
                 mode=value.mode.split('-');
-                number = mode[2];
+                number = (mode[2] ? mode[2] : 2);
 
-                html += '<div class="gm-now'+(value.players.length<mode[2]?' available':'')+'">' +
-                '<div class="gm-now-md"><b>'+(mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1])+'</b><i>'+(mode[0]=='MONEY'?getCurrency():'баллов')+'</i></div>' +
-                '<div class="gm-now-nmb"><span class="icon-users"></span> '+value.players.length + '/' + (mode[2] ? mode[2] : 2) + '</div>';
+                html += '<div class="gm-now' + (value.players.length < number?' available':'') + '">' +
+                '<div class="gm-now-md"><b>' + (mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1]) + '</b><i>' + (mode[0]=='MONEY' ? getCurrency() : 'баллов') + '</i></div>' +
+                '<div class="gm-now-nmb"><span class="icon-users"></span> ' + value.players.length + '/' + number + '</div>';
 
                 players = [];
                 $.each(value.players, function (i, player) {
                     players.push(player);
                 });
 
-                html += '<div class="gm-now-plr">'+players.join(', ')+(value.players.length<mode[2]?'<span data-id="'+value.id+'" data-mode="'+value.mode+'" class="icon-control-play"></span>':'')+"</div></div>";
+                html += '<div class="gm-now-plr">'+players.join(', ')+(value.players.length < number ? '<span data-id="'+value.id+'" data-mode="'+value.mode+'" class="icon-control-play"></span>' : '')+
+                "</div>" +
+                "</div>";
             });
         } else {
 
