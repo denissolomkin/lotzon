@@ -362,7 +362,7 @@ class WebSocketController implements MessageComponentInterface {
                     $data = $data->data;
                 $action = (isset($data->action) ? $data->action : '') . 'Action';
 
-                if($type!='stats' && !$game = OnlineGamesModel::instance()->getGame($appName)){
+                if(!isset($data->message) && !$game = OnlineGamesModel::instance()->getGame($appName)){
                     $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
                     return;
                 }
@@ -569,131 +569,134 @@ class WebSocketController implements MessageComponentInterface {
 
                     case 'update':
 
-                        $date = mktime(0, 0, 0, date("n"), 1);
+                        if(isset($game)) {
+                            $date = mktime(0, 0, 0, date("n"), 1);
 
-                        // $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
-                        $sql = "SELECT SUM(Price) Total, Currency FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a  GROUP BY Currency";
+                            // $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
+                            $sql = "SELECT SUM(Price) Total, Currency FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a  GROUP BY Currency";
 
-                        try {
-                            $sth = DB::Connect()->prepare($sql);
-                            $sth->execute(
-                                array(
-                                    ':gameid' => $game->getId(),
-                                    ':dt' => $date
-                                ));
-                        } catch (PDOException $e) {
-                            throw new ModelException("Error processing storage query", 500);
-                        }
+                            try {
+                                $sth = DB::Connect()->prepare($sql);
+                                $sth->execute(
+                                    array(
+                                        ':gameid' => $game->getId(),
+                                        ':dt' => $date
+                                    ));
+                            } catch (PDOException $e) {
+                                throw new ModelException("Error processing storage query", 500);
+                            }
 
-                        $fund = array();
-                        $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0; //(self::COMISSION) / 100;
-                        foreach ($sth->fetchAll() as $data) {
-                            $fund[$data['Currency']] = $data['Currency'] == 'MONEY' ? ceil($data['Total'] * $comission * 100) / 100 : ceil($data['Total'] * $comission);
-                        }
+                            $fund = array();
+                            $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0; //(self::COMISSION) / 100;
+                            foreach ($sth->fetchAll() as $data) {
+                                $fund[$data['Currency']] = $data['Currency'] == 'MONEY' ? ceil($data['Total'] * $comission * 100) / 100 : ceil($data['Total'] * $comission);
+                            }
 
 
-                        $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`
+                            $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`
                                         FROM `Players`
                                         LEFT JOIN `PlayerGames`
                                         ON `PlayerGames`.`PlayerId` = `Players`.`Id`
                                         WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>:dt AND `PlayerGames`.`Price`>0
                                         LIMIT 1";
 
-                        #echo $this->time() . " SELECT PLAYER INFO" . "\n";
+                            #echo $this->time() . " SELECT PLAYER INFO" . "\n";
 
-                        try {
+                            try {
 
-                            $sth = DB::Connect()->prepare($sql);
-                            $sth->execute(
-                                array(
-                                    ':id' => $from->resourceId,
-                                    ':dt' => $date,
-                                    ':gameid' => $game->getId()
-                                ));
+                                $sth = DB::Connect()->prepare($sql);
+                                $sth->execute(
+                                    array(
+                                        ':id' => $from->resourceId,
+                                        ':dt' => $date,
+                                        ':gameid' => $game->getId()
+                                    ));
 
-                        } catch (PDOException $e) {
-                            throw new ModelException("Error processing storage query", 500);
+                            } catch (PDOException $e) {
+                                throw new ModelException("Error processing storage query", 500);
+                            }
+
+                            if (!$sth->rowCount()) {
+                                throw new ModelException("Player not found", 404);
+                            }
+
+                            $stat = $sth->fetch();
+
+
+                            #echo $this->time() . " " . "Список текущих игр \n";
+
+                            $modes = $game->getModes();
+                            $res = array(
+                                'key' => $game->getKey(),
+                                'audio' => array_filter($game->getAudio()),
+                                'modes' => (is_array($modes) && array_walk($modes, function (&$value, $index) {
+                                    $value = array_keys($value);
+                                }) ? $modes : null),
+                                'fund' => $fund,
+                                'count' => $stat['Count'],
+                                'win' => $stat['Win'] * 25,
+                                'maxPlayers' => $game->getOption('p'),
+                                'create' => $game->getOption('f'),
+                            );
+
+                            $from->send(json_encode(array(
+                                'path' => $type, // 'update'
+                                'res' => $res)));
                         }
-
-                        if (!$sth->rowCount()) {
-                            throw new ModelException("Player not found", 404);
-                        }
-
-                        $stat = $sth->fetch();
-
-
-
-                    #echo $this->time() . " " . "Список текущих игр \n";
-
-                    $modes = $game->getModes();
-                    $res = array(
-                        'key'       => $game->getKey(),
-                        'audio' => array_filter($game->getAudio()),
-                        'modes' => (is_array($modes) && array_walk($modes, function (&$value, $index) {
-                            $value = array_keys($value);
-                        }) ? $modes : null),
-                        'fund'       => $fund,
-                        'count'      => $stat['Count'],
-                        'win'        => $stat['Win']*25,
-                        'maxPlayers' => $game->getOption('p'),
-                        'create'     => $game->getOption('f'),
-                    );
-
-                    $from->send(json_encode(array(
-                        'path' => $type, // 'update'
-                        'res' => $res)));
-
                         break;
 
                     case 'now':
 
-                        $games=array();
+                        if(isset($game)) {
+                            $games = array();
 
-                        if(is_array($this->apps($appName)))
-                            foreach($this->apps($appName) as $id => $game) {
-                                $players = array();
-                                foreach ($game->getPlayers() as $player)
-                                    $players[] = $player['name'];
+                            if (is_array($this->apps($appName)))
+                                foreach ($this->apps($appName) as $id => $game) {
+                                    $players = array();
+                                    foreach ($game->getPlayers() as $player)
+                                        $players[] = $player['name'];
 
-                                $games[] = array(
-                                    'id' => $id,
-                                    'mode' => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
-                                    'players' => $players
-                                );
-                            }
-
-                        if(is_array($this->stack($appName)))
-                            foreach($this->stack($appName) as $mode=>$clients)
-                                foreach($clients as $id=>$client) {
                                     $games[] = array(
-                                        'id' => 0,
-                                        'mode' => $mode,
-                                        'players' => array($client->name)
+                                        'id' => $id,
+                                        'mode' => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                                        'players' => $players
                                     );
                                 }
 
-                        $res = array(
-                            'key'       => $game->getKey(),
-                            'now'       => $games,
-                        );
+                            if (is_array($this->stack($appName)))
+                                foreach ($this->stack($appName) as $mode => $clients)
+                                    foreach ($clients as $id => $client) {
+                                        $games[] = array(
+                                            'id' => 0,
+                                            'mode' => $mode,
+                                            'players' => array($client->name)
+                                        );
+                                    }
 
-                        $from->send(json_encode(array(
-                            'path' => $type, // 'now'
-                            'res' => $res)));
+                            $res = array(
+                                'key' => $game->getKey(),
+                                'now' => $games,
+                            );
+
+                            $from->send(json_encode(array(
+                                'path' => $type, // 'now'
+                                'res' => $res)));
+                        }
 
                         break;
 
                     case 'rating':
 
-                        $date = mktime(0, 0, 0, date("n"), 1);
+                        if(isset($game)) {
+                            $date = mktime(0, 0, 0, date("n"), 1);
 
-                        $_rating = $this->rating($appName);
+                            $_rating = $this->rating($appName);
 
-                        if ($_rating AND $_rating['timeout'] > time()) {
-                            $top  = $_rating['top'];
-                        } else {
+                            if ($_rating AND $_rating['timeout'] > time()) {
+                                $top = $_rating['top'];
+                            } else {
 
-                            $sql = "(SELECT g.Currency Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
+                                $sql = "(SELECT g.Currency Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
                                 where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0 AND g.Currency='MONEY'
@@ -713,44 +716,47 @@ class WebSocketController implements MessageComponentInterface {
                                 order by R DESC, T DESC
                                 LIMIT 10)";
 
-                            #echo $this->time() . " SELECT TOP\n";
+                                #echo $this->time() . " SELECT TOP\n";
 
-                            try {
-                                $sth = DB::Connect()->prepare($sql);
-                                $sth->execute(
-                                    array(
-                                        ':gameid'   => $game->getId(),
-                                        ':dt'       => $date
-                                    ));
-                            } catch (PDOException $e) {
-                                throw new ModelException("Error processing storage query", 500);
+                                try {
+                                    $sth = DB::Connect()->prepare($sql);
+                                    $sth->execute(
+                                        array(
+                                            ':gameid' => $game->getId(),
+                                            ':dt' => $date
+                                        ));
+                                } catch (PDOException $e) {
+                                    throw new ModelException("Error processing storage query", 500);
+                                }
+
+                                $top = array();
+                                foreach ($sth->fetchAll() as $player) {
+                                    $player['O'] = ((isset($this->players($player['I'])['appName']) && $this->players($player['I'])['appName'] == $appName ? 1 : 0));
+                                    $cur = $player['Currency'];
+                                    unset($player['Currency']);
+                                    $top[$cur][] = $player;
+                                }
+
+                                $this->rating($appName, array(
+                                    'top' => $top,
+                                    'timeout' => time() + 1 * 60
+                                ));
+
                             }
 
-                            $top = array();
-                            foreach ($sth->fetchAll() as $player) {
-                                $player['O'] = ((isset($this->players($player['I'])['appName']) && $this->players($player['I'])['appName'] == $appName ? 1 : 0));
-                                $cur=$player['Currency'];unset($player['Currency']);
-                                $top[$cur][] = $player;
-                            }
+                            #echo $this->time() . " " . "Топ + обновление данных игрока\n";
 
-                            $this->rating($appName,array(
-                                'top'     => $top,
-                                'timeout' => time() + 1 * 60
-                            ));
-
+                            $from->send(json_encode(array(
+                                'path' => $type, // 'update'
+                                'res' => array(
+                                    'top' => $top,
+                                ))));
                         }
-
-                        #echo $this->time() . " " . "Топ + обновление данных игрока\n";
-
-                        $from->send(json_encode(array(
-                            'path' => $type, // 'update'
-                            'res' => array(
-                                'top'      => $top,
-                            ))));
 
                         break;
 
                     default:
+
                         if(isset($data->message)){
 
                             if ($data->message == 'stop') {
