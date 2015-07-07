@@ -268,7 +268,7 @@ function updateCallback(receiveData)
         html='';
         if(receiveData.res.now && receiveData.res.now.length){
             $.each(receiveData.res.now, function( index, value ) {
-                mode=value.mode.split('-');
+                mode = value.mode.split('-');
                 number = (mode[2] ? mode[2] : 2);
 
                 html += '<div class="gm-now' + (value.players.length < number?' available':'') + '">' +
