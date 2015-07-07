@@ -267,6 +267,10 @@ function updateCallback(receiveData)
 
         html='';
         if(receiveData.res.now && receiveData.res.now.length){
+
+            $('.ngm-rls .rls-r .now-bl ul').show();
+            $('.ngm-rls .rls-r .now-bl .gn-now-create').hide();
+
             $.each(receiveData.res.now, function( index, value ) {
                 mode = value.mode.split('-');
                 number = (mode[2] ? mode[2] : 2);
@@ -284,12 +288,21 @@ function updateCallback(receiveData)
                 "</div>" +
                 "</div>";
             });
-        } else {
 
-            html='<div class="gn-now-create">запущенных игр нет, создайте свою</div>';
+
+        } else {
+            $('.ngm-rls .rls-r .now-bl ul').hide();
+            $('.ngm-rls .rls-r .now-bl .gn-now-create').show();
         }
 
-        $('.ngm-rls .rls-r .now-bl').html(html);
+        $('.ngm-rls .rls-r .now-bl .list-games').replaceWith('<div class="list-games">'+html+'</div>');
+
+        if(html!='') {
+            if (!$('.ngm-rls .rls-r .now-bl ul li.bt-all.sel').length)
+                $('.ngm-rls .rls-r .now-bl .list-games div.gm-now:not(.available)').hide();
+            $('.ngm-rls .rls-r .now-bl ul li.bt-all span').text('('+$('.ngm-rls .rls-r .now-bl .list-games div.gm-now').length+')');
+            $('.ngm-rls .rls-r .now-bl ul li.bt-om span').text('('+$('.ngm-rls .rls-r .now-bl .list-games div.gm-now.available').length+')');
+        }
 
     }
 
@@ -834,6 +847,17 @@ function appSeaBattleCallback()
         WebSocketAjaxClient('now/'+appName);
     });
 
+
+// switch online games
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .now-bl .filter li', function(e){
+        $(this).parent('ul').find('li').removeClass('sel');
+        $(this).addClass('sel');
+
+        if(!$('.ngm-rls .rls-r .preloader').length)
+            $('.ngm-rls .rls-r').append('<div class="preloader"></div>').find('.preloader').show();
+
+        WebSocketAjaxClient('now/'+appName);
+    });
 
 // open rating block
     $(document).on('click', '.ngm-bk .ngm-rating', function(e){

@@ -1265,7 +1265,12 @@
                         </div>
 
                         <div class="now-bl">
-
+                            <ul class="filter">
+                                <li class="bt-all sel"><a href="javascript:void(0)"><?=$MUI->getText('button-all')?> <span></span></a></li>
+                                <li class="bt-om"><a href="javascript:void(0)"><?=$MUI->getText('button-only-free')?> <span></span></a></li>
+                            </ul>
+                            <div class="gn-now-create"><?=$MUI->getText('text-no-online-create-own')?></div>
+                            <div class="list-games"></div>
                         </div>
 
                     </div>

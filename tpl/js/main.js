@@ -927,13 +927,13 @@ $(function(){
     });
 
     var onlyMineLotteryResults = false;
-    $('.bt-om').on('click', function() {
+    $('.ph-fr-bk .bt-om').on('click', function() {
         onlyMineLotteryResults = true;
         $(this).parents('.profile-history').find('.ht-bk').find('li.lot-container').remove();
         loadLotteries(0, onlyMineLotteryResults, processLotteryResults, function(){}, function(){});
     });
 
-    $('.bt-all').on('click', function() {
+    $('.ph-fr-bk .bt-all').on('click', function() {
         onlyMineLotteryResults = false;
         $(this).parents('.profile-history').find('.ht-bk').find('li.lot-container').remove();
         loadLotteries(0, onlyMineLotteryResults, processLotteryResults, function(){}, function(){});

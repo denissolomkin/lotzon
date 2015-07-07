@@ -193,7 +193,7 @@ class Durak extends Game
                 $this->_isSaved = 0;
             }
 
-            $this->setResponse(isset($data['response']) ? $data['response'] : $this->getClients());
+            $this->setResponse((is_array($data) && isset($data['response'])) ? $data['response'] : $this->getClients());
 
             $fields = $this->getField();
 
@@ -241,7 +241,7 @@ class Durak extends Game
                             'appId' => $this->getIdentifier(),
                             'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                             'appName' => $this->getKey(),
-                            'action' => $data['action']?:'start',
+                            'action' => (is_array($data) && isset($data['action']))? $data['action'] : 'start',
                             'timeout' => (isset($this->currentPlayer()['timeout']) && $this->currentPlayer()['timeout'] > time()? $this->currentPlayer()['timeout'] : time() + 1) - time(),
                             'timestamp' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time()),
                             'beater' => $this->getBeater(),
