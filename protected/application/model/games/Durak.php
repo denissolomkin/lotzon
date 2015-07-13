@@ -370,13 +370,16 @@ class Durak extends Game
                     if (!in_array($this->getClient()->id, $this->currentPlayers()) || $this->getPlayers($playerId)['timeout'] > time())
                         continue;
 
+                    echo " $playerId пропускает ход";
                     $this->updatePlayer(array(
                         'status' => $this->initStatus($playerId),
                         'moves' => -1
                     ), $playerId);
 
-                    if($this->getPlayers($playerId)['moves'] <= 0 && !$this->getLoser())
+                    if($this->getPlayers($playerId)['moves'] <= 0 && !$this->getLoser()){
                         $this->setLoser($playerId);
+                        echo " проигравший №$playerId";
+                    }
                 }
 
                 $this->doMove();
