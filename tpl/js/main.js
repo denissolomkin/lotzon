@@ -2547,7 +2547,8 @@ function moveToEnd(target) {
     }
 }
 function echo(log) {
-    console.log(log);
+    var d = new Date();
+    console.log(d.toLocaleTimeString()+': '+log);
 }
 
 Object.size = function(obj) {

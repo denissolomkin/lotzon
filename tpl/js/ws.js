@@ -1461,8 +1461,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 $(".ui-droppable").droppable("destroy");
                 $('.m .card.draggable').draggable("destroy");
-                console.log(onlineGame.action);
-                console.log(onlineGame);
+                echo(onlineGame.action);
+                echo(onlineGame);
 
                 if(($.inArray(onlineGame.action, ['move','timeout','pass']) == -1 &&
                     (onlineGame.action!='ready' || Object.size(onlineGame.players)==onlineGame.current.length))
@@ -1585,7 +1585,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         newLen = (field.length ? field.length : Object.size(field));
                         oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
                         //if(is_numeric(key))
-                        //console.log(key, newLen, oldLen, fields);
+                        //echo(key, newLen, oldLen, fields);
 
                         if (key == 'deck') {
                             if (field.length) {
@@ -1597,9 +1597,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         } else if(key == 'table' && 0) {
 
                         } else if(key == 'off' && newLen == oldLen) {
-                           //console.log('пропускаем off');
+                           //echo('пропускаем off');
                         } else if(is_numeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length )) {
-                           //console.log('пропускаем '+key);
+                           //echo('пропускаем '+key);
 
                         } else {
 
@@ -1709,12 +1709,12 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             if($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 ||
                                 ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 && onlineGame.beater==index)){
 
-                                // console.log($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
+                                // echo($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
 
                                 if( onlineGame.timestamp && timestamp != onlineGame.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-onlineGame.timeout) > 2
                                     || !$('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length){
 
-                                    console.log('remove');
+                                    echo('remove');
 
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration',onlineGame.timeout+'s');
@@ -1737,7 +1737,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                             if (player.status || player.ready || onlineGame.winner) {
 
                                 var status = '';
-                                // console.log($.inArray(parseInt(index), onlineGame.current), parseInt(index), onlineGame.current);
+                                // echo($.inArray(parseInt(index), onlineGame.current), parseInt(index), onlineGame.current);
 
                                 if (player.status == 2 && onlineGame.beater == index)
                                     status = 'Беру';
@@ -2371,7 +2371,6 @@ function appWhoMoreCallback()
     function updateTimeOut(time, format) {
         if(time) {
             format = format || '{mnn}<span>:</span>{snn}';
-            echo('обновили таймаут на '+time);
             if (time < 1) {
                 onTimeOut();
             } else {
@@ -2379,15 +2378,14 @@ function appWhoMoreCallback()
                     until: (time),
                     layout: format
                 });
-                $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
                 $(".ngm-bk .tm").countdown('resume');
                 $(".ngm-bk .tm").countdown('option', {until: (time)});
+                $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
             }
         }
     }
 
     function onTimeOut() {
-        echo('выстрелил таймаут!');
         // $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
         var path='app/'+appName+'/'+appId;
         var data={'action':'timeout'};
