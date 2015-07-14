@@ -53,6 +53,18 @@
         </div>  
         <? } ?>
 
+        <div class="row">
+
+                <!--button type="button" class="btn btn-md btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button-->
+
+                <div class="btn-group">
+                    <? foreach ($supportedCountries as $country) { ?>
+                        <button type="button" class="btn btn-md country btn-default<?=($country == 'UA' ? ' active' : '') ?>" data-cc="<?=$country?>"><?=$country?></button>
+                    <? } ?>
+                </div>
+
+        </div>
+
     </div>
     
     <!-- scnd column -->
@@ -88,24 +100,20 @@
         <? $i++;
         } ?>
     </div>
+
+
 </div>
 <div class="row-fluid">&nbsp;</div>
-<div class="row-fluid">
-    <div class="col-md-offset-1 col-md-6">
-        <!--button type="button" class="btn btn-md btn-success pull-right add-country"><span class="glyphicon glyphicon-plus"></span></button-->
 
-        <div class="btn-group">
-            <? foreach ($supportedCountries as $country) { ?>
-                <button type="button" class="btn btn-md country btn-default<?=($country == 'UA' ? ' active' : '') ?>" data-cc="<?=$country?>"><?=$country?></button>
-            <? } ?>
-        </div>
+<div class="row-fluid">
+    <div class="col-md-3 col-md-offset-1">
+        <button class="btn btn-danger force-modal-button"> Принудительный розыгрыш</button>
+    </div>
+    <div class="col-md-3 col-md-offset-5">
+        <button class="btn btn-success save-button"> Cохранить</button>
     </div>
 </div>
 
-<div class="row-fluid">&nbsp;</div>
-<div class="col-md-3 col-md-offset-9">
-    <button class="btn btn-success save-button"> Cохранить</button>
-</div>
 
 <div id="lottery-time-template" style="display:none">
     <div class="form-group">
@@ -170,6 +178,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="force" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Принудительное проведение розыгрыша</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <p class="bg-warning">Внимание! Запустив розыгрыш принудительно Вы разыграете все заполненные <span class="label label-danger"></span> билетов. <br>Принудительное проведение розыгрыша сейчас не отменит проведение розыгрыша согласно расписанию.</p>
+                    <p class="bg-danger file-locked">ВАЖНО! Обнаружен файл блокировки, это означает, что прямо сейчас происходит проведение розыгрыша, Вы не можете запустить еще один.</p>
+                    <button type="button" class="btn btn-danger force-lottery-button" >Я понимаю всю ответственность, запустить принудительно всё равно</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть окно</button>
             </div>
         </div>
     </div>
@@ -252,6 +280,54 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
             success: function(data) {
                 console.log(data);
                 $('#simulation').modal().find('.modal-body .row pre').html(data);
+
+            },
+            error: function() {
+                button.find('span').remove();
+                button.prepend($('<span class="glyphicon glyphicon-remove"></span>'));
+                button.removeClass('btn-success').addClass('btn-danger');
+                button.parent().prepend($('<alert class="alert alert-danger">Unexpected server error</alert>'))
+            }
+        });
+    });
+
+    $(document).on('click', '.force-lottery-button', function() {
+
+        button=$(this);
+        $('#force').find('.modal-body .row-fluid').hide().parent().append('<pre>розыгрыш запущен, результат будет выведен здесь, ожидайте...</pre>');
+
+        $.ajax({
+            url: "/private/lottery/force",
+            method: 'POST',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $('#force').find('.modal-body pre:visible').html(data.data);
+
+            },
+            error: function(xhr, status, error) {
+                $('#force').find('.modal-body pre:visible').html(xhr.responseText);
+            }
+        });
+    });
+
+    $(document).on('click', '.force-modal-button', function() {
+
+        button=$(this);
+
+        $.ajax({
+            url: "/private/lottery/checkLock",
+            method: 'POST',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $('#force').find('.modal-body>pre').remove();
+                $('#force').modal().find('.modal-body .row-fluid').show()
+                    .find('.label').text(data.data.tickets)
+                    .parents('.row-fluid').children().hide()
+                    .parents('.row-fluid').find(!data.data.lock?':not(.file-locked)':'.file-locked').show();
 
             },
             error: function() {

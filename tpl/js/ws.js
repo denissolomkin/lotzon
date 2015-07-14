@@ -1773,9 +1773,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current');
 
 
-                    if(!$('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').is(":visible")) {
+                    if (!$('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').is(":visible")) {
 
-                    playAudio([appName, ($.inArray(playerId, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
+                        playAudio([appName, ($.inArray(playerId, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
 
                         // $('.msg.winner').fadeIn(200);
 
@@ -1786,8 +1786,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 (onlineGame.currency == 'MONEY' ? getCurrency() : 'баллов')
                             ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
 
-                            if(index==playerId){
-                                onlineGame.currency == 'MONEY' ? updateMoney(playerMoney+getCurrency(value.win, 1)) : updatePoints(playerPoints+parseInt(value.win))
+                            if (index == playerId) {
+                                onlineGame.currency == 'MONEY' ? updateMoney(playerMoney + getCurrency(value.win, 1)) : updatePoints(playerPoints + parseInt(value.win))
                             }
                         });
 
@@ -2369,8 +2369,9 @@ function appWhoMoreCallback()
     }
 
     function updateTimeOut(time, format) {
-        format = format || '{mnn}<span>:</span>{snn}';
         if(time) {
+            format = format || '{mnn}<span>:</span>{snn}';
+            echo('обновили таймаут на '+time);
             if (time < 1) {
                 onTimeOut();
             } else {
@@ -2386,7 +2387,8 @@ function appWhoMoreCallback()
     }
 
     function onTimeOut() {
-        $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove()
+        echo('выстрелил таймаут!');
+        // $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
         var path='app/'+appName+'/'+appId;
         var data={'action':'timeout'};
         WebSocketAjaxClient(path,data);

@@ -38,6 +38,11 @@ class TicketsModel extends Model
         return $tickets;
     }
 
+    public function getCountUnplayedTickets($id=0)
+    {
+        return $this->getProcessor()->getCountUnplayedTickets($id);
+    }
+
     public function getAllUnplayedTickets($id=0)
     {
         return $this->getProcessor()->getAllUnplayedTickets($id);

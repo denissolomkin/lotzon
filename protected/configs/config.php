@@ -83,6 +83,12 @@ Config::instance()->privateResources =  array(
     '/private/lottery/simulation' => array(
         'post' => 'controllers\admin\Lottery:simulation',
     ),
+    '/private/lottery/checkLock' => array(
+        'post' => 'controllers\admin\Lottery:checkLock',
+    ),
+    '/private/lottery/force' => array(
+        'post' => 'controllers\admin\Lottery:force',
+    ),
     '/private/lottery/addcountry' => array(
         'post' => 'controllers\admin\Lottery:addcountry',
     ),

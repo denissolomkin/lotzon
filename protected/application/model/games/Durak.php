@@ -123,7 +123,8 @@ class Durak extends Game
 
             $this->_isRun = 0;
             $this->setLoser(null);
-            $this->setPlayers($this->getClients(), false);
+            $this->setPlayers($this->getClients(), false)
+                ->currentPlayers(array());
             $this->setResponse($this->getClients());
             $this->setCallback(array(
                 'price' => $this->getPrice(),
@@ -386,12 +387,12 @@ class Durak extends Game
 
             } else {
 
-                #echo $this->time() . "не нажали на готов \n";
+                echo $this->time() . "не нажали на готов \n";
                 foreach ($this->getPlayers() as $player) {
                     if (!isset($player['ready']))
                         $this->unsetClients($player['pid']);
                 }
-                $this->startAction(array('action' => 'timeout'));
+                // $this->startAction(array('action' => 'timeout'));
             }
 
             $this->startAction(array('action' => 'timeout'));

@@ -97,6 +97,20 @@ class TicketsDBProcessor implements IProcessor
         return $tickets;
     }
 
+    public function getCountUnplayedTickets($id=0)
+    {
+        $sql = "SELECT COUNT(*) FROM `LotteryTickets` WHERE `LotteryId` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':id'=>$id));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
+    }
+
     public function getPlayerLotteryTickets($lotteryId, $playerId)
     {
         $sql = "SELECT * FROM `LotteryTickets` WHERE `PlayerId` = :plid AND `LotteryId` = :lotid ORDER BY `DateCreated` ASC";

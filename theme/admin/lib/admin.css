@@ -99,6 +99,10 @@ vertical-align: middle;}
     width:100px;
 }
 
+#force p {
+    padding: 15px;
+}
+
 .banners select{position: absolute;padding: 1px 0 0 0;font-size: 11px;}
 .banners .btn-success{float:right;margin-top: 3px;}
 .banners .row-banner  {padding:0;display: inline-block;}

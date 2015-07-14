@@ -57,32 +57,36 @@ function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $r
 		else
 		{
 			echo "rollBack is looped $times times: exit".PHP_EOL;
+            if(file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
+                unlink($tmp);
 		}
 	};
 
 	DB::Connect()->beginTransaction();
 
-	try
-	{
-		$data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
+    try {
 
-		if(empty($data)
-		|| current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch()))
-		{
-			DB::Connect()->commit();
-            if(file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
-                unlink($tmp);
-		}
-		else
-		{
-			$rollBack('HoldLottery is not ready');
-		}
-	}
-	catch(EntityException $e)
-	{
-		$rollBack(PHP_EOL.'HoldLottery is catch'.PHP_EOL.$e->getMessage().PHP_EOL);
-	}
+        try {
+            $data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
+
+            if (empty($data)
+                || current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch())
+            ) {
+                DB::Connect()->commit();
+                if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp'))
+                    unlink($tmp);
+            } else {
+                $rollBack('HoldLottery is not ready');
+            }
+        } catch (PDOException $e) {
+            $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
+        }
+
+    } catch(EntityException $e) {
+        $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
+    }
 }
+
 function PlayerLotteryWins($lid)
 {
 	$time = microtime(true);
@@ -151,6 +155,7 @@ function Transactions($lid)
 
 	echo (microtime(true) - $time).PHP_EOL;
 }
+
 function ApplyLotteryTickets($comb)
 {
 
@@ -229,6 +234,7 @@ function PlayerTotal($lid)
 
 	echo (microtime(true) - $time).PHP_EOL;
 }
+
 function PlayerCounter($lid)
 {
 	$time = microtime(true);
@@ -273,6 +279,7 @@ function ApplyLotteryCombination(&$comb)
 
 	unset($comb['fields']);
 }
+
 function SetLotteryCombination($comb, $simulation)
 {
 	if(!$comb)
@@ -338,6 +345,7 @@ function SetLotteryCombination($comb, $simulation)
 
 	return $comb;
 }
+
 function GetLotteryCombinationStatistics()
 {
 	global $_variantsCount;
@@ -372,6 +380,7 @@ function GetLotteryCombinationStatistics()
 
 	return $stats;
 }
+
 function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy)
 {
 	global $_ballsCount;
@@ -480,6 +489,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 
 	return $rountdsStats[$return];
 }
+
 function ResetLottery($lid = null)
 {
 	if($lid)
@@ -517,6 +527,7 @@ function ResetLottery($lid = null)
 		echo (microtime(true) - $time).PHP_EOL;
 	}
 }
+
 function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
@@ -526,15 +537,19 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy);
 	$comb = SetLotteryCombination($comb, $simulation);
     if($simulation) {print_r($comb);return;}
-    file_put_contents(__DIR__.'/../lastLottery', json_encode(array(
-        'i'=>isset($comb['id'])?$comb['id']:0,
-        'c'=>$comb['Combination'],
-        'pt'=>$comb['PlayersTotal'],
-        'pw'=>$comb['WinnersCount'],
-        'tt'=>$comb['TicketsTotal'],
-        'tw'=>$comb['TicketsCount'],
-        'b'=>$comb['ballsArray']
-    )));
+    $filename = __DIR__.'/../lastLottery';
+    try {
+        file_put_contents($filename, json_encode(array(
+            'i' => isset($comb['id']) ? $comb['id'] : 0,
+            'c' => $comb['Combination'],
+            'pt' => $comb['PlayersTotal'],
+            'pw' => $comb['WinnersCount'],
+            'tt' => $comb['TicketsTotal'],
+            'tw' => $comb['TicketsCount'],
+            'b' => $comb['ballsArray']
+        )));
+        chmod($filename, fileperms($filename) | 128 + 16 + 2);
+    } catch (ErrorException $e){}
 			ApplyLotteryCombination($comb);
 
 
@@ -544,6 +559,7 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
 
 	return $comb;
 }
+
 function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal')
 {
 	$SQL = "SELECT
@@ -576,6 +592,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 	file_put_contents($output, $results);
 
 }
+
 function RestoreAllTickets()
 {
 	$SQL = "SELECT

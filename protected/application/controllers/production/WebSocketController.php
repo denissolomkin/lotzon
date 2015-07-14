@@ -356,7 +356,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 $data = json_decode($msg);
                 list($type, $appName, $appId) = array_pad(explode("/", $data->path), 3, 0);
-                echo $this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
+                echo " \n" . $this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
                 $this->_class = $class = '\\' . $appName;
                 if (isset($data->data))
                     $data = $data->data;
@@ -523,7 +523,11 @@ class WebSocketController implements MessageComponentInterface {
                                         if (isset($_player['appName']) && isset($_player['appId']) && $this->apps($_player['appName'], $_player['appId'])) {
 
                                             echo $this->time(0, 'DANGER') . " {$_player['appName']}" . " Игрок {$player->getId()} отправил запрос на новую при активной игре {$_player['appId']}\n";
-                                            $this->runGame($_player['appName'], $_player['appId'], 'startAction', $_player['Id']);
+                                            $this->runGame($_player['appName'], $_player['appId'],
+                                                $_player['appId'] == $app->getIdentifier() && in_array($action, array('timeoutAction', 'quitAction')) ? $action : 'startAction',
+                                                $_player['Id']);
+
+
                                             return;
 
                                         } else if(!$app->getOption('v') && count($app->getClients())==$app->getNumberPlayers()){
@@ -943,6 +947,9 @@ class WebSocketController implements MessageComponentInterface {
                 if(is_numeric($client))
                     $client=(object)['id'=>$client];
                 if (($con = $this->clients($client->id)) && ($con instanceof ConnectionInterface)){
+
+                    echo $this->time(0,'RESPONSE') . "  #{$client->id} ".json_encode((isset($response[$client->id]) ? $response[$client->id] : $response))." \n";
+
                     $con->send(
                         json_encode(
                             array(
