@@ -56,7 +56,7 @@ class Game
 
         if(!$this->_isOver) {
             $this->startAction($data);
-        } else{
+        } else {
             $playerId = $this->getClient()->id;
             $this->unsetCallback();
             $this->setCallback(array(
@@ -111,36 +111,40 @@ class Game
         #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
-        $playerId = $this->getClient()->id;
-        $this->updatePlayer(array('ready' => 1), $playerId);
-        $players = $this->getPlayers();
-
-        $ready = array();
-        foreach ($players as $player){
-            if (isset($player['ready']) || isset($this->getClients($player['pid'])->bot))
-                $ready[$player['pid']] = $player;
-        }
-
-        if (count($ready) == count($players)) {
-
-            $this->_isSaved = 0;
-            $this->_isRun = 1;
-            $this->unsetPlayers()
-                ->startAction();
-
-        } else {
-
-            $this->_isOver = 0;
-            $this->currentPlayers(array_values(array_diff($this->currentPlayers(),array($playerId))));
+        if($this->_isRun == 1){
             $this->startAction();
-            /*
-            $this->unsetCallback()
-                ->setResponse($this->getClient())
-                ->setCallback(array(
-                    'action' => 'ready',
-                    'ready'  => $ready
-                ));
-            */
+        } else {
+            $playerId = $this->getClient()->id;
+            $this->updatePlayer(array('ready' => 1), $playerId);
+            $players = $this->getPlayers();
+
+            $ready = array();
+            foreach ($players as $player) {
+                if (isset($player['ready']) || isset($this->getClients($player['pid'])->bot))
+                    $ready[$player['pid']] = $player;
+            }
+
+            if (count($ready) == count($players)) {
+
+                $this->_isSaved = 0;
+                $this->_isRun = 1;
+                $this->unsetPlayers()
+                    ->startAction();
+
+            } else {
+
+                $this->_isOver = 0;
+                $this->currentPlayers(array_values(array_diff($this->currentPlayers(), array($playerId))));
+                $this->startAction();
+                /*
+                $this->unsetCallback()
+                    ->setResponse($this->getClient())
+                    ->setCallback(array(
+                        'action' => 'ready',
+                        'ready'  => $ready
+                    ));
+                */
+            }
         }
 
         #echo $this->time().' '. "Конец повтора игры\n";
@@ -777,7 +781,7 @@ class Game
         $coef *= ($this->getOption('h') ? (100 - $this->getOption('h')) / 100 : 1) * $this->getPrice();
 
         if($coef>0)
-            $coef = $this->getCurrency()=='MONEY' ? ceil($coef * 100) / 100 : ceil($coef);
+            $coef = $this->getCurrency()=='MONEY' ? floor($coef * 100) / 100 : floor($coef);
 
 
         return $coef;

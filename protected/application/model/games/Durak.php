@@ -12,7 +12,7 @@ class Durak extends Game
         '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards = array(
+    protected $_cards2 = array(
         '1x6', '1x7', '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14', // пики  # числа 2-10 + валет, дама, король, туз
         '2x6', '2x7', '2x8', '2x9', '2x10', '2x11', '2x12', '2x13', '2x14', // треф  # числа 2-10 + валет, дама, король, туз
         '3x6', '3x7', '3x8', '3x9', '3x10', '3x11', '3x12', '3x13', '3x14', // буби  # числа 2-10 + валет, дама, король, туз
@@ -26,11 +26,11 @@ class Durak extends Game
         '4x2', '4x3', '4x4', '4x5', '4x6', '4x7', '4x8', '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards2 = array(
-        '1x6', '1x7', '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
+    protected $_cards = array(
+        '1x6', '1x7', // '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
     );
 
-    const   CARDS_ON_THE_HANDS = 6;
+    const   CARDS_ON_THE_HANDS = 1;
     const   REVERT_MODE = false;
 
     protected $_trump = null;
@@ -42,7 +42,7 @@ class Durak extends Game
     public function init()
     {
     }
-
+/*
     public function replayAction($data=null)
     {
         #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
@@ -79,7 +79,7 @@ class Durak extends Game
 
         #echo $this->time().' '. "Конец повтора игры\n";
     }
-
+*/
     public function quitAction($data=null)
     {
         #echo $this->time().' '. "Выход из игры\n";
@@ -144,10 +144,12 @@ class Durak extends Game
             if($this->getNumberPlayers() != count($this->getPlayers()))
                 $this->setPlayers($this->getClients(), false)
                     ->currentPlayers(array_keys($this->getPlayers()));
+
             elseif(!count($this->currentPlayers()))
                 $this->currentPlayers(array_keys($this->getPlayers()));
 
             $this->setResponse($this->getClients());
+
 
             $callback = array(
                 'appId' => $this->getIdentifier(),
@@ -165,6 +167,7 @@ class Durak extends Game
                 'action' => 'ready'
             );
 
+
             if ($this->getLoser()) {
                 #echo "нашли програвшего!!";
                 $callback += array(
@@ -173,6 +176,8 @@ class Durak extends Game
                     'loser' => $this->getLoser(),
                     'fields' => $this->getField(),
                 );
+
+                $this->setField(array());
             }
 
             $this->setCallback($callback);
@@ -249,7 +254,7 @@ class Durak extends Game
                             'starter' => $this->getStarter(),
                             'current' => $this->currentPlayers(),
                             'players' => $this->getPlayers(),
-                            'fields' => array($client->id => $this->getField()[$client->id]) + $fields,
+                            'fields' => 1 ? $this->getField() : array($client->id => $this->getField()[$client->id]) + $fields,
                             'trump' => $this->getTrump('full'),
                         ), $client->id);
                     }
@@ -844,7 +849,7 @@ class Durak extends Game
                         ->setTrump(null);
 
                     $this->updatePlayer(array('result' => -1, 'win' => $this->getPrice() * -1), $loser)
-                        ->updatePlayer(array('status'))
+                        ->updatePlayer(array('timeout','status','timeout'=> time() + $this->getOption('t')))
                         ->currentPlayers(array());
 
                     #print_r($this->getPlayers($loser));

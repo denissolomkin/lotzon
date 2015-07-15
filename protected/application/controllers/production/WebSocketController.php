@@ -168,7 +168,7 @@ class WebSocketController implements MessageComponentInterface {
     {
         if($app=$this->apps($appName,$appId)) {
             $this->_class = $class='\\' . $appName;
-            echo "###################################################\n".$this->time() . " " . "$appName $appId $action ".(empty($app->_bot) || !in_array($playerId,$app->_bot) ? "игрок №" : 'бот №').$playerId.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
+            echo $this->time() . " " . "$appName $appId $action ".(empty($app->_bot) || !in_array($playerId,$app->_bot) ? "игрок №" : 'бот №').$playerId.($action != 'startAction'?' (текущий №'.implode(',',$app->currentPlayers()).")":'')." \n";
 
             if (isset($playerId) && $app->getClients($playerId)
                 && !isset($app->getClients($playerId)->bot)
@@ -248,12 +248,12 @@ class WebSocketController implements MessageComponentInterface {
             || !count($app->getClients())
         ) {
 
-            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} удаляем приложение \n";
+            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} удаляем приложение \n\n";
             $this->apps('unset', $app->getKey(), $app->getIdentifier());
 
         } else {
 
-            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} сохраняем приложение \n";
+            echo $this->time(1) . " {$app->getKey()} {$app->getIdentifier()} сохраняем приложение \n\n";
             $this->apps($app->getKey(),$app->getIdentifier(), $app);
 
         }
@@ -356,7 +356,7 @@ class WebSocketController implements MessageComponentInterface {
 
                 $data = json_decode($msg);
                 list($type, $appName, $appId) = array_pad(explode("/", $data->path), 3, 0);
-                echo " \n" . $this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
+                echo "###################################################\n".$this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
                 $this->_class = $class = '\\' . $appName;
                 if (isset($data->data))
                     $data = $data->data;
@@ -948,7 +948,7 @@ class WebSocketController implements MessageComponentInterface {
                     $client=(object)['id'=>$client];
                 if (($con = $this->clients($client->id)) && ($con instanceof ConnectionInterface)){
 
-                    echo $this->time(0,'RESPONSE') . "  #{$client->id} ".json_encode((isset($response[$client->id]) ? $response[$client->id] : $response))." \n";
+                    #echo $this->time(0,'RESPONSE') . "  #{$client->id} \n";//.json_encode((isset($response[$client->id]) ? $response[$client->id] : $response))." \n";
 
                     $con->send(
                         json_encode(

@@ -49,6 +49,7 @@ var conn;
                                 onlineGame = {};
                             } else if(onlineGame.winner) {
                                 onlineGame['winner'] = null;
+                                onlineGame['fields'] = null;
                             }
 
                             $.each(data.res, function( index, value ) {
@@ -1576,8 +1577,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 var sample = null;
 
-                if($.inArray(onlineGame.action, ['ready','wait']) == -1
-                    && onlineGame.fields){
+                if($.inArray(onlineGame.action, ['ready','wait']) == -1 || onlineGame.fields){
 
                     $.each(onlineGame.fields, function( key, field ) {
                         if(!field)
@@ -1639,7 +1639,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                         : 0 );
 
                                     $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + key).append(
-                                        '<div style="transform: rotate(' + deg + 'deg); -webkit-transform: rotate(' + deg + 'deg);' +
+                                        '<div style="transform: rotate(' + deg + 'deg) '+(key == playerId ? '' : 'scale(0.7, 0.7)')+'; -webkit-transform: rotate(' + deg + 'deg)'+(key == playerId ? '' : 'scale(0.7, 0.7)')+';' +
                                         (key == playerId ? (idx == 1 ? 'margin-left:'+(230+(cardsCount>4?(cardsCount>8?-160:''):(6-cardsCount)*30))+'px;' : '') +
                                         (cardsCount>6?('margin-right:-' + (110 - (cardsCount>8?750:400) / cardsCount) + 'px'):'')
                                          : '' ) + '"' +
@@ -2368,25 +2368,48 @@ function appWhoMoreCallback()
         $('.ngm-bk .ngm-gm .gm-mx ul.mx > li').html('').removeClass();
     }
 
+    // $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
+
+    $.countdown.setDefaults({alwaysExpire: true,onExpiry: onTimeOut})
+
     function updateTimeOut(time, format) {
         if(time) {
             format = format || '{mnn}<span>:</span>{snn}';
             if (time < 1) {
                 onTimeOut();
             } else {
-                $(".ngm-bk .tm").countdown({
-                    until: (time),
-                    layout: format
-                });
-                $(".ngm-bk .tm").countdown('resume');
-                $(".ngm-bk .tm").countdown('option', {until: (time)});
-                $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
+
+                //if(!$(".ngm-bk .tm:eq(0)").countdown('option', 'onExpiry'))
+                //    $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
+
+                if($(".ngm-bk .tm:eq(0)").countdown('getTimes') && $(".ngm-bk .tm:eq(0)").countdown('getTimes').reduce(function (a, b) {return a + b;})==0){
+                    $(".ngm-bk .tm:eq(0)").countdown('destroy');
+                }
+
+                if(!$(".ngm-bk .tm:eq(0)").countdown('getTimes')){
+                    $(".ngm-bk .tm:eq(0)").countdown({until:time, layout: format});
+
+                } else if(!$(".ngm-bk .tm:eq(0)").countdown('option', 'layout') || $(".ngm-bk .tm:eq(0)").countdown('option', 'layout')!=format)
+                    $(".ngm-bk .tm:eq(0)").countdown('option', {layout: format});
+
+                // $(".ngm-bk .tm:eq(0)").countdown('destroy').countdown({until: 5});
+                $(".ngm-bk .tm:eq(0)").countdown({until:time}).countdown('resume').countdown('option',{until:time});
+                /*
+                $(".ngm-bk .tm:eq(0)").countdown('resume');
+                $(".ngm-bk .tm:eq(0)").countdown({until: time});
+                $(".ngm-bk .tm:eq(0)").countdown('option',{until: time});
+                */
+
+
+
+
             }
         }
     }
 
     function onTimeOut() {
-        // $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
+        console.info('тайм-аут');
+        $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
         var path='app/'+appName+'/'+appId;
         var data={'action':'timeout'};
         WebSocketAjaxClient(path,data);
