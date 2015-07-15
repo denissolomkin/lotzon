@@ -34,7 +34,7 @@ class Durak extends Game
         '1x6','2x6','3x6','4x6','1x6','2x6','3x6','4x6','1x6','2x6','3x6','4x6'
     );
 
-    const   CARDS_ON_THE_HANDS = 12;
+    const   CARDS_ON_THE_HANDS = 6;
     const   REVERT_MODE = false;
 
     protected $_trump = null;
