@@ -495,7 +495,8 @@ class WebSocketController implements MessageComponentInterface {
                                         $from->send(json_encode(array('path' => 'quit')));
                                     }
 
-                                    // пробуем загрузить приложение, проверяем наличие, если есть, загружаем и удаляем игрока из стека
+                                    // пробуем загрузить приложение, проверяем наличие
+                                    // если нет, сообщаем об ошибке
                                 }  elseif (!($app=$this->apps($appName,$appId))) {
 
                                     if ($action == 'replayAction' || $action == 'quitAction') {
@@ -514,7 +515,7 @@ class WebSocketController implements MessageComponentInterface {
                                         $from->send(json_encode(array('path' => 'quit')));
                                     }
 
-                                    // если нет, сообщаем об ошибке
+                                    // если есть, загружаем и удаляем игрока из стека
                                 } else {
 
                                     if(!in_array($player->getId(),array_keys($app->getClients()))) {
@@ -534,7 +535,7 @@ class WebSocketController implements MessageComponentInterface {
                                                 $client->send(json_encode(array('error' => 'GAME_IS_FULL')));
                                             return;
 
-                                        } else if(isset($_player['appMode']) && in_array($player->getId(),$this->stack($_player['appName'], $_player['appMode']))) {
+                                        } else if(isset($_player['appMode']) && $this->stack($_player['appName'], $_player['appMode']) && in_array($player->getId(),$this->stack($_player['appName'], $_player['appMode']))) {
                                             echo $this->time(1) . " {$_player['appName']}" . " Игрок {$player->getId()} запускает другую игру, пребывая в стеке {$_player['appMode']}\n";
                                             $this->stack('unset', $_player['appName'], $_player['appMode'], $player->getId());
                                         }

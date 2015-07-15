@@ -26,11 +26,15 @@ class Durak extends Game
         '4x2', '4x3', '4x4', '4x5', '4x6', '4x7', '4x8', '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards = array(
+    protected $_cards3 = array(
         '1x6', '1x7', // '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
     );
 
-    const   CARDS_ON_THE_HANDS = 1;
+    protected $_cards = array(
+        '1x6','2x6','3x6','4x6','1x6','2x6','3x6','4x6','1x6','2x6','3x6','4x6'
+    );
+
+    const   CARDS_ON_THE_HANDS = 12;
     const   REVERT_MODE = false;
 
     protected $_trump = null;
@@ -367,9 +371,10 @@ class Durak extends Game
 
         if((isset($this->currentPlayer()['timeout']) && $this->currentPlayer()['timeout']<=time())) {
 
-
             #echo $this->time() . "время истекло\n";
             if ($this->isRun()) {
+
+               $checkBeater = in_array($this->getBeater(), $this->currentPlayers());
 
                 foreach ($this->currentPlayers() as $playerId) {
 
@@ -379,7 +384,7 @@ class Durak extends Game
                     echo " $playerId пропускает ход";
                     $this->updatePlayer(array(
                         'status' => $this->initStatus($playerId),
-                        'moves' => -1
+                        'moves'  => !$checkBeater || $this->getBeater()==$playerId ? -1 : 0
                     ), $playerId);
 
                     if($this->getPlayers($playerId)['moves'] <= 0 && !$this->getLoser()){
@@ -871,7 +876,7 @@ class Durak extends Game
         $cards = is_array($card) ? array(implode('x',$card)) : (is_numeric($playerId) ? $this->getField()[$playerId] : array());
         $tables = count($this->getField()['table']);
 
-        if($tables < self::CARDS_ON_THE_HANDS &&
+        if($tables < (self::CARDS_ON_THE_HANDS - (count($this->getField()['off']) ? 1 : 0)) &&
             ((count($this->getField()['table'],COUNT_RECURSIVE) - $tables + count($this->getField()[$this->getBeater()])) / 2 > $tables)) {
             foreach ($this->getField()['table'] as $table) {
                 foreach ($table as $waiting) {
