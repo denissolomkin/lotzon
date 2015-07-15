@@ -431,11 +431,12 @@ class WebSocketController implements MessageComponentInterface {
                                             }
 
                                             $client = (object) array(
-                                                    'time' => time(),
-                                                    'id' => $player->getId(),
+                                                    'time'   => time(),
+                                                    'id'     => $player->getId(),
                                                     'avatar' => $player->getAvatar(),
-                                                    'lang' => $player->getLang(),
-                                                    'name' => $player->getNicName());
+                                                    'lang'   => $player->getLang(),
+                                                    'admin'     =>  $player->isAdmin(),
+                                                    'name'   => $player->getNicName());
 
                                             if ($game->getOption('f')){
 
@@ -550,6 +551,7 @@ class WebSocketController implements MessageComponentInterface {
                                             'time'      =>  time(),
                                             'id'        =>  $player->getId(),
                                             'avatar'    =>  $player->getAvatar(),
+                                            'admin'     =>  $player->isAdmin(),
                                             'lang'      =>  $player->getLang(),
                                             'name'      =>  $player->getNicName())));
                                     }

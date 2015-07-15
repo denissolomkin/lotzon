@@ -12,7 +12,7 @@ class Durak extends Game
         '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards2 = array(
+    protected $_cards = array(
         '1x6', '1x7', '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14', // пики  # числа 2-10 + валет, дама, король, туз
         '2x6', '2x7', '2x8', '2x9', '2x10', '2x11', '2x12', '2x13', '2x14', // треф  # числа 2-10 + валет, дама, король, туз
         '3x6', '3x7', '3x8', '3x9', '3x10', '3x11', '3x12', '3x13', '3x14', // буби  # числа 2-10 + валет, дама, король, туз
@@ -26,12 +26,8 @@ class Durak extends Game
         '4x2', '4x3', '4x4', '4x5', '4x6', '4x7', '4x8', '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards3 = array(
+    protected $_cards2 = array(
         '1x6', '1x7', // '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
-    );
-
-    protected $_cards = array(
-        '1x6','2x6','3x6','4x6','1x6','2x6','3x6','4x6','1x6','2x6','3x6','4x6'
     );
 
     const   CARDS_ON_THE_HANDS = 6;
@@ -258,7 +254,7 @@ class Durak extends Game
                             'starter' => $this->getStarter(),
                             'current' => $this->currentPlayers(),
                             'players' => $this->getPlayers(),
-                            'fields' => 1 ? $this->getField() : array($client->id => $this->getField()[$client->id]) + $fields,
+                            'fields' => $client->admin ? $this->getField() : array($client->id => $this->getField()[$client->id]) + $fields,
                             'trump' => $this->getTrump('full'),
                         ), $client->id);
                     }
@@ -876,7 +872,9 @@ class Durak extends Game
         $cards = is_array($card) ? array(implode('x',$card)) : (is_numeric($playerId) ? $this->getField()[$playerId] : array());
         $tables = count($this->getField()['table']);
 
-        if($tables < (self::CARDS_ON_THE_HANDS - (count($this->getField()['off']) ? 1 : 0)) &&
+        echo $this->time().' '. "Отбой: ".(count($this->getField()['off']))."\n";
+
+        if($tables < (self::CARDS_ON_THE_HANDS - (count($this->getField()['off']) ? 0 : 1)) &&
             ((count($this->getField()['table'],COUNT_RECURSIVE) - $tables + count($this->getField()[$this->getBeater()])) / 2 > $tables)) {
             foreach ($this->getField()['table'] as $table) {
                 foreach ($table as $waiting) {
@@ -893,7 +891,7 @@ class Durak extends Game
             }
         }
 
-        #echo $this->time().' '. "Возможность подкинуть: ".($check?'да':'нет')."\n";
+        echo $this->time().' '. "Возможность подкинуть: ".($check?'да':'нет')."\n";
         return $check;
 
     }

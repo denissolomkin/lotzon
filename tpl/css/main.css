@@ -1165,7 +1165,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .exit:hover{background-color: rgba(255,255,255,0.5);}
 .ngm-bk .ngm-gm.cards .gm-mx .players .exit span {color: white;font-size: 30px;}
 
-.ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-top: 40px;/*width: 70px; height: 108px;background-position: -1430px 0px;*/ border-radius: 5px; -webkit-transform-origin: 50% 25%; transform-origin: 50% 25%;}
+.ngm-bk .ngm-gm.cards .gm-mx .players .o .card{position: absolute; margin-left: -20px; margin-top: 20px;/*width: 70px; height: 108px;background-position: -1430px 0px;*/ border-radius: 5px; -webkit-transform-origin: 50% 25%; transform-origin: 50% 25%;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr { height: auto;  margin: 0 0 0 5px;  }
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-ph {width: 60px;  height: 60px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: relative; box-shadow: 0px 0px 10px;  margin: 30px 0 0 0px;border-radius: 50px;}
 .ngm-bk .ngm-gm.cards .gm-mx .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.6);  color: #ffffff;    top: 60px; padding:2px; position: absolute;border-radius: 3px;font: 15px/1 Handbook-regular;}

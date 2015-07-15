@@ -76,6 +76,12 @@ class Session2
         return $default;
     }
 
+    public function has($key)
+    {
+
+        return !empty($_SESSION[$key]);
+    }
+
     public function delete($key)
     {
         unset($_SESSION[$key]);

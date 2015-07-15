@@ -119,14 +119,6 @@ class Index extends \SlimController\SlimController
         if(is_array($blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], $blockedReferers) && !$session->has('REFERER'))
             $session->set('REFERER',parse_url($_SERVER['HTTP_REFERER'])['host']);
 
-
-
-
-
-
-
-
-
         $reviews = ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE'), null, false, 'json');
 
         $templates = array(
@@ -150,7 +142,7 @@ class Index extends \SlimController\SlimController
             'seo'         => $seo,
             'onlineGames' => OnlineGamesModel::instance()->getList(),
             'langs'       => ($seo['multilanguage'] ? \LanguagesModel::instance()->getList() : null),
-            'debug'       => (\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
+            'debug'       => (\Session2::connect()->has(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
             'quickGames'  => QuickGamesModel::instance()->getList(),
             'gameSettings'=> $gameSettings,
             'chanceGame'  => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,

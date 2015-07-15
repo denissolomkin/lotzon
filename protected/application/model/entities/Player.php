@@ -71,6 +71,7 @@ class Player extends Entity
     private $_adBlock    = 0;
     private $_webSocket  = 0;
 
+    private $_admin = false;
     private $_valid = 0;
     private $_hash = '';
     private $_ip = '';
@@ -718,6 +719,18 @@ class Player extends Entity
     public function getReferalId()
     {
         return $this->_referalId;
+    }
+
+    public function isAdmin()
+    {
+        return $this->_admin;
+    }
+
+    public function setAdmin($status)
+    {
+        $this->_admin = $status;
+
+        return $this;
     }
 
     public function isReferalPaid()
@@ -1562,6 +1575,7 @@ class Player extends Entity
                  ->setInviterId($data['InviterId'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
+                 ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
 
             if ($data['TicketsFilled']) {
