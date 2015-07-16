@@ -690,12 +690,12 @@ function appSeaBattleCallback()
     });
 
 
-// записать в игровой стек
+// записаться в игровой стек
     $(document).on('click', '.ngm-bk .ngm-go', function(e){
 
         if(appMode = $('.ngm-bk .rls-r .new-bl .prc-sel').find('.active').attr('data-price')) {
             price = appMode.split('-');
-            appMode+='-'+($('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players')?$('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players'):2);
+            appMode+='-'+($('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players') ? $('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players') : 2);
 
             if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
 
@@ -703,13 +703,16 @@ function appSeaBattleCallback()
 
             } else {
 
-                var path = 'app/' + appName + '/' + appId;
+                var path = 'app/' + appName + '/0'; // + appId;
                 var data = {'action': 'start', 'mode': appMode};
                 WebSocketAjaxClient(path, data);
 
             }
+
         } else {
+
             $("#report-popup").show().find(".txt").text(getText('CHOICE_BET')).fadeIn(200);
+
         }
     });
 
@@ -1588,7 +1591,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         //echo(key, newLen, oldLen, fields);
 
                         if (key == 'deck') {
-                            if (field.length) {
+                            if (field.length > 1) {
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .deck .last').text(field.length);
                             } else{
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .deck .lear').nextAll().hide();

@@ -40,7 +40,7 @@ class FiveLine extends Game
             $line=array($x=>array($y=>'w'));
             foreach ($mx as $dir) {
                 $x1=$x; $y1=$y;
-                while($x1+$dir[0]>0 && $x1+$dir[0]<=$this->getOption('x') && $y1+$dir[1]>0 && $y1+$dir[1]<=$this->getOption('y') && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
+                while($x1+$dir[0]>0 && $x1+$dir[0]<=$this->getOption('x') && $y1+$dir[1]>0 && $y1+$dir[1]<=$this->getOption('y') && isset($field[$x1+$dir[0]][$y1+$dir[1]]) && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
                     $x1+=$dir[0];
                     $y1+=$dir[1];
                     $line[$x1][$y1]='w';
