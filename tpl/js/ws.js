@@ -1591,7 +1591,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                         //echo(key, newLen, oldLen, fields);
 
                         if (key == 'deck') {
-                            if (field.length > 1) {
+                            if (field.length) {
+                                if(field.length==1)
+                                    $('.ngm-bk .ngm-gm .gm-mx .mx .deck .card:not(.trump )').remove();
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .deck .last').text(field.length);
                             } else{
                                 $('.ngm-bk .ngm-gm .gm-mx .mx .deck .lear').nextAll().hide();
