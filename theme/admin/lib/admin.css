@@ -433,7 +433,7 @@ min-height: 17px;
     padding: 0 0 5px 5px;}
 
 .ogames form .holder .row-fluid{margin: -1px 0 0 0;}
-.ogames form .row-fluid, .qgames form .row-fluid {margin: 10px 0;}
+#variation-modal .row-fluid .row-fluid, .ogames form .row-fluid, .qgames form .row-fluid {margin: 10px 0;}
 .ogames #field .ships ul > li > ul > li {width:20px;height:20px;background: coral;margin-right: 1px; float: left}
 .ogames #field .ships ul {list-style: none;}
 .ogames #field .ships + ul {float: left}

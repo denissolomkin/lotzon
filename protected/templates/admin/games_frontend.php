@@ -44,9 +44,9 @@ $(function() {
     $('.lang').on('click', function () {
         lang = $(this).data('lang');
         $('.lang').removeClass('active');
-        $(this).addClass('active');
-        $('input[name^="game[Title]"], textarea[name^="game[Description]"]', $('#editGame')).hide();
-        $('input[name="game[Title][' + lang + ']"], textarea[name="game[Description][' + lang + ']"]', $('#editGame')).fadeIn(200);
+        $('.lang[data-lang="' + lang + '"]').addClass('active');
+        $('.mui').hide();
+        $('.mui[name$="[' + lang + ']"]').fadeIn(200);
     });
 
     $('#image').on('click', initUpload);

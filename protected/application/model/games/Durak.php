@@ -27,7 +27,7 @@ class Durak extends Game
     );
 
     protected $_cards2 = array(
-        '1x6', '1x7', // '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
+        '1x6', '1x7', '1x8', '1x9', // '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
     );
 
     const   CARDS_ON_THE_HANDS = 6;
@@ -370,7 +370,8 @@ class Durak extends Game
             #echo $this->time() . "время истекло\n";
             if ($this->isRun()) {
 
-               $checkBeater = in_array($this->getBeater(), $this->currentPlayers());
+               $isBeaterCurrent = in_array($this->getBeater(), $this->currentPlayers());
+               $isTableEmpty = !count($this->getField('table'));
 
                 foreach ($this->currentPlayers() as $playerId) {
 
@@ -380,7 +381,7 @@ class Durak extends Game
                     echo " $playerId пропускает ход";
                     $this->updatePlayer(array(
                         'status' => $this->initStatus($playerId),
-                        'moves'  => !$checkBeater || $this->getBeater()==$playerId ? -1 : 0
+                        'moves'  => ($isTableEmpty && $this->getStarter()==$playerId) || ($isBeaterCurrent && $this->getBeater()==$playerId) ? -1 : 0
                     ), $playerId);
 
                     if($this->getPlayers($playerId)['moves'] <= 0 && !$this->getLoser()){
@@ -628,17 +629,26 @@ class Durak extends Game
         return $this;
     }
 
-    public function sortCards($playerId)
+    public function checkDiverseCards()
     {
-        usort($this->_field[$playerId], function($a, $b){
-            $a=explode('x',$a);
-            $b=explode('x',$b);
-            return (($a[0]==$this->getTrump() && $b[0]!=$this->getTrump()) || ($a[0]!=$this->getTrump() && $b[0]!=$this->getTrump() && $a[0] > $b[0]) || ($a[0] == $b[0] && $a[1] > $b[1])) ? 1 : -1 ;
-        });
 
-        return $this;
+        #echo "Проверяем карты одной масти на руках";
+
+            foreach($this->getPlayers() as $player) {
+
+                $count = array();
+
+                foreach($this->getField($player['pid']) as $card)
+                    isset($count[$card[0]]) ? $count[$card[0]]++ : $count[$card[0]] = 1;
+
+                // если мастей на руках меньше или равно двум и одной из мастей больше 4 либо равно 1
+                if(count($count)<=2 && (reset($count)>=5 || reset($count)<=1))
+                    return false;
+
+            }
+
+        return true;
     }
-
 
     public function shuffleCards()
     {
@@ -668,6 +678,17 @@ class Durak extends Game
 
                 }
             }
+
+        return $this;
+    }
+
+    public function sortCards($playerId)
+    {
+        usort($this->_field[$playerId], function($a, $b){
+            $a=explode('x',$a);
+            $b=explode('x',$b);
+            return (($a[0]==$this->getTrump() && $b[0]!=$this->getTrump()) || ($a[0]!=$this->getTrump() && $b[0]!=$this->getTrump() && $a[0] > $b[0]) || ($a[0] == $b[0] && $a[1] > $b[1])) ? 1 : -1 ;
+        });
 
         return $this;
     }
@@ -754,12 +775,15 @@ class Durak extends Game
     public function generateField()
     {
 
-        shuffle($this->_cards);
-        $this->_field = array('deck'=>$this->_cards,'table'=>array(),'off'=>array());
-        $this->_fieldPlayed = array_fill_keys(array_flip($this->_cards),null);
+        do {
 
-        $this->setTrump(count($this->_field['deck']) ? end($this->_field['deck']): $this->_cards[array_rand($this->_cards)]);
-        $this->shuffleCards();
+            shuffle($this->_cards);
+            $this->_fieldPlayed = array_fill_keys(array_flip($this->_cards),null);
+            $this->_field = array('deck'=>$this->_cards,'table'=>array(),'off'=>array());
+            $this->setTrump(count($this->_field['deck']) ? end($this->_field['deck']): $this->_cards[array_rand($this->_cards)]);
+            $this->shuffleCards();
+
+        } while (!$this->checkDiverseCards());
 
         return $this;
     }
