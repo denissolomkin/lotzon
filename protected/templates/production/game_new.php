@@ -60,8 +60,8 @@
 
 
         <script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
-        <script src="/tpl/js/lib/modernizr.js"></script>
         <script src="/tpl/js/lib/jquery.min.js"></script>
+        <!--script src="/tpl/js/lib/modernizr.js"></script>
         <script src="/tpl/js/lib/jquery-ui.min.js"></script>
         <script src="/tpl/js/lib/jquery.inputmask.js"></script>
         <script src="/tpl/js/lib/jquery.bind-first-0.1.min.js"></script>
@@ -71,12 +71,12 @@
         <script src="/tpl/js/lib/jquery.cookie.js"></script>
         <script src="/tpl/js/lib/jquery.countdown.min.js"></script>
         <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
-        <script src="/tpl/js/social.js" charset="utf-8"></script>
-        <script src="/tpl/js/lib/doT.min.js"></script>
-
-
-        <!-- social_likes -->
         <script src="/tpl/js/lib/social-likes.min.js"></script>
+        <script src="/tpl/js/lib/doT.min.js"></script-->
+        <script src="/tpl/js/lib/plugins.js" charset="utf-8"></script>
+        <script src="/tpl/js/social.js" charset="utf-8"></script>
+
+
 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <? if($debug){ ?>
@@ -1298,7 +1298,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
 
                                 <div class="plr-bt">
                                     <div class="prc-txt-bk">
-                                        <span class="icon-users" aria-hidden="true"></span> <?=$MUI->getText('text-choose-players')?>
+                                        <span class="icon-equalizer" aria-hidden="true"></span> <?=$MUI->getText('text-choose-options')?>
                                     </div>
 
                                     <div class="plr-sel">
@@ -1519,10 +1519,9 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
 
 
         </div>
-        <script src="/tpl/js/lib/jquery.damnUploader.min.js"></script>
-        <script src="/tpl/js/backend.js"></script>
+        <script src="/tpl/js/backend.min.js"></script>
         <script src="/tpl/js/template.js"></script>
-        <script src="/tpl/js/main.js"></script>
+        <script src="/tpl/js/main.min.js"></script>
         <script src="/tpl/js/ws.js"></script>
         <script src="/tpl/js/ads.js"></script>
 
