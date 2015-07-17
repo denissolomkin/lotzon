@@ -1527,16 +1527,20 @@ function moneyExchange() {
 }
 
 function showGameProccessPopup(){
-    if (filledTicketsCount > 0) {
-        $('.popup').hide();
-        $("#game-won").hide();
-        $("#game-end").hide();
-        $("#mchance").hide();
-        $("#game-process").show();
-        $("#game-itself").show();
-        proccessResult();
-    } else {
-        location.reload();
+
+    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#ChanceGame-holder:visible").length || $("#QuickGame-holder:visible").length || $(".ngm-gm:visible").length;
+    if(!gw) {
+        if (filledTicketsCount > 0) {
+            $('.popup').hide();
+            $("#game-won").hide();
+            $("#game-end").hide();
+            $("#mchance").hide();
+            $("#game-process").show();
+            $("#game-itself").show();
+            proccessResult();
+        } else {
+            location.reload();
+        }
     }
 
 }

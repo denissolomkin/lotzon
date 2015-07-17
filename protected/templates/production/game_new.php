@@ -1519,9 +1519,9 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
 
 
         </div>
-        <script src="/tpl/js/backend.min.js"></script>
+        <script src="/tpl/js/backend.js"></script>
         <script src="/tpl/js/template.js"></script>
-        <script src="/tpl/js/main.min.js"></script>
+        <script src="/tpl/js/main.js"></script>
         <script src="/tpl/js/ws.js"></script>
         <script src="/tpl/js/ads.js"></script>
 

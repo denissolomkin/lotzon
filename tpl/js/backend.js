@@ -674,7 +674,7 @@ window.setInterval(function() {
                 if(data.res.moment == 1) {
 
                     // if main game screen is visible
-                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#ChanceGame-holder:visible").length|| $("#QuickGame-holder:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
+                    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#ChanceGame-holder:visible").length || $("#QuickGame-holder:visible").length || $(".ngm-gm:visible").length || $("#game-won:visible").length || $("#game-won:visible").length || $("#game-end:visible").length || $("#game-process:visible").length || $("#game-itself:visible").length;
                     if (!gw) {
 
                         startQuickGame('Moment', null,

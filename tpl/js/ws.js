@@ -2375,10 +2375,9 @@ function appWhoMoreCallback()
 
     // $(".ngm-bk .tm:eq(0)").countdown('option', {onExpiry: onTimeOut});
 
-    $.countdown.setDefaults({alwaysExpire: true,onExpiry: onTimeOut})
-
     function updateTimeOut(time, format) {
         if(time) {
+            console.log('обновление таймаута');
             format = format || '{mnn}<span>:</span>{snn}';
             if (time < 1) {
                 onTimeOut();
@@ -2392,7 +2391,7 @@ function appWhoMoreCallback()
                 }
 
                 if(!$(".ngm-bk .tm:eq(0)").countdown('getTimes')){
-                    $(".ngm-bk .tm:eq(0)").countdown({until:time, layout: format});
+                    $(".ngm-bk .tm:eq(0)").countdown({until:time, layout: format, onExpiry: onTimeOut});
 
                 } else if(!$(".ngm-bk .tm:eq(0)").countdown('option', 'layout') || $(".ngm-bk .tm:eq(0)").countdown('option', 'layout')!=format)
                     $(".ngm-bk .tm:eq(0)").countdown('option', {layout: format});

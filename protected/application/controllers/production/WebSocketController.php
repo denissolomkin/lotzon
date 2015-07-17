@@ -266,7 +266,7 @@ class WebSocketController implements MessageComponentInterface {
 
             $player = $conn->Session->get(Player::IDENTITY);
             $_player = array_merge(
-                array('Id'=>$player->getId(),'Ping'=>time(),'Country'=>$player->getCountry()),
+                array('Id'=>$player->getId(),'Ping'=>time(),'Country'=>$player->getCountry(),'Lang'=>$player->getLang()),
                 $this->players($player->getId()) ? : array()
             );
             $conn->resourceId = $player->getId();
@@ -431,12 +431,12 @@ class WebSocketController implements MessageComponentInterface {
                                             }
 
                                             $client = (object) array(
-                                                    'time'   => time(),
-                                                    'id'     => $player->getId(),
-                                                    'avatar' => $player->getAvatar(),
-                                                    'lang'   => $player->getLang(),
-                                                    'admin'     =>  $player->isAdmin(),
-                                                    'name'   => $player->getNicName());
+                                                    'time'      => time(),
+                                                    'id'        => $player->getId(),
+                                                    'avatar'    => $player->getAvatar(),
+                                                    'lang'      => $player->getLang(),
+                                                    'admin'     => $player->isAdmin(),
+                                                    'name'      => $player->getNicName());
 
                                             if ($game->getOption('f')){
 
@@ -529,16 +529,18 @@ class WebSocketController implements MessageComponentInterface {
                                                 $_player['appId'] == $app->getIdentifier() && in_array($action, array('timeoutAction', 'quitAction')) ? $action : 'startAction',
                                                 $_player['Id']);
 
-
                                             return;
 
                                         } else if(!$app->getOption('v') && count($app->getClients())==$app->getNumberPlayers()){
-                                                $client->send(json_encode(array('error' => 'GAME_IS_FULL')));
+
+                                            $client->send(json_encode(array('error' => 'GAME_IS_FULL')));
                                             return;
 
                                         } else if(isset($_player['appMode']) && $this->stack($_player['appName'], $_player['appMode']) && in_array($player->getId(),$this->stack($_player['appName'], $_player['appMode']))) {
+
                                             echo $this->time(1) . " {$_player['appName']}" . " Игрок {$player->getId()} запускает другую игру, пребывая в стеке {$_player['appMode']}\n";
                                             $this->stack('unset', $_player['appName'], $_player['appMode'], $player->getId());
+
                                         }
                                         
                                         $_player['appName'] = $appName;
@@ -633,12 +635,14 @@ class WebSocketController implements MessageComponentInterface {
                             #echo $this->time() . " " . "Список текущих игр \n";
 
                             $modes = $game->getModes();
+
                             $res = array(
                                 'key' => $game->getKey(),
                                 'audio' => array_filter($game->getAudio()),
                                 'modes' => (is_array($modes) && array_walk($modes, function (&$value, $index) {
                                     $value = array_keys($value);
                                 }) ? $modes : null),
+                                'variations' => $game->getVariations($_player['Lang']),
                                 'fund' => $fund,
                                 'count' => $stat['Count'],
                                 'win' => $stat['Win'] * 25,
@@ -925,9 +929,17 @@ class WebSocketController implements MessageComponentInterface {
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
 
-        if($e->getCode() == 'HY000' || stristr($e->getMessage(), 'server has gone away')) {
-            echo $this->time()." ". "{$e->getMessage()} RECONNECT \n";
-            DB::Reconnect('default', Config::instance()->dbConnectionProperties);
+        if($e->getCode()=='HY000' || stristr($e->getMessage(), 'HY000') || stristr($e->getMessage(), 'server has gone away')) {
+            echo $this->time(0,'ERROR')." ". "{$e->getCode()} {$e->getMessage()} RECONNECT \n";
+            try
+            {
+                DB::Connect('default', Config::instance()->dbConnectionProperties, true);
+            }
+            catch(\Exception $e)
+            {
+                echo $this->time(0,'ERROR')." ". "{$e->getCode()} {$e->getMessage()} CAN'T RECONNECT \n";
+            }
+
         } else {
             echo $this->time()." ". "An error has occurred: {$e->getMessage()}\n";
             $conn->close();

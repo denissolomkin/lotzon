@@ -51,7 +51,7 @@ function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $r
 			$counter ++;
 		if( $counter < $times)
 		{
-			sleep(20);
+			sleep(10);
 			HoldLotteryAndCheck($ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
 		}
 		else

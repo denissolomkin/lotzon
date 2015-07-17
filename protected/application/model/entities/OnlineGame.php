@@ -92,6 +92,38 @@ class OnlineGame extends Entity
         return isset($this->_options[$key]) ? $this->_options[$key] : false;
     }
 
+
+    public function getVariations($lang)
+    {
+        $variations = $this->getOption('Variations') ? : array();
+
+        foreach($variations as &$variation){
+            $variation['Title'] = isset($variation['Title'][$lang])
+                ? $variation['Title'][$lang]
+                : reset($variation['Title']);
+
+            if(is_array($variation['Values']))
+                foreach($variation['Values'] as &$value){
+                    $value = isset($value[$lang])
+                        ? $value[$lang]
+                        : reset($value);
+
+                }
+        }
+
+        return $variations;
+    }
+
+    public function getVariation($key)
+    {
+        return isset($this->_variations[$key]) ? $this->_variations[$key] : false;
+    }
+
+    public function isVariation($key, $value)
+    {
+        return isset($this->_variations[$key][$value]);
+    }
+
     public function setModes($array)
     {
         $this->_modes=$array;
