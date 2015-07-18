@@ -1012,6 +1012,7 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
 
 // выбор карты
     $(document).on('click', '.ngm-gm .gm-mx .players .m .card:not(.select)', function(e){
+        echo('2asdasd');
 
             $('.ngm-gm .gm-mx .players .m .card').removeClass('select');
             $(this).addClass('select');
@@ -1021,6 +1022,7 @@ $(document).on('click', '.ngm-gm .gm-pr.l .pr-surr', function(e){
 
 // подтверждение карты
     $(document).on('click', '.ngm-gm .gm-mx .players .m .card.select', function(e){
+        echo('asdasd');
 
             var path='app/'+appName+'/'+appId;
             var data={'action':'move','cell':$(this).attr('data-card')};
@@ -1879,10 +1881,13 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     hoverClass: 'hover',
                     drop: function(event, ui) {
 
-                        if($(this).attr('data-table'))
+                        if($(this).attr('data-table')){
                             $(this).click();
-                        else
-                            $(ui.draggable).click();
+                        }
+                        else{
+                            a = ui.draggable;
+                            $(a).click().click();
+                        }
                     }
                 });
 
