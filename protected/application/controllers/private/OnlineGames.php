@@ -47,6 +47,9 @@ class OnlineGames extends PrivateArea
             $game = new OnlineGame();
 
 
+            //if(isset($post['Field']['Variations']))
+            //    $post['Field']['Variations'] = array_filter($post['Field']['Variations']);
+
             $game->setId($post['Id'])
                 ->setKey($post['Key'])
                 ->setTitle($post['Title'])

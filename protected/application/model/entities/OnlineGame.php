@@ -98,15 +98,16 @@ class OnlineGame extends Entity
         $variations = $this->getOption('Variations') ? : array();
 
         foreach($variations as &$variation){
-            $variation['Title'] = isset($variation['Title'][$lang])
-                ? $variation['Title'][$lang]
-                : reset($variation['Title']);
+            $variation['t'] = isset($variation['t'][$lang]) && $variation['t'][$lang] != ''
+                ? $variation['t'][$lang]
+                : reset($variation['t']);
 
-            if(is_array($variation['Values']))
-                foreach($variation['Values'] as &$value){
-                    $value = isset($value[$lang])
-                        ? $value[$lang]
-                        : reset($value);
+            if(is_array($variation['v']))
+                foreach($variation['v'] as &$value){
+
+                    $value = isset($value['t'][$lang]) && $value['t'][$lang] != ''
+                        ? $value['t'][$lang]
+                        : reset($value['t']);
 
                 }
         }
@@ -114,14 +115,23 @@ class OnlineGame extends Entity
         return $variations;
     }
 
-    public function getVariation($key)
+    public function initVariation($inputVariation=array())
     {
-        return isset($this->_variations[$key]) ? $this->_variations[$key] : false;
-    }
 
-    public function isVariation($key, $value)
-    {
-        return isset($this->_variations[$key][$value]);
+        $variations = $this->getOption('Variations') ? : array();
+
+        print_r($inputVariation);
+
+        foreach($variations as $key=>&$variation){
+            if(isset($inputVariation[$key]) && isset($variation['v'][$inputVariation[$key]]))
+                $variation = $inputVariation[$key];
+            elseif(isset($variation['d']))
+                $variation = $variation['d'];
+            else
+                $variation = key($variation['v']);
+        }
+
+        return $variations;
     }
 
     public function setModes($array)

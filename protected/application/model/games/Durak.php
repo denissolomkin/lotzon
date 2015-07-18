@@ -12,7 +12,7 @@ class Durak extends Game
         '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards = array(
+    protected $_cards36 = array(
         '1x6', '1x7', '1x8', '1x9', '1x10', '1x11', '1x12', '1x13', '1x14', // пики  # числа 2-10 + валет, дама, король, туз
         '2x6', '2x7', '2x8', '2x9', '2x10', '2x11', '2x12', '2x13', '2x14', // треф  # числа 2-10 + валет, дама, король, туз
         '3x6', '3x7', '3x8', '3x9', '3x10', '3x11', '3x12', '3x13', '3x14', // буби  # числа 2-10 + валет, дама, король, туз
@@ -26,12 +26,11 @@ class Durak extends Game
         '4x2', '4x3', '4x4', '4x5', '4x6', '4x7', '4x8', '4x9', '4x10', '4x11', '4x12', '4x13', '4x14', // червы # числа 2-10 + валет, дама, король, туз
     );
 
-    protected $_cards2 = array(
+    protected $_cards4 = array(
         '1x6', '1x7', '1x8', '1x9', // '1x10', '1x11', '1x12', '1x13', '1x14' // пики  # числа 2-10 + валет, дама, король, туз
     );
 
     const   CARDS_ON_THE_HANDS = 6;
-    const   REVERT_MODE = false;
 
     protected $_trump = null;
     protected $_trump_card = null;
@@ -775,12 +774,15 @@ class Durak extends Game
     public function generateField()
     {
 
-        do {
+        // echo $this->time().' '. "Расдаем карты {$this->getVariation('cards')} \n";
+        $cards = $this->{'_cards'.$this->getVariation('cards')};
 
-            shuffle($this->_cards);
-            $this->_fieldPlayed = array_fill_keys(array_flip($this->_cards),null);
-            $this->_field = array('deck'=>$this->_cards,'table'=>array(),'off'=>array());
-            $this->setTrump(count($this->_field['deck']) ? end($this->_field['deck']): $this->_cards[array_rand($this->_cards)]);
+        do {
+            //echo $this->time().' '. "Расдаем карты \n";
+            shuffle($cards);
+            $this->_fieldPlayed = array_fill_keys(array_flip($cards),null);
+            $this->_field = array('deck'=>$cards,'table'=>array(),'off'=>array());
+            $this->setTrump( count($this->_field['deck']) ? end($this->_field['deck']) : $cards[array_rand($cards)]);
             $this->shuffleCards();
 
         } while (!$this->checkDiverseCards());
@@ -970,8 +972,8 @@ class Durak extends Game
 
     public function checkRevert($playerId=null, $card=null){ // $check == playerId OR candidate
 
-        var_dump(static::REVERT_MODE);
-        if(!static::REVERT_MODE) return false;
+        if($this->getVariation('type')!='revert')
+            return false;
 
         $check = false;
         $playerId = $playerId ? : $this->getClient()->id;

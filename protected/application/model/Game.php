@@ -7,7 +7,7 @@ class Game
     protected $_gameModes = array();
     protected $_gameTitle = array();
     protected $_gameOptions = array();
-    protected $_gameVariatons = array();
+    protected $_gameVariation = array();
 
     private $_gameCurrency = '';
     private $_gamePrice = null;
@@ -715,16 +715,16 @@ class Game
         return isset($this->_gameOptions[$key]) ? $this->_gameOptions[$key] : false;
     }
 
-    public function setVariations($array)
+    public function setVariation($variation)
     {
-        $this->_gameVariations = $array;
+        $this->_gameVariation = $variation;
 
         return $this;
     }
 
-    public function getVariation($key)
+    public function getVariation($key=null)
     {
-        return isset($this->_gameVariations[$key]) ? $this->_gameVariations[$key] : false;
+        return isset($key) ? (isset($this->_gameVariation[$key]) ? $this->_gameVariation[$key] : false) : $this->_gameVariation;
     }
 
     public function setKey($key)

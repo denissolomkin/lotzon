@@ -1,23 +1,26 @@
-<div class="modal fade ogames" id="editGame" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade ogames" id="editGame" role="dialog" aria-labelledby="confirmLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="confirmLabel"><span>Редактирование игры</span>
                     <span style="float: right;margin-bottom: 10px;">
                 <button type="button" class="btn btn-md btn-success tab" data-tab="text">
-                    <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-font"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="image">
-                    <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-picture"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="audio">
-                    <span class="fa fa-volume-up" aria-hidden="true"></span>
+                    <span class="fa fa-volume-up"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="field">
-                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+                <button type="button" class="btn btn-md btn-success tab" data-tab="variations">
+                    <span class="fa fa-sliders"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="prizes">
-                    <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-gift"></span>
                 </button>
                 </span>
                 </h3>
@@ -31,7 +34,7 @@
                             <div class="form-group">
                                 <label class="sr-only">Название</label>
                                 <? foreach ($langs as $lang) { ?>
-                                <input type="text" class="form-control" name="game[Title][<?=$lang->getCode()?>]" placeholder="Название игры" value="">
+                                <input type="text" class="form-control mui" name="game[Title][<?=$lang->getCode()?>]" placeholder="Название игры" value="">
                                 <? } ?>
                                 <input type="hidden" name="game[Id]" value="0">
                             </div>
@@ -41,7 +44,7 @@
                         </div>
                         <div class="row-fluid description">
                             <? foreach ($langs as $lang) { ?>
-                            <textarea class="form-control" rows=5 name="game[Description][<?=$lang->getCode()?>]" placeholder="Описание игры"></textarea>
+                            <textarea class="form-control mui" rows=5 name="game[Description][<?=$lang->getCode()?>]" placeholder="Описание игры"></textarea>
                             <? } ?>
                         </div>
                         <div class="row-fluid banner">
@@ -60,6 +63,19 @@
 
                         <div class="row-fluid tab" id="image">
                             <img class="i">
+                        </div>
+
+                        <div class="row-fluid tab" id="variations">
+
+                            <div class="row-fluid">
+                                <button class="btn btn-md btn-primary add-variation-trigger" data-inherit="true">Вариация игры &nbsp;<i class="fa fa-plus-circle"></i></button>
+                            </div>
+
+                            <div class="row-fluid">
+                                <? foreach ($langs as $lang) { ?>
+                                    <button type="button" class="btn btn-md lang btn-default" data-lang="<?=$lang->getCode()?>"><?=strtoupper($lang->getCode())?></button>
+                                <? } ?>
+                            </div>
                         </div>
 
                         <div class="row-fluid tab" id="audio">
@@ -175,7 +191,7 @@
 </div>
 
 
-<div class="modal fade ogames" id="price-modal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+<div class="modal fade ogames" id="price-modal" role="dialog" aria-labelledby="confirmLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -194,6 +210,49 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success add">Добавить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade ogames" id="variation-modal" role="dialog" aria-labelledby="confirmLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Добавление вариации игры</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row-fluid">
+
+                    <div class="row-fluid">
+                        <input type="text" class="form-control" name="key" value="" placeholder="Ключ">
+                    </div>
+                    <div class="row-fluid">
+                        <button class="btn btn-md btn-primary next-variation-trigger">Далее &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+                    </div>
+
+                </div>
+
+                <div class="row-fluid">
+
+                    <div class="row-fluid">
+                    </div>
+                    <div class="row-fluid">
+                        <? foreach ($langs as $lang) { ?>
+                            <button type="button" class="btn btn-md lang btn-default" data-lang="<?=$lang->getCode()?>"><?=strtoupper($lang->getCode())?></button>
+                        <? } ?>
+                    </div>
+                    <div class="row-fluid">
+                        <button type="button" class="btn btn-success save-variation-trigger">Добавить</button>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
             </div>
         </div>
@@ -332,6 +391,7 @@
 
 
             if (game.Key == 'SeaBattle') {
+
                 holder.find('#field .ships').show();
                 if (game.Field.ships)
                     $.each(game.Field.ships, function (i, ship) {
@@ -367,6 +427,48 @@
                     }).appendTo(holder.find('.' + index + '-holder').find('div.prize').parent());
 
                 });
+
+            }
+
+
+            holder.find('.variation').remove();
+            if (game.Field.Variations) {
+                html = '';
+                $.each(game.Field.Variations, function (index, variation) {
+
+                    html += '<div class="variation"><div class="row-fluid"><button class="btn btn-md btn-danger delete-variation-trigger"><i class="fa fa-times-circle"></i></button>';
+
+                    $('#variations .lang', '').each(function (i, lang) {
+                        html +='<input type="text" class="form-control mui" name="game[Field][Variations][' + index + '][t]['+$(lang).data('lang')+']" placeholder="Название" value="'+variation.t[$(lang).data('lang')]+'">'
+                    });
+
+                    html +='<button class="btn btn-md btn-primary add-variation-trigger" data-key="'+index+'"> <i class="fa fa-plus-circle"></i></button>';
+
+                    if(variation.v) {
+                        $.each(variation.v, function (key, value) {
+                            html += '<div class="variation"><div class="row-fluid"><button class="btn btn-md btn-danger delete-variation-trigger"><i class="fa fa-times-circle"></i></button>';
+
+                            $('#variations .lang', '').each(function (i, lang) {
+                                html += '<input type="text" class="form-control mui" name="game[Field][Variations][' + index + '][v][' + key + '][t][' + $(lang).data('lang') + ']" placeholder="Название" value="' + value.t[$(lang).data('lang')] + '">';
+                            });
+
+                            html += '<button class="btn btn-md btn-' + (variation.d && variation.d == key ? 'success' : 'default') + ' default-variation-trigger" data-key="' + key + '" data-variation="' + index + '"><i class="fa fa-check-circle"></i></button>';
+
+                            if (variation.d && variation.d == key)
+                                html += '<input type="hidden" name="game[Field][Variations][' + index + '][d]" value="' + key + '">';
+
+                            html += '</div></div>';
+                        });
+
+                    }
+
+                    html+='</div></div>';
+
+                });
+
+                $(html).insertAfter($('.add-variation-trigger').first());
+
+                $('#variations .lang').first().click();
 
             }
         }
@@ -458,6 +560,67 @@
             return false;
         });
 
+        $(document).on('click','.delete-variation-trigger',function() {
+            $(this).closest('.variation').remove();
+        });
+
+        $(document).on('click','.default-variation-trigger',function() {
+
+            var button = $(this);
+            var holder = button.parents('.variation').find('.add-variation-trigger').parent(); //button.parent('.variation .variation');
+            $('[name$="[d]"]', holder).remove();
+            $('.default-variation-trigger',holder).removeClass('btn-success').addClass('btn-default');
+            button.addClass('btn-success');
+            $('<input type=hidden name="game[Field][Variations]['+button.attr('data-variation')+'][d]" value="'+button.attr('data-key')+'">').insertAfter(button);
+        });
+
+        $(document).on('click', '.add-variation-trigger', function() {
+
+            var holder = $("#variation-modal");
+            var button = $(this);
+            var variation = button.attr('data-key') ? button.attr('data-key') : null;
+
+            holder.modal();
+
+            $('.modal-body > .row-fluid',holder).hide().first().show().find('input').val('');
+
+            holder.find('.next-variation-trigger').off('click').on('click', function () {
+
+                if( key = $('.modal-body > .row-fluid input',holder).first().val()) {
+                    $('.modal-body > .row-fluid:eq(1) > .row-fluid', holder).first().html('');
+                    $('.lang', holder).each(function (index, value) {
+                        $('.modal-body > .row-fluid:eq(1) > .row-fluid', holder).first().append($(
+                            '<input type="text" class="form-control mui" name="game[Field][Variations]' + (variation ? '['+variation+'][v]' : '') + '[' + key + '][t]['+$(value).data('lang')+']" placeholder="Название" value="">'
+                        ));
+                        $('.lang', holder).first().click();
+
+                    });
+
+
+                    $('.modal-body > .row-fluid', holder).toggle();
+                }
+            });
+
+            holder.find('.save-variation-trigger').off('click').on('click', function () {
+
+                html = $('.modal-body > .row-fluid:eq(1) > .row-fluid', holder).first().clone();
+                html.prepend('<button class="btn btn-md btn-danger delete-variation-trigger"><i class="fa fa-times-circle"></i></button>');
+                html.append( variation
+                    ? '<button class="btn btn-md btn-default default-variation-trigger" data-key="'+key+'" data-variation="'+variation+'"><i class="fa fa-check-circle"></i></button>'
+                    : '<button class="btn btn-md btn-primary add-variation-trigger" data-key="'+(button.data('inherit')?key:variation)+'"> <i class="fa fa-plus-circle"></i></button>');
+
+                html.insertAfter(button).wrap("<div class='variation'></div>");
+
+                holder.modal('hide');
+
+            });
+
+            holder.find('.cls').off('click').on('click', function () {
+                holder.modal('hide');
+            });
+
+            return false;
+        });
 
   $('.save-game').on('click', function() {
 

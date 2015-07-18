@@ -1307,8 +1307,8 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                                 </div>
 
                                 <!--div class="ngm-cncl">отмена</div-->
-                                <div class="ngm-go"><?=$MUI->getText('button-create')?></div>
                             </div>
+                            <div class="ngm-go"><?=$MUI->getText('button-create')?></div>
                         </div>
 
                         <div class="top-bl">
@@ -1588,8 +1588,9 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
         <?json_encode($modes, JSON_PRETTY_PRINT); ?>;
         <?json_encode($audio, JSON_PRETTY_PRINT); ?>;
     } */ ?>
-        var appModes = {}
-        var appAudio = {}
+        var appModes = {};
+        var appVariations = {};
+        var appAudio = {};
         var unreadNotices = <?=$notices?>;
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
         var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';

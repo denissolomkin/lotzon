@@ -245,6 +245,9 @@ function updateCallback(receiveData)
     if(receiveData.res.modes)
         appModes[receiveData.res.key] = receiveData.res.modes;
 
+    if(receiveData.res.variations)
+        appVariations[receiveData.res.key] = receiveData.res.variations;
+
     if(receiveData.res.audio)
         appAudio[receiveData.res.key ? receiveData.res.key : receiveData.res.appName]=receiveData.res.audio;
 
@@ -703,8 +706,15 @@ function appSeaBattleCallback()
 
             } else {
 
+                var variation = {};
+                $('.ngm-bk .rls-r .new-bl .var-sel .var-vl.active').each(function() {
+                    variation[$(this).parent().attr('data-variation')]=$(this).attr('data-value');
+                });
+
                 var path = 'app/' + appName + '/0'; // + appId;
-                var data = {'action': 'start', 'mode': appMode};
+                var data = {'action': 'start', 'mode': appMode, 'variation': variation};
+
+                console.log(variation, data);
                 WebSocketAjaxClient(path, data);
 
             }
@@ -821,7 +831,7 @@ function appSeaBattleCallback()
 
         $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt').removeClass('hidden').show();
 
-        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl').remove();
+        $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel').remove();
 
         if(onlineGame.maxPlayers  && onlineGame.maxPlayers > 2 || 1) {
             for(i=2;i<=onlineGame.maxPlayers ;i++)
@@ -830,6 +840,22 @@ function appSeaBattleCallback()
         } else {
             $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt').hide();
         }
+
+        if(appVariations && appVariations[appName])
+            $.each(appVariations[appName], function (c, m) {
+
+                html = '<div class="var-sel" data-variation="'+c+'"><div class="var-tl">'+ m.t+'</div>';
+                opt ='';
+
+                $.each(m.v, function (i,v) {
+                    opt = '<div class="var-vl'+(i== m.d ? ' active' : '')+'" data-value="'+i+'">'+v+'</div>' + opt;
+                });
+
+                html += opt+'</div>';
+                $(html).insertAfter($('.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel'));
+
+
+            });
 
         if(appModes && appModes[appName])
             $.each(appModes[appName], function (c, m) {
@@ -895,6 +921,12 @@ function appSeaBattleCallback()
 // выбор ставки
     $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl', function(e){
         $('.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl').removeClass('active');
+        $(this).addClass('active');
+    });
+
+// выбор вариации
+    $(document).on('click', '.ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-vl', function(e){
+        $(this).parent().find('.active').removeClass('active');
         $(this).addClass('active');
     });
 

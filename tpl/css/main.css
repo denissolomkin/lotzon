@@ -978,20 +978,22 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .blocks {height: 360px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games {height: 330px;overflow: auto;}
 .ngm-bk .ngm-rls-bk .rls-r .preloader {  clear: both;  top: 50%;background-position: 0 100%;position: absolute;left: 50%;margin-left: -20px;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-cover {opacity: 0.5;background:white; width:400px;height:380px;position:absolute;display:none;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-cover {opacity: 0.5;background:white; width:400px;height:380px;position:absolute;display:none;z-index: 10;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt{margin-top:0;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt {   box-sizing: border-box; border-radius: 3px;margin-bottom:10px;color:#4f4f4f;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:white;cursor:pointer;border:1px solid #b2d0d4;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt {   box-sizing: border-box; border-radius: 3px;margin-bottom:5px;color:#4f4f4f;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:white;cursor:pointer;border:1px solid #b2d0d4;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-bt.active {color:#4f4f4f;border:1px solid #b2d0d4;background-color: #b2d0d4}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .ngm-go, .ngm-bk .ngm-rls-bk .rls-r .new-bl .ngm-cncl { /* bottom: 0;position: absolute;*/margin-top:40px;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:#ffe400;cursor:pointer;border:1px solid #ffe400;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .ngm-go, .ngm-bk .ngm-rls-bk .rls-r .new-bl .ngm-cncl { bottom: 0;position: absolute;/* */ margin-top:40px;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;background-color:#ffe400;cursor:pointer;border:1px solid #ffe400;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .ngm-go:hover, .rls-r .new-bl .prc-but-bk .ngm-cncl:hover {background-color:#000;color:#fff;border:1px solid #000;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-txt-bk{text-transform: uppercase;margin-bottom: 15px;margin-top: 15px;font-family: Handbook-bold;text-align: center;font-size: 20px;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-txt-bk{text-transform: uppercase;margin-bottom: 10px;margin-top: 10px;font-family: Handbook-bold;text-align: center;font-size: 20px;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-bk > div.prc-txt-bk{margin-top: 0;}
 .ngm-bk .ngm-rls-bk .rls-r .top-bl .prc-txt-bk{text-align: center;text-transform: uppercase;margin-bottom: 5px;font-family: Handbook-bold;width: 50%;float: left;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel {border-radius: 3px;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;margin-bottom:10px;background-color:#b2d0d4;cursor:pointer;/*border:1px solid #b2d0d4;*/}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel {border-radius: 3px;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;margin-bottom:5px;background-color:#b2d0d4;cursor:pointer;/*border:1px solid #b2d0d4;*/}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel {display: block;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-tl {width: 100px;float: left;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl {width: 50px;height: 38px;border-radius: 3px;  border: 1px solid #b2d0d4; display:  table-cell;float: right;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl.active, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl.active {   border: 1px solid #b2c4c8; background-color: #d3e3e3;/*color:#b2d0d4;background-color: #333*/}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-tl {width: 100px;float: left;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-vl {min-width: 30px;padding: 0 10px;height: 38px;border-radius: 3px;  border: 1px solid #b2d0d4; display:  table-cell;float: right;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl.active, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl.active, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-vl.active {   border: 1px solid #b2c4c8; background-color: #d3e3e3;/*color:#b2d0d4;background-color: #333*/}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl, .ngm-bk .ngm-rls-bk .rls-r .prc-sel, .ngm-bk .ngm-rls-bk .rls-r .prc-but-bk .ngm-cncl {display:none;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-bk {overflow-x: hidden;height: 300px;overflow-y: auto;}
 
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t {font:18px/1 Handbook-regular;color:black;height: 65px}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t > b {position:relative;}
