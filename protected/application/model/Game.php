@@ -453,7 +453,7 @@ class Game
 
     public function currentPlayer()
     {
-        return count($this->currentPlayers()) ? $this->_players[reset($this->currentPlayers())] : false;
+        return count($this->_current) ? $this->_players[reset($this->_current)] : false;
         /* return current($this->_players); */
     }
 

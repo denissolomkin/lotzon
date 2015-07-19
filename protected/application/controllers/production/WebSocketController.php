@@ -691,6 +691,7 @@ class WebSocketController implements MessageComponentInterface {
                                     $games[] = array(
                                         'id' => $id,
                                         'mode' => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                                        'variation' => $game->getVariation(),
                                         'players' => $players
                                     );
                                 }
@@ -1046,22 +1047,25 @@ class WebSocketController implements MessageComponentInterface {
             if(isset($_player['appName'])) {
 
                 $appName = $_player['appName'];
-                $appMode = $_player['appMode'];
 
-                if (isset($_player['appId'])) {
+                if (isset($_player['appMode']))
+                    $appMode = $_player['appMode'];
+
+
+                if (isset($_player['appId']))
                     $appId = $_player['appId'];
-                }
+
             }
 
         if (isset($appName))
         {
-            
+
+
             /*
-             * если игрок уходит, но у него есть маячок с игрой, то проверяем его наличие в стеке и удаляем из него 
+             * если игрок уходит, но у него есть маячок с игрой, то проверяем его наличие в стеке и удаляем из него
              */
 
-            if($this->stack($appName,$appMode,$playerId)) {
-
+            if(isset($appMode) && $this->stack($appName,$appMode,$playerId)) {
                 echo $this->time(1) . " " . "$appName Удаление игрока из игрового стека ожидающих \n";
                 $this->stack('unset', $appName, $appMode, $playerId);
             }

@@ -289,6 +289,20 @@ function updateCallback(receiveData)
                 '<div class="gm-now-md"><b>' + (mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1]) + '</b><i>' + (mode[0]=='MONEY' ? getCurrency() : 'баллов') + '</i></div>' +
                 '<div class="gm-now-nmb"><span class="icon-users"></span> ' + value.players.length + '/' + number + '</div>';
 
+                if(value.variation) {
+                    echo(1);
+                    var var_class = '';
+                    var var_html = '';
+                    $.each(value.variation, function (i, variation) {
+
+                        if(is_numeric(variation))
+                            var_html+=variation;
+                        else
+                            var_class+=' '+variation;
+                    });
+                    html += '<div class="variation'+var_class+'">'+var_html+'</div>';
+                }
+
                 players = [];
                 $.each(value.players, function (i, player) {
                     players.push(player);
@@ -1804,19 +1818,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 } else {
 
-                    // $('.ngm-bk .tm').countdown('pause');
-                    // $('.ngm-bk .msg').hide();
-
-                    // $('.ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle, .ngm-bk .ngm-gm .gm-mx .mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
-                    // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div .tm').remove();
-                    // $('.ngm-bk .ngm-gm .gm-mx .mx .players > div').removeClass('current');
-
-
                     if (!$('.ngm-bk .ngm-gm .gm-mx .mx .players .wt').is(":visible")) {
 
                         playAudio([appName, ($.inArray(playerId, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
-
-                        // $('.msg.winner').fadeIn(200);
 
                         $.each(onlineGame.players, function (index, value) {
                             $('.ngm-bk .ngm-gm .gm-mx .mx .players .player' + index + ' .wt').removeClass('loser').html(
@@ -1825,9 +1829,9 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                 (onlineGame.currency == 'MONEY' ? getCurrency() : 'баллов')
                             ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
 
-                            if (index == playerId) {
-                                onlineGame.currency == 'MONEY' ? updateMoney(playerMoney + getCurrency(value.win, 1)) : updatePoints(playerPoints + parseInt(value.win))
-                            }
+                            //if (index == playerId) {
+                            //    onlineGame.currency == 'MONEY' ? updateMoney(playerMoney + getCurrency(value.win, 1)) : updatePoints(playerPoints + parseInt(value.win))
+                            //}
                         });
 
 
@@ -1840,11 +1844,6 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                         }, 5000);
                     }
-                    // setTimeout(function () {}, 200);
-
-                    // $('.ngm-bk .ngm-gm .gm-mx .msg.winner .ch-ot').show();
-                    // $('.ngm-bk .ngm-gm .gm-mx .msg.winner .re').show();
-                    // $('.ngm-bk .ot-exit').hide();
 
                 }
 

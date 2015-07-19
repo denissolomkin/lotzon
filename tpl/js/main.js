@@ -1528,7 +1528,7 @@ function moneyExchange() {
 
 function showGameProccessPopup(){
 
-    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#ChanceGame-holder:visible").length || $("#QuickGame-holder:visible").length || $(".ngm-gm:visible").length;
+    var gw = $(".ngm-bk .rls-r-ts:visible").length || $("#ChanceGame-holder:visible").length || $("#QuickGame-holder:visible").length || ($(".ngm-gm .gm-fld .mx:visible").length &&  $(".ngm-rls:not(:visible)").length);
     if(!gw) {
         if (filledTicketsCount > 0) {
             $('.popup').hide();

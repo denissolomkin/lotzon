@@ -925,10 +925,10 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now {  width: 100%;height: 20px;margin-bottom: 0px;padding: 10px 0;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available {cursor:pointer;position: relative;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available:hover {background-color: aliceblue;}
-.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now div{float: left;width: 12%;text-align: center;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now div{float: left;width: 10%;text-align: center;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-md b{font: 20px/15px Handbook-bold;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-md i {text-decoration: none;text-transform: uppercase;font-style: normal;display: block;font: 10px/8px Handbook-regular;}
-.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-plr {width: 74%;text-align: left;font: 16px/12px Handbook-regular;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-plr {width: 70%;text-align: left;font: 16px/12px Handbook-regular;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-plr span {  float: right;position: absolute;right: 10px;top: 12px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-nmb {font: 14px/10px Handbook-bold;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-nmb span{display: block;}
@@ -977,6 +977,23 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl {font:18px/19px Handbook-regular;margin-bottom: 20px;position: relative;height: 350px;}
 .ngm-bk .ngm-rls-bk .rls-r .blocks {height: 360px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games {height: 330px;overflow: auto;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.throw, .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert{  background: url('../img/games/card-deck.png') no-repeat;
+    background-position: -1430px -10px;
+    height: 28px;
+    border-radius: 2px;
+    width: 18px !important;
+    font: 14px/40px Handbook-bold;
+    border: 1px solid lightgray;
+    position: relative;
+    margin: -3px 5px 0 0;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert::before {
+    font-family: 'Simple-Line-Icons';
+    font-size: 12px;
+    content: "\e099";
+    position: absolute;
+    left: 3px;
+    bottom: 1px;
+}
 .ngm-bk .ngm-rls-bk .rls-r .preloader {  clear: both;  top: 50%;background-position: 0 100%;position: absolute;left: 50%;margin-left: -20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-cover {opacity: 0.5;background:white; width:400px;height:380px;position:absolute;display:none;z-index: 10;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt{margin-top:0;}
