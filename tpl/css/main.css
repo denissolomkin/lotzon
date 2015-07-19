@@ -991,9 +991,11 @@ article .infos {padding:40px 20px 0 20px;}
     font-size: 12px;
     content: "\e099";
     position: absolute;
-    left: 3px;
-    bottom: 1px;
+    left: 2px;
+    bottom: 0px;
+    font-weight: bold;
 }
+
 .ngm-bk .ngm-rls-bk .rls-r .preloader {  clear: both;  top: 50%;background-position: 0 100%;position: absolute;left: 50%;margin-left: -20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-cover {opacity: 0.5;background:white; width:400px;height:380px;position:absolute;display:none;z-index: 10;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-bt{margin-top:0;}
