@@ -35,7 +35,6 @@ class DB {
                     if($reconnect && self::$counter < self::$times ){
                         self::$counter ++;
                         echo "TRY RECONNECT\n";
-                        sleep(1);
                         self::Connect($name, $connection_properties, true);
                     } else {
                         self::$counter = 0;

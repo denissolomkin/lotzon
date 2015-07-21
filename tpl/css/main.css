@@ -985,13 +985,13 @@ article .infos {padding:40px 20px 0 20px;}
     font: 14px/40px Handbook-bold;
     border: 1px solid lightgray;
     position: relative;
-    margin: -3px 5px 0 0;}
+    margin: -3px 8px 0 0;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert::before {
     font-family: 'Simple-Line-Icons';
     font-size: 12px;
     content: "\e099";
     position: absolute;
-    left: 2px;
+    left: 3px;
     bottom: 0px;
     font-weight: bold;
 }

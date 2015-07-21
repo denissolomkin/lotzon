@@ -348,10 +348,10 @@ class Durak extends Game
     {
         $this->unsetCallback();
 
-        if ($this->isOver() || !in_array($this->getClient()->id,$this->currentPlayers())) {
+        if ($this->isOver()){ // || !in_array($this->getClient()->id,$this->currentPlayers())) {
             $this->setCallback(array('action' => 'error','error' => 'GAME_IS_OVER'))
                 ->setResponse($this->getClient());
-        } else {
+        } elseif(count($this->getField('table')) && in_array($this->getClient()->id,$this->currentPlayers())) {
 
             $playerId = $this->getClient()->id;
             $this->updatePlayer(array('status' => $this->initStatus($playerId)), $playerId);
