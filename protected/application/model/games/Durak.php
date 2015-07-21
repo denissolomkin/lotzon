@@ -775,7 +775,7 @@ class Durak extends Game
     {
 
         // echo $this->time().' '. "Расдаем карты {$this->getVariation('cards')} \n";
-        $cards = $this->{'_cards'.$this->getVariation('cards')};
+        $cards = $this->{'_cards'.($this->getVariation('cards')?:'36')};
 
         do {
             //echo $this->time().' '. "Расдаем карты \n";
