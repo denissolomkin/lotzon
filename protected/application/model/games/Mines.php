@@ -11,7 +11,13 @@ class Mines extends Game
     );
 
     protected $_mines = 0;
+    protected $_size = 0;
     protected $_cells = 0;
+    protected $_gameVariation = array('mines'=>1);
+
+    public function init()
+    {
+    }
 
     public function doMove($cell)
     {
@@ -49,8 +55,8 @@ class Mines extends Game
 
         foreach ($this->_matrix as $dir) {
                 while(
-                    $x+$dir[0]>0 && $x+$dir[0]<=$this->getOption('x')
-                    && $y+$dir[1]>0 && $y+$dir[1]<=$this->getOption('y')
+                    $x+$dir[0]>0 && $x+$dir[0]<=$this->_size
+                    && $y+$dir[1]>0 && $y+$dir[1]<=$this->_size
                     && !in_array(array($x+$dir[0],$y+$dir[1]),$ignore)
                 ){
                     $x1=$x+$dir[0];
@@ -76,12 +82,15 @@ class Mines extends Game
         return $empty;
     }
 
+
     public function checkWinner()
     {
         echo $this->time().' '. "Проверка победителя \n";
         $current = $this->getPlayers()[$this->getClient()->id];
-echo ($this->getOption('x') * $this->getOption('y')) - $this->_cells - $this->_mines.' = '.$this->getOption('x') * $this->getOption('y').'-'.$this->_cells .' + '. $this->_mines."\n";
-        if (($this->getOption('w') && $current['points'] >= $this->getOption('w')) OR $current['moves'] <= 0 OR (($this->getOption('x') * $this->getOption('y')) - $this->_mines == $this->_cells)) {
+
+        echo ($this->_size * $this->_size) - $this->_cells - $this->_mines.' = '.$this->_size * $this->_size.'-'.$this->_cells .' + '. $this->_mines."\n";
+
+        if (($this->getOption('w') && $current['points'] >= $this->getOption('w')) OR $current['moves'] <= 0 OR (($this->_size * $this->_size) - $this->_mines == $this->_cells)) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 
@@ -113,35 +122,47 @@ echo ($this->getOption('x') * $this->getOption('y')) - $this->_cells - $this->_m
                 $this->_botTimer    = array();
                 return current($winner)['player'];
             } else {
-                #echo $this->time().' '. "Экстра время \n";
-                $this->setCallback(array('extra' => 1));
-                $this->updatePlayer(array('moves' => 1));
+
+                echo $this->time().' '. "Экстра время \n";
+
+                $this->unsetPlayers()
+                    ->startAction()
+                    ->setCallback(array('extra' => 1));
+                // $this->updatePlayer(array('moves' => 1));
             }
 
         }
         #echo $this->time().' '. "Победителя нет \n";
     }
 
+    public function isCell($cell)
+    {
+        list($x,$y)=$cell;
+        return ($x>0 && $y>0 && $x<= $this->_size && $y<= $this->_size);
+    }
 
     public function generateField()
     {
         $gameField=array();
 
-        for ($x = 1; $x <= $this->getOption('x') ; ++$x) {
-            for ($y = 1; $y <= $this->getOption('y'); ++$y) {
+        $this->_mines = $mines = $this->getVariation('mines');//(int)($this->getOption('x') * $this->getOption('y') / 5);
+        $this->_size = (int) sqrt($this->_mines*5);
+
+        $this->_cells = 0;
+
+        for ($x = 1; $x <= $this->_size ; ++$x) {
+            for ($y = 1; $y <= $this->_size; ++$y) {
                 $gameField[$x][$y]['player'] = null;
                 $gameField[$x][$y]['mine'] = null;
                 $gameField[$x][$y]['coord'] = $x.'x'.$y;
             }
         }
 
-        $this->_mines = $mines = (int)($this->getOption('x') * $this->getOption('y') / 5);
-        $this->_cells = 0;
 
         do {
             do {
-                $x = rand(1, $this->getOption('x'));
-                $y = rand(1, $this->getOption('y'));
+                $x = rand(1, $this->_size);
+                $y = rand(1, $this->_size);
             } while ($gameField[$x][$y]['mine']=='m');
 
             $mines--;
@@ -163,8 +184,8 @@ echo ($this->getOption('x') * $this->getOption('y')) - $this->_cells - $this->_m
     {
         #echo $this->time().' '. "Генерация поля для бота\n";
         do {
-            $x = rand(1, $this->getOption('x'));
-            $y = rand(1, $this->getOption('y'));
+            $x = rand(1, $this->_size);
+            $y = rand(1, $this->_size);
         } while($this->_field[$x][$y]['player']);
         return array($x, $y);
     }

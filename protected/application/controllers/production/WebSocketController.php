@@ -13,7 +13,7 @@ Application::import(PATH_GAMES . '*');
 
 class WebSocketController implements MessageComponentInterface {
 
-    const   MIN_WAIT_TIME = 15;//15;
+    const   MIN_WAIT_TIME = 2;//15;
     const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;//2
     const   CONNECTION_TIMER = 1800;
@@ -36,8 +36,8 @@ class WebSocketController implements MessageComponentInterface {
 
     public function __construct($loop) {
 
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+        // error_reporting(E_ALL);
+        // ini_set('display_errors', 1);
 
         echo $this->time(0,'START')." ". "Server have started\n";
 
@@ -84,7 +84,21 @@ class WebSocketController implements MessageComponentInterface {
                             } while (array_key_exists($bot->id,$clients));
                             $clients[$bot->id] = $bot;
                         }
-                        $this->initGame($clients,$key,$mode,$game->initVariation(),$id);
+
+                        $appMode = array(
+                            'currency'=>null,
+                            'price'=>null,
+                            'number'=>null);
+
+                        list($appMode['currency'], $appMode['price'], $appMode['number'], $appVariation) = array_pad(explode("-", $mode),4,null);
+
+                        $appMode['mode'] = implode('-',$appMode) . '-'.$appVariation;
+
+                        if($appVariation)
+                            parse_str($appVariation, $appVariation);
+
+                        $this->initGame($clients,$key,$appMode,$game->initVariation($appVariation),$id);
+
                     } elseif($client->time + self::MAX_WAIT_TIME < time()){
                         echo $this->time(0) . " $key " . "Игрок {$id} удален из стека {$this->players($id)['appMode']} по таймауту\n";
                         $this->stack('unset',$this->players($id)['appName'],$this->players($id)['appMode'],$id);
@@ -140,13 +154,14 @@ class WebSocketController implements MessageComponentInterface {
         $this->_class = $class='\\' . $appName;
         $app = new $class(OnlineGamesModel::instance()->getGame($appName));
         $keys = array_keys($clients);
-        list($currency, $price, $number) = array_pad(explode("-", $appMode),3,2);
-        echo $this->time()." $appName инициируем приложение $currency-$price-$number: №".implode(', №',$keys)."\n";
+
+        // list($currency, $price, $number) = array_pad(explode("-", $appMode),3,2);
+        echo $this->time()." $appName инициируем приложение ".$appMode['mode'].": №".implode(', №',$keys)."\n";
 
         #echo $this->time()." чистим стек\n";
         foreach ($keys as $playerId) {
             if($_player=$this->players($playerId)) {
-                $this->stack('unset',$appName,$appMode,$playerId);
+                $this->stack('unset',$appName,$appMode['mode'],$playerId);
                 /* игрок уже не сможет записаться, если есть запущенная игра
                 if(isset($_player['appId']))
                     $this->quitPlayer($playerId); */
@@ -159,10 +174,10 @@ class WebSocketController implements MessageComponentInterface {
         #echo $this->time()." запускаем и кешируем приложение\n";
         $app->setClients($clients)
             ->setClient($clientId)
-            ->setNumberPlayers($number)
             ->setVariation($appVariation)
-            ->setCurrency($currency)
-            ->setPrice((float)$price);
+            ->setNumberPlayers($appMode['number'])
+            ->setCurrency($appMode['currency'])
+            ->setPrice((float)$appMode['price']);
 
         $this->apps($appName,$app->getIdentifier(),$app);
         $this->runGame($appName,$app->getIdentifier(),'startAction',$clientId);
@@ -309,7 +324,7 @@ class WebSocketController implements MessageComponentInterface {
                             'money'     => $balance['Money'],
                             'points'    => $balance['Points'],
                             'appName'   => isset($_player['appName']) ? $_player['appName'] : null,
-                            'audio'     => isset($_player['appId']) && isset($_player['appName']) ? array_filter(OnlineGamesModel::instance()->getGame($_player['appName'])->getAudio()) : null
+                            'audio'     => isset($_player['appId']) && isset($_player['appName']) && $_player['appName'] ? array_filter(OnlineGamesModel::instance()->getGame($_player['appName'])->getAudio()) : null
                         )))
             );
 
@@ -369,16 +384,18 @@ class WebSocketController implements MessageComponentInterface {
                 if (isset($data->data))
                     $data = $data->data;
 
-                if(!isset($data->message) && !$game = OnlineGamesModel::instance()->getGame($appName)){
+                if(!isset($data->message) && (!$appName || !$game = OnlineGamesModel::instance()->getGame($appName))){
                     $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
                     return;
                 }
 
                 if($action = (isset($data->action) ? $data->action. 'Action' : null)){
 
-                    $appMode = (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE);
+                    // $appMode = (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE);
+                    $appMode = array('currency'=>null,'price'=>null,'number'=>null);
+                    list($appMode['currency'], $appMode['price'], $appMode['number']) = explode("-", (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE));
                     $appVariation = $game->initVariation( (isset($data->variation) ? (array) $data->variation : array()) );
-
+                    $appMode['mode'] = implode('-',$appMode) .'-'. http_build_query($appVariation);
                 }
 
                 if (!($client = $this->clients($player->getId())) || !($client instanceof ConnectionInterface)) {
@@ -419,9 +436,9 @@ class WebSocketController implements MessageComponentInterface {
 
                                     } elseif ($action == 'startAction') {
 
-                                        list($currency, $price, $number) = explode("-", $appMode);
+                                        // list($currency, $price, $number) = explode("-", $appMode);
 
-                                        if($this->checkBalance($player->getId(), $currency, $price)){
+                                        if($this->checkBalance($player->getId(), $appMode['currency'], $appMode['price'])){
 
                                             if( isset($_player['appName']) && isset($_player['appId'])
                                                 && ($app=$this->apps($_player['appName'],$_player['appId'])) && !$app->_isOver){
@@ -457,20 +474,20 @@ class WebSocketController implements MessageComponentInterface {
 
                                             } else {
 
-                                                echo $this->time() . " " . "$appName Игрок {$from->resourceId} записался в стек $appMode\n";
+                                                echo $this->time() . " " . "$appName Игрок {$from->resourceId} записался в стек ".$appMode['mode']."\n";
 
-                                                $this->stack($appName, $appMode, $player->getId(), $client);
+                                                $this->stack($appName, $appMode['mode'], $player->getId(), $client);
 
                                                 $_player['appName'] = $appName;
-                                                $_player['appMode'] = $appMode;
+                                                $_player['appMode'] = $appMode['mode'];
                                                 $this->players($from->resourceId, $_player);
 
                                                 $success = false;
 
-                                                $stack = $this->stack($appName, $appMode);
+                                                $stack = $this->stack($appName, $appMode['mode']);
                                                 // если насобирали минимальную очередь
                                                 if ((count($stack) >= $game->getOption('s')
-                                                        AND count($stack) >= $number) || $game->getOption('f')
+                                                        AND count($stack) >= $appMode['number']) || $game->getOption('f')
                                                 ) {
 
                                                     // перемешали игроков
@@ -481,7 +498,7 @@ class WebSocketController implements MessageComponentInterface {
                                                     foreach ($keys as $key) {
                                                         $clients[$key] = $stack[$key];
                                                         // дошли до необходимого числа и прервали
-                                                        if (count($clients) == $number || $game->getOption('f')) {
+                                                        if (count($clients) == $appMode['number'] || $game->getOption('f')) {
                                                             $success = true;
                                                             break;
                                                         }
@@ -499,7 +516,7 @@ class WebSocketController implements MessageComponentInterface {
                                                     array('path' => 'stack',
                                                         'res' => array(
                                                             'stack' => count($stack),
-                                                            'mode' => $appMode)
+                                                            'mode' => $appMode['mode'])
                                                     )));
 
                                             }

@@ -32,11 +32,13 @@ class Durak extends Game
 
     const   CARDS_ON_THE_HANDS = 6;
 
+    // protected $_trump_card = null;
+
     protected $_trump = null;
-    protected $_trump_card = null;
     protected $_beater = null; // отбивающийся
     protected $_starter = null; // первая рука
 
+    protected $_gameVariation = array('type'=>'throw', 'cards'=>36);
 
     public function init()
     {
@@ -134,6 +136,7 @@ class Durak extends Game
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
                 'current' => $this->currentPlayers(),
+                'variation' => $this->getVariation(),
                 'timeout' => null,
                 'action' => 'wait'
             ));
@@ -255,6 +258,7 @@ class Durak extends Game
                             'players' => $this->getPlayers(),
                             'fields' => $client->admin ? $this->getField() : array($client->id => $this->getField()[$client->id]) + $fields,
                             'trump' => $this->getTrump('full'),
+                            'variation' => $this->getVariation(),
                         ), $client->id);
                     }
                 }
@@ -656,15 +660,18 @@ class Durak extends Game
 
         #echo "расдаем карты на руки игрокам:"; #print_r($players);
 
-        if(count($this->getField()['deck']))
-            foreach($players as $player) {
+        if(count($this->getField()['deck'])) {
 
-                if(!isset($this->_field[$player['pid']]))
+            $min = min(self::CARDS_ON_THE_HANDS, floor($this->getVariation('cards') / $this->getNumberPlayers()));
+
+            foreach ($players as $player) {
+
+                if (!isset($this->_field[$player['pid']]))
                     $this->_field[$player['pid']] = array();
 
-                if(count($this->getField($player['pid'])) < self::CARDS_ON_THE_HANDS && count($this->getField('deck'))) {
+                if (count($this->getField($player['pid'])) < $min && count($this->getField('deck'))) {
                     $count = 0;
-                    while (count($this->getField($player['pid'])) < self::CARDS_ON_THE_HANDS && count($this->getField('deck'))) {
+                    while (count($this->getField($player['pid'])) < $min && count($this->getField('deck'))) {
                         $count++;
                         $card = array_shift($this->_field['deck']);
                         $this->_field[$player['pid']][] = $card;
@@ -677,6 +684,7 @@ class Durak extends Game
 
                 }
             }
+        }
 
         return $this;
     }
@@ -900,7 +908,7 @@ class Durak extends Game
 
         echo $this->time().' '. "Отбой: ".(count($this->getField()['off']))."\n";
 
-        if($tables < (self::CARDS_ON_THE_HANDS - (count($this->getField()['off']) ? 0 : 1)) &&
+        if($tables < ((min(self::CARDS_ON_THE_HANDS, floor($this->getVariation('cards') / $this->getNumberPlayers())) ) - (count($this->getField()['off']) ? 0 : 1)) &&
             ((count($this->getField()['table'],COUNT_RECURSIVE) - $tables + count($this->getField()[$this->getBeater()])) / 2 > $tables)) {
             foreach ($this->getField()['table'] as $table) {
                 foreach ($table as $waiting) {

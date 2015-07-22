@@ -202,10 +202,12 @@ class Game
         $this->unsetCallback();
 
         if(!$this->getPlayers()) {
+
             #echo $this->time().' '. "Первичная установка игроков\n";
-            $this->setPlayers($this->getClients());
-            $this->nextPlayer();
-            $this->setWinner(null);
+            $this->setPlayers($this->getClients())
+                ->nextPlayer()
+                ->setWinner(null);
+
             $this->_isOver = 0;
             $this->_isSaved = 0;
             $this->_isRun = 1;
@@ -226,10 +228,11 @@ class Game
             'appName' => $this->getKey(),
             'players'   => $this->getPlayers(),
             'field'     => $this->getFieldPlayed(),
+            'variation' => $this->getVariation(),
             'action'    => 'start'
         ));
 
-        $this->updatePlayer( array('reply','ready','result') );
+        $this->updatePlayer(array('reply','ready','result'));
         $this->setResponse($this->getClients());
     }
 
@@ -710,14 +713,15 @@ class Game
         return $this;
     }
 
-    public function getOption($key)
+    public function getOption($key=null)
     {
-        return isset($this->_gameOptions[$key]) ? $this->_gameOptions[$key] : false;
+        return isset($key) ? (isset($this->_gameOptions[$key]) ? $this->_gameOptions[$key] : false) : $this->_gameOptions;
     }
 
     public function setVariation($variation)
     {
-        $this->_gameVariation = $variation;
+        if($variation)
+            $this->_gameVariation = $variation;
 
         return $this;
     }
