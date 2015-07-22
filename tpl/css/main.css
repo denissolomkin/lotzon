@@ -977,9 +977,10 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl {font:18px/19px Handbook-regular;margin-bottom: 20px;position: relative;height: 350px;}
 .ngm-bk .ngm-rls-bk .rls-r .blocks {height: 360px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games {height: 330px;overflow: auto;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation {display: none;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.throw, .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert{
-    /*background: url('../img/games/card-deck.png') no-repeat;*/
-    background-position: -1430px -10px;
+    /*background: url('../img/games/card-deck.png') no-repeat;
+    background-position: -1430px -10px;*/
     height: 28px;
     border-radius: 2px;
     width: 18px !important;
