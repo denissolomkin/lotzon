@@ -977,7 +977,8 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl {font:18px/19px Handbook-regular;margin-bottom: 20px;position: relative;height: 350px;}
 .ngm-bk .ngm-rls-bk .rls-r .blocks {height: 360px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games {height: 330px;overflow: auto;}
-.ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.throw, .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert{  background: url('../img/games/card-deck.png') no-repeat;
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.throw, .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert{
+    /*background: url('../img/games/card-deck.png') no-repeat;*/
     background-position: -1430px -10px;
     height: 28px;
     border-radius: 2px;
@@ -1120,6 +1121,15 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-gm .gm-mx ul.Mines > li.m.last {opacity:1;}
 .ngm-bk .ngm-gm .gm-mx ul.Mines > li.o.last {opacity:1;}
 
+.ngm-bk .ngm-gm .gm-mx ul.Mines > li {
+    background: url("../img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
+    margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
+}
+
+
+
+.ngm-bk .ngm-gm .gm-mx ul.Mines > li img {margin: 10%;width: 80%;height: 80%;}
+/*.ngm-bk .ngm-gm .gm-mx ul.Mines > li.m {background:url("tpl/img/games/bomb.png") #d8e7ea no-repeat 0 0/ 100% 100%;}*/
 
 /*
 .ngm-bk .ngm-gm.cards .gm-pr{width: auto;float: inherit;height: auto;margin: 0;}
