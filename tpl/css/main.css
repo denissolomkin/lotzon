@@ -1017,7 +1017,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .top-bl .prc-txt-bk{text-align: center;text-transform: uppercase;margin-bottom: 5px;font-family: Handbook-bold;width: 50%;float: left;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel {border-radius: 3px;width:100%;height:40px;font:15px/40px Handbook-bold;text-transform:uppercase;text-align:center;margin-bottom:5px;background-color:#b2d0d4;cursor:pointer;/*border:1px solid #b2d0d4;*/}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel {display: block;}
-.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-tl {width: 100px;float: left;}
+.ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-tl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-tl {  max-width: 100px;margin-left: 20px;float: left;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-vl {min-width: 30px;padding: 0 10px;height: 38px;border-radius: 3px;  border: 1px solid #b2d0d4; display:  table-cell;float: right;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .plr-sel .plr-vl.active, .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-sel .prc-vl.active, .ngm-bk .ngm-rls-bk .rls-r .new-bl .var-sel .var-vl.active {   border: 1px solid #b2c4c8; background-color: #d3e3e3;/*color:#b2d0d4;background-color: #333*/}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl, .ngm-bk .ngm-rls-bk .rls-r .prc-sel, .ngm-bk .ngm-rls-bk .rls-r .prc-but-bk .ngm-cncl {display:none;}
