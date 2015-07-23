@@ -4,7 +4,7 @@ Application::import(PATH_APPLICATION . 'model/Game.php');
 
 class SeaBattle extends Game
 {
-    const   START_TIME_OUT = 10;
+    const   START_TIME_OUT = 90;
 
     protected $_matrix = array(
         array(-1, -1), array(-1, 0), array(-1, 1),
