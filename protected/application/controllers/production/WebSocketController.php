@@ -13,7 +13,7 @@ Application::import(PATH_GAMES . '*');
 
 class WebSocketController implements MessageComponentInterface {
 
-    const   MIN_WAIT_TIME = 2;//15;
+    const   MIN_WAIT_TIME = 15;//15;
     const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;//2
     const   CONNECTION_TIMER = 1800;
@@ -385,10 +385,15 @@ class WebSocketController implements MessageComponentInterface {
                 if($action = (isset($data->action) ? $data->action. 'Action' : null)){
 
                     // $appMode = (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE);
-                    $appMode = array('currency'=>null,'price'=>null,'number'=>null);
-                    list($appMode['currency'], $appMode['price'], $appMode['number']) = explode("-", (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE));
-                    $appVariation = $game->initVariation( (isset($data->variation) ? (array) $data->variation : array()) );
-                    $appMode['mode'] = implode('-',$appMode) .'-'. http_build_query($appVariation);
+                    $appMode = array('currency'=>null,'price'=>null,'number'=>null,'variation'=>null);
+                    list($appMode['currency'], $appMode['price'], $appMode['number'], $appMode['variation']) = array_pad(explode("-", (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE)),4,null);
+
+                    if($appMode['variation'])
+                        parse_str($appMode['variation'], $appMode['variation']);
+
+                    $appVariation = $game->initVariation( isset($data->variation) ? (array) $data->variation : ($appMode['variation'] ? : array()) );
+                    $appMode['variation'] = ($appVariation?http_build_query($appVariation):null);
+                    $appMode['mode'] = implode('-',$appMode);
                 }
 
                 if (!($client = $this->clients($player->getId())) || !($client instanceof ConnectionInterface)) {

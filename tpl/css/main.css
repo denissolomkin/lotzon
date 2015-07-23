@@ -997,11 +997,13 @@ article .infos {padding:40px 20px 0 20px;}
 
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.throw{
     background: url('../img/games/online-games-sprite.png') no-repeat;
-    background-position: -16px -2px;}
+    background-position: -16px -2px;
+    padding-top: 14px;}
 
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .list-games .variation.revert{
     background: url('../img/games/online-games-sprite.png') no-repeat;
-    background-position: 8px -2px;}
+    background-position: 8px -2px;
+    padding-top: 14px;}
 
 .ngm-bk .ngm-rls-bk .rls-r .preloader {  clear: both;  top: 50%;background-position: 0 100%;position: absolute;left: 50%;margin-left: -20px;}
 .ngm-bk .ngm-rls-bk .rls-r .new-bl .prc-but-cover {opacity: 0.5;background:white; width:400px;height:380px;position:absolute;display:none;z-index: 10;}
