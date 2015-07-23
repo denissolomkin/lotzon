@@ -1499,6 +1499,10 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     runGame();
 
                     $('.ngm-bk .ngm-gm').addClass('cards');
+
+                    if(onlineGame.variation && onlineGame.variation.type && onlineGame.variation.type=='revert')
+                        $('.ngm-bk .ngm-gm').addClass('Revert');
+
                     $('.ngm-rls').fadeOut(200);
 
                     echo('обнулили поля');
@@ -1572,11 +1576,14 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                                         '<div class="msg-move">ваш ход</div>' +
                                     '</div>'
                                 ).append(
-                                    '<div class="pr-md"><i class="icon-reload"></i></div>'+
+                                    '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>'+
                                     '<div class="pr-pr"><b>'+(bet[0]=='MONEY'?getCurrency(bet[1],1):bet[1])+'</b><span>'+(bet[0]=='MONEY'?getCurrency(bet[1],2):'баллов')+'</span></div>'+
                                     '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">'+playerMoney+'</span> '+getCurrency()+'</div><div><span class="plPointHolder">'+playerPoints+'</span> баллов</div></div>'
 
                                 );
+
+                                if(onlineGame.variation && onlineGame.variation.cards)
+                                    $('.ngm-bk .ngm-gm .cards-number').html(onlineGame.variation.cards);
                             }
 
 
@@ -1829,7 +1836,7 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
                 if(onlineGame.beater == playerId && $('.ngm-gm .gm-mx .table .cards').length){
 
-                    if($('.ngm-gm').hasClass('DurakRevert') && $('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
+                    if($('.ngm-gm').hasClass('Revert') && $('.ngm-gm .gm-mx .table .cards').length==$('.ngm-gm .gm-mx .table .cards .card').length && !$('.ngm-gm .gm-mx .table .revert').length)
                         $('.ngm-gm .gm-mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
 
