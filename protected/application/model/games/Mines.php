@@ -15,10 +15,6 @@ class Mines extends Game
     protected $_cells = 0;
     protected $_gameVariation = array('mines'=>1);
 
-    public function init()
-    {
-    }
-
     public function doMove($cell)
     {
         list($x,$y)=$cell;

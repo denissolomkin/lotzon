@@ -13,7 +13,7 @@ Application::import(PATH_GAMES . '*');
 
 class WebSocketController implements MessageComponentInterface {
 
-    const   MIN_WAIT_TIME = 15;//15;
+    const   MIN_WAIT_TIME = 2;//15;
     const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;//2
     const   CONNECTION_TIMER = 1800;
@@ -33,8 +33,8 @@ class WebSocketController implements MessageComponentInterface {
 
     public function __construct($loop) {
 
-        // error_reporting(E_ALL);
-        // ini_set('display_errors', 1);
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
 
         echo $this->time(0,'START')." ". "Server have started\n";
 
@@ -147,7 +147,7 @@ class WebSocketController implements MessageComponentInterface {
     public function initGame($clients,$appName,$appMode,$appVariation,$clientId)
     {
         $this->_class = $class='\\' . $appName;
-        $app = new $class(OnlineGamesModel::instance()->getGame($appName));
+        $app = new $class(OnlineGamesModel::instance()->getGame($appName),$appVariation);
         $keys = array_keys($clients);
 
         echo $this->time()." $appName инициируем приложение ".$appMode['mode'].": №".implode(', №',$keys)."\n";
@@ -168,7 +168,6 @@ class WebSocketController implements MessageComponentInterface {
         #echo $this->time()." запускаем и кешируем приложение\n";
         $app->setClients($clients)
             ->setClient($clientId)
-            ->setVariation($appVariation)
             ->setNumberPlayers($appMode['number'])
             ->setCurrency($appMode['currency'])
             ->setPrice((float)$appMode['price']);

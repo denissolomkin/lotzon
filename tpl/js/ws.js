@@ -289,16 +289,29 @@ function updateCallback(receiveData)
                 '<div class="gm-now-md"><b>' + (mode[0]=='MONEY'?getCurrency(mode[1],1):mode[1]) + '</b><i>' + (mode[0]=='MONEY' ? getCurrency() : 'баллов') + '</i></div>' +
                 '<div class="gm-now-nmb"><span class="icon-users"></span> ' + value.players.length + '/' + number + '</div>';
 
+                if(mode[3]){
+                    
+                    if(!value.variation)
+                        value.variation={};
+
+                    $.each(mode[3].split('&'), function (i, variation) {
+                        variation = variation.split('=');
+                        console.log(variation);
+                        value.variation[variation[0]]=variation[1];
+                    });
+                }
+
                 if(value.variation) {
-                    echo(1);
                     var var_class = '';
                     var var_html = '';
                     $.each(value.variation, function (i, variation) {
 
-                        if(is_numeric(variation))
+                        if(is_numeric(variation[0]))
                             var_html+=variation;
                         else
                             var_class+=' '+variation;
+
+                        var_class+=' '+i;
                     });
                     html += '<div class="variation'+var_class+'">'+var_html+'</div>';
                 }
@@ -351,114 +364,113 @@ function appchatCallback(receiveData)
 // game
 function appSeaBattleCallback()
 {
-
      switch (onlineGame.action) {
-     case 'reply':
-         $('.re').hide();
-         $('.ot-exit').html('Ожидаем соперника').show();
-         break;
+         case 'reply':
+         case 'ready':
+             $('.re').hide();
+             $('.ot-exit').html('Ожидаем соперника').show();
+             break;
 
      case 'stack':
 
          break;
 
          case 'wait':
-
-             hideAllGames();
-             if(!($('ul.mx.SeaBattle.m').find('div').length) && !($('ul.mx.SeaBattle.m').find('li.s').length)){
-                 runGame();
-                 $('.ngm-bk .gm-fld .place').show();
-                 $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
-                 $('.gm-pr.r .pr-cl').hide();
-
-                 price=onlineGame.appMode.split('-');
-                 $('.gm-pr .pr-pr').show().html("<b>"+
-                 (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
-                 "</b><span>"+
-                 (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
-
-                 $.each(onlineGame.players, function( index, value ) {
-                     var player=value.pid;
-                     var class_player=player==playerId?'l':'r';
-                     html='';
-                     $.each(value.ships, function( shp, cnt ) {html+='<div class="s '+(cnt?'':'e ')+'" style="width:'+shp*20+'px"><b>'+cnt+'</b></div>'});
-                     $('.gm-pr.'+class_player+' .pr-cl b').html(html);
-
-                     var class_field=player==playerId?'m':'o';
-                     $('.ngm-bk ul.mx.'+class_field+' li').each(function( index ) {
-                         $(this).attr('data-cell', $(this).data('coor')+'x'+player).addClass((player==playerId?'m':''));
-                     });
-
-                     if(value.avatar)
-                         value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
-                     else
-                         value.avatar = "url('../tpl/img/default.jpg')";
-
-                     $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
-
-                     if(player!=playerId && value.name){
-                         $('.gm-pr.r .pr-nm').html(value.name);
-                     }
-                 });
-
-                 appId=onlineGame.appId;
-                 updateTimeOut(onlineGame.timeout);
-             }
-
-             $('.sb-wait').show();
-             $('.sb-ready.but, .sb-random.but').hide();
-             $.each(onlineGame.fields, function( index, field ) {
-                 class_cell = index==playerId?'m':'o';
-                 $.each(field, function( x, cells ) {
-                     $.each(cells, function( y, cell) {
-                         $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.'+class_cell+' li.last').
-                             removeClass('last');
-                         $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.'+class_cell+' li[data-cell="'+x+'x'+y+'x'+index+'"]').
-                             addClass((is_numeric(cell)?'s':cell)+' last').fadeIn(100);
-                     });
-                 });
-             });
-             break;
-
          case 'field':
+         case 'start':
 
              hideAllGames();
-             if((!($('ul.mx.SeaBattle.m').find('div').length) && !($('ul.mx.SeaBattle.m').find('li.s').length)) || $('ul.SeaBattle.o').is(':visible')){
-                 runGame();
-                 window.game_ships=onlineGame.ships;
-                 genFieldSeaBattle();
-                 $('.ngm-bk .gm-fld .place').show();
-                 $('.ngm-bk .gm-fld .mx.SeaBattle.o').hide();
-                 $('.sb-wait').hide();
-                 $('.sb-ready.but, .sb-random.but').show();
+
+             if(onlineGame.variation && onlineGame.variation.field){
+
+                 var field = onlineGame.variation.field.split('x');
+                 var height = 0;
+                 var width = height = Math.min( Math.floor((220 - (field[0]-1)) / field[0]), Math.floor((440 - field[1]) / field[0]))+'px;';
+                 var font = (parseInt(width) / 1.6) + 'px/'+ (parseInt(width))+'px Handbook-bold;';
+                 var html = '';
+
+                 for(i=1;i<=field[1];i++)
+                     for(j=1;j<=field[0];j++)
+                         html+="<li style='width:"+width+"height:"+height+"font:"+font+(j==field[0]?"margin-right: 0px;":"")+"' data-coor='"+j+"x"+i+"'></li>";
+
+                 $('.ngm-bk ul.mx.SeaBattle').html(html);
+             }
+
+             switch (onlineGame.action) {
+
+                 case 'wait':
+
+                     if((!($('ul.mx.SeaBattle.m').find('div')) || !($('ul.mx.SeaBattle.m').find('div').length)) && (!($('ul.mx.SeaBattle.m').find('li.s')) || !($('ul.mx.SeaBattle.m').find('li.s').length))){
+                         runGame();
+                         $('.ngm-bk .gm-fld .place').show();
+                         $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
+                         $('.gm-pr.r .pr-cl').hide();
+                     }
+
+                     $('.sb-wait').show();
+                     $('.sb-ready.but, .sb-random.but').hide();
+
+                     break;
+
+                 case 'field':
+
+                     if(((!$('ul.mx.SeaBattle.m').find('div') || !($('ul.mx.SeaBattle.m').find('div').length)) && (!($('ul.mx.SeaBattle.m').find('li.s')) || !($('ul.mx.SeaBattle.m').find('li.s').length))) || $('ul.SeaBattle.o').is(':visible')){
+                         runGame();
+                         window.game_ships=onlineGame.ships;
+                         genFieldSeaBattle();
+                         $('.ngm-bk .gm-fld .place').show();
+                         $('.ngm-bk .gm-fld .mx.SeaBattle.o').hide();
+                         $('.sb-wait').hide();
+                         $('.sb-ready.but, .sb-random.but').show();
+                     }
+
+                     $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
+                     $('.gm-pr.r .pr-cl').hide();
+
+                     $('.ngm-bk .ngm-gm .tm').css('text-align','center');
+                     $('.gm-pr.l').addClass('move');
+                     $('.gm-pr.r').removeClass('move');
+
+                     $('ul.mx.SeaBattle.m').css('opacity',1);
+
+                     break;
+
+                 case 'start':
+
+                     runGame();
+
+                     $('.ngm-bk .gm-fld .place').hide();
+                     $('.ngm-bk .gm-fld .mx.SeaBattle.o').show();
+                     $('.gm-pr .pr-cl').show().css('opacity',1).html("<span>корабли</span><b></b>");
+                     $('ul.mx.SeaBattle.m div').remove();
+
+                     break;
              }
 
 
-             $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
-             $('.gm-pr.r .pr-cl').hide();
-
-             updateTimeOut(onlineGame.timeout);
+             if(!onlineGame.winner)
+                 updateTimeOut(onlineGame.timeout);
 
              price=onlineGame.appMode.split('-');
              $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
+             (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
              "</b><span>"+
              (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
-
              $.each(onlineGame.players, function( index, value ) {
                  var player=value.pid;
                  var class_player=player==playerId?'l':'r';
+                 var class_field=player==playerId?'m':'o';
+
                  html='';
-                 $.each(value.ships, function( shp, cnt ) {html+='<div class="s '+(cnt?'':'e ')+'" style="width:'+shp*20+'px"><b>'+cnt+'</b></div>'});
+                 $.each(value.ships, function( shp, cnt ) {html+='<div class="s '+(cnt?'':'e ')+class_field+'" style="width:'+shp*20+'px"><b>'+cnt+'</b></div>'});
                  $('.gm-pr.'+class_player+' .pr-cl b').html(html);
 
-                 var class_field=player==playerId?'m':'o';
                  $('.ngm-bk ul.mx.'+class_field+' li').each(function( index ) {
-                     $(this).attr('data-cell', $(this).data('coor')+'x'+player).addClass((player==playerId?'m':''));
+                     $(this).attr('data-cell', $(this).data('coor')+'x'+player).addClass((player==playerId?'m':''));;
                  });
 
                  if(value.avatar)
-                     value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(value.pid)/100)+"/"+value.avatar+"')";
+                     value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(player)/100)+"/"+value.avatar+"')";
                  else
                      value.avatar = "url('../tpl/img/default.jpg')";
 
@@ -469,86 +481,38 @@ function appSeaBattleCallback()
                  }
              });
 
-             $('.ngm-bk .ngm-gm .tm').css('text-align','center');
-             $('.gm-pr.l').addClass('move');
-             $('.gm-pr.r').removeClass('move');
-
-             $('ul.mx.SeaBattle.m').css('opacity',1);
-
-             break;
-
-         case 'start':
-
-             if(!onlineGame.winner)
-                 updateTimeOut(onlineGame.timeout);
-             hideAllGames();
-             runGame();
-             $('.ngm-bk .gm-fld .place').hide();
-             $('.ngm-bk .gm-fld .mx.SeaBattle.o').show();
-             $('.gm-pr .pr-cl').show().css('opacity',1).html("<span>корабли</span><b></b>");
-             $('ul.mx.SeaBattle.m div').remove();
-
-             price=onlineGame.appMode.split('-');
-             $('.gm-pr .pr-pr').show().html("<b>"+
-            (price[0]=='MONEY'?getCurrency(price[1],1):price[1])+
-             "</b><span>"+
-             (price[0]=='MONEY'?getCurrency():'баллов')+"<br>ставка</span>");
-
-         $.each(onlineGame.players, function( index, value ) {
-             var player=value.pid;
-             var class_player=player==playerId?'l':'r';
-             var class_field=player==playerId?'m':'o';
-
-             html='';
-             $.each(value.ships, function( shp, cnt ) {html+='<div class="s '+(cnt?'':'e ')+class_field+'" style="width:'+shp*20+'px"><b>'+cnt+'</b></div>'});
-             $('.gm-pr.'+class_player+' .pr-cl b').html(html);
-
-             $('.ngm-bk ul.mx.'+class_field+' li').each(function( index ) {
-                 $(this).attr('data-cell', $(this).data('coor')+'x'+player).addClass((player==playerId?'m':''));;
-             });
-
-             if(value.avatar)
-                 value.avatar = "url('../filestorage/avatars/"+Math.ceil(parseInt(player)/100)+"/"+value.avatar+"')";
-                else
-                 value.avatar = "url('../tpl/img/default.jpg')";
-
-                 $('.gm-pr.'+class_player+' .pr-ph-bk .pr-ph').css('background-image',value.avatar);
-
-             if(player!=playerId && value.name){
-                 $('.gm-pr.r .pr-nm').html(value.name);
+             if(onlineGame.current && onlineGame.current!=playerId)
+             {
+                 $('ul.mx.SeaBattle.o').css('opacity',0.5);
+                 $('ul.mx.SeaBattle.m').css('opacity',1);
+                 $('.ngm-bk .ngm-gm .tm').css('text-align','right');
+                 $('.gm-pr.r').addClass('move');
+                 $('.gm-pr.l').removeClass('move');
+             } else {
+                 $('ul.mx.SeaBattle.o').css('opacity',1);
+                 $('ul.mx.SeaBattle.m').css('opacity',0.5);
+                 $('.ngm-bk .ngm-gm .tm').css('text-align','left');
+                 $('.gm-pr.l').addClass('move');
+                 $('.gm-pr.r').removeClass('move');
              }
-         });
 
-         if(onlineGame.current!=playerId)
-         {
-             $('ul.mx.SeaBattle.o').css('opacity',0.5);
-             $('ul.mx.SeaBattle.m').css('opacity',1);
-             $('.ngm-bk .ngm-gm .tm').css('text-align','right');
-             $('.gm-pr.r').addClass('move');
-             $('.gm-pr.l').removeClass('move');
-         } else {
-             $('ul.mx.SeaBattle.o').css('opacity',1);
-             $('ul.mx.SeaBattle.m').css('opacity',0.5);
-             $('.ngm-bk .ngm-gm .tm').css('text-align','left');
-             $('.gm-pr.l').addClass('move');
-             $('.gm-pr.r').removeClass('move');
-         }
 
-         $.each(onlineGame.fields, function( index, field ) {
-             class_cell = index==playerId?'m':'o';
-             $.each(field, function( x, cells ) {
-                 $.each(cells, function( y, cell) {
-                     $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.'+class_cell+' li.last').
-                         removeClass('last');
-                     $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.'+class_cell+' li[data-cell="'+x+'x'+y+'x'+index+'"]').
-                         addClass((is_numeric(cell)?'s':cell)+' last').addClass(class_cell).fadeIn(100);
-                 });
-             });
-         });
+             if(onlineGame.fields)
+                $.each(onlineGame.fields, function( index, field ) {
+                    class_cell = index == playerId ? 'm' : 'o';
+                    $.each(field, function (x, cells) {
+                        $.each(cells, function (y, cell) {
+                            $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.' + class_cell + ' li.last').
+                                removeClass('last');
+                            $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.' + class_cell + ' li[data-cell="' + x + 'x' + y + 'x' + index + '"]').
+                                addClass((is_numeric(cell) ? 's' : cell) + ' last').fadeIn(100);
+                        });
+                    });
+                });
 
              onlineGame.winner && endGame();
 
-         break;
+             break;
 
          case 'move':
 
@@ -562,15 +526,15 @@ function appSeaBattleCallback()
                  $('.ngm-bk .ngm-gm .gm-mx ul.mx li.'+class_cell+'.last').
                      removeClass('last');
 
-                 $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+onlineGame.cell.coord+'"]')
-                     //html(onlineGame.cell.points).
+                 var cell = $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+onlineGame.cell.coord+'"]');
+                 cell
                      .addClass(onlineGame.cell.class)
-                     .html('<div class="'+onlineGame.cell.class+'" style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+onlineGame.cell.coord+'"]').css('background')+';width:19px;height:19px;"></div>')
+                     .html('<div class="'+onlineGame.cell.class+'" style="background:'+$('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="'+onlineGame.cell.coord+'"]').css('background')+';width:'+cell.css('width')+';height:'+cell.css('height')+'"></div>')
                      .find('div')
                      .effect('explode', {pieces: 4 }, 500)
-                     //.effect('bounce')
                      .parent().addClass(class_cell+' last')
                      .fadeIn(300).html(onlineGame.cell.class=='d'?"<img src='tpl/img/games/damage.png'>":'');
+                 delete onlineGame.cell;
 
              }
 
@@ -858,11 +822,13 @@ function appSeaBattleCallback()
         if(appVariations && appVariations[appName])
             $.each(appVariations[appName], function (c, m) {
 
-                html = '<div class="var-sel" data-variation="'+c+'"><div class="var-tl">'+ m.t+'</div>';
-                opt ='';
+                var html = '<div class="var-sel" data-variation="'+c+'"><div class="var-tl">'+ m.t+'</div>';
+                var opt ='';
 
+                var count=0;
                 $.each(m.v, function (i,v) {
-                    opt = '<div class="var-vl'+(i== m.d ? ' active' : '')+'" data-value="'+i+'">'+v+'</div>' + opt;
+                    opt = '<div class="var-vl'+((m.d && i==m.d) || (!m.d && count==0) ? ' active' : '')+'" data-value="'+i+'">'+v+'</div>' + opt;
+                    count++;
                 });
 
                 html += opt+'</div>';
@@ -1367,6 +1333,21 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                     $('.gm-pr.r').removeClass('move');
                 }
 
+                if(onlineGame.variation && onlineGame.variation.field){
+                    var size = parseInt(onlineGame.variation.field);
+
+                    var width = parseFloat((480 - (size-1)) / size, 2)+'px;';
+                    var height = parseFloat((480 - size) / size, 2)+'px;';
+                    var font = ((480-size) / 1.6 / size ) + 'px/'+ ((480-(size)) / size)+'px Handbook-bold;';
+                    var html = '';
+
+                    for(i=1;i<=size;i++)
+                        for(j=1;j<=size;j++)
+                            html+="<li style='width:"+width+"height:"+height+"font:"+font+(j==size?"margin-right: 0px;":"")+"' data-cell='"+j+"x"+i+"'></li>";
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx').html(html);
+                }
+
                 $.each(onlineGame.field, function( x, cells ) {
                     $.each(cells, function( y, cell) {
                         if(cell.player==playerId) {
@@ -1478,12 +1459,6 @@ $('.ngm-bk .bk-bt').on('click', function() {});
 
 
         }
-    }
-
-// DurakRevert
-    function appDurakRevertCallback(action)
-    {
-        appDurakCallback(action)
     }
 
 // Durak
@@ -1993,6 +1968,21 @@ function appWhoMoreCallback()
                 $('.gm-pr.r').removeClass('move');
             }
 
+            if(onlineGame.variation && onlineGame.variation.field){
+                var size = parseInt(onlineGame.variation.field);
+
+                var width = parseFloat((480 - (size-1)*10) / size, 2)+'px;';
+                var height = parseFloat((480 - size *10) / size, 2)+'px;';
+                var font = ((480-size*10) / 1.6 / size ) + 'px/'+ ((480-(size*10)) / size)+'px Handbook-bold;';
+                var html = '';
+
+                for(i=1;i<=size;i++)
+                    for(j=1;j<=size;j++)
+                        html+="<li style='width:"+width+"height:"+height+"font:"+font+(j==size?"margin-right: 0px;":"")+"' data-cell='"+j+"x"+i+"'></li>";
+
+                $('.ngm-bk .ngm-gm .gm-mx ul.mx').html(html);
+            }
+
             $.each(onlineGame.field, function( x, cells ) {
                 $.each(cells, function( y, cell) {
                     if(cell.player==playerId) {
@@ -2197,6 +2187,20 @@ function appWhoMoreCallback()
                     }
                 });
 
+                if(onlineGame.variation && onlineGame.variation.mines){
+                    var size = parseInt(Math.sqrt(onlineGame.variation.mines*5));
+                    var width = parseFloat((480 - (size-1)) / size, 2)+'px;';
+                    var height = parseFloat((480 - size) / size, 2)+'px;';
+                    var font = ((480-size) / 1.6 / size ) + 'px/'+ ((480-(size)) / size)+'px Handbook-bold;';
+                    var html = '';
+
+                    for(i=1;i<=size;i++)
+                        for(j=1;j<=size;j++)
+                            html+="<li style='width:"+width+"height:"+height+"font:"+font+(j==size?"margin-right: 0px;":"")+"' data-cell='"+j+"x"+i+"'></li>";
+
+                    $('.ngm-bk .ngm-gm .gm-mx ul.mx').html(html);
+                }
+
                 if(onlineGame.current!=playerId)
                 {
                     $('.ngm-bk .ngm-gm .tm').css('text-align','right');
@@ -2349,6 +2353,7 @@ function appWhoMoreCallback()
 
         // $("#report-popup").show().find(".txt").text(getText(onlineGame.error)).fadeIn(200);
         // $("#report-popup").show().fadeIn(200);
+
         if(onlineGame.appId==0) {
             $('.ngm-bk .tm').countdown('pause');
             appId = onlineGame.appId;

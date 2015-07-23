@@ -150,56 +150,6 @@
             }
             .chance .ch-lot-bk .game-bk .ul-hld .qg-tbl.chance<?=$game?> > li:nth-child(<?=$quickGames[$game]->getOption('x')?>n+<?=$quickGames[$game]->getOption('x')?>) {margin-right:0;}
         <?  endforeach ?>
-
-            .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li:nth-child(<?=$onlineGames['WhoMore']->getOption('x');?>n+<?=$onlineGames['WhoMore']->getOption('x');?>){margin-right: 0px;}
-            .ngm-bk .ngm-gm .gm-mx ul.WhoMore > li {
-                background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
-                font: <?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / 1.6 / $onlineGames['WhoMore']->getOption('y')?>px/<?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px Handbook-bold;
-                width: <?=(480-(($onlineGames['WhoMore']->getOption('x')-1)*10)) / $onlineGames['WhoMore']->getOption('x')?>px;
-                height: <?=(480-($onlineGames['WhoMore']->getOption('y')*10)) / $onlineGames['WhoMore']->getOption('y')?>px;
-                margin:0 10px 10px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
-            }
-
-            .ngm-bk .ngm-gm .gm-mx ul.Mines > li:nth-child(<?=$onlineGames['Mines']->getOption('x');?>n+<?=$onlineGames['Mines']->getOption('x');?>){margin-right: 0px;}
-            .ngm-bk .ngm-gm .gm-mx ul.Mines > li {
-                background: url("tpl/img/bg-chanse-game-hz.png") #b2d0d4 no-repeat 0 0 / 100% 100%;
-                font:   <?=(480-($onlineGames['Mines']->getOption('y')*1)) / 1.6 / $onlineGames['Mines']->getOption('y')?>px/<?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px Handbook-bold;
-                width:  <?=floor((480-(($onlineGames['Mines']->getOption('x')-1)*1)) / $onlineGames['Mines']->getOption('x'))?>px;
-                height: <?=(480-($onlineGames['Mines']->getOption('y')*1)) / $onlineGames['Mines']->getOption('y')?>px;
-                margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
-            }
-
-            .ngm-bk .ngm-gm .gm-mx ul.Mines > li img {margin: 10%;width: 80%;height: 80%;}
-            /*.ngm-bk .ngm-gm .gm-mx ul.Mines > li.m {background:url("tpl/img/games/bomb.png") #d8e7ea no-repeat 0 0/ 100% 100%;}*/
-
-            ul.SeaBattle.mx > li {
-                width:  <?=floor((220-($onlineGames['SeaBattle']->getOption('x')*1)) / $onlineGames['SeaBattle']->getOption('x'))?>px;
-                height: <?=floor((440-($onlineGames['SeaBattle']->getOption('y')*1)) / $onlineGames['SeaBattle']->getOption('y'))?>px;
-                margin:0 1px 1px 0;background-color: #d8e7ea;float:left;
-                font:19px/19px Handbook-bold;text-align:center;color:#4c4c4c;letter-spacing:-2px;}
-            /*.ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li:nth-child(<?=$onlineGames['SeaBattle']->getOption('x');?>n+<?=$onlineGames['SeaBattle']->getOption('x');?>) {margin-right:0;}*/
-            .ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.d, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle > li.k
-            {background:url("tpl/img/games/damage.png") #d8e7ea no-repeat 0 0/ 100% 100%;}
-            .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m > li.d, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m > li.s, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.m > li.k { background-color:#00b8d4;opacity:1;}
-            .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o > li.d, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o > li.s, .ngm-bk .ngm-gm .gm-mx ul.SeaBattle.o > li.k { background-color:#f24235;opacity:1;}
-
-
-            .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li:nth-child(<?=$onlineGames['FiveLine']->getOption('x');?>n+<?=$onlineGames['FiveLine']->getOption('x');?>){margin-right: 0px;}
-            .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li div{
-                border-radius: <?=
-                max((480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x'),
-                (480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')); ?>px;
-                margin: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.1?>px <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.1?>px;
-                width: <?=(480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x') * 0.8?>px;
-                height: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y') * 0.8?>px;
-            }
-            .ngm-bk .ngm-gm .gm-mx ul.FiveLine > li {
-                background-color: #d8e7e9;
-                font: <?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / 1.6 / $onlineGames['FiveLine']->getOption('y')?>px/<?=(480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y')?>px Handbook-bold;
-                width: <?=floor((480-(($onlineGames['FiveLine']->getOption('x')-1)*1)) / $onlineGames['FiveLine']->getOption('x'))?>px;
-                height: <?=floor((480-($onlineGames['FiveLine']->getOption('y')*1)) / $onlineGames['FiveLine']->getOption('y'))?>px;
-                margin:0 1px 1px 0;float:left;cursor:pointer;text-align:center;color:#4c4c4c;letter-spacing:-2px;
-            }
         </style>
 
     </head>
@@ -1138,7 +1088,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
 
                     <div class="rls-l">
                         <div class="rw-t">
-                            <div class="bk-bt"><spn><?=$MUI->getText('button-back-to-games')?></spn></div>
+                            <div class="bk-bt"><span><?=$MUI->getText('button-back-to-games')?></span></div>
                         </div>
 
                         <div class="gm-if-bk">
@@ -1152,37 +1102,21 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
 
                                     <div data-game="WhoMore">
                                         <ul class="mx WhoMore">
-                                            <? for($i=1;$i<=$onlineGames['WhoMore']->getOption('y');$i++)
-                                                for($j=1;$j<=$onlineGames['WhoMore']->getOption('x');$j++)
-                                                    echo "<li data-cell='{$j}x{$i}'></li>";
-                                            ?>
                                         </ul>
                                     </div>
 
                                     <div data-game="Mines">
                                         <ul class="mx Mines">
-                                            <? for($i=1;$i<=$onlineGames['Mines']->getOption('y');$i++)
-                                                for($j=1;$j<=$onlineGames['Mines']->getOption('x');$j++)
-                                                    echo "<li data-cell='{$j}x{$i}'></li>";
-                                            ?>
                                         </ul>
                                     </div>
 
                                     <div data-game="FiveLine">
                                         <ul class="mx FiveLine">
-                                            <? for($i=1;$i<=$onlineGames['FiveLine']->getOption('y');$i++)
-                                                for($j=1;$j<=$onlineGames['FiveLine']->getOption('x');$j++)
-                                                    echo "<li data-cell='{$j}x{$i}'></li>";
-                                            ?>
                                         </ul>
                                     </div>
 
                                     <div data-game="SeaBattle">
                                         <ul class="mx SeaBattle m">
-                                            <? for($i=1;$i<=$onlineGames['SeaBattle']->getOption('y');$i++)
-                                                for($j=1;$j<=$onlineGames['SeaBattle']->getOption('x');$j++)
-                                                    echo "<li data-coor='{$j}x{$i}'></li>";
-                                            ?>
                                         </ul>
                                         <div class="place">Расставьте корабли в необходимом порядке.<br><br>Что бы изменить ориентацию корабля, кликните по нему дважды.
                                             <div class="sb-random but">случайно</div>
@@ -1190,23 +1124,10 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                                             <div class="sb-wait">ожидаем соперника</div>
                                         </div>
                                         <ul class="mx SeaBattle o">
-                                            <? for($i=1;$i<=$onlineGames['SeaBattle']->getOption('y');$i++)
-                                                for($j=1;$j<=$onlineGames['SeaBattle']->getOption('x');$j++)
-                                                    echo "<li data-coor='{$j}x{$i}'></li>";
-                                            ?>
                                         </ul>
                                     </div>
 
                                     <div data-game="Durak">
-                                        <div class="mx Durak">
-                                            <div class="players"></div>
-                                            <div class="deck"></div>
-                                            <div class="table"></div>
-                                            <div class="off"></div>
-                                        </div>
-                                    </div>
-
-                                    <div data-game="DurakRevert">
                                         <div class="mx Durak">
                                             <div class="players"></div>
                                             <div class="deck"></div>

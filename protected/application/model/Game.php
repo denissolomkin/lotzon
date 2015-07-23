@@ -35,13 +35,14 @@ class Game
     protected $_field = array();
     protected $_fieldPlayed = array();
 
-    public function __construct($game) {
+    public function __construct($game,$variation) {
 
         $this->setId($game->getId())
             ->setKey($game->getKey())
             ->setOptions($game->getOptions())
             ->setTitle($game->getTitle())
             ->setModes($game->getModes())
+            ->setVariation($variation)
             ->setIdentifier(uniqid())
             ->setTime(time())
             ->init();
@@ -436,7 +437,10 @@ class Game
             if (next($this->_players) === false)
                 reset($this->_players);
 
-            if($skip===false) {
+            if($skip=='init') {
+                $this->currentPlayers(array(current($this->_players)['pid']));
+                return;
+            } elseif($skip===false) {
                 $this->currentPlayers(array(current($this->_players)['pid']));
             } else {
                 return current($this->_players)['pid'];
@@ -722,6 +726,11 @@ class Game
     {
         if($variation)
             $this->_gameVariation = $variation;
+
+        if(isset($this->_gameVariation['field'])){
+            $field = explode('x', $this->_gameVariation['field']);
+            $this->setOptions(array('x'=>$field[0],'y'=>$field[1])+$this->getOption());
+        }
 
         return $this;
     }

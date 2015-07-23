@@ -4,7 +4,7 @@ Application::import(PATH_APPLICATION . 'model/Game.php');
 
 class SeaBattle extends Game
 {
-    const   START_TIME_OUT = 90;
+    const   START_TIME_OUT = 10;
 
     protected $_matrix = array(
         array(-1, -1), array(-1, 0), array(-1, 1),
@@ -17,19 +17,26 @@ class SeaBattle extends Game
                     array(1, 0),
     );
 
-    protected $_ships2 = array(
-        2,3);
+    protected $_ships2x4 = array(
+        1);
 
-    protected $_ships = array(
+    protected $_ships11x22 = array(
         1, 1, 1, 1, 1,
         2, 2, 2, 2,
         3, 3, 3,
         4, 4,
         5);
 
+    protected $_shipsDefault = array(
+        1, 1, 1, 1,
+        2, 2, 2,
+        3, 3,
+        4);
+
     protected $_playerShips = array();
     protected $_destroy = array();
-
+    protected $_gameVariation = array('field'=>'11x22');
+    
     public function init() {}
 
     public function startAction($data = null)
@@ -42,20 +49,23 @@ class SeaBattle extends Game
             $this->setPlayers($this->getClients());
             $this->updatePlayer(array(
                 'timeout' => static::START_TIME_OUT - $this->getOption('t'),
-                'ships' => array_count_values($this->_ships)
+                'ships' => array_count_values($this->getShips())
             ));
+            $this->nextPlayer('init');
             $this->setWinner(null);
             $this->_isOver = 0;
             $this->_isSaved = 0;
             $this->_isRun = 1;
         }
 
-        foreach($this->_bot as $bot) {
-            if (!isset($this->getField()[$bot])) {
-                #echo $this->time().' '. "Генерация поля для бота \n";
-                $this->setField($this->generateField($bot), $bot);
-                #if(count($this->getField()==count($this->getClients())))
-                #$this->nextPlayer();
+        if (count($this->getField()) != count($this->getClients())) {
+            foreach ($this->_bot as $bot) {
+                if (!isset($this->getField()[$bot])) {
+                    #echo $this->time().' '. "Генерация поля для бота \n";
+                    $this->setField($this->generateField($bot), $bot);
+                    #if(count($this->getField()==count($this->getClients())))
+                    #$this->nextPlayer();
+                }
             }
         }
 
@@ -89,12 +99,13 @@ class SeaBattle extends Game
 
                     $this->setCallback(array(
                         'current' => $this->currentPlayer()['pid'],
-                        'timeout' => (isset($currentPlayer['timeout']) ? $currentPlayer['timeout'] : time() + 1) - time(),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
+                        'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : 1),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
                         'appId' => $this->getIdentifier(),
                         'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                         'appName' => $this->getKey(),
                         'players' => $this->getPlayers(),
                         'fields' => $fields,//$this->getField(),// $fields,
+                        'variation' => $this->getVariation(),
                         'action' => 'start'
                     ), $client->id);
                 }
@@ -109,6 +120,7 @@ class SeaBattle extends Game
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
                 'fields' => array($this->getClient()->id => $this->getField()[$this->getClient()->id]),
+                'variation' => $this->getVariation(),
                 'action' => 'wait',
             ));
         } else {
@@ -120,7 +132,8 @@ class SeaBattle extends Game
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
-                'ships' => $this->_ships,
+                'ships' => $this->getShips(),
+                'variation' => $this->getVariation(),
                 'action' => 'field'
             ));
         }
@@ -151,7 +164,7 @@ class SeaBattle extends Game
     {
 
         $this->unsetCallback();
-        #echo $this->time().' '. "Тайм-аут \n";
+        #echo $this->time().' '. "Тайм-аут ".($this->currentPlayer()['timeout']-time())." \n ";
         if (!$this->isOver() AND isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout'] <= time()) {
 
             if (count($this->getField()) != count($this->getClients())) {
@@ -160,6 +173,7 @@ class SeaBattle extends Game
                     if (!isset($this->_field[$player['pid']])) {
                         $this->setField($this->generateField($player['pid']), $player['pid']);
                     }
+                #echo $this->time().' '. "Автозаполнение всех полей \n";
                 $this->nextPlayer();
                 $this->startAction();
                 return false;
@@ -171,6 +185,9 @@ class SeaBattle extends Game
             $this->nextPlayer();
             #echo $this->time().' '. 'разница времени после перехода '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
         } elseif (count($this->getField()) == count($this->getClients())) {
+
+            #echo $this->time().' '. "Не переход хода \n";
+
             if ($winner = $this->checkWinner())
                 $this->setCallback(array(
                     'winner' => $winner['pid'],
@@ -189,9 +206,12 @@ class SeaBattle extends Game
             ));
 
             $this->setResponse($this->getClients());
-        } else
-            $this->startAction($data);
+            return false;
+        }
+
+        $this->startAction($data);
         #echo $this->time().' '. "Конец тайм-аута \n";
+
     }
 
     public function moveAction($data = null)
@@ -247,7 +267,7 @@ class SeaBattle extends Game
 
     public function replayAction($data = null)
     {
-        echo $this->time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
+        #echo $this->time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
 
         $clientId = $this->getClient()->id;
         $this->updatePlayer(array('ready' => 1), $clientId);
@@ -275,7 +295,7 @@ class SeaBattle extends Game
                 ->setPlayers($this->getClients())
                 ->updatePlayer(array(
                     'timeout' => static::START_TIME_OUT - $this->getOption('t'),
-                    'ships' => array_count_values($this->_ships)
+                    'ships' => array_count_values($this->getShips())
                     ))
                 ->setWinner(false)
                 ->setTime(time())
@@ -443,7 +463,7 @@ class SeaBattle extends Game
     {
         #echo $this->time().' '. "Проверка победителя \n";
         $current = $this->currentPlayer();
-        if ($current['points'] >= count($this->_ships) OR $current['moves'] <= 0) {
+        if ($current['points'] >= count($this->getShips()) OR $current['moves'] <= 0) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 
@@ -508,8 +528,10 @@ class SeaBattle extends Game
             return 'FIELD_ALREADY_EXIST';
 
         // проверка на количество кораблей
-        if (count($usr_ships) != count($this->_ships))
+        if (count($usr_ships) != count($this->getShips())){
+            echo count($usr_ships).'!='.count($this->getShips())."\n";
             return 'ERROR_AMOUNT_SHIPS';
+        }
 
         $ships = array();
         //$player_ships = array();
@@ -560,7 +582,7 @@ class SeaBattle extends Game
             $field = $tpm_field;//array_merge($tmp_field, $ship_xy);
         }
 
-        if (count(array_diff_assoc(array_count_values($this->_ships), $ships)) || count(array_diff_assoc($ships, array_count_values($this->_ships))))
+        if (count(array_diff_assoc(array_count_values($this->getShips()), $ships)) || count(array_diff_assoc($ships, array_count_values($this->getShips()))))
             return 'ERROR_CLASS_SHIPS';
 
         //$this->_playerShips[$this->getClient()->id]=$player_ships;
@@ -612,6 +634,12 @@ class SeaBattle extends Game
         );
     }
 
+    public function getShips()
+    {        
+        return isset($this->{'_ships'.$this->getVariation('field')}) ? $this->{'_ships'.$this->getVariation('field')} : $this->_shipsDefault;
+    }
+
+
     public function generateField($playerId=null)
     {
         $ships = array();
@@ -619,15 +647,15 @@ class SeaBattle extends Game
         //$player_ships = array();
         $iterration = 0;
 
-        while (count($ships) != count($this->_ships)) {
+        while (count($ships) != count($this->getShips())) {
 
             $x = rand(1, $this->getOption('x'));
             $y = rand(1, $this->getOption('y'));
             $v = rand(0,1);
             $ship=array();
 
-            while (count($ship) != $this->_ships[$iterration]) {
-                if ($this->_ships[$iterration] != 1)
+            while (count($ship) != $this->getShips()[$iterration]) {
+                if ($this->getShips()[$iterration] != 1)
                     if (!$this->isCell(($v ? array($x+1,$y) : array($x,$y+1))))
                         break;
 
@@ -638,9 +666,9 @@ class SeaBattle extends Game
                 $v ? $x++ : $y++;
             }
 
-            if(count($ship) == $this->_ships[$iterration]){
+            if(count($ship) == $this->getShips()[$iterration]){
                 foreach($ship as $cell)
-                    $field[$cell[0]][$cell[1]]=$this->_ships[$iterration];
+                    $field[$cell[0]][$cell[1]]=$this->getShips()[$iterration];
                 $ships[]=$ship;
                 //$player_ships[$iterration]=array('l'=>count($ship),'d'=>0);
                 $iterration++;

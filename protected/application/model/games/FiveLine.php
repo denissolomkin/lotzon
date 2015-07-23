@@ -12,6 +12,8 @@ class FiveLine extends Game
 
     );
 
+    protected $_gameVariation = array('field' => '24x24');
+
     public function doMove($cell)
     {
         list($x,$y)=$cell;
