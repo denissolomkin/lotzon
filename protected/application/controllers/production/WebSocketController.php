@@ -13,16 +13,13 @@ Application::import(PATH_GAMES . '*');
 
 class WebSocketController implements MessageComponentInterface {
 
-    const   MIN_WAIT_TIME = 2;//15;
+    const   MIN_WAIT_TIME = 15;//15;
     const   MAX_WAIT_TIME = 600;//600;
     const   PERIODIC_TIMER = 2;//2
     const   CONNECTION_TIMER = 1800;
-    // const   COMISSION = 10; //percent
     const   DEFAULT_MODE = 'POINT-0-2';
     const   EMULATION = false; //false;
 
-    // private $_settings = array();
-    // private $_bots     = array();
     private $_rating    = array();
     private $_class     = null;
     private $_loop      = null;
@@ -46,8 +43,6 @@ class WebSocketController implements MessageComponentInterface {
         $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
         $this->memcache = new \Memcache;
         $this->memcache->connect('localhost', 11211);
-        // $this->_bots = SettingsModel::instance()->getSettings('gameBots')->getValue();
-        // $this->_settings = LotterySettingsModel::instance()->loadSettings();
     }
 
     public function checkConnections()
@@ -155,7 +150,6 @@ class WebSocketController implements MessageComponentInterface {
         $app = new $class(OnlineGamesModel::instance()->getGame($appName));
         $keys = array_keys($clients);
 
-        // list($currency, $price, $number) = array_pad(explode("-", $appMode),3,2);
         echo $this->time()." $appName инициируем приложение ".$appMode['mode'].": №".implode(', №',$keys)."\n";
 
         #echo $this->time()." чистим стек\n";
@@ -995,25 +989,29 @@ class WebSocketController implements MessageComponentInterface {
         if(!isset($clients) OR !is_array($clients) OR !count($clients))
             echo $this->time(0,'WARNING')."  response пустой\n";
 
+        elseif(!isset($response) || !$response)
+            echo $this->time(0,'WARNING')."  callback пустой\n";
+
         // рассылаем игрокам результат обработки
-        foreach($clients as $client) {
-            if(!isset($client->bot)) {
-                if(is_numeric($client))
-                    $client=(object)['id'=>$client];
-                if (($con = $this->clients($client->id)) && ($con instanceof ConnectionInterface)){
+        else
+            foreach($clients as $client) {
+                if(!isset($client->bot)) {
+                    if(is_numeric($client))
+                        $client=(object)['id'=>$client];
+                    if (($con = $this->clients($client->id)) && ($con instanceof ConnectionInterface)){
 
-                    #echo $this->time(0,'RESPONSE') . "  #{$client->id} \n";//.json_encode((isset($response[$client->id]) ? $response[$client->id] : $response))." \n";
+                        #echo $this->time(0,'RESPONSE') . "  #{$client->id} \n";//.json_encode((isset($response[$client->id]) ? $response[$client->id] : $response))." \n";
 
-                    $con->send(
-                        json_encode(
-                            array(
-                                'path' => 'app' . $class,
-                                'res' => (isset($response[$client->id]) ? $response[$client->id] : $response)
-                            )));
-                } else
-                    echo $this->time(0,'WARNING') . "  соединение #{$client->id} не найдено \n";
+                        $con->send(
+                            json_encode(
+                                array(
+                                    'path' => 'app' . $class,
+                                    'res' => (isset($response[$client->id]) ? $response[$client->id] : $response)
+                                )));
+                    } else
+                        echo $this->time(0,'WARNING') . "  соединение #{$client->id} не найдено \n";
+                }
             }
-        }
     }
 
     private function checkBalance($pid, $currency, $price)

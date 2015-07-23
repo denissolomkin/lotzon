@@ -117,11 +117,7 @@ class OnlineGame extends Entity
 
     public function initVariation($inputVariation=array())
     {
-
         $variations = $this->getOption('Variations') ? : array();
-
-        print_r($inputVariation);
-
         foreach($variations as $key=>&$variation){
             if(isset($inputVariation[$key]) && isset($variation['v'][$inputVariation[$key]]))
                 $variation = $inputVariation[$key];
@@ -130,7 +126,6 @@ class OnlineGame extends Entity
             else
                 $variation = key($variation['v']);
         }
-
         return $variations;
     }
 

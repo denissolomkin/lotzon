@@ -890,7 +890,7 @@ class Game
 
     public function getCallback()
     {
-        return $this->_callback;
+        return isset($this->_callback)?$this->_callback:null;
     }
 
     public function setResponse($clients)
