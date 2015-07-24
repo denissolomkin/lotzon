@@ -33,8 +33,8 @@ class WebSocketController implements MessageComponentInterface {
 
     public function __construct($loop) {
 
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+        //error_reporting(E_ALL);
+        //ini_set('display_errors', 1);
 
         echo $this->time(0,'START')." ". "Server have started\n";
 
