@@ -306,7 +306,7 @@ function updateCallback(receiveData)
                     var var_html = '';
                     $.each(value.variation, function (i, variation) {
 
-                        if(is_numeric(variation[0]))
+                        if(is_numeric(variation) || is_numeric(variation[0]))
                             var_html+=variation;
                         else
                             var_class+=' '+variation;
@@ -692,7 +692,6 @@ function appSeaBattleCallback()
                 var path = 'app/' + appName + '/0'; // + appId;
                 var data = {'action': 'start', 'mode': appMode, 'variation': variation};
 
-                console.log(variation, data);
                 WebSocketAjaxClient(path, data);
 
             }

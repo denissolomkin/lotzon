@@ -925,7 +925,7 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now {  width: 100%;height: 20px;margin-bottom: 0px;padding: 10px 0;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available {cursor:pointer;position: relative;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now.available:hover {background-color: aliceblue;}
-.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now div{float: left;margin-left: 10px;text-align: center;}
+.ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now div{float: left;width:7%;margin-left: 10px;text-align: center;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-md b{font: 20px/15px Handbook-bold;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-md i {text-decoration: none;text-transform: uppercase;font-style: normal;display: block;font: 10px/8px Handbook-regular;}
 .ngm-bk .ngm-rls-bk .rls-r .now-bl .gm-now .gm-now-plr {width: 60%;text-align: left;font: 16px/12px Handbook-regular;}
