@@ -165,6 +165,7 @@ class Durak extends Game
                 'timestamp' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] : time()),
                 'current' => $this->currentPlayers(),
                 'starter' => null,
+                'variation' => $this->getVariation(),
                 'beater' => null,
                 'action' => 'ready'
             );
