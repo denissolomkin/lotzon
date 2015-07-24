@@ -388,6 +388,9 @@ class WebSocketController implements MessageComponentInterface {
                     $appMode = array('currency'=>null,'price'=>null,'number'=>null,'variation'=>null);
                     list($appMode['currency'], $appMode['price'], $appMode['number'], $appMode['variation']) = array_pad(explode("-", (isset($data->mode) && $game->isMode($data->mode) ? $data->mode : self::DEFAULT_MODE)),4,null);
 
+                    if(!$appMode['number'])
+                        $appMode['number'] = 2;
+
                     if($appMode['variation'])
                         parse_str($appMode['variation'], $appMode['variation']);
 
