@@ -1335,8 +1335,8 @@ $('.ngm-bk .bk-bt').on('click', function() {});
                 if(onlineGame.variation && onlineGame.variation.field){
                     var size = parseInt(onlineGame.variation.field);
 
-                    var width = parseFloat((480 - (size-1)) / size, 2)+'px;';
-                    var height = parseFloat((480 - size) / size, 2)+'px;';
+                    var width = Math.floor((480 - (size-1)) / size)+'px;';
+                    var height = Math.floor((480 - size) / size)+'px;';
                     var font = ((480-size) / 1.6 / size ) + 'px/'+ ((480-(size)) / size)+'px Handbook-bold;';
                     var html = '';
 
@@ -1977,8 +1977,8 @@ function appWhoMoreCallback()
             if(onlineGame.variation && onlineGame.variation.field){
                 var size = parseInt(onlineGame.variation.field);
 
-                var width = parseFloat((480 - (size-1)*10) / size, 2)+'px;';
-                var height = parseFloat((480 - size *10) / size, 2)+'px;';
+                var width = Math.floor((480 - (size-1)*10) / size)+'px;';
+                var height = Math.floor((480 - size *10) / size)+'px;';
                 var font = ((480-size*10) / 1.6 / size ) + 'px/'+ ((480-(size*10)) / size)+'px Handbook-bold;';
                 var html = '';
 
