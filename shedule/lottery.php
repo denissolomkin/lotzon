@@ -1,7 +1,7 @@
 <?php
 
 
-    echo PHP_EOL.'************ '.date('H:i:s').' ************'.PHP_EOL;
+    echo PHP_EOL.'************ '.date('Y-m-d H:i:s').' ************'.PHP_EOL;
 
 
 	require_once('lottery.inc.php');

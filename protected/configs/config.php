@@ -23,40 +23,6 @@ try {
 
 Config::instance()->defaultSenderEmail = 'no-reply@lotzon.com';
 
-/*
-Config::instance()->newsCacheCount = 18;
-Config::instance()->playerOfflineTimeout = 5 * 60;
-Config::instance()->generatorNumTries = 20;
-
-Config::instance()->langs = array('RU', 'UA', 'EN');
-Config::instance()->countryLangs = array(
-    'UA' => 'UA',
-    'RU' => 'UA',
-    'BY' => 'UA',
-);
-Config::instance()->defaultLang = 'RU';
-Config::instance()->langCurrencies = array(
-    'UA' => 'грн',
-    'RU' => 'руб',
-    'BY' => 'руб',
-    'EN' => 'usd',
-);
-Config::instance()->errorMessages = array(
-    'AGREE_WITH_RULES' => 'Вы должны ознакомиться с правилами',
-    'EMPTY_EMAIL'      => 'Введите email',
-    'INVALID_EMAIL'    => 'Неверный email',
-    'REG_LOGIN_EXISTS' => 'Этот email уже зарегистрирован',
-    'EMPTY_PASSWORD'   => 'Введите пароль',
-    'PLAYER_NOT_FOUND' => 'Учетная запись не найдена',
-    'INVALID_PASSWORD' => 'Неверный пароль',
-    'ALREADY_INVITED'  => 'На этот email уже было отправлено приглашение',
-    'EMAIL_NOT_VALIDATED' => 'Завершите процесс регистрации через свой email',
-    'BLOCKED_EMAIL_DOMAIN' => 'Регистрация с этого email-домена запрещена',
-    'BLOCKED_IP'        => 'Регистрация пользователя запрещена',
-    'ACCESS_DENIED'        => 'Доступ запрещен'
-);
-*/
-
 Config::instance()->privateResources =  array(
     '/private/' => 'controllers\admin\Users:index',
     '/private/login/' => array(
@@ -389,37 +355,4 @@ Config::instance()->vkCredentials = array(
     'scope'        => 'email',
 );
 
-Config::instance()->blockedEmails = array(
-    'trbvm.com', 'tempinbox.com', 'mailinator.com', 'sharklasers.com',
-    'grr.la', 'guerrillamail.biz', 'guerrillamail.com', 'guerrillamail.de',
-    'guerrillamail.net', 'guerrillamail.org', 'guerrillamailblock.com', 'spam4.me',
-    'mt2014.com', 'mailmetrash.com', 'trashymail.com', 'mt2009.com', 'trash2009.com',
-    'thankyou2010.com', 'thankyou2010.com', 'TempEMail.net', 'bigprofessor.so',
-    'alivance.com', 'lackmail.net',
-    'walkmail.net','yopmail.com','mailspeed.ru',
-    'sharklasers.com', 'yopmail.fr','yopmail.net','cool.fr.nf','jetable.fr.nf',
-    'nospam.ze.tc','nomail.xl.cx','mega.zik.dj', 'gustr.com', 'fleckens.hu',
-    'speed.1s.fr','courriel.fr.nf','moncourrier.fr.nf','monemail.fr.nf','monmail.fr.nf','tryalert.com',
-    'sofimail.com','einrot.com','armyspy.com','cuvox.de','dayrep.com','hulapla.de','meltmail.com',
-    'anonymbox.com','discardmail.com','mail-temporaire.fr','trashmail.com','filzmail.com',
-    'dunflimblag.mailexpire.com', 'mailcatch.com', 'discardmail.de', 'dispostable.com',
-    'ce.mintemail.com', 'spambog.com', 'spamfree24.org', 'spambog.de', 'mailnull.com',
-    'mytempemail.com', 'incognitomail.com', 'spamobox.com', 'deadaddress.com', 'uroid.com',
-    'spambog.ru', 'mailscrap.com', 'cachedot.net', 'onewaymail.com', 'get2mail.fr', 'mynetstore.de',
-    '0815.ru', 'fakeinbox.com', 'teleworm.us', 'yomail.info', 'maildrop.cc', 'voidbay.com', 'mailnesia.com',
-    'mytemp.email', 'tempsky.com', 'mohmal.com', 'forward.cat', 'cnmsg.net', 'explodemail.com',
-    'emailsensei.com', 'nowmymail.com', 'crapmail.org', 'shitmail.org', 'eyepaste.com', 'hideme.be',
-    'q314.net', 'one-time.email', 'emailgo.de', 'squizzy.de', 'tempmailer.de', 'kurzepost.de',
-    'objectmail.com', 'proxymail.eu', 'rcpt.at', 'trash-mail.at', 'trashmail.at', 'trashmail.me',
-    'trashmail.net', 'wegwerfmail.de', 'wegwerfmail.net', 'wegwerfmail.org', 'jourrapide.com'
-);
-*/
-
-/*
-// init config from DB
-$sth = DB::Connect()->prepare("SELECT * FROM `Config`");
-$sth->execute();
-if ($sth->rowCount())
-    foreach ($sth->fetchAll() as $config)
-        Config::instance()->$config['Key']=unserialize($config['Value']);
 */

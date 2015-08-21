@@ -21,17 +21,19 @@ class SeaBattle extends Game
         1);
 
     protected $_ships11x22 = array(
-        1, 1, 1, 1, 1,
-        2, 2, 2, 2,
-        3, 3, 3,
+        5,
         4, 4,
-        5);
+        3, 3, 3,
+        2, 2, 2, 2,
+        1, 1, 1, 1, 1,
+    );
 
     protected $_shipsDefault = array(
-        1, 1, 1, 1,
-        2, 2, 2,
+        4,
         3, 3,
-        4);
+        2, 2, 2,
+        1, 1, 1, 1,
+    );
 
     protected $_playerShips = array();
     protected $_destroy = array();
@@ -642,20 +644,22 @@ class SeaBattle extends Game
 
     public function generateField($playerId=null)
     {
-        $ships = array();
+        $playerShips = array();
         $field = array();
-        //$player_ships = array();
+        $ships = $this->getShips();
+        rsort($ships);
         $iterration = 0;
+        $tries = 0;
 
-        while (count($ships) != count($this->getShips())) {
+        while (count($playerShips) != count($ships)) {
 
             $x = rand(1, $this->getOption('x'));
             $y = rand(1, $this->getOption('y'));
             $v = rand(0,1);
-            $ship=array();
+            $ship = array();
 
-            while (count($ship) != $this->getShips()[$iterration]) {
-                if ($this->getShips()[$iterration] != 1)
+            while (count($ship) != $ships[$iterration]) {
+                if ($ships[$iterration] != 1)
                     if (!$this->isCell(($v ? array($x+1,$y) : array($x,$y+1))))
                         break;
 
@@ -666,15 +670,25 @@ class SeaBattle extends Game
                 $v ? $x++ : $y++;
             }
 
-            if(count($ship) == $this->getShips()[$iterration]){
+            if(count($ship) == $ships[$iterration]){
                 foreach($ship as $cell)
-                    $field[$cell[0]][$cell[1]]=$this->getShips()[$iterration];
-                $ships[]=$ship;
+                    $field[$cell[0]][$cell[1]]=$ships[$iterration];
+                $playerShips[]=$ship;
                 //$player_ships[$iterration]=array('l'=>count($ship),'d'=>0);
+                // echo "\nКОРАБЛЬ №$iterration ".$ships[$iterration].'-палубный';
+                
                 $iterration++;
+            } else
+                $tries++;
 
+            if($tries>100){
+                echo "\n!!!ПРЕВЫШЕНИЕ ИТТЕРАЦИЙ!!! КОРАБЛЬ №$iterration ".$ships[$iterration].'-палубный';
+                $field = $this->generateField($playerId);
+                break;
             }
+
         }
+
         return $field;
     }
 

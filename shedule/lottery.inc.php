@@ -67,22 +67,28 @@ function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $r
     try {
 
         try {
-            $data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
 
-            if (empty($data)
-                || current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch())
-            ) {
-                DB::Connect()->commit();
-                if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp'))
-                    unlink($tmp);
-            } else {
-                $rollBack('HoldLottery is not ready');
+            try {
+                $data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
+
+                if (empty($data)
+                    || current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch())
+                ) {
+                    DB::Connect()->commit();
+                    if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp'))
+                        unlink($tmp);
+                } else {
+                    $rollBack('HoldLottery is not ready');
+                }
+            } catch (PDOException $e) {
+                $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
             }
-        } catch (PDOException $e) {
+
+        } catch (EntityException $e) {
             $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
         }
 
-    } catch(EntityException $e) {
+    } catch(DBExeption $e) {
         $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
     }
 }
