@@ -1514,7 +1514,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
         var appAudio = {};
         var unreadNotices = <?=$notices?>;
         var bannerTicketLastNum = (5-Math.ceil(Math.random() * (5-<?=($filledTicketsCount?:1);?>)));
-        var url = 'ws<?=$_SERVER['HTTPS']?'s':'';?>://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
+        var url = 'ws<?=\Config::instance()->SSLEnabled?'s':'';?>://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
 
         updateNotices(unreadNotices);
         getTpl.init(<?=json_encode($templates)?>);
