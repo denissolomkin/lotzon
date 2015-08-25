@@ -352,14 +352,13 @@ class PlayersDBProcessor implements IProcessor
     public function delete(Entity $player)
     {
         $sql = "
-        DELETE `Players`, `PlayerLogs`, `EmailInvites`, `LotteryTickets`, `ChanceGameWins`, `PlayerLotteryWins`, `MoneyOrders`, `PlayerNotes`, `PlayerCookies`, `PlayerNotices`, `PlayerReviews`,  `PlayerSocials`, `PlayerDates`, `ShopOrders`, `Transactions`
+        DELETE `Players`, `PlayerLogs`, `EmailInvites`, `LotteryTickets`, `ChanceGameWins`, `MoneyOrders`, `PlayerNotes`, `PlayerCookies`, `PlayerNotices`, `PlayerReviews`,  `PlayerSocials`, `PlayerDates`, `ShopOrders`, `Transactions`
         FROM `Players`
         LEFT JOIN `ChanceGameWins`    ON `Players`.`id` = `ChanceGameWins`.`PlayerId`
         LEFT JOIN `EmailInvites`    ON `Players`.`id` = `EmailInvites`.`InviterId`
         LEFT JOIN `LotteryTickets`    ON `Players`.`id` = `LotteryTickets`.`PlayerId`
         LEFT JOIN `MoneyOrders`    ON `Players`.`id` = `MoneyOrders`.`PlayerId`
         LEFT JOIN `PlayerLogs`    ON `Players`.`id` = `PlayerLogs`.`PlayerId`
-        LEFT JOIN `PlayerLotteryWins`    ON `Players`.`id` = `PlayerLotteryWins`.`PlayerId`
         LEFT JOIN `PlayerNotes`    ON `Players`.`id` = `PlayerNotes`.`PlayerId`
         LEFT JOIN `PlayerCookies`    ON `Players`.`id` = `PlayerCookies`.`PlayerId`
         LEFT JOIN `PlayerNotices`    ON `Players`.`id` = `PlayerNotices`.`PlayerId`

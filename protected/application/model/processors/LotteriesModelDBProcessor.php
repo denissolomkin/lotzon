@@ -135,6 +135,14 @@ class LotteriesModelDBProcessor implements IProcessor
                 LEFT JOIN `Lotteries` AS `lt` ON `plt`.`LotteryId` = `lt`.`Id`
                 WHERE `plt`.`PlayerId` = :plid AND `lt`.`Ready` = 1 ORDER BY `lt`.`Date` DESC";
 
+        $sql = " SELECT  `lt` . *
+                FROM  `LotteryTickets` AS  `plt`
+                LEFT JOIN  `Lotteries` AS  `lt` ON  `plt`.`LotteryId` =  `lt`.`Id`
+                WHERE  `plt`.`PlayerId` = :plid
+                    AND  `lt`.`Ready` =1
+                GROUP BY  `plt`.`LotteryId`
+                ORDER BY  `lt`.`Date` DESC ";
+
         if (!empty($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }
@@ -213,36 +221,6 @@ class LotteriesModelDBProcessor implements IProcessor
         }
         $lottery = new Lottery();
         $lottery->formatFrom('DB', $lotteryData);
-
-        /*
-        $winners = array();
-            // get winners
-            $sql = "SELECT `p`.* FROM `PlayerLotteryWins` AS `plw` 
-                    LEFT JOIN `Players` AS `p` ON `p`.`Id` = `plw`.`PlayerId`
-                    WHERE `plw`.`LotteryId` = :lotid AND (`plw`.`MoneyWin` > 0 OR `plw`.`PointsWin` > 0 OR `plw`.`PlayerId` = :plid)";
-
-            try {
-                $sth = DB::Connect()->prepare($sql);
-                $sth->execute(array(
-                    ':lotid' => $lottery->getId(),
-                    ':plid'  => $session->get(Player::IDENTITY)->getId(),
-                ));
-
-            } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query ", 500);              
-            }
-
-            if ($sth->rowCount()) {
-                $playersData = $sth->fetchAll();
-
-                foreach ($playersData as $playerData) {
-                    $player = new Player();
-                    $player->formatFrom('DB', $playerData);
-
-                    $returnData['winners'][] = $player;
-                }
-            }
-        */
 
             // get lottery tikets
             $sql = "SELECT * FROM `LotteryTickets` WHERE `LotteryId` = :lotid AND `PlayerId` = :plid";
