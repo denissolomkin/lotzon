@@ -804,10 +804,10 @@ class PlayersDBProcessor implements IProcessor
     public function getTickets($playerId, $lotteryId)
     {
         $sql = "SELECT `Lotteries`.`Date`, `Lotteries`.`Combination` WinCombination,
-              `LotteryTickets`.`TicketWinCurrency`, `LotteryTickets`.`TicketWin`, `LotteryTickets`.`TicketWin`,
-              `LotteryTickets`.`TicketNum`, `LotteryTickets`.`Combination`, `LotteryTickets`.`PlayerId`,
-              `LotteryTickets`.`LotteryId`, `LotteryTickets`.`Id`, `LotteryTickets`.`DateCreated`
-              FROM `LotteryTickets`
+              `LotteryTicketsArchive`.`TicketWinCurrency`, `LotteryTicketsArchive`.`TicketWin`, `LotteryTicketsArchive`.`TicketWin`,
+              `LotteryTicketsArchive`.`TicketNum`, `LotteryTicketsArchive`.`Combination`, `LotteryTicketsArchive`.`PlayerId`,
+              `LotteryTicketsArchive`.`LotteryId`, `LotteryTicketsArchive`.`Id`, `LotteryTicketsArchive`.`DateCreated`
+              FROM `LotteryTicketsArchive`
               LEFT JOIN `Lotteries` ON `LotteryTickets`.`LotteryId`=`Lotteries`.`Id`
               WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
 
