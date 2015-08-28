@@ -19,23 +19,14 @@ class TicketsModel extends Model
         return __CLASS__;
     }
 
-    public function getPlayerTickets(Player $player)
+    public function getPlayerTickets(Player $player, $lotteryId = null)
     {
-        return $this->getProcessor()->getPlayerTickets($player);
+        return $this->getProcessor()->getPlayerTickets($player, $lotteryId);
     }
 
     public function getPlayerUnplayedTickets(Player $player)
     {
-        $all = $this->getPlayerTickets($player);
-
-        $tickets = array();
-        foreach ($all as $id => $ticket) {
-            if (!$ticket->getLotteryId()) {
-                $tickets[$id] = $ticket;
-            }
-        }
-
-        return $tickets;
+        return $this->getProcessor()->getPlayerUnplayedTickets($player);
     }
 
     public function getCountUnplayedTickets($id=0)
@@ -48,8 +39,4 @@ class TicketsModel extends Model
         return $this->getProcessor()->getAllUnplayedTickets($id);
     }
 
-    public function getPlayerLotteryTickets($lotteryId, $playerId)
-    {
-        return $this->getProcessor()->getPlayerLotteryTickets($lotteryId, $playerId);
-    }
 }

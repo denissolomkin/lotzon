@@ -1,8 +1,7 @@
 <?php
 Application::import(PATH_INTERFACES . 'IProcessor.php');
-use Symfony\Component\HttpFoundation\Session\Session;
 
-class LotteriesModelDBProcessor implements IProcessor
+class LotteriesDBProcessor implements IProcessor
 {
     public function create(Entity $lottery)
     {
@@ -77,6 +76,25 @@ class LotteriesModelDBProcessor implements IProcessor
         return $lottery;
     }
 
+    public function getLastPublishedLottery()
+    {
+        $sql = "SELECT * FROM `Lotteries` WHERE `Ready` = 1 ORDER BY `Date` DESC LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $lotteryData = $sth->fetch();
+
+        $lottery = new Lottery();
+        $lottery->formatFrom('DB', $lotteryData);
+
+        return $lottery;
+    }
+
     public function getPublishedLotteriesList($limit, $offset = 0)
     {
         $sql = "SELECT * FROM `Lotteries` WHERE `Ready` = 1 ORDER BY `Date` DESC";
@@ -108,54 +126,31 @@ class LotteriesModelDBProcessor implements IProcessor
         return $lotteries;
     }
 
-    public function getLastPlayedLottery()
+    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0)
     {
-        $currentMinute = (strtotime(date("H:i")) - 5*60);
-        $sql = "SELECT * FROM `Lotteries` WHERE `Date` >= :curminute LIMIT 1";
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':curminute' => $currentMinute,
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
 
-        $lotteryData = $sth->fetch();
-        
-        $lottery = new Lottery();
-        $lottery->formatFrom('DB', $lotteryData);
-
-        return $lottery;
-    }
-
-    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0) 
-    {
-        $sql = "SELECT `lt`.* FROM `PlayerLotteryWins` AS `plt`
-                LEFT JOIN `Lotteries` AS `lt` ON `plt`.`LotteryId` = `lt`.`Id`
-                WHERE `plt`.`PlayerId` = :plid AND `lt`.`Ready` = 1 ORDER BY `lt`.`Date` DESC";
-
-        $sql = " SELECT  `lt` . *
+        $sql = "SELECT  `lt` . *
                 FROM  `LotteryTickets` AS  `plt`
                 LEFT JOIN  `Lotteries` AS  `lt` ON  `plt`.`LotteryId` =  `lt`.`Id`
-                WHERE  `plt`.`PlayerId` = :plid
-                    AND  `lt`.`Ready` =1
+                WHERE `plt`.`PlayerId` = :plid AND `lt`.`Ready` =1
                 GROUP BY  `plt`.`LotteryId`
                 ORDER BY  `lt`.`Date` DESC ";
 
         if (!empty($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }
+
         if (!empty($offset)) {
             $sql .= " OFFSET " . (int)$offset;   
         }
+
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':plid' => $playerId,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ", 500);
+            throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
         }
 
         $lotteriesData = $sth->fetchAll();
@@ -173,7 +168,16 @@ class LotteriesModelDBProcessor implements IProcessor
 
     public function getPlayerHistory($playerId, $limit, $offset) 
     {
-        $sql = "SELECT * FROM `PlayerLotteryWins` WHERE `PlayerId` = :plid ORDER BY `Date` DESC";
+
+        $sql = "SELECT PlayerId, l.Date, LotteryId,
+                SUM(CASE WHEN TicketWinCurrency = 'MONEY' THEN TicketWin ELSE 0 END) AS MoneyWin,
+                SUM(CASE WHEN TicketWinCurrency = 'POINT' THEN TicketWin ELSE 0 END) AS PointsWin
+                FROM `LotteryTickets` t
+                LEFT JOIN Lotteries l
+                  ON l.Id = t.LotteryId
+                WHERE `PlayerId` = :plid
+                GROUP BY LotteryId
+                ORDER BY `DateCreated` DESC";
 
         if (!empty($limit)) {
             $sql .= " LIMIT " . (int)$limit;
@@ -197,12 +201,6 @@ class LotteriesModelDBProcessor implements IProcessor
 
     public function getLotteryDetails($lotteryId)
     {
-        $session = new Session();
-        $returnData = array(
-            'lottery' => null,
-            'winners' => array(),
-            'tickets' => array(),
-        );
         // get lottery basic info
         $sql = "SELECT * FROM `Lotteries` WHERE `Id` = :lotid LIMIT 1";
 
@@ -219,39 +217,11 @@ class LotteriesModelDBProcessor implements IProcessor
         if (!$lotteryData) {
             throw new ModelException("LOTTERY_NOT_FOUND", 404);
         }
+
         $lottery = new Lottery();
         $lottery->formatFrom('DB', $lotteryData);
 
-            // get lottery tikets
-            $sql = "SELECT * FROM `LotteryTickets` WHERE `LotteryId` = :lotid AND `PlayerId` = :plid";
-
-            try {
-                $sth = DB::Connect()->prepare($sql);
-                $sth->execute(array(
-                    ':lotid' => $lottery->getId(),
-                    ':plid'  => $session->get(Player::IDENTITY)->getId(),
-                ));
-            } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query ", 500);
-            }
-
-            if ($sth->rowCount()) {
-                $ticketsData = $sth->fetchAll();
-
-                foreach ($ticketsData as $ticketData) {
-                    $ticket = new LotteryTicket();
-                    $ticket->formatFrom('DB', $ticketData);
-
-                    if (!isset($returnData['tickets'][$ticket->getPlayerId()])) {
-                        $returnData['tickets'][$ticket->getPlayerId()] = array();
-                    }
-                    $returnData['tickets'][$ticket->getPlayerId()][$ticket->getTicketNum()] = $ticket;
-                }
-            }
-
-        $returnData['lottery'] = $lottery;
-
-        return $returnData;
+        return $lottery;
     }
 
     public function getDependentLottery($lotteryId, $dependancy) 
@@ -281,7 +251,7 @@ class LotteriesModelDBProcessor implements IProcessor
 
     public function getWinnersCount()
     {
-        $sql = "SELECT COUNT(DISTINCT PlayerId) FROM PlayerLotteryWins WHERE MoneyWin > 0";
+        $sql = "SELECT COUNT(PlayerId) FROM (SELECT DISTINCT PlayerId FROM LotteryTicketsArchive WHERE TicketWinCurrency = 'MONEY') Winners";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
@@ -303,5 +273,11 @@ class LotteriesModelDBProcessor implements IProcessor
         }
 
         return $sth->fetchColumn(0);
+    }
+
+
+    public function recache()
+    {
+        return false;
     }
 }

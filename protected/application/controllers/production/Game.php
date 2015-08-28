@@ -41,64 +41,6 @@ class Game extends \AjaxController
         $this->ajaxResponse($respData);
     }
 
-    /*
-    public function lastLotteryAction()
-    {
-        $lottery = LotteriesModel::instance()->getLastPlayedLottery();
-        if ($lottery && $lottery->getReady()) {
-            $this->session->get(Player::IDENTITY)->fetch();
-
-            $tickets      = TicketsModel::instance()->getPlayerLotteryTickets($lottery->getId(), $this->session->get(Player::IDENTITY)->getId());
-            $gameSettings = LotterySettingsModel::instance()->loadSettings();
-
-            $data = array();
-            $data['content'] = true;
-            $data['lottery'] = array(
-                'id'    => $lottery->getId(),
-                'combination'   => $lottery->getCombination(),
-            );
-            $data['player'] = array(
-                'points'  => $this->session->get(Player::IDENTITY)->getPoints(),
-                'money'   => $this->session->get(Player::IDENTITY)->getMoney(),
-                'win'     => false,
-            );
-
-            $data['tickets'] = array();
-            $data['ticketWins'] = array();
-
-            foreach ($tickets as $ticket) {
-                $data['tickets'][$ticket->getTicketNum()] = $ticket->getCombination();
-                $shoots = 0;
-                foreach ($lottery->getCombination() as $lotteryNum) {
-                    foreach ($ticket->getCombination() as $num) {
-                        if ($num == $lotteryNum) {
-                            $shoots++;
-                        }
-                    }
-                }
-                if ($shoots > 0) {
-                    $data['player']['win']  = true;
-                    $prize = $gameSettings->getPrizes($this->session->get(Player::IDENTITY)->getCountry())[$shoots];
-                    if ($prize['currency'] == LotterySettings::CURRENCY_POINT) {
-                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " баллов";
-                    } else {
-                        $data['ticketWins'][$ticket->getTicketNum()] = $prize['sum'] . " " . \CountriesModel::instance()->getCountry($this->session->get(Player::IDENTITY)->getCountry())->loadCurrency()->getTitle('iso');;
-                    }
-                } else {
-                    $data['ticketWins'][] = 0;
-                }
-            }
-            $this->ajaxResponse($data);
-        } else {
-            $this->ajaxResponse(array(
-                'content' => false,
-                'wait' => 5000,
-            ));
-        }
-        $this->ajaxResponse(array(), 0, 'UNEXPECTED_ERROR');
-    }
-    */
-
     public function previewQuickGameAction($key='QuickGame')
     {
         $id = $key=='ChanceGame' ? $this->request()->get('id', null) : null;
