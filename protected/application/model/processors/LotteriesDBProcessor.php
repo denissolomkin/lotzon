@@ -1,6 +1,5 @@
 <?php
 Application::import(PATH_INTERFACES . 'IProcessor.php');
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class LotteriesDBProcessor implements IProcessor
 {
@@ -127,17 +126,13 @@ class LotteriesDBProcessor implements IProcessor
         return $lotteries;
     }
 
-    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0, $lotteryIds = null)
+    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0)
     {
 
-        $where = array("`plt`.`PlayerId` = :plid", "`lt`.`Ready` =1");
-        if($lotteryIds)
-            $where[]='plt.LotteryId IN ('.implode(',',$lotteryIds).')';
-
-        $sql = " SELECT  `lt` . *
+        $sql = "SELECT  `lt` . *
                 FROM  `LotteryTickets` AS  `plt`
                 LEFT JOIN  `Lotteries` AS  `lt` ON  `plt`.`LotteryId` =  `lt`.`Id`
-                WHERE ".implode(' AND ', $where)."
+                WHERE `plt`.`PlayerId` = :plid AND `lt`.`Ready` =1
                 GROUP BY  `plt`.`LotteryId`
                 ORDER BY  `lt`.`Date` DESC ";
 

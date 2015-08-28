@@ -33,9 +33,9 @@ class LotteriesModel extends Model
         return $this->getProcessor()->getPublishedLotteriesList($limit, $offset);
     }
 
-    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0, $lotteriesIds = null)
+    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0)
     {
-        return $this->getProcessor()->getPlayerPlayedLotteries($playerId, $limit, $offset, $lotteriesIds);
+        return $this->getProcessor()->getPlayerPlayedLotteries($playerId, $limit, $offset);
     }
 
     public function getPlayerHistory($playerId, $limit = 0, $offset = 0)

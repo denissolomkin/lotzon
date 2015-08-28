@@ -25,4 +25,3 @@ Config::instance()->dbConnectionProperties = array(
 );
 
 Config::instance()->wsPort = 8080;
-Config::instance()->cacheEnabled = true;

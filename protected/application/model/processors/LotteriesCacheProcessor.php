@@ -37,9 +37,9 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
         return array_slice($list,$offset,$limit,true);
     }
 
-    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0, $lotteriesIds = null)
+    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0)
     {
-        return $this->getBackendProcessor()->getPlayerPlayedLotteries($playerId, $limit, $offset, $lotteriesIds);
+        return $this->getBackendProcessor()->getPlayerPlayedLotteries($playerId, $limit, $offset);
     }
 
     public function getPlayerHistory($playerId, $limit = 0, $offset = 0)
