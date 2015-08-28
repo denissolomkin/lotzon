@@ -94,7 +94,7 @@ class PlayersDBProcessor implements IProcessor
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'      => $player->getId(),
                 ':agnt'      => $player->getAgent(),
-                ':ip'      => $player->getIp(),
+                ':ip'      => $player->getLastIp(),
                 ':tm'      => time()
             ));
         } catch (PDOException $e) {
