@@ -49,9 +49,7 @@ function commitMigrations($migrations = array())
         while (($file = readdir($openDir)) !== false) {
             if ($file != "." && $file != "..") {
                 if (is_file($path.'/'.$file) && !in_array($file, $migrations)) {
-
                     $queries[$file] = file_get_contents ($path.'/'.$file);
-
                 }
             }
         }
@@ -61,6 +59,8 @@ function commitMigrations($migrations = array())
             ksort($queries);
 
             try {
+
+                indexLock();
 
                 foreach($queries as $file => $sql) {
 
@@ -73,13 +73,11 @@ function commitMigrations($migrations = array())
 
             } catch (PDOException $e) {
 
-                // throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
-                die(
-                    "\t$file [ERROR]\n
-                    \tRollBack: {$e->getMessage()}\n"
-                );
+                indexUnlock();
+                die("\t$file [ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
             }
 
+            indexUnlock();
 
         }
 
@@ -88,8 +86,8 @@ function commitMigrations($migrations = array())
 
 function indexLock(){
 
-    $indexOff = dirname(__FILE__).'/../index.html.off';
-    $indexOn = str_replace('.off','',$indexOff);
+    $indexOn = dirname(__FILE__).'/../index.html';
+    $indexOff = $indexOn.'.off';
 
     if(is_file($indexOff)){
         rename($indexOff, $indexOn);
@@ -98,12 +96,8 @@ function indexLock(){
 
 function indexUnlock(){
 
-    $indexOff = dirname(__FILE__).'/../index.html.off';
-    $indexOn = str_replace('.off','',$indexOff);
-
-    if(is_file($indexOff)){
-        rename($indexOff, $indexOn);
-    }
+    $indexOn = dirname(__FILE__).'/../index.html';
+    $indexOff = $indexOn.'.off';
 
     if(is_file($indexOn)){
         rename($indexOn, $indexOff);
