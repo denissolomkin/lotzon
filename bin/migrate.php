@@ -43,28 +43,67 @@ function getStoredMigrations()
 
 function commitMigrations($migrations = array())
 {
+    $queries = array();
     $path = dirname(__FILE__).'/../migrations';
     if (is_dir($path) && ($openDir = opendir($path))) {
         while (($file = readdir($openDir)) !== false) {
             if ($file != "." && $file != "..") {
                 if (is_file($path.'/'.$file) && !in_array($file, $migrations)) {
-                    try {
-                        $sql = file_get_contents ($path.'/'.$file);
-
-                        DB::Connect()->prepare($sql)->execute();
-                        DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(
-                            ':f'=>$file
-                        ));
-
-                        echo"\t$file [COMMIT]\n";
-                    } catch (PDOException $e) {
-                        throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
-                    }
+                    $queries[$file] = file_get_contents ($path.'/'.$file);
                 }
             }
         }
+
+        if(!empty($queries)){
+
+            ksort($queries);
+
+            try {
+
+                indexLock();
+
+                foreach($queries as $file => $sql) {
+
+                    DB::Connect()->prepare($sql)->execute();
+                    DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
+
+                    echo "\t$file [COMMIT]\n";
+
+                }
+
+            } catch (PDOException $e) {
+
+                indexUnlock();
+                die("\t$file [ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
+            }
+
+            indexUnlock();
+
+        }
+
     }
 }
+
+function indexLock(){
+
+    $indexOn = dirname(__FILE__).'/../index.html';
+    $indexOff = $indexOn.'.off';
+
+    if(is_file($indexOff)){
+        rename($indexOff, $indexOn);
+    }
+}
+
+function indexUnlock(){
+
+    $indexOn = dirname(__FILE__).'/../index.html';
+    $indexOff = $indexOn.'.off';
+
+    if(is_file($indexOn)){
+        rename($indexOn, $indexOff);
+    }
+}
+
 
 $storedMigrations = getStoredMigrations();
 commitMigrations($storedMigrations);
