@@ -47,14 +47,20 @@ class TicketsDBProcessor implements IProcessor
         return $ticket;
     }
 
-    public function getPlayerTickets(Player $player)
+    public function getPlayerTickets(Player $player, $lotteryId=null)
     {
-        $sql = "SELECT * FROM `LotteryTickets` WHERE `PlayerId` = :plid ORDER BY `DateCreated` ASC";
+
+        $where = array("`PlayerId` = :plid");
+        if(isset($lotteryId))
+            $where[] = "`LotteryId` = :lotid";
+
+        $sql = "SELECT * FROM `LotteryTickets` WHERE ".implode(' AND ', $where)." ORDER BY `DateCreated` ASC";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ":plid" => $player->getId(),
+                ":lotid" => $lotteryId
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -67,10 +73,45 @@ class TicketsDBProcessor implements IProcessor
             $ticket = new LotteryTicket();
 
             $ticket->formatFrom('DB', $ticketData);
-            $tickets[$ticket->getTicketNum()] = $ticket;
+            $tickets[$ticket->getLotteryId()][$ticket->getTicketNum()] = $ticket;
         }
 
+        if(isset($lotteryId))
+            $tickets = array_shift($tickets);
+
         return $tickets;
+    }
+
+    public function getPlayerUnplayedTickets(Player $player, $lotteryId = 0)
+    {
+
+        $where = array("`PlayerId` = :plid");
+        if(isset($lotteryId))
+            $where[] = "`LotteryId` = :lotid";
+
+        $sql = "SELECT * FROM `LotteryTickets` WHERE ".implode(' AND ', $where)." ORDER BY `DateCreated` ASC";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ":plid" => $player->getId(),
+                ":lotid" => $lotteryId
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $unplayedTicketsData = $sth->fetchAll();
+        $unplayedTickets = array();
+
+        foreach ($unplayedTicketsData as $ticketData) {
+            $ticket = new LotteryTicket();
+
+            $ticket->formatFrom('DB', $ticketData);
+            $unplayedTickets[$ticket->getTicketNum()] = $ticket;
+        }
+
+        return $unplayedTickets;
     }
 
     public function getAllUnplayedTickets($id=0)
@@ -111,30 +152,4 @@ class TicketsDBProcessor implements IProcessor
         return $sth->fetchColumn(0);
     }
 
-    public function getPlayerLotteryTickets($lotteryId, $playerId)
-    {
-        $sql = "SELECT * FROM `LotteryTickets` WHERE `PlayerId` = :plid AND `LotteryId` = :lotid ORDER BY `DateCreated` ASC";
-        
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ":plid"    => $playerId,
-                ":lotid"   => $lotteryId,
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        $ticketsData = $sth->fetchAll();
-        $tickets = array();
-
-        foreach ($ticketsData as $ticketData) {
-            $ticket = new LotteryTicket();
-
-            $ticket->formatFrom('DB', $ticketData);
-            $tickets[$ticket->getId()] = $ticket;
-        }
-
-        return $tickets;
-    }
 }

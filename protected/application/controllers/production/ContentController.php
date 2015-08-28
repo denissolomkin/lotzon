@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \SettingsModel, \Player, \EntityException, \CountriesModel, \LotteryTicket, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
+use \Application, \SettingsModel, \Player, \EntityException, \CountriesModel, \TicketsModel, \LotteriesModel, \ShopModel, \NewsModel, \LotterySettings, \ModelException, \ReviewsModel, \NoticesModel, \TransactionsModel, \Common;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -30,7 +30,7 @@ class ContentController extends \AjaxController
 
             if (!$onlyMine) {
                 $lotteries = LotteriesModel::instance()->getPublishedLotteriesList(SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE'), $offset);
-                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->session->get(Player::IDENTITY)->getId());
+                $playerLotteries = LotteriesModel::instance()->getPlayerPlayedLotteries($this->session->get(Player::IDENTITY)->getId(), null, null, array_keys($lotteries));
                 foreach ($playerLotteries as $lottery) {
                     if (isset($lotteries[$lottery->getId()])) {
                         $lotteries[$lottery->getId()]->playerPlayed = true;
@@ -213,6 +213,7 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
         if (!$lotteryId) {
             $this->ajaxResponse(array(), 0, 'EMPTY_LOTTERY_ID');
         }
+
         try {
             $lotteryDetails = LotteriesModel::instance()->getLotteryDetails($lotteryId);
         } catch (ModelException $e) {
@@ -222,37 +223,25 @@ setTimeout(function(){ $('#ticket_video').remove(); }, ({$banner['title']}+1)*10
 
         $responseData = array(
             'lottery' => array(
-                'id'  => $lotteryDetails['lottery']->getId(),
-                'combination'  => $lotteryDetails['lottery']->getCombination(),
-                'date'  => $lotteryDetails['lottery']->getDate('d.m.Y'),
+                'id'  => $lotteryDetails->getId(),
+                'combination'  => $lotteryDetails->getCombination(),
+                'date'  => $lotteryDetails->getDate('d.m.Y'),
             ),
-            'winners' => array(), //$lotteryDetails['lottery']->getBallsTotal(),
+            'winners' => array(),
             'tickets' => array(),
         );
 
-        /*
-        $langs = array();
-        foreach ($lotteryDetails['winners'] as $player) {
-            $responseData['winners'][] = array(
-                'id'      => $player->getId(),
-                'name'    => $player->getVisibility() ? $player->getName() : '',
-                'surname' => $player->getVisibility() ? $player->getSurname() : '',
-                'nick'    => $player->getVisibility() ? $player->getNicName() : 'id'.$player->getId(),
-                'avatar'  => $player->getVisibility() ? ($player->getAvatar() ? '/filestorage/avatars/' .ceil($player->getId() / 100) . '/' . $player->getAvatar() : '') : '',
-                'you'     => $player->getId() == $this->session->get(Player::IDENTITY)->getId(),
+        $player = $this->session->get(Player::IDENTITY);
+        $currency = CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso');
+        $playerTickets = TicketsModel::instance()->getPlayerTickets($player, $lotteryId);
+
+        $response['tickets'][$player->getId()] = array();
+        if(!empty($playerTickets))
+            foreach ($playerTickets as $ticket) {
+            $responseData['tickets'][$player->getId()][$ticket->getTicketNum()] = array(
+                'combination' => $ticket->getCombination(),
+                'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency) : '',
             );
-        }
-        */
-        //print_r($lotteryDetails['tickets']);
-        $currency = CountriesModel::instance()->getCountry($this->session->get(Player::IDENTITY)->getCountry())->loadCurrency()->getTitle('iso');
-        foreach ($lotteryDetails['tickets'] as $playerId => $ticketData) {
-            $response['tickets'][$playerId] = array();
-            foreach ($ticketData as $ticket) {
-                $responseData['tickets'][$playerId][$ticket->getTicketNum()] = array(
-                    'combination' => $ticket->getCombination(),
-                    'win' => $ticket->getTicketWin() > 0 ? Common::viewNumberFormat($ticket->getTicketWin()) . " " . ($ticket->getTicketWinCurrency() == LotterySettings::CURRENCY_POINT ? 'баллов' : $currency) : '',
-                );
-            }
         }
 
         $this->ajaxResponse($responseData);
