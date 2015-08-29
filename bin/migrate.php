@@ -47,7 +47,7 @@ function commitMigrations($migrations = array())
     $path = dirname(__FILE__).'/../migrations';
     if (is_dir($path) && ($openDir = opendir($path))) {
         while (($file = readdir($openDir)) !== false) {
-            if ($file != "." && $file != "..") {
+            if ($file != ".htaccess" && $file != "." && $file != "..") {
                 if (is_file($path.'/'.$file) && !in_array($file, $migrations)) {
                     $queries[$file] = file_get_contents ($path.'/'.$file);
                 }
@@ -64,9 +64,14 @@ function commitMigrations($migrations = array())
 
                 foreach($queries as $file => $sql) {
 
-                    echo "\t$file\n";
-                    DB::Connect()->prepare($sql)->execute();
+                    echo "\t$file";
+
+                    $sth = DB::Connect()->prepare($sql);
+                    $sth->execute();
+                    while ($sth->nextRowset());
+
                     DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
+
                     echo "\t[COMMIT]\n";
 
                 }
