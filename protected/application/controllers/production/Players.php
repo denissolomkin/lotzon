@@ -204,8 +204,8 @@ class Players extends \AjaxController
                 $this->ajaxResponse(array(), 0, 'FRAUD');
             }
 
-
-            $player = $this->session->get(Player::IDENTITY);
+            $player = new Player();
+            $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
 
             try {
 
@@ -260,11 +260,14 @@ class Players extends \AjaxController
                 }
                 $this->ajaxResponse(array(), 0, $e->getMessage());
             }
+
             if ($pwd = $this->request()->post('password')) {
                 $pwd=trim($pwd);
                 $player->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$player->hidePassword($pwd),'status'=>'info'))
                     ->changePassword($pwd);
             }
+
+            $this->session->set(Player::IDENTITY, $player);
             $this->ajaxResponse(array());
         }
         $this->redirect('/');
