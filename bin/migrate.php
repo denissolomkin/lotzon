@@ -95,6 +95,9 @@ function commitMigrations($migrations = array())
 
             }
 
+        } else {
+
+            echo "=============================== UP TO DATE =============================="."\n";
         }
 
     }
