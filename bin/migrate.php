@@ -44,12 +44,14 @@ function getStoredMigrations()
 function commitMigrations($migrations = array())
 {
     $queries = array();
+    $length = 56;
     $path = dirname(__FILE__).'/../migrations';
     if (is_dir($path) && ($openDir = opendir($path))) {
         while (($file = readdir($openDir)) !== false) {
             if ($file != ".htaccess" && $file != "." && $file != "..") {
                 if (is_file($path.'/'.$file) && !in_array($file, $migrations)) {
                     $queries[$file] = file_get_contents ($path.'/'.$file);
+
                 }
             }
         }
@@ -60,11 +62,17 @@ function commitMigrations($migrations = array())
 
             try {
 
+                echo "=========================== ".count($queries)." FILES TO PROCESS =========================="."\n";
+                $time = microtime();
                 indexLock();
 
                 foreach($queries as $file => $sql) {
 
-                    echo "\t$file";
+                    $microtime = microtime();
+                    if(strlen($file)>$length)
+                        echo substr($file,0,$length-3)."...";
+                    else
+                        echo "$file";
 
                     $sth = DB::Connect()->prepare($sql);
                     $sth->execute();
@@ -72,9 +80,13 @@ function commitMigrations($migrations = array())
 
                     DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
 
-                    echo "\t[COMMIT]\n";
+                    echo " [COMMIT] ".(round($microtime-microtime(),4))."s\n";
+
 
                 }
+
+                indexUnlock();
+                echo "=========================== TOTAL TIME ".(round($time-microtime(),4))."s =========================="."\n";
 
             } catch (PDOException $e) {
 
@@ -82,8 +94,6 @@ function commitMigrations($migrations = array())
                 die("\t[ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
 
             }
-
-            indexUnlock();
 
         }
 
