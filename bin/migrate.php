@@ -64,17 +64,18 @@ function commitMigrations($migrations = array())
 
                 foreach($queries as $file => $sql) {
 
+                    echo "\t$file\n";
                     DB::Connect()->prepare($sql)->execute();
                     DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
-
-                    echo "\t$file [COMMIT]\n";
+                    echo "\t[COMMIT]\n";
 
                 }
 
             } catch (PDOException $e) {
 
                 indexUnlock();
-                die("\t$file [ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
+                die("\t[ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
+
             }
 
             indexUnlock();
