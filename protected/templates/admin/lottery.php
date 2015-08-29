@@ -22,15 +22,6 @@
     <div class="row-fluid">&nbsp;</div>
     <!-- fst column -->
     <div class="col-md-4 col-md-offset-1">
-        <!--h6>Cумма розыгрыша</h6>
-        <div class="row">            
-            <div class="col-md-9">
-                <input type="text" name="sum" value="<?=$settings->getTotalWinSum()?>" placeholder="Сумма розыгрыша" class="form-control" />    
-            </div>
-            <div class="col-md-3">
-                <button class="btn <?=$settings->getJackpot() ? 'btn-success' : 'btn-default'?> btn-md jackpot">JACKPOT!</button>
-            </div>
-        </div-->
         <h6>Настройка призов<span class="pull-right  glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Установите флажок, для того чтобы указать что приз денежный" style="color:#428BCA;cursor:help;">&nbsp;</span></h6>
         <? for ($i = 1; $i <= 6; ++$i) { ?>
         <div class="row">
@@ -211,13 +202,6 @@ $ajaxedSettings = array(
     'lotteries'    => array(),
 ); 
 
-$ajaxedSettings['lotteryTotal'] = $settings->getTotalWinSum();
-$ajaxedSettings['isJackpot']  = $settings->getJackpot();
-
-foreach ($supportedCountries as $country) {
-    @$ajaxedSettings['countryCoefficients'][$country] = @$settings->getCountryCoefficient($country);
-    @$ajaxedSettings['countryRates'][$country] = @$settings->getCountryRate($country);
-}
 $ajaxedSettings['countryCoefficients'] = (object)$ajaxedSettings['countryCoefficients'];
 $ajaxedSettings['countryRates'] = (object)$ajaxedSettings['countryRates'];
 

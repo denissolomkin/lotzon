@@ -7,8 +7,6 @@ class LotterySettings
 
     private $_model = null;
 
-    private $_countryCoefficients = array();
-    private $_countryRates = array();
     private $_countryPrizes = array();
     private $_total = 0;
     private $_jackpot = false;
@@ -41,28 +39,6 @@ class LotterySettings
     public function getJackpot()
     {
         return $this->_jackpot;
-    }
-
-    public function setCountryCoefficient($country, $coof) {
-        $this->_countryCoefficients[$country] = $coof;
-
-        return $this;
-    }
-
-    public function getCountryCoefficient($country)
-    {
-        return @$this->_countryCoefficients[$country];
-    }
-
-    public function setCountryRate($country, $rate) {
-        $this->_countryRates[$country] = $rate;
-
-        return $this;
-    }
-
-    public function getCountryRate($country)
-    {
-        return @$this->_countryRates[$country];
     }
 
     public function setPrizes($country, array $prizes)
