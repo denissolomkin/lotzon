@@ -79,9 +79,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getReviews($playerId);
     }
 
-    public function getTickets($playerId, $lotteryId=0)
+    public function getTickets($playerId)
     {
-        return $this->getProcessor()->getTickets($playerId,$lotteryId);
+        return $this->getProcessor()->getTickets($playerId);
     }
 
     public function checkNickname(Entity $player)
