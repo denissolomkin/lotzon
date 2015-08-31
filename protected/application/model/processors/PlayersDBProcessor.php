@@ -414,8 +414,8 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                 SUM(Money / IFNULL((SELECT `Coefficient` FROM `MUICountries` cn LEFT JOIN `MUICurrency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
                 SUM(Points) Points,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM `PlayerDates` WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM `LotteryTickets` WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
 
@@ -801,13 +801,13 @@ class PlayersDBProcessor implements IProcessor
         return $reviews;
     }
 
-    public function getTickets($playerId, $lotteryId)
+    public function getTickets($playerId)
     {
         $sql = "SELECT `Lotteries`.`Date`, `Lotteries`.`Combination` WinCombination,
-              `LotteryTickets`.`TicketWinCurrency`, `LotteryTickets`.`TicketWin`, `LotteryTickets`.`TicketWin`,
-              `LotteryTickets`.`TicketNum`, `LotteryTickets`.`Combination`, `LotteryTickets`.`PlayerId`,
-              `LotteryTickets`.`LotteryId`, `LotteryTickets`.`Id`, `LotteryTickets`.`DateCreated`
-              FROM `LotteryTickets`
+              `LotteryTicketsArchive`.`TicketWinCurrency`, `LotteryTicketsArchive`.`TicketWin`, `LotteryTicketsArchive`.`TicketWin`,
+              `LotteryTicketsArchive`.`TicketNum`, `LotteryTicketsArchive`.`Combination`, `LotteryTicketsArchive`.`PlayerId`,
+              `LotteryTicketsArchive`.`LotteryId`, `LotteryTicketsArchive`.`Id`, `LotteryTicketsArchive`.`DateCreated`
+              FROM `LotteryTicketsArchive`
               LEFT JOIN `Lotteries` ON `LotteryTickets`.`LotteryId`=`Lotteries`.`Id`
               WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
 

@@ -52,15 +52,14 @@ class TicketsDBProcessor implements IProcessor
 
         $where = array("`PlayerId` = :plid");
         if(isset($lotteryId))
-            $where[] = "`LotteryId` = :lotid";
+            $where[] = "`LotteryId` = ".(int)$lotteryId;
 
-        $sql = "SELECT * FROM `LotteryTickets` WHERE ".implode(' AND ', $where)." ORDER BY `DateCreated` ASC";
+        $sql = "SELECT * FROM `LotteryTicketsArchive` WHERE ".implode(' AND ', $where)." ORDER BY `DateCreated` ASC";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ":plid" => $player->getId(),
-                ":lotid" => $lotteryId
+                ":plid" => $player->getId()
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -85,11 +84,7 @@ class TicketsDBProcessor implements IProcessor
     public function getPlayerUnplayedTickets(Player $player, $lotteryId = 0)
     {
 
-        $where = array("`PlayerId` = :plid");
-        if(isset($lotteryId))
-            $where[] = "`LotteryId` = :lotid";
-
-        $sql = "SELECT * FROM `LotteryTickets` WHERE ".implode(' AND ', $where)." ORDER BY `DateCreated` ASC";
+        $sql = "SELECT * FROM `LotteryTickets` WHERE `PlayerId` = :plid AND `LotteryId` = :lotid ORDER BY `DateCreated` ASC";
 
         try {
             $sth = DB::Connect()->prepare($sql);

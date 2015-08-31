@@ -130,7 +130,7 @@ class LotteriesDBProcessor implements IProcessor
     {
 
         $sql = "SELECT  `lt` . *
-                FROM  `LotteryTickets` AS  `plt`
+                FROM  `LotteryTicketsArchive` AS  `plt`
                 LEFT JOIN  `Lotteries` AS  `lt` ON  `plt`.`LotteryId` =  `lt`.`Id`
                 WHERE `plt`.`PlayerId` = :plid AND `lt`.`Ready` =1
                 GROUP BY  `plt`.`LotteryId`
@@ -172,7 +172,7 @@ class LotteriesDBProcessor implements IProcessor
         $sql = "SELECT PlayerId, l.Date, LotteryId,
                 SUM(CASE WHEN TicketWinCurrency = 'MONEY' THEN TicketWin ELSE 0 END) AS MoneyWin,
                 SUM(CASE WHEN TicketWinCurrency = 'POINT' THEN TicketWin ELSE 0 END) AS PointsWin
-                FROM `LotteryTickets` t
+                FROM `LotteryTicketsArchive` t
                 LEFT JOIN Lotteries l
                   ON l.Id = t.LotteryId
                 WHERE `PlayerId` = :plid
