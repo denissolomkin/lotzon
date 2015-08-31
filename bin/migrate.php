@@ -44,7 +44,8 @@ function getStoredMigrations()
 function commitMigrations($migrations = array())
 {
     $queries = array();
-    $length = 56;
+    $length = 55;
+    $i = 0;
     $path = dirname(__FILE__).'/../migrations';
     if (is_dir($path) && ($openDir = opendir($path))) {
         while (($file = readdir($openDir)) !== false) {
@@ -62,36 +63,46 @@ function commitMigrations($migrations = array())
 
             try {
 
-                echo "=========================== ".count($queries)." FILES TO PROCESS =========================="."\n";
+                echo "=========================== FILES TO PROCESS: ".count($queries)." =========================="."\n";
                 $time = microtime();
                 indexLock();
 
-                foreach($queries as $file => $sql) {
+                foreach($queries as $file => $query) {
 
-                    $microtime = microtime();
-                    if(strlen($file)>$length)
-                        echo substr($file,0,$length-3)."...";
-                    else
-                        echo "$file";
+                    $filetime = microtime();
 
-                    $sth = DB::Connect()->prepare($sql);
-                    $sth->execute();
-                    while ($sth->nextRowset());
+                    echo "-> ".(strlen($file)>$length ? substr($file,0,$length-3)."..." : $file ).":\n";
+
+                    $query = array_filter(explode(';',$query));
+                    foreach($query as $sql){
+
+                        $sqltime = microtime();
+
+                        $echo = trim(preg_replace(array("/\r\n/","/\n/","/\r\t/","/  /")," ",$sql));
+
+                        echo "   ".(strlen($echo)>$length-2 ? substr($echo,0,$length-5)."..." : str_pad($echo.' ',$length-2,'.'));
+
+                        DB::Connect()->prepare($sql)->execute();
+
+
+                        echo " [COMMIT] ".(round($sqltime-microtime(),4))."s";
+                        echo "\n";
+                    }
 
                     DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
 
-                    echo " [COMMIT] ".(round($microtime-microtime(),4))."s\n";
+                    echo "<- File time: ".(round($filetime-microtime(),4))."s\n";
 
 
                 }
 
                 indexUnlock();
-                echo "=========================== TOTAL TIME ".(round($time-microtime(),4))."s =========================="."\n";
+                echo "=========================== TOTAL TIME: ".(round($time-microtime(),4))."s ========================="."\n";
 
             } catch (PDOException $e) {
 
                 indexUnlock();
-                die("\t[ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
+                die(" [ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
 
             }
 
