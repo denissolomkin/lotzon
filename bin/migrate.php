@@ -78,6 +78,7 @@ function commitMigrations($migrations = array())
 
                         $sqltime = microtime();
 
+                        $sql = str_replace('%%',';',$sql);
                         $echo = trim(preg_replace(array("/\r\n/","/\n/","/\r\t/","/  /")," ",$sql));
 
                         echo "   ".(strlen($echo)>$length-2 ? substr($echo,0,$length-5)."..." : str_pad($echo.' ',$length-2,'.'));
@@ -102,7 +103,7 @@ function commitMigrations($migrations = array())
             } catch (PDOException $e) {
 
                 indexUnlock();
-                die(" [ERROR] \n\tMESSAGE: {$e->getMessage()}\n");
+                die(" [ERROR] \n   MESSAGE: {$e->getMessage()}\n");
 
             }
 
