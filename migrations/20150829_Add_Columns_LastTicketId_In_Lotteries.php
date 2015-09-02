@@ -1,1 +1,0 @@
-ALTER TABLE `Lotteries` ADD `LastTicketId` BIGINT UNSIGNED NULL DEFAULT NULL AFTER `Combination`;
