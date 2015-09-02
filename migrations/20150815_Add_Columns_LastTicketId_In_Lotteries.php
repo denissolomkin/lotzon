@@ -1,0 +1,1 @@
+call addCol('Lotteries','LastTicketId','BIGINT UNSIGNED NULL DEFAULT NULL AFTER `Combination`');
