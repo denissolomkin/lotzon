@@ -12,24 +12,20 @@ CREATE TABLE IF NOT EXISTS `PlayerGamesTmp` (
   `Prize` float(9,2) DEFAULT NULL,
   `Result` tinyint(1) NOT NULL DEFAULT '0',
   `Currency` enum('MONEY','POINT','LOTZON') CHARACTER SET latin1 NOT NULL,
-  `Price` float(9,2) NOT NULL
+  `Price` float(9,2) NOT NULL,
+   KEY `MonthRating` (`GameId`,`Month`,`Price`),
+   KEY `PlayerId` (`PlayerId`), 
+   KEY `GameUid` (`GameUid`), 
+   KEY `GameId` (`GameId`), 
+   KEY `Month` (`Month`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
-");
-
-call isCol('PlayerGames','Month','SELECT null',"
-ALTER TABLE `PlayerGamesTmp` 
- ADD KEY `MonthRating` (`GameId`,`Month`,`Price`),
- ADD KEY `PlayerId` (`PlayerId`), 
- ADD KEY `GameUid` (`GameUid`), 
- ADD KEY `GameId` (`GameId`), 
- ADD KEY `Month` (`Month`)
 ");
 
 call isCol('PlayerGames','Month','SELECT null',"
 INSERT INTO `PlayerGamesTmp` (`Id`, `PlayerId`, `GameId`, `GameUid`, `Date`, `Month`, `Win`, `Lose`, `Draw`, `Prize`, `Result`, `Currency`, `Price`) 
 SELECT
 `Id`, `PlayerId`, `GameId`, `GameUid`, `Date`, UNIX_TIMESTAMP(DATE_FORMAT(FROM_UNIXTIME(`Date`),'%Y-%m-01')), `Win`, `Lose`, `Draw`, `Prize`, `Result`, `Currency`, `Price`
-FROM `PlayerGames` WHERE 1
+FROM `PlayerGames` WHERE `PlayerGames`.Id > IFNULL((SELECT max(Id) FROM `PlayerGamesTmp`),0)
 ");
 
 call isCol('PlayerGames','Month','SELECT null',"
