@@ -8,6 +8,7 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
 {
 
     const LIST_CACHE_KEY = "games::online";
+    const RATING_CACHE_KEY = "games::rating";
 
     public function init()
     {
@@ -17,7 +18,7 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function create(Entity $game)
     {
         $game = $this->getBackendProcessor()->create($game);
-        $this->incrementPlayersCountCache();
+        $this->getList(true);
         return $game;
     }
 
@@ -47,6 +48,28 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
         $game = $this->getBackendProcessor()->save($game);
         $this->getList(true);
         return $game;
+    }
+
+    public function recacheRating()
+    {
+        $rating = $this->getBackendProcessor()->getRating();
+        if (!Cache::init()->set(self::RATING_CACHE_KEY , $rating)) {
+            throw new ModelException("Unable to cache storage data", 500);
+        }
+
+        return true;
+    }
+
+    public function getRating($gameId)
+    {
+        if (($rating = Cache::init()->get(self::RATING_CACHE_KEY)) === false) {
+            $rating = $this->getBackendProcessor()->getRating();
+            if (!Cache::init()->set(self::LIST_CACHE_KEY , $rating)) {
+                throw new ModelException("Unable to cache storage data", 500);
+            }
+        }
+
+        return isset($rating[$gameId]) ? $rating[$gameId] : null;
     }
 
 

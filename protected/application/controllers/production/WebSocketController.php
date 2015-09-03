@@ -621,7 +621,9 @@ class WebSocketController implements MessageComponentInterface {
                             $date = mktime(0, 0, 0, date("n"), 1);
 
                             // $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
-                            $sql = "SELECT SUM(Price) Total, Currency FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a  GROUP BY Currency";
+                            $sql = "SELECT SUM(Price) Total, Currency
+                                    FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a
+                                    GROUP BY Currency";
 
                             try {
                                 $sth = DB::Connect()->prepare($sql);
@@ -670,6 +672,7 @@ class WebSocketController implements MessageComponentInterface {
 
                             $stat = $sth->fetch();
 
+                            $stat = OnlineGamesModel::instance()->getRating($game->getId(),$from->resourceId);
 
                             #echo $this->time() . " " . "Список текущих игр \n";
 
@@ -739,7 +742,9 @@ class WebSocketController implements MessageComponentInterface {
                     case 'rating':
 
                         if(isset($game)) {
-                            $date = mktime(0, 0, 0, date("n"), 1);
+
+                            /* $date = mktime(0, 0, 0, date("n"), 1);
+
 
                             $_rating = $this->rating($appName);
 
@@ -794,13 +799,13 @@ class WebSocketController implements MessageComponentInterface {
                                 ));
 
                             }
-
+                            */
                             #echo $this->time() . " " . "Топ + обновление данных игрока\n";
 
                             $from->send(json_encode(array(
                                 'path' => $type, // 'update'
                                 'res' => array(
-                                    'top' => $top,
+                                    'top' => OnlineGamesModel::instance()->getRating($game->getId()),
                                 ))));
                         }
 

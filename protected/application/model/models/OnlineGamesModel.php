@@ -33,4 +33,14 @@ class OnlineGamesModel extends Model
         return __CLASS__;
     }
 
+    public function recacheMonthRating()
+    {
+        return $this->getProcessor()->recacheMonthRating();
+    }
+
+    public function getMonthRating($gemeId)
+    {
+        return $this->getProcessor()->getMonthRating($gemeId);
+    }
+
 }
