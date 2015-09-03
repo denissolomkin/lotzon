@@ -135,7 +135,7 @@ class Migrate {
 
     function storeMigration($file)
     {
-        // DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
+        DB::Connect()->prepare("INSERT INTO `DatabaseMigrations` (`File`) VALUES (:f)")->execute(array(':f' => $file));
     }
 
 
