@@ -26,7 +26,7 @@ $memcache->connect('localhost', 11211);
 
 $loop = Factory::create();
 $webSock = new Server($loop);
-$webSock->listen(Config::instance()->wsPort, '0.0.0.0');
+$webSock->listen(Config::instance()->wsServerPort, '0.0.0.0');
 
 $server = new IoServer(
     new HttpServer(new WsServer(
