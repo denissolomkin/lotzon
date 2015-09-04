@@ -358,6 +358,11 @@ class WebSocketController implements MessageComponentInterface {
 
     }
 
+    /**
+     * @param ConnectionInterface $from
+     * @param string $msg
+     * @throws ModelException
+     */
     public function onMessage(ConnectionInterface $from, $msg) {
 
         if($player = $from->Session->get(Player::IDENTITY))
@@ -618,6 +623,9 @@ class WebSocketController implements MessageComponentInterface {
                     case 'update':
 
                         if(isset($game)) {
+
+
+                            /*
                             $date = mktime(0, 0, 0, date("n"), 1);
 
                             // $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
@@ -637,10 +645,17 @@ class WebSocketController implements MessageComponentInterface {
                             }
 
                             $fund = array();
-                            $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0; //(self::COMISSION) / 100;
+
                             foreach ($sth->fetchAll() as $data) {
                                 $fund[$data['Currency']] = $data['Currency'] == 'MONEY' ? ceil($data['Total'] * $comission * 100) / 100 : ceil($data['Total'] * $comission);
                             }
+                            $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0; //(self::COMISSION) / 100;
+                            */
+
+                            $fund  = OnlineGamesModel::instance()->getFund($game->getId());
+
+
+                            /*
 
 
                             $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`
@@ -671,6 +686,7 @@ class WebSocketController implements MessageComponentInterface {
                             }
 
                             $stat = $sth->fetch();
+                            */
 
                             $stat = OnlineGamesModel::instance()->getRating($game->getId(),$from->resourceId);
 

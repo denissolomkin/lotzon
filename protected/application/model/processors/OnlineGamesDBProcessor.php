@@ -93,16 +93,15 @@ class OnlineGamesDBProcessor
         return false;
     }
 
-    public function getRating($gameId=null,$playerId=null)
+    public function getFund($gameId=null)
     {
 
         $month = mktime(0, 0, 0, date("n"), 1);
 
-        $sql = "SELECT g.Currency Currency, sum(g.Win) W, g.GameId, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
+        $sql = "SELECT g.GameId, g.Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId :gameid AND g.`Month`=:month AND g.Price>0 ".
-                                (isset($playerId)?' AND PlayerId = '.(int)$playerId:'')."
+                                WHERE g.`Month`=:month AND g.`IsFee` = 1
                                 group by g.GameId, g.Currency, g.PlayerId
                                 order by Currency, R DESC, T DESC";
 
@@ -110,7 +109,43 @@ class OnlineGamesDBProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(
                 array(
-                    ':gameid' => $gameId ? "=".$gameId: "IS NOT NULL",
+                    ':month' => $month
+                ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $rating = array();
+
+        foreach ($sth->fetchAll() as $row) {
+
+            $cur = $row['Currency'];
+            $gid = $row['GameId'];
+
+            unset($row['Currency'],$row['GameId']);
+
+            $rating[$gid][$cur][$row['PlayerId']] = $row;
+        }
+
+        return isset($rating[$gameId]) ? $rating[$gameId] : null;
+    }
+
+    public function getRating($gameId=null,$playerId=null)
+    {
+
+        $month = mktime(0, 0, 0, date("n"), 1);
+
+        $sql = "SELECT g.GameId, g.Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
+                                FROM `PlayerGames` g
+                                JOIN Players p On p.Id=g.PlayerId
+                                WHERE g.`Month`=:month AND g.`IsFee` = 1
+                                group by g.GameId, g.Currency, g.PlayerId
+                                order by Currency, R DESC, T DESC";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(
+                array(
                     ':month' => $month
                 ));
         } catch (PDOException $e) {
