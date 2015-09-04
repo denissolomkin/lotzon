@@ -201,7 +201,7 @@ class OnlineGamesDBProcessor
 
             if(isset($playerId)){
 
-                $rating[$cur] = $row;
+                $rating[$cur] = $row['R'];
 
             } elseif(isset($gameId)){
 
@@ -222,9 +222,8 @@ class OnlineGamesDBProcessor
     {
         $month = mktime(0, 0, 0, date("n"), 1);
 
-        $sql = "SELECT g.Currency, sum(g.Win) W, count(g.Id) T, (sum(g.Win)*25+count(g.Id)) R
+        $sql = "SELECT g.Currency, (sum(g.Win)*25+count(g.Id)) R
                                 FROM `PlayerGames` g
-                                JOIN Players p On p.Id=g.PlayerId
                                 WHERE g.`Month`=:month AND g.`IsFee` = 1 AND g.`GameId` = :gameid AND g.`PlayerId` = :playerid
                                 group by g.Currency";
 
@@ -244,9 +243,7 @@ class OnlineGamesDBProcessor
         $rating = array();
 
         foreach ($sth->fetchAll() as $row) {
-
             $rating[$row['Currency']] = $row['R'];
-
         }
 
         return $rating;
