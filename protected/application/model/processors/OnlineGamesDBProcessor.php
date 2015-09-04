@@ -222,12 +222,13 @@ class OnlineGamesDBProcessor
     {
         $month = mktime(0, 0, 0, date("n"), 1);
 
-        $sql = "SELECT Currency, (sum(Win)*25+count(Id)) R FROM(
-                                SELECT Win, Id, Currency
-                                FROM `PlayerGames` g
-                                WHERE g.`Month`=:month AND g.`IsFee` = 1 AND g.`GameId` = :gameid AND g.`PlayerId` = :playerid
-                                ) t
-                                group by Currency";
+        $sql = "SELECT Currency, (sum(Win)*25+count(Id)) R
+                FROM(
+                  SELECT Win, Id, Currency
+                  FROM `PlayerGames` g
+                  WHERE g.`Month`=:month AND g.`IsFee` = 1 AND g.`GameId` = :gameid AND g.`PlayerId` = :playerid
+                ) t
+                group by Currency";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -239,7 +240,6 @@ class OnlineGamesDBProcessor
                 ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
-
         }
 
         $rating = array();
