@@ -205,11 +205,11 @@ class OnlineGamesDBProcessor
 
             } elseif(isset($gameId)){
 
-                $rating[$cur][$row['I']] = $row;
+                $rating[$cur]['#'.$row['I']] = $row;
 
             } else {
 
-                $rating[$gid][$cur][$row['I']] = $row;
+                $rating[$gid][$cur]['#'.$row['I']] = $row;
 
             }
         }
