@@ -8,7 +8,6 @@ use \Player, \Cache, \DB, \Config, \SettingsModel, \Application, \OnlineGamesMod
 
 Application::import(PATH_APPLICATION . '/model/Game.php');
 Application::import(PATH_APPLICATION . '/model/entities/Player.php');
-// Application::import(PATH_APPLICATION . '/model/entities/LotterySettings.php');
 Application::import(PATH_GAMES . '*');
 
 class WebSocketController implements MessageComponentInterface {
@@ -41,8 +40,10 @@ class WebSocketController implements MessageComponentInterface {
         $this->_loop = $loop;
         $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->periodicTimer();});
         $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
+
         $this->memcache = new \Memcache;
         $this->memcache->connect('localhost', 11211);
+        OnlineGamesModel::instance()->recacheRatingAndFund();
     }
 
     public function checkConnections()
@@ -358,6 +359,11 @@ class WebSocketController implements MessageComponentInterface {
 
     }
 
+    /**
+     * @param ConnectionInterface $from
+     * @param string $msg
+     * @throws ModelException
+     */
     public function onMessage(ConnectionInterface $from, $msg) {
 
         if($player = $from->Session->get(Player::IDENTITY))
@@ -618,61 +624,21 @@ class WebSocketController implements MessageComponentInterface {
                     case 'update':
 
                         if(isset($game)) {
-                            $date = mktime(0, 0, 0, date("n"), 1);
 
-                            // $sql = "SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` =:gameid GROUP BY `GameUid` , `Date` ) `All`";
-                            $sql = "SELECT SUM(Price) Total, Currency FROM (SELECT Price,Currency FROM `PlayerGames` WHERE `GameId` =:gameid AND Price>0 AND Date>:dt GROUP BY `GameUid` , `Date`) a  GROUP BY Currency";
+                            #echo $this->time() . " " . "Призовой фонд \n";
+                            $fund  = OnlineGamesModel::instance()->getFund($game->getId());
+                            $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0;
 
-                            try {
-                                $sth = DB::Connect()->prepare($sql);
-                                $sth->execute(
-                                    array(
-                                        ':gameid' => $game->getId(),
-                                        ':dt' => $date
-                                    ));
-                            } catch (PDOException $e) {
-                                throw new ModelException("Error processing storage query", 500);
+                            if(!empty($fund)){
+                                foreach ($fund as $currency => &$total) {
+                                    $total = ($currency == 'POINT') ? ceil($total * $comission) : ceil($total * $comission * 100) / 100;
+                                }
                             }
 
-                            $fund = array();
-                            $comission = $game->getOption('r') ? $game->getOption('r') / 100 : 0; //(self::COMISSION) / 100;
-                            foreach ($sth->fetchAll() as $data) {
-                                $fund[$data['Currency']] = $data['Currency'] == 'MONEY' ? ceil($data['Total'] * $comission * 100) / 100 : ceil($data['Total'] * $comission);
-                            }
-
-
-                            $sql = "SELECT count(`PlayerGames`.`Id`) Count, sum(`PlayerGames`.`Win`) `Win`
-                                        FROM `Players`
-                                        LEFT JOIN `PlayerGames`
-                                        ON `PlayerGames`.`PlayerId` = `Players`.`Id`
-                                        WHERE `Players`.`Id`=:id AND `PlayerGames`.`GameId` = :gameid AND `PlayerGames`.`Date`>:dt AND `PlayerGames`.`Price`>0
-                                        LIMIT 1";
-
-                            #echo $this->time() . " SELECT PLAYER INFO" . "\n";
-
-                            try {
-
-                                $sth = DB::Connect()->prepare($sql);
-                                $sth->execute(
-                                    array(
-                                        ':id' => $from->resourceId,
-                                        ':dt' => $date,
-                                        ':gameid' => $game->getId()
-                                    ));
-
-                            } catch (PDOException $e) {
-                                throw new ModelException("Error processing storage query", 500);
-                            }
-
-                            if (!$sth->rowCount()) {
-                                throw new ModelException("Player not found", 404);
-                            }
-
-                            $stat = $sth->fetch();
-
+                            #echo $this->time() . " " . "Рейтинг текущего игрока по этой игре \n";
+                            $rating = OnlineGamesModel::instance()->getPlayerRating($game->getId(),$from->resourceId);
 
                             #echo $this->time() . " " . "Список текущих игр \n";
-
                             $modes = $game->getModes();
 
                             $res = array(
@@ -683,8 +649,7 @@ class WebSocketController implements MessageComponentInterface {
                                 }) ? $modes : null),
                                 'variations' => $game->getVariations($_player['Lang']),
                                 'fund' => $fund,
-                                'count' => $stat['Count'],
-                                'win' => $stat['Win'] * 25,
+                                'rating' => $rating,
                                 'maxPlayers' => $game->getOption('p'),
                                 'create' => $game->getOption('f'),
                             );
@@ -739,7 +704,9 @@ class WebSocketController implements MessageComponentInterface {
                     case 'rating':
 
                         if(isset($game)) {
-                            $date = mktime(0, 0, 0, date("n"), 1);
+
+                            /* $date = mktime(0, 0, 0, date("n"), 1);
+
 
                             $_rating = $this->rating($appName);
 
@@ -747,46 +714,8 @@ class WebSocketController implements MessageComponentInterface {
                                 $top = $_rating['top'];
                             } else {
 
-                                $sql = "(SELECT g.Currency Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
-                                FROM `PlayerGames` g
-                                JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0 AND g.Currency='MONEY'
-                                group by g.PlayerId
-                                having T >
-                                (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` = :gameid AND `Date`>:dt AND Price>0 AND Currency='MONEY' GROUP BY `GameUid` , `Date` ) `All`) / count(*)
-                                order by R DESC, T DESC
-                                LIMIT 10)
-                                UNION
-                                (SELECT g.Currency Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
-                                FROM `PlayerGames` g
-                                JOIN Players p On p.Id=g.PlayerId
-                                where g.GameId = :gameid AND g.`Date`>:dt AND g.Price>0 AND g.Currency='POINT'
-                                group by g.PlayerId
-                                having T >
-                                (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `GameId` = :gameid AND `Date`>:dt AND Price>0 AND Currency='POINT' GROUP BY `GameUid`, `Date` ) `All`) / count(*)
-                                order by R DESC, T DESC
-                                LIMIT 10)";
-
-                                #echo $this->time() . " SELECT TOP\n";
-
-                                try {
-                                    $sth = DB::Connect()->prepare($sql);
-                                    $sth->execute(
-                                        array(
-                                            ':gameid' => $game->getId(),
-                                            ':dt' => $date
-                                        ));
-                                } catch (PDOException $e) {
-                                    throw new ModelException("Error processing storage query", 500);
-                                }
 
                                 $top = array();
-                                foreach ($sth->fetchAll() as $player) {
-                                    $player['O'] = ((isset($this->players($player['I'])['appName']) && $this->players($player['I'])['appName'] == $appName ? 1 : 0));
-                                    $cur = $player['Currency'];
-                                    unset($player['Currency']);
-                                    $top[$cur][] = $player;
-                                }
 
                                 $this->rating($appName, array(
                                     'top' => $top,
@@ -794,13 +723,13 @@ class WebSocketController implements MessageComponentInterface {
                                 ));
 
                             }
-
+                            */
                             #echo $this->time() . " " . "Топ + обновление данных игрока\n";
 
                             $from->send(json_encode(array(
                                 'path' => $type, // 'update'
                                 'res' => array(
-                                    'top' => $top,
+                                    'top' => OnlineGamesModel::instance()->getRating($game->getId()),
                                 ))));
                         }
 
@@ -1143,17 +1072,17 @@ class WebSocketController implements MessageComponentInterface {
         print_r($app->getPlayers());
 
         $sql_results = "INSERT INTO `PlayerGames`
-        (`PlayerId`, `GameId`, `GameUid`, `Date`, `Win`, `Lose`, `Draw`, `Result`, `Prize`, `Currency`, `Price`)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?)".
-            str_repeat(',(?,?,?,?,?,?,?,?,?,?,?)', count($app->getPlayers())-1);
+        (`PlayerId`, `GameId`, `GameUid`, `Date`, `Month`, `Win`, `Lose`, `Draw`, `Result`, `Prize`, `IsFee`, `Currency`, `Price`)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)".
+            str_repeat(',(?,?,?,?,?,?,?,?,?,?,?,?,?)', count($app->getPlayers())-1);
 
         if($app->getPrice()){
             $sql_transactions = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES ";
-            $comission = 1; //(100 - self::COMISSION) / 100;
         }
 
         $results = $transactions = array();
         $players = $app->getPlayers();
+        $month = mktime(0, 0, 0, date("n")-1, 1);
 
         foreach($players as $player)
         {
@@ -1164,9 +1093,6 @@ class WebSocketController implements MessageComponentInterface {
 
                 if($currency=='Money')
                     $win *= CountriesModel::instance()->getCountry($this->players($player['pid'])['Country'])->loadCurrency()->getCoefficient();
-
-                //if($win>0)
-                //    $win = $currency=='Money' ? ceil($win * $comission * 100) / 100 : ceil($win * $comission);
 
                 if($win==0)
                     continue;
@@ -1219,7 +1145,7 @@ class WebSocketController implements MessageComponentInterface {
                     $player['pid'],
                     $app->getCurrency(),
                     $win,
-                    (isset($balance)?$balance[$currency]:null),
+                    (isset($balance) ? $balance[$currency] : null),
                     $app->getTitle($player['lang']),
                     $app->getTime()
                 );
@@ -1230,11 +1156,13 @@ class WebSocketController implements MessageComponentInterface {
                 $app->getId(),
                 $app->getIdentifier(),
                 $app->getTime(),
+                $month,
                 ($player['result'] == 1?1:0),  // win
                 ($player['result'] == -1?1:0), // lose
                 ($player['result'] == 0?1:0),  // draw
                 $player['result'],
                 isset($player['win']) ? $player['win'] : $player['result']*$app->getPrice(),
+                $app->getPrice() ? 1 : 0,
                 $app->getCurrency(),
                 $app->getPrice()
             );

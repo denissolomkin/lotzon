@@ -1173,6 +1173,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                             </div>
                             <div class="rls-r-t-rating">
                                 <div class="icon-star"></div>
+                                <div class="rls-r-t-rating-money"></div>
                                 <div class="rls-r-t-rating-points"></div>
                             </div>
                             <div class="rls-r-t-balance">
