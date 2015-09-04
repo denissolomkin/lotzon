@@ -636,7 +636,7 @@ class WebSocketController implements MessageComponentInterface {
                             }
 
                             #echo $this->time() . " " . "Рейтинг текущего игрока по этой игре \n";
-                            $rating = OnlineGamesModel::instance()->getRating($game->getId(),$from->resourceId);
+                            $rating = OnlineGamesModel::instance()->getPlayerRating($game->getId(),$from->resourceId);
 
                             #echo $this->time() . " " . "Список текущих игр \n";
                             $modes = $game->getModes();

@@ -254,10 +254,10 @@ function updateCallback(receiveData)
     if(receiveData.res.key) {
 
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating .rls-r-t-rating-points").text(
-            (receiveData.res.rating && receiveData.res.rating.POINT ? receiveData.res.rating.POINT.R : "0"));
+            (receiveData.res.rating && receiveData.res.rating.POINT ? receiveData.res.rating.POINT : "0"));
 
         $(".ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating .rls-r-t-rating-money").text(
-            (receiveData.res.rating && receiveData.res.rating.MONEY ? receiveData.res.rating.MONEY.R : "0"));
+            (receiveData.res.rating && receiveData.res.rating.MONEY ? receiveData.res.rating.MONEY : "0"));
 
         $('.ngm-bk .ngm-rls-bk .rls-r .rls-mn-bk .bt').removeClass('button-disabled').removeAttr('disabled');
         $('.ngm-bk .cell .bt').first().click();

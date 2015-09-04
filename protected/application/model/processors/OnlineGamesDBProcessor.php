@@ -166,6 +166,7 @@ class OnlineGamesDBProcessor
 
             }
         }
+
         /* Rating For Concrete Game And Player */
         elseif($gameId AND $playerId) {
             $sql = "SELECT g.GameId, g.Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
@@ -211,6 +212,41 @@ class OnlineGamesDBProcessor
                 $rating[$gid][$cur][$row['I']] = $row;
 
             }
+        }
+
+        return $rating;
+
+    }
+
+    public function getPlayerRating($gameId=null,$playerId=null)
+    {
+        $month = mktime(0, 0, 0, date("n"), 1);
+
+        $sql = "SELECT g.Currency, sum(g.Win) W, count(g.Id) T, (sum(g.Win)*25+count(g.Id)) R
+                                FROM `PlayerGames` g
+                                JOIN Players p On p.Id=g.PlayerId
+                                WHERE g.`Month`=:month AND g.`IsFee` = 1 AND g.`GameId` = :gameid AND g.`PlayerId` = :playerid
+                                group by g.Currency";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(
+                array(
+                    ':month' => $month,
+                    ':gameid' => $gameId,
+                    ':playerid' => $playerId,
+                ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+
+        }
+
+        $rating = array();
+
+        foreach ($sth->fetchAll() as $row) {
+
+            $rating[$row['Currency']] = $row['R'];
+
         }
 
         return $rating;
