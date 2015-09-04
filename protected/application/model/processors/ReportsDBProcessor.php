@@ -153,7 +153,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
     {
 
         $sql = "
-        SELECT Concat('#',p.Id) Id, p.Nicname Name, count(g.Id) Total, sum(g.Win) Win, (sum(g.Win)*25+count(g.Id)) Rating
+        SELECT Concat('#',p.Id) Id, p.Nicname Name, g.Currency, count(g.Id) Total, sum(g.Win) Win, (sum(g.Win)*25+count(g.Id)) Rating
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
                                 LEFT JOIN OnlineGames o ON o.Id = GameId
@@ -164,16 +164,8 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
             (is_numeric($args['GameId'])?$args['GameId']:'1').
             (isset($args['Currency']) && $args['Currency']!=''?" AND `Currency` = '{$args['Currency']}'":'').
 
-                                " group by g.GameId, g.PlayerId
-                                having Total >
-    (SELECT COUNT(*) FROM ( SELECT 1 FROM `PlayerGames` WHERE `Date`>:from AND `Date`<:to AND Price>0 AND `GameId` =".
-
-            (is_numeric($args['GameId'])?$args['GameId']:'1').
-            (isset($args['Currency']) && $args['Currency']!=''?" AND `Currency` = '{$args['Currency']}'":'').
-
-            " GROUP BY `GameUid` , `Date` ) `All`) / count(*)
-                                order by Rating DESC, Total DESC
-                                LIMIT 10";
+                                " group by Currency, g.GameId, g.PlayerId
+                                order by Currency, Rating DESC, Total DESC";
 
         try {
             $sth = DB::Connect()->prepare($sql);

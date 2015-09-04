@@ -1028,9 +1028,9 @@ article .infos {padding:40px 20px 0 20px;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t {font:18px/1 Handbook-regular;color:black;height: 65px}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t > b {position:relative;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-avatar  {width: 50px;height: 50px;background-repeat: no-repeat;background-size: contain;float: left;border-radius: 70px;margin: 0px;margin-left: 20px;}
-.ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating {float: left;width: 90px;padding: 15px;}
-.ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating .icon-star{float: left;margin-right: 5px}
-.ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-balance  {position: relative;  float: left;height: 50px;width: 190px;padding: 5px 0;}
+.ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating {float: left;width: 100px;padding: 5px 15px;}
+.ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-rating .icon-star{font-size: 36px;float: left;margin-right: 5px}
+.ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-balance  {position: relative;  float: left;height: 50px;width: 180px;padding: 5px 0;}
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-t .rls-r-t-balance .wallet {font-size: 36px;color: black;float: left;margin-right: 10px;}
 
 .ngm-bk .ngm-rls-bk .rls-r .rls-r-ws {margin-bottom:38px;}
