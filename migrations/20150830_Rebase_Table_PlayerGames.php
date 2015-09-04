@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `PlayerGamesTmp` (
   `IsFee` tinyint(1) DEFAULT NULL,
   `Price` float(9,2) NOT NULL,
    KEY `Rating` (`Month`,`IsFee`),
+   KEY `PlayerRating` (`Month`,`IsFee`,`GameId`,`PlayerId`),
    KEY `PlayerId` (`PlayerId`), 
    KEY `GameUid` (`GameUid`), 
    KEY `GameId` (`GameId`), 
