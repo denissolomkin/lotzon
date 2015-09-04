@@ -1082,7 +1082,7 @@ class WebSocketController implements MessageComponentInterface {
 
         $results = $transactions = array();
         $players = $app->getPlayers();
-        $month = mktime(0, 0, 0, date("n")-1, 1);
+        $month = mktime(0, 0, 0, date("n"), 1);
 
         foreach($players as $player)
         {
