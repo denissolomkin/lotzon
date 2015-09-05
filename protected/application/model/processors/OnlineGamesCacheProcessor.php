@@ -63,7 +63,7 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
         /* Replace rating of all players by rating of concrete player */
         if(isset($playerId))
             foreach ($rating[$gameId] as $currency => &$players)
-                $players = isset($players[$playerId]) ? $players[$playerId] : null;
+                $players = isset($players["#".$playerId]) ? $players["#".$playerId] : null;
 
         /* Replace rating of all games by rating of concrete game or player */
         if(isset($gameId))
