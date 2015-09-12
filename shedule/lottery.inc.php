@@ -21,13 +21,33 @@ function timeToRunLottery()
 
 	foreach($gameSettings->getLotterySettings() as $game)
 	{
-		if($currentTime == $game['StartTime'])
+		if($currentTime > $game['StartTime'])
 		{
-            $gameSettings=$game;
-			return true;
+            $gameSettings = $game;
+			$lotteryTime = strtotime(date("Y-m-d")+$game['StartTime']);
+
+			$SQL = 'SELECT
+				Id,Ready
+			FROM
+				Lotteries
+			WHERE
+				Date = '.$lotteryTime.'
+			LIMIT 1';
+			$lottery = current(DB::Connect()->query($SQL)->fetch());
+			if (!$lottery) {
+				$gameSettings['lotteryTime'] = $lotteryTime;
+				return true;
+			} else {
+				if (!$lottery['Ready']) {
+					$gameSettings['lotteryId'] = $lottery['Id'];
+					$gameSettings['lotteryTime'] = $lotteryTime;
+					return true;
+				} else {
+					return false;
+				}
+			}
 		}
 	}
-
 	return false;
 }
 
@@ -63,7 +83,7 @@ function SetSerializeBallsRollBack()
  * rollback fot last lottery
  * @param $text #error description
  */
-function RollBack($text) {
+function RollBack($text = '') {
 	echo PHP_EOL.$text.PHP_EOL;
 	$time = microtime(true);
 	echo 'rollBack: '.PHP_EOL;
@@ -102,6 +122,8 @@ function ApplyLotteryCombinationAndCheck(&$comb)
 	} catch (Exception $e) {
 		$roll(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
 	}
+
+	return $comb;
 }
 
 function ApplyLotteryCombination(&$comb)
@@ -130,6 +152,8 @@ function ApplyLotteryCombination(&$comb)
 
 function SetLotteryCombination($comb, $simulation, $lastTicketId)
 {
+	global $gameSettings;
+
 	if(!$comb)
 	{
 		return;
@@ -179,7 +203,7 @@ function SetLotteryCombination($comb, $simulation, $lastTicketId)
 				(%d, '%s', %d, %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
         $SQL = sprintf($SQL,	implode(',', $comb['fields']),
-            time(),
+			$gameSettings['lotteryTime'],
             serialize($Combination),
 			$lastTicketId,
             $comb['WinnersCount'],
