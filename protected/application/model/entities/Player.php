@@ -60,8 +60,6 @@ class Player extends Entity
     private $_money       = 0;
     private $_gamesPlayed = 0;
 
-    private $_invitesCount = 0;
-
     /**
      * @var array Счётчик оставшихся оплачиваемых реф.ссылок в соц.сетях [имя соц.сети]=>[количество]
      */
@@ -491,14 +489,20 @@ class Player extends Entity
 
     public function getInvitesCount()
     {
-        return $this->_invitesCount;
+        $model = $this->getModelClass();
+
+        try {
+            $count = $model::instance()->getInvitesCount($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $count;
     }
 
-    public function setInvitesCount($ic)
+    public function getAvailableInvitesCount()
     {
-        $this->_invitesCount = $ic;
-
-        return $this;
+        return SettingsModel::instance()->getSettings('counters')->getValue('INVITES_PER_WEEK') - $this->getInvitesCount();
     }
 
     /**
@@ -540,20 +544,6 @@ class Player extends Entity
                 $this->_socialPostsCount[$key] = $value;
             }
         }
-        return $this;
-    }
-
-    public function decrementInvitesCount()
-    {
-        $this->setInvitesCount($this->getInvitesCount() - 1);
-        $model = $this->getModelClass();
-
-        try {
-            $model::instance()->decrementInvitesCount($this);
-        } catch (ModelException $e) {
-            throw new EntityException('INTERNAL_ERROR', 500);
-        }
-
         return $this;
     }
 
@@ -1565,7 +1555,7 @@ class Player extends Entity
                  ->setPoints($data['Points'])
                  ->setMoney($data['Money'])
                  ->setGamesPlayed($data['GamesPlayed'])
-                 ->setInvitesCount($data['InvitesCount'])
+                 //->setInvitesCount($data['InvitesCount'])
                  ->setSocialPostsCount(!empty($data['SocialPostsCount']) ? @unserialize($data['SocialPostsCount']) : array())
                  ->setCookieId($data['CookieId'])
                  ->setIp($data['Ip'])

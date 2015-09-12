@@ -100,7 +100,7 @@ class EmailInvite extends Entity
                 }
                 $this->validEmail();
 
-                if (!$this->getInviter()->getInvitesCount()) {
+                if (!($this->getInviter()->getAvailableInvitesCount()>0)) {
                     throw new EntityException("NO_MORE_INVITES", 403);                    
                 }
                 // check for player already exists

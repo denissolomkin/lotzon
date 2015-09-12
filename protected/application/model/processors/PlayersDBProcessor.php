@@ -1014,21 +1014,22 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function decrementInvitesCount(Entity $player)
+    public function getInvitesCount(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `InvitesCount` = :ic WHERE  `Id` = :plid";
+        $sql = "SELECT COUNT(*) FROM `EmailInvites` WHERE `InviterId` = :plid AND `Date` > :date";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':ic'  => $player->getInvitesCount(),
                 ':plid' => $player->getId(),
+                ':date' => strtotime('-7 days')
             ));
+
+            return $sth->fetchColumn();
+
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
-
-        return $player;
     }
 
     /**

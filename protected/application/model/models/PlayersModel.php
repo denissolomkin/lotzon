@@ -174,9 +174,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->changePassword($player);
     }
 
-    public function decrementInvitesCount(Entity $player)
+    public function getInvitesCount(Entity $player)
     {
-        return $this->getProcessor()->decrementInvitesCount($player);
+        return $this->getProcessor()->getInvitesCount($player);
     }
 
     public function decrementSocialPostsCount(Entity $player)
