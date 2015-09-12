@@ -446,11 +446,11 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                             </div>
 
                             <? foreach ($shop as $category) { ?>
-                                <? if ($fst && count($category->getItems()) > SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE')) {
+                                <? if ($fst && count($category->getItems()) > $counters->getValue('SHOP_PER_PAGE')) {
                                     $showMoreButton = true;
                                 } ?>
                                 <ul class="shop-category-items pz-cg" data-category="<?=$category->getId()?>"  <?=(!$fst ? 'style="display:none"':'')?>>
-                                <? $pager = SettingsModel::instance()->getSettings('counters')->getValue('SHOP_PER_PAGE') ?>
+                                <? $pager = $counters->getValue('SHOP_PER_PAGE') ?>
                                 <? $i = 0; ?>
                                 <? foreach ($category->getItems() as $item) { ?>
                                     <? if ($i == $pager) {
@@ -582,7 +582,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                                                 <img src="/tpl/img/default.jpg">
                                             <? } ?>
                                         </div>
-                                        <div class="rv-i-tl"><span class="rv-i-pl"><?=$reviewItem->getPlayerName()?></span> • <span class="rv-i-dt"><?=date('d.m.Y H:i', $reviewItem->getDate()+SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600)?></span> <span class="rv-i-ans"> <?=$MUI->getText('button-answer')?></span></div>
+                                        <div class="rv-i-tl"><span class="rv-i-pl"><?=$reviewItem->getPlayerName()?></span> • <span class="rv-i-dt"><?=date('d.m.Y H:i', $reviewItem->getDate()+$counters->getValue('HOURS_ADD')*3600)?></span> <span class="rv-i-ans"> <?=$MUI->getText('button-answer')?></span></div>
                                         <div class="rv-i-txt"><?=$reviewItem->getText()?></div>
                                             <? if ($reviewItem->getImage()) {?>
                                             <div class="rv-i-img">
@@ -720,7 +720,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                             <section class="_section profile-bonuses">
                                 <div class="pb-txt"><?=$MUI->getText('text-profile-bonus')?></div>
                                 <div class="if-bk">
-                                    <div class="if-tl"><nobr><?=$MUI->getText('text-invite-friend', array($bonuses->getValue('bonus_email_invite'), $player->getInvitesCount()))?></nobr></div>
+                                    <div class="if-tl"><nobr><?=$MUI->getText('text-invite-friend', array($bonuses->getValue('bonus_email_invite'), $counters->getValue('INVITES_PER_WEEK')))?></nobr></div>
                                     <div class="fm-bk">
                                         <div class="inp-bk">
                                             <input type="email" name="email" autocomplete="off" spellcheck="false" placeholder="<?=$MUI->getText('placeholder-friend-email');?>" />

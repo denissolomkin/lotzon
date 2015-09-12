@@ -15,7 +15,6 @@ class InvitesController extends \AjaxController
             if (!$this->session->get(Player::IDENTITY) instanceof PLayer) {
                 $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
             }
-            // $this->session->get(Player::IDENTITY)->markOnline();
         }
     }
 
@@ -29,7 +28,6 @@ class InvitesController extends \AjaxController
 
         try {
             $invite->create();
-            $this->session->get(Player::IDENTITY)->decrementInvitesCount();
 
             Common::sendEmail($invite->getEmail(), 'Приглашение на www.lotzon.com', 'player_invite', array(
                 'ivh'  => $invite->getHash(),
@@ -40,7 +38,7 @@ class InvitesController extends \AjaxController
         }
 
         $this->ajaxResponse(array(
-            'invitesCount' => $this->session->get(Player::IDENTITY)->getInvitesCount(),
+            'invitesCount' => $this->session->get(Player::IDENTITY)->getAvailableInvitesCount(),
         ));
     }
 }
