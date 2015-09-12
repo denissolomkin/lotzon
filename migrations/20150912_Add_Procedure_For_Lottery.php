@@ -212,7 +212,7 @@ t.Sum
 FROM
 Transactions AS t
 WHERE
-t.ObjectType = 'Розыгрыш'
+t.ObjectType = 'Lottery'
 AND
 t.ObjectId = LotteryId
 AND
@@ -269,13 +269,13 @@ Players AS p
 SET
 p.GamesPlayed = p.GamesPlayed - 1
 WHERE p.Id IN
-( SELECT DISTINCT t.PlayerId FROM Transactions AS t WHERE t.ObjectType = 'Розыгрыш' AND t.ObjectId = LotteryId AND t.date = lotteryDate);
+( SELECT DISTINCT t.PlayerId FROM Transactions AS t WHERE t.ObjectType = 'Lottery' AND t.ObjectId = LotteryId AND t.date = lotteryDate);
 
 #delete transactions
 DELETE
 FROM Transactions
 WHERE
-Transactions.ObjectType = 'Розыгрыш'
+Transactions.ObjectType = 'Lottery'
 AND
 Transactions.ObjectId = LotteryId
 AND
@@ -429,13 +429,13 @@ IF (playerMoney>0) THEN
 INSERT INTO Transactions
 (PlayerId, Currency, SUM, DATE, Balance, Description, ObjectType, ObjectId)
 VALUES
-( playerid, 'MONEY', playerMoney, lotteryDate, balMoney, 'Выигрыш в розыгрыше', 'Розыгрыш', lotteryId);
+( playerid, 'MONEY', playerMoney, lotteryDate, balMoney, 'Выигрыш в розыгрыше', 'Lottery', lotteryId);
 END IF;
 IF (playerPoints>0) THEN
 INSERT INTO Transactions
 (PlayerId, Currency, SUM, DATE, Balance, Description, ObjectType, ObjectId)
 VALUES
-( playerid, 'POINT', playerPoints, lotteryDate, balPoints, 'Выигрыш в розыгрыше', 'Розыгрыш', lotteryId);
+( playerid, 'POINT', playerPoints, lotteryDate, balPoints, 'Выигрыш в розыгрыше', 'Lottery', lotteryId);
 END IF;
 END LOOP;
 #for not showing warning of fetch
