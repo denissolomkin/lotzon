@@ -188,7 +188,7 @@ $(function(){
             button.parent().find('.it-msg-bk').remove();
             button.parents('.if-bk').find('.invites-count').text(data.res.invitesCount);
             button.parent().find('input[name="email"]').hide();
-            button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">Приглашение отправлено</span>');
+            button.parent().find('.inp-bk').append('<span class="it-msg-bk'+(data.status == 0 ? ' error':'')+'">Приглашение отправлено. Осталось '+data.res.invitesCount+' приглашений</span>');
             setTimeout(function(){
                 button.parent().find('.it-msg-bk').fadeOut(300);
                 button.parent().find('input[name="email"]').val("");
