@@ -109,29 +109,44 @@ class OnlineGamesDBProcessor
             throw new ModelException("Error processing storage query", 500);
         }
 
-        $rating = array();
+        $fund = array();
 
         foreach ($sth->fetchAll() as $row) {
 
-            $rating[$row['GameId']][$row['Currency']] = $row['Total'];
+            $fund[$row['GameId']][$row['Currency']] = $row['Total'];
 
         }
 
-        return ($gameId) ? (isset($rating[$gameId])?$rating[$gameId]:array()) : $rating;
+        return $fund;
     }
 
-    public function getRating($gameId=null,$playerId=null)
+    public function getRating($gameId=null)
     {
         $month = mktime(0, 0, 0, date("n"), 1);
+        echo $month;
+
+        if (ini_get('date.timezone')) {
+            echo 'date.timezone: ' . ini_get('date.timezone');
+        }
 
         /* Rating For All Games And Players */
-        if(!max($gameId,$playerId)) {
-            $sql = "SELECT g.GameId, g.Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
+
+            $sql = "(SELECT g.GameId, g.Currency, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R, 0 Top
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                WHERE g.`Month`=:month AND g.`IsFee` = 1
-                                group by g.GameId, g.Currency, g.PlayerId
-                                order by Currency, R DESC, T DESC";
+                                WHERE g.`Month`=:month AND g.`IsFee` = 1 ". ($gameId?' AND g.`GameId` = '.$gameId:'') ."
+                                group by g.GameId, g.Currency, g.PlayerId)
+
+                    UNION ALL
+
+                    (SELECT t.GameId, t.Currency, p.Nicname N,  p.Avatar A, p.Id I, t.Rating R, 1 Top
+                                FROM `OnlineGamesTop` t
+                                JOIN Players p On p.Id=t.PlayerId
+                                WHERE t.`Month`=:month ". ($gameId?' AND t.`GameId` = '.$gameId:'') ."
+                                )
+
+                                order by Currency, R DESC
+                                ";
 
             try {
                 $sth = DB::Connect()->prepare($sql);
@@ -143,52 +158,7 @@ class OnlineGamesDBProcessor
                 throw new ModelException("Error processing storage query", 500);
 
             }
-        }
 
-        /* Rating For Concrete Game And All Players */
-        elseif($gameId and !$playerId) {
-            $sql = "SELECT g.GameId, g.Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
-                                FROM `PlayerGames` g
-                                JOIN Players p On p.Id=g.PlayerId
-                                WHERE g.`Month`=:month AND g.`IsFee` = 1 AND g.GameId = :gameid
-                                group by g.GameId, g.Currency, g.PlayerId
-                                order by Currency, R DESC, T DESC";
-
-            try {
-                $sth = DB::Connect()->prepare($sql);
-                $sth->execute(
-                    array(
-                        ':month' => $month,
-                        ':gameid' => $gameId,
-                    ));
-            } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query", 500);
-
-            }
-        }
-
-        /* Rating For Concrete Game And Player */
-        elseif($gameId AND $playerId) {
-            $sql = "SELECT g.GameId, g.Currency, sum(g.Win) W, count(g.Id) T, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R
-                                FROM `PlayerGames` g
-                                JOIN Players p On p.Id=g.PlayerId
-                                WHERE g.`Month`=:month AND g.`IsFee` = 1 AND g.GameId = :gameid AND g.PlayerId = :playerid
-                                group by g.GameId, g.Currency, g.PlayerId
-                                order by Currency, R DESC, T DESC";
-
-            try {
-                $sth = DB::Connect()->prepare($sql);
-                $sth->execute(
-                    array(
-                        ':month' => $month,
-                        ':gameid' => $gameId,
-                        ':playerid' => $playerId,
-                    ));
-            } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query", 500);
-
-            }
-        }
 
         $rating = array();
 
@@ -196,22 +166,13 @@ class OnlineGamesDBProcessor
 
             $cur = $row['Currency'];
             $gid = $row['GameId'];
+            $top = $row['Top'];
 
-            unset($row['Currency'],$row['GameId']);
+            unset($row['Currency'],$row['GameId'], $row['Top']);
 
-            if(isset($playerId)){
-
-                $rating[$cur] = $row['R'];
-
-            } elseif(isset($gameId)){
-
-                $rating[$cur]['#'.$row['I']] = $row;
-
-            } else {
-
+            if(!isset($rating[$gid][$cur]['#'.$row['I']]) || $top)
                 $rating[$gid][$cur]['#'.$row['I']] = $row;
 
-            }
         }
 
         return $rating;
@@ -249,6 +210,115 @@ class OnlineGamesDBProcessor
         }
 
         return $rating;
+
+    }
+
+    public function saveGameTop($data)
+    {
+        $sql = "REPLACE INTO `OnlineGamesTop`
+                (`Id`, `PlayerId`, `GameId`, `Month`, `Currency`, `Rating`, `Increment`, `Period`, `Start`, `End`)
+                VALUES
+                (:id, :pid, :gid, :mon, :cur, :rat, :inc, :per, :str, :end)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'   => $data['Id'],
+                ':pid'  => $data['PlayerId'],
+                ':gid'  => $data['GameId'],
+                ':mon'  => $data['Month'],
+                ':cur'  => $data['Currency'],
+                ':rat'  => $data['Rating'],
+                ':inc'  => $data['Increment'],
+                ':per'  => $data['Period'],
+                ':str'  => strtotime($data['Start'],0),
+                ':end'  => strtotime($data['End'],0),
+            ));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        $data['Id'] = DB::Connect()->lastInsertId();
+        return $data;
+    }
+
+    public function getGameTop($month=null)
+    {
+        $month = $month ? : mktime(0, 0, 0, date("n"), 1);
+
+        $sql = "SELECT g.*, p.Avatar, p.Nicname
+                  FROM `OnlineGamesTop` g
+                  LEFT JOIN `Players` p ON p.Id = g.PlayerId
+                  WHERE g.`Month`=:month
+                  ORDER BY g.GameId, g.Currency, g.Rating
+                ";
+
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(
+                array(
+                    ':month' => $month,
+                ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $top = array();
+
+        foreach ($sth->fetchAll() as $row) {
+
+            $row['Start'] = date("H:i",$row['Start']);
+            $row['End'] = date("H:i",$row['End']);
+            $top[] = $row;
+        }
+
+        return $top;
+
+    }
+
+    public function incrementGameTop()
+    {
+
+        $month = mktime(0, 0, 0, date("n"), 1);
+        $time  = strtotime(date("H:i"), 0);
+        $now   = time();
+
+        $sql = "UPDATE `OnlineGamesTop`
+                  SET Rating = Rating + Increment, `LastUpdate` = :now
+                  WHERE `Month` = :month AND `Start` <= :time AND `End` >= :time AND `Period` > 0 AND `LastUpdate` < :now - Period*60
+                ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(
+                array(
+                    ':month' => $month,
+                    ':time' => $time,
+                    ':now' => $now,
+                ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
+        }
+
+    }
+
+    public function deleteGameTop($id)
+    {
+
+        $sql = "DELETE FROM `OnlineGamesTop` WHERE `Id` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id' => $id
+            ));
+
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to process delete query", 500);
+        }
+
+        return true;
 
     }
 
