@@ -1373,6 +1373,7 @@ $('.delete-trigger').on('click', function() {
     $("#delete-user").find('.cls').off('click').on('click', function() {
         $("#delete-user").modal('hide');
     });
+
     $("#delete-user").find('.rm').off('click').on('click', function() {
         $.ajax({
             url: "/private/users/delete/" + plid,

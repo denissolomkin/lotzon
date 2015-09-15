@@ -33,9 +33,26 @@ class OnlineGamesModel extends Model
         return __CLASS__;
     }
 
-    public function getRating($gameId = null, $playerId = null)
+    public function getRating($gameId = null)
     {
-        return $this->getProcessor()->getRating($gameId, $playerId);
+        $rating = $this->getProcessor()->getRating($gameId);
+
+        if($gameId) {
+            $rating = isset($rating[$gameId]) ? $rating[$gameId] : array();
+        }
+
+        return $rating;
+    }
+
+    public function getFund($gameId = null)
+    {
+        $fund = $this->getProcessor()->getFund($gameId);
+
+        if($gameId) {
+            $fund = isset($fund[$gameId]) ? $fund[$gameId] : array();
+        }
+
+        return $fund;
     }
 
     public function getPlayerRating($gameId = null, $playerId = null)
@@ -43,9 +60,25 @@ class OnlineGamesModel extends Model
         return $this->getProcessor()->getPlayerRating($gameId, $playerId);
     }
 
-    public function getFund($gameId = null)
+
+    public function getGameTop($month = null)
     {
-        return $this->getProcessor()->getFund($gameId);
+        return $this->getProcessor()->getGameTop($month);
+    }
+
+    public function saveGameTop($data = array())
+    {
+        return $this->getProcessor()->saveGameTop($data);
+    }
+
+    public function deleteGameTop($id = null)
+    {
+        return $this->getProcessor()->deleteGameTop($id);
+    }
+
+    public function incrementGameTop()
+    {
+        return $this->getProcessor()->incrementGameTop();
     }
 
     public function recacheRatingAndFund()

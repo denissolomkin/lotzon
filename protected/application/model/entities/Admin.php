@@ -45,6 +45,7 @@ class Admin extends Entity
                 'qgames'=>array('icon'=>'puzzle-piece','name'=>'Конструктор игр'),
                 'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
                 'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
+                'gametop'=>array('icon'=>'star','name'=>'Наши в топе'),
                 'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
             )),
 
