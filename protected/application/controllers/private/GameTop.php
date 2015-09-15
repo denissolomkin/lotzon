@@ -19,12 +19,6 @@ class GameTop extends \PrivateArea
 
     public function indexAction()
     {
-        //1441065600 1441065600
-        $month = mktime(0, 0, 0, date("n"), 1);
-        echo $month;
-        if (ini_get('date.timezone')) {
-            echo 'date.timezone: ' . ini_get('date.timezone');
-        }
         $month = (strtotime($this->request()->get('month', null))?:mktime(0, 0, 0, date("n"), 1));
         $gameTop = OnlineGamesModel::instance()->getGameTop($month);
         $onlineGames = array();
