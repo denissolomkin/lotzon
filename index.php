@@ -24,10 +24,6 @@ $memcache->connect('localhost', 11211);
 $storage = new NativeSessionStorage(array(), new MemcacheSessionHandler($memcache));
 $session = new Session($storage);
 $session->start();
-/*
-Session2::connect()->start();
-*/
-
 
 $dispatcher = new \SlimController\Slim(array(
     'view'                       => '\Slim\LayoutView',
