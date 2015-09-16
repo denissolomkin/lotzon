@@ -20,7 +20,6 @@ class OnlineGamesDBProcessor
                 ':e'     => $game->isEnabled(),
             ));
         } catch (PDOException $e) {
-            echo $e->getMessage();
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
         $game->setId(DB::Connect()->lastInsertId());
@@ -123,11 +122,6 @@ class OnlineGamesDBProcessor
     public function getRating($gameId=null)
     {
         $month = mktime(0, 0, 0, date("n"), 1);
-        echo $month;
-
-        if (ini_get('date.timezone')) {
-            echo 'date.timezone: ' . ini_get('date.timezone');
-        }
 
         /* Rating For All Games And Players */
 
@@ -234,7 +228,6 @@ class OnlineGamesDBProcessor
                 ':end'  => strtotime($data['End'],0),
             ));
         } catch (PDOException $e) {
-            echo $e->getMessage();
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
 
