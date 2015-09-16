@@ -13,6 +13,7 @@
       </style>
       <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
       <link rel="stylesheet" href="/theme/admin/datepicker/css/datepicker.css">
+      <link rel="stylesheet" href="/theme/admin/datetimepicker/css/bootstrap-datetimepicker.min.css">
       <link href="/theme/admin/bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
       <!-- Include Summernote CSS files -->
       <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
@@ -28,6 +29,7 @@
       <!-- Include Summernote JS file -->
       <script src="/theme/admin/lib/summernote/summernote.js"></script>
       <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
+      <script src="/theme/admin/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
   </head>
   <body style="">
       <div class="container-fluid text-center">

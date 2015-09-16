@@ -211,6 +211,17 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\GameBots:index',
         'post' => 'controllers\admin\GameBots:save',
     ),
+    '/private/gametop/'      => array(
+        'get' => 'controllers\admin\GameTop:index',
+        'post' => 'controllers\admin\GameTop:save',
+    ),
+    '/private/gametop/getPlayer/:playerId' => array(
+        'get' => 'controllers\admin\GameTop:getPlayer'
+    ),
+    '/private/gametop/delete/:id' => array(
+        'get' => 'controllers\admin\GameTop:delete'
+    ),
+
     '/private/gamebots/uploadPhoto' => array(
         'post'    => 'controllers\admin\GameBots:uploadPhoto',
     ),

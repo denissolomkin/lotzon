@@ -194,7 +194,7 @@ function quitCallback() {
                     '<div class="nm">'+value.N+(value.O?' <b>•</b>':'')+'</div>' +
                     '<div class="ifo">'+
                     '<div class="icon-star"></div> '+
-                    Math.ceil(value.R)+ // ' <b>|</b> '+value.T+' <b>|</b> '+Math.ceil((parseInt(value.W)))+
+                    Math.ceil(value.R)+
                     '</div>' +
                     '</div></li>';
 

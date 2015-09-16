@@ -51,7 +51,7 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
         return $game;
     }
 
-    public function getRating($gameId = null, $playerId = null)
+    public function getRating($gameId = null)
     {
         if (($rating = Cache::init()->get(self::RATING_CACHE_KEY)) === false) {
             $rating = $this->getBackendProcessor()->getRating();
@@ -60,22 +60,7 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
             }
         }
 
-        /* Replace rating of all players by rating of concrete player */
-        if(isset($playerId))
-            foreach ($rating[$gameId] as $currency => &$players)
-                $players = isset($players["#".$playerId]) ? $players["#".$playerId] : null;
-
-        /* Replace rating of all games by rating of concrete game or player */
-        if(isset($gameId))
-            $rating = $rating[$gameId];
-
         return $rating;
-
-    }
-
-    public function getPlayerRating($gameId = null, $playerId = null)
-    {
-        return $this->getBackendProcessor()->getPlayerRating($gameId, $playerId);
 
     }
 
@@ -88,7 +73,37 @@ class OnlineGamesCacheProcessor extends BaseCacheProcessor implements IProcessor
             }
         }
 
-        return isset($fund[$gameId]) ? $fund[$gameId] : array();
+        return $fund;
+    }
+
+    public function getPlayerRating($gameId = null, $playerId = null)
+    {
+        return $this->getBackendProcessor()->getPlayerRating($gameId, $playerId);
+
+    }
+
+    public function getGameTop($month)
+    {
+        return $this->getBackendProcessor()->getGameTop($month);
+
+    }
+
+    public function saveGameTop($data)
+    {
+        return $this->getBackendProcessor()->saveGameTop($data);
+
+    }
+
+    public function deleteGameTop($id)
+    {
+        return $this->getBackendProcessor()->deleteGameTop($id);
+
+    }
+
+    public function incrementGameTop()
+    {
+        return $this->getBackendProcessor()->incrementGameTop();
+
     }
 
     public function recacheRatingAndFund()
