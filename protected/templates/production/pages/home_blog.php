@@ -15,7 +15,7 @@
 
 					<div class="post-item clearfix">
 						<div class="post-item-img">
-							<img src="/img/post_img.jpg" alt="">
+							<img src="/res/img/post_img.jpg" alt="">
 						</div>
 						<div class="post-item-description">
 							<div class="post-item-inf clearfix">
@@ -34,7 +34,7 @@
 
 					<div class="post-item clearfix">
 						<div class="post-item-img">
-							<img src="/img/post_img.jpg" alt="">
+							<img src="/res/img/post_img.jpg" alt="">
 						</div>
 						<div class="post-item-description">
 							<div class="post-item-inf clearfix">

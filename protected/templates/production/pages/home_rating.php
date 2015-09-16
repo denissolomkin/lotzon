@@ -24,7 +24,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">670</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -48,7 +48,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">23</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -72,7 +72,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">670</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -96,7 +96,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">1</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -120,7 +120,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">670</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -144,7 +144,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">670</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -168,7 +168,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">3</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>
@@ -192,7 +192,7 @@
 					<div class="raiting-item clearfix">
                         <a href = 'communication_user_detail'>
 						<div class="raiting-img">
-							<img src="/img/raiting_img.png" alt="">
+							<img src="/res/img/raiting_img.png" alt="">
 							<div class="raiting-position">670</div>
 						</div>
 						<div class="raiting-name">Nathan Hayes</div>

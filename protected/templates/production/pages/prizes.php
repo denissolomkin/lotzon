@@ -28,7 +28,7 @@
 						<div class="prize">
 							<div class="prize-content">
 								<div class="prize-img">
-									<img src="/img/prize.png" alt="">
+									<img src="/res/img/prize.png" alt="">
 								</div>
 								<div class="prize-name">Ноутбук Asus X551MA</div>
 								<div class="prize-price">520 000<span>баллов</span></div>
@@ -40,7 +40,7 @@
                             <a href="prize_exchange_not_filled">
 							<div class="prize-content">
 								<div class="prize-img">
-									<img src="/img/prize.png" alt="">
+									<img src="/res/img/prize.png" alt="">
 								</div>
 								<div class="prize-name">Ноутбук Asus X551MA</div>
 								<div class="prize-price">520 000<span>баллов</span></div>
@@ -52,7 +52,7 @@
 						<div class="prize prize-finished">
 							<div class="prize-content">
 								<div class="prize-img">
-									<img src="/img/prize.png" alt="">
+									<img src="/res/img/prize.png" alt="">
 								</div>
 								<div class="prize-name">Ноутбук Asus X551MA</div>
 								<div class="prize-price">520 000<span>баллов</span></div>
@@ -63,7 +63,7 @@
 						<div class="prize prize-limited">
 							<div class="prize-content">
 								<div class="prize-img">
-									<img src="/img/prize.png" alt="">
+									<img src="/res/img/prize.png" alt="">
 								</div>
 								<div class="prize-name">Ноутбук Asus X551MA</div>
 								<div class="prize-price">520 000<span>баллов</span></div>
