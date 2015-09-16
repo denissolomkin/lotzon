@@ -12,10 +12,13 @@ class Index extends \SlimController\SlimController
 
     public $lang = '';
     public $country = '';
-    public $ref     = 0;
+    public $ref = 0;
 
-    public function indexAction($page='tickets')
+    public function indexAction($page = 'home_blog')
     {
+
+        die($this->page($page));
+
         $session = new Session();
         // validate registration
         if ($vh = $this->request()->get('vh')) {
@@ -28,12 +31,12 @@ class Index extends \SlimController\SlimController
         $this->ref = $this->request()->get('ref', null);
 
         try {
-            $geoReader =  new Reader(PATH_MMDB_FILE);
+            $geoReader = new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country->isoCode;
 
-            if (!CountriesModel::instance()->isCountry($country)){
+            if (!CountriesModel::instance()->isCountry($country)) {
                 $this->country = CountriesModel::instance()->defaultCountry();
-                $this->lang  = CountriesModel::instance()->defaultLang();
+                $this->lang = CountriesModel::instance()->defaultLang();
             } else {
                 $this->country = $country;
                 $this->lang = CountriesModel::instance()->getCountry($country)->getLang();
@@ -62,7 +65,7 @@ class Index extends \SlimController\SlimController
                     // do nothing just show promo page
                 }
             }
-            $this->landing();    
+            $this->landing();
         } else {
             // FORCE UPDATE POINTS AND MONEY FOR FIX WEBSOCKET SESSION
             try {
@@ -88,9 +91,17 @@ class Index extends \SlimController\SlimController
                 }
             }
         }
-        
+
     }
 
+    protected function page($page)
+    {
+        $this->render("production/pages/$page", array(
+            'layout' => 'production/layout.php',
+            'page' => $page,
+        ));
+
+    }
     protected function game($page)
     {
 
@@ -126,6 +137,7 @@ class Index extends \SlimController\SlimController
         );
 
         $this->render('production/game_new', array(
+            'layout'      => false,
             'templates'   => $templates,
             'gameInfo'    => $gameInfo,
             'shop'        => ShopModel::instance()->loadShop(),
@@ -135,7 +147,6 @@ class Index extends \SlimController\SlimController
             'player'      => $player,
             'tickets'     => TicketsModel::instance()->getPlayerUnplayedTickets($player),
             'MUI'         => StaticTextsModel::instance()->setLang($this->lang),
-            'layout'      => false,
             'bonuses'     => SettingsModel::instance()->getSettings('bonuses'),
             'counters'    => SettingsModel::instance()->getSettings('counters'),
             'lotteries'   => LotteriesModel::instance()->getPublishedLotteriesList(SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
