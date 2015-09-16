@@ -25,7 +25,7 @@
 
 					<div class="message new admin">
 						<div class="message-img">
-							<img src="/img/comment_img.jpg" alt="">
+							<img src="/res/img/comment_img.jpg" alt="">
 						</div>
 						<div class="message-name">Админ</div>
 						<div class="message-text">
@@ -35,7 +35,7 @@
 
 					<div class="message new online">
 						<div class="message-img">
-							<img src="/img/comment_img.jpg" alt="">
+							<img src="/res/img/comment_img.jpg" alt="">
 						</div>
 						<div class="message-name">Doris Pena</div>
 						<div class="message-text">
@@ -45,7 +45,7 @@
 
 					<div class="message">
 						<div class="message-img">
-							<img src="/img/comment_img.jpg" alt="">
+							<img src="/res/img/comment_img.jpg" alt="">
 						</div>
 						<div class="message-name">Doris Pena</div>
 						<div class="message-text">
@@ -55,7 +55,7 @@
 
 					<div class="message">
 						<div class="message-img">
-							<img src="/img/comment_img.jpg" alt="">
+							<img src="/res/img/comment_img.jpg" alt="">
 						</div>
 						<div class="message-name">Doris Pena</div>
 						<div class="message-text">

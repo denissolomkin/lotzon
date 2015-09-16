@@ -121,11 +121,11 @@
 					<div class="popup-banner">
 						<div class="title">Баннер 468x60</div>
 						<div class="popup-banner-slide clearfix">
-							<img src="/img/popup_banner.jpg" alt="">
+							<img src="/res/img/popup_banner.jpg" alt="">
 							<a href="#" class="popup-banner-download">скачать</a>
 						</div>
 						<div class="popup-banner-copy clearfix">
-							<input type="text" value="http://lotzon.com/tpl/img/banners/banner-468x60.gif?ref=234679">
+							<input type="text" value="http://lotzon.com/tpl/res/img/banners/banner-468x60.gif?ref=234679">
 							<div class="popup-banner-copy-btn">копировать ссылку</div>
 						</div>
 						<p>
