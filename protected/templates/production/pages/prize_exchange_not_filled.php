@@ -9,7 +9,7 @@
 				<div class="content-box-item">
 					<div class="ex-prize clearfix">
 						<div class="ex-prize-img">
-							<img src="/img/prize.png" alt="">
+							<img src="/res/img/prize.png" alt="">
 						</div>
 						<div class="ex-prize-description">
 							<div class="ex-prize-name">Ноутбук Asus X551MA</div>

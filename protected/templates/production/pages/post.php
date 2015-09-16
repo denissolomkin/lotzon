@@ -28,7 +28,7 @@
 
 					<div class="post-description clearfix">
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum laudantium consequuntur, quam provident aut sint corporis harum dolorum iure tempore amet debitis enim tempora nihil iusto doloremque quibusdam at, veniam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum laudantium consequuntur, quam provident aut sint corporis harum dolorum iure tempore amet debitis enim tempora nihil iusto doloremque quibusdam at, veniam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum laudantium consequuntur, quam provident aut sint corporis harum dolorum iure tempore amet debitis enim tempora nihil iusto doloremque quibusdam at, veniam.
-						<img src="/img/post.jpg" alt="">
+						<img src="/res/img/post.jpg" alt="">
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum aliquam velit id sapiente nihil pariatur, accusantium laudantium dignissimos repellat et nam cupiditate iste natus, numquam est perspiciatis expedita. Porro, unde. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum aliquam velit id sapiente nihil pariatur, accusantium laudantium dignissimos repellat et nam cupiditate iste natus, numquam est perspiciatis expedita. Porro, unde.
 					</div>
 
@@ -46,7 +46,7 @@
 							<div class="comment-content">
 								<div class="comment-top">
 									<div class="comment-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="comment-inf">
 										<span class="comment-name">Gerald Barnett</span>
@@ -69,7 +69,7 @@
 								<div class="comment-content">
 									<div class="comment-top">
 										<div class="comment-img">
-											<img src="/img/comment_img.jpg" alt="">
+											<img src="/res/img/comment_img.jpg" alt="">
 										</div>
 										<div class="comment-inf">
 											<span class="comment-name">Gerald Barnett</span>
@@ -94,7 +94,7 @@
 							<div class="comment-content">
 								<div class="comment-top">
 									<div class="comment-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="comment-inf">
 										<span class="comment-name">Gerald Barnett 863487568736</span>
@@ -117,7 +117,7 @@
 							<div class="comment-content">
 								<div class="comment-top">
 									<div class="comment-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="comment-inf">
 										<span class="comment-name">Gerald Barnett</span>

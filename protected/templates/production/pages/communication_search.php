@@ -31,7 +31,7 @@
 					<div>
 						<div class="c-friend online clearfix">
 							<div class="c-friend-img">
-								<img src="/img/user_img.jpg" alt="">
+								<img src="/res/img/user_img.jpg" alt="">
 							</div>
 							<div class="c-friend-description">
 								<div class="c-friend-name">Andrew Price</div>
@@ -41,7 +41,7 @@
 
 						<div class="c-friend clearfix">
 							<div class="c-friend-img">
-								<img src="/img/user_img.jpg" alt="">
+								<img src="/res/img/user_img.jpg" alt="">
 							</div>
 							<div class="c-friend-description">
 								<div class="c-friend-name">Andrew Price</div>
@@ -52,7 +52,7 @@
 
 						<div class="c-friend online clearfix">
 							<div class="c-friend-img">
-								<img src="/img/user_img.jpg" alt="">
+								<img src="/res/img/user_img.jpg" alt="">
 							</div>
 							<div class="c-friend-description">
 								<div class="c-friend-name">Andrew Price</div>
@@ -62,7 +62,7 @@
 
 						<div class="c-friend clearfix">
 							<div class="c-friend-img">
-								<img src="/img/user_img.jpg" alt="">
+								<img src="/res/img/user_img.jpg" alt="">
 							</div>
 							<div class="c-friend-description">
 								<div class="c-friend-name">Andrew Price</div>

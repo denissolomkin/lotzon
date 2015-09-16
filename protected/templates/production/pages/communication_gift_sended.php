@@ -9,7 +9,7 @@
 				<div class="content-box-item communication-gift clearfix">
 
 					<div class="cg-friend-img">
-						<img src="/img/comment_img.jpg" alt="">
+						<img src="/res/img/comment_img.jpg" alt="">
 					</div>
 					<div class="cg-friend-name">Thomas Price</div>
 

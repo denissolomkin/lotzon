@@ -44,7 +44,7 @@
 						<div class="c-user-inf-wrapper clearfix">
 							<div class="c-user-inf">
 								<div class="c-user-img">
-									<img src="/img/user_img.jpg" alt="">
+									<img src="/res/img/user_img.jpg" alt="">
 									<div class="c-user-nickname">Zachary Stewart</div>
 								</div>
 								<div class="c-social">
