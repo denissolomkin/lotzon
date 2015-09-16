@@ -10,7 +10,7 @@
 
 					<div class="ae-top clearfix">
 						<div class="ae-user-img">
-							<img src="/img/user_img.jpg" alt="">
+							<img src="/res/img/user_img.jpg" alt="">
 						</div>
 
 						<div class="ae-inf">

@@ -32,7 +32,7 @@
 								<div class="close-notification"></div>
 								<div class="c-notification-top">
 									<div class="c-notification-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="c-notificaion-inf">
 										<span class="c-notification-name">Gerald Barnett</span>
@@ -49,7 +49,7 @@
 								<div class="close-notification"></div>
 								<div class="c-notification-top">
 									<div class="c-notification-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="c-notificaion-inf">
 										<span class="c-notification-name">Gerald Barnett</span>
@@ -66,7 +66,7 @@
 								<div class="close-notification"></div>
 								<div class="c-notification-top">
 									<div class="c-notification-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="c-notificaion-inf">
 										<span class="c-notification-name">Gerald Barnett</span>
@@ -88,7 +88,7 @@
 						<div class="comment-content">
 							<div class="comment-top">
 								<div class="comment-img">
-									<img src="/img/comment_img.jpg" alt="">
+									<img src="/res/img/comment_img.jpg" alt="">
 								</div>
 								<div class="comment-inf">
 									<span class="comment-name">Gerald Barnett</span>
@@ -111,7 +111,7 @@
 							<div class="comment-content">
 								<div class="comment-top">
 									<div class="comment-img">
-										<img src="/img/comment_img.jpg" alt="">
+										<img src="/res/img/comment_img.jpg" alt="">
 									</div>
 									<div class="comment-inf">
 										<span class="comment-name">Gerald Barnett</span>
@@ -136,7 +136,7 @@
 						<div class="comment-content">
 							<div class="comment-top">
 								<div class="comment-img">
-									<img src="/img/comment_img.jpg" alt="">
+									<img src="/res/img/comment_img.jpg" alt="">
 								</div>
 								<div class="comment-inf">
 									<span class="comment-name">Gerald Barnett 863487568736</span>
@@ -159,7 +159,7 @@
 						<div class="comment-content">
 							<div class="comment-top">
 								<div class="comment-img">
-									<img src="/img/comment_img.jpg" alt="">
+									<img src="/res/img/comment_img.jpg" alt="">
 								</div>
 								<div class="comment-inf">
 									<span class="comment-name">Gerald Barnett</span>

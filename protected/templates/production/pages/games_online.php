@@ -14,31 +14,31 @@
 				<div class="content-box-item games-chance">
 					<div class="game">
 						<div class="game-img">
-							<img src="/img/game.png" alt="">
+							<img src="/res/img/game.png" alt="">
 						</div>
 						<div class="game-name">Крестики-нолики 4x4</div>
 					</div>
 					<div class="game">
 						<div class="game-img">
-							<img src="/img/game.png" alt="">
+							<img src="/res/img/game.png" alt="">
 						</div>
 						<div class="game-name">Крестики-нолики 4x4</div>
 					</div>
 					<div class="game">
 						<div class="game-img">
-							<img src="/img/game.png" alt="">
+							<img src="/res/img/game.png" alt="">
 						</div>
 						<div class="game-name">Крестики-нолики 4x4</div>
 					</div>
 					<div class="game">
 						<div class="game-img">
-							<img src="/img/game.png" alt="">
+							<img src="/res/img/game.png" alt="">
 						</div>
 						<div class="game-name">Крестики-нолики 4x4</div>
 					</div>
 					<div class="game">
 						<div class="game-img">
-							<img src="/img/game.png" alt="">
+							<img src="/res/img/game.png" alt="">
 						</div>
 						<div class="game-name">Крестики-нолики 4x4</div>
 					</div>
