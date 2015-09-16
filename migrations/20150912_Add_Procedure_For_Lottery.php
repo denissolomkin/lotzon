@@ -1,6 +1,11 @@
-DELIMITER $$
+CREATE TABLE IF NOT EXISTS `LotteryTmp` (
+`playerId` int(11) NOT NULL DEFAULT '0',
+`points` int(11) NOT NULL DEFAULT '0',
+`money` float(9,2) NOT NULL DEFAULT '0.00',
+PRIMARY KEY (`playerId`)
+) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
-DROP PROCEDURE IF EXISTS `applyLottery`$$
+DROP PROCEDURE IF EXISTS `applyLottery`;
 
 CREATE PROCEDURE `applyLottery`(IN LotteryId INT)
 BEGIN
@@ -143,9 +148,9 @@ CLOSE rCursor;
 #save transactions and update players balance and statistic
 CALL saveLottery(lotteryDate, LotteryId);
 CALL cleanLottery(LotteryId);
-END$$
+END;
 
-DROP PROCEDURE IF EXISTS `applyLotteryLast`$$
+DROP PROCEDURE IF EXISTS `applyLotteryLast`;
 
 CREATE PROCEDURE `applyLotteryLast`()
 BEGIN
@@ -165,9 +170,9 @@ LIMIT 1;
 IF (lastLotteryId IS NOT NULL) THEN
 CALL applyLottery(lastLotteryId);
 END IF;
-END$$
+END;
 
-DROP PROCEDURE IF EXISTS `cleanLottery`$$
+DROP PROCEDURE IF EXISTS `cleanLottery`;
 
 CREATE PROCEDURE `cleanLottery`(IN LotteryId INT)
 BEGIN
@@ -186,9 +191,9 @@ l.id = LotteryId;
 DELETE FROM `LotteryTickets` WHERE id<=lotteryLastTicketId;
 #delete temp
 DELETE FROM LotteryTmp;
-END$$
+END;
 
-DROP PROCEDURE IF EXISTS `rollBackLottery`$$
+DROP PROCEDURE IF EXISTS `rollBackLottery`;
 
 CREATE PROCEDURE `rollBackLottery`(IN LotteryId INT)
 BEGIN
@@ -283,9 +288,9 @@ Transactions.date = lotteryDate;
 CALL rollBackTickets(LotteryId);
 #delete temp table
 DELETE FROM LotteryTmp;
-END$$
+END;
 
-DROP PROCEDURE IF EXISTS `rollBackLotteryLast`$$
+DROP PROCEDURE IF EXISTS `rollBackLotteryLast`;
 
 CREATE PROCEDURE `rollBackLotteryLast`()
 BEGIN
@@ -305,9 +310,9 @@ LIMIT 1;
 IF (lastLotteryId IS NOT NULL) THEN
 CALL rollBackLottery(lastLotteryId);
 END IF;
-END$$
+END;
 
-DROP PROCEDURE IF EXISTS `rollBackTickets`$$
+DROP PROCEDURE IF EXISTS `rollBackTickets`;
 
 CREATE PROCEDURE `rollBackTickets`(IN LotteryId INT)
 BEGIN
@@ -377,9 +382,9 @@ FROM
 LotteryTicketsArchive AS t
 LIMIT 1;
 CLOSE rCursor;
-END$$
+END;
 
-DROP PROCEDURE IF EXISTS `saveLottery`$$
+DROP PROCEDURE IF EXISTS `saveLottery`;
 
 CREATE PROCEDURE `saveLottery`(IN lotteryDate INT, IN lotteryId INT)
 BEGIN
@@ -447,6 +452,5 @@ FROM
 LotteryTmp AS lt
 LIMIT 1;
 CLOSE rCursor;
-END$$
+END;
 
-DELIMITER ;
