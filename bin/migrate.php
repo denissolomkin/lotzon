@@ -25,10 +25,22 @@ class Migrate {
     private $sqltime = 0;
     private $sql = 0;
 
+    /*
+     * description to mysqli direct connection
+     */
+    private $mysqli;
+
     function __construct()
     {
         $this->indexOn = dirname(__FILE__).'/../index.html';
         $this->indexOff = $this->indexOn.'.off';
+
+        /*
+         * connect to mysql directly
+         */
+        $conf = (object) \Config::instance()->dbConnectionProperties;
+        $conf->dsn = preg_replace("/(.*)=/", "", explode(';', $conf->dsn));
+        $this->mysqli = new mysqli($conf->dsn[0], $conf->user, $conf->password, $conf->dsn[1]);
     }
 
     function run()
@@ -97,13 +109,11 @@ class Migrate {
         $this->startQuery();
         //echo $this->sql;
         // $this->sql = trim(preg_replace(array("/\r\n/", "/\n/", "/\r\t/", "/  /"), " ", $this->sql));
-        $conf = (object) \Config::instance()->dbConnectionProperties;
-        $conf->dsn = preg_replace("/(.*)=/", "", explode(';', $conf->dsn));// 'mysql:host=127.0.0.1;dbname=lotzon_testbed',
-        $mysqli = new mysqli($conf->dsn[0], $conf->user, $conf->password, $conf->dsn[1]);
+
 
         // $mysqli->multi_query("DROP PROCEDURE IF EXISTS AddColumnUnlessExists;CREATE PROCEDURE p(IN id_val INT) BEGIN INSERT INTO test(id) VALUES(id_val); END;DROP PROCEDURE IF EXISTS p;");
         // while ($mysqli->next_result());
-        $mysqli->multi_query($this->sql);
+        $this->mysqli->multi_query($this->sql);
         // while ($mysqli->next_result());
 
 
@@ -167,7 +177,9 @@ class Migrate {
 
                         $query = array_filter(explode(';', $query));
                         foreach ($query as $sql) {
-
+                            if (trim($sql)=='') {
+                                continue;
+                            }
                             $this->sql = $sql;
                             $this->PDOQuery();
 
