@@ -12,7 +12,7 @@
 						<div class="c-user-inf">
 							<div class="c-user-img online">
 								<div class="c-user-delete"></div>
-								<img src="/img/user_img.jpg" alt="">
+								<img src="/res/img/user_img.jpg" alt="">
 							</div>
 						</div>
 

@@ -12,7 +12,7 @@
 						<a href="communication_new_message"><div class="nm-change">Изменить получателя</div></a>
 						<div class="nm-friend">
 							<div class="nm-friend-img">
-								<img src="/img/comment_img.jpg" alt="">
+								<img src="/res/img/comment_img.jpg" alt="">
 							</div>
 							<div class="nm-friend-name">Evgeniy Patterson</div>
 						</div>
