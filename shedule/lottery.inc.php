@@ -24,8 +24,7 @@ function timeToRunLottery()
 		if($currentTime > $game['StartTime'])
 		{
             $gameSettings = $game;
-			$lotteryTime = strtotime(date("Y-m-d")+$game['StartTime']);
-
+			$lotteryTime = strtotime(date("Y-m-d"))+$game['StartTime'];
 			$SQL = 'SELECT
 				Id,Ready
 			FROM
@@ -33,7 +32,7 @@ function timeToRunLottery()
 			WHERE
 				Date = '.$lotteryTime.'
 			LIMIT 1';
-			$lottery = current(DB::Connect()->query($SQL)->fetch());
+			$lottery = DB::Connect()->query($SQL)->fetch();
 			if (!$lottery) {
 				$gameSettings['lotteryTime'] = $lotteryTime;
 				return true;
