@@ -1,0 +1,71 @@
+// BONUSES ---------------------------------------- //
+
+.cabinet .content-box-tab span
+  display: inline
+
+.cabinet .content-box-tab
+  width: auto
+
+.cabinet .content-box-tab.cabinet-balance-tab
+  width: 275px
+  float: right
+  font-size: 20px
+  padding-left: 25px
+  border-left: 1px solid #fff
+
+.cabinet .content-box-tab:after
+  display: none
+
+.cabinet-balance-count:first-child
+  margin-right: 25px
+
+.cabinet-balance-count span
+  margin-left: 5px
+  font-size: 12px
+  font-weight: normal
+
+
+
+// BALANCE MENU ----------------------------- //
+
+.balance-menu
+  width: 275px
+  padding: 70px 40px 30px
+  top: 0
+
+.balance-menu-inf
+  display: none
+
+.balance-menu-actions .balance-menu-item
+  width: auto
+
+  &:first-child
+    float: none
+
+  &:last-child
+    float: none
+
+.balance-menu-item
+  margin-bottom: 10px
+  background: #b7cfd3
+  font-weight: bold
+  border: none
+
+  &.active:after
+    content: ""
+    display: block
+    width: 15px
+    height: 15px
+    border-radius: 50%
+    background: #fff
+    position: absolute
+    left: 7px
+    top: 10px
+
+  &:hover
+    background: #d1e3e5
+
+  &:last-child
+    margin-bottom: 0
+
+// ----------------------------------- //

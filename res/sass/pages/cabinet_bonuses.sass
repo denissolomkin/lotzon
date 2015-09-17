@@ -1,0 +1,264 @@
+.cabinet-bonuses p
+  font-size: 15px
+  line-height: 1.27
+  margin-bottom: 20px
+
+.cabinet-bonuses .title
+  font-size: 21px
+  line-height: 1.29
+  margin-bottom: 20px
+
+// ----------------------------------- //
+
+.bonus-form
+  margin-bottom: 50px
+
+.bonus-form .title
+  margin-bottom: 13px
+
+.bonus-form input
+  border-width: 0 0 1px 0
+  border-style: solid
+  border-color: #B9B9B9
+  padding: 4px
+  width: 100%
+  margin-bottom: 20px
+  font-style: italic
+  font-size: 15px
+
+.bonus-form button
+  width: 100%
+  display: block
+  border: 1px solid #7F7F7F
+  border-radius: 2px
+  background: transparent
+  color: #7F7F7F
+  cursor: pointer
+  font-size: 15px
+  padding: 6px 0
+
+// ----------------------------------- //
+
+.bonus-share-post
+  margin-bottom: 50px
+
+.bonus-social-item
+  width: 38px
+  height: 38px
+  border-radius: 50%
+  display: block
+  float: left
+  margin: 0 14px 10px 0
+  background: url(img/sprite.png)
+
+  &:last-child
+    margin-right: 0
+
+.bonus-social-item.soc-1
+  background-position: 0 -336px
+
+.bonus-social-item.soc-2
+  background-position: -47px -336px
+
+.bonus-social-item.soc-3
+  background-position: -95px -336px
+
+.bonus-social-item.soc-4
+  background-position: -144px -336px
+
+.bonus-social-item.soc-5
+  background-position: -192px -336px
+
+.bonus-social-item.soc-6
+  background-position: -240px -336px
+
+.bonus-social-item.soc-7
+  background-position: -288px -336px
+
+.bonus-social-item.soc-8
+  background-position: -336px -336px
+
+.bonus-social-item.soc-9
+  background-position: -385px -336px
+
+.bonus-social-item.soc-10
+  background-position: -433px -336px
+
+.bonus-social-item.soc-11
+  background-position: -481px -336px
+
+.bonus-social-item.soc-12
+  background-position: -529px -336px
+
+.bonus-social-item.soc-13
+  background-position: -578px -336px
+
+
+// ----------------------------------- //
+
+.bonus-share-url
+  margin-bottom: 50px
+
+.bonus-share-url-copy input,
+.bonus-share-url-copy-btn
+  width: 100%
+  display: block
+  border: 1px solid #7F7F7F
+  border-radius: 2px
+  background: transparent
+  color: #000
+  font-size: 15px
+
+.bonus-share-url-copy input
+  padding: 6px 10px
+  margin-bottom: 20px
+
+.bonus-share-url-copy-btn
+  padding: 6px 0
+  text-align: center
+  cursor: pointer
+
+// ----------------------------------- //
+
+.bonus-banner-view-item
+  float: left
+  padding-left: 60px
+  margin: 0 20px 30px 0
+  position: relative
+
+.bonus-banner-view-img
+  width: 50px
+  height: 50px
+  background: url(img/sprite.png) 0 -51px
+  float: left
+  margin-left: -60px
+
+.bonus-banner-view-size
+  font-size: 16px
+
+.bonus-banner-view-btn
+  text-decoration: underline
+  cursor: pointer
+  position: absolute
+  bottom: 0
+  left: 60px
+
+  &:hover
+    text-decoration: none
+
+// ----------------------------------- //
+
+@media (min-width: 500px)
+
+  .bonus-form input
+    float: left
+    width: 70%
+    margin: 0 5% 0 0
+
+  .bonus-form button
+    width: 25%
+    float: left
+
+  .bonus-share-url-copy input
+    margin: 0 5% 0 0
+    width: 70%
+    float: left
+
+  .bonus-share-url-copy-btn
+    width: 25%
+    float: left
+
+
+
+
+
+
+// POPUP BANNER -------------------- //
+
+.popup-banner
+  display: none
+  position: fixed
+  top: 50px
+  left: 50px
+  width: 518px
+  box-shadow: 0 0 15px rgba(0,0,0,.5)
+  border-radius: 2px
+  padding: 20px 25px
+  background: #fff
+  z-index: 100
+
+  & .close
+    position: absolute
+    width: 55px
+    height: 70px
+    top: 0
+    left: 100%
+    z-index: 99
+    overflow: hidden
+    cursor: pointer
+
+    &:before
+      content: ""
+      width: 40px
+      height: 40px
+      position: relative
+      top: 15px
+      display: block
+      background: url(img/sprite.png) -83px -251px
+      box-shadow: 0 0 15px rgba(0,0,0,.5)
+
+  & .title
+    font-size: 21px
+    margin-bottom: 30px
+
+  & p
+    line-height: 1.2
+    margin-bottom: 0
+
+.popup-banner-slide
+  margin-bottom: 20px
+
+  & img
+    display: block
+    width: 100%
+    height: auto
+
+.popup-banner-download
+  float: right
+  color: #000
+  text-decoration: underline
+
+  &:hover
+    text-decoration: none
+
+.popup-banner-copy
+  position: relative
+  padding-left: 35px
+
+  & input
+    display: block
+    width: 100%
+    border: 1px solid #A5A5A5
+    border-radius: 2px
+    padding: 7px 10px
+    margin-bottom: 5px
+
+  &:before
+    clear: none
+    content: ""
+    display: block
+    position: absolute
+    top: 9px
+    left: 0
+    width: 22px
+    height: 14px
+    background: url(img/sprite.png) -419px -88px
+
+.popup-banner-copy-btn
+  text-decoration: underline
+  display: table
+  margin: 0 auto 20px
+  cursor: pointer
+
+  &:hover
+    text-decoration: none

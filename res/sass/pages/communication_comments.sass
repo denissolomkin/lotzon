@@ -1,0 +1,256 @@
+.communication-comments
+  padding-bottom: 100px
+
+.comment
+  margin-bottom: 30px
+
+.comment-content
+  position: relative
+
+.comment-top
+  display: table
+  width: 100%
+  margin-bottom: 10px
+
+.comment-img
+  display: table-cell
+  width: 50px
+  height: 50px
+
+  & img
+    display: block
+    width: 100%
+    height: auto
+    border-radius: 50%
+
+.comment-inf
+  display: table-cell
+  vertical-align: middle
+  padding-left: 10px
+
+.comment-name
+  font-weight: bold
+  margin-right: 13px
+
+.comment-date
+  font-size: 13px
+  color: #5a5a5a
+
+  & span:first-child
+    margin-right: 15px
+
+.comment-reply
+  display: none
+  font-size: 21px
+  color: #4a90e2
+  position: absolute
+  top: 45%
+  left: 17%
+
+  & .separator
+    display: none
+
+.comment-like
+  opacity: 0
+  position: absolute
+  top: 15px
+  right: 0
+  padding-left: 30px
+
+  &:before
+    content: ""
+    display: block
+    width: 18px
+    height: 15px
+    background: url(img/sprite.png) -364px -54px
+    position: absolute
+    top: 2px
+    left: 0
+
+.comment-like-mob
+  display: none
+
+
+
+// LIKED COMMENT -------------------------- //
+
+.comment.liked > .comment-content
+
+  & .comment-like
+    opacity: 1
+
+  & .comment-inf
+    padding-right: 60px
+
+
+
+// COMMENT ANSWER -------------------------- //
+
+.comment.answer
+  margin-top: 20px
+  padding-left: 20px
+
+
+
+
+// COMMENT ACTIVE FOR MOBILE ---------------- //
+
+@media (max-width: $screen-sm-min)
+
+  .comment.active > .comment-content
+
+    &:before
+      content: ""
+      display: block
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      opacity: .95
+      background: #fff
+      z-index: 1
+
+    & .comment-reply
+      display: block
+      width: 50%
+      position: absolute
+      top: 40%
+      left: 25%
+      z-index: 1
+
+    & .comment-like-mob
+      display: block
+      width: 30px
+      height: 25px
+      background: url(img/sprite.png) -345px -192px
+      position: absolute
+      top: 4px
+      right: 0
+      z-index: 1
+
+
+
+
+
+
+// COMMENT NOTIFICATIONS ------------- //
+
+.c-notifications
+  margin: 0 -10px 20px
+  position: relative
+
+  & .title
+    padding: 6px 10px
+    background: #F2F8F8
+    position: relative
+    font-size: 14px
+
+.c-show-notifications
+  text-decoration: underline
+  cursor: pointer
+
+  &:hover
+    text-decoration: none
+
+.c-hide-notifications
+  display: block
+  width: 15px
+  height: 15px
+  background: url(img/sprite.png) -156px -55px
+  position: absolute
+  top: 8px
+  right: 10px
+  cursor: pointer
+
+// ---------------------------------- //
+
+.c-notifications-list
+  display: none
+  position: absolute
+  top: 0
+  left: 0
+  box-shadow: 0 2px 5px rgba(0,0,0,.5)
+  background: #fff
+  padding: 45px 0 10px
+  z-index: 2
+
+  & .close-list
+    position: absolute
+    top: 8px
+    right: 10px
+
+.c-notification
+  position: relative
+  font-size: 14px
+  margin-bottom: 5px
+  padding: 5px 10px
+
+  &:hover
+    background: #F2F8F8
+
+.close-notification
+  width: 10px
+  height: 10px
+  background: #fff
+  border: 1px solid #000
+  border-radius: 50%
+  position: absolute
+  top: 8px
+  right: 10px
+  z-index: 3
+
+.c-notification-top
+  padding-left: 50px
+  min-height: 45px
+  position: relative
+
+.c-notification-img
+  width: 40px
+  height: 40px
+  position: absolute
+  top: 0
+  left: 0
+
+  & img
+    display: block
+    width: 100%
+    height: auto
+    border-radius: 50%
+
+.c-notification-name
+  font-weight: bold
+
+.c-notification-date
+  font-size: 13px
+  color: #5a5a5a
+  white-space: nowrap
+
+  & span:first-child
+    margin-right: 5px
+
+.c-notification-question
+  margin-top: 3px
+
+  & span
+    color: #4A8FEC
+
+
+.c-notification-description
+  line-height: 1.4
+
+
+
+
+
+// COMMENT FORM ------------------------ //
+
+.communication-comments
+
+  & .message-form-wrapper
+    position: absolute
+    bottom: 0
+    left: 0
+
+  & .message-form
+    padding: 0 10px
