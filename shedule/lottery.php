@@ -5,6 +5,7 @@ require_once('lottery.inc.php');
 
 if(@$_SERVER['argv'][1] == 'roll') {
     RollBack();
+    return true;
 }
 
 if(timeToRunLottery()) {
