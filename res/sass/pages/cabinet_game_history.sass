@@ -1,0 +1,117 @@
+.gh-circle
+  content: ""
+  display: inline-block
+  width: 10px
+  height: 10px
+  background: #B7CFD3
+  border-radius: 50%
+
+.cabinet-game-history .content-box-cat a:last-child
+  padding: 0 15px
+
+.cabinet-game-history .content-box-cat a:first-child:after
+  @extend .gh-circle
+  margin-left: 13px
+
+// ------------------------------- //
+
+.gh-header
+  display: none
+
+.gh-item
+  margin: 0 -10px 20px
+  padding: 5px 10px
+  cursor: pointer
+
+  &:hover
+    background: #FAFAFA
+
+.gh-my-game .gh-date:after
+  @extend .gh-circle
+  margin-left: 20px
+
+.gh-inf
+  margin-bottom: 10px
+
+  &:last-child
+    margin-bottom: 0
+
+.gh-inf-name
+  margin-right: 15px
+
+.gh-combination .gh-inf-name
+  margin-bottom: 10px
+  display: inline-block
+
+.gh-numbers
+  display: inline-block
+
+.gh-number
+  display: inline-block
+  width: 35px
+  height: 35px
+  background: #FFE800
+  border-radius: 50%
+  margin-right: 5px
+  font-size: 16px
+  line-height: 35px
+  text-align: center
+
+  &:last-child
+    margin-right: 0
+
+
+
+// ------------------------------- //
+
+@media (min-width: 520px)
+
+  .gh-header
+    display: block
+    margin: 0 -10px 20px
+    padding: 0 10px
+    text-transform: uppercase
+    font-weight: bold
+    color: #3f3f3f
+
+  .gh-header div
+    float: left
+
+  .gh-date-name
+    width: 25%
+
+  .gh-combination-name
+    width: 55%
+
+  .gh-winners-name
+    width: 20%
+
+  // ---------------------- //
+
+  .gh-item
+    margin: 0 -10px 0
+    padding: 10px
+    line-height: 35px
+
+  .gh-inf
+    margin-bottom: 0
+    float: left
+
+  .gh-date
+    width: 25%
+
+  .gh-winners
+    width: 20%
+    position: relative
+    left: 55%
+
+  .gh-combination
+    width: 55%
+    position: relative
+    left: -20%
+
+  .gh-inf-name
+    display: none
+
+  .gh-combination .gh-inf-name
+    display: none

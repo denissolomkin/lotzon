@@ -1,0 +1,53 @@
+// RATING ------------------------------- //
+
+.raiting-item
+  float: left
+  cursor: pointer
+  width: 280px
+  margin: 0 10px 30px 0
+  padding: 10px 10px 10px 130px
+  position: relative
+
+  &:hover
+    background: #F2F8F8
+
+  &:nth-child(odd)
+    margin-right: 0
+
+.raiting-img
+  float: left
+  width: 100px
+  height: 100px
+  margin-left: -120px
+  position: relative
+
+.raiting-position
+  position: absolute
+  top: 0
+  left: 0
+  width: 35px
+  height: 35px
+  background: url(img/sprite.png) -400px -190px
+  color: #fff
+  font-size: 13px
+  line-height: 30px
+  padding-right: 5px
+  text-align: center
+
+.raiting-img img
+  display: block
+  width: 100%
+  height: auto
+  border-radius: 50%
+
+.raiting-name
+  font-size: 16px
+
+.raiting-inf
+  position: absolute
+  bottom: 10px
+  left: 130px
+  font-size: 14px
+
+.raiting-inf td:nth-child(even)
+  padding-left: 10px

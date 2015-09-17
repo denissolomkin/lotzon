@@ -1,0 +1,54 @@
+.content-box-item.c-search
+  padding-top: 120px
+
+.c-search
+  & .friends-search
+    display: table
+    margin: auto
+    position: static
+
+    & input
+      &:focus
+        border-color: #4A4A4A
+
+      &:first-child
+        margin-bottom: 15px
+
+  & .cancel
+    color: #FF4767
+    text-decoration: none
+
+    &:hover
+      text-decoration: underline
+
+.c-friend-pal
+  font-size: 14px
+  display: inline-block
+  line-height: 23px
+  text-align: center
+  text-decoration: none
+  border: 1px solid #000
+  border-radius: 2px
+  color: #000
+  padding: 0 25px
+  margin-top: 25px
+
+.c-friend-pal-inf
+  margin-top: 25px
+  margin-bottom: 10px
+
+
+
+
+@media (min-width: 550px)
+
+  .content-box-item.c-search
+    padding-top: 90px
+
+  .c-search .friends-search
+    & input
+      display: inline-block
+
+      &:first-child
+        margin-bottom: 0
+        margin-right: 50px

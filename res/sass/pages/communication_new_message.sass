@@ -1,0 +1,120 @@
+.content-box-item.communication-new-message
+  padding-top: 40px
+
+.nm-search
+  position: relative
+  max-width: 354px
+  margin: 0 auto 100px
+
+.enter-friend-name
+  width: 210px
+  display: block
+  margin: auto
+  border-width: 0 0 1px
+  border-style: solid
+  border-color: #9B9B9B
+  padding: 0 3px 1px
+  line-height: 1.4
+
+  &.error
+    border-color: #FF4343
+
+    &::-webkit-input-placeholder
+      color: #FF4343
+
+    &:-moz-placeholder
+      color: #FF4343
+
+    &::-moz-placeholder
+      color: #FF4343
+
+  &:focus
+    border-width: 0 0 2px
+    border-color: #98B9BE
+    padding-bottom: 0
+
+.nm-search-results
+  position: absolute
+  top: 95%
+  left: 0
+  width: 100%
+  max-width: 354px
+  padding: 20px 0
+  border-radius: 2px
+  background: #fff
+  box-shadow: 2px 2px 6px rgba(0,0,0,.3)
+  z-index: 100
+
+.nm-friend
+  padding: 10px 20px
+
+  &:hover
+    background: #F2F7F8
+    cursor: pointer
+
+.nm-friend-img
+  display: inline-block
+  width: 50px
+  height: 50px
+  margin-right: 15px
+  vertical-align: middle
+
+  & img
+    display: block
+    width: 100%
+    height: auto
+    border-radius: 50%
+
+.nm-friend-name
+  display: inline-block
+  vertical-align: middle
+
+
+
+
+// SELECTED FRIEND -------------------- //
+
+.nm-selected
+  display: table
+  width: 100%
+  position: relative
+  margin: 0 auto 50px
+
+  & .nm-friend
+    cursor: default
+    padding: 0
+
+    &:hover
+      background: none
+
+  & .nm-friend-img
+    display: block
+    margin: 0 auto 10px
+
+  & .nm-friend-name
+    display: block
+    text-align: center
+    font-weight: bold
+
+  & .nm-change
+    display: table
+    margin: 0 auto 20px
+    font-size: 14px
+    color: #FF4343
+    cursor: pointer
+
+    &:hover
+      text-decoration: underline
+
+
+
+
+
+// SENDED ----------------------------- //
+
+.nm-sended-msg
+  padding-top: 20px
+  border-top: 1px solid #98B9BE
+  text-transform: uppercase
+  font-size: 20px
+  text-align: center

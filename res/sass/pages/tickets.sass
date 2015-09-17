@@ -1,0 +1,231 @@
+// TICKET-ITEMS ------------------------------ //
+
+.ticket-ball
+  width: 34px
+  height: 34px
+  border-radius: 50%
+  font-size: 15px
+  font-weight: bold
+  line-height: 36px
+  text-align: center
+  color: #6c6c6c
+  cursor: pointer
+  background: #eaf2f4
+  box-shadow: 0px 2px 1px rgba(255,255,255,.5), inset 1px 2px 2px rgba(0,0,0,.46)
+  padding-left: 2px
+
+
+.ticket-items
+  background: #B7CFD3
+  margin: 55px 0 20px
+  border-radius: 0 5px 5px 5px
+  position: relative
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.5)
+
+.ticket-tabs
+  width: 100%
+  position: absolute
+  top: -34px
+  overflow: hidden
+
+  & li
+    position: relative
+    top: 8px
+    float: left
+    width: 10%
+    height: 26px
+    margin-right: 2%
+    background: #909090
+    border-radius: 5px 5px 0 0
+    font-size: 14px
+    font-weight: bold
+    line-height: 26px
+    color: #fff
+    text-align: center
+    cursor: pointer
+
+    &.gold
+      background: #F9DC42
+
+    &.active
+      top: 0
+      height: 34px
+      line-height: 34px
+      background: #B7CFD3
+      color: #464444
+      cursor: default
+      text-shadow: 1px 1px 1px (255,255,255,.49)
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.5)
+
+  & span
+    display: none
+    text-transform: uppercase
+
+.ticket-item
+  padding-top: 15px
+  padding-bottom: 15px
+
+.ticket-numbers
+  margin-bottom: 10px
+
+  & li
+    @extend .ticket-ball
+    float: left
+
+.ticket-actions li
+  @extend .ticket-ball
+  float: left
+
+.ticket-fc-btn
+  position: relative
+
+  &:before
+    content: ""
+    position: absolute
+    width: 18px
+    height: 16px
+    top: 11px
+    left: 8px
+    background: url(img/sprite.png) -198px -85px
+
+.ticket-btn
+  @extend .ticket-ball
+  float: right
+  width: auto !important
+  padding: 0 20px
+  border-radius: 17px
+  text-transform: uppercase
+
+// ------------------------------------------- //
+
+.tickets .content-box-tab
+  padding: 0 20px
+
+.tickets-rules
+  & dt
+    font-weight: bold
+    margin-bottom: 10px
+
+  & dd
+    margin-bottom: 25px
+
+
+
+
+
+
+// MATCHES-INF ------------------------------ //
+
+.matches-inf-wrapper
+  margin-bottom: 20px
+  background: #fff
+
+  &.carousel
+    box-shadow: 2px 2px 4px rgba(0,0,0,.5)
+    padding-bottom: 5px
+
+.matches-inf
+  box-shadow: none
+  margin: 0 0 30px
+
+.matches-inf
+
+  &.content-box
+    margin: 0
+
+  & .content-box-header
+    text-align: left
+    padding-left: 20px
+    font-size: 14px
+
+  &.gold .content-box-header
+    background: #F8E71D
+
+  & .content-box-content
+    min-height: auto
+    padding: 20px 0 0 20px
+
+  & table
+    width: 100%
+
+  & th:first-child,
+  & td:first-child
+    width: 63%
+
+  & th
+    font-size: 14px
+    font-weight: bold
+    text-transform: uppercase
+    color: #191919
+    padding-bottom: 20px
+
+  & td
+    font-size: 15px
+    color: #2b2b2b
+    padding-bottom: 15px
+
+.matches-ball
+  display: block
+  width: 20px
+  height: 20px
+  border: 1px solid #d6e5e9
+  border-radius: 50%
+  background: #f6fafb
+
+  &.true
+    border: none
+    background: #F8E71D
+
+.matches-balls
+
+  & span
+    @extend .matches-ball
+    float: left
+    margin-right: 7px
+
+    &:last-child
+      margin-right: 0
+
+
+
+
+
+// ------------------------------------------- //
+
+@media (min-width: 480px)
+
+  .ticket-ball
+    width: 40px
+    height: 40px
+    line-height: 42px
+
+  .ticket-fc-btn:before
+    width: 19px
+    height: 17px
+    top: 13px
+    left: 11px
+    background: url(img/sprite.png) -160px -84px
+
+  .ticket-btn
+    border-radius: 20px
+    padding: 0 35px
+
+
+
+@media (min-width: 680px)
+
+  .matches-inf-wrapper
+    background: transparent
+
+    &.carousel
+      box-shadow: none
+
+  .matches-inf
+    width: 48%
+    box-shadow: 2px 2px 4px rgba(0,0,0,.5)
+
+    &:first-child
+      float: left
+
+    &:last-child
+      float: right

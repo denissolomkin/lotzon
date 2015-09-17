@@ -42,6 +42,7 @@
                         'tickets' => 'Билеты',
                         'prizes' => 'Призы',
                         'communication_comments' => 'Общение',
+                        'communication_friends' => 'Друзья',
                         'games_online' => 'Игры',
                         'cabinet_game_history' => 'Кабинет',
                     ),
@@ -58,7 +59,7 @@
                     <ul class="<?= $ul ?>">
                         <? foreach ($items as $href => $title): ?>
                             <li>
-                                <a<?= ($href === $page ? ' class="active"': '') ?> href="<?= $href ?>"><?= $title ?></a>
+                                <a<?= ($href === $page ? ' class="active"': '') ?> href="<?= !is_numeric($href)?$href:'' ?>"><?= $title ?></a>
                             </li>
                         <? endforeach; ?>
                     </ul>

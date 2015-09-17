@@ -1,0 +1,140 @@
+.site-top
+  display: block
+
+.header
+  margin-bottom: 30px
+
+.header-left
+  width: 684px
+  margin-right: 0
+  position: relative
+
+.header-logo
+  width: 100px
+  height: 20px
+  background-position: -119px 0
+  top: 18px
+  margin-right: 22px
+
+
+
+// MENU ---------------------------- //
+
+.menu
+  float: left
+  visibility: visible
+  position: static
+  width: auto !important
+  height: auto
+  padding: 0
+  background: transparent
+
+.menu-main
+  padding: 0
+
+  & li
+    float: left
+
+    &:first-child
+      display: none
+
+  & a
+    padding: 0 18px
+    line-height: 55px
+    text-align: center
+    font-weight: bold
+
+    &.active,
+    &:hover
+      background: #FFE700
+
+  &:after
+    display: none
+
+.menu-more
+  visibility: hidden
+  opacity: 0
+  position: absolute
+  top: 49px
+  right: 0
+  transition: all .2s ease-out
+  background: #fff
+  padding: 20px 40px
+  border-radius: 2px
+  box-shadow: 2px 2px 5px rgba(0,0,0,.2)
+  z-index: 3
+
+  &:before
+    content: ""
+    display: block
+    width: 30px
+    height: 13px
+    background: url(img/sprite.png) -311px -87px
+    position: absolute
+    top: -13px
+    right: 10px
+    z-index: 2
+
+  &.active
+    visibility: visible
+    opacity: 1
+
+  & a
+    padding: 0
+    margin-bottom: 10px
+    text-align: left
+
+    &.active,
+    &:hover
+      background: none
+      text-decoration: underline
+
+    & li:last-child a
+      margin-top: 35
+      margin-bottom: 0
+
+.menu-btn
+  display: none
+
+.more-menu-btn
+  display: block
+  width: 19px
+  height: 11px
+  background: url(img/sprite.png) -240px -88px
+  float: right
+  position: relative
+  top: 23px
+  right: 30px
+  cursor: pointer
+
+  &.active
+    background-position: -278px -88px
+
+// --------------------------------- //
+
+
+.inf-slider
+  width: 300px
+  height: 135px
+  margin-top: -135px
+
+
+// --------------------------------- //
+
+.timer
+  display: block
+  color: #3f3f3f
+
+.timer-title
+  float: left
+  font-size: 11px
+  font-weight: bold
+  line-height: 1.28
+  text-transform: uppercase
+  padding: 14px 25px 0 40px
+
+.timer-digits
+  float: left
+  font-size: 30px
+  font-weight: bold
+  padding-top: 8px
