@@ -1,0 +1,120 @@
+.ph-notice
+  text-align: center
+  margin-bottom: 30px
+
+// ----------------------------- //
+
+.ph-header
+  display: none
+
+// ----------------------------- //
+
+.ph-item
+  margin: 0 -10px
+  padding: 20px 10px
+  cursor: pointer
+  position: relative
+  font-size: 16px
+
+  & > div
+    display: table-row
+
+  &:hover:before
+    content: ""
+    clear: none
+    display: block
+    position: absolute
+    width: 17px
+    height: 30px
+    background: url(img/sprite.png) -214px -187px
+    top: 32px
+    right: 20px
+
+  &:nth-child(odd)
+    background: #FAFAFA
+
+.ph-inf-name,
+.ph-inf-value
+  display: table-cell
+  padding: 2px 0
+
+.ph-inf-name
+  padding-right: 20px
+
+
+// ----------------------------- //
+
+.ph-item.ph-paid .ph-status .ph-inf-value
+  color: #417506
+
+.ph-item.ph-processed .ph-status .ph-inf-value
+  color: #F3A622
+
+.ph-item.ph-denied .ph-status .ph-inf-value
+  color: #FF4242
+  position: relative
+  display: inline-block
+  padding-right: 35px
+
+  &:after
+    content: ""
+    display: block
+    width: 20px
+    height: 20px
+    background: url(img/sprite.png) -292px -52px
+    position: absolute
+    top: 1px
+    right: 0
+
+// ----------------------------- //
+
+
+
+@media (min-width: 530px)
+
+  .ph-header
+    margin: 0 -10px 20px
+    padding: 0 10px
+    display: block
+    font-size: 18px
+
+  .ph-header-item
+    float: left
+
+  // ------------------ //
+
+  .ph-item
+    padding: 14px 10px
+    line-height: 1.4
+
+    & > div
+      display: block
+      float: left
+
+    &:hover:before
+      top: 10px
+      right: 10px
+
+  .ph-inf-name
+    display: none
+
+  .ph-inf-value
+    display: block
+
+  // ------------------ //
+
+  .ph-date,
+  .ph-date-text
+    width: 22%
+
+  .ph-won,
+  .ph-won-text
+    width: 18%
+
+  .ph-method,
+  .ph-method-text
+    width: 38%
+
+  .ph-status,
+  .ph-status-text
+    width: 22%

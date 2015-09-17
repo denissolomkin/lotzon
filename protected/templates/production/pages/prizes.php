@@ -33,11 +33,11 @@
 								<div class="prize-name">Ноутбук Asus X551MA</div>
 								<div class="prize-price">520 000<span>баллов</span></div>
 							</div>
-                        </a>
 						</div>
+                        </a>
 
+                        <a href="prize_exchange_not_filled">
 						<div class="prize prize-few-points">
-                            <a href="prize_exchange_not_filled">
 							<div class="prize-content">
 								<div class="prize-img">
 									<img src="/res/img/prize.png" alt="">
@@ -46,8 +46,8 @@
 								<div class="prize-price">520 000<span>баллов</span></div>
 							</div>
 							<div class="prize-inf">Не достаточно баллов</div>
-                            </a>
 						</div>
+                        </a>
 
 						<div class="prize prize-finished">
 							<div class="prize-content">

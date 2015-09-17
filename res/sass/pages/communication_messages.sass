@@ -1,0 +1,87 @@
+.content-box-item.communication-messages
+  padding-top: 80px
+  padding-right: 0
+
+// ---------------------------- //
+
+.cm-top
+  width: 100%
+  position: absolute
+  top: 20px
+  left: 0
+  padding: 0 10px
+
+  & a
+    display: block
+    color: #000
+    font-size: 14px
+
+  & .new-message
+    float: left
+    border: 1px solid #000000
+    border-radius: 2px
+    text-decoration: none
+    text-align: center
+    padding: 5px 22px
+
+  & .write-admin
+    float: right
+    line-height: 30px
+    text-decoration: underline
+
+    &:hover
+      text-decoration: none
+
+// ---------------------------- //
+
+.message
+  padding: 15px 10px 15px 0
+  margin-left: 60px
+  border-bottom: 1px solid #DBDBDB
+  cursor: pointer
+
+  &.new .message-text
+    color: #000
+
+  &.online .message-img:before
+    background: #7ED31E
+
+  &.admin
+    & .message-img:before
+      display: none
+
+    & .message-name
+      font-weight: bold
+
+.message-img
+  position: relative
+  display: block
+  width: 50px
+  height: 50px
+  float: left
+  margin-left: -60px
+
+  & img
+    display: block
+    width: 100%
+    height: auto
+    border-radius: 50%
+
+  &:before
+    content: ""
+    display: block
+    position: absolute
+    top: 0
+    right: 0
+    width: 7px
+    height: 7px
+    border-radius: 50%
+    background: #D2D2D2
+
+.message-name
+  margin-bottom: 8px
+  line-height: 1.27
+
+.message-text
+  color: #8B8D8C
+  line-height: 1.27

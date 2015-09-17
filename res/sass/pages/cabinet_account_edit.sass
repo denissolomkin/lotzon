@@ -1,0 +1,204 @@
+.ae-top
+  margin-bottom: 15px
+
+.ae-user-img
+  width: 200px
+  height: 200px
+  margin: 0 auto
+  border-radius: 50%
+  overflow: hidden
+
+.ae-user-img img
+  display: block
+  width: 100%
+  height: auto
+
+.ae-inf
+  display: none
+
+// --------------------------- //
+
+.ae-personal-form
+  position: relative
+  line-height: 50px
+  margin-bottom: 15px
+
+.ae-personal-form-names
+  position: absolute
+  top: 0
+  left: 0
+  text-align: right
+  color: #B4AEAE
+  font-size: 14px
+  z-index: 1
+
+.ae-personal-form-names li
+  margin-bottom: 2px
+
+.ae-personal-form-values li
+  position: relative
+
+.ae-personal-form .error-msg
+  display: none
+  color: #FF4242
+  font-size: 14px
+  position: absolute
+  top: 0
+  right: 0
+
+.ae-personal-form-values input
+  border-width: 0 0 1px
+  border-style: solid
+  border-color: #B4AEAE
+  display: block
+  width: 100%
+  line-height: inherit
+  padding: 0
+  padding-left: 135px
+  padding-bottom: 1px
+
+  &:focus
+    border-width: 0 0 2px
+    border-color: #BED8D9
+    padding-bottom: 0
+
+  &.error
+    border-width: 0 0 2px
+    border-color: #FF4242
+    padding-bottom: 0
+    color: #FF4242
+
+  &.error + .error-msg
+    display: block
+
+// --------------------------- //
+
+.ae-personal-inf .title
+  text-align: center
+  margin-bottom: 10px
+
+.ae-combination
+  margin-bottom: 15px
+
+.ae-favorite-combination
+  width: 260px
+  margin: auto
+  position: relative
+
+// --------------------------- //
+
+.ae-combination-box
+  display: none
+  width: 288px
+  padding: 20px 16px 16px 20px
+  background: #fff
+  border-radius: 2px
+  box-shadow: 0 0 15px rgba(0,0,0,.49)
+  position: absolute
+  top: -315px
+  left: -14px
+  z-index: 10
+
+  &:before
+    content: ""
+    clear: none
+    display: block
+    width: 55px
+    height: 29px
+    position: absolute
+    top: 100%
+    left: 116px
+    background: url(img/sprite.png) -440px -55px
+
+.ae-combination-box li
+  float: left
+  border: 1px solid transparent
+  border-radius: 50%
+  margin: 0 4px 4px 0
+  width: 32px
+  height: 32px
+  line-height: 32px
+  font-size: 15px
+  text-align: center
+  cursor: pointer
+
+  &:hover
+    border: 1px solid #ccc
+
+  &.selected
+    border: 1px solid
+
+// --------------------------- //
+
+.ae-current-combination li
+  float: left
+  width: 35px
+  height: 35px
+  border: 1px solid #000
+  border-radius: 50%
+  line-height: 34px
+  font-size: 16px
+  text-align: center
+  margin-right: 10px
+  cursor: pointer
+
+  &:last-child
+    margin-right: 0
+
+// --------------------------- //
+
+.ae-socials
+  margin-bottom: 30px
+
+.ae-binded
+  margin-bottom: 25px
+
+.ae-social
+  display: table
+  margin: auto
+
+.ae-social-item
+  display: inline-block
+  width: 35px
+  height: 35px
+  background: url(img/sprite.png)
+  text-decoration: none
+  margin-right: 5px
+
+  &:last-child
+    margin-right: 0
+
+.ae-social-item.soc-1
+  background-position: -168px -255px
+
+.ae-social-item.soc-2
+  background-position: -213px -255px
+
+.ae-social-item.soc-3
+  background-position: -258px -255px
+
+.ae-social-item.soc-4
+  background-position: -332px -255px
+
+.ae-social-item.soc-5
+  background-position: -377px -255px
+
+.ae-social-item.soc-6
+  background-position: -422px -255px
+
+// --------------------------- //
+
+.ae-save-btn
+  display: block
+  margin: auto
+  width: 200px
+  border: 1px solid #E6E6E6
+  border-radius: 2px
+  color: #B4AEAE
+  text-transform: uppercase
+  text-align: center
+  background: transparent
+  font-weight: bold
+  cursor: pointer
+  padding: 7px 0
+  margin-bottom: 20px
