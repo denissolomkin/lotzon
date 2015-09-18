@@ -24,6 +24,7 @@ class Migrate {
     private $length = 55;
     private $sqltime = 0;
     private $sql = 0;
+    private $conf = 0;
 
     /*
      * description to mysqli direct connection
@@ -38,9 +39,8 @@ class Migrate {
         /*
          * connect to mysql directly
          */
-        $conf = (object) \Config::instance()->dbConnectionProperties;
-        $conf->dsn = preg_replace("/(.*)=/", "", explode(';', $conf->dsn));
-        $this->mysqli = new mysqli($conf->dsn[0], $conf->user, $conf->password, $conf->dsn[1]);
+        $this->conf = (object) \Config::instance()->dbConnectionProperties;
+        $this->conf->dsn = preg_replace("/(.*)=/", "", explode(';', $this->conf->dsn));
     }
 
     function run()
@@ -111,11 +111,12 @@ class Migrate {
         // $this->sql = trim(preg_replace(array("/\r\n/", "/\n/", "/\r\t/", "/  /"), " ", $this->sql));
 
 
+        $this->mysqli = new mysqli($this->conf->dsn[0], $this->conf->user, $this->conf->password, $this->conf->dsn[1]);
         // $mysqli->multi_query("DROP PROCEDURE IF EXISTS AddColumnUnlessExists;CREATE PROCEDURE p(IN id_val INT) BEGIN INSERT INTO test(id) VALUES(id_val); END;DROP PROCEDURE IF EXISTS p;");
         // while ($mysqli->next_result());
         $this->mysqli->multi_query($this->sql);
         // while ($mysqli->next_result());
-
+        $this->mysqli->close();
 
         //while ($mysqli->next_result()){
 //            echo 1;
