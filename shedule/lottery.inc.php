@@ -83,12 +83,20 @@ function SetSerializeBallsRollBack()
  * @param $text #error description
  */
 function RollBack($text = '') {
-	echo PHP_EOL.$text.PHP_EOL;
-	$time = microtime(true);
-	echo 'rollBack: '.PHP_EOL;
-	DB::Connect()->query("CALL rollBackLotteryLast");
-	echo (microtime(true) - $time).PHP_EOL;
-	SetSerializeBallsRollBack();
+	try {
+		echo PHP_EOL . $text . PHP_EOL;
+		$time = microtime(true);
+		echo 'rollBack: ' . PHP_EOL;
+		DB::Connect()->query("CALL rollBackLotteryLast");
+		echo (microtime(true) - $time) . PHP_EOL;
+		SetSerializeBallsRollBack();
+	} catch (Exception $e) {
+		echo "rollBack get exception: ". PHP_EOL . $e->getMessage().PHP_EOL;
+		if(file_exists($tmp = __DIR__.'/lottery.lock.tmp')) {
+			unlink($tmp);
+		}
+		exit();
+	}
 }
 
 /**
@@ -104,13 +112,13 @@ function ApplyLotteryCombinationAndCheck(&$comb)
 		$times = 1;
 		echo 'rollBack start: ';
 		RollBack($text);
-		$counter ++;
-		if( $counter < $times) {
+		$counter++;
+		if ($counter < $times) {
 			sleep(5);
 			ApplyLotteryCombinationAndCheck($comb);
 		} else {
-			echo "rollBack is looped $times times: exit".PHP_EOL;
-			if(file_exists($tmp = __DIR__.'/lottery.lock.tmp')) {
+			echo "rollBack is looped $times times: exit" . PHP_EOL;
+			if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp')) {
 				unlink($tmp);
 			}
 		}
