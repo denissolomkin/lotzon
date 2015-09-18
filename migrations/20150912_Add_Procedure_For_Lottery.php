@@ -1,3 +1,5 @@
+SET NAMES 'utf8' COLLATE 'utf8_general_ci';
+
 CREATE TABLE IF NOT EXISTS `LotteryTmp` (
 `playerId` int(11) NOT NULL DEFAULT '0',
 `points` int(11) NOT NULL DEFAULT '0',
