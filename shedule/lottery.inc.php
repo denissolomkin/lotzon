@@ -21,7 +21,7 @@ function timeToRunLottery()
 
 	foreach($gameSettings->getLotterySettings() as $game)
 	{
-		if($currentTime > $game['StartTime'])
+		if($currentTime >= $game['StartTime'])
 		{
             $gameSettings = $game;
 			$lotteryTime = strtotime(date("Y-m-d"))+$game['StartTime'];
@@ -41,8 +41,6 @@ function timeToRunLottery()
 					$gameSettings['lotteryId'] = $lottery['Id'];
 					$gameSettings['lotteryTime'] = $lotteryTime;
 					return true;
-				} else {
-					return false;
 				}
 			}
 		}
