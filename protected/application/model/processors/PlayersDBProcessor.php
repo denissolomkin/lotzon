@@ -351,37 +351,40 @@ class PlayersDBProcessor implements IProcessor
 
     public function delete(Entity $player)
     {
-        $sql = "
-        DELETE `Players`, `PlayerLogs`, `EmailInvites`, `LotteryTickets`, `ChanceGameWins`, `PlayerLotteryWins`, `MoneyOrders`, `PlayerNotes`, `PlayerCookies`, `PlayerNotices`, `PlayerReviews`,  `PlayerSocials`, `PlayerDates`, `ShopOrders`, `Transactions`
-        FROM `Players`
-        LEFT JOIN `ChanceGameWins`    ON `Players`.`id` = `ChanceGameWins`.`PlayerId`
-        LEFT JOIN `EmailInvites`    ON `Players`.`id` = `EmailInvites`.`InviterId`
-        LEFT JOIN `LotteryTickets`    ON `Players`.`id` = `LotteryTickets`.`PlayerId`
-        LEFT JOIN `MoneyOrders`    ON `Players`.`id` = `MoneyOrders`.`PlayerId`
-        LEFT JOIN `PlayerLogs`    ON `Players`.`id` = `PlayerLogs`.`PlayerId`
-        LEFT JOIN `PlayerLotteryWins`    ON `Players`.`id` = `PlayerLotteryWins`.`PlayerId`
-        LEFT JOIN `PlayerNotes`    ON `Players`.`id` = `PlayerNotes`.`PlayerId`
-        LEFT JOIN `PlayerCookies`    ON `Players`.`id` = `PlayerCookies`.`PlayerId`
-        LEFT JOIN `PlayerNotices`    ON `Players`.`id` = `PlayerNotices`.`PlayerId`
-        LEFT JOIN `PlayerReviews`    ON `Players`.`id` = `PlayerReviews`.`PlayerId`
-        LEFT JOIN `PlayerSocials`    ON `Players`.`id` = `PlayerSocials`.`PlayerId`
-        LEFT JOIN `PlayerDates` ON  `Players`.`Id` = `PlayerDates` . `PlayerId`
-        LEFT JOIN `ShopOrders`    ON `Players`.`id` = `ShopOrders`.`PlayerId`
-        LEFT JOIN `Transactions`    ON `Players`.`id` = `Transactions`.`PlayerId`
-        WHERE `Players`.`Id` = :id";
+        $sql = "DELETE FROM `Players` WHERE `Players`.`Id` = :id;
+        DELETE FROM `EmailInvites` WHERE `InviterId` = :id;
+        DELETE FROM `LotteryTickets` WHERE `PlayerId` = :id;
+        DELETE FROM `LotteryTicketsArchive` WHERE `PlayerId` = :id;
+        DELETE FROM `ShopOrders` WHERE `PlayerId` = :id;
+        DELETE FROM `MoneyOrders` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerLogs` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerLogins` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerIps` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerDates` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerTroubles` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerNotes` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerCookies` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerNotices` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerReviews` WHERE `PlayerId` = :id;
+        DELETE FROM `PlayerSocials` WHERE `PlayerId` = :id;
+        DELETE FROM `Transactions` WHERE `PlayerId` = :id;";
 
         try {
+
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':id' => $player->getId(),
             ));
 
+            while ($sth->nextRowset());
+
             if ($player->getAvatar()) {
                 @unlink( PATH_FILESTORAGE . 'avatars/' . (ceil($player->getId() / 100)) . '/' . $player->getAvatar());
             };
 
+
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
         }
 
         return true;
@@ -411,8 +414,8 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                 SUM(Money / IFNULL((SELECT `Coefficient` FROM `MUICountries` cn LEFT JOIN `MUICurrency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
                 SUM(Points) Points,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM PlayerDates WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM LotteryTickets WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM `PlayerDates` WHERE Ping > ".(time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300)).") o) Online,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM `LotteryTickets` WHERE LotteryId =0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
 
@@ -798,13 +801,13 @@ class PlayersDBProcessor implements IProcessor
         return $reviews;
     }
 
-    public function getTickets($playerId, $lotteryId)
+    public function getTickets($playerId)
     {
         $sql = "SELECT `Lotteries`.`Date`, `Lotteries`.`Combination` WinCombination,
-              `LotteryTickets`.`TicketWinCurrency`, `LotteryTickets`.`TicketWin`, `LotteryTickets`.`TicketWin`,
-              `LotteryTickets`.`TicketNum`, `LotteryTickets`.`Combination`, `LotteryTickets`.`PlayerId`,
-              `LotteryTickets`.`LotteryId`, `LotteryTickets`.`Id`, `LotteryTickets`.`DateCreated`
-              FROM `LotteryTickets`
+              `LotteryTicketsArchive`.`TicketWinCurrency`, `LotteryTicketsArchive`.`TicketWin`, `LotteryTicketsArchive`.`TicketWin`,
+              `LotteryTicketsArchive`.`TicketNum`, `LotteryTicketsArchive`.`Combination`, `LotteryTicketsArchive`.`PlayerId`,
+              `LotteryTicketsArchive`.`LotteryId`, `LotteryTicketsArchive`.`Id`, `LotteryTicketsArchive`.`DateCreated`
+              FROM `LotteryTicketsArchive`
               LEFT JOIN `Lotteries` ON `LotteryTickets`.`LotteryId`=`Lotteries`.`Id`
               WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
 

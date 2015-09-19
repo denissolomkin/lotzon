@@ -184,9 +184,7 @@ class Index extends \SlimController\SlimController
             }
             $comments = $stripped;
         }
-        $lastLottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
-        $lastLottery = array_shift($lastLottery);
-
+        $lastLottery = LotteriesModel::instance()->getLastPublishedLottery();
 
         if($session->has('SOCIAL_IDENTITY'))
         {

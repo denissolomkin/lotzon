@@ -21,259 +21,128 @@ function timeToRunLottery()
 
 	foreach($gameSettings->getLotterySettings() as $game)
 	{
-		if($currentTime == $game['StartTime'])
+		if($currentTime >= $game['StartTime'])
 		{
-            $gameSettings=$game;
-			return true;
+            $gameSettings = $game;
+			$lotteryTime = strtotime(date("Y-m-d"))+$game['StartTime'];
+			$SQL = 'SELECT
+				Id,Ready
+			FROM
+				Lotteries
+			WHERE
+				Date = '.$lotteryTime.'
+			LIMIT 1';
+			$lottery = DB::Connect()->query($SQL)->fetch();
+			if (!$lottery) {
+				$gameSettings['lotteryTime'] = $lotteryTime;
+				return true;
+			} else {
+				if (!$lottery['Ready']) {
+					$gameSettings['lotteryId'] = $lottery['Id'];
+					$gameSettings['lotteryTime'] = $lotteryTime;
+					return true;
+				}
+			}
 		}
 	}
-
 	return false;
 }
 
-//////////////////////////////////////////////////
+/**
+ * Unserialize combination in tickets and update B* fields in tickets fter rollBackTicket proc
+ * @throws DBExeption
+ */
+function SetSerializeBallsRollBack()
+{
+	$time = microtime(true);
+	echo 'rollBack (serialize): '.PHP_EOL;
+	$SQL = "SELECT
+			Id AS id,
+			Combination AS combination
+		FROM
+			LotteryTickets
+	";
+	DB::Connect()->query($SQL)->fetchAll(PDO::FETCH_FUNC, function($id, $combination)
+	{
+		$comb = unserialize($combination);
+		$filds	= array();
 
-function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
+		foreach((array)$comb as $ball)
+		{
+			$filds[]= 'B'.((int)$ball);
+		}
+		DB::Connect()->query("UPDATE LotteryTickets SET ".implode('=1, ', $filds)."=1 WHERE id=".$id);
+	});
+	echo (microtime(true) - $time).PHP_EOL;
+}
+
+/**
+ * rollback fot last lottery
+ * @param $text #error description
+ */
+function RollBack($text = '') {
+	try {
+		echo PHP_EOL . $text . PHP_EOL;
+		$time = microtime(true);
+		echo 'rollBack: ' . PHP_EOL;
+		DB::Connect()->query("CALL rollBackLotteryLast");
+		echo (microtime(true) - $time) . PHP_EOL;
+		SetSerializeBallsRollBack();
+	} catch (Exception $e) {
+		echo "rollBack get exception: ". PHP_EOL . $e->getMessage().PHP_EOL;
+		if(file_exists($tmp = __DIR__.'/lottery.lock.tmp')) {
+			unlink($tmp);
+		}
+		exit();
+	}
+}
+
+/**
+ * Start ApplyLotteryCombination and restart if catch Exception $counter tries
+ * @param $comb
+ */
+function ApplyLotteryCombinationAndCheck(&$comb)
 {
 	static $counter = 0;
 
-	$rollBack = function($text) use ($ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation, &$counter)
+	$roll = function($text) use ($comb, &$counter)
 	{
-		$times = 10;
-
-		echo $text.PHP_EOL;
-
-		$time = microtime(true);
-		echo 'rollBack: ';
-		DB::Connect()->rollBack();
-		echo (microtime(true) - $time).PHP_EOL;
-
-			$counter ++;
-		if( $counter < $times)
-		{
-			sleep(10);
-			HoldLotteryAndCheck($ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
-		}
-		else
-		{
-			echo "rollBack is looped $times times: exit".PHP_EOL;
-            if(file_exists($tmp = __DIR__.'/lottery.lock.tmp'))
-                unlink($tmp);
+		$times = 1;
+		echo 'rollBack start: ';
+		RollBack($text);
+		$counter++;
+		if ($counter < $times) {
+			sleep(5);
+			ApplyLotteryCombinationAndCheck($comb);
+		} else {
+			echo "rollBack is looped $times times: exit" . PHP_EOL;
+			if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp')) {
+				unlink($tmp);
+			}
 		}
 	};
 
-	DB::Connect()->beginTransaction();
-
     try {
-
-        try {
-
-            try {
-                $data = HoldLottery(0, $ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
-
-                if (empty($data)
-                    || current(DB::Connect()->query("SELECT Ready FROM Lotteries WHERE Id = {$data['id']}")->fetch())
-                ) {
-                    DB::Connect()->commit();
-                    if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp'))
-                        unlink($tmp);
-                } else {
-                    $rollBack('HoldLottery is not ready');
-                }
-            } catch (PDOException $e) {
-                $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
-            }
-
-        } catch (EntityException $e) {
-            $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
-        }
-
-    } catch(DBExeption $e) {
-        $rollBack(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
-    }
-}
-
-function PlayerLotteryWins($lid)
-{
-	$time = microtime(true);
-	echo 'PlayerLotteryWins: ';
-
-	$SQL = "INSERT INTO PlayerLotteryWins
-			(
-				PlayerId,
-				MoneyWin,
-				PointsWin,
-				Date,
-				LotteryId
-			)
-			SELECT
-				lt.PlayerId,
-				SUM(IF(lt.TicketWinCurrency = 'POINT', 0, lt.TicketWin)) AS MoneyWin,
-				SUM(IF(lt.TicketWinCurrency = 'POINT', lt.TicketWin, 0)) AS PointsWin,
-				l.Date,
-				l.Id
-			FROM
-			 				Lotteries		l
-				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
-			WHERE
-					l.Id			= $lid
-				AND lt.TicketWin	> 0
-			GROUP BY
-				lt.PlayerId";
-
-	DB::Connect()->query($SQL);
-
-	echo (microtime(true) - $time).PHP_EOL;
-}
-function Transactions($lid)
-{
-	$time = microtime(true);
-	echo 'Transactions: ';
-
-	$SQL = "INSERT INTO Transactions
-			(
-				PlayerId,
-				Currency,
-				Sum,
-				Date,
-				Balance,
-				Description
-			)
-			SELECT
-				lt.PlayerId,
-				lt.TicketWinCurrency,
-				SUM(lt.TicketWin),
-				l.Date,
-				IF(lt.TicketWinCurrency = 'POINT', p.Points, p.Money),
-				'Выигрыш в розыгрыше'
-			FROM
-							Lotteries		l
-				INNER JOIN	LotteryTickets	lt	ON	l.Id = lt.LotteryId
-				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
-			WHERE
-					l.Id 			= $lid
-				AND lt.TicketWin	> 0
-			GROUP BY
-				lt.PlayerId,
-				lt.TicketWinCurrency";
-
-	DB::Connect()->query($SQL);
-
-	echo (microtime(true) - $time).PHP_EOL;
-}
-
-function ApplyLotteryTickets($comb)
-{
-
-
-	$time = microtime(true);
-	echo '  Update win tickets: ';
-
-	$defaultCountry  = 'RU'; //Config::instance()->defaultLang;
-	$select = $where = array();
-
-	$SQL = "SELECT
-				CountryCode AS code
-			FROM
-				LotterySettings
-			WHERE
-				CountryCode <> '$defaultCountry'
-			GROUP BY
-				CountryCode";
-	$codes = DB::Connect()->query($SQL)->fetchAll(PDO::FETCH_FUNC, function($code)
-	{
-		return "WHEN '$code' THEN '$code'";
-	});
-
-	foreach($comb['fields'] as $field)
-	{
-		$select[]= "IFNULL($field, 0)";
-		$where []= "$field IS NOT NULL";
+		ApplyLotteryCombination($comb);
+	} catch (Exception $e) {
+		$roll(PHP_EOL . 'HoldLottery is catch' . PHP_EOL . $e->getMessage() . PHP_EOL);
 	}
 
-	$lid = (int)$comb['id'];
-
-	$SQL = "UPDATE
-							LotteryTickets	lt
-				INNER JOIN	LotterySettings	ls	ON	%s = ls.BallsCount
-				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
-												AND CASE p.Country %s ELSE '$defaultCountry' END = ls.CountryCode
-			SET
-				lt.TicketWin		 = ls.Prize,
-  				lt.TicketWinCurrency = ls.Currency,
-  				lt.LotteryId		 = $lid
-
-			WHERE
-				lt.LotteryId = 0
-				AND (%s)";
-
-	$SQL = sprintf($SQL, implode('+', $select), implode(' ', $codes), implode(' OR ', $where));
-
-	DB::Connect()->query($SQL);
-
-	echo (microtime(true) - $time).PHP_EOL;
-
-
-
-	$time = microtime(true);
-	echo '  Update losing tickets: ';
-
-	DB::Connect()->query("UPDATE LotteryTickets SET LotteryId	= $lid  WHERE LotteryId = 0");
-
-	echo (microtime(true) - $time).PHP_EOL;
-}
-function PlayerTotal($lid)
-{
-	$time = microtime(true);
-	echo 'PlayerTotal: ';
-
-	$SQL = "UPDATE
-							Players				p
-				INNER JOIN	PlayerLotteryWins	plw	 ON  plw.PlayerId = p.Id
-			SET
-				p.Points = p.Points + plw.PointsWin,
-				p.Money  = p.Money  + plw.MoneyWin
-
-			WHERE
-				plw.LotteryId = $lid";
-	DB::Connect()->query($SQL);
-
-	echo (microtime(true) - $time).PHP_EOL;
+	return $comb;
 }
 
-function PlayerCounter($lid)
-{
-	$time = microtime(true);
-	echo 'PlayerCounter: ';
-
-	$SQL = "UPDATE
-							LotteryTickets	lt
-				INNER JOIN	Players			p	ON	lt.PlayerId = p.Id
-			SET
-				p.GamesPlayed = p.GamesPlayed + 1
-			WHERE
-				lt.LotteryId = $lid";
-
-	DB::Connect()->query($SQL);
-
-	echo (microtime(true) - $time).PHP_EOL;
-}
 function ApplyLotteryCombination(&$comb)
 {
-	if(!$comb)
-	{
+	if (!$comb) {
 		return;
 	}
-
-    echo 'ApplyLotteryCombination'.PHP_EOL;
-
 	$lid = (int)$comb['id'];
 
-	ApplyLotteryTickets($comb);
-	PlayerLotteryWins($lid);
-	PlayerTotal($lid);
-	Transactions($lid);
-	PlayerCounter($lid);
+	echo 'ApplyLotteryCombination' . PHP_EOL;
+	$time = microtime(true);
+
+	DB::Connect()->query("CALL applyLotteryLast");
+	echo (microtime(true) - $time).PHP_EOL;
 
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
 
@@ -286,8 +155,10 @@ function ApplyLotteryCombination(&$comb)
 	unset($comb['fields']);
 }
 
-function SetLotteryCombination($comb, $simulation)
+function SetLotteryCombination($comb, $simulation, $lastTicketId)
 {
+	global $gameSettings;
+
 	if(!$comb)
 	{
 		return;
@@ -324,19 +195,22 @@ function SetLotteryCombination($comb, $simulation)
 				LotteryTickets
 			WHERE
 				LotteryId = 0
+				AND
+				Id <= '.$lastTicketId.'
 				AND ('.implode(' OR ', $where).')';
     $comb['WinnersCount'] = current(DB::Connect()->query($SQL)->fetch());
 
     if(!$simulation) {
 
         $SQL = "INSERT INTO Lotteries
-				(`Date`, Combination, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
+				(`Date`, Combination, LastTicketId, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
 			VALUES
-				(%d, '%s', %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
+				(%d, '%s', %d, %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
 
         $SQL = sprintf($SQL,	implode(',', $comb['fields']),
-            time(),
+			$gameSettings['lotteryTime'],
             serialize($Combination),
+			$lastTicketId,
             $comb['WinnersCount'],
             $comb['MoneyTotal'],
             $comb['PointsTotal'],
@@ -352,7 +226,7 @@ function SetLotteryCombination($comb, $simulation)
 	return $comb;
 }
 
-function GetLotteryCombinationStatistics()
+function GetLotteryCombinationStatistics($lastTicketId)
 {
 	global $_variantsCount;
 
@@ -366,7 +240,7 @@ function GetLotteryCombinationStatistics()
 		$fields[]= "COUNT(B$i) as B$i";
 	}
 
-	$SQL    = sprintf('SELECT COUNT(DISTINCT(PlayerId)) PlayersTotal, COUNT(*) TicketsTotal, %s FROM LotteryTickets WHERE LotteryId = 0', implode(',', $fields));
+	$SQL    = sprintf('SELECT COUNT(DISTINCT(PlayerId)) PlayersTotal, COUNT(*) TicketsTotal, %s FROM LotteryTickets WHERE Id <= '.$lastTicketId.' AND LotteryId = 0', implode(',', $fields));
 	$stats  = DB::Connect()->query($SQL)->fetch();
 
 	asort($stats);
@@ -387,7 +261,7 @@ function GetLotteryCombinationStatistics()
 	return $stats;
 }
 
-function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy)
+function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy, $lastTicketId)
 {
 	global $_ballsCount;
 	global $_variantsCount;
@@ -398,7 +272,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 	$ballsRange+= $_ballsCount;
 	$ballsRange = min($ballsRange, $_variantsCount - $ballsStart);
 
-	$stats = GetLotteryCombinationStatistics();
+	$stats = GetLotteryCombinationStatistics($lastTicketId);
 
 	if(!array_sum($stats))
 	{
@@ -460,6 +334,8 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
                             LotteryTickets
                         WHERE
                             LotteryId = 0
+                        AND
+                        	Id <= %d
                     )	sm
 
                     WHERE
@@ -472,13 +348,12 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
                 WHERE
                     ls.CountryCode = 'UA'";
 
-		$SQL = sprintf($SQL, implode(',', $ballsStatSQL), implode('+', $fields));
+		$SQL = sprintf($SQL, implode(',', $ballsStatSQL), implode('+', $fields), $lastTicketId);
 
 		$rountdStats = DB::Connect()->query($SQL)->fetch();
 
 		$rountdStats['combination'] = $balls;
         $rountdStats+= $total;
-
 
 		$rountdsStats[(int)$rountdStats[$orderBy]] = $rountdStats;
 
@@ -496,52 +371,25 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 	return $rountdsStats[$return];
 }
 
-function ResetLottery($lid = null)
-{
-	if($lid)
-	{
-		$SQL = "UPDATE
-					LotteryTickets l
-				SET
-					l.LotteryId = 0
-				WHERE
-					l.LotteryId = $lid";
-	}
-	elseif(!isset($lid))
-	{
-		$SQL = "UPDATE
-				(
-					SELECT
-    					MAX(LotteryTickets.LotteryId) AS mx
-					FROM
-					 	LotteryTickets
-				)	mx
-
-  				INNER JOIN LotteryTickets l	 ON	 mx.mx = l.LotteryId
-				SET
-  					l.LotteryId = 0";
-	}
-
-	if(isset($SQL))
-	{
-		$time = microtime(true);
-
-		echo 'ResetLottery'.($lid ? " $lid" : null).': ';
-
-		DB::Connect()->query($SQL);
-
-		echo (microtime(true) - $time).PHP_EOL;
-	}
-}
-
-function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
+function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
 
-			ConverDB();
-			ResetLottery($lid);
-	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy);
-	$comb = SetLotteryCombination($comb, $simulation);
+	/**
+	 * Get lastTicketId
+	 */
+	$SQL = 'SELECT
+				Id
+			FROM
+				LotteryTickets
+			WHERE
+				LotteryId = 0
+			ORDER BY id DESC
+			LIMIT 1';
+	$lastTicketId = current(DB::Connect()->query($SQL)->fetch());
+
+	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy, $lastTicketId);
+	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId);
     if($simulation) {print_r($comb);return;}
     $filename = __DIR__.'/../lastLottery';
     try {
@@ -556,8 +404,7 @@ function HoldLottery($lid = 0, $ballsStart = 0, $ballsRange = 3, $rounds = 250, 
         )));
         chmod($filename, fileperms($filename) | 128 + 16 + 2);
     } catch (ErrorException $e){}
-			ApplyLotteryCombination($comb);
-
+	ApplyLotteryCombinationAndCheck($comb);
 
 	echo PHP_EOL.PHP_EOL;   print_r($comb);
 
@@ -599,160 +446,7 @@ function LotterySimulation($output = 'simulation.html', $ballsStart = 0, $ballsR
 
 }
 
-function RestoreAllTickets()
+function HoldLotteryAndCheck($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
-	$SQL = "SELECT
-			LotteryId AS lid,
-			count(*) AS cnt
-		FROM
-			LotteryTickets
-		GROUP BY
-			LotteryId
-		ORDER BY
-			LotteryId DESC";
-
-	DB::Connect()->query($SQL)->fetchAll(PDO::FETCH_FUNC, function($lid, $cnt)
-	{
-
-		$time = microtime(true);
-
-		echo "Lottery #$lid ($cnt): ";
-
-		RestoreTickets($lid);
-
-		echo (microtime(true) - $time).PHP_EOL;
-
-	});
+	HoldLottery($ballsStart, $ballsRange, $rounds, $return, $orderBy, $simulation);
 }
-
-function RestoreTickets($lid = 0)
-{
-	global $_variantsCount;
-
-	$tckts = DB::Connect()->query("SELECT count(*) FROM LotteryTickets WHERE LotteryId = $lid")->fetch();
-	$tckts = current($tckts);
-
-	for($inc = 1000, $l1 = 0, $l2 = $inc; $l1 < $tckts; $l1 += $inc, $l2 += $inc)
-	{
-		$limit = "$l1, $l2";
-
-		$SQL = 'INSERT IGNORE INTO LotteryTickets (Id';
-
-		for ($i = 1; $i <= $_variantsCount; $i++)
-		{
-			$SQL .= ",B$i";
-		}
-
-		$SQL.= ') VALUES %s ON DUPLICATE KEY UPDATE ';
-
-		for ($i = 1; $i <= $_variantsCount; $i++)
-		{
-			$SQL .= "B$i=VALUES(B$i),";
-		}
-		$SQL = substr($SQL, 0, -1);
-		$cls = array();
-
-		$lot = DB::Connect()->query("SELECT Id, Combination FROM LotteryTickets WHERE LotteryId = $lid LIMIT $limit")->fetchAll();
-		foreach ($lot as $l)
-		{
-			if ($l['Combination'])
-			{
-				$balls = unserialize($l['Combination']);
-
-				$vars = array();
-
-				for ($i = 1; $i <= $_variantsCount; $i++)
-				{
-					$vars[] = in_array($i, $balls)
-						? 1
-						: 'NULL';
-				}
-
-				$cls[] = sprintf("({$l['Id']},%s)", implode(',', $vars));
-			}
-		}
-
-		if($cls)
-		{
-			$SQL = sprintf($SQL, implode(',', $cls));
-			DB::Connect()->query($SQL);
-		}
-	}
-}
-function ConverDB()
-{
-/*
-	$time = microtime(true);
-
-	echo PHP_EOL.'ConverDB: ';
-
-	global $_variantsCount;
-
-	if(!DB::Connect()->query('SHOW COLUMNS FROM Players LIKE "InviterId"')->fetch())
-	{
-		DB::Connect()->query('ALTER TABLE `Players` ADD `InviterId` INT(11) UNSIGNED	NOT NULL DEFAULT "0", ADD INDEX (`InviterId`)');
-		DB::Connect()->query('ALTER TABLE `Players` ADD `Agent`		VARCHAR(255)		NOT NULL');
-		DB::Connect()->query('CREATE TABLE IF NOT EXISTS `PlayerIps` (
-								`PlayerId` int(11) unsigned NOT NULL,
-								`Ip` int(11) unsigned NOT NULL,
-								`Time` int(11) unsigned NOT NULL
-							) ENGINE=InnoDB DEFAULT CHARSET=latin1');
-		DB::Connect()->query('ALTER TABLE `PlayerIps` ADD PRIMARY KEY (`PlayerId`,`Ip`), ADD KEY `PlayerId` (`PlayerId`), ADD KEY `Ip` (`Ip`)');
-
-	}
-
-	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
-	{
-		DB::Connect()->query('ALTER TABLE Players			ADD INDEX `Country`		(`Country`)');
-		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `CountryCode`	(`CountryCode`)');
-		DB::Connect()->query('ALTER TABLE LotterySettings	ADD INDEX `BallsCount`	(`BallsCount`)');
-	}
-
-	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
-	{
-		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
-	}
-
-	if(!DB::Connect()->query('SHOW COLUMNS FROM Lotteries LIKE "BallsTotal"')->fetch())
-	{
-		DB::Connect()->query('ALTER TABLE Lotteries ADD BallsTotal varchar(255) NULL');
-	}
-
-	if(!DB::Connect()->query('SHOW COLUMNS FROM LotteryTickets LIKE "B1"')->fetch())
-	{
-//		foreach(array('Players', 'Lotteries', 'LotterySettings', 'LotteryTickets', 'PlayerLotteryWins', 'Transactions') as $table)
-//		{
-//			DB::Connect()->query("ALTER TABLE $table ENGINE='MyISAM'");
-//		}
-
-		$SQL_LT = 'ALTER TABLE LotteryTickets ';
-		$SQL_L  = 'ALTER TABLE Lotteries ';
-
-		for($i = 1; $i <= $_variantsCount; $i++)
-		{
-			$SQL_LT.= "ADD B$i TINYINT(1) NULL, ADD INDEX L$i (LotteryId,B$i),";
-			$SQL_L .= "ADD B$i TINYINT(1) NULL, ADD INDEX L$i (B$i),";
-		}
-
-		$SQL_LT = substr($SQL_LT, 0, -1);
-		$SQL_L  = substr($SQL_L,  0, -1);
-
-
-		DB::Connect()->query($SQL_LT);
-		DB::Connect()->query($SQL_L);
-
-		DB::Connect()->query('ALTER TABLE `LotteryTickets` CHANGE `Combination` `Combination` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;');
-
-		RestoreTickets();
-
-		echo (microtime(true) - $time).PHP_EOL;
-
-		return true;
-	}
-
-	echo (microtime(true) - $time).PHP_EOL;
-// */
-	return false;
-}
-
-?>

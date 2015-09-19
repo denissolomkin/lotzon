@@ -6,7 +6,7 @@ Application::import(PATH_APPLICATION . 'model/processors/LotterySettingsDBProces
 class LotterySettingsCacheProcessor extends BaseCacheProcessor
 {
 
-    const SETTINGS_CACHE_KEY = "game::settings";
+    const LOTTERY_SETTINGS_KEY = "lottery::settings";
 
     public function init()
     {
@@ -17,7 +17,7 @@ class LotterySettingsCacheProcessor extends BaseCacheProcessor
     {
         $settings = $this->getBackendProcessor()->saveSettings($settings);
 
-        if (!Cache::init()->set(self::SETTINGS_CACHE_KEY, $settings)) {
+        if (!Cache::init()->set(self::LOTTERY_SETTINGS_KEY, $settings)) {
             throw new ModelException("Unable to cache storage data", 500);            
         }
 
@@ -26,12 +26,12 @@ class LotterySettingsCacheProcessor extends BaseCacheProcessor
 
     public function loadSettings()
     {
-        if (($settings = Cache::init()->get(self::SETTINGS_CACHE_KEY)) !== false) {
+        if (($settings = Cache::init()->get(self::LOTTERY_SETTINGS_KEY)) !== false) {
             return $settings;
         }
 
         $settings = $this->getBackendProcessor()->loadSettings();
-        Cache::init()->set(self::SETTINGS_CACHE_KEY, $settings);
+        Cache::init()->set(self::LOTTERY_SETTINGS_KEY, $settings);
 
         return $settings;
     }
