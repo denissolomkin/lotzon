@@ -96,7 +96,7 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
     public function getMoneyTotalWin()
     {
 
-        if (($count = Cache::init()->get(self::LOTTERIES_MONEY_KEY)) === false) {
+        if (($money = Cache::init()->get(self::LOTTERIES_MONEY_KEY)) === false) {
 
             $money = $this->getBackendProcessor()->getMoneyTotalWin();
             Cache::init()->set(self::LOTTERIES_MONEY_KEY, $money);
