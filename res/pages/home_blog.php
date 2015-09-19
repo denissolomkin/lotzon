@@ -3,13 +3,6 @@
 
 		<div class="content-box">
 
-			<div class="content-box-header">
-				<div class="content-box-tabs clearfix">
-					<a href="/" class="content-box-tab active">Блог</a>
-					<a href="home_rating" class="content-box-tab">Рейтинг</a>
-				</div>
-			</div>
-
 			<div class="content-box-content clearfix">
 				<div class="content-box-item home-blog">
 

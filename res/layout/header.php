@@ -39,12 +39,20 @@
                 <? $menu = array(
                     'menu-main' => array(
                         'home_blog' => 'Блог',
-                        'tickets' => 'Билеты',
-                        'prizes' => 'Призы',
-                        'communication_comments' => 'Общение',
-                        'communication_friends' => 'Друзья',
+                        'tickets' => 'Лотерея',
                         'games_online' => 'Игры',
-                        'cabinet_game_history' => 'Кабинет',
+                        'communication_comments' => 'Общение',
+                        'friends' => 'Друзья',
+                        'prizes' => 'Витрина',
+                        // 'cabinet_game_history' => 'Кабинет',
+                    ),
+
+                    'menu-profile' => array(
+                        'settings' => 'Настройки',
+                        'Обратная связь',
+                        'Правила',
+                        'Помощь',
+                        'Выйти',
                     ),
 
                     'menu-more' => array(
