@@ -23,7 +23,7 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
 
     public function getLastPublishedLottery()
     {
-        return end($this->getPublishedLotteriesList());
+        return current($this->getPublishedLotteriesList(1));
     }
 
     public function getPublishedLotteriesList($limit = null, $offset = 0)
