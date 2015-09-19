@@ -67,4 +67,9 @@ class LotteriesModel extends Model
     {
         return $this->getProcessor()->getMoneyTotalWin();      
     }
+
+    public function recache()
+    {
+        return $this->getProcessor()->recache();
+    }
 }
