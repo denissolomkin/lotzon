@@ -152,6 +152,12 @@ function ApplyLotteryCombination(&$comb)
         SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
     }
 
+	echo PHP_EOL.'recache: '.PHP_EOL;
+	$time = microtime(true);
+	LotteriesModel::instance()->recache();
+	echo (microtime(true) - $time).PHP_EOL;
+	echo PHP_EOL.PHP_EOL;
+
 	unset($comb['fields']);
 }
 
