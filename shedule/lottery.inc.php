@@ -374,6 +374,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
+    $lastTicketId = 0;
 
 	/**
 	 * Get lastTicketId
@@ -386,7 +387,10 @@ function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 
 				LotteryId = 0
 			ORDER BY id DESC
 			LIMIT 1';
-	$lastTicketId = current(DB::Connect()->query($SQL)->fetch());
+    
+    if($lastTickets = DB::Connect()->query($SQL)->fetch()){
+	    $lastTicketId = current($lastTickets);
+    }
 
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy, $lastTicketId);
 	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId);
