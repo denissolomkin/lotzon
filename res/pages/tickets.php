@@ -256,6 +256,7 @@
 				<div class="content-box-tabs clearfix">
 					<a href="#" class="content-box-tab active">Правила</a>
 					<a href="#" class="content-box-tab">Частые вопросы</a>
+                    <a href="home_rating" class="content-box-tab active">Рейтинг</a>
 				</div>
 			</div>
 

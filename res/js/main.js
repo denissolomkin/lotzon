@@ -101,8 +101,31 @@
 
 
 
+    /* ========================================================= */
+    //                        TAB MENU
+    /* ========================================================= */
 
 
+    $('.content-box-tabs a').on('click', activateTab);
+    $('.content-box-tabs a').first().click();
+
+    function activateTab() {
+        $Tab = $(this);
+        if ($Block = $Tab.data('block')) {
+            $('.content-box-tabs a').removeClass('active');
+            $('.content-box-item:visible').fadeOut(200);
+            setTimeout(function () {
+                console.log($Block);
+                $('.content-box-item.' + $Block).fadeIn(200);
+            }, 200);
+            $Tab.addClass('active');
+            return false;
+        }
+
+    }
+
+    /* ========================================================= */
+    /* ========================================================= */
 
 
 

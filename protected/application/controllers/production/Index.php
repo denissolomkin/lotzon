@@ -96,8 +96,9 @@ class Index extends \SlimController\SlimController
 
     protected function page($page)
     {
-        $this->render("production/pages/$page", array(
-            'layout' => 'production/layout.php',
+
+        $this->render("../../res/pages/$page", array(
+            'layout' => '../../res/index.php',
             'page' => $page,
         ));
 
