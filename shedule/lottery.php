@@ -4,7 +4,14 @@ echo PHP_EOL.'************ '.date('Y-m-d H:i:s').' ************'.PHP_EOL;
 require_once('lottery.inc.php');
 
 if(@$_SERVER['argv'][1] == 'roll') {
-    RollBack();
+    if(!file_exists($tmp = __DIR__.'/lottery.lock.tmp')) {
+        file_put_contents($tmp, '');
+        RollBack();
+        if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp')) {
+            unlink($tmp);
+        }
+    }
+    exit("rollback done");
 }
 
 if(timeToRunLottery()) {

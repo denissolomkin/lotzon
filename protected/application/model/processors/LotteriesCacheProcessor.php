@@ -23,7 +23,7 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
 
     public function getLastPublishedLottery()
     {
-        return end($this->getPublishedLotteriesList());
+        return current($this->getPublishedLotteriesList(1));
     }
 
     public function getPublishedLotteriesList($limit = null, $offset = 0)
@@ -96,7 +96,7 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
     public function getMoneyTotalWin()
     {
 
-        if (($count = Cache::init()->get(self::LOTTERIES_MONEY_KEY)) === false) {
+        if (($money = Cache::init()->get(self::LOTTERIES_MONEY_KEY)) === false) {
 
             $money = $this->getBackendProcessor()->getMoneyTotalWin();
             Cache::init()->set(self::LOTTERIES_MONEY_KEY, $money);

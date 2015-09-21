@@ -21,11 +21,10 @@ function timeToRunLottery()
 
 	foreach($gameSettings->getLotterySettings() as $game)
 	{
-		if($currentTime > $game['StartTime'])
+		if($currentTime >= $game['StartTime'])
 		{
             $gameSettings = $game;
-			$lotteryTime = strtotime(date("Y-m-d")+$game['StartTime']);
-
+			$lotteryTime = strtotime(date("Y-m-d"))+$game['StartTime'];
 			$SQL = 'SELECT
 				Id,Ready
 			FROM
@@ -33,7 +32,7 @@ function timeToRunLottery()
 			WHERE
 				Date = '.$lotteryTime.'
 			LIMIT 1';
-			$lottery = current(DB::Connect()->query($SQL)->fetch());
+			$lottery = DB::Connect()->query($SQL)->fetch();
 			if (!$lottery) {
 				$gameSettings['lotteryTime'] = $lotteryTime;
 				return true;
@@ -42,8 +41,6 @@ function timeToRunLottery()
 					$gameSettings['lotteryId'] = $lottery['Id'];
 					$gameSettings['lotteryTime'] = $lotteryTime;
 					return true;
-				} else {
-					return false;
 				}
 			}
 		}
@@ -84,12 +81,20 @@ function SetSerializeBallsRollBack()
  * @param $text #error description
  */
 function RollBack($text = '') {
-	echo PHP_EOL.$text.PHP_EOL;
-	$time = microtime(true);
-	echo 'rollBack: '.PHP_EOL;
-	DB::Connect()->query("CALL rollBackLotteryLast");
-	echo (microtime(true) - $time).PHP_EOL;
-	SetSerializeBallsRollBack();
+	try {
+		echo PHP_EOL . $text . PHP_EOL;
+		$time = microtime(true);
+		echo 'rollBack: ' . PHP_EOL;
+		DB::Connect()->query("CALL rollBackLotteryLast");
+		echo (microtime(true) - $time) . PHP_EOL;
+		SetSerializeBallsRollBack();
+	} catch (Exception $e) {
+		echo "rollBack get exception: ". PHP_EOL . $e->getMessage().PHP_EOL;
+		if(file_exists($tmp = __DIR__.'/lottery.lock.tmp')) {
+			unlink($tmp);
+		}
+		exit();
+	}
 }
 
 /**
@@ -105,13 +110,13 @@ function ApplyLotteryCombinationAndCheck(&$comb)
 		$times = 1;
 		echo 'rollBack start: ';
 		RollBack($text);
-		$counter ++;
-		if( $counter < $times) {
+		$counter++;
+		if ($counter < $times) {
 			sleep(5);
 			ApplyLotteryCombinationAndCheck($comb);
 		} else {
-			echo "rollBack is looped $times times: exit".PHP_EOL;
-			if(file_exists($tmp = __DIR__.'/lottery.lock.tmp')) {
+			echo "rollBack is looped $times times: exit" . PHP_EOL;
+			if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp')) {
 				unlink($tmp);
 			}
 		}
@@ -146,6 +151,12 @@ function ApplyLotteryCombination(&$comb)
         $counters['MONEY_ADD']+=$counters['MONEY_ADD_INCREMENT'];
         SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
     }
+
+	echo PHP_EOL.'recache: '.PHP_EOL;
+	$time = microtime(true);
+	LotteriesModel::instance()->recache();
+	echo (microtime(true) - $time).PHP_EOL;
+	echo PHP_EOL.PHP_EOL;
 
 	unset($comb['fields']);
 }
@@ -369,6 +380,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
+    $lastTicketId = 0;
 
 	/**
 	 * Get lastTicketId
@@ -381,7 +393,10 @@ function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 
 				LotteryId = 0
 			ORDER BY id DESC
 			LIMIT 1';
-	$lastTicketId = current(DB::Connect()->query($SQL)->fetch());
+    
+    if($lastTickets = DB::Connect()->query($SQL)->fetch()){
+	    $lastTicketId = current($lastTickets);
+    }
 
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy, $lastTicketId);
 	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId);
