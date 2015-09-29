@@ -123,7 +123,7 @@ return;
         // setTimeout(WebSocketAjaxClient,500);
     });
 
-
+WebSocketAjaxClient();
 }
 
 
