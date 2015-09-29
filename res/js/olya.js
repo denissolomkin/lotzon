@@ -23,7 +23,7 @@ $(window).resize(function() {
     ViewDurakSize();    
 });*/
 
-
+$(function () {
 
 
 step = 0;
@@ -34,12 +34,53 @@ var playerMoney   = 3.58;
 var currency =  {"iso":"\u0433\u0440\u043d","one":"\u0433\u0440\u0438\u0432\u043d\u0430","few":"\u0433\u0440\u0438\u0432\u043d\u0438","many":"\u0433\u0440\u0438\u0432\u0435\u043d","coefficient":"1","rate":100};
 var playerId   = 3628;
 
-function WebSocketAjaxClient(id) {
+WebSocketAjaxClient = function (id) {
 
             if(is_numeric(id))
                 step = id;
             else
                 step++;
+
+            data = $Cache['games-game'][step]
+
+            if (data.error)
+                $("#report-popup").show().find(".txt").text(getText(data.error)).fadeIn(200);
+            else {
+
+                path = data.path;
+                if (data.res) {
+
+                    if (data.res.appId && data.res.appId != onlineGame.appId) {
+                        onlineGame = {};
+                    } else if (onlineGame.winner) {
+                        onlineGame['winner'] = null;
+                        onlineGame['fields'] = null;
+                    }
+
+                    $.each(data.res, function(index, value) {
+                        onlineGame[index] = value;
+                    });
+
+                    if (data.res.appName)
+                        appName = data.res.appName;
+
+                    if (data.res.appMode)
+                        appMode = data.res.appMode;
+
+                    if (data.res.appId) {
+                        appId = data.res.appId;
+                        data = null;
+                    }
+
+                    / /
+
+                    playAudio([appName, onlineGame.action]);
+                }
+
+                eval(path.replace('\\', '') + 'Callback')(data);
+return;
+
+}
     $.getJSON("/?step="+step,
         function(data) {
             if (data.error)
@@ -84,7 +125,6 @@ function WebSocketAjaxClient(id) {
 
 
 }
-WebSocketAjaxClient();
 
 
 function playAudio(key) {
@@ -948,3 +988,5 @@ function is_numeric(mixed_var) {
     return (typeof mixed_var === 'number' || (typeof mixed_var === 'string' && whitespace.indexOf(mixed_var.slice(-1)) === -
         1)) && mixed_var !== '' && !isNaN(mixed_var);
 }
+
+});
