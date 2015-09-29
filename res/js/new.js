@@ -96,7 +96,7 @@ $(function () {
             },
 
             "Json": function (url) {
-                return $Url.Path.Json + $Url.Parse.Url(url);
+                return $Url.Path.Json +  $Url.Parse.Url($Url.Parse.Json(url));
             },
 
             "Tmpl": function (url) {
