@@ -7,7 +7,9 @@
                 <?php include "layout/banner_1.php"; ?>
             </div>
 
-            <?=$yield?>
+            <div class="content-top">
+            </div><!-- .content-top -->
+
 
             <div class="banner-2">
                 <?php include "layout/banner_2.php"; ?>

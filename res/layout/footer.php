@@ -16,14 +16,24 @@
 		</div><!-- .container -->
 	</footer>
 	<!-- end of FOOTER -->
+    <style>
+    </style>
 
 
 
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
+	<script src="/res/js/libs/jquery.plugin.min.js"></script>
+	<script src="/res/js/libs/jquery-ui.min.js"></script>
+	<script src="/res/js/libs/jquery.countdown.min.js"></script>
+	<script src="/res/js/libs/jquery.cookie.js"></script>
 	<script src="/res/js/libs/moment.min.js"></script>
+    <script src="/res/js/libs/mustache.min.js"></script>
 	<script src="/res/js/libs/daterangepicker.js"></script>
 	<script src="/res/js/libs/owl.carousel.js"></script>
-	<script src="/res/js/main.js"></script>
+    <script src="/res/js/libs/sugar.min.js"></script>
+    <script src="/res/js/main.js"></script>
+    <script src="/res/js/new.js"></script>
+    <script src="/res/js/olya.js"></script>
 
 </body>
 </html>

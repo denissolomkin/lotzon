@@ -5,3 +5,5 @@
 /protected/configs/_mail.local.php
 /res/.sass-cache
 /lastLottery
+/res/.gitignore
+/res/.gitattributes

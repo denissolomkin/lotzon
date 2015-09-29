@@ -2,12 +2,13 @@
   height: 55px
   margin-bottom: 20px
 
+  .container
+    position: relative
+    padding-right: 184px
+
 .header-left
-  float: left
-  width: 378px
-  width: 100%
-  margin-right: -350px
   height: 55px
+  float: left
 
 .header-logo
   top: 19px
@@ -15,48 +16,31 @@
 
 
 
+// MENU BUTTONS ------------------------- //
 
+.menu-btns
+  height: 55px
 
-// MENU ------------------------- //
+.menu-btn-item
+  padding: 0 20px
 
-.menu
-  padding-top: 90px
+.menu-btn:before
+  top: 18px
 
-  &.active
-    width: 370px
-
-  & a
-    padding-right: 30px
-
-.menu-main:after
-  right: 19px
-
-.menu-btn
+.menu-profile-btn:before
   top: 17px
-  right: 2px
-  width: 25px
-  height: 21px
-  background-position: -46px -191px
 
-  &.active
-    position: absolute
-    right: 30px
-    width: 19px
-    height: 19px
-    background-position: -140px -192px
+.menu-balance-btn:before
+  top: 16px
 
-// ----------------------------- //
-
-
-
-
-
-
-
+// -------------------------------- //
 
 .header-right
-  float: left
-  background: transparent
+  height: 55px
 
 .inf-slider
+  display: block
+  float: right
   width: 300px
+  height: 55px
+  background: #ffe700

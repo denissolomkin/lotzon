@@ -4,10 +4,14 @@
 .header
   margin-bottom: 30px
 
+  .container
+    padding: 0
+
 .header-left
   width: 684px
   margin-right: 0
   position: relative
+  padding-right: 10px
 
 .header-logo
   width: 100px
@@ -18,100 +22,141 @@
 
 
 
-// MENU ---------------------------- //
+// MENUS ------------------------- //
 
 .menu
-  float: left
-  visibility: visible
+  display: block !important
+  overflow: visible
   position: static
-  width: auto !important
-  height: auto
-  padding: 0
   background: transparent
-
-.menu-main
   padding: 0
+  font-size: 15px
+  width: auto
+  display: block
 
-  & li
-    float: left
-
-    &:first-child
-      display: none
-
-  & a
-    padding: 0 18px
-    line-height: 55px
-    text-align: center
-    font-weight: bold
+  a
+    text-align: left
+    padding: 0
 
     &.active,
     &:hover
+      background: none
+
+.menu-main
+  display: block !important
+  float: left
+  overflow: hidden
+  position: static
+  background: transparent
+  padding: 0
+  width: 430px
+
+  li:first-child
+    display: none
+
+  a
+    float: left
+    height: 55px
+    line-height: 55px
+    text-transform: uppercase
+    padding: 0 13px
+    font-weight: bold
+
+    &:hover,
+    &.active
       background: #FFE700
 
   &:after
     display: none
 
 .menu-more
-  visibility: hidden
-  opacity: 0
-  position: absolute
-  top: 49px
-  right: 0
-  transition: all .2s ease-out
-  background: #fff
-  padding: 20px 40px
-  border-radius: 2px
-  box-shadow: 2px 2px 5px rgba(0,0,0,.2)
-  z-index: 3
+  display: none
+  padding: 20px 30px
 
-  &:before
-    content: ""
-    display: block
-    width: 30px
-    height: 13px
-    background: url(img/sprite.png) -311px -87px
-    position: absolute
-    top: -13px
-    right: 10px
-    z-index: 2
+  a
+    margin-bottom: 5px
 
-  &.active
-    visibility: visible
-    opacity: 1
+  li:last-child a
+    margin-top: 25px
 
-  & a
-    padding: 0
-    margin-bottom: 10px
-    text-align: left
 
-    &.active,
-    &:hover
-      background: none
-      text-decoration: underline
+// BALANCE MENU ----------------------------- //
 
-    & li:last-child a
-      margin-top: 35
-      margin-bottom: 0
+.menu-balance
+  width: 250px
+  padding: 70px 25px 20px
+  top: 0
+  right: 23px
 
-.menu-btn
+.menu-balance-inf
   display: none
 
-.more-menu-btn
-  display: block
-  width: 19px
-  height: 11px
-  background: url(img/sprite.png) -240px -88px
-  float: right
+.menu-balance-actions .menu-balance-item
+  width: auto
+
+  &:first-child
+    float: none
+
+  &:last-child
+    float: none
+
+.menu-balance-item
+  margin-bottom: 10px
+  background: #b7cfd3
+  font-weight: bold
+  border: none
+
+  &.active:after
+    content: ""
+    display: block
+    width: 15px
+    height: 15px
+    border-radius: 50%
+    background: #fff
+    position: absolute
+    left: 7px
+    top: 10px
+
+  &:hover
+    background: #d1e3e5
+
+  &:last-child
+    margin-bottom: 0
+
+// ----------------------------------- //
+
+
+// MENU BUTTONS ------------------------- //
+
+.menu-balance-btn
+  display: none
+
+// -------------------------------- //
+
+.header-right
   position: relative
-  top: 23px
-  right: 30px
-  cursor: pointer
+  left: 0
+  float: left
 
-  &.active
-    background-position: -278px -88px
+.balance-btn
+  float: none
+  position: relative
+  z-index: 51
+  display: block
+  height: 100%
+  text-align: center
+  font-size: 24px
+  font-weight: bold
+  padding-top: 10px
+  text-transform: uppercase
+  box-shadow: none !important
 
-// --------------------------------- //
+  span span
+    font-size: 12px
 
+  &.active,
+  &:hover
+    background: transparent
 
 .inf-slider
   width: 300px
