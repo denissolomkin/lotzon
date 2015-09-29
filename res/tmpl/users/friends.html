@@ -1,0 +1,30 @@
+﻿<div class="content-box-item c-friends">
+
+    <div class="content-box-item-top">
+        <div class="friends-count">Друзей<span>{{friends}}</span></div>
+        <div class="friends-search">
+            <input type="text" class="friends-search-input" placeholder="Поиск среди друзей">
+        </div>
+    </div>
+
+    <div>
+        {{#items}}
+        <div class="c-friend online clearfix">
+            <div class="c-friend-img">
+                <img src="{{ img }}" alt="">
+            </div>
+            <div class="c-friend-description">
+                <div class="c-friend-name">{{ title }}</div>
+                <div class="c-friend-inf">
+                    <div>Игр: {{ games }}</div>
+                    <div>Денег: {{ money }}</div>
+                    <div>Баллов: {{ points }}</div>
+                </div>
+                <a href="message" data-json="friends-get-{{ id }}" class="block c-friend-msg">Написать сообщение</a>
+            </div>
+        </div>
+        {{/items}}
+        {{^items}}No friends :({{/items}}
+
+    </div>
+</div>

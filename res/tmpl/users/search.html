@@ -1,0 +1,26 @@
+﻿<div class="content-box-item c-search">
+
+                    <div class="content-box-item-top">
+                        <div class="friends-search">
+                            <input type="text" class="friends-search-input" placeholder="Поиск">
+                            <input type="text" class="friends-search-input" placeholder="Поиск по городу">
+                        </div>
+                    </div>
+    <div>
+
+        {{#items}}
+
+                        <div class="c-friend clearfix">
+                            <div class="c-friend-img">
+                                <img src="{{ img }}" alt="">
+                            </div>
+                            <div class="c-friend-description">
+                                <div class="c-friend-name">{{ title }}</div>
+                                <a href="#" class="c-friend-pal">Дружить</a>
+                            </div>
+                        </div>
+
+        {{/items}}
+        {{^items}}No friends :({{/items}}
+    </div>
+</div>

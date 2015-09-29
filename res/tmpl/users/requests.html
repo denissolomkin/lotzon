@@ -1,0 +1,22 @@
+﻿<div class="content-box-item c-requests">
+    <div>
+        {{#items}}
+
+                        <div class="c-friend clearfix">
+                            <div class="c-friend-img">
+                                <img src="{{ img }}" alt="">
+                            </div>
+                            <div class="c-friend-description">
+                                <div class="c-friend-name">{{ title }}</div>
+                                <div class="c-friend-date">{{ date }}</div>
+                                <div class="c-friend-news">Предлагает дружить</div>
+                                <div class="c-friend-actions">
+                                    <a href="#" class="yes">Дружить</a>
+                                    <a href="#" class="no">Отказаться</a>
+                                </div>
+                            </div>
+                        </div>
+        {{/items}}
+        {{^items}}No friends :({{/items}}
+    </div>
+</div>

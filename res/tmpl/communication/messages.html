@@ -1,0 +1,23 @@
+<div class="content-box-item clearfix communication-messages">
+	<div class="cm-top">
+			<a href="communication_new_message" class="new-message">Новое сообщение</a>
+			<a href="communication_new_message" class="write-admin">Написать админу</a>
+		</div>
+		
+	{{#items}}
+	
+		<div class="message">
+			<div class="message-img">
+				<img src="{{img}}" alt="">
+			</div>
+			<div class="message-name">{{title}}</div>
+			<div class="message-text">
+				{{text}}
+			</div>
+		</div>
+		
+	 {{/items}}	
+	 {{^items}}No messages :({{/items}}
+
+	</div>
+</div>
