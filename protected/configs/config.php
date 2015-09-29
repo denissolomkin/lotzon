@@ -248,7 +248,7 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
-    '/:page' => 'controllers\production\Index:index',
+    '/:page/' => 'controllers\production\Index:index',
     '/vkproxy/' => 'controllers\production\Index:VKProxy',
     '/feedback/' => 'controllers\production\Index:feedback',
     '/trailer/' => array(
@@ -319,6 +319,8 @@ Config::instance()->publicResources = array(
     '/quickgame/preview/:key' => array(
         'post' => 'controllers\production\Game:previewQuickGame',
     ),
+
+    '/(.*)/' => 'controllers\production\Index:index',
 );
 
 Config::instance()->hybridAuth = array(

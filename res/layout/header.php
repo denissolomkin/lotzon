@@ -10,6 +10,9 @@
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic'
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/res/css/style.css">
+    <link rel="stylesheet" href="/res/css/animate.css">
+    <link rel="stylesheet" href="/res/css/new.css">
+    <link rel="stylesheet" href="/res/css/olya.css">
 </head>
 <body>
 
@@ -31,43 +34,40 @@
         <div class="header-left clearfix">
 
             <!-- Logo -->
-            <a href="/" class="header-logo"></a>
+            <a href="/blog" class="header-logo"></a>
 
             <!-- MENU -->
             <nav class="menu">
 
                 <? $menu = array(
                     'menu-main' => array(
-                        'home_blog' => 'Блог',
-                        'tickets' => 'Лотерея',
-                        'games_online' => 'Игры',
-                        'communication_comments' => 'Общение',
-                        'friends' => 'Друзья',
+                        'blog' => 'Блог',
+                        'lottery' => 'Лотерея',
+                        'games' => 'Игры',
+                        'communication' => 'Общение',
+                        'users' => 'Друзья',
                         'prizes' => 'Витрина',
-                        // 'cabinet_game_history' => 'Кабинет',
                     ),
 
-                    'menu-profile' => array(
+                    'menu-profile menu-item' => array(
                         'settings' => 'Настройки',
-                        'Обратная связь',
-                        'Правила',
-                        'Помощь',
+                        'Выписки',
+                        'Рефералы',
+                        'Бонусы',
                         'Выйти',
                     ),
 
-                    'menu-more' => array(
-                        'settings' => 'Настройки',
+                    'menu-more menu-item' => array(
                         'Обратная связь',
                         'Правила',
                         'Помощь',
-                        'Выйти',
                     )
                 );
                 foreach ($menu as $ul => $items):?>
                     <ul class="<?= $ul ?>">
                         <? foreach ($items as $href => $title): ?>
                             <li>
-                                <a<?= ($href === $page ? ' class="active"': '') ?> href="<?= !is_numeric($href)?$href:'' ?>"><?= $title ?></a>
+                                <a<?= ($href === $page ? ' class="active"': '') ?> href="/<?= !is_numeric($href)?$href:'' ?>"><?= $title ?></a>
                             </li>
                         <? endforeach; ?>
                     </ul>
@@ -75,11 +75,17 @@
             </nav>
             <!-- end of MENU -->
 
-            <!-- Menu Button -->
-            <div class="menu-btn"></div>
+            <div class="menu-btns">
+                <!-- Menu Button -->
+                <div class="menu-btn menu-btn-item"></div>
 
-            <!-- More Menu Button -->
-            <div class="more-menu-btn"></div>
+                <!-- Profile Menu Button -->
+                <div class="menu-profile-btn menu-btn-item"></div>
+
+                <!-- Balance Menu Button -->
+                <div class="menu-balance-btn menu-btn-item"></div>
+            </div>
+
 
         </div>
         <!-- .header-left -->
@@ -87,13 +93,27 @@
         <!-- Header Right -->
         <div class="header-right">
             <div class="inf-slider"></div>
-            <div class="timer clearfix">
-                <div class="timer-title">
-                    До розыгрыша<br>
-                    осталось
+
+            <a href="#" class="balance-btn menu-btn-item">
+                <span class="cabinet-balance-count">31,80<span>грн</span></span>
+                <span class="cabinet-balance-count">32 320<span>баллов</span></span>
+            </a>
+
+            <!-- BALANCE MENU -->
+            <div class="menu-balance menu-item">
+                <div class="menu-balance-inf clearfix">
+                    <div>34.80<br><span>гривен на счету</span></div>
+                    <div>12 450<br><span>баллов на счету</span></div>
                 </div>
-                <div class="timer-digits">15:09:40</div>
+                <div class="menu-balance-actions clearfix">
+                    <a href="cabinet_cashout" class="menu-balance-item">Вывести</a>
+                    <a href="cabinet_convert" class="menu-balance-item">Конвертировать</a>
+                </div>
+                <a href="cabinet_transaction_history" class="menu-balance-item">История транзакций</a>
+                <a href="cabinet_payments_history" class="menu-balance-item active">История выплат</a>
             </div>
+            <!-- end of BALANCE MENU -->
+
         </div>
         <!-- .header-right -->
 

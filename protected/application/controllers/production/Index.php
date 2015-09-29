@@ -14,9 +14,10 @@ class Index extends \SlimController\SlimController
     public $country = '';
     public $ref = 0;
 
-    public function indexAction($page = 'home_blog')
+    public function indexAction($page = 'home')
     {
 
+        return include ("res/index.php");
         die($this->page($page));
 
         $session = new Session();
