@@ -623,11 +623,11 @@ $(function () {
             var html = '';
 
             $.each(this.balls, function (index, ticket) {
-                html += "<li><span>БИЛЕТ</span> #" + index + "<ul class=balls-box>";
+                html += "<ul class='ticket-result'><li class='ticket-number-result'><span>БИЛЕТ</span> #" + index + "";
                 $.each(ticket, function (number, ball) {
-                    html += "<li class=ball-circle>" + ball + "</li>";
+                    html += "<li class='ball-number-result'>" + ball + "</li>";
                 });
-                html += "</ul></li>";
+                html += "</ul>";
             });
 
             return html;

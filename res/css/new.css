@@ -148,14 +148,14 @@
     display: block;
     color: red;
 }
-.ticket-result{
+/*.ticket-result{
     background-color:#B2D0D4;
     z-index:10;
     border-radius:14px;
     padding: 10px 10px;
     position:relative;
 
-}
+}*/
 .tickets-number-result{
     font-size:15px;
     line-height:45px;
@@ -220,10 +220,10 @@
         margin-left: 20px;
     }
 
-    .balls-result {
+    /*.balls-result {
         margin-top: 60px;
         width: 87%;
-    }
+    }*/
 
     .tickets-number-result {
         margin: 60px 0 0 0;
