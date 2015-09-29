@@ -1,0 +1,15 @@
+<div class="content-box-item games-online">
+    <div>
+        {{#items}}
+        <a href="/games/game">
+            <div class="game">
+                <div class="game-img">
+                    <img src="{{ img }}" alt="">
+                </div>
+                <div class="game-name">{{ title }}</div>
+            </div>
+        </a>
+        {{/items}}
+        {{^items}}No games :({{/items}}
+    </div>
+</div>

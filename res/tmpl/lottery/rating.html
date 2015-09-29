@@ -1,0 +1,31 @@
+<div class="content-box-item raiting">
+    <div>
+        {{#items}}
+					<div class="raiting-item clearfix">
+                        <a href = '/users/{{ id }}/detail/'>
+						<div class="raiting-img">
+							<img src="{{ img }}" alt="">
+							<div class="raiting-position">{{ position }}</div>
+						</div>
+						<div class="raiting-name">{{ title }}</div>
+						<table class="raiting-inf">
+							<tr>
+								<td>Розыгрышей</td>
+								<td>{{ games }}</td>
+							</tr>
+							<tr>
+								<td>Денег (руб)</td>
+								<td>{{ money }}</td>
+							</tr>
+							<tr>
+								<td>Баллов</td>
+								<td>{{ points }}</td>
+							</tr>
+						</table>
+                        </a>
+					</div>
+
+        {{/items}}
+        {{^items}}No rating :({{/items}}
+    </div>
+</div>

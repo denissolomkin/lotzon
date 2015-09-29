@@ -1,0 +1,34 @@
+﻿<div class="content-box-item with-cat prizes-exchange">
+    <div class="content-box-item-top clearfix">
+        <div class="content-box-cat">
+            {{#categories}}
+            <a href="#" data-category="{{ id }}">{{ title }}</a>
+            {{/categories}}
+        </div>
+    </div>
+
+    <div class="content-box-item-content">
+     {{asd}}
+        {{#items}}
+            <div class="prize category-{{ category }}">
+        <a href="/prizes/exchange/{{ id }}">
+                <div class="prize-content">
+                    <div class="prize-img">
+                        <img src="{{ img }}" alt="">
+                    </div>
+                    <div class="prize-name">
+                        {{ title }}
+                    </div>
+                    <div class="prize-price">
+                        {{ price }}<span>{{#i18n}}title-points{{/i18n}}</span>
+                    </div>
+                </div>
+                <div class="prize-inf">
+                    {{#i18n}}title-limited-quantity{{/i18n}}<br>25 {{#i18n}}title-pieces{{/i18n}}
+                </div>
+        </a>
+            </div>
+        {{/items}}
+        {{^items}} {{#i18n}}title-points{{/i18n}} No prizes :({{/items}}
+    </div>
+</div>

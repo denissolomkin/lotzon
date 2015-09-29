@@ -1,0 +1,28 @@
+﻿<div class="ticket-item clearfix">
+
+    <ul class="ticket-numbers ticket-balls clearfix">
+        {{{ ballsHTML }}}
+    </ul>
+    <!-- .ticket-numbers -->
+
+    {{#isDone}}
+    <div class="ticket-done">{{#i18n}}message-done-and-approved{{/i18n}}</div>
+    {{/isDone}}
+
+    {{^isDone}}
+
+    <ul class="ticket-actions">
+        <li class='ticket-random'>A
+            <div class="after">{{#i18n}}message-autocomplete{{/i18n}}</div>
+        </li>
+        <li class="ticket-favorite ticket-fc-btn">
+            <div class="after">{{#i18n}}message-favorite{{/i18n}}</div>
+        </li>
+    </ul>
+
+    <div class="balls-count">{{#i18n}}message-numbers-yet{{/i18n}}</div>
+    <div class="ticket-btn add-ticket">{{#i18n}}button-add-ticket{{/i18n}}</div>
+
+    {{/isDone}}
+
+</div><!-- .ticket-item -->

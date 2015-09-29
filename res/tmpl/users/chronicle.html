@@ -1,0 +1,18 @@
+﻿<div class="content-box-item c-chronicle">
+    <div>
+        {{#items}}
+        <div class="c-friend online clearfix">
+            <div class="c-friend-img">
+                <img src="{{ img }}" alt="">
+            </div>
+            <div class="c-friend-description">
+                <div class="c-friend-name">{{ title }}</div>
+                <div class="c-friend-date">{{ date }}</div>
+                <div class="c-friend-news">{{ news }}</div>
+                <a href="message" data-block="friends-get-{{ id }}" class="block c-friend-msg">Написать сообщение</a>
+            </div>
+        </div>
+        {{/items}}
+        {{^items}}No friends :({{/items}}
+    </div>
+</div>

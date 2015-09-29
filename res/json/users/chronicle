@@ -1,0 +1,53 @@
+{
+    "status": 1,
+    "message": "OK",
+    "res":{
+        "items":[
+            {
+                "id": "1",
+                "img": "/res/img/user_img.jpg",
+                "title": "Ноутбук Asus X551MA",
+                "games": "50000",
+                "money": "0",
+                "news": "Выиграл в онлайн играх 280 баллов",
+                "date": "3 часа назад"
+            },
+            {
+                "id": "2",
+                "img": "/res/img/user_img.jpg",
+                "title": "Смартфон Lenovo X551MA",
+                "games": 10000,
+                "money": "5",
+                "news": "Принял вашу заявку дружить",
+                "date": "3 часа назад"
+            },
+            {
+                "id": "3",
+                "img": "/res/img/user_img.jpg",
+                "title": "Mp3-плеер Ipod X551MA",
+                "games": "10000",
+                "money": null,
+                "news": "Принял вашу заявку дружить",
+                "date": "3 часа назад"
+            },
+            {
+                "id": "4",
+                "img": "/res/img/user_img.jpg",
+                "title": "Mp3-плеер Ipod X551MA",
+                "games": "10000",
+                "money": null,
+                "news": "Поздравил вас с Днем пождения и подарил игру «Шанс»",
+                "date": "3 часа назад"
+            },
+            {
+                "id": "5",
+                "img": "/res/img/user_img.jpg",
+                "title": "Mp3-плеер Ipod X551MA",
+                "games": "10000",
+                "money": null,
+                "news": "Поздравил вас с Днем пождения и подарил игру «Шанс»",
+                "date": "3 часа назад"
+            }
+        ]
+	}
+}

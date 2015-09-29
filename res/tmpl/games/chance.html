@@ -1,0 +1,15 @@
+<div class="content-box-item games-chance">
+    <div>
+        {{#items}}
+        <a href="/games/online/play/{{ id }}">
+        <div class="game">
+            <div class="game-img">
+                <img src="{{ img }}" alt="">
+            </div>
+            <div class="game-name">{{ title }}</div>
+        </div>
+        </a>
+        {{/items}}
+        {{^items}}No rating :({{/items}}
+    </div>
+</div>
