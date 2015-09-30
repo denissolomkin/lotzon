@@ -1,5 +1,6 @@
 (function () {
 
+
     var $body = $('body');
 
     // DETECT DEVICE ========================== //
@@ -18,17 +19,11 @@
     }
     // ======================================= //
 
-
-    // CALENDAR ================================ //
-    $('input[name="daterange"]').daterangepicker(
-        {
-            locale: {
-                format: 'DD.MM.YYYY'
-            },
-            "autoApply": true
-        }
-    );
-    // ======================================== //
+    function menuMobile() {
+        var device = detectDevice();
+        var menuMobile = (device === 'mobile' || device === 'tablet') ? true : false;
+        return menuMobile;
+    }
 
 
     // OWL CAROUSEL =========================== //
@@ -46,15 +41,22 @@
     // ======================================== //
 
 
+
+    // CALENDAR ================================ //
+    $('input[name="daterange"]').daterangepicker(
+        {
+            locale: {
+                format: 'DD.MM.YYYY'
+            },
+            "autoApply": true
+        }
+    );
+    // ======================================== //
+
     /* ========================================================= */
     //                        MENUS
     /* ========================================================= */
 
-    function menuMobile() {
-        var device = detectDevice();
-        var menuMobile = (device === 'mobile' || device === 'tablet') ? true : false;
-        return menuMobile;
-    }
 
     /* ========================================================= */
     /* ========================================================= */
@@ -251,33 +253,40 @@
     /* ========================================================= */
 
     // TICKET ================================= //
-    var $ticketBox = $('.ticket-item');
-    var $ticketBalls = $('.ticket-numbers li');
-    var $ticketActions = $('.ticket-actions li');
-    var $ticketNumbersBox = $('.ticket-numbers');
+    var $ticketBox = '.ticket-item';
+    var $ticketBalls = '.ticket-numbers li';
+    var $ticketActions = '.ticket-actions li';
+    var $ticketNumbersBox = '.ticket-numbers';
 
     if (detectDevice() === 'mobile') {
         setBallsMargins();
     }
 
     function setBallsMargins() {
-        var result = getBallsMargins($ticketBox, $ticketBalls);
+
+        console.log('setBallsMargins');
+        var ticketBox = $($ticketBox);
+        var ticketBalls = $($ticketBalls);
+        var ticketActions = $($ticketActions);
+        var ticketNumbersBox = $($ticketNumbersBox);
+
+        var result = getBallsMargins(ticketBox, ticketBalls);
         var margin = result.margin;
         var padding = result.padding;
 
-        $ticketBox.css({
+        ticketBox.css({
             'padding-left': padding + 'px',
             'padding-right': padding + 'px',
         });
 
-        $ticketNumbersBox.css('margin-right', -margin + 'px');
+        ticketNumbersBox.css('margin-right', -margin + 'px');
 
-        $ticketBalls.css({
+        ticketBalls.css({
             'margin-right': margin + 'px',
             'margin-bottom': 0.7 * margin + 'px'
         });
 
-        $ticketActions.css({
+        ticketActions.css({
             'margin-right': margin + 'px'
         });
     }

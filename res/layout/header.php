@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/tpl/img/favicon.png" type="image/png"/>
+    <link rel="icon" href="/res/img/favicon.png" type="image/png"/>
 
     <title>Lotzon</title>
 
@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/res/css/olya.css">
 </head>
 <body>
+
+<span class="js-detect"></span>
 
 <!-- SITE TOP -->
 <div class="site-top">
@@ -69,7 +71,8 @@
                     <ul class="<?= $ul ?>">
                         <? foreach ($items as $href => $title): ?>
                             <li>
-                                <a<?= ($href === $page ? ' class="active"': '') ?> href="/<?= !is_numeric($href)?$href:'' ?>"><?= $title ?></a>
+                                <a<?= ($href === $page ? ' class="active"' : '') ?>
+                                    href="/<?= !is_numeric($href) ? $href : '' ?>"><?= $title ?></a>
                             </li>
                         <? endforeach; ?>
                     </ul>

@@ -155,8 +155,6 @@ var slotMachine = {
         var t = $("#reel" + n), i = t.data("spinTimer");
         if (window.clearInterval(i), t.data("spinTimer", null), null != e) {
             var s = slotMachine.stripHeight / window.numIconsPerReel, o = -slotMachine.stripHeight - (e - 1) * s + slotMachine.alignmentOffset;
-            console.log(o);
-
             t.css({top: o - slotMachine.stripHeight}).animate({top: o + slotMachine.bounceHeight}, slotMachine.positioningTime, "linear", function () {
                 t.animate({top: o}, slotMachine.bounceTime, "easeOutElastic")
             })
