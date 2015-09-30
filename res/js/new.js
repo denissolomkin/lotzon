@@ -1,65 +1,65 @@
 $(function () {
 
     /* ========================================================= */
-    //                        SYSTEM FUNCTIONS
-    /* ========================================================= */
-
-    $.ajaxSetup({
-        error: function (xhr, status, message) {
-            throw('An AJAX error occured: ' + status + "\nError: " + message);
-        }
-    });
-
-    window.onerror = function (message, url, line, col, error) {
-
-        /* err(message, url);
-         return; */
-
-        D.log([message, url, line],'error');
-
-        if ($Button) {
-            $Button.data('disabled', false);
-            $Button = null;
-        }
-
-        $(".error").remove();
-        $(".loading").remove();
-
-        $Error = $('<div class="error"><div><span>' + M.i18n('title-error') + '</span>' + message + '</div></div>');
-
-
-        if (!$Box)
-            $Box = $('.content-box').length == 1 ? $('.content-box') : $('.content-top');
-
-        $Box.append($Error);
-
-        if ($Errors = $(".error"))
-            setTimeout(function () {
-                $Errors.fadeOut(500);
-                setTimeout(function () {
-                    $Errors.remove();
-                }, 500)
-            }, 1000);
-
-        R.empty();
-
-        return true;
-    }
-
-    /* ========================================================= */
     //                        ENGINE
     /* ========================================================= */
 
+    // Debugger
     D = {
 
         "Enable": true,
 
+        "init": function(){
+
+            $.ajaxSetup({
+                error: function (xhr, status, message) {
+                    throw('An AJAX error occured: ' + status + "\nError: " + message);
+                }
+            });
+
+            window.onerror = function (message, url, line, col, error) {
+
+                /* err(message, url);
+                 return; */
+
+                D.log([message, url, line],'error');
+
+                if ($Button) {
+                    $Button.data('disabled', false);
+                    $Button = null;
+                }
+
+                $(".error").remove();
+                $(".loading").remove();
+
+                $Error = $('<div class="error"><div><span>' + M.i18n('title-error') + '</span>' + message + '</div></div>');
+
+
+                if (!$Box)
+                    $Box = $('.content-box').length == 1 ? $('.content-box') : $('.content-top');
+
+                $Box.append($Error);
+
+                if ($Errors = $(".error"))
+                    setTimeout(function () {
+                        $Errors.fadeOut(500);
+                        setTimeout(function () {
+                            $Errors.remove();
+                        }, 500)
+                    }, 1000);
+
+                R.empty();
+
+                return true;
+            }
+        },
+
         "log": function (log, type) {
 
-            type = type || 'log';
-            var d = new Date();
-
             if (D.Enable) {
+
+                type = type || 'log';
+                var d = new Date();
 
                 var output = '';
 
@@ -67,16 +67,17 @@ $(function () {
 
                     $.each(log, function (index, obj) {
                         if (obj)
-                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, "type"=="error"?100:40) + ' ';
+                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, "type" == "error" ? 100 : 40) + ' ';
                     });
 
                 } else {
-                    output = JSON.stringify(log).replace(/"/g, "").substring(0, "type"=="error"?100:40);
+                    output = JSON.stringify(log).replace(/"/g, "").substring(0, "type" == "error" ? 100 : 40);
                 }
 
 
                 console[type](d.toLocaleTimeString('ru-RU') + ' ' + output);
             }
+
         },
 
         "error": function (message, trace) {
@@ -110,6 +111,7 @@ $(function () {
         }
     };
 
+    // Render Handler
     R = {
 
         "Cache": {},
@@ -121,6 +123,7 @@ $(function () {
         "init": function () {
 
             D.log(['init']);
+            D.init();
             R.empty();
 
             R.Path = window.location.pathname.split('/');
@@ -149,15 +152,15 @@ $(function () {
 
                 R.Render.push({
                     'options': {
-                        'box': $Box,
-                        'tab': $Tab,
+                        'box':      $Box,
+                        'tab':      $Tab,
                         'callback': options.callback,
-                        "this": options.template
+                        'this':     options.template
                     },
-                    'url': options.url,
+                    'url':      options.url,
                     'template': options.template,
-                    'href': options.href,
-                    'json': options.json
+                    'href':     options.href,
+                    'json':     options.json
                 });
 
                 if (!R.IsRendering)
@@ -202,9 +205,8 @@ $(function () {
         "renderJSON": function (href, template, options) {
 
             try {
-                D.log(['renderJSON:', href]);
-
                 var json = null;
+                D.log(['renderJSON:', href]);
 
                 if (json = R.cache(href)) {
 
@@ -360,7 +362,6 @@ $(function () {
                         options.tab.addClass('active');
                     }
 
-
                 }
 
                 R.empty();
@@ -405,6 +406,7 @@ $(function () {
     };
 
 
+    // Multilingual User Interface
     M = {
 
         "i18n": function (key) {
@@ -428,7 +430,7 @@ $(function () {
         }
     };
 
-
+    // URL Handler
     U = {
 
         "Path": {
@@ -512,7 +514,7 @@ $(function () {
 
     R.init();
 
-    // functions
+    // handler functions
     function loadPage(event) {
 
         if (!event.isPropagationStopped()) {
@@ -574,10 +576,11 @@ $(function () {
             event.stopPropagation();
             $Box = $(this).parents('.content-box').find('.content-box-content');
             $Tab = $(this);
+            $Href = $Tab.attr('href');
 
-            D.log(['switchTab:', $Tab.attr('href')]);
+            D.log(['switchTab:', $Href]);
 
-            if (U.isAnchor($Tab.attr('href'))) {
+            if (U.isAnchor($Href)) {
 
                 $($Tabs, $Tab.parents('.content-box-header')).removeClass('active');
                 $(' > div', $Box).hide();

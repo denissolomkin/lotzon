@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="/res/css/style.css">
     <link rel="stylesheet" href="/res/css/animate.css">
     <link rel="stylesheet" href="/res/css/new.css">
-    <link rel="stylesheet" href="/res/css/ZHENYA.css">
+    <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
+    <link rel="stylesheet" href="/res/css/zhenya.css">
     <link rel="stylesheet" href="/res/css/olya.css">
 </head>
 <body>
