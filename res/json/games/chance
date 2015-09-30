@@ -2,80 +2,54 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "categories":[
-                {
-                    "id":"5",
-                    "title":"Ноутбуки"
-                },
-                {
-                    "id":"4",
-                    "title":"Смартфоны"
-                },
-                {
-                    "id":"3",
-                    "title":"Отдых"
-                },
-                {
-                    "id":"2",
-                    "title":"Ноутбуки"
-                },
-                {
-                    "id":"1",
-                    "title":"Игрушки"
-                },
-                {
-                    "id":"6",
-                    "title":"Техника"
-                }
-        ],
         "items":[
             {
                 "id": "1",
                 "category": "5",
-                "img": "/res/img/prize.png",
-                "title": "Ноутбук Asus X551MA",
+                "img": "/res/img/games/slots.png",
+                "title": "Игра Слоты",
                 "price": "50000",
                 "quantity": "0"
             },
             {
                 "id": "1",
                 "category": "5",
-                "img": "/res/img/prize.png",
-                "title": "Ноутбук Asus X551MA",
+                "img": "/res/img/games/slots.png",
+                "title": "Игра Слоты",
                 "price": "50000",
                 "quantity": "0"
             },
             {
                 "id": "1",
                 "category": "5",
-                "img": "/res/img/prize.png",
-                "title": "Ноутбук Asus X551MA",
+                "img": "/res/img/games/slots.png",
+                "title": "Игра Слоты",
                 "price": "50000",
                 "quantity": "0"
             },
             {
                 "id": "1",
-                "category": "1",
-                "img": "/res/img/prize.png",
-                "title": "Ноутбук Asus X551MA",
+                "category": "5",
+                "img": "/res/img/games/slots.png",
+                "title": "Игра Слоты",
                 "price": "50000",
                 "quantity": "0"
             },
             {
-                "id": "2",
-                "category": "2",
-                "img": "/res/img/prize.png",
-                "title": "Смартфон Lenovo X551MA",
-                "price": 10000,
-                "quantity": "5"
+                "id": "1",
+                "category": "5",
+                "img": "/res/img/games/slots.png",
+                "title": "Игра Слоты",
+                "price": "50000",
+                "quantity": "0"
             },
             {
-                "id": "3",
-                "category": "3",
-                "img": "/res/img/prize.png",
-                "title": "Mp3-плеер Ipod X551MA",
-                "price": "10000",
-                "quantity": null
+                "id": "1",
+                "category": "5",
+                "img": "/res/img/games/slots.png",
+                "title": "Игра Слоты",
+                "price": "50000",
+                "quantity": "0"
             }
 	    ]
 	}
