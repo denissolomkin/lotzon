@@ -49,6 +49,7 @@ $(function () {
                     }, 1000);
 
                 R.empty();
+                R.stop();
 
                 return true;
             }
@@ -107,6 +108,7 @@ $(function () {
                 }, 1000);
 
             R.empty();
+            R.stop();
             return false;
         }
     };
@@ -437,6 +439,7 @@ $(function () {
             "message-favorite": "<b>ЛЮБИМАЯ КОМБИНАЦИЯ</b><span>настраивается в кабинете</span>",
             "button-add-ticket": "Подтвердить",
             "title-prizes-draw": "Розыгрыш призов",
+            "title-prizes-exchange": "Обмен на баллы",
             "title-limited-quantity": "Ограниченное количество",
             "title-pieces": "шт.",
             "title-games-online": "Игры Онлайн",
