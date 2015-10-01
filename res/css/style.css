@@ -1,10 +1,8 @@
-/* line 1, ../sass/reset.sass */
 * {
   box-sizing: border-box;
   background-repeat: no-repeat;
 }
 
-/* line 5, ../sass/reset.sass */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -26,56 +24,46 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 25, ../sass/reset.sass */
 html {
   line-height: 1;
 }
 
-/* line 28, ../sass/reset.sass */
 ul {
   list-style: none;
 }
 
-/* line 31, ../sass/reset.sass */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 35, ../sass/reset.sass */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 40, ../sass/reset.sass */
 q, blockquote {
   quotes: none;
 }
-/* line 43, ../sass/reset.sass */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 47, ../sass/reset.sass */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
 
-/* line 50, ../sass/reset.sass */
 input, button, textarea {
   outline: 0;
 }
 
-/* line 1, ../sass/layout/common.sass */
 html {
   overflow-x: hidden;
   height: 100%;
 }
 
-/* line 5, ../sass/layout/common.sass */
 body {
   font: 15px "PT Sans", sans-serif;
   text-shadow: 0 0 1px #fff;
@@ -87,33 +75,28 @@ body {
   padding-bottom: 50px;
 }
 
-/* line 15, ../sass/layout/common.sass */
 a {
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
-/* line 20, ../sass/layout/common.sass */
 .container {
   min-width: 320px;
   padding: 0 10px;
   margin: auto;
 }
 
-/* line 25, ../sass/layout/common.sass */
 .content {
   margin-bottom: 20px;
 }
 
-/* line 30, ../sass/layout/common.sass */
 .content-box {
   margin: 0 -10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background: #fff;
 }
 
-/* line 35, ../sass/layout/common.sass */
 .content-box-header {
   background: #b7cfd3;
   height: 50px;
@@ -127,15 +110,12 @@ a {
   position: relative;
 }
 
-/* line 47, ../sass/layout/common.sass */
 .content-box-header.back {
   cursor: pointer;
 }
-/* line 50, ../sass/layout/common.sass */
 .content-box-header.back:hover {
   background: #d1e3e5;
 }
-/* line 53, ../sass/layout/common.sass */
 .content-box-header.back:before {
   content: "";
   display: block;
@@ -147,12 +127,10 @@ a {
   background: url(img/sprite.png) -178px -188px;
 }
 
-/* line 63, ../sass/layout/common.sass */
 .content-box-tabs {
   height: 100%;
 }
 
-/* line 66, ../sass/layout/common.sass */
 .content-box-tab {
   display: block;
   float: left;
@@ -167,32 +145,26 @@ a {
   text-transform: uppercase;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.49);
 }
-/* line 80, ../sass/layout/common.sass */
 .content-box-tab:hover {
   background: #d1e3e5;
 }
-/* line 83, ../sass/layout/common.sass */
 .content-box-tab.active {
   background: #fff;
   cursor: default;
 }
 
-/* line 87, ../sass/layout/common.sass */
 .content-box-content {
   position: relative;
 }
 
-/* line 90, ../sass/layout/common.sass */
 .content-box-item {
   padding: 20px 10px 20px;
 }
 
-/* line 93, ../sass/layout/common.sass */
 .content-box-item.with-cat {
   padding-top: 72px;
 }
 
-/* line 96, ../sass/layout/common.sass */
 .content-box-item-top {
   position: absolute;
   top: 0;
@@ -203,12 +175,10 @@ a {
   padding: 20px 10px 0;
 }
 
-/* line 105, ../sass/layout/common.sass */
 .content-box-cat {
   float: left;
 }
 
-/* line 108, ../sass/layout/common.sass */
 .content-box-cat a {
   display: block;
   float: left;
@@ -221,16 +191,13 @@ a {
   margin-right: 40px;
   line-height: 1.39;
 }
-/* line 120, ../sass/layout/common.sass */
 .content-box-cat a:last-child {
   margin-right: 0 !important;
 }
-/* line 123, ../sass/layout/common.sass */
 .content-box-cat a:hover, .content-box-cat a.active {
   border-bottom: 4px solid #bed7db;
 }
 
-/* line 131, ../sass/layout/common.sass */
 .calendar-range {
   width: 200px;
   height: 30px;
@@ -239,7 +206,6 @@ a {
   cursor: pointer;
   position: relative;
 }
-/* line 139, ../sass/layout/common.sass */
 .calendar-range:before {
   content: "";
   display: block;
@@ -252,7 +218,6 @@ a {
   z-index: -1;
 }
 
-/* line 150, ../sass/layout/common.sass */
 .calendar-range input.daterange {
   background: transparent;
   display: block;
@@ -264,12 +229,10 @@ a {
   padding-left: 10px;
 }
 
-/* line 164, ../sass/layout/common.sass */
 input.input-radio {
   display: none;
 }
 
-/* line 167, ../sass/layout/common.sass */
 label.input-radio {
   display: block;
   width: 20px;
@@ -279,7 +242,6 @@ label.input-radio {
   position: relative;
 }
 
-/* line 175, ../sass/layout/common.sass */
 input.input-radio:checked + label.input-radio:before {
   content: "";
   display: block;
@@ -292,14 +254,12 @@ input.input-radio:checked + label.input-radio:before {
   border-radius: 50%;
 }
 
-/* line 193, ../sass/layout/common.sass */
 .message-form-wrapper {
   width: 100%;
   padding-top: 10px;
   background: #fff;
 }
 
-/* line 198, ../sass/layout/common.sass */
 .message-form textarea {
   font: 15px "PT Sans";
   display: block;
@@ -311,18 +271,15 @@ input.input-radio:checked + label.input-radio:before {
   border-color: #98B9BE;
   padding-bottom: 3px;
 }
-/* line 209, ../sass/layout/common.sass */
 .message-form textarea:focus {
   border-width: 0 0 2px;
   padding-bottom: 2px;
 }
 
-/* line 213, ../sass/layout/common.sass */
 .message-form-actions {
   padding: 10px 0;
 }
 
-/* line 216, ../sass/layout/common.sass */
 .input-file-wrapper {
   display: block;
   float: left;
@@ -335,12 +292,10 @@ input.input-radio:checked + label.input-radio:before {
   top: 4px;
 }
 
-/* line 227, ../sass/layout/common.sass */
 .input-file {
   opacity: 0;
 }
 
-/* line 230, ../sass/layout/common.sass */
 .message-form-btn {
   float: right;
   margin-left: 30px;
@@ -352,7 +307,6 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
 }
 
-/* line 240, ../sass/layout/common.sass */
 .message-form-smileys {
   float: right;
   width: 22px;
@@ -363,17 +317,14 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
 }
 
-/* line 259, ../sass/layout/common.sass */
 .show {
   display: block !important;
 }
 
-/* line 262, ../sass/layout/common.sass */
 .hide {
   display: none !important;
 }
 
-/* line 265, ../sass/layout/common.sass */
 .clearfix:before,
 .clearfix:after {
   display: block;
@@ -381,12 +332,10 @@ input.input-radio:checked + label.input-radio:before {
   clear: both;
 }
 
-/* line 276, ../sass/layout/common.sass */
 .sidebar {
   display: none;
 }
 
-/* line 282, ../sass/layout/common.sass */
 .banner-1,
 .banner-2,
 .banner-3,
@@ -395,29 +344,24 @@ input.input-radio:checked + label.input-radio:before {
   display: none;
 }
 
-/* line 1, ../sass/layout/header.sass */
 .site-top {
   display: none;
 }
 
-/* line 4, ../sass/layout/header.sass */
 .header {
   background: #f2efed;
   margin-bottom: 10px;
   position: relative;
 }
 
-/* line 9, ../sass/layout/header.sass */
 .header .container {
   padding: 0;
 }
 
-/* line 12, ../sass/layout/header.sass */
 .header-left {
   height: 40px;
 }
 
-/* line 15, ../sass/layout/header.sass */
 .header-logo {
   float: left;
   display: block;
@@ -429,7 +373,6 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -227px 0;
 }
 
-/* line 29, ../sass/layout/header.sass */
 .menu-item,
 .menu {
   overflow: hidden;
@@ -440,19 +383,16 @@ input.input-radio:checked + label.input-radio:before {
   z-index: 50;
 }
 
-/* line 38, ../sass/layout/header.sass */
 .menu-item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 41, ../sass/layout/header.sass */
 .menu {
   padding: 20px 0;
   font-size: 15px;
   width: 250px;
   display: none;
 }
-/* line 47, ../sass/layout/header.sass */
 .menu a {
   display: block;
   text-decoration: none;
@@ -460,22 +400,18 @@ input.input-radio:checked + label.input-radio:before {
   color: #4a4a4a;
   padding-right: 15px;
 }
-/* line 54, ../sass/layout/header.sass */
 .menu a.active, .menu a:hover {
   background: #B7CED3;
 }
 
-/* line 58, ../sass/layout/header.sass */
 .menu-main {
   padding-bottom: 15px;
 }
-/* line 61, ../sass/layout/header.sass */
 .menu-main a {
   text-transform: uppercase;
   padding-top: 8px;
   padding-bottom: 8px;
 }
-/* line 66, ../sass/layout/header.sass */
 .menu-main:after {
   content: "";
   display: block;
@@ -488,28 +424,23 @@ input.input-radio:checked + label.input-radio:before {
   right: 15px;
 }
 
-/* line 77, ../sass/layout/header.sass */
 .menu-more {
   padding-top: 15px;
 }
-/* line 80, ../sass/layout/header.sass */
 .menu-more a {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-/* line 84, ../sass/layout/header.sass */
 .menu-more li:last-child a {
   margin-top: 25px;
 }
 
-/* line 88, ../sass/layout/header.sass */
 .menu-profile {
   display: none;
   min-width: 250px;
   padding: 20px;
 }
 
-/* line 95, ../sass/layout/header.sass */
 .menu-balance {
   display: none;
   width: 320px;
@@ -520,7 +451,6 @@ input.input-radio:checked + label.input-radio:before {
   text-transform: uppercase;
 }
 
-/* line 104, ../sass/layout/header.sass */
 .menu-balance-inf {
   font-size: 31px;
   font-weight: bold;
@@ -528,44 +458,35 @@ input.input-radio:checked + label.input-radio:before {
   margin-bottom: 15px;
 }
 
-/* line 110, ../sass/layout/header.sass */
 .menu-balance-inf span {
   font-size: 13px;
   font-weight: normal;
 }
 
-/* line 114, ../sass/layout/header.sass */
 .menu-balance-inf div {
   width: 130px;
 }
-/* line 117, ../sass/layout/header.sass */
 .menu-balance-inf div:first-child {
   float: left;
 }
-/* line 120, ../sass/layout/header.sass */
 .menu-balance-inf div:last-child {
   float: right;
 }
 
-/* line 123, ../sass/layout/header.sass */
 .menu-balance-actions {
   margin-bottom: 10px;
 }
 
-/* line 126, ../sass/layout/header.sass */
 .menu-balance-actions .menu-balance-item {
   width: 130px;
 }
-/* line 129, ../sass/layout/header.sass */
 .menu-balance-actions .menu-balance-item:first-child {
   float: left;
 }
-/* line 132, ../sass/layout/header.sass */
 .menu-balance-actions .menu-balance-item:last-child {
   float: right;
 }
 
-/* line 135, ../sass/layout/header.sass */
 .menu-balance-item {
   display: block;
   border: 1px solid #A5A5A5;
@@ -577,12 +498,10 @@ input.input-radio:checked + label.input-radio:before {
   margin-bottom: 15px;
   position: relative;
 }
-/* line 146, ../sass/layout/header.sass */
 .menu-balance-item:last-child {
   margin-bottom: 0;
 }
 
-/* line 152, ../sass/layout/header.sass */
 .menu-btns {
   position: absolute;
   top: 0;
@@ -590,7 +509,6 @@ input.input-radio:checked + label.input-radio:before {
   height: 40px;
 }
 
-/* line 158, ../sass/layout/header.sass */
 .menu-btn-item {
   float: right;
   height: 100%;
@@ -598,23 +516,19 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
   transition: all 0.2s linear;
 }
-/* line 165, ../sass/layout/header.sass */
 .menu-btn-item:before {
   content: "";
   display: block;
   background: url(img/sprite.png);
   position: relative;
 }
-/* line 171, ../sass/layout/header.sass */
 .menu-btn-item:hover, .menu-btn-item.active {
   background: #fff;
 }
-/* line 175, ../sass/layout/header.sass */
 .menu-btn-item.active {
   box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 178, ../sass/layout/header.sass */
 .menu-btn:before {
   width: 20px;
   height: 18px;
@@ -622,7 +536,6 @@ input.input-radio:checked + label.input-radio:before {
   top: 11px;
 }
 
-/* line 184, ../sass/layout/header.sass */
 .menu-profile-btn:before {
   width: 20px;
   height: 20px;
@@ -630,7 +543,6 @@ input.input-radio:checked + label.input-radio:before {
   top: 10px;
 }
 
-/* line 190, ../sass/layout/header.sass */
 .menu-balance-btn:before {
   width: 24px;
   height: 22px;
@@ -638,29 +550,24 @@ input.input-radio:checked + label.input-radio:before {
   top: 9px;
 }
 
-/* line 201, ../sass/layout/header.sass */
 .inf-slider {
   display: none;
 }
 
-/* line 204, ../sass/layout/header.sass */
 .timer {
   display: none;
 }
 
-/* line 207, ../sass/layout/header.sass */
 .balance-btn {
   display: none;
 }
 
-/* line 1, ../sass/pages/home_blog.sass */
 .content-box-scroll-top {
   float: right;
   position: relative;
   padding-right: 15px;
   cursor: pointer;
 }
-/* line 7, ../sass/pages/home_blog.sass */
 .content-box-scroll-top:after {
   content: "";
   display: block;
@@ -672,55 +579,46 @@ input.input-radio:checked + label.input-radio:before {
   right: 0;
 }
 
-/* line 21, ../sass/pages/home_blog.sass */
 .post-item {
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #CBC7C4;
 }
-/* line 26, ../sass/pages/home_blog.sass */
 .post-item:last-child {
   border-bottom: none;
 }
 
-/* line 29, ../sass/pages/home_blog.sass */
 .post-item-img {
   margin-bottom: 20px;
   overflow: hidden;
 }
 
-/* line 33, ../sass/pages/home_blog.sass */
 .post-item-img img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* line 38, ../sass/pages/home_blog.sass */
 .post-item-inf {
   font-size: 13px;
   line-height: 1.39;
   margin-bottom: 10px;
 }
 
-/* line 43, ../sass/pages/home_blog.sass */
 .post-item-date {
   float: left;
 }
 
-/* line 46, ../sass/pages/home_blog.sass */
 .post-item-views-comments {
   float: right;
 }
 
-/* line 49, ../sass/pages/home_blog.sass */
 .post-item-views-inf {
   float: left;
   position: relative;
   margin-right: 20px;
   padding-left: 20px;
 }
-/* line 55, ../sass/pages/home_blog.sass */
 .post-item-views-inf:before {
   content: "";
   display: block;
@@ -732,13 +630,11 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -120px -86px;
 }
 
-/* line 65, ../sass/pages/home_blog.sass */
 .post-item-comments-inf {
   float: left;
   position: relative;
   padding-left: 20px;
 }
-/* line 70, ../sass/pages/home_blog.sass */
 .post-item-comments-inf:before {
   content: "";
   display: block;
@@ -750,14 +646,12 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -260px -55px;
 }
 
-/* line 80, ../sass/pages/home_blog.sass */
 .post-item-title {
   font-size: 15px;
   line-height: 1.27;
   margin-bottom: 22px;
 }
 
-/* line 85, ../sass/pages/home_blog.sass */
 .post-more-btn {
   float: right;
   font-size: 15px;
@@ -768,7 +662,6 @@ input.input-radio:checked + label.input-radio:before {
   position: relative;
   padding-right: 17px;
 }
-/* line 95, ../sass/pages/home_blog.sass */
 .post-more-btn:after {
   content: "";
   position: absolute;
@@ -780,13 +673,11 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 @media (min-width: 500px) {
-  /* line 108, ../sass/pages/home_blog.sass */
   .post-item {
     padding-left: 310px;
     position: relative;
   }
 
-  /* line 112, ../sass/pages/home_blog.sass */
   .post-item-img {
     float: left;
     width: 300px;
@@ -795,23 +686,19 @@ input.input-radio:checked + label.input-radio:before {
     margin-left: -310px;
   }
 
-  /* line 119, ../sass/pages/home_blog.sass */
   .post-item-description {
     float: right;
   }
 
-  /* line 122, ../sass/pages/home_blog.sass */
   .post-item-views-comments {
     float: none;
   }
 
-  /* line 125, ../sass/pages/home_blog.sass */
   .post-item-date {
     float: none;
     margin-bottom: 5px;
   }
 
-  /* line 129, ../sass/pages/home_blog.sass */
   .post-more-btn {
     position: absolute;
     right: 0;
@@ -819,18 +706,15 @@ input.input-radio:checked + label.input-radio:before {
   }
 }
 @media (min-width: 560px) {
-  /* line 138, ../sass/pages/home_blog.sass */
   .post-item-date {
     float: left;
     margin-bottom: 0;
   }
 
-  /* line 142, ../sass/pages/home_blog.sass */
   .post-item-views-comments {
     float: right;
   }
 }
-/* line 3, ../sass/pages/home_rating.sass */
 .raiting-item {
   float: left;
   cursor: pointer;
@@ -839,16 +723,13 @@ input.input-radio:checked + label.input-radio:before {
   padding: 10px 10px 10px 130px;
   position: relative;
 }
-/* line 11, ../sass/pages/home_rating.sass */
 .raiting-item:hover {
   background: #F2F8F8;
 }
-/* line 14, ../sass/pages/home_rating.sass */
 .raiting-item:nth-child(odd) {
   margin-right: 0;
 }
 
-/* line 17, ../sass/pages/home_rating.sass */
 .raiting-img {
   float: left;
   width: 100px;
@@ -857,7 +738,6 @@ input.input-radio:checked + label.input-radio:before {
   position: relative;
 }
 
-/* line 24, ../sass/pages/home_rating.sass */
 .raiting-position {
   position: absolute;
   top: 0;
@@ -872,7 +752,6 @@ input.input-radio:checked + label.input-radio:before {
   text-align: center;
 }
 
-/* line 37, ../sass/pages/home_rating.sass */
 .raiting-img img {
   display: block;
   width: 100%;
@@ -880,12 +759,10 @@ input.input-radio:checked + label.input-radio:before {
   border-radius: 50%;
 }
 
-/* line 43, ../sass/pages/home_rating.sass */
 .raiting-name {
   font-size: 16px;
 }
 
-/* line 46, ../sass/pages/home_rating.sass */
 .raiting-inf {
   position: absolute;
   bottom: 10px;
@@ -893,19 +770,16 @@ input.input-radio:checked + label.input-radio:before {
   font-size: 14px;
 }
 
-/* line 52, ../sass/pages/home_rating.sass */
 .raiting-inf td:nth-child(even) {
   padding-left: 10px;
 }
 
-/* line 1, ../sass/pages/post.sass */
 .post .title {
   font-size: 21px;
   line-height: 1.29;
   margin-bottom: 15px;
 }
 
-/* line 6, ../sass/pages/post.sass */
 .more-posts .title,
 .post-comments .title {
   border-width: 1px 0;
@@ -914,14 +788,12 @@ input.input-radio:checked + label.input-radio:before {
   padding: 5px 2px;
 }
 
-/* line 13, ../sass/pages/post.sass */
 .post-comments .title {
   text-align: center;
   text-transform: uppercase;
   margin-bottom: 30px;
 }
 
-/* line 20, ../sass/pages/post.sass */
 .post-inf {
   margin-bottom: 15px;
   color: #4C4C4E;
@@ -929,24 +801,20 @@ input.input-radio:checked + label.input-radio:before {
   margin-bottom: 20px;
 }
 
-/* line 26, ../sass/pages/post.sass */
 .post-date {
   float: left;
 }
 
-/* line 29, ../sass/pages/post.sass */
 .post-views-comments {
   float: right;
 }
 
-/* line 32, ../sass/pages/post.sass */
 .post-views-inf,
 .post-comments-inf {
   float: left;
   position: relative;
   padding-left: 20px;
 }
-/* line 38, ../sass/pages/post.sass */
 .post-views-inf:before,
 .post-comments-inf:before {
   content: "";
@@ -956,11 +824,9 @@ input.input-radio:checked + label.input-radio:before {
   background-image: url(img/sprite.png);
 }
 
-/* line 45, ../sass/pages/post.sass */
 .post-views-inf {
   margin-right: 20px;
 }
-/* line 48, ../sass/pages/post.sass */
 .post-views-inf:before {
   width: 15px;
   height: 11px;
@@ -968,7 +834,6 @@ input.input-radio:checked + label.input-radio:before {
   background-position: -120px -86px;
 }
 
-/* line 54, ../sass/pages/post.sass */
 .post-comments-inf:before {
   width: 15px;
   height: 14px;
@@ -976,7 +841,6 @@ input.input-radio:checked + label.input-radio:before {
   background-position: -260px -55px;
 }
 
-/* line 63, ../sass/pages/post.sass */
 .post-socials a {
   display: block;
   float: left;
@@ -994,11 +858,9 @@ input.input-radio:checked + label.input-radio:before {
   font-size: 13px;
   font-weight: bold;
 }
-/* line 80, ../sass/pages/post.sass */
 .post-socials a:last-child {
   margin-right: 0;
 }
-/* line 83, ../sass/pages/post.sass */
 .post-socials a:before {
   content: "";
   display: block;
@@ -1008,22 +870,18 @@ input.input-radio:checked + label.input-radio:before {
   width: 30px;
   height: 100%;
 }
-/* line 92, ../sass/pages/post.sass */
 .post-socials a:after {
   content: "";
   display: block;
   position: absolute;
   background-image: url(img/sprite.png);
 }
-/* line 98, ../sass/pages/post.sass */
 .post-socials .fb {
   border-color: #3C5A96;
 }
-/* line 101, ../sass/pages/post.sass */
 .post-socials .fb:before {
   background-color: #3C5A96;
 }
-/* line 104, ../sass/pages/post.sass */
 .post-socials .fb:after {
   width: 8px;
   height: 16px;
@@ -1031,15 +889,12 @@ input.input-radio:checked + label.input-radio:before {
   left: 10px;
   background-position: -455px -197px;
 }
-/* line 111, ../sass/pages/post.sass */
 .post-socials .tw {
   border-color: #59ADEB;
 }
-/* line 114, ../sass/pages/post.sass */
 .post-socials .tw:before {
   background-color: #59ADEB;
 }
-/* line 117, ../sass/pages/post.sass */
 .post-socials .tw:after {
   width: 20px;
   height: 16px;
@@ -1047,15 +902,12 @@ input.input-radio:checked + label.input-radio:before {
   left: 5px;
   background-position: -492px -197px;
 }
-/* line 124, ../sass/pages/post.sass */
 .post-socials .gp {
   border-color: #BD4C3A;
 }
-/* line 127, ../sass/pages/post.sass */
 .post-socials .gp:before {
   background-color: #BD4C3A;
 }
-/* line 130, ../sass/pages/post.sass */
 .post-socials .gp:after {
   width: 16px;
   height: 16px;
@@ -1064,14 +916,12 @@ input.input-radio:checked + label.input-radio:before {
   background-position: -544px -199px;
 }
 
-/* line 137, ../sass/pages/post.sass */
 .post-description {
   border-top: 1px solid #D2D1CD;
   padding-top: 20px;
   margin: 0 0 30px;
   line-height: 1.5;
 }
-/* line 143, ../sass/pages/post.sass */
 .post-description img {
   display: block;
   width: 100%;
@@ -1079,92 +929,75 @@ input.input-radio:checked + label.input-radio:before {
   margin: 20px 0;
 }
 
-/* line 151, ../sass/pages/post.sass */
 .more-posts {
   margin-bottom: 40px;
 }
-/* line 154, ../sass/pages/post.sass */
 .more-posts a {
   display: block;
   color: #000;
   margin-bottom: 20px;
   text-decoration: none;
 }
-/* line 160, ../sass/pages/post.sass */
 .more-posts a:hover {
   text-decoration: underline;
 }
-/* line 163, ../sass/pages/post.sass */
 .more-posts a:last-child {
   margin-bottom: 0;
 }
 
-/* line 168, ../sass/pages/post.sass */
 .post-comments {
   padding-bottom: 60px;
 }
 
 @media (min-width: 550px) {
-  /* line 178, ../sass/pages/post.sass */
   .post-inf {
     margin-bottom: 0;
     position: relative;
     top: 3px;
   }
-  /* line 183, ../sass/pages/post.sass */
   .post-inf:after {
     clear: none;
   }
 
-  /* line 186, ../sass/pages/post.sass */
   .post-date {
     margin-right: 40px;
   }
 
-  /* line 189, ../sass/pages/post.sass */
   .post-views-comments {
     float: left;
   }
 
-  /* line 192, ../sass/pages/post.sass */
   .post-socials {
     float: right;
   }
-  /* line 195, ../sass/pages/post.sass */
   .post-socials a {
     margin: 0 15px 15px 0;
   }
 }
-/* line 3, ../sass/pages/games.sass */
 .games-chance {
   width: 50%;
   max-width: 200px;
   margin: auto;
 }
 
-/* line 8, ../sass/pages/games.sass */
 .game {
   margin-bottom: 40px;
   cursor: pointer;
 }
-/* line 12, ../sass/pages/games.sass */
 .game:hover .game-img {
   opacity: 0.7;
 }
 
-/* line 16, ../sass/pages/games.sass */
 .game-img {
   position: relative;
   margin-bottom: 12px;
 }
-/* line 20, ../sass/pages/games.sass */
 .game-img:before {
   content: "";
   display: block;
   padding-top: 100%;
 }
 
-/* line 25, ../sass/pages/games.sass */
 .game-img img {
   position: absolute;
   top: 0;
@@ -1175,7 +1008,6 @@ input.input-radio:checked + label.input-radio:before {
   height: auto;
 }
 
-/* line 34, ../sass/pages/games.sass */
 .game-name {
   height: 40px;
   font-size: 15px;
@@ -1183,13 +1015,11 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 @media (min-width: 500px) {
-  /* line 43, ../sass/pages/games.sass */
   .games-chance {
     width: 90%;
     max-width: 530px;
   }
 
-  /* line 47, ../sass/pages/games.sass */
   .game {
     float: left;
     width: 38%;
@@ -1197,27 +1027,22 @@ input.input-radio:checked + label.input-radio:before {
   }
 }
 @media (min-width: 500px) and (max-width: 768px) {
-  /* line 56, ../sass/pages/games.sass */
   .game:nth-child(even) {
     margin-right: 0;
   }
 }
-/* line 5, ../sass/pages/prizes.sass */
 .prizes-for-points.content-box-item.with-cat {
   padding-top: 130px;
 }
 
-/* line 8, ../sass/pages/prizes.sass */
 .prizes-for-points .content-box-item-top {
   height: 100px;
 }
 
-/* line 11, ../sass/pages/prizes.sass */
 .prizes-for-points .content-box-cat {
   float: none;
 }
 
-/* line 14, ../sass/pages/prizes.sass */
 .prizes-for-points .content-box-cat a {
   margin-right: 0;
   margin-bottom: 30px;
@@ -1225,41 +1050,34 @@ input.input-radio:checked + label.input-radio:before {
   height: 25px;
 }
 
-/* line 22, ../sass/pages/prizes.sass */
 .prizes-for-points .content-box-item-content {
   width: 58%;
   max-width: 280px;
   margin: auto;
 }
 
-/* line 27, ../sass/pages/prizes.sass */
 .prize {
   margin-bottom: 30px;
   position: relative;
 }
-/* line 31, ../sass/pages/prizes.sass */
 .prize:hover {
   cursor: pointer;
 }
-/* line 34, ../sass/pages/prizes.sass */
 .prize:hover .prize-price {
   color: #ffe700;
   background: #000;
 }
 
-/* line 38, ../sass/pages/prizes.sass */
 .prize-img {
   position: relative;
   margin-bottom: 5px;
 }
-/* line 42, ../sass/pages/prizes.sass */
 .prize-img:before {
   content: "";
   display: block;
   padding-top: 100%;
 }
 
-/* line 47, ../sass/pages/prizes.sass */
 .prize-img img {
   position: absolute;
   top: 0;
@@ -1270,7 +1088,6 @@ input.input-radio:checked + label.input-radio:before {
   height: auto;
 }
 
-/* line 56, ../sass/pages/prizes.sass */
 .prize-name {
   height: 47px;
   font-size: 15px;
@@ -1278,7 +1095,6 @@ input.input-radio:checked + label.input-radio:before {
   padding-left: 15px;
 }
 
-/* line 62, ../sass/pages/prizes.sass */
 .prize-price {
   height: 40px;
   line-height: 40px;
@@ -1289,14 +1105,12 @@ input.input-radio:checked + label.input-radio:before {
   padding-left: 15px;
 }
 
-/* line 71, ../sass/pages/prizes.sass */
 .prize-price span {
   font-size: 13px;
   text-transform: uppercase;
   margin-left: 10px;
 }
 
-/* line 76, ../sass/pages/prizes.sass */
 .prize-inf {
   width: 100%;
   height: 60px;
@@ -1313,36 +1127,30 @@ input.input-radio:checked + label.input-radio:before {
   border-radius: 2px;
 }
 
-/* line 92, ../sass/pages/prizes.sass */
 .prize-few-points .prize-inf {
   background: rgba(255, 66, 66, 0.8);
   padding-top: 20px;
 }
 
-/* line 97, ../sass/pages/prizes.sass */
 .prize-limited .prize-inf {
   background: rgba(255, 231, 0, 0.7);
   color: #000;
 }
 
-/* line 101, ../sass/pages/prizes.sass */
 .prize-finished .prize-inf {
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* line 104, ../sass/pages/prizes.sass */
 .prize-finished .prize-content {
   opacity: 0.5;
 }
 
 @media (min-width: 540px) {
-  /* line 111, ../sass/pages/prizes.sass */
   .prizes-for-points .content-box-item-content {
     width: 92%;
     max-width: 625px;
   }
 
-  /* line 115, ../sass/pages/prizes.sass */
   .prize {
     float: left;
     width: 45%;
@@ -1350,52 +1158,43 @@ input.input-radio:checked + label.input-radio:before {
   }
 }
 @media (min-width: 540px) and (max-width: 768px) {
-  /* line 124, ../sass/pages/prizes.sass */
   .prize:nth-child(even) {
     margin-right: 0;
   }
 }
 @media (min-width: 640px) {
-  /* line 133, ../sass/pages/prizes.sass */
   .prizes-for-points.content-box-item.with-cat {
     padding-top: 72px;
   }
 
-  /* line 136, ../sass/pages/prizes.sass */
   .prizes-for-points .content-box-item-top {
     height: auto;
   }
 
-  /* line 139, ../sass/pages/prizes.sass */
   .prizes-for-points .content-box-cat a {
     margin-bottom: 0;
     width: 100px;
   }
 }
-/* line 1, ../sass/pages/prize_exchange.sass */
 .exchange-prize .content-box-item {
   text-align: center;
 }
 
-/* line 4, ../sass/pages/prize_exchange.sass */
 .ex-prize {
   margin-bottom: 30px;
 }
 
-/* line 7, ../sass/pages/prize_exchange.sass */
 .ex-prize-img {
   position: relative;
   margin: 0 auto 20px;
   max-width: 400px;
 }
-/* line 12, ../sass/pages/prize_exchange.sass */
 .ex-prize-img:before {
   content: "";
   display: block;
   padding-top: 100%;
 }
 
-/* line 17, ../sass/pages/prize_exchange.sass */
 .ex-prize-img img {
   position: absolute;
   top: 0;
@@ -1406,59 +1205,49 @@ input.input-radio:checked + label.input-radio:before {
   height: auto;
 }
 
-/* line 26, ../sass/pages/prize_exchange.sass */
 .ex-prize-name {
   margin-bottom: 10px;
   font-size: 21px;
 }
 
-/* line 30, ../sass/pages/prize_exchange.sass */
 .ex-prize-price {
   margin-bottom: 20px;
   font-size: 30px;
   font-weight: bold;
 }
 
-/* line 35, ../sass/pages/prize_exchange.sass */
 .ex-prize-price span {
   margin-left: 15px;
 }
 
-/* line 38, ../sass/pages/prize_exchange.sass */
 .ex-prize-details {
   font-size: 15px;
 }
 
-/* line 41, ../sass/pages/prize_exchange.sass */
 .ex-prize-details p {
   margin-bottom: 20px;
   line-height: 1.27;
 }
-/* line 45, ../sass/pages/prize_exchange.sass */
 .ex-prize-details p:last-child {
   margin-bottom: 0;
 }
 
-/* line 48, ../sass/pages/prize_exchange.sass */
 .prize-delivery-inf {
   margin-bottom: 30px;
 }
 
-/* line 51, ../sass/pages/prize_exchange.sass */
 .personal-data-inf-header {
   padding: 0 5px 7px;
   margin: 0 -5px 10px;
   border-bottom: 1px solid #DBDBDB;
 }
 
-/* line 56, ../sass/pages/prize_exchange.sass */
 .personal-data-inf-title {
   float: left;
   font-size: 19px;
   line-height: 0.91;
 }
 
-/* line 61, ../sass/pages/prize_exchange.sass */
 .personal-data-edit {
   float: right;
   display: block;
@@ -1469,52 +1258,43 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -332px -54px;
 }
 
-/* line 70, ../sass/pages/prize_exchange.sass */
 .personal-data-edit span {
   display: none;
 }
 
-/* line 73, ../sass/pages/prize_exchange.sass */
 .prize-delivery-inf tbody {
   display: block;
   margin-bottom: 20px;
 }
-/* line 77, ../sass/pages/prize_exchange.sass */
 .prize-delivery-inf tbody:last-child {
   margin-bottom: 0;
 }
 
-/* line 80, ../sass/pages/prize_exchange.sass */
 .prize-delivery-inf td:first-child {
   opacity: 0.5;
   font-size: 15px;
   line-height: 1.27;
 }
 
-/* line 85, ../sass/pages/prize_exchange.sass */
 .prize-delivery-inf td:last-child {
   padding-left: 50px;
   font-size: 18px;
   line-height: 1.28;
 }
 
-/* line 90, ../sass/pages/prize_exchange.sass */
 .personal-data-attention {
   margin-bottom: 20px;
   font-size: 15px;
 }
 
-/* line 94, ../sass/pages/prize_exchange.sass */
 .personal-data-attention span {
   color: #FF4666;
 }
 
-/* line 97, ../sass/pages/prize_exchange.sass */
 .ex-prize-submit-wrapper {
   margin: 0 -5px 0;
 }
 
-/* line 100, ../sass/pages/prize_exchange.sass */
 .ex-prize-submit {
   text-decoration: none;
   text-align: center;
@@ -1529,7 +1309,6 @@ input.input-radio:checked + label.input-radio:before {
   margin: auto;
 }
 
-/* line 113, ../sass/pages/prize_exchange.sass */
 .ex-prize-not-filled {
   font-size: 21px;
   text-align: center;
@@ -1540,23 +1319,19 @@ input.input-radio:checked + label.input-radio:before {
   margin: 0 -10px;
 }
 
-/* line 122, ../sass/pages/prize_exchange.sass */
 .ex-prize-not-filled a {
   color: #4990E2;
   text-decoration: none;
 }
 
-/* line 3, ../sass/pages/cabinet.sass */
 .cabinet .content-box-tab span {
   display: none;
 }
 
-/* line 6, ../sass/pages/cabinet.sass */
 .cabinet .content-box-tab {
   width: 20%;
 }
 
-/* line 9, ../sass/pages/cabinet.sass */
 .cabinet .content-box-tab:after {
   content: "";
   display: block;
@@ -1566,35 +1341,30 @@ input.input-radio:checked + label.input-radio:before {
   background-image: url(img/sprite.png);
 }
 
-/* line 17, ../sass/pages/cabinet.sass */
 .cabinet-history-tab:after {
   width: 30px;
   height: 26px;
   background-position: 0 -130px;
 }
 
-/* line 23, ../sass/pages/cabinet.sass */
 .cabinet-bonuses-tab:after {
   width: 26px;
   height: 26px;
   background-position: -61px -130px;
 }
 
-/* line 29, ../sass/pages/cabinet.sass */
 .cabinet-referrals-tab:after {
   width: 28px;
   height: 26px;
   background-position: -120px -130px;
 }
 
-/* line 35, ../sass/pages/cabinet.sass */
 .cabinet-account-tab:after {
   width: 26px;
   height: 25px;
   background-position: -182px -130px;
 }
 
-/* line 1, ../sass/pages/cabinet_game_history.sass */
 .gh-circle, .cabinet-game-history .content-box-cat a:first-child:after, .gh-my-game .gh-date:after {
   content: "";
   display: inline-block;
@@ -1604,63 +1374,51 @@ input.input-radio:checked + label.input-radio:before {
   border-radius: 50%;
 }
 
-/* line 9, ../sass/pages/cabinet_game_history.sass */
 .cabinet-game-history .content-box-cat a:last-child {
   padding: 0 15px;
 }
 
-/* line 12, ../sass/pages/cabinet_game_history.sass */
 .cabinet-game-history .content-box-cat a:first-child:after {
   margin-left: 13px;
 }
 
-/* line 18, ../sass/pages/cabinet_game_history.sass */
 .gh-header {
   display: none;
 }
 
-/* line 21, ../sass/pages/cabinet_game_history.sass */
 .gh-item {
   margin: 0 -10px 20px;
   padding: 5px 10px;
   cursor: pointer;
 }
-/* line 26, ../sass/pages/cabinet_game_history.sass */
 .gh-item:hover {
   background: #FAFAFA;
 }
 
-/* line 29, ../sass/pages/cabinet_game_history.sass */
 .gh-my-game .gh-date:after {
   margin-left: 20px;
 }
 
-/* line 33, ../sass/pages/cabinet_game_history.sass */
 .gh-inf {
   margin-bottom: 10px;
 }
-/* line 36, ../sass/pages/cabinet_game_history.sass */
 .gh-inf:last-child {
   margin-bottom: 0;
 }
 
-/* line 39, ../sass/pages/cabinet_game_history.sass */
 .gh-inf-name {
   margin-right: 15px;
 }
 
-/* line 42, ../sass/pages/cabinet_game_history.sass */
 .gh-combination .gh-inf-name {
   margin-bottom: 10px;
   display: inline-block;
 }
 
-/* line 46, ../sass/pages/cabinet_game_history.sass */
 .gh-numbers {
   display: inline-block;
 }
 
-/* line 49, ../sass/pages/cabinet_game_history.sass */
 .gh-number {
   display: inline-block;
   width: 35px;
@@ -1672,13 +1430,11 @@ input.input-radio:checked + label.input-radio:before {
   line-height: 35px;
   text-align: center;
 }
-/* line 60, ../sass/pages/cabinet_game_history.sass */
 .gh-number:last-child {
   margin-right: 0;
 }
 
 @media (min-width: 520px) {
-  /* line 69, ../sass/pages/cabinet_game_history.sass */
   .gh-header {
     display: block;
     margin: 0 -10px 20px;
@@ -1688,69 +1444,57 @@ input.input-radio:checked + label.input-radio:before {
     color: #3f3f3f;
   }
 
-  /* line 77, ../sass/pages/cabinet_game_history.sass */
   .gh-header div {
     float: left;
   }
 
-  /* line 80, ../sass/pages/cabinet_game_history.sass */
   .gh-date-name {
     width: 25%;
   }
 
-  /* line 83, ../sass/pages/cabinet_game_history.sass */
   .gh-combination-name {
     width: 55%;
   }
 
-  /* line 86, ../sass/pages/cabinet_game_history.sass */
   .gh-winners-name {
     width: 20%;
   }
 
-  /* line 91, ../sass/pages/cabinet_game_history.sass */
   .gh-item {
     margin: 0 -10px 0;
     padding: 10px;
     line-height: 35px;
   }
 
-  /* line 96, ../sass/pages/cabinet_game_history.sass */
   .gh-inf {
     margin-bottom: 0;
     float: left;
   }
 
-  /* line 100, ../sass/pages/cabinet_game_history.sass */
   .gh-date {
     width: 25%;
   }
 
-  /* line 103, ../sass/pages/cabinet_game_history.sass */
   .gh-winners {
     width: 20%;
     position: relative;
     left: 55%;
   }
 
-  /* line 108, ../sass/pages/cabinet_game_history.sass */
   .gh-combination {
     width: 55%;
     position: relative;
     left: -20%;
   }
 
-  /* line 113, ../sass/pages/cabinet_game_history.sass */
   .gh-inf-name {
     display: none;
   }
 
-  /* line 116, ../sass/pages/cabinet_game_history.sass */
   .gh-combination .gh-inf-name {
     display: none;
   }
 }
-/* line 1, ../sass/pages/cabinet_game_history_detail.sass */
 .Ghd-number, .ghd-number, .ghd-ticket-number {
   background: #FFE700;
   border-radius: 50%;
@@ -1758,13 +1502,11 @@ input.input-radio:checked + label.input-radio:before {
   text-align: center;
 }
 
-/* line 9, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-numbers {
   width: 295px;
   margin: 0 auto 30px;
 }
 
-/* line 13, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-number {
   width: 45px;
   height: 45px;
@@ -1775,44 +1517,36 @@ input.input-radio:checked + label.input-radio:before {
   margin-right: 5px;
   color: #4a4a4a;
 }
-/* line 24, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-number:last-child {
   margin-right: 0;
 }
 
-/* line 29, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-tickets {
   display: table;
   margin: 0 auto 40px;
   color: #3f3f3f;
 }
 
-/* line 34, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-tickets table {
   margin-bottom: 5px;
 }
 
-/* line 37, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-tickets td:first-child {
   padding-right: 5px;
 }
 
-/* line 40, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-tickets td:last-child {
   padding-left: 10px;
 }
 
-/* line 43, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-tickets td {
   padding-bottom: 15px;
 }
 
-/* line 46, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-tickets td:first-child span {
   display: none;
 }
 
-/* line 49, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-ticket-number {
   display: inline-block;
   width: 30px;
@@ -1820,18 +1554,15 @@ input.input-radio:checked + label.input-radio:before {
   line-height: 29px;
   font-size: 15px;
 }
-/* line 57, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-ticket-number.false {
   background: #fff;
   border: 1px solid #535353;
 }
 
-/* line 61, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-won {
   font-size: 18px;
 }
 
-/* line 65, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf .title {
   font-size: 18px;
   border-bottom: 1px solid #9B9B9B;
@@ -1840,77 +1571,63 @@ input.input-radio:checked + label.input-radio:before {
   text-align: center;
 }
 
-/* line 72, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf table {
   font-size: 15px;
   width: 100%;
   margin-bottom: 10px;
 }
 
-/* line 77, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf th {
   padding-bottom: 10px;
 }
-/* line 80, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf th:nth-child(1) {
   text-align: center;
   padding-right: 20px;
 }
-/* line 86, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf th:nth-child(3) {
   padding-left: 30px;
 }
 
-/* line 89, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf td {
   padding-bottom: 10px;
 }
-/* line 92, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf td:nth-child(1) {
   text-align: center;
   padding-right: 20px;
 }
-/* line 96, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf td:nth-child(2) {
   padding-left: 25px;
 }
-/* line 99, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-game-inf td:nth-child(3) {
   padding-left: 30px;
 }
 
-/* line 102, ../sass/pages/cabinet_game_history_detail.sass */
 .ghd-all-won {
   border-top: 1px solid #9B9B9B;
   padding: 10px 10px 0;
   float: right;
 }
 
-/* line 1, ../sass/pages/cabinet_bonuses.sass */
 .cabinet-bonuses p {
   font-size: 15px;
   line-height: 1.27;
   margin-bottom: 20px;
 }
 
-/* line 6, ../sass/pages/cabinet_bonuses.sass */
 .cabinet-bonuses .title {
   font-size: 21px;
   line-height: 1.29;
   margin-bottom: 20px;
 }
 
-/* line 13, ../sass/pages/cabinet_bonuses.sass */
 .bonus-form {
   margin-bottom: 50px;
 }
 
-/* line 16, ../sass/pages/cabinet_bonuses.sass */
 .bonus-form .title {
   margin-bottom: 13px;
 }
 
-/* line 19, ../sass/pages/cabinet_bonuses.sass */
 .bonus-form input {
   border-width: 0 0 1px 0;
   border-style: solid;
@@ -1922,7 +1639,6 @@ input.input-radio:checked + label.input-radio:before {
   font-size: 15px;
 }
 
-/* line 29, ../sass/pages/cabinet_bonuses.sass */
 .bonus-form button {
   width: 100%;
   display: block;
@@ -1935,12 +1651,10 @@ input.input-radio:checked + label.input-radio:before {
   padding: 6px 0;
 }
 
-/* line 42, ../sass/pages/cabinet_bonuses.sass */
 .bonus-share-post {
   margin-bottom: 50px;
 }
 
-/* line 45, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item {
   width: 38px;
   height: 38px;
@@ -1950,82 +1664,66 @@ input.input-radio:checked + label.input-radio:before {
   margin: 0 14px 10px 0;
   background: url(img/sprite.png);
 }
-/* line 54, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item:last-child {
   margin-right: 0;
 }
 
-/* line 57, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-1 {
   background-position: 0 -336px;
 }
 
-/* line 60, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-2 {
   background-position: -47px -336px;
 }
 
-/* line 63, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-3 {
   background-position: -95px -336px;
 }
 
-/* line 66, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-4 {
   background-position: -144px -336px;
 }
 
-/* line 69, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-5 {
   background-position: -192px -336px;
 }
 
-/* line 72, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-6 {
   background-position: -240px -336px;
 }
 
-/* line 75, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-7 {
   background-position: -288px -336px;
 }
 
-/* line 78, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-8 {
   background-position: -336px -336px;
 }
 
-/* line 81, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-9 {
   background-position: -385px -336px;
 }
 
-/* line 84, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-10 {
   background-position: -433px -336px;
 }
 
-/* line 87, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-11 {
   background-position: -481px -336px;
 }
 
-/* line 90, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-12 {
   background-position: -529px -336px;
 }
 
-/* line 93, ../sass/pages/cabinet_bonuses.sass */
 .bonus-social-item.soc-13 {
   background-position: -578px -336px;
 }
 
-/* line 99, ../sass/pages/cabinet_bonuses.sass */
 .bonus-share-url {
   margin-bottom: 50px;
 }
 
-/* line 102, ../sass/pages/cabinet_bonuses.sass */
 .bonus-share-url-copy input,
 .bonus-share-url-copy-btn {
   width: 100%;
@@ -2037,20 +1735,17 @@ input.input-radio:checked + label.input-radio:before {
   font-size: 15px;
 }
 
-/* line 112, ../sass/pages/cabinet_bonuses.sass */
 .bonus-share-url-copy input {
   padding: 6px 10px;
   margin-bottom: 20px;
 }
 
-/* line 116, ../sass/pages/cabinet_bonuses.sass */
 .bonus-share-url-copy-btn {
   padding: 6px 0;
   text-align: center;
   cursor: pointer;
 }
 
-/* line 123, ../sass/pages/cabinet_bonuses.sass */
 .bonus-banner-view-item {
   float: left;
   padding-left: 60px;
@@ -2058,7 +1753,6 @@ input.input-radio:checked + label.input-radio:before {
   position: relative;
 }
 
-/* line 129, ../sass/pages/cabinet_bonuses.sass */
 .bonus-banner-view-img {
   width: 50px;
   height: 50px;
@@ -2067,12 +1761,10 @@ input.input-radio:checked + label.input-radio:before {
   margin-left: -60px;
 }
 
-/* line 136, ../sass/pages/cabinet_bonuses.sass */
 .bonus-banner-view-size {
   font-size: 16px;
 }
 
-/* line 139, ../sass/pages/cabinet_bonuses.sass */
 .bonus-banner-view-btn {
   text-decoration: underline;
   cursor: pointer;
@@ -2080,39 +1772,33 @@ input.input-radio:checked + label.input-radio:before {
   bottom: 0;
   left: 60px;
 }
-/* line 146, ../sass/pages/cabinet_bonuses.sass */
 .bonus-banner-view-btn:hover {
   text-decoration: none;
 }
 
 @media (min-width: 500px) {
-  /* line 153, ../sass/pages/cabinet_bonuses.sass */
   .bonus-form input {
     float: left;
     width: 70%;
     margin: 0 5% 0 0;
   }
 
-  /* line 158, ../sass/pages/cabinet_bonuses.sass */
   .bonus-form button {
     width: 25%;
     float: left;
   }
 
-  /* line 162, ../sass/pages/cabinet_bonuses.sass */
   .bonus-share-url-copy input {
     margin: 0 5% 0 0;
     width: 70%;
     float: left;
   }
 
-  /* line 167, ../sass/pages/cabinet_bonuses.sass */
   .bonus-share-url-copy-btn {
     width: 25%;
     float: left;
   }
 }
-/* line 178, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner {
   display: none;
   position: fixed;
@@ -2125,7 +1811,6 @@ input.input-radio:checked + label.input-radio:before {
   background: #fff;
   z-index: 100;
 }
-/* line 190, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner .close {
   position: absolute;
   width: 55px;
@@ -2136,7 +1821,6 @@ input.input-radio:checked + label.input-radio:before {
   overflow: hidden;
   cursor: pointer;
 }
-/* line 200, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner .close:before {
   content: "";
   width: 40px;
@@ -2147,45 +1831,37 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -83px -251px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
-/* line 210, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner .title {
   font-size: 21px;
   margin-bottom: 30px;
 }
-/* line 214, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner p {
   line-height: 1.2;
   margin-bottom: 0;
 }
 
-/* line 218, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-slide {
   margin-bottom: 20px;
 }
-/* line 221, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-slide img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* line 226, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-download {
   float: right;
   color: #000;
   text-decoration: underline;
 }
-/* line 231, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-download:hover {
   text-decoration: none;
 }
 
-/* line 234, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-copy {
   position: relative;
   padding-left: 35px;
 }
-/* line 238, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-copy input {
   display: block;
   width: 100%;
@@ -2194,7 +1870,6 @@ input.input-radio:checked + label.input-radio:before {
   padding: 7px 10px;
   margin-bottom: 5px;
 }
-/* line 246, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-copy:before {
   clear: none;
   content: "";
@@ -2207,40 +1882,33 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -419px -88px;
 }
 
-/* line 257, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-copy-btn {
   text-decoration: underline;
   display: table;
   margin: 0 auto 20px;
   cursor: pointer;
 }
-/* line 263, ../sass/pages/cabinet_bonuses.sass */
 .popup-banner-copy-btn:hover {
   text-decoration: none;
 }
 
-/* line 1, ../sass/pages/cabinet_referrals.sass */
 .content-box-item.cabinet-referrals {
   padding-top: 112px;
 }
 
-/* line 4, ../sass/pages/cabinet_referrals.sass */
 .cabinet-referrals .content-box-cat {
   float: none;
 }
 
-/* line 7, ../sass/pages/cabinet_referrals.sass */
 .cabinet-referrals .content-box-cat a {
   padding: 0 10px;
   margin-right: 5px;
 }
 
-/* line 13, ../sass/pages/cabinet_referrals.sass */
 .r-header {
   display: none;
 }
 
-/* line 18, ../sass/pages/cabinet_referrals.sass */
 .r-item {
   line-height: 1.7;
   margin: 0 -10px;
@@ -2248,7 +1916,6 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
   position: relative;
 }
-/* line 25, ../sass/pages/cabinet_referrals.sass */
 .r-item:hover:before {
   content: "";
   clear: none;
@@ -2260,28 +1927,23 @@ input.input-radio:checked + label.input-radio:before {
   top: 32px;
   right: 20px;
 }
-/* line 36, ../sass/pages/cabinet_referrals.sass */
 .r-item:nth-child(odd) {
   background: #FAFAFA;
 }
 
-/* line 39, ../sass/pages/cabinet_referrals.sass */
 .r-inf-names {
   float: left;
   margin-right: 20px;
 }
 
-/* line 43, ../sass/pages/cabinet_referrals.sass */
 .r-inf {
   float: left;
 }
 
-/* line 46, ../sass/pages/cabinet_referrals.sass */
 .r-active {
   position: relative;
 }
 
-/* line 49, ../sass/pages/cabinet_referrals.sass */
 .r-active-icon {
   display: inline-block;
   width: 15px;
@@ -2293,14 +1955,12 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
 }
 
-/* line 59, ../sass/pages/cabinet_referrals.sass */
 .r-item.online .r-active-icon {
   width: 18px;
   height: 15px;
   background-position: -192px -54px;
 }
 
-/* line 64, ../sass/pages/cabinet_referrals.sass */
 .r-active-inf {
   display: none;
   width: 150px;
@@ -2315,7 +1975,6 @@ input.input-radio:checked + label.input-radio:before {
   background: #fff;
   border-radius: 2px;
 }
-/* line 78, ../sass/pages/cabinet_referrals.sass */
 .r-active-inf:after {
   content: "";
   display: block;
@@ -2328,7 +1987,6 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 @media (min-width: 530px) {
-  /* line 94, ../sass/pages/cabinet_referrals.sass */
   .r-header,
   .r-item {
     margin-left: -10px;
@@ -2337,125 +1995,103 @@ input.input-radio:checked + label.input-radio:before {
     padding-right: 10px;
   }
 
-  /* line 103, ../sass/pages/cabinet_referrals.sass */
   .r-header {
     display: block;
     margin-bottom: 20px;
     font-size: 18px;
   }
 
-  /* line 108, ../sass/pages/cabinet_referrals.sass */
   .r-header-item {
     float: left;
   }
 
-  /* line 113, ../sass/pages/cabinet_referrals.sass */
   .r-item {
     padding: 14px 10px;
     border-bottom: none;
     line-height: 1.4;
   }
-  /* line 118, ../sass/pages/cabinet_referrals.sass */
   .r-item:hover:before {
     top: 10px;
     right: 10px;
   }
 
-  /* line 122, ../sass/pages/cabinet_referrals.sass */
   .r-inf-names {
     display: none;
   }
 
-  /* line 125, ../sass/pages/cabinet_referrals.sass */
   .r-inf {
     float: none;
   }
 
-  /* line 128, ../sass/pages/cabinet_referrals.sass */
   .r-inf-item {
     float: left;
   }
 
-  /* line 131, ../sass/pages/cabinet_referrals.sass */
   .r-active {
     padding-left: 35px;
   }
 
-  /* line 134, ../sass/pages/cabinet_referrals.sass */
   .r-active-inf {
     top: -74px;
     left: -32px;
   }
 
-  /* line 140, ../sass/pages/cabinet_referrals.sass */
   .r-nickname,
   .r-nickname-text {
     width: 33%;
   }
 
-  /* line 144, ../sass/pages/cabinet_referrals.sass */
   .r-registered,
   .r-registered-text {
     width: 23%;
   }
 
-  /* line 148, ../sass/pages/cabinet_referrals.sass */
   .r-games,
   .r-games-text {
     width: 10%;
   }
 
-  /* line 152, ../sass/pages/cabinet_referrals.sass */
   .r-active,
   .r-active-text {
     width: 21%;
   }
 
-  /* line 156, ../sass/pages/cabinet_referrals.sass */
   .r-profit,
   .r-profit-text {
     width: 13%;
   }
 }
 @media (min-width: 580px) {
-  /* line 164, ../sass/pages/cabinet_referrals.sass */
   .content-box-item.cabinet-referrals {
     padding-top: 90px;
   }
 
-  /* line 167, ../sass/pages/cabinet_referrals.sass */
   .cabinet-referrals .calendar-range {
     float: left;
     margin-bottom: 0;
   }
 
-  /* line 171, ../sass/pages/cabinet_referrals.sass */
   .cabinet-referrals .content-box-item-top {
     padding-top: 35px;
   }
 
-  /* line 174, ../sass/pages/cabinet_referrals.sass */
   .cabinet-referrals .content-box-cat {
     float: right;
     padding-top: 8px;
   }
 }
-/* line 1, ../sass/pages/cabinet_account.sass */
 .cabinet-account {
   text-align: center;
 }
 
-/* line 6, ../sass/pages/cabinet_account.sass */
 .c-user-inf-wrapper {
   margin-bottom: 30px;
 }
 
-/* line 9, ../sass/pages/cabinet_account.sass */
 .c-user-inf {
   margin-bottom: 30px;
 }
 
-/* line 12, ../sass/pages/cabinet_account.sass */
 .c-user-img {
   width: 200px;
   height: 200px;
@@ -2463,7 +2099,6 @@ input.input-radio:checked + label.input-radio:before {
   margin: 0 auto 20px;
 }
 
-/* line 18, ../sass/pages/cabinet_account.sass */
 .c-user-img img {
   display: block;
   width: 100%;
@@ -2471,7 +2106,6 @@ input.input-radio:checked + label.input-radio:before {
   border-radius: 50%;
 }
 
-/* line 24, ../sass/pages/cabinet_account.sass */
 .c-user-nickname {
   position: absolute;
   bottom: 30px;
@@ -2481,28 +2115,23 @@ input.input-radio:checked + label.input-radio:before {
   text-align: center;
 }
 
-/* line 32, ../sass/pages/cabinet_account.sass */
 .c-socials {
   margin-bottom: 30px;
 }
 
-/* line 35, ../sass/pages/cabinet_account.sass */
 .c-social-inf {
   margin-bottom: 10px;
   text-align: center;
 }
 
-/* line 39, ../sass/pages/cabinet_account.sass */
 .c-social-inf span {
   margin-left: 10px;
 }
 
-/* line 42, ../sass/pages/cabinet_account.sass */
 .c-social-icons {
   text-align: center;
 }
 
-/* line 45, ../sass/pages/cabinet_account.sass */
 .c-social-item {
   display: inline-block;
   width: 25px;
@@ -2510,49 +2139,40 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png);
 }
 
-/* line 51, ../sass/pages/cabinet_account.sass */
 .c-social-item.soc-1 {
   background-position: -496px -260px;
 }
 
-/* line 54, ../sass/pages/cabinet_account.sass */
 .c-social-item.soc-2 {
   background-position: -526px -260px;
 }
 
-/* line 57, ../sass/pages/cabinet_account.sass */
 .c-social-item.soc-3 {
   background-position: -556px -260px;
 }
 
-/* line 63, ../sass/pages/cabinet_account.sass */
 .c-user-personal-inf {
   font-size: 14px;
 }
 
-/* line 66, ../sass/pages/cabinet_account.sass */
 .c-user-personal-inf table {
   width: 100%;
   line-height: 1.3;
   margin-bottom: 10px;
 }
 
-/* line 71, ../sass/pages/cabinet_account.sass */
 .c-user-personal-inf tr {
   border-bottom: 1px solid #E6E6E6;
 }
 
-/* line 74, ../sass/pages/cabinet_account.sass */
 .c-user-personal-inf td {
   text-align: center;
   padding: 10px 0;
 }
-/* line 78, ../sass/pages/cabinet_account.sass */
 .c-user-personal-inf td:first-child {
   display: none;
 }
 
-/* line 81, ../sass/pages/cabinet_account.sass */
 .c-favorite-combination-item {
   display: inline-block;
   width: 30px;
@@ -2564,19 +2184,16 @@ input.input-radio:checked + label.input-radio:before {
   margin-right: 5px;
 }
 
-/* line 91, ../sass/pages/cabinet_account.sass */
 .personal-inf-edit-btn {
   float: right;
   font-size: 14px;
   color: #4A90E5;
   text-decoration: none;
 }
-/* line 97, ../sass/pages/cabinet_account.sass */
 .personal-inf-edit-btn:hover {
   text-decoration: underline;
 }
 
-/* line 102, ../sass/pages/cabinet_account.sass */
 .c-play-inf-win {
   font-size: 17px;
   background: #FAFAFA;
@@ -2586,37 +2203,30 @@ input.input-radio:checked + label.input-radio:before {
   text-align: center;
 }
 
-/* line 110, ../sass/pages/cabinet_account.sass */
 .c-play-inf-win span {
   display: block;
 }
 
-/* line 113, ../sass/pages/cabinet_account.sass */
 .c-play-inf table {
   width: 100%;
   line-height: 1.3;
 }
 
-/* line 117, ../sass/pages/cabinet_account.sass */
 .c-play-inf tr {
   border-bottom: 1px solid #E6E6E6;
 }
 
-/* line 120, ../sass/pages/cabinet_account.sass */
 .c-play-inf td {
   padding: 14px 0 14px 10px;
 }
-/* line 123, ../sass/pages/cabinet_account.sass */
 .c-play-inf td:first-child {
   padding-left: 0;
 }
 
-/* line 1, ../sass/pages/cabinet_account_edit.sass */
 .ae-top {
   margin-bottom: 15px;
 }
 
-/* line 4, ../sass/pages/cabinet_account_edit.sass */
 .ae-user-img {
   width: 200px;
   height: 200px;
@@ -2625,26 +2235,22 @@ input.input-radio:checked + label.input-radio:before {
   overflow: hidden;
 }
 
-/* line 11, ../sass/pages/cabinet_account_edit.sass */
 .ae-user-img img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* line 16, ../sass/pages/cabinet_account_edit.sass */
 .ae-inf {
   display: none;
 }
 
-/* line 21, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form {
   position: relative;
   line-height: 50px;
   margin-bottom: 15px;
 }
 
-/* line 26, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-names {
   position: absolute;
   top: 0;
@@ -2655,17 +2261,14 @@ input.input-radio:checked + label.input-radio:before {
   z-index: 1;
 }
 
-/* line 35, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-names li {
   margin-bottom: 2px;
 }
 
-/* line 38, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-values li {
   position: relative;
 }
 
-/* line 41, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form .error-msg {
   display: none;
   color: #FF4242;
@@ -2675,7 +2278,6 @@ input.input-radio:checked + label.input-radio:before {
   right: 0;
 }
 
-/* line 49, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-values input {
   border-width: 0 0 1px;
   border-style: solid;
@@ -2687,43 +2289,36 @@ input.input-radio:checked + label.input-radio:before {
   padding-left: 135px;
   padding-bottom: 1px;
 }
-/* line 60, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-values input:focus {
   border-width: 0 0 2px;
   border-color: #BED8D9;
   padding-bottom: 0;
 }
-/* line 65, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-values input.error {
   border-width: 0 0 2px;
   border-color: #FF4242;
   padding-bottom: 0;
   color: #FF4242;
 }
-/* line 71, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-form-values input.error + .error-msg {
   display: block;
 }
 
-/* line 76, ../sass/pages/cabinet_account_edit.sass */
 .ae-personal-inf .title {
   text-align: center;
   margin-bottom: 10px;
 }
 
-/* line 80, ../sass/pages/cabinet_account_edit.sass */
 .ae-combination {
   margin-bottom: 15px;
 }
 
-/* line 83, ../sass/pages/cabinet_account_edit.sass */
 .ae-favorite-combination {
   width: 260px;
   margin: auto;
   position: relative;
 }
 
-/* line 90, ../sass/pages/cabinet_account_edit.sass */
 .ae-combination-box {
   display: none;
   width: 288px;
@@ -2736,7 +2331,6 @@ input.input-radio:checked + label.input-radio:before {
   left: -14px;
   z-index: 10;
 }
-/* line 102, ../sass/pages/cabinet_account_edit.sass */
 .ae-combination-box:before {
   content: "";
   clear: none;
@@ -2749,7 +2343,6 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -440px -55px;
 }
 
-/* line 113, ../sass/pages/cabinet_account_edit.sass */
 .ae-combination-box li {
   float: left;
   border: 1px solid transparent;
@@ -2762,16 +2355,13 @@ input.input-radio:checked + label.input-radio:before {
   text-align: center;
   cursor: pointer;
 }
-/* line 125, ../sass/pages/cabinet_account_edit.sass */
 .ae-combination-box li:hover {
   border: 1px solid #ccc;
 }
-/* line 128, ../sass/pages/cabinet_account_edit.sass */
 .ae-combination-box li.selected {
   border: 1px solid;
 }
 
-/* line 133, ../sass/pages/cabinet_account_edit.sass */
 .ae-current-combination li {
   float: left;
   width: 35px;
@@ -2784,28 +2374,23 @@ input.input-radio:checked + label.input-radio:before {
   margin-right: 10px;
   cursor: pointer;
 }
-/* line 145, ../sass/pages/cabinet_account_edit.sass */
 .ae-current-combination li:last-child {
   margin-right: 0;
 }
 
-/* line 150, ../sass/pages/cabinet_account_edit.sass */
 .ae-socials {
   margin-bottom: 30px;
 }
 
-/* line 153, ../sass/pages/cabinet_account_edit.sass */
 .ae-binded {
   margin-bottom: 25px;
 }
 
-/* line 156, ../sass/pages/cabinet_account_edit.sass */
 .ae-social {
   display: table;
   margin: auto;
 }
 
-/* line 160, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item {
   display: inline-block;
   width: 35px;
@@ -2814,42 +2399,34 @@ input.input-radio:checked + label.input-radio:before {
   text-decoration: none;
   margin-right: 5px;
 }
-/* line 168, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item:last-child {
   margin-right: 0;
 }
 
-/* line 171, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item.soc-1 {
   background-position: -168px -255px;
 }
 
-/* line 174, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item.soc-2 {
   background-position: -213px -255px;
 }
 
-/* line 177, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item.soc-3 {
   background-position: -258px -255px;
 }
 
-/* line 180, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item.soc-4 {
   background-position: -332px -255px;
 }
 
-/* line 183, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item.soc-5 {
   background-position: -377px -255px;
 }
 
-/* line 186, ../sass/pages/cabinet_account_edit.sass */
 .ae-social-item.soc-6 {
   background-position: -422px -255px;
 }
 
-/* line 191, ../sass/pages/cabinet_account_edit.sass */
 .ae-save-btn {
   display: block;
   margin: auto;
@@ -2866,27 +2443,22 @@ input.input-radio:checked + label.input-radio:before {
   margin-bottom: 20px;
 }
 
-/* line 1, ../sass/pages/cabinet_cashout.sass */
 .cabinet-cashout a {
   color: #4990E2;
   text-decoration: none;
 }
-/* line 5, ../sass/pages/cabinet_cashout.sass */
 .cabinet-cashout a:hover {
   text-decoration: underline;
 }
 
-/* line 8, ../sass/pages/cabinet_cashout.sass */
 .cco-title {
   margin-bottom: 30px;
 }
 
-/* line 11, ../sass/pages/cabinet_cashout.sass */
 .cco-title div {
   float: left;
 }
 
-/* line 14, ../sass/pages/cabinet_cashout.sass */
 .cco-edit {
   float: right;
   display: block;
@@ -2897,38 +2469,31 @@ input.input-radio:checked + label.input-radio:before {
   top: 4px;
 }
 
-/* line 23, ../sass/pages/cabinet_cashout.sass */
 .cco-edit span {
   display: none;
 }
 
-/* line 28, ../sass/pages/cabinet_cashout.sass */
 .cco-choose-method {
   margin-bottom: 40px;
 }
 
-/* line 31, ../sass/pages/cabinet_cashout.sass */
 .cco-methods {
   margin-bottom: 40px;
 }
 
-/* line 34, ../sass/pages/cabinet_cashout.sass */
 .cco-method {
   margin-bottom: 20px;
 }
-/* line 37, ../sass/pages/cabinet_cashout.sass */
 .cco-method:last-child {
   margin-bottom: 0;
 }
 
-/* line 40, ../sass/pages/cabinet_cashout.sass */
 .cco-method > label {
   cursor: pointer;
   display: inline-block;
   padding-left: 40px;
 }
 
-/* line 45, ../sass/pages/cabinet_cashout.sass */
 .cco-methods label.input-radio {
   float: left;
   margin-left: -40px;
@@ -2936,22 +2501,18 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
 }
 
-/* line 51, ../sass/pages/cabinet_cashout.sass */
 .cco-method-name {
   margin-bottom: 10px;
 }
 
-/* line 56, ../sass/pages/cabinet_cashout.sass */
 .cco-enter-sum {
   margin-bottom: 40px;
 }
 
-/* line 59, ../sass/pages/cabinet_cashout.sass */
 .cco-enter-sum-box {
   margin-bottom: 18px;
 }
 
-/* line 62, ../sass/pages/cabinet_cashout.sass */
 .cco-enter-sum .title {
   display: block;
   float: left;
@@ -2959,7 +2520,6 @@ input.input-radio:checked + label.input-radio:before {
   margin-right: 20px;
 }
 
-/* line 68, ../sass/pages/cabinet_cashout.sass */
 .cco-enter-sum input {
   display: block;
   width: 140px;
@@ -2975,7 +2535,6 @@ input.input-radio:checked + label.input-radio:before {
   font-weight: bold;
 }
 
-/* line 82, ../sass/pages/cabinet_cashout.sass */
 .cco-currency {
   display: block;
   float: left;
@@ -2983,7 +2542,6 @@ input.input-radio:checked + label.input-radio:before {
   position: relative;
 }
 
-/* line 88, ../sass/pages/cabinet_cashout.sass */
 .cco-cashout-btn {
   display: block;
   width: 100%;
@@ -3000,7 +2558,6 @@ input.input-radio:checked + label.input-radio:before {
   cursor: pointer;
 }
 
-/* line 105, ../sass/pages/cabinet_cashout.sass */
 .cco-inf {
   margin: 0 -10px;
   padding: 20px 10px;
@@ -3009,49 +2566,41 @@ input.input-radio:checked + label.input-radio:before {
   border-color: #CBC7C6;
 }
 
-/* line 112, ../sass/pages/cabinet_cashout.sass */
 .cco-inf p {
   margin-bottom: 20px;
 }
-/* line 115, ../sass/pages/cabinet_cashout.sass */
 .cco-inf p:last-child {
   margin-bottom: 0;
 }
 
 @media (min-width: 600px) {
-  /* line 124, ../sass/pages/cabinet_cashout.sass */
   .cco-methods label.input-radio {
     top: 0;
   }
 
-  /* line 127, ../sass/pages/cabinet_cashout.sass */
   .cco-method-name {
     margin-bottom: 0;
     margin-right: 20px;
     min-width: 200px;
   }
 
-  /* line 132, ../sass/pages/cabinet_cashout.sass */
   .cco-method-name,
   .cco-method-value {
     display: inline-block;
   }
 
-  /* line 138, ../sass/pages/cabinet_cashout.sass */
   .cco-enter-sum-box {
     margin-bottom: 0;
     float: left;
     margin-right: 30px;
   }
 
-  /* line 143, ../sass/pages/cabinet_cashout.sass */
   .cco-cashout-btn {
     width: 150px;
     position: relative;
     top: -6px;
   }
 }
-/* line 156, ../sass/pages/cabinet_cashout.sass */
 .cb-title {
   border-width: 1px 0;
   border-style: solid;
@@ -3062,26 +2611,21 @@ input.input-radio:checked + label.input-radio:before {
   line-height: 1.5;
 }
 
-/* line 165, ../sass/pages/cabinet_cashout.sass */
 .cb-inf p {
   margin-bottom: 20px;
 }
-/* line 168, ../sass/pages/cabinet_cashout.sass */
 .cb-inf p:last-child {
   margin-bottom: 0;
 }
 
-/* line 171, ../sass/pages/cabinet_cashout.sass */
 .cb-verified {
   color: #B4AFB6;
 }
 
-/* line 181, ../sass/pages/cabinet_cashout.sass */
 .content-box-content.cashout-block .content-box-item {
   opacity: 0.5;
   position: relative;
 }
-/* line 185, ../sass/pages/cabinet_cashout.sass */
 .content-box-content.cashout-block .content-box-item:before {
   content: "";
   display: block;
@@ -3093,7 +2637,6 @@ input.input-radio:checked + label.input-radio:before {
   z-index: 100;
 }
 
-/* line 195, ../sass/pages/cabinet_cashout.sass */
 .cabinet-cashout-block {
   border-width: 1px 0;
   border-style: solid;
@@ -3105,28 +2648,23 @@ input.input-radio:checked + label.input-radio:before {
   line-height: 1.4;
 }
 
-/* line 205, ../sass/pages/cabinet_cashout.sass */
 .cabinet-cashout-block a {
   color: #4A90E5;
   text-decoration: none;
 }
-/* line 209, ../sass/pages/cabinet_cashout.sass */
 .cabinet-cashout-block a:hover {
   text-decoration: underline;
 }
 
-/* line 1, ../sass/pages/cabinet_cashout_inf.sass */
 .content-box-header.cabinet-cashout-inf {
   font-size: 17px;
 }
 
-/* line 4, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-title {
   font-size: 16px;
   margin-bottom: 25px;
 }
 
-/* line 10, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form {
   position: relative;
   line-height: 50px;
@@ -3135,7 +2673,6 @@ input.input-radio:checked + label.input-radio:before {
   border-top: 1px solid #B4AEAE;
 }
 
-/* line 17, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form-names {
   position: absolute;
   top: 0;
@@ -3147,17 +2684,14 @@ input.input-radio:checked + label.input-radio:before {
   padding-left: 10px;
 }
 
-/* line 27, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form-names li {
   margin-bottom: 2px;
 }
 
-/* line 30, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form-values li {
   position: relative;
 }
 
-/* line 33, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form-values input {
   border-width: 0 0 1px;
   border-style: solid;
@@ -3170,18 +2704,15 @@ input.input-radio:checked + label.input-radio:before {
   padding-bottom: 1px;
   font-size: 15px;
 }
-/* line 45, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form-values input:focus {
   border-width: 0 0 2px;
   border-color: #BED8D9;
   padding-bottom: 0;
 }
-/* line 50, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-personal-form-values input.input-prefix {
   padding-left: 165px;
 }
 
-/* line 53, ../sass/pages/cabinet_cashout_inf.sass */
 span.input-prefix {
   color: #B4AEAE;
   position: absolute;
@@ -3189,7 +2720,6 @@ span.input-prefix {
   left: 150px;
 }
 
-/* line 59, ../sass/pages/cabinet_cashout_inf.sass */
 .ci-save-btn {
   display: block;
   margin: auto;
@@ -3206,33 +2736,27 @@ span.input-prefix {
   margin-bottom: 20px;
 }
 
-/* line 1, ../sass/pages/cabinet_convert.sass */
 .cc-title {
   margin-bottom: 30px;
 }
 
-/* line 4, ../sass/pages/cabinet_convert.sass */
 .cc-form-top {
   margin-bottom: 20px;
 }
 
-/* line 7, ../sass/pages/cabinet_convert.sass */
 .cc-form-top .title {
   font-size: 22px;
   margin-right: 20px;
 }
 
-/* line 11, ../sass/pages/cabinet_convert.sass */
 .cc-out {
   margin-bottom: 30px;
 }
 
-/* line 14, ../sass/pages/cabinet_convert.sass */
 .cc-out .title {
   display: inline-block;
 }
 
-/* line 17, ../sass/pages/cabinet_convert.sass */
 .cc-out input {
   display: inline-block;
   width: 170px;
@@ -3243,24 +2767,20 @@ span.input-prefix {
   padding: 0 35px 0 5px;
 }
 
-/* line 26, ../sass/pages/cabinet_convert.sass */
 .cc-out .cc-currency {
   position: relative;
   left: -30px;
 }
 
-/* line 30, ../sass/pages/cabinet_convert.sass */
 .cc-sum {
   font-size: 50px;
   font-weight: bold;
 }
 
-/* line 34, ../sass/pages/cabinet_convert.sass */
 .cc-currency {
   text-transform: uppercase;
 }
 
-/* line 37, ../sass/pages/cabinet_convert.sass */
 .cc-convert-btn {
   display: block;
   width: 100%;
@@ -3276,42 +2796,35 @@ span.input-prefix {
 }
 
 @media (min-width: 600px) {
-  /* line 56, ../sass/pages/cabinet_convert.sass */
   .cc-out {
     float: left;
   }
 
-  /* line 59, ../sass/pages/cabinet_convert.sass */
   .cc-income {
     float: right;
   }
 
-  /* line 62, ../sass/pages/cabinet_convert.sass */
   .cc-title {
     margin-bottom: 30px;
     font-size: 21px;
   }
 }
-/* line 1, ../sass/pages/cabinet_transaction_history.sass */
 .content-box-item.cabinet-transaction-history {
   padding-top: 112px;
 }
 
-/* line 4, ../sass/pages/cabinet_transaction_history.sass */
 .cabinet-transaction-history .content-box-cat {
   float: none;
   display: table;
   margin: auto;
 }
 
-/* line 9, ../sass/pages/cabinet_transaction_history.sass */
 .cabinet-transaction-history .content-box-cat a {
   display: table-cell;
   padding: 0 10px;
   margin-right: 5px;
 }
 
-/* line 16, ../sass/pages/cabinet_transaction_history.sass */
 .th-item {
   margin: 0 -10px;
   padding: 13px 10px 0;
@@ -3319,7 +2832,6 @@ span.input-prefix {
   position: relative;
   line-height: 1.4;
 }
-/* line 23, ../sass/pages/cabinet_transaction_history.sass */
 .th-item:hover:before {
   content: "";
   clear: none;
@@ -3331,91 +2843,75 @@ span.input-prefix {
   top: 10px;
   right: 10px;
 }
-/* line 34, ../sass/pages/cabinet_transaction_history.sass */
 .th-item:nth-child(odd) {
   background: #FAFAFA;
 }
 
-/* line 39, ../sass/pages/cabinet_transaction_history.sass */
 .th-date-range {
   font-size: 24px;
   margin-bottom: 5px;
   margin-top: 30px;
 }
-/* line 44, ../sass/pages/cabinet_transaction_history.sass */
 .th-date-range:first-child {
   margin-top: 0;
 }
 
-/* line 49, ../sass/pages/cabinet_transaction_history.sass */
 .th-item-left,
 .th-item-right {
   margin-bottom: 13px;
 }
 
-/* line 55, ../sass/pages/cabinet_transaction_history.sass */
 .th-item-left {
   float: left;
 }
 
-/* line 58, ../sass/pages/cabinet_transaction_history.sass */
 .th-item-left div {
   float: left;
   margin-right: 30px;
 }
 
-/* line 62, ../sass/pages/cabinet_transaction_history.sass */
 .th-item-right {
   float: right;
 }
 
-/* line 65, ../sass/pages/cabinet_transaction_history.sass */
 .th-item-right div {
   float: left;
   margin-right: 35px;
 }
 
-/* line 71, ../sass/pages/cabinet_transaction_history.sass */
 .th-item.th-minus .th-item-sum {
   color: #FF466D;
 }
 
 @media (min-width: 530px) {
-  /* line 78, ../sass/pages/cabinet_transaction_history.sass */
   .content-box-item.cabinet-transaction-history {
     padding-top: 90px;
   }
 
-  /* line 81, ../sass/pages/cabinet_transaction_history.sass */
   .cabinet-transaction-history .calendar-range {
     float: left;
     margin-bottom: 0;
   }
 
-  /* line 85, ../sass/pages/cabinet_transaction_history.sass */
   .cabinet-transaction-history .content-box-item-top {
     padding-top: 35px;
   }
 
-  /* line 88, ../sass/pages/cabinet_transaction_history.sass */
   .cabinet-transaction-history .content-box-cat {
     float: right;
     padding-top: 8px;
     margin-right: 30px;
   }
 }
-/* line 1, ../sass/pages/cabinet_payments_history.sass */
 .ph-notice {
   text-align: center;
   margin-bottom: 30px;
 }
 
-/* line 7, ../sass/pages/cabinet_payments_history.sass */
 .ph-header {
   display: none;
 }
 
-/* line 12, ../sass/pages/cabinet_payments_history.sass */
 .ph-item {
   margin: 0 -10px;
   padding: 20px 10px;
@@ -3423,11 +2919,9 @@ span.input-prefix {
   position: relative;
   font-size: 16px;
 }
-/* line 19, ../sass/pages/cabinet_payments_history.sass */
 .ph-item > div {
   display: table-row;
 }
-/* line 22, ../sass/pages/cabinet_payments_history.sass */
 .ph-item:hover:before {
   content: "";
   clear: none;
@@ -3439,41 +2933,34 @@ span.input-prefix {
   top: 32px;
   right: 20px;
 }
-/* line 33, ../sass/pages/cabinet_payments_history.sass */
 .ph-item:nth-child(odd) {
   background: #FAFAFA;
 }
 
-/* line 36, ../sass/pages/cabinet_payments_history.sass */
 .ph-inf-name,
 .ph-inf-value {
   display: table-cell;
   padding: 2px 0;
 }
 
-/* line 41, ../sass/pages/cabinet_payments_history.sass */
 .ph-inf-name {
   padding-right: 20px;
 }
 
-/* line 47, ../sass/pages/cabinet_payments_history.sass */
 .ph-item.ph-paid .ph-status .ph-inf-value {
   color: #417506;
 }
 
-/* line 50, ../sass/pages/cabinet_payments_history.sass */
 .ph-item.ph-processed .ph-status .ph-inf-value {
   color: #F3A622;
 }
 
-/* line 53, ../sass/pages/cabinet_payments_history.sass */
 .ph-item.ph-denied .ph-status .ph-inf-value {
   color: #FF4242;
   position: relative;
   display: inline-block;
   padding-right: 35px;
 }
-/* line 59, ../sass/pages/cabinet_payments_history.sass */
 .ph-item.ph-denied .ph-status .ph-inf-value:after {
   content: "";
   display: block;
@@ -3486,7 +2973,6 @@ span.input-prefix {
 }
 
 @media (min-width: 530px) {
-  /* line 75, ../sass/pages/cabinet_payments_history.sass */
   .ph-header {
     margin: 0 -10px 20px;
     padding: 0 10px;
@@ -3494,73 +2980,60 @@ span.input-prefix {
     font-size: 18px;
   }
 
-  /* line 81, ../sass/pages/cabinet_payments_history.sass */
   .ph-header-item {
     float: left;
   }
 
-  /* line 86, ../sass/pages/cabinet_payments_history.sass */
   .ph-item {
     padding: 14px 10px;
     line-height: 1.4;
   }
-  /* line 90, ../sass/pages/cabinet_payments_history.sass */
   .ph-item > div {
     display: block;
     float: left;
   }
-  /* line 94, ../sass/pages/cabinet_payments_history.sass */
   .ph-item:hover:before {
     top: 10px;
     right: 10px;
   }
 
-  /* line 98, ../sass/pages/cabinet_payments_history.sass */
   .ph-inf-name {
     display: none;
   }
 
-  /* line 101, ../sass/pages/cabinet_payments_history.sass */
   .ph-inf-value {
     display: block;
   }
 
-  /* line 106, ../sass/pages/cabinet_payments_history.sass */
   .ph-date,
   .ph-date-text {
     width: 22%;
   }
 
-  /* line 110, ../sass/pages/cabinet_payments_history.sass */
   .ph-won,
   .ph-won-text {
     width: 18%;
   }
 
-  /* line 114, ../sass/pages/cabinet_payments_history.sass */
   .ph-method,
   .ph-method-text {
     width: 38%;
   }
 
-  /* line 118, ../sass/pages/cabinet_payments_history.sass */
   .ph-status,
   .ph-status-text {
     width: 22%;
   }
 }
-/* line 3, ../sass/pages/communication.sass */
 .communication .content-box-tab {
   padding: 0 20px;
   position: relative;
 }
 
-/* line 7, ../sass/pages/communication.sass */
 .communication .content-box-tab span {
   display: none;
 }
 
-/* line 10, ../sass/pages/communication.sass */
 .communication .content-box-tab:before {
   content: "";
   display: inline-block;
@@ -3569,12 +3042,10 @@ span.input-prefix {
   background-image: url(img/sprite.png);
 }
 
-/* line 17, ../sass/pages/communication.sass */
 .communication .content-box-tab.back-tab {
   padding: 0 20px 0 10px;
 }
 
-/* line 20, ../sass/pages/communication.sass */
 .communication .back-tab:before {
   width: 15px;
   height: 30px;
@@ -3582,7 +3053,6 @@ span.input-prefix {
   background-position: -178px -187px;
 }
 
-/* line 26, ../sass/pages/communication.sass */
 .communication .communication-comments-tab:before {
   width: 31px;
   height: 32px;
@@ -3590,7 +3060,6 @@ span.input-prefix {
   background-position: -347px -130px;
 }
 
-/* line 32, ../sass/pages/communication.sass */
 .communication .communication-messages-tab:before {
   width: 32px;
   height: 24px;
@@ -3598,7 +3067,6 @@ span.input-prefix {
   background-position: -290px -130px;
 }
 
-/* line 39, ../sass/pages/communication.sass */
 .communication .communication-friends-tab:before {
   width: 25px;
   height: 25px;
@@ -3606,7 +3074,6 @@ span.input-prefix {
   background-position: -235px -130px;
 }
 
-/* line 47, ../sass/pages/communication.sass */
 .communication .content-box-tab .count {
   display: inline-block;
   text-align: center;
@@ -3623,7 +3090,6 @@ span.input-prefix {
   vertical-align: baseline;
 }
 
-/* line 62, ../sass/pages/communication.sass */
 .communication .content-box-tab .chronicle-count {
   display: block;
   position: absolute;
@@ -3636,40 +3102,33 @@ span.input-prefix {
   padding: 1px 4px;
 }
 
-/* line 76, ../sass/pages/communication.sass */
 .communication .content-box-tab {
   padding: 0 15px;
 }
 
-/* line 1, ../sass/pages/communication_comments.sass */
 .communication-comments {
   padding-bottom: 100px;
 }
 
-/* line 4, ../sass/pages/communication_comments.sass */
 .comment {
   margin-bottom: 30px;
 }
 
-/* line 7, ../sass/pages/communication_comments.sass */
 .comment-content {
   position: relative;
 }
 
-/* line 10, ../sass/pages/communication_comments.sass */
 .comment-top {
   display: table;
   width: 100%;
   margin-bottom: 10px;
 }
 
-/* line 15, ../sass/pages/communication_comments.sass */
 .comment-img {
   display: table-cell;
   width: 50px;
   height: 50px;
 }
-/* line 20, ../sass/pages/communication_comments.sass */
 .comment-img img {
   display: block;
   width: 100%;
@@ -3677,30 +3136,25 @@ span.input-prefix {
   border-radius: 50%;
 }
 
-/* line 26, ../sass/pages/communication_comments.sass */
 .comment-inf {
   display: table-cell;
   vertical-align: middle;
   padding-left: 10px;
 }
 
-/* line 31, ../sass/pages/communication_comments.sass */
 .comment-name {
   font-weight: bold;
   margin-right: 13px;
 }
 
-/* line 35, ../sass/pages/communication_comments.sass */
 .comment-date {
   font-size: 13px;
   color: #5a5a5a;
 }
-/* line 39, ../sass/pages/communication_comments.sass */
 .comment-date span:first-child {
   margin-right: 15px;
 }
 
-/* line 42, ../sass/pages/communication_comments.sass */
 .comment-reply {
   display: none;
   font-size: 21px;
@@ -3709,12 +3163,10 @@ span.input-prefix {
   top: 45%;
   left: 17%;
 }
-/* line 50, ../sass/pages/communication_comments.sass */
 .comment-reply .separator {
   display: none;
 }
 
-/* line 53, ../sass/pages/communication_comments.sass */
 .comment-like {
   opacity: 0;
   position: absolute;
@@ -3722,7 +3174,6 @@ span.input-prefix {
   right: 0;
   padding-left: 30px;
 }
-/* line 60, ../sass/pages/communication_comments.sass */
 .comment-like:before {
   content: "";
   display: block;
@@ -3734,28 +3185,23 @@ span.input-prefix {
   left: 0;
 }
 
-/* line 70, ../sass/pages/communication_comments.sass */
 .comment-like-mob {
   display: none;
 }
 
-/* line 79, ../sass/pages/communication_comments.sass */
 .comment.liked > .comment-content .comment-like {
   opacity: 1;
 }
-/* line 82, ../sass/pages/communication_comments.sass */
 .comment.liked > .comment-content .comment-inf {
   padding-right: 60px;
 }
 
-/* line 89, ../sass/pages/communication_comments.sass */
 .comment.answer {
   margin-top: 20px;
   padding-left: 20px;
 }
 
 @media (max-width: 768px) {
-  /* line 102, ../sass/pages/communication_comments.sass */
   .comment.active > .comment-content:before {
     content: "";
     display: block;
@@ -3768,7 +3214,6 @@ span.input-prefix {
     background: #fff;
     z-index: 1;
   }
-  /* line 114, ../sass/pages/communication_comments.sass */
   .comment.active > .comment-content .comment-reply {
     display: block;
     width: 50%;
@@ -3777,7 +3222,6 @@ span.input-prefix {
     left: 25%;
     z-index: 1;
   }
-  /* line 122, ../sass/pages/communication_comments.sass */
   .comment.active > .comment-content .comment-like-mob {
     display: block;
     width: 30px;
@@ -3789,12 +3233,10 @@ span.input-prefix {
     z-index: 1;
   }
 }
-/* line 139, ../sass/pages/communication_comments.sass */
 .c-notifications {
   margin: 0 -10px 20px;
   position: relative;
 }
-/* line 143, ../sass/pages/communication_comments.sass */
 .c-notifications .title {
   padding: 6px 10px;
   background: #F2F8F8;
@@ -3802,17 +3244,14 @@ span.input-prefix {
   font-size: 14px;
 }
 
-/* line 149, ../sass/pages/communication_comments.sass */
 .c-show-notifications {
   text-decoration: underline;
   cursor: pointer;
 }
-/* line 153, ../sass/pages/communication_comments.sass */
 .c-show-notifications:hover {
   text-decoration: none;
 }
 
-/* line 156, ../sass/pages/communication_comments.sass */
 .c-hide-notifications {
   display: block;
   width: 15px;
@@ -3824,7 +3263,6 @@ span.input-prefix {
   cursor: pointer;
 }
 
-/* line 168, ../sass/pages/communication_comments.sass */
 .c-notifications-list {
   display: none;
   position: absolute;
@@ -3835,26 +3273,22 @@ span.input-prefix {
   padding: 45px 0 10px;
   z-index: 2;
 }
-/* line 178, ../sass/pages/communication_comments.sass */
 .c-notifications-list .close-list {
   position: absolute;
   top: 8px;
   right: 10px;
 }
 
-/* line 183, ../sass/pages/communication_comments.sass */
 .c-notification {
   position: relative;
   font-size: 14px;
   margin-bottom: 5px;
   padding: 5px 10px;
 }
-/* line 189, ../sass/pages/communication_comments.sass */
 .c-notification:hover {
   background: #F2F8F8;
 }
 
-/* line 192, ../sass/pages/communication_comments.sass */
 .close-notification {
   width: 10px;
   height: 10px;
@@ -3867,14 +3301,12 @@ span.input-prefix {
   z-index: 3;
 }
 
-/* line 203, ../sass/pages/communication_comments.sass */
 .c-notification-top {
   padding-left: 50px;
   min-height: 45px;
   position: relative;
 }
 
-/* line 208, ../sass/pages/communication_comments.sass */
 .c-notification-img {
   width: 40px;
   height: 40px;
@@ -3882,7 +3314,6 @@ span.input-prefix {
   top: 0;
   left: 0;
 }
-/* line 215, ../sass/pages/communication_comments.sass */
 .c-notification-img img {
   display: block;
   width: 100%;
@@ -3890,64 +3321,52 @@ span.input-prefix {
   border-radius: 50%;
 }
 
-/* line 221, ../sass/pages/communication_comments.sass */
 .c-notification-name {
   font-weight: bold;
 }
 
-/* line 224, ../sass/pages/communication_comments.sass */
 .c-notification-date {
   font-size: 13px;
   color: #5a5a5a;
   white-space: nowrap;
 }
-/* line 229, ../sass/pages/communication_comments.sass */
 .c-notification-date span:first-child {
   margin-right: 5px;
 }
 
-/* line 232, ../sass/pages/communication_comments.sass */
 .c-notification-question {
   margin-top: 3px;
 }
-/* line 235, ../sass/pages/communication_comments.sass */
 .c-notification-question span {
   color: #4A8FEC;
 }
 
-/* line 239, ../sass/pages/communication_comments.sass */
 .c-notification-description {
   line-height: 1.4;
 }
 
-/* line 250, ../sass/pages/communication_comments.sass */
 .communication-comments .message-form-wrapper {
   position: absolute;
   bottom: 0;
   left: 0;
 }
-/* line 255, ../sass/pages/communication_comments.sass */
 .communication-comments .message-form {
   padding: 0 10px;
 }
 
-/* line 1, ../sass/pages/communication_friends.sass */
 .content-box-item.c-friends {
   padding-top: 120px;
 }
 
-/* line 4, ../sass/pages/communication_friends.sass */
 .friends-count {
   font-size: 22px;
   margin-bottom: 15px;
 }
 
-/* line 8, ../sass/pages/communication_friends.sass */
 .friends-count span {
   margin-left: 20px;
 }
 
-/* line 11, ../sass/pages/communication_friends.sass */
 .friends-search-input {
   display: block;
   width: 212px;
@@ -3959,26 +3378,22 @@ span.input-prefix {
   background: transparent;
 }
 
-/* line 23, ../sass/pages/communication_friends.sass */
 .c-friend {
   float: left;
   width: 300px;
   margin: 0 20px 30px 0;
   position: relative;
 }
-/* line 29, ../sass/pages/communication_friends.sass */
 .c-friend:nth-child(even) {
   margin-right: 0;
 }
 
-/* line 32, ../sass/pages/communication_friends.sass */
 .c-friend-img {
   float: left;
   width: 100px;
   height: 100px;
   position: relative;
 }
-/* line 38, ../sass/pages/communication_friends.sass */
 .c-friend-img:after {
   content: "";
   display: block;
@@ -3991,12 +3406,10 @@ span.input-prefix {
   right: 0;
 }
 
-/* line 49, ../sass/pages/communication_friends.sass */
 .c-friend.online .c-friend-img:after {
   background: #7ED320;
 }
 
-/* line 52, ../sass/pages/communication_friends.sass */
 .c-friend-img img {
   display: block;
   width: 100%;
@@ -4004,24 +3417,20 @@ span.input-prefix {
   border-radius: 50%;
 }
 
-/* line 58, ../sass/pages/communication_friends.sass */
 .c-friend-description {
   padding-left: 120px;
 }
 
-/* line 61, ../sass/pages/communication_friends.sass */
 .c-friend-name {
   font-size: 15px;
   margin-bottom: 5px;
 }
 
-/* line 65, ../sass/pages/communication_friends.sass */
 .c-friend-inf {
   font-size: 13px;
   margin-bottom: 9px;
 }
 
-/* line 69, ../sass/pages/communication_friends.sass */
 .c-friend-msg {
   font-size: 14px;
   color: #4a90e2;
@@ -4030,36 +3439,30 @@ span.input-prefix {
   bottom: 0;
   left: 120px;
 }
-/* line 77, ../sass/pages/communication_friends.sass */
 .c-friend-msg:hover {
   text-decoration: underline;
 }
 
 @media (min-width: 580px) {
-  /* line 87, ../sass/pages/communication_friends.sass */
   .content-box-item.c-friends {
     padding-top: 78px;
   }
 
-  /* line 90, ../sass/pages/communication_friends.sass */
   .friends-count {
     margin-bottom: 0;
   }
 
-  /* line 93, ../sass/pages/communication_friends.sass */
   .friends-search {
     position: absolute;
     top: 23px;
     left: 330px;
   }
 }
-/* line 1, ../sass/pages/communication_messages.sass */
 .content-box-item.communication-messages {
   padding-top: 80px;
   padding-right: 0;
 }
 
-/* line 7, ../sass/pages/communication_messages.sass */
 .cm-top {
   width: 100%;
   position: absolute;
@@ -4067,13 +3470,11 @@ span.input-prefix {
   left: 0;
   padding: 0 10px;
 }
-/* line 14, ../sass/pages/communication_messages.sass */
 .cm-top a {
   display: block;
   color: #000;
   font-size: 14px;
 }
-/* line 19, ../sass/pages/communication_messages.sass */
 .cm-top .new-message {
   float: left;
   border: 1px solid #000000;
@@ -4082,42 +3483,34 @@ span.input-prefix {
   text-align: center;
   padding: 5px 22px;
 }
-/* line 27, ../sass/pages/communication_messages.sass */
 .cm-top .write-admin {
   float: right;
   line-height: 30px;
   text-decoration: underline;
 }
-/* line 32, ../sass/pages/communication_messages.sass */
 .cm-top .write-admin:hover {
   text-decoration: none;
 }
 
-/* line 37, ../sass/pages/communication_messages.sass */
 .message {
   padding: 15px 10px 15px 0;
   margin-left: 60px;
   border-bottom: 1px solid #DBDBDB;
   cursor: pointer;
 }
-/* line 43, ../sass/pages/communication_messages.sass */
 .message.new .message-text {
   color: #000;
 }
-/* line 46, ../sass/pages/communication_messages.sass */
 .message.online .message-img:before {
   background: #7ED31E;
 }
-/* line 50, ../sass/pages/communication_messages.sass */
 .message.admin .message-img:before {
   display: none;
 }
-/* line 53, ../sass/pages/communication_messages.sass */
 .message.admin .message-name {
   font-weight: bold;
 }
 
-/* line 56, ../sass/pages/communication_messages.sass */
 .message-img {
   position: relative;
   display: block;
@@ -4126,14 +3519,12 @@ span.input-prefix {
   float: left;
   margin-left: -60px;
 }
-/* line 64, ../sass/pages/communication_messages.sass */
 .message-img img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 50%;
 }
-/* line 70, ../sass/pages/communication_messages.sass */
 .message-img:before {
   content: "";
   display: block;
@@ -4146,31 +3537,26 @@ span.input-prefix {
   background: #D2D2D2;
 }
 
-/* line 81, ../sass/pages/communication_messages.sass */
 .message-name {
   margin-bottom: 8px;
   line-height: 1.27;
 }
 
-/* line 85, ../sass/pages/communication_messages.sass */
 .message-text {
   color: #8B8D8C;
   line-height: 1.27;
 }
 
-/* line 1, ../sass/pages/communication_new_message.sass */
 .content-box-item.communication-new-message {
   padding-top: 40px;
 }
 
-/* line 4, ../sass/pages/communication_new_message.sass */
 .nm-search {
   position: relative;
   max-width: 354px;
   margin: 0 auto 100px;
 }
 
-/* line 9, ../sass/pages/communication_new_message.sass */
 .enter-friend-name {
   width: 210px;
   display: block;
@@ -4181,30 +3567,24 @@ span.input-prefix {
   padding: 0 3px 1px;
   line-height: 1.4;
 }
-/* line 19, ../sass/pages/communication_new_message.sass */
 .enter-friend-name.error {
   border-color: #FF4343;
 }
-/* line 22, ../sass/pages/communication_new_message.sass */
 .enter-friend-name.error::-webkit-input-placeholder {
   color: #FF4343;
 }
-/* line 25, ../sass/pages/communication_new_message.sass */
 .enter-friend-name.error:-moz-placeholder {
   color: #FF4343;
 }
-/* line 28, ../sass/pages/communication_new_message.sass */
 .enter-friend-name.error::-moz-placeholder {
   color: #FF4343;
 }
-/* line 31, ../sass/pages/communication_new_message.sass */
 .enter-friend-name:focus {
   border-width: 0 0 2px;
   border-color: #98B9BE;
   padding-bottom: 0;
 }
 
-/* line 36, ../sass/pages/communication_new_message.sass */
 .nm-search-results {
   position: absolute;
   top: 95%;
@@ -4218,17 +3598,14 @@ span.input-prefix {
   z-index: 100;
 }
 
-/* line 48, ../sass/pages/communication_new_message.sass */
 .nm-friend {
   padding: 10px 20px;
 }
-/* line 51, ../sass/pages/communication_new_message.sass */
 .nm-friend:hover {
   background: #F2F7F8;
   cursor: pointer;
 }
 
-/* line 55, ../sass/pages/communication_new_message.sass */
 .nm-friend-img {
   display: inline-block;
   width: 50px;
@@ -4236,7 +3613,6 @@ span.input-prefix {
   margin-right: 15px;
   vertical-align: middle;
 }
-/* line 62, ../sass/pages/communication_new_message.sass */
 .nm-friend-img img {
   display: block;
   width: 100%;
@@ -4244,40 +3620,33 @@ span.input-prefix {
   border-radius: 50%;
 }
 
-/* line 68, ../sass/pages/communication_new_message.sass */
 .nm-friend-name {
   display: inline-block;
   vertical-align: middle;
 }
 
-/* line 77, ../sass/pages/communication_new_message.sass */
 .nm-selected {
   display: table;
   width: 100%;
   position: relative;
   margin: 0 auto 50px;
 }
-/* line 83, ../sass/pages/communication_new_message.sass */
 .nm-selected .nm-friend {
   cursor: default;
   padding: 0;
 }
-/* line 87, ../sass/pages/communication_new_message.sass */
 .nm-selected .nm-friend:hover {
   background: none;
 }
-/* line 90, ../sass/pages/communication_new_message.sass */
 .nm-selected .nm-friend-img {
   display: block;
   margin: 0 auto 10px;
 }
-/* line 94, ../sass/pages/communication_new_message.sass */
 .nm-selected .nm-friend-name {
   display: block;
   text-align: center;
   font-weight: bold;
 }
-/* line 99, ../sass/pages/communication_new_message.sass */
 .nm-selected .nm-change {
   display: table;
   margin: 0 auto 20px;
@@ -4285,12 +3654,10 @@ span.input-prefix {
   color: #FF4343;
   cursor: pointer;
 }
-/* line 106, ../sass/pages/communication_new_message.sass */
 .nm-selected .nm-change:hover {
   text-decoration: underline;
 }
 
-/* line 115, ../sass/pages/communication_new_message.sass */
 .nm-sended-msg {
   padding-top: 20px;
   border-top: 1px solid #98B9BE;
@@ -4299,19 +3666,16 @@ span.input-prefix {
   text-align: center;
 }
 
-/* line 1, ../sass/pages/communication_gift.sass */
 .cg-balance {
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* line 5, ../sass/pages/communication_gift.sass */
 .cg-friend-img {
   width: 100px;
   height: 100px;
   margin: 0 auto 10px;
 }
-/* line 10, ../sass/pages/communication_gift.sass */
 .cg-friend-img img {
   display: block;
   width: 100%;
@@ -4319,40 +3683,33 @@ span.input-prefix {
   border-radius: 50%;
 }
 
-/* line 16, ../sass/pages/communication_gift.sass */
 .cg-friend-name {
   margin-bottom: 30px;
   text-align: center;
 }
 
-/* line 20, ../sass/pages/communication_gift.sass */
 .cg-title {
   font-size: 24px;
   text-align: center;
   margin-bottom: 30px;
 }
 
-/* line 25, ../sass/pages/communication_gift.sass */
 .cg-gifts {
   margin-bottom: 20px;
 }
 
-/* line 28, ../sass/pages/communication_gift.sass */
 .cg-gift {
   border-bottom: 1px solid #CBC7C6;
   padding: 10px;
 }
-/* line 32, ../sass/pages/communication_gift.sass */
 .cg-gift:first-child {
   border-top: 1px solid #CBC7C6;
 }
-/* line 35, ../sass/pages/communication_gift.sass */
 .cg-gift > label {
   cursor: pointer;
   display: block;
   padding-left: 40px;
 }
-/* line 40, ../sass/pages/communication_gift.sass */
 .cg-gift label.input-radio {
   cursor: pointer;
   display: inline-block;
@@ -4361,40 +3718,34 @@ span.input-prefix {
   vertical-align: middle;
 }
 
-/* line 47, ../sass/pages/communication_gift.sass */
 .cg-gift-inf {
   display: inline-block;
   vertical-align: middle;
   font-size: 18px;
 }
 
-/* line 52, ../sass/pages/communication_gift.sass */
 .cg-gift-name {
   text-transform: uppercase;
   margin-bottom: 5px;
 }
 
-/* line 56, ../sass/pages/communication_gift.sass */
 .cg-sum {
   margin-bottom: 25px;
   font-size: 24px;
 }
 
-/* line 60, ../sass/pages/communication_gift.sass */
 .cg-sum-count {
   font-size: 48px;
   font-weight: bold;
   margin: 0 10px 0 20px;
 }
 
-/* line 65, ../sass/pages/communication_gift.sass */
 .cg-sum-currency {
   font-size: 15px;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-/* line 70, ../sass/pages/communication_gift.sass */
 .cg-btn {
   text-decoration: none;
   text-transform: uppercase;
@@ -4412,13 +3763,11 @@ span.input-prefix {
 }
 
 @media (min-width: 600px) {
-  /* line 89, ../sass/pages/communication_gift.sass */
   .cg-sum {
     float: left;
     margin-bottom: 0;
   }
 
-  /* line 93, ../sass/pages/communication_gift.sass */
   .cg-btn {
     max-width: none;
     width: 200px;
@@ -4427,7 +3776,6 @@ span.input-prefix {
     top: 15px;
   }
 }
-/* line 105, ../sass/pages/communication_gift.sass */
 .communication-gift.limited .cg-title {
   border-width: 1px 0;
   border-style: solid;
@@ -4437,12 +3785,10 @@ span.input-prefix {
   padding: 15px 10px;
   font-size: 16px;
 }
-/* line 114, ../sass/pages/communication_gift.sass */
 .communication-gift.limited .cg-form {
   position: relative;
   opacity: 0.5;
 }
-/* line 118, ../sass/pages/communication_gift.sass */
 .communication-gift.limited .cg-form:before {
   clear: none;
   content: "";
@@ -4455,14 +3801,12 @@ span.input-prefix {
   z-index: 100;
 }
 
-/* line 1, ../sass/pages/communication_birthdays.sass */
 .c-friend-date {
   color: #9B9B9B;
   font-size: 12px;
   margin-bottom: 10px;
 }
 
-/* line 6, ../sass/pages/communication_birthdays.sass */
 .c-friend-gift {
   font-size: 14px;
   display: inline-block;
@@ -4474,50 +3818,41 @@ span.input-prefix {
   color: #4C4C4C;
 }
 
-/* line 1, ../sass/pages/communication_chronicle.sass */
 .c-chronicle .c-friend {
   opacity: 0.6;
 }
-/* line 4, ../sass/pages/communication_chronicle.sass */
 .c-chronicle .c-friend.new {
   opacity: 1;
 }
 
-/* line 7, ../sass/pages/communication_chronicle.sass */
 .c-friend-news {
   font-size: 14px;
   line-height: 1.2;
 }
-/* line 11, ../sass/pages/communication_chronicle.sass */
 .c-friend-news a {
   color: #4a90e2;
   text-decoration: none;
 }
-/* line 15, ../sass/pages/communication_chronicle.sass */
 .c-friend-news a:hover {
   text-decoration: underline;
 }
 
-/* line 1, ../sass/pages/communication_requests.sass */
 .c-requests .c-friend-img:after {
   display: none;
 }
 
-/* line 4, ../sass/pages/communication_requests.sass */
 .c-friend-actions {
   font-size: 14px;
   position: absolute;
   bottom: 0;
   left: 120px;
 }
-/* line 10, ../sass/pages/communication_requests.sass */
 .c-friend-actions a {
   display: inline-block;
   line-height: 23px;
   text-align: center;
   text-decoration: none;
 }
-/* line 16, ../sass/pages/communication_requests.sass */
 .c-friend-actions .yes {
   border: 1px solid #000;
   border-radius: 2px;
@@ -4525,22 +3860,18 @@ span.input-prefix {
   margin-right: 15px;
   padding: 0 15px;
 }
-/* line 23, ../sass/pages/communication_requests.sass */
 .c-friend-actions .no {
   color: #FF4242;
 }
-/* line 26, ../sass/pages/communication_requests.sass */
 .c-friend-actions .no:hover {
   text-decoration: underline;
 }
 
-/* line 35, ../sass/pages/communication_requests.sass */
 .c-requests .title {
   font-size: 32px;
   text-align: center;
   margin-bottom: 50px;
 }
-/* line 40, ../sass/pages/communication_requests.sass */
 .c-requests .find {
   display: table;
   margin: auto;
@@ -4548,41 +3879,33 @@ span.input-prefix {
   color: #498FE4;
   text-decoration: underline;
 }
-/* line 47, ../sass/pages/communication_requests.sass */
 .c-requests .find:hover {
   text-decoration: none;
 }
 
-/* line 1, ../sass/pages/communication_search.sass */
 .content-box-item.c-search {
   padding-top: 120px;
 }
 
-/* line 5, ../sass/pages/communication_search.sass */
 .c-search .friends-search {
   display: table;
   margin: auto;
   position: static;
 }
-/* line 11, ../sass/pages/communication_search.sass */
 .c-search .friends-search input:focus {
   border-color: #4A4A4A;
 }
-/* line 14, ../sass/pages/communication_search.sass */
 .c-search .friends-search input:first-child {
   margin-bottom: 15px;
 }
-/* line 17, ../sass/pages/communication_search.sass */
 .c-search .cancel {
   color: #FF4767;
   text-decoration: none;
 }
-/* line 21, ../sass/pages/communication_search.sass */
 .c-search .cancel:hover {
   text-decoration: underline;
 }
 
-/* line 24, ../sass/pages/communication_search.sass */
 .c-friend-pal {
   font-size: 14px;
   display: inline-block;
@@ -4596,29 +3919,24 @@ span.input-prefix {
   margin-top: 25px;
 }
 
-/* line 36, ../sass/pages/communication_search.sass */
 .c-friend-pal-inf {
   margin-top: 25px;
   margin-bottom: 10px;
 }
 
 @media (min-width: 550px) {
-  /* line 45, ../sass/pages/communication_search.sass */
   .content-box-item.c-search {
     padding-top: 90px;
   }
 
-  /* line 49, ../sass/pages/communication_search.sass */
   .c-search .friends-search input {
     display: inline-block;
   }
-  /* line 52, ../sass/pages/communication_search.sass */
   .c-search .friends-search input:first-child {
     margin-bottom: 0;
     margin-right: 50px;
   }
 }
-/* line 1, ../sass/pages/communication_friend_detail.sass */
 .send-msg {
   display: table;
   margin: 40px auto 0;
@@ -4630,13 +3948,11 @@ span.input-prefix {
   padding: 0 35px;
   font-size: 14px;
 }
-/* line 12, ../sass/pages/communication_friend_detail.sass */
 .send-msg:hover {
   color: #000;
   border-color: #000;
 }
 
-/* line 16, ../sass/pages/communication_friend_detail.sass */
 .c-user-delete {
   position: absolute;
   top: 0;
@@ -4646,24 +3962,19 @@ span.input-prefix {
   background: url(img/sprite.png) -119px -54px;
   cursor: pointer;
 }
-/* line 25, ../sass/pages/communication_friend_detail.sass */
 .c-user-delete:hover {
   background-position: -82px -54px;
 }
 
-/* line 30, ../sass/pages/communication_friend_detail.sass */
 .c-friend-detail .c-user-inf-wrapper {
   position: relative;
 }
-/* line 33, ../sass/pages/communication_friend_detail.sass */
 .c-friend-detail .c-user-inf {
   margin-bottom: 90px;
 }
-/* line 36, ../sass/pages/communication_friend_detail.sass */
 .c-friend-detail .c-user-img {
   position: relative;
 }
-/* line 39, ../sass/pages/communication_friend_detail.sass */
 .c-friend-detail .c-user-img:after {
   content: "";
   display: block;
@@ -4675,34 +3986,28 @@ span.input-prefix {
   border-radius: 50%;
   background: #cfcfcf;
 }
-/* line 50, ../sass/pages/communication_friend_detail.sass */
 .c-friend-detail .c-user-img.online:after {
   background: #7ED320;
 }
-/* line 53, ../sass/pages/communication_friend_detail.sass */
 .c-friend-detail .c-social {
   position: absolute;
   top: 220px;
   width: 100%;
 }
 
-/* line 1, ../sass/pages/settings.sass */
 .settings .title {
   font-size: 21px;
   margin-bottom: 20px;
 }
 
-/* line 7, ../sass/pages/settings.sass */
 .s-pass {
   margin-bottom: 30px;
 }
-/* line 10, ../sass/pages/settings.sass */
 .s-pass ul {
   position: relative;
   line-height: 50px;
 }
 
-/* line 14, ../sass/pages/settings.sass */
 .s-pass-names {
   position: absolute;
   top: 0;
@@ -4711,12 +4016,10 @@ span.input-prefix {
   font-size: 14px;
   z-index: 1;
 }
-/* line 22, ../sass/pages/settings.sass */
 .s-pass-names li {
   margin-bottom: 2px;
 }
 
-/* line 27, ../sass/pages/settings.sass */
 .s-pass-values input {
   display: block;
   width: 100%;
@@ -4728,24 +4031,20 @@ span.input-prefix {
   line-height: inherit;
   font-size: 20px;
 }
-/* line 38, ../sass/pages/settings.sass */
 .s-pass-values input:focus {
   border-width: 0 0 2px;
   border-color: #BED8D9;
   padding-bottom: 0;
 }
 
-/* line 45, ../sass/pages/settings.sass */
 .s-lang {
   margin-bottom: 30px;
 }
 
-/* line 50, ../sass/pages/settings.sass */
 .s-email {
   margin-bottom: 40px;
 }
 
-/* line 55, ../sass/pages/settings.sass */
 .settings-btn {
   display: block;
   border: 1px solid #4A4A4A;
@@ -4760,26 +4059,21 @@ span.input-prefix {
   font-weight: bold;
 }
 
-/* line 70, ../sass/pages/settings.sass */
 .radio-text {
   margin-right: 15px;
 }
-/* line 73, ../sass/pages/settings.sass */
 .radio-text input {
   display: none;
 }
-/* line 76, ../sass/pages/settings.sass */
 .radio-text input:checked + span {
   border-bottom: 2px solid #CBE4DE;
 }
-/* line 79, ../sass/pages/settings.sass */
 .radio-text span {
   display: inline-block;
   padding: 0 2px 4px;
   cursor: pointer;
 }
 
-/* line 3, ../sass/pages/tickets.sass */
 .ticket-ball, .ticket-numbers li, .ticket-actions li, .ticket-btn {
   width: 34px;
   height: 34px;
@@ -4795,7 +4089,6 @@ span.input-prefix {
   padding-left: 2px;
 }
 
-/* line 18, ../sass/pages/tickets.sass */
 .ticket-items {
   background: #B7CFD3;
   margin: 55px 0 20px;
@@ -4804,14 +4097,12 @@ span.input-prefix {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* line 25, ../sass/pages/tickets.sass */
 .ticket-tabs {
   width: 100%;
   position: absolute;
   top: -34px;
   overflow: hidden;
 }
-/* line 31, ../sass/pages/tickets.sass */
 .ticket-tabs li {
   position: relative;
   top: 8px;
@@ -4828,11 +4119,9 @@ span.input-prefix {
   text-align: center;
   cursor: pointer;
 }
-/* line 47, ../sass/pages/tickets.sass */
 .ticket-tabs li.gold {
   background: #F9DC42;
 }
-/* line 50, ../sass/pages/tickets.sass */
 .ticket-tabs li.active {
   top: 0;
   height: 34px;
@@ -4843,37 +4132,30 @@ span.input-prefix {
   text-shadow: 1px 1px 1px 255, 255, 255, 0.49;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
-/* line 60, ../sass/pages/tickets.sass */
 .ticket-tabs span {
   display: none;
   text-transform: uppercase;
 }
 
-/* line 64, ../sass/pages/tickets.sass */
 .ticket-item {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-/* line 68, ../sass/pages/tickets.sass */
 .ticket-numbers {
   margin-bottom: 10px;
 }
-/* line 71, ../sass/pages/tickets.sass */
 .ticket-numbers li {
   float: left;
 }
 
-/* line 75, ../sass/pages/tickets.sass */
 .ticket-actions li {
   float: left;
 }
 
-/* line 79, ../sass/pages/tickets.sass */
 .ticket-fc-btn {
   position: relative;
 }
-/* line 82, ../sass/pages/tickets.sass */
 .ticket-fc-btn:before {
   content: "";
   position: absolute;
@@ -4884,7 +4166,6 @@ span.input-prefix {
   background: url(img/sprite.png) -198px -85px;
 }
 
-/* line 91, ../sass/pages/tickets.sass */
 .ticket-btn {
   float: right;
   width: auto !important;
@@ -4893,66 +4174,53 @@ span.input-prefix {
   text-transform: uppercase;
 }
 
-/* line 101, ../sass/pages/tickets.sass */
 .tickets .content-box-tab {
   padding: 0 20px;
 }
 
-/* line 105, ../sass/pages/tickets.sass */
 .tickets-rules dt {
   font-weight: bold;
   margin-bottom: 10px;
 }
-/* line 109, ../sass/pages/tickets.sass */
 .tickets-rules dd {
   margin-bottom: 25px;
 }
 
-/* line 119, ../sass/pages/tickets.sass */
 .matches-inf-wrapper {
   margin-bottom: 20px;
   background: #fff;
 }
-/* line 123, ../sass/pages/tickets.sass */
 .matches-inf-wrapper.carousel {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   padding-bottom: 5px;
 }
 
-/* line 127, ../sass/pages/tickets.sass */
 .matches-inf {
   box-shadow: none;
   margin: 0 0 30px;
 }
 
-/* line 133, ../sass/pages/tickets.sass */
 .matches-inf.content-box {
   margin: 0;
 }
-/* line 136, ../sass/pages/tickets.sass */
 .matches-inf .content-box-header {
   text-align: left;
   padding-left: 20px;
   font-size: 14px;
 }
-/* line 141, ../sass/pages/tickets.sass */
 .matches-inf.gold .content-box-header {
   background: #F8E71D;
 }
-/* line 144, ../sass/pages/tickets.sass */
 .matches-inf .content-box-content {
   min-height: auto;
   padding: 20px 0 0 20px;
 }
-/* line 148, ../sass/pages/tickets.sass */
 .matches-inf table {
   width: 100%;
 }
-/* line 151, ../sass/pages/tickets.sass */
 .matches-inf th:first-child, .matches-inf td:first-child {
   width: 63%;
 }
-/* line 155, ../sass/pages/tickets.sass */
 .matches-inf th {
   font-size: 14px;
   font-weight: bold;
@@ -4960,14 +4228,12 @@ span.input-prefix {
   color: #191919;
   padding-bottom: 20px;
 }
-/* line 162, ../sass/pages/tickets.sass */
 .matches-inf td {
   font-size: 15px;
   color: #2b2b2b;
   padding-bottom: 15px;
 }
 
-/* line 167, ../sass/pages/tickets.sass */
 .matches-ball, .matches-balls span {
   display: block;
   width: 20px;
@@ -4976,31 +4242,26 @@ span.input-prefix {
   border-radius: 50%;
   background: #f6fafb;
 }
-/* line 175, ../sass/pages/tickets.sass */
 .matches-ball.true, .matches-balls span.true {
   border: none;
   background: #F8E71D;
 }
 
-/* line 181, ../sass/pages/tickets.sass */
 .matches-balls span {
   float: left;
   margin-right: 7px;
 }
-/* line 186, ../sass/pages/tickets.sass */
 .matches-balls span:last-child {
   margin-right: 0;
 }
 
 @media (min-width: 480px) {
-  /* line 197, ../sass/pages/tickets.sass */
   .ticket-ball, .ticket-numbers li, .ticket-actions li, .ticket-btn {
     width: 40px;
     height: 40px;
     line-height: 42px;
   }
 
-  /* line 202, ../sass/pages/tickets.sass */
   .ticket-fc-btn:before {
     width: 19px;
     height: 17px;
@@ -5009,37 +4270,95 @@ span.input-prefix {
     background: url(img/sprite.png) -160px -84px;
   }
 
-  /* line 209, ../sass/pages/tickets.sass */
   .ticket-btn {
     border-radius: 20px;
     padding: 0 35px;
   }
 }
 @media (min-width: 680px) {
-  /* line 217, ../sass/pages/tickets.sass */
   .matches-inf-wrapper {
     background: transparent;
   }
-  /* line 220, ../sass/pages/tickets.sass */
   .matches-inf-wrapper.carousel {
     box-shadow: none;
   }
 
-  /* line 223, ../sass/pages/tickets.sass */
   .matches-inf {
     width: 48%;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-  /* line 227, ../sass/pages/tickets.sass */
   .matches-inf:first-child {
     float: left;
   }
-  /* line 230, ../sass/pages/tickets.sass */
   .matches-inf:last-child {
     float: right;
   }
 }
-/* line 1, ../sass/layout/footer.sass */
+.lottery-result {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.balls-result,
+.text-result {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+
+.balls-result {
+  width: 100%;
+  padding-top: 55px;
+}
+
+.text-result {
+  width: 100%;
+  padding-top: 10px;
+}
+.text-result span {
+  color: #000;
+}
+
+.ticket-result {
+  width: 100%;
+  list-style: none;
+  position: relative;
+  float: left;
+  margin: 0 0 1.5% 0;
+  padding-left: 3%;
+}
+.ticket-result li {
+  position: relative;
+  float: left;
+}
+
+.ball-number-result {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  margin-right: 3%;
+  line-height: 35px;
+  text-align: center;
+}
+
+.ticket-number-result {
+  line-height: 40px;
+  margin-right: 2%;
+}
+.ticket-number-result span {
+  display: none;
+}
+
+.ticket-items {
+  min-height: 460px;
+}
+
+.ticket-numbers li {
+  margin-bottom: 15px;
+}
+
 .footer {
   background: #ffe700;
   height: 50px;
@@ -5048,12 +4367,10 @@ span.input-prefix {
   bottom: 0;
 }
 
-/* line 8, ../sass/layout/footer.sass */
 .footer .container {
   padding: 0;
 }
 
-/* line 11, ../sass/layout/footer.sass */
 .footer-logo {
   display: block;
   float: left;
@@ -5065,7 +4382,6 @@ span.input-prefix {
   background: url(img/sprite.png) -227px 0;
 }
 
-/* line 21, ../sass/layout/footer.sass */
 .footer-social-icons {
   float: right;
   position: relative;
@@ -5073,7 +4389,6 @@ span.input-prefix {
   right: 10px;
 }
 
-/* line 27, ../sass/layout/footer.sass */
 .footer-social-icons a {
   display: block;
   float: left;
@@ -5083,152 +4398,124 @@ span.input-prefix {
   height: 35px;
   border-radius: 50%;
 }
-/* line 36, ../sass/layout/footer.sass */
 .footer-social-icons a:last-child {
   margin-right: 0;
 }
 
-/* line 39, ../sass/layout/footer.sass */
 .footer-social-icons .fb {
   background-position: -327px 0;
 }
 
-/* line 42, ../sass/layout/footer.sass */
 .footer-social-icons .vk {
   background-position: -368px 0;
 }
 
-/* line 45, ../sass/layout/footer.sass */
 .footer-social-icons .ok {
   background-position: -409px 0;
 }
 
-/* line 48, ../sass/layout/footer.sass */
 .footer-social-icons .tw {
   background-position: -450px 0;
 }
 
-/* line 54, ../sass/layout/footer.sass */
 .js-detect {
   display: none;
   opacity: 0.1;
 }
 
 @media (min-width: 768px) {
-  /* line 1, ../sass/media/small/layout/common.sass */
   .container {
     width: 728px;
     padding: 0;
   }
 
-  /* line 5, ../sass/media/small/layout/common.sass */
   .content {
     margin-bottom: 20px;
   }
 
-  /* line 10, ../sass/media/small/layout/common.sass */
   .content-box {
     margin: 0;
   }
 
-  /* line 13, ../sass/media/small/layout/common.sass */
   .content-box-header .back {
     left: 20px;
   }
 
-  /* line 16, ../sass/media/small/layout/common.sass */
   .content-box-tab {
     padding: 0 20px;
   }
 
-  /* line 19, ../sass/media/small/layout/common.sass */
   .content-box-content {
     min-height: 850px;
   }
 
-  /* line 22, ../sass/media/small/layout/common.sass */
   .content-box-item {
     padding: 20px;
   }
 
-  /* line 25, ../sass/media/small/layout/common.sass */
   .content-box-item-top {
     padding: 20px 20px 0;
   }
 
-  /* line 33, ../sass/media/small/layout/common.sass */
   .banner-1,
   .banner-2 {
     display: block;
   }
 
-  /* line 37, ../sass/media/small/layout/common.sass */
   .banner-1 {
     height: 135px;
     margin-bottom: 30px;
   }
 
-  /* line 41, ../sass/media/small/layout/common.sass */
   .banner-2 {
     height: 90px;
     margin-bottom: 30px;
     margin-top: 30px;
   }
 
-  /* line 1, ../sass/media/small/layout/header.sass */
   .header {
     height: 55px;
     margin-bottom: 20px;
   }
-  /* line 5, ../sass/media/small/layout/header.sass */
   .header .container {
     position: relative;
     padding-right: 184px;
   }
 
-  /* line 9, ../sass/media/small/layout/header.sass */
   .header-left {
     height: 55px;
     float: left;
   }
 
-  /* line 13, ../sass/media/small/layout/header.sass */
   .header-logo {
     top: 19px;
     left: 0;
   }
 
-  /* line 21, ../sass/media/small/layout/header.sass */
   .menu-btns {
     height: 55px;
   }
 
-  /* line 24, ../sass/media/small/layout/header.sass */
   .menu-btn-item {
     padding: 0 20px;
   }
 
-  /* line 27, ../sass/media/small/layout/header.sass */
   .menu-btn:before {
     top: 18px;
   }
 
-  /* line 30, ../sass/media/small/layout/header.sass */
   .menu-profile-btn:before {
     top: 17px;
   }
 
-  /* line 33, ../sass/media/small/layout/header.sass */
   .menu-balance-btn:before {
     top: 16px;
   }
 
-  /* line 38, ../sass/media/small/layout/header.sass */
   .header-right {
     height: 55px;
   }
 
-  /* line 41, ../sass/media/small/layout/header.sass */
   .inf-slider {
     display: block;
     float: right;
@@ -5237,135 +4524,112 @@ span.input-prefix {
     background: #ffe700;
   }
 
-  /* line 3, ../sass/media/small/pages/home_blog.sass */
   .post-item {
     padding-left: 340px;
   }
 
-  /* line 6, ../sass/media/small/pages/home_blog.sass */
   .post-item-img {
     width: 320px;
     height: 200px;
     margin-left: -340px;
   }
 
-  /* line 3, ../sass/media/small/pages/home_rating.sass */
   .raiting-item {
     width: 324px;
     margin-right: 40px;
   }
 
-  /* line 1, ../sass/media/small/pages/post.sass */
   .post-inf {
     margin-bottom: 15px;
   }
 
-  /* line 4, ../sass/media/small/pages/post.sass */
   .post-date {
     margin-right: 60px;
   }
 
-  /* line 7, ../sass/media/small/pages/post.sass */
   .post-description img {
     margin: 30px 0;
   }
 
-  /* line 12, ../sass/media/small/pages/post.sass */
   .more-posts a {
     float: left;
     width: 24%;
     margin: 0 14% 0 0;
   }
-  /* line 17, ../sass/media/small/pages/post.sass */
   .more-posts a:last-child {
     margin: 0;
   }
 
-  /* line 3, ../sass/media/small/pages/games.sass */
   .games-chance {
     width: auto;
     max-width: none;
     padding: 20px 30px 0;
   }
 
-  /* line 8, ../sass/media/small/pages/games.sass */
   .game {
     width: 160px;
     margin-right: 94px;
   }
 }
 @media (min-width: 768px) and (max-width: 1010px) {
-  /* line 16, ../sass/media/small/pages/games.sass */
   .game:nth-child(3n+3) {
     margin-right: 0;
   }
 }
 @media (min-width: 768px) {
-  /* line 3, ../sass/media/small/pages/prizes.sass */
   .prizes-for-points .content-box-item-content {
     width: auto;
     max-width: none;
   }
 
-  /* line 7, ../sass/media/small/pages/prizes.sass */
   .prize {
     width: 220px;
     margin-right: 14px;
   }
 }
 @media (min-width: 768px) and (max-width: 1010px) {
-  /* line 15, ../sass/media/small/pages/prizes.sass */
   .prize:nth-child(3n+3) {
     margin-right: 0;
   }
 }
 @media (min-width: 768px) {
-  /* line 1, ../sass/media/small/pages/prize_exchange.sass */
   .exchange-prize .content-box-item {
     text-align: left;
   }
 
-  /* line 4, ../sass/media/small/pages/prize_exchange.sass */
   .ex-prize-img {
     float: left;
     margin: 0 40px 0 0;
     width: 300px;
   }
 
-  /* line 9, ../sass/media/small/pages/prize_exchange.sass */
   .ex-prize-description {
     float: left;
     width: 348px;
     padding-top: 20px;
   }
 
-  /* line 14, ../sass/media/small/pages/prize_exchange.sass */
   .ex-prize-name {
     margin-bottom: 15px;
   }
 
-  /* line 17, ../sass/media/small/pages/prize_exchange.sass */
   .ex-prize-price {
     margin-bottom: 40px;
   }
 
-  /* line 20, ../sass/media/small/pages/prize_exchange.sass */
   .prize-delivery-inf {
     margin-bottom: 50px;
   }
 
-  /* line 23, ../sass/media/small/pages/prize_exchange.sass */
   .personal-data-inf-header {
     padding: 0 10px 7px;
     margin: 0 0 30px;
   }
 
-  /* line 27, ../sass/media/small/pages/prize_exchange.sass */
   .personal-data-inf-title {
     font-size: 21px;
   }
 
-  /* line 30, ../sass/media/small/pages/prize_exchange.sass */
   .personal-data-edit {
     width: auto;
     height: auto;
@@ -5377,42 +4641,34 @@ span.input-prefix {
     line-height: 1.27;
   }
 
-  /* line 40, ../sass/media/small/pages/prize_exchange.sass */
   .personal-data-edit span {
     display: inline;
   }
 
-  /* line 44, ../sass/media/small/pages/prize_exchange.sass */
   .prize-delivery-inf tbody {
     padding: 0 10px;
   }
 
-  /* line 47, ../sass/media/small/pages/prize_exchange.sass */
   .personal-data-attention {
     text-align: center;
   }
 
-  /* line 50, ../sass/media/small/pages/prize_exchange.sass */
   .ex-prize-submit-wrapper {
     margin: 0;
   }
 
-  /* line 53, ../sass/media/small/pages/prize_exchange.sass */
   .ex-prize-not-filled {
     margin: 0 -20px;
   }
 
-  /* line 3, ../sass/media/small/pages/cabinet.sass */
   .cabinet .content-box-tab span {
     display: inline;
   }
 
-  /* line 6, ../sass/media/small/pages/cabinet.sass */
   .cabinet .content-box-tab {
     width: auto;
   }
 
-  /* line 9, ../sass/media/small/pages/cabinet.sass */
   .cabinet .content-box-tab.cabinet-balance-tab {
     width: 275px;
     float: right;
@@ -5421,37 +4677,31 @@ span.input-prefix {
     border-left: 1px solid #fff;
   }
 
-  /* line 16, ../sass/media/small/pages/cabinet.sass */
   .cabinet .content-box-tab:after {
     display: none;
   }
 
-  /* line 19, ../sass/media/small/pages/cabinet.sass */
   .cabinet-balance-count:first-child {
     margin-right: 25px;
   }
 
-  /* line 22, ../sass/media/small/pages/cabinet.sass */
   .cabinet-balance-count span {
     margin-left: 5px;
     font-size: 12px;
     font-weight: normal;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_game_history.sass */
   .gh-header {
     margin: 0 -20px 20px;
     padding: 0 20px;
   }
 
-  /* line 5, ../sass/media/small/pages/cabinet_game_history.sass */
   .gh-item {
     margin: 0 -20px 0;
     padding: 10px 20px;
     position: relative;
   }
 
-  /* line 10, ../sass/media/small/pages/cabinet_game_history.sass */
   .gh-item:hover:before {
     content: "";
     clear: none;
@@ -5464,13 +4714,11 @@ span.input-prefix {
     right: 40px;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-numbers {
     width: 520px;
     margin: 0 auto 40px;
   }
 
-  /* line 5, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-number {
     width: 70px;
     height: 70px;
@@ -5479,38 +4727,31 @@ span.input-prefix {
     margin-right: 20px;
   }
 
-  /* line 14, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-tickets {
     margin: 0 auto 70px;
   }
 
-  /* line 17, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-tickets table {
     margin-bottom: 10px;
   }
 
-  /* line 20, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-tickets td:first-child {
     padding-right: 40px;
   }
 
-  /* line 23, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-tickets td:last-child {
     padding-left: 40px;
   }
 
-  /* line 26, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-tickets td {
     padding-bottom: 20px;
   }
 
-  /* line 29, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-tickets td:first-child span {
     display: inline;
     text-transform: uppercase;
   }
 
-  /* line 33, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-ticket-number {
     width: 35px;
     height: 35px;
@@ -5518,73 +4759,58 @@ span.input-prefix {
     margin-right: 5px;
   }
 
-  /* line 39, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-won {
     font-size: 21px;
   }
 
-  /* line 44, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf th {
     padding-bottom: 20px;
     width: 33.33%;
   }
-  /* line 48, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf th:nth-child(1) {
     padding-right: 0;
   }
-  /* line 51, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf th:nth-child(2) {
     padding-left: 70px;
   }
-  /* line 54, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf th:nth-child(3) {
     padding-left: 60px;
   }
 
-  /* line 57, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf td {
     padding-bottom: 10px;
     width: 33.33%;
   }
-  /* line 61, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf td:nth-child(1) {
     padding-right: 0;
   }
-  /* line 64, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf td:nth-child(2) {
     padding-left: 95px;
   }
-  /* line 67, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-game-inf td:nth-child(3) {
     padding-left: 60px;
   }
 
-  /* line 70, ../sass/media/small/pages/cabinet_game_history_detail.sass */
   .ghd-all-won {
     padding: 10px 10px 0 50px;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-form input {
     width: 77%;
   }
 
-  /* line 4, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-form button {
     width: 18%;
   }
 
-  /* line 9, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-social-item {
     margin-right: 10px;
   }
 
-  /* line 14, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-share-url-copy {
     padding-left: 30px;
     position: relative;
   }
-  /* line 18, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-share-url-copy:before {
     content: "";
     display: block;
@@ -5596,29 +4822,24 @@ span.input-prefix {
     top: 7px;
   }
 
-  /* line 28, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-share-url-copy input {
     margin: 0 30px 0 0;
     width: 434px;
   }
 
-  /* line 32, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-share-url-copy-btn {
     width: 120px;
   }
 
-  /* line 37, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-share-banner-view {
     width: 70%;
     margin: auto;
   }
 
-  /* line 41, ../sass/media/small/pages/cabinet_bonuses.sass */
   .bonus-banner-view-item:nth-child(even) {
     float: right;
   }
 
-  /* line 3, ../sass/media/small/pages/cabinet_referrals.sass */
   .r-header,
   .r-item {
     margin-left: -20px;
@@ -5627,81 +4848,67 @@ span.input-prefix {
     padding-right: 20px;
   }
 
-  /* line 12, ../sass/media/small/pages/cabinet_referrals.sass */
   .r-nickname,
   .r-nickname-text {
     width: 44%;
   }
 
-  /* line 16, ../sass/media/small/pages/cabinet_referrals.sass */
   .r-registered,
   .r-registered-text {
     width: 20%;
   }
 
-  /* line 20, ../sass/media/small/pages/cabinet_referrals.sass */
   .r-games,
   .r-games-text {
     width: 9%;
   }
 
-  /* line 24, ../sass/media/small/pages/cabinet_referrals.sass */
   .r-active,
   .r-active-text {
     width: 18%;
   }
 
-  /* line 28, ../sass/media/small/pages/cabinet_referrals.sass */
   .r-profit,
   .r-profit-text {
     width: 9%;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_account.sass */
   .c-user-inf {
     float: left;
     width: 200px;
     margin: 0 30px 0 0;
   }
 
-  /* line 6, ../sass/media/small/pages/cabinet_account.sass */
   .c-user-img {
     margin: 0 auto 30px;
   }
 
-  /* line 9, ../sass/media/small/pages/cabinet_account.sass */
   .c-socials {
     margin-bottom: 0;
   }
 
-  /* line 12, ../sass/media/small/pages/cabinet_account.sass */
   .c-social-inf {
     margin-bottom: 15px;
   }
 
-  /* line 18, ../sass/media/small/pages/cabinet_account.sass */
   .c-user-personal-inf {
     float: left;
     width: 458px;
   }
 
-  /* line 22, ../sass/media/small/pages/cabinet_account.sass */
   .c-user-personal-inf td {
     text-align: left;
   }
-  /* line 25, ../sass/media/small/pages/cabinet_account.sass */
   .c-user-personal-inf td:first-child {
     padding-left: 10px;
     display: table-cell;
     color: #A2A2A2;
   }
 
-  /* line 30, ../sass/media/small/pages/cabinet_account.sass */
   .c-favorite-combination td:last-child span:first-child {
     display: none;
   }
 
-  /* line 35, ../sass/media/small/pages/cabinet_account.sass */
   .c-play-inf-win {
     margin: 0;
     text-align: left;
@@ -5709,29 +4916,24 @@ span.input-prefix {
     padding: 12px 0 12px 10px;
   }
 
-  /* line 41, ../sass/media/small/pages/cabinet_account.sass */
   .c-play-inf-win span {
     display: inline;
     margin-left: 13px;
   }
 
-  /* line 45, ../sass/media/small/pages/cabinet_account.sass */
   .c-play-inf td:first-child {
     padding-left: 15px;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-top {
     margin-bottom: 40px;
   }
 
-  /* line 4, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-user-img {
     margin: 0 30px 0 0;
     float: left;
   }
 
-  /* line 8, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-inf {
     display: block;
     width: 458px;
@@ -5744,22 +4946,18 @@ span.input-prefix {
     line-height: 1.5;
   }
 
-  /* line 19, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-inf p {
     margin-bottom: 20px;
   }
-  /* line 22, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-inf p:last-child {
     margin-bottom: 0;
   }
 
-  /* line 27, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-personal-form {
     margin-bottom: 0;
     border-top: 1px solid #B4AEAE;
   }
 
-  /* line 33, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-personal-inf .title {
     display: inline-block;
     text-align: left;
@@ -5767,60 +4965,50 @@ span.input-prefix {
     margin-right: 40px;
   }
 
-  /* line 39, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-combination {
     margin-bottom: 0;
     border-bottom: 1px solid #B4AEAE;
   }
 
-  /* line 43, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-favorite-combination {
     display: inline-block;
   }
 
-  /* line 46, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-current-combination {
     display: inline-block;
     margin: 0;
     vertical-align: middle;
   }
 
-  /* line 51, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-combination,
   .ae-socials {
     padding: 13px 0 13px 5px;
   }
 
-  /* line 57, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-socials {
     margin-bottom: 40px;
     border-bottom: 1px solid #B4AEAE;
     line-height: 35px;
   }
 
-  /* line 62, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-binded {
     margin-bottom: 0;
     float: left;
   }
 
-  /* line 66, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-bind {
     float: right;
   }
 
-  /* line 69, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-bind .title {
     margin-right: 20px;
   }
 
-  /* line 72, ../sass/media/small/pages/cabinet_account_edit.sass */
   .ae-social {
     display: inline-block;
     margin: 0;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_cashout.sass */
   .cco-edit {
     width: auto;
     height: auto;
@@ -5829,12 +5017,10 @@ span.input-prefix {
     font-size: 14px;
   }
 
-  /* line 8, ../sass/media/small/pages/cabinet_cashout.sass */
   .cco-edit span {
     display: inline;
   }
 
-  /* line 13, ../sass/media/small/pages/cabinet_cashout.sass */
   .cco-inf {
     margin: 0;
     padding: 20px;
@@ -5842,7 +5028,6 @@ span.input-prefix {
     border-radius: 2px;
   }
 
-  /* line 24, ../sass/media/small/pages/cabinet_cashout.sass */
   .cb-title {
     border-width: 1px;
     border-radius: 2px;
@@ -5850,7 +5035,6 @@ span.input-prefix {
     margin: 0 0 30px;
   }
 
-  /* line 35, ../sass/media/small/pages/cabinet_cashout.sass */
   .cabinet-cashout-block {
     border-width: 1px;
     border-radius: 2px;
@@ -5858,112 +5042,92 @@ span.input-prefix {
     margin: 20px 20px 30px;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_cashout_inf.sass */
   .ci-title {
     margin-bottom: 35px;
     font-size: 17px;
     padding-left: 10px;
   }
 
-  /* line 8, ../sass/media/small/pages/cabinet_cashout_inf.sass */
   .ci-personal-form {
     margin: 0 0 40px;
   }
 
-  /* line 11, ../sass/media/small/pages/cabinet_cashout_inf.sass */
   .ci-personal-form-values input {
     padding-left: 190px;
   }
-  /* line 14, ../sass/media/small/pages/cabinet_cashout_inf.sass */
   .ci-personal-form-values input.input-prefix {
     padding-left: 205px;
   }
 
-  /* line 17, ../sass/media/small/pages/cabinet_cashout_inf.sass */
   span.input-prefix {
     top: -1px;
     left: 190px;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_convert.sass */
   .content-box-item.cabinet-convert {
     padding: 30px 58px;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_transaction_history.sass */
   .th-item {
     margin: 0 -20px;
     padding: 13px 20px 0;
   }
 
-  /* line 1, ../sass/media/small/pages/cabinet_payments_history.sass */
   .ph-header {
     margin: 0 -20px 20px;
     padding: 0 20px;
   }
 
-  /* line 5, ../sass/media/small/pages/cabinet_payments_history.sass */
   .ph-item {
     margin: 0 -20px;
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  /* line 12, ../sass/media/small/pages/cabinet_payments_history.sass */
   .ph-date,
   .ph-date-text {
     width: 22%;
   }
 
-  /* line 16, ../sass/media/small/pages/cabinet_payments_history.sass */
   .ph-won,
   .ph-won-text {
     width: 22%;
   }
 
-  /* line 20, ../sass/media/small/pages/cabinet_payments_history.sass */
   .ph-method,
   .ph-method-text {
     width: 38%;
   }
 
-  /* line 24, ../sass/media/small/pages/cabinet_payments_history.sass */
   .ph-status,
   .ph-status-text {
     width: 18%;
   }
 
-  /* line 3, ../sass/media/small/pages/communication.sass */
   .communication .content-box-tab span {
     display: inline;
   }
 
-  /* line 6, ../sass/media/small/pages/communication.sass */
   .communication .content-box-tab:before {
     display: none;
   }
 
-  /* line 9, ../sass/media/small/pages/communication.sass */
   .communication .content-box-tab.back-tab {
     padding: 0 91px 0 20px;
   }
 
-  /* line 12, ../sass/media/small/pages/communication.sass */
   .communication .content-box-tab.back-tab:before {
     display: block;
   }
 
-  /* line 15, ../sass/media/small/pages/communication.sass */
   .communication .content-box-tab .count {
     margin-left: 6px;
   }
 
-  /* line 1, ../sass/media/small/pages/communication_comments.sass */
   .comment-content {
     padding-left: 70px;
   }
 
-  /* line 4, ../sass/media/small/pages/communication_comments.sass */
   .comment-img {
     display: block;
     position: absolute;
@@ -5971,18 +5135,15 @@ span.input-prefix {
     left: 0;
   }
 
-  /* line 10, ../sass/media/small/pages/communication_comments.sass */
   .comment-inf {
     padding-left: 0;
     padding-right: 60px;
   }
 
-  /* line 14, ../sass/media/small/pages/communication_comments.sass */
   .comment-name {
     margin-right: 20px;
   }
 
-  /* line 17, ../sass/media/small/pages/communication_comments.sass */
   .comment-reply {
     display: inline;
     font-size: 13px;
@@ -5990,108 +5151,88 @@ span.input-prefix {
     opacity: 0;
     transition: all 0.1s linear;
   }
-  /* line 24, ../sass/media/small/pages/communication_comments.sass */
   .comment-reply .separator {
     display: inline;
     margin: 0 10px;
   }
 
-  /* line 28, ../sass/media/small/pages/communication_comments.sass */
   .comment-reply-btn {
     cursor: pointer;
   }
-  /* line 31, ../sass/media/small/pages/communication_comments.sass */
   .comment-reply-btn:hover {
     text-decoration: underline;
   }
 
-  /* line 34, ../sass/media/small/pages/communication_comments.sass */
   .comment-like {
     top: 0;
     cursor: pointer;
   }
 
-  /* line 44, ../sass/media/small/pages/communication_comments.sass */
   .comment-content:hover .comment-like, .comment-content:hover .comment-reply {
     opacity: 1;
   }
 
-  /* line 52, ../sass/media/small/pages/communication_comments.sass */
   .comment.answer {
     margin-top: 20px;
     padding-left: 70px;
   }
 
-  /* line 63, ../sass/media/small/pages/communication_comments.sass */
   .c-notifications {
     margin: 0 0 20px;
   }
 
-  /* line 68, ../sass/media/small/pages/communication_comments.sass */
   .c-notifications-list {
     left: 0;
     padding: 45px 0 10px;
     border-radius: 2px;
   }
-  /* line 73, ../sass/media/small/pages/communication_comments.sass */
   .c-notifications-list .close-list {
     top: 5px;
     cursor: pointer;
   }
 
-  /* line 77, ../sass/media/small/pages/communication_comments.sass */
   .c-notification {
     cursor: pointer;
   }
 
-  /* line 80, ../sass/media/small/pages/communication_comments.sass */
   .close-notification {
     cursor: pointer;
   }
 
-  /* line 83, ../sass/media/small/pages/communication_comments.sass */
   .c-notification-top {
     min-height: auto;
   }
 
-  /* line 86, ../sass/media/small/pages/communication_comments.sass */
   .c-notification-question {
     margin-top: 0;
     display: inline;
   }
 
-  /* line 90, ../sass/media/small/pages/communication_comments.sass */
   .c-notification-description {
     padding: 5px 0 0 50px;
   }
 
-  /* line 1, ../sass/media/small/pages/communication_friends.sass */
   .c-friend {
     width: 324px;
     margin: 0 40px 30px 0;
   }
 
-  /* line 5, ../sass/media/small/pages/communication_friends.sass */
   .friends-search {
     left: 384px;
   }
 
-  /* line 1, ../sass/media/small/pages/communication_messages.sass */
   .cm-top {
     padding: 0 20px;
   }
-  /* line 4, ../sass/media/small/pages/communication_messages.sass */
   .cm-top .new-message {
     padding: 5px 30px;
   }
 
-  /* line 9, ../sass/media/small/pages/communication_messages.sass */
   .message {
     padding-right: 20px;
     margin-left: 70px;
   }
 
-  /* line 13, ../sass/media/small/pages/communication_messages.sass */
   .message-img,
   .message-name,
   .message-text {
@@ -6099,43 +5240,36 @@ span.input-prefix {
     vertical-align: middle;
   }
 
-  /* line 19, ../sass/media/small/pages/communication_messages.sass */
   .message-img {
     float: none;
     margin-left: -70px;
     margin-right: 16px;
   }
 
-  /* line 24, ../sass/media/small/pages/communication_messages.sass */
   .message-name {
     width: 19%;
     margin-right: 1%;
     margin-bottom: 0;
   }
 
-  /* line 29, ../sass/media/small/pages/communication_messages.sass */
   .message-text {
     width: 79%;
   }
 
-  /* line 3, ../sass/media/small/pages/communication_new_message.sass */
   .nm-selected .nm-change {
     position: absolute;
     top: 0;
     right: 0;
   }
 
-  /* line 1, ../sass/media/small/pages/communication_gift.sass */
   .cg-balance {
     text-align: right;
   }
 
-  /* line 4, ../sass/media/small/pages/communication_gift.sass */
   .cg-gift-inf {
     width: 100%;
   }
 
-  /* line 7, ../sass/media/small/pages/communication_gift.sass */
   .cg-gift-name {
     display: inline-block;
     margin-bottom: 0;
@@ -6144,14 +5278,12 @@ span.input-prefix {
     vertical-align: middle;
   }
 
-  /* line 14, ../sass/media/small/pages/communication_gift.sass */
   .cg-gift-price {
     display: inline-block;
     width: 25%;
     vertical-align: middle;
   }
 
-  /* line 25, ../sass/media/small/pages/communication_gift.sass */
   .communication-gift.limited .cg-title {
     border-width: 1px;
     border-radius: 2px;
@@ -6160,51 +5292,41 @@ span.input-prefix {
     padding: 15px;
   }
 
-  /* line 1, ../sass/media/small/pages/communication_search.sass */
   .c-search .friends-search input:first-child {
     margin-right: 100px;
   }
 
-  /* line 3, ../sass/media/small/pages/communication_friend_detail.sass */
   .c-friend-detail .c-user-inf-wrapper {
     position: static;
   }
-  /* line 6, ../sass/media/small/pages/communication_friend_detail.sass */
   .c-friend-detail .c-user-inf {
     margin-bottom: 0;
   }
-  /* line 9, ../sass/media/small/pages/communication_friend_detail.sass */
   .c-friend-detail .c-social {
     position: static;
     margin-top: 15px;
     padding-left: 10px;
   }
-  /* line 14, ../sass/media/small/pages/communication_friend_detail.sass */
   .c-friend-detail .c-social-inf, .c-friend-detail .c-social-icons {
     display: inline-block;
     vertical-align: middle;
   }
-  /* line 19, ../sass/media/small/pages/communication_friend_detail.sass */
   .c-friend-detail .c-social-inf {
     margin-bottom: 0;
     color: #A2A2A2;
     margin-right: 18px;
   }
-  /* line 24, ../sass/media/small/pages/communication_friend_detail.sass */
   .c-friend-detail .c-social-item {
     vertical-align: middle;
   }
 
-  /* line 3, ../sass/media/small/pages/tickets.sass */
   .ticket-items {
     margin: 70px 0 30px;
   }
 
-  /* line 6, ../sass/media/small/pages/tickets.sass */
   .ticket-tabs {
     top: -40px;
   }
-  /* line 9, ../sass/media/small/pages/tickets.sass */
   .ticket-tabs li {
     top: 9px;
     width: 80px;
@@ -6212,154 +5334,141 @@ span.input-prefix {
     margin-right: 10px;
     line-height: 31px;
   }
-  /* line 16, ../sass/media/small/pages/tickets.sass */
   .ticket-tabs li.active {
     height: 40px;
     line-height: 40px;
   }
-  /* line 20, ../sass/media/small/pages/tickets.sass */
   .ticket-tabs li.active span {
     display: inline;
   }
 
-  /* line 23, ../sass/media/small/pages/tickets.sass */
   .ticket-item {
     padding: 25px 29px !important;
   }
 
-  /* line 26, ../sass/media/small/pages/tickets.sass */
   .ticket-numbers {
     margin-right: -30px !important;
   }
-  /* line 29, ../sass/media/small/pages/tickets.sass */
   .ticket-numbers li {
     margin: 0 30px 20px 0 !important;
   }
 
-  /* line 32, ../sass/media/small/pages/tickets.sass */
   .ticket-actions li {
     margin: 0 30px 0 0 !important;
   }
 
-  /* line 41, ../sass/media/small/pages/tickets.sass */
   .matches-inf-wrapper {
     margin-bottom: 30px;
   }
 
-  /* line 1, ../sass/media/small/layout/footer.sass */
+  .ball-number-result {
+    width: 40px;
+    height: 40px;
+    margin-right: 9%;
+    line-height: 40px;
+  }
+
+  .balls-result {
+    padding-left: 30px;
+  }
+
+  .ticket-number-result {
+    margin-right: 5%;
+  }
+
   .footer-logo {
     left: 0;
   }
 
-  /* line 4, ../sass/media/small/layout/footer.sass */
   .footer-social-icons {
     top: 11px;
     right: 0;
   }
 
-  /* line 8, ../sass/media/small/layout/footer.sass */
   .footer-social-icons a {
     margin-right: 10px;
     width: 28px;
     height: 28px;
   }
 
-  /* line 13, ../sass/media/small/layout/footer.sass */
   .footer-social-icons .fb {
     background-position: -492px 0;
   }
 
-  /* line 16, ../sass/media/small/layout/footer.sass */
   .footer-social-icons .vk {
     background-position: -524px 0;
   }
 
-  /* line 19, ../sass/media/small/layout/footer.sass */
   .footer-social-icons .ok {
     background-position: -556px 0;
   }
 
-  /* line 22, ../sass/media/small/layout/footer.sass */
   .footer-social-icons .tw {
     background-position: -588px 0;
   }
 
-  /* line 28, ../sass/media/small/layout/footer.sass */
   .js-detect {
     opacity: 0.2;
   }
 }
 @media (min-width: 1010px) {
-  /* line 1, ../sass/media/middle/layout/common.sass */
   .container {
     width: 984px;
   }
 
-  /* line 4, ../sass/media/middle/layout/common.sass */
   .content {
     float: left;
     width: 654px;
     margin-bottom: 20px;
   }
 
-  /* line 11, ../sass/media/middle/layout/common.sass */
   .content-box-item {
     padding: 20px;
   }
 
-  /* line 18, ../sass/media/middle/layout/common.sass */
   .sidebar {
     display: block;
     float: right;
     width: 300px;
   }
 
-  /* line 28, ../sass/media/middle/layout/common.sass */
   .banner-1,
   .banner-2 {
     display: none;
   }
 
-  /* line 32, ../sass/media/middle/layout/common.sass */
   .banner-3,
   .banner-4,
   .banner-5 {
     display: block;
   }
 
-  /* line 37, ../sass/media/middle/layout/common.sass */
   .banner-3 {
     width: 684px;
     height: 135px;
   }
 
-  /* line 41, ../sass/media/middle/layout/common.sass */
   .banner-4 {
     height: 600px;
     margin-bottom: 30px;
   }
 
-  /* line 45, ../sass/media/middle/layout/common.sass */
   .banner-5 {
     height: 300px;
     margin-bottom: 30px;
   }
 
-  /* line 1, ../sass/media/middle/layout/header.sass */
   .site-top {
     display: block;
   }
 
-  /* line 4, ../sass/media/middle/layout/header.sass */
   .header {
     margin-bottom: 30px;
   }
-  /* line 7, ../sass/media/middle/layout/header.sass */
   .header .container {
     padding: 0;
   }
 
-  /* line 10, ../sass/media/middle/layout/header.sass */
   .header-left {
     width: 684px;
     margin-right: 0;
@@ -6367,7 +5476,6 @@ span.input-prefix {
     padding-right: 10px;
   }
 
-  /* line 16, ../sass/media/middle/layout/header.sass */
   .header-logo {
     width: 100px;
     height: 20px;
@@ -6376,7 +5484,6 @@ span.input-prefix {
     margin-right: 22px;
   }
 
-  /* line 27, ../sass/media/middle/layout/header.sass */
   .menu {
     display: block !important;
     overflow: visible;
@@ -6387,17 +5494,14 @@ span.input-prefix {
     width: auto;
     display: block;
   }
-  /* line 37, ../sass/media/middle/layout/header.sass */
   .menu a {
     text-align: left;
     padding: 0;
   }
-  /* line 41, ../sass/media/middle/layout/header.sass */
   .menu a.active, .menu a:hover {
     background: none;
   }
 
-  /* line 45, ../sass/media/middle/layout/header.sass */
   .menu-main {
     display: block !important;
     float: left;
@@ -6407,11 +5511,9 @@ span.input-prefix {
     padding: 0;
     width: 430px;
   }
-  /* line 54, ../sass/media/middle/layout/header.sass */
   .menu-main li:first-child {
     display: none;
   }
-  /* line 57, ../sass/media/middle/layout/header.sass */
   .menu-main a {
     float: left;
     height: 55px;
@@ -6420,30 +5522,24 @@ span.input-prefix {
     padding: 0 13px;
     font-weight: bold;
   }
-  /* line 65, ../sass/media/middle/layout/header.sass */
   .menu-main a:hover, .menu-main a.active {
     background: #FFE700;
   }
-  /* line 69, ../sass/media/middle/layout/header.sass */
   .menu-main:after {
     display: none;
   }
 
-  /* line 72, ../sass/media/middle/layout/header.sass */
   .menu-more {
     display: none;
     padding: 20px 30px;
   }
-  /* line 76, ../sass/media/middle/layout/header.sass */
   .menu-more a {
     margin-bottom: 5px;
   }
-  /* line 79, ../sass/media/middle/layout/header.sass */
   .menu-more li:last-child a {
     margin-top: 25px;
   }
 
-  /* line 85, ../sass/media/middle/layout/header.sass */
   .menu-balance {
     width: 250px;
     padding: 70px 25px 20px;
@@ -6451,32 +5547,26 @@ span.input-prefix {
     right: 23px;
   }
 
-  /* line 91, ../sass/media/middle/layout/header.sass */
   .menu-balance-inf {
     display: none;
   }
 
-  /* line 94, ../sass/media/middle/layout/header.sass */
   .menu-balance-actions .menu-balance-item {
     width: auto;
   }
-  /* line 97, ../sass/media/middle/layout/header.sass */
   .menu-balance-actions .menu-balance-item:first-child {
     float: none;
   }
-  /* line 100, ../sass/media/middle/layout/header.sass */
   .menu-balance-actions .menu-balance-item:last-child {
     float: none;
   }
 
-  /* line 103, ../sass/media/middle/layout/header.sass */
   .menu-balance-item {
     margin-bottom: 10px;
     background: #b7cfd3;
     font-weight: bold;
     border: none;
   }
-  /* line 109, ../sass/media/middle/layout/header.sass */
   .menu-balance-item.active:after {
     content: "";
     display: block;
@@ -6488,28 +5578,23 @@ span.input-prefix {
     left: 7px;
     top: 10px;
   }
-  /* line 120, ../sass/media/middle/layout/header.sass */
   .menu-balance-item:hover {
     background: #d1e3e5;
   }
-  /* line 123, ../sass/media/middle/layout/header.sass */
   .menu-balance-item:last-child {
     margin-bottom: 0;
   }
 
-  /* line 131, ../sass/media/middle/layout/header.sass */
   .menu-balance-btn {
     display: none;
   }
 
-  /* line 136, ../sass/media/middle/layout/header.sass */
   .header-right {
     position: relative;
     left: 0;
     float: left;
   }
 
-  /* line 141, ../sass/media/middle/layout/header.sass */
   .balance-btn {
     float: none;
     position: relative;
@@ -6523,29 +5608,24 @@ span.input-prefix {
     text-transform: uppercase;
     box-shadow: none !important;
   }
-  /* line 154, ../sass/media/middle/layout/header.sass */
   .balance-btn span span {
     font-size: 12px;
   }
-  /* line 157, ../sass/media/middle/layout/header.sass */
   .balance-btn.active, .balance-btn:hover {
     background: transparent;
   }
 
-  /* line 161, ../sass/media/middle/layout/header.sass */
   .inf-slider {
     width: 300px;
     height: 135px;
     margin-top: -135px;
   }
 
-  /* line 169, ../sass/media/middle/layout/header.sass */
   .timer {
     display: block;
     color: #3f3f3f;
   }
 
-  /* line 173, ../sass/media/middle/layout/header.sass */
   .timer-title {
     float: left;
     font-size: 11px;
@@ -6555,7 +5635,6 @@ span.input-prefix {
     padding: 14px 25px 0 40px;
   }
 
-  /* line 181, ../sass/media/middle/layout/header.sass */
   .timer-digits {
     float: left;
     font-size: 30px;
@@ -6563,207 +5642,197 @@ span.input-prefix {
     padding-top: 8px;
   }
 
-  /* line 3, ../sass/media/middle/pages/home_rating.sass */
   .raiting-item {
     width: 297px;
     margin-right: 20px;
   }
 
-  /* line 1, ../sass/media/middle/pages/post.sass */
   .more-posts a {
     width: 30%;
     margin: 0 5% 0 0;
   }
 
-  /* line 3, ../sass/media/middle/pages/games.sass */
   .games-chance {
     padding: 20px 20px 0;
   }
 
-  /* line 6, ../sass/media/middle/pages/games.sass */
   .game {
     margin-right: 67px;
   }
 }
 @media (min-width: 1010px) and (max-width: 1200px) {
-  /* line 13, ../sass/media/middle/pages/games.sass */
   .game:nth-child(3n+3) {
     margin-right: 0;
   }
 }
 @media (min-width: 1010px) {
-  /* line 3, ../sass/media/middle/pages/prizes.sass */
   .prizes-for-points {
     padding-left: 60px;
     padding-right: 60px;
   }
 
-  /* line 7, ../sass/media/middle/pages/prizes.sass */
   .prize {
     margin-right: 94px;
   }
 }
 @media (min-width: 1010px) and (max-width: 1200px) {
-  /* line 14, ../sass/media/middle/pages/prizes.sass */
   .prize:nth-child(even) {
     margin-right: 0;
   }
 }
 @media (min-width: 1010px) {
-  /* line 1, ../sass/media/middle/pages/prize_exchange.sass */
   .ex-prize-description {
     width: 274px;
   }
 
-  /* line 3, ../sass/media/middle/pages/cabinet.sass */
   .cabinet .content-box-tab.cabinet-balance-tab {
     width: 215px;
     padding: 0 0 0 10px;
   }
 
-  /* line 7, ../sass/media/middle/pages/cabinet.sass */
   .cabinet-balance-count:first-child {
     margin-right: 5px;
   }
 
-  /* line 10, ../sass/media/middle/pages/cabinet.sass */
   .cabinet-balance-count span {
     margin-left: 2px;
   }
 
-  /* line 3, ../sass/media/middle/pages/cabinet_referrals.sass */
   .r-nickname,
   .r-nickname-text {
     width: 40%;
   }
 
-  /* line 7, ../sass/media/middle/pages/cabinet_referrals.sass */
   .r-registered,
   .r-registered-text {
     width: 22%;
   }
 
-  /* line 11, ../sass/media/middle/pages/cabinet_referrals.sass */
   .r-games,
   .r-games-text {
     width: 10%;
   }
 
-  /* line 15, ../sass/media/middle/pages/cabinet_referrals.sass */
   .r-active,
   .r-active-text {
     width: 20%;
   }
 
-  /* line 19, ../sass/media/middle/pages/cabinet_referrals.sass */
   .r-profit,
   .r-profit-text {
     width: 8%;
   }
 
-  /* line 1, ../sass/media/middle/pages/cabinet_account.sass */
   .c-user-inf {
     margin: 0 20px 0 0;
   }
 
-  /* line 6, ../sass/media/middle/pages/cabinet_account.sass */
   .c-user-personal-inf {
     width: 394px;
   }
 
-  /* line 9, ../sass/media/middle/pages/cabinet_account.sass */
   .c-user-personal-inf td:last-child {
     padding-left: 10px;
   }
 
-  /* line 1, ../sass/media/middle/pages/cabinet_account_edit.sass */
   .ae-inf {
     width: 384px;
     padding: 20px 10px;
   }
 
-  /* line 1, ../sass/media/middle/pages/cabinet_convert.sass */
   .content-box-item.cabinet-convert {
     padding: 30px 20px;
   }
 
-  /* line 1, ../sass/media/middle/pages/cabinet_payments_history.sass */
   .ph-date,
   .ph-date-text {
     width: 22%;
   }
 
-  /* line 5, ../sass/media/middle/pages/cabinet_payments_history.sass */
   .ph-won,
   .ph-won-text {
     width: 24%;
   }
 
-  /* line 9, ../sass/media/middle/pages/cabinet_payments_history.sass */
   .ph-method,
   .ph-method-text {
     width: 36%;
   }
 
-  /* line 13, ../sass/media/middle/pages/cabinet_payments_history.sass */
   .ph-status,
   .ph-status-text {
     width: 18%;
   }
 
-  /* line 3, ../sass/media/middle/pages/communication.sass */
   .communication .content-box-tab.back-tab {
     padding: 0 74px 0 20px;
   }
 
-  /* line 1, ../sass/media/middle/pages/communication_friends.sass */
   .c-friend {
     width: 297px;
     margin: 0 20px 30px 0;
   }
 
-  /* line 5, ../sass/media/middle/pages/communication_friends.sass */
   .friends-search {
     left: 337px;
   }
 
-  /* line 1, ../sass/media/middle/pages/communication_messages.sass */
   .message-name {
     width: 22%;
     margin-right: 1%;
   }
 
-  /* line 5, ../sass/media/middle/pages/communication_messages.sass */
   .message-text {
     width: 76%;
   }
 
-  /* line 3, ../sass/media/middle/pages/tickets.sass */
   .ticket-tabs li {
     width: 72px;
     margin-right: 8px;
   }
 
-  /* line 7, ../sass/media/middle/pages/tickets.sass */
   .ticket-item {
     padding: 25px 23px !important;
   }
 
-  /* line 10, ../sass/media/middle/pages/tickets.sass */
   .ticket-numbers {
     margin-right: -23px !important;
   }
-  /* line 13, ../sass/media/middle/pages/tickets.sass */
   .ticket-numbers li {
     margin: 0 23px 14px 0 !important;
   }
 
-  /* line 16, ../sass/media/middle/pages/tickets.sass */
   .ticket-actions li {
     margin: 0 23px 0 0 !important;
   }
 
-  /* line 1, ../sass/media/middle/layout/footer.sass */
+  .balls-result {
+    width: 100%;
+    padding-top: 45px;
+  }
+
+  .text-result {
+    width: 100%;
+    top: -475px;
+    padding-top: 15px;
+  }
+
+  .ticket-result {
+    margin: 0 0 10px 0;
+  }
+
+  .ball-number-result,
+  .ticket-number-result {
+    margin-right: 40px;
+  }
+
+  .ball-number-result {
+    width: 40px;
+    height: 40px;
+    margin-right: 7%;
+    line-height: 40px;
+  }
+
   .footer-logo {
     top: 14px;
     width: 110px;
@@ -6771,198 +5840,161 @@ span.input-prefix {
     background-position: 0 0;
   }
 
-  /* line 7, ../sass/media/middle/layout/footer.sass */
   .footer-social-icons {
     top: 8px;
   }
 
-  /* line 10, ../sass/media/middle/layout/footer.sass */
   .footer-social-icons a {
     margin-right: 14px;
     width: 35px;
     height: 35px;
   }
 
-  /* line 15, ../sass/media/middle/layout/footer.sass */
   .footer-social-icons .fb {
     background-position: -327px 0;
   }
 
-  /* line 18, ../sass/media/middle/layout/footer.sass */
   .footer-social-icons .vk {
     background-position: -368px 0;
   }
 
-  /* line 21, ../sass/media/middle/layout/footer.sass */
   .footer-social-icons .ok {
     background-position: -409px 0;
   }
 
-  /* line 24, ../sass/media/middle/layout/footer.sass */
   .footer-social-icons .tw {
     background-position: -450px 0;
   }
 
-  /* line 31, ../sass/media/middle/layout/footer.sass */
   .js-detect {
     opacity: 0.3;
   }
 }
 @media (min-width: 1200px) {
-  /* line 1, ../sass/media/large/layout/common.sass */
   .container {
     width: 1140px;
   }
 
-  /* line 4, ../sass/media/large/layout/common.sass */
   .content {
     width: 800px;
     margin-bottom: 20px;
   }
 
-  /* line 11, ../sass/media/large/layout/common.sass */
   .content-box-tab {
     padding: 0 30px;
   }
 
-  /* line 14, ../sass/media/large/layout/common.sass */
   .content-box-item {
     padding: 30px;
   }
 
-  /* line 17, ../sass/media/large/layout/common.sass */
   .content-box-item-top {
     padding: 20px 30px 0;
   }
 
-  /* line 27, ../sass/media/large/layout/common.sass */
   .banner-3 {
     width: 840px;
   }
 
-  /* line 1, ../sass/media/large/layout/header.sass */
   .header-left {
     width: 840px;
   }
 
-  /* line 4, ../sass/media/large/layout/header.sass */
   .header-logo {
     margin-right: 65px;
   }
 
-  /* line 12, ../sass/media/large/layout/header.sass */
   .menu-main {
     width: 540px;
   }
-  /* line 15, ../sass/media/large/layout/header.sass */
   .menu-main a {
     padding: 0 23px;
   }
 
-  /* line 3, ../sass/media/large/pages/home_blog.sass */
   .post-item {
     padding-left: 350px;
   }
 
-  /* line 6, ../sass/media/large/pages/home_blog.sass */
   .post-item-img {
     width: 320px;
     height: 200px;
     margin-left: -350px;
   }
 
-  /* line 3, ../sass/media/large/pages/home_rating.sass */
   .raiting-item {
     width: 350px;
     margin-right: 40px;
   }
 
-  /* line 1, ../sass/media/large/pages/post.sass */
   .more-posts a {
     width: 28%;
     margin: 0 8% 0 0;
   }
 
-  /* line 3, ../sass/media/large/pages/games.sass */
   .games-chance {
     padding: 30px 30px 0;
   }
 
-  /* line 6, ../sass/media/large/pages/games.sass */
   .game {
     margin-right: 33px;
   }
 
-  /* line 9, ../sass/media/large/pages/games.sass */
   .game:nth-child(4n+4) {
     margin-right: 0;
   }
 
-  /* line 3, ../sass/media/large/pages/prizes.sass */
   .prizes-for-points {
     padding-left: 30px;
     padding-right: 30px;
   }
 
-  /* line 7, ../sass/media/large/pages/prizes.sass */
   .prize {
     margin-right: 40px;
   }
 
-  /* line 10, ../sass/media/large/pages/prizes.sass */
   .prize:nth-child(3n+3) {
     margin-right: 0;
   }
 
-  /* line 1, ../sass/media/large/pages/prize_exchange.sass */
   .ex-prize-description {
     width: 380px;
   }
 
-  /* line 4, ../sass/media/large/pages/prize_exchange.sass */
   .ex-prize-img {
     margin-right: 60px;
   }
 
-  /* line 7, ../sass/media/large/pages/prize_exchange.sass */
   .ex-prize-not-filled {
     margin: 0 -30px;
   }
 
-  /* line 3, ../sass/media/large/pages/cabinet.sass */
   .cabinet .content-box-tab.cabinet-balance-tab {
     width: 275px;
     padding: 0 30px 0 30px;
   }
 
-  /* line 7, ../sass/media/large/pages/cabinet.sass */
   .cabinet-balance-count:first-child {
     margin-right: 20px;
   }
 
-  /* line 10, ../sass/media/large/pages/cabinet.sass */
   .cabinet-balance-count span {
     margin-left: 5px;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_game_history.sass */
   .gh-header {
     margin: 0 -30px 20px;
     padding: 0 30px;
   }
 
-  /* line 5, ../sass/media/large/pages/cabinet_game_history.sass */
   .gh-item {
     margin: 0 -30px 0;
     padding: 10px 30px;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_bonuses.sass */
   .bonus-share-banner-view {
     width: 60%;
   }
 
-  /* line 3, ../sass/media/large/pages/cabinet_referrals.sass */
   .r-header,
   .r-item {
     margin-left: -30px;
@@ -6971,194 +6003,190 @@ span.input-prefix {
     padding-right: 30px;
   }
 
-  /* line 12, ../sass/media/large/pages/cabinet_referrals.sass */
   .r-nickname,
   .r-nickname-text {
     width: 42%;
   }
 
-  /* line 16, ../sass/media/large/pages/cabinet_referrals.sass */
   .r-registered,
   .r-registered-text {
     width: 20%;
   }
 
-  /* line 20, ../sass/media/large/pages/cabinet_referrals.sass */
   .r-games,
   .r-games-text {
     width: 10%;
   }
 
-  /* line 24, ../sass/media/large/pages/cabinet_referrals.sass */
   .r-active,
   .r-active-text {
     width: 19%;
   }
 
-  /* line 28, ../sass/media/large/pages/cabinet_referrals.sass */
   .r-profit,
   .r-profit-text {
     width: 9%;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_account.sass */
   .c-user-inf {
     margin: 0 30px 0 0;
   }
 
-  /* line 4, ../sass/media/large/pages/cabinet_account.sass */
   .c-user-personal-inf {
     width: 510px;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_account_edit.sass */
   .ae-inf {
     width: 510px;
     padding: 20px 40px;
   }
 
-  /* line 3, ../sass/media/large/pages/cabinet_cashout.sass */
   .cabinet-cashout-block {
     margin: 30px 30px 40px;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_convert.sass */
   .content-box-item.cabinet-convert {
     padding: 30px 95px;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_transaction_history.sass */
   .th-item {
     margin: 0 -30px;
     padding: 13px 30px 0;
   }
 
-  /* line 1, ../sass/media/large/pages/cabinet_payments_history.sass */
   .ph-header {
     margin: 0 -30px 30px;
     padding: 0 30px;
   }
 
-  /* line 5, ../sass/media/large/pages/cabinet_payments_history.sass */
   .ph-item {
     margin: 0 -30px;
     padding-left: 30px;
     padding-right: 30px;
   }
 
-  /* line 12, ../sass/media/large/pages/cabinet_payments_history.sass */
   .ph-date,
   .ph-date-text {
     width: 25%;
   }
 
-  /* line 16, ../sass/media/large/pages/cabinet_payments_history.sass */
   .ph-won,
   .ph-won-text {
     width: 24%;
   }
 
-  /* line 20, ../sass/media/large/pages/cabinet_payments_history.sass */
   .ph-method,
   .ph-method-text {
     width: 35%;
   }
 
-  /* line 24, ../sass/media/large/pages/cabinet_payments_history.sass */
   .ph-status,
   .ph-status-text {
     width: 16%;
   }
 
-  /* line 3, ../sass/media/large/pages/communication.sass */
   .communication .content-box-tab {
     padding: 0 30px;
   }
 
-  /* line 6, ../sass/media/large/pages/communication.sass */
   .communication .content-box-tab.back-tab {
     padding: 0 60px 0 30px;
   }
 
-  /* line 1, ../sass/media/large/pages/communication_friends.sass */
   .c-friend {
     width: 350px;
     margin: 0 40px 30px 0;
   }
 
-  /* line 5, ../sass/media/large/pages/communication_friends.sass */
   .friends-search {
     left: 420px;
   }
 
-  /* line 1, ../sass/media/large/pages/communication_messages.sass */
   .cm-top {
     padding: 0 30px;
   }
 
-  /* line 4, ../sass/media/large/pages/communication_messages.sass */
   .message {
     padding-right: 30px;
   }
 
-  /* line 7, ../sass/media/large/pages/communication_messages.sass */
   .message-name {
     width: 18%;
     margin-right: 1%;
   }
 
-  /* line 11, ../sass/media/large/pages/communication_messages.sass */
   .message-text {
     width: 80%;
   }
 
-  /* line 1, ../sass/media/large/pages/communication_gift.sass */
   .cg-form {
     padding: 0 60px;
   }
 
-  /* line 3, ../sass/media/large/pages/tickets.sass */
   .ticket-items {
     margin: 80px 0 40px;
   }
 
-  /* line 6, ../sass/media/large/pages/tickets.sass */
   .ticket-tabs li {
     width: 85px;
     margin-right: 15px;
   }
 
-  /* line 10, ../sass/media/large/pages/tickets.sass */
   .ticket-item {
     padding: 40px 42px 30px !important;
   }
 
-  /* line 13, ../sass/media/large/pages/tickets.sass */
   .ticket-numbers {
     margin-right: -35px !important;
     margin-bottom: 22px;
   }
-  /* line 17, ../sass/media/large/pages/tickets.sass */
   .ticket-numbers li {
     margin: 0 35px 18px 0 !important;
   }
 
-  /* line 20, ../sass/media/large/pages/tickets.sass */
   .ticket-actions li {
     margin: 0 35px 0 0 !important;
   }
 
-  /* line 29, ../sass/media/large/pages/tickets.sass */
   .matches-inf-wrapper {
     margin-bottom: 40px;
   }
 
-  /* line 2, ../sass/media/large/layout/footer.sass */
+  .balls-result {
+    width: 60%;
+    padding-top: 35px;
+    padding-left: 10px;
+  }
+
+  .text-result {
+    width: 40%;
+    padding-top: 15px;
+    top: 35px;
+  }
+
+  .ticket-result {
+    margin: 0 0 10px 0;
+  }
+
+  .ball-number-result,
+  .ticket-number-result {
+    margin-right: 20px;
+  }
+
+  .ticket-number-result span {
+    display: inline;
+  }
+
+  .ball-number-result {
+    width: 40px;
+    height: 40px;
+    margin-right: 4%;
+  }
+
   .js-detect {
     opacity: 0.4;
   }
 }
-/* line 9, ../sass/libs/daterangepicker.sass */
 .daterangepicker {
   position: absolute;
   background: #fff;
@@ -7170,7 +6198,6 @@ span.input-prefix {
   display: none;
 }
 
-/* line 19, ../sass/libs/daterangepicker.sass */
 .daterangepicker.opensleft:before {
   position: absolute;
   top: -7px;
@@ -7183,7 +6210,6 @@ span.input-prefix {
   content: "";
 }
 
-/* line 30, ../sass/libs/daterangepicker.sass */
 .daterangepicker.opensleft:after {
   position: absolute;
   top: -6px;
@@ -7195,7 +6221,6 @@ span.input-prefix {
   content: "";
 }
 
-/* line 40, ../sass/libs/daterangepicker.sass */
 .daterangepicker.openscenter:before {
   position: absolute;
   top: -7px;
@@ -7212,7 +6237,6 @@ span.input-prefix {
   content: "";
 }
 
-/* line 55, ../sass/libs/daterangepicker.sass */
 .daterangepicker.openscenter:after {
   position: absolute;
   top: -6px;
@@ -7228,7 +6252,6 @@ span.input-prefix {
   content: "";
 }
 
-/* line 69, ../sass/libs/daterangepicker.sass */
 .daterangepicker.opensright:before {
   position: absolute;
   top: -7px;
@@ -7241,7 +6264,6 @@ span.input-prefix {
   content: "";
 }
 
-/* line 80, ../sass/libs/daterangepicker.sass */
 .daterangepicker.opensright:after {
   position: absolute;
   top: -6px;
@@ -7253,12 +6275,10 @@ span.input-prefix {
   content: "";
 }
 
-/* line 90, ../sass/libs/daterangepicker.sass */
 .daterangepicker.dropup {
   margin-top: -5px;
 }
 
-/* line 93, ../sass/libs/daterangepicker.sass */
 .daterangepicker.dropup:before {
   top: initial;
   bottom: -7px;
@@ -7266,7 +6286,6 @@ span.input-prefix {
   border-top: 7px solid #ccc;
 }
 
-/* line 99, ../sass/libs/daterangepicker.sass */
 .daterangepicker.dropup:after {
   top: initial;
   bottom: -6px;
@@ -7274,47 +6293,39 @@ span.input-prefix {
   border-top: 6px solid #fff;
 }
 
-/* line 105, ../sass/libs/daterangepicker.sass */
 .daterangepicker.dropdown-menu {
   max-width: none;
   z-index: 3000;
 }
 
-/* line 109, ../sass/libs/daterangepicker.sass */
 .daterangepicker .ranges,
 .daterangepicker .calendar {
   float: left;
 }
 
-/* line 113, ../sass/libs/daterangepicker.sass */
 .daterangepicker.single .ranges,
 .daterangepicker.single .calendar {
   float: none;
 }
 
-/* line 117, ../sass/libs/daterangepicker.sass */
 .daterangepicker .ranges {
   margin: 4px;
   text-align: left;
 }
 
-/* line 121, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar {
   display: none;
   max-width: 270px;
 }
 
-/* line 125, ../sass/libs/daterangepicker.sass */
 .daterangepicker.show-calendar .calendar {
   display: block;
 }
 
-/* line 128, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar.single .calendar-table {
   border: none;
 }
 
-/* line 133, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar th,
 .daterangepicker .calendar td {
   white-space: nowrap;
@@ -7322,7 +6333,6 @@ span.input-prefix {
   min-width: 32px;
 }
 
-/* line 139, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar-table {
   border: 1px solid #ddd;
   padding: 4px;
@@ -7330,42 +6340,35 @@ span.input-prefix {
   background: #fff;
 }
 
-/* line 145, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar.left .calendar-table {
   border-right: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-/* line 150, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar.right .calendar-table {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-/* line 155, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar.left {
   margin: 4px 0 4px 4px;
 }
 
-/* line 158, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar.right {
   margin: 4px 4px 4px 0;
 }
 
-/* line 161, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar.left .calendar-table {
   padding-right: 12px;
 }
 
-/* line 164, ../sass/libs/daterangepicker.sass */
 .daterangepicker table {
   width: 100%;
   margin: 0;
 }
 
-/* line 168, ../sass/libs/daterangepicker.sass */
 .daterangepicker td,
 .daterangepicker th {
   text-align: center;
@@ -7376,7 +6379,6 @@ span.input-prefix {
   cursor: pointer;
 }
 
-/* line 177, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.off,
 .daterangepicker td.off.in-range,
 .daterangepicker td.off.start-date,
@@ -7385,40 +6387,33 @@ span.input-prefix {
   background: #fff;
 }
 
-/* line 184, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.disabled,
 .daterangepicker option.disabled {
   color: #999;
 }
 
-/* line 188, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.available:hover,
 .daterangepicker th.available:hover {
   background: #eee;
 }
 
-/* line 192, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.in-range {
   background: #ebf4f8;
   border-radius: 0;
 }
 
-/* line 196, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.start-date {
   border-radius: 4px 0 0 4px;
 }
 
-/* line 199, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.end-date {
   border-radius: 0 4px 4px 0;
 }
 
-/* line 202, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.start-date.end-date {
   border-radius: 4px;
 }
 
-/* line 205, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.active,
 .daterangepicker td.active:hover {
   background-color: #357ebd;
@@ -7426,14 +6421,12 @@ span.input-prefix {
   color: #fff;
 }
 
-/* line 211, ../sass/libs/daterangepicker.sass */
 .daterangepicker td.week,
 .daterangepicker th.week {
   font-size: 80%;
   color: #ccc;
 }
 
-/* line 216, ../sass/libs/daterangepicker.sass */
 .daterangepicker select.monthselect,
 .daterangepicker select.yearselect {
   font-size: 12px;
@@ -7443,18 +6436,15 @@ span.input-prefix {
   cursor: default;
 }
 
-/* line 224, ../sass/libs/daterangepicker.sass */
 .daterangepicker select.monthselect {
   margin-right: 2%;
   width: 56%;
 }
 
-/* line 228, ../sass/libs/daterangepicker.sass */
 .daterangepicker select.yearselect {
   width: 40%;
 }
 
-/* line 231, ../sass/libs/daterangepicker.sass */
 .daterangepicker select.hourselect,
 .daterangepicker select.minuteselect,
 .daterangepicker select.secondselect,
@@ -7463,12 +6453,10 @@ span.input-prefix {
   margin-bottom: 0;
 }
 
-/* line 238, ../sass/libs/daterangepicker.sass */
 .daterangepicker th.month {
   width: auto;
 }
 
-/* line 243, ../sass/libs/daterangepicker.sass */
 .daterangepicker .input-mini {
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -7482,29 +6470,24 @@ span.input-prefix {
   width: 100%;
 }
 
-/* line 255, ../sass/libs/daterangepicker.sass */
 .daterangepicker .input-mini.active {
   border: 1px solid #357ebd;
 }
 
-/* line 258, ../sass/libs/daterangepicker.sass */
 .daterangepicker .daterangepicker_input i {
   position: absolute;
   left: 8px;
   top: 8px;
 }
 
-/* line 263, ../sass/libs/daterangepicker.sass */
 .daterangepicker .left .daterangepicker_input {
   padding-right: 12px;
 }
 
-/* line 266, ../sass/libs/daterangepicker.sass */
 .daterangepicker .daterangepicker_input {
   position: relative;
 }
 
-/* line 271, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar-time {
   text-align: center;
   margin: 5px auto;
@@ -7513,18 +6496,15 @@ span.input-prefix {
   padding-left: 28px;
 }
 
-/* line 278, ../sass/libs/daterangepicker.sass */
 .daterangepicker .calendar-time select.disabled {
   color: #ccc;
   cursor: not-allowed;
 }
 
-/* line 284, ../sass/libs/daterangepicker.sass */
 .daterangepicker .ranges {
   font-size: 11px;
 }
 
-/* line 287, ../sass/libs/daterangepicker.sass */
 .daterangepicker .ranges ul {
   list-style: none;
   margin: 0;
@@ -7532,7 +6512,6 @@ span.input-prefix {
   width: 160px;
 }
 
-/* line 293, ../sass/libs/daterangepicker.sass */
 .daterangepicker .ranges li {
   font-size: 13px;
   background: #f5f5f5;
@@ -7544,7 +6523,6 @@ span.input-prefix {
   cursor: pointer;
 }
 
-/* line 303, ../sass/libs/daterangepicker.sass */
 .daterangepicker .ranges li.active,
 .daterangepicker .ranges li:hover {
   background: #08c;
@@ -7552,7 +6530,6 @@ span.input-prefix {
   color: #fff;
 }
 
-/* line 5, ../sass/libs/owl.carousel.sass */
 .owl-carousel .owl-wrapper:after {
   content: ".";
   display: block;
@@ -7562,7 +6539,6 @@ span.input-prefix {
   height: 0;
 }
 
-/* line 14, ../sass/libs/owl.carousel.sass */
 .owl-carousel {
   display: none;
   position: relative;
@@ -7570,21 +6546,18 @@ span.input-prefix {
   -ms-touch-action: pan-y;
 }
 
-/* line 20, ../sass/libs/owl.carousel.sass */
 .owl-carousel .owl-wrapper {
   display: none;
   position: relative;
   -webkit-transform: translate3d(0px, 0px, 0px);
 }
 
-/* line 25, ../sass/libs/owl.carousel.sass */
 .owl-carousel .owl-wrapper-outer {
   overflow: hidden;
   position: relative;
   width: 100%;
 }
 
-/* line 30, ../sass/libs/owl.carousel.sass */
 .owl-carousel .owl-wrapper-outer.autoHeight {
   -webkit-transition: height 500ms ease-in-out;
   -moz-transition: height 500ms ease-in-out;
@@ -7593,18 +6566,15 @@ span.input-prefix {
   transition: height 500ms ease-in-out;
 }
 
-/* line 37, ../sass/libs/owl.carousel.sass */
 .owl-carousel .owl-item {
   float: left;
 }
 
-/* line 40, ../sass/libs/owl.carousel.sass */
 .owl-controls .owl-page,
 .owl-controls .owl-buttons div {
   cursor: pointer;
 }
 
-/* line 44, ../sass/libs/owl.carousel.sass */
 .owl-controls {
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -7614,7 +6584,6 @@ span.input-prefix {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* line 57, ../sass/libs/owl.carousel.sass */
 .owl-carousel .owl-wrapper,
 .owl-carousel .owl-item {
   -webkit-backface-visibility: hidden;
@@ -7625,13 +6594,11 @@ span.input-prefix {
   -ms-transform: translate3d(0, 0, 0);
 }
 
-/* line 4, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls {
   margin-top: 5px;
   text-align: center;
 }
 
-/* line 10, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls .owl-buttons div {
   color: #FFF;
   display: inline-block;
@@ -7648,21 +6615,18 @@ span.input-prefix {
   opacity: 0.5;
 }
 
-/* line 28, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls.clickable .owl-buttons div:hover {
   filter: Alpha(Opacity=100);
   opacity: 1;
   text-decoration: none;
 }
 
-/* line 35, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls .owl-page {
   display: inline-block;
   zoom: 1;
   *display: inline;
 }
 
-/* line 40, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls .owl-page span {
   display: block;
   width: 10px;
@@ -7675,13 +6639,11 @@ span.input-prefix {
   background: #fff;
 }
 
-/* line 51, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls .owl-page.active span,
 .owl-theme .owl-controls.clickable .owl-page:hover span {
   background: #4A4A4A;
 }
 
-/* line 57, ../sass/libs/owl.theme.sass */
 .owl-theme .owl-controls .owl-page span.owl-numbers {
   height: auto;
   width: auto;
@@ -7693,7 +6655,6 @@ span.input-prefix {
   border-radius: 30px;
 }
 
-/* line 68, ../sass/libs/owl.theme.sass */
 .owl-item.loading {
   min-height: 150px;
   background: url(AjaxLoader.gif) no-repeat center center;

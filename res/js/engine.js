@@ -7,7 +7,7 @@ $(function () {
     // Debugger
     D = {
 
-        "Enable": true,
+        "Enable": false,
 
         "init": function(){
 
@@ -330,6 +330,11 @@ $(function () {
                     options.callback(rendered, findClass);
                 }
 
+                if (C[options.this]) {
+                    D.log(['C.callback']);
+                    C[options.this](rendered, findClass);
+                }
+
                 /* tickets functionality */
                 if ($('.ticket-items', $(rendered)).length && !$('.ticket-items li.active').length)
                     renderTicket();
@@ -383,6 +388,10 @@ $(function () {
         },
 
         "cache": function (key, data) {
+
+            $.each(key.split('-'), function(i,v){
+                console.log(v);
+            });
 
             if (key && R.Cache[key]) {
                 return R.Cache[key];

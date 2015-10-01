@@ -216,7 +216,6 @@
     .text-result {
         top: 0;
         position: absolute;
-        margin-top: 30px;
         margin-left: 20px;
     }
 
@@ -238,16 +237,26 @@
         .balls-box{
             margin-bottom:2px;
         }
-        .text-result{
-            margin-top:20px;
-        }
         .tickets-number-result p{
             line-height:42px;
         }
         .tickets-number-result{
             width:5%;
         }
-        .balls-result{
-            width:93%;
-        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

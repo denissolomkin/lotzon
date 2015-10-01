@@ -23,18 +23,33 @@ $(function () {
         return menuMobile;
     }
 
+    owl = null;
 
-    // OWL CAROUSEL =========================== //
-    var $matchesCarousel = $('.matches-inf-wrapper.carousel');
-    var owl = null;
+    runOwlCarousel = function() {
 
-    if ($matchesCarousel.css('box-shadow') !== 'none') {
-        $matchesCarousel.owlCarousel({
-            singleItem: true,
-            autoPlay: false
-        });
+        // OWL CAROUSEL =========================== //
+        var $matchesCarousel = $('.matches-inf-wrapper.carousel');
 
-        var owl = $matchesCarousel.data('owlCarousel');
+        if($matchesCarousel.length) {
+
+            // OWL CAROUSEL =========================== //
+            if ($matchesCarousel.css('box-shadow') === 'none') {
+                if (owl !== null) {
+                    owl.destroy();
+                    owl = null;
+                }
+            } else {
+                if (owl === null) {
+                    $matchesCarousel.owlCarousel({
+                        singleItem: true,
+                        autoPlay: false
+                    });
+                    owl = $matchesCarousel.data('owlCarousel');
+                }
+            }
+            // ======================================== //
+        }
+
     }
     // ======================================== //
 
@@ -223,9 +238,6 @@ $(function () {
                 "url": false,
                 "callback": function () {
                     activateTicket();
-                    if (detectDevice() === 'mobile') {
-                        setBallsMargins();
-                    }
                 }
             });
 
@@ -233,6 +245,8 @@ $(function () {
     }
 
     function activateTicket() {
+
+        setBallsMargins();
         $('.ticket-item .ticket-random').off().on('click', clickTicketRandom);
         $('.ticket-item .ticket-favorite').off().on('click', clickTicketFavorite);
         $('.ticket-item .ball-number').off().on('click', clickTicketBall);
@@ -444,31 +458,33 @@ $(function () {
 
     function setBallsMargins() {
 
-        console.log('setBallsMargins');
-        var ticketBox = $($ticketBox);
-        var ticketBalls = $($ticketBalls);
-        var ticketActions = $($ticketActions);
-        var ticketNumbersBox = $($ticketNumbersBox);
+        if ( detectDevice() === 'mobile') {
+            console.log('setBallsMargins');
+            var ticketBox = $($ticketBox);
+            var ticketBalls = $($ticketBalls);
+            var ticketActions = $($ticketActions);
+            var ticketNumbersBox = $($ticketNumbersBox);
 
-        var result = getBallsMargins(ticketBox, ticketBalls);
-        var margin = result.margin;
-        var padding = result.padding;
+            var result = getBallsMargins(ticketBox, ticketBalls);
+            var margin = result.margin;
+            var padding = result.padding;
 
-        ticketBox.css({
-            'padding-left': padding + 'px',
-            'padding-right': padding + 'px',
-        });
+            ticketBox.css({
+                'padding-left': padding + 'px',
+                'padding-right': padding + 'px'
+            });
 
-        ticketNumbersBox.css('margin-right', -margin + 'px');
+            ticketNumbersBox.css('margin-right', -margin + 'px');
 
-        ticketBalls.css({
-            'margin-right': margin + 'px',
-            'margin-bottom': 0.7 * margin + 'px'
-        });
+            ticketBalls.css({
+                'margin-right': margin + 'px',
+                'margin-bottom': 0.7 * margin + 'px'
+            });
 
-        ticketActions.css({
-            'margin-right': margin + 'px'
-        });
+            ticketActions.css({
+                'margin-right': margin + 'px'
+            });
+        }
     }
 
     function getBallsMargins($box, $balls) {
@@ -497,8 +513,6 @@ $(function () {
 
     windowResize = function () {
 
-        var device = detectDevice();
-
         // MENU =================================== //
         var mobile  = menuMobile();
         if ( mobile ) {
@@ -510,8 +524,7 @@ $(function () {
             else {
                 $menu.hide();
             }
-        }
-        else {
+        } else {
             $menuMore.addClass('menu-item');
 
             if ( $menuBtn.hasClass('active') ) {
@@ -524,30 +537,10 @@ $(function () {
         // ======================================== //
 
 
-
         // TICKET ================================= //
-        if (device === 'mobile') {
-            setBallsMargins();
-        }
-        // ======================================== //
+        setBallsMargins();
 
-
-        // OWL CAROUSEL =========================== //
-        if ($matchesCarousel.css('box-shadow') === 'none') {
-            if (owl !== null) {
-                owl.destroy();
-                owl = null;
-            }
-        }
-        else {
-            if (owl === null) {
-                $matchesCarousel.owlCarousel({
-                    singleItem: true,
-                    autoPlay: false
-                });
-                owl = $matchesCarousel.data('owlCarousel');
-            }
-        }
-        // ======================================== //
+        // OwlCarousel ============================ //
+        runOwlCarousel();
     }
 });
