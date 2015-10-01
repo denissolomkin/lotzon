@@ -39,6 +39,18 @@
 
         },
 
+        "lottery": function(){
+
+            runOwlCarousel();
+
+        },
+
+        "blog": function(){
+
+            runOwlCarousel();
+
+        },
+
         "menu": function () {
 
             /* ========================================================= */

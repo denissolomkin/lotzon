@@ -10,7 +10,11 @@ javascripts_dir = "js"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
-output_style = :compressed
+output_style = :expanded
+
+enable_sourcemaps = false
+sourcemap = false
+sass_options = {:sourcemap => false}
 
 relative_assets = true
 

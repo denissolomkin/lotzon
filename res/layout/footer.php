@@ -1,7 +1,9 @@
 	<!-- FOOTER -->
 	<footer class="footer clearfix">
 		<div class="container">
-
+          <a href="#top"><div class="go-to-top">
+           
+          </div></a>
 			<!-- Logo -->
 			<a href="/" class="footer-logo"></a>
 
@@ -22,21 +24,22 @@
 
 
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
-	<script src="/res/js/libs/jquery.plugin.min.js"></script>
 	<script src="/res/js/libs/jquery-ui.min.js"></script>
+    <script src="/res/js/libs/jquery.plugin.js"></script>
 	<script src="/res/js/libs/jquery.countdown.min.js"></script>
 	<script src="/res/js/libs/jquery.cookie.js"></script>
 	<script src="/res/js/libs/moment.min.js"></script>
     <script src="/res/js/libs/mustache.min.js"></script>
 	<script src="/res/js/libs/daterangepicker.js"></script>
 	<script src="/res/js/libs/owl.carousel.js"></script>
-
+    <script src="/res/js/libs/slick.min.js"></script>
+    <script src="/res/js/libs/jquery.countdown.js"></script>
     <script src="/res/js/engine.js"></script>
     <script src="/res/js/functions.js"></script>
     <script src="/res/js/callbacks.js"></script>
     <script src="/res/js/init.js"></script>
-
     <script src="/res/js/olya.js"></script>
+    <script src="/res/js/zhenya.js"></script>
 
 </body>
 </html>
