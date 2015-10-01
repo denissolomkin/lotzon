@@ -23,78 +23,17 @@
 <a name="top"></a>
 <span class="js-detect"></span>
 
+
 <!-- SITE TOP -->
 <div class="site-top">
     <div class="container">
         <div class="banner-3">
             <?php include "banner_3.php"; ?>
         </div>
-     
-        <div class="slider-top">
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Джекпот
-                <br/>
-                <br/>
-              </div>
-              <b class="n">100 000 <span>грн</span></b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">розыгрыш от
-                <br/>29.09.2015</div>
-              <ul class="rt-bk">
-                <li class="rt-bk_li">43</li>
-                <li class="rt-bk_li">39</li>
-                <li class="rt-bk_li">2</li>
-                <li class="rt-bk_li">49</li>
-                <li class="rt-bk_li">11</li>
-                <li class="rt-bk_li">26</li>
-              </ul>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Участников
-                <br/>
-                <br/>
-              </div>
-              <b class="n">53 520</b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Победителей
-                <br/>
-                <br/>
-              </div>
-              <b class="n">34 260</b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Общая сумма выигрыша
-                <br/>
-                <br/>
-              </div>
-              <b class="n">353 944 <span>грн</span></b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tn-tr-bk">
-                <div class="tn-tr-tt">
-                  <p>ДО РОЗЫГРЫША ОСТАЛОСЬ</p>
-                </div>
-                <div id="countdownHolder" class="tn-tr"></div>
-              </div>
-            </div>
-          </div>
-        </div>        
     </div>
 </div>
 <!-- end of SITE TOP -->
+
 
 <!-- HEADER -->
 <header class="header clearfix">
@@ -162,7 +101,58 @@
         <!-- .header-left -->
 
         <!-- Header Right -->
-        <div class="header-right-block">
+        <div class="header-right">
+
+            <div class="inf-slider">
+                <div class="slider-top">
+                    <div class="slide">
+                        <div class="ct">
+                            <div class="tl">Джекпот</div>
+                            <b class="n">100 000 <span>грн</span></b>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="ct">
+                            <div class="last-results">розыгрыш от 29.09.2015</div>
+                            <ul class="rt-bk">
+                                <li class="rt-bk_li">43</li>
+                                <li class="rt-bk_li">39</li>
+                                <li class="rt-bk_li">2</li>
+                                <li class="rt-bk_li">49</li>
+                                <li class="rt-bk_li">11</li>
+                                <li class="rt-bk_li">26</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="ct">
+                            <div class="tl">Участников</div>
+                            <b class="n">53 520</b>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="ct">
+                            <div class="tl">Победителей</div>
+                            <b class="n">34 260</b>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="ct">
+                            <div class="tl">Общая сумма выигрыша</div>
+                            <b class="n">353 944 <span>грн</span></b>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="ct">
+                            <div class="tn-tr-bk">
+                                <div class="timer-text">До розыгрыша<br>осталось</div>
+                                <div id="countdownHolder-mobile" class="tn-tr"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="balance-btn menu-btn-item">
                 <span class="cabinet-balance-count">31,80<span>грн</span></span>
                 <span class="cabinet-balance-count">32 320<span>баллов</span></span>
@@ -181,69 +171,8 @@
                 <a href="cabinet_transaction_history" class="menu-balance-item">История транзакций</a>
                 <a href="cabinet_payments_history" class="menu-balance-item active">История выплат</a>
             </div>
-            <div class="slider-top">
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Джекпот
-                <br/>
-                <br/>
-              </div>
-              <b class="n">100 000 <span>грн</span></b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="last-results">розыгрыш от 29.09.2015</div>
-              <ul class="rt-bk">
-                <li class="rt-bk_li">43</li>
-                <li class="rt-bk_li">39</li>
-                <li class="rt-bk_li">2</li>
-                <li class="rt-bk_li">49</li>
-                <li class="rt-bk_li">11</li>
-                <li class="rt-bk_li">26</li>
-              </ul>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Участников
-                <br/>
-                <br/>
-              </div>
-              <b class="n">53 520</b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Победителей
-                <br/>
-                <br/>
-              </div>
-              <b class="n">34 260</b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tl">Общая сумма выигрыша
-                <br/>
-                <br/>
-              </div>
-              <b class="n">353 944 <span>грн</span></b>
-            </div>
-          </div>
-          <div class="slide">
-            <div class="ct">
-              <div class="tn-tr-bk">
-                <div class="timer-text">
-                  <p>До розыгрыша </p>
-                  <p>осталось</p>
-                </div>
-                <div id="countdownHolder-mobile" class="tn-tr"></div>
-              </div>
-            </div>
-          </div>
-        </div> 
             <!-- end of BALANCE MENU -->
+
 
         </div>
         <!-- .header-right -->
