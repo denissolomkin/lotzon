@@ -144,10 +144,8 @@
                     </div>
                     <div class="slide">
                         <div class="ct">
-                            <div class="tn-tr-bk">
-                                <div class="timer-text">До розыгрыша<br>осталось</div>
-                                <div id="countdownHolder-mobile" class="tn-tr"></div>
-                            </div>
+                            <div class="tl">До розыгрыша осталось</div>
+                            <div id="countdownHolder-mobile" class="n"></div>
                         </div>
                     </div>
                 </div>
