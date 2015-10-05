@@ -7,9 +7,103 @@
         "init": function(){
 
             // variables
+
             $Tabs = '.content-box-tabs a';
             $Cats = '.content-box-cat a';
             $TicketTabs = '.ticket-tabs li';
+
+            Tickets = $.extend(
+                Tickets,
+                {
+                    "ballsHTML": function () {
+                        var html = '';
+                        for (i = 1; i <= this.totalBalls; i++) {
+
+                            html += "<li class='ball-number number-" + i + ($.inArray(i, this.balls[$($TicketTabs).filter('.active').data('ticket')]) == -1 ? '' : ' select') + "'>" + i + "</li>";
+                        }
+                        return html;
+
+                    },
+
+                    "tabsHTML": function () {
+                        var html = '';
+                        for (i = 1; i <= this.totalTickets; i++) {
+                            html += "<li data-ticket='" + i + "' class='" + (this.balls && this.balls[i] ? 'done' : '') + "'><span>" + M.i18n('title-ticket') + " </span>#" + i + "</li>";
+                        }
+                        return html;
+                    },
+
+                    "isDone": function () {
+                        return (this.balls && this.balls[$($TicketTabs).filter('.active').data('ticket')] && this.balls[$($TicketTabs).filter('.active').data('ticket')].length && this.balls[$($TicketTabs).filter('.active').data('ticket')].length == this.selectedBalls);
+                    },
+
+                    "isComplete": function () {
+                        return (this.balls && Object.keys(this.balls).length == this.totalTickets);
+                    },
+
+                    "completeHTML": function () {
+
+                        var html = '';
+
+                        $.each(this.balls, function (index, ticket) {
+                            html += "<ul class='ticket-result'><li class='ticket-number-result'><span>БИЛЕТ</span> #" + index + "";
+                            $.each(ticket, function (number, ball) {
+                                html += "<li class='ball-number-result'>" + ball + "</li>";
+                            });
+                            html += "</ul>";
+                        });
+
+                        return html;
+                    }
+                }
+            );
+
+            // handlers
+            $(window).on('resize', windowResize);
+            $(document).on('click', $Tabs, switchTab);
+            $(document).on('click', $Cats, switchCat);
+            $(document).on('click', 'a', loadBlock);
+            $(document).on('click', 'div.back', backBlock);
+            $(document).on('click', $TicketTabs, switchTicket);
+
+        },
+
+        "lottery": function(){
+
+            runOwlCarousel();
+            renderTicket();
+
+        },
+
+        "blog": function(){
+
+            $Box = $('.content-box-content:visible');
+            R.render({
+                'template': 'posts',
+                'url': false
+            })
+
+        },
+
+        "menu": function () {
+
+            /* ========================================================= */
+            //                        MENUS
+            /* ========================================================= */
+
+            R.render({
+                'box': 'balance',
+                'template': 'menu-balance',
+                'json': Player,
+                'url': false
+            });
+
+            R.render({
+                'box': 'inf-slider',
+                'template': 'menu-slider',
+                'json': Slider,
+                'url': false
+            });
 
             $menu = $('.menu');
             $menuMain = $('.menu-main');
@@ -27,36 +121,6 @@
                 $menuMore.addClass('menu-item');
                 $menuProfile.addClass('menu-item');
             }
-
-            // handlers
-            $(window).on('resize', windowResize);
-            $(document).on('click', $Tabs, switchTab);
-            $(document).on('click', $Cats, switchCat);
-            $(document).on('click', 'a', loadBlock);
-            $(document).on('click', 'div.back', backBlock);
-            $("header a").on('click', loadPage);
-            $(document).on('click', $TicketTabs, switchTicket);
-
-        },
-
-        "lottery": function(){
-
-            runOwlCarousel();
-
-        },
-
-        "blog": function(){
-
-            runOwlCarousel();
-
-        },
-
-        "menu": function () {
-
-            /* ========================================================= */
-            //                        MENUS
-            /* ========================================================= */
-
 
             // MENU
             $menuBtn.on('click', function () {
@@ -164,6 +228,22 @@
                 event.stopPropagation();
             });
 
+            $("#countdownHolder").countdown({
+                until: (Slider.timer),
+                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
+            });
+
+            $(".slider-top").owlCarousel({
+                navigation : false,
+                slideSpeed : 300,
+                paginationSpeed : 400,
+                singleItem: true,
+                autoPlay: true
+            });
+                    
+            $("header a").on('click', loadPage);
+          
+            $('[href="/' + R.Path[1] + '"]').click();
         }
     };
 

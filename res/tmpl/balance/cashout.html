@@ -1,0 +1,69 @@
+﻿<div class="content-box cashout">
+{{+Player}}
+            <div class="content-box-header back">Вывод денег</div>
+
+			<div class="content-box-content clearfix">
+				<div class="content-box-item cabinet-cashout">
+
+					<div class="cco-title clearfix">
+						<div>Выберите способ вывода денег</div>
+						<a href="/profile/billing" class="cco-edit"><span>редактировать</span></a>
+					</div>
+
+					<div class="cco-choose-method">
+						<form action="cabinet_cashout_blocked" method="post">
+							<div class="cco-methods">
+								<div class="cco-method clearfix">
+									<label>
+                                        <input id="cco-mb" class="input-radio" {{^Player.Phone}}disabled{{/Player.Phone}} name="method" type="radio" value="1">
+										<label for="cco-mb" class="input-radio"></label>
+										<div class="cco-method-name">Мобильный телефон</div>
+										<div class="cco-method-value">{{Player.Phone}}</div>
+									</label>
+								</div>
+								<div class="cco-method clearfix">
+									<label>
+										<input id="cco-ym" class="input-radio" name="method" type="radio" value="2">
+										<label for="cco-ym" class="input-radio"></label>
+										<div class="cco-method-name">Яндекс Деньги</div>
+										<div class="cco-method-value">{{Player.Billing.YandexMoney}}</div>
+									</label>
+								</div>
+								<div class="cco-method clearfix">
+									<label>
+										<input id="cco-wm" class="input-radio" name="method" type="radio" value="3">
+										<label for="cco-wm" class="input-radio"></label>
+										<div class="cco-method-name">WebMoney</div>
+										<div class="cco-method-value">{{Player.Billing.WebMoney}}</div>
+									</label>
+								</div>
+								<div class="cco-method clearfix">
+									<label>
+										<input id="cco-qw" class="input-radio" name="method" type="radio" value="4">
+										<label for="cco-qw" class="input-radio"></label>
+										<div class="cco-method-name">QIWI</div>
+										<div class="cco-method-value">{{Player.Billing.Qiwi}}</div>
+									</label>
+								</div>
+							</div>
+
+							<div class="cco-enter-sum clearfix">
+								<div class="cco-enter-sum-box clearfix">
+									<div class="title">Введите сумму</div>
+									<input type="text" value="12"><span class="cco-currency">грн</span>
+								</div>
+								<button type="submit" class="cco-cashout-btn">Вывести</button>
+							</div>
+						</form>
+					</div>
+
+					<div class="cco-inf">
+						<p>Все заявки на вывод денег обрабатываются в течении 7-ми рабочих дней.</p>
+						<p>Информация о состоянии заявки можно посмотреть в <a href="/balance2/payments">истории выплат</a></p>
+						<p>Если Вы не получили выигрыш в указанный срок напишите нам используя <a href="/support/feedback">эту форму</a></p>
+					</div>
+
+				</div>
+			</div>
+
+</div><!-- .content-box -->

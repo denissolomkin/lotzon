@@ -7,59 +7,33 @@ $(function () {
     // Debugger
     D = {
 
-        "Enable": false,
+        "Enabled": {
+            "info": true,
+            "warn": false,
+            "error": true,
+            "log": false,
+            "clean": true
+        },
 
-        "init": function(){
+        "init": function () {
 
             $.ajaxSetup({
                 error: function (xhr, status, message) {
-                    throw('An AJAX error occured: ' + status + "\nError: " + message);
+                    D.error(['AJAX Error: ',message]);
                 }
             });
 
             window.onerror = function (message, url, line, col, error) {
-
-                /* err(message, url);
-                 return; */
-
-                D.log([message, url, line],'error');
-
-                if ($Button) {
-                    $Button.data('disabled', false);
-                    $Button = null;
-                }
-
-                $(".error").remove();
-                $(".loading").remove();
-
-                $Error = $('<div class="error"><div><span>' + M.i18n('title-error') + '</span>' + message + '</div></div>');
-
-
-                if (!$Box)
-                    $Box = $('.content-box').length == 1 ? $('.content-box') : $('.content-top');
-
-                $Box.append($Error);
-
-                if ($Errors = $(".error"))
-                    setTimeout(function () {
-                        $Errors.fadeOut(500);
-                        setTimeout(function () {
-                            $Errors.remove();
-                        }, 500)
-                    }, 1000);
-
-                R.empty();
-                R.stop();
-
+                D.error([message, url, line]);
                 return true;
             }
         },
 
         "log": function (log, type) {
 
-            if (D.Enable) {
+            type = type || 'log';
 
-                type = type || 'log';
+            if (D.Enabled[type]) {
                 var d = new Date();
 
                 var output = '';
@@ -68,44 +42,48 @@ $(function () {
 
                     $.each(log, function (index, obj) {
                         if (obj)
-                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, "type" == "error" ? 100 : 40) + ' ';
+                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40) + ' ';
                     });
 
                 } else {
-                    output = JSON.stringify(log).replace(/"/g, "").substring(0, "type" == "error" ? 100 : 40);
+                    output = JSON.stringify(log).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40);
                 }
-
 
                 console[type](d.toLocaleTimeString('ru-RU') + ' ' + output);
             }
 
         },
 
-        "error": function (message, trace) {
+        "error": function (message) {
 
             if ($Button) {
                 $Button.data('disabled', false);
                 $Button = null;
             }
 
-            $(".error").remove();
+            D.log(message.join(' '), 'error');
+
+            if(D.Enabled.clean)
+                $(".error").remove();
+
             $(".loading").remove();
 
-            $Error = $('<div class="error"><div><span>' + M.i18n('title-error') + '</span>' + message + '</div></div>');
+            $Error = $('<div class="error"><div><span>' + M.i18n('title-error') + '</span>' + message.join(' ') + '</div></div>');
 
-
-            if (!$Box)
-                $Box = $('.content-box').length == 1 ? $('.content-box') : $('.content-top');
+            if (!$Box || !$Box.length){
+                $Box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first();
+            }
 
             $Box.append($Error);
 
-            if ($Errors = $(".error"))
-                setTimeout(function () {
-                    $Errors.fadeOut(500);
+            if(D.Enabled.clean)
+                if ($Errors = $(".error"))
                     setTimeout(function () {
-                        $Errors.remove();
-                    }, 500)
-                }, 1000);
+                        $Errors.fadeOut(500);
+                        setTimeout(function () {
+                            $Errors.remove();
+                        }, 500)
+                    }, 1000);
 
             R.empty();
             R.stop();
@@ -116,21 +94,20 @@ $(function () {
     // Render Handler
     R = {
 
-        "Cache": {},
-        "Templates": {},
+        "Cache": Cache,
+        "Templates": Templates,
         "Render": [],
         "Path": [],
         "IsRendering": false,
 
         "init": function () {
 
-            D.log(['init']);
+            D.log('R.init','info');
             D.init();
             R.empty();
 
             R.Path = window.location.pathname.split('/');
             R.Path[1] = R.Path[1] || 'blog';
-            $('[href="/' + R.Path[1] + '"]').click();
 
         },
 
@@ -148,21 +125,31 @@ $(function () {
                 if (!options.callback)
                     options.callback = $Callback;
 
+                if (!options.box)
+                    options.box = $Box;
+                else
+                    options.box = (typeof options.box !== 'object' ? $('.'+options.box+':visible').first() : options.box);
+
+                if (!options.tab)
+                    options.tab = $Tab;
+                else
+                    options.tab = (typeof options.tab !== 'object' ? $('.'+options.tab+':visible').first() : options.tab);
+
                 R.empty('soft');
 
                 D.log(['render.push:', options.template, options.href, options.json], 'info');
 
                 R.Render.push({
                     'options': {
-                        'box':      $Box,
-                        'tab':      $Tab,
+                        'box': options.box,
+                        'tab': options.tab,
                         'callback': options.callback,
-                        'this':     options.template
+                        'this': options.template
                     },
-                    'url':      options.url,
+                    'url': options.url,
                     'template': options.template,
-                    'href':     options.href,
-                    'json':     options.json
+                    'href': options.href,
+                    'json': options.json
                 });
 
                 if (!R.IsRendering)
@@ -243,23 +230,27 @@ $(function () {
                 template = U.Parse.Tmpl(template);
                 D.log(['renderTMPL:', template]);
 
+                /* Insert into already exist DIV */
                 if ($('.template.' + template).length) {
 
                     D.log(['TMPL already in DOM', template]);
                     R.renderHTML(template, json, options);
 
+                /* Template from cache */
                 } else if (R.Templates[template]) {
 
                     template = R.Templates[template];
                     D.log(['TMPL from Cache', template]);
                     R.renderHTML(template, json, options);
 
+                /* Template from HTML template */
                 } else if ($('#tmpl-' + template).length) {
 
                     template = R.Templates[template] = $('#tmpl-' + template).html();
                     D.log(['TMPL from HTML:', template]);
                     R.renderHTML(template, json, options);
 
+                /* Template from AJAX template */
                 } else {
                     $.get(U.Generate.Tmpl(template), function (data) {
 
@@ -287,14 +278,14 @@ $(function () {
 
                 if (typeof json != 'object') {
 
-                    D.log('Rendered with HTML');
+                    D.log('Rendered from HTML');
                     rendered = $($('.template.' + template)[0].outerHTML).html(json);
 
                 } else {
 
-                    D.log('Rendered with Template');
+                    D.log('Rendered from Template');
                     Mustache.parse(template);   // optional, speeds up future uses
-                    rendered = Mustache.render(template, $.extend({"i18n": M.i18n}, json));
+                    rendered = Mustache.render(template, $.extend({"i18n": M.i18n, "eval": M.eval}, json));
 
                 }
 
@@ -309,6 +300,7 @@ $(function () {
             try {
 
                 D.log(['inputHTML into:', (typeof options.box == 'object' ? options.box.attr('class') : options.box)]);
+
                 var findClass = '.' + $(rendered).attr('class').replace(/ /g, '.');
 
                 if (options.box) {
@@ -320,9 +312,7 @@ $(function () {
                         $(findClass, options.box).html($(rendered).html()).show();
 
                     } else {
-
                         options.box.append(rendered).find(findClass).hide().show();
-
                     }
 
                 }
@@ -337,10 +327,6 @@ $(function () {
                     C[options.this](rendered, findClass);
                 }
 
-                /* tickets functionality */
-                if ($('.ticket-items', $(rendered)).length && !$('.ticket-items li.active').length)
-                    renderTicket();
-
                 /* parent box functionality after rendering */
                 if (options.box) {
 
@@ -348,7 +334,6 @@ $(function () {
                     if ($($Tabs, options.box).filter(":visible").length) {
 
                         /* click on unactive tab */
-
                         if (!$($Tabs, options.box).filter(".active:visible").length) {
                             D.log(['clickTab:', $($Tabs, options.box).not(".active").filter(":visible").first().attr('href')]);
                             $($Tabs, options.box).not(".active").filter(":visible").first().click();
@@ -391,13 +376,13 @@ $(function () {
 
         "cache": function (key, data) {
 
-            $.each(key.split('-'), function(i,v){
-                console.log(v);
+            $.each(key.split('-'), function (i, v) {
+                // console.log(v);
             });
 
             if (key && R.Cache[key]) {
                 return R.Cache[key];
-            } else if (data && !data['nocache']) {
+            } else if (data && (!data['nocache'] && data['cache'] !== false)) {
                 return R.Cache[key] = data;
             } else if (data) {
                 return data;
@@ -424,28 +409,17 @@ $(function () {
 
     // Multilingual User Interface
     M = {
-
+        "Texts": Texts,
         "i18n": function (key) {
             return key ? (M.Texts[key] ? M.Texts[key] : key) : (function (key) {
                 return M.i18n(key);
             });
         },
 
-        "Texts": {
-            "title-ticket": "Билет",
-            "message-autocomplete": "АВТОЗАПОЛНЕНИЕ",
-            "message-done-and-approved": "<b>ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ</b>",
-            "message-numbers-yet": "ЕЩЕ <b></b> НОМЕРОВ",
-            "message-favorite": "<b>ЛЮБИМАЯ КОМБИНАЦИЯ</b><span>настраивается в кабинете</span>",
-            "button-add-ticket": "Подтвердить",
-            "title-prizes-draw": "Розыгрыш призов",
-            "title-prizes-exchange": "Обмен на баллы",
-            "title-limited-quantity": "Ограниченное количество",
-            "title-pieces": "шт.",
-            "title-games-online": "Игры Онлайн",
-            "title-games-chance": "Шансы",
-            "title-games-rating": "Рейтинг",
-            "title-error": "Ошибка",
+        "eval": function (key) {
+            return key ? eval(key) : (function (key) {
+                return M.eval(key);
+            });
         }
     };
 

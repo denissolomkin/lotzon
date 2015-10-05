@@ -1,0 +1,11 @@
+﻿{
+    "status": 1,
+    "message": "OK",
+    "res":{
+                "id": "1",
+                "img": "/res/img/user_img.jpg",
+                "title": "Ноутбук Asus X551MA",
+                "games": "50000",
+                "money": "0"
+	}
+}

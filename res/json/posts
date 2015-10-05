@@ -1,0 +1,39 @@
+﻿{
+    "status": 1,
+    "message": "OK",
+    "res":{
+        "cache": false,
+        "items":[
+            {
+                "id": "1",
+                "img": "/res/img/post.jpg",
+                "title": "Ноутбук Asus X551MA",
+                "date": "24.04.2001",
+                "stat": {
+                    "views": 10,
+                    "comments": 20
+                }
+            },
+            {
+                "id": "1",
+                "img": "/res/img/post.jpg",
+                "title": "Ноутбук Asus X551MA",
+                "date": "24.04.2001",
+                "stat": {
+                    "views": 10,
+                    "comments": 20
+                }
+            },
+            {
+                "id": "1",
+                "img": "/res/img/post.jpg",
+                "title": "Ноутбук Asus X551MA",
+                "date": "24.04.2001",
+                "stat": {
+                    "views": 10,
+                    "comments": 20
+                }
+            }
+	    ]
+	}
+}

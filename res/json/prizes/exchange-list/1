@@ -1,0 +1,13 @@
+﻿{
+    "status": 1,
+    "message": "OK",
+    "res":{
+                "id": "1",
+                "category": "5",
+                "type": "item",
+                "img": "/res/img/prize.png",
+                "title": "Ноутбук Asus X551MA",
+                "price": "50000",
+                "quantity": "0"
+	}
+}

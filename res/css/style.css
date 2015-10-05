@@ -1,3 +1,16 @@
+/* -------------------------------------------------------------
+ *  Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library
+ *  By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
+ *
+ *  List of CSS3 Sass Mixins File to be @imported and @included as you need
+ *
+ *  The purpose of this library is to facilitate the use of CSS3 on different browsers avoiding HARD TO READ and NEVER
+ *  ENDING css files
+ *
+ *  note: All CSS3 Properties are being supported by Safari 5
+ *  more info: http://www.findmebyip.com/litmus/#css3-properties
+ *
+ *------------------------------------------------------------- */
 * {
   box-sizing: border-box;
   background-repeat: no-repeat;
@@ -91,6 +104,10 @@ a {
   margin-bottom: 20px;
 }
 
+.content-top {
+  position: relative;
+}
+
 .content-box {
   margin: 0 -10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -157,12 +174,21 @@ a {
   position: relative;
 }
 
+@media (min-width: 120px) {
+  .content-box-content {
+    min-height: 200px;
+  }
+}
 .content-box-item {
   padding: 20px 10px 20px;
 }
 
 .content-box-item.with-cat {
   padding-top: 72px;
+}
+
+.ticket-item {
+  min-height: 422px;
 }
 
 .content-box-item-top {
@@ -373,6 +399,121 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -227px 0;
 }
 
+@font-face {
+  font-family: handbookpro-regular;
+  src: url(../css/fonts/pfhandbookpro-regular-webfont.woff);
+}
+@font-face {
+  font-family: handbookpro-italic;
+  src: url(../css/pfhandbookpro-italic-webfont.woff);
+}
+@font-face {
+  font-family: Handbook-bold;
+  src: url(../css/fonts/pfhandbookpro-bold-webfont.woff);
+}
+.site-top {
+  width: 100%;
+  height: 135px;
+  position: relative;
+  top: 0;
+}
+
+.container {
+  height: 100%;
+}
+
+.banner-3 {
+  position: relative;
+  float: left;
+}
+
+.slider-top {
+  position: relative;
+  float: left;
+  top: 0px;
+}
+
+.clearfix:before {
+  clear: none;
+}
+
+.menu-main {
+  font: 15px/45px Handbook-bold;
+}
+
+div {
+  word-wrap: break-word;
+}
+
+.c-notifications-list {
+  width: 100%;
+}
+
+.content-box-item {
+  overflow-y: scroll;
+  height: 500px;
+}
+
+.message-form-wrapper {
+  z-index: 10;
+}
+
+.cm-top {
+  background-color: #fff;
+  z-index: 10;
+  top: 0px;
+  height: 50px;
+}
+
+.new-message,
+.write-admin {
+  top: 10px;
+  position: absolute;
+}
+
+.write-admin {
+  right: 32px;
+}
+
+.header {
+  width: 100%;
+  z-index: 200;
+}
+
+.menu {
+  overflow: visible;
+}
+
+.go-to-top {
+  position: fixed;
+  right: 15px;
+  border-radius: 5px;
+  line-height: 50px;
+  text-align: center;
+  -webkit-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
+  -moz-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
+  box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
+  display: none;
+  background: url(img/sprite.png) -550px -120px no-repeat;
+  background-color: #f2efed;
+  right: 50px;
+  bottom: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.is-countdown {
+  background-color: #FEE518;
+  font-size: 50px;
+  font-weight: bold;
+  border: none;
+  padding-top: 10px;
+  width: 90px;
+  top: 0;
+  position: absolute;
+  right: 0;
+}
+
 .menu-item,
 .menu {
   overflow: hidden;
@@ -552,6 +693,7 @@ input.input-radio:checked + label.input-radio:before {
 
 .inf-slider {
   display: none;
+  overflow: hidden;
 }
 
 .timer {
@@ -560,6 +702,166 @@ input.input-radio:checked + label.input-radio:before {
 
 .balance-btn {
   display: none;
+}
+
+.ticket-tabs,
+.slider-top,
+.header-right,
+.ticket-item,
+.content-box-header,
+.content-box-content th,
+.cabinet_cashout,
+.raiting-name,
+.c-friend-name,
+.content-box-cat {
+  font-family: Handbook-bold;
+}
+
+.content-box-header {
+  font: 15px/50px Handbook-bold;
+}
+
+.content-box-tab {
+  font: 15px/55px Handbook-bold;
+}
+
+.content-box-cat a {
+  font-size: 15px !important;
+}
+
+header .owl-theme .owl-controls .owl-page span {
+  background: #FEE518;
+}
+
+.header-right .rt-bk {
+  top: 20px;
+  left: 30px;
+  position: absolute;
+}
+
+.timer-text {
+  top: 8px;
+  position: absolute;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.last-results {
+  position: absolute;
+  top: -5px;
+  left: 30px;
+  font-weight: bold;
+}
+
+.header-right .ct .rt-bk .rt-bk_li {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.header-right .slider-top .ct .n {
+  font-size: 15px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 26px;
+}
+
+#countdownHolder-mobile {
+  top: 0;
+}
+
+.header-right .slider-top {
+  height: 55px;
+  display: block;
+}
+
+.header-right .slider-top .ct {
+  padding-left: 0px;
+}
+
+.header-right .slider-top .ct .tl {
+  line-height: 25px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.ct {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 16px 0 15px 15px;
+}
+
+.ct .tl {
+  font-size: 12px;
+  line-height: 14px;
+  color: #000;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.pw-gm-rt .ct .rt-bk {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0;
+}
+
+.ct .rt-bk .rt-bk_li {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #000;
+  font: 17px/34px Handbook-bold;
+  background-color: #000;
+  color: #fee212;
+  text-align: center;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.notification-window {
+  width: 270px;
+  height: 140px;
+  position: fixed;
+  background: rgba(255, 228, 0, 0.95);
+  bottom: 40px;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
+  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
+  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
+  z-index: 200;
+}
+
+.notification-cross {
+  right: 0;
+  background: url("/res/img/cross-closer.png") no-repeat 0 0;
+  background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  width: 24px;
+  cursor: pointer;
+  height: 24px;
+  margin: 10px;
+  position: absolute;
+}
+
+.notification-cross:hover {
+  height: 26px;
+  width: 26px;
+  right: -1px;
+  top: -1px;
+}
+
+.notification-cross:onclick {
+  display: none;
+}
+
+.pw-gm-rt .ct {
+  padding: 16px 0 15px 30px;
 }
 
 .content-box-scroll-top {
@@ -4102,13 +4404,14 @@ span.input-prefix {
   position: absolute;
   top: -34px;
   overflow: hidden;
+  z-index: -10;
 }
 .ticket-tabs li {
   position: relative;
   top: 8px;
   float: left;
   width: 10%;
-  height: 26px;
+  height: 75px;
   margin-right: 2%;
   background: #909090;
   border-radius: 5px 5px 0 0;
@@ -4121,6 +4424,9 @@ span.input-prefix {
 }
 .ticket-tabs li.gold {
   background: #F9DC42;
+}
+.ticket-tabs li.done {
+  background-color: #668286;
 }
 .ticket-tabs li.active {
   top: 0;
@@ -4135,6 +4441,23 @@ span.input-prefix {
 .ticket-tabs span {
   display: none;
   text-transform: uppercase;
+}
+
+.ticket-tabs li:hover {
+  -webkit-transform: translate(0, -8px);
+  -moz-transform: translate(0, -8px);
+  -o-transform: translate(0, -8px);
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.active:hover {
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
+  transform: none !important;
 }
 
 .ticket-item {
@@ -4359,6 +4682,21 @@ span.input-prefix {
   margin-bottom: 15px;
 }
 
+@media (min-width: 415px) and (max-width: 500px) {
+  .ball-number-result {
+    margin-right: 6%;
+  }
+}
+@media (min-width: 501px) and (max-width: 768px) {
+  .ball-number-result {
+    margin-right: 6%;
+  }
+
+  .ticket-number-result {
+    margin-right: 5%;
+    padding-left: 3%;
+  }
+}
 .footer {
   background: #ffe700;
   height: 50px;
@@ -5330,7 +5668,7 @@ span.input-prefix {
   .ticket-tabs li {
     top: 9px;
     width: 80px;
-    height: 31px;
+    height: 85px;
     margin-right: 10px;
     line-height: 31px;
   }
@@ -5591,8 +5929,7 @@ span.input-prefix {
 
   .header-right {
     position: relative;
-    left: 0;
-    float: left;
+    float: right;
   }
 
   .balance-btn {
@@ -5600,7 +5937,7 @@ span.input-prefix {
     position: relative;
     z-index: 51;
     display: block;
-    height: 100%;
+    height: 55px;
     text-align: center;
     font-size: 24px;
     font-weight: bold;
@@ -5640,6 +5977,51 @@ span.input-prefix {
     font-size: 30px;
     font-weight: bold;
     padding-top: 8px;
+  }
+
+  .slider-top {
+    height: 135px !important;
+  }
+
+  .slide {
+    position: relative;
+    height: 100px;
+  }
+
+  .header-right .slider-top .ct .n {
+    top: 40px;
+    font-size: 52px;
+    left: 25px;
+  }
+
+  .header-right .slider-top .ct .tl {
+    font-size: 12px;
+    margin-left: 25px;
+  }
+
+  .header-right .rt-bk {
+    top: 55px;
+    left: 25px;
+  }
+
+  .last-results {
+    top: 20px;
+    font-size: 12px;
+    left: 25px;
+  }
+
+  #countdownHolder-mobile {
+    top: 40px;
+    width: 185px;
+    height: 45px;
+    line-height: 45px;
+  }
+
+  .rt-bk_li {
+    width: 35px !important;
+    height: 35px !important;
+    line-height: 35px !important;
+    margin-right: 4px !important;
   }
 
   .raiting-item {
@@ -5813,7 +6195,7 @@ span.input-prefix {
 
   .text-result {
     width: 100%;
-    top: -475px;
+    top: -457px;
     padding-top: 15px;
   }
 
