@@ -33,7 +33,6 @@ var playerPoints   = 13296;
 var playerMoney   = 3.58;
 var currency =  {"iso":"\u0433\u0440\u043d","one":"\u0433\u0440\u0438\u0432\u043d\u0430","few":"\u0433\u0440\u0438\u0432\u043d\u0438","many":"\u0433\u0440\u0438\u0432\u0435\u043d","coefficient":"1","rate":100};
 var playerId   = 3628;
-var $Cache = [];
 
 WebSocketAjaxClient = function (id) {
 
@@ -42,7 +41,7 @@ WebSocketAjaxClient = function (id) {
             else
                 step++;
 
-            data = $Cache['games-game'][step]
+            data = Cache['games-game'][step]
 
             if (data.error)
                 $("#report-popup").show().find(".txt").text(getText(data.error)).fadeIn(200);
