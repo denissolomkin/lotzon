@@ -6,7 +6,7 @@
     <!-- .ticket-numbers -->
 
     {{#isDone}}
-    <div class="ticket-done">{{#i18n}}message-done-and-approved{{/i18n}}</div>
+    <div class="ticket-done"><b>{{#i18n}}message-done-and-approved{{/i18n}}</b></div>
     {{/isDone}}
 
     {{^isDone}}
@@ -16,11 +16,11 @@
             <div class="after">{{#i18n}}message-autocomplete{{/i18n}}</div>
         </li>
         <li class="ticket-favorite ticket-fc-btn">
-            <div class="after">{{#i18n}}message-favorite{{/i18n}}</div>
+            <div class="after"><b>{{#i18n}}message-favorite{{/i18n}}</b><span>{{#i18n}}button-set-favorite{{/i18n}}</span></div>
         </li>
     </ul>
 
-    <div class="balls-count">{{#i18n}}message-numbers-yet{{/i18n}}</div>
+    <div class="balls-count">{{#i18n}}message-yet{{/i18n}} <b>{{selectedBalls}}</b> {{#i18n}}message-numbers{{/i18n}}</div>
     <div class="ticket-btn add-ticket">{{#i18n}}button-add-ticket{{/i18n}}</div>
 
     {{/isDone}}

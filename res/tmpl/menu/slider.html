@@ -1,0 +1,43 @@
+<div class="slider-top">
+    {{+Players.currency.iso}}
+    <div class="slide">
+        <div class="ct">
+            <div class="tl">{{#i18n}}title-slider-jackpot{{/i18n}}</div>
+            <b class="n">{{jackpot}} <span>{{Players.currency.iso}}</span></b>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="ct">
+            <div class="last-results">{{#i18n}}title-slider-date{{/i18n}} {{lottery.date}}</div>
+            <ul class="rt-bk">
+                {{#lottery.balls}}
+                <li class="rt-bk_li">{{.}}</li>
+                {{/lottery.balls}}
+            </ul>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="ct">
+            <div class="tl">{{#i18n}}title-slider-players{{/i18n}}</div>
+            <b class="n">{{players}}</b>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="ct">
+            <div class="tl">{{#i18n}}title-slider-winners{{/i18n}}</div>
+            <b class="n">{{winners}}</b>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="ct">
+            <div class="tl">{{#i18n}}title-slider-sum{{/i18n}}</div>
+            <b class="n">{{sum}} <span>{{Players.currency.iso}}</span></b>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="ct">
+            <div class="tl">{{#i18n}}title-slider-timer{{/i18n}}</div>
+            <div id="countdownHolder" class="n"></div>
+        </div>
+    </div>
+</div>

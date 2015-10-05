@@ -118,8 +118,8 @@
 .cards .deck .lear.card4{background-position: -1491px -480px;}
 
  .card{width: 106px; height: 162px; text-align: center; background: url('../img/games/card-deck.png') no-repeat; background-position: -1430px 0px; transform-origin: 50% 20%; border-radius: 10px; box-shadow: 2px 0px 10px 0px rgba(0,0,0,0.2);}
- .card.select { margin-top: -20px; box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);  }
-
+ .card.select { box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);  }
+ /*.card.select-next { box-shadow: 0px 0px 10px 1px rgba(200,200,0,1); }*/
  .card1x2 {background-position: 0px -170px;}
  .card1x3 {background-position: -110px -170px;}
  .card1x4 {background-position: -220px -170px;}
@@ -205,7 +205,20 @@
         margin: 20px 15px;
         width: 15%;
     }
+    main.active_small_devices {position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .cards .players .m {
+        height: auto;
+        min-height: 220px;
 
+    }
+    
 }    
 @media (max-width: 650px) { 
         .cards .players .m .gm-pr .pr-ph-bk{
@@ -225,5 +238,56 @@
     .cards .table .cards div:first-of-type {
          transform: rotate(-1deg) scale(0.5,0.5);
         -webkit-transform: rotate(-1deg) scale(0.5,0.5);
+    }
+}
+@media (max-height: 550px) {
+
+    .mx .gm-pr {
+        width: auto;
+    }
+    .cards .players .gm-pr .pr-ph-bk {
+        width: 40px;
+        height: 40px;
+    }
+    .cards .players .o .gm-pr .pr-ph {
+        width: 40px;
+        height: 40px;
+        margin: 5px 0 0;
+    }
+    .cards .players .o .card {
+        margin-left: -28px;
+        margin-top: -15px;
+    }
+    .cards .deck .card {
+
+    }
+        .cards .table .cards .card {
+        transform: rotate(-1deg) scale(0.4,0.4);
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+    } 
+    .cards .table .cards div:first-of-type {
+         transform: rotate(-1deg) scale(0.4,0.4);
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+    }
+    .cards .deck .card {
+        transform: rotate(10deg) scale(0.4, 0.4);
+        -webkit-transform: rotate(10deg) scale(0.4, 0.4);
+        left: -40px;
+    }
+    .cards .deck .card.trump {
+        transform: rotate(100deg) scale(0.4, 0.4);
+        -webkit-transform: rotate(100deg) scale(0.4, 0.4);
+        top: 50px
+    }
+    .cards .players .m {
+        height: auto;
+        min-height: 200px;
+    }
+    .cards .players .m .gm-pr {
+        height: 60px;
+    }
+    .cards .table > div:nth-of-type(even) {
+    margin-top: -10px;
+    padding-top: 0;
     }
 }

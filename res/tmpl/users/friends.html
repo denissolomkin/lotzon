@@ -9,6 +9,7 @@
 
     <div>
         {{#items}}
+	<a href="/users/{{ id }}">
         <div class="c-friend online clearfix">
             <div class="c-friend-img">
                 <img src="{{ img }}" alt="">
@@ -20,9 +21,10 @@
                     <div>Денег: {{ money }}</div>
                     <div>Баллов: {{ points }}</div>
                 </div>
-                <a href="message" data-json="friends-get-{{ id }}" class="block c-friend-msg">Написать сообщение</a>
+                <a href="/messages/new" class="c-friend-msg">Написать сообщение</a>
             </div>
         </div>
+	</a>
         {{/items}}
         {{^items}}No friends :({{/items}}
 

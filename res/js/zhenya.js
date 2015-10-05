@@ -1,21 +1,4 @@
 $( document ).ready(function() {
-     $('.slider-top').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: false,
-        autoplaySpeed: 2000,
-        dots:true
-      });
-  
-  $("#countdownHolder").countdown({
-                until: (27943),
-                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}',
-            });
-  $("#countdownHolder-mobile").countdown({
-                until: (27943),
-                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}',
-            });
-  
   
   $('a[href=#top]').click(function(){
         $('html, body').animate({scrollTop:0}, 'slow');
@@ -80,9 +63,10 @@ $( document ).ready(function() {
 
   
   
+  $('.done').on('click',function(){
   
-  
-  
+    $(this).removeClass('done').addClass('active').css({'background-color':'#B7CFD3'});
+  })
   
   
 })

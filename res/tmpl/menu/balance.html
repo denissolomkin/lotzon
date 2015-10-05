@@ -1,0 +1,19 @@
+<div class="balance-btn menu-btn-item">
+    <span class="cabinet-balance-count">{{Balance.money}}<span>{{Currency.iso}}</span></span>
+    <span class="cabinet-balance-count">{{Balance.points}}<span>{{#i18n}}title-points{{/i18n}}</span></span>
+</div>
+
+<!-- BALANCE MENU -->
+<div class="menu-balance menu-item">
+    <div class="menu-balance-inf clearfix">
+        <div>{{Balance.money}}<br><span>гривен на счету</span></div>
+        <div>{{Balance.points}}<br><span>баллов на счету</span></div>
+    </div>
+    <div class="menu-balance-actions clearfix">
+        <a href="/balance/cashout" class="menu-balance-item">{{#i18n}}button-cashout{{/i18n}}</a>
+        <a href="/balance/convert" class="menu-balance-item">{{#i18n}}button-convert{{/i18n}}</a>
+    </div>
+    <a href="/balance/transactions" class="menu-balance-item">{{#i18n}}button-transactions{{/i18n}}</a>
+    <a href="/balance/payments" class="menu-balance-item">{{#i18n}}button-payments{{/i18n}}</a>
+</div>
+<!-- end of BALANCE MENU -->

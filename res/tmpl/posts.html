@@ -1,0 +1,25 @@
+﻿<div class="content-box-item home-blog">
+{{#items}}
+					<div class="post-item clearfix">
+						<div class="post-item-img">
+							<img src=" {{ img }}" alt="">
+						</div>
+						<div class="post-item-description">
+							<div class="post-item-inf clearfix">
+								<div class="post-item-date">{{ date }}</div>
+								<div class="post-item-views-comments">
+									<div class="post-item-views-inf">{{ stat.views }}</div>
+									<div class="post-item-comments-inf">{{ stat.comments }}</div>
+								</div>
+							</div>
+							<div class="post-item-title">
+								{{ title }}
+							</div>
+						</div>
+                        <a href="/blog/{{ id }}" class="post-more-btn">{{#i18n}}button-more{{/i18n}}</a>
+					</div>
+
+{{/items}}
+{{^items}} No posts :({{/items}}
+
+</div>

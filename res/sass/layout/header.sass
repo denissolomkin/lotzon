@@ -21,7 +21,113 @@
   top: 11px
   left: 10px
   background: url(img/sprite.png) -227px 0
+  
+@font-face
+  font-family: handbookpro-regular
+  src: url(../css/fonts/pfhandbookpro-regular-webfont.woff)
 
+
+@font-face
+  font-family: handbookpro-italic
+  src: url(../css/pfhandbookpro-italic-webfont.woff)
+
+
+@font-face
+  font-family: Handbook-bold
+  src: url(../css/fonts/pfhandbookpro-bold-webfont.woff)
+
+
+.site-top
+  width: 100%
+  height: 135px
+  position: relative
+  top: 0
+
+
+.container 
+  height: 100%
+
+
+.banner-3
+  position: relative
+  float: left
+
+
+.slider-top
+  position: relative
+  float: left
+  top: 0px
+
+
+.clearfix:before
+  clear: none
+
+
+.menu-main
+  font: 15px/45px Handbook-bold
+
+
+div
+  word-wrap: break-word
+
+.c-notifications-list
+  width: 100%
+
+.content-box-item
+  overflow-y: scroll
+  height: 500px
+
+.message-form-wrapper
+  z-index: 10
+
+.cm-top
+  background-color: #fff
+  z-index: 10
+  top: 0px
+  height: 50px
+
+.new-message,
+.write-admin
+  top: 10px
+  position: absolute
+
+.write-admin
+  right: 32px
+
+.header
+  width: 100%
+  z-index: 200
+
+.menu
+  overflow: visible
+
+.go-to-top
+  position: fixed
+  right: 15px
+  border-radius: 5px
+  line-height: 50px
+  text-align: center
+  -webkit-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65)
+  -moz-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65)
+  box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65)
+  display: none
+  background: url(img/sprite.png) -550px -120px no-repeat
+  background-color: #f2efed
+  right: 50px
+  bottom: 50px
+  width: 50px
+  height: 50px
+
+.is-countdown
+  background-color: #FEE518
+  font-size: 50px
+  font-weight: bold
+  border: none
+  padding-top: 10px
+  width: 90px
+  top: 0
+  position: absolute
+  right: 0
 
 
 // MENUS ------------------------- //
@@ -196,13 +302,164 @@
 // -------------------------------- //
 
 
-.header-right
 
 .inf-slider
   display: none
-
+  overflow: hidden
+  
 .timer
   display: none
 
 .balance-btn
   display: none
+  
+.ticket-tabs,
+.slider-top,
+.header-right,
+.ticket-item,
+.content-box-header,
+.content-box-content th,
+.cabinet_cashout,
+.raiting-name,
+.c-friend-name,
+.content-box-cat
+  font-family: Handbook-bold
+  
+.content-box-header
+  font: 15px/50px Handbook-bold
+
+
+.content-box-tab
+  font: 15px/55px Handbook-bold
+
+.content-box-cat a
+  font-size: 15px !important
+
+  
+  // SLIDER ------------------------- //
+
+header .owl-theme .owl-controls .owl-page span
+  background: #FEE518
+  
+.header-right .rt-bk
+  top: 20px
+  left: 30px
+  position: absolute
+  
+.timer-text
+  top: 8px
+  position: absolute
+  padding-left: 10px
+  font-weight: bold
+  
+.last-results
+  position: absolute
+  top: -5px
+  left: 30px
+  font-weight: bold
+  
+.header-right .ct .rt-bk .rt-bk_li
+  width: 30px
+  height: 30px
+  line-height: 30px
+  
+.header-right .slider-top .ct .n
+  font-size: 15px
+  position: absolute
+  top: 10px
+  right: 10px
+  font-size: 26px
+
+#countdownHolder-mobile
+  top: 0
+  
+.header-right .slider-top
+  height: 55px
+  display: block
+  
+.header-right .slider-top .ct
+  padding-left: 0px
+  
+.header-right .slider-top .ct .tl
+  line-height: 25px
+  font-size: 14px
+  margin-left: 10px
+
+  // -------------------------------- //
+  
+  
+  // SLIDER ------------------------- //
+  
+.ct
+  position: relative
+  width: 100%
+  height: 100%
+  padding: 16px 0 15px 15px
+
+.ct .tl
+  font-size: 12px
+  line-height: 14px
+  color: #000
+  text-transform: uppercase
+  margin-bottom: 10px
+  font-weight: bold
+
+
+.pw-gm-rt .ct .rt-bk
+  margin: 0
+  padding: 0
+  list-style: none
+  font-size: 0
+
+.ct .rt-bk .rt-bk_li
+  width: 35px
+  height: 35px
+  border-radius: 50%
+  background-color: #000
+  font: 17px/34px Handbook-bold
+  background-color: #000
+  color: #fee212
+  text-align: center
+  margin-right: 8px
+  display: inline-block
+
+.notification-window
+  width: 270px
+  height: 140px
+  position: fixed
+  background: rgba(255, 228, 0, 0.95)
+  bottom: 40px
+  border-radius: 5px
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5)
+  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5)
+  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5)
+  z-index: 200
+
+.notification-cross
+  right: 0
+  background: url("/res/img/cross-closer.png") no-repeat 0 0
+  background-size: cover
+  -o-background-size: cover
+  -moz-background-size: cover
+  -webkit-background-size: cover
+  width: 24px
+  cursor: pointer
+  height: 24px
+  margin: 10px
+  position: absolute
+
+.notification-cross:hover
+  height: 26px
+  width: 26px
+  right: -1px
+  top: -1px
+
+.notification-cross:onclick
+  display: none
+  
+.pw-gm-rt .ct
+  padding: 16px 0 15px 30px
+
+// -------------------------------- //
+
+

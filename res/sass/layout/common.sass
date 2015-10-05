@@ -25,6 +25,8 @@ a
 .content
   margin-bottom: 20px
 
+.content-top
+  position: relative
 
 
 .content-box
@@ -86,12 +88,19 @@ a
 
 .content-box-content
   position: relative
+  
+@media (min-width: 120px)
+  .content-box-content 
+    min-height: 200px
 
 .content-box-item
   padding: 20px 10px 20px
 
 .content-box-item.with-cat
   padding-top: 72px
+  
+.ticket-item
+  min-height: 422px
 
 .content-box-item-top
   position: absolute

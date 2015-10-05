@@ -33,6 +33,7 @@ var playerPoints   = 13296;
 var playerMoney   = 3.58;
 var currency =  {"iso":"\u0433\u0440\u043d","one":"\u0433\u0440\u0438\u0432\u043d\u0430","few":"\u0433\u0440\u0438\u0432\u043d\u0438","many":"\u0433\u0440\u0438\u0432\u0435\u043d","coefficient":"1","rate":100};
 var playerId   = 3628;
+var $Cache = [];
 
 WebSocketAjaxClient = function (id) {
 
@@ -288,6 +289,41 @@ $(document).on('click', '.mx .players .m .btn-pass', function(e) {
     WebSocketAjaxClient(path, data);
 
 });
+// выбор карты
+    $(document).on('click', '.players .m .card:not(.select)', function(e){
+        echo('2asdasd');
+         $('.players .m .card').removeClass('select').next().removeClass('select-next')
+            cardsCount > 6 ? RihtMargin = '-'+ deltaMargin : RihtMargin = '-' + cardsLess6 ;
+            // $('.select').next().animate({marginRight: RihtMargin }, 250);
+            $('.players .m .card').css({'margin-top': '0', 'margin-right': RihtMargin });
+           
+
+            
+            
+            $this = $(this).addClass('select');
+
+            if ($this.next().length>0) {
+                $this.next().addClass('select-next');
+                $card =   $('.players .m .card:not(.select), .players .m .card:not(.select-next)');
+                // RihtMargin =  parseInt($card.css('margin-right'));
+                smallestRihtMargin =  cardsCount > 6 ? ( ((cardsCount-2) * RihtMargin + RihtMargin*2)/(cardsCount-2)) : RihtMargin;
+                $card.animate({marginRight:  + smallestRihtMargin + 'px'},{ duration: 200, queue: false });
+                $('.select').animate({marginTop: '-20px', marginRight: marginRightSelect },{ duration: 200, queue: false });
+                $('.select').next().animate({marginRight: marginRightSelect },{ duration: 200, queue: false });
+            }
+            else {
+                $card =   $('.players .m .card:not(.select)'); 
+                smallestRihtMargin = ((cardsCount-1) * RihtMargin + RihtMargin)/(cardsCount-1);
+                $card.animate({marginRight: + smallestRihtMargin + 'px'}, 250);
+            } 
+
+              
+            
+            // $card.css({marginRight: + smallestRihtMargin + 'px'});
+            appDurakCallback('premove');
+
+    });
+
 
 // подтверждение карты
 $(document).on('click', '.mx .players .m .card.select', function(e) {
@@ -382,6 +418,10 @@ function runGame() {
  $('.mx').html($('.mx-tmpl').html());
 }
 
+var medium = window.matchMedia("screen and (max-width: 767px)");
+var small = window.matchMedia("screen and (max-width: 480px)");
+var smallHeight = window.matchMedia("screen and (max-height: 550px)");
+
 
 
 var scale = 1;
@@ -391,28 +431,62 @@ var rightMargin24 = 12;
 var rightMargin8 = 40; 
 var marginIndex = 12;
 var indexMargin = 0
-var mbl = window.matchMedia("screen and (max-width: 768px)"); 
+var cardsLess6 = 40;
+var gameHeight = $(window).height() - 50;
+var marginRightSelect = 0;
 
-function setup_for_devices(mbl) {
+function setup_for_devices() {
 
-    if (mbl.matches) {
+    if (medium.matches) {
         scale = 0.7;
         scaleO = 0.5;
         scaleOf = 0.5;
         rightMargin24 = 0;
         marginIndex = 13;
-        indexMargin = 1
-        
+        indexMargin = 1;
+        $('.game.single-game, .game > .cards').height(gameHeight);
     }
-}
- 
- 
-setup_for_devices(mbl); 
 
-var mbl = window.matchMedia("screen and (max-width: 767px)");
+
+    if (small.matches) {
+        scale = 0.7;
+        scaleO = 0.5;
+        scaleOf = 0.5;
+        rightMargin24 = 0;
+        marginIndex = 13;
+        indexMargin = 1;
+        cardsLess6 = 60;
+        marginRightSelect = -20 +'px';
+        $('.game.single-game, .game > .cards').height(gameHeight);
+
+    }
+
+
+
+    if (smallHeight.matches) {
+        scale = 0.4;
+        scaleO = 0.4;
+        scaleOf = 0.4;
+        rightMargin24 = 0;
+        marginIndex = 0;
+        indexMargin = 2;
+        cardsLess6 = 80;
+        $('.game.single-game, .game > .cards').height(gameHeight);
+        console.log('smallHeigth');
+        marginRightSelect = -40 +'px';
+    }
+   
+}
+
+
 
 
 function appDurakCallback(action) {
+    setup_for_devices(); 
+    small.addListener(setup_for_devices);
+    medium.addListener(setup_for_devices);
+    smallHeight.addListener(setup_for_devices);
+    $('main').addClass('active_small_devices');
     action = action && action.res && action.res.action ? action.res.action : action || onlineGame.action;
 
     switch (action) {
@@ -661,19 +735,33 @@ function appDurakCallback(action) {
                                                         ? (0 + '%')
                                                         : (cardsCount > 6 
                                                             ?(durakSpaceWidth - allCardWidth) / 2 + 'px'
-                                                            :(durakSpaceWidth - allCardWidth + cardsCount * 40 ) / 2 + 'px')
-                                                    :(deltaWidth > 0
-                                                        ?(cardsCount > 6 
-                                                            ?(0 + '%')
-                                                            :(durakSpaceWidth - allCardWidth + cardsCount * 40 ) / 2 + 'px')
-                                                        :(durakSpaceWidth - allCardWidth + cardsCount * 40 ) / 2 + 'px')  
+                                                            :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
+                                                    :((indexMargin != 2)
+                                                        ?(deltaWidth > 0
+                                                            ?(cardsCount > 6 
+                                                                ?(0 + '%')
+                                                                :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
+                                                            :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
+                                                        :(durakSpaceWidth -  cardWidth*scale*cardsCount) / 2 + 'px')  
                                                         
-                                                    )
+                                                )
 
                                         : '')
 
                                     : '');
                                 
+                                
+/*                                 var f = document.querySelector(".cards .players .m .card");
+                                 if (f) {
+
+
+                                 for (k > 0; k = f.length; k++) {
+                                    n = getComputedStyle(k, '');
+                                   console.log(n);
+                                 }
+                                }
+                                    */
+
 
                                 key == playerId && idx == 1 && $('.mx .players .player'+ key +' .card').css
                                     ({
@@ -688,7 +776,7 @@ function appDurakCallback(action) {
                                     ({           
                                         'margin-right' :- (cardsCount > 6 
                                             ? deltaMargin 
-                                            : 40 ) + 'px'     
+                                            : cardsLess6 ) + 'px'     
                                     });
 
                             } else if (key == 'table') {
@@ -704,7 +792,7 @@ function appDurakCallback(action) {
                                     $('.mx .' + key).append('<div ' + (key == 'off' ? 'style="margin-top:' + Math.random() * 160 + 'px;transform: scale('+scaleOf+',' + scaleOf+') rotate(' + deg + 'deg);-webkit-transform: scale('+scaleOf+',' + scaleOf+') rotate(' + deg + 'deg)" ' : '') + 'class="card' + (card ? ' card' + card : '') + '">' + '</div>');
                                 }
                             }
-                            mbl.addListener(setup_for_devices);
+
 
                         });
                     }
@@ -727,8 +815,24 @@ function appDurakCallback(action) {
                 if (index == playerId && onlineGame.action != 'ready') {
                     var status = '';
 
-                    if (index == onlineGame.beater)
+                    if (index == onlineGame.beater) {
                         status = 'Беру';
+                    
+
+/*                        var game_cards = $('.game-cards');
+                        var wrapper = $('.table')
+                            .contents()
+                            .wrap($('<div>').css('position','absolute'))
+                            .parent();
+
+                        wrapper
+                        .animate(
+                            game_cards.offset(), 1000, function() {
+                        $(this).contents().appendTo(game_cards);
+                        wrapper.remove();
+                            }
+                        );*/
+                    }
                     else if (
                         ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.starter == playerId || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[onlineGame.beater].status == 2)) && (onlineGame.players[playerId].status != 1) || (onlineGame.beater && onlineGame.players[onlineGame.beater].status))
                         status = 'Пас';

@@ -27,13 +27,14 @@
   position: absolute
   top: -34px
   overflow: hidden
+  z-index: -10
 
   & li
     position: relative
     top: 8px
     float: left
     width: 10%
-    height: 26px
+    height: 75px
     margin-right: 2%
     background: #909090
     border-radius: 5px 5px 0 0
@@ -46,6 +47,9 @@
 
     &.gold
       background: #F9DC42
+      
+    &.done
+      background-color: #668286
 
     &.active
       top: 0
@@ -61,6 +65,24 @@
     display: none
     text-transform: uppercase
 
+    
+.ticket-tabs li:hover
+  -webkit-transform: translate(0, -8px)
+  -moz-transform: translate(0, -8px)
+  -o-transform: translate(0, -8px)
+  -moz-transition: all 0.1s ease-in-out
+  -o-transition: all 0.1s ease-in-out
+  -webkit-transition: all 0.1s ease-in-out
+  transition: all 0.1s ease-in-out
+    
+     
+.active:hover
+  -webkit-transform: none !important
+  -moz-transform: none !important
+  -o-transform: none !important
+  transform: none !important
+      
+      
 .ticket-item
   padding-top: 15px
   padding-bottom: 15px

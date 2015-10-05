@@ -25,12 +25,12 @@ $(function () {
 
     owl = null;
 
-    runOwlCarousel = function() {
+    runOwlCarousel = function () {
 
         // OWL CAROUSEL =========================== //
         var $matchesCarousel = $('.matches-inf-wrapper.carousel');
 
-        if($matchesCarousel.length) {
+        if ($matchesCarousel.length) {
 
             // OWL CAROUSEL =========================== //
             if ($matchesCarousel.css('box-shadow') === 'none') {
@@ -42,7 +42,7 @@ $(function () {
                 if (owl === null) {
                     $matchesCarousel.owlCarousel({
                         singleItem: true,
-                        autoPlay: false
+                        autoPlay: true
                     });
                     owl = $matchesCarousel.data('owlCarousel');
                 }
@@ -63,7 +63,10 @@ $(function () {
             $Tab = $(this);
 
             R.render({
-                "json": {}
+                "json": {},
+                "callback": function(){
+                    $("html, body").animate({scrollTop: 0}, 'slow');
+                }
             });
 
         }
@@ -83,6 +86,7 @@ $(function () {
             R.render({
                 "callback": function (rendered, findClass) {
                     $(findClass).addClass('slideInRight');
+                    $("html, body").animate({scrollTop: 0}, 'slow');
                 }
             });
 
@@ -90,7 +94,7 @@ $(function () {
         return false;
 
     }
-
+    Box = '';
     backBlock = function (event) {
 
         if (!event.isPropagationStopped()) {
@@ -101,8 +105,10 @@ $(function () {
 
             D.log(['backBlock:', $Tab.attr('href')]);
 
-            $($Tabs + '.active', $Box.prev()).click();
-            $Box.prev().addClass('slideInLeft').show().next().remove();
+            $Box.prev().addClass('slideInLeft').show()
+                .find($Tabs + '.active').click();
+
+            $(this).parents('.content-box').remove();
 
         }
 
@@ -171,7 +177,6 @@ $(function () {
     /* ========================================================= */
 
 
-
     /* ========================================================= */
     //                        TICKETS
     /* ========================================================= */
@@ -180,13 +185,13 @@ $(function () {
 
         D.log('renderTicket');
 
-        if ($Tickets.isComplete()) {
+        if (Tickets.isComplete()) {
 
             $Box = $('.ticket-items').parent();
 
             R.render({
-                "template": 'ticket-complete',
-                "json": $Tickets,
+                "template": 'lottery-ticket-complete',
+                "json": Tickets,
                 "url": false
             });
 
@@ -195,8 +200,8 @@ $(function () {
             $Box = $('.ticket-items');
 
             R.render({
-                "template": 'ticket-tabs',
-                "json": $Tickets,
+                "template": 'lottery-ticket-tabs',
+                "json": Tickets,
                 "url": false,
                 "callback": function () {
                     $($TicketTabs).not('.done').first().click();
@@ -211,13 +216,13 @@ $(function () {
 
         D.log('switchTicket');
 
-        if ($Tickets.isComplete()) {
+        if (Tickets.isComplete()) {
 
             $Box = $('.ticket-items').parent();
 
             R.render({
-                "template": 'ticket-complete',
-                "json": $Tickets,
+                "template": 'lottery-ticket-complete',
+                "json": Tickets,
                 "url": false
             });
 
@@ -233,8 +238,8 @@ $(function () {
             $($Tab).addClass('active');
 
             R.render({
-                "template": 'ticket-item',
-                "json": $Tickets,
+                "template": 'lottery-ticket-item',
+                "json": Tickets,
                 "url": false,
                 "callback": function () {
                     activateTicket();
@@ -250,7 +255,9 @@ $(function () {
         $('.ticket-item .ticket-random').off().on('click', clickTicketRandom);
         $('.ticket-item .ticket-favorite').off().on('click', clickTicketFavorite);
         $('.ticket-item .ball-number').off().on('click', clickTicketBall);
-        $('.ticket-item .ticket-favorite .after i').off().on('click', function () {$('.profile .ul_li[data-link="profile-info"]').click();});
+        $('.ticket-item .ticket-favorite .after i').off().on('click', function () {
+            $('.profile .ul_li[data-link="profile-info"]').click();
+        });
         $('.ticket-item .add-ticket').on('click', addTicket);
     }
 
@@ -280,7 +287,7 @@ $(function () {
 
             window.setTimeout(function () {
                 window.clearInterval(lotInterval);
-                if ($('.ticket-balls li.select').length == $Tickets.selectedBalls) {
+                if ($('.ticket-balls li.select').length == Tickets.selectedBalls) {
                     $('.add-ticket').addClass('on');
                 }
             }, 1000);
@@ -314,9 +321,9 @@ $(function () {
                 $('.ticket-item li.select').removeClass('select');
             }
 
-            if ($Tickets.favorite.length) {
+            if (Player.Favorite.length) {
                 for (var i = 0; i <= 5; ++i) {
-                    $('.ticket-balls .number-' + $Tickets.favorite[i]).addClass('select');
+                    $('.ticket-balls .number-' + Player.Favorite[i]).addClass('select');
                 }
                 $(this).addClass('select');
                 $('.balls-count b').html(0);
@@ -414,7 +421,7 @@ $(function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.status == 1) {
-                        $Tickets.balls[ticket.tickNum] = ticket.combination;
+                        Tickets.balls[ticket.tickNum] = ticket.combination;
                         $($TicketTabs + '.active').addClass('done');
                         switchTicket();
                     } else {
@@ -449,7 +456,6 @@ $(function () {
     }
 
 
-
     // TICKET ================================= //
     var $ticketBox = '.ticket-item';
     var $ticketBalls = '.ticket-numbers li';
@@ -458,7 +464,7 @@ $(function () {
 
     function setBallsMargins() {
 
-        if ( detectDevice() === 'mobile') {
+        if (detectDevice() === 'mobile') {
             console.log('setBallsMargins');
             var ticketBox = $($ticketBox);
             var ticketBalls = $($ticketBalls);
@@ -507,6 +513,7 @@ $(function () {
             padding: padding
         };
     }
+
     /* ========================================================= */
     /* ========================================================= */
 
@@ -514,11 +521,11 @@ $(function () {
     windowResize = function () {
 
         // MENU =================================== //
-        var mobile  = menuMobile();
-        if ( mobile ) {
+        var mobile = menuMobile();
+        if (mobile) {
             $menuMore.removeClass('menu-item');
 
-            if ( $menuBtn.hasClass('active') ) {
+            if ($menuBtn.hasClass('active')) {
                 $menu.show();
             }
             else {
@@ -527,7 +534,7 @@ $(function () {
         } else {
             $menuMore.addClass('menu-item');
 
-            if ( $menuBtn.hasClass('active') ) {
+            if ($menuBtn.hasClass('active')) {
                 $menuMore.show();
             }
             else {
