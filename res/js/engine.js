@@ -70,6 +70,7 @@ $(function () {
 
             $Error = $('<div class="error"><div><span>' + M.i18n('title-error') + '</span>' + message.join(' ') + '</div></div>');
 
+            alert(message.join(' '));
             if (!$Box || !$Box.length){
                 $Box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first();
             }
@@ -113,6 +114,7 @@ $(function () {
 
         "render": function (options) {
 
+            console.log(options);
             try {
                 if (!options) options = {};
 
@@ -121,7 +123,7 @@ $(function () {
                 if (!options.href)
                     options.href = U.Parse.Undo($Href || options.template);
                 if (!options.json)
-                    options.json = $JSON || false;
+                     options.json = ($JSON || false);
                 if (!options.callback)
                     options.callback = $Callback;
 
@@ -135,10 +137,18 @@ $(function () {
                 else
                     options.tab = (typeof options.tab !== 'object' ? $('.'+options.tab+':visible').first() : options.tab);
 
+                /* disable JSON for "/new" template if none "?object:id" */
+                if(!options.json && options.template.search(/new/)!= -1){
+                    var url = options.href.split('?'), template = options.template.split('?');
+
+                    if(url.length > 1) options.href = url[1];
+                    else options.json =  {};
+
+                    if(template.length > 1) options.template = template[0];
+                }
+
                 R.empty('soft');
-
                 D.log(['render.push:', options.template, options.href, options.json], 'info');
-
                 R.Render.push({
                     'options': {
                         'box': options.box,
@@ -299,7 +309,7 @@ $(function () {
 
             try {
 
-                D.log(['inputHTML into:', (typeof options.box == 'object' ? options.box.attr('class') : options.box)]);
+                D.log(['inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box)]);
 
                 var findClass = '.' + $(rendered).attr('class').replace(/ /g, '.');
 
@@ -428,6 +438,7 @@ $(function () {
 
         "Path": {
 
+            "Post": "/res/post/",
             "Json": "/res/json/",
             "Ajax": "/res/json/",
             "Tmpl": "/res/tmpl/"
@@ -435,6 +446,10 @@ $(function () {
         },
 
         "Generate": {
+            "Post": function (url) {
+                return U.Path.Post + U.Parse.Url(url);
+            },
+
             "Ajax": function (url) {
                 return U.Path.Ajax + U.Parse.Url(url);
             },
@@ -450,7 +465,7 @@ $(function () {
 
         "Parse": {
             "Url": function (url) {
-                return url.replace(/-/g, '/');
+                return url.replace(/^\//, "").replace(/-/g, '/');
             },
 
             "Tmpl": function (url) {
@@ -465,8 +480,7 @@ $(function () {
                 if (typeof url == 'object') {
                     return url;
                 } else {
-                    url = url.replace(/^\//, "");
-                    return url.replace(/\//g, '-');
+                    return url.replace(/^\//, "").replace(/\/|=/g, '-');
                 }
             }
         },

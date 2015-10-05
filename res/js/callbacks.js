@@ -60,11 +60,22 @@
 
             // handlers
             $(window).on('resize', windowResize);
+
+            /* navigation */
             $(document).on('click', $Tabs, switchTab);
             $(document).on('click', $Cats, switchCat);
             $(document).on('click', 'a', loadBlock);
             $(document).on('click', 'div.back', backBlock);
+
+            /* ticket */
             $(document).on('click', $TicketTabs, switchTicket);
+
+            /* new message*/
+            $(document).on('input', ".enter-friend-name", searchMessageAddressee);
+            $(document).on('click', ".nm-change", clearMessageAddressee);
+            $(document).on('click', ".nm-friend", setMessageAddressee);
+            $(document).on('click', ".message-form-btn", sendMessage);
+
 
         },
 

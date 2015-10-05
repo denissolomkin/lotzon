@@ -1,6 +1,6 @@
 ﻿		<div class="content-box user">
-
-			<div class="content-box-header back">Jane Barnes</div>
+            {{#item}}
+			<div class="content-box-header back">{{ title.nickname }}</div>
 
 			<div class="content-box-content clearfix">
 				<div class="content-box-item c-friend-detail">
@@ -9,16 +9,16 @@
 						<div class="c-user-inf">
 							<div class="c-user-img online">
 								<div class="c-user-delete"></div>
-								<img src="/res/img/user_img.jpg" alt="">
+								<img src="{{ img }}" alt="">
 							</div>
 						</div>
 
 						<div class="c-user-personal-inf clearfix">
 							<table>
-								<tr><td>Имя</td><td>Дмитрий</td></tr>
-								<tr><td>Фамилия</td><td>Сидоров</td></tr>
-								<tr><td>Отчество</td><td>Анатолиевич</td></tr>
-								<tr><td>Страна</td><td>Украина</td></tr>
+								<tr><td>Имя</td><td>{{ title.name }}</td></tr>
+								<tr><td>Фамилия</td><td>{{ title.surname }}</td></tr>
+								<tr><td>Отчество</td><td>{{ title.patronymic }}</td></tr>
+								<tr><td>Страна</td><td>{{ addresse.country }}</td></tr>
 							</table>
 
 							<div class="c-social">
@@ -43,9 +43,9 @@
 						</table>
 					</div>
 
-					<a href="communication_new_message_selected" class="send-msg">Написать сообщение</a>
+					<a href="/communication/messages/new?users=1" class="send-msg">Написать сообщение</a>
 
 				</div>
 			</div>
-
+            {{/item}}
 		</div><!-- .content-box -->

@@ -15,6 +15,10 @@
                 return 'desktop';
             case '0.4':
                 return 'desktop-hd';
+            case '0.5':
+                return 'smallMobile';
+            case '0.6':
+                return 'landscape';
         }
     }
     // ======================================= //

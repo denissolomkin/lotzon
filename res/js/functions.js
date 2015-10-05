@@ -321,9 +321,9 @@ $(function () {
                 $('.ticket-item li.select').removeClass('select');
             }
 
-            if (Player.Favorite.length) {
+            if (Player.favorite.length) {
                 for (var i = 0; i <= 5; ++i) {
-                    $('.ticket-balls .number-' + Player.Favorite[i]).addClass('select');
+                    $('.ticket-balls .number-' + Player.favorite[i]).addClass('select');
                 }
                 $(this).addClass('select');
                 $('.balls-count b').html(0);
@@ -550,4 +550,87 @@ $(function () {
         // OwlCarousel ============================ //
         runOwlCarousel();
     }
+
+    clearMessageAddressee = function() {
+        R.render({
+            'template': 'communication-messages-new',
+            'url': false,
+            'callback': function(html){
+                $('.addressee').html($('.addressee', $(html)).html());
+            }
+        });
+    },
+
+    setMessageAddressee = function() {
+        var userId = $(this).data('userid');
+        R.render({
+            'template': 'communication-messages-new?users='+userId,
+            'url': false,
+            'callback': function(html){
+                $('.addressee').html($('.addressee', $(html)).html());
+            }
+        });
+    },
+
+    searchMessageAddressee = function() {
+        $.getJSON(
+            U.Generate.Ajax('/users/search?match='+$(this).val()),
+            function (data) {
+                R.render({
+                    'template': 'communication-messages-new',
+                    'json': data.res,
+                    'url': false,
+                    'callback': function(html){
+                        $('.addressee .nm-search-result-box').html($('.addressee .nm-search-result-box', $(html)).html());
+                    }
+                });
+
+            });
+    }
+
+    sendMessage = function() {
+        event.preventDefault();
+        var form = $(this).parents('form').serializeObject();
+        if(form.userid && form.message)
+            $.post(
+                U.Generate.Post('/communications/messages/addMessage'),
+                form,
+                function (data) {
+                    R.render({
+                        'template': 'communication-messages-new',
+                        'json': data.res,
+                        'url': false,
+                        'callback': function(html){
+                            $('.addressee .nm-search-result-box').html($('.addressee .nm-search-result-box', $(html)).html());
+                        }
+                    });
+
+                });
+    }
+
+    $.fn.serializeObject = function(){
+        var obj = {};
+        var assignByPath = function (obj,path,value){
+            if (path.length == 1) {
+                if(path[0])
+                    obj[path[0].replace(':','.')] = value;
+                else obj[value]=value;
+                return obj;
+            } else if (obj[path[0]] === undefined) {
+                obj[path[0].replace(':','.')] = {};
+            }
+            return assignByPath(obj[path.shift()],path,value);
+        }
+
+        $.each( this.serializeArray(), function(i,o){
+            var n = o.name,
+                v = o.value;
+            path = n.replace('.',':').replace(/\]\[/g,'.').replace(/\[/g,'.').replace(']','').split('.');
+
+            assignByPath(obj,path,v);
+        });
+
+        return obj;
+    };
+
 });
