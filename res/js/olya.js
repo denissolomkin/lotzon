@@ -41,7 +41,7 @@ WebSocketAjaxClient = function (id) {
             else
                 step++;
 
-            data = Cache['games-game'][step]
+            data = Cache['games-game'][step];
 
             if (data.error)
                 $("#report-popup").show().find(".txt").text(getText(data.error)).fadeIn(200);
@@ -71,8 +71,6 @@ WebSocketAjaxClient = function (id) {
                         appId = data.res.appId;
                         data = null;
                     }
-
-                    / /
 
                     playAudio([appName, onlineGame.action]);
                 }
@@ -138,7 +136,13 @@ function playAudio(key) {
     }
 }
 
-
+Object.size = function(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
 
 function stackCallback() {
     if($('.rls-r-t').is(':visible')) {
@@ -290,7 +294,7 @@ $(document).on('click', '.mx .players .m .btn-pass', function(e) {
 });
 // выбор карты
     $(document).on('click', '.players .m .card:not(.select)', function(e){
-        echo('2asdasd');
+        D.log('2asdasd');
          $('.players .m .card').removeClass('select').next().removeClass('select-next')
             cardsCount > 6 ? RihtMargin = '-'+ deltaMargin : RihtMargin = '-' + cardsLess6 ;
             // $('.select').next().animate({marginRight: RihtMargin }, 250);
@@ -326,7 +330,7 @@ $(document).on('click', '.mx .players .m .btn-pass', function(e) {
 
 // подтверждение карты
 $(document).on('click', '.mx .players .m .card.select', function(e) {
-    echo('asdasd');
+    D.log('asdasd');
 
     var path = 'app/' + appName + '/' + appId;
     var data = {
@@ -393,10 +397,7 @@ function getCurrency(value, part) {
             break;
     }
 }
-function echo(log) {
-    var d = new Date();
-    console.log(d.toLocaleTimeString()+': '+log);
-}
+
 function hideAllGames() {
 
 }
@@ -509,8 +510,8 @@ function appDurakCallback(action) {
 
             $(".ui-droppable").droppable("destroy");
             $('.m .card.draggable').draggable("destroy");
-            echo(onlineGame.action);
-            echo(onlineGame);
+            D.log(onlineGame.action);
+            D.log(onlineGame);
 
             if (($.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
                     (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)) || !$('.mx .players').children('div').length) {
@@ -525,7 +526,7 @@ function appDurakCallback(action) {
 
                 $('.ngm-rls').fadeOut(200);
 
-                echo('обнулили поля');
+                D.log('обнулили поля');
 
                 fields = [];
                 statuses = [];
@@ -654,9 +655,9 @@ function appDurakCallback(action) {
                     } else if (key == 'table' && 0) {
 
                     } else if (key == 'off' && newLen == oldLen) {
-                        //echo('пропускаем off');
+                        //D.log('пропускаем off');
                     } else if (is_numeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length)) {
-                        //echo('пропускаем '+key);
+                        //D.log('пропускаем '+key);
 
                     } else {
 
@@ -858,12 +859,12 @@ function appDurakCallback(action) {
                     if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 ||
                         ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 && onlineGame.beater == index)) {
 
-                        // echo($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
+                        // D.log($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
 
                         if (onlineGame.timestamp && timestamp != onlineGame.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-onlineGame.timeout) > 2
                             || !$('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length) {
 
-                            echo('remove');
+                            D.log('remove');
 
                             $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
                             $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration', onlineGame.timeout + 's');
@@ -886,7 +887,7 @@ function appDurakCallback(action) {
                     if (player.status || player.ready || onlineGame.winner) {
 
                         var status = '';
-                        // echo($.inArray(parseInt(index), onlineGame.current), parseInt(index), onlineGame.current);
+                        // D.log($.inArray(parseInt(index), onlineGame.current), parseInt(index), onlineGame.current);
 
                         if (player.status == 2 && onlineGame.beater == index)
                             status = 'Беру';
@@ -901,7 +902,7 @@ function appDurakCallback(action) {
                     }
                 }
 
-                echo(timestamp);
+                D.log(timestamp);
                 if (onlineGame.timestamp)
                     timestamp = onlineGame.timestamp;
             });

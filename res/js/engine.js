@@ -11,7 +11,7 @@ $(function () {
             "info": true,
             "warn": false,
             "error": true,
-            "log": false,
+            "log": true,
             "clean": true
         },
 
@@ -38,7 +38,7 @@ $(function () {
 
                 var output = '';
 
-                if (typeof log == 'object' && log.length) {
+                if (log && typeof log == 'object' && log.length) {
 
                     $.each(log, function (index, obj) {
                         if (obj)
