@@ -2,12 +2,19 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "item":{
-                "id": "3",
+        "item":
+            {
+                "id": "1",
                 "img": "/res/img/user_img.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "games": "50000",
                 "money": "0"
-        }
+            },
+        "messageid": 20,
+        "messages":[
+            {
+                "text": "Ноутбук Asus X551MA"
+            }
+        ]
 	}
 }

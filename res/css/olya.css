@@ -182,7 +182,11 @@
     margin: 0 auto;
     height: 100%;
 }
-
+@media (min-width: : 480px) {
+    .js-detect {
+        opacity: 0.5;
+    }
+}
 @media (max-width: 767px) { 
     .cards .deck .card  {
     transform: rotate(10deg) scale(0.7, 0.7);
@@ -239,6 +243,11 @@
          transform: rotate(-1deg) scale(0.5,0.5);
         -webkit-transform: rotate(-1deg) scale(0.5,0.5);
     }
+    .cards .players .m .gm-pr .pr-cl .msg-move {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
 }
 @media (max-height: 550px) {
 

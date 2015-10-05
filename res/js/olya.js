@@ -297,18 +297,13 @@ $(document).on('click', '.mx .players .m .btn-pass', function(e) {
         D.log('2asdasd');
          $('.players .m .card').removeClass('select').next().removeClass('select-next')
             cardsCount > 6 ? RihtMargin = '-'+ deltaMargin : RihtMargin = '-' + cardsLess6 ;
-            // $('.select').next().animate({marginRight: RihtMargin }, 250);
             $('.players .m .card').css({'margin-top': '0', 'margin-right': RihtMargin });
-           
-
-            
             
             $this = $(this).addClass('select');
 
             if ($this.next().length>0) {
                 $this.next().addClass('select-next');
                 $card =   $('.players .m .card:not(.select), .players .m .card:not(.select-next)');
-                // RihtMargin =  parseInt($card.css('margin-right'));
                 smallestRihtMargin =  cardsCount > 6 ? ( ((cardsCount-2) * RihtMargin + RihtMargin*2)/(cardsCount-2)) : RihtMargin;
                 $card.animate({marginRight:  + smallestRihtMargin + 'px'},{ duration: 200, queue: false });
                 $('.select').animate({marginTop: '-20px', marginRight: marginRightSelect },{ duration: 200, queue: false });
@@ -417,75 +412,95 @@ function hideAllGames() {
 function runGame() {
  $('.mx').html($('.mx-tmpl').html());
 }
-
-var medium = window.matchMedia("screen and (max-width: 767px)");
-var small = window.matchMedia("screen and (max-width: 480px)");
-var smallHeight = window.matchMedia("screen and (max-height: 550px)");
-
-
-
-var scale = 1;
-var scaleO = 0.7;
-var scaleOf = 0.7;
-var rightMargin24 = 12;
-var rightMargin8 = 40; 
-var marginIndex = 12;
-var indexMargin = 0
-var cardsLess6 = 40;
-var gameHeight = $(window).height() - 50;
-var marginRightSelect = 0;
-
+       var scale,
+        scaleO,
+        scaleOf,
+        rightMargin24,
+        rightMargin8,
+        marginIndex ,
+        indexMargin,
+        cardsLess6,
+        marginRightSelect;
 function setup_for_devices() {
 
-    if (medium.matches) {
-        scale = 0.7;
-        scaleO = 0.5;
-        scaleOf = 0.5;
-        rightMargin24 = 0;
-        marginIndex = 13;
-        indexMargin = 1;
-        $('.game.single-game, .game > .cards').height(gameHeight);
-    }
+    console.warn('setup_for_devices');
+    var gameHeight = $(window).height() - 50;
+    var orientation = ($(window).width() > $(window).height());
+     
+    if($( window ).width() > 767) {
+         scale = 1;
+         scaleO = 0.7;
+         scaleOf = 0.7;
+         rightMargin24 = 12;
+         rightMargin8 = 40; 
+         marginIndex = 12;
+         indexMargin = 0
+         cardsLess6 = 40;
+         marginRightSelect = 0;
 
+    } else if($( window ).width() < 767) {
 
-    if (small.matches) {
-        scale = 0.7;
-        scaleO = 0.5;
-        scaleOf = 0.5;
-        rightMargin24 = 0;
-        marginIndex = 13;
-        indexMargin = 1;
-        cardsLess6 = 60;
-        marginRightSelect = -20 +'px';
-        $('.game.single-game, .game > .cards').height(gameHeight);
+            scale = 0.7;
+            scaleO = 0.5;
+            scaleOf = 0.5;
+            rightMargin24 = 0;
+            marginIndex = 13;
+            indexMargin = 1;
+            $('.game.single-game, .game > .cards').height(gameHeight);
+            
+            if ($( window ).height() < 550) {
+                scale = 0.4;
+                scaleO = 0.4;
+                scaleOf = 0.4;
+                rightMargin24 = 0;
+                marginIndex = 0;
+                indexMargin = 2;
+                cardsLess6 = 80;
+                $('.game.single-game, .game > .cards').height(gameHeight);
+                marginRightSelect = -40 +'px';
 
-    }
+            }
 
+    } else if ($( window ).width() < 480) {
 
+            console.log('small');
+            scale = 0.7;
+            scaleO = 0.5;
+            scaleOf = 0.5;
+            rightMargin24 = 0;
+            marginIndex = 13;
+            indexMargin = 1;
+            cardsLess6 = 60;
+            marginRightSelect = -20 +'px';
+            $('.game.single-game, .game > .cards').height(gameHeight);
 
-    if (smallHeight.matches) {
-        scale = 0.4;
-        scaleO = 0.4;
-        scaleOf = 0.4;
-        rightMargin24 = 0;
-        marginIndex = 0;
-        indexMargin = 2;
-        cardsLess6 = 80;
-        $('.game.single-game, .game > .cards').height(gameHeight);
-        console.log('smallHeigth');
-        marginRightSelect = -40 +'px';
-    }
    
+}   
 }
 
 
-
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
 function appDurakCallback(action) {
     setup_for_devices(); 
-    small.addListener(setup_for_devices);
+/*    small.addListener(setup_for_devices);
     medium.addListener(setup_for_devices);
-    smallHeight.addListener(setup_for_devices);
+    smallHeight.addListener(setup_for_devices);*/
+    // $(window).resize(function() {
+    //     setup_for_devices(); 
+    //     small.addListener(setup_for_devices);
+    //     medium.addListener(setup_for_devices);
+    //     smallHeight.addListener(setup_for_devices);
+    // });
+
+
+
     $('main').addClass('active_small_devices');
     action = action && action.res && action.res.action ? action.res.action : action || onlineGame.action;
 
@@ -514,55 +529,56 @@ function appDurakCallback(action) {
             D.log(onlineGame);
 
             if (($.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
-                    (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)) || !$('.mx .players').children('div').length) {
+                    (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)) || !$('.mx .players').children('div').length) 
+            {
 
-                hideAllGames();
-                runGame();
+                        hideAllGames();
+                        runGame();
 
-                $('game > div ').addClass('cards');
+                        $('game > div ').addClass('cards');
 
-                if (onlineGame.variation && onlineGame.variation.type && onlineGame.variation.type == 'revert')
-                    $('game > div').addClass('Revert');
+                        if (onlineGame.variation && onlineGame.variation.type && onlineGame.variation.type == 'revert')
+                            $('game > div').addClass('Revert');
 
-                $('.ngm-rls').fadeOut(200);
+                            $('.ngm-rls').fadeOut(200);
 
                 D.log('обнулили поля');
 
-                fields = [];
-                statuses = [];
+                            fields = [];
+                            statuses = [];
 
-                timestamp = null;
+                            timestamp = null;
 
-                if (players = onlineGame.players) {
+                        if (players = onlineGame.players) {
 
-                    if (onlineGame.action == 'wait') {
-                        var player = {
-                            "avatar": "",
-                            "name": "ждем..."
-                        };
-                        for (i = Object.size(players); i < onlineGame.playerNumbers; i++) {
-                            index = 0 - i;
-                            players[index] = player;
-                        }
-                    }
+                            if (onlineGame.action == 'wait') {
+                                var player = {
+                                    "avatar": "",
+                                    "name": "ждем..."
+                                };
+                                for (i = Object.size(players); i < onlineGame.playerNumbers; i++) {
+                                    index = 0 - i;
+                                    players[index] = player;
+                                }
+                            }
 
 
-                    if (onlineGame.action == 'start') {
+                        if (onlineGame.action == 'start') {
 
-                        var orders = Object.keys(players);
-                        var order = players[playerId].order;
+                            var orders = Object.keys(players);
+                            var order = players[playerId].order;
 
-                        orders.sort(function(a, b) {
+                            orders.sort(function(a, b) {
 
-                            a = players[a].order;
-                            b = players[b].order;
+                                a = players[a].order;
+                                b = players[b].order;
 
-                            check = a == order ? 1 : (
-                                b == order ? -1 : (
-                                    (a < order && b < order) || (a > order && b > order) ? (a - b) : (b - a)))
+                                check = a == order ? 1 : (
+                                    b == order ? -1 : (
+                                        (a < order && b < order) || (a > order && b > order) ? (a - b) : (b - a)))
 
-                            return check;
-                        });
+                                return check;
+                            });
 
                         $.each(orders, function(index, value) {
                             div = '<div class="player' + value + (value == playerId ? ' m' : ' o col' + (Object.size(players) - 1)) + '"></div>';
@@ -621,14 +637,14 @@ function appDurakCallback(action) {
 
                     if (onlineGame.action == 'ready' || onlineGame.action == 'wait')
                         $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
-                }
+                    }
 
-                if (onlineGame.trump)
-                    $('.mx .deck').append(
-                        '<div class="lear card' + (onlineGame.trump[0]) + '"></div>' +
-                        '<div class="last"></div>' +
-                        (onlineGame.fields.deck && onlineGame.fields.deck.length ? '<div class="card trump card' + onlineGame.trump + '"></div>' : '') +
-                        (onlineGame.fields.deck && onlineGame.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
+                    if (onlineGame.trump)
+                        $('.mx .deck').append(
+                            '<div class="lear card' + (onlineGame.trump[0]) + '"></div>' +
+                            '<div class="last"></div>' +
+                            (onlineGame.fields.deck && onlineGame.fields.deck.length ? '<div class="card trump card' + onlineGame.trump + '"></div>' : '') +
+                            (onlineGame.fields.deck && onlineGame.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
 
 
             } else {}
@@ -749,18 +765,7 @@ function appDurakCallback(action) {
                                         : '')
 
                                     : '');
-                                
-                                
-/*                                 var f = document.querySelector(".cards .players .m .card");
-                                 if (f) {
 
-
-                                 for (k > 0; k = f.length; k++) {
-                                    n = getComputedStyle(k, '');
-                                   console.log(n);
-                                 }
-                                }
-                                    */
 
 
                                 key == playerId && idx == 1 && $('.mx .players .player'+ key +' .card').css
@@ -1026,6 +1031,14 @@ function appDurakCallback(action) {
 
     }
 }
+
+$(window).on('resize', function(){ 
+        D.log('setup_for_devices','error');
+        fields = [];
+        appDurakCallback();
+    }
+    );
+
 function updatePoints(points) {
     playerPoints = parseInt(points) || playerPoints;
     points=playerPoints.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
