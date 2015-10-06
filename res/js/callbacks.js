@@ -6,90 +6,74 @@
 
         "init": function(){
 
-            // variables
+            // classes
+            I = {
+                /* navigation and tabs */
+                Tabs: '.content-box-tabs a',
+                Cats: '.content-box-cat a',
+                TicketTabs: '.ticket-tabs li',
+                /* menu */
+                menu: '.menu',
+                menuMain: '.menu-main',
+                menuMore:'.menu-more',
+                menuProfile:'.menu-profile',
+                menuBalance:'.menu-balance',
+                menuItem:'.menu-item',
+                menuBtn:'.menu-btn',
+                menuProfileBtn:'.menu-profile-btn',
+                menuBalanceBtn:'.menu-balance-btn',
+                menuBtnItem:'.menu-btn-item',
+                balanceBtn:'.balance-btn',
+                /* communication */
+                comment: '.comment',
+                notifications: '.c-notifications',
+                showNotifications: '.c-show-notifications',
+                hideNotifications: '.c-hide-notifications',
+                notificationsList: '.c-notifications-list',
+                closeList: '.c-notifications-list .close-list',
+                closeNotification: '.c-notification .close-notification',
+                textArea: '.message-form-area',
+            }
 
-            $Tabs = '.content-box-tabs a';
-            $Cats = '.content-box-cat a';
-            $TicketTabs = '.ticket-tabs li';
-
-            Tickets = $.extend(
-                Tickets,
-                {
-                    "ballsHTML": function () {
-                        var html = '';
-                        for (i = 1; i <= this.totalBalls; i++) {
-
-                            html += "<li class='ball-number number-" + i + ($.inArray(i, this.balls[$($TicketTabs).filter('.active').data('ticket')]) == -1 ? '' : ' select') + "'>" + i + "</li>";
-                        }
-                        return html;
-
-                    },
-
-                    "tabsHTML": function () {
-                        var html = '';
-                        for (i = 1; i <= this.totalTickets; i++) {
-                            html += "<li data-ticket='" + i + "' class='" + (this.balls && this.balls[i] ? 'done' : '') + "'><span>" + M.i18n('title-ticket') + " </span>#" + i + "</li>";
-                        }
-                        return html;
-                    },
-
-                    "isDone": function () {
-                        return (this.balls && this.balls[$($TicketTabs).filter('.active').data('ticket')] && this.balls[$($TicketTabs).filter('.active').data('ticket')].length && this.balls[$($TicketTabs).filter('.active').data('ticket')].length == this.selectedBalls);
-                    },
-
-                    "isComplete": function () {
-                        return (this.balls && Object.keys(this.balls).length == this.totalTickets);
-                    },
-
-                    "completeHTML": function () {
-
-                        var html = '';
-
-                        $.each(this.balls, function (index, ticket) {
-                            html += "<ul class='ticket-result'><li class='ticket-number-result'><span>БИЛЕТ</span> #" + index + "";
-                            $.each(ticket, function (number, ball) {
-                                html += "<li class='ball-number-result'>" + ball + "</li>";
-                            });
-                            html += "</ul>";
-                        });
-
-                        return html;
-                    }
-                }
-            );
+            // extend tickets
+            Tickets = $.extend(Tickets, TicketsFunctions);
 
             // handlers
             $(window).on('resize', windowResize);
+            $(window).on('scroll', windowScroll);
+            $(document).on('click', hideBlocks);
 
             /* navigation */
-            $(document).on('click', $Tabs, switchTab);
-            $(document).on('click', $Cats, switchCat);
+            $(document).on('click', I.Tabs, switchTab);
+            $(document).on('click', I.Cats, switchCat);
             $(document).on('click', 'a', loadBlock);
             $(document).on('click', 'div.back', backBlock);
 
             /* ticket */
-            $(document).on('click', $TicketTabs, switchTicket);
+            $(document).on('click', I.TicketTabs, switchTicket);
 
             /* new message*/
             $(document).on('input', ".enter-friend-name", searchMessageAddressee);
             $(document).on('click', ".nm-change", clearMessageAddressee);
             $(document).on('click', ".nm-friend", setMessageAddressee);
             $(document).on('click', ".message-form-btn", sendMessage);
-
+            
+            /* go top */
+            $('.go-to-top').click(function(){$('html, body').animate({scrollTop:0}, 'slow');return false;});
 
         },
 
         "lottery": function(){
 
-            runOwlCarousel();
+            initOwlCarousel();
             renderTicket();
 
         },
 
         "blog": function(){
 
-            $Box = $('.content-box-content:visible');
             R.render({
+                'box': $('.content-box-content:visible'),
                 'template': 'posts',
                 'url': false
             })
@@ -106,155 +90,217 @@
                 'box': 'balance',
                 'template': 'menu-balance',
                 'json': Player,
-                'url': false
+                'url': false,
+                'callback': function(){
+
+                    $("header a").on('click', loadPage);
+                    $('[href="/' + R.Path[1] + '"]').click();
+
+                }
             });
 
             R.render({
                 'box': 'inf-slider',
                 'template': 'menu-slider',
                 'json': Slider,
-                'url': false
+                'url': false,
+                'callback': function(){
+
+                    $("#countdownHolder").countdown({
+                        until: (Slider.timer),
+                        layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
+                    });
+
+                    $(".slider-top").owlCarousel({
+                        navigation : false,
+                        slideSpeed : 300,
+                        paginationSpeed : 400,
+                        singleItem: true,
+                        autoPlay: true
+                    });
+                }
             });
 
-            $menu = $('.menu');
-            $menuMain = $('.menu-main');
-            $menuMore = $('.menu-more');
-            $menuProfile = $('.menu-profile');
-            $menuBalance = $('.menu-balance');
-            $menuItem = $('.menu-item');
-            $menuBtn = $('.menu-btn');
-            $menuProfileBtn = $('.menu-profile-btn');
-            $menuBalanceBtn = $('.menu-balance-btn');
-            $menuBtnItem = $('.menu-btn-item');
-            $balanceBtn = $('.balance-btn');
 
-            if (!menuMobile()) {
-                $menuMore.addClass('menu-item');
-                $menuProfile.addClass('menu-item');
+            if (!isMobile()) {
+                $(I.menuMore).addClass('menu-item');
+                $(I.menuProfile).addClass('menu-item');
             }
 
             // MENU
-            $menuBtn.on('click', function () {
-                var mobile = menuMobile();
+            $(document).on('click', I.menuBtn, function () {
+                var mobile = isMobile();
 
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
 
                     if (mobile) {
-                        $menu.fadeOut(200);
-                    }
-                    else {
-                        $menuMore.fadeOut(200);
+                        $(I.menu).fadeOut(200);
+                    } else {
+                        $(I.menuMore).fadeOut(200);
                     }
                 }
                 else {
-                    $menuBtnItem.removeClass('active');
+                    $(I.menuBtnItem).removeClass('active');
                     $(this).addClass('active');
 
-                    $menuBalance.hide();
-                    $menuProfile.hide();
+                    $(I.menuBalance).hide();
+                    $(I.menuProfile).hide();
 
                     if (mobile) {
-                        $menu.fadeIn(200);
-                    }
-                    else {
-                        $menuMore.fadeIn(200);
+                        $(I.menu).fadeIn(200);
+                    } else {
+                        $(I.menuMore).fadeIn(200);
                     }
                 }
             });
 
             // PROFILE MENU
-            $menuProfileBtn.on('click', function () {
-                var mobile = menuMobile();
+            $(document).on('click', I.menuProfileBtn, function () {
+                var mobile = isMobile();
 
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
-                    $menuProfile.fadeOut(200);
+                    $(I.menuProfile).fadeOut(200);
                 }
                 else {
-                    $menuBtnItem.removeClass('active');
+                    $(I.menuBtnItem).removeClass('active');
                     $(this).addClass('active');
 
-                    $menuBalance.hide();
+                    $(I.menuBalance).hide();
 
                     if (mobile) {
-                        $menu.hide();
+                        $(I.menu).hide();
                     }
                     else {
-                        $menuMore.hide();
+                        $(I.menuMore).hide();
                     }
 
-                    $menuProfile.fadeIn(200);
+                    $(I.menuProfile).fadeIn(200);
                 }
             });
 
             // BALANCE MENU
-            $menuBalanceBtn.on('click', function () {
-                var mobile = menuMobile();
+            $(document).on('click', I.menuBalanceBtn, function () {
+                var mobile = isMobile();
 
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
-                    $menuBalance.fadeOut(200);
+                    $(I.menuBalance).fadeOut(200);
                 }
                 else {
-                    $menuBtnItem.removeClass('active');
+                    $(I.menuBtnItem).removeClass('active');
                     $(this).addClass('active');
 
-                    $menuProfile.hide();
+                    $(I.menuProfile).hide();
 
                     if (mobile) {
-                        $menu.hide();
+                        $(I.menu).hide();
                     }
                     else {
-                        $menuMore.hide();
+                        $(I.menuMore).hide();
                     }
 
-                    $menuBalance.fadeIn(200);
+                    $(I.menuBalance).fadeIn(200);
                 }
             });
 
-            $balanceBtn.on('click', function () {
+            $(document).on('click', I.balanceBtn, function () {
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
-                    $menuBalance.fadeOut(200);
+                    $(I.menuBalance).fadeOut(200);
                 }
                 else {
-                    $menuBtnItem.removeClass('active');
+                    $(I.menuBtnItem).removeClass('active');
                     $(this).addClass('active');
 
-                    $menuProfile.hide();
-                    $menuBalance.fadeIn(200);
-                    $menuMore.hide();
+                    $(I.menuProfile).hide();
+                    $(I.menuBalance).fadeIn(200);
+                    $(I.menuMore).hide();
 
-                    $menuBalance.fadeIn(200);
+                    $(I.menuBalance).fadeIn(200);
                 }
             });
 
             // Stop Propogation
-            $menuItem.on('click', function (event) {
+            $(I.menuItem).on('click', function (event) {
                 event.stopPropagation();
             });
 
-            $menuBtnItem.on('click', function (event) {
+            $(I.menuBtnItem).on('click', function (event) {
                 event.stopPropagation();
             });
 
-            $("#countdownHolder").countdown({
-                until: (Slider.timer),
-                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
+        },
+
+        "communications-messages": function(){
+
+            /* ========================================================= */
+            //                     COMMUNICATION
+            /* ========================================================= */
+
+            // COMMENTS ============================== //
+
+            $(I.comment).on('click', function (event) {
+                event.stopPropagation();
+                $(I.comment).removeClass('active');
+                if (detectDevice() === 'mobile') {
+                    $(this).addClass('active');
+                }
             });
 
-            $(".slider-top").owlCarousel({
-                navigation : false,
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem: true,
-                autoPlay: true
+            $(I.hideNotifications).on('click', function () {
+                $(I.notifications).fadeOut('fast', function () {
+                    $(I.notifications).remove();
+                });
             });
-                    
-            $("header a").on('click', loadPage);
-          
-            $('[href="/' + R.Path[1] + '"]').click();
+
+            $(I.closeList).on('click', function () {
+                $(I.notifications).slideUp('fast', function () {
+                    $(I.notifications).remove();
+                });
+            });
+
+            $(I.closeNotification).on('click', function () {
+                if ($(I.notificationsList).find('.c-notification').length < 2) {
+                    $(I.notifications).slideUp('fast', function () {
+                        $(I.notifications).remove();
+                    });
+                }
+                else {
+                    $(this).parent().slideUp('fast', function () {
+                        $(this).remove();
+                    });
+                }
+            });
+
+            $(I.showNotifications).on('click', function (event) {
+                $(I.notificationsList).slideDown('fast');
+            });
+
+            $(I.notificationsList).on('click', function (event) {
+                event.stopPropagation();
+            });
+
+            // $notifications.on('click', function(event) {
+            // 	event.stopPropagation();
+            // });
+
+            // TEXTAREA ------------------------- //
+            function h(e) {
+                $(e).css({'height': 'auto', 'overflow-y': 'hidden'}).height(e.scrollHeight);
+            }
+
+            $(I.textArea).each(function () {
+                h(this);
+            }).on('input', function () {
+                h(this);
+            });
+            // --------------------------------- //
+            // ======================================= //
+
+            /* ========================================================= */
+            /* ========================================================= */
         }
     };
 
