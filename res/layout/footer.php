@@ -162,10 +162,10 @@
 <?php if($dir = opendir('./res/js/functions/'))
     while (($file = readdir($dir)) !== false)
         if ($file != "." && $file != "..")
-            echo '<script src="/res/js/functions/' . $file . '"></script>'; ?>
+            echo '<script src="/res/js/functions/' . $file . "\"></script>\r\n"; ?>
 <script src="/res/js/callbacks.js"></script>
 <script src="/res/js/olya.js"></script>
-<script src="/res/js/zhenya.js"></script>
+<!--script src="/res/js/zhenya.js"></script-->
 
 <script>
     $(function () {

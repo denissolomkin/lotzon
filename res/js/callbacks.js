@@ -14,16 +14,20 @@
                 TicketTabs: '.ticket-tabs li',
                 /* menu */
                 menu: '.menu',
-                menuMain: '.menu-main',
-                menuMore:'.menu-more',
+
+                menuMain:   '.menu-main',
+                menuMore:   '.menu-more',
                 menuProfile:'.menu-profile',
                 menuBalance:'.menu-balance',
-                menuItem:'.menu-item',
-                menuBtn:'.menu-btn',
-                menuProfileBtn:'.menu-profile-btn',
-                menuBalanceBtn:'.menu-balance-btn',
-                menuBtnItem:'.menu-btn-item',
-                balanceBtn:'.balance-btn',
+
+                menuItem:   '.menu-item',
+                menuBtn:    '.menu-btn',
+
+                menuProfileBtn: '.menu-profile-btn',
+                menuBalanceBtn: '.menu-balance-btn',
+                menuBtnItem:    '.menu-btn-item',
+
+                balanceBtn: '.balance-btn',
                 /* communication */
                 comment: '.comment',
                 notifications: '.c-notifications',
@@ -94,7 +98,10 @@
                 'callback': function(){
 
                     $("header a").on('click', loadPage);
-                    $('[href="/' + R.Path[1] + '"]').click();
+                    $(document).on('click',I.menuBtnItem,clickMenu);
+
+                    $('[href="/' + R.Path[1] + '"]').first().click();
+                    switchMobileMenu();
 
                 }
             });
@@ -118,118 +125,11 @@
                         singleItem: true,
                         autoPlay: true
                     });
+
                 }
             });
 
 
-            if (!isMobile()) {
-                $(I.menuMore).addClass('menu-item');
-                $(I.menuProfile).addClass('menu-item');
-            }
-
-            // MENU
-            $(document).on('click', I.menuBtn, function () {
-                var mobile = isMobile();
-
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-
-                    if (mobile) {
-                        $(I.menu).fadeOut(200);
-                    } else {
-                        $(I.menuMore).fadeOut(200);
-                    }
-                }
-                else {
-                    $(I.menuBtnItem).removeClass('active');
-                    $(this).addClass('active');
-
-                    $(I.menuBalance).hide();
-                    $(I.menuProfile).hide();
-
-                    if (mobile) {
-                        $(I.menu).fadeIn(200);
-                    } else {
-                        $(I.menuMore).fadeIn(200);
-                    }
-                }
-            });
-
-            // PROFILE MENU
-            $(document).on('click', I.menuProfileBtn, function () {
-                var mobile = isMobile();
-
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-                    $(I.menuProfile).fadeOut(200);
-                }
-                else {
-                    $(I.menuBtnItem).removeClass('active');
-                    $(this).addClass('active');
-
-                    $(I.menuBalance).hide();
-
-                    if (mobile) {
-                        $(I.menu).hide();
-                    }
-                    else {
-                        $(I.menuMore).hide();
-                    }
-
-                    $(I.menuProfile).fadeIn(200);
-                }
-            });
-
-            // BALANCE MENU
-            $(document).on('click', I.menuBalanceBtn, function () {
-                var mobile = isMobile();
-
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-                    $(I.menuBalance).fadeOut(200);
-                }
-                else {
-                    $(I.menuBtnItem).removeClass('active');
-                    $(this).addClass('active');
-
-                    $(I.menuProfile).hide();
-
-                    if (mobile) {
-                        $(I.menu).hide();
-                    }
-                    else {
-                        $(I.menuMore).hide();
-                    }
-
-                    $(I.menuBalance).fadeIn(200);
-                }
-            });
-
-            $(document).on('click', I.balanceBtn, function () {
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-                    $(I.menuBalance).fadeOut(200);
-                }
-                else {
-                    $(I.menuBtnItem).removeClass('active');
-                    $(this).addClass('active');
-
-                    $(I.menuProfile).hide();
-                    $(I.menuBalance).fadeIn(200);
-                    $(I.menuMore).hide();
-
-                    $(I.menuBalance).fadeIn(200);
-                }
-            });
-
-            // Stop Propogation
-            $(I.menuItem).on('click', function (event) {
-                event.stopPropagation();
-            });
-
-            $(I.menuBtnItem).on('click', function (event) {
-                event.stopPropagation();
-            });
 
         },
 

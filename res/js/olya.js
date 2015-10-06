@@ -31,12 +31,12 @@ appName = 'Durak';
 onlineGame = appAudio = appModes = appVariations = {};
 var playerPoints   = 13296;
 var playerMoney   = 3.58;
-var currency =  {"iso":"\u0433\u0440\u043d","one":"\u0433\u0440\u0438\u0432\u043d\u0430","few":"\u0433\u0440\u0438\u0432\u043d\u0438","many":"\u0433\u0440\u0438\u0432\u0435\u043d","coefficient":"1","rate":100};
+
 var playerId   = 3628;
 
 WebSocketAjaxClient = function (id) {
 
-            if(is_numeric(id))
+            if(isNumeric(id))
                 step = id;
             else
                 step++;
@@ -125,24 +125,6 @@ WebSocketAjaxClient();
 }
 
 
-function playAudio(key) {
-    if (!$.cookie("audio-off")) {
-        if ($.isArray(key)){
-            if(appAudio && appAudio[key[0]] && (file = appAudio[key[0]][key[1]]))
-                $('<audio src=""></audio>').attr('src', 'tpl/audio/' + file).trigger("play");
-        } else if (key) {
-            $('<audio src=""></audio>').attr('src', 'tpl/audio/' + key).trigger("play");
-        }
-    }
-}
-
-Object.size = function(obj) {
-        var size = 0, key;
-        for (key in obj) {
-            if (obj.hasOwnProperty(key)) size++;
-        }
-        return size;
-    };
 
 function stackCallback() {
     if($('.rls-r-t').is(':visible')) {
@@ -347,52 +329,6 @@ $(document).on('click', '.mx .table .cards.highlight', function(e) {
     WebSocketAjaxClient(path, data);
 });
 
-function getCurrency(value, part) {
-    function round(a,b) {
-        b=b||0;
-        return parseFloat(a.toFixed(b));
-    }
-
-    var format=null;
-
-    if ($.inArray(part, ["iso","one","few","many"])>=0){
-        var format=part;
-        part=null;
-    }
-
-    if(!value || value=='' || value=='undefined')
-        value=null;
-
-
-    switch (value){
-        case null:
-            return currency['iso'];
-            break;
-        case 'coefficient':
-        case 'rate':
-            return (currency[value]?currency[value]:1);
-            break;
-        case 'iso':
-        case 'one':
-        case 'few':
-        case 'many':
-            return (currency[value]?currency[value]:currency['iso']);
-            break;
-        default:
-            value = round((parseFloat(value)*currency['coefficient']),2);
-            if((format=='many' || (!format && value>=5)) && currency['many']){
-                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['many']);
-            } else if((format=='few' || (!format && (value>1 || value<1))) && currency['few']){
-                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['few']);
-            } else if((format=='one' || (!format && value == 1)) && currency['one']){
-                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['one']);
-            } else {
-                return (!part || part==1 ? value : '') + (part==1 ? null : (!part ? ' ' : '') + currency['iso']);
-            }
-            break;
-    }
-}
-
 function hideAllGames() {
 
 }
@@ -490,7 +426,7 @@ Object.size = function(obj) {
 };
 
 function appDurakCallback(action) {
-    setup_for_devices(); 
+    setup_for_devices();
 /*    small.addListener(setup_for_devices);
     medium.addListener(setup_for_devices);
     smallHeight.addListener(setup_for_devices);*/
@@ -674,12 +610,12 @@ function appDurakCallback(action) {
 
                     } else if (key == 'off' && newLen == oldLen) {
                         //D.log('пропускаем off');
-                    } else if (is_numeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length)) {
+                    } else if (isNumeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length)) {
                         //D.log('пропускаем '+key);
 
                     } else {
 
-                        if (is_numeric(key)) {
+                        if (isNumeric(key)) {
                             $('.mx .players .player' + key + ' .card').remove();
 
                             if (!sample) {
@@ -706,7 +642,7 @@ function appDurakCallback(action) {
                                 return false;
 
 
-                            if (is_numeric(key)) {
+                            if (isNumeric(key)) {
                                 cardsCount = (field.length ? field.length : Object.size(field));
 
                                 var deg = (cardsCount > 1 ?
@@ -1043,34 +979,9 @@ $(window).on('resize', function(){
     }
     );
 
-function updatePoints(points) {
-    playerPoints = parseInt(points) || playerPoints;
-    points=playerPoints.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-    $('.plPointHolder').text(points);
-}
-function updateMoney(money) {
-    // money = money || playerMoney;
-    playerMoney = parseFloat(money).toFixed(2) || playerMoney;
-    money=parseFloat(playerMoney).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-    $('.plMoneyHolder').text(money.replace('.00',''));
-}
-
 
 function updateTimeOut(time, format) {
  
-}
-
-function is_numeric(mixed_var) {
-    //   example 1: is_numeric(186.31); returns 1: true
-    //   example 2: is_numeric('Kevin van Zonneveld'); returns 2: false
-    //   example 3: is_numeric(' +186.31e2'); returns 3: true
-    //   example 4: is_numeric(''); returns 4: false
-    //   example 5: is_numeric([]); returns 5: false
-    //   example 6: is_numeric('1 '); returns 6: false
-    var whitespace =
-        " \n\r\t\f\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
-    return (typeof mixed_var === 'number' || (typeof mixed_var === 'string' && whitespace.indexOf(mixed_var.slice(-1)) === -
-        1)) && mixed_var !== '' && !isNaN(mixed_var);
 }
 
 });
