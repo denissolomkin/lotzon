@@ -53,7 +53,7 @@
                         '/prizes' => 'Витрина',
                     ),
 
-                    'menu-profile menu-item' => array(
+                    'menu-profile' => array(
 
                         '/profile/details' => 'Контактные данные',
                         '/profile/billing' => 'Платежные данные',
@@ -63,19 +63,19 @@
                         '/logout' => 'Выйти',
                     ),
 
-                    'menu-more menu-item' => array(
+                    'menu-more' => array(
                         '/support/feedback' => 'Обратная связь',
                         '/support/rules' => 'Правила',
                         '/support/help' => 'Помощь',
                     )
                 );
-foreach ($menu as $ul => $items):?>
+    foreach ($menu as $ul => $items):?>
               <ul class="<?= $ul ?>">
-<? foreach ($items as $href => $title): ?>
+<?      foreach ($items as $href => $title): ?>
                 <li><a<?= ($href === $page ? ' class="active"' : '') ?> href="<?= !is_numeric($href) ? $href : '' ?>"><?= $title ?></a></li>
-<? endforeach; ?>
+<?      endforeach; ?>
               </ul>
-<? endforeach; ?>
+<?  endforeach; ?>
             </nav>
             <!-- end of MENU -->
 

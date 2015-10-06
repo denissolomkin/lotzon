@@ -5,6 +5,7 @@ $(function () {
 
         if (!event.isPropagationStopped()) {
 
+
             event.stopPropagation();
             $Box = $('.content-top');
             $Tab = $(this);
@@ -15,6 +16,8 @@ $(function () {
                     $("html, body").animate({scrollTop: 0}, 'slow');
                 }
             });
+
+            hideMenu();
 
         }
         return false;

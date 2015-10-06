@@ -9,9 +9,9 @@ $(function () {
 
         "Enabled": {
             "info": true,
-            "warn": false,
+            "warn": true,
             "error": true,
-            "log": true,
+            "log": false,
             "clean": true
         },
 
@@ -114,7 +114,6 @@ $(function () {
 
         "render": function (options) {
 
-            console.log(options);
             try {
                 if (!options) options = {};
 

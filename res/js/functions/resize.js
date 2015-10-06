@@ -65,29 +65,22 @@ $(function () {
             });
         }
     }
-
     switchMobileMenu = function(){
 
-        // MENU =================================== //
         if (isMobile()) {
             $(I.menuMore).removeClass('menu-item');
-
-            if ($(I.menuBtn).hasClass('active')) {
-                $(I.menu).show();
-            } else {
-                $(I.menu).hide();
-            }
-
+            $(I.menuProfile).removeClass('menu-item');
+            $(I.balanceBtn).hide();
         } else {
             $(I.menuMore).addClass('menu-item');
-
-            if ($(I.menuBtn).hasClass('active')) {
-                $(I.menuMore).show();
-            } else {
-                $(I.menuMore).hide();
-            }
+            $(I.menuProfile).addClass('menu-item');
+            $(I.balanceBtn).show();
         }
-        // ======================================== //
+
+        hideMenu();
+
+        // $(I.menuBtnItem+'.active').removeClass('active').click();
+
     }
 
     owl = null;
