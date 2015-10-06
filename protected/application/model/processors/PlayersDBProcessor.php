@@ -808,7 +808,7 @@ class PlayersDBProcessor implements IProcessor
               `LotteryTicketsArchive`.`TicketNum`, `LotteryTicketsArchive`.`Combination`, `LotteryTicketsArchive`.`PlayerId`,
               `LotteryTicketsArchive`.`LotteryId`, `LotteryTicketsArchive`.`Id`, `LotteryTicketsArchive`.`DateCreated`
               FROM `LotteryTicketsArchive`
-              LEFT JOIN `Lotteries` ON `LotteryTickets`.`LotteryId`=`Lotteries`.`Id`
+              LEFT JOIN `Lotteries` ON `LotteryTicketsArchive`.`LotteryId`=`Lotteries`.`Id`
               WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
 
         try {
