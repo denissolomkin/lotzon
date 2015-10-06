@@ -2,18 +2,23 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "item":
+        "id": 20,
+        "user":
             {
-                "id": "1",
+                "id": 1,
                 "img": "/res/img/user_img.jpg",
-                "title": "Ноутбук Asus X551MA",
-                "games": "50000",
-                "money": "0"
+                "title": "Ноутбук Asus X551MA"
             },
-        "messageid": 20,
         "messages":[
             {
                 "text": "Ноутбук Asus X551MA"
+                "userid": 1,
+                "date": "14.12.2004"
+            },
+            {
+                "text": "Ноутбук2 Asus X551MA"
+                "userid": 3628,
+                "date": "14.12.2004"
             }
         ]
 	}

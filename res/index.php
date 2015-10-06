@@ -1,4 +1,38 @@
-<?php include "layout/header.php"; ?>
+<?php
+if(!class_exists('Config')){
+    class Config
+    {
+        private static $_instance = null;
+        private $_configs = array(
+            'dev' => true
+        );
+        private function __construct() {}
+        public static function instance()
+        {
+            if (is_null(self::$_instance)) {
+                self::$_instance = new Config();
+            }
+
+            return self::$_instance;
+        }
+
+        public function __set($key, $value)
+        {
+            $this->_configs[$key] = $value;
+        }
+
+        public function __get($key)
+        {
+            if (isset($this->_configs[$key])) {
+                return $this->_configs[$key];
+            }
+
+            return null;
+        }
+    }
+}
+
+?><?php include "layout/header.php"; ?>
 
     <div class="container">
         <main class="content clearfix">

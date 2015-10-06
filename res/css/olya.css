@@ -111,7 +111,7 @@
 .cards .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);-webkit-transform: rotate(10deg);}
 .cards .deck .card.trump {  left: 0;  top: 80px;transform: rotate(100deg);-webkit-transform: rotate(100deg); transform-origin: 50% 25%; -webkit-transform-origin: 50% 25%;}
 .cards .deck .last{position: absolute;  top:0;  left: 10px; color: #ffffff;}
-.cards .deck .lear{ position: absolute;top: 75px;left:10px;width: 50px;height: 50px;background: url('../img/games/card-deck.png') no-repeat;background-position: -138px -227px;border-radius: 50px;}
+.cards .deck .lear{display:none;position: absolute;top: 75px;left:10px;width: 50px;height: 50px;background: url('../img/games/card-deck.png') no-repeat;background-position: -138px -227px;border-radius: 50px;}
 .cards .deck .lear.card1{background-position: -1491px -531px;}
 .cards .deck .lear.card2{background-position: -1438px -480px;}
 .cards .deck .lear.card3{background-position: -1438px -531px;}
@@ -182,6 +182,9 @@
     margin: 0 auto;
     height: 100%;
 }
+.tmp_but  {
+    position: absolute;
+}
 @media (min-width: : 480px) {
     .js-detect {
         opacity: 0.5;
@@ -222,6 +225,31 @@
         min-height: 220px;
 
     }
+    .cards .players .m .gm-pr .pr-pr b {
+        font-size: 25px;
+        display: block;
+        line-height: 10px;
+    }
+    .cards .players .m .gm-pr .pr-pr span {
+        font: 13px/5px Handbook-regular;
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        margin: 7px 0;
+        padding: 15px 0;
+    }  
+    .cards .players .m .gm-pr .pr-ph-bk {
+        left: 30%;
+    }
+    .cards .players .m .gm-pr .pr-cl .msg-move {
+        font-size: 14px;
+    }
+    .cards .players .m .card {
+        margin-right: -50px;
+    }
+}
+
+        
+
     
 }    
 @media (max-width: 650px) { 
@@ -250,13 +278,25 @@
 
 }
 @media (max-height: 550px) {
+    .cards .players .m .gm-pr .pr-ph-bk {
+        top: 6px;
+    }
+    .cards .players .m .gm-pr .pr-pr b {
+        font-size: 25px;
+        display: block;
+        line-height: 10px;
+    }
 
+    .cards .players .m .gm-pr .pr-pr {
+        margin: 5px;
+    }
     .mx .gm-pr {
         width: auto;
     }
     .cards .players .gm-pr .pr-ph-bk {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
+        position: absolute;
     }
     .cards .players .o .gm-pr .pr-ph {
         width: 40px;
@@ -296,7 +336,30 @@
         height: 60px;
     }
     .cards .table > div:nth-of-type(even) {
-    margin-top: -10px;
-    padding-top: 0;
+        margin-top: -10px;
+        padding-top: 0;
+    }
+    .cards .players .gm-pr .pr-ph-bk .mt {
+        font-size: 14px;
+        width: auto;
+    }
+    .cards .players .m .gm-pr .pr-ph,.cards .players .m .gm-pr .pr-pr {
+        width: 50px;
+        height: 50px;
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        padding: 8px 0;
+    }
+    .cards .players .m .gm-pr .pr-pr span {
+        line-height: 1;
+        white-space: nowrap;
+        text-align: center;
+        display: inline-block;
+    }
+    .cards .players .m .gm-pr .pr-cl {
+        margin: 12px 15px;
+    }
+    .cards .players .m .pr-pt {
+        padding: 13px 0;
     }
 }

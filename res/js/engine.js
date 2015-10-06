@@ -137,7 +137,7 @@ $(function () {
                 else
                     options.tab = (typeof options.tab !== 'object' ? $('.'+options.tab+':visible').first() : options.tab);
 
-                /* disable JSON for "/new" template if none "?object:id" */
+                /* disable JSON for "/new" template without "?object:id" */
                 if(!options.json && options.template.search(/new/)!= -1){
                     var url = options.href.split('?'), template = options.template.split('?');
 
@@ -341,12 +341,12 @@ $(function () {
                 if (options.box) {
 
                     /* if new box has tabs */
-                    if ($($Tabs, options.box).filter(":visible").length) {
+                    if ($(I.Tabs, options.box).filter(":visible").length) {
 
                         /* click on unactive tab */
-                        if (!$($Tabs, options.box).filter(".active:visible").length) {
-                            D.log(['clickTab:', $($Tabs, options.box).not(".active").filter(":visible").first().attr('href')]);
-                            $($Tabs, options.box).not(".active").filter(":visible").first().click();
+                        if (!$(I.Tabs, options.box).filter(".active:visible").length) {
+                            D.log(['clickTab:', $(I.Tabs, options.box).not(".active").filter(":visible").first().attr('href')]);
+                            $(I.Tabs, options.box).not(".active").filter(":visible").first().click();
                         }
 
                     }
@@ -356,9 +356,9 @@ $(function () {
 
                         $('.active', options.tab.parent().parent()).removeClass('active');
 
-                        if ($($Cats, options.tab.parents('.content-box')).filter(":visible").length) {
-                            D.log(['clickCat:', $($Cats, options.box).first().attr('href')]);
-                            $($Cats, options.tab.parents('.content-box')).first().click();
+                        if ($(I.Cats, options.tab.parents('.content-box')).filter(":visible").length) {
+                            D.log(['clickCat:', $(I.Cats, options.box).first().attr('href')]);
+                            $(I.Cats, options.tab.parents('.content-box')).first().click();
                         }
 
                         options.tab.addClass('active');

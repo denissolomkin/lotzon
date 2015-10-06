@@ -7,15 +7,16 @@
             <form>
                 <div class="addressee">
 
-                    {{#item}}
+                    {{?messages,}}
+                    <input type="hidden" name="id" value="{{ id }}">
+                    {{/messages,}}
+
+                    {{#user}}
                     <div class="nm-selected">
                         <input type="hidden" name="userid" value="{{ id }}">
-                        {{#messageid}}
-                        <input type="hidden" name="messageid" value="{{ messageid }}">
-                        {{/messageid}}
-                        {{^messageid}}
+                        {{^messages}}
                         <div class="nm-change">{{#i18n}}title-change-addressee{{/i18n}}</div>
-                        {{/messageid}}
+                        {{/messages}}
                         <div class="nm-friend">
                             <div class="nm-friend-img">
                                 <img src="{{ img }}" alt="">
@@ -23,26 +24,26 @@
                             <div class="nm-friend-name">{{ title }}</div>
                         </div>
                     </div>
-                    {{/item}}
+                    {{/user}}
 
                     <div class="nm-search">
-                        {{^item}}
+                        {{^user}}
                         <input type="text" name="" placeholder="Введите имя друга" class="enter-friend-name">
-                        {{/item}}
+                        {{/user}}
 
                         <div class="nm-search-result-box">
-                            {{?items,}}
+                            {{?users,}}
                             <div class="nm-search-results">
-                                {{#items}}
+                                {{#users}}
                                 <div class="nm-friend" data-userid="{{ id }}">
                                     <div class="nm-friend-img">
                                         <img src="{{ img }}" alt="">
                                     </div>
                                     <div class="nm-friend-name">{{ title }}</div>
                                 </div>
-                                {{/items}}
+                                {{/users}}
                             </div>
-                            {{/items,}}
+                            {{/users,}}
                         </div>
                     </div>
 

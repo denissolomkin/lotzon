@@ -438,6 +438,7 @@ function setup_for_devices() {
          cardsLess6 = 40;
          marginRightSelect = 0;
 
+
     } else if($( window ).width() < 767) {
 
             scale = 0.7;
@@ -447,7 +448,8 @@ function setup_for_devices() {
             marginIndex = 13;
             indexMargin = 1;
             $('.game.single-game, .game > .cards').height(gameHeight);
-            
+            $('.content-box-header').css({
+                display: 'none'});
             if ($( window ).height() < 550) {
                 scale = 0.4;
                 scaleO = 0.4;
@@ -737,7 +739,9 @@ function appDurakCallback(action) {
                                 if (cardWidth) {
                                     allCardWidth = cardsCount*cardWidth;
                                     deltaWidth = (allCardWidth - durakSpaceWidth);
-                                    if( deltaWidth > 0) {deltaMargin = deltaWidth/cardsCount*1.02};
+                                    if( deltaWidth > 0) {deltaMargin = deltaWidth/cardsCount*1.02} else {
+                                     deltaMargin = cardsCount/deltaWidth
+                                    };
                                 }
 
                                 ((key == playerId)
@@ -773,7 +777,7 @@ function appDurakCallback(action) {
                                         'margin-left': marginLeftValue , 
                                         'margin-right' :- (cardsCount > 6 
                                             ? deltaMargin 
-                                            : '' ) + 'px'     
+                                            : cardsLess6 ) + 'px'     
                                     });
 
 
@@ -1053,44 +1057,7 @@ function updateMoney(money) {
 
 
 function updateTimeOut(time, format) {
-  /*  if (time) {
-        console.log('обновление таймаута');
-        format = format || '{mnn}<span>:</span>{snn}';
-        if (time < 1) {
-            onTimeOut();
-        } else {
-
-
-            if ($(".tm:eq(0)").countdown('getTimes') && $(".tm:eq(0)").countdown('getTimes').reduce(function(a, b) {
-                    return a + b;
-                }) == 0) {
-                $(".tm:eq(0)").countdown('destroy');
-            }
-
-            if (!$(".tm:eq(0)").countdown('getTimes')) {
-                $(".tm:eq(0)").countdown({
-                    until: time,
-                    layout: format,
-                    onExpiry: onTimeOut
-                });
-
-            } else if (!$(".tm:eq(0)").countdown('option', 'layout') || $(".tm:eq(0)").countdown('option', 'layout') != format)
-                $(".tm:eq(0)").countdown('option', {
-                    layout: format
-                });
-
-
-            $(".tm:eq(0)").countdown({
-                until: time
-            }).countdown('resume').countdown('option', {
-                until: time
-            });
-    
-
-
-
-        }
-    }*/
+ 
 }
 
 function is_numeric(mixed_var) {
