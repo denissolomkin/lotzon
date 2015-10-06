@@ -1,28 +1,3 @@
-/*
-function ViewDurakSize() {
-    full_ScreenHeight = $(window).height()*0.57;
-    $(".game > .cards").height(full_ScreenHeight);   
-    cardHeight = full_ScreenHeight*0.27;
-    $(".card").height(cardHeight); 
-    cardWidth = cardHeight*0.654;
-    $(".card").width(cardWidth);
-}
-
-function viewCardSize() {
-
-}
-
-function viewDurak() {
-    
-}
-$( document ).ready(function() {
-   ViewDurakSize();
-   console.log($(window).height());
-});
-$(window).resize(function() {  
-    ViewDurakSize();    
-});*/
-
 $(function () {
 
 
@@ -275,17 +250,17 @@ $(document).on('click', '.mx .players .m .btn-pass', function(e) {
 
 });
 // выбор карты
-    $(document).on('click', '.players .m .card:not(.select)', function(e){
-        D.log('2asdasd');
-         $('.players .m .card').removeClass('select').next().removeClass('select-next')
-            cardsCount > 6 ? RihtMargin = '-'+ deltaMargin : RihtMargin = '-' + cardsLess6 ;
-            $('.players .m .card').css({'margin-top': '0', 'margin-right': RihtMargin });
+$(document).on('click', '.players .m .card:not(.select)', function(e){
+    D.log('2asdasd');
+        $('.players .m .card').removeClass('select').next().removeClass('select-next')
+        cardsCount > 6 ? RihtMargin = '-'+ deltaMargin : RihtMargin = '-' + cardsLess6 ;
+        $('.players .m .card').css({'margin-top': '0', 'margin-right': RihtMargin });
             
-            $this = $(this).addClass('select');
+        $this = $(this).addClass('select');
 
-            if ($this.next().length>0) {
-                $this.next().addClass('select-next');
-                $card =   $('.players .m .card:not(.select), .players .m .card:not(.select-next)');
+         if ($this.next().length>0) {
+            $this.next().addClass('select-next');
+            $card =   $('.players .m .card:not(.select), .players .m .card:not(.select-next)');
                 smallestRihtMargin =  cardsCount > 6 ? ( ((cardsCount-2) * RihtMargin + RihtMargin*2)/(cardsCount-2)) : RihtMargin;
                 $card.animate({marginRight:  + smallestRihtMargin + 'px'},{ duration: 200, queue: false });
                 $('.select').animate({marginTop: '-20px', marginRight: marginRightSelect },{ duration: 200, queue: false });
@@ -333,19 +308,21 @@ function hideAllGames() {
 
 }
 
-    function errorGame(){
+function errorGame(){
 
         // $("#report-popup").show().find(".txt").text(getText(onlineGame.error)).fadeIn(200);
         // $("#report-popup").show().fadeIn(200);
 
-        if(onlineGame.appId==0) {
-            $('.mx .tm').countdown('pause');
-            appId = onlineGame.appId;
-            $('.mx .prc-but-cover').hide();
-            $('.ngm-rls').fadeIn(200);
-        }
+    if(onlineGame.appId==0) {
+        $('.mx .tm').countdown('pause');
+        appId = onlineGame.appId;
+        $('.mx .prc-but-cover').hide();
+        $('.ngm-rls').fadeIn(200);
     }
+}
+
 function runGame() {
+
  $('.mx').html($('.mx-tmpl').html());
 }
        var scale,
@@ -357,63 +334,68 @@ function runGame() {
         indexMargin,
         cardsLess6,
         marginRightSelect;
+
 function setup_for_devices() {
 
-    console.warn('setup_for_devices');
-    var gameHeight = $(window).height() - 50;
+    var gameHeight = $(window).height()-50;
     var orientation = ($(window).width() > $(window).height());
      
     if($( window ).width() > 767) {
-         scale = 1;
-         scaleO = 0.7;
-         scaleOf = 0.7;
-         rightMargin24 = 12;
-         rightMargin8 = 40; 
-         marginIndex = 12;
-         indexMargin = 0
-         cardsLess6 = 40;
-         marginRightSelect = 0;
+        scale = 1;
+        scaleO = 0.7;
+        scaleOf = 0.7;
+        rightMargin24 = 12;
+        rightMargin8 = 40; 
+        marginIndex = 12;
+        indexMargin = 0;
+        cardsLess6 = 40;
+        marginRightSelect = 0;
 
 
-    } else if($( window ).width() < 767) {
+    } else if($( window ).width() > 550) {
 
-            scale = 0.7;
-            scaleO = 0.5;
-            scaleOf = 0.5;
-            rightMargin24 = 0;
-            marginIndex = 13;
-            indexMargin = 1;
-            $('.game.single-game, .game > .cards').height(gameHeight);
-            $('.content-box-header').css({
-                display: 'none'});
-            if ($( window ).height() < 550) {
-                scale = 0.4;
-                scaleO = 0.4;
-                scaleOf = 0.4;
-                rightMargin24 = 0;
-                marginIndex = 0;
-                indexMargin = 2;
-                cardsLess6 = 80;
-                $('.game.single-game, .game > .cards').height(gameHeight);
-                marginRightSelect = -40 +'px';
+        scale = 0.7;
+        scaleO = 0.5;
+        scaleOf = 0.5;
+        rightMargin24 = 0;
+        rightMargin8 = 40; 
+        marginIndex = 13;
+        indexMargin = 1;
+        cardsLess6 = 40;
+        marginRightSelect = 0;
+        $('.game.single-game, .game > .cards').height(gameHeight);
 
-            }
 
-    } else if ($( window ).width() < 480) {
+    } else  if ($( window ).width() > 200) {
 
-            console.log('small');
-            scale = 0.7;
-            scaleO = 0.5;
-            scaleOf = 0.5;
-            rightMargin24 = 0;
-            marginIndex = 13;
-            indexMargin = 1;
-            cardsLess6 = 60;
-            marginRightSelect = -20 +'px';
-            $('.game.single-game, .game > .cards').height(gameHeight);
+        console.log('small');
+        scale = 0.7;
+        scaleO = 0.5;
+        scaleOf = 0.5;
+        rightMargin24 = 0;
+        marginIndex = 13;
+        indexMargin = 1;
+        cardsLess6 = 60;
+        marginRightSelect = -20 +'px';
+        $('.game.single-game, .game > .cards').height(gameHeight);
 
    
-}   
+    }
+
+    if (($( window ).height() < 550) || (($( window ).height() < 550) && orientation)) {
+            scale = 0.4;
+            scaleO = 0.4;
+            scaleOf = 0.4;
+            rightMargin24 = 0;
+            marginIndex = 0;
+            indexMargin = 2;
+            cardsLess6 = 80;
+            gameHeight += 50;
+            $('.game.single-game, .game > .cards').height(gameHeight);
+            marginRightSelect = -40 +'px'; 
+            $('.content-box-header').css({
+            display: 'none'});   
+    }   
 }
 
 
@@ -425,21 +407,100 @@ Object.size = function(obj) {
     return size;
 };
 
+
+
+function seatPlayers() {
+
+    if (players = onlineGame.players) {
+
+        D.log('рассадили игроков');
+
+        if (onlineGame.action == 'wait') {
+
+            var player = {
+                "avatar": "",
+                "name": "ждем..."
+            };
+
+            for (i = Object.size(players); i < onlineGame.playerNumbers; i++) {
+                index = 0 - i;
+                players[index] = player;
+            }
+        }
+
+        var orders = players;
+
+        if (players[playerId].order && onlineGame.action == 'start') {
+
+            orders = Object.keys(players);
+            var order = players[playerId].order;
+
+            orders.sort(function(a, b) {
+                a = players[a].order;
+                b = players[b].order;
+                check = a == order ? 1 : (
+                    b == order ? -1 : (
+                        (a < order && b < order) || (a > order && b > order) ? (a - b) : (b - a)))
+                return check;
+            });
+            
+        }
+
+        $.each(orders, function(index, value) {
+            value = typeof value == 'object' ? index : value;
+            div = '<div class="player' + value + (value == playerId ? ' m' : ' o col' + (Object.size(players) - 1)) + '"></div>';
+            $('.mx .players').append(div);
+        })
+
+    }
+
+}
+
+function setPlayersDetales() { 
+    $.each(players, function(index, value) {
+        value.avatar = index < 0 ? "url(../tpl/img/preloader.gif)" : (value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('../tpl/img/default.jpg')");
+            $('.mx .players .player' + index).append(
+                '<div class="gm-pr">' +
+                '<div class="pr-ph-bk">' +
+                '<div class="pr-ph" style="background-image: ' + value.avatar + '">' +
+                '<div class="mt"></div>' +
+                '<div class="wt"></div>' +
+                '<div class="pr-nm">' + value.name + '</div></div></div></div>');
+
+        if (index == playerId) {
+                bet = price = onlineGame.appMode.split('-');
+                $('.mx .players .player' + index + ' .gm-pr').prepend(
+                    '<div class="pr-cl">' +
+                    '<div class="btn-pass">пас</div>' +
+                    '<div class="msg-move">ваш ход</div>' +
+                    '</div>'
+                ).append(
+                    '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>' +
+                    '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? getCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? getCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
+                    '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + playerMoney + '</span> ' + getCurrency() + '</div><div><span class="plPointHolder">' + playerPoints + '</span> баллов</div></div>'
+
+                );
+        }
+
+
+    });
+
+}
+
+
 function appDurakCallback(action) {
-    setup_for_devices();
-/*    small.addListener(setup_for_devices);
-    medium.addListener(setup_for_devices);
-    smallHeight.addListener(setup_for_devices);*/
-    // $(window).resize(function() {
-    //     setup_for_devices(); 
-    //     small.addListener(setup_for_devices);
-    //     medium.addListener(setup_for_devices);
-    //     smallHeight.addListener(setup_for_devices);
-    // });
 
+setup_for_devices(); 
 
-
+singeGame = $('.single-game');
+if (singeGame.length> 0) {
     $('main').addClass('active_small_devices');
+    $('footer').addClass('unvisible');   
+}
+
+   
+    
+
     action = action && action.res && action.res.action ? action.res.action : action || onlineGame.action;
 
     switch (action) {
@@ -466,156 +527,100 @@ function appDurakCallback(action) {
             D.log(onlineGame.action);
             D.log(onlineGame);
 
-            if (($.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
-                    (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)) || !$('.mx .players').children('div').length) 
+/* 
+    1) если действие "ждем", "старт" или "готовы", но все обязаны подтердить готовность
+    или 2) еще нет блоков игроков
+ */
+            if ((   $.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
+                        (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)
+                    ) 
+                || !$('.mx .players').children('div').length) 
             {
 
-                        hideAllGames();
-                        runGame();
+                hideAllGames();
+                runGame();
 
-                        $('game > div ').addClass('cards');
+                $('game > div ').addClass('cards');
 
-                        if (onlineGame.variation && onlineGame.variation.type && onlineGame.variation.type == 'revert')
-                            $('game > div').addClass('Revert');
-
-                            $('.ngm-rls').fadeOut(200);
+                if (onlineGame.variation && onlineGame.variation.type && onlineGame.variation.type == 'revert')
+                $('game > div').addClass('Revert');
+                        
+                $('.ngm-rls').fadeOut(200);
 
                 D.log('обнулили поля');
+                fields = [];
+                statuses = [];
+                timestamp = null;
 
-                            fields = [];
-                            statuses = [];
-
-                            timestamp = null;
-
-                        if (players = onlineGame.players) {
-
-                            if (onlineGame.action == 'wait') {
-                                var player = {
-                                    "avatar": "",
-                                    "name": "ждем..."
-                                };
-                                for (i = Object.size(players); i < onlineGame.playerNumbers; i++) {
-                                    index = 0 - i;
-                                    players[index] = player;
-                                }
-                            }
+                seatPlayers();
+                setPlayersDetales();
 
 
-                        if (onlineGame.action == 'start') {
+// создание врапера для карт игрока(своих), отрисовка количества карт в колоде
 
-                            var orders = Object.keys(players);
-                            var order = players[playerId].order;
-
-                            orders.sort(function(a, b) {
-
-                                a = players[a].order;
-                                b = players[b].order;
-
-                                check = a == order ? 1 : (
-                                    b == order ? -1 : (
-                                        (a < order && b < order) || (a > order && b > order) ? (a - b) : (b - a)))
-
-                                return check;
-                            });
-
-                        $.each(orders, function(index, value) {
-                            div = '<div class="player' + value + (value == playerId ? ' m' : ' o col' + (Object.size(players) - 1)) + '"></div>';
-
-
-                            $('.mx .players').append(div);
-                           
-                        })
-
+                $.each(players, function(index, value) {
+                    if (index == playerId) {
+                        $('.mx .players .player' + index).append('<div class="game-cards"></div>');
+                                
                     }
+                    if (onlineGame.variation && onlineGame.variation.cards)
+                        $('.ngm-gm .cards-number').html(onlineGame.variation.cards);
+                            
+                 });
 
-                    $.each(players, function(index, value) {
+///////////////////////////////////////////////////////////////////////////////
 
-                        if (onlineGame.action != 'start') {
-                            div = '<div class="player' + index + (index == playerId ? ' m' : ' o col' + (Object.size(players) - 1)) + '"></div>';
-                            $('.mx .players').append(div);
-                        }
+                if (onlineGame.action == 'ready') {
+                    $('.mx .players .player' + playerId + ' .gm-pr .btn-pass').addClass('btn-ready').removeClass('btn-pass').text('готов');
+                }
 
-                        value.avatar = index < 0 ? "url(../tpl/img/preloader.gif)" : (value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('../tpl/img/default.jpg')");
-
-                        $('.mx .players .player' + index).append(
-                            '<div class="gm-pr">' +
-                            '<div class="pr-ph-bk">' +
-                            '<div class="pr-ph" style="background-image: ' + value.avatar + '">' +
-                            '<div class="mt"></div>' +
-                            '<div class="wt"></div>' +
-                            '<div class="pr-nm">' + value.name + '</div></div></div></div>');
+                if (onlineGame.action == 'ready' || onlineGame.action == 'wait') {
+                    $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');    
+                }
 
 
+                if (onlineGame.trump)
+                    $('.mx .deck').append(
+                        '<div class="lear card' + (onlineGame.trump[0]) + '"></div>' +
+                        '<div class="last"></div>' +
+                        (onlineGame.fields.deck && onlineGame.fields.deck.length ? '<div class="card trump card' + onlineGame.trump + '"></div>' : '') +
+                        (onlineGame.fields.deck && onlineGame.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
+                } else {}
 
-                        if (index == playerId) {
-                            $('.mx .players .player' + index).append('<div class="game-cards"></div>');
-                            bet = price = onlineGame.appMode.split('-');
-                            $('.mx .players .player' + index + ' .gm-pr').prepend(
-                                '<div class="pr-cl">' +
-                                '<div class="btn-pass">пас</div>' +
-                                '<div class="msg-move">ваш ход</div>' +
-                                '</div>'
-                            ).append(
-                                '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>' +
-                                '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? getCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? getCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
-                                '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + playerMoney + '</span> ' + getCurrency() + '</div><div><span class="plPointHolder">' + playerPoints + '</span> баллов</div></div>'
+                var sample = null;
 
-                            );
+                if ($.inArray(onlineGame.action, ['ready', 'wait']) == -1 || onlineGame.fields) {
 
-                            if (onlineGame.variation && onlineGame.variation.cards)
-                                $('.ngm-gm .cards-number').html(onlineGame.variation.cards);
-                        }
-
-
-                    });
-
-                    if (onlineGame.action == 'ready') {
-                        $('.mx .players .player' + playerId + ' .gm-pr .btn-pass').addClass('btn-ready').removeClass('btn-pass').text('готов');
-                    }
-
-                    if (onlineGame.action == 'ready' || onlineGame.action == 'wait')
-                        $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
-                    }
-
-                    if (onlineGame.trump)
-                        $('.mx .deck').append(
-                            '<div class="lear card' + (onlineGame.trump[0]) + '"></div>' +
-                            '<div class="last"></div>' +
-                            (onlineGame.fields.deck && onlineGame.fields.deck.length ? '<div class="card trump card' + onlineGame.trump + '"></div>' : '') +
-                            (onlineGame.fields.deck && onlineGame.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
-
-
-            } else {}
-
-            var sample = null;
-
-            if ($.inArray(onlineGame.action, ['ready', 'wait']) == -1 || onlineGame.fields) {
-
-                $.each(onlineGame.fields, function(key, field) {
-                    if (!field)
+                    $.each(onlineGame.fields, function(key, field) {
+                        if (!field)
                         return;
-                    newLen = (field.length ? field.length : Object.size(field));
-                    oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
+                        newLen = (field.length ? field.length : Object.size(field));
+                        oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
 
-                    if (key == 'deck') {
-                        if (field.length) {
-                            if (field.length == 1)
-                                $('.mx .deck .card:not(.trump )').remove();
-                            $('.mx .deck .last').text(field.length);
-                        } else {
-                            $('.mx .deck .lear').nextAll().hide();
-                        }
+                        if (key == 'deck') {
+                            if (field.length) {
+                                if (field.length == 1)
+                                    $('.mx .deck .card:not(.trump )').remove();
+                                $('.mx .deck .last').text(field.length);
+                            } else {
+                                $('.mx .deck .lear').nextAll().hide();
+                            }
                         return true;
-                    } else if (key == 'table' && 0) {
+                        } else 
+                            if (key == 'table' && 0) {
 
-                    } else if (key == 'off' && newLen == oldLen) {
+                        } else 
+                            if (key == 'off' && newLen == oldLen) {
                         //D.log('пропускаем off');
-                    } else if (isNumeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length)) {
+
+                        } else 
+                            if (isNumeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length)) {
                         //D.log('пропускаем '+key);
 
-                    } else {
+                        } else {
+                            
+                            if (isNumeric(key)) {
 
-                        if (isNumeric(key)) {
                             $('.mx .players .player' + key + ' .card').remove();
 
                             if (!sample) {
@@ -625,9 +630,10 @@ function appDurakCallback(action) {
                                     sample = 'Move-o-2';
                             }
 
-                        } else if (key != 'off' || newLen == 0) {
+                            } else if (key != 'off' || newLen == 0) {
                             $('.mx .' + key).html('');
-                        } else if (key == 'off') {
+
+                            } else if (key == 'off') {
                             sample = 'Move-o-3'; // отбой
                         }
 
@@ -649,12 +655,10 @@ function appDurakCallback(action) {
                                     (idx * ((key == playerId ? 60 : 105) - (cardsCount > 4 ? 0 : (4 - cardsCount) * 15)) / cardsCount) -
                                     ((key == playerId ? 30 : 45)) : 0);
 
-                                     
-
-                                  $('.mx .players .player' + key + (key == playerId ? ' .game-cards' :'')).append(
+                                $('.mx .players .player' + key + (key == playerId ? ' .game-cards' :'')).append(
                                 '<div style="transform: rotate(' + deg + 'deg)' + ' ' + 
 
-                                 (key == playerId 
+                                (key == playerId 
                                     ? 'scale(' + scale + ',' + scale +')'
                                     : 'scale('+ scaleO + ','+ scaleO +')' ) +
                                     '; -webkit-transform: rotate(' + deg + 'deg)' + 
@@ -677,7 +681,7 @@ function appDurakCallback(action) {
                                     deltaWidth = (allCardWidth - durakSpaceWidth);
                                     if( deltaWidth > 0) {deltaMargin = deltaWidth/cardsCount*1.02} else {
                                      deltaMargin = cardsCount/deltaWidth
-                                    };
+                                    }
                                 }
 
                                 ((key == playerId)
@@ -692,15 +696,17 @@ function appDurakCallback(action) {
                                                         : (cardsCount > 6 
                                                             ?(durakSpaceWidth - allCardWidth) / 2 + 'px'
                                                             :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
-                                                    :((indexMargin != 2)
-                                                        ?(deltaWidth > 0
+                                                    :(
+                                                        (deltaWidth > 0
                                                             ?(cardsCount > 6 
                                                                 ?(0 + '%')
                                                                 :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
-                                                            :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
-                                                        :(durakSpaceWidth -  cardWidth*scale*cardsCount) / 2 + 'px')  
+
+                                                            :(0 + '%')
+                                                            // :(durakSpaceWidth - allCardWidth + cardsCount * cardsLess6 ) / 2 + 'px')
+                                                        )  
                                                         
-                                                )
+                                                )   )
 
                                         : '')
 
@@ -762,22 +768,8 @@ function appDurakCallback(action) {
 
                     if (index == onlineGame.beater) {
                         status = 'Беру';
-                    
-
-/*                        var game_cards = $('.game-cards');
-                        var wrapper = $('.table')
-                            .contents()
-                            .wrap($('<div>').css('position','absolute'))
-                            .parent();
-
-                        wrapper
-                        .animate(
-                            game_cards.offset(), 1000, function() {
-                        $(this).contents().appendTo(game_cards);
-                        wrapper.remove();
-                            }
-                        );*/
                     }
+
                     else if (
                         ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.starter == playerId || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[onlineGame.beater].status == 2)) && (onlineGame.players[playerId].status != 1) || (onlineGame.beater && onlineGame.players[onlineGame.beater].status))
                         status = 'Пас';

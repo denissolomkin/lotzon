@@ -1,3 +1,6 @@
+body {
+    box-sizing: border-box;
+}
 .cards #tm {display: none;}
 .game.single-game {
     width: 100%;
@@ -71,10 +74,10 @@
 .cards .players .m .gm-pr .pr-cl .msg-move{width: 100%;display: none;  height: 50px;color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
 .cards .players .m.starter .gm-pr .pr-cl .msg-move{display: block;}
 
-.cards .players .o{width: 100%;float: left;margin: 0;}
-.cards .players .col1 {padding-left: 45%;}
-.cards .players .col2 {padding-left: 140px;}
-.cards .players .col3 {padding-left: 80px;}
+.cards .players .o{width: 30%;float: left;margin: 0;}
+.cards .players .col1 {padding-left: 42%;}
+.cards .players .col2 {padding-left: 25%;}
+.cards .players .col3 {padding-left: 10%;}
 .cards .players .exit {  position: absolute;top: 0;left: 0;margin: 15px;border-radius: 10px;padding: 10px;width: 50px;height: 30px;background-color: rgba(255,255,255,0.3); cursor: pointer;}
 .cards .players .exit:hover{background-color: rgba(255,255,255,0.5);}
 .cards .players .exit span {color: white;font-size: 30px;}
@@ -184,6 +187,9 @@
 }
 .tmp_but  {
     position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 100;
 }
 @media (min-width: : 480px) {
     .js-detect {
@@ -219,6 +225,10 @@
         left: 0;
         width: 100%;
         z-index: 1000;
+        margin-bottom: 0;
+    }
+    footer.unvisible {
+        display: none;
     }
     .cards .players .m {
         height: auto;
@@ -292,6 +302,7 @@
     }
     .mx .gm-pr {
         width: auto;
+        height: 80px;
     }
     .cards .players .gm-pr .pr-ph-bk {
         width: 50px;
