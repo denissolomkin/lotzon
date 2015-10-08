@@ -15,11 +15,12 @@ CREATE TABLE `MaillistMessages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE `MaillistTasks` (
     `Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `Description` VARCHAR(255) NOT NULL,
     `MessageId` INT UNSIGNED NOT NULL,
     `Schedule` TINYINT(1) NOT NULL DEFAULT '0',
     `Settings` TEXT NOT NULL COMMENT 'serialized, events and filters',
     `Enable` TINYINT(1) NOT NULL DEFAULT '0',
-    `Status` ENUM('waiting','in progress','done') DEFAULT NULL,
+    `Status` ENUM('waiting','in progress','done','archived') DEFAULT NULL,
     PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE `MaillistHistory` (
