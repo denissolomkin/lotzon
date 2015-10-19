@@ -1,86 +1,99 @@
 (function () {
 
+
+    // classes
+    I = {
+
+        /* navigation and tabs */
+        Tabs: '.content-box-tabs a',
+        Cats: '.content-box-cat a',
+        TicketTabs: '.ticket-tabs li',
+
+        /* menu */
+        menu: '.menu',
+        menuMain: '.menu-main',
+        menuMore: '.menu-more',
+        menuProfile: '.menu-profile',
+        menuBalance: '.menu-balance',
+        menuItem: '.menu-item',
+        menuBtn: '.menu-btn',
+        menuProfileBtn: '.menu-profile-btn',
+        menuBalanceBtn: '.menu-balance-btn',
+        menuBtnItem: '.menu-btn-item',
+        balanceBtn: '.balance-btn',
+
+        /* communication */
+        comment: '.comment',
+        notifications: '.c-notifications',
+        showNotifications: '.c-show-notifications',
+        hideNotifications: '.c-hide-notifications',
+        notificationsList: '.c-notifications-list',
+        closeList: '.c-notifications-list .close-list',
+        closeNotification: '.c-notification .close-notification',
+        textArea: '.message-form-area',
+
+        /* other */
+        goTop: '.go-to-top',
+    }
+
     // callbacks
 
     C = {
 
-        "init": function(){
-
-            // classes
-            I = {
-                /* navigation and tabs */
-                Tabs: '.content-box-tabs a',
-                Cats: '.content-box-cat a',
-                TicketTabs: '.ticket-tabs li',
-                /* menu */
-                menu: '.menu',
-
-                menuMain:   '.menu-main',
-                menuMore:   '.menu-more',
-                menuProfile:'.menu-profile',
-                menuBalance:'.menu-balance',
-
-                menuItem:   '.menu-item',
-                menuBtn:    '.menu-btn',
-
-                menuProfileBtn: '.menu-profile-btn',
-                menuBalanceBtn: '.menu-balance-btn',
-                menuBtnItem:    '.menu-btn-item',
-
-                balanceBtn: '.balance-btn',
-                /* communication */
-                comment: '.comment',
-                notifications: '.c-notifications',
-                showNotifications: '.c-show-notifications',
-                hideNotifications: '.c-hide-notifications',
-                notificationsList: '.c-notifications-list',
-                closeList: '.c-notifications-list .close-list',
-                closeNotification: '.c-notification .close-notification',
-                textArea: '.message-form-area',
-            }
-
-            // extend tickets
-            Tickets = $.extend(Tickets, TicketsFunctions);
+        "init": function () {
 
             // handlers
-            $(window).on('resize', windowResize);
-            $(window).on('scroll', windowScroll);
-            $(document).on('click', hideBlocks);
+            $(window).on('resize',  W.resize);
+            $(window).on('scroll',  W.scroll);
+            $(document).on('click', W.hide);
+            $(I.goTop).on('click',  W.goTop);
 
             /* navigation */
-            $(document).on('click', I.Tabs, switchTab);
-            $(document).on('click', I.Cats, switchCat);
-            $(document).on('click', 'a', loadBlock);
-            $(document).on('click', 'div.back', backBlock);
+            $(document).on('click', I.Tabs,     Navigation.switchTab);
+            $(document).on('click', I.Cats,     Navigation.switchCat);
+            $(document).on('click', 'a',        Navigation.loadBlock);
+            $(document).on('click', 'div.back', Navigation.backBlock);
 
             /* ticket */
-            $(document).on('click', I.TicketTabs, switchTicket);
+            $(document).on('click', I.TicketTabs, Ticket.switch);
 
             /* new message*/
-            $(document).on('input', ".enter-friend-name", searchMessageAddressee);
-            $(document).on('click', ".nm-change", clearMessageAddressee);
-            $(document).on('click', ".nm-friend", setMessageAddressee);
-            $(document).on('click', ".message-form-btn", sendMessage);
-            
-            /* go top */
-            $('.go-to-top').click(function(){$('html, body').animate({scrollTop:0}, 'slow');return false;});
+            $(document).on('input', ".enter-friend-name",   Message.searchAddressee);
+            $(document).on('click', ".nm-change",           Message.clearAddressee);
+            $(document).on('click', ".nm-friend",           Message.setAddressee);
+            $(document).on('click', ".message-form-btn",    Message.send);
+
 
         },
 
-        "lottery": function(){
+        "lottery": function () {
 
-            initOwlCarousel();
-            renderTicket();
+            Carousel.initOwl();
+            Ticket.render();
 
         },
 
-        "blog": function(){
+        "blog": function () {
 
             R.render({
                 'box': $('.content-box-content:visible'),
-                'template': 'posts',
+                'template': 'blog-posts',
                 'url': false
             })
+
+        },
+
+        "games-game": function () {
+
+            WebSocketAjaxClient();
+            $(document).on('click', '.mx .players .m .btn-ready', GameAction.ready);
+            $(document).on('click', '.mx .players .m .btn-pass', GameAction.pass);
+            $(document).on("mouseenter",'.players .m .card', mouseEnter);
+            $(document).on("mouseleave",'.players .m .card', mouseLeave);
+            $(document).on("touchstart",'.players .m .card', touchstart);
+            $(document).on("touchmove",'.players .m .card', touchMove);
+            $(document).on("touchend",'.players .m .card', touchend);
+
 
         },
 
@@ -90,28 +103,29 @@
             //                        MENUS
             /* ========================================================= */
 
+            // Balance menu
             R.render({
                 'box': 'balance',
                 'template': 'menu-balance',
                 'json': Player,
                 'url': false,
-                'callback': function(){
+                'callback': function () {
 
-                    $("header a").on('click', loadPage);
-                    $(document).on('click',I.menuBtnItem,clickMenu);
-
+                    $("header a").on('click', Navigation.loadPage);
+                    $(document).on('click', I.menuBtnItem, Menu.click);
                     $('[href="/' + R.Path[1] + '"]').first().click();
-                    switchMobileMenu();
+                    Menu.switch();
 
                 }
             });
 
+            // Slider carousel
             R.render({
                 'box': 'inf-slider',
                 'template': 'menu-slider',
                 'json': Slider,
                 'url': false,
-                'callback': function(){
+                'callback': function () {
 
                     $("#countdownHolder").countdown({
                         until: (Slider.timer),
@@ -119,9 +133,9 @@
                     });
 
                     $(".slider-top").owlCarousel({
-                        navigation : false,
-                        slideSpeed : 300,
-                        paginationSpeed : 400,
+                        navigation: false,
+                        slideSpeed: 300,
+                        paginationSpeed: 400,
                         singleItem: true,
                         autoPlay: true
                     });
@@ -130,10 +144,9 @@
             });
 
 
-
         },
 
-        "communications-messages": function(){
+        "communications-messages": function () {
 
             /* ========================================================= */
             //                     COMMUNICATION
@@ -144,7 +157,7 @@
             $(I.comment).on('click', function (event) {
                 event.stopPropagation();
                 $(I.comment).removeClass('active');
-                if (detectDevice() === 'mobile') {
+                if (Device.detect() === 'mobile') {
                     $(this).addClass('active');
                 }
             });
@@ -166,8 +179,7 @@
                     $(I.notifications).slideUp('fast', function () {
                         $(I.notifications).remove();
                     });
-                }
-                else {
+                } else {
                     $(this).parent().slideUp('fast', function () {
                         $(this).remove();
                     });

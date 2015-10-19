@@ -57,15 +57,7 @@
     box-sizing: content-box;
 }
 
-.ticket-favorite .after {
-    display: none;
-    position: absolute;
-    bottom: 2px;
-    left: 50px;
-    font-size: 15px;
-    width: 200px;
-    line-height: 18px;
-}
+
 
 .after span {
     color: #fff;

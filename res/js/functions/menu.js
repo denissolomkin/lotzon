@@ -1,51 +1,91 @@
 $(function () {
 
-    clickMenu = function (event){
+    Menu = {
 
-        event.stopPropagation();
+        click: function (event) {
 
-        var active = $(this).hasClass('active'),
-            menu = $(this).attr('class').replace(/ |menu-btn-item|active/g, ''),
-            mobile = isMobile();
+            event.stopPropagation();
 
-        hideMenu();
+            var isActive = $(this).hasClass('active'),
+                isMobile = Device.isMobile(),
+                menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
 
+            Menu.hide();
 
-        if(active)  return false;
-        else        $(this).addClass('active');
+            if (isActive)
+                return false;
+            else
+                $(this).addClass('active');
 
-        switch (menu) {
-            case 'menu-btn':
+            switch (menuClass) {
+                case I.menuBtn:
+                    if (isMobile) {
+                        $(I.menuMain).show();
+                        $(I.menuMore).show();
+                        $(I.menu).fadeIn(200);
+                    } else {
+                        $(I.menuMore).fadeIn(200);
+                    }
+                    break;
 
-                if(mobile) {
-                    $(I.menuMain).show();
-                    $(I.menuMore).show();
-                    $(I.menu).fadeIn(200);
-                } else {
-                    $(I.menuMore).fadeIn(200);
-                }
-                break;
+                case I.menuProfileBtn:
+                    if (isMobile) {
+                        $(I.menuProfile).show();
+                        $(I.menuMain).hide();
+                        $(I.menu).fadeIn(200);
+                    } else {
+                        $(I.menuProfile).fadeIn(200);
+                    }
+                    break;
 
-            case 'menu-profile-btn':
-                if(mobile){
-                    $(I.menuProfile).show();
-                    $(I.menuMain).hide();
-                    $(I.menu).fadeIn(200);
-                } else {
-                    $(I.menuProfile).fadeIn(200);
-                }
-                break;
+                case I.balanceBtn:
+                case I.menuBalanceBtn:
+                    $(I.menuBalance).fadeIn(200);
+                    break;
 
-            case 'balance-btn':
-            case 'menu-balance-btn':
-                $(I.menuBalance).fadeIn(200);
-                break;
+                default:
+                    break;
+            }
 
+        },
 
-            default:
-                break;
+        switch: function () {
+
+            if (Device.isMobile()) {
+                $(I.menuMore).removeClass('menu-item');
+                $(I.menuProfile).removeClass('menu-item');
+                $(I.balanceBtn).hide();
+            } else {
+                $(I.menuMore).addClass('menu-item');
+                $(I.menuProfile).addClass('menu-item');
+                $(I.balanceBtn).show();
+            }
+
+            Menu.hide();
+
+            // $(I.menuBtnItem+'.active').removeClass('active').click();
+
+        },
+
+        hide: function () {
+
+            $(I.menuProfile + ":visible").fadeOut(200);
+            $(I.menuBalance + ":visible").fadeOut(200);
+            $(I.menuMore + ":visible").fadeOut(200);
+
+            if (Device.isMobile()) {
+                $(I.menu + ":visible").hide();
+                $(I.menuMain + ":visible").fadeOut(200);
+            }
+
+            $(I.menuBtnItem + ".active").removeClass('active');
+        },
+
+        fix: function () {
+            (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0) ? $('body').addClass('fixed') : $('body').removeClass('fixed');
         }
-    };
+
+    }
 
 
 });

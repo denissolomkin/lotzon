@@ -1,4 +1,4 @@
-﻿<? $categories = array(
+<? $categories = array(
     'menu'=>array('t'=>'Меню', 'i'=>'sitemap'),
     'button'=>array('t'=>'Кнопки', 'i'=>'hand-o-up'),
     'text'=>array('t'=>'Тексты', 'i'=>'paragraph'),
