@@ -11,6 +11,7 @@
             Menu.switch();
             Ticket.setBallsMargins();
             Carousel.initOwl();
+            Cards.setupForDevices()
         },
 
         scroll: function (event) {
@@ -42,6 +43,7 @@
         },
 
         toggleFullScreen: function () {
+
             var doc = window.document;
 
             var docEl = doc.documentElement;
@@ -61,6 +63,7 @@
                 } else if (document.documentElement.webkitRequestFullscreen) {
                     document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
                 }
+                  console.log("вызвался");
             }
             else {
                 cancelFullScreen.call(doc);
