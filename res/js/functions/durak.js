@@ -16,7 +16,7 @@ $(function () {
 
             $(document).on('click', '.tmp_but', function (e) {
                 if (Device.get() <= 0.5) {
-                    // W.toggleFullScreen();
+                    W.toggleFullScreen();
                 }
             });
             return;
@@ -25,7 +25,7 @@ $(function () {
         ready: function () {
 
             console.log(action, onlineGame);
-            Game.setupForDevices();
+            Cards.setupForDevices();
             $('.tmp_but').html(Device.detect() + document.documentElement.clientHeight);
 
             /*
