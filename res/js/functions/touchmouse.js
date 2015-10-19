@@ -68,25 +68,16 @@
             Drag.status('move')
 
           
-	        if ((Drag.position.left - Drag.options.event.clientX) > 40 && (Drag.position.top - Drag.options.event.clientY) < 10){
+	        if ((Drag.position.left - Drag.options.event.clientX) > 40 &&  (Drag.position.top - Drag.options.event.clientY) < 10 || (Drag.options.event.clientX  - Drag.position.left) > 40 && (Drag.position.top - Drag.options.event.clientY) < 10){
 	        	console.log('Drag.options.target', Drag.options.target);
 	        	Drag.rollback();
-	        	 Drag.options.target =  document.elementFromPoint(Drag.options.event.clientX, Drag.options.event.clientY);
+	        	Drag.options.target =  document.elementFromPoint(Drag.options.event.clientX, Drag.options.event.clientY);
 
 	        	console.log('Drag.options.target2', Drag.options.target);
 	        	Drag.start();
 	        	
 	        }
- 			else if ((Drag.options.event.clientX  - Drag.position.left) > 40 && (Drag.position.top - Drag.options.event.clientY) < 10) {
-
- 				console.log('Drag.options.target',Drag.options.target);
-	    		Drag.rollback();
-	    		Drag.options.target =  document.elementFromPoint(Drag.options.event.clientX, Drag.options.event.clientY);
-				console.log('Drag.options.target2',Drag.options.target);
-
-	        	Drag.start();
-	        	
-	        }
+ 
 	        else  {
 				$(Drag.options.target).css({
 					left: Drag.options.event.clientX + Drag.position.fixX,
@@ -122,14 +113,8 @@
             var droppableTables = document.getElementsByClassName('droppable');
             for (var i = 0; i < droppableTables.length; i++) {
                 var table = droppableTables[i].getBoundingClientRect();
- 				// console.log(table);
-				
+
 				var dragEndposition = Drag.options.target.getBoundingClientRect();
-				// console.log(dragEndposition);
-
-
-				// console.log(dragEndposition.bottom + '< ' + table.bottom + ' ' + dragEndposition.bottom + '> ' + table.top );
-				// console.log(dragEndposition.right + '> ' + table.left + ' ' + dragEndposition.left+ '< ' + table.right );
 
 				if (dragEndposition.bottom < table.bottom 
 					&& dragEndposition.bottom > table.top  
@@ -162,7 +147,6 @@
         },
 
         status: function (status) {
-            // console.log(status);
             if(typeof statusDiv != 'undefined')
             	statusDiv.innerHTML = 'Type: ' + Drag.options.type + '<br>Status: ' + status
         },
@@ -207,16 +191,6 @@
             // e.preventDefault()
         },
 
-        // newStart: function touch(e) {
-        // Drag.rollback();
-        // Drag.options = {
-        //     type: 'move',
-        //     event: e.targetTouches[0],
-        //     target: e.targetTouches[0].target
-        // }
-        // Drag.start()
-        //     // e.preventDefault()
-        // },
 
         move: function (e) {
             Drag.options.event = e.targetTouches[0];
@@ -224,10 +198,6 @@
             Drag.move()
         }
     }
-
-
-
-
 
     function eachCardLeft(showedCardsWidth, Top) {
 
@@ -241,9 +211,7 @@
         cards[i].style.left =  Left + 'px';
         cards[i].style.top =  Top;
 
-
     }
-
 
     var mouseEnter =  function(e) {
 
@@ -287,34 +255,30 @@
     }
 
 
-    var target;
+    var targetTouch;
     var touchStartPosition;
+
     var touchstart = function(e) {
         event.preventDefault();
         touchStartPosition = event.touches[0];
-        target = document.elementFromPoint(touchStartPosition.pageX,touchStartPosition.pageY);
-        // target.className += ' select'
-        // console.log('target' , target);
-
-        var next = target.nextElementSibling;
-
-        var selectedIndex = $('.players .m .card').index(target);
+        targetTouch = document.elementFromPoint(touchStartPosition.pageX,touchStartPosition.pageY);
+        if(targetTouch.nextElementSibling != null && targetTouch.nextElementSibling != undefined  )
+        var next = targetTouch.nextElementSibling;
+        var selectedIndex = $('.players .m .card').index(targetTouch);
         var nextIndex = $('.players .m .card').index(next);
         cards = document.querySelectorAll('.players .m .card');
         for (i=0; i < cards.length; i++) {
+
             if ( i < selectedIndex) {
                 eachCardLeft(0,0);
             }
             if (i==selectedIndex) {
                 eachCardLeft(0, '-20px');
-                // cards[i].className += ' select'
             }
             else if (nextIndex > 0  && i == nextIndex) {
-
                 eachCardLeft(cardWidth*scale*0.7, 0);
             }
             else if (nextIndex > 0 && i > nextIndex) {
-
                 eachCardLeft(cardWidth*2*scale*0.7, 0);
 
             }
@@ -324,39 +288,37 @@
     }
 
     var touchMove = function(e) {
-        var touch = event.touches[0];
+
+        var touch= event.touches[0];
+
         if (touchStartPosition.pageX-touch.pageX > 10 || touch.pageX - touchStartPosition.pageX > 10) {
-
-
             cards = document.querySelectorAll('.players .m .card');
 
             for (var i = 0; i < cards.length; i++) {
-
                 if (touch.pageX > cards[i].getBoundingClientRect().left
-                    && touch.pageX < cards[i].getBoundingClientRect().right
-                    && touch.pageY > cards[i].getBoundingClientRect().top
-                    && touch.pageY < cards[i].getBoundingClientRect().bottom
-                ) {
+                && touch.pageX < cards[i].getBoundingClientRect().right
+                && touch.pageY > cards[i].getBoundingClientRect().top
+                && touch.pageY < cards[i].getBoundingClientRect().bottom){
                     event.preventDefault();
                     marginsDraw();
                     touchstart();
-
                 }
 
             }
 
+
         }
 
-
     };
+
     var touchend = function(e) {
         event.preventDefault();
         // target.className = target.className.replace(' select', '')
         marginsDraw ();
 
     }
-
     marginsDraw = function () {
+
         marginLeftValue =
             (myCount > 6
                 ? (deltaWidth > 0
@@ -370,5 +332,8 @@
                 : marginLeftValue + indx * indexLess6);
             $(this).css({'left': a + 'px', 'top': 0})
         });
+
     }
+
+
 
