@@ -1568,7 +1568,7 @@ class Player extends Entity
                  ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
 
-            if ($data['TicketsFilled']) {
+            if (isset($data['TicketsFilled'])) {
                 $this->_isTicketsFilled = $data['TicketsFilled'];
             }
 
