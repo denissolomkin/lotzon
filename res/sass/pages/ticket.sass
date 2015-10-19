@@ -5,7 +5,7 @@
     
 .balls-result,
 .text-result
-  position: relative
+  position: absolute
   float: left
   height: 100%
     
@@ -18,7 +18,7 @@
   padding-top: 10px
   
   & span
-    color: #000
+    display: none
   
 .ticket-result
   width: 100%
@@ -51,8 +51,132 @@
 .ticket-items
   min-height: 460px
   
+.ticket-item
+  min-height: 422px
+  
+.select
+  background-color: #ffe400 !important
+  -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1)
+  -moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1)
+  -ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1)
+  -o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1)
+  transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1)
+  
+.balls-count
+  color: #e7f6f7
+  font-size: 15px
+  position: absolute
+  right: 235px
+  bottom: 40px
+  
+.balls-count b
+  color: #4c4c4c
+  font-size: 15px
+  font-weight: bold
+
+.after
+  left: 50px
+  bottom: -5px
+  position: absolute
+  font-size: 15px
+  width: 200px
+  line-height: 18px
+  display: none
+
+  &span
+    color: #fff
+    
+.ticket-done
+  position: absolute
+  height: 30px
+  right: 41px
+  bottom: 30px
+  color: #e7f6f7
+  
+.add-ticket .on
+  color: #4c4c4c
+  cursor: pointer
+  
+.add-ticket
+  color: #8f8e8e
+  cursor: default
+  
+.add-ticket.on
+  color: #4c4c4c
+  cursor: pointer
+    
+.tickets-number-result
+  font-size: 15px
+  line-height: 45px
+  color: #4C4C4C
+  font-weight: bold
+  margin: 0 20px 0 0
+  width: 12%
+
+.balls-box
+  top: 4px
+  margin-bottom: 5px
+  position: relative
+  height: 40px
+  float: left
+  margin-left: 3%
+  width: 100%
+  
+.balls-box li
+  padding: 0 
+  
+.ball-circle
+  border: 1px solid #4C4C4C
+  border-radius: 50%
+  position: relative
+  float: left
+  height: 35px
+  width: 35px
+  margin-right: 6%
+  line-height: 40px
+  text-align: center
+  
+.ball-circle
+  margin-right: 1%
+  
+.balls-box
+  margin-bottom: 2px
+  
+.tickets-number-result 
+  &p
+    line-height: 42px
+    
+.tickets-number-result
+  width: 5%
+  
+.text-result
+  color: #4C4C4C
+  font-size: 16px
+  line-height: 20px
+  margin: 0
+  
+.text-result-top
+  color: white
+  margin-bottom: 20px
+  margin-left: 30px
+  
+.tickets-number-result p
+  margin: 0
+  
+.tickets-number-result p
+  text-align: right
+  
+  
 .ticket-numbers  li
   margin-bottom: 15px
+  
+.ticket-random .after
+  left: 150px !important
+  bottom: 77px !important
+  display: none
+  
+.after span
+  color: white
   
 @media (min-width: 415px) and (max-width: 500px)
   .ball-number-result

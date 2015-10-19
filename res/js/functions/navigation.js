@@ -1,126 +1,152 @@
 $(function () {
 
-    // handler functions
-    loadPage = function (event) {
+    Navigation = {
 
-        if (!event.isPropagationStopped()) {
+        init: function () {
 
+            window.onpopstate = function (event) {
+                D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)],'info');
+                if(event.state)
+                    R.render(event.state);
+            };
+        },
 
-            event.stopPropagation();
-            $Box = $('.content-top');
-            $Tab = $(this);
+        // handler functions
+        loadPage: function (event) {
 
-            R.render({
-                "json": {},
-                "callback": function(){
-                    $("html, body").animate({scrollTop: 0}, 'slow');
-                }
-            });
+            if (!event.isPropagationStopped()) {
 
-            hideMenu();
+                event.stopPropagation();
+                var tab = $(this),
+                    box = $('.content-top');
 
-        }
-        return false;
+                D.log(['loadPage:', tab.attr('href')], 'info');
 
-    }
+                R.render.call(this, {
+                    box: box,
+                    callback: function () {
+                        $("html, body").animate({scrollTop: 0}, 'slow');
+                    }
+                });
 
-    loadBlock = function (event) {
+                Menu.hide();
 
-        if (!event.isPropagationStopped()) {
-
-            event.stopPropagation();
-            $Box = $(this).parents('.content-main');
-            $Tab = $(this);
-            D.log(['loadBlock:', $Tab.attr('href')]);
-
-            R.render({
-                "callback": function (rendered, findClass) {
-                    $(findClass).addClass('slideInRight');
-                    $("html, body").animate({scrollTop: 0}, 'slow');
-                }
-            });
-
-        }
-        return false;
-
-    }
-
-    backBlock = function (event) {
-
-        if (!event.isPropagationStopped()) {
-
-            event.stopPropagation();
-            $Box = $(this).parents('.content-box');
-            $Tab = $(this);
-
-            D.log(['backBlock:', $Tab.attr('href')]);
-
-            $Box.prev().addClass('slideInLeft').show()
-                .find(I.Tabs + '.active').click();
-
-            $(this).parents('.content-box').remove();
-
-        }
-
-        return false;
-
-    }
-
-    switchTab = function (event) {
-
-        if (!event.isPropagationStopped()) {
-
-            event.stopPropagation();
-            $Box = $(this).parents('.content-box').find('.content-box-content');
-            $Tab = $(this);
-            $Href = $Tab.attr('href');
-
-            D.log(['switchTab:', $Href]);
-
-            if (U.isAnchor($Href)) {
-
-                $(I.Tabs, $Tab.parents('.content-box-header')).removeClass('active');
-                $(' > div', $Box).hide();
-                $('.content-box-item.' + $Href, $Box).show();
-                $Tab.addClass('active');
-
-            } else {
-                R.render();
             }
-        }
+            return false;
 
-        return false;
-    }
+        },
 
-    switchCat = function (event) {
+        loadBlock: function (event) {
 
-        if (!event.isPropagationStopped()) {
+            if (!event.isPropagationStopped()) {
 
-            event.stopPropagation();
-            $Cat = $(this);
-            D.log(['switchCat:', $Cat.attr('href')]);
+                event.stopPropagation();
+                var tab = $(this),
+                    box = tab.parents('.content-main').length ? tab.parents('.content-main') : tab.parents('.content-top');
 
-            // with animation
-            if ($(I.Cats, $Box).filter('.active').length) {
+                D.log(['loadBlock:', tab.attr('href')], 'info');
 
-                $(I.Cats, $Box).removeClass('active');
-                $('.content-box-item-content > div', $Box).fadeOut(200);
-                setTimeout(function () {
-                    $('.content-box-item-content > div.category-' + $Cat.data('category'), $Box).fadeIn(200);
-                }, 200);
+                R.render.call(this, {
+                    box: box,
+                    callback: function (rendered, findClass) {
+                        $(findClass).addClass('slideInRight');
+                        $("html, body").animate({scrollTop: 0}, 'slow');
+                    }
+                });
+
+            }
+
+            return false;
+
+        },
+
+        backBlock: function (event) {
+
+            if (!event.isPropagationStopped()) {
+
+                event.stopPropagation();
+                var tab = $(this),
+                    box = $(this).parents('.content-box');
+
+
+                D.log(['backBlock:', tab.attr('href')], 'info');
+
+                box.prev().addClass('slideInLeft').show()
+                    .find(I.Tabs + '.active').click();
+
+                $(this).parents('.content-box').remove();
+                history.back();
+
+            }
+
+            return false;
+
+        },
+
+        switchTab: function (event) {
+
+            if (!event.isPropagationStopped()) {
+
+                event.stopPropagation();
+                var tab = $(this),
+                    box = tab.parents('.content-box').find('.content-box-content'),
+                    href = tab.attr('href');
+
+                D.log(['switchTab:', href], 'info');
+
+                if (U.isAnchor(href)) {
+
+                    $(I.Tabs, tab.parents('.content-box-header')).removeClass('active');
+                    $(' > div', box).hide();
+                    $('.content-box-item.' + href, box).show();
+                    tab.addClass('active');
+                }
+
+                else {
+                    R.render.call(this, {
+                        box: box,
+                        url: false
+                    });
+                }
+            }
+
+            return false;
+        },
+
+        switchCat: function (event) {
+
+            if (!event.isPropagationStopped()) {
+
+                event.stopPropagation();
+                var tab = $(this),
+                    box = tab.parents('.with-cat');
+
+                D.log(['switchCat:', tab.attr('href')], 'info');
+
+                // with animation
+                if ($(I.Cats, box).filter('.active').length) {
+
+                    $(I.Cats, box).removeClass('active');
+                    $('.content-box-item-content > div', box).fadeOut(200);
+                    setTimeout(function () {
+                        $('.content-box-item-content > div.category-' + tab.data('category'), box).fadeIn(200);
+                    }, 200);
+
+                }
 
                 // without animation
-            } else {
-                $('.content-box-item-content > div', $Box).hide();
-                $('.content-box-item-content > div.category-' + $Cat.data('category'), $Box).show();
+                else {
+                    $('.content-box-item-content > div', box).hide();
+                    $('.content-box-item-content > div.category-' + tab.data('category'), box).show();
+                }
+
+                tab.addClass('active');
+
             }
 
-            $Cat.addClass('active');
+            return false;
 
         }
-
-        return false;
-
     }
 
     /* ========================================================= */

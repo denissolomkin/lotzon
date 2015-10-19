@@ -1,497 +1,76 @@
-
-
-
-/* MAIN*/
-@font-face {
-    font-family: handbookpro-regular; 
-    src: url(../css/fonts/pfhandbookpro-regular-webfont.woff);
-   }
-@font-face {
-    font-family: handbookpro-italic; 
-    src: url(../css/pfhandbookpro-italic-webfont.woff);
-   }
-@font-face {
-    font-family: Handbook-bold; 
-    src: url(../css/fonts/pfhandbookpro-bold-webfont.woff);
-   }
-.site-top{
-    width:100%;
-    height:135px;
-    position: relative;
-    top:0;
+#game-process {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index:1000;
+  background-color: #b2d0d4;
+  position: absolute;
+  z-index:1000;
 }
-.container{
-    height:100%;
+
+#game-process .balls-result {
+  padding-top: 150px;
 }
-.banner-3{
-   position: relative;
+
+.balls-end-game li {
+  background: url(../css/img/sprite.png) 100% 0%;
+  border-radius: 50px;
+  width: 75px;
+  height: 75px;
+  position: relative;
   float:left;
-}
-.slider-top{
-    position: relative;
-    float:left;
-    top: 0px;
-}
-.clearfix:before {
-    clear: none;
-
-}
-.menu-main{   
-  font: 15px/45px Handbook-bold;
-}
-
-div {
-  word-wrap: break-word;
-}
-
-.c-notifications-list {
-  width: 100%;
-}
-
-.content-box-item {
-  overflow-y: scroll;
-  height: 500px;
-}
-
-.message-form-wrapper {
-  z-index: 10;
-}
-
-.cm-top {
-  background-color: #fff;
-  z-index: 10;
-  top: 0px;
-  height: 50px;
-}
-
-.new-message,
-.write-admin {
-  top: 10px;
-  position: absolute;
-}
-
-.write-admin {
-  right: 32px;
-}
-
-.header {
-  width: 100%;
-  z-index: 200;
-}
-
-.menu {
-  overflow: visible;
-}
-
-.go-to-top {
-  position: fixed;
-  right: 15px;
-  border-radius: 5px;
-  line-height: 50px;
-  text-align: center;
-  -webkit-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
-  -moz-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
-  box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
-  display:none;
-  background:url(img/sprite.png) -550px -120px no-repeat;
-  background-color: #f2efed;
-  right: 50px;
-  bottom: 50px;
-  width: 50px;
-  height: 50px;
-}
-.is-countdown {
-    background-color: #FEE518;
-    font-size: 50px;
-    font-weight: bold;
-    border:none;
-    padding-top:10px;
-    width: 90px;
-    top: 0;
-    position: absolute;
-    right: 0
-}
-
-
-@media screen and (min-width:1200px) {
-  .footer-container {
-    width: 1000px;
-    position: absolute;
-    margin-left: -500px;
-    left: 50%;
-  }
-  .go-to-top{
-     right: 10px;
-    bottom: 50px;
-    width: 50px;
-    height: 50px; 
-  }
-  .header-right .is-countdown{
-     
-  }
-}
-
-@media screen and (max-width:768px) {
-  .footer-container {
-    width: 320px;
-    position: absolute;
-    margin-left: -160px;
-    left: 50%;
-  }
-  
-  .notification-window {
-    width: 170px;
-    height: 90px;
-  }
-
-}
-/* END MAIN*/
-
-
-
-
-
-
-
-
-
-
-
-
-/* Lottery result */
-.lottery-result {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.balls-result,
-.text-result {
-  position: relative;
-  float: left;
-  height: 100%;
-}
-.balls-result {
-  width: 60%;
-  padding-top: 15px;
-}
-.text-result {
-  width: 40%;
-  padding: 40px 20px 20px 0;
-}
-.ticket-result {
-  width: 100%;
-  list-style: none;
-  position: relative;
-  float: left;
-  margin: 0 0 15px 0;
-  padding-left: 30px;
-}
-.ticket-result li {
-  position: relative;
-  float: left;
-}
-.ball-number-result {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #000;
-  border-radius: 50%;
-  margin-right: 10px;
-  line-height: 40px;
-  text-align: center;
-}
-.ticket-number-result {
-  line-height: 40px;
-  margin-right: 20px;
-}
-.text-result span {
-  color: #000;
-}
-.ticket-numbers li {
-  margin-bottom: 15px;
-}
-.ticket-items {
-  min-height: 460px;
-}
-@media screen and (max-width:1200px) {
-  .balls-result {
-    width: 100%;
-    padding-top: 45px;
-  }
-  
-  .text-result {
-    width: 100%;
-    top: -475px;
-    padding: 0;
-  }
-  
-  .ticket-result {
-    margin: 0 0 10px 0;
-  }
-  
-  .ball-number-result,
-  .ticket-number-result {
-    margin-right: 40px;
-  }
-  
-  .ct .n {
-    font-size: 50px;
-    line-height: 30px;
-    color: #000;
-    letter-spacing: -1px;
-    font-weight: bold;
-}
-}
-@media screen and (max-width:768px) {
-  .ticket-number-result span {
-    display: none;
-  }
-  
-  .ball-number-result,
-  .ticket-number-result {
-    margin-right: 3%;
-  }
-  
-  .ball-number-result {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-  }
-  
-  .ticket-result {
-    padding-left: 3%;
-  }
-}
-
-/* END Lottery result */
-
-
-
-
-
-
-/*Owl Slider*/
-.owl-controls {
-  top: 106px;
-  position: absolute;
-  left: 85px;
-}
-
-.owl-theme .owl-controls .owl-page span {
-  background: #FEE518
-}
-
-.inf-slider {
+  margin:10px 10px 10px 10px;
+  -webkit-box-shadow: inset 9px 7px 34px -8px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset 9px 7px 34px -8px rgba(0,0,0,0.75);
+  box-shadow: inset 9px 7px 34px -8px rgba(0,0,0,0.75);
   overflow: hidden;
 }
-
-.header-right .rt-bk {
-  top: 20px;
-  left: 30px;
+.yellow-ball{
   position: absolute;
+   width:100%;
+  height:100%;
+  background-color: #FFE700;
+  border-radius:50%;
+  left:-100%;
+  bottom:-100%;
+  transform: rotate(-90deg) translate(100px, 100px);
+  transition: all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  
+      -webkit-transition: all 1250ms ease;
+    -moz-transition: all 1250ms ease;
+    -ms-transition: all 1250ms ease;
+    -o-transition: all 1250ms ease;
+    transition: all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transform: rotate(-90deg) translate(100px, 100px);
+    -webkit-transform: rotate(-90deg) translate(100px, 100px);
+    -o-transform: rotate(-90deg) translate(100px, 100px);
+    -ms-transform: rotate(-90deg) translate(100px, 100px);
+    transform: rotate(-90deg) translate(100px, 100px);
 }
 
-.timer-text {
-  top: 8px;
-  position: absolute;
-  padding-left: 10px;
-  font-weight: bold;
+
+
+
+@media screen and (min-width: 1010px) {
+  #game-process {
+    background-color: #b2d0d4;
+    position: absolute;
+    width: 1280px;
+    height: 720px;
+  }
 }
 
-.last-results {
-  position: absolute;
-  top: -5px;
-  left: 30px;
-  font-weight: bold;
+@media screen and (min-width: 1200px) {
+  .balls-end-game li {
+    width: 100px;
+    height: 100px;
+    margin:10px 10px 10px 10px;
+  }
+  .balls-end-game{
+     margin: 50px 30px 0px 150px;
+  }
+  .balls-result{
+    margin-left: 150px;
+  }
 }
-
-.header-right .ct .rt-bk .rt-bk_li {
-  width: 30px;
-  height: 30px;
-  line-height: : 30px;
-}
-
-.ticket-tabs,
-.slider-top,
-.header-right,
-.ticket-item,
-.content-box-header,
-.content-box-content th,
-.cabinet_cashout,
-.raiting-name,
-.c-friend-name,
-.content-box-cat {
-  font: 15px/30px Handbook-bold;
-}
-
-.content-box-header {
-  font: 15px/50px Handbook-bold;
-}
-
-.content-box-tab {
-  font: 15px/55px Handbook-bold;
-}
-
-.content-box-cat a {
-  font-size: 15px !important;
-}
-
-.header-right .slider-top .ct .n {
-  font-size: 15px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 26px;
-}
-
-#countdownHolder-mobile {
-  top: 0;
-}
-
-.header-right .slider-top {
-  height: 55px;
-  display: block;
-}
-
-.header-right .slider-top .ct {
-  padding-left: 0px;
-}
-
-.header-right .slider-top .ct .tl {
-  line-height: 25px;
-  font-size: 15px;
-  margin-left: 10px;
-}
-
-/* End Owl Slider*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.ticket-result li{
-        display: inline;
-}
-.tickets-number-result{
-    width: 48%;
-    margin-right: 0%;
-    height: auto;
-    position: relative;
-    padding: 20px; 
-    font-size: 15px;
-    line-height: 45px;
-    color: #4C4C4C;
-    font-weight: bold;
-}
-.balls-box{
-     top: 4px;
-    height: 40px;
-    float: right;
-    width: 72%;
-}
-.ticket-result{
-     background-color: #B2D0D4;
-    z-index: 10;
-    border-radius: 14px;
-    padding: 10px 10px;
-    position: relative;   
-}
-.text-result {
-    color: #4C4C4C;
-    font-size: 16px;
-    line-height: 20px;
-    margin: 0;
-    width: 50%;
-    float: right;
-    top: 59px;
-    position: relative;
-}
-*/
-
-
-
-
-
-
-
-
-/* Yellow notification window */
-.ct {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 16px 0 15px 15px;
-}
-.ct .tl {
-  font-size: 12px;
-  line-height: 14px;
-  color: #000;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.pw-gm-rt .ct .rt-bk {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0;
-}
-.ct .rt-bk .rt-bk_li {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: #000;
-  font: 17px/34px Handbook-bold;
-  background-color: #000;
-  color: #fee212;
-  text-align: center;
-  margin-right: 8px;
-  display: inline-block;
-}
-.notification-window {
-  width: 270px;
-  height: 140px;
-  position: fixed;
-  background: rgba(255, 228, 0, 0.95);
-  bottom: 40px;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
-  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
-  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
-  z-index: 200;
-}
-.notification-cross {
-  right: 0;
-  background: url("/res/img/cross-closer.png") no-repeat 0 0;
-  background-size: cover;
-   -o-background-size:cover;
-  -moz-background-size:cover;
-  -webkit-background-size:cover;
-  width: 24px;
-  cursor: pointer;
-  height: 24px;
-  margin: 10px;
-  position: absolute;
-}
-.notification-cross:hover {
-  height: 26px;
-  width: 26px;
-  right: -1px;
-  top: -1px;
-}
-.notification-cross:onclick {
-  display: none;
-}
-
-/* END Yellow notification window */

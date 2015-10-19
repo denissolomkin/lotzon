@@ -11,10 +11,12 @@
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/res/css/style.css">
     <link rel="stylesheet" href="/res/css/animate.css">
-    <link rel="stylesheet" href="/res/css/new.css">
+
     <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
 
     <link rel="stylesheet" href="/res/css/olya.css">
+    <link rel="stylesheet" href="/res/css/zhenya.css">
+
 
 </head>
 <body>
@@ -54,11 +56,10 @@
                     ),
 
                     'menu-profile' => array(
-
                         '/profile/details' => 'Контактные данные',
                         '/profile/billing' => 'Платежные данные',
                         '/profile/settings' => 'Настройки',
-                        '/profile/referrals' => 'Рефералы',
+                        '/reports/referrals' => 'Рефералы',
                         '/profile/bonuses' => 'Бонусы',
                         '/logout' => 'Выйти',
                     ),

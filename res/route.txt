@@ -1,0 +1,57 @@
+Блог / blog
+## GET ##
+posts -> res/items
+/blog/:id -> res/item
+## POST ##
+/blog/addComment
+/blog/addLike
+---------------------------------------
+Лотерея / lottery
+## GET ##
+/lottery/history -> res/items
+/lottery/history/:id -> res/item
+/lottery/rating -> res/items
+/lottery/rules -> (string) res
+/lottery/faq -> (string) res
+## POST ##
+/lottery/addTicket
+---------------------------------------
+Общение / communication
+## GET ##
+/communication/comments -> res/items + (int) res/notifications
+/communication/notifications -> res/items
+/communication/messages/:id -> res/items + res/user
+/communication/messages/new/:userId -> res/item
+## POST ##
+/communication/messages/addMessage
+/communication/comments/addComment
+/communication/comments/addLike
+---------------------------------------
+Друзья / users
+## GET ##
+/users/friends -> (array) res/items + (count) res/friends
+/users/:id -> res/item
+/users/chronicle -> res/items
+/users/birthdays -> res/items
+/users/requests -> res/items
+/users/search
+## POST ##
+/users/search/findUser
+/users/requests/addRequest
+/users/requests/removeRequest
+/users/requests/confirmRequest
+/users/requests/declineRequest
+---------------------------------------
+Витрина / prizes
+## GET ##
+/prizes/exchange -> (array) res/items
+/prizes/exchange/:id -> res/item
+## POST ##
+/prizes/exchange/orderItem
+---------------------------------------
+Профиль / profile
+## GET ##
+/prizes/exchange -> (array) res/items
+/prizes/exchange/:id -> res/item
+## POST ##
+/prizes/exchange/orderItem

@@ -1,6 +1,11 @@
 body {
     box-sizing: border-box;
 }
+.game * {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;}
 .cards #tm {display: none;}
 .game.single-game {
     width: 100%;
@@ -17,7 +22,7 @@ body {
 .cards .msg.winner .ch-ot {margin-bottom: 30px;}
 
 .cards .players { width: 40%; height:25%;margin: 0 30%;text-align: center;}
-.cards .players .card{float: left; margin-right: -20px;}
+/*.cards .players .card{float: left; margin-right: -20px;}*/
 
 .cards .players .gm-pr .pr-ph-bk .pr-ph {box-shadow: 0 0 6px 0px rgba(0,0,0,0.5);}
 .cards .players .gm-pr .pr-ph-bk{  width: auto;height: auto;opacity: 1;z-index:2;position:relative;margin: auto;overflow: visible;}
@@ -40,29 +45,42 @@ body {
 .cards .players .m .gm-pr .pr-ph-bk .wt{margin-top: -100px;}
 
 .cards .players .m {position: absolute;bottom: 0;  width: 100%;  height: 40%;  margin-left: -30%; z-index: 1;}
-.cards .players .m .card{transform-origin: 50% 100%; margin-right: -40px;}
+.cards .players .m .card{transform-origin: 50% 100%; -ms-transform-origin: 50% 100%; -webkit-transform-origin: 50% 100%;
+    /*margin-right: -40px;*/
+}
 .cards .players .m .card:hover, .cards .players .m .gm-pr .pr-cl .btn-ready:hover, .cards .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
 .cards .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 80px;margin: 0; }
 .cards .players .m .gm-pr .pr-ph {width: 60px;height: 60px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 0px;}
 .cards .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 65px;width: 65px;margin: 8px;float:right;border-radius: 80px;padding: 7px 10px;box-sizing: border-box;bottom:0;}
-.cards .players .m .gm-pr .pr-md{  margin: 10px 25px;
+.cards .players .m .gm-pr .pr-md{      margin: 10px 25px;
     float: right;
-    width: 26px;
-    height: 20px;
+    width: 35px;
+    height: 60px;
     border: 2px solid #888;
-    padding: 17px 3px;
+    /* padding: 17px 3px; */
     border-radius: 5px;
     color: #888;
     font: 18px/1 Handbook-bold;
     position: relative;}
+.cards .players .m .gm-pr .pr-md span {
+    font: 18px/1 Handbook-bold;
+    line-height: 60px;
+    }
 .cards .players .m .gm-pr .pr-md .icon-reload{ display: none;}
 .cards.Revert .players .m .gm-pr .pr-md .icon-reload{display: block;
     position: absolute;
     top: 14px;
     font-size: 29px;
     left: 1px;}
-.cards .players .m .gm-pr .pr-pr b{    font: 36px/1 Handbook-bold;letter-spacing: -3px;  margin-left: -3px;}
-.cards .players .m .gm-pr .pr-pr span{ font: 13px/5px Handbook-regular; }
+.cards .players .m .gm-pr .pr-pr b{font: 36px/1 Handbook-bold;
+    letter-spacing: -3px;
+    margin-left: -3px;
+    display: block;
+    text-transform: uppercase;}
+.cards .players .m .gm-pr .pr-pr span{font: 13px/5px Handbook-bold;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    display: block;}
 
 .cards .players .m .pr-pt {position: relative;  float: right;height: 100%;width: 20%;padding: 23px 0;box-sizing: border-box;color: black;text-align: left;margin: 0 0 0 40px;}
 .cards .players .m .pr-pt .wallet {font-size: 36px;color: black;float: left;margin-right: 20px;}
@@ -114,13 +132,13 @@ body {
 .cards .deck .card{position: absolute;  left: -80px;  top: 20px;  transform: rotate(10deg);-webkit-transform: rotate(10deg);}
 .cards .deck .card.trump {  left: 0;  top: 80px;transform: rotate(100deg);-webkit-transform: rotate(100deg); transform-origin: 50% 25%; -webkit-transform-origin: 50% 25%;}
 .cards .deck .last{position: absolute;  top:0;  left: 10px; color: #ffffff;}
-.cards .deck .lear{display:none;position: absolute;top: 75px;left:10px;width: 50px;height: 50px;background: url('../img/games/card-deck.png') no-repeat;background-position: -138px -227px;border-radius: 50px;}
+.cards .deck .lear{position: absolute;top: 75px;left:10px;width: 50px;height: 50px;background: url('../img/games/card-deck.png') no-repeat;background-position: -138px -227px;border-radius: 50px;}
 .cards .deck .lear.card1{background-position: -1491px -531px;}
 .cards .deck .lear.card2{background-position: -1438px -480px;}
 .cards .deck .lear.card3{background-position: -1438px -531px;}
 .cards .deck .lear.card4{background-position: -1491px -480px;}
 
- .card{width: 106px; height: 162px; text-align: center; background: url('../img/games/card-deck.png') no-repeat; background-position: -1430px 0px; transform-origin: 50% 20%; border-radius: 10px; box-shadow: 2px 0px 10px 0px rgba(0,0,0,0.2);}
+ .card{position: absolute!important; width: 106px; height: 162px; text-align: center; background: url('../img/games/card-deck.png') no-repeat; background-position: -1430px 0px; transform-origin: 50% 20%; border-radius: 10px; box-shadow: 2px 0px 10px 0px rgba(0,0,0,0.2);}
  .card.select { box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);  }
  /*.card.select-next { box-shadow: 0px 0px 10px 1px rgba(200,200,0,1); }*/
  .card1x2 {background-position: 0px -170px;}
@@ -184,6 +202,7 @@ body {
     width: 80%;
     margin: 0 auto;
     height: 100%;
+    position: relative;
 }
 .tmp_but  {
     position: absolute;
@@ -191,11 +210,28 @@ body {
     top: 10px;
     z-index: 100;
 }
-@media (min-width: : 480px) {
-    .js-detect {
-        opacity: 0.5;
-    }
+.tmp_but2 {
+    right: 10px;
+    position: absolute;
+    top: 10px;
+    z-index: 100;
 }
+
+.transition, .select {
+    transition: all 0.5s linear ;
+    -moz-transition: all 0.5s linear ;
+    -o-transition: all 0.5s linear ;
+    -webkit-transition: all 0.5s linear ;
+
+/*  -webkit-transition-property: top;
+    -moz-transition-property: top;
+    -o-transition-property: top;
+    transition-property: top;
+    -webkit-transition-duration: 2s;
+    -moz-transition-duration: 2s;
+    -o-transition-duration: 2s;
+    transition-duration: 2s;*/
+}    
 @media (max-width: 767px) { 
     .cards .deck .card  {
     transform: rotate(10deg) scale(0.7, 0.7);
@@ -235,17 +271,10 @@ body {
         min-height: 220px;
 
     }
-    .cards .players .m .gm-pr .pr-pr b {
-        font-size: 25px;
-        display: block;
-        line-height: 10px;
-    }
-    .cards .players .m .gm-pr .pr-pr span {
-        font: 13px/5px Handbook-regular;
-    }
+
     .cards .players .m .gm-pr .pr-pr {
         margin: 7px 0;
-        padding: 15px 0;
+        /*padding: 15px 0;*/
     }  
     .cards .players .m .gm-pr .pr-ph-bk {
         left: 30%;
@@ -254,55 +283,63 @@ body {
         font-size: 14px;
     }
     .cards .players .m .card {
-        margin-right: -50px;
+        /*margin-right: -50px;*/
     }
+    .cards .players .o .gm-pr .pr-nm {
+        width: 100%;
+        background: rgba(64,64,64,0.6);
+        color: #ffffff;
+        top: 40px;
+        padding: 2px;
+        position: absolute;
+        border-radius: 3px;
+        font: 8px/1 Handbook-regular;
+        text-align: center;
+        /* white-space: nowrap; */
+        /* left: 0; */
+        /* right: 0; */
+        margin: 0 auto;
+        text-align: center;
+    }
+
 }
 
-        
 
-    
-}    
+
+
 @media (max-width: 650px) { 
         .cards .players .m .gm-pr .pr-ph-bk{
             left: 25%; 
         }
 
+    .cards .players .gm-pr .pr-ph-bk {
+
+    }    
+
        
 }
-@media (max-width: 480px) {
-    .cards .players .m .pr-pt {
-        font-size: 14px;
-    }
-    .cards .table .cards .card {
-        transform: rotate(-1deg) scale(0.5,0.5);
-        -webkit-transform: rotate(-1deg) scale(0.5,0.5);
-    } 
-    .cards .table .cards div:first-of-type {
-         transform: rotate(-1deg) scale(0.5,0.5);
-        -webkit-transform: rotate(-1deg) scale(0.5,0.5);
-    }
-    .cards .players .m .gm-pr .pr-cl .msg-move {
-        font-size: 14px;
-        line-height: 1.5;
+
+@media (max-width: 550px) { 
+    .js-detect {
+        opacity: 0.2;
     }
 
-}
-@media (max-height: 550px) {
-    .cards .players .m .gm-pr .pr-ph-bk {
+     .cards .players .m .gm-pr .pr-ph-bk {
         top: 6px;
     }
     .cards .players .m .gm-pr .pr-pr b {
-        font-size: 25px;
+        font: 26px/1 Handbook-bold;
+        letter-spacing: -3px;
+        margin-left: -3px;
         display: block;
-        line-height: 10px;
+        text-transform: uppercase;
+        margin-top: 0;
     }
 
-    .cards .players .m .gm-pr .pr-pr {
-        margin: 5px;
-    }
-    .mx .gm-pr {
+
+    .cards .players .o .gm-pr {
         width: auto;
-        height: 80px;
+        height: 30px;
     }
     .cards .players .gm-pr .pr-ph-bk {
         width: 50px;
@@ -345,6 +382,7 @@ body {
     }
     .cards .players .m .gm-pr {
         height: 60px;
+        margin: 0;
     }
     .cards .table > div:nth-of-type(even) {
         margin-top: -10px;
@@ -357,20 +395,332 @@ body {
     .cards .players .m .gm-pr .pr-ph,.cards .players .m .gm-pr .pr-pr {
         width: 50px;
         height: 50px;
+        margin: 0;
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        margin: 5px 0;
+
     }
     .cards .players .m .gm-pr .pr-pr {
         padding: 8px 0;
     }
     .cards .players .m .gm-pr .pr-pr span {
-        line-height: 1;
-        white-space: nowrap;
-        text-align: center;
-        display: inline-block;
+    font: 9px/5px Handbook-bold;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    display: block;
     }
     .cards .players .m .gm-pr .pr-cl {
         margin: 12px 15px;
     }
     .cards .players .m .pr-pt {
-        padding: 13px 0;
+        margin: 5px 0;
+    padding: 0 10px;
     }
+    .cards .deck .lear {
+        top: 60px;
+    }
+    .cards .players .m .gm-pr .pr-md {
+        height: 45px
+    }
+    .cards .players .m .gm-pr .pr-md span {
+        line-height: 45px;
+    }
+    .cards .players {
+        height: 20%;
+    }
+
+    .cards .players .m .gm-pr .pr-cl .msg-move {
+    font-size: 14px;
+    line-height: 1.5;
+    }
+} 
+@media (max-width: 480px) {
+    .cards .players .m .pr-pt {
+        font-size: 12px; 
+        margin: 17px 0;
+        padding: 0;
+    }
+    .cards .table .cards .card {
+        transform: rotate(-1deg) scale(0.5,0.5);
+        -webkit-transform: rotate(-1deg) scale(0.5,0.5);
+    } 
+    .cards .table .cards div:first-of-type {
+         transform: rotate(-1deg) scale(0.5,0.5);
+        -webkit-transform: rotate(-1deg) scale(0.5,0.5);
+    }
+    .cards .players .m .gm-pr .pr-cl .msg-move {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+/*    .cards .players .m .gm-pr .pr-ph {
+        width: 40px;
+        height: 40px;
+        margin: 10px 0;
+    }*/
+/*    .cards .players .m .gm-pr .pr-pr { 
+        width: 40px;
+        height: 40px;
+        margin: 20px 0;
+        padding: 0;
+    }*/
+    .cards .players .gm-pr .pr-ph-bk .mt {
+        font-size: 16px;
+    }
+
+/*    .cards .players .m .gm-pr .pr-pr b {
+        font-size: 20px;
+        display: block;
+        line-height: 14px;
+        margin-top: 5px;
+    }*/
+    .cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {
+        font: 14px Handbook-regular;
+        line-height: 40px;
+    }
+/*     .cards .players .m .gm-pr .pr-md {
+    margin: 20px 25px;
+} */
+    .cards .deck .card {
+        transform: rotate(10deg) scale(0.6, 0.6);
+        -webkit-transform: rotate(10deg) scale(0.6, 0.6);  
+    }
+    .cards .deck .card.trump {
+        transform: rotate(100deg) scale(0.6, 0.6);
+        -webkit-transform: rotate(100deg) scale(0.6, 0.6);  
+    } 
+    .cards .deck .lear {
+        top: 85px;
+    }
+
 }
+
+@media (max-height: 550px) {
+    .cards .players .m .gm-pr .pr-ph-bk {
+        top: 6px;
+    }
+    .cards .players .m .gm-pr .pr-pr b {
+        font: 26px/1 Handbook-bold;
+        letter-spacing: -3px;
+        margin-left: -3px;
+        display: block;
+        text-transform: uppercase;
+        margin-top: 0;
+    }
+
+
+    .cards .players .o .gm-pr {
+        width: auto;
+        height: 30px;
+    }
+    .cards .players .gm-pr .pr-ph-bk {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+    }
+    .cards .players .o .gm-pr .pr-ph {
+        width: 40px;
+        height: 40px;
+        margin: 5px 0 0;
+    }
+    .cards .players .o .card {
+        margin-left: -28px;
+        margin-top: -15px;
+    }
+    .cards .deck .card {
+
+    }
+        .cards .table .cards .card {
+        transform: rotate(-1deg) scale(0.4,0.4);
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+    } 
+    .cards .table .cards div:first-of-type {
+         transform: rotate(-1deg) scale(0.4,0.4);
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+    }
+    .cards .deck .card {
+        transform: rotate(10deg) scale(0.4, 0.4);
+        -webkit-transform: rotate(10deg) scale(0.4, 0.4);
+        left: -40px;
+    }
+    .cards .deck .card.trump {
+        transform: rotate(100deg) scale(0.4, 0.4);
+        -webkit-transform: rotate(100deg) scale(0.4, 0.4);
+        top: 50px
+    }
+    .cards .players .m {
+        height: auto;
+        min-height: 200px;
+    }
+    .cards .players .m .gm-pr {
+        height: 60px;
+        margin: 0;
+    }
+    .cards .table > div:nth-of-type(even) {
+        margin-top: -10px;
+        padding-top: 0;
+    }
+    .cards .players .gm-pr .pr-ph-bk .mt {
+        font-size: 14px;
+        width: auto;
+    }
+    .cards .players .m .gm-pr .pr-ph,.cards .players .m .gm-pr .pr-pr {
+        width: 50px;
+        height: 50px;
+        margin: 0;
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        margin: 5px 0;
+
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        padding: 8px 0;
+    }
+    .cards .players .m .gm-pr .pr-pr span {
+    font: 9px/5px Handbook-bold;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    display: block;
+    }
+    .cards .players .m .gm-pr .pr-cl {
+        margin: 12px 15px;
+    }
+    .cards .players .m .pr-pt {
+        margin: 5px 0;
+    padding: 0 10px;
+    }
+    .cards .deck .lear {
+        top: 60px;
+    }
+    .cards .players .m .gm-pr .pr-md {
+        height: 45px
+    }
+    .cards .players .m .gm-pr .pr-md span {
+        line-height: 45px;
+    }
+    .cards .players {
+        height: 20%;
+    }
+
+}
+@media (max-height: 550px) and (orientation: landscape) {
+    .cards .players .m .gm-pr .pr-ph-bk {
+        top: 6px;
+    }
+    .cards .players .m .gm-pr .pr-pr b {
+        font: 26px/1 Handbook-bold;
+        letter-spacing: -3px;
+        margin-left: -3px;
+        display: block;
+        text-transform: uppercase;
+        margin-top: 0;
+    }
+
+    .cards .players .o .gm-pr {
+        width: auto;
+        height: 30px;
+    }
+    .cards .players .gm-pr .pr-ph-bk {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+    }
+    .cards .players .o .gm-pr .pr-ph {
+        width: 40px;
+        height: 40px;
+        margin: 5px 0 0;
+    }
+    .cards .players .o .card {
+        margin-left: -28px;
+        margin-top: -15px;
+    }
+    .cards .deck .card {
+
+    }
+        .cards .table .cards .card {
+        transform: rotate(-1deg) scale(0.4,0.4);
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+    } 
+    .cards .table .cards div:first-of-type {
+         transform: rotate(-1deg) scale(0.4,0.4);
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+    }
+    .cards .deck .card {
+        transform: rotate(10deg) scale(0.4, 0.4);
+        -webkit-transform: rotate(10deg) scale(0.4, 0.4);
+        left: -40px;
+    }
+    .cards .deck .card.trump {
+        transform: rotate(100deg) scale(0.4, 0.4);
+        -webkit-transform: rotate(100deg) scale(0.4, 0.4);
+        top: 50px
+    }
+    .cards .players .m {
+        height: auto;
+        min-height: 200px;
+    }
+    .cards .players .m .gm-pr {
+        height: 60px;
+        margin: 0;
+    }
+    .cards .table > div:nth-of-type(even) {
+        margin-top: -10px;
+        padding-top: 0;
+    }
+    .cards .players .gm-pr .pr-ph-bk .mt {
+        font-size: 14px;
+        width: auto;
+    }
+    .cards .players .m .gm-pr .pr-ph,.cards .players .m .gm-pr .pr-pr {
+        width: 50px;
+        height: 50px;
+        margin: 0;
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        margin: 5px 0;
+
+    }
+    .cards .players .m .gm-pr .pr-pr {
+        padding: 8px 0;
+    }
+    .cards .players .m .gm-pr .pr-pr span {
+    font: 9px/5px Handbook-bold;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    display: block;
+    }
+    .cards .players .m .gm-pr .pr-cl {
+        margin: 12px 15px;
+    }
+    .cards .players .m .pr-pt {
+        margin: 5px 0;
+    padding: 0 10px;
+    }
+    .cards .deck .lear {
+        top: 60px;
+    }
+    .cards .players .m .gm-pr .pr-md {
+        height: 45px
+    }
+    .cards .players .m .gm-pr .pr-md span {
+        line-height: 45px;
+    }
+    .js-detect {
+        opacity: 0.3;
+    }
+    .cards .players {
+        height: 20%;
+    }
+
+
+}
+/* @media (max-height: 550px) and (max-width: 550px) and (orientation: landscape) {
+    .js-detect {
+        opacity: 0.3;
+    }
+} */
+/*@media (max-height: 550px) {
+        .js-detect {
+        opacity: 0.3;
+    }
+}*/

@@ -22,16 +22,22 @@
 
 <script>
 
-    Cache = {
-        "users": null,
-        "prizes": null,
-        "lots": null,
-        "games": null,
-        "chances": null,
-        "posts": null,
-        "lottery-rules": null,
-        "lottery-faq": null
-    };
+
+    appName = 'Durak';
+    onlineGame = appAudio = appModes = appVariations = {};
+
+    OnlineGames = {
+        Audio: [],
+        Modes: [],
+        Variations: []
+    },
+
+    OnlineGame = {
+        name: 'Durak',
+        id: '1'
+    },
+
+    Cache = {};
 
     Templates = <?php $templates = array();
             foreach(array(
@@ -100,6 +106,8 @@
         }
     }
 
+    Balance = Player.balance;
+
     Tickets = {
         "selectedBalls": 6,
         "totalBalls": 49,
@@ -149,35 +157,24 @@
     };
 </script>
 
-<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
-<script src="/res/js/libs/jquery-ui.min.js"></script>
-<script src="/res/js/libs/jquery.plugin.min.js"></script>
-<script src="/res/js/libs/jquery.countdown.min.js"></script>
-<script src="/res/js/libs/jquery.cookie.js"></script>
-<script src="/res/js/libs/moment.min.js"></script>
-<script src="/res/js/libs/mustache.min.js"></script>
-<script src="/res/js/libs/daterangepicker.js"></script>
-<script src="/res/js/libs/owl.carousel.min.js"></script>
-<script src="/res/js/engine.js"></script>
-<?php if($dir = opendir('./res/js/functions/'))
-    while (($file = readdir($dir)) !== false)
-        if ($file != "." && $file != "..")
-            echo '<script src="/res/js/functions/' . $file . "\"></script>\r\n"; ?>
-<script src="/res/js/callbacks.js"></script>
-<script src="/res/js/olya.js"></script>
-<!--script src="/res/js/zhenya.js"></script-->
+<?php $dirs = array('libs', 'plugins', 'functions', 'core', 'temp');
+foreach ($dirs as $dir) {
+    echo "<!-- {$dir} -->\r\n";
+    $files = scandir('./res/js/' . $dir . '/');
+    foreach($files as $file)
+        if ($file != "." && $file != ".." && strstr($file, '.js'))
+            echo '<script src="/res/js/' . $dir . '/' . $file . "\"></script>\r\n";
+}?>
 
 <script>
     $(function () {
 
-        // init callbacks
-        C.init();
+        Navigation.init(); // init navigation
+        D.init(); // init debugger
+        R.init(); // init render engine
+        C.init(); // init callbacks
+        C.menu(); // menu callback
 
-        // init render
-        R.init();
-
-        // render menu
-        C.menu();
     });
 </script>
 

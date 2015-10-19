@@ -17,6 +17,28 @@ a
   color: inherit
   display: block
 
+button
+  border: none
+
+  &.waiting
+    position: relative
+    opacity: 0.8
+    cursor: default
+
+  &.waiting:before
+    width: 20px
+    position: absolute
+    left: 10px
+    background-repeat: no-repeat
+    background-position: center
+    background-size: contain
+    background-image: url(../css/img/preloader.gif)
+    content: ""
+    display: inline-block
+    min-height: inherit
+    height: 100%
+    vertical-align: middle
+
 .container
   min-width: 320px
   padding: 0 10px
@@ -255,8 +277,54 @@ input.input-radio:checked + label.input-radio:before
   top: 3px
   cursor: pointer
 
+.loading
+  & div
+    margin: 0 auto
+    width: 40px
+    height: 40px
+    position: absolute
+    margin-left: -20px
+    margin-top: -20px
+    top: 50%
+    left: 50%
+    background-repeat: no-repeat
+    background-position: center
+    background-size: contain
+    background-image: url(../css/img/preloader.gif)
+ 
+.error 
+  & div
+    margin: 0 auto
+    width: 240px
+    height: auto
+    position: absolute
+    margin-left: -120px
+    top: 20%
+    left: 50%
+    background-color: white
+    border-radius: 3px
+    padding: 20px
 
+.error,
+.loading
+  position: absolute
+  top: 0
+  left: 0
+  width: 100% 
+  height: 100%
+  z-index: 20
 
+.error
+  background-color: rgba(0,0,0,0.5)
+  display: block !important
+
+.loading
+  background-color: rgba(255,255,255,0.5)
+    
+.error 
+  & span
+    display: block
+    color: red 
 
 
 
