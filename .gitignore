@@ -1,5 +1,6 @@
 /.idea
 /protected/configs/_db.php
 /protected/configs/_db.local.php
+/protected/configs/_mail.local.php
 /res/.sass-cache
 /lastLottery
