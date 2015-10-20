@@ -65,17 +65,21 @@ Drag = {
 
     move: function() {
         Drag.status('move')
+        var draggableCards = document.getElementsByClassName('transition');
+        for (var i = 0; i < draggableCards.length; i++) {
+            card = draggableCards[i];
+            card.className = card.className.replace(' transition', '');
+        }
 
-
-        if ((Drag.position.left - Drag.options.event.clientX) < 20 && (Drag.position.top - Drag.options.event.clientY) < 10 || (Drag.options.event.clientX - Drag.position.left) < 20 && (Drag.position.top - Drag.options.event.clientY) < 10) {
-            Drag.options.target.className = Drag.options.target.className.replace(' transition', '');           
-           Drag.rollback();
+        if ((Drag.position.left - Drag.options.event.clientX) > 20 && (Drag.position.top - Drag.options.event.clientY) < 10 || (Drag.options.event.clientX - Drag.position.left) > 20 && (Drag.position.top - Drag.options.event.clientY) < 10) {
             Drag.options.target = document.elementFromPoint(Drag.options.event.clientX, Drag.options.event.clientY);
-            Drag.start();
+
+                Drag.start();
+
+           
 
         } else {
             Drag.options.target.style.zIndex = 10;
-            Drag.options.target.className = Drag.options.target.className.replace(' transition', '');
             $(Drag.options.target).css({
                 left: Drag.options.event.clientX + Drag.position.fixX,
                 top: Drag.options.event.clientY + Drag.position.fixY
@@ -183,7 +187,7 @@ Touch = {
     move: function(e) {
         Drag.options.event = e.targetTouches[0];
         Drag.options.target = e.target;
-        Drag.move()
+        Drag.move();
     }
 }
 
@@ -240,20 +244,20 @@ var mouseLeave = function(e) {
 }
 
 
-var targetTouch;
+var touchTarget;
 var touchStartPosition;
 
 var touchstart = function(e) {
     event.preventDefault();
-    marginsDraw();
+    
     touchStartPosition = event.touches[0];
-    targetTouch = document.elementFromPoint(touchStartPosition.pageX, touchStartPosition.pageY);
-    
-    
-    if (targetTouch.nextElementSibling != null && targetTouch.nextElementSibling != undefined) {
-        var next = targetTouch.nextElementSibling;
+    touchTarget = document.elementFromPoint(touchStartPosition.pageX, touchStartPosition.pageY);
+    touchTarget .className += ' select';
+    marginsDraw();
+    if (touchTarget.nextElementSibling != null && touchTarget.nextElementSibling != undefined) {
+        var next = touchTarget.nextElementSibling;
     }
-    var selectedIndex = $('.players .m .card').index(targetTouch);
+    var selectedIndex = $('.players .m .card').index(touchTarget);
     var nextIndex = $('.players .m .card').index(next);
     cards = document.querySelectorAll('.players .m .card');
     for (i = 0; i < cards.length; i++) {
@@ -279,16 +283,10 @@ var touchMove = function(e) {
     var touch = event.touches[0];
 
     if (touchStartPosition.pageX - touch.pageX > 20 || touch.pageX - touchStartPosition.pageX > 20) {
-        // cards = document.querySelectorAll('.players .m .card');
+        touchTarget .className = touchTarget .className.replace(' select', '');
+        event.preventDefault();
+        touchstart();
 
-        // for (var i = 0; i < cards.length; i++) {
-        //     if (touch.pageX > cards[i].getBoundingClientRect().left && touch.pageX < cards[i].getBoundingClientRect().right && touch.pageY > cards[i].getBoundingClientRect().top && touch.pageY < cards[i].getBoundingClientRect().bottom) {
-        //         event.preventDefault();
-            event.preventDefault();
-                touchstart();
-            // }
-
-        // }
 
 
     }
@@ -297,6 +295,7 @@ var touchMove = function(e) {
 
 var touchend = function(e) {
     event.preventDefault();
+     touchTarget .className = touchTarget .className.replace(' select', '');
     // target.className = target.className.replace(' select', '')
     marginsDraw();
 
