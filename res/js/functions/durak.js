@@ -1,5 +1,8 @@
 $(function () {
 
+
+
+
     Durak = {
 
         reply: function () {
@@ -12,21 +15,8 @@ $(function () {
             return;
         },
 
-        start: function () {
-
-            $(document).on('click', '.tmp_but', function (e) {
-                if (Device.get() <= 0.5) {
-                    W.toggleFullScreen();
-                }
-            });
-            return;
-        },
-
         ready: function () {
-
-            console.log(action, onlineGame);
-            Cards.setupForDevices();
-            $('.tmp_but').html(Device.detect() + document.documentElement.clientHeight);
+        
 
             /*
              1) если действие "ждем", "старт" или "готовы", но все обязаны подтердить готовность
@@ -42,7 +32,16 @@ $(function () {
                 Cards.emptyFields();
                 Cards.drawTrump();
             }
+            $(document).on('click', '.tmp_but', function (e) {
 
+                if (Device.get() <= 0.5) {
+                   
+                    W.toggleFullScreen();
+                }
+            });
+            console.log(action, onlineGame);
+            Cards.setupForDevices();
+            $('.tmp_but').html(Device.detect() + document.documentElement.clientHeight);
             Cards.drawFields();
             Cards.premove();
             Cards.initStatuses();
@@ -70,6 +69,6 @@ $(function () {
 
     }
 
-    Durak.move = Durak.timeout = Durak.pass = Durak.wait = Durak.ready;
+    Durak.start = Durak.move = Durak.timeout = Durak.pass = Durak.wait = Durak.ready ;
 
 });
