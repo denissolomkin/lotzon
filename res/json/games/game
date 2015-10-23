@@ -66,7 +66,16 @@
 
 
 
-,{"path":"app\\Durak","res":{"appId":"5603b09f5b3e1","appMode":"MONEY-1","appName":"Durak","action":"move","timeout":35,"timestamp":1443082585,"beater":24216,"starter":3628,"current":[3628],"players":{"24216":{"pid":24216,"moves":"3","points":0,"avatar":"54e3ad5cbb50e.jpg","lang":"RU","name":"\u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a 24216","timeout":1443082581,"order":1},"3628":{"pid":3628,"moves":"3","points":0,"avatar":"","lang":"RU","name":"\u0418\u0433\u0440\u043e\u043a 2","timeout":1443082585,"order":2}},"fields":{"3628":{"0":"2x14","3":"4x8","4":"4x9"},"deck":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"table":[["4x6","4x10"],["3x10","3x11"],["4x11","1x10"]],"off":[null,null],"24216":[null,null,null]},"trump":"1x6","variation":{"cards":"36","type":"throw"}}}
+,{"path":"app\\Durak","res":{"appId":"5603b09f5b3e1","appMode":"MONEY-1","appName":"Durak","action":"move","timeout":35,"timestamp":1443082585,"beater":24216,"starter":3628,"current":[3628],"players":{"24216":{"pid":24216,"moves":"3","points":0,"avatar":"54e3ad5cbb50e.jpg","lang":"RU","name":"\u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a 24216","timeout":1443082581,"order":1},"3628":{"pid":3628,"moves":"3","points":0,"avatar":"","lang":"RU","name":"\u0418\u0433\u0440\u043e\u043a 2","timeout":1443082585,"order":2}},"fields":{"3628":{"0":"2x14","3":"4x8","4":"4x9"},"deck":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+"table":
+[
+    ["4x6"],
+    ["3x10","3x11"],
+    ["4x11","1x10"]
+],
+
+
+"off":[null,null],"24216":[null,null,null]},"trump":"1x6","variation":{"cards":"36","type":"throw"}}}
 
 
 ,{"path":"app\\Durak","res":{"appId":"5603b09f5b3e1","appMode":"MONEY-1","appName":"Durak","action":"pass","timeout":35,"timestamp":1443082590,"beater":3628,"starter":24216,"current":[24216],"players":{"24216":{"pid":24216,"moves":"3","points":0,"avatar":"54e3ad5cbb50e.jpg","lang":"RU","name":"\u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a 24216","timeout":1443082590,"order":1},"3628":{"pid":3628,"moves":"3","points":0,"avatar":"","lang":"RU","name":"\u0418\u0433\u0440\u043e\u043a 2","timeout":1443082585,"order":2}},"fields":{"3628":["2x11","2x14","3x8","4x8","4x9","1x12"],"deck":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"table":[],"off":[null,null,null,null,null,null,null,null],"24216":[null,null,null,null,null,null]},"trump":"1x6","variation":{"cards":"36","type":"throw"}}}

@@ -1,6 +1,50 @@
-$(function () {
+(function () {
 
     Menu = {
+
+        init: function(){
+
+            // Slider carousel
+            R.push({
+                'box': 'inf-slider',
+                'template': 'menu-slider',
+                'json': Slider,
+                'url': false,
+                'callback': function () {
+
+                    $("#countdownHolder").countdown({
+                        until: (Slider.timer),
+                        layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
+                    });
+
+                    $(".slider-top").owlCarousel({
+                        navigation: false,
+                        slideSpeed: 300,
+                        paginationSpeed: 400,
+                        singleItem: true,
+                        autoPlay: true
+                    });
+
+                }
+            });
+
+            // Balance menu
+            R.push({
+                'box': 'balance',
+                'template': 'menu-balance',
+                'json': Player,
+                'url': false,
+                'callback': function () {
+
+                    $("header a").on('click', Navigation.loadPage);
+                    $(document).on('click', I.menuBtnItem, Menu.click);
+                    $('[href="/' + Navigation.path[1] + '"]').first().click();
+                    Menu.switch();
+
+                }
+            });
+
+        },
 
         click: function (event) {
 
@@ -61,9 +105,7 @@ $(function () {
                 $(I.balanceBtn).show();
             }
 
-            Menu.hide();
-
-            // $(I.menuBtnItem+'.active').removeClass('active').click();
+            this.hide();
 
         },
 
@@ -82,10 +124,12 @@ $(function () {
         },
 
         fix: function () {
-            (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0) ? $('body').addClass('fixed') : $('body').removeClass('fixed');
+            (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)
+                ? $('body').addClass('fixed')
+                : $('body').removeClass('fixed');
         }
 
     }
 
 
-});
+})();

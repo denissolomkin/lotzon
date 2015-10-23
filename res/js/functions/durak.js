@@ -34,14 +34,14 @@ $(function () {
             }
             $(document).on('click', '.tmp_but', function (e) {
 
-                if (Device.get() <= 0.5) {
+                if (Device.get() <= 0.6) {
                    
                     W.toggleFullScreen();
                 }
             });
             console.log(action, onlineGame);
             Cards.setupForDevices();
-            $('.tmp_but').html(Device.detect() + document.documentElement.clientHeight);
+            $('.tmp_but').html(Device.detect() + Device.get() + document.documentElement.clientWidth);
             Cards.drawFields();
             Cards.premove();
             Cards.initStatuses();
@@ -59,7 +59,7 @@ $(function () {
 
         error: function () {
 
-            alert('error');
+         
             Cards.premove();
             Game.error();
             Drag.rollback();

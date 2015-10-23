@@ -217,7 +217,7 @@ body {
     z-index: 100;
 }
 
-.transition, .select {
+.transition {
     transition: all 0.5s linear ;
     -moz-transition: all 0.5s linear ;
     -o-transition: all 0.5s linear ;
@@ -232,7 +232,21 @@ body {
     -o-transition-duration: 2s;
     transition-duration: 2s;*/
 }    
-@media (max-width: 767px) { 
+@media  all and ( max-width: 768px) { 
+
+    .active_small_devices {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        margin: 0;
+    }
+    .content-box-content {
+        min-height: 0;
+    }
     .cards .deck .card  {
     transform: rotate(10deg) scale(0.7, 0.7);
     -webkit-transform: rotate(10deg) scale(0.7, 0.7);
@@ -254,15 +268,7 @@ body {
         margin: 20px 15px;
         width: 15%;
     }
-    main.active_small_devices {position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        margin: 0;
-    }
+
     footer.unvisible {
         display: none;
     }
@@ -282,9 +288,9 @@ body {
     .cards .players .m .gm-pr .pr-cl .msg-move {
         font-size: 14px;
     }
-    .cards .players .m .card {
-        /*margin-right: -50px;*/
-    }
+  /*  .cards .players .m .card {
+     
+    }*/
     .cards .players .o .gm-pr .pr-nm {
         width: 100%;
         background: rgba(64,64,64,0.6);
@@ -312,18 +318,14 @@ body {
             left: 25%; 
         }
 
-    .cards .players .gm-pr .pr-ph-bk {
+/*    .cards .players .gm-pr .pr-ph-bk {
 
-    }    
+    }    */
 
        
 }
 
 @media (max-width: 550px) { 
-    .js-detect {
-        opacity: 0.2;
-    }
-
      .cards .players .m .gm-pr .pr-ph-bk {
         top: 6px;
     }
@@ -436,6 +438,9 @@ body {
     }
 } 
 @media (max-width: 480px) {
+        .js-detect {
+        opacity: 0.2;
+    }
     .cards .players .m .pr-pt {
         font-size: 12px; 
         margin: 17px 0;
@@ -714,13 +719,3 @@ body {
 
 
 }
-/* @media (max-height: 550px) and (max-width: 550px) and (orientation: landscape) {
-    .js-detect {
-        opacity: 0.3;
-    }
-} */
-/*@media (max-height: 550px) {
-        .js-detect {
-        opacity: 0.3;
-    }
-}*/

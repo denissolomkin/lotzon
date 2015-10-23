@@ -14,39 +14,42 @@
                     <div class="cco-methods">
                         <div class="cco-method clearfix">
                             <label>
-                                <input id="cco-mb" class="input-radio" {{^Player.Phone}}disabled{{/Player.Phone}}
+                                <input id="cco-mb" class="input-radio" {{^billing.phone}}disabled{{/billing.phone}}
                                 name="method" type="radio" value="1">
                                 <label for="cco-mb" class="input-radio"></label>
 
                                 <div class="cco-method-name">Мобильный телефон</div>
-                                <div class="cco-method-value">{{Player.Phone}}</div>
+                                <div class="cco-method-value">{{billing.phone}}</div>
                             </label>
                         </div>
                         <div class="cco-method clearfix">
                             <label>
-                                <input id="cco-ym" class="input-radio" name="method" type="radio" value="2">
+                                <input id="cco-ym" class="input-radio" {{^billing.yandexMoney}}disabled{{/billing.yandexMoney}}
+                                name="method" type="radio" value="2">
                                 <label for="cco-ym" class="input-radio"></label>
 
                                 <div class="cco-method-name">Яндекс Деньги</div>
-                                <div class="cco-method-value">{{Player.Billing.YandexMoney}}</div>
+                                <div class="cco-method-value">{{billing.yandexMoney}}</div>
                             </label>
                         </div>
                         <div class="cco-method clearfix">
                             <label>
-                                <input id="cco-wm" class="input-radio" name="method" type="radio" value="3">
+                                <input id="cco-wm" class="input-radio" {{^billing.webMoney}}disabled{{/billing.webMoney}}
+                                name="method" type="radio" value="3">
                                 <label for="cco-wm" class="input-radio"></label>
 
                                 <div class="cco-method-name">WebMoney</div>
-                                <div class="cco-method-value">{{Player.Billing.WebMoney}}</div>
+                                <div class="cco-method-value">{{billing.webMoney}}</div>
                             </label>
                         </div>
                         <div class="cco-method clearfix">
                             <label>
-                                <input id="cco-qw" class="input-radio" name="method" type="radio" value="4">
+                                <input id="cco-qw" class="input-radio" {{^billing.qiwi}}disabled{{/billing.qiwi}}
+                                name="method" type="radio" value="4">
                                 <label for="cco-qw" class="input-radio"></label>
 
                                 <div class="cco-method-name">QIWI</div>
-                                <div class="cco-method-value">{{Player.Billing.Qiwi}}</div>
+                                <div class="cco-method-value">{{billing.qiwi}}</div>
                             </label>
                         </div>
                     </div>
@@ -54,7 +57,7 @@
                     <div class="cco-enter-sum clearfix">
                         <div class="cco-enter-sum-box clearfix">
                             <div class="title">Введите сумму</div>
-                            <input type="text" value="12"><span class="cco-currency">грн</span>
+                            <input type="text"  class="cco-sum" value=""><span class="cco-currency">грн</span>
                         </div>
                         <button type="submit" class="cco-cashout-btn">Вывести</button>
                     </div>

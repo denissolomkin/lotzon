@@ -33,13 +33,15 @@ $(function () {
             $('.ngm-rls').fadeOut(200);
             if ((   $.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
                 (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)
-                )
-                || !$('.mx .players').children('div').length) {
-                $('.mx').html($('.mx-tmpl').html());
+                ) || !$('.mx .players').children('div').length) {
+
+                $('.mx').html('<div class="players"></div>' +
+                    '<div class="deck"></div>' +
+                    '<div class="table"></div>' +
+                    '<div class="off"></div>');
                 Game.seatPlayers();
                 Game.setPlayersDetailes();
                 Game.setFullScreenHeigth();
-
             }
 
         },
@@ -251,7 +253,7 @@ $(function () {
             if (singleGame.length > 0) {
 
                 $("meta[name='mobile-web-app-capable']").attr('content', 'yes');
-                $('main').addClass('active_small_devices');
+                $('main, .content-top').addClass('active_small_devices');
                 $('footer').addClass('unvisible');
             }
         },

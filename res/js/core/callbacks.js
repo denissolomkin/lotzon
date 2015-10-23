@@ -1,7 +1,10 @@
 (function () {
 
 
-    // classes
+    /* ========================================================= */
+    /*                      INIT CLASSES
+     /* ========================================================= */
+
     I = {
 
         /* navigation and tabs */
@@ -36,50 +39,66 @@
         goTop: '.go-to-top',
     }
 
-    // callbacks
+    /* ========================================================= */
+    /*                      CALLBACKS
+     /* ========================================================= */
 
     C = {
 
         "init": function () {
 
             // handlers
-            $(window).on('resize',  W.resize);
-            $(window).on('scroll',  W.scroll);
+            $(window).on('resize', W.resize);
+            $(window).on('scroll', W.scroll);
             $(document).on('click', W.hide);
-            $(I.goTop).on('click',  W.goTop);
+            $(I.goTop).on('click', W.goTop);
 
             /* navigation */
-            $(document).on('click', I.Tabs,     Navigation.switchTab);
-            $(document).on('click', I.Cats,     Navigation.switchCat);
-            $(document).on('click', 'a',        Navigation.loadBlock);
+            $(document).on('click', I.Tabs, Navigation.switchTab);
+            $(document).on('click', I.Cats, Navigation.switchCat);
+            $(document).on('click', 'a', Navigation.loadBlock);
             $(document).on('click', 'div.back', Navigation.backBlock);
 
             /* ticket */
             $(document).on('click', I.TicketTabs, Ticket.switch);
 
             /* new message*/
-            $(document).on('input', ".enter-friend-name",   Message.searchAddressee);
-            $(document).on('click', ".nm-change",           Message.clearAddressee);
-            $(document).on('click', ".nm-friend",           Message.setAddressee);
-            $(document).on('click', ".message-form-btn",    Message.send);
+            $(document).on('input', ".enter-friend-name", Message.searchAddressee);
+            $(document).on('click', ".nm-change", Message.clearAddressee);
+            $(document).on('click', ".nm-friend", Message.setAddressee);
+            $(document).on('click', ".message-form-btn", Message.send);
 
+            $(document).on('click', 'form button[type="submit"]', Form.submit);
+            $(document).on('input', 'form input', Form.validate);
+
+            /* profile*/
+            $(document).on('click', '.pi-ph.true i', Profile.removeAvatar);
+            $(document).on('click', '.pi-ph.true i', Profile.updateAvatar);
+
+            $(document).on('click', '.ae-current-combination li', Profile.openFavorite);
+            $(document).on('click', '.ae-combination-box li', Profile.selectFavorite);
+
+            $(document).on('input', 'form input.cc-sum', Profile.validateConvert);
+            $(document).on('input', 'form input.cco-sum', Profile.validateCashout);
+
+            /* callback menu*/
+            this.menu();
 
         },
 
-        "lottery": function () {
+        "menu": Menu.init,
 
-            Carousel.initOwl();
-            Ticket.render();
+        "blog": Blog.init,
 
-        },
+        "lottery": Lottery.init,
 
-        "blog": function () {
+        "post": {
 
-            R.render({
-                'box': $('.content-box-content:visible'),
-                'template': 'blog-posts',
-                'url': false
-            })
+            "profile-edit": Profile.updateDetails,
+            "profile-settings": Profile.updateSettings,
+            "profile-billing": Profile.updateBilling,
+            "profile-convert": Profile.convertMoney,
+            "profile-cashout": Profile.cashoutMoney,
 
         },
 
@@ -88,63 +107,31 @@
             WebSocketAjaxClient();
             $(document).on('click', '.mx .players .m .btn-ready', GameAction.ready);
             $(document).on('click', '.mx .players .m .btn-pass', GameAction.pass);
-            $(document).on("mouseenter",'.players .m .card', mouseEnter);
-            $(document).on("mouseleave",'.players .m .card', mouseLeave);
-            $(document).on("touchstart",'.players .m .card', touchstart);
-            $(document).on("touchmove",'.players .m .card', touchMove);
-            $(document).on("touchend",'.players .m .card', touchend);
+            $(document).on("mouseenter", '.players .m .card', mouseEnter);
+            $(document).on("mouseleave", '.players .m .card', mouseLeave);
+            $(document).on("touchstart", '.players .m .card', touchstart);
+            $(document).on("touchmove", '.players .m .card', touchMove);
+            $(document).on("touchend", '.players .m .card', touchend);
 
 
         },
 
-        "menu": function () {
 
-            /* ========================================================= */
-            //                        MENUS
-            /* ========================================================= */
+        "profile-edit": function () {
 
-            // Balance menu
-            R.render({
-                'box': 'balance',
-                'template': 'menu-balance',
-                'json': Player,
-                'url': false,
-                'callback': function () {
-
-                    $("header a").on('click', Navigation.loadPage);
-                    $(document).on('click', I.menuBtnItem, Menu.click);
-                    $('[href="/' + R.Path[1] + '"]').first().click();
-                    Menu.switch();
-
-                }
-            });
-
-            // Slider carousel
-            R.render({
-                'box': 'inf-slider',
-                'template': 'menu-slider',
-                'json': Slider,
-                'url': false,
-                'callback': function () {
-
-                    $("#countdownHolder").countdown({
-                        until: (Slider.timer),
-                        layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
-                    });
-
-                    $(".slider-top").owlCarousel({
-                        navigation: false,
-                        slideSpeed: 300,
-                        paginationSpeed: 400,
-                        singleItem: true,
-                        autoPlay: true
-                    });
-
-                }
-            });
-
+            $('input[type="text"][name="bd"]').inputmask("d.m.y", {autoUnmask: false});
 
         },
+
+        "profile-billing": function () {
+
+            $('input[type="tel"][name="billing[phone]"]').inputmasks(phoneMask);
+            $('input[type="tel"][name="billing[qiwi]"]').inputmasks(phoneMask);
+            $('input[type="text"][name="billing[yandexMoney]"]').inputmask({mask: '410019{7,10}', placeholder: ''});
+            $('input[type="text"][name="billing[webMoney]"]').inputmask('a999999999999');
+
+        },
+
 
         "communications-messages": function () {
 
@@ -208,11 +195,6 @@
             }).on('input', function () {
                 h(this);
             });
-            // --------------------------------- //
-            // ======================================= //
-
-            /* ========================================================= */
-            /* ========================================================= */
         }
     };
 

@@ -3,7 +3,7 @@ $(function () {
 
     // TICKET ================================= //
 
-    Tickets = $.extend(Tickets, {
+    $.extend(Tickets, {
         "ballsHTML": function () {
             var html = '';
             for (i = 1; i <= this.totalBalls; i++) {
