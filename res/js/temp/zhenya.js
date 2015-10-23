@@ -24,7 +24,7 @@ $(document).ready(function () {
 
 //запускает анимацию
   runAnimation = function () {
-      R.render({
+      R.push({
         'template': 'lottery-animation-process',
         'json': {},
         'url': false,

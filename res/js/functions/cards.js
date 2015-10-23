@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     scale = 1;
     scaleO = 0.7;
@@ -12,15 +12,16 @@ $(function () {
     marginRightSelect = '-10px';
 
     Cards = {
-
-        drawFields: function () {
+        drawFields: function() {
 
             if ($.inArray(onlineGame.action, ['ready', 'wait']) == -1 || onlineGame.fields) {
-                $.each(onlineGame.fields, function (key, field) {
+                $.each(onlineGame.fields, function(key, field) {
                     if (!field)
                         return;
                     newLen = (field.length ? field.length : Object.size(field));
                     oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
+console.log(oldLen,'oldLen');
+
                     if (key == 'deck') {
                         if (field.length) {
                             if (field.length == 1)
@@ -56,7 +57,7 @@ $(function () {
                         var idx = 0;
                         var count = 16;
 
-                        $.each(field, function (index, card) {
+                        $.each(field, function(index, card) {
                             idx++;
 
                             if (idx > count && 0)
@@ -69,11 +70,18 @@ $(function () {
                                 if (key == Player.id) {
                                     myCount = (field.length ? field.length : Object.size(field));
                                 }
-                                console.log(key, 'field', field, 'cardsCount', myCount);
-                                var deg = (cardsCount > 1 ?
-                                (idx * ((key == Player.id ? 60 : 105) - (cardsCount > 4 ? 0 : (4 - cardsCount) * 15)) / cardsCount) -
-                                ((key == Player.id ? 30 : 45)) : 0);
-                                // console.log(deg);
+                                var deg = (cardsCount > 1 
+                                    ? (idx * ((key == Player.id
+                                        ? 22 
+                                        : 105) 
+                                    - (cardsCount > 4 
+                                        ? 0 
+                                        : (4 - cardsCount) * 15)) / cardsCount) 
+                                    - ((key == Player.id 
+                                        ? 11 
+                                        : 45)) 
+                                    : 0);
+
 
                                 $('.mx .players .player' + key + (key == Player.id ? ' .game-cards' : '')).append(
                                     '<div style="transform: rotate(' + deg + 'deg)' + ' ' +
@@ -85,11 +93,11 @@ $(function () {
                                     ';' + '\"' + 'class="card ' + (card ? ' card' + card + '" data-card="' + card + '' : '') + '">' +
                                     '</div>');
 
-
                                 durakSpaceWidth = $(".game-cards").width();
                                 cardsBlock = $(".game-cards  > div");
                                 cardsWrapper = $(".game-cards");
                                 cardWidth = $(".cards .players .m .card").width();
+                                cardHeight = $(".cards .players .m .card").height();
                                 marginValue = 0;
                                 marginLeftValue = 0;
                                 if (cardWidth) {
@@ -102,54 +110,19 @@ $(function () {
                                     }
                                     marginRightValue = (deltaMargin < cardsLess6) ? (-cardsLess6) : (-(myCount > 6 ? deltaMargin : cardsLess6));
 
-
-                                    var angle = deg * Math.PI / 180,
-                                        sin = Math.sin(angle),
-                                        cos = Math.cos(angle),
-                                        width = $(".cards .players .m .card").width(),
-                                        height = $(".cards .players .m .card").height();
-
-                                    // (0,0) stays as (0, 0)
-
-                                    // (w,0) rotation
-                                    var x1 = cos * width,
-                                        y1 = sin * width;
-
-                                    // (0,h) rotation
-                                    var x2 = -sin * height,
-                                        y2 = cos * height;
-
-                                    // (w,h) rotation
-                                    var x3 = cos * width - sin * height,
-                                        y3 = sin * width + cos * height;
-
-                                    var minX = Math.min(0, x1, x2, x3),
-                                        maxX = Math.max(0, x1, x2, x3),
-                                        minY = Math.min(0, y1, y2, y3),
-                                        maxY = Math.max(0, y1, y2, y3);
-
-                                    var rotatedWidth = maxX - minX * scale,
-                                        rotatedHeight = maxY - minY * scale;
-
-                                    newWidth = rotatedWidth * scale;
+                                    rotatedWidth = Cards.getRotateSize(idx);
+                                    newWidth = rotatedWidth.Width * scale;
                                     newAllwidth = newWidth * myCount;
 
-
-                                    d = allCardWidth - marginRightValue;
-                                    md = newAllwidth - d;
-                                    (newAllwidth - md < 0) ? (newAllwidth1 = newAllwidth - (md - newAllwidth)) : (newAllwidth1 = newAllwidth + (md - newAllwidth))
-
-
-                                }
+                                }  
 
                                 if (key == Player.id) {
-                                    console.log("зашли");
-                                    marginsDraw();
+                                    Cards.marginsDraw();
                                 }
 
                             } else if (key == 'table') {
                                 var cards = '';
-                                $.each(card, function (i, c) {
+                                $.each(card, function(i, c) {
                                     cards += '<div class="card' + (c ? ' card' + c : '') + '">' + '</div>';
                                 });
                                 $('.mx .' + key).append('<div data-table="' + index + '" class="cards">' + cards + '</div>');
@@ -166,11 +139,233 @@ $(function () {
                     }
                 });
             }
-
+             
+            Cards.animateClass();
             fields = onlineGame.fields;
+           
         },
 
-        emptyFields: function () {
+        animateClass: function() {
+
+            if ($.inArray(onlineGame.action, ['move']) != -1 || onlineGame.fields) {
+
+
+                $.each(onlineGame.fields, function(key, field) {
+
+                    if (!field)
+                        return;
+                    console.log($.inArray(onlineGame.action, ['move']) != -1 || onlineGame.fields, 'first');
+                    newLen = (field.length ? field.length : Object.size(field));
+                    oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
+                    console.log(oldLen,'oldLen2');
+
+                    if (isNumeric(key) && newLen == oldLen && fields && fields.key && (fields.key.length == onlineGame.fields.key.length)) {
+
+                    } 
+
+                    else  {
+   
+                        $.each(field, function(index, card) {
+
+                            if ( oldLen == 0 ) {
+
+                                newCard = $('.card' + card).addClass('animatedCard');
+                                   
+                            }
+
+                            else if (fields && fields[key] && fields[key] != undefined ) {
+
+                                if (fields[key][index] != onlineGame.fields[key][index]) {
+                                    $('.card' + fields[key][index]).addClass('animatedCard') ;
+                                }
+
+                            }  
+
+                           
+                            // }
+
+                        });
+
+
+
+
+                    }
+
+                }); 
+                Cards.animateMove($('.deck'), $('.game-cards div.animatedCard'));
+
+            }       
+        },
+        animateMove: function(elem, newElem){
+
+
+// function doSetTimeout(i) {
+ 
+// }
+
+// for (var i = 1; i <= 2; ++i)
+  
+
+        $.each(newElem, function(index) {
+
+                if (elem && elem[0] != undefined && newElem && newElem.parent()[0] != undefined && newElem.hasClass('animatedCard')) {
+
+                    var startPosY = $(newElem[index]).css('top');
+                    var startPosX = $(newElem[index]).css('left');
+
+                    var box = elem[0].getBoundingClientRect();
+                    var top = box.top - $(newElem[index]).parent()[0].getBoundingClientRect().top;
+                    var left = box.left - $(newElem[index]).parent()[0].getBoundingClientRect().left;
+
+                    $(newElem[index]).css({
+                        'display': 'none',
+                        'top': top + 'px',
+                        'left': left + 'px'
+                    });
+
+
+                    var j = index;
+                    // (function(j) {
+                        setTimeout(function() {
+                            console.log('timeout');
+                            $(newElem[j]).addClass('transition');
+                           
+                            // $(newElem[j]).animate({'display': 'block','top': startPosY, 'left': startPosX}, 'slow');
+
+                            $(newElem[j]).css({
+
+                                'display': 'block',
+                                'transition': "all 1s",
+                                'top': startPosY,
+                                'left': startPosX
+                                
+                            });
+                            
+
+
+                            $(newElem[j]).removeClass('animatedCard').removeClass('transition');
+                        }, j* 50);
+                    // })(j);
+
+                }
+
+
+
+                console.log('top', top, 'left', left);
+            });
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // if (elem && elem[0] != undefined && newElem && newElem.parent()[0] != undefined && newElem.hasClass('animatedCard')) {
+        
+            //     for (var i = 0; i<newElem.length; i++) {
+            //         var startPosY = $(newElem[i]).css('top');
+            //         var startPosX =$(newElem[i]).css('left');
+
+            //         var box = elem[0].getBoundingClientRect();
+            //         var top  = box.top  - $(newElem[i]).parent()[0].getBoundingClientRect().top;
+            //         var left = box.left - $(newElem[i]).parent()[0].getBoundingClientRect().left;
+   
+            //         $(newElem[i]).css({
+            //             'display' : 'none',
+            //             'top' :top + 'px',
+            //             'left' : left + 'px'
+            //         });
+
+                    
+            //             var j = i;
+            //         (function(j){
+            //         setTimeout(function(){
+            //             console.log('timeout');
+                         
+            //             $(newElem[j]).css({
+            //                 'display' : 'block',
+            //                 'top' :startPosY,
+            //                 'left' : startPosX ,
+            //                 'transition' : "all 1s"
+            //             })
+            //         }, j*100);
+            //         })(j);
+                   
+            //     }
+
+                
+                
+            //     console.log('top', top, 'left', left);
+            // }    
+        },
+        marginsDraw: function() {
+
+            marginLeftValue =
+                (myCount > 6 ? (deltaWidth > 0 ? (0) : (durakSpaceWidth - newAllwidth) / 2) : (durakSpaceWidth - allCardWidth + myCount * cardsLess6) / 2)
+
+            $(cardsBlock).each(function(indx) {
+                a = (myCount > 6 ? marginLeftValue + indx * (newWidth - ((newAllwidth - durakSpaceWidth) / myCount)) * 0.9 : marginLeftValue + indx * indexLess6);
+
+                var rotatedHeight = Cards.getRotateSize(indx);
+                var newIdxrotatedHeight = Cards.getRotateSize(indx-1);
+
+                topFordeg = (((newIdxrotatedHeight.Height - rotatedHeight.Height) > 0 
+                    ? ((newIdxrotatedHeight.Height - rotatedHeight.Height) ) 
+                    : (rotatedHeight.Height - newIdxrotatedHeight.Height ))  + 
+                 (newIdxrotatedHeight.Deg > 0 
+                    ? newIdxrotatedHeight.Deg 
+                    : (-newIdxrotatedHeight.Deg))) ;
+                $(this).css({
+                    'left': a + 'px',
+                    'top': topFordeg + 'px'
+                });
+
+                
+            });
+
+        },
+
+        getRotateSize: function(indx) {
+            var Deg = (
+                myCount > 1 ? ((indx) *
+                    (18 -
+                        (myCount > 4 ? 0 : (4 - myCount) * 15)
+                    ) / myCount) - 9 : 0
+            );
+
+            var angle = Deg * Math.PI / 180;
+            var sin = Math.sin(angle);
+            var cos = Math.cos(angle);
+            var width = $(cardsBlock).width();
+            var height = $(cardsBlock).height();
+            var x1 = cos * width;
+            y1 = sin * width;
+            var x2 = -sin * height;
+            y2 = cos * height;
+            var x3 = cos * width - sin * height;
+            y3 = sin * width + cos * height;
+            var minX = Math.min(0, x1, x2, x3);
+            maxX = Math.max(0, x1, x2, x3);
+            minY = Math.min(0, y1, y2, y3);
+            maxY = Math.max(0, y1, y2, y3);
+            var Width = maxX - minX * scale;
+            var Height = maxY - minY * scale;
+            return {
+                Height: Height,
+                Width: Width,
+                Deg: Deg
+            }
+
+        },
+
+        emptyFields: function() {
 
             D.log('обнулили поля');
             fields = [];
@@ -178,8 +373,9 @@ $(function () {
             timestamp = null;
         },
 
-        drawTrump: function () {
+        drawTrump: function() {
             if (onlineGame.trump) {
+                console.log('onlineGame.trump')
                 $('.mx .deck').append(
                     '<div class="lear card' + (onlineGame.trump[0]) + '"></div>' +
                     '<div class="last"></div>' +
@@ -188,10 +384,10 @@ $(function () {
             }
         },
 
-        createCardsWrapper: function () {
+        createCardsWrapper: function() {
 
             $('.game > div ').addClass('cards');
-            $.each(players, function (index, value) {
+            $.each(players, function(index, value) {
                 if (index == Player.id) {
                     $('.mx .players .player' + index).append('<div class="game-cards"></div>');
 
@@ -199,7 +395,7 @@ $(function () {
             });
         },
 
-        initStatuses: function () {
+        initStatuses: function() {
             if (onlineGame.action == 'ready') {
                 $('.mx .players .player' + Player.id + ' .gm-pr .btn-pass').addClass('btn-ready').removeClass('btn-pass').text('готов');
             }
@@ -210,7 +406,7 @@ $(function () {
 
             $('.mx .players .mt').hide();
             $('.mx .players > div').removeClass('current beater starter');
-            $.each(onlineGame.players, function (index, player) {
+            $.each(onlineGame.players, function(index, player) {
                 if (index == Player.id && onlineGame.action != 'ready') {
                     var status = '';
                     if (index == onlineGame.beater) {
@@ -279,35 +475,31 @@ $(function () {
             });
         },
 
-        premove: function () {
+        premove: function() {
             Cards.highlight();
             Listeners.clear();
 
 
-            tableObj = $(".Durak .table" + (Player.id == onlineGame.beater
-                    ? " .cards:not(:has(.card:eq(1)))"
-                    : '')
-            );
+            tableObj = $(".Durak .table" + (Player.id == onlineGame.beater ? " .cards:not(:has(.card:eq(1)))" : ''));
 
 
             if (tableObj != undefined && tableObj.length > 0) {
                 tableObj = tableObj.get(0);
-            }
-            else {
+            } else {
                 tableObj = $(".Durak .table").get(0);
             }
             Listeners.options.droppable = '.' + tableObj.className;
             Listeners.init();
         },
 
-        highlight: function () {
+        highlight: function() {
 
             if (onlineGame.beater == Player.id && $('.mx .table .cards').length) {
                 if ($('.ngm-gm').hasClass('Revert') && $('.mx .table .cards').length == $('.mx .table .cards .card').length && !$('.mx .table .revert').length)
                     $('.mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
                 if ($('.mx .players .m .card.select').length) {
-                    $('.mx .table .cards').each(function (index) {
+                    $('.mx .table .cards').each(function(index) {
                         if ($('.card', this).length == 1 && !$(this).hasClass('highlight'))
                             $(this).addClass('highlight');
                     });
@@ -317,12 +509,12 @@ $(function () {
             }
         },
 
-        setupForDevices: function () {
+        setupForDevices: function() {
 
-            var gameHeight = $(window).height() - 50;
+            var gameHeight = $(window).height()-50;
             var orientation = ($(window).width() > $(window).height());
 
-            if (Device.get() >= 0.6) {
+            if (Device.get() > 0.6) {
                 scale = 1;
                 scaleO = 0.7;
                 scaleOf = 0.7;
@@ -334,9 +526,28 @@ $(function () {
                 indexLess6 = 60;
                 marginRightSelect = '-10px';
 
-            } else if (Device.detect() == 'mobile') {
+            }
 
-                scale = 0.7;
+            else if (Device.get() <= 0.6 ) {
+               console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddd", gameHeight <= 768);
+               $('.game.single-game, .game > .cards').css({
+                'height' : gameHeight + 'px'
+               });
+
+
+               //  .content-main.single-game
+               //  css({
+               //  'height' : gameHeight,
+               //  'width' : '100%',
+               //  'position' : 'absolute',
+               //  'top' : 0,
+               //  'left' :0
+
+               // })
+
+             if (Device.detect() == 'mobile') {
+            
+                scale = 1;
                 scaleO = 0.5;
                 scaleOf = 0.5;
                 rightMargin24 = 0;
@@ -346,26 +557,23 @@ $(function () {
                 cardsLess6 = 60;
                 indexLess6 = 40;
                 marginRightSelect = 0;
-                $('.game.single-game, .game > .cards').height(gameHeight);
+                // $('.game.single-game, .game > .cards').height(gameHeight);
 
             } else if (Device.detect() == 'mobile-small') {
-
-                // console.log('small');
-                scale = 0.7;
+            
+                scale = 0.8;
                 scaleO = 0.5;
                 scaleOf = 0.5;
                 rightMargin24 = 0;
                 marginIndex = 13;
                 indexMargin = 1;
-                cardsLess6 = 80;
-                indexLess6 = 20;
+                cardsLess6 = 60;
+                indexLess6 = 40;
                 marginRightSelect = -20 + 'px';
-                $('.game.single-game, .game > .cards').height(gameHeight);
+                // $('.game.single-game, .game > .cards').height(gameHeight);
 
 
-            }
-
-            else if (Device.detect() == 'mobile-landscape') {
+            } else if (Device.detect() == 'mobile-landscape') {
                 scale = 0.6;
                 scaleO = 0.3;
                 scaleOf = 0.3;
@@ -375,12 +583,12 @@ $(function () {
                 cardsLess6 = 70;
                 gameHeight += 50;
                 indexLess6 = 30;
-                $('.game.single-game, .game > .cards').height(gameHeight);
+                // $('.game.single-game, .game > .cards').height(gameHeight);
                 marginRightSelect = -40 + 'px';
-                $('.content-box-header').css({
-                    display: 'none'
-                });
-
+                // $('.content-box-header').css({
+                //     display: 'none'
+                // });
+            }           
 
             }
 

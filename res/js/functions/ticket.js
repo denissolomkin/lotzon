@@ -32,7 +32,7 @@ $(function () {
 
                 var box = $('.ticket-items');
 
-                R.render({
+                R.push({
                     box: box,
                     template: 'lottery-ticket-tabs',
                     json: Tickets,
@@ -64,7 +64,7 @@ $(function () {
                 $(I.TicketTabs).removeClass('active');
                 $(tab).addClass('active');
 
-                R.render({
+                R.push({
                     tab: tab,
                     box: box,
                     template: 'lottery-ticket-item',
@@ -81,7 +81,7 @@ $(function () {
             D.log('ticketComplete');
             var box = $('.ticket-items').parent();
 
-            R.render({
+            R.push({
                 box: box,
                 template: 'lottery-ticket-complete',
                 json: Tickets,
@@ -280,13 +280,13 @@ $(function () {
 
         setBallsMargins: function () {
 
-            if (Device.detect() === 'mobile') {
+            if (Device.get() < 0.6) {
                 var ticketBox = $('.ticket-item');
                 var ticketBalls = $('.ticket-numbers li');
                 var ticketActions = $('.ticket-actions li');
                 var ticketNumbersBox = $('.ticket-numbers');
 
-                var result = Ticket.getBallsMargins(ticketBox, ticketBalls);
+                var result = this.getBallsMargins(ticketBox, ticketBalls);
                 var margin = result.margin;
                 var padding = result.padding;
 
@@ -309,6 +309,7 @@ $(function () {
         },
 
         getBallsMargins: function (box, balls) {
+
             var boxWidth = box.outerWidth();
             var ballWidth = balls.outerWidth();
             var margin, padding, count;

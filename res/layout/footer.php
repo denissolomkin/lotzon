@@ -22,23 +22,20 @@
 
 <script>
 
-
-    appName = 'Durak';
-    onlineGame = appAudio = appModes = appVariations = {};
-
-    OnlineGames = {
-        Audio: [],
-        Modes: [],
-        Variations: []
-    },
-
-    OnlineGame = {
+    onlineGame = App = {
+        id: null,
         name: 'Durak',
-        id: '1'
-    },
+        mode: null,
+        variation: null
+    };
+
+    Apps = {
+        audio: [],
+        modes: [],
+        variations: []
+    };
 
     Cache = {};
-
     Templates = <?php $templates = array();
             foreach(array(
                 'menu-balance',
@@ -64,49 +61,49 @@
     };
 
     Player = {
-        'id': 3628,
-        'lang': 'RU',
-        'img': 'res/img/user_img.jpg',
-        'favorite': [],
-        'title': {
-            'name': "Сергей",
-            'surname': "Шевченко",
-            'patronymic': "Иванович",
-            'nickname': "Участник 3628"
+        "id": 3628, 
+        "lang": "RU",
+        "img": "res/img/user_img.jpg",
+        "favorite": [],
+        "title": {
+            "name": "Сергей",
+            "surname": "Шевченко",
+            "patronymic": "Иванович",
+            "nickname": "Участник 3628"
         },
-        'currency': {
-            'coefficient': "1",
-            'few': "гривни",
-            'iso': "грн",
-            'many': "гривен",
-            'one': "гривна",
-            'rate': 100
+        "location": {
+            "country": "UA",
+            "city": "Kyiv",
+            "home": "Obolonska, 29"
         },
-        'balance': {
-            'points': 100,
-            'money': 15.41,
-            'lotzon': 1500
+        "balance": {
+            "points": 100,
+            "money": 15.41,
+            "lotzon": 1500
         },
-        'addresse': {
-            'country': "UA",
-            'city': "Kyiv",
-            'home': "Obolonska, 29"
+        "currency": {
+            "coefficient": "1",
+            "few": "гривни",
+            "iso": "грн",
+            "many": "гривен",
+            "one": "гривна",
+            "rate": 100
         },
-        'billing': {
-            'webmoney': 'R333289102947',
-            'yandexmoney': '411141590761950',
-            'qiwi': null,
-            'phone': null
+        "billing": {
+            "webMoney": "R333289102947",
+            "yandexMoney": "410011141000",
+            "qiwi": null,
+            "phone": null
         },
-        'social': {
-            'vk': 'R333289102947',
-            'ok': '411141590761950',
-            'gl': null,
-            'tw': null
+        "social": {
+            "vk": "R333289102947",
+            "ok": "411141590761950",
+            "gl": null,
+            "tw": null
+        },
+        "settings":{
         }
     }
-
-    Balance = Player.balance;
 
     Tickets = {
         "selectedBalls": 6,
@@ -171,9 +168,7 @@ foreach ($dirs as $dir) {
 
         Navigation.init(); // init navigation
         D.init(); // init debugger
-        R.init(); // init render engine
         C.init(); // init callbacks
-        C.menu(); // menu callback
 
     });
 </script>

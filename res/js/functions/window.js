@@ -3,15 +3,17 @@
     W = {
 
         hide: function (event) {
-            Menu.hide();
+            Menu.hide(event);
             Comments.hide(event);
+            Profile.hideFavorite(event);
+
         },
 
         resize: function (event) {
             Menu.switch();
             Ticket.setBallsMargins();
             Carousel.initOwl();
-            Cards.setupForDevices()
+            Cards.setupForDevices();
         },
 
         scroll: function (event) {
@@ -68,7 +70,7 @@
             else {
                 cancelFullScreen.call(doc);
             }
-        },
+        }
     }
 
 })();

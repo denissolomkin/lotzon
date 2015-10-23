@@ -2,13 +2,24 @@ $(function () {
 
     Navigation = {
 
+        path: [],
+
         init: function () {
 
             window.onpopstate = function (event) {
                 D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)],'info');
                 if(event.state)
-                    R.render(event.state);
+                    R.push(event.state);
             };
+
+            this.initPath();
+        },
+
+        initPath: function () {
+
+            this.path = window.location.pathname.split('/');
+            this.path[1] = Navigation.path[1] || 'blog';
+
         },
 
         // handler functions
@@ -22,7 +33,7 @@ $(function () {
 
                 D.log(['loadPage:', tab.attr('href')], 'info');
 
-                R.render.call(this, {
+                R.push.call(this, {
                     box: box,
                     callback: function () {
                         $("html, body").animate({scrollTop: 0}, 'slow');
@@ -46,7 +57,7 @@ $(function () {
 
                 D.log(['loadBlock:', tab.attr('href')], 'info');
 
-                R.render.call(this, {
+                R.push.call(this, {
                     box: box,
                     callback: function (rendered, findClass) {
                         $(findClass).addClass('slideInRight');
@@ -103,7 +114,7 @@ $(function () {
                 }
 
                 else {
-                    R.render.call(this, {
+                    R.push.call(this, {
                         box: box,
                         url: false
                     });

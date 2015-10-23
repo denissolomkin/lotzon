@@ -3,33 +3,19 @@ $(function () {
     Message = {
 
         clearAddressee: function () {
-            R.render({
+            R.push({
                 'template': 'communication-messages-new',
-                'url': false,
-                'callback': function (html) {
-                    var replaceBox = '.addressee';
-                    var replaceHTML = $(replaceBox, $(html)).html();
-                    $(replaceBox)
-                        .html(replaceHTML)
-                        .hide()
-                        .fadeIn();
-                }
+                'replace': '.addressee',
+                'url': false
             });
         },
 
         setAddressee: function () {
             var userId = $(this).data('userid');
-            R.render({
+            R.push({
                 'template': 'communication-messages-new?users=' + userId,
-                'url': false,
-                'callback': function (html) {
-                    var replaceBox = '.addressee';
-                    var replaceHTML = $(replaceBox, $(html)).html();
-                    $(replaceBox)
-                        .html(replaceHTML)
-                        .hide()
-                        .fadeIn();
-                }
+                'replace': '.addressee',
+                'url': false
             });
         },
 
@@ -38,18 +24,11 @@ $(function () {
             $.getJSON(
                 U.Generate.Json('/users/search?match=' + search),
                 function (data) {
-                    R.render({
-                        'template': 'communication-messages-new',
+                    R.push({
                         'json': data.res,
-                        'url': false,
-                        'callback': function (html) {
-                            var replaceBox = '.addressee .nm-search-result-box';
-                            var replaceHTML = $(replaceBox, $(html)).html();
-                            $(replaceBox)
-                                .html(replaceHTML)
-                                .hide()
-                                .fadeIn();
-                        }
+                        'template': 'communication-messages-new',
+                        'replace': '.addressee .nm-search-result-box',
+                        'url': false
                     });
 
                 });
@@ -57,25 +36,18 @@ $(function () {
 
         send: function () {
             event.preventDefault();
-            var form = $(this).parents('form').serializeObject();
-            if (form.userid && form.message)
+            var formData = $(this).parents('form').serializeObject();
+            if (formData.userid && formData.message)
                 $.post(
                     U.Generate.Post('/communications/messages/addMessage'),
-                    form,
+                    formData,
                     function (data) {
                         if (data.status == 1) {
-                            R.render({
-                                'template': 'communication-messages-new',
+                            R.push({
                                 'json': data.res,
-                                'url': false,
-                                'callback': function (html) {
-                                    var replaceBox = '.addressee .nm-search-result-box';
-                                    var replaceHTML = $(replaceBox, $(html)).html();
-                                    $(replaceBox)
-                                        .html(replaceHTML)
-                                        .hide()
-                                        .fadeIn();
-                                }
+                                'template': 'communication-messages-new',
+                                'replace': '.addressee .nm-search-result-box',
+                                'url': false
                             });
                         } else {
                             throw(data.message);

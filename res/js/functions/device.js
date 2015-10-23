@@ -5,7 +5,7 @@ $(function () {
     Device = {
 
         get: function () {
-            return $('.js-detect').css('opacity');
+            return parseFloat($('.js-detect').css('opacity')).toFixed(1);
         },
 
         detect: function () {

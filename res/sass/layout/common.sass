@@ -17,15 +17,35 @@ a
   color: inherit
   display: block
 
+.error
+  position: relative
+
+.error:after
+  position: absolute
+  right: 10px
+  top: 50%
+  width: 20px
+  height: 20px
+  margin-top: -10px
+  background: url(img/sprite.png) -80px -50px
+  content: ""
+  z-index: 1
+
 button
   border: none
+  opacity: 0.8
 
-  &.waiting
+  &.on
+    opacity: 1
+    border-color: black
+    color: black
+
+  &.loading
     position: relative
     opacity: 0.8
     cursor: default
 
-  &.waiting:before
+  &.loading:before
     width: 20px
     position: absolute
     left: 10px
@@ -39,6 +59,10 @@ button
     height: 100%
     vertical-align: middle
 
+.status
+  display: none
+  text-align: center
+
 .container
   min-width: 320px
   padding: 0 10px
@@ -50,10 +74,9 @@ button
 .content-top
   position: relative
 
-
 .content-box
   margin: 0 -10px
-  box-shadow: 2px 2px 4px rgba(0,0,0,.5)
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, .5)
   background: #fff
 
 .content-box-header
@@ -62,7 +85,7 @@ button
   font-size: 21px
   line-height: 50px
   color: #2b2b2b
-  text-shadow: 1px 1px 1px rgba(255,255,255,.5)
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .5)
   text-align: center
   text-transform: uppercase
   font-weight: bold
@@ -99,7 +122,7 @@ button
   color: #3f3f3f
   text-decoration: none
   text-transform: uppercase
-  text-shadow: 1px 1px 1px rgba(255,255,255,.49)
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .49)
 
   &:hover
     background: #d1e3e5
@@ -110,17 +133,18 @@ button
 
 .content-box-content
   position: relative
-  
+
 @media (min-width: 120px)
-  .content-box-content 
+  .content-box-content
     min-height: 200px
 
 .content-box-item
   padding: 20px 10px 20px
+  min-height: 500px
 
 .content-box-item.with-cat
   padding-top: 72px
-  
+
 .ticket-item
   min-height: 422px
 
@@ -129,7 +153,7 @@ button
   top: 0
   left: 0
   width: 100%
-  background: rgba(255,255,255,.95)
+  background: rgba(255, 255, 255, .95)
   z-index: 1
   padding: 20px 10px 0
 
@@ -154,8 +178,6 @@ button
   &:hover,
   &.active
     border-bottom: 4px solid #bed7db
-
-
 
 // Calendar ----------------------- //
 
@@ -188,8 +210,6 @@ button
   cursor: pointer
   padding-left: 10px
 
-
-
 // Input Radio ----------------------- //
 
 input.input-radio
@@ -213,11 +233,6 @@ input.input-radio:checked + label.input-radio:before
   left: 2px
   background: #000
   border-radius: 50%
-
-
-
-
-
 
 // Message Form ------------------------ //
 
@@ -277,7 +292,38 @@ input.input-radio:checked + label.input-radio:before
   top: 3px
   cursor: pointer
 
-.loading
+.modal-error,
+.modal-loading
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  z-index: 20
+
+.modal-error
+  background-color: rgba(0, 0, 0, 0.5)
+  display: block !important
+
+  & div
+    margin: 0 auto
+    width: 240px
+    height: auto
+    position: absolute
+    margin-left: -120px
+    top: 20%
+    left: 50%
+    background-color: white
+    border-radius: 3px
+    padding: 20px
+
+  & span
+    display: block
+    color: red
+
+.modal-loading
+  background-color: rgba(255, 255, 255, 0.5)
+
   & div
     margin: 0 auto
     width: 40px
@@ -291,47 +337,6 @@ input.input-radio:checked + label.input-radio:before
     background-position: center
     background-size: contain
     background-image: url(../css/img/preloader.gif)
- 
-.error 
-  & div
-    margin: 0 auto
-    width: 240px
-    height: auto
-    position: absolute
-    margin-left: -120px
-    top: 20%
-    left: 50%
-    background-color: white
-    border-radius: 3px
-    padding: 20px
-
-.error,
-.loading
-  position: absolute
-  top: 0
-  left: 0
-  width: 100% 
-  height: 100%
-  z-index: 20
-
-.error
-  background-color: rgba(0,0,0,0.5)
-  display: block !important
-
-.loading
-  background-color: rgba(255,255,255,0.5)
-    
-.error 
-  & span
-    display: block
-    color: red 
-
-
-
-
-
-
-
 
 .show
   display: block !important
@@ -345,14 +350,10 @@ input.input-radio:checked + label.input-radio:before
   content: ""
   clear: both
 
-
-
-
 // SIDEBAR -------------------------------- //
 
 .sidebar
   display: none
-
 
 // BANNERS -------------------------------- //
 
