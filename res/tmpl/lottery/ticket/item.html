@@ -1,33 +1,34 @@
 <div class="ticket-item clearfix">
     <form action="/ticket/addTicket" method="post">
-    <ul class="ticket-numbers ticket-balls clearfix">
-        {{#renderBalls}}
-        <li class='ball-number number-{{num}}{{#select}} select{{/select}}'>
-            <input type="checkbox" class="hide" name="combination[]" value="{{num}}">
-            {{num}}
-        </li>
-        {{/renderBalls}}
-    </ul>
-    <!-- .ticket-numbers -->
+        <ul class="ticket-numbers ticket-balls clearfix">
+            {{#renderBalls}}
+            <li class='ball-number number-{{num}}{{#select}} select{{/select}}'>
+                <input type="checkbox" class="hide" name="combination[]" value="{{num}}">
+                {{num}}
+            </li>
+            {{/renderBalls}}
+        </ul>
+        <!-- .ticket-numbers -->
 
-    {{#isDone}}
-    <div class="ticket-done"><b>{{#i18n}}message-done-and-approved{{/i18n}}</b></div>
-    {{/isDone}}
+        {{#isDone}}
+        <div class="ticket-done"><b>{{#i18n}}message-done-and-approved{{/i18n}}</b></div>
+        {{/isDone}}
 
-    {{^isDone}}
-    <input type="hidden" name="tickNum" value="{{selectedTab}}">
-    <ul class="ticket-actions">
-        <li class='ticket-random'>A
-            <div class="after">{{#i18n}}message-autocomplete{{/i18n}}</div>
-        </li>
-        <li class="ticket-favorite ticket-fc-btn">
-            <div class="after"><b>{{#i18n}}message-favorite{{/i18n}}</b><span>{{#i18n}}button-set-favorite{{/i18n}}</span></div>
-        </li>
-    </ul>
+        {{^isDone}}
+        <input type="hidden" name="tickNum" value="{{selectedTab}}">
+        <ul class="ticket-actions">
+            <li class='ticket-random'>A
+                <div class="after">{{#i18n}}message-autocomplete{{/i18n}}</div>
+            </li>
+            <li class="ticket-favorite ticket-fc-btn">
+                <div class="after">
+                    <b>{{#i18n}}message-favorite{{/i18n}}</b><span>{{#i18n}}button-set-favorite{{/i18n}}</span></div>
+            </li>
+        </ul>
 
-    <div class="balls-count">{{#i18n}}message-yet{{/i18n}} <b>{{selectedBalls}}</b> {{#i18n}}message-numbers{{/i18n}}</div>
-    <button type="submit" class="ticket-btn add-ticket">{{#i18n}}button-add-ticket{{/i18n}}</button>
+        <!--div class="balls-count">{{#i18n}}message-yet{{/i18n}} <b>{{selectedBalls}}</b> {{#i18n}}message-numbers{{/i18n}}</div-->
+        <button type="submit" class="ticket-btn add-ticket">{{#i18n}}button-add-ticket{{/i18n}}</button>
 
-    {{/isDone}}
+        {{/isDone}}
     </form>
 </div><!-- .ticket-item -->

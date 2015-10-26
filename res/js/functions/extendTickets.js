@@ -6,7 +6,7 @@ $(function () {
     $.extend(Tickets, {
 
         "isDone": function () {
-            return (this.balls && this.balls[this.selectedTab] && this.balls[this.selectedTab].length && this.balls[this.selectedTab].length == this.selectedBalls);
+            return (this.balls && this.balls[$(I.TicketTabs).filter('.active').data('ticket')] && this.balls[$(I.TicketTabs).filter('.active').data('ticket')].length && this.balls[$(I.TicketTabs).filter('.active').data('ticket')].length == this.selectedBalls);
         },
 
         "isComplete": function () {
@@ -36,7 +36,7 @@ $(function () {
             for (i = 1; i <= this.totalBalls; i++) {
                 balls.push({
                     num: i,
-                    select: $.inArray(i, this.balls[this.selectedTab]) !== -1
+                    select: $.inArray(i, this.balls[$(I.TicketTabs + '.active').data('ticket')]) !== -1
                 });
             }
 

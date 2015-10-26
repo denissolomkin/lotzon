@@ -13,10 +13,8 @@
             Menu.switch();
             Ticket.setBallsMargins();
             Carousel.initOwl();
-
-            if ($('div').hasClass('game-cards')) {
-              Cards.setupForDevices();  
-            }
+            Cards.setupForDevices();  
+  
             
         },
 

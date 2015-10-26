@@ -240,6 +240,7 @@ button.loading:before {
 
 .ticket-item {
   min-height: 422px;
+  padding: 15px 0 !important;
 }
 
 .content-box-item-top {
@@ -4568,10 +4569,12 @@ span.input-prefix {
   margin-bottom: 10px;
 }
 .ticket-numbers li {
+  margin: 0 15px 20px 15px !important;
   float: left;
 }
 
 .ticket-actions li {
+  margin: 0 15px 20px 15px !important;
   float: left;
 }
 
@@ -5017,6 +5020,11 @@ span.input-prefix {
   opacity: 0.2;
 }
 
+@media (min-width: 480px) {
+  .js-detect {
+    opacity: 0.5;
+  }
+}
 @media (min-width: 768px) {
   .container {
     width: 728px;
@@ -5941,6 +5949,7 @@ span.input-prefix {
   }
 
   .ticket-numbers {
+    margin-left: 0 !important;
     margin-right: -30px !important;
   }
   .ticket-numbers li {
