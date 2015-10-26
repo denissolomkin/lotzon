@@ -291,26 +291,34 @@
                 var ticketBalls = $('.ticket-numbers li');
                 var ticketActions = $('.ticket-actions li');
                 var ticketNumbersBox = $('.ticket-numbers');
-
+                var ticketNumbers = $('.ticket-numbers, .ticket-actions');
                 var result = this.getBallsMargins(ticketBox, ticketBalls);
-                var margin = result.margin;
-                var padding = result.padding;
 
-                ticketBox.css({
-                    'padding-left': padding + 'px',
-                    'padding-right': padding + 'px'
+                console.log(result, 'result');
+
+                ticketNumbers.css({
+                    'margin': '10px ' + result  + 'px'
+                    // 'padding-right': padding + 'px'
                 });
 
-                ticketNumbersBox.css('margin-right', -margin + 'px');
+                // var margin = result.margin;
+                // var padding = result.padding;
 
-                ticketBalls.css({
-                    'margin-right': margin + 'px',
-                    'margin-bottom': 0.7 * margin + 'px'
-                });
+                // ticketBox.css({
+                //     'padding-left': padding + 'px',
+                //     'padding-right': padding + 'px'
+                // });
 
-                ticketActions.css({
-                    'margin-right': margin + 'px'
-                });
+                // ticketNumbersBox.css('margin-right', -margin + 'px');
+
+                // ticketBalls.css({
+                //     'margin-right': margin + 'px',
+                //     'margin-bottom': 0.7 * margin + 'px'
+                // });
+
+                // ticketActions.css({
+                //     'margin-right': margin + 'px'
+                // });
             }
         },
 
@@ -320,20 +328,33 @@
             var ballWidth = balls.outerWidth();
             var margin, padding, count;
 
-            if (boxWidth < 7 * 1.8 * ballWidth || boxWidth / 1.8 * ballWidth < 8) {
-                margin = Math.floor((boxWidth - 7 * ballWidth) / 7);
-                padding = margin / 2 + (boxWidth - 7 * ballWidth - 7 * margin) / 2;
+            if (Device.get() < 0.6 && Device.get() > 0.2) {
+                if ((boxWidth ) % 70 > 0 ) {
+                    console.log((boxWidth + 30) % 40 > 0 , '(boxWidth + 30) % 70', (boxWidth + 30) % 70 );
+                    return boxWidth =  boxWidth % 70/ 2 
+                }
+            }else if  (Device.get() == 0.2) {
+                 if ((boxWidth ) % 64 > 0 ) {
+                    console.log((boxWidth + 30) % 40 > 0 , '(boxWidth + 30) % 64', (boxWidth + 30) % 64 );
+                    return boxWidth = boxWidth % 64/ 2
+                }
             }
-            else {
-                count = Math.floor(boxWidth / (1.8 * ballWidth));
-                margin = Math.floor((boxWidth - count * ballWidth) / (count));
-                padding = margin / 2 + (boxWidth - count * ballWidth - (count) * margin) / 2;
-            }
+            return false;
 
-            return {
-                margin: margin,
-                padding: padding
-            };
+            // if (boxWidth < 7 * 1.8 * ballWidth || boxWidth / 1.8 * ballWidth < 8) {
+            //     margin = Math.floor((boxWidth - 7 * ballWidth) / 7);
+            //     padding = margin / 2 + (boxWidth - 7 * ballWidth - 7 * margin) / 2;
+            // }
+            // else {
+            //     count = Math.floor(boxWidth / (1.8 * ballWidth));
+            //     margin = Math.floor((boxWidth - count * ballWidth) / (count));
+            //     padding = margin / 2 + (boxWidth - count * ballWidth - (count) * margin) / 2;
+            // }
+
+            // return {
+            //     margin: margin,
+            //     padding: padding
+            // };
         }
     }
 
