@@ -218,13 +218,13 @@ $(function () {
         end: function () {
             if (!onlineGame.winner) {
 
-                sample && playAudio([appName, sample]);
+                sample && Apps.playAudio([appName, sample]);
 
             } else {
 
                 if (!$('.mx .players .wt').is(":visible")) {
 
-                    playAudio([appName, ($.inArray(Player.id, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
+                    Apps.playAudio([appName, ($.inArray(Player.id, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
 
                     $.each(onlineGame.players, function (index, value) {
                         $('.mx .players .player' + index + ' .wt').removeClass('loser').html(

@@ -324,9 +324,3 @@ function eachCardLeft(target) {
         cards[i].style.top = Number(oldTop + newTop) + 'px';
     }
 }
-
-var mouseEnter = function(e) {};
-var mouseLeave = function(e) {};
-var touchstart = function(e) {};
-var touchMove = function(e) {};
-var touchend = function(e) {};

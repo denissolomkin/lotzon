@@ -212,9 +212,9 @@ $(function () {
                 options.callback(rendered, findClass);
             }
 
-            if (C[options.init.template]) {
+            if (Callbacks.render[options.init.template]) {
                 D.log(['C.callback']);
-                C[options.init.template](rendered, findClass);
+                Callbacks.render[options.init.template](rendered, findClass);
             }
 
             /* parent box functionality after rendering */

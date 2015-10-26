@@ -5,35 +5,52 @@ $(function () {
         validate: function () {
 
             var $form = $(this).closest('form');
+            var valid = true;
 
-            if ($form) {
+            if ($form.length) {
 
-                var $incomplete = $('.incomplete', $form),
-                    $required = $('.required', $form).filter(function () {
-                        return $(this).val() === '' || $(this).val() === 0;
-                    });
+                var callback = U.Parse.Undo($form.attr('action')),
+                    $incomplete = $('.incomplete', $form),
+                    $required = $('.required', $form).filter(Form.required);
 
-                if ($required.length || $incomplete.length) {
+
+                if ($required.length) {
 
                     $.each($required, function(index, element){
                         $(element).parent().addClass('error');
                     })
 
+                    valid = false;
+                }
+
+                if($incomplete.length){
                     $.each($incomplete, function(index, element){
                         $(element).parent().addClass('error');
                     })
 
-                    $('button[type="submit"]', $form).removeClass('on');
-                    return false;
-
-                } else {
-
-                    $('button[type="submit"]', $form).addClass('on');
-                    return true;
+                    valid = false;
                 }
 
-            } else
-                return true;
+                if (Callbacks.validate[callback]) {
+                    D.log(['C.validate.callback']);
+                    valid = !Callbacks.validate[callback].call(this) ? false : valid;
+                }
+
+            }
+
+            valid
+                ? $('button[type="submit"]', $form).addClass('on')
+                : $('button[type="submit"]', $form).removeClass('on');
+
+            return valid;
+        },
+
+        required: function(){
+
+                return $(this).val() === ''
+                || ($(this).hasClass('float') && parseFloat($(this).val()) <= 0)
+                || ($(this).hasClass('int') && parseInt($(this).val()) <= 0);
+
         },
 
         start: function () {
@@ -92,9 +109,9 @@ $(function () {
 
                             formUrl = U.Parse.Undo(formUrl);
 
-                            if (C['post'][formUrl]) {
+                            if (Callbacks['post'][formUrl]) {
                                 D.log(['C.post.callback']);
-                                C['post'][formUrl](data.res);
+                                Callbacks['post'][formUrl](data.res);
                             }
 
                         } else {

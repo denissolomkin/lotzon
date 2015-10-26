@@ -20,7 +20,7 @@ $(function() {
                         return;
                     newLen = (field.length ? field.length : Object.size(field));
                     oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
-console.log(oldLen,'oldLen');
+                    console.log(oldLen,'oldLen');
 
                     if (key == 'deck') {
                         if (field.length) {
@@ -176,6 +176,10 @@ console.log(oldLen,'oldLen');
                             else if (fields && fields[key] && fields[key] != undefined ) {
 
                                 if (fields[key][index] != onlineGame.fields[key][index]) {
+                                    console.log(key, 'key');
+
+                                   if (fields.table[index] != onlineGame.fields.table[index])
+                                    
                                     $('.card' + fields[key][index]).addClass('animatedCard') ;
                                 }
 
@@ -199,11 +203,6 @@ console.log(oldLen,'oldLen');
         animateMove: function(elem, newElem){
 
 
-// function doSetTimeout(i) {
- 
-// }
-
-// for (var i = 1; i <= 2; ++i)
   
 
         $.each(newElem, function(index) {
@@ -214,44 +213,41 @@ console.log(oldLen,'oldLen');
                     var startPosX = $(newElem[index]).css('left');
 
                     var box = elem[0].getBoundingClientRect();
-                    var top = box.top - $(newElem[index]).parent()[0].getBoundingClientRect().top;
-                    var left = box.left - $(newElem[index]).parent()[0].getBoundingClientRect().left;
+                    var top = box.top - $(newElem[index]).parent()[0].getBoundingClientRect().top ;
+                    var left = box.left - $(newElem[index]).parent()[0].getBoundingClientRect().left -200;
 
                     $(newElem[index]).css({
                         'display': 'none',
                         'top': top + 'px',
                         'left': left + 'px'
                     });
+                    $(newElem[index]).css({'display': 'block',});
 
 
                     var j = index;
-                    // (function(j) {
+
                         setTimeout(function() {
                             console.log('timeout');
+
                             $(newElem[j]).addClass('transition');
-                           
-                            // $(newElem[j]).animate({'display': 'block','top': startPosY, 'left': startPosX}, 'slow');
-
                             $(newElem[j]).css({
-
-                                'display': 'block',
-                                'transition': "all 1s",
                                 'top': startPosY,
                                 'left': startPosX
                                 
                             });
                             
+                            
 
 
-                            $(newElem[j]).removeClass('animatedCard').removeClass('transition');
-                        }, j* 50);
-                    // })(j);
+                            $(newElem[j]).removeClass('animatedCard');
+
+
+                        }, j* 100);
 
                 }
 
 
-
-                console.log('top', top, 'left', left);
+            $(newElem[j]).removeClass('transition');
             });
  
 

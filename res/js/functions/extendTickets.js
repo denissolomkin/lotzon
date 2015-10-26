@@ -4,45 +4,56 @@ $(function () {
     // TICKET ================================= //
 
     $.extend(Tickets, {
-        "ballsHTML": function () {
-            var html = '';
-            for (i = 1; i <= this.totalBalls; i++) {
-
-                html += "<li class='ball-number number-" + i + ($.inArray(i, this.balls[$(I.TicketTabs).filter('.active').data('ticket')]) == -1 ? '' : ' select') + "'>" + i + "</li>";
-            }
-            return html;
-
-        },
-
-        "tabsHTML": function () {
-            var html = '';
-            for (i = 1; i <= this.totalTickets; i++) {
-                html += "<li data-ticket='" + i + "' class='" + (this.balls && this.balls[i] ? 'done' : '') + "'><span>" + M.i18n('title-ticket') + " </span>#" + i + "</li>";
-            }
-            return html;
-        },
 
         "isDone": function () {
-            return (this.balls && this.balls[$(I.TicketTabs).filter('.active').data('ticket')] && this.balls[$(I.TicketTabs).filter('.active').data('ticket')].length && this.balls[$(I.TicketTabs).filter('.active').data('ticket')].length == this.selectedBalls);
+            return (this.balls && this.balls[this.selectedTab] && this.balls[this.selectedTab].length && this.balls[this.selectedTab].length == this.selectedBalls);
         },
 
         "isComplete": function () {
             return (this.balls && Object.keys(this.balls).length == this.totalTickets);
         },
 
-        "completeHTML": function () {
+        "renderTickets": function () {
 
-            var html = '';
-
-            $.each(this.balls, function (index, ticket) {
-                html += "<ul class='ticket-result'><li class='ticket-number-result'><span>БИЛЕТ</span> #" + index + "";
-                $.each(ticket, function (number, ball) {
-                    html += "<li class='ball-number-result'>" + ball + "</li>";
+            var tickets = [];
+            $.each(this.balls, function (index, balls) {
+                var ticket = {
+                    index: index,
+                    balls: []
+                };
+                $.each(balls, function (number, ball) {
+                    ticket.balls.push(ball);
                 });
-                html += "</ul>";
+                tickets.push(ticket);
             });
 
-            return html;
+            return tickets;
+        },
+
+        "renderBalls": function () {
+
+            var balls = [];
+            for (i = 1; i <= this.totalBalls; i++) {
+                balls.push({
+                    num: i,
+                    select: $.inArray(i, this.balls[this.selectedTab]) !== -1
+                });
+            }
+
+            return balls;
+        },
+
+        "renderTabs": function () {
+
+            var tabs = [];
+            for (i = 1; i <= this.totalTickets; i++) {
+                tabs.push({
+                    num: i,
+                    done: this.balls && this.balls[i] ? true : false
+                });
+            }
+
+            return tabs;
         }
     });
 });

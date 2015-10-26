@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
 
     /* ========================================================= */
@@ -62,7 +62,9 @@ $(function () {
                         : ($(I.TicketTabs).not('.done').first() || $(I.TicketTabs).first());
 
                 $(I.TicketTabs).removeClass('active');
-                $(tab).addClass('active');
+                tab.addClass('active');
+
+                Tickets.selectedTab = 1 + tab.index();
 
                 R.push({
                     tab: tab,
@@ -224,6 +226,10 @@ $(function () {
             }
         },
 
+        validateTicket : function () {
+            return $(this).closest('form').find('input[name="combination[]"]:checked').length === Tickets.selectedBalls
+        },
+
         add: function () {
 
             if ($(this).hasClass('on') && !$(this).hasClass('waiting')) {
@@ -240,7 +246,7 @@ $(function () {
                 ticket.tickNum = $(I.TicketTabs + '.active').data('ticket');
 
                 $.post(
-                    U.Generate.Post('/lottery/addTicket'),
+                    U.Generate.Post('/lottery/ticket'),
                     ticket,
                     function (data) {
                         if (data.status == 1) {
@@ -332,4 +338,4 @@ $(function () {
     }
 
 
-});
+})();
