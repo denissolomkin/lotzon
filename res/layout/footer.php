@@ -90,7 +90,7 @@
             "rate": 100
         },
         "billing": {
-            "webMoney": "R333289102947",
+            "webMoney": "R111289102111",
             "yandexMoney": "410011141000",
             "qiwi": null,
             "phone": null
@@ -109,8 +109,9 @@
         "selectedBalls": 6,
         "totalBalls": 49,
         "totalTickets": 8,
+        "selectedTab": null,
         "balls": {
-            "1": [1, 2, 3, 4, 5, 6],
+            "8": [1, 2, 3, 4, 5, 6],
             "2": [31, 22, 13, 44, 25, 9],
             "3": [3, 2, 14, 34, 15, 19],
             "4": [1, 2, 3, 4, 5, 6],
@@ -126,6 +127,7 @@
         "message-yet": "ЕЩЕ",
         "message-numbers": "НОМЕРОВ",
         "message-favorite": "ЛЮБИМАЯ КОМБИНАЦИЯ",
+        "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
 
         "button-set-favorite": "настраивается в кабинете",
         "button-more": "Подробнее",
@@ -168,7 +170,8 @@ foreach ($dirs as $dir) {
 
         Navigation.init(); // init navigation
         D.init(); // init debugger
-        C.init(); // init callbacks
+        Callbacks.init(); // init callbacks
+        Menu.init();
 
     });
 </script>

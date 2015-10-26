@@ -2,24 +2,37 @@
 
     Profile = {
 
+        init: function () {
+
+            $('input[type="text"][name="bd"]').inputmask("d.m.y", {autoUnmask: false});
+            $('input[type="tel"][name="billing[phone]"]').inputmasks(phoneMask);
+            $('input[type="tel"][name="billing[qiwi]"]').inputmasks(phoneMask);
+            $('input[type="text"][name="billing[yandexMoney]"]').inputmask({mask: '410019{7,10}', placeholder: ''});
+            $('input[type="text"][name="billing[webMoney]"]').inputmask('a999999999999');
+        },
+
         validateConvert: function () {
 
-            var $input_money = $(this),
-                $calc_points = $('.cc-income .cc-sum', $input_money.closest('form')),
-                input_money  = Player.checkMoney($input_money.val()),
+            var $input_money = $(I.moneyConvert),
+                $calc_points = $(I.pointsConvert, $input_money.closest('form')),
+                input_money = Player.checkMoney($input_money.val()),
                 calc_points = Player.calcPoints(input_money);
 
             $input_money.val(input_money);
             $calc_points.text(calc_points);
 
+            return true;
+
         },
 
         validateCashout: function () {
 
-            var $input_money = $(this),
+            var $input_money = $(I.moneyCashout),
                 input_money = Player.checkMoney($input_money.val());
 
             $input_money.val(input_money);
+
+            return true;
 
         },
 
@@ -45,8 +58,9 @@
         },
 
         cashoutMoney: function (data) {
-            Player.extend(data)
-                .updateBalance();
+            console.log(data);
+            Player.extend(data);
+            // Player.updateBalance();
             R.push({
                 url: false,
                 template: 'profile-cashout',

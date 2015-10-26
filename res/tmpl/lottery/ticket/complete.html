@@ -7,6 +7,16 @@
 <div class='lottery-result'>
 
     <div class='balls-result'>
+
+        {{#renderTickets}}
+        <ul class='ticket-result'>
+            <li class='ticket-number-result'><span>БИЛЕТ</span> #{{index}}
+            {{#balls}}
+            <li class='ball-number-result'>{{.}}</li>
+            {{/balls}}
+        </ul>
+        {{/renderTickets}}
+
         {{{ completeHTML }}}
     </div>
 

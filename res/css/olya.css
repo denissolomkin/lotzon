@@ -231,7 +231,11 @@ body {
     -moz-transition-duration: 2s;
     -o-transition-duration: 2s;
     transition-duration: 2s;*/
-}    
+}  
+.game-cards div:not(.animatedCard)   {
+    /*transition: all 0s ease 0s !important;*/
+
+}
 @media  all and ( max-width: 768px) { 
 
     .active_small_devices {

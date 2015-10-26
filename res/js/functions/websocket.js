@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
     step = 0;
 
@@ -44,7 +44,7 @@ $(function () {
                     data = null;
                 }
 
-                playAudio([appName, onlineGame.action]);
+                Apps.playAudio([appName, onlineGame.action]);
             }
 
             action = data && data.res && data.res.action ? data.res.action : onlineGame.action;
@@ -54,4 +54,4 @@ $(function () {
 
     }
 
-});
+})();

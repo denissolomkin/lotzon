@@ -100,16 +100,17 @@ $(function () {
         },
 
         extend: function(source) {
+
             for (var property in source) {
                 if (source[property] && source[property].constructor &&
                     source[property].constructor === Object) {
-                    this[property] = this[property] || {};
-                    arguments.callee(this[property], source[property]);
+                    Player[property] = Player[property] || {};
+                    arguments.callee(Player[property], source[property]);
                 } else {
-                    this[property] = source[property];
+                    Player[property] = source[property];
                 }
             }
-            return this;
+
         }
     });
 

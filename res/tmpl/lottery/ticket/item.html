@@ -1,7 +1,12 @@
 <div class="ticket-item clearfix">
-
+    <form action="/ticket/addTicket" method="post">
     <ul class="ticket-numbers ticket-balls clearfix">
-        {{{ ballsHTML }}}
+        {{#renderBalls}}
+        <li class='ball-number number-{{num}}{{#select}} select{{/select}}'>
+            <input type="checkbox" class="hide" name="combination[]" value="{{num}}">
+            {{num}}
+        </li>
+        {{/renderBalls}}
     </ul>
     <!-- .ticket-numbers -->
 
@@ -10,7 +15,7 @@
     {{/isDone}}
 
     {{^isDone}}
-
+    <input type="hidden" name="tickNum" value="{{selectedTab}}">
     <ul class="ticket-actions">
         <li class='ticket-random'>A
             <div class="after">{{#i18n}}message-autocomplete{{/i18n}}</div>
@@ -21,8 +26,8 @@
     </ul>
 
     <div class="balls-count">{{#i18n}}message-yet{{/i18n}} <b>{{selectedBalls}}</b> {{#i18n}}message-numbers{{/i18n}}</div>
-    <button class="ticket-btn add-ticket">{{#i18n}}button-add-ticket{{/i18n}}</button>
+    <button type="submit" class="ticket-btn add-ticket">{{#i18n}}button-add-ticket{{/i18n}}</button>
 
     {{/isDone}}
-
+    </form>
 </div><!-- .ticket-item -->

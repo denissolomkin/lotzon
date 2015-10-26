@@ -1,0 +1,11 @@
+{
+    "status": 1,
+    "message": "message-cashout-success",
+    "res":{
+        "balance": {
+            "money": 14141.14,
+            "points": 11111,
+            "lotzon": null
+        }
+	}
+}
