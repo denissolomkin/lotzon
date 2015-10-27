@@ -63,6 +63,7 @@ class MaillistTask extends Entity
     private $_settings    = array();
     private $_enable      = false;
     private $_status      = '';
+    private $_lastStart   = '';
 
     public function init()
     {
@@ -147,6 +148,17 @@ class MaillistTask extends Entity
         return $this->_status;
     }
 
+    public function setLastStart($lastStart)
+    {
+        $this->_lastStart = $lastStart;
+        return $this;
+    }
+
+    public function getLastStart()
+    {
+        return $this->_lastStart;
+    }
+
     public function formatFrom($from, $data)
     {
         if ($from == 'DB') {
@@ -156,7 +168,8 @@ class MaillistTask extends Entity
                  ->setSchedule($data['Schedule'])
                  ->setSettings(unserialize($data['Settings']))
                  ->setEnable($data['Enable'])
-                 ->setStatus($data['Status']);
+                 ->setStatus($data['Status'])
+                 ->setLastStart($data['LastStart']);
         }
         return $this;
     }
@@ -170,7 +183,8 @@ class MaillistTask extends Entity
             'Schedule'    => $this->getSchedule(),
             'Settings'    => $this->getSettings(),
             'Enable'      => $this->getEnable(),
-            'Status'      => $this->getStatus()
+            'Status'      => $this->getStatus(),
+            'LastStart'   => $this->getLastStart()
         );
     }
 
@@ -180,14 +194,87 @@ class MaillistTask extends Entity
         return $model::instance()->getEmails($this);
     }
 
+    public function isDoStart()
+    {
+        if ($this->getEnable()==false) {
+            return false;
+        }
+        if (($this->isTimeToStart())and(!($this->isDoneToday()))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isDoneToday()
+    {
+        if ($this->getSchedule()) {
+            // if start done today
+            if ((strtotime($this->getLastStart()))>(strtotime($this->getSettings()['timeFrom']))) {
+                return true;
+            }
+        } else {
+            // if once start
+            if (strtotime($this->getLastStart())>strtotime($this->getSettings()['dateFrom'])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isTimeToStart()
+    {
+        // check fromDate
+        if (strtotime($this->getSettings()['dateFrom'])>time()) {
+            return false;
+        }
+
+        // check from_to Time
+        if ((strtotime($this->getSettings()['timeFrom'])>time())or(strtotime($this->getSettings()['timeTo'])<time())) {
+            return false;
+        }
+
+        if ($this->getSchedule()) {
+            switch ($this->getSettings()['period']) {
+                case 'day':
+                    break;
+                case 'week':
+                    if (!(is_array($this->getSettings()['parameter']))) {
+                        return false;
+                    }
+                    if (!(in_array(strtolower(date('l')),$this->getSettings()['parameter']))) {
+                        return false;
+                    }
+                    break;
+                case 'month':
+                    if (!(is_array($this->getSettings()['parameter']))) {
+                        return false;
+                    }
+                    if (!(in_array(strtolower(date('j')),$this->getSettings()['parameter']))) {
+                        if (!((in_array('last',$this->getSettings()['parameter']))and(date('j')==date('t')))) {
+                            return false;
+                        }
+                    }
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
+
     public function send()
     {
+        $this->setStatus('in progress');
+        $this->setLastStart(date("Y-m-d H:i:s"));
+        $this->update();
+
         $emails  = $this->getEmails();
 
         $message = MaillistModel::instance()->getMessage($this->getMessageId());
 
         foreach ($emails as $email) {
-            $playerId    = $email['Id'];
+            $playerId  = $email['Id'];
             $emailLang = $email['Lang'];
             $address   = $email['Email'];
             $render    = $message->render($playerId, $emailLang);
@@ -195,12 +282,7 @@ class MaillistTask extends Entity
             $header    = $render['header'];
             $from      = $message->getSettings()['from'];
 
-            var_dump($playerId);
-            var_dump($emailLang);
-            var_dump($address);
-            var_dump($from);
-            var_dump($header);
-            var_dump($html);
+            echo date("Y-m-d H:i:s").' '.$address.' ['.$this->getId().'] - '.$header.PHP_EOL;
 
             $model = $this->getModelClass();
             $model::instance()->saveHistory(
@@ -213,6 +295,13 @@ class MaillistTask extends Entity
                 )
             );
         }
+
+        if ($this->getSchedule()) {
+            $this->setStatus('waiting');
+        } else {
+            $this->setStatus('done');
+        }
+        $this->update();
     }
 
     public function delete()

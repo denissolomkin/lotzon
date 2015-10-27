@@ -150,6 +150,9 @@ class MaillistDBProcessor implements IProcessor
             case 'archived':
                 $sql .= ' WHERE `status`="archived" ';
                 break;
+            case 'waiting':
+                $sql .= ' WHERE `status`="waiting" ';
+                break;
             case false:
                 break;
             default:
@@ -214,7 +217,7 @@ class MaillistDBProcessor implements IProcessor
 
     public function createTask(Entity $task)
     {
-        $sql = "INSERT INTO `MaillistTasks` (`Id`, `Description`, `MessageId`, `Schedule`, `Settings`, `Enable`, `Status`) VALUES (:id, :description, :messageId, :schedule, :settings, :enable, :status)";
+        $sql = "INSERT INTO `MaillistTasks` (`Id`, `Description`, `MessageId`, `Schedule`, `Settings`, `Enable`, `Status`, `LastStart`) VALUES (:id, :description, :messageId, :schedule, :settings, :enable, :status, :lastStart)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -225,6 +228,7 @@ class MaillistDBProcessor implements IProcessor
                 ':settings'    => serialize($task->getSettings()),
                 ':enable'      => $task->getEnable(),
                 ':status'      => $task->getStatus(),
+                ':lastStart'   => $task->getLastStart(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);
@@ -234,7 +238,7 @@ class MaillistDBProcessor implements IProcessor
 
     public function updateTask(Entity $task)
     {
-        $sql = "UPDATE `MaillistTasks` SET `Description` = :description, `MessageId` = :messageId, `Schedule` = :schedule, `Settings` = :settings, `Enable` = :enable, `Status` = :status WHERE `Id` = :id";
+        $sql = "UPDATE `MaillistTasks` SET `Description` = :description, `MessageId` = :messageId, `Schedule` = :schedule, `Settings` = :settings, `Enable` = :enable, `Status` = :status, `LastStart` = :lastStart WHERE `Id` = :id";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'          => $task->getId(),
@@ -244,6 +248,7 @@ class MaillistDBProcessor implements IProcessor
                 ':settings'    => serialize($task->getSettings()),
                 ':enable'      => $task->getEnable(),
                 ':status'      => $task->getStatus(),
+                ':lastStart'   => $task->getLastStart(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);

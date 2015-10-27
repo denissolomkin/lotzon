@@ -21,6 +21,7 @@ CREATE TABLE `MaillistTasks` (
     `Settings` TEXT NOT NULL COMMENT 'serialized, events and filters',
     `Enable` TINYINT(1) NOT NULL DEFAULT '0',
     `Status` ENUM('waiting','in progress','done','archived','disable') DEFAULT NULL,
+    `LastStart` DATETIME NOT NULL DEFAULT 0,
     PRIMARY KEY (`Id`),
     KEY `status` (`Status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
