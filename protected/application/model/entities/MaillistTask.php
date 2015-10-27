@@ -294,6 +294,7 @@ class MaillistTask extends Entity
         $mailer->From       = Config::instance()->mailServers[$from]['from'];
         $mailer->FromName   = Config::instance()->mailServers[$from]['fromName'];
         $mailer->isHTML(true);
+        $mailer->charset    = 'utf-8';
 
         foreach ($emails as $email) {
             $playerId  = $email['Id'];
