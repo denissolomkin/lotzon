@@ -1,4 +1,6 @@
 <?php
+require_once(PATH_ROOT . 'vendor/phpmailer/PHPMailerAutoload.php');
+
 Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class MaillistTask extends Entity
@@ -188,6 +190,11 @@ class MaillistTask extends Entity
         );
     }
 
+    public function getCountEmails()
+    {
+        return count($this->getEmails());
+    }
+
     public function getEmails()
     {
         $model = $this->getModelClass();
@@ -269,9 +276,24 @@ class MaillistTask extends Entity
         $this->setLastStart(date("Y-m-d H:i:s"));
         $this->update();
 
+        echo date("Y-m-d H:i:s").' Sending '.$this->getCountEmails().' emails'.PHP_EOL;
+
         $emails  = $this->getEmails();
 
         $message = MaillistModel::instance()->getMessage($this->getMessageId());
+        $from      = $message->getSettings()['from'];
+
+        $mailer = new PHPMailer;
+        $mailer->isSMTP();
+        $mailer->Host       = Config::instance()->mailServers[$from]['host'];
+        $mailer->SMTPAuth   = true;
+        $mailer->Username   = Config::instance()->mailServers[$from]['user'];
+        $mailer->Password   = Config::instance()->mailServers[$from]['pass'];
+        $mailer->SMTPSecure = Config::instance()->mailServers[$from]['secure'];
+        $mailer->Port       = Config::instance()->mailServers[$from]['port'];
+        $mailer->From       = Config::instance()->mailServers[$from]['from'];
+        $mailer->FromName   = Config::instance()->mailServers[$from]['fromName'];
+        $mailer->isHTML(true);
 
         foreach ($emails as $email) {
             $playerId  = $email['Id'];
@@ -280,9 +302,20 @@ class MaillistTask extends Entity
             $render    = $message->render($playerId, $emailLang);
             $html      = $render['html'];
             $header    = $render['header'];
-            $from      = $message->getSettings()['from'];
 
-            echo date("Y-m-d H:i:s").' '.$address.' ['.$this->getId().'] - '.$header.PHP_EOL;
+
+            //send email
+            $mailer->clearAddresses();
+            $mailer->addAddress($address);
+            $mailer->Subject    = $header;
+            $mailer->Body       = $html;
+            if ($mailer->send()) {
+                $status = 'send';
+            } else {
+                $status = 'error';
+            }
+
+            echo date("Y-m-d H:i:s").' ['.$status.'] '.$address.' ['.$this->getId().'] - '.$header.PHP_EOL;
 
             $model = $this->getModelClass();
             $model::instance()->saveHistory(
@@ -292,7 +325,8 @@ class MaillistTask extends Entity
                     'email'    => $address,
                     'header'   => $header,
                     'body'     => $html,
-                )
+                ),
+                $status
             );
         }
 

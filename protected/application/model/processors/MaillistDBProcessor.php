@@ -5,17 +5,17 @@ Application::import(PATH_INTERFACES . 'IProcessor.php');
 class MaillistDBProcessor implements IProcessor
 {
 
-    public function saveHistory($message)
+    public function saveHistory($message, $status = 'ok')
     {
-        $sql = "INSERT INTO `MaillistHistory` (`TaskId`, `Date`, `PlayerId`, `Email`, `Header`, `Body`) VALUES (:taskId, NOW(), :playerId, :email, :header, :body)";
+        $sql = "INSERT INTO `MaillistHistory` (`TaskId`, `Date`, `PlayerId`, `Email`, `Header`, `Body`, `Status`) VALUES (:taskId, NOW(), :playerId, :email, :header, :body, :status)";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':taskId'   => $message['taskId'],
                 ':playerId' => $message['playerId'],
                 ':email'    => $message['email'],
                 ':header'   => $message['header'],
-                //':body'     => $message['body'],
                 ':body'     => gzencode($message['body']),
+                ':status'   => $status,
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);

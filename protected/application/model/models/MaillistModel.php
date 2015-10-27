@@ -104,9 +104,9 @@ class MaillistModel extends Model
         return $this->getProcessor()->getEmails($task);
     }
 
-    public function saveHistory($message)
+    public function saveHistory($message, $status)
     {
-        return $this->getProcessor()->saveHistory($message);
+        return $this->getProcessor()->saveHistory($message, $status);
     }
 
 }
