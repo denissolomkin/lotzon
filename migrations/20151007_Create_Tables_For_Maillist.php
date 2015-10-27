@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `MaillistTemplates`(
     `Description` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-CREATE TABLE `MaillistMessages` (
+CREATE TABLE IF NOT EXISTS `MaillistMessages` (
     `Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `Description` VARCHAR(255) NOT NULL,
     `TemplateId` INT UNSIGNED NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `MaillistMessages` (
     `Settings` TEXT NOT NULL COMMENT 'serialized',
     PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-CREATE TABLE `MaillistTasks` (
+CREATE TABLE IF NOT EXISTS `MaillistTasks` (
     `Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `Description` VARCHAR(255) NOT NULL,
     `MessageId` INT UNSIGNED NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `MaillistTasks` (
     PRIMARY KEY (`Id`),
     KEY `status` (`Status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-CREATE TABLE `MaillistHistory` (
+CREATE TABLE IF NOT EXISTS `MaillistHistory` (
     `Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `TaskId` INT NOT NULL,
     `Date` DATETIME NOT NULL DEFAULT 0,
