@@ -193,7 +193,7 @@ class MaillistMessage extends Entity
             } else {
                 switch ($macros) {
                     case '%unsubscribe%':
-                        $render['html'] = str_replace($macros, 'https://lotzon.com/unsubscribe/?email='.$player->getEmail().'&hash='.$player->getSalt(), $render['html']);
+                        $render['html'] = str_replace($macros, 'http://lotzon.com/unsubscribe/?email='.$player->getEmail().'&hash='.$player->getSalt(), $render['html']);
                         break;
                     case '%nickname%':
                         $render['html'] = str_replace($macros, $player->getNicName(), $render['html']);

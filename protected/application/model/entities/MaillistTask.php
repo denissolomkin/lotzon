@@ -307,6 +307,15 @@ class MaillistTask extends Entity
 
             //send email
             $mailer->clearAddresses();
+            $mailer->clearCustomHeaders();
+
+            //add unsubscribe method
+            if ($playerId>0) {
+                $player = new \Player;
+                $player->setId($playerId)->fetch();
+                $mailer->addCustomHeader("List-Unsubscribe", '<mailto:'.Config::instance()->unsubscribeMail.'?body=unsubscribe.'.$player->getSalt().'>, <http://lotzon.com/unsubscribe/?email='.$address.'&hash='.$player->getSalt().'>');
+            }
+
             $mailer->addAddress($address);
             $mailer->Subject    = $header;
             $mailer->Body       = $html;
