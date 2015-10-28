@@ -201,6 +201,29 @@
     var filters = [];
     var events  = [];
 
+    function drawFilterCount() {
+        messageId   = $('select[name="messageId"]').val();
+        settings    = {
+            filters: currentEdit.settings.filters
+        };
+        $.ajax({
+            url     : "/private/maillist/tasks/filter",
+            method  : 'POST',
+            data    : {
+                messageId  : messageId,
+                settings   : settings
+            },
+            async   : true,
+            dataType: 'json',
+            success: function(data) {
+                $('#filterEmailsCount', modal).html(data.data.count);
+            },
+            error: function() {
+                $('#filterEmailsCount', modal).html('');
+            }
+        });
+    }
+
     function drawFilter() {
         retHTML = '<table class="table table-striped">';
         retJS = '';
@@ -231,8 +254,10 @@
             }
         }
         retHTML = retHTML + '</table>';
-        retHTML = retHTML + '<a href="#" id="add_filter"><i class="glyphicon glyphicon-plus"></i></a>';
+        retHTML = retHTML + '<div class="row"><div class="col-sm-8"><a href="#" id="add_filter"><i class="glyphicon glyphicon-plus"></i></a></div>';
+        retHTML = retHTML + '<div class="col-sm-4" style="align:right;"><div style="float:right;" id="filterEmailsCount"></div><div style="float:right;"><i class="glyphicon glyphicon-envelope"></i>: </div></div></div>';
         $('#filters', modal).html(retHTML+retJS);
+        drawFilterCount();
     }
 
     $(document).on('click', '#del_filter', function() {

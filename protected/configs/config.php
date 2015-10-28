@@ -269,6 +269,9 @@ Config::instance()->privateResources =  array(
     '/private/maillist/template/:identifier' => array(
         'get'    => 'controllers\admin\Maillist:getTemplatePreview',
     ),
+    '/private/maillist/tasks/filter/' => array(
+        'post'    => 'controllers\admin\Maillist:getTaskFilterCount',
+    ),
 );
 
 Config::instance()->publicResources = array(

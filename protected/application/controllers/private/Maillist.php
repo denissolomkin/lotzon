@@ -14,6 +14,35 @@ class Maillist extends PrivateArea
 {
     public $activeMenu = 'maillist';
 
+    public function getTaskFilterCountAction()
+    {
+        $messageId   = $this->request()->post('messageId',0);
+        $settings    = $this->request()->post('settings','');
+
+        if ($this->request()->isAjax()) {
+            $response = array();
+            try {
+                $message = new \MaillistTask();
+                $message->setMessageId($messageId)
+                        ->setSettings($settings);
+                $response = array(
+                    'status'   => 1,
+                    'message'  => 'OK',
+                    'data'     => array(
+                        'count' => $message->getCountEmails(),
+                    ),
+                );
+            } catch (EntityException $e) {
+                $response['status']  = 0;
+                $response['message'] = $e->getCode();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
     public function listTasksAction()
     {
 
