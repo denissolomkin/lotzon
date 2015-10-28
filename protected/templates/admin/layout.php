@@ -13,8 +13,12 @@
       </style>
       <link rel="stylesheet" href="/theme/admin/bootstrap/css/bootstrap.min.css">
       <link rel="stylesheet" href="/theme/admin/datepicker/css/datepicker.css">
+      <link rel="stylesheet" href="/theme/admin/timepicker/css/timepicker.min.css">
       <link rel="stylesheet" href="/theme/admin/datetimepicker/css/bootstrap-datetimepicker.min.css">
+      <link rel="stylesheet" href="/theme/admin/select2/select2.css">
       <link href="/theme/admin/bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/theme/admin/bootstrap3-editable/css/bootstrap-editable.css">
       <!-- Include Summernote CSS files -->
       <link rel="stylesheet" href="/tpl/css/font-awesome.min.css">
       <link href="/theme/admin/lib/summernote/summernote.css" rel="stylesheet">
@@ -28,8 +32,12 @@
       <script src="/theme/admin/bootstrap/js/bootstrap.min.js"></script>
       <!-- Include Summernote JS file -->
       <script src="/theme/admin/lib/summernote/summernote.js"></script>
+      <script src="/theme/admin/timepicker/js/timepicker.min.js"></script>
       <script src="/theme/admin/datepicker/js/bootstrap-datepicker.js"></script>
+      <script src="/theme/admin/select2/select2.js"></script>
       <script src="/theme/admin/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+      <script src="/theme/admin/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
   </head>
   <body style="">
       <div class="container-fluid text-center">

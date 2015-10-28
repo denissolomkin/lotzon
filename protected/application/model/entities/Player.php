@@ -80,6 +80,8 @@ class Player extends Entity
     private $_referalId = 0;
     private $_referalPaid = 0;
 
+    private $_newsSubscribe = 1;
+
     private $_additionalData = array();
     // filled only when list of players fetched
     private $_isTicketsFilled = array();
@@ -112,6 +114,18 @@ class Player extends Entity
     public function getBan()
     {
         return $this->_ban;
+    }
+
+    public function setNewsSubscribe($newsSubscribe)
+    {
+        $this->_newsSubscribe = $newsSubscribe;
+
+        return $this;
+    }
+
+    public function getNewsSubscribe()
+    {
+        return $this->_newsSubscribe;
     }
 
     public function setReferer($referer)
@@ -1261,6 +1275,19 @@ class Player extends Entity
         return $this;
     }
 
+    public function updateNewsSubscribe($newsSubscribe)
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateNewsSubscribe($this, $newsSubscribe);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
     public function updateBalance($currency, $quantity=0)
     {
         $model = $this->getModelClass();
@@ -1565,10 +1592,11 @@ class Player extends Entity
                  ->setInviterId($data['InviterId'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
+                 ->setNewsSubscribe($data['NewsSubscribe'])
                  ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
 
-            if ($data['TicketsFilled']) {
+            if (isset($data['TicketsFilled'])) {
                 $this->_isTicketsFilled = $data['TicketsFilled'];
             }
 

@@ -69,6 +69,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getLogins($playerId);
     }
 
+    public function updateNewsSubscribe(Entity $player, $newsSubscribe)
+    {
+        return $this->getProcessor()->updateNewsSubscribe($player, $newsSubscribe);
+    }
+
     public function getMults($playerId)
     {
         return $this->getProcessor()->getMults($playerId);
