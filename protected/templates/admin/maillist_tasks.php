@@ -206,6 +206,7 @@
         settings    = {
             filters: currentEdit.settings.filters
         };
+        $('#filterEmailsCount', modal).html('<i class="glyphicon glyphicon-refresh"></i>');
         $.ajax({
             url     : "/private/maillist/tasks/filter",
             method  : 'POST',
@@ -219,7 +220,7 @@
                 $('#filterEmailsCount', modal).html(data.data.count);
             },
             error: function() {
-                $('#filterEmailsCount', modal).html('');
+                $('#filterEmailsCount', modal).html('error');
             }
         });
     }
