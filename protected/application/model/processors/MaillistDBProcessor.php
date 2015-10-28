@@ -66,7 +66,8 @@ class MaillistDBProcessor implements IProcessor
                     $where[] = 'p.Lang '.$filter['equal'].' ('.$ids.')';
                     break;
                 case 'DateRegistered':
-                    $where[] = 'FROM_UNIXTIME(p.DateRegistered) '.$filter['equal'].' ('.$ids.')';
+                    $tables[] = 'PlayerDates as pd ON pd.PlayerId = p.Id';
+                    $where[] = 'FROM_UNIXTIME(pd.Registration) '.$filter['equal'].' ('.$ids.')';
                     break;
                 case 'OnlineTime':
                     $tables[] = 'PlayerDates as pd ON pd.PlayerId = p.Id';
@@ -97,7 +98,7 @@ class MaillistDBProcessor implements IProcessor
             $sql     = 'SELECT DISTINCT p.Id, p.Email, p.Lang FROM `Players` as p ';
             $where[] = '(p.NewsSubscribe = 1)';
             if (count($tables)>0) {
-                $sql .= ' JOIN '.implode('JOIN ',$tables);
+                $sql .= ' JOIN '.implode('JOIN ',array_unique($tables));
             }
             if (count($where)>0) {
                 $sql .= ' WHERE '.implode(' AND ',$where);
