@@ -94,7 +94,8 @@ class MaillistDBProcessor implements IProcessor
         if ($union != array() and (count($filters)==1)) {
             $sql = implode(' UNION ',$union);
         } else {
-            $sql    = 'SELECT DISTINCT p.Id, p.Email, p.Lang FROM `Players` as p ';
+            $sql     = 'SELECT DISTINCT p.Id, p.Email, p.Lang FROM `Players` as p ';
+            $where[] = '(p.NewsSubscribe = 1)';
             if (count($tables)>0) {
                 $sql .= ' JOIN '.implode('JOIN ',$tables);
             }

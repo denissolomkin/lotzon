@@ -347,6 +347,10 @@ Config::instance()->publicResources = array(
     '/quickgame/preview/:key' => array(
         'post' => 'controllers\production\Game:previewQuickGame',
     ),
+    '/unsubscribe/' => array(
+        'get'  => 'controllers\production\Maillist:unsubscribe',
+        'post' => 'controllers\production\Maillist:doUnsubscribe',
+    ),
 );
 
 Config::instance()->hybridAuth = array(
