@@ -150,7 +150,11 @@ class MaillistMessage extends Entity
             if (isset($values[$language][$key])) {
                 $html = str_replace('%'.$key.'%', $values[$language][$key], $html);
             } else {
-                $html = str_replace('%'.$key.'%', '' , $html);
+                if (isset($variables[$key]["default"][$language])) {
+                    $html = str_replace('%' . $key . '%', $variables[$key]["default"][$language], $html);
+                } else {
+                    $html = str_replace('%' . $key . '%', '', $html);
+                }
             }
         }
 

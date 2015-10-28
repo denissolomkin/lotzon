@@ -187,7 +187,16 @@
                 value = currentEdit.values[$('.lang.active', modal).data('lang')][variable];
             else
                 value = '';
-            preview = preview.replace('%'+variable+'%', '<span href="#" id="'+variable+'" data-unsavedclass="test" style="cursor:pointer;" data-send="never" data-type="'+currentEdit.template.Variables[variable].type+'" data-pk="1" data-url="/post" data-emptytext="%'+variable+'%" data-title="'+currentEdit.template.Variables[variable].description+'">'+value+'</span>');
+
+            if(currentEdit.template.Variables[variable].default)
+                if(currentEdit.template.Variables[variable].default[$('.lang.active', modal).data('lang')])
+                    defaultValue = currentEdit.template.Variables[variable].default[$('.lang.active', modal).data('lang')];
+                else
+                    defaultValue = '%'+variable+'%';
+            else
+                defaultValue = '%'+variable+'%';
+
+            preview = preview.replace('%'+variable+'%', '<span href="#" id="'+variable+'" data-unsavedclass="test" style="cursor:pointer;" data-send="never" data-type="'+currentEdit.template.Variables[variable].type+'" data-pk="1" data-url="/post" data-emptytext="'+defaultValue+'" data-title="'+currentEdit.template.Variables[variable].description+'">'+value+'</span>');
             preview = preview + '<scr'+'ipt> $(document).ready(function() { $("#'+variable+'").editable( { success: function(response, newValue) { if (newValue) currentEdit.values[$(".lang.active", modal).data("lang")]["'+variable+'"] = newValue; else delete currentEdit.values[$(".lang.active", modal).data("lang")]["'+variable+'"]; recountLanguage(); } }  ); });</scr'+'ipt>';
         }
         $('#preview', modal).html(preview);
