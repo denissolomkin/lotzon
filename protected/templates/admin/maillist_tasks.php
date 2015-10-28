@@ -342,6 +342,10 @@
         }
     });
 
+    $(document).on('change', 'select[name="messageId"]', function() {
+        drawFilterCount();
+    });
+
     $(document).on('change', 'select[name="event"]', function() {
         select_event = $('select[name="event"] option:selected').val();
         if (currentEdit.events[select_event].parameter) {
