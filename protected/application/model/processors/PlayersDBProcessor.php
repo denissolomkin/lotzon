@@ -230,6 +230,26 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function updateNewsSubscribe(Entity $player, $newsSubscribe)
+    {
+        $sql = "UPDATE `Players` SET
+                    `NewsSubscribe` = :newsSubscribe
+                WHERE `Id` = :id OR `Email` = :email";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'            => $player->getId(),
+                ':email'         => $player->getEmail(),
+                ':newsSubscribe' => $newsSubscribe,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
     public function updateBalance(Entity $player, $currency, $quantity)
     {
         $sql = "UPDATE `Players` SET

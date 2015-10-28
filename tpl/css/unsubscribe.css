@@ -1,0 +1,96 @@
+
+
+
+@font-face {
+  font-family: handbookpro-regular;
+  src: url(../fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.woff);
+}
+@font-face {
+  font-family: handbookpro-italic;
+  src: url(../fonts/PFHandbookPro-Italic/pfhandbookpro-italic-webfont.woff);
+}
+@font-face {
+  font-family: Handbook-bold;
+  src: url(../fonts/PFHandbookPro-Bold/pfhandbookpro-bold-webfont.woff);
+}
+
+* {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  outline: none;
+}
+
+html, body, div, span, applet, object, iframe, button,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+.header {
+	background: #ffe700;
+  height: 50px;
+  width: 100%;
+  margin-bottom: 28px
+}
+p {
+  font: 20px Handbook-bold, sans-serif;
+  margin:  23px 20px;
+  color: #181818;
+}
+button {
+  font: 13px "PT Sans", sans-serif;
+  height: 30px;
+  /*padding: 5px 37px;*/
+  width: 150px;
+  vertical-align: middle;
+  background-color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+.bordered {
+  border: 1px solid #000;
+}
+.bordered:hover {
+  background-color: #000;
+  color: #fff;
+}
+.logo {
+  display: inline-block;
+  width: 110px;
+  height: 40px;
+  line-height: 50px;
+  background: url("../img/Lotzon-Logo.svg") no-repeat center;
+  position: relative;
+  top: 5px;
+  left: 20px;
+  background-size: contain;
+}
+@media (max-width: 480px) {
+  button {
+    font-size: 12px;
+    width: 120px;
+  }
+}
+
