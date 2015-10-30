@@ -4,24 +4,23 @@
     <ul class="ticket-tabs clearfix">
     </ul>
 
-<div class='lottery-result'>
+<div class='lottery-result clearfix'>
 
     <div class='balls-result'>
 
         {{#renderTickets}}
         <ul class='ticket-result'>
-            <li class='ticket-number-result'><span>БИЛЕТ</span> #{{index}}
+            <li class='ticket-number-result'> №{{index}}
             {{#balls}}
             <li class='ball-number-result'>{{.}}</li>
             {{/balls}}
         </ul>
         {{/renderTickets}}
 
-        {{{ completeHTML }}}
     </div>
 
     <div class='text-result'>
-     <p class=text-result-top>ВСЕ 8 БИЛЕТОВ ПОДТВЕРЖДЕНЫ И ПРИНЯТЫ К РОЗЫГРЫШУ</p>
+     <p class='text-result-top'>ВСЕ ЗАПОЛЕНННЫЕ БИЛЕТЫ ПОДТВЕРЖДЕНЫ И ПРИНЯТЫ К РОЗЫГРЫШУ</p>
      <span><p>Каждые 20-25 минут появляется «Моментальный шанс». Проверьте свою интуицию и выиграйте баллы.
      <br>
      <p>В Кабинете, в разделе «Бонусы», приглашайте друзей и получайте баллы.</p>

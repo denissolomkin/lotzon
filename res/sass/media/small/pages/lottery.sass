@@ -2,42 +2,177 @@
 
 .ticket-items
   margin: 70px 0 30px
+  background: #b2d0d4
 
 .ticket-tabs
   top: -40px
+  background: transparent
+  width: 100%
+  position: absolute
+  overflow: hidden
+  z-index: -10
+  display: block
+  padding-top: 0
 
   & li
     top: 9px
-    width: 80px
+    width: 72px
     height: 85px
     margin-right: 10px
     line-height: 31px
+    background: #4C4C4C
+    color: #b2d0d4
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4)
+    position: relative
+    float: left
+    border-radius: 5px 5px 0 0
+    font-size: 14px
+    font-weight: bold
+    line-height: 30px
+    text-align: center
+    cursor: pointer
+    display: block
+
+
+    &.unavailable 
+      background: #8f8e8e
+
+      &:hover
+
+        & .ticket-number-sm
+          background: transparent
+
+    &.done
+      background: #4c4c4c
+      color: #b2d0d4
+      text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4)
+
+      &:after 
+        content: ""
+        display: inline-block
+        background: url(img/sprite.png) center center no-repeat
+        background-position: -597px -61px
+        position: absolute
+        width: 11px
+        height: 8px
+        right: 12px
+        top: 12px
+
+      &:before 
+        display: none
+
+      &:hover .ticket-number-sm:before
+        display: none  
+
+      & .ticket-number-sm:before 
+        display: none
+
+
 
     &.active
       height: 40px
       line-height: 40px
+      color: #464444
+      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4)
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.5)
+      background: #B7CFD3
 
-      & span
+      & .ticket-number-sm
+        background: transparent
+
+    &:last-of-type
+      background: #e8cf6b
+      color: #4c4c4c
+      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4)
+      width: 120px
+      
+      &.active 
+        color: #4c4c4c
+      
+      &:hover
+        color: #4c4c4c
+
+      & .ticket-number-sm
         display: inline
+        width: auto
+        height: auto
+        background: transparent
+        line-height: 1
+        border-radius: 0
+        position: static
+
+    & .ticket-number-sm
+      display: inline!important
+      width: auto!important
+      height: auto!important
+      background: transparent!important
+      line-height: 1!important
+      border-radius: 0!important
+      position: static!important
+
+    & .ticket-number-sm:before 
+      display: none!important
+
+.scroll-box
+  height: auto
+  
+.is-done 
+  padding-top: 0
+
+.balls-count
+  color: #e7f6f7
+  font-size: 15px
+  position: absolute
+  right: 235px
+  bottom: 40px
+  display: block
+
+.ticket-numbers-wrapper
+  height: auto
+  overflow: visible       
+    
+.ticket-tabs li:hover
+  -webkit-transform: translate(0, -8px)
+  -moz-transform: translate(0, -8px)
+  -o-transform: translate(0, -8px)
+  -moz-transition: all 0.1s ease-in-out
+  -o-transition: all 0.1s ease-in-out
+  -webkit-transition: all 0.1s ease-in-out
+  transition: all 0.1s ease-in-out
+       
 
 .ticket-item
-  padding: 25px 29px !important
+  padding: 37px 30px 27px !important
+
 
 .ticket-numbers
+  height: auto
   margin-left: 0 !important
-  margin-right: -30px !important
-  
+  margin-right: -40px !important
+  margin-bottom: 7px
 
   & li
-    margin: 0 30px 20px 0 !important
+    margin: 0 30px 21px 0 !important
+
+.ticket-actions 
+  margin-left: 0 !important
 
 .ticket-actions li
   margin: 0 30px 0 0 !important
 
+.add-ticket 
+  margin-right: 0 !important
 
+.balls-count 
+  bottom: 43px
 
+.ticket-btn 
+  padding: 0 40px
 
 // MATCHES-INF ------------------------------ //
 
 .matches-inf-wrapper
   margin-bottom: 30px
+
+#lottery-process 
+  padding: 61px 0 0 170px

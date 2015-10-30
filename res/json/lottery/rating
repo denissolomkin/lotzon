@@ -2,8 +2,9 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "nocache": true,
-        "items":[
+        "cache": false,
+        "lottery":{
+        "rating":[
             {
                 "id": "1",
                 "img": "/res/img/user_img.jpg",
@@ -26,5 +27,6 @@
                 "money": null
             }
 	    ]
+	    }
 	}
 }

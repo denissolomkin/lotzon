@@ -1,29 +1,162 @@
 {
+
+
     "status": 1,
     "message": "OK",
     "res":{
-        "items":[
-            {
-                "id": "1",
-                "img": "/res/img/user_img.jpg",
-                "title": "Ноутбук Asus X551MA",
-                "games": "50000",
-                "money": "0"
-            },
-            {
-                "id": "2",
-                "img": "/res/img/user_img.jpg",
-                "title": "Смартфон Lenovo X551MA",
-                "games": 10000,
-                "money": "5"
-            },
-            {
-                "id": "3",
-                "img": "/res/img/user_img.jpg",
-                "title": "Mp3-плеер Ipod X551MA",
-                "games": "10000",
-                "money": null
-            }
-	    ]
-	}
+            "349":{
+
+"id":"349",
+"date":"12.06.2015",
+"combination":[37,8,32,16,10,22],
+"playerTotal":"4400",
+"playerWins":"4258",
+"ticketsTotal":"21914",
+"ticketsWins":"12305",
+"statistics":[
+{"balls": 1,
+    "currency":"points",
+    "prize":5,
+    "matches":"9130"},
+{"balls": 2,
+    "currency":"points",
+    "prize":10,
+    "matches":"2800"},
+{"balls": 3,
+    "currency":"points",
+    "prize":100,
+    "matches":"366"},
+{"balls": 4,
+    "currency":"money",
+    "prize":1,
+    "matches":"9"},
+{"balls": 5,
+    "currency":"money",
+    "prize":3,
+    "matches":"0"},
+{"balls": 6,
+    "currency":"money",
+    "prize":1000000,
+    "matches":"0"}
+]
+
+
+},
+
+            "349":{
+
+"id":"349",
+"date":"12.06.2015",
+"combination":[37,8,32,16,10,22],
+"playerTotal":"4400",
+"playerWins":"4258",
+"ticketsTotal":"21914",
+"ticketsWins":"12305",
+"statistics":[
+{"balls": 1,
+    "currency":"points",
+    "prize":5,
+    "matches":"9130"},
+{"balls": 2,
+    "currency":"points",
+    "prize":10,
+    "matches":"2800"},
+{"balls": 3,
+    "currency":"points",
+    "prize":100,
+    "matches":"366"},
+{"balls": 4,
+    "currency":"money",
+    "prize":1,
+    "matches":"9"},
+{"balls": 5,
+    "currency":"money",
+    "prize":3,
+    "matches":"0"},
+{"balls": 6,
+    "currency":"money",
+    "prize":1000000,
+    "matches":"0"}
+]
+
+
+},
+            "348":{
+
+"id":"348",
+"date":"11.06.2015",
+"combination":[37,8,32,16,10,22],
+"playerTotal":"4400",
+"playerWins":"4258",
+"ticketsTotal":"21914",
+"ticketsWins":"12305",
+"statistics":[
+{"balls": 1,
+    "currency":"points",
+    "prize":5,
+    "matches":"9130"},
+{"balls": 2,
+    "currency":"points",
+    "prize":10,
+    "matches":"2800"},
+{"balls": 3,
+    "currency":"points",
+    "prize":100,
+    "matches":"366"},
+{"balls": 4,
+    "currency":"money",
+    "prize":1,
+    "matches":"9"},
+{"balls": 5,
+    "currency":"money",
+    "prize":3,
+    "matches":"0"},
+{"balls": 6,
+    "currency":"money",
+    "prize":1000000,
+    "matches":"0"}
+]
+
+
+},
+            "347":{
+
+"id":"347",
+"date":"10.06.2015",
+"combination":[37,8,32,16,10,22],
+"playerTotal":"4400",
+"playerWins":"4258",
+"ticketsTotal":"21914",
+"ticketsWins":"12305",
+"statistics":[
+{"balls": 1,
+    "currency":"points",
+    "prize":5,
+    "matches":"9130"},
+{"balls": 2,
+    "currency":"points",
+    "prize":10,
+    "matches":"2800"},
+{"balls": 3,
+    "currency":"points",
+    "prize":100,
+    "matches":"366"},
+{"balls": 4,
+    "currency":"money",
+    "prize":1,
+    "matches":"9"},
+{"balls": 5,
+    "currency":"money",
+    "prize":3,
+    "matches":"0"},
+{"balls": 6,
+    "currency":"money",
+    "prize":1000000,
+    "matches":"0"}
+]
+
+
+}
+
+	    }
 }

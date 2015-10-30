@@ -1,6 +1,6 @@
 <div class="content-box-item games-chance">
     <div>
-        {{#items}}
+        {{#each .}}
         <a href="/games/spin">
         <div class="game">
             <div class="game-img">
@@ -9,7 +9,7 @@
             <div class="game-name">{{ title }}</div>
         </div>
         </a>
-        {{/items}}
-        {{^items}}No rating :({{/items}}
+        {{/each}}
+        {{^.}}No games :({{/.}}
     </div>
 </div>

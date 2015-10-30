@@ -9,7 +9,7 @@
         else
             step++;
 
-        data = Cache['games-game'][step];
+        data = Cache.get('games-game')[step];
 
 
         if (data.error)
@@ -22,33 +22,33 @@
             if (data.res) {
 
 
-                if (data.res.appId && data.res.appId != onlineGame.appId) {
-                    onlineGame = {};
-                } else if (onlineGame.winner) {
-                    onlineGame['winner'] = null;
-                    onlineGame['fields'] = null;
+                if (data.res.appId && data.res.appId != App.id) {
+                    App = {};
+                } else if (App.winner) {
+                    App['winner'] = null;
+                    App['fields'] = null;
                 }
 
                 $.each(data.res, function (index, value) {
-                    onlineGame[index] = value;
+                    App[index] = value;
                 });
 
                 if (data.res.appName)
-                    appName = data.res.appName;
+                    App.name = data.res.appName;
 
                 if (data.res.appMode)
-                    appMode = data.res.appMode;
+                    App.mode = data.res.appMode;
 
                 if (data.res.appId) {
-                    appId = data.res.appId;
+                    App.id = data.res.appId;
                     data = null;
                 }
 
-                Apps.playAudio([appName, onlineGame.action]);
+                Apps.playAudio([App.name, App.action]);
             }
 
-            action = data && data.res && data.res.action ? data.res.action : onlineGame.action;
-            eval(appName+'.'+action)(data);
+            action = data && data.res && data.res.action ? data.res.action : App.action;
+            eval(App.name+'.'+action)(data);
 
         }
 

@@ -1,0 +1,41 @@
+﻿<div class="content-top">
+	<div class="content-main">
+
+		<div class="content-box">
+
+            <div class="content-box-header back">{{date}}</div>
+
+			<div class="content-box-content clearfix">
+				<div class="content-box-item game_history_detail" data-lotteryid="{{id}}">
+					<div class="ghd-numbers clearfix">
+                        {{#combination}}
+						<span class="ghd-number">{{.}}</span>
+                        {{/combination}}
+					</div>
+
+					<div class="ghd-tickets" style="min-height: 100px;">
+					</div>
+
+					<div class="ghd-game-inf clearfix">
+						<div class="title">Общая информация о розыгрыше</div>
+						<table>
+							<tr><th>Угаданных чисел</th><th>Выигрыш</th><th>Совпадений</th><th>Общий выигрыш</th></tr>
+                            {{#statistics}}
+							<tr class="balls-matches-{{balls}}">
+                                <td>{{balls}} x 6</td>
+                                <td>{{prize}} </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {{/statistics}}
+						</table>
+						<div class="ghd-all-won">Всего выиграно: <span class="money">0</span> грн&nbsp;&nbsp;<span class="points">0</span> баллов</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div><!-- .content-main -->
+</div><!-- .content-top -->

@@ -1,18 +1,19 @@
-$(function () {
+(function () {
 
     // Multilingual User Interface
     M = {
-        "i18n": function (key) {
-            return key ? (Texts[key] ? Texts[key] : key) : (function (key) {
-                return M.i18n(key);
-            });
+
+        "texts": null,
+        "init": function(texts) {
+            this.texts = texts;
         },
 
-        "eval": function (key) {
-            return key ? eval(key) : (function (key) {
-                return M.eval(key);
+        "i18n": function (key) {
+            return key ? (this.texts[Player.lang] && this.texts[Player.lang][key] ? this.texts[Player.lang][key] : key) : (function (key) {
+                return M.i18n(key);
             });
         }
+
     };
 
-});
+})();

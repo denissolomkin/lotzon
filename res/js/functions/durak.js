@@ -22,8 +22,8 @@ $(function () {
              1) если действие "ждем", "старт" или "готовы", но все обязаны подтердить готовность
              или 2) еще нет блоков игроков
              */
-            if (($.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
-                (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)
+            if (($.inArray(App.action, ['move', 'timeout', 'pass']) == -1 &&
+                (App.action != 'ready' || Object.size(App.players) == App.current.length)
                 ) || !$('.mx .players').children('div').length) {
 
                 Game.run();
@@ -39,22 +39,22 @@ $(function () {
                     W.toggleFullScreen();
                 }
             });
-            console.log(action, onlineGame);
+            console.log(action, App);
             Cards.setupForDevices();
             $('.tmp_but').html(Device.detect() + Device.get() + document.documentElement.clientWidth);
             Cards.drawFields();
             Cards.premove();
             Cards.initStatuses();
-            Game.updateTimeOut(onlineGame.timeout);
+            Game.updateTimeOut(App.timeout);
             Game.end();
         },
 
         quit: function () {
-            if (onlineGame.quit != Player.id) {
+            if (App.quit != Player.id) {
                 $('.re').hide();
                 $('.ot-exit').html('Соперник вышел').show();
             } else
-                appId = 0;
+                App.id = 0;
         },
 
         error: function () {

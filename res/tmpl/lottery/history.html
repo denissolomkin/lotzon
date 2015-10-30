@@ -1,46 +1,48 @@
 <div class="content-box-item lottery-history with-cat cabinet-game-history">
 
-                <div class="content-box-item">
+    <div class="content-box-item">
 
-                    <div class="content-box-item-top clearfix">
-                        <div class="content-box-cat">
-                            <a href="gh-my-game">{{#i18n}}title-only-mine{{/i18n}}</a>
-                            <a href="#">{{#i18n}}title-all{{/i18n}}</a>
+        <div class="content-box-item-top clearfix">
+            <div class="content-box-cat">
+                <a href="gh-my-game">{{i18n "title-only-mine"}}</a>
+                <a href="#">{{i18n "title-all"}}</a>
+            </div>
+        </div>
+
+        <div class="content-box-item-content">
+
+            <div class="gh-header clearfix">
+                <div class="gh-date-name">{{i18n "title-date"}}</div>
+                <div class="gh-combination-name">{{i18n "title-win-combination"}}</div>
+                <div class="gh-winners-name">{{i18n "title-winners"}}</div>
+            </div>
+
+        </div>
+
+        <div>
+            {{#each .}}
+            <a href="/lottery/history/{{ id }}">
+                <div class="gh-item clearfix">
+                    <div class="gh-inf gh-date">
+                        <span class="gh-inf-name">{{i18n "title-date"}}</span>{{ date }}
+                    </div>
+                    <div class="gh-inf gh-winners">
+                        <span class="gh-inf-name">{{i18n "title-winners"}}</span> {{playerWins}}
+                    </div>
+                    <div class="gh-inf gh-combination">
+                        <span class="gh-inf-name">{{i18n "title-win-combination"}}</span>
+
+                        <div class="gh-numbers clearfix">
+                            {{#combination}}
+                            <span class="gh-number">{{.}}</span>
+                            {{/combination}}
                         </div>
                     </div>
-
-                    <div class="content-box-item-content">
-
-                        <div class="gh-header clearfix">
-                            <div class="gh-date-name">{{#i18n}}title-date{{/i18n}}</div>
-                            <div class="gh-combination-name">{{#i18n}}title-win-combination{{/i18n}}</div>
-                            <div class="gh-winners-name">{{#i18n}}title-winners{{/i18n}}</div>
-                        </div>
-
-                    </div>
-
-    	<div>
-        {{#items}}
-
-                        <a href="/lottery/history/{{ id }}">
-                            <div class="gh-item clearfix">
-                                <div class="gh-inf gh-date"><span class="gh-inf-name">{{#i18n}}title-date{{/i18n}}</span>{{ date }}</div>
-                                <div class="gh-inf gh-winners"><span class="gh-inf-name">{{#i18n}}title-winners{{/i18n}}</span>{{ stat.tw }}</div>
-                                <div class="gh-inf gh-combination">
-                                    <span class="gh-inf-name">{{#i18n}}title-win-combination{{/i18n}}</span>
-
-                                    <div class="gh-numbers clearfix">
-
-        {{#balls}}
-                                        <span class="gh-number">{{number}}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-        {{/balls}}
-        {{/items}}
-        {{^items}}No lotteries:({{/items}}
-	</div>
+                </div>
+            </a>
+            {{/each}}
+            {{^.}} No rating :({{/.}}
+        </div>
 
     </div>
 </div>

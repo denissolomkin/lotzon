@@ -145,13 +145,9 @@ button.loading:before {
 }
 
 .container {
+  padding: 0;
   min-width: 320px;
-  padding: 0 10px;
   margin: auto;
-}
-
-.content {
-  margin-bottom: 20px;
 }
 
 .content-top {
@@ -239,7 +235,6 @@ button.loading:before {
 }
 
 .ticket-item {
-  min-height: 422px;
   padding: 15px 0 !important;
 }
 
@@ -477,7 +472,6 @@ input.input-radio:checked + label.input-radio:before {
 
 .header {
   background: #f2efed;
-  margin-bottom: 10px;
   position: relative;
 }
 
@@ -813,6 +807,10 @@ div {
   font-family: Handbook-bold;
 }
 
+.lottery-result {
+  font-family: handbookpro-regular;
+}
+
 .content-box-header {
   font: 15px/50px Handbook-bold;
 }
@@ -958,10 +956,6 @@ header .owl-theme .owl-controls .owl-page span {
 
 .pw-gm-rt .ct {
   padding: 16px 0 15px 30px;
-}
-
-.content {
-  margin-top: 30px;
 }
 
 .content-box-scroll-top {
@@ -1923,12 +1917,6 @@ header .owl-theme .owl-controls .owl-page span {
   margin-right: 0;
 }
 
-.ghd-tickets {
-  display: table;
-  margin: 0 auto 40px;
-  color: #3f3f3f;
-}
-
 .ghd-tickets table {
   margin-bottom: 5px;
 }
@@ -1986,8 +1974,11 @@ header .owl-theme .owl-controls .owl-page span {
   text-align: center;
   padding-right: 20px;
 }
+.ghd-game-inf th:nth-child(2) {
+  padding-left: 10px;
+}
 .ghd-game-inf th:nth-child(3) {
-  padding-left: 30px;
+  padding-left: 10px;
 }
 
 .ghd-game-inf td {
@@ -4477,12 +4468,12 @@ span.input-prefix {
 }
 
 .ticket-ball, .ticket-numbers li, .ticket-actions li, .ticket-btn {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   font-size: 15px;
   font-weight: bold;
-  line-height: 36px;
+  line-height: 42px;
   text-align: center;
   color: #6c6c6c;
   cursor: pointer;
@@ -4492,65 +4483,147 @@ span.input-prefix {
 }
 
 .ticket-items {
-  background: #B7CFD3;
-  margin: 55px 0 20px;
+  margin: 0 0 20px;
   border-radius: 0 5px 5px 5px;
   position: relative;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: #b2d0d4;
+}
+
+.ticket-numbers-wrapper {
+  overflow: hidden;
 }
 
 .ticket-tabs {
-  width: 100%;
-  position: absolute;
-  top: -34px;
-  overflow: hidden;
-  z-index: -10;
+  background: #b2d0d4;
+  display: table;
+  padding: 6px 0 18px;
 }
 .ticket-tabs li {
-  position: relative;
-  top: 8px;
-  float: left;
-  width: 10%;
-  height: 75px;
-  margin-right: 2%;
-  background: #909090;
-  border-radius: 5px 5px 0 0;
-  font-size: 14px;
+  width: 1000px;
+  height: 40px;
+  font-size: 15px;
   font-weight: bold;
   line-height: 26px;
-  color: #fff;
+  color: #4c4c4c;
   text-align: center;
   cursor: pointer;
+  display: table-cell;
+  vertical-align: bottom;
 }
 .ticket-tabs li.gold {
   background: #F9DC42;
 }
-.ticket-tabs li.done {
-  background-color: #668286;
+.ticket-tabs li.unavailable:hover .ticket-number-sm {
+  background: #8f8e8e;
+}
+.ticket-tabs li.done .ticket-number-sm:before {
+  content: "";
+  display: block;
+  background: url(img/sprite.png) center center no-repeat;
+  background-position: -597px -72px;
+  position: absolute;
+  width: 11px;
+  height: 8px;
+  text-align: center;
+  top: 5px;
+  left: 8px;
+}
+.ticket-tabs li.done:hover .ticket-number-sm:before {
+  content: "";
+  display: block;
+  background: url(img/sprite.png) center center no-repeat;
+  background-position: -597px -53px;
+  position: absolute;
+  width: 11px;
+  height: 8px;
+  text-align: center;
+  top: 5px;
+  left: 8px;
 }
 .ticket-tabs li.active {
   top: 0;
-  height: 34px;
-  line-height: 34px;
-  background: #B7CFD3;
-  color: #464444;
   cursor: default;
-  text-shadow: 1px 1px 1px 255, 255, 255, 0.49;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 0 rgba(233, 242, 244, 0.6);
+  color: #b2d0d4;
+}
+.ticket-tabs li.active .ticket-number-sm {
+  background: #4c4c4c;
+}
+.ticket-tabs li.active.unavailable .ticket-number-sm {
+  background: #8f8e8e;
+}
+.ticket-tabs li.active.done .ticket-number-sm:before {
+  content: "";
+  display: block;
+  background: url(img/sprite.png) center center no-repeat;
+  background-position: -597px -53px;
+  position: absolute;
+  width: 11px;
+  height: 8px;
+  text-align: center;
+  top: 5px;
+  left: 8px;
+}
+.ticket-tabs li:last-of-type:hover {
+  color: #cdcf9f;
+}
+.ticket-tabs li:last-of-type:hover .ticket-number-sm {
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  line-height: 50px;
+  border-radius: 3px;
+  position: relative;
+  background: #4c4c4c;
+}
+.ticket-tabs li:last-of-type .ticket-number-sm {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 3px;
+  position: relative;
+  padding-bottom: 20px;
+  background: #cdcf9f;
+}
+.ticket-tabs li.active:last-of-type {
+  color: #cdcf9f;
+}
+.ticket-tabs li.active:last-of-type .ticket-number-sm {
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  line-height: 50px;
+  border-radius: 3px;
+  position: relative;
+  background: #4c4c4c;
 }
 .ticket-tabs span {
   display: none;
   text-transform: uppercase;
 }
-
+.ticket-tabs .ticket-number-sm {
+  display: inline-block;
+  width: 30px;
+  height: 40px;
+  line-height: 50px;
+  border-radius: 3px;
+  position: relative;
+}
 .ticket-tabs li:hover {
-  -webkit-transform: translate(0, -8px);
-  -moz-transform: translate(0, -8px);
-  -o-transform: translate(0, -8px);
-  -moz-transition: all 0.1s ease-in-out;
-  -o-transition: all 0.1s ease-in-out;
-  -webkit-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
+  color: #b2d0d4;
+}
+.ticket-tabs li:hover .ticket-number-sm {
+  background: #4c4c4c;
+}
+
+.is-done {
+  padding-top: 18px;
+}
+
+.balls-count {
+  display: none;
 }
 
 .active:hover {
@@ -4565,16 +4638,22 @@ span.input-prefix {
   padding-bottom: 15px;
 }
 
+.scroll-box {
+  height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .ticket-numbers {
   margin-bottom: 10px;
 }
 .ticket-numbers li {
-  margin: 0 15px 20px 15px !important;
+  margin: 0 10px 20px 10px !important;
   float: left;
 }
 
 .ticket-actions li {
-  margin: 0 15px 20px 15px !important;
+  margin: 0 10px 0 10px !important;
   float: left;
 }
 
@@ -4584,10 +4663,10 @@ span.input-prefix {
 .ticket-fc-btn:before {
   content: "";
   position: absolute;
-  width: 18px;
-  height: 16px;
-  top: 11px;
-  left: 8px;
+  top: 13px;
+  left: 11px;
+  width: 19px;
+  height: 17px;
   background: url(img/sprite.png) -198px -85px;
 }
 
@@ -4597,6 +4676,8 @@ span.input-prefix {
   padding: 0 20px;
   border-radius: 17px;
   text-transform: uppercase;
+  background: #d0e2e4;
+  box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
 }
 
 .tickets .content-box-tab {
@@ -4680,6 +4761,53 @@ span.input-prefix {
   margin-right: 0;
 }
 
+#lottery-process {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 1000;
+  background-color: #b2d0d4;
+}
+
+.ghd-tickets li {
+  margin-bottom: 15px;
+  font: 15px/1 Handbook-bold;
+  text-transform: uppercase;
+  padding-bottom: 2px;
+  line-height: 38px;
+}
+.ghd-tickets li span {
+  float: left;
+  display: inline-block;
+  line-height: 38px;
+  margin-right: 15px;
+}
+.ghd-tickets li ul {
+  float: left;
+}
+.ghd-tickets li ul li {
+  line-height: 38px;
+  margin-bottom: 0;
+}
+.ghd-tickets li ul li.filled-ball {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #2d2d2d;
+  color: #2d2d2d;
+  border-radius: 50%;
+  float: left;
+  margin-right: 10px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+  text-align: center;
+  text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);
+}
+
+.lottery-amimation-box {
+  float: left;
+  margin-top: 50px;
+}
+
 @media (min-width: 480px) {
   .ticket-ball, .ticket-numbers li, .ticket-actions li, .ticket-btn {
     width: 40px;
@@ -4720,26 +4848,24 @@ span.input-prefix {
   }
 }
 .lottery-result {
-  position: absolute;
   width: 100%;
   height: 100%;
+  padding: 20px;
+  color: #4c4c4c;
 }
 
 .balls-result,
 .text-result {
-  position: absolute;
   float: left;
   height: 100%;
 }
 
 .balls-result {
   width: 100%;
-  padding-top: 55px;
 }
 
 .text-result {
   width: 100%;
-  padding-top: 10px;
 }
 .text-result span {
   display: none;
@@ -4750,12 +4876,12 @@ span.input-prefix {
   list-style: none;
   position: relative;
   float: left;
-  margin: 0 0 1.5% 0;
-  padding-left: 3%;
+  margin-bottom: 11px;
 }
 .ticket-result li {
   position: relative;
   float: left;
+  font-weight: bold;
 }
 
 .ball-number-result {
@@ -4763,9 +4889,9 @@ span.input-prefix {
   height: 35px;
   border: 1px solid #000;
   border-radius: 50%;
-  margin-right: 3%;
   line-height: 35px;
   text-align: center;
+  margin-right: 6px;
 }
 
 .ticket-number-result {
@@ -4774,14 +4900,6 @@ span.input-prefix {
 }
 .ticket-number-result span {
   display: none;
-}
-
-.ticket-items {
-  min-height: 460px;
-}
-
-.ticket-item {
-  min-height: 422px;
 }
 
 .select {
@@ -4793,12 +4911,23 @@ span.input-prefix {
   transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.balls-count {
-  color: #e7f6f7;
-  font-size: 15px;
-  position: absolute;
-  right: 235px;
-  bottom: 40px;
+.ticket-item.gold {
+  background: #e8cf6b;
+}
+
+.ticket-items.gold {
+  background: #e8cf6b;
+}
+
+.ticket-tabs.gold {
+  background: #e8cf6b;
+}
+
+.condition {
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 15px 40px;
 }
 
 .balls-count b {
@@ -4901,10 +5030,13 @@ span.input-prefix {
   margin: 0;
 }
 
-.text-result-top {
-  color: white;
+.text-result p {
+  font-size: 18px;
+}
+.text-result p.text-result-top {
+  color: #e7f6f7;
   margin-bottom: 20px;
-  margin-left: 30px;
+  font-size: 15px;
 }
 
 .tickets-number-result p {
@@ -4920,7 +5052,7 @@ span.input-prefix {
 }
 
 .ticket-random .after {
-  left: 150px !important;
+  left: 0;
   bottom: 77px !important;
   display: none;
 }
@@ -5033,6 +5165,7 @@ span.input-prefix {
 
   .content {
     margin-bottom: 20px;
+    margin-top: 30px;
   }
 
   .content-box {
@@ -5329,10 +5462,6 @@ span.input-prefix {
     margin-right: 20px;
   }
 
-  .ghd-tickets {
-    margin: 0 auto 70px;
-  }
-
   .ghd-tickets table {
     margin-bottom: 10px;
   }
@@ -5367,13 +5496,13 @@ span.input-prefix {
 
   .ghd-game-inf th {
     padding-bottom: 20px;
-    width: 33.33%;
+    width: 25%;
   }
   .ghd-game-inf th:nth-child(1) {
     padding-right: 0;
   }
   .ghd-game-inf th:nth-child(2) {
-    padding-left: 70px;
+    padding-left: 20px;
   }
   .ghd-game-inf th:nth-child(3) {
     padding-left: 60px;
@@ -5381,13 +5510,13 @@ span.input-prefix {
 
   .ghd-game-inf td {
     padding-bottom: 10px;
-    width: 33.33%;
+    width: 25%;
   }
   .ghd-game-inf td:nth-child(1) {
     padding-right: 0;
   }
   .ghd-game-inf td:nth-child(2) {
-    padding-left: 95px;
+    padding-left: 50px;
   }
   .ghd-game-inf td:nth-child(3) {
     padding-left: 60px;
@@ -5924,59 +6053,222 @@ span.input-prefix {
 
   .ticket-items {
     margin: 70px 0 30px;
+    background: #b2d0d4;
   }
 
   .ticket-tabs {
     top: -40px;
+    background: transparent;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: -10;
+    display: block;
+    padding-top: 0;
   }
   .ticket-tabs li {
     top: 9px;
-    width: 80px;
+    width: 72px;
     height: 85px;
     margin-right: 10px;
     line-height: 31px;
+    background: #4C4C4C;
+    color: #b2d0d4;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+    position: relative;
+    float: left;
+    border-radius: 5px 5px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+  }
+  .ticket-tabs li.unavailable {
+    background: #8f8e8e;
+  }
+  .ticket-tabs li.unavailable:hover .ticket-number-sm {
+    background: transparent;
+  }
+  .ticket-tabs li.done {
+    background: #4c4c4c;
+    color: #b2d0d4;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+  }
+  .ticket-tabs li.done:after {
+    content: "";
+    display: inline-block;
+    background: url(img/sprite.png) center center no-repeat;
+    background-position: -597px -61px;
+    position: absolute;
+    width: 11px;
+    height: 8px;
+    right: 12px;
+    top: 12px;
+  }
+  .ticket-tabs li.done:before {
+    display: none;
+  }
+  .ticket-tabs li.done:hover .ticket-number-sm:before {
+    display: none;
+  }
+  .ticket-tabs li.done .ticket-number-sm:before {
+    display: none;
   }
   .ticket-tabs li.active {
     height: 40px;
     line-height: 40px;
+    color: #464444;
+    text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: #B7CFD3;
   }
-  .ticket-tabs li.active span {
+  .ticket-tabs li.active .ticket-number-sm {
+    background: transparent;
+  }
+  .ticket-tabs li:last-of-type {
+    background: #e8cf6b;
+    color: #4c4c4c;
+    text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+    width: 120px;
+  }
+  .ticket-tabs li:last-of-type.active {
+    color: #4c4c4c;
+  }
+  .ticket-tabs li:last-of-type:hover {
+    color: #4c4c4c;
+  }
+  .ticket-tabs li:last-of-type .ticket-number-sm {
     display: inline;
+    width: auto;
+    height: auto;
+    background: transparent;
+    line-height: 1;
+    border-radius: 0;
+    position: static;
+  }
+  .ticket-tabs li .ticket-number-sm {
+    display: inline !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    line-height: 1 !important;
+    border-radius: 0 !important;
+    position: static !important;
+  }
+  .ticket-tabs li .ticket-number-sm:before {
+    display: none !important;
+  }
+
+  .scroll-box {
+    height: auto;
+  }
+
+  .is-done {
+    padding-top: 0;
+  }
+
+  .balls-count {
+    color: #e7f6f7;
+    font-size: 15px;
+    position: absolute;
+    right: 235px;
+    bottom: 40px;
+    display: block;
+  }
+
+  .ticket-numbers-wrapper {
+    height: auto;
+    overflow: visible;
+  }
+
+  .ticket-tabs li:hover {
+    -webkit-transform: translate(0, -8px);
+    -moz-transform: translate(0, -8px);
+    -o-transform: translate(0, -8px);
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
   }
 
   .ticket-item {
-    padding: 25px 29px !important;
+    padding: 37px 30px 27px !important;
   }
 
   .ticket-numbers {
+    height: auto;
     margin-left: 0 !important;
-    margin-right: -30px !important;
+    margin-right: -40px !important;
+    margin-bottom: 7px;
   }
   .ticket-numbers li {
-    margin: 0 30px 20px 0 !important;
+    margin: 0 30px 21px 0 !important;
+  }
+
+  .ticket-actions {
+    margin-left: 0 !important;
   }
 
   .ticket-actions li {
     margin: 0 30px 0 0 !important;
   }
 
+  .add-ticket {
+    margin-right: 0 !important;
+  }
+
+  .balls-count {
+    bottom: 43px;
+  }
+
+  .ticket-btn {
+    padding: 0 40px;
+  }
+
   .matches-inf-wrapper {
     margin-bottom: 30px;
+  }
+
+  #lottery-process {
+    padding: 61px 0 0 170px;
   }
 
   .ball-number-result {
     width: 40px;
     height: 40px;
-    margin-right: 9%;
     line-height: 40px;
-  }
-
-  .balls-result {
-    padding-left: 30px;
   }
 
   .ticket-number-result {
     margin-right: 5%;
+  }
+
+  .condition {
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 85px 77px 67px 77px;
+  }
+
+  .ticket-item.gold {
+    background: #e8cf6b;
+  }
+
+  .ticket-itmes.gold {
+    background: #b2d0d4;
+  }
+
+  .ticket-tabs.gold {
+    background: transparent;
+  }
+
+  .lottery-result {
+    padding: 50px 45px;
+  }
+
+  .ticket-item {
+    min-height: 420px;
   }
 
   .footer-logo {
@@ -6443,7 +6735,7 @@ span.input-prefix {
   }
 
   .ticket-tabs li {
-    width: 72px;
+    width: 62px;
     margin-right: 8px;
   }
 
@@ -6454,30 +6746,15 @@ span.input-prefix {
   .ticket-numbers {
     margin-right: -23px !important;
   }
-  .ticket-numbers li {
-    margin: 0 23px 14px 0 !important;
-  }
-
-  .ticket-actions li {
-    margin: 0 23px 0 0 !important;
-  }
 
   .balls-result {
     width: 100%;
-    padding-top: 45px;
   }
 
   .text-result {
     width: 100%;
-    top: -457px;
-    padding-top: 15px;
   }
 
-  .ticket-result {
-    margin: 0 0 10px 0;
-  }
-
-  .ball-number-result,
   .ticket-number-result {
     margin-right: 40px;
   }
@@ -6485,7 +6762,6 @@ span.input-prefix {
   .ball-number-result {
     width: 40px;
     height: 40px;
-    margin-right: 7%;
     line-height: 40px;
   }
 
@@ -6562,7 +6838,7 @@ span.input-prefix {
   }
 
   .content {
-    width: 800px;
+    width: 750px;
     margin-bottom: 20px;
   }
 
@@ -6823,24 +7099,15 @@ span.input-prefix {
   }
 
   .ticket-tabs li {
-    width: 85px;
     margin-right: 15px;
   }
 
   .ticket-item {
-    padding: 40px 42px 30px !important;
+    padding: 37px 40px 27px !important;
   }
 
   .ticket-numbers {
-    margin-right: -35px !important;
-    margin-bottom: 22px;
-  }
-  .ticket-numbers li {
-    margin: 0 35px 18px 0 !important;
-  }
-
-  .ticket-actions li {
-    margin: 0 35px 0 0 !important;
+    margin-right: -30px !important;
   }
 
   .matches-inf-wrapper {
@@ -6848,22 +7115,13 @@ span.input-prefix {
   }
 
   .balls-result {
-    width: 60%;
-    padding-top: 35px;
-    padding-left: 10px;
+    width: 57%;
   }
 
   .text-result {
-    width: 40%;
-    padding-top: 15px;
-    top: 35px;
+    width: 43%;
   }
 
-  .ticket-result {
-    margin: 0 0 10px 0;
-  }
-
-  .ball-number-result,
   .ticket-number-result {
     margin-right: 20px;
   }
@@ -6875,7 +7133,6 @@ span.input-prefix {
   .ball-number-result {
     width: 40px;
     height: 40px;
-    margin-right: 4%;
   }
 
   .text-result span {
@@ -6886,8 +7143,9 @@ span.input-prefix {
     margin-left: 0px;
   }
 
-  .balls-count {
-    bottom: 80px;
+  .ticket-tabs li {
+    width: 80px;
+    margin-right: 8px;
   }
 
   .notification-window {

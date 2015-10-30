@@ -42,11 +42,11 @@ $(function () {
 
                     $.each(log, function (index, obj) {
                         if (obj)
-                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40) + ' ';
+                            output += obj && JSON.stringify(obj) && JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40) + ' ';
                     });
 
                 } else {
-                    output = JSON.stringify(log).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40);
+                    output = log && JSON.stringify(log).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40);
                 }
 
                 console[type](d.toLocaleTimeString('ru-RU') + ' ' + output);
@@ -56,8 +56,12 @@ $(function () {
 
         "error": function (message) {
 
-            D.log(message.join(' '), 'error');
-            alert(message.join(' '));
+            message = typeof message === 'object'
+                ? message.join(' ')
+                : message;
+
+            D.log(message, 'error');
+            alert(message);
 
             if (D.isEnabled.clean)
                 $(".modal-error").remove();
@@ -68,7 +72,7 @@ $(function () {
             R.event.stop();
 
             var box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first(),
-                error = $('<div class="modal-error"><div><span>' + M.i18n('title-error') + '</span>' + message.join(' ') + '</div></div>'),
+                error = $('<div class="modal-error"><div><span>' + M.i18n('title-error') + '</span>' + message + '</div></div>'),
                 buttons = null,
                 errors = null;
 

@@ -3,53 +3,67 @@ $(function () {
     // URL Handler
     U = {
 
-        "Path": {
+        "path": {
 
-            "Post": "/res/post/",
-            "Json": "/res/json/",
-            "Ajax": "/res/json/",
-            "Tmpl": "/res/tmpl/"
+            "put": "/res/put/",
+            "post": "/res/post/",
+            "delete": "/res/delete/",
+            "get": "/res/json/",
+            "tmpl": "/res/tmpl/"
 
         },
 
-        "Generate": {
-            "Post": function (url) {
-                return U.Path.Post + U.Parse.Url(url);
-            },
+        "generate": function (url, type) {
 
-            "Ajax": function (url) {
-                return U.Path.Ajax + U.Parse.Url(url);
-            },
+            type = type || 'get';
 
-            "Json": function (url) {
-                return U.Path.Json + U.Parse.Url(U.Parse.Json(url));
-            },
+            switch (type) {
 
-            "Tmpl": function (url) {
-                return U.Path.Tmpl + U.Parse.Url(url) + '.html';
+                case "post":
+                case "delete":
+                case "put":
+                    url = U.parse(url, 'url');
+                    break;
+
+                case "tmpl":
+                    url = U.parse(url, 'url') + '.html';
+                    break;
+
+                default:
+                case "get":
+                    url = U.parse(url, 'get');
+                    url = U.parse(url, 'url');
+                    break;
+
             }
+
+            return U.path[type] + url;
         },
 
-        "Parse": {
-            "Url": function (url) {
-                return url.replace(/^\//, "").replace(/-/g, '/');
-            },
+        "parse": function (url, type) {
 
-            "Tmpl": function (url) {
-                return url.replace(/-\d+/g, '-view');
-            },
+            switch (type) {
 
-            "Json": function (url) {
-                return url.replace(/-view/g, '');
-            },
+                case "url":
+                    return url.replace(/^\//, "").replace(/-/g, '/');
+                    break;
 
-            "Undo": function (url) {
-                if (typeof url == 'object') {
-                    return url;
-                } else {
-                    return url.replace(document.location.origin, "").replace(/^\//, "").replace(/\/|=/g, '-');
-                }
+                case "get":
+                    return url.replace(/-view/g, '');
+                    break;
+
+                case "tmpl":
+                    return url.replace(/-\d+/g, '-view');
+                    break;
+
+                case "undo":
+                default:
+                    return typeof url == 'object'
+                        ? url
+                        : url.replace(document.location.origin, "").replace(/^\//, "").replace(/\/|=/g, '-');
+                    break;
             }
+
         },
 
         "update": function (options) {
@@ -61,7 +75,7 @@ $(function () {
 
                 if (url) {
 
-                    url = '/' + U.Parse.Url(url);
+                    url = '/' + U.parse(url,'url');
                     if (url !== window.location.pathname) {
                         console.log(options.init);
                         D.log(['updateURL:', url], 'info');

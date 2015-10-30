@@ -1,6 +1,8 @@
-    <ul class="ticket-tabs clearfix">
+    <ul class="ticket-tabs clearfix{{#isGold}} gold{{/isGold}}">
         {{#renderTabs}}
-        <li data-ticket='{{num}}' class='{{#done}}done{{/done}}'><span>{{#i18n}}title-ticket{{/i18n}}</span>#{{num}}</li>
+        <li data-ticket='{{num}}' class='{{#done}}done{{/done}} {{^available}}unavailable{{/available}}'>
+        <span class="ticket-number-sm">№{{num}}</span>
+        </li>
         {{/renderTabs}}
     </ul>
     <!-- .ticket-tabs -->

@@ -233,5 +233,4 @@
 
 ,{"path":"app\\Durak","res":{"appId":"5603b09f5b3e1","appMode":"MONEY-1","appName":"Durak","price":1,"playerNumbers":"2","currency":"MONEY","players":{"3628":{"pid":3628,"moves":"3","points":0,"avatar":"","lang":"RU","name":"\u0418\u0433\u0440\u043e\u043a 2","timeout":1443082783,"order":1},"2074":{"pid":2074,"moves":"3","points":0,"avatar":"54adb468bf620.jpg","lang":"RU","name":"GAS","timeout":1443082783,"order":2,"ready":1}},"timeout":33,"timestamp":1443082783,"current":[3628],"starter":null,"variation":{"cards":"36","type":"throw"},"beater":null,"action":"ready"}}
 	    ]
-	
 }

@@ -1,30 +1,26 @@
 {
-    "status": 1,
-    "message": "OK",
-    "res":{
-        "nocache": true,
-        "items":[
-            {
-                "id": "1",
-                "img": "/res/img/user_img.jpg",
-                "title": "Ноутбук Asus X551MA",
-                "games": "50000",
-                "money": "0"
-            },
-            {
-                "id": "2",
-                "img": "/res/img/user_img.jpg",
-                "title": "Смартфон Lenovo X551MA",
-                "games": 10000,
-                "money": "5"
-            },
-            {
-                "id": "3",
-                "img": "/res/img/user_img.jpg",
-                "title": "Mp3-плеер Ipod X551MA",
-                "games": "10000",
-                "money": null
-            }
-	    ]
-	}
+    "cache": false,
+    "res":[
+                      {
+                          "id": "1",
+                          "img": "/res/img/user_img.jpg",
+                          "title": "Ноутбук Asus X551MA",
+                          "games": "50000",
+                          "money": "0"
+                      },
+                      {
+                          "id": "2",
+                          "img": "/res/img/user_img.jpg",
+                          "title": "Смартфон Lenovo X551MA",
+                          "games": 10000,
+                          "money": "5"
+                      },
+                      {
+                          "id": "3",
+                          "img": "/res/img/user_img.jpg",
+                          "title": "Mp3-плеер Ipod X551MA",
+                          "games": "10000",
+                          "money": null
+                      }
+          	    ]
 }
