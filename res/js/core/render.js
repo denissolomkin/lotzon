@@ -5,6 +5,7 @@ $(function () {
 
         "queue": [],
         "isRendering": false,
+        "timeout": 0,
 
         "init": function () {
         },
@@ -16,7 +17,7 @@ $(function () {
              template: Name of Template or Parse Href
              href:     Parse Href or Template
              json:     Source Object For Parsing
-             callback: Callback Function
+             after:    Callback Function
              url:      False for Skip U.update
              box:      Container (element or search by class)
              tab:      Menu Item (element or search by href)
@@ -24,10 +25,10 @@ $(function () {
              };
              ---------------------------------------------------- */
 
-            options.template = options.template || U.Parse.Undo(this.href);
-            options.href = U.Parse.Undo(this.href || options.template);
+            options.template = options.template || U.parse(this.href);
+            options.href = options.href || U.parse(this.href || options.template);
             options.box = typeof options.box !== 'object'
-                ? (options.box ? $('.' + options.box).first() : null)
+                ? (options.box ? $(options.box).first() : null)
                 : options.box;
             options.tab = options.tab
                 ? (typeof options.tab !== 'object' ? $('[href="' + options.tab + '"]').first() : options.tab)
@@ -35,8 +36,9 @@ $(function () {
 
             options.init = $.extend({}, options, {
                 template: options.template,
-                box: options.box && options.box.attr('class').split(' ').join('.'),
+                box: options.box && options.box.attr('class') && ('.' + options.box.attr('class').split(' ').join('.')),
                 tab: options.tab.attr('href'),
+                after: null,
                 callback: null,
                 url: false
             });
@@ -84,12 +86,15 @@ $(function () {
 
                 R.event.start(options);
 
-                if (typeof options.json == 'object') {
-                    D.log(['JSON from Object:', options.json]);
-                    R.renderTMPL(options);
-                } else {
-                    R.renderJSON(options);
-                }
+                setTimeout(function () {
+                    if (typeof options.json == 'object') {
+                        D.log(['JSON from Object:', options.json]);
+                        R.formatJSON(options);
+                    } else {
+                        R.renderJSON(options);
+
+                    }
+                }, this.timeout)
             }
 
             R.event.stop();
@@ -100,33 +105,77 @@ $(function () {
 
             D.log(['renderJSON:', options.href]);
 
-            if (options.json = R.caching(options.href)) {
+            if (options.json = Cache.get(options.href)) {
 
                 D.log(['JSON from Cache:', options.json]);
-                R.renderTMPL(options);
+                R.formatJSON(options);
 
             } else {
 
-                $.getJSON(U.Generate.Json(options.href), function (response) {
-                    if (response.status == 1) {
+                $.ajax({
+                    url: U.generate(options.href),
+                    method: 'get',
+                    dataType: 'json',
+                    statusCode: {
 
-                        options.json = R.caching(options.href, response.res);
-                        D.log(['JSON from AJAX:', options.json], 'warn');
-                        R.renderTMPL(options);
+                        404: function (data) {
+                            throw(data.message);
+                        },
 
-                    } else {
+                        200: function (data) {
 
-                        D.error(response.message);
+                            options.json = Cache.set(options.href, data);
+                            D.log(['JSON from AJAX:', options.json], 'warn');
+                            R.formatJSON(options);
 
+                        },
+
+                        201: function (data) {
+                            throw(data.message);
+                        },
+
+                        204: function (data) {
+                            throw(data.message);
+                        },
+
+                        500: function (data) {
+                            throw(data.message);
+                        }
                     }
                 });
+                /*
+                 $.getJSON(U.generate(options.href), function (response) {
+                 if (response.status == 1) {
+
+
+                 } else {
+
+                 D.error(response.message);
+
+                 }
+                 });
+                 */
             }
+
+        },
+
+        "formatJSON": function (options) {
+
+            if (typeof options.format === 'function') {
+                D.log(['formatJSON:', options.json]);
+                if (!options.arguments.length)
+                    options.arguments.length = [];
+                options.arguments.unshift(options.json);
+                options.json = options.format(options.arguments);
+            }
+
+            R.renderTMPL(options);
 
         },
 
         "renderTMPL": function (options) {
 
-            options.template = U.Parse.Tmpl(options.template);
+            options.template = U.parse(options.template, 'tmpl');
             D.log(['renderTMPL:', options.template]);
 
             /* Insert into already exist DIV */
@@ -136,28 +185,29 @@ $(function () {
                 R.renderHTML(options);
 
                 /* Template from cache */
-            } else if (Templates[options.template]) {
+            } else if (Template.has(options.template)) {
 
-                options.template = Templates[options.template];
-                D.log(['TMPL from Cache', options.template]);
+                options.template = Template.get(options.template);
+                D.log(['TMPL from Cache', options.init.template]);
                 R.renderHTML(options);
 
                 /* Template from HTML template */
             } else if ($('#tmpl-' + options.template).length) {
 
-                options.template = Templates[options.template] = $('#tmpl-' + options.template).html();
+                options.template = Template.set(options.template, $('#tmpl-' + options.template).html());
                 D.log(['TMPL from HTML:', options.template]);
                 R.renderHTML(options);
 
                 /* Template from AJAX template */
             } else {
-                $.get(U.Generate.Tmpl(options.template), function (data) {
+
+                $.get(U.generate(options.template, 'tmpl'), function (data) {
 
                     if (!$(data).not('empty').first().attr('class')) {
-                        throw("Format Template Error");
+                        throw("Format Template Error: " + options.template);
                     } else {
-                        options.template = Templates[options.template] = data;
-                        D.log(['TMPL from AJAX:', options.template], 'warn');
+                        options.template = Template.set(options.template, data);
+                        D.log(['TMPL from AJAX:', options.init.template], 'warn');
                         R.renderHTML(options);
                     }
 
@@ -168,8 +218,7 @@ $(function () {
 
         "renderHTML": function (options) {
 
-
-            D.log(['renderHTML:', options.template, options.json]);
+            D.log(['renderHTML:', options.init.template, options.json]);
             var rendered = null;
 
             if (typeof options.json != 'object') {
@@ -180,8 +229,8 @@ $(function () {
             } else {
 
                 D.log('Rendered from Template');
-                Mustache.parse(options.template);   // optional, speeds up future uses
-                rendered = Mustache.render(options.template, $.extend({"i18n": M.i18n, "eval": M.eval}, options.json));
+                // Mustache.parse(options.template);   // optional, speeds up future uses
+                rendered = options.template(options.json);
 
             }
 
@@ -191,7 +240,6 @@ $(function () {
         "inputHTML": function (rendered, options) {
 
             D.log(['inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box)]);
-
             var findClass = '.' + $(rendered).not('empty').first().attr('class').replace(/ /g, '.');
 
             if (options.box) {
@@ -200,6 +248,8 @@ $(function () {
 
                 if ($(findClass, options.box).length)
                     $(findClass, options.box).html($(rendered).html()).show();
+                else if (options.box.is(findClass))
+                    options.box.html($(rendered).html()).show();
                 else
                     options.box.append(rendered).find(findClass).hide().show();
 
@@ -207,14 +257,16 @@ $(function () {
                 $(options.replace).html($(options.replace, rendered).html()).hide().fadeIn(1000);
             }
 
-            if (options.callback) {
-                D.log(['callback']);
-                options.callback(rendered, findClass);
+            console.log(options);
+            if (options.after) {
+                D.log(['callback', typeof options.after]);
+                options.after(rendered, findClass);
             }
 
-            if (Callbacks.render[options.init.template]) {
-                D.log(['C.callback']);
-                Callbacks.render[options.init.template](rendered, findClass);
+            if (callback = Callbacks['get'][U.parse(options.init.template, 'tmpl')]) {
+
+                D.log(['C.callback', U.parse(options.init.template, 'tmpl')]);
+                callback(rendered, findClass);
             }
 
             /* parent box functionality after rendering */
@@ -253,18 +305,49 @@ $(function () {
 
         "caching": function (key, data) {
 
-            $.each(key.split('-'), function (i, v) {
-                // console.log(v);
-            });
+            var cache = Cache,
+                path = key.split('-'),
+                needle = path.last();
 
-            if (key && Cache[key]) {
-                return Cache[key];
-            } else if (data && (!data['nocache'] && data['cache'] !== false)) {
-                return Cache[key] = data;
-            } else if (data) {
-                return data;
-            } else
-                return false;
+            /* if receive data for extend cache */
+            if (data) {
+
+                if (data.cache !== false) {
+                    Cache.extend(data, path);
+                    localStorage.setObj('Cache', Cache);
+                    console.log('storage:', localStorage.getObj('Cache'));
+                }
+
+                cache = data.res;
+
+            } else {
+
+                /* check, if object already in cache */
+                $.each(path, function (i, key) {
+                    needle = key;
+                    return cache = cache && cache.hasOwnProperty(key) && cache[key];
+                });
+            }
+
+            console.log('needle:', needle);
+
+            /* fix absent mustache each object, replacing with array */
+            switch (typeof cache) {
+                case 'object':
+                    if (!isNumeric(needle) || !cache.length)
+                        cache = {'items': format4Mustache(cache)};
+                    break;
+                case 'string':
+                    /* nothing */
+                    break;
+                case 'boolean':
+                    /* nothing */
+                    break;
+            }
+
+            console.log(Cache, cache);
+            return cache;
+
         },
 
         "event": {
@@ -283,7 +366,7 @@ $(function () {
 
             "complete": function (options) {
                 if (options.box)
-                    $('.modal-loading', options.box).length ? $('.modal-loading', options.box).remove() : '';
+                    $('.modal-loading', options.box).length ? $('.modal-loading', options.box).first().remove() : '';
             },
 
             "stop": function () {

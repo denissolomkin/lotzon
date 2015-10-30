@@ -4,7 +4,7 @@
 			<a href="/communication/messages/new?users=1" class="write-admin">Написать админу</a>
 		</div>
 		
-	{{#items}}
+	{{#each .}}
 	
 		<div class="message">
 			<div class="message-img">
@@ -16,8 +16,8 @@
 			</div>
 		</div>
 		
-	 {{/items}}	
-	 {{^items}}No messages :({{/items}}
+	 {{/each}}
+	 {{^.}}No messages :({{/.}}
 
 	</div>
 </div>

@@ -1,16 +1,8 @@
-#game-process {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  z-index:1000;
-  background-color: #b2d0d4;
-  position: absolute;
-  z-index:1000;
-}
 
-#game-process .balls-result {
+
+/*#lottery-process .balls-result {
   padding-top: 150px;
-}
+}*/
 
 .balls-end-game li {
   background: url(../css/img/sprite.png) 100% 0%;
@@ -53,7 +45,7 @@
 
 
 @media screen and (min-width: 1010px) {
-  #game-process {
+  #lottery-process {
     background-color: #b2d0d4;
     position: absolute;
     width: 1280px;
@@ -65,12 +57,5 @@
   .balls-end-game li {
     width: 100px;
     height: 100px;
-    margin:10px 10px 10px 10px;
-  }
-  .balls-end-game{
-     margin: 50px 30px 0px 150px;
-  }
-  .balls-result{
-    margin-left: 150px;
   }
 }

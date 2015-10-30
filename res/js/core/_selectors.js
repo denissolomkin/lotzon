@@ -41,7 +41,12 @@
         /* profile */
         moneyConvert: 'input.cc-sum',
         pointsConvert: '.cc-income .cc-sum',
-        moneyCashout: 'input.cco-sum'
+        moneyCashout: 'input.cco-sum',
+
+        /* ticket */
+        ticketTab: '.ticket-items .ticket-tabs li',
+        ticketBall: '.ticket-item .ticket-balls li',
+        ticketAction: '.ticket-item .ticket-actions li'
 
     }
 

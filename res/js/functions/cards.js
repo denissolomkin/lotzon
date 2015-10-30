@@ -14,8 +14,8 @@ $(function() {
     Cards = {
         drawFields: function() {
 
-            if ($.inArray(onlineGame.action, ['ready', 'wait']) == -1 || onlineGame.fields) {
-                $.each(onlineGame.fields, function(key, field) {
+            if ($.inArray(App.action, ['ready', 'wait']) == -1 || App.fields) {
+                $.each(App.fields, function(key, field) {
                     if (!field)
                         return;
                     newLen = (field.length ? field.length : Object.size(field));
@@ -35,7 +35,7 @@ $(function() {
 
                     } else if (key == 'off' && newLen == oldLen) {
 
-                    } else if (isNumeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == onlineGame.fields.deck.length)) {
+                    } else if (isNumeric(key) && newLen == oldLen && fields && fields.deck && (fields.deck.length == App.fields.deck.length)) {
 
                     } else {
                         if (isNumeric(key)) {
@@ -141,25 +141,25 @@ $(function() {
             }
              
             Cards.animateClass();
-            fields = onlineGame.fields;
+            fields = App.fields;
            
         },
 
         animateClass: function() {
 
-            if ($.inArray(onlineGame.action, ['move']) != -1 || onlineGame.fields) {
+            if ($.inArray(App.action, ['move']) != -1 || App.fields) {
 
 
-                $.each(onlineGame.fields, function(key, field) {
+                $.each(App.fields, function(key, field) {
 
                     if (!field)
                         return;
-                    console.log($.inArray(onlineGame.action, ['move']) != -1 || onlineGame.fields, 'first');
+                    console.log($.inArray(App.action, ['move']) != -1 || App.fields, 'first');
                     newLen = (field.length ? field.length : Object.size(field));
                     oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
                     console.log(oldLen,'oldLen2');
 
-                    if (isNumeric(key) && newLen == oldLen && fields && fields.key && (fields.key.length == onlineGame.fields.key.length)) {
+                    if (isNumeric(key) && newLen == oldLen && fields && fields.key && (fields.key.length == App.fields.key.length)) {
 
                     } 
 
@@ -175,23 +175,18 @@ $(function() {
 
                             else if (fields && fields[key] && fields[key] != undefined ) {
 
-                                if (fields[key][index] != onlineGame.fields[key][index]) {
+                                if (fields[key][index] != App.fields[key][index]) {
                                     console.log(key, 'key');
 
-                                   if (fields.table[index] != onlineGame.fields.table[index])
+                                   if (fields.table[index] != App.fields.table[index])
                                     
                                     $('.card' + fields[key][index]).addClass('animatedCard') ;
                                 }
 
                             }  
 
-                           
-                            // }
 
                         });
-
-
-
 
                     }
 
@@ -250,56 +245,7 @@ $(function() {
             $(newElem[j]).removeClass('transition');
             });
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // if (elem && elem[0] != undefined && newElem && newElem.parent()[0] != undefined && newElem.hasClass('animatedCard')) {
-        
-            //     for (var i = 0; i<newElem.length; i++) {
-            //         var startPosY = $(newElem[i]).css('top');
-            //         var startPosX =$(newElem[i]).css('left');
-
-            //         var box = elem[0].getBoundingClientRect();
-            //         var top  = box.top  - $(newElem[i]).parent()[0].getBoundingClientRect().top;
-            //         var left = box.left - $(newElem[i]).parent()[0].getBoundingClientRect().left;
-   
-            //         $(newElem[i]).css({
-            //             'display' : 'none',
-            //             'top' :top + 'px',
-            //             'left' : left + 'px'
-            //         });
-
-                    
-            //             var j = i;
-            //         (function(j){
-            //         setTimeout(function(){
-            //             console.log('timeout');
-                         
-            //             $(newElem[j]).css({
-            //                 'display' : 'block',
-            //                 'top' :startPosY,
-            //                 'left' : startPosX ,
-            //                 'transition' : "all 1s"
-            //             })
-            //         }, j*100);
-            //         })(j);
-                   
-            //     }
-
-                
-                
-            //     console.log('top', top, 'left', left);
-            // }    
+  
         },
         marginsDraw: function() {
 
@@ -370,13 +316,13 @@ $(function() {
         },
 
         drawTrump: function() {
-            if (onlineGame.trump) {
-                console.log('onlineGame.trump')
+            if (App.trump) {
+                console.log('App.trump')
                 $('.mx .deck').append(
-                    '<div class="lear card' + (onlineGame.trump[0]) + '"></div>' +
+                    '<div class="lear card' + (App.trump[0]) + '"></div>' +
                     '<div class="last"></div>' +
-                    (onlineGame.fields.deck && onlineGame.fields.deck.length ? '<div class="card trump card' + onlineGame.trump + '"></div>' : '') +
-                    (onlineGame.fields.deck && onlineGame.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
+                    (App.fields.deck && App.fields.deck.length ? '<div class="card trump card' + App.trump + '"></div>' : '') +
+                    (App.fields.deck && App.fields.deck.length > 1 ? '<div class="card"></div>' : ''));
             }
         },
 
@@ -392,46 +338,46 @@ $(function() {
         },
 
         initStatuses: function() {
-            if (onlineGame.action == 'ready') {
+            if (App.action == 'ready') {
                 $('.mx .players .player' + Player.id + ' .gm-pr .btn-pass').addClass('btn-ready').removeClass('btn-pass').text('готов');
             }
 
-            if (onlineGame.action == 'ready' || onlineGame.action == 'wait') {
+            if (App.action == 'ready' || App.action == 'wait') {
                 $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
             }
 
             $('.mx .players .mt').hide();
             $('.mx .players > div').removeClass('current beater starter');
-            $.each(onlineGame.players, function(index, player) {
-                if (index == Player.id && onlineGame.action != 'ready') {
+            $.each(App.players, function(index, player) {
+                if (index == Player.id && App.action != 'ready') {
                     var status = '';
-                    if (index == onlineGame.beater) {
+                    if (index == App.beater) {
                         status = 'Беру';
                     } else if (
-                        ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 || onlineGame.starter == Player.id || (onlineGame.beater && onlineGame.players[onlineGame.beater].status && onlineGame.players[onlineGame.beater].status == 2)) && (onlineGame.players[Player.id].status != 1) || (onlineGame.beater && onlineGame.players[onlineGame.beater].status))
+                        ($.inArray(parseInt(App.beater), App.current) != -1 || App.starter == Player.id || (App.beater && App.players[App.beater].status && App.players[App.beater].status == 2)) && (App.players[Player.id].status != 1) || (App.beater && App.players[App.beater].status))
                         status = 'Пас';
-                    else if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 || (onlineGame.players[Player.id].status == 1))
+                    else if ($.inArray(parseInt(App.beater), App.current) == -1 || (App.players[Player.id].status == 1))
                         status = 'Отбой';
                     $('.mx .players .player' + Player.id + ' .gm-pr .btn-pass').text(status);
                 }
-                if (index == onlineGame.beater)
+                if (index == App.beater)
                     $('.mx .players .player' + index).addClass('beater');
-                else if (index == onlineGame.starter && !$('.mx .table .cards').length)
+                else if (index == App.starter && !$('.mx .table .cards').length)
                     $('.mx .players .player' + index).addClass('starter');
                 if (!sample && (!statuses[index] || statuses[index] != player.status) && player.status)
-                    sample = (index == onlineGame.beater) ? 'Move-o-1' : 'Move-m-3';
+                    sample = (index == App.beater) ? 'Move-o-1' : 'Move-m-3';
                 statuses[index] = player.status ? player.status : null;
-                if ($.inArray(parseInt(index), onlineGame.current) != -1) {
+                if ($.inArray(parseInt(index), App.current) != -1) {
                     $('.mx .players .player' + index).addClass('current');
-                    if ($.inArray(parseInt(onlineGame.beater), onlineGame.current) == -1 ||
-                        ($.inArray(parseInt(onlineGame.beater), onlineGame.current) != -1 && onlineGame.beater == index)) {
+                    if ($.inArray(parseInt(App.beater), App.current) == -1 ||
+                        ($.inArray(parseInt(App.beater), App.current) != -1 && App.beater == index)) {
 
-                        // D.log($($('#tm').countdown('getTimes')).get(-1),onlineGame.timeout);
-                        if (onlineGame.timestamp && timestamp != onlineGame.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-onlineGame.timeout) > 2
+                        // D.log($($('#tm').countdown('getTimes')).get(-1),App.timeout);
+                        if (App.timestamp && timestamp != App.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-App.timeout) > 2
                             || !$('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length) {
                             D.log('remove');
                             $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
-                            $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration', onlineGame.timeout + 's');
+                            $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration', App.timeout + 's');
                         }
 
                     } else {
@@ -444,17 +390,17 @@ $(function() {
                 } else {
                     $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
 
-                    if (index == onlineGame.beater)
+                    if (index == App.beater)
                         $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle"></div>');
 
-                    if (player.status || player.ready || onlineGame.winner) {
+                    if (player.status || player.ready || App.winner) {
 
                         var status = '';
-                        // D.log($.inArray(parseInt(index), onlineGame.current), parseInt(index), onlineGame.current);
+                        // D.log($.inArray(parseInt(index), App.current), parseInt(index), App.current);
 
-                        if (player.status == 2 && onlineGame.beater == index)
+                        if (player.status == 2 && App.beater == index)
                             status = 'Беру';
-                        else if (player.status == 1 && onlineGame.starter == index)
+                        else if (player.status == 1 && App.starter == index)
                             status = 'Пас';
                         else if (player.status == 2)
                             status = 'Отбой';
@@ -466,8 +412,8 @@ $(function() {
                 }
 
                 D.log(timestamp);
-                if (onlineGame.timestamp)
-                    timestamp = onlineGame.timestamp;
+                if (App.timestamp)
+                    timestamp = App.timestamp;
             });
         },
 
@@ -476,7 +422,7 @@ $(function() {
             Listeners.clear();
 
 
-            tableObj = $(".Durak .table" + (Player.id == onlineGame.beater ? " .cards:not(:has(.card:eq(1)))" : ''));
+            tableObj = $(".Durak .table" + (Player.id == App.beater ? " .cards:not(:has(.card:eq(1)))" : ''));
 
 
             if (tableObj != undefined && tableObj.length > 0) {
@@ -490,7 +436,7 @@ $(function() {
 
         highlight: function() {
 
-            if (onlineGame.beater == Player.id && $('.mx .table .cards').length) {
+            if (App.beater == Player.id && $('.mx .table .cards').length) {
                 if ($('.ngm-gm').hasClass('Revert') && $('.mx .table .cards').length == $('.mx .table .cards .card').length && !$('.mx .table .revert').length)
                     $('.mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
@@ -507,7 +453,7 @@ $(function() {
 
         setupForDevices: function() {
 
-            var gameHeight = $(window).height()-50;
+            var gameHeight = $(window).height();
             var orientation = ($(window).width() > $(window).height());
 
             if (Device.get() > 0.6) {
@@ -526,20 +472,10 @@ $(function() {
 
             else if (Device.get() <= 0.6 ) {
                console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddd", gameHeight <= 768);
-               $('.game.single-game, .game > .cards').css({
+               $('.game > .cards').css({
                 'height' : gameHeight + 'px'
                });
 
-
-               //  .content-main.single-game
-               //  css({
-               //  'height' : gameHeight,
-               //  'width' : '100%',
-               //  'position' : 'absolute',
-               //  'top' : 0,
-               //  'left' :0
-
-               // })
 
              if (Device.detect() == 'mobile') {
             

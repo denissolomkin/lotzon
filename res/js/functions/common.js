@@ -14,10 +14,27 @@
             1)) && mixed_var !== '' && !isNaN(mixed_var);
     };
 
-    Object.extend = function(destination, source) {
+    Array.prototype.last = function () {
+        return this[this.length - 1];
+    };
+
+    Storage.prototype.setObj = function(key, obj) {
+        return this.setItem(key, JSON.stringify(obj))
+    };
+
+    Storage.prototype.getObj = function(key) {
+        return JSON.parse(this.getItem(key))
+    };
+
+    // not very sure if this work cross-frame
+    Object.isObjectLiteral = function(object){
+        return object && object.constructor && object.constructor.name === 'Object';
+    }
+
+    Object.deepExtend = function(destination, source) {
         for (var property in source) {
-            if (source[property] && source[property].constructor &&
-                source[property].constructor === Object) {
+            if (Object.isObjectLiteral(destination[property]) && Object.isObjectLiteral(source[property])) {
+
                 destination[property] = destination[property] || {};
                 arguments.callee(destination[property], source[property]);
             } else {
@@ -26,6 +43,7 @@
         }
         return destination;
     };
+
 
     Object.size = function (obj) {
         var size = 0, key;

@@ -1,16 +1,16 @@
 
 
-		{{#items}}
+		{{#each .}}
 		
 
 							<div class="c-notification clearfix">
 								<div class="close-notification"></div>
 								<div class="c-notification-top">
 									<div class="c-notification-img">
-										<img src="{{player.img}}" alt="">
+										<img src="{{user.img}}" alt="">
 									</div>
 									<div class="c-notificaion-inf">
-										<span class="c-notification-name">{{player.title}}</span>
+										<span class="c-notification-name">{{user.title}}</span>
 										<span class="c-notification-date"><span>сегодня в</span><span>{{date}}</span></span>
 										<div class="c-notification-question">на <span>{{theme}}</span></div>
 									</div>
@@ -20,5 +20,5 @@
 								</div>
 							</div>
 					
-        {{/items}}
-        {{^items}}No NOTIFICATIONS :({{/items}}
+        {{/each}}
+        {{^.}}No notifications :({{/.}}

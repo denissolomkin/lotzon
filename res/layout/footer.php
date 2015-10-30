@@ -14,7 +14,7 @@
             <a href="#" class="ok"></a>
             <a href="#" class="tw"></a>
         </div>
-
+        <button class="tmp_but" onclick="Lottery.prepareData()">Start</button>
     </div>
     <!-- .container -->
 </footer>
@@ -22,7 +22,7 @@
 
 <script>
 
-    onlineGame = App = {
+    App = {
         id: null,
         name: 'Durak',
         mode: null,
@@ -35,26 +35,14 @@
         variations: []
     };
 
-    Cache = {};
-    Templates = <?php $templates = array();
-            foreach(array(
-                'menu-balance',
-                'menu-slider',
-                'lottery-ticket-complete',
-                'lottery-ticket-item',
-                'lottery-ticket-tabs'
-            ) as $template)
-                $templates[$template] = file_get_contents('./res/tmpl/'.str_replace('-','/',$template).'.html');
-                echo json_encode($templates);
-                ?>;
-
     Slider = {
         "sum": 353944,
         "winners": 34260,
         "jackpot": 100000,
         "players": 54000,
-        "timer": 34260,
+        "timer": 353944,
         "lottery": {
+            "id": 345,
             "date": '20.41.2014',
             "balls": [5, 1, 32, 18, 14, 49]
         }
@@ -64,7 +52,7 @@
         "id": 3628, 
         "lang": "RU",
         "img": "res/img/user_img.jpg",
-        "favorite": [],
+        "favorite": [1,2],
         "title": {
             "name": "Сергей",
             "surname": "Шевченко",
@@ -106,57 +94,77 @@
     }
 
     Tickets = {
-        "selectedBalls": 6,
-        "totalBalls": 49,
-        "totalTickets": 8,
+        "lastLotteryId": 353,
         "selectedTab": null,
-        "balls": {
-            "8": [1, 2, 3, 4, 5, 6],
-            "2": [31, 22, 13, 44, 25, 9],
-            "3": [3, 2, 14, 34, 15, 19],
+        "totalBalls": 49,
+        "requiredBalls": 6,
+        "totalTickets": 8,
+        "filledTickets": {
+            "1": [1, 2, 3, 4, 5, 6],
+            "2": [3, 2, 14, 34, 15, 19],
+            "3": null,
             "4": [1, 2, 3, 4, 5, 6],
             "5": [31, 22, 13, 44, 25, 9],
             "6": [3, 2, 14, 34, 15, 19],
-            "7": [31, 22, 13, 44, 25, 9]
+            "7": false,
+            "8": false
         }
     };
 
-    Texts = {
-        "message-autocomplete": "АВТОЗАПОЛНЕНИЕ",
-        "message-done-and-approved": "ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ",
-        "message-yet": "ЕЩЕ",
-        "message-numbers": "НОМЕРОВ",
-        "message-favorite": "ЛЮБИМАЯ КОМБИНАЦИЯ",
-        "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
+    var templates = <?php $templates = array();
+            foreach(array(
+                'menu-balance',
+                'menu-slider',
+                'lottery-ticket-complete',
+                'lottery-ticket-item',
+                'lottery-ticket-tabs'
+            ) as $template)
+                $templates[$template] = file_get_contents('./res/tmpl/'.str_replace('-','/',$template).'.html');
+                echo json_encode($templates);
+                ?>,
 
-        "button-set-favorite": "настраивается в кабинете",
-        "button-more": "Подробнее",
-        "button-add-ticket": "Подтвердить",
-        "button-cashout": "Вывести",
-        "button-convert": "Конвертировать",
-        "button-transactions": "История транзакций",
-        "button-payments": "История выплат",
+        texts = {
+            'RU': {
+                "message-autocomplete": "АВТОЗАПОЛНЕНИЕ",
+                "message-done-and-approved": "ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ",
+                "message-yet": "ЕЩЕ",
+                "message-numbers": "НОМЕРОВ",
+                "message-favorite": "ЛЮБИМАЯ КОМБИНАЦИЯ",
+                "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
+                "message-ticket-4": "для доступа к билету №4 вы должны принять участие в 100 розыгрышах",
+                "message-ticket-5": "для доступа к билету №5 вы должны принять участие в 100 розыгрышах",
+                "message-ticket-6": "для доступа к билету №6 вы должны принять участие в 100 розыгрышах",
+                "message-ticket-7": "для доступа к билету №7 вы должны принять участие в 100 розыгрышах",
 
-        "title-points": "баллов",
-        "title-ticket": "Билет",
-        "title-prizes-draw": "Розыгрыш призов",
-        "title-prizes-exchange": "Обмен на баллы",
-        "title-limited-quantity": "Ограниченное количество",
-        "title-pieces": "шт.",
-        "title-games-online": "Игры Онлайн",
-        "title-games-chance": "Шансы",
-        "title-games-rating": "Рейтинг",
-        "title-error": "Ошибка",
-        "title-slider-jackpot": "Джекпот",
-        "title-slider-players": "Участников",
-        "title-slider-winners": "Победителей",
-        "title-slider-sum": "Общая сумма выигрыша",
-        "title-slider-timer": "До розыгрыша осталось",
-        "title-slider-date": "Розыгрыш от",
-    };
+                "button-set-favorite": "настраивается в кабинете",
+                "button-more": "Подробнее",
+                "button-add-ticket": "Подтвердить",
+                "button-cashout": "Вывести",
+                "button-convert": "Конвертировать",
+                "button-transactions": "История транзакций",
+                "button-payments": "История выплат",
+
+                "title-points": "баллов",
+                "title-ticket": "Билет",
+                "title-prizes-draw": "Розыгрыш призов",
+                "title-prizes-exchange": "Обмен на баллы",
+                "title-limited-quantity": "Ограниченное количество",
+                "title-pieces": "шт.",
+                "title-games-online": "Игры Онлайн",
+                "title-games-chance": "Шансы",
+                "title-games-rating": "Рейтинг",
+                "title-error": "Ошибка",
+                "title-slider-jackpot": "Джекпот",
+                "title-slider-players": "Участников",
+                "title-slider-winners": "Победителей",
+                "title-slider-sum": "Общая сумма выигрыша",
+                "title-slider-timer": "До розыгрыша осталось",
+                "title-slider-date": "Розыгрыш от",
+            }
+        };
 </script>
 
-<?php $dirs = array('libs', 'plugins', 'functions', 'core', 'temp');
+<?php $dirs = array('libs', 'plugins', 'controllers', 'models', 'functions', 'core', 'temp');
 foreach ($dirs as $dir) {
     echo "<!-- {$dir} -->\r\n";
     $files = scandir('./res/js/' . $dir . '/');
@@ -168,10 +176,17 @@ foreach ($dirs as $dir) {
 <script>
     $(function () {
 
+        localStorage.setItem('cacheStorage', null);
+        localStorage.templateStorage = null;
+
+        Cache.init(); // init cache engine
+        M.init(texts); // compile templates
+        Template.init(templates); // compile templates
+        Menu.init(); // echo menu
+        Slider.init(); // echo slider
         Navigation.init(); // init navigation
         D.init(); // init debugger
         Callbacks.init(); // init callbacks
-        Menu.init();
 
     });
 </script>

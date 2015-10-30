@@ -1,4 +1,4 @@
-Áëîã / blog
+Ğ‘Ğ»Ğ¾Ğ³ / blog
 ## GET ##
 posts -> res/items
 /blog/:id -> res/item
@@ -6,7 +6,7 @@ posts -> res/items
 /blog/addComment
 /blog/addLike
 ---------------------------------------
-Ëîòåğåÿ / lottery
+Ğ›Ğ¾Ñ‚ĞµÑ€ĞµÑ / lottery
 ## GET ##
 /lottery/history -> res/items
 /lottery/history/:id -> res/item
@@ -16,7 +16,7 @@ posts -> res/items
 ## POST ##
 /lottery/addTicket
 ---------------------------------------
-Îáùåíèå / communication
+ĞĞ±Ñ‰ĞµĞ½Ğ¸Ğµ / communication
 ## GET ##
 /communication/comments -> res/items + (int) res/notifications
 /communication/notifications -> res/items
@@ -27,7 +27,7 @@ posts -> res/items
 /communication/comments/addComment
 /communication/comments/addLike
 ---------------------------------------
-Äğóçüÿ / users
+Ğ”Ñ€ÑƒĞ·ÑŒÑ / users
 ## GET ##
 /users/friends -> (array) res/items + (count) res/friends
 /users/:id -> res/item
@@ -42,14 +42,14 @@ posts -> res/items
 /users/requests/confirmRequest
 /users/requests/declineRequest
 ---------------------------------------
-Âèòğèíà / prizes
+Ğ’Ğ¸Ñ‚Ñ€Ğ¸Ğ½Ğ° / prizes
 ## GET ##
 /prizes/exchange -> (array) res/items
 /prizes/exchange/:id -> res/item
 ## POST ##
 /prizes/exchange/orderItem
 ---------------------------------------
-Ïğîôèëü / profile
+ĞŸÑ€Ğ¾Ñ„Ğ¸Ğ»ÑŒ / profile
 ## GET ##
 /prizes/exchange -> (array) res/items
 /prizes/exchange/:id -> res/item

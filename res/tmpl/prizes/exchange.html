@@ -1,4 +1,6 @@
 <div class="content-box-item with-cat prizes-exchange">
+
+    {{#items}}
     <div class="content-box-item-top clearfix">
         <div class="content-box-cat">
             {{#categories}}
@@ -8,7 +10,7 @@
     </div>
 
     <div class="content-box-item-content">
-        {{#items}}
+        {{#goods}}
             <div class="prize category-{{ category }}">
         <a href="/prizes/exchange/{{ id }}">
                 <div class="prize-content">
@@ -27,7 +29,9 @@
                 </div>
         </a>
             </div>
-        {{/items}}
-        {{^items}} No prizes :({{/items}}
+        {{/goods}}
+        {{^goods}} No prizes :({{/goods}}
     </div>
+
+    {{/items}}
 </div>

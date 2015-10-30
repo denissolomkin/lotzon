@@ -1,20 +1,20 @@
 <div class="content-box profile-billing">
-    <div class="content-box-header back">{{#i18n}}profile-billing{{/i18n}}</div>
+    <div class="content-box-header back">{{i18n "profile-billing"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cashout-inf">
 
-            <div class="ci-title">{{#i18n}}title-input-billing-information{{/i18n}}</div>
+            <div class="ci-title">{{i18n "title-input-billing-information"}}</div>
 
             <div class="ci-form">
-                <form action="/profile/billing" method="post">
+                <form action="/profile/billing" method="put">
                     <ul class="ci-personal-form">
                         <li class="ci-personal-form-names">
                             <ul>
-                                <li>{{#i18n}}title-phone{{/i18n}}</li>
-                                <li>{{#i18n}}title-yandexmoney{{/i18n}}</li>
-                                <li>{{#i18n}}title-webmoney{{/i18n}}</li>
-                                <li>{{#i18n}}title-qiwi{{/i18n}}</li>
+                                <li>{{i18n "title-phone"}}</li>
+                                <li>{{i18n "title-yandexmoney"}}</li>
+                                <li>{{i18n "title-webmoney"}}</li>
+                                <li>{{i18n "title-qiwi"}}</li>
                             </ul>
                         </li>
                         <li class="ci-personal-form-values">
@@ -27,7 +27,7 @@
                         </li>
                     </ul>
 
-                    <button type="submit" class="ci-save-btn">{{#i18n}}button-save{{/i18n}}</button>
+                    <button type="submit" class="ci-save-btn">{{i18n "button-save"}}</button>
                 </form>
             </div>
 

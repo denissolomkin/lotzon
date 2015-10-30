@@ -9,10 +9,10 @@
         "init": function () {
 
             // handlers
-            $(window).on('resize', W.resize);
-            $(window).on('scroll', W.scroll);
-            $(document).on('click', W.hide);
-            $(I.goTop).on('click', W.goTop);
+            $(window).on('resize', Device.resize);
+            $(window).on('scroll', Device.scroll);
+            $(document).on('click', Device.hide);
+            $(I.goTop).on('click', Device.goTop);
 
             /* navigation */
             $(document).on('click', I.Tabs, Navigation.switchTab);
@@ -30,8 +30,10 @@
             $(document).on('click', ".message-form-btn", Message.send);
 
             /* form */
-            $(document).on('click', 'form button[type="submit"]',   Form.submit);
-            $(document).on('input', 'form input.required',          Form.validate);
+            $(document).on('click', 'form button[type="submit"]', Form.submit);
+            $(document).on('input', 'form input[type="text"].required', Form.validate);
+            $(document).on('change', 'form input[type="radio"].required', Form.validate);
+            $(document).on('change', 'form input[type="checkbox"].required', Form.validate);
 
             /* profile*/
             $(document).on('click', '.pi-ph.true i', Profile.removeAvatar);
@@ -40,41 +42,48 @@
             $(document).on('click', '.ae-current-combination li', Profile.openFavorite);
             $(document).on('click', '.ae-combination-box li', Profile.selectFavorite);
 
-            $(document).on('input', 'form input.cc-sum', Profile.validateConvert);
-            $(document).on('input', 'form input.cco-sum', Profile.validateCashout);
-
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', GameAction.ready);
             $(document).on('click', '.mx .players .m .btn-pass', GameAction.pass);
 
         },
 
-        "render": {
+        "get": {
 
             "blog": Blog.init,
             "lottery": Lottery.init,
             "games-game": WebSocketAjaxClient,
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
-            "communications-messages": Message.init
+            "communications-messages": Message.init,
+            "lottery-history-view": Lottery.view
 
         },
 
-        "post": {
+        "post": { // new
+
+            "profile-convert": Profile.convertMoney,
+            "profile-cashout": Profile.cashoutMoney,
+            "lottery-ticket": Ticket.update,
+
+        },
+
+        "put": { // update
 
             "profile-edit": Profile.updateDetails,
             "profile-settings": Profile.updateSettings,
             "profile-billing": Profile.updateBilling,
-            "profile-convert": Profile.convertMoney,
-            "profile-cashout": Profile.cashoutMoney
 
         },
 
-        "validate":{
+        "delete": {},
 
-            "lottery-ticket": Ticket.validateTicket,
+        "validate": {
+
+            "lottery-ticket": Ticket.validate,
             "profile-convert": Profile.validateConvert,
             "profile-cashout": Profile.validateCashout
+
         }
 
     };

@@ -1,6 +1,9 @@
 $(function () {
 
     Game = {
+        isRun: function () {
+            // проверка игры
+        },
 
         stack: function () {
             if ($('.rls-r-t').is(':visible')) {
@@ -31,8 +34,8 @@ $(function () {
 
         run: function () {
             $('.ngm-rls').fadeOut(200);
-            if ((   $.inArray(onlineGame.action, ['move', 'timeout', 'pass']) == -1 &&
-                (onlineGame.action != 'ready' || Object.size(onlineGame.players) == onlineGame.current.length)
+            if ((   $.inArray(App.action, ['move', 'timeout', 'pass']) == -1 &&
+                (App.action != 'ready' || Object.size(App.players) == App.current.length)
                 ) || !$('.mx .players').children('div').length) {
 
                 $('.mx').html('<div class="players"></div>' +
@@ -48,8 +51,8 @@ $(function () {
 
         quit: function () {
 
-            appId = 0;
-            WebSocketAjaxClient('update/' + appName);
+            App.id = 0;
+            WebSocketAjaxClient('update/' + App.name);
             $('.tm').countdown('pause');
 
 
@@ -91,19 +94,19 @@ $(function () {
         update: function (receiveData) {
 
             if (receiveData.res.points)
-                Balance.updatePoints(receiveData.res.points);
+                Player.updatePoints(receiveData.res.points);
 
             if (receiveData.res.money)
-                Balance.updateMoney(receiveData.res.money);
+                Player.updateMoney(receiveData.res.money);
 
             if (receiveData.res.modes)
-                OnlineGames.Modes[receiveData.res.key] = receiveData.res.modes;
+                Apps.Modes[receiveData.res.key] = receiveData.res.modes;
 
             if (receiveData.res.variations)
-                OnlineGames.Variations[receiveData.res.key] = receiveData.res.variations;
+                Apps.Variations[receiveData.res.key] = receiveData.res.variations;
 
             if (receiveData.res.audio)
-                OnlineGames.Audio[receiveData.res.key ? receiveData.res.key : receiveData.res.appName] = receiveData.res.audio;
+                Apps.Audio[receiveData.res.key ? receiveData.res.key : receiveData.res.appName] = receiveData.res.audio;
 
             if (receiveData.res.key) {
 
@@ -125,9 +128,8 @@ $(function () {
 
         error: function () {
 
-            if (onlineGame.appId == 0) {
+            if (App.id == 0) {
                 $('.mx .tm').countdown('pause');
-                appId = onlineGame.appId;
                 $('.mx .prc-but-cover').hide();
                 $('.ngm-rls').fadeIn(200);
             }
@@ -135,16 +137,16 @@ $(function () {
 
         seatPlayers: function () {
 
-            if (players = onlineGame.players) {
+            if (players = App.players) {
                 D.log('рассадили игроков');
-                if (onlineGame.action == 'wait') {
+                if (App.action == 'wait') {
 
                     var player = {
                         "avatar": "",
                         "name": "ждем..."
                     };
 
-                    for (i = Object.size(players); i < onlineGame.playerNumbers; i++) {
+                    for (i = Object.size(players); i < App.playerNumbers; i++) {
                         index = 0 - i;
                         players[index] = player;
                     }
@@ -152,7 +154,7 @@ $(function () {
 
                 var orders = players;
 
-                if (players[Player.id].order && onlineGame.action == 'start') {
+                if (players[Player.id].order && App.action == 'start') {
 
                     orders = Object.keys(players);
                     var order = players[Player.id].order;
@@ -190,7 +192,7 @@ $(function () {
                     '<div class="pr-nm">' + value.name + '</div></div></div></div>');
 
                 if (index == Player.id) {
-                    bet = price = onlineGame.appMode.split('-');
+                    bet = price = App.mode.split('-');
                     $('.mx .players .player' + index + ' .gm-pr').prepend(
                         '<div class="pr-cl">' +
                         '<div class="btn-pass">пас</div>' +
@@ -207,16 +209,16 @@ $(function () {
 
         variations: function () {
 
-            if (onlineGame.variation && onlineGame.variation.type && onlineGame.variation.type == 'revert')
+            if (App.variation && App.variation.type && App.variation.type == 'revert')
                 $('.cards > .mx').addClass('Revert');
-            if (onlineGame.variation && onlineGame.variation.cards)
-                $('.pr-md .cards-number').html(onlineGame.variation.cards);
+            if (App.variation && App.variation.cards)
+                $('.pr-md .cards-number').html(App.variation.cards);
 
 
         },
 
         end: function () {
-            if (!onlineGame.winner) {
+            if (!App.winner) {
 
                 sample && Apps.playAudio([appName, sample]);
 
@@ -224,13 +226,13 @@ $(function () {
 
                 if (!$('.mx .players .wt').is(":visible")) {
 
-                    Apps.playAudio([appName, ($.inArray(Player.id, onlineGame.winner) != -1 ? 'Win' : 'Lose')]);
+                    Apps.playAudio([App.name, ($.inArray(Player.id, App.winner) != -1 ? 'Win' : 'Lose')]);
 
-                    $.each(onlineGame.players, function (index, value) {
+                    $.each(App.players, function (index, value) {
                         $('.mx .players .player' + index + ' .wt').removeClass('loser').html(
                             (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                            (onlineGame.currency == 'MONEY' ? Player.getCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
-                            (onlineGame.currency == 'MONEY' ? Player.getCurrency() : 'баллов')
+                            (App.currency == 'MONEY' ? Player.getCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
+                            (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов')
                         ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
                     });
 

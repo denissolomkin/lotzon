@@ -1,9 +1,6 @@
 {
-    "status": 1,
-    "message": "OK",
-    "res":{
-        "cache": false,
-        "items":[
+   "cache": false,
+   "res":[
             {
                 "id": "1",
                 "img": "/res/img/post.jpg",
@@ -35,5 +32,4 @@
                 }
             }
 	    ]
-	}
 }

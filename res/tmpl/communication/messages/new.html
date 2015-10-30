@@ -1,19 +1,15 @@
 <div class="content-box communication-message">
 
-    <div class="content-box-header back">{{#i18n}}title-message-new{{/i18n}}</div>
+    <div class="content-box-header back">{{i18n "title-message-new"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item communication-new-message">
-            <form>
+            <form action="/communication/message">
                 <div class="addressee">
-
-                    {{?messages,}}
                     <input type="hidden" name="id" value="{{ id }}">
-                    {{/messages,}}
-
                     {{#user}}
                     <div class="nm-selected">
-                        <input type="hidden" name="userid" value="{{ id }}">
+                        <input type="hidden" class="required int" name="userid" value="{{ id }}">
                         {{^messages}}
                         <div class="nm-change">{{#i18n}}title-change-addressee{{/i18n}}</div>
                         {{/messages}}
@@ -32,7 +28,6 @@
                         {{/user}}
 
                         <div class="nm-search-result-box">
-                            {{?users,}}
                             <div class="nm-search-results">
                                 {{#users}}
                                 <div class="nm-friend" data-userid="{{ id }}">
@@ -43,7 +38,6 @@
                                 </div>
                                 {{/users}}
                             </div>
-                            {{/users,}}
                         </div>
                     </div>
 
@@ -65,7 +59,7 @@
                                 <label class="input-file-wrapper">
                                     <input type="file" class="input-file">
                                 </label>
-                                <button type="submit" class="message-form-btn">{{#i18n}}button-send{{/i18n}}</button>
+                                <button type="submit" class="message-form-btn">{{i18n "button-send"}}</button>
                                 <div class="message-form-smileys"></div>
                             </div>
                     </div>

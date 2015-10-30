@@ -2,55 +2,21 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "items":[
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/slots.png",
-                "title": "Игра Слоты",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/slots.png",
-                "title": "Игра Слоты",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/slots.png",
-                "title": "Игра Слоты",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/slots.png",
-                "title": "Игра Слоты",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/slots.png",
-                "title": "Игра Слоты",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/slots.png",
-                "title": "Игра Слоты",
-                "price": "50000",
-                "quantity": "0"
-            }
-	    ]
+                "1":    {
+                                "id": "1",
+                                "category": "5",
+                                "img": "/res/img/games/slots.png",
+                                "title": "Игра Слоты",
+                                "price": "50000",
+                                "quantity": "0"
+                            },
+                "2": {
+                                "id": "2",
+                                "category": "5",
+                                "img": "/res/img/games/slots.png",
+                                "title": "Игра Слоты",
+                                "price": "50000",
+                                "quantity": "0"
+                    }
 	}
 }

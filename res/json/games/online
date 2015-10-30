@@ -2,39 +2,40 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "items":[
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/durak.jpg",
-                "title": "Дурак",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/durak.jpg",
-                "title": "Дурак",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/durak.jpg",
-                "title": "Дурак",
-                "price": "50000",
-                "quantity": "0"
-            },
-            {
-                "id": "1",
-                "category": "5",
-                "img": "/res/img/games/durak.jpg",
-                "title": "Дурак",
-                "price": "50000",
-                "quantity": "0"
-            }
-	    ]
+
+                   "1": {
+                        "id": "1",
+                        "category": "5",
+                        "img": "/res/img/games/durak.jpg",
+                        "title": "Дурак",
+                        "price": "50000",
+                        "quantity": "0"
+                    },
+                    "2": {
+                        "id": "1",
+                        "category": "5",
+                        "img": "/res/img/games/durak.jpg",
+                        "title": "Дурак",
+                        "price": "50000",
+                        "quantity": "0"
+                    },
+                    "3": {
+                        "id": "1",
+                        "category": "5",
+                        "img": "/res/img/games/durak.jpg",
+                        "title": "Дурак",
+                        "price": "50000",
+                        "quantity": "0"
+                    },
+                    "4":
+                    {
+                        "id": "1",
+                        "category": "5",
+                        "img": "/res/img/games/durak.jpg",
+                        "title": "Дурак",
+                        "price": "50000",
+                        "quantity": "0"
+                    }
+
 	}
 }

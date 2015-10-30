@@ -2,11 +2,10 @@
     "status": 1,
     "message": "OK",
     "res":{
-        "billing": {
-            "webMoney": "R333289102947",
-            "yandexMoney": "410011590761950",
-            "qiwi": null,
-            "phone": null
+        "balance": {
+            "money": 14141.14,
+            "points": 11111,
+            "lotzon": null
         }
 	}
 }

@@ -1,5 +1,6 @@
 				<div class="content-box-item clearfix communication-comments">
 
+                    {{#items}}
 		{{#notifications}}
 					<!-- NOTIFICATIONS -->
 					<div class="c-notifications">
@@ -16,12 +17,12 @@
 					<!-- end of NOTIFICATIONS -->
         {{/notifications}}
         {{^notifications}}No NOTIFICATIONS :({{/notifications}}
-		
-		
-		
 
 
-		{{#items}}
+
+        {{#records}}
+
+
 					<div class="comment liked{{#answer}} answer{{/answer}}">
 						<div class="comment-content">
 							<div class="comment-top">
@@ -46,9 +47,10 @@
 						</div>
 
 					</div>
-        {{/items}}
+        {{/records}}
 		
-        {{^items}}No comments :({{/items}}
+        {{^records}}No comments :({{/records}}
+                    {{/items}}
 		
 					<!-- COMMENT FORM -->
 					<div class="message-form-wrapper">
