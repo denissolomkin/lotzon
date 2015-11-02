@@ -166,6 +166,8 @@
 
 <?php $dirs = array('libs', 'plugins', 'controllers', 'models', 'functions', 'core', 'temp');
 foreach ($dirs as $dir) {
+    if(!is_dir('./res/js/' . $dir . '/'))
+        continue;
     echo "<!-- {$dir} -->\r\n";
     $files = scandir('./res/js/' . $dir . '/');
     foreach($files as $file)
@@ -176,7 +178,7 @@ foreach ($dirs as $dir) {
 <script>
     $(function () {
 
-        localStorage.setItem('cacheStorage', null);
+        localStorage.cacheStorage = null;
         localStorage.templateStorage = null;
 
         Cache.init(); // init cache engine
