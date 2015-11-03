@@ -307,6 +307,7 @@ class Users extends PrivateArea
                 }
 
                 $player->setPhone($this->request()->post('phone'));
+
                 $player->setQiwi($this->request()->post('qiwi'));
                 $player->setWebMoney($this->request()->post('webmoney'));
                 $player->setYandexMoney($this->request()->post('yandexmoney'));

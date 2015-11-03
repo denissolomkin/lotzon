@@ -51,7 +51,7 @@
         "get": {
 
             "blog": Blog.init,
-            "blog-post-view": Blog.loadComments,
+            "blog-post-view": Blog.loadPostData,
             "lottery": Lottery.init,
             "games-game": WebSocketAjaxClient,
             "profile-edit": Profile.init,
