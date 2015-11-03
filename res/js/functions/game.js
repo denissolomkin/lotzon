@@ -121,7 +121,7 @@ $(function () {
             }
 
             if (receiveData.res.fund) {
-                $('.prz-fnd-mon').text(receiveData.res.fund && receiveData.res.fund.MONEY ? Player.getCurrency(receiveData.res.fund.MONEY, 1) : 0);
+                $('.prz-fnd-mon').text(receiveData.res.fund && receiveData.res.fund.MONEY ? Player.formatCurrency(receiveData.res.fund.MONEY, 1) : 0);
                 $('.prz-fnd-pnt').text(receiveData.res.fund && receiveData.res.fund.POINT ? parseInt(receiveData.res.fund.POINT) : 0);
             }
         },
@@ -200,8 +200,8 @@ $(function () {
                         '</div>'
                     ).append(
                         '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>' +
-                        '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? Player.getCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.getCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
-                        '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.getCurrency() + '</div><div><span class="plPointHolder">' + Player.balance.points + '</span> баллов</div></div>'
+                        '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
+                        '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div><div><span class="plPointHolder">' + Player.balance.points + '</span> баллов</div></div>'
                     );
                 }
             });
@@ -231,7 +231,7 @@ $(function () {
                     $.each(App.players, function (index, value) {
                         $('.mx .players .player' + index + ' .wt').removeClass('loser').html(
                             (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                            (App.currency == 'MONEY' ? Player.getCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
+                            (App.currency == 'MONEY' ? Player.formatCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
                             (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов')
                         ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
                     });

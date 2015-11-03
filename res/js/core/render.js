@@ -14,19 +14,29 @@ $(function () {
 
             /* ----------------------------------------------------
              options = {
-             template: Name of Template or Parse Href
-             href:     Parse Href or Template
-             json:     Source Object For Parsing
-             after:    Callback Function
-             url:      False for Skip U.update
-             box:      Container (element or search by class)
-             tab:      Menu Item (element or search by href)
-             init:     For History PushState and check is exists Callback by Template name
+
+             template:  Name of Template or Parse Href
+             href:      Parse Href or Template
+             json:      Source Object For Parsing
+             url:       False for Skip U.update
+             box:       Container (element or search by class)
+             tab:       Menu Item (element or search by href)
+
+             # auto #
+             init:      For History PushState and check is exists Callback by Template name
+
+             # before renderHTML #
+             format:    Function for format JSON
+             arguments: Arguments for JSON formating
+
+             # after renderHTML #
+             after:     Callback Function
              };
+
              ---------------------------------------------------- */
 
             options.template = options.template || U.parse(this.href);
-            options.href = options.href || U.parse(this.href || options.template);
+            options.href = options.href || this.href || options.template; //U.parse();
             options.box = typeof options.box !== 'object'
                 ? (options.box ? $(options.box).first() : null)
                 : options.box;
@@ -87,13 +97,7 @@ $(function () {
                 R.event.start(options);
 
                 setTimeout(function () {
-                    if (typeof options.json == 'object') {
-                        D.log(['JSON from Object:', options.json]);
-                        R.formatJSON(options);
-                    } else {
-                        R.renderJSON(options);
-
-                    }
+                    R.json(options);
                 }, this.timeout)
             }
 
@@ -101,11 +105,19 @@ $(function () {
 
         },
 
-        "renderJSON": function (options) {
+        "json": function (options) {
+
+            options.href = U.parse(options.href);
 
             D.log(['renderJSON:', options.href]);
 
-            if (options.json = Cache.get(options.href)) {
+            if (typeof options.json === 'object') {
+
+                options.json = Cache.set(options.href, options.json);
+                D.log(['JSON from Object:', options.json]);
+                R.formatJSON(options);
+
+            } else if (options.json = Cache.get(options.href)) {
 
                 D.log(['JSON from Cache:', options.json]);
                 R.formatJSON(options);
@@ -143,18 +155,6 @@ $(function () {
                         }
                     }
                 });
-                /*
-                 $.getJSON(U.generate(options.href), function (response) {
-                 if (response.status == 1) {
-
-
-                 } else {
-
-                 D.error(response.message);
-
-                 }
-                 });
-                 */
             }
 
         },
@@ -163,13 +163,13 @@ $(function () {
 
             if (typeof options.format === 'function') {
                 D.log(['formatJSON:', options.json]);
-                if (!options.arguments.length)
-                    options.arguments.length = [];
-                options.arguments.unshift(options.json);
-                options.json = options.format(options.arguments);
+                options.json = options.format(options.json, options.arguments);
             }
 
-            R.renderTMPL(options);
+            if (options.template)
+                R.renderTMPL(options);
+            else
+                return options;
 
         },
 
@@ -219,54 +219,69 @@ $(function () {
         "renderHTML": function (options) {
 
             D.log(['renderHTML:', options.init.template, options.json]);
-            var rendered = null;
 
-            if (typeof options.json != 'object') {
+            if (typeof options.template != 'function') {
 
-                D.log('Rendered from HTML');
-                rendered = $($('.template.' + options.template)[0].outerHTML).html(options.json);
+                options.rendered = $($('.template.' + options.template)[0].outerHTML).html(options.json);
+                D.log(['Rendered from HTML:', options.rendered]);
 
             } else {
 
-                D.log('Rendered from Template');
-                // Mustache.parse(options.template);   // optional, speeds up future uses
-                rendered = options.template(options.json);
+                options.rendered = options.template(options.json);
+                D.log(['Rendered from Template:', options.rendered]);
 
             }
 
-            R.inputHTML(rendered, options);
+            R.inputHTML(options);
         },
 
-        "inputHTML": function (rendered, options) {
+        "inputHTML": function (options) {
 
+            options.findClass = '.' + $(options.rendered).not('empty').first().attr('class').replace(/ /g, '.');
             D.log(['inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box)]);
-            var findClass = '.' + $(rendered).not('empty').first().attr('class').replace(/ /g, '.');
 
             if (options.box) {
 
                 $(' > div', options.box).hide();
 
-                if ($(findClass, options.box).length)
-                    $(findClass, options.box).html($(rendered).html()).show();
-                else if (options.box.is(findClass))
-                    options.box.html($(rendered).html()).show();
-                else
-                    options.box.append(rendered).find(findClass).hide().show();
+                if ($(options.findClass, options.box).length) {
+
+                    D.log(['Replace Block in Box']);
+
+                    $(options.findClass, options.box).html($(options.rendered).html()).show();
+
+                } else if (options.box.is(options.findClass)) {
+
+                    D.log(['Replace Box']);
+
+                    options.box.html($(options.rendered).html()).show();
+
+                } else {
+                    D.log(['Append to Box']);
+                    options.box.append(options.rendered).find(options.findClass).hide().show();
+                }
 
             } else if (options.replace) {
-                $(options.replace).html($(options.replace, rendered).html()).hide().fadeIn(1000);
+                $(options.replace).html($(options.replace, options.rendered).html()).hide().fadeIn(1000);
             }
 
-            console.log(options);
+            R.afterHTML(options);
+
+        },
+
+        "afterHTML": function (options) {
+
+            D.log(['afterHTML class:', options.findClass]);
+
             if (options.after) {
                 D.log(['callback', typeof options.after]);
-                options.after(rendered, findClass);
+                options.after(options);
             }
 
             if (callback = Callbacks['get'][U.parse(options.init.template, 'tmpl')]) {
 
                 D.log(['C.callback', U.parse(options.init.template, 'tmpl')]);
-                callback(rendered, findClass);
+                callback(options);
             }
 
             /* parent box functionality after rendering */
@@ -300,53 +315,6 @@ $(function () {
 
             U.update(options);
             R.event.complete(options);
-
-        },
-
-        "caching": function (key, data) {
-
-            var cache = Cache,
-                path = key.split('-'),
-                needle = path.last();
-
-            /* if receive data for extend cache */
-            if (data) {
-
-                if (data.cache !== false) {
-                    Cache.extend(data, path);
-                    localStorage.setObj('Cache', Cache);
-                    console.log('storage:', localStorage.getObj('Cache'));
-                }
-
-                cache = data.res;
-
-            } else {
-
-                /* check, if object already in cache */
-                $.each(path, function (i, key) {
-                    needle = key;
-                    return cache = cache && cache.hasOwnProperty(key) && cache[key];
-                });
-            }
-
-            console.log('needle:', needle);
-
-            /* fix absent mustache each object, replacing with array */
-            switch (typeof cache) {
-                case 'object':
-                    if (!isNumeric(needle) || !cache.length)
-                        cache = {'items': format4Mustache(cache)};
-                    break;
-                case 'string':
-                    /* nothing */
-                    break;
-                case 'boolean':
-                    /* nothing */
-                    break;
-            }
-
-            console.log(Cache, cache);
-            return cache;
 
         },
 

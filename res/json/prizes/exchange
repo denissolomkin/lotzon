@@ -1,37 +1,42 @@
 {
-    "status": 1,
-    "message": "OK",
+    "cache": true,
     "res":{
         "prizes":{
-            "exchange":{
-             "categories":[
-                            {
+        "exchange":{
+
+             "categories":{
+                            "5":{
                                 "id":"5",
-                                "title":"Ноутбуки"
+                                "title":"Ноутбуки",
+                                "goods":{
+
+                                }
                             },
-                            {
+                            "4":{
                                 "id":"4",
                                 "title":"Смартфоны"
                             },
-                            {
+                            "3":{
                                 "id":"3",
                                 "title":"Отдых"
                             },
-                            {
+                            "2":{
                                 "id":"2",
                                 "title":"Ноутбуки"
                             },
-                            {
+                            "1":{
                                 "id":"1",
                                 "title":"Игрушки"
                             },
-                            {
+                            "6":{
                                 "id":"6",
                                 "title":"Техника"
+
                             }
-                    ],
-                    "goods":[
-                        {
+                    },
+
+                    "goods":{
+                        "1":{
                             "id": "1",
                             "category": "5",
                             "img": "/res/img/prize.png",
@@ -39,7 +44,7 @@
                             "price": "50000",
                             "quantity": "0"
                         },
-                        {
+                        "2":{
                             "id": "1",
                             "category": "5",
                             "img": "/res/img/prize.png",
@@ -79,7 +84,7 @@
                             "price": "10000",
                             "quantity": null
                         }
-                    ]
+                    }
             }
         }
 

@@ -1,8 +1,8 @@
 {
-   "status":1,
-   "message":"OK",
+   "cache": false,
    "res":{
-      "items":[
+   "communication":{
+      "notifications":[
          {
 
             "player":{
@@ -63,7 +63,7 @@
             "img":"",
             "answer":null
          }
-      ],
-      "keepButtonShow":true
+      ]
+      }
    }
 }

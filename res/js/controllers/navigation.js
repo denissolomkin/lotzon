@@ -59,8 +59,8 @@ $(function () {
 
                 R.push.call(this, {
                     box: box,
-                    after: function (rendered, findClass) {
-                        $(findClass).addClass('slideInRight');
+                    after: function (options) {
+                        $(options.findClass).addClass('slideInRight');
                         $("html, body").animate({scrollTop: 0}, 'slow');
                     }
                 });

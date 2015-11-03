@@ -2,6 +2,8 @@
     "status": 1,
     "message": "OK",
     "res":{
+    "games":{
+    "online":{
 
                    "1": {
                         "id": "1",
@@ -39,3 +41,5 @@
 
 	}
 }
+    }
+    }

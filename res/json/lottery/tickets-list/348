@@ -1,3 +1,10 @@
 {
-    "res":[]
+    "cache": "session",
+    "res":{
+    "lottery":{
+    "tickets":{
+    "348":[]
+                      }
+            }
+        }
 }

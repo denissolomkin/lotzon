@@ -5,7 +5,26 @@ $(function () {
 
     $.extend(Player, {
 
-        getCurrency: function (value, part) {
+
+        getCurrency: function (currency) {
+
+            switch (currency) {
+                case 'money':
+                default:
+                    currency = this.currency.iso;
+                    break;
+                case 'points':
+                    currency = M.i18n('title-points');
+                    break;
+                case 'lotzon':
+                    currency = M.i18n('title-lotzon');
+                    break;
+            }
+
+            return currency;
+        },
+
+        formatCurrency: function (value, part) {
 
             function round(a, b) {
                 b = b || 0;

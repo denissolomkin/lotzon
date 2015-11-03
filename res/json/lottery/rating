@@ -1,8 +1,6 @@
 {
-    "status": 1,
-    "message": "OK",
+        "cache": 360,
     "res":{
-        "cache": false,
         "lottery":{
         "rating":[
             {
