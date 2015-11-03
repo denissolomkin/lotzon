@@ -1,13 +1,9 @@
 {
-   "status":1,
-   "message":"OK",
-   "res":{
    "cache":false,
+   "res":{
    "communication":{
-   "comments":{
-
    "notifications": 55,
-   "records":[
+   "comments":[
 
                        {
 
@@ -188,7 +184,7 @@
                           "answer":null
                        }
                     ]
-}
+
    }
    }
 }

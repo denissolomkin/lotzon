@@ -1,7 +1,9 @@
 {
-    "status": 1,
-    "message": "OK",
+    "cache": "local",
     "res":{
+    "games":{
+    "chance":{
+
                 "1":    {
                                 "id": "1",
                                 "category": "5",
@@ -18,5 +20,7 @@
                                 "price": "50000",
                                 "quantity": "0"
                     }
-	}
+            }
+	    }
+    }
 }

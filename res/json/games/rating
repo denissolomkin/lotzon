@@ -1,6 +1,8 @@
 {
-    "cache": false,
-    "res":[
+    "cache": 3600,
+    "res":{
+    "games":{
+    "rating":[
                       {
                           "id": "1",
                           "img": "/res/img/user_img.jpg",
@@ -23,4 +25,7 @@
                           "money": null
                       }
           	    ]
+
+          	    }
+            }
 }

@@ -1,7 +1,7 @@
 {
-    "status": 1,
-    "message": "OK",
-    "res":[
+    "res":{
+    "games":{
+    "spin":[
            {"reels":["6.0","3.0","4.0"],"prize":null,"success":true,"credits":92,"dayWinnings":7,"lifetimeWinnings":55},
            {"reels":["3.0","1.0","3.0"],"prize":{"id":"41","payoutCredits":7,"payoutWinnings":7},"lastWin":7,"success":true,"credits":98,"dayWinnings":14,"lifetimeWinnings":62},
            {"reels":["5.0","2.0","1.0"],"prize":null,"success":true,"credits":97,"dayWinnings":14,"lifetimeWinnings":62},
@@ -20,4 +20,7 @@
            {"reels":["3.0","3.0","3.0"],"prize":{"id":"35","payoutCredits":12,"payoutWinnings":12},"lastWin":12,"success":true,"credits":117,"dayWinnings":47,"lifetimeWinnings":95},
            {"reels":["4.0","3.0","1.0"],"prize":null,"success":true,"credits":116,"dayWinnings":47,"lifetimeWinnings":95}
            	]
+
+    }
+    }
 }

@@ -1,441 +1,312 @@
-(function() {
+(function () {
 
-        Lottery = {
+    Lottery = {
 
-            data: null,
-            tickets: null,
+        data: null,
+        tickets: null,
+        summary: null,
 
-            getCurrency: function(currency) {
+        init: function () {
 
-                switch (currency) {
-                    case 'money':
-                        currency = Player.currency.iso;
-                        break;
-                    case 'points':
-                        currency = M.i18n('title-points');
-                        break;
-                    case 'lotzon':
-                        currency = M.i18n('title-lotzon');
-                        break;
-                }
+            Carousel.initOwl();
+            Ticket.render();
+        },
 
-                return currency;
-            },
+        update: function () {
 
-            extendTickets: function(arguments) {
+            Tickets.update(); // отрисует новые билеты
+            Slider.update(); // отрисует новый слайдер и баланс
 
-                ticketsArray = arguments[0];
-                prizesData = arguments[1];
-                lotteryCombination = arguments[2];
+        },
 
-                if (typeof ticketsArray !== 'object')
-                    return false;
+        extendTickets: function (ticketsArray, arguments) {
 
-                var extendedTickets = {
-                        win: [],
-                        tickets: []
-                    },
-                    extendedTicket,
-                    matchesBalls;
+            var prizesData = arguments[0],
+                lotteryCombination = arguments[1];
 
-                /* extend playerTickets */
-                if (Object.size(ticketsArray))
-                    for (i = 1; i <= Tickets.totalTickets; i++) {
+            if (typeof ticketsArray !== 'object')
+                return false;
 
-                        i = parseInt(i);
+            var extendedTickets = {
+                    win: [],
+                    tickets: []
+                },
+                extendedTicket,
+                matchesBalls;
 
-                        matchesBalls = 0;
-                        extendedTicket = {
-                            num: i,
-                            combination: [],
-                            prize: null,
-                            currency: ''
-                        };
-
-                        /* extend playerTicket */
-                        for (var b in ticketsArray[i]) {
-
-                            extendedBall = {
-                                ball: ticketsArray[i][b],
-                                win: false
-                            };
-
-                            if (lotteryCombination.indexOf(ticketsArray[i][b]) > -1) {
-                                matchesBalls += 1;
-                                extendedBall.win = true;
-                            }
-
-                            extendedTicket.combination.push(extendedBall);
-                        }
-
-                        if (matchesBalls) {
-                            extendedTicket.prize = prizesData[matchesBalls].prize;
-                            extendedTicket.currency = prizesData[matchesBalls].currency;
-                            if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
-                                extendedTickets.win[prizesData[matchesBalls].currency] = {
-                                    currency: extendedTicket.currency,
-                                    prize: extendedTicket.prize
-                                };
-                            } else
-                                extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
-                        }
-
-                        extendedTickets.tickets.push(extendedTicket)
-                    }
-
-                return extendedTickets;
-            },
-
-            getSummary: function(lotteryData) {
-
-                var lotterySummary = {
-                    totalSum: []
-                };
-
-                for (var i in lotteryData.statistics) {
-                    if(!lotteryData.statistics.hasOwnProperty(i))
-                        continue;
+            /* extend playerTickets */
+            if (Object.size(ticketsArray))
+                for (i = 1; i <= Tickets.totalTickets; i++) {
 
                     i = parseInt(i);
 
-                    var ballData = lotteryData.statistics[i],
-                        sum = ballData.prize * ballData.matches;
-
-                    lotterySummary[ballData.balls] = {
-                        currency: Lottery.getCurrency(ballData.currency),
-                        prize: ballData.prize,
-                        matches: ballData.matches,
-                        sum: sum
+                    matchesBalls = 0;
+                    extendedTicket = {
+                        num: i,
+                        combination: [],
+                        prize: null,
+                        currency: ''
                     };
 
-                    if (!lotterySummary.totalSum[ballData.currency])
-                        lotterySummary.totalSum[ballData.currency] = 0;
-                    lotterySummary.totalSum[ballData.currency] += sum;
+                    /* extend playerTicket */
+                    for (var b in ticketsArray[i]) {
 
+                        if (!ticketsArray[i].hasOwnProperty(b))
+                            continue;
+
+                        extendedBall = {
+                            ball: ticketsArray[i][b],
+                            win: false
+                        };
+
+                        if (lotteryCombination.indexOf(ticketsArray[i][b]) > -1) {
+                            matchesBalls += 1;
+                            extendedBall.win = true;
+                        }
+
+                        extendedTicket.combination.push(extendedBall);
+                    }
+
+                    if (matchesBalls) {
+                        extendedTicket.prize = prizesData[matchesBalls].prize;
+                        extendedTicket.currency = prizesData[matchesBalls].currency;
+                        if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
+                            extendedTickets.win[prizesData[matchesBalls].currency] = {
+                                currency: extendedTicket.currency,
+                                prize: extendedTicket.prize
+                            };
+                        } else
+                            extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
+                    }
+
+                    extendedTickets.tickets.push(extendedTicket)
                 }
 
-                return lotterySummary;
-            },
+            return extendedTickets;
+        },
 
-            animateSummary: function(lotterySummary) {
+        getSummary: function () {
 
-                var $won = $('.ghd-game-inf .ghd-all-won'),
-                    $table = $('.ghd-game-inf table');
+            var lotterySummary = {
+                    totalSum: []
+                },
+                lotteryData = this.data;
 
-                for (var i in lotterySummary) {
+            for (var i in lotteryData.statistics) {
+                if (!lotteryData.statistics.hasOwnProperty(i))
+                    continue;
 
-                    if (!isNumeric(i))
-                        continue;
+                i = parseInt(i);
 
-                    $('tr.balls-matches-' + i + ' td:eq(1)', $table).append(lotterySummary[i].currency)
-                        .delay(1000)
-                        .next().html(lotterySummary[i].matches).spincrement()
-                        .next().html('<span>' + lotterySummary[i].sum + '</span> <span>' + lotterySummary[i].currency + '</span>')
-                        .find('span').first().spincrement();
-                }
+                var ballData = lotteryData.statistics[i],
+                    sum = ballData.prize * ballData.matches;
 
-                $won.hide().delay(2000).fadeIn(1000);
-                setTimeout(function() {
-                    for (var currency in lotterySummary.totalSum)
-                        $('span.' + currency, $won).html(lotterySummary.totalSum[currency]).spincrement()
-                }, 3000);
+                lotterySummary[ballData.balls] = {
+                    currency: Player.getCurrency(ballData.currency),
+                    prize: ballData.prize,
+                    matches: ballData.matches,
+                    sum: sum
+                };
 
-            },
+                if (!lotterySummary.totalSum[ballData.currency])
+                    lotterySummary.totalSum[ballData.currency] = 0;
+                lotterySummary.totalSum[ballData.currency] += sum;
 
-            view: function() {
+            }
 
-                var lotteryId = parseInt($('.game_history_detail').data('lotteryid')),
-                    lotteryData = Cache.get('lottery-history-'+lotteryId),
-                    lotterySummary = Lottery.getSummary(lotteryData);
+            return lotterySummary;
+        },
 
-                Lottery.animateSummary(lotterySummary);
+        animateSummary: function () {
 
-                R.push({
-                    template: 'lottery-history-tickets',
-                    href: 'lottery-tickets-' + lotteryId,
-                    format: Lottery.extendTickets,
-                    arguments: [lotterySummary, lotteryData.combination],
-                    box: '.ghd-tickets',
-                    url: false
-                })
+            var lotterySummary = this.summary,
+                $won = $('.ghd-game-inf .ghd-all-won'),
+                $table = $('.ghd-game-inf table');
 
-            },
+            for (var i in lotterySummary) {
 
-            init: function() {
+                if (!isNumeric(i))
+                    continue;
 
-                Carousel.initOwl();
-                Ticket.render();
-            },
+                $('tr.balls-matches-' + i + ' td:eq(1)', $table).append(lotterySummary[i].currency)
+                    .delay(1000)
+                    .next().html(lotterySummary[i].matches).spincrement()
+                    .next().html('<span>' + lotterySummary[i].sum + '</span> <span>' + lotterySummary[i].currency + '</span>')
+                    .find('span').first().spincrement();
+            }
 
-            update: function() {
+            $won.hide().delay(2000).fadeIn(1000);
+            setTimeout(function () {
+                for (var currency in lotterySummary.totalSum)
+                    $('span.' + currency, $won).html(lotterySummary.totalSum[currency]).spincrement()
+            }, 3000);
 
-                Tickets.update(); // отрисует новые билеты
-                Slider.update(); // отрисует новый слайдер и баланс
+        },
 
-            },
+        view: function () {
 
-            prepareData: function(id) {
+            var lotteryId = parseInt($('.game_history_detail').data('lotteryid'));
 
-                var lotteryData, url;
+            Lottery.data = Cache.get('lottery-history-' + lotteryId);
+            Lottery.summary = Lottery.getSummary();
+            Lottery.animateSummary();
 
-                if (id && lotteryData == Cache.get('lottery-history-' + id)) {
+            R.push({
+                template: 'lottery-history-tickets',
+                href: 'lottery-tickets-' + lotteryId,
+                format: Lottery.extendTickets,
+                arguments: [Lottery.summary, Lottery.data.combination],
+                box: '.ghd-tickets',
+                url: false
+            })
 
-                    this.data = lotteryData;
-                    Lottery.prepareTickets(id);
+        },
 
-                } else {
+        prepareData: function (id) {
 
-                    url = id ? '/lottery/history/' + id : '/lastLottery';
+            var href = id ? '/lottery/history/' + id : '/lastLottery',
+                format = function (json) {
 
-                    $.getJSON(U.generate(url), function(response) {
+                    console.log(json);
 
-                        Lottery.data = response.res;
-
-                        if (response.res.id == Tickets.lastLotteryId) {
-
-                            setTimeout(function() {
+                    Lottery.data = json;
+                    switch (true) {
+                        case Lottery.data.id == Tickets.lastLotteryId:
+                        default:
+                            setTimeout(function () {
                                 Lottery.prepareData(id)
-                            }, 3000)
-
-                        } else if (response.res.id > Tickets.lastLotteryId + 1) {
+                            }, 3000);
+                            break;
+                        case Lottery.data.id > Tickets.lastLotteryId + 1:
                             Lottery.update();
-                        } else {
-                            Lottery.prepareTickets(id);
-                        }
-
-                    });
-                }
-
-console.log('prepareData: ',this.data);
-
-            },
-
-            prepareTickets: function(id) {
-
-
-                var playerTickets, 
-                url;
-
-                if (id) {
-
-                    if (playerTickets = Cache.get('lottery-tickets-' + id)) {
-                        this.tickets = playerTickets;
-                        Lottery.renderAnimation();
-                    } else {
-
-                        $.getJSON(U.generate(url),'/lottery/tickets/' + id, function(response) {
-                            Lottery.tickets = response.res;
-                            Lottery.renderAnimation();
-                        });
+                            break;
+                        case Lottery.data.id == Tickets.lastLotteryId + 1:
+                            Lottery.prepareTickets(Lottery.data.id);
+                            break;
                     }
+                    console.log('prepareData: ', Lottery.data);
+                };
 
-                } else {
-                            this.tickets = Tickets.filledTickets;
+            R.json({
+                href: href,
+                format: format
+            });
+
+
+        },
+
+        prepareTickets: function (id) {
+
+            var href = 'lottery-tickets-' + id,
+                json = (id == Tickets.lastLotteryId + 1)
+                    ? {key: href, cache: "session", res: Tickets.filledTickets}
+                    : null,
+                format = function (json) {
+                    Lottery.tickets = json;
                     Lottery.renderAnimation();
+                    console.log('prepareTickets: ', Lottery.tickets);
+                };
 
-                }
+            R.json({
+                href: href,
+                json: json,
+                format: format
+            });
 
-console.log('prepareTickets: ',this.tickets);
+
+        },
+
+        renderAnimation: function () {
+
+            var json = $.extend(
+                {},
+                this.data,
+                Lottery.extendTickets(
+                    this.tickets,
+                    [Lottery.getSummary(this.data), this.data.combination]
+                )
+            );
+
+            console.log('renderAnimation: ', json);
+
+            R.push({
+                box: '.container',
+                json: json,
+                template: 'lottery-animation-process',
+                after: Lottery.runAnimation,
+                url: false
+            })
+        },
+
+        runAnimation: function() {
+
+            var combination = Lottery.data.combination,
+                ballInterval,
+                arrRandom = [],
+                timer = {
+                    fake: 200,
+                    ball: 1000,
+                    tries: 5
+                };
+
+            for(var i = 1; i <= Tickets.totalBalls; i++) {
+                arrRandom.push(i);
+            }
+            var li;
+            var spn;
+            fakeAnimation = function() {
 
 
-            },
+                var ball = arrRandom[Math.ceil(Math.random() * (arrRandom.length)-1)]
 
-            renderAnimation: function() {
 
-                var lottery = $.extend(
-                    {}, 
-                    this.data, 
-                    Lottery.extendTickets([this.tickets, Lottery.getSummary(this.data), this.data.combination]));
+                spn = $("#lottery-process .g-oc_span.unfilled:first");
+                spn.text(ball);
+                li = spn.parents('.g-oc_li');
+                li.find('.goc_li-nb').addClass('goc-nb-act');
 
-console.log('renderAnimation: ',lottery);
 
-                R.push({
-                    template: 'lottery-animation-process',
-                    json: lottery,
-                    box: '.container',
-                    url: false,
-                    after: Lottery.runAnimation
-                })
-            },
+            }
 
-            runAnimation: function() {
+            ballAnimation = function() {
 
-                var combination = Lottery.data.combination,
-                    ballInterval,
-                    ballAnimation = function(ball) {
 
-                        var ball = combination.shift();
-                        var spn = $("#lottery-process .g-oc_span.unfilled:first");
+                var ball = combination.shift();
 
-                        spn.text(ball);
-                        var li = spn.parents('.g-oc_li');
-                        li.find('.goc_li-nb').addClass('goc-nb-act');
-                        spn.removeClass('unfilled');
 
-                        window.setTimeout(function() {
-                            $("#lottery-process").find('li[data-num="' + ball + '"]').addClass('won')
-                        }, 1000);
+                arrRandom.splice(arrRandom.indexOf(ball),1);
+                spn = $("#lottery-process .g-oc_span.unfilled:first");
+                spn.text(ball);
+                var li = spn.parents('.g-oc_li');
 
-                        if (!combination.length) {
-                            window.clearInterval(ballInterval);
-                            window.setTimeout(function() {
-                                if ($("#lottery-process").find('li.won').length) {
-                                    showWinPopup(data);
-                                } else {
-                                    showFailPopup(data);
-                                }
-                            }, 2000);
-                        }
-                    }
+                spn.removeClass('unfilled');
 
                 window.setTimeout(function() {
-                    ballAnimation();
-                    ballInterval = window.setInterval(ballAnimation, 5000);
-                }, 2000);
+                    $("#lottery-process").find('li[data-num="' + ball + '"]').addClass('won')
+                }, 1000);
 
-            },
-
-
-
-
-
-        // showFailPopup: function(data) {
-
-        //     $("#lottery-process").hide();
-        //     $("#game-end").show();
-        //     var ticketsHtml = '';
-        //     for (var i = 0; i < 5; ++i) {
-        //         var won = 0
-        //         ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (i + 1) + '</div><ul data-ticket="' + i + '" class="yr-tt-tr">';
-
-        //         if (data.tickets[i]) {
-        //             $(data.tickets[i]).each(function(id, num) {
-        //                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
-        //             });
-        //         } else {
-        //             ticketsHtml += "<li class='null'>Не заполнен</li>"
-        //         }
-        //         ticketsHtml += '</ul></li>';
-        //     }
-        //     $("#game-end").find('.yr-tb').html(ticketsHtml);
-        //     var lotteryHtml = '';
-
-        //     $(data.c).each(function(id, num) {
-        //         lotteryHtml += '<li class="g-oc_li"><span class="g-oc_span">' + num + '</span></li>';
-        //     });
-
-        //     $("#game-end").find('.g-oc-b').html(lotteryHtml);
-
-        //     return;
-
-        //     $("#lottery-process").hide();
-        //     $("#game-end").show();
-        //     var ticketsHtml = '';
-        //     for (var i = 1; i <= 5; ++i) {
-        //         ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (i) + '</div><ul class="yr-tt-tr">';
-        //         if (data.res.tickets[i]) {
-        //             $(data.res.tickets[i]).each(function(id, num) {
-        //                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
-        //             });
-        //         } else {
-        //             ticketsHtml += "<li class='null'>Не заполнен</li>"
-        //         }
-        //         ticketsHtml += '</ul></li>';
-        //     }
-        //     $("#game-end").find('.yr-tb').html(ticketsHtml);
-        //     var lotteryHtml = '';
-
-        //     $(data.res.lottery.combination).each(function(id, num) {
-        //         lotteryHtml += '<li class="g-oc_li"><span class="g-oc_span">' + num + '</span></li>';
-        //     });
-
-        //     $("#game-end").find('.g-oc-b').html(lotteryHtml);
-        // }
-
-        // function showWinPopup(data) {
-        //     $("#lottery-process").hide();
-        //     $("#game-won").show();
-
-        //     var nominals = [];
-        //     $('.win-tbl .c-r .c-r_li').each(function(index) {
-        //         nominals[index] = $(this).find('.tb-t').html();
-        //     });
-        //     nominals.reverse();
-
-        //     var ticketsHtml = '';
-        //     var wonMoney = 0;
-        //     var wonPoints = 0;
-        //     for (var i = 0; i < 5; ++i) {
-        //         var won = 0
-        //         ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (i + 1) + '</div><ul data-ticket="' + i + '" class="yr-tt-tr">';
-
-        //         if (data.tickets[i]) {
-        //             $(data.tickets[i]).each(function(id, num) {
-        //                 ticketsHtml += '<li class="yr-tt-tr_li' + ($.inArray(parseInt(num), data.c) >= 0 ? ' won' : '') + '" data-num="' + num + '">' + num + '</li>';
-        //             });
-        //         } else {
-        //             ticketsHtml += "<li class='null'>Не заполнен</li>"
-        //         }
-        //         ticketsHtml += '</ul>';
-
-        //         var nominal = [];
-        //         if (won = $(ticketsHtml).find('ul[data-ticket="' + i + '"] li.won').length) {
-        //             ticketsHtml += '<div class="yr-tt-tc">' + nominals[won - 1] + '</div>';
-        //             nominal = nominals[won - 1].split(" ");
-        //             if (nominal[1] == getCurrency())
-        //                 wonMoney += parseFloat(nominal[0]);
-        //             else
-        //                 wonPoints += parseInt(nominal[0]);
-        //         }
-        //         ticketsHtml += '</li>';
-        //     }
+                if (!combination.length) {
+                    window.clearInterval(fakeInterval);
+                    window.clearInterval(ballInterval);
+                    window.setTimeout(function() {
+                        if ($("#lottery-process").find('li.won').length) {
+                            // showWinPopup(data);
+                        } else {
+                            // showFailPopup(data);
+                        }
+                    }, 2000);
+                }
+            }
 
 
-        //     $("#game-won").find('.yr-tb').html(ticketsHtml);
-        //     var lotteryHtml = '';
+            window.setTimeout(function() {
+                // ballAnimation();
+                fakeInterval = window.setInterval(fakeAnimation, timer.fake);
+                ballInterval = window.setInterval(ballAnimation, timer.fake * timer.tries + timer.ball);
+            }, 1000);
+            console.log('timer.fake * timer.tries + timer.ball', timer.fake * timer.tries + timer.ball)
 
-        //     $(data.c).each(function(id, num) {
-        //         lotteryHtml += '<li class="g-oc_li"><span class="g-oc_span">' + num + '</span></li>';
-        //     });
-
-        //     $("#game-won").find('.g-oc-b').html(lotteryHtml);
-        //     $("#game-won").find('.plPointHolder').text(wonPoints);
-        //     $("#game-won").find('.plMoneyHolder').text((Math.round((wonMoney) * 100) / 100));
-
-        //     return false;
-
-        //     updateMoney(playerMoney + wonMoney);
-        //     updatePoints(playerPoints + wonPoints);
-        //     $("#lottery-process").hide();
-        //     $("#game-won").show();
-        //     var ticketsHtml = '';
-        //     for (var i = 1; i <= 5; ++i) {
-        //         ticketsHtml += '<li class="yr-tt"><div class="yr-tt-tn">Билет #' + (i) + '</div><ul class="yr-tt-tr">';
-        //         if (data.res.tickets[i]) {
-        //             $(data.res.tickets[i]).each(function(id, num) {
-        //                 ticketsHtml += '<li class="yr-tt-tr_li" data-num="' + num + '">' + num + '</li>';
-        //             });
-        //         } else {
-        //             ticketsHtml += "<li class='null'>Не заполнен</li>"
-        //         }
-        //         ticketsHtml += '</ul>';
-        //         if (data.res.ticketWins[i] && data.res.ticketWins[i] != 0) {
-        //             ticketsHtml += '<div class="yr-tt-tc">' + data.res.ticketWins[i] + '</div>'
-        //         }
-        //         ticketsHtml += '</li>';
-        //     }
-        //     $("#game-won").find('.yr-tb').html(ticketsHtml);
-        //     var lotteryHtml = '';
-
-        //     $(data.res.lottery.combination).each(function(id, num) {
-        //         lotteryHtml += '<li class="g-oc_li"><span class="g-oc_span">' + num + '</span></li>';
-        //         $("#game-won").find('li[data-num="' + num + '"]').addClass('won')
-        //     });
-
-        //     $("#game-won").find('.g-oc-b').html(lotteryHtml);
-        //     $("#game-won").find('.player-points').text(data.res.player.points);
-        //     $("#game-won").find('.player-money').text(data.res.player.money);
-        // }
+        }
 
 
     }

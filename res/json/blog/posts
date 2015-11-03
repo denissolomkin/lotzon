@@ -1,6 +1,9 @@
 {
    "cache": false,
-   "res":[
+   "res":{
+   "blog":{
+   "posts":
+   [
             {
                 "id": "1",
                 "img": "/res/img/post.jpg",
@@ -32,4 +35,6 @@
                 }
             }
 	    ]
+   }
+   }
 }

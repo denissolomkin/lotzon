@@ -1,6 +1,5 @@
 {
-   "status":1,
-   "message":"OK",
+   "cache": "session",
    "res":{
    "communication":{
    "messages":[

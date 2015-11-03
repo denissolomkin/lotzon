@@ -113,6 +113,88 @@
     & .ticket-number-sm:before 
       display: none!important
 
+
+#lottery-process
+  background-color: #A6D1D5
+
+
+
+.balls-end-game 
+  & .g-oc_li 
+    width: 105px
+    height: 105px
+    margin-right: 25px
+    float: left
+    font: 50px/100px Handbook-bold
+    color: #8f8e8e
+    text-align: center
+    letter-spacing: -2px
+    position: relative
+    overflow: hidden
+    
+    & .goc_li-sh
+      width: 105px
+      height: 105px
+      position: absolute
+      top: 0
+      left: 0
+      z-index: 1
+      background: url(../css/img/sprite.png)
+      background-position: -625px 0px
+      
+
+    & .goc_li-sh2
+      width: 105px
+      height: 105px
+      position: absolute
+      top: 0
+      left: 0
+      z-index: 3
+      background: url(../css/img/sprite.png)
+      background-position: -620px 274px
+
+    & .goc_li-nb 
+      background-color: #ffe400
+      width: 100px
+      height: 100px
+      border-radius: 50%
+      text-align: center
+      letter-spacing: -2px
+      position: absolute
+      left: 0
+      top: 0
+      z-index: 2
+      -webkit-transition: all 2500ms ease
+      -moz-transition: all 2500ms ease
+      -ms-transition: all 2500ms ease
+      -o-transition: all 2500ms ease
+      transition: all 2500ms cubic-bezier(0.175, 0.8, 0.9, 1.275)
+      -moz-transform: rotate(-90deg) translate(-50px, -100px)
+      -webkit-transform: rotate(-90deg) translate(-50px, -100px)
+      -o-transform: rotate(-90deg) translate(-50px, -100px)
+      -ms-transform: rotate(-90deg) translate(-50px, -100px)
+      transform: rotate(0deg) translate(-50px, -100px)
+
+      &.goc-nb-act 
+        -moz-transform: rotate(0) translateX(0) translateY(0)
+        -webkit-transform: rotate(0) translateX(0) translateY(0)
+        -o-transform: rotate(0) translateX(0) translateY(0)
+        -ms-transform: rotate(0) translateX(0) translateY(0)
+        transform: rotate(1440deg) translate(0, 0)
+
+      &.goc-nb-act-fake
+        -moz-transform: rotate(0) translateX(0) translateY(0)
+        -webkit-transform: rotate(0) translateX(0) translateY(0)
+        -o-transform: rotate(0) translateX(0) translateY(0)
+        -ms-transform: rotate(0) translateX(0) translateY(0)
+        transform: rotate(180deg) translate(100px, 100px)
+        -webkit-transition: all 1000ms ease
+        -moz-transition: all 1000ms ease
+        -ms-transition: all 1000ms ease
+        -o-transition: all 1000ms ease
+        transition: all 1000ms cubic-bezier(0.7, 0.8, 0.9, 1.5)
+
+
 .scroll-box
   height: auto
   

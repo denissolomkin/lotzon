@@ -1,6 +1,9 @@
 {
+    "cache": true,
+    "key": "lottery/history/354",
     "res": {
-        "id": "350",
+
+        "id": "354",
 "date":"13.06.2015",
 "combination":[37,8,32,16,10,22],
 "playerTotal":"4400",
