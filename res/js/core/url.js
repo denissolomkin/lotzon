@@ -3,6 +3,7 @@ $(function () {
     // URL Handler
     U = {
 
+        "href": null,
         "path": {
 
             "put": "/res/put/",
@@ -75,7 +76,10 @@ $(function () {
 
                 if (url) {
 
+
                     url = '/' + U.parse(url,'url');
+                    this.href = url;
+
                     if (url !== window.location.pathname) {
                         console.log(options.init);
                         D.log(['updateURL:', url], 'info');

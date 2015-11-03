@@ -11,12 +11,18 @@
         },
 
 
-        loadComments: function(options){
+        loadPostData: function(){
+
             R.push({
-                'box': $('.content-box-content:visible'),
-                'template': 'blog-posts',
+                'href': U.href+'/comments',
                 'url': false
             })
+
+            R.push({
+                'href': U.href+'/posts',
+                'url': false
+            })
+
         }
     }
 

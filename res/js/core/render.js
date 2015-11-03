@@ -35,7 +35,7 @@ $(function () {
 
              ---------------------------------------------------- */
 
-            options.template = options.template || U.parse(this.href);
+            options.template = options.template || U.parse(this.href || options.href);
             options.href = options.href || this.href || options.template; //U.parse();
             options.box = typeof options.box !== 'object'
                 ? (options.box ? $(options.box).first() : null)
@@ -265,6 +265,7 @@ $(function () {
                 $(options.replace).html($(options.replace, options.rendered).html()).hide().fadeIn(1000);
             }
 
+            U.update(options);
             R.afterHTML(options);
 
         },
@@ -313,7 +314,6 @@ $(function () {
 
             }
 
-            U.update(options);
             R.event.complete(options);
 
         },
