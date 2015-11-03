@@ -306,14 +306,11 @@ class Users extends PrivateArea
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
 
-                if($this->request()->post('phone'))
-                    $player->setPhone($this->request()->post('phone'));
-                if($this->request()->post('qiwi'))
-                    $player->setQiwi($this->request()->post('qiwi'));
-                if($this->request()->post('webmoney'))
-                    $player->setWebMoney($this->request()->post('webmoney'));
-                if($this->request()->post('yandexmoney'))
-                    $player->setYandexMoney($this->request()->post('yandexmoney'));
+                $player->setPhone($this->request()->post('phone'));
+                $player->setQiwi($this->request()->post('qiwi'));
+                $player->setWebMoney($this->request()->post('webmoney'));
+                $player->setYandexMoney($this->request()->post('yandexmoney'));
+
                 if($this->request()->post('bd'))
                     $player->setBirthday(strtotime($this->request()->post('bd')));
 
