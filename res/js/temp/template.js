@@ -1,36 +1,6 @@
 $(function () {
 
-    Handlebars.JavaScriptCompiler.prototype.nameLookup = function(parent, name, type) {
-        if (parent === "helpers") {
-            if (Handlebars.JavaScriptCompiler.isValidJavaScriptVariableName(name))
-                return parent + "." + name;
-            else
-                return parent + "['" + name + "']";
-        }
 
-        if (/^[0-9]+$/.test(name)) {
-            return parent + "[" + name + "]";
-        } else if (Handlebars.JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
-            // ( typeof parent.name === "function" ? parent.name() : parent.name)
-            return "(typeof " + parent + "." + name + " === 'function' ? " + parent + "." + name + "() : " + parent + "." + name + ")";
-        } else {
-            return "(typeof " + parent + "['" + name + "'] === 'function' ? " + parent + "['" + name + "']() : " + parent + "." + name + ")";
-        }
-    };
-
-    Handlebars.registerHelper('player', function(fn, options) {
-
-        console.log(fn);
-        var response = eval("Player." + fn.toString());
-
-        console.log(response);
-
-        return typeof response === 'function' && response() || response;
-    });
-
-    Handlebars.registerHelper('i18n', function(key) {
-        return M.i18n(key);
-    });
 
     /*
     Handlebars.registerHelper('list', function(items, options) {

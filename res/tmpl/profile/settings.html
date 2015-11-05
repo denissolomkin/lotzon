@@ -1,5 +1,5 @@
 <div class="content-box profile-settings">
-    <div class="content-box-header back">{{#i18n}}title-profile-settings{{/i18n}}</div>
+    <div class="content-box-header back">{{i18n "title-profile-settings"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item settings">
@@ -27,18 +27,12 @@
 
                 <div class="s-lang">
                     <div class="title">Язык сайта</div>
+                    {{#each language.available}}
                     <label class="radio-text">
-                        <input type="radio" name="site-lang" value="1" checked>
-                        <span>Русский</span>
+                        <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
+                        <span>{{.}}</span>
                     </label>
-                    <label class="radio-text">
-                        <input type="radio" name="site-lang" value="2">
-                        <span>Украинский</span>
-                    </label>
-                    <label class="radio-text">
-                        <input type="radio" name="site-lang" value="3">
-                        <span>English</span>
-                    </label>
+                    {{/each}}
                 </div>
 
                 <div class="s-email">
@@ -53,7 +47,7 @@
                     </label>
                 </div>
 
-                <button type="submit" class="settings-btn">Сохранить</button>
+                <button type="submit" class="settings-btn">{{i18n "button-save"}}</button>
             </form>
 
         </div><!-- .content-box-item -->

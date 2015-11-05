@@ -39,10 +39,21 @@
         updateBilling: function (data) {
             Player.extend(data);
             R.push({
-                url: false,
                 template: 'profile-billing',
                 replace: '.ci-personal-form-values'
             });
+
+        },
+
+        changeLanguage: function (data) {
+
+            var selectedLang = $('input', this).val(),
+                isLanguageChange = (selectedLang !== Player.language.current);
+
+            Player.language.current = selectedLang;
+
+            if (isLanguageChange)
+                Cache.localize();
 
         },
 
@@ -59,7 +70,6 @@
         updateDetails: function (data) {
             Player.extend(data);
             R.push({
-                url: false,
                 template: 'profile-details',
                 replace: '.ci-personal-form-values'
             });
@@ -69,7 +79,6 @@
         updateSettings: function (data) {
             Player.extend(data);
             R.push({
-                url: false,
                 template: 'profile-settings',
                 replace: '.ci-personal-form-values'
             });

@@ -464,7 +464,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (!value && value !== 0) {
 	    return true;
 	  } else if (isArray(value) && value.length === 0) {
-	    return true;
+          return true;
+      } else if (typeof value === 'object') {
+          return Object.getOwnPropertyNames(value).length === 0;
 	  } else {
 	    return false;
 	  }

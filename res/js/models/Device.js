@@ -1,18 +1,16 @@
-$(function () {
-
-    // DETECT DEVICE ========================== //
+(function () {
 
     Device = {
 
         hide: function (event) {
-            Menu.hide(event);
+            Navigation.hide(event);
             Comments.hide(event);
             Profile.hideFavorite(event);
 
         },
 
         resize: function (event) {
-            Menu.switch();
+            Navigation.switch();
             Ticket.setBallsMargins();
             Carousel.initOwl();
             Cards.setupForDevices();
@@ -22,7 +20,7 @@ $(function () {
         scroll: function (event) {
             Device.getScroll();
             Device.switchGoTop();
-            Menu.fix();
+            Navigation.fix();
 
         },
 
@@ -105,4 +103,4 @@ $(function () {
     }
 
 
-});
+})();

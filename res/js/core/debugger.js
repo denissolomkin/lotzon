@@ -7,15 +7,12 @@ $(function () {
     // Debugger
     D = {
 
-        "isEnabled": {
-            "info": true,
-            "warn": true,
-            "error": true,
-            "log": true,
-            "clean": true
-        },
+        "config": {},
 
-        "init": function () {
+        "init": function (init) {
+
+            D.log('Debugger.init', 'func');
+            Object.deepExtend(this, init);
 
             $.ajaxSetup({
                 error: function (xhr, status, message) {
@@ -33,10 +30,14 @@ $(function () {
 
             type = type || 'log';
 
-            if (D.isEnabled[type]) {
-                var d = new Date();
+            var d = new Date(),
+                pre = '',
+                output = '';
 
-                var output = '';
+            if (D.isEnable(type)) {
+
+                if(!console[type])
+                    type = 'log';
 
                 if (log && typeof log == 'object' && log.length) {
 
@@ -49,8 +50,14 @@ $(function () {
                     output = log && JSON.stringify(log).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40);
                 }
 
-                console[type](d.toLocaleTimeString('ru-RU') + ' ' + output);
+                console[type](d.toLocaleTimeString('ru-RU') + ' ' + pre + output);
             }
+
+        },
+
+        "isEnable": function(key){
+
+            return D["config"] && D["config"][key];
 
         },
 
@@ -61,24 +68,24 @@ $(function () {
                 : message;
 
             D.log(message, 'error');
-            alert(message);
+            D.isEnable("alert") && alert(message);
 
-            if (D.isEnabled.clean)
+            if (D.isEnable("clean"))
                 $(".modal-error").remove();
 
             $(".modal-loading").remove();
 
             Form.stop();
-            R.event.stop();
+            R.isRendering && R.event.stop();
 
             var box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first(),
-                error = $('<div class="modal-error"><div><span>' + M.i18n('title-error') + '</span>' + message + '</div></div>'),
+                error = $('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>'),
                 buttons = null,
                 errors = null;
 
             box.append(error);
 
-            if (D.isEnabled.clean)
+            if (D.isEnable("clean"))
                 if (errors = $(".modal-error"))
                     setTimeout(function () {
                         errors.fadeOut(500);

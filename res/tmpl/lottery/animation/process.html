@@ -1,55 +1,60 @@
 <!-- END BLOCK -->
 <div id="lottery-process" class="pop-box">
-  <ul class="balls-end-game">
-   {{#combination}}
-  <li class="g-oc_li">
-    <div class="goc_li-nb">
-      <span class="g-oc_span unfilled"></span>
-    </div>
-    <div class="goc_li-sh"></div>
-    <div class="goc_li-sh2"></div>
-  </li>
-   {{/combination}}
-   </ul>
-  <section class="lottery-amimation-box">
-    <div class="ghd-tickets">
-      <ul>
-        {{#tickets}}
-        <li class="clearfix">
-          <span>{{i18n "title-ticket"}} N°{{num}} </span>
-          <ul>
-              {{#combination}}
-              <li class="filled-ball">
-                {{ball}}
-              </li>
-              {{/combination}}
-              {{^combination}}
-              <li>
-                не заполнен
-              </li>
-              {{/combination}}
-              <li class="hide">
-                {{prize}} {{currency}}
-              </li>
+    <ul class="balls-end-game">
+        {{#combination}}
+        <li class="g-oc_li unfilled">
+            {{#each this}}
+            <div class="goc_li-nb">
+                <span class="g-oc_span">{{.}}</span>
+            </div>
+            {{/each}}
+            <div class="goc_li-sh"></div>
+            <div class="goc_li-sh2"></div>
+        </li>
+        {{/combination}}
+    </ul>
+    <section class="lottery-amimation-box">
+        <div class="ghd-tickets">
+
+            {{#if tickets}}
+            <ul>
+                {{#tickets}}
+                <li class="clearfix">
+                    <span>{{i18n "title-ticket"}} N°{{num}} </span>
+                    <ul>
+                        {{#combination}}
+                        <li class="filled-ball" data-num='{{ball}}'>
+                            {{ball}}
+                        </li>
+                        {{/combination}}
+                        {{^combination}}
+                        <li>
+                            не заполнен
+                        </li>
+                        {{/combination}}
+                        <li>
+                            {{prize}} {{currency}}
+                        </li>
+                    </ul>
+                </li>
+                {{/tickets}}
             </ul>
-          </li>    
-          {{/tickets}}
-        </ul>
 
-        {{#win}}
-        <div class="ghd-won hide">Ваш выигрыш:
-        {{prize}} {{currency}} &nbsp;
-        {{/win}}
+            {{#if win}}
+            <div class="ghd-text ghd-won">Ваш выигрыш:
+                {{#each win}}
+                {{prize}} {{currency}} &nbsp;
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
+            {{/if}}
+
+            {{else}}
+            <div class="ghd-text">Вы не принимали участия в розыгрыше</div>
+            {{/if}}
+
         </div>
-
-        {{^win}}
-          <div class="ghd-won">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
-        {{/win}}
-
-        {{^tickets}}
-          <div class="ghd-won">Вы не принимали участия в розыгрыше</div>
-        {{/tickets}}
-      </div>
-  </section>
+    </section>
 </div>
 <!-- END END BLOCK -->

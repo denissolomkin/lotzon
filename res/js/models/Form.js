@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
     Form = {
 
@@ -104,7 +104,7 @@ $(function () {
                 return Form;
 
             var $button = this;
-            var $status = $('<div class="status">' + M.i18n(message) + '</div>');
+            var $status = $('<div class="status">' + Cache.i18n(message) + '</div>');
 
             $button.fadeOut(200).delay(2400).fadeIn(200);
             $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function () {
@@ -165,4 +165,4 @@ $(function () {
 
     }
 
-});
+})();

@@ -1,13 +1,8 @@
 (function () {
 
-    /* ========================================================= */
-    /*                      CALLBACKS
-     /* ========================================================= */
-
     Callbacks = {
 
         "init": function () {
-
             // handlers
             $(window).on('resize', Device.resize);
             $(window).on('scroll', Device.scroll);
@@ -41,6 +36,7 @@
 
             $(document).on('click', '.ae-current-combination li', Profile.openFavorite);
             $(document).on('click', '.ae-combination-box li', Profile.selectFavorite);
+            $(document).on('click', '.s-lang .radio-text', Profile.changeLanguage);
 
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', GameAction.ready);
@@ -50,6 +46,10 @@
 
         "get": {
 
+            "menu-slider": Slider.after,
+            "menu-balance": Navigation.check,
+            "menu-navigation": Navigation.check,
+
             "blog": Blog.init,
             "blog-post-view": Blog.loadPostData,
             "lottery": Lottery.init,
@@ -57,7 +57,9 @@
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
             "communications-messages": Message.init,
-            "lottery-history-view": Lottery.view
+            "lottery-history-view": Lottery.view,
+            "lottery-ticket-item": Ticket.activate,
+            "lottery-ticket-tabs": Ticket.switch
 
         },
 

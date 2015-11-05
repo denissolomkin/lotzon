@@ -34,10 +34,7 @@
                     box: '.ticket-tabs',
                     template: 'lottery-ticket-tabs',
                     json: Tickets,
-                    url: false,
-                    after: function () {
-                        $(I.TicketTabs).not('.done').first().click();
-                    }
+                    url: false
                 });
 
             }
@@ -59,7 +56,7 @@
 
                         ? $(this)
                         : ($(I.TicketTabs).not('.done').first() || $(I.TicketTabs).first());
-            console.log('meaning this', $(this));
+
                 if (!box.length)
                     return;
 
@@ -68,14 +65,12 @@
 
                 Tickets.selectedTab = 1 + tab.index();
 
-            
                 R.push({
                     tab: tab,
-                    box: box,
+                    replace: '.ticket-item',
                     template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable'+Tickets.selectedTab,
                     json: Tickets,
-                    url: false,
-                    after: Ticket.activate
+                    url: false
                 });
 
             }

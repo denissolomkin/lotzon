@@ -43,41 +43,7 @@
             <a href="/blog" class="header-logo"></a>
 
             <!-- MENU -->
-            <nav class="menu">
-
-<? $menu = array(
-                    'menu-main' => array(
-                        '/blog' => 'Блог',
-                        '/lottery' => 'Лотерея',
-                        '/games' => 'Игры',
-                        '/communication' => 'Общение',
-                        '/users' => 'Друзья',
-                        '/prizes' => 'Витрина',
-                    ),
-
-                    'menu-profile' => array(
-                        '/profile/details' => 'Контактные данные',
-                        '/profile/billing' => 'Платежные данные',
-                        '/profile/settings' => 'Настройки',
-                        '/reports/referrals' => 'Рефералы',
-                        '/profile/bonuses' => 'Бонусы',
-                        '/logout' => 'Выйти',
-                    ),
-
-                    'menu-more' => array(
-                        '/support/feedback' => 'Обратная связь',
-                        '/support/rules' => 'Правила',
-                        '/support/help' => 'Помощь',
-                    )
-                );
-    foreach ($menu as $ul => $items):?>
-              <ul class="<?= $ul ?>">
-<?      foreach ($items as $href => $title): ?>
-                <li><a<?= ($href === $page ? ' class="active"' : '') ?> href="<?= !is_numeric($href) ? $href : '' ?>"><?= $title ?></a></li>
-<?      endforeach; ?>
-              </ul>
-<?  endforeach; ?>
-            </nav>
+            <nav class="menu"></nav>
             <!-- end of MENU -->
 
             <div class="menu-btns">
@@ -101,7 +67,7 @@
             <div class="inf-slider"></div>
 
             <div class="balance"></div>
-
+     <button class="tmp_but" onclick="Lottery.prepareData()">Start</button>
         </div>
         <!-- .header-right -->
 

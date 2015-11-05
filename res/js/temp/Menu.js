@@ -4,26 +4,38 @@
 
         init: function(){
 
+            D.log('Menu.init','func');
+
+            // Navigation menu
+            R.push({
+                'box': '.menu',
+                'template': 'menu-navigation',
+                'json': Menu
+            });
+
             // Balance menu
             R.push({
                 'box': '.balance',
                 'template': 'menu-balance',
-                'json': Player,
-                'url': false,
-                'after': function () {
-
-                    $("header a").on('click', Navigation.loadPage);
-                    $(document).on('click', I.menuBtnItem, Menu.click);
-                    $('[href="/' + Navigation.path[1] + '"]').first().click();
-                    Menu.switch();
-
-                }
+                'json': Player
             });
+
+        },
+
+        after: function () {
+
+
+            D.log('Menu.after','func');
+            $("header a").on('click', Navigation.loadPage);
+            $(document).on('click', I.menuBtnItem, Menu.click);
+            $('[href="/' + Navigation.path[1] + '"]').first().click();
+            Menu.switch();
 
         },
 
         click: function (event) {
 
+            D.log('Menu.click','func');
             event.stopPropagation();
 
             var isActive = $(this).hasClass('active'),
@@ -71,6 +83,7 @@
 
         switch: function () {
 
+            D.log('Menu.switch','func');
             if (Device.isMobile()) {
                 $(I.menuMore).removeClass('menu-item');
                 $(I.menuProfile).removeClass('menu-item');
@@ -87,6 +100,7 @@
 
         hide: function () {
 
+            D.log('Menu.hide','func');
             $(I.menuProfile + ":visible").fadeOut(200);
             $(I.menuBalance + ":visible").fadeOut(200);
             $(I.menuMore + ":visible").fadeOut(200);
@@ -100,6 +114,7 @@
         },
 
         fix: function () {
+            D.log('Menu.fix','func');
             (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)
                 ? $('body').addClass('fixed')
                 : $('body').removeClass('fixed');

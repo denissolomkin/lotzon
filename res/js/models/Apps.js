@@ -1,6 +1,10 @@
-$(function () {
+(function () {
 
-    $.extend(Apps,{
+    Apps = {
+
+        audio: [],
+        modes: [],
+        variations: [],
 
         playAudio: function (key) {
             if (!$.cookie("audio-off")) {
@@ -11,8 +15,8 @@ $(function () {
                     $('<audio src=""></audio>').attr('src', 'res/audio/' + key).trigger("play");
                 }
             }
-        },
+        }
 
-    });
+    };
 
-});
+})();

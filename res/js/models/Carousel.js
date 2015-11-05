@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
     Carousel = {
         Owl: null,
@@ -22,7 +22,11 @@ $(function () {
                     }
                 }
             }
+        },
+
+        destroy: function(){
+
         }
     }
 
-});
+})();

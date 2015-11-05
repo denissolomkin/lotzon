@@ -1,33 +1,37 @@
-﻿					<div class="ghd-tickets">
+﻿<div class="ghd-tickets">
 
-						<table>
-                            {{#tickets}}
-							<tr>
-								<td><span>{{i18n "title-ticket"}} </span>N°{{num}}</td>
-                                {{#combination}}
-                                <td>
-									<span class="ghd-ticket-number{{^win}} false{{/win}}">{{ball}}</span>
-								</td>
-                                {{/combination}}
-                                {{^combination}}
-                                <td colspan="6">
-                                    не заполнен
-                                </td>
-                                {{/combination}}
-								<td>{{prize}} {{currency}}</td>
-							</tr>
-                            {{/tickets}}
-						</table>
+    {{#if tickets}}
+    <table>
+        {{#tickets}}
+        <tr>
+            <td><span>{{i18n "title-ticket"}} </span>N°{{num}}</td>
+            {{#combination}}
+            <td>
+                <span class="ghd-ticket-number{{^win}} false{{/win}}">{{ball}}</span>
+            </td>
+            {{/combination}}
+            {{^combination}}
+            <td colspan="6">
+                не заполнен
+            </td>
+            {{/combination}}
+            <td>{{prize}} {{currency}}</td>
+        </tr>
+        {{/tickets}}
+    </table>
 
-                        {{#win}}
-						<div class="ghd-won">Ваш выигрыш:
-                            {{#win}}
-                            {{prize}} {{currency}} &nbsp;
-                            {{/win}}
-                        </div>
-                        {{/win}}
+    {{#if win}}
+    <div class="ghd-won">Ваш выигрыш:
+        {{#each win}}
+        {{prize}} {{currency}} &nbsp;
+        {{/each}}
+    </div>
+    {{else}}
+    <div class="ghd-won">Ничего не выиграно</div>
+    {{/if}}
 
-                        {{^tickets}}
-                        <div class="ghd-won">Вы не принимали участия в розыгрыше</div>
-                        {{/tickets}}
-					</div>
+
+    {{else}}
+    <div class="ghd-won">Вы не принимали участия в розыгрыше</div>
+    {{/if}}
+</div>

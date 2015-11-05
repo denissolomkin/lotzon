@@ -71,7 +71,7 @@ $(function () {
 
             var url = null;
 
-            if (options.url !== false) {
+            if (options.url === true) {
                 url = typeof options.href != 'object' ? options.href : options.init.template
 
                 if (url) {

@@ -1,5 +1,13 @@
 (function () {
 
+    function extend(Child, Parent) {
+        var F = function() {};
+        F.prototype = Parent.prototype;
+        Child.prototype = new F();
+        Child.prototype.constructor = Child;
+        Child.superclass = Parent.prototype;
+    }
+
 
     isNumeric = function (mixed_var) {
         //   example 1: isNumeric(186.31); returns 1: true
@@ -18,6 +26,19 @@
         return this[this.length - 1];
     };
 
+    Array.prototype.shuffle = function() {
+        var i = this.length, j, temp;
+        var rnd=Math.random;
+        if ( i == 0 ) return this;
+        while ( --i ) {
+            j = ( rnd() * ( i + 1 ) )|0;
+            temp = this[i];
+            this[i] = this[j];
+            this[j] = temp;
+        }
+        return this;
+    }
+
     Storage.prototype.setObj = function(key, obj) {
         return this.setItem(key, JSON.stringify(obj))
     };
@@ -29,6 +50,18 @@
     // not very sure if this work cross-frame
     Object.isObjectLiteral = function(object){
         return object && object.constructor && object.constructor.name === 'Object';
+    }
+
+    function isEmpty(value) {
+        if (!value && value !== 0) {
+            return true;
+        } else if (isArray(value) && value.length === 0) {
+            return true;
+        } else if (typeof value === 'object') {
+            return Object.getOwnPropertyNames(value).length === 0;
+        } else {
+            return false;
+        }
     }
 
     Object.deepExtend = function(destination, source) {

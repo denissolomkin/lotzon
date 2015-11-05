@@ -33,8 +33,7 @@
     cursor: pointer
     display: block
 
-
-    &.unavailable 
+    &.unavailable
       background: #8f8e8e
 
       &:hover
@@ -47,7 +46,7 @@
       color: #b2d0d4
       text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4)
 
-      &:after 
+      &:after
         content: ""
         display: inline-block
         background: url(img/sprite.png) center center no-repeat
@@ -58,23 +57,21 @@
         right: 12px
         top: 12px
 
-      &:before 
+      &:before
         display: none
 
       &:hover .ticket-number-sm:before
-        display: none  
-
-      & .ticket-number-sm:before 
         display: none
 
-
+      & .ticket-number-sm:before
+        display: none
 
     &.active
       height: 40px
       line-height: 40px
       color: #464444
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4)
-      box-shadow: 2px 2px 4px rgba(0,0,0,0.5)
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
       background: #B7CFD3
 
       & .ticket-number-sm
@@ -85,10 +82,10 @@
       color: #4c4c4c
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4)
       width: 120px
-      
-      &.active 
+
+      &.active
         color: #4c4c4c
-      
+
       &:hover
         color: #4c4c4c
 
@@ -102,25 +99,26 @@
         position: static
 
     & .ticket-number-sm
-      display: inline!important
-      width: auto!important
-      height: auto!important
-      background: transparent!important
-      line-height: 1!important
-      border-radius: 0!important
-      position: static!important
+      display: inline !important
+      width: auto !important
+      height: auto !important
+      background: transparent !important
+      line-height: 1 !important
+      border-radius: 0 !important
+      position: static !important
 
-    & .ticket-number-sm:before 
-      display: none!important
-
+    & .ticket-number-sm:before
+      display: none !important
 
 #lottery-process
   background-color: #A6D1D5
+  & .ghd-won
+    display: none
+  & .ghd-fale
+    display: none
 
-
-
-.balls-end-game 
-  & .g-oc_li 
+.balls-end-game
+  & .g-oc_li
     width: 105px
     height: 105px
     margin-right: 25px
@@ -131,7 +129,7 @@
     letter-spacing: -2px
     position: relative
     overflow: hidden
-    
+
     & .goc_li-sh
       width: 105px
       height: 105px
@@ -141,7 +139,6 @@
       z-index: 1
       background: url(../css/img/sprite.png)
       background-position: -625px 0px
-      
 
     & .goc_li-sh2
       width: 105px
@@ -149,11 +146,11 @@
       position: absolute
       top: 0
       left: 0
-      z-index: 3
+      z-index: 100
       background: url(../css/img/sprite.png)
       background-position: -620px 274px
 
-    & .goc_li-nb 
+    & .goc_li-nb
       background-color: #ffe400
       width: 100px
       height: 100px
@@ -162,43 +159,22 @@
       letter-spacing: -2px
       position: absolute
       left: 0
-      top: 0
+      top: -210px
       z-index: 2
-      -webkit-transition: all 2500ms ease
-      -moz-transition: all 2500ms ease
-      -ms-transition: all 2500ms ease
-      -o-transition: all 2500ms ease
-      transition: all 2500ms cubic-bezier(0.175, 0.8, 0.9, 1.275)
-      -moz-transform: rotate(-90deg) translate(-50px, -100px)
-      -webkit-transform: rotate(-90deg) translate(-50px, -100px)
-      -o-transform: rotate(-90deg) translate(-50px, -100px)
-      -ms-transform: rotate(-90deg) translate(-50px, -100px)
-      transform: rotate(0deg) translate(-50px, -100px)
-
-      &.goc-nb-act 
-        -moz-transform: rotate(0) translateX(0) translateY(0)
-        -webkit-transform: rotate(0) translateX(0) translateY(0)
-        -o-transform: rotate(0) translateX(0) translateY(0)
-        -ms-transform: rotate(0) translateX(0) translateY(0)
-        transform: rotate(1440deg) translate(0, 0)
-
-      &.goc-nb-act-fake
-        -moz-transform: rotate(0) translateX(0) translateY(0)
-        -webkit-transform: rotate(0) translateX(0) translateY(0)
-        -o-transform: rotate(0) translateX(0) translateY(0)
-        -ms-transform: rotate(0) translateX(0) translateY(0)
-        transform: rotate(180deg) translate(100px, 100px)
-        -webkit-transition: all 1000ms ease
-        -moz-transition: all 1000ms ease
-        -ms-transition: all 1000ms ease
-        -o-transition: all 1000ms ease
-        transition: all 1000ms cubic-bezier(0.7, 0.8, 0.9, 1.5)
-
+      display: block
+      &.random-ball
+        display: block
+        @include transition(all 800ms ease)
+        top: 210px
+        &:first-child
+          display: block
+          @include transition(all 800ms ease)
+          top: 0px
 
 .scroll-box
   height: auto
-  
-.is-done 
+
+.is-done
   padding-top: 0
 
 .balls-count
@@ -211,8 +187,8 @@
 
 .ticket-numbers-wrapper
   height: auto
-  overflow: visible       
-    
+  overflow: visible
+
 .ticket-tabs li:hover
   -webkit-transform: translate(0, -8px)
   -moz-transform: translate(0, -8px)
@@ -221,11 +197,9 @@
   -o-transition: all 0.1s ease-in-out
   -webkit-transition: all 0.1s ease-in-out
   transition: all 0.1s ease-in-out
-       
 
 .ticket-item
   padding: 37px 30px 27px !important
-
 
 .ticket-numbers
   height: auto
@@ -236,19 +210,19 @@
   & li
     margin: 0 30px 21px 0 !important
 
-.ticket-actions 
+.ticket-actions
   margin-left: 0 !important
 
 .ticket-actions li
   margin: 0 30px 0 0 !important
 
-.add-ticket 
+.add-ticket
   margin-right: 0 !important
 
-.balls-count 
+.balls-count
   bottom: 43px
 
-.ticket-btn 
+.ticket-btn
   padding: 0 40px
 
 // MATCHES-INF ------------------------------ //
@@ -256,5 +230,5 @@
 .matches-inf-wrapper
   margin-bottom: 30px
 
-#lottery-process 
+#lottery-process
   padding: 61px 0 0 170px
