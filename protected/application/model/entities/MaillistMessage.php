@@ -10,8 +10,8 @@ class MaillistMessage extends Entity
         '%unsubscribe%' => array(
             'description' => 'ссылка отписывания от рассылки',
         ),
-        '%nickname%'   => array(
-            'description' => 'ник',
+        '%name%' => array(
+            'description' => 'имя/ник',
         ),
     );
 
@@ -199,8 +199,12 @@ class MaillistMessage extends Entity
                     case '%unsubscribe%':
                         $render['html'] = str_replace($macros, 'http://lotzon.com/unsubscribe/?email='.$player->getEmail().'&hash='.$player->getSalt(), $render['html']);
                         break;
-                    case '%nickname%':
-                        $render['html'] = str_replace($macros, $player->getNicName(), $render['html']);
+                    case '%name%':
+                        $name = $player->getName();
+                        if ($name=='') {
+                            $name = $player->getNicName();
+                        }
+                        $render['html'] = str_replace($macros, $name, $render['html']);
                         break;
                     default:
                         $render['html'] = str_replace($macros, '', $render['html']);
