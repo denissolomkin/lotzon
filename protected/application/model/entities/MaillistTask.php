@@ -281,7 +281,7 @@ class MaillistTask extends Entity
         $emails  = $this->getEmails();
 
         $message = MaillistModel::instance()->getMessage($this->getMessageId());
-        $from      = $message->getSettings()['from'];
+        $from    = $message->getSettings()['from'];
 
         $mailer = new PHPMailer;
         $mailer->isSMTP();
@@ -316,6 +316,7 @@ class MaillistTask extends Entity
                 $mailer->addCustomHeader("List-Unsubscribe", '<mailto:'.Config::instance()->unsubscribeMail.'?body=unsubscribe.'.$player->getSalt().'>, <http://lotzon.com/unsubscribe/?email='.$address.'&hash='.$player->getSalt().'>');
             }
             $mailer->addCustomHeader("Precedence: bulk");
+            $mailer->addCustomHeader("List-id: ".$this->getId());
 
             $mailer->addAddress($address);
             $mailer->Subject    = $header;
