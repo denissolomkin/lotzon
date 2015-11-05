@@ -1,0 +1,9 @@
+<nav class="menu">
+    {{#each menu}}
+    <ul class="{{@key}}">
+        {{#each this}}
+            <li><a href="/{{.}}">{{i18n "menu" .}}</a></li>
+        {{/each}}
+    </ul>
+    {{/each}}
+</nav>

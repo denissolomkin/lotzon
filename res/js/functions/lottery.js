@@ -28,7 +28,7 @@
                 return false;
 
             var extendedTickets = {
-                    win: [],
+                    win: {},
                     tickets: []
                 },
                 extendedTicket,
@@ -82,6 +82,7 @@
                     extendedTickets.tickets.push(extendedTicket)
                 }
 
+            console.log(extendedTickets);
             return extendedTickets;
         },
 
@@ -156,8 +157,7 @@
                 href: 'lottery-tickets-' + lotteryId,
                 format: Lottery.extendTickets,
                 arguments: [Lottery.summary, Lottery.data.combination],
-                box: '.ghd-tickets',
-                url: false
+                box: '.ghd-tickets'
             })
 
         },
@@ -167,9 +167,8 @@
             var href = id ? '/lottery/history/' + id : '/lastLottery',
                 format = function (json) {
 
-                    console.log(json);
-
                     Lottery.data = json;
+
                     switch (true) {
                         case Lottery.data.id == Tickets.lastLotteryId:
                         default:
@@ -181,30 +180,30 @@
                             Lottery.update();
                             break;
                         case Lottery.data.id == Tickets.lastLotteryId + 1:
+                            console.log('prepareData: ', Lottery.data);
                             Lottery.prepareTickets(Lottery.data.id);
                             break;
                     }
-                    console.log('prepareData: ', Lottery.data);
                 };
 
             R.json({
                 href: href,
                 format: format
             });
-
-
         },
 
         prepareTickets: function (id) {
 
             var href = 'lottery-tickets-' + id,
-                json = (id == Tickets.lastLotteryId + 1)
-                    ? {key: href, cache: "session", res: Tickets.filledTickets}
-                    : null,
+                json = ((id == Tickets.lastLotteryId + 1) ? {
+                    key: href,
+                    cache: "session",
+                    res: Tickets.filledTickets
+                } : null),
                 format = function (json) {
                     Lottery.tickets = json;
-                    Lottery.renderAnimation();
                     console.log('prepareTickets: ', Lottery.tickets);
+                    Lottery.renderAnimation();
                 };
 
             R.json({
@@ -218,14 +217,32 @@
 
         renderAnimation: function () {
 
-            var json = $.extend(
-                {},
-                this.data,
-                Lottery.extendTickets(
-                    this.tickets,
-                    [Lottery.getSummary(this.data), this.data.combination]
-                )
-            );
+            var json = this.data,
+                arrRandom = [],
+                renderBalls = {'combination': []},
+                tickets = Lottery.extendTickets(
+                    this.tickets, [Lottery.getSummary(this.data), this.data.combination]
+                ),
+                combination = this.data.combination;
+
+            Object.deepExtend(json,tickets);
+
+            for (var i = 1; i <= Tickets.totalBalls; i++)
+                if (combination.indexOf(i) == -1)
+                    arrRandom.push(i);
+
+            while (combination.length) {
+                var balls = [combination.shift()];
+                for (var y = 0; y < Tickets.requiredBalls - combination.length; y++) {
+                    arrRandom.shuffle();
+                    for (var i = 0; i < 10; i++) {
+                        balls.push(arrRandom[i]);
+                    }
+                }
+                renderBalls.combination.push(balls);
+            }
+
+            Object.deepExtend(json,renderBalls);
 
             console.log('renderAnimation: ', json);
 
@@ -233,82 +250,58 @@
                 box: '.container',
                 json: json,
                 template: 'lottery-animation-process',
-                after: Lottery.runAnimation,
-                url: false
+                after: Lottery.runAnimation
             })
         },
 
-        runAnimation: function() {
+        runAnimation: function () {
 
-            var combination = Lottery.data.combination,
-                ballInterval,
-                arrRandom = [],
-                timer = {
-                    fake: 200,
-                    ball: 1000,
-                    tries: 5
-                };
+            var randomInterval,
+                readyBalls = [];
 
-            for(var i = 1; i <= Tickets.totalBalls; i++) {
-                arrRandom.push(i);
-            }
-            var li;
-            var spn;
-            fakeAnimation = function() {
+            randomInterval = window.setInterval(function () {
 
+                if (readyBalls.length === Tickets.requiredBalls) {
 
-                var ball = arrRandom[Math.ceil(Math.random() * (arrRandom.length)-1)]
+                    D.log('Lottery.runAnimation: clearInterval','func');
 
+                    window.clearInterval(randomInterval);
 
-                spn = $("#lottery-process .g-oc_span.unfilled:first");
-                spn.text(ball);
-                li = spn.parents('.g-oc_li');
-                li.find('.goc_li-nb').addClass('goc-nb-act');
-
-
-            }
-
-            ballAnimation = function() {
-
-
-                var ball = combination.shift();
-
-
-                arrRandom.splice(arrRandom.indexOf(ball),1);
-                spn = $("#lottery-process .g-oc_span.unfilled:first");
-                spn.text(ball);
-                var li = spn.parents('.g-oc_li');
-
-                spn.removeClass('unfilled');
-
-                window.setTimeout(function() {
-                    $("#lottery-process").find('li[data-num="' + ball + '"]').addClass('won')
-                }, 1000);
-
-                if (!combination.length) {
-                    window.clearInterval(fakeInterval);
-                    window.clearInterval(ballInterval);
-                    window.setTimeout(function() {
-                        if ($("#lottery-process").find('li.won').length) {
-                            // showWinPopup(data);
-                        } else {
-                            // showFailPopup(data);
-                        }
-                    }, 2000);
+                    if ($("#lottery-process").find('li.won').length) {
+                        $('.ghd-won').css({
+                            'display': 'block'
+                        });
+                    } else {
+                        $('.ghd-won').css({
+                            'display': 'block'
+                        });
+                    }
                 }
-            }
 
+                $.each($('.g-oc_li'), function (index, li) {
 
-            window.setTimeout(function() {
-                // ballAnimation();
-                fakeInterval = window.setInterval(fakeAnimation, timer.fake);
-                ballInterval = window.setInterval(ballAnimation, timer.fake * timer.tries + timer.ball);
-            }, 1000);
-            console.log('timer.fake * timer.tries + timer.ball', timer.fake * timer.tries + timer.ball)
+                    if (readyBalls.indexOf(index) !== -1)
+                        return true;
+
+                    var ball = $('.goc_li-nb', li).not('.random-ball').last();
+
+                    if (ball.length) {
+                        ball.addClass('random-ball');
+                    } else {
+                        readyBalls.push(index);
+                        ball = parseInt($('.goc_li-nb', li).first().text());
+
+                        window.setTimeout(function() {
+                            $("#lottery-process").find('li[data-num="' + ball + '"]').addClass('won')
+                        }, 1000);
+                    }
+
+                })
+
+            }, 300);
 
         }
-
-
     }
+
 
 })();

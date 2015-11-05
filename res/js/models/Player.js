@@ -1,23 +1,65 @@
-$(function () {
+(function () {
 
+    Handlebars.registerHelper('player', function(fn, options) {
 
-    // ======================================= //
+        console.log(options);
+        options = typeof options === 'string' ? options : null;
 
-    $.extend(Player, {
+        var response = eval("Player." + fn.toString());
+        D.log('Player.'+fn+(options?'('+options+')':''),'func');
+        return typeof response === 'function' && response(options) || response;
+    });
 
+    Handlebars.registerHelper({
+        eq: function (v1, v2) {
+            console.log(v1, v2);
+            return v1 === v2;
+        },
+        ne: function (v1, v2) {
+            return v1 !== v2;
+        },
+        lt: function (v1, v2) {
+            return v1 < v2;
+        },
+        gt: function (v1, v2) {
+            return v1 > v2;
+        },
+        lte: function (v1, v2) {
+            return v1 <= v2;
+        },
+        gte: function (v1, v2) {
+            return v1 >= v2;
+        },
+        and: function (v1, v2) {
+            return v1 && v2;
+        },
+        or: function (v1, v2) {
+            return v1 || v2;
+        }
+    });
+
+    Player = {
+
+        init: function(init){
+
+            D.log('Player.init', 'func');
+            Object.deepExtend(this, init);
+
+            return this;
+        },
 
         getCurrency: function (currency) {
 
             switch (currency) {
                 case 'money':
                 default:
-                    currency = this.currency.iso;
+                    currency = Player.currency.iso;
                     break;
                 case 'points':
-                    currency = M.i18n('title-points');
+                    currency = Cache.i18n('title-points');
                     break;
                 case 'lotzon':
-                    currency = M.i18n('title-lotzon');
+                    currency = Cache.i18n('title-lotzon');
                     break;
             }
 
@@ -33,10 +75,11 @@ $(function () {
 
             var format = null;
 
-            if ($.inArray(part, ["iso", "one", "few", "many"]) >= 0) {
+            if (["iso", "one", "few", "many"].indexOf(part) > -1) {
                 var format = part;
                 part = null;
             }
+
 
             if (!value || value == '' || value == 'undefined')
                 value = null;
@@ -117,10 +160,6 @@ $(function () {
             return calc_points;
         },
 
-        extend: function(source) {
-            Object.deepExtend(this, source);
-            return this;
-        }
-    });
+    };
 
-});
+})();

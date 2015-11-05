@@ -4619,7 +4619,7 @@ span.input-prefix {
 }
 
 .is-done {
-  padding-top: 18px;
+  padding-top: 19px;
 }
 
 .balls-count {
@@ -4801,6 +4801,15 @@ span.input-prefix {
   box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
   text-align: center;
   text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);
+}
+.ghd-tickets li ul li.filled-ball.won {
+  background: #FFE400;
+  width: 40px;
+  height: 40px;
+  background-color: #ffe400;
+  border: none;
+  box-shadow: inset 1px 1px 0px 0px rgba(20, 20, 20, 0.4), 0 1px 0px 0 rgba(255, 255, 255, 0.6);
+  line-height: 40px;
 }
 
 .lottery-amimation-box {
@@ -6164,6 +6173,12 @@ span.input-prefix {
   #lottery-process {
     background-color: #A6D1D5;
   }
+  #lottery-process .ghd-won {
+    display: none;
+  }
+  #lottery-process .ghd-fale {
+    display: none;
+  }
 
   .balls-end-game .g-oc_li {
     width: 105px;
@@ -6193,7 +6208,7 @@ span.input-prefix {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 3;
+    z-index: 100;
     background: url(../css/img/sprite.png);
     background-position: -620px 274px;
   }
@@ -6206,37 +6221,29 @@ span.input-prefix {
     letter-spacing: -2px;
     position: absolute;
     left: 0;
-    top: 0;
+    top: -210px;
     z-index: 2;
-    -webkit-transition: all 2500ms ease;
-    -moz-transition: all 2500ms ease;
-    -ms-transition: all 2500ms ease;
-    -o-transition: all 2500ms ease;
-    transition: all 2500ms cubic-bezier(0.175, 0.8, 0.9, 1.275);
-    -moz-transform: rotate(-90deg) translate(-50px, -100px);
-    -webkit-transform: rotate(-90deg) translate(-50px, -100px);
-    -o-transform: rotate(-90deg) translate(-50px, -100px);
-    -ms-transform: rotate(-90deg) translate(-50px, -100px);
-    transform: rotate(0deg) translate(-50px, -100px);
+    display: block;
   }
-  .balls-end-game .g-oc_li .goc_li-nb.goc-nb-act {
-    -moz-transform: rotate(0) translateX(0) translateY(0);
-    -webkit-transform: rotate(0) translateX(0) translateY(0);
-    -o-transform: rotate(0) translateX(0) translateY(0);
-    -ms-transform: rotate(0) translateX(0) translateY(0);
-    transform: rotate(1440deg) translate(0, 0);
+  .balls-end-game .g-oc_li .goc_li-nb.random-ball {
+    display: block;
+    -webkit-transition: all 800ms ease;
+    -khtml-transition: all 800ms ease;
+    -moz-transition: all 800ms ease;
+    -ms-transition: all 800ms ease;
+    -o-transition: all 800ms ease;
+    transition: all 800ms ease;
+    top: 210px;
   }
-  .balls-end-game .g-oc_li .goc_li-nb.goc-nb-act-fake {
-    -moz-transform: rotate(0) translateX(0) translateY(0);
-    -webkit-transform: rotate(0) translateX(0) translateY(0);
-    -o-transform: rotate(0) translateX(0) translateY(0);
-    -ms-transform: rotate(0) translateX(0) translateY(0);
-    transform: rotate(180deg) translate(100px, 100px);
-    -webkit-transition: all 1000ms ease;
-    -moz-transition: all 1000ms ease;
-    -ms-transition: all 1000ms ease;
-    -o-transition: all 1000ms ease;
-    transition: all 1000ms cubic-bezier(0.7, 0.8, 0.9, 1.5);
+  .balls-end-game .g-oc_li .goc_li-nb.random-ball:first-child {
+    display: block;
+    -webkit-transition: all 800ms ease;
+    -khtml-transition: all 800ms ease;
+    -moz-transition: all 800ms ease;
+    -ms-transition: all 800ms ease;
+    -o-transition: all 800ms ease;
+    transition: all 800ms ease;
+    top: 0px;
   }
 
   .scroll-box {

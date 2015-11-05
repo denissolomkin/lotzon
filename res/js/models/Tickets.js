@@ -1,9 +1,13 @@
-$(function () {
+(function () {
 
+    Tickets = {
 
-    // TICKET ================================= //
+        "init": function(init){
 
-    $.extend(Tickets, {
+            D.log('Tickets.init', 'func');
+            Object.deepExtend(this, init);
+
+        },
 
         "isDone": function (ticketId) {
             ticketId = ticketId || this.selectedTab;
@@ -18,9 +22,11 @@ $(function () {
             ticketId = ticketId || this.selectedTab;
             return this.filledTickets[ticketId] !== false;
         },
+
         "isGold": function () {
             return this.selectedTab == 8;    
         },
+
         "countFilled": function () {
 
             var count = 0;
@@ -103,5 +109,6 @@ $(function () {
 
         }
 
-    });
-});
+    };
+
+})();

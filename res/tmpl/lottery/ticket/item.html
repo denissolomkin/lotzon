@@ -1,49 +1,44 @@
-
 <div class="ticket-item clearfix{{#isGold}} gold{{/isGold}}">
 
-
-        <form action="/lottery/ticket" method="post">
-            <div class="ticket-numbers-wrapper clearfix">
-                <div class="scroll-box">
-                    <ul class="ticket-numbers ticket-balls clearfix">
-                        {{#renderBalls}}
-                        <li class='ball-number number-{{num}}{{#select}} select{{/select}}'>
-                            <input type="checkbox" class="hide required" name="combination[]" value="{{num}}">
-                            {{num}}
-                        </li>
-                        {{/renderBalls}}
-                    </ul>
-                </div>
-            </div>
-            <!-- .ticket-numbers -->
-
-
-            {{#isDone}}
-            <div class="ticket-done"><b>{{i18n "message-done-and-approved"}}</b></div>
-            {{/isDone}}
-
-            {{^isDone}}
-            <div class="is_done clearfix">
-                <input type="hidden" name="tickNum" value="{{selectedTab}}">
-                <ul class="ticket-actions">
-                    <li class='ticket-random'>A
-                        <div class="after">{{i18n "message-autocomplete"}}</div>
+    <form action="/lottery/ticket" method="post">
+        <div class="ticket-numbers-wrapper clearfix">
+            <div class="scroll-box">
+                <ul class="ticket-numbers ticket-balls clearfix">
+                    {{#renderBalls}}
+                    <li class='ball-number number-{{num}}{{#select}} select{{/select}}'>
+                        <input type="checkbox" class="hide required" name="combination[]" value="{{num}}">
+                        {{num}}
                     </li>
-                    <li class="ticket-favorite ticket-fc-btn">
-                        <div class="after">
-                            <b>{{i18n "message-favorite"}}</b><span>{{i18n "button-set-favorite"}}</span></div>
-                    </li>
+                    {{/renderBalls}}
                 </ul>
-
-                <div class="balls-count">{{i18n "message-yet"}} <b>{{requiredBalls}}</b> {{i18n "message-numbers"}}</div>
-                <button type="submit" class="ticket-btn add-ticket">{{i18n "button-add-ticket"}}</button>
             </div>
+        </div>
+        <!-- .ticket-numbers -->
 
-            {{/isDone}}
-        </form>
- 
 
-        
+        {{#isDone}}
+        <div class="ticket-done"><b>{{i18n "message-done-and-approved"}}</b></div>
+        {{/isDone}}
 
- 
+        {{^isDone}}
+        <div class="is_done clearfix">
+            <input type="hidden" name="tickNum" value="{{selectedTab}}">
+            <ul class="ticket-actions">
+                <li class='ticket-random'>A
+                    <div class="after">{{i18n "message-autocomplete"}}</div>
+                </li>
+                <li class="ticket-favorite ticket-fc-btn">
+                    <div class="after">
+                        <b>{{i18n "message-favorite"}}</b><span>{{i18n "button-set-favorite"}}</span></div>
+                </li>
+            </ul>
+
+            <div class="balls-count">{{i18n "message-yet"}} <b>{{requiredBalls}}</b> {{i18n "message-numbers"}}</div>
+            <button type="submit" class="ticket-btn add-ticket">{{i18n "button-add-ticket"}}</button>
+        </div>
+
+        {{/isDone}}
+    </form>
+
+
 </div><!-- .ticket-item -->

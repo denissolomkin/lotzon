@@ -69,8 +69,7 @@
         clearAddressee: function () {
             R.push({
                 'template': 'communication-messages-new',
-                'replace': '.addressee',
-                'url': false
+                'replace': '.addressee'
             });
         },
 
@@ -78,8 +77,7 @@
             var userId = $(this).data('userid');
             R.push({
                 'template': 'communication-messages-new?users=' + userId,
-                'replace': '.addressee',
-                'url': false
+                'replace': '.addressee'
             });
         },
 
@@ -91,8 +89,7 @@
                     R.push({
                         'json': data.res,
                         'template': 'communication-messages-new',
-                        'replace': '.addressee .nm-search-result-box',
-                        'url': false
+                        'replace': '.addressee .nm-search-result-box'
                     });
 
                 });
@@ -110,8 +107,7 @@
                             R.push({
                                 'json': data.res,
                                 'template': 'communication-messages-new',
-                                'replace': '.addressee .nm-search-result-box',
-                                'url': false
+                                'replace': '.addressee .nm-search-result-box'
                             });
                         } else {
                             throw(data.message);

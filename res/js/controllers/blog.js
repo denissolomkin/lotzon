@@ -5,24 +5,13 @@
         init: function(){
             R.push({
                 'box': $('.content-box-content:visible'),
-                'template': 'blog-posts',
-                'url': false
+                'template': 'blog-posts'
             })
         },
 
-
-        loadPostData: function(){
-
-            R.push({
-                'href': U.href+'/comments',
-                'url': false
-            })
-
-            R.push({
-                'href': U.href+'/posts',
-                'url': false
-            })
-
+        loadPostData: function(options){
+            R.push(options.href+'/comments');
+            R.push(options.href+'/posts');
         }
     }
 

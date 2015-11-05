@@ -78,7 +78,8 @@ var slotMachine = {
             dataType: "json",
             timeout: 1e4,
             success: function (n) {
-                n = n.res;
+
+                n = n.res.games.spin;
 
                 if($i> n.length)
                     $i=0;

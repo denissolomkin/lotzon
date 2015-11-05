@@ -1,6 +1,5 @@
 <div class="content-box-item with-cat prizes-exchange">
 
-    {{#items}}
     <div class="content-box-item-top clearfix">
         <div class="content-box-cat">
             {{#categories}}
@@ -33,5 +32,6 @@
         {{^goods}} No prizes :({{/goods}}
     </div>
 
-    {{/items}}
+    {{#each .}}
+    {{/each}}
 </div>
