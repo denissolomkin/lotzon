@@ -315,6 +315,7 @@ class MaillistTask extends Entity
                 $player->setId($playerId)->fetch();
                 $mailer->addCustomHeader("List-Unsubscribe", '<mailto:'.Config::instance()->unsubscribeMail.'?body=unsubscribe.'.$player->getSalt().'>, <http://lotzon.com/unsubscribe/?email='.$address.'&hash='.$player->getSalt().'>');
             }
+            $mailer->addCustomHeader("Precedence: bulk");
 
             $mailer->addAddress($address);
             $mailer->Subject    = $header;
