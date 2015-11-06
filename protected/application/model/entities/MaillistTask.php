@@ -41,6 +41,11 @@ class MaillistTask extends Entity
             'type'        => 'text',
             'default'     => 'test@lotzon.com',
         ),
+        'Valid' => array(
+            'description' => 'Подтверждён email',
+            'type'        => 'text',
+            'default'     => '1',
+        ),
     );
 
     static $EVENTS = array(
@@ -296,11 +301,15 @@ class MaillistTask extends Entity
         $mailer->isHTML(true);
         $mailer->CharSet    = 'utf-8';
 
+        $utm_variables = array(
+            "%taskId%" => $this->getId()
+        );
+
         foreach ($emails as $email) {
             $playerId  = $email['Id'];
             $emailLang = $email['Lang'];
             $address   = $email['Email'];
-            $render    = $message->render($playerId, $emailLang);
+            $render    = $message->render($playerId, $emailLang, $utm_variables);
             $html      = $render['html'];
             $header    = $render['header'];
 

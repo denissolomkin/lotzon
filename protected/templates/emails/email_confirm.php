@@ -17,13 +17,13 @@
                 <table width="100%" align="center" bgcolor="#ffffff" border="0" cellpadding="1" data-mobile="true">
                   <tr>
                     <td bgcolor="#ffe401" height="50px" width="100%">
-                      <table style="width:130px;height:100%">
-                        <tr style="width:130px;height:100%">
-                          <td background="http://lotzon.com/tpl/emails/img/logo.png" style="width:130px;min-width:28px;width:130px;height:100%">
-
-                          </td>
-                        </tr>
-                      </table>
+                      <a href="https://lotzon.com/?utm_source=direct&utm_medium=email&utm_content=logo&utm_campaign=%taskId%">
+                        <table style="width:130px;height:100%">
+                          <tr style="width:130px;height:100%">
+                            <td background="http://lotzon.com/tpl/emails/img/logo.png" style="width:130px;min-width:28px;width:130px;height:100%"></td>
+                          </tr>
+                        </table>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -76,19 +76,19 @@
                           <td style="width:20px"></td>
                           <td style="font-family:Arial;font-size:13px">%footer_social%</td>
                           <td style="width:28px;min-width:28px">
-                            <a href="***" style="width:100%;display:block;height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/fb.png"></a>
+                            <a href="https://www.facebook.com/pages/Lotzon/714221388659166" style="width:100%;display:block;height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/fb.png"></a>
                           </td>
                           <td style="width:28px;min-width:28px">
-                            <a href="***" style="width:100%; display:block; height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/vk.png"></a>
+                            <a href="http://vk.com/lotzon" style="width:100%; display:block; height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/vk.png"></a>
                           </td>
                           <td style="width:28px;min-width:28px">
-                            <a href="***" style="width:100%; display:block; height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/tw.png"></a>
+                            <a href="https://twitter.com/LOTZON_COM" style="width:100%; display:block; height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/tw.png"></a>
                           </td>
                           <td style="width:28px;min-width:28px">
-                            <a href="***" style="width:100%; display:block; height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/gplus.png"></a>
+                            <a href="https://plus.google.com/112273863200721967076/about" style="width:100%; display:block; height:100%"><img style="width:28px;height:50px" src="http://lotzon.com/tpl/emails/img/gplus.png"></a>
                           </td>
                           <td style="width:35%"></td>
-                          <td style="font-family:Arial;font-size:13px">%footer_site% <a href="http://lotzon.com" target="_blank" style="text-decoration: none">lotzon.com</a></td>
+                          <td style="font-family:Arial;font-size:13px">%footer_site% <a href="https://lotzon.com/?utm_source=direct&utm_medium=email&utm_content=footer_site&utm_campaign=%taskId%" target="_blank" style="text-decoration: none">lotzon.com</a></td>
                           <td style="width:20px"></td>
                         </tr>
                       </table>
