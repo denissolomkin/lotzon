@@ -17,13 +17,15 @@
                 <table width="100%" align="center" bgcolor="#ffffff" border="0" cellpadding="1" data-mobile="true">
                   <tr>
                     <td bgcolor="#ffe401" height="50px" width="100%">
-                      <a href="https://lotzon.com/?utm_source=direct&utm_medium=email&utm_content=logo&utm_campaign=%taskId%">
-                        <table style="width:130px;height:100%">
-                          <tr style="width:130px;height:100%">
-                            <td background="http://lotzon.com/tpl/emails/img/logo.png" style="width:130px;min-width:28px;width:130px;height:100%"></td>
-                          </tr>
-                        </table>
-                      </a>
+                      <table style="width:130px;height:100%">
+                        <tr style="width:130px;height:100%">
+                          <td style="width:130px;min-width:28px;width:130px;height:100%">
+                            <a href="https://lotzon.com/?utm_source=direct&utm_medium=email&utm_content=logo&utm_campaign=%taskId%" style="width:100%; display:block; height:50px;">
+                              <img style="width:130px;height:50px" src="http://lotzon.com/tpl/emails/img/logo.png">
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
                     </td>
                   </tr>
                   <tr>
