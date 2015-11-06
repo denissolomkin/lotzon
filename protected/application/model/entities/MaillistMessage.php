@@ -148,10 +148,10 @@ class MaillistMessage extends Entity
 
         foreach($variables as $key=>$variable) {
             if (isset($values[$language][$key])) {
-                $html = str_replace('%'.$key.'%', $values[$language][$key], $html);
+                $html = str_replace('%'.$key.'%', str_replace("\n","<br>",$values[$language][$key]), $html);
             } else {
                 if (isset($variables[$key]["default"][$language])) {
-                    $html = str_replace('%' . $key . '%', $variables[$key]["default"][$language], $html);
+                    $html = str_replace('%' . $key . '%', str_replace("\n","<br>",$variables[$key]["default"][$language]), $html);
                 } else {
                     $html = str_replace('%' . $key . '%', '', $html);
                 }
@@ -180,7 +180,7 @@ class MaillistMessage extends Entity
      * @return array|bool
      * @throws EntityException
      */
-    public function render($playerId = 0, $lang = false, $renderTemplate = false)
+    public function render($playerId = 0, $lang = false, $variables = false, $renderTemplate = false)
     {
         if ($renderTemplate===false) {
             $render = $this->renderTemplate($lang);
@@ -209,6 +209,11 @@ class MaillistMessage extends Entity
                     default:
                         $render['html'] = str_replace($macros, '', $render['html']);
                 }
+            }
+        }
+        if (is_array($variables)) {
+            foreach ($variables as $macros => $value) {
+                $render['html'] = str_replace($macros, $value, $render['html']);
             }
         }
         return $render;

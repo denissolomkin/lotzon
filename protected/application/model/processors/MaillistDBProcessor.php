@@ -89,6 +89,9 @@ class MaillistDBProcessor implements IProcessor
                         $union[] = '(SELECT 0 as Id, :'.(count($values)+$key).' as Email, :language as Lang)';
                     }
                     break;
+                case 'Valid':
+                    $where[] = 'p.Valid '.$filter['equal'].' ('.$ids.')';
+                    break;
             }
             $values = array_merge($values, $val);
         }
