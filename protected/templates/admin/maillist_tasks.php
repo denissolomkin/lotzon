@@ -95,13 +95,11 @@
 <!-- =========================STATISTIC========================== -->
 <div class="modal fade" id="Statistic" role="dialog" aria-labelledby="StatisticLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width:700px;">
             <div class="modal-header">
                 <h4 class="modal-title" id="confirmLabel">Статистика по заданию</h4>
             </div>
-            <div class="modal-body" id="chart">
-
-            </div>
+            <div class="modal-body" id="chart"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
             </div>
