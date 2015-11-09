@@ -4,6 +4,67 @@ Application::import(PATH_INTERFACES . 'IProcessor.php');
 
 class MaillistDBProcessor implements IProcessor
 {
+    const TaskStatisticPlayerGamesBars = 7;
+
+    public function getTaskStatisticPlayerGames($taskId)
+    {
+        $ret = array();
+        $ret['bars_count']   = MaillistDBProcessor::TaskStatisticPlayerGamesBars;
+        $ret['bars']         = array_fill(0,MaillistDBProcessor::TaskStatisticPlayerGamesBars,0);
+        $ret['bars']['over'] = 0;
+
+        $sql = "SELECT COUNT(*) as count FROM `MaillistHistory` WHERE `TaskId` = :taskId";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':taskId'   => $taskId,
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+        $ret['count']   = $sth->fetch()['count'];
+        $ret['bars'][0] = $ret['count'];
+
+        $sql = "SELECT
+                    COUNT(*) AS count, COUNT AS games
+                    FROM
+                    (
+                        SELECT COUNT(*)AS COUNT, PlayerId
+                        FROM
+                        (
+                            SELECT DISTINCT
+                                la.`LotteryId`, la.`PlayerId`
+                            FROM
+                                `LotteryTicketsArchive` AS la
+                            JOIN
+                                `MaillistHistory` AS mh
+                            ON
+                                mh.`PlayerId` = la.`PlayerId`
+                            WHERE
+                                mh.`TaskId`=:taskId
+                                AND
+                                la.`DateCreated`>UNIX_TIMESTAMP(mh.`Date`)
+                        ) AS playerGame
+                        GROUP BY PlayerId
+                    ) AS playerCound
+                    GROUP BY COUNT";
+
+        $sth = DB::Connect()->prepare($sql);
+        $sth->execute(array(
+            ':taskId'   => $taskId,
+        ));
+        $gamesData = $sth->fetchAll();
+        foreach ($gamesData as $data) {
+            $ret['bars'][0] -= $data['count'];
+            if ($data['games'] > MaillistDBProcessor::TaskStatisticPlayerGamesBars) {
+                $ret['bars']['over'] += $data['count'];
+            } else {
+                $ret['bars'][$data['games']] = $data['count'];
+            }
+        }
+
+        return $ret;
+    }
 
     public function saveHistory($message, $status = 'ok')
     {

@@ -33,6 +33,7 @@
                     <td><i class="glyphicon glyphicon-<?=($task->getEnable()==true ? 'ok' : 'remove')?>"></i></td>
                     <td>
                         <button class="btn btn-md edit-text btn-warning text-trigger" data-key="<?=$key?>"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button class="btn btn-md statistic-text btn-success" data-key="<?=$key?>"><i class="fa fa-bar-chart"></i></button>
                         <?php if ($status=='archived') { ?>
                             <button class="btn btn-md remove-text btn-danger" data-target="#deleteConfirm"><i class="glyphicon glyphicon-remove"></i></button>
                         <?php } else { ?>
@@ -90,6 +91,103 @@
     });
 </script>
 <!-- ==========================/DELETE=========================== -->
+
+<!-- =========================STATISTIC========================== -->
+<div class="modal fade" id="Statistic" role="dialog" aria-labelledby="StatisticLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Статистика по заданию</h4>
+            </div>
+            <div class="modal-body" id="chart">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.statistic-text').on('click', function() {
+        var row = $(this).parents('tr');
+        var identifier = row.find('td.id').text();
+        $('#Statistic').modal();
+        $.ajax({
+            url: "/private/maillist/tasks/statistic/player_games/" + identifier,
+            method: 'GET',
+            data: {},
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+
+                    if (data.data.count<=0)
+                        return false;
+
+                    bars_data = [];
+                    cats = [];
+                    for(var i = 0; i < data.data.bars_count; i++) {
+                        bars_data[i] = [""+i, parseInt(data.data.bars[i])*100/data.data.count];
+                        cats[i] = ""+i;
+                    }
+                    bars_data[i] = [i+'+', parseInt(data.data.bars.over)*100/data.data.count];
+                    cats[i] = i+"+";
+                    console.log(bars_data);
+
+                    $('#chart').highcharts({
+                        credits: {
+                            enabled: false
+                        },
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Сыграно лотерей игроками, которым пришёл email после рассылки'
+                        },
+                        subtitle: {
+                            text: 'Всего отослано писем:'+data.data.count
+                        },
+                        xAxis: {
+                            type: 'игр',
+                            labels: {
+                                style: {
+                                    fontSize: '12px',
+                                    fontFamily: 'Verdana, sans-serif'
+                                }
+                            },
+                            categories: cats
+                        },
+                        yAxis: {
+                            min: 0,
+                            max:100,
+                            title: {
+                                text: '%'
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            pointFormat: '{point.y:.1f}'
+                        },
+                        series: [{
+                            name: '%',
+                            data: bars_data
+                        }]
+                    });
+
+                } else {
+                    showError(data.message);
+                }
+            },
+            error: function() {
+                showError('Unexpected server error');
+            }
+        });
+    });
+</script>
+<!-- ========================/STATISTIC========================== -->
 
 <!-- =========================== EDIT =========================== -->
 <div class="modal fade texts" id="text-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">

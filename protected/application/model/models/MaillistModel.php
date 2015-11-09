@@ -109,4 +109,9 @@ class MaillistModel extends Model
         return $this->getProcessor()->saveHistory($message, $status);
     }
 
+    public function getTaskStatisticPlayerGames($task)
+    {
+        return $this->getProcessor()->getTaskStatisticPlayerGames($task);
+    }
+
 }
