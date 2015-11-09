@@ -14,6 +14,28 @@ class Maillist extends PrivateArea
 {
     public $activeMenu = 'maillist';
 
+    public function getTaskStatisticPlayerGamesAction($identifier)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array();
+            try {
+                $bars = MaillistModel::instance()->getTaskStatisticPlayerGames($identifier);
+                $response = array(
+                    'status'   => 1,
+                    'message'  => 'OK',
+                    'data'     => $bars
+                );
+            } catch (EntityException $e) {
+                $response['status']  = 0;
+                $response['message'] = $e->getCode();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
     public function getTaskFilterCountAction()
     {
         $messageId   = $this->request()->post('messageId',0);

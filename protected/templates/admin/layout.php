@@ -38,6 +38,8 @@
       <script src="/theme/admin/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
       <script src="/theme/admin/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+      <script src="/theme/admin/highcharts/highcharts.js"></script>
   </head>
   <body style="">
       <div class="container-fluid text-center">

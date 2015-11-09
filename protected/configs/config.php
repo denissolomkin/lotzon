@@ -272,6 +272,9 @@ Config::instance()->privateResources =  array(
     '/private/maillist/tasks/filter/' => array(
         'post'    => 'controllers\admin\Maillist:getTaskFilterCount',
     ),
+    '/private/maillist/tasks/statistic/player_games/:identifier' => array(
+        'get'    => 'controllers\admin\Maillist:getTaskStatisticPlayerGames',
+    ),
 );
 
 Config::instance()->publicResources = array(
