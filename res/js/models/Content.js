@@ -69,7 +69,7 @@
 
         infiniteScrolling: function () {
 
-            var infiniteScrolling = visible([
+            var infiniteScrolling = DOM.visible([
                 '.die-infinite-scrolling:not(.loading)',
                 '.once-infinite-scrolling:not(.loading)',
                 '.infinite-scrolling:not(.loading)'

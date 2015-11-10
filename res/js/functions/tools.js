@@ -69,18 +69,6 @@
         }
     };
 
-    toggle = function f(el) {
-
-        if (typeof el === 'string')
-            el = document.querySelectorAll(el);
-
-        if (el.length) {
-            for (i in el)
-                el.hasOwnProperty(i) && f(el[i]);
-        } else if (el && typeof el === 'object') {
-            isVisible(el) ? fadeOut(el) : fadeIn(el);
-        }
-    };
 
     compare = function(array1, array2){
 

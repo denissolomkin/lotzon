@@ -215,14 +215,21 @@
 
         visible: function (el, parent) {
 
+
             var visibleElements = [];
 
             if (typeof el === 'string')
-                el = parent && parent.querySelectorAll(el) || document.querySelectorAll(el);
+                el = [parent && parent.querySelectorAll(el) || document.querySelectorAll(el)];
 
-            for (i in el)
-                if (el.hasOwnProperty(i) && DOM.isVisible(el[i]))
-                    visibleElements.push(el[i]);
+            else if (typeof el === 'object' && el.length)
+                for (i in el)
+                    if (el.hasOwnProperty(i))
+                        el[i] = parent && parent.querySelectorAll(el[i]) || document.querySelectorAll(el[i])
+
+            for(var y=0;y<el.length;y++)
+                for (i in el[y])
+                    if (el[y].hasOwnProperty(i) && isVisible(el[y][i]))
+                        visibleElements.push(el[y][i]);
 
             return visibleElements;
         },

@@ -41,7 +41,7 @@ a {
   width: 20px;
   height: 20px;
   margin-top: -10px;
-  background: url(img/sprite.png) -80px -50px; 
+  background: url(img/sprite.png) -80px -50px;
   content: "";
   z-index: 1;
 }
@@ -56,7 +56,7 @@ button {
     opacity: 1;
     border-color: black;
     color: black;
-  } 
+  }
 }
 
 .btn-flat {
@@ -85,9 +85,11 @@ button {
   min-width: 320px;
   margin: auto;
 }
+
 .container-center {
   text-align: center
 }
+
 .content-top {
   position: relative;
 }
@@ -360,10 +362,13 @@ input.input-radio:checked + label.input-radio:before {
     background-color: white;
     border-radius: 3px;
     padding: 20px;
-  }
-  & span {
-    display: block;
-    color: red;
+    & p {
+      margin-top: 10px;
+    }
+    & span {
+      display: block;
+      color: red;
+    }
   }
 }
 
@@ -422,10 +427,10 @@ input.input-radio:checked + label.input-radio:before {
   padding: 0;
   list-style: none;
   &.grid-nomargin {
-    margin: 0!important;
-    padding: 0!important;
-    & > *{
-      padding: 0!important;
+    margin: 0 !important;
+    padding: 0 !important;
+    & > * {
+      padding: 0 !important;
     }
   }
   & > * {
@@ -436,15 +441,14 @@ input.input-radio:checked + label.input-radio:before {
     width: 100%;
   }
   & .width-60 {
-    width: 60%  
+    width: 60%
   }
   & .width-50 {
     width: 50%;
   }
   & .width-20 {
-    width: 20%  
+    width: 20%
   }
-
 
   &:before {
     content: "";
@@ -463,21 +467,27 @@ input.input-radio:checked + label.input-radio:before {
 [class*=push-], [class*=pull-] {
   position: relative;
 }
+
 .pull-20 {
   left: -20%;
 }
+
 .push-20 {
   left: 20%;
 }
+
 .pull-30 {
   left: -30%;
 }
+
 .push-30 {
   left: 30%;
 }
+
 .pull-50 {
   left: -50%;
 }
+
 .push-50 {
   left: 50%;
 }
@@ -489,11 +499,10 @@ input.input-radio:checked + label.input-radio:before {
     background: #fff;
     padding: 16px;
     &:nth-of-type(odd) {
-      background: #fafafa; 
+      background: #fafafa;
     }
   }
 }
-
 
 // **********************************TEXT STYLES
 .text-large {

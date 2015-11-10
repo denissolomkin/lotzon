@@ -263,7 +263,7 @@ $(function () {
 
         "update": function (object, key) {
 
-            if (typeof object === 'object') {
+            if (object && typeof object === 'object') {
 
                 if (!key || !object.hasOwnProperty('id')) {
 

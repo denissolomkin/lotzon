@@ -6,7 +6,7 @@
 
             livedateInterval = window.setInterval(function () {
 
-                var livedates = visible('.live-date');
+                var livedates = DOM.visible('.live-date');
 
                 for(var i = 0; i<livedates.length;i++ ){
                     var el = livedates[i],

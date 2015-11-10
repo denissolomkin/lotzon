@@ -88,13 +88,20 @@ $(function () {
             //box.append(error);
 
 
+
             if (this && this.node) {
-                DOM.remove('.modal-loading', this.node);
-                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this.node);
+                node = this.node;
+                DOM.remove('.modal-loading', node);
             } else if (this && 'nodeType' in this) {
-                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this);
+                node = this;
             } else {
-                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', document.getElementById('content'));
+                node = document.getElementById('content');
+            }
+
+            if(node.querySelector('.modal-error div')){
+                DOM.append('<p>' + message + '<p>', node.querySelector('.modal-error div'));
+            } else {
+                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span><p>' + message + '</p></div></div>', node);
             }
 
             if (0 && D.isEnable("clean"))
