@@ -1,0 +1,104 @@
+<div class="content-box exchange-prize">
+
+    <div class="content-box-header back">{{i18n "title-prize-exchange"}}</div>
+
+    <div class="content-box-content clearfix">
+        <div class="content-box-item">
+            <form action="/prizes/exchange/goods/" method="post">
+
+                <input type="hidden" name="itemId" value="{{id}}">
+                <input type="hidden" name="itemPrice" value="{{price}}">
+
+                <div class="ex-prize clearfix">
+                    <div class="ex-prize-img">
+                        <img src="{{ img }}" alt="">
+                    </div>
+                    <div class="ex-prize-description">
+                        <div class="ex-prize-name">{{ title }}</div>
+                        <div class="ex-prize-price">{{ price }}<span>{{i18n "title-points"}}</span></div>
+                        <div class="ex-prize-details">
+                            {{i18n "message-prize-exchange"}}
+                        </div>
+                    </div>
+                </div>
+
+                {{#if (eq type 'item')}}
+
+                {{#if (player "location")}}
+                <!-- Данные заполнены -->
+                <div class="prize-delivery-inf">
+                    <div class="personal-data-inf-header clearfix">
+                        <div class="personal-data-inf-title">Информация для доставки приза</div>
+                        <a href="/profile/details" class="personal-data-edit"><span>Редактировать</span></a>
+                    </div>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>Фамилия</td>
+                            <td>Маслов</td>
+                        </tr>
+                        <tr>
+                            <td>Имя</td>
+                            <td>Дмитрий</td>
+                        </tr>
+                        <tr>
+                            <td>Отчество</td>
+                            <td>Андреевич</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Страна</td>
+                            <td>{{player "location.country"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Город</td>
+                            <td>{{player "location.city"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Улица</td>
+                            <td>{{player "location.street"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Дом</td>
+                            <td>14а</td>
+                        </tr>
+                        <tr>
+                            <td>Квартира</td>
+                            <td>32</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Телефон</td>
+                            <td>{{player "billing.phone"}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="personal-data-attention">
+                    <span>Внимание!</span> Убедитесь в правильности заполненных данных.
+                </div>
+                <div class="ex-prize-submit-wrapper">
+                    <button type="submit" class="ex-prize-submit">{{i18n "button-send-request"}}</button>
+                </div>
+                <!-- end of Данные заполнены -->
+
+                {{else}}
+                <!-- Данные НЕ заполнены -->
+                <div class="ex-prize-not-filled">
+                    Информация для доставки приза отсутствует!<br>
+                    Заполните ее в разделе <a href="/profile/details">«Мои данные»</a>
+                </div>
+                <!-- end of Данные НЕ заполнены -->
+                {{/if}}
+
+                {{/if}}
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</div>

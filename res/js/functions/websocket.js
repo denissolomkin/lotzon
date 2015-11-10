@@ -48,7 +48,22 @@
             }
 
             action = data && data.res && data.res.action ? data.res.action : App.action;
-            eval(App.name+'.'+action)(data);
+
+            switch ('function'){
+
+                case typeof eval(App.name+'.'+action):
+                    eval(App.name+'.'+action)(data);
+                    break;
+
+                case typeof Game.callback[action] :
+                    eval('Game.callback.'+action)(data);
+                    break;
+
+                case typeof eval(App.name+'.action'):
+                    eval(App.name+'.action')(data);
+                    break;
+
+            }
 
         }
 

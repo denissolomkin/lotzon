@@ -1,0 +1,26 @@
+// PRIZES FOT POINTS ------------------- //
+
+.prizes-for-points {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.prize {
+  margin-right: 40px;
+}
+
+.prize:nth-child(3n+3) {
+  margin-right: 0;
+}
+
+.ex-prize-description {
+  width: 380px;
+}
+
+.ex-prize-img {
+  margin-right: 60px;
+}
+
+.ex-prize-not-filled {
+  margin: 0 -30px;
+}

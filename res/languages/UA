@@ -19,6 +19,19 @@
                 "menu-users": "Друзi",
                 "menu-prizes": "Вiтрiна",
 
+                "menu-profile-details": "Контактнi данi",
+                "menu-profile-billing": "Платiжнi данi",
+                "menu-profile-settings": "Налаштування",
+                "menu-profile-password": "Змiнити пароль",
+                "menu-profile-bonuses": "Бонуси",
+                "menu-logout": "Вихiд",
+
+                "menu-support-feedback": "Зворотний зв'язок",
+                "menu-support-rules": "Правила",
+                "menu-support-help": "Допомога",
+
+                "menu-reports-referrals": "Мои рефералы",
+
                 "button-set-favorite": "настраивается в кабинете",
                 "button-more": "Подробнее",
                 "button-add-ticket": "Подтвердить",

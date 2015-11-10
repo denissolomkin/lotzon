@@ -12,6 +12,7 @@
                 "message-ticket-6": "для доступа к билету №6 вы должны принять участие в 100 розыгрышах",
                 "message-ticket-7": "для доступа к билету №7 вы должны принять участие в 100 розыгрышах",
                 "message-ticket-8": "для доступа к золотому билету №8 вы должны его приобрести",
+                "message-order-process-week": "Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.",
 
                 "menu-blog": "Блог",
                 "menu-lottery": "Лотерея",
@@ -19,6 +20,19 @@
                 "menu-communication": "Общение",
                 "menu-users": "Друзья",
                 "menu-prizes": "Витрина",
+
+                "menu-profile-details": "Контактные данные",
+                "menu-profile-billing": "Платежные данные",
+                "menu-profile-settings": "Настройки",
+                "menu-profile-password": "Сменить пароль",
+                "menu-profile-bonuses": "Бонусы",
+                "menu-logout": "Выход",
+
+                "menu-support-feedback": "Обратная связь",
+                "menu-support-rules": "Правила",
+                "menu-support-help": "Помощь",
+
+                "menu-reports-referrals": "Мои рефералы",
 
                 "button-set-favorite": "настраивается в кабинете",
                 "button-more": "Подробнее",
@@ -43,8 +57,17 @@
                 "title-slider-players": "Участников",
                 "title-slider-winners": "Победителей",
                 "title-slider-sum": "Общая сумма выигрыша",
-                "title-slider-timer": "До розыгрыша осталось",
-                "title-slider-date": "Розыгрыш от"
+                "title-slider-timer": "До следующего розыгрыша осталось",
+                "title-slider-date": "Розыгрыш от",
+
+                "title-lottery-history-mine" : "Только мои",
+                "title-lottery-history-all" : "Все",
+                "title-history-win-combinaion" : "Выиграшная комбинация за",
+
+                "title-order-date": "Дата заявки",
+                "title-order-status": "Статус заявки",
+                "title-order-type":"Способ получения",
+                "title-order-prize":"Выигрыш"
             }
 	}
 }

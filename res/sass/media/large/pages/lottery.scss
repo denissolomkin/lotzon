@@ -1,0 +1,77 @@
+// TICKET-ITEMS ------------------------------ //
+
+.ticket-items {
+  margin: 80px 0 40px;
+}
+
+.ticket-tabs li {
+  margin-right: 15px;
+}
+
+.ticket-item {
+  padding: 37px 40px 27px !important;
+}
+
+.ticket-numbers {
+  margin-right: -30px !important;
+}
+
+// MATCHES-INF ------------------------------ //
+
+.matches-inf-wrapper {
+  margin-bottom: 40px;
+}
+
+.gh-header {
+  margin: 0 -30px 20px;
+  padding: 0 30px;
+}
+
+.gh-item {
+  margin: 0 -30px 0;
+  padding: 10px 30px;
+}
+
+// RATING ------------------------------- //
+
+.raiting-item {
+  width: 350px;
+  margin-right: 40px;
+}
+
+.balls-result {
+  width: 57%;
+}
+
+.text-result {
+  width: 43%;
+}
+
+.ticket-number-result {
+  margin-right: 20px;
+}
+
+.ticket-number-result span {
+  display: inline;
+}
+
+.ball-number-result {
+  width: 40px;
+  height: 40px;
+}
+
+.text-result {
+  & span {
+    display: block;
+  }
+}
+
+.text-result-top {
+  margin-left: 0px;
+}
+
+.ticket-tabs li {
+  width: 80px;
+  margin-right: 8px;
+}
+

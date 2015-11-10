@@ -22,10 +22,10 @@
 <script>
 
     var
-        navigation = {
-            menu: {
+        menu = {
+            navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
-                'menu-profile': ['profile/details', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses', 'logout'],
+                'menu-profile': ['profile/details', 'profile/billing', 'profile/settings', 'profile/password', 'reports/referrals', 'profile/bonuses', 'logout'],
                 'menu-more': ['support/feedback', 'support/rules', 'support/help']
             }
         },
@@ -51,6 +51,7 @@
         player = {
             "id": 3628,
             "lang": "RU",
+            "timezone": -3,
             "language": {
                 "current": "RU",
                 "available": {
@@ -78,7 +79,7 @@
                 "lotzon": 1500
             },
             "currency": {
-                "coefficient": "1",
+                "coefficient": 3,
                 "few": "гривни",
                 "iso": "грн",
                 "many": "гривен",
@@ -129,7 +130,7 @@
         };
 </script>
 
-<?php $dirs = array('libs', 'plugins', 'controllers', 'functions', 'models', 'core');
+<?php $dirs = array('libs', 'plugins', 'controllers', 'models', 'functions', 'core');
 foreach ($dirs as $dir):
     if (!is_dir('./res/js/' . $dir . '/'))
         continue; ?>
@@ -151,7 +152,8 @@ endforeach;
         Player.init(player); // extend player
         D.init(debug); // init debugger
         Slider.init(slider); // echo slider
-        Navigation.init(navigation); // init navigation
+        Navigation.init(menu); // init navigation
+        Livedate.init(); // update dates in realtime
 
         Cache.drop().init(); // init cache engine
         Callbacks.init(); // init callbacks

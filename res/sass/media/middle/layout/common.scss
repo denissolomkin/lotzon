@@ -1,0 +1,49 @@
+.container {
+  width: 984px;
+}
+
+.content {
+  float: left;
+  width: 654px;
+  margin-bottom: 20px;
+}
+
+.content-box-item {
+  padding: 20px;
+}
+
+// SIDEBAR -------------------------------- //
+
+.sidebar {
+  display: block;
+  float: right;
+  width: 300px;
+}
+
+// BANNERS ------------------------------ //
+
+.banner-1,
+.banner-2 {
+  display: none;
+}
+
+.banner-3,
+.banner-4,
+.banner-5 {
+  display: block;
+}
+
+.banner-3 {
+  width: 684px;
+  height: 135px;
+}
+
+.banner-4 {
+  height: 600px;
+  margin-bottom: 30px;
+}
+
+.banner-5 {
+  height: 300px;
+  margin-bottom: 30px;
+}

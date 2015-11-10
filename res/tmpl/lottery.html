@@ -1,8 +1,16 @@
 <div class="content-main tickets">
 
     <div class="ticket-box">
+    <div class="grid-container lottery-grid timer-box header-box">
+        <div id="ticketCountdownHolder" class="width-50 push-50"><span></span></div>
+        <div class="width-50 pull-50">
+            <p class="title">
+                {{i18n "title-slider-timer"}}
+            </p>
+        </div>
+     </div>
         <div class="ticket-items">
-
+        
             <ul class="ticket-tabs clearfix">
             </ul>
             <!-- .ticket-tabs -->
@@ -14,9 +22,84 @@
         <!-- .ticket-items -->
     </div>
 
-    <div class="matches-inf-wrapper carousel clearfix">
-        <div class="content-box matches-inf">
-            <div class="content-box-header">1-7 Билет</div>
+    <div class="matches-inf-wrapper clearfix carousel ">
+        <div class="matches-inf">
+            <div class="grid-container lottery-grid header-box grid-nomargin">
+                <div class="width-100">
+                    <p class="title">
+                        Таблица выиграшей с 1-го по 7-ой билет
+                    </p>
+                </div>
+            </div>    
+            <div class="grid-container lottery-grid grid-nomargin">     
+                <ul class="width-100 ul-striped">
+                    <li>
+                        <p class="text-large">100 000 грн</p> 
+                        <p>ДЖЕКПОТ угадано 6 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">200 грн</p> 
+                        <p>Угадано 5 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">10 грн</p> 
+                        <p>Угадано 4 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">0,25 грн</p> 
+                        <p>Угадано 3 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">0,10 грн</p> 
+                        <p>Угадано 2 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">5 баллов</p> 
+                        <p>Угадано 1 из 6 номеров</p>
+                    </li>
+                </ul>  
+            </div>
+        </div>
+        <div class="matches-inf gold">
+            <div class="grid-container lottery-grid header-box grid-nomargin">
+                <div class="width-100">
+                    <p class="title">
+                        Таблица выиграшей золотого билета
+                    </p>
+                </div>
+            </div>    
+            <div class="grid-container lottery-grid grid-nomargin">     
+                <ul class="width-100 ul-striped">
+                    <li>
+                        <p class="text-large">1000 000 грн</p> 
+                        <p>ДЖЕКПОТ угадано 6 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">2 000 грн</p> 
+                        <p>Угадано 5 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">100 грн</p> 
+                        <p>Угадано 4 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">2,50 грн</p> 
+                        <p>Угадано 3 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">1 грн</p> 
+                        <p>Угадано 2 из 6 номеров</p>
+                    </li>
+                    <li>
+                        <p class="text-large">5 баллов</p> 
+                        <p>Угадано 1 из 6 номеров</p>
+                    </li>
+                </ul>  
+            </div>
+        </div>
+
+<!--         <div class="content-box matches-inf">
+            <div class="content-box-header title">1-7 Билет</div>
             <div class="content-box-content clearfix">
                 <table>
                     <tr>
@@ -93,7 +176,7 @@
             </div>
         </div>
 
-        <div class="content-box matches-inf gold">
+        <div class="matches-inf gold">
             <div class="content-box-header">8 Билет</div>
             <div class="content-box-content clearfix">
                 <table>
@@ -170,10 +253,33 @@
                 </table>
             </div>
         </div>
+    </div> -->
+
+    </div>
+    <div class="grid-container lottery-grid header-box grid-nomargin">
+        <div class="width-100">
+            <p class="title">
+                История розыгрышей
+            </p>
+        </div>
+    </div>    
+   
+    <div class="content-box tickets">
+
+
+
+        <div class="content-box-content clearfix">
+         <div class="content-box-item lottery-history with-cat cabinet-game-history">
+        
+    </div>
+ <!--            <div class="content-box-item lottery-rules tickets-rules template"></div>
+            <div class="content-box-item lottery-faq tickets-rules template"></div> -->
+        </div>
+
     </div>
 
 
-    <div class="content-box tickets">
+     <<!-- div class="content-box tickets">
 
         <div class="content-box-header">
             <div class="content-box-tabs clearfix">
@@ -189,7 +295,7 @@
             <div class="content-box-item lottery-faq tickets-rules template"></div>
         </div>
 
-    </div>
+    </div> -->
 
 </div>
 <!-- .content-main -->

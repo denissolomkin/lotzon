@@ -1,43 +1,5 @@
 (function () {
 
-    Handlebars.registerHelper('player', function(fn, options) {
-
-        console.log(options);
-        options = typeof options === 'string' ? options : null;
-
-        var response = eval("Player." + fn.toString());
-        D.log('Player.'+fn+(options?'('+options+')':''),'func');
-        return typeof response === 'function' && response(options) || response;
-    });
-
-    Handlebars.registerHelper({
-        eq: function (v1, v2) {
-            console.log(v1, v2);
-            return v1 === v2;
-        },
-        ne: function (v1, v2) {
-            return v1 !== v2;
-        },
-        lt: function (v1, v2) {
-            return v1 < v2;
-        },
-        gt: function (v1, v2) {
-            return v1 > v2;
-        },
-        lte: function (v1, v2) {
-            return v1 <= v2;
-        },
-        gte: function (v1, v2) {
-            return v1 >= v2;
-        },
-        and: function (v1, v2) {
-            return v1 && v2;
-        },
-        or: function (v1, v2) {
-            return v1 || v2;
-        }
-    });
-
     Player = {
 
         init: function(init){

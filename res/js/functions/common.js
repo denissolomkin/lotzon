@@ -134,6 +134,12 @@
         return obj;
     };
 
+    include = function ( src ) {
+        var s = document.createElement( 'script' );
+        s.setAttribute( 'src', src );
+        document.body.appendChild( s );
+    }
+
     String.prototype.replaceArray = function(find, replace) {
         var replaceString = this;
         var replaceMatch = replace;

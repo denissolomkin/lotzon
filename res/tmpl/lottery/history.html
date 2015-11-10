@@ -4,8 +4,8 @@
 
         <div class="content-box-item-top clearfix">
             <div class="content-box-cat">
-                <a href="/lottery/mine">{{i18n "title-only-mine"}}</a>
-                <a href="/lottery/history">{{i18n "title-all"}}</a>
+                <a href="/lottery/history/all">{{i18n "title-lottery-history-all"}}</a>
+                <a href="/lottery/mine">{{i18n "title-lottery-history-mine"}}</a>
             </div>
         </div>
 
@@ -17,32 +17,11 @@
                 <div class="gh-winners-name">{{i18n "title-winners"}}</div>
             </div>
 
+            <div class="lottery-history-items">
+            </div>
+
         </div>
 
-        <div>
-            {{#each .}}
-            <a href="/lottery/history/{{ id }}">
-                <div class="gh-item clearfix">
-                    <div class="gh-inf gh-date">
-                        <span class="gh-inf-name">{{i18n "title-date"}}</span>{{ date }}
-                    </div>
-                    <div class="gh-inf gh-winners">
-                        <span class="gh-inf-name">{{i18n "title-winners"}}</span> {{playerWins}}
-                    </div>
-                    <div class="gh-inf gh-combination">
-                        <span class="gh-inf-name">{{i18n "title-win-combination"}}</span>
-
-                        <div class="gh-numbers clearfix">
-                            {{#combination}}
-                            <span class="gh-number">{{.}}</span>
-                            {{/combination}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-            {{/each}}
-            {{^.}} No rating :({{/.}}
-        </div>
 
     </div>
 </div>

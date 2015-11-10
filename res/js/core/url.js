@@ -49,6 +49,10 @@ $(function () {
                     return url.replace(/^\//, "").replace(/-/g, '/');
                     break;
 
+                case "anchor":
+                    return this.parse(url).replace(/.*\#/, "");
+                    break;
+
                 case "get":
                     return url.replace(/-view/g, '');
                     break;
@@ -91,7 +95,7 @@ $(function () {
         },
 
         "isAnchor": function (url) {
-            return (url.indexOf('#') == 0);
+            return (url.indexOf('#') !== -1);
         }
 
     };

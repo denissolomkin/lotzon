@@ -107,7 +107,18 @@
 
             return this.filledTickets[this.selectedTab];
 
-        }
+        },
+        
+        countdown: function () {
+
+            D.log('Ticket.countdown', 'func');
+            $("#ticketCountdownHolder span").countdown({
+                until: ($.countdown.periodsToSeconds($('#countdownHolder').countdown('getTimes'))),
+                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
+            });
+
+        },
+
 
     };
 

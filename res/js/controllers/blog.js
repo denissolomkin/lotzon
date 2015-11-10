@@ -11,7 +11,7 @@
 
         loadPostData: function(options){
             R.push(options.href+'/comments');
-            R.push(options.href+'/posts');
+            R.push(options.href+'/similar');
         }
     }
 

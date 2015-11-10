@@ -1,0 +1,30 @@
+$screen-xsm-min: 480px;
+$screen-sm-min: 768px;
+$screen-md-min: 1010px;
+$screen-lg-min: 1200px;
+
+  @import "mixins/css3-mixins";
+  @import "reset";
+  @import "layout/common";
+  @import "layout/footer";
+  @import "layout/header";
+  @import "pages/blog";
+  @import "pages/bonuses";
+  @import "pages/communication";
+  @import "pages/games";
+  @import "pages/lottery";
+  @import "pages/prizes";
+  @import "pages/profile";
+  @import "pages/reports";
+  @import "pages/users";
+
+  // MEDIA --------------------- //
+  @import "media/Xsmall/style";
+  @import "media/small/style";
+  @import "media/middle/style";
+  @import "media/large/style";
+
+  // LIBS ---------------------- //
+  @import "libs/daterangepicker";
+  @import "libs/owl.carousel";
+  @import "libs/owl.theme";

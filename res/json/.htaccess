@@ -2,3 +2,9 @@ RewriteEngine On
 
 RewriteCond "%{REQUEST_URI}" !^(.*)(list)(.*)$
 RewriteRule ^(.*)/([0-9]+)$ $1-list/$2 [L]
+
+RewriteCond "%{REQUEST_URI}" !^(.*)(list)(.*)$
+RewriteRule ^(.*)/([0-9]+)/(.*)$ $1-item/$3 [L]
+
+RewriteCond "%{REQUEST_URI}" !^(.*)(list)(.*)$
+RewriteRule ^(.*)/([0-9]+)/(.*)/([0-9]+)$ $1/view/$3-list/$4 [L]

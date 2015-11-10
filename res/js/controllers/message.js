@@ -66,53 +66,56 @@
             });
         },
 
-        clearAddressee: function () {
-            R.push({
-                'template': 'communication-messages-new',
-                'replace': '.addressee'
-            });
-        },
+        do: {
 
-        setAddressee: function () {
-            var userId = $(this).data('userid');
-            R.push({
-                'template': 'communication-messages-new?users=' + userId,
-                'replace': '.addressee'
-            });
-        },
-
-        searchAddressee: function () {
-            var search = $(this).val();
-            $.getJSON(
-                U.Generate.Json('/users/search?match=' + search),
-                function (data) {
-                    R.push({
-                        'json': data.res,
-                        'template': 'communication-messages-new',
-                        'replace': '.addressee .nm-search-result-box'
-                    });
-
+            clearAddressee: function () {
+                R.push({
+                    'template': 'communication-messages-new',
+                    'replace': '.addressee'
                 });
-        },
+            },
 
-        send: function () {
-            event.preventDefault();
-            var formData = $(this).parents('form').serializeObject();
-            if (formData.userid && formData.message)
-                $.post(
-                    U.Generate.Post('/communications/messages/addMessage'),
-                    formData,
+            setAddressee: function () {
+                var userId = $(this).data('userid');
+                R.push({
+                    'template': 'communication-messages-new?users=' + userId,
+                    'replace': '.addressee'
+                });
+            },
+
+            searchAddressee: function () {
+                var search = $(this).val();
+                $.getJSON(
+                    U.Generate.Json('/users/search?match=' + search),
                     function (data) {
-                        if (data.status == 1) {
-                            R.push({
-                                'json': data.res,
-                                'template': 'communication-messages-new',
-                                'replace': '.addressee .nm-search-result-box'
-                            });
-                        } else {
-                            throw(data.message);
-                        }
-                    }, "json");
+                        R.push({
+                            'json': data.res,
+                            'template': 'communication-messages-new',
+                            'replace': '.addressee .nm-search-result-box'
+                        });
+
+                    });
+            },
+
+            send: function () {
+                event.preventDefault();
+                var formData = $(this).parents('form').serializeObject();
+                if (formData.userid && formData.message)
+                    $.post(
+                        U.Generate.Post('/communications/messages/addMessage'),
+                        formData,
+                        function (data) {
+                            if (data.status == 1) {
+                                R.push({
+                                    'json': data.res,
+                                    'template': 'communication-messages-new',
+                                    'replace': '.addressee .nm-search-result-box'
+                                });
+                            } else {
+                                throw(data.message);
+                            }
+                        }, "json");
+            }
         }
     }
 
