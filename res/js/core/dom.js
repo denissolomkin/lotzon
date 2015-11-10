@@ -23,10 +23,11 @@
 
         },
 
-        insert: function (str, el, prepend) {
+        insert: function f(str, el, prepend) {
 
             if (typeof str === 'string')
                 str = DOM.create(str);
+
 
             if (str) {
 
@@ -42,6 +43,7 @@
                         : el.insertBefore(str, el.firstChild);
                 }
             }
+
 
         },
 

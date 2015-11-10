@@ -20,10 +20,11 @@ $(function () {
              }
              });
              */
-            /*window.onerror = function (message, url, line, col, error) {
+            /**/
+            window.onerror = function (message, url, line, col, error) {
              D.error([message, url, line]);
              return true;
-             }*/
+             }
         },
 
         "log": function (log, type) {
@@ -92,6 +93,8 @@ $(function () {
                 DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this.node);
             } else if (this && 'nodeType' in this) {
                 DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this);
+            } else {
+                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', document.getElementById('content'));
             }
 
             if (0 && D.isEnable("clean"))
