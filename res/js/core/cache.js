@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
     // Cache Engine
     Cache = {
@@ -423,4 +423,4 @@ $(function () {
         }
     };
 
-});
+})();
