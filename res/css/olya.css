@@ -620,7 +620,7 @@ body {
 
 }*/
 
-@media (max-height: 550px) and (orientation: landscape) {
+@media (max-height: 550px) and (max-width: 1010px) and (orientation: landscape) {
     .cards .players .m .gm-pr .pr-ph-bk {
         top: 6px;
         left: 35%;

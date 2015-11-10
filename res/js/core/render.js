@@ -81,6 +81,12 @@
                     options.template = template[0];
             }
 
+            /* fix JSON for "/all" template */
+            else if (!options.json && options.href.search(/all/) != -1) {
+
+                options.href = options.href.replace(/\/all/g, '');
+            }
+
             R.event.push(options);
             R.queue.push(options);
 
@@ -206,6 +212,7 @@
                     if (!$(data).not('empty').first().attr('class')) {
                         throw("Format Template Error: " + options.template);
                     } else {
+
                         D.log(['Render.renderTMPL:', options.template, 'TMPL from AJAX:', options.init.template], 'warn');
                         options.template = Cache.template(options.template, data);
                         R.renderHTML(options);
@@ -256,19 +263,26 @@
 
                     D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replace Block in Box'],'render');
 
-                    $(options.findClass, options.box).html($(options.rendered).html()).show();
+                    $(options.findClass, options.box)
+                        .html($(options.rendered).html()).show()
+                        .parents().show();
 
                 } else if (options.box.is(options.findClass)) {
 
                     D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Box = Rendered'],'render');
-
-                    options.box.html($(options.rendered).html()).show();
+                    options.box.html($(options.rendered).html()).find(' > div').show();
 
                 } else {
+
                     D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Append to Box'],'render');
-                    options.box.append(options.rendered).find(options.findClass).hide().show();
+                    options.box.append(options.rendered).find(options.findClass).hide().fadeIn();
                 }
 
+            } else if($(options.findClass).length) {
+
+                D.log(['Render.inputHTML into:', (options.findClass), 'Replace Block by Finding'],'render');
+
+                $(options.findClass).html($(options.rendered).html()).show();
             }
 
             U.update(options);
@@ -304,20 +318,26 @@
 
                 }
 
-
+            /* rendered box functionality after rendering */
+            } else if (!$(I.Cats,$(options.findClass)).filter(".active").length) {
+                if ($(I.Cats, $(options.findClass)).filter(":visible").length) {
+                    D.log(['clickCat:', $(I.Cats, $(options.findClass)).first().attr('href')]);
+                    $(I.Cats, $(options.findClass)).first().click();
+                }
             }
 
             /* tab functionality after click on tab */
             if (options.tab) {
 
                 $('a.active', options.tab.parent().parent()).removeClass('active');
-
-                if ($(I.Cats, options.tab.parents('.content-box')).filter(":visible").length) {
-                    D.log(['clickCat:', $(I.Cats, options.box).first().attr('href')]);
-                    $(I.Cats, options.tab.parents('.content-box')).first().click();
-                }
-
                 options.tab.addClass('active');
+
+                if (!$(I.Cats, options.tab.parents('.content-box')).filter(".active").length)
+                    if($(I.Cats, options.tab.parents('.content-box')).filter(":visible").length) {
+                        D.log(['clickCat:', $(I.Cats, options.box).first().attr('href')]);
+                        $(I.Cats, options.tab.parents('.content-box')).first().click();
+                    }
+
             }
 
             R.event.complete(options);

@@ -2,39 +2,35 @@
 
     Device = {
 
-        hide: function (event) {
-            Navigation.hide(event);
-            Comments.hide(event);
-            Profile.hideFavorite(event);
+        do: {
 
-        },
+            hide: function (event) {
+                Navigation.menu.hide(event);
+                Comments.hide(event);
+                Profile.do.hideFavorite(event);
 
-        resize: function (event) {
-            Navigation.switch();
-            Ticket.setBallsMargins();
-            Carousel.initOwl();
-            Cards.setupForDevices();
+            },
 
-        },
+            resize: function (event) {
+                Navigation.menu.switch();
+                Ticket.setBallsMargins();
+                Carousel.initOwl();
+                Cards.setupForDevices();
 
-        scroll: function (event) {
-            Device.getScroll();
-            Device.switchGoTop();
-            Navigation.fix();
+            },
 
-        },
+            scroll: function (event) {
+                Device.getScroll();
+                Device.switchGoTop();
+                Navigation.menu.fix();
 
-        getScroll: function () {
-            if (self.pageYOffset) {
-                yScroll = self.pageYOffset;
-                xScroll = self.pageXOffset;
-            } else if (document.documentElement && document.documentElement.scrollTop) {
-                yScroll = document.documentElement.scrollTop;
-                xScroll = document.documentElement.scrollLeft;
-            } else if (document.body) {
-                yScroll = document.body.scrollTop;
-                xScroll = document.body.scrollLeft;
+            },
+
+            goTop: function () {
+                $('html, body').animate({scrollTop: 0}, 'slow');
+                return false;
             }
+
         },
 
         get: function () {
@@ -60,17 +56,25 @@
             }
         },
 
+        getScroll: function () {
+            if (self.pageYOffset) {
+                yScroll = self.pageYOffset;
+                xScroll = self.pageXOffset;
+            } else if (document.documentElement && document.documentElement.scrollTop) {
+                yScroll = document.documentElement.scrollTop;
+                xScroll = document.documentElement.scrollLeft;
+            } else if (document.body) {
+                yScroll = document.body.scrollTop;
+                xScroll = document.body.scrollLeft;
+            }
+        },
+
         isMobile: function () {
             return $('.js-detect').css('opacity') < 0.8;
         },
 
         switchGoTop: function () {
             yScroll >= 150 ? $(I.goTop).fadeIn(200) : $(I.goTop).fadeOut(300);
-        },
-
-        goTop: function () {
-            $('html, body').animate({scrollTop: 0}, 'slow');
-            return false;
         },
 
         toggleFullScreen: function () {
@@ -100,6 +104,8 @@
                 cancelFullScreen.call(doc);
             }
         }
+
+
     }
 
 

@@ -1,6 +1,6 @@
-<div class="content-box balance-payments">
+﻿<div class="content-box balance-payments">
 
-            <div class="content-box-header back">{{#i18n}}title-balance-payments{{/i18n}}</div>
+            <div class="content-box-header back">{{i18n "title-reports-payments"}}</div>
 
 			<div class="content-box-content clearfix">
 				<div class="content-box-item cabinet-payments-history">
@@ -8,130 +8,37 @@
 					<div class="content-box-item-content">
 
 						<p class="ph-notice">
-							Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.
+                            {{i18n "message-order-process-week"}}
 						</p>
 
 						<div class="ph-header clearfix">
-							<div class="ph-header-item ph-date-text">Дата заявки</div>
-							<div class="ph-header-item ph-won-text">Выигрыш</div>
-							<div class="ph-header-item ph-method-text">Способ получения</div>
-							<div class="ph-header-item ph-status-text">Статус</div>
+							<div class="ph-header-item ph-date-text">{{i18n "title-order-date"}}</div>
+							<div class="ph-header-item ph-won-text">{{i18n "title-order-prize"}}</div>
+							<div class="ph-header-item ph-method-text">{{i18n "title-order-type"}}</div>
+							<div class="ph-header-item ph-status-text">{{i18n "title-order-status"}}</div>
 						</div>
 
 						<div>
-							<div class="ph-item ph-paid clearfix">
+							{{#each .}}
+							<div class="ph-item ph-{{this.status}} clearfix">
 								<div class="ph-date">
-									<div class="ph-inf-name">Дата заявки</div>
-									<div class="ph-inf-value">12.02.15</div>
+									<div class="ph-inf-name">{{i18n "title-order-date"}}</div>
+									<div class="ph-inf-value">{{day this.date}}</div>
 								</div>
 								<div class="ph-won">
-									<div class="ph-inf-name">Приз</div>
-									<div class="ph-inf-value">30 руб</div>
+									<div class="ph-inf-name">{{i18n "title-order-prize"}}</div>
+									<div class="ph-inf-value">{{#if (eq 'shop' this.type)}} {{prize}} {{else}} {{player "formatCurrency" prize 'iso'}} {{/if}}</div>
 								</div>
 								<div class="ph-method">
-									<div class="ph-inf-name">Способ получения</div>
-									<div class="ph-inf-value">моб. +380 50 667 80 90</div>
+									<div class="ph-inf-name">{{i18n "title-order-type"}}</div>
+									<div class="ph-inf-value">{{this.type}} {{this.data}}</div>
 								</div>
 								<div class="ph-status">
-									<div class="ph-inf-name">Статус</div>
-									<div class="ph-inf-value">Выплачено</div>
+									<div class="ph-inf-name">{{i18n "title-order-status"}}</div>
+									<div class="ph-inf-value">{{i18n "title-status" this.status}}</div>
 								</div>
 							</div>
-
-							<div class="ph-item ph-processed clearfix">
-								<div class="ph-date">
-									<div class="ph-inf-name">Дата заявки</div>
-									<div class="ph-inf-value">12.02.15</div>
-								</div>
-								<div class="ph-won">
-									<div class="ph-inf-name">Приз</div>
-									<div class="ph-inf-value">30 руб</div>
-								</div>
-								<div class="ph-method">
-									<div class="ph-inf-name">Способ получения</div>
-									<div class="ph-inf-value">моб. +380 50 667 80 90</div>
-								</div>
-								<div class="ph-status">
-									<div class="ph-inf-name">Статус</div>
-									<div class="ph-inf-value">Обработка</div>
-								</div>
-							</div>
-
-							<div class="ph-item ph-denied clearfix">
-								<div class="ph-date">
-									<div class="ph-inf-name">Дата заявки</div>
-									<div class="ph-inf-value">12.02.15</div>
-								</div>
-								<div class="ph-won">
-									<div class="ph-inf-name">Приз</div>
-									<div class="ph-inf-value">30 руб</div>
-								</div>
-								<div class="ph-method">
-									<div class="ph-inf-name">Способ получения</div>
-									<div class="ph-inf-value">моб. +380 50 667 80 90</div>
-								</div>
-								<div class="ph-status">
-									<div class="ph-inf-name">Статус</div>
-									<div class="ph-inf-value">Отказано</div>
-								</div>
-							</div>
-
-							<div class="ph-item ph-paid clearfix">
-								<div class="ph-date">
-									<div class="ph-inf-name">Дата заявки</div>
-									<div class="ph-inf-value">12.02.15</div>
-								</div>
-								<div class="ph-won">
-									<div class="ph-inf-name">Приз</div>
-									<div class="ph-inf-value">30 руб</div>
-								</div>
-								<div class="ph-method">
-									<div class="ph-inf-name">Способ получения</div>
-									<div class="ph-inf-value">моб. +380 50 667 80 90</div>
-								</div>
-								<div class="ph-status">
-									<div class="ph-inf-name">Статус</div>
-									<div class="ph-inf-value">Выплачено</div>
-								</div>
-							</div>
-
-							<div class="ph-item ph-processed clearfix">
-								<div class="ph-date">
-									<div class="ph-inf-name">Дата заявки</div>
-									<div class="ph-inf-value">12.02.15</div>
-								</div>
-								<div class="ph-won">
-									<div class="ph-inf-name">Приз</div>
-									<div class="ph-inf-value">30 руб</div>
-								</div>
-								<div class="ph-method">
-									<div class="ph-inf-name">Способ получения</div>
-									<div class="ph-inf-value">моб. +380 50 667 80 90</div>
-								</div>
-								<div class="ph-status">
-									<div class="ph-inf-name">Статус</div>
-									<div class="ph-inf-value">Обработка</div>
-								</div>
-							</div>
-
-							<div class="ph-item ph-denied clearfix">
-								<div class="ph-date">
-									<div class="ph-inf-name">Дата заявки</div>
-									<div class="ph-inf-value">12.02.15</div>
-								</div>
-								<div class="ph-won">
-									<div class="ph-inf-name">Приз</div>
-									<div class="ph-inf-value">30 руб</div>
-								</div>
-								<div class="ph-method">
-									<div class="ph-inf-name">Способ получения</div>
-									<div class="ph-inf-value">моб. +380 50 667 80 90</div>
-								</div>
-								<div class="ph-status">
-									<div class="ph-inf-name">Статус</div>
-									<div class="ph-inf-value">Отказано</div>
-								</div>
-							</div>
+							{{/each}}
 						</div>
 
 					</div>

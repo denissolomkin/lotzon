@@ -2,16 +2,16 @@
 
     <div class="content-box-item-top clearfix">
         <div class="content-box-cat">
-            {{#categories}}
-            <a href="#" data-category="{{ id }}">{{ title }}</a>
-            {{/categories}}
+            {{#each categories}}
+            <a href="#{{ id }}">{{ title }}</a>
+            {{/each}}
         </div>
     </div>
 
     <div class="content-box-item-content">
-        {{#goods}}
+        {{#each goods}}
             <div class="prize category-{{ category }}">
-        <a href="/prizes/exchange/{{ id }}">
+        <a href="/prizes/exchange/goods/{{ id }}">
                 <div class="prize-content">
                     <div class="prize-img">
                         <img src="{{ img }}" alt="">
@@ -20,18 +20,17 @@
                         {{ title }}
                     </div>
                     <div class="prize-price">
-                        {{ price }}<span>{{#i18n}}title-points{{/i18n}}</span>
+                        {{ price }}<span>{{i18n "title-points"}}</span>
                     </div>
                 </div>
                 <div class="prize-inf">
-                    {{#i18n}}title-limited-quantity{{/i18n}}<br>25 {{#i18n}}title-pieces{{/i18n}}
+                    {{i18n "title-limited-quantity"}}<br>25 {{i18n "title-pieces"}}
                 </div>
         </a>
             </div>
-        {{/goods}}
-        {{^goods}} No prizes :({{/goods}}
+        {{else}}
+            No prizes :(
+        {{/each}}
     </div>
 
-    {{#each .}}
-    {{/each}}
 </div>

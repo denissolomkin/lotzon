@@ -12,9 +12,9 @@
             D.log('activateTicket');
 
             Ticket.setBallsMargins();
-            $(I.ticketBall).off().on('click', Ticket.clickBall);
-            $(I.ticketAction).filter('.ticket-random').off().on('click', Ticket.clickRandom);
-            $(I.ticketAction).filter('.ticket-favorite').off().on('click', Ticket.clickFavorite);
+            $(I.ticketBall).off().on('click', Ticket.action.clickBall);
+            $(I.ticketAction).filter('.ticket-random').off().on('click', Ticket.action.clickRandom);
+            $(I.ticketAction).filter('.ticket-favorite').off().on('click', Ticket.action.clickFavorite);
             $(I.ticketAction).find('.after i').off().on('click', function () {
                 $('.profile .ul_li[data-link="profile-info"]').click();
             });
@@ -105,90 +105,94 @@
 
         },
 
-        clickFavorite: function (e) {
+        action:{
 
-            if ($(e.target).hasClass('after'))
-                return false;
+            clickFavorite: function (e) {
 
-            Ticket.clearBalls();
+                if ($(e.target).hasClass('after'))
+                    return false;
 
-            if (Player.favorite.length) {
+                Ticket.clearBalls();
 
-                for (num in Player.favorite)
+                if (Player.favorite.length) {
 
-                    /* increase in performance */
-                    if (parseInt(num) + 1 === Player.favorite.length) {
-                        $(I.ticketBall).filter(':eq(' + (Player.favorite[num] - 1) + ')').click();
-                    } else {
-                        $(I.ticketBall).filter(':eq(' + (Player.favorite[num] - 1) + ')').addClass('select').find('input').prop('checked', true);
-                    }
+                    for (num in Player.favorite)
 
-                $(this).addClass('select');
+                        /* increase in performance */
+                        if (parseInt(num) + 1 === Player.favorite.length) {
+                            $(I.ticketBall).filter(':eq(' + (Player.favorite[num] - 1) + ')').click();
+                        } else {
+                            $(I.ticketBall).filter(':eq(' + (Player.favorite[num] - 1) + ')').addClass('select').find('input').prop('checked', true);
+                        }
 
-            } else if(Device.get() >= 0.6) {
+                    $(this).addClass('select');
 
-                $(this).find('.after').fadeIn(200);
+                } else if(Device.get() >= 0.6) {
+
+                    $(this).find('.after').fadeIn(200);
+
+                }
+
+            },
+
+            clickBall: function (event) {
+
+                var li = $(this),
+                    requiredBalls;
+
+                switch (true) {
+
+                    case $(I.ticketTab).filter(':eq(' + (Tickets.selectedTab - 1) + ')').hasClass('done'): // if ticket already done
+                    case Ticket.countBalls() === Tickets.requiredBalls && !li.hasClass('select'): // if balls already all
+                    case !$(event.target).is('li'): // if target is not li
+                        return true;
+                        break;
+                    default :
+
+                        Ticket.clearActions();
+
+                        li.toggleClass('select')
+                            .children('input').click();
+
+                        requiredBalls = Tickets.requiredBalls - Ticket.countBalls();
+
+                        requiredBalls === 0 || Device.get() < 0.6
+                            ? $('.balls-count').hide()
+                            : $('.balls-count').show().find('b').html(requiredBalls);
+
+                        break;
+                }
+
+            },
+
+            clickRandom: function (e) {
+
+                if ($(e.target).hasClass('after'))
+                    return false;
+
+                Ticket.clearActionsAfter();
+
+                var lotInterval,
+                    li = $(this),
+                    after = $(this).find('.after');
+
+                if(Device.get() >= 0.6) {
+                    after.fadeIn(300);
+                    setTimeout(function () {
+                        after.fadeOut(300);
+                    }, 1800);
+                }
+
+                lotInterval = window.setInterval(Ticket.randomBalls, 200);
+
+                window.setTimeout(function () {
+                    window.clearInterval(lotInterval);
+                    Ticket.randomBalls(true);
+                    li.addClass('select');
+                }, 800);
+
 
             }
-
-        },
-
-        clickBall: function (event) {
-
-            var li = $(this),
-                requiredBalls;
-
-            switch (true) {
-
-                case $(I.ticketTab).filter(':eq(' + (Tickets.selectedTab - 1) + ')').hasClass('done'): // if ticket already done
-                case Ticket.countBalls() === Tickets.requiredBalls && !li.hasClass('select'): // if balls already all
-                case !$(event.target).is('li'): // if target is not li
-                    return true;
-                    break;
-                default :
-
-                    Ticket.clearActions();
-
-                    li.toggleClass('select')
-                        .children('input').click();
-
-                    requiredBalls = Tickets.requiredBalls - Ticket.countBalls();
-
-                    requiredBalls === 0 || Device.get() < 0.6
-                        ? $('.balls-count').hide()
-                        : $('.balls-count').show().find('b').html(requiredBalls);
-
-                    break;
-            }
-
-        },
-
-        clickRandom: function (e) {
-
-            if ($(e.target).hasClass('after'))
-                return false;
-
-            Ticket.clearActionsAfter();
-
-            var lotInterval,
-                li = $(this),
-                after = $(this).find('.after');
-
-            if(Device.get() >= 0.6) {
-                after.fadeIn(300);
-                setTimeout(function () {
-                    after.fadeOut(300);
-                }, 1800);
-            }
-
-            lotInterval = window.setInterval(Ticket.randomBalls, 200);
-
-            window.setTimeout(function () {
-                window.clearInterval(lotInterval);
-                Ticket.randomBalls(true);
-                li.addClass('select');
-            }, 800);
-
 
         },
 
@@ -267,7 +271,7 @@
                 var ticketNumbersBox = $('.ticket-numbers');
                 var ticketScrollBox = $('.scroll-box');
                 var blocksForAligning = $('.ticket-numbers, .ticket-actions');
-                var ticketTabs = $('.ticket-tabs');
+                var ticketTabs = $('.ticket-tabs, .timer-box');
 
                 var ticketBtn = $('.ticket-btn.add-ticket');
                 var result = this.getBallsMargins(ticketBox, ticketBalls);

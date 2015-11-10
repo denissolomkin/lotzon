@@ -1,5 +1,4 @@
 {
-   "cache": false,
    "res":{
    "blog":{
    "posts":
@@ -8,7 +7,7 @@
                 "id": "1",
                 "img": "/res/img/post.jpg",
                 "title": "Ноутбук Asus X551MA",
-                "date": "24.04.2001",
+                "date": 1447078996 ,
                 "stat": {
                     "views": 10,
                     "comments": 20
@@ -18,7 +17,7 @@
                 "id": "1",
                 "img": "/res/img/post.jpg",
                 "title": "Ноутбук Asus X551MA",
-                "date": "24.04.2001",
+                "date": 1447074996 ,
                 "stat": {
                     "views": 10,
                     "comments": 20
@@ -28,7 +27,7 @@
                 "id": "1",
                 "img": "/res/img/post.jpg",
                 "title": "Ноутбук Asus X551MA",
-                "date": "24.04.2001",
+                "date":1447008996 ,
                 "stat": {
                     "views": 10,
                     "comments": 20

@@ -1,0 +1,24 @@
+            <div class="lottery-history-items">
+            {{#reverse .}}
+            <a href="/lottery/history/{{ id }}">
+                <div class="gh-item clearfix">
+                    <div class="gh-inf gh-date">
+                        <span class="gh-inf-name">{{i18n "title-date"}}</span>{{day this.date }}
+                    </div>
+                    <div class="gh-inf gh-winners">
+                        <span class="gh-inf-name">{{i18n "title-winners"}}</span> {{this.playerWins}}
+                    </div>
+                    <div class="gh-inf gh-combination">
+                        <span class="gh-inf-name">{{i18n "title-win-combination"}}</span>
+
+                        <div class="gh-numbers clearfix">
+                            {{#combination}}
+                            <span class="gh-number">{{.}}</span>
+                            {{/combination}}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {{else}}
+            No rating :({{/reverse}}
+            </div>

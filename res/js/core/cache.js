@@ -1,38 +1,5 @@
 $(function () {
 
-    Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name, type) {
-        if (parent === "helpers") {
-            if (Handlebars.JavaScriptCompiler.isValidJavaScriptVariableName(name))
-                return parent + "." + name;
-            else
-                return parent + "['" + name + "']";
-        }
-
-        if (/^[0-9]+$/.test(name)) {
-            return parent + "[" + name + "]";
-        } else if (Handlebars.JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
-            // ( typeof parent.name === "function" ? parent.name() : parent.name)
-            return "(typeof " + parent + "." + name + " === 'function' ? " + parent + "." + name + "() : " + parent + "." + name + ")";
-        } else {
-            return "(typeof " + parent + "['" + name + "'] === 'function' ? " + parent + "['" + name + "']() : " + parent + "." + name + ")";
-        }
-    };
-
-    Handlebars.registerHelper('i18n', function () {
-
-        var key = [];
-        for (var i = 0; i < arguments.length; i++)
-            typeof arguments[i] === 'string' && key.push(arguments[i]);
-
-        return Cache.i18n(key.join('-'));
-
-    });
-
-    Handlebars.registerHelper('cache', function () {
-
-
-    });
-
     // Cache Engine
     Cache = {
 
@@ -56,7 +23,6 @@ $(function () {
                 .load() // compile templates
                 .compile() // compile templates
                 .localize(); // loading required language
-
         },
 
         "drop": function () {
@@ -90,6 +56,8 @@ $(function () {
 
             this.selectedLanguage = Player.language.current;
             D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
+
+            include('/res/js/libs/moment-locale/'+this.selectedLanguage.toLowerCase()+'.js');
 
             if (!this.language(this.selectedLanguage)) {
 
@@ -205,7 +173,6 @@ $(function () {
 
         "get": function (path, storage) {
 
-            D.log(['Cache.get:', path, storage], 'cache');
 
             var cache,
                 needle;
@@ -222,11 +189,13 @@ $(function () {
                         cache = cache && cache.hasOwnProperty(needle) && cache[needle];
                     }
 
+                    D.log(['Cache.get:', path, storage, cache.toString()], 'cache');
                     return cache;
                     break;
 
                 default:
 
+                    D.log(['Cache.get:', path, storage], 'cache');
                     return this.get(path, 'local') || this.get(path, 'session');
                     break;
             }
@@ -252,7 +221,7 @@ $(function () {
                     source = source && source.hasOwnProperty(needle) && source[needle];
                 }
 
-            return source;
+            return source || data.res || data;
 
         },
 
@@ -325,9 +294,24 @@ $(function () {
             D.log(['Cache.template:', key, template], 'cache');
 
             if (template) {
+
+                var div = document.createElement("div");
+                div.innerHTML = template;
+                if(div.childNodes[0].nodeType == 8) {
+                    eval("var options = "+div.childNodes[0].data);
+                    if (options && typeof options === 'object' && Object.size(options) && options.aliases){
+                        for (alias in options.aliases) {
+                            if (options.aliases.hasOwnProperty(alias)) {
+                                this.compile(options.aliases[alias], template)
+                            }
+                        }
+                    }
+                }
+
                 return this.compile(key, template)
                     .save(this.templates)
                     .template(key);
+
             } else {
                 return this.compiledStorage.hasOwnProperty(key) && this.compiledStorage[key];
             }
@@ -382,6 +366,13 @@ $(function () {
         },
 
         "i18n": function (key) {
+
+            if(typeof key === 'object') {
+                var args = [];
+                for (var i = 0; i <= key.length; i++)
+                    typeof key[i] === 'string' && key[i] !== 'i18n' && args.push(key[i]);
+                key = args.join('-');
+            }
 
             D.log(['Cache.i18n:', key], 'i18n');
 
