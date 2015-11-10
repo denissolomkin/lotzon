@@ -37,10 +37,8 @@
 }
 
 .gh-inf {
-  margin-bottom: 10px;
-  &:last-child {
-    margin-bottom: 0;
-  }
+  margin-bottom: 0;
+  font-size: 12px
 }
 
 .gh-inf-name {
@@ -58,13 +56,13 @@
 
 .gh-number {
   display: inline-block;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background: #ffe800;
   border-radius: 50%;
   margin-right: 5px;
-  font-size: 16px;
-  line-height: 35px;
+  font-size: 14px;
+  line-height: 30px;
   text-align: center;
   &:last-child {
     margin-right: 0;
@@ -1117,6 +1115,19 @@
 // }
 
 .gh-item {
+  position:relative;
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #b7cfd3;
+    border-radius: 50%;
+    margin-right: 13px;
+    position: absolute;
+    left: -20px;
+    top: 10px;
+  }
   & .arrow {
     display: inline-block;
     width: 0;
@@ -1153,3 +1164,9 @@
     }
   }
 }   
+
+.cabinet-game-history {
+  & .content-box-item {
+    padding: 10px 10px 10px 40px;
+  }
+}

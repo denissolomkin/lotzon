@@ -31,6 +31,7 @@
                 "menu-support-feedback": "Обратная связь",
                 "menu-support-rules": "Правила",
                 "menu-support-help": "Помощь",
+                "menu-support-faq": "Частые вопросы",
 
                 "menu-reports-referrals": "Мои рефералы",
 
@@ -67,7 +68,13 @@
                 "title-order-date": "Дата заявки",
                 "title-order-status": "Статус заявки",
                 "title-order-type":"Способ получения",
-                "title-order-prize":"Выигрыш"
+                "title-order-prize":"Выигрыш",
+
+                "title-support-faq": "Часто задаваемые вопросы",
+                "title-support-rules": "Правила",
+
+                "text-support-rules":"<h1>Правило №1</h1><p>Кто чаще билеты заполняет, тот больше шансов получает</p><h1>Правило №2</h1><p>Кто по рекламе нажимает, тот в лотерее побеждает</p>",
+                "text-support-faq":"<h1>1. Как часто выигрывают?</h1><p>Ежесекундно</p><h1>2. Как много выигрывают?</h1><p>Миллионы и золотые горы</p>"
             }
 	}
 }

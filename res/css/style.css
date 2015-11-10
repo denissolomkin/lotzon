@@ -241,7 +241,7 @@ button.loading:before {
 }
 
 .content-box-item.with-cat {
-  padding-top: 72px;
+  padding-top: 52px;
 }
 
 .ticket-item {
@@ -2396,10 +2396,8 @@ header .owl-theme .owl-controls .owl-page span {
 }
 
 .gh-inf {
-  margin-bottom: 10px;
-}
-.gh-inf:last-child {
   margin-bottom: 0;
+  font-size: 12px;
 }
 
 .gh-inf-name {
@@ -2417,13 +2415,13 @@ header .owl-theme .owl-controls .owl-page span {
 
 .gh-number {
   display: inline-block;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background: #ffe800;
   border-radius: 50%;
   margin-right: 5px;
-  font-size: 16px;
-  line-height: 35px;
+  font-size: 14px;
+  line-height: 30px;
   text-align: center;
 }
 .gh-number:last-child {
@@ -3405,6 +3403,21 @@ header .owl-theme .owl-controls .owl-page span {
   background: #f8e71d;
 }
 
+.gh-item {
+  position: relative;
+}
+.gh-item:before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #b7cfd3;
+  border-radius: 50%;
+  margin-right: 13px;
+  position: absolute;
+  left: -20px;
+  top: 10px;
+}
 .gh-item .arrow {
   display: inline-block;
   width: 0;
@@ -3436,6 +3449,10 @@ header .owl-theme .owl-controls .owl-page span {
   top: -20px;
   right: 2px;
   position: absolute;
+}
+
+.cabinet-game-history .content-box-item {
+  padding: 10px 10px 10px 40px;
 }
 
 .prizes-for-points.content-box-item.with-cat {
