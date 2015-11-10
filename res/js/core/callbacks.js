@@ -42,6 +42,9 @@
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
 
+            /* support */
+            $(document).on('click', '.support h1', Support.do.collapse);
+
         },
 
         "get": {
@@ -59,7 +62,10 @@
             "communications-messages": Message.init,
             "lottery-history-view": Lottery.view,
             "lottery-ticket-item": Ticket.activate,
-            "lottery-ticket-tabs": Ticket.switch
+            "lottery-ticket-tabs": Ticket.switch,
+
+            "support-rules": Support.init,
+            "support-faq": Support.init
 
         },
 

@@ -19,7 +19,7 @@
 						</div>
 
 						<div>
-							{{#each .}}
+							{{#reverse .}}
 							<div class="ph-item ph-{{this.status}} clearfix">
 								<div class="ph-date">
 									<div class="ph-inf-name">{{i18n "title-order-date"}}</div>
@@ -27,7 +27,11 @@
 								</div>
 								<div class="ph-won">
 									<div class="ph-inf-name">{{i18n "title-order-prize"}}</div>
-									<div class="ph-inf-value">{{#if (eq 'shop' this.type)}} {{prize}} {{else}} {{player "formatCurrency" prize 'iso'}} {{/if}}</div>
+									<div class="ph-inf-value">
+                                        {{#if (eq 'shop' this.type)}} {{prize}}
+                                        {{else}} {{player "formatCurrency" prize 'iso'}}
+                                        {{/if}}
+                                    </div>
 								</div>
 								<div class="ph-method">
 									<div class="ph-inf-name">{{i18n "title-order-type"}}</div>
@@ -38,7 +42,7 @@
 									<div class="ph-inf-value">{{i18n "title-status" this.status}}</div>
 								</div>
 							</div>
-							{{/each}}
+							{{/reverse}}
 						</div>
 
 					</div>

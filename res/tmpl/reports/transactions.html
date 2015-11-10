@@ -1,6 +1,6 @@
 <div class="content-box balance-transactions">
 
-            <div class="content-box-header back">{{i18n "title-balance-transactions"}}</div>
+            <div class="content-box-header back">{{i18n "title-reports-transactions"}}</div>
 
 
 			<div class="content-box-content clearfix">
@@ -13,87 +13,30 @@
 						</div>
 
 						<div class="content-box-cat">
-							<a href="/reports/transactions/all">Деньги</a>
-							<a href="/reports/transactions/points">Баллы</a>
+							<a href="/reports/transactions/all">{{i18n "title-money"}}</a>
+							<a href="/reports/transactions/points">{{i18n "title-points"}}</a>
 						</div>
 
 					</div>
 
 					<div class="content-box-item-content">
 
-						<div class="th-date-range">Сегодня</div>
-						<div>
-							<div class="th-item clearfix">
-								<div class="th-item-left">
-									<div>21:00</div>
-									<div>Выигрыш Розыгрыш N167</div>
-								</div>
-								<div class="th-item-right">
-									<div class="th-item-sum">0,25 грн</div>
-									<div>12,25</div>
-								</div>
-							</div>
+                        <div class="th-date-range">Сегодня</div>
+                        {{#each .}}
 
-							<div class="th-item th-minus clearfix">
-								<div class="th-item-left">
-									<div>21:00</div>
-									<div>«Морской бой»</div>
-								</div>
-								<div class="th-item-right">
-									<div class="th-item-sum">-1,00 грн</div>
-									<div>12,25</div>
-								</div>
-							</div>
+                        <div class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
+                            <div class="th-item-left">
+                                <div>{{day this.date}}</div>
+                                <div>{{this.description}}</div>
+                            </div>
+                            <div class="th-item-right">
+                                <div class="th-item-sum">{{this.sum}} {{player "getCurrency"}}</div>
+                                <div>{{this.balance}}</div>
+                            </div>
+                        </div>
 
-							<div class="th-item th-minus clearfix">
-								<div class="th-item-left">
-									<div>21:00</div>
-									<div>«Морской бой»</div>
-								</div>
-								<div class="th-item-right">
-									<div class="th-item-sum">-1,00 грн</div>
-									<div>12,25</div>
-								</div>
-							</div>
-						</div>
+                        {{/each}}
 
-
-
-						<div class="th-date-range">16.05.15</div>
-						<div>
-							<div class="th-item clearfix">
-								<div class="th-item-left">
-									<div>21:00</div>
-									<div>«Морской бой»</div>
-								</div>
-								<div class="th-item-right">
-									<div class="th-item-sum">0,25 грн</div>
-									<div>12,25</div>
-								</div>
-							</div>
-
-							<div class="th-item clearfix">
-								<div class="th-item-left">
-									<div>21:00</div>
-									<div>«Морской бой»</div>
-								</div>
-								<div class="th-item-right">
-									<div class="th-item-sum">0,25 грн</div>
-									<div>12,25</div>
-								</div>
-							</div>
-
-							<div class="th-item clearfix">
-								<div class="th-item-left">
-									<div>21:00</div>
-									<div>«Морской бой»</div>
-								</div>
-								<div class="th-item-right">
-									<div class="th-item-sum">0,25 грн</div>
-									<div>12,25</div>
-								</div>
-							</div>
-						</div>
 
 					</div>
 

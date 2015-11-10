@@ -61,8 +61,8 @@
                 options.json = Player;
             }
 
-            /* disable JSON for header menu */
-            else if (options.template.search(/-/) == -1) {
+            /* disable JSON for header and support menu */
+            else if (options.template.search(/-/) == -1 || options.template.search(/support/) !== -1) {
                 options.json = {};
             }
 
