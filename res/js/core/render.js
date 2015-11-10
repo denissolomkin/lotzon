@@ -311,9 +311,7 @@
                 node = options.node,
                 template = false;
 
-
-
-            D.log(['Render.inputHTML into:', node], 'render');
+            D.log(['Render.inputHTML into:', node.id], 'render');
 
             if (node) {
 

@@ -25,7 +25,12 @@
     border-bottom: none;
   }
 }
-
+#blog {
+  & .content-box-item  {
+    padding: 20px;
+  }
+} 
+ 
 #blog-post-view {
   font-family: handbookpro-regular;
   font-size: 15px;
@@ -103,7 +108,7 @@
     }
   }
   & .post-comments {
-    &.render-list {
+    & .render-list-form {
       & .message-form-wrapper {
         padding-left: 70px;
         margin-top: -10px;
@@ -198,6 +203,18 @@ div.comment-reply-btn {
   }
   &  .post-inf {
     margin-bottom: 20px;
+  }
+
+  & .post-item {
+    padding-bottom: 0;
+    border-bottom: 0;
+    & hr {
+      padding-bottom: 30px;
+      border: none;
+      border-bottom: 1px solid #cbc7c4;
+      margin: 0 -20px!important;
+      display: block;
+    }
   }
 }
 .post-item-img {
@@ -460,12 +477,12 @@ div.comment-reply-btn {
 .post-comments.render-list {
   margin-bottom: 40px;
 }
-.content-box-item {
-  &.home-blog {
-    padding: 20px;
-  }
-}
 
+
+
+.comment-description {
+  position: relative;
+}
 // ---------------------------- //
 
 @media (max-width: 479px) {
@@ -473,14 +490,38 @@ div.comment-reply-btn {
     & .comment-content {
       padding-left: 0;
     }
-    & .comment-img {
-      position: static;
-    }
     & .comment-like {
       top: 18px;
     }
+    .post-comments .render-list-form .message-form-wrapper {
+      padding-left: 0;
+    }
+
+    & .comment-inf {
+       display: block;
+      max-width: 80%;
+      padding-left: 70px;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    & .comment-top {
+      position: relative;
+      display: block;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    & .comment-img {
+      top: 0;
+    }
+    & .comment {
+      & .message-form {
+        margin: 0 -20px;
+      } 
+    }
   }
 }
+
 @media (min-width: 550px) {
   .post-inf {
     margin-bottom: 0;

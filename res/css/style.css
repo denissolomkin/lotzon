@@ -987,6 +987,9 @@ header .owl-theme .owl-controls .owl-page span {
   .post-item:last-child {
     border-bottom: none; }
 
+#blog .content-box-item {
+  padding: 20px; }
+
 #blog-post-view {
   font-family: handbookpro-regular;
   font-size: 15px; }
@@ -1044,14 +1047,14 @@ header .owl-theme .owl-controls .owl-page span {
     margin: 5px -20px 5px; }
   #blog-post-view .message-form-wrapper:hover hr {
     border-color: #b7cfd3; }
-  #blog-post-view .post-comments.render-list .message-form-wrapper {
+  #blog-post-view .post-comments .render-list-form .message-form-wrapper {
     padding-left: 70px;
     margin-top: -10px;
     padding-top: 0; }
-    #blog-post-view .post-comments.render-list .message-form-wrapper .message-form {
+    #blog-post-view .post-comments .render-list-form .message-form-wrapper .message-form {
       background: #fafafa;
       padding: 10px 20px 0; }
-    #blog-post-view .post-comments.render-list .message-form-wrapper hr {
+    #blog-post-view .post-comments .render-list-form .message-form-wrapper hr {
       display: none; }
   #blog-post-view .render-list-form {
     margin-top: 5px; }
@@ -1118,6 +1121,15 @@ div.comment-reply-btn {
     padding: 20px; }
   #blog-posts .post-inf {
     margin-bottom: 20px; }
+  #blog-posts .post-item {
+    padding-bottom: 0;
+    border-bottom: 0; }
+    #blog-posts .post-item hr {
+      padding-bottom: 30px;
+      border: none;
+      border-bottom: 1px solid #cbc7c4;
+      margin: 0 -20px !important;
+      display: block; }
 
 .post-item-img {
   margin: 0 -20px; }
@@ -1328,16 +1340,32 @@ div.comment-reply-btn {
 .post-comments.render-list {
   margin-bottom: 40px; }
 
-.content-box-item.home-blog {
-  padding: 20px; }
+.comment-description {
+  position: relative; }
 
 @media (max-width: 479px) {
   #blog-post-view .comment-content {
     padding-left: 0; }
-  #blog-post-view .comment-img {
-    position: static; }
   #blog-post-view .comment-like {
-    top: 18px; } }
+    top: 18px; }
+  #blog-post-view .post-comments .render-list-form .message-form-wrapper {
+    padding-left: 0; }
+  #blog-post-view .comment-inf {
+    display: block;
+    max-width: 80%;
+    padding-left: 70px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+  #blog-post-view .comment-top {
+    position: relative;
+    display: block;
+    height: 50px;
+    margin-bottom: 10px; }
+  #blog-post-view .comment-img {
+    top: 0; }
+  #blog-post-view .comment .message-form {
+    margin: 0 -20px; } }
 
 @media (min-width: 550px) {
   .post-inf {

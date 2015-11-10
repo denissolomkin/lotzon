@@ -1,3 +1,7 @@
+html {
+  min-width: 1024px;
+  overflow: scroll; }
+
 .container {
   width: 980px;
   max-width: none; }
@@ -9,6 +13,9 @@
 
 .content-box-item {
   padding: 20px; }
+
+.content-box {
+  margin: 0; }
 
 .sidebar {
   display: block;
@@ -285,6 +292,34 @@
   line-height: 30px;
   margin-bottom: 14px;
   font-weight: bold; }
+
+@media (max-width: 479px) {
+  #blog-post-view .comment-content {
+    padding-left: 70px; }
+  #blog-post-view .comment-img {
+    position: absolute; }
+  #blog-post-view .comment-like {
+    top: 0; }
+  #blog-post-view .post-comments .render-list-form .message-form-wrapper {
+    padding-left: 70px; } }
+
+.comment-reply {
+  display: inline !important; }
+
+#blog-posts .post-item-img {
+  margin: 0; }
+
+#blog-post-view .post > .title {
+  font-size: 25px;
+  line-height: 30px;
+  margin-bottom: 14px;
+  font-weight: bold; }
+
+#blog-post-view .message-form-wrapper button[type="submit"] {
+  font-family: Handbook-bold; }
+
+.comment-description, .message-form-area {
+  line-height: 1.5; }
 
 .communication .content-box-tab.back-tab {
   padding: 0 74px 0 20px; }

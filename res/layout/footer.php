@@ -256,6 +256,6 @@ endforeach;
     });
 
 </script>
-
+</div>
 </body>
 </html>

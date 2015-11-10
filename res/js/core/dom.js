@@ -58,8 +58,8 @@
             }
 
             if (el && el.length) {
-                for (i in el) {
-                    el.hasOwnProperty(i) && f(el[i]);
+                for (var i = 0; i < el.length; i++) {
+                    f(el[i]);
                 }
             }
         },
@@ -72,7 +72,7 @@
 
             while (!node && id && id.match(/(?:\w+)(?:-\w+)+$/) && (!level || l < level)) {
                 id = id.replace(/-(\w+)$/, "");
-                node = document.getElementById(id) || document.getElementById(id+'-list');
+                node = document.getElementById(id) || document.getElementById(id + '-list');
                 l++;
             }
 
@@ -198,8 +198,9 @@
 
             if (typeof el === 'object' && "nodeType" in el) {
                 el.remove();
-            } else
+            } else {
                 this.all(f, el, parent)
+            }
         },
 
         toggle: function f(el, parent) {

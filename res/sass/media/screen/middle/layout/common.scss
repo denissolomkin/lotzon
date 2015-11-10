@@ -1,3 +1,8 @@
+html {
+  min-width: 1024px;
+  overflow: scroll;
+}
+
 .container {
   width: 980px;
   max-width: none;
@@ -12,7 +17,9 @@
 .content-box-item {
   padding: 20px;
 }
-
+.content-box {
+  margin: 0;
+}
 // SIDEBAR -------------------------------- //
 
 .sidebar {

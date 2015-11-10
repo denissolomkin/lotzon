@@ -1,5 +1,4 @@
 <div class="comment-content">
-    <div class="comment-reply-btn" data-user-name="{{this.user.name}}" data-user-id="{{this.user.id}}" data-post-id="{{this.post_id}}"data-comment-id="{{this.id}}"></div>
     <div class="comment-top">
         <div class="comment-img">
             <img src="{{this.user.avatar}}" alt="">
@@ -22,6 +21,8 @@
     </div>
     <div class="comment-like">{{likes}}</div>
     <div class="comment-description">
+        <div class="comment-reply-btn" data-user-name="{{this.user.name}}" data-user-id="{{this.user.id}}" data-post-id="{{this.post_id}}"data-comment-id="{{this.id}}">
+        </div>
         {{this.text}}
     </div>
 </div>

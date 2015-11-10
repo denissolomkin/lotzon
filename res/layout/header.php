@@ -27,6 +27,7 @@
 
 </head>
 <body>
+<div class="wrapper">
 <span class="js-detect"></span>
 
 <!-- SITE TOP -->
