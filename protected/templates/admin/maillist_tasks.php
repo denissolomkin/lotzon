@@ -143,16 +143,10 @@
                             text: 'Сыграно лотерей игроками, которым пришёл email'
                         },
                         subtitle: {
-                            text: 'Всего отослано писем:'+data.data.count+', из них сыграло после рассылки: '+((data.data.count-data.data.bars[0])*100/data.data.count)+'%'
+                            text: 'Всего отослано писем:'+data.data.count+', из них сыграло после рассылки: '+((data.data.count-data.data.bars[0])*100/data.data.count).toFixed(2)+'%'
                         },
                         xAxis: {
                             type: 'игр',
-                            labels: {
-                                style: {
-                                    fontSize: '12px',
-                                    fontFamily: 'Verdana, sans-serif'
-                                }
-                            },
                             categories: cats
                         },
                         yAxis: {
@@ -166,7 +160,8 @@
                             enabled: false
                         },
                         tooltip: {
-                            pointFormat: '{point.y} чел'
+                            pointFormat: '{point.y} чел',
+                            headerFormat: ''
                         },
                         series: [{
                             name: '%',
