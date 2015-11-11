@@ -35,8 +35,10 @@
 
              ---------------------------------------------------- */
 
-            if(typeof options !== 'object')
-                options = {'href':options};
+            console.log(options);
+
+            if (typeof options !== 'object')
+                options = {'href': options};
 
             options.template = options.template || U.parse(this.href || options.href);
             options.href = options.href || this.href || options.template; //U.parse();
@@ -121,18 +123,19 @@
             if (typeof options.json === 'object') {
 
                 options.json = Cache.set(options.href, options.json);
-                D.log(['Render.json:', options.href, 'JSON from Object:', options.json],'render');
+                D.log(['Render.json:', options.href, 'JSON from Object:', options.json], 'render');
                 R.formatJSON(options);
 
             } else if (options.json = Cache.get(options.href)) {
 
-                D.log(['Render.json:', options.href, 'JSON from Cache:', options.json],'render');
+                D.log(['Render.json:', options.href, 'JSON from Cache:', options.json], 'render');
                 R.formatJSON(options);
 
             } else {
 
                 $.ajax({
                     url: U.generate(options.href),
+                    data: options.query,
                     method: 'get',
                     dataType: 'json',
                     statusCode: {
@@ -187,20 +190,20 @@
             /* Insert into already exist DIV */
             if ($('.template.' + options.template).length) {
 
-                D.log(['Render.renderTMPL:', options.template, 'TMPL already in DOM', options.template],'render');
+                D.log(['Render.renderTMPL:', options.template, 'TMPL already in DOM', options.template], 'render');
                 R.renderHTML(options);
 
                 /* Template from cache */
             } else if (Cache.template(options.template)) {
 
-                D.log(['Render.renderTMPL:', options.template, 'TMPL from Cache', options.init.template],'render');
+                D.log(['Render.renderTMPL:', options.template, 'TMPL from Cache', options.init.template], 'render');
                 options.template = Cache.template(options.template);
                 R.renderHTML(options);
 
                 /* Template from HTML template */
             } else if ($('#tmpl-' + options.template).length) {
 
-                D.log(['Render.renderTMPL:', options.template, 'TMPL from HTML:', options.template],'render');
+                D.log(['Render.renderTMPL:', options.template, 'TMPL from HTML:', options.template], 'render');
                 options.template = Cache.template(options.template, $('#tmpl-' + options.template).html());
                 R.renderHTML(options);
 
@@ -228,12 +231,12 @@
             if (typeof options.template != 'function') {
 
                 options.rendered = $($('.template.' + options.template)[0].outerHTML).html(options.json);
-                D.log(['Render.renderHTML:', options.init.template, options.json, 'From HTML:', options.rendered],'render');
+                D.log(['Render.renderHTML:', options.init.template, options.json, 'From HTML:', options.rendered], 'render');
 
             } else {
 
                 options.rendered = options.template(options.json);
-                D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered],'render');
+                D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered], 'render');
 
             }
 
@@ -246,14 +249,17 @@
 
             if (options.replace) {
 
-                D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing'],'render');
+                D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing'], 'render');
 
-                if($(options.rendered).is(options.replace))
+                if ($(options.rendered).is(options.replace)) {
                     $(options.replace).replaceWith($(options.rendered));
-                else
+                } else if (options.replace === '.render-list') {
+                    var appendHTML = $(options.replace, options.rendered).html(),
+                        appendPlace = options.findClass + ' ' + options.replace;
+                    $(appendHTML).appendTo(appendPlace).hide().fadeIn();
+                } else {
                     $(options.replace).html($(options.replace, options.rendered).html()).hide().fadeIn(1000);
-
-
+                }
 
             } else if (options.box) {
 
@@ -261,26 +267,31 @@
 
                 if ($(options.findClass, options.box).length) {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replace Block in Box'],'render');
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replace Block in Box'], 'render');
 
                     $(options.findClass, options.box)
                         .html($(options.rendered).html()).show()
                         .parents().show();
 
+                    // content-box-item with content-box-item-top
+                    if($(options.rendered).is('.content-box-item-content')) {
+                        $(' > div', options.box).show();
+                    }
+
                 } else if (options.box.is(options.findClass)) {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Box = Rendered'],'render');
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Box = Rendered'], 'render');
                     options.box.html($(options.rendered).html()).find(' > div').show();
 
                 } else {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Append to Box'],'render');
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Append to Box'], 'render');
                     options.box.append(options.rendered).find(options.findClass).hide().fadeIn();
                 }
 
-            } else if($(options.findClass).length) {
+            } else if ($(options.findClass).length) {
 
-                D.log(['Render.inputHTML into:', (options.findClass), 'Replace Block by Finding'],'render');
+                D.log(['Render.inputHTML into:', (options.findClass), 'Replace Block by Finding'], 'render');
 
                 $(options.findClass).html($(options.rendered).html()).show();
             }
@@ -292,15 +303,15 @@
 
         "afterHTML": function (options) {
 
-            D.log(['Render.afterHTML class:', options.findClass],'render');
+            D.log(['Render.afterHTML class:', options.findClass], 'render');
 
             if (options.after) {
-                D.log(['Render.after', typeof options.after],'render');
+                D.log(['Render.after', typeof options.after], 'render');
                 options.after(options);
             }
 
             if (callback = Callbacks['get'][U.parse(options.init.template, 'tmpl')]) {
-                D.log(['Callbacks.get', U.parse(options.init.template, 'tmpl')],'render');
+                D.log(['Callbacks.get', U.parse(options.init.template, 'tmpl')], 'render');
                 callback(options);
             }
 
@@ -318,8 +329,8 @@
 
                 }
 
-            /* rendered box functionality after rendering */
-            } else if (!$(I.Cats,$(options.findClass)).filter(".active").length) {
+                /* rendered box functionality after rendering */
+            } else if (!$(I.Cats, $(options.findClass)).filter(".active").length) {
                 if ($(I.Cats, $(options.findClass)).filter(":visible").length) {
                     D.log(['clickCat:', $(I.Cats, $(options.findClass)).first().attr('href')]);
                     $(I.Cats, $(options.findClass)).first().click();
@@ -333,7 +344,7 @@
                 options.tab.addClass('active');
 
                 if (!$(I.Cats, options.tab.parents('.content-box')).filter(".active").length)
-                    if($(I.Cats, options.tab.parents('.content-box')).filter(":visible").length) {
+                    if ($(I.Cats, options.tab.parents('.content-box')).filter(":visible").length) {
                         D.log(['clickCat:', $(I.Cats, options.box).first().attr('href')]);
                         $(I.Cats, options.tab.parents('.content-box')).first().click();
                     }
@@ -365,7 +376,7 @@
 
             "stop": function () {
 
-                D.log('Render.stop','render');
+                D.log('Render.stop', 'render');
                 R.isRendering = false;
 
             }

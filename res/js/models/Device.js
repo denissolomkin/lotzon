@@ -23,7 +23,7 @@
                 Device.getScroll();
                 Device.switchGoTop();
                 Navigation.menu.fix();
-
+                Content.infiniteScrolling();
             },
 
             goTop: function () {

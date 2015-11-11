@@ -7,7 +7,7 @@
             livedateInterval = window.setInterval(function () {
                 $('.live-date:visible').each(function () {
                     var el = $(this),
-                        date = Livedate.from(el.data('stamp'));
+                        date = Livedate.fn.from(el.data('stamp'));
                     if (date != el.text())
                         el.text(date).hide().fadeIn();
                 })

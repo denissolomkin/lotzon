@@ -29,6 +29,35 @@
           "data": "г. Кузнецовск, ул. Калиновича, д. 15",
           "prize": "Наушники Goldfinger FA-51",
           "status": "denied"
+        },
+
+        "7":{
+          "date": "151251515",
+          "type": "qiwi",
+          "data": "+380501545136",
+          "prize": "60",
+          "status": "paid"
+        },
+        "8":{
+          "date": "1447155829",
+          "type": "webmoney",
+          "data": "R451151617165",
+          "prize": "130",
+          "status": "paid"
+        },
+        "9":{
+          "date": "1447455829",
+          "type": "phone",
+          "data": "+380501545136",
+          "prize": "40",
+          "status": "processed"
+        },
+        "10":{
+          "date": "1447955829",
+          "type": "shop",
+          "data": "г. Кузнецовск, ул. Калиновича, д. 15",
+          "prize": "Наушники Goldfinger FA-51",
+          "status": "denied"
         }
       }
     }

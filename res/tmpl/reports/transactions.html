@@ -6,6 +6,8 @@
 			<div class="content-box-content clearfix">
 				<div class="content-box-item with-cat cabinet-transaction-history">
 
+                    <form class="filter-render-list-unwatched" action="/reports/transactions" method="get">
+                        
 					<div class="content-box-item-top clearfix">
 
 						<div class="calendar-range">
@@ -13,33 +15,56 @@
 						</div>
 
 						<div class="content-box-cat">
-							<a href="/reports/transactions/all">{{i18n "title-money"}}</a>
-							<a href="/reports/transactions/points">{{i18n "title-points"}}</a>
+
+                            <label>
+                                <input id="brt-money" name="currency" type="radio" value="money" checked>
+                                <label for="brt-money" ></label>
+                                {{i18n "title-money"}}
+                            </label>
+
+                            <label>
+                                <input id="brt-points" name="currency" type="radio" value="points">
+                                <label for="brt-points" class="input-radio"></label>
+                                {{i18n "title-points"}}
+                            </label>
+
+                            {{#each currency1}}
+                            <a href="/reports/transactions/{{.}}">{{i18n "title" .}}</a>
+                            {{/each}}
 						</div>
 
 					</div>
 
-					<div class="content-box-item-content">
+                        <div class="render-list-container content-box-item-content">
 
-                        <div class="th-date-range">Сегодня</div>
-                        {{#each .}}
+                            <!--div class="th-date-range">Сегодня</div-->
 
-                        <div class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
-                            <div class="th-item-left">
-                                <div>{{day this.date}}</div>
-                                <div>{{this.description}}</div>
+                            <div class="render-list">
+                                {{#each .}}
+                                <div data-id={{@key}} class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
+                                    <div class="th-item-left">
+                                        <div>{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
+                                        <div>{{this.description}}</div>
+                                    </div>
+                                    <div class="th-item-right">
+                                        <div class="th-item-sum">{{this.sum}}
+                                            {{#if (eq this.type "money") }}
+                                                {{player "getCurrency"}}
+                                            {{else}}
+                                                {{i18n "title-points"}}
+                                            {{/if}}
+                                        </div>
+                                        <div>{{this.balance}}</div>
+                                    </div>
+                                </div>
+                                {{/each}}
                             </div>
-                            <div class="th-item-right">
-                                <div class="th-item-sum">{{this.sum}} {{player "getCurrency"}}</div>
-                                <div>{{this.balance}}</div>
-                            </div>
+
+                            <a class="infinite-scrolling"> {{i18n "button-load-more"}} </a>
+
                         </div>
 
-                        {{/each}}
-
-
-					</div>
-
+                    </form>
 				</div>
 			</div>
 

@@ -26,6 +26,10 @@
 
             /* form */
             $(document).on('click', 'form button[type="submit"]', Form.do.submit);
+
+            $(document).on('change', 'form.filter-render-list input', Content.autoload);
+            $(document).on('submit', 'form.filter-render-list', Content.enableAutoload);
+
             $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
@@ -55,14 +59,20 @@
 
             "blog": Blog.init,
             "blog-post-view": Blog.loadPostData,
-            "lottery": Lottery.init,
+
             "games-game": WebSocketAjaxClient,
+
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
+
             "communications-messages": Message.init,
+
+            "lottery": Lottery.init,
             "lottery-history-view": Lottery.view,
             "lottery-ticket-item": Ticket.activate,
             "lottery-ticket-tabs": Ticket.switch,
+
+            "reports-transactions": Reports.init,
 
             "support-rules": Support.init,
             "support-faq": Support.init
