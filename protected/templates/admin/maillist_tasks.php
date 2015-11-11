@@ -125,13 +125,12 @@
 
                     bars_data = [];
                     cats = [];
-                    for(var i = 0; i < data.data.bars_count; i++) {
-                        bars_data[i] = [""+i, parseInt(data.data.bars[i])*100/data.data.count];
-                        cats[i] = ""+i;
+                    for(var i = 1; i < data.data.bars_count; i++) {
+                        bars_data[i-1] = [""+i, parseInt(data.data.bars[i])];
+                        cats[i-1] = ""+i;
                     }
-                    bars_data[i] = [i+'+', parseInt(data.data.bars.over)*100/data.data.count];
-                    cats[i] = i+"+";
-                    console.log(bars_data);
+                    bars_data[i-1] = [i+'+', parseInt(data.data.bars.over)];
+                    cats[i-1] = i+"+";
 
                     $('#chart').highcharts({
                         credits: {
@@ -141,10 +140,10 @@
                             type: 'column'
                         },
                         title: {
-                            text: 'Сыграно лотерей игроками, которым пришёл email после рассылки'
+                            text: 'Сыграно лотерей игроками, которым пришёл email'
                         },
                         subtitle: {
-                            text: 'Всего отослано писем:'+data.data.count
+                            text: 'Всего отослано писем:'+data.data.count+', из них сыграло после рассылки: '+((data.data.count-data.data.bars[0])*100/data.data.count)+'%'
                         },
                         xAxis: {
                             type: 'игр',
@@ -158,16 +157,16 @@
                         },
                         yAxis: {
                             min: 0,
-                            max:100,
+                            allowDecimals: false,
                             title: {
-                                text: '%'
+                                text: 'чел'
                             }
                         },
                         legend: {
                             enabled: false
                         },
                         tooltip: {
-                            pointFormat: '{point.y:.1f}'
+                            pointFormat: '{point.y} чел'
                         },
                         series: [{
                             name: '%',
