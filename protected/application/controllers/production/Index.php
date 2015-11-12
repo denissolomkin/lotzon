@@ -16,10 +16,6 @@ class Index extends \SlimController\SlimController
 
     public function indexAction($page = 'home')
     {
-
-        return include ("res/index.php");
-        die($this->page($page));
-
         $session = new Session();
         // validate registration
         if ($vh = $this->request()->get('vh')) {
@@ -95,17 +91,9 @@ class Index extends \SlimController\SlimController
 
     }
 
-    protected function page($page)
-    {
-
-        $this->render("../../res/pages/$page", array(
-            'layout' => '../../res/index.php',
-            'page' => $page,
-        ));
-
-    }
     protected function game($page)
     {
+        return include ("res/index.php");
 
         $session               = new Session();
         $seo                   = SEOModel::instance()->getSEOSettings();
