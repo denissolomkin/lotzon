@@ -1,59 +1,61 @@
 ﻿<div class="content-box balance-payments">
 
-            <div class="content-box-header back">{{i18n "title-reports-payments"}}</div>
+    <div class="content-box-header back">{{i18n "title-reports-payments"}}</div>
 
-			<div class="content-box-content clearfix">
-				<div class="content-box-item cabinet-payments-history">
+    <div class="content-box-content clearfix">
+        <div class="content-box-item cabinet-payments-history">
 
-					<div class="content-box-item-content">
+            <div class="content-box-item-content">
 
-						<p class="ph-notice">
-                            {{i18n "message-order-process-week"}}
-						</p>
+                <p class="ph-notice">
+                    {{i18n "message-order-process-week"}}
+                </p>
 
-						<div class="ph-header clearfix">
-							<div class="ph-header-item ph-date-text">{{i18n "title-order-date"}}</div>
-							<div class="ph-header-item ph-won-text">{{i18n "title-order-prize"}}</div>
-							<div class="ph-header-item ph-method-text">{{i18n "title-order-type"}}</div>
-							<div class="ph-header-item ph-status-text">{{i18n "title-order-status"}}</div>
-						</div>
+                <div class="ph-header clearfix">
+                    <div class="ph-header-item ph-date-text">{{i18n "title-order-date"}}</div>
+                    <div class="ph-header-item ph-won-text">{{i18n "title-order-prize"}}</div>
+                    <div class="ph-header-item ph-method-text">{{i18n "title-order-type"}}</div>
+                    <div class="ph-header-item ph-status-text">{{i18n "title-order-status"}}</div>
+                </div>
 
-                        <form action="/reports/payments" class="filter-render-list" method="get">
-						<div class="render-list">
-							{{#reverse .}}
-							<div data-id="{{@key}}" class="ph-item ph-{{this.status}} clearfix">
-								<div class="ph-date">
-									<div class="ph-inf-name">{{i18n "title-order-date"}}</div>
-									<div class="ph-inf-value">{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
-								</div>
-								<div class="ph-won">
-									<div class="ph-inf-name">{{i18n "title-order-prize"}}</div>
-									<div class="ph-inf-value">
-                                        {{#if (eq 'shop' this.type)}}
-                                            {{prize}}
-                                        {{else}}
-                                            {{player "formatCurrency" prize 'iso'}}
-                                        {{/if}}
-                                    </div>
-								</div>
-								<div class="ph-method">
-									<div class="ph-inf-name">{{i18n "title-order-type"}}</div>
-									<div class="ph-inf-value">{{this.type}} {{this.data}}</div>
-								</div>
-								<div class="ph-status">
-									<div class="ph-inf-name">{{i18n "title-order-status"}}</div>
-									<div class="ph-inf-value">{{i18n "title-status" this.status}}</div>
-								</div>
-							</div>
-							{{/reverse}}
-						</div>
+                <form action="/reports/payments" class="filter-render-list" method="get">
 
-                        <input type="submit" class="" value="{{i18n "button-load-more"}}"></input>
-                        </form>
+                    <div class="render-list">
+                        {{#reverse .}}
+                        <div data-id="{{@key}}" class="ph-item ph-{{this.status}} clearfix">
+                            <div class="ph-date">
+                                <div class="ph-inf-name">{{i18n "title-order-date"}}</div>
+                                <div class="ph-inf-value">{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
+                            </div>
+                            <div class="ph-won">
+                                <div class="ph-inf-name">{{i18n "title-order-prize"}}</div>
+                                <div class="ph-inf-value">
+                                    {{#if (eq 'shop' this.type)}}
+                                    {{prize}}
+                                    {{else}}
+                                    {{player "formatCurrency" prize 'iso'}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                            <div class="ph-method">
+                                <div class="ph-inf-name">{{i18n "title-order-type"}}</div>
+                                <div class="ph-inf-value">{{this.type}} {{this.data}}</div>
+                            </div>
+                            <div class="ph-status">
+                                <div class="ph-inf-name">{{i18n "title-order-status"}}</div>
+                                <div class="ph-inf-value">{{i18n "title-status" this.status}}</div>
+                            </div>
+                        </div>
+                        {{/reverse}}
+                    </div>
 
-					</div>
+                    <input type="submit" class="" value="{{i18n " button-load-more"}}"></input>
 
-				</div>
-			</div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
 
 </div><!-- .content-box -->

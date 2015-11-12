@@ -2,26 +2,63 @@
 
     <div class="content-box-item">
 
-        <div class="content-box-item-top clearfix">
-            <div class="content-box-cat">
-                <a href="/lottery/history/all">{{i18n "title-lottery-history-all"}}</a>
-                <a href="/lottery/mine">{{i18n "title-lottery-history-mine"}}</a>
+        <form action="/lottery/history" class="filter-render-list" method="get">
+
+            <div class="content-box-item-top clearfix">
+
+                <label>
+                    <input id="brt-points" name="mine" type="radio" value="true">
+                    <label for="brt-points" class="input-radio"></label>
+                    {{i18n "title-lottery-history-mine"}}
+                </label>
+
+                <label>
+                    <input id="brt-money" name="mine" type="radio" value="false" checked>
+                    <label for="brt-money"></label>
+                    {{i18n "title-lottery-history-all"}}
+                </label>
+
             </div>
-        </div>
 
-        <div class="content-box-item-content">
+            <div class="content-box-item-content">
 
-            <div class="gh-header clearfix">
-                <div class="gh-date-name">{{i18n "title-date"}}</div>
-                <div class="gh-combination-name">{{i18n "title-win-combination"}}</div>
-                <div class="gh-winners-name">{{i18n "title-winners"}}</div>
+                <div class="gh-header clearfix">
+                    <div class="gh-date-name">{{i18n "title-date"}}</div>
+                    <div class="gh-combination-name">{{i18n "title-win-combination"}}</div>
+                    <div class="gh-winners-name">{{i18n "title-winners"}}</div>
+                </div>
+
+                <div class="render-list render-list-container">
+                    {{#reverse .}}
+                    <a data-id="{{@key}}" href="/lottery/history/{{ id }}">
+                        <div class="gh-item clearfix">
+                            <div class="gh-inf gh-date">
+                                <span class="gh-inf-name">{{i18n "title-date"}}</span>{{day this.date }}
+                            </div>
+                            <div class="gh-inf gh-winners">
+                                <span class="gh-inf-name">{{i18n "title-winners"}}</span> {{this.playerWins}}
+                            </div>
+                            <div class="gh-inf gh-combination">
+                                <span class="gh-inf-name">{{i18n "title-win-combination"}}</span>
+
+                                <div class="gh-numbers clearfix">
+                                    {{#combination}}
+                                    <span class="gh-number">{{.}}</span>
+                                    {{/combination}}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {{else}}
+                        No history :(
+                    {{/reverse}}
+                </div>
+
+                <input type="submit" class="" value="{{i18n " button-load-more"}}"></input>
+
             </div>
 
-            <div class="lottery-history-items">
-            </div>
-
-        </div>
-
+        </form>
 
     </div>
 </div>

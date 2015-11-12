@@ -24,17 +24,40 @@
 
         },
 
+        catchFilter: function (event) {
+
+            D.log('Content.autoload', this);
+
+            var form = this;
+            while (form && form.nodeName !== 'FORM')
+                form = form.parentElement;
+
+            var renderList = form.querySelector(".render-list"),
+                query = $(form).serializeObject();
+
+            query.first_id = renderList.firstElementChild.getAttribute('data-id');
+            query.last_id = renderList.lastElementChild.getAttribute('data-id');
+            query.offset = renderList.childElementCount;
+
+            R.push({
+                href: form.action,
+                replace: this.nodeName === 'INPUT' ? '.render-list-container' : '.render-list',
+                query: query,
+                after: Content.afterInfiniteScrolling
+            });
+
+        },
+
         autoload: function (event) {
 
             D.log('Content.autoload', this);
 
-            var form = this,
-                renderList = form.querySelector(".render-list"),
-                query = $(form).serializeObject();
-
+            var form = this;
             while (form && form.nodeName !== 'FORM')
                 form = form.parentElement;
 
+            var renderList = form.querySelector(".render-list"),
+                query = $(form).serializeObject();
 
             query.first_id = renderList.firstElementChild.getAttribute('data-id');
             query.last_id = renderList.lastElementChild.getAttribute('data-id');
@@ -60,7 +83,7 @@
                 D.log('Content.infiniteScrolling', 'func');
                 infiniteScrolling.classList.add("loading");
 
-                this.autoload.call(infiniteScrolling.parentElement);
+                this.autoload.call(infiniteScrolling.parentElement); // fix for checking this.nodeName === 'INPUT'
 
             }
 

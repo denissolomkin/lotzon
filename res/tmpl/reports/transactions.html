@@ -1,71 +1,70 @@
 <div class="content-box balance-transactions">
 
-            <div class="content-box-header back">{{i18n "title-reports-transactions"}}</div>
+    <div class="content-box-header back">{{i18n "title-reports-transactions"}}</div>
 
+    <div class="content-box-content clearfix">
+        <div class="content-box-item with-cat cabinet-transaction-history">
 
-			<div class="content-box-content clearfix">
-				<div class="content-box-item with-cat cabinet-transaction-history">
+            <form class="filter-render-list-unwatched" action="/reports/transactions" method="get">
 
-                    <form class="filter-render-list-unwatched" action="/reports/transactions" method="get">
+                <div class="content-box-item-top clearfix">
 
-					<div class="content-box-item-top clearfix">
+                    <div class="calendar-range">
+                        <input type="text" name="daterange" class="daterange" value="01.01.2015 - 02.02.2015">
+                    </div>
 
-						<div class="calendar-range">
-							<input type="text" name="daterange" class="daterange" value="01.01.2015 - 02.02.2015">
-						</div>
+                    <div class="content-box-cat">
 
-						<div class="content-box-cat">
+                        <label>
+                            <input id="brt-money" name="currency" type="radio" value="money" checked>
+                            <label for="brt-money"></label>
+                            {{i18n "title-money"}}
+                        </label>
 
-                            <label>
-                                <input id="brt-money" name="currency" type="radio" value="money" checked>
-                                <label for="brt-money" ></label>
-                                {{i18n "title-money"}}
-                            </label>
+                        <label>
+                            <input id="brt-points" name="currency" type="radio" value="points">
+                            <label for="brt-points" class="input-radio"></label>
+                            {{i18n "title-points"}}
+                        </label>
 
-                            <label>
-                                <input id="brt-points" name="currency" type="radio" value="points">
-                                <label for="brt-points" class="input-radio"></label>
-                                {{i18n "title-points"}}
-                            </label>
+                        {{#each currency1}}
+                        <a href="/reports/transactions/{{.}}">{{i18n "title" .}}</a>
+                        {{/each}}
+                    </div>
 
-                            {{#each currency1}}
-                            <a href="/reports/transactions/{{.}}">{{i18n "title" .}}</a>
-                            {{/each}}
-						</div>
+                </div>
 
-					</div>
+                <div class="render-list-container content-box-item-content">
 
-                        <div class="render-list-container content-box-item-content">
+                    <!--div class="th-date-range">Сегодня</div-->
 
-                            <!--div class="th-date-range">Сегодня</div-->
-
-                            <div class="render-list">
-                                {{#each .}}
-                                <div data-id={{@key}} class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
-                                    <div class="th-item-left">
-                                        <div>{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
-                                        <div>{{this.description}}</div>
-                                    </div>
-                                    <div class="th-item-right">
-                                        <div class="th-item-sum">{{this.sum}}
-                                            {{#if (eq this.type "money") }}
-                                                {{player "getCurrency"}}
-                                            {{else}}
-                                                {{i18n "title-points"}}
-                                            {{/if}}
-                                        </div>
-                                        <div>{{this.balance}}</div>
-                                    </div>
-                                </div>
-                                {{/each}}
+                    <div class="render-list">
+                        {{#each .}}
+                        <div data-id={{@key}} class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
+                            <div class="th-item-left">
+                                <div>{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
+                                <div>{{this.description}}</div>
                             </div>
-
-                            <input type="submit" class="infinite-scrolling" value="{{i18n "button-load-more"}}"></input>
-
+                            <div class="th-item-right">
+                                <div class="th-item-sum">{{this.sum}}
+                                    {{#if (eq this.type "money") }}
+                                    {{player "getCurrency"}}
+                                    {{else}}
+                                    {{i18n "title-points"}}
+                                    {{/if}}
+                                </div>
+                                <div>{{this.balance}}</div>
+                            </div>
                         </div>
+                        {{/each}}
+                    </div>
 
-                    </form>
-				</div>
-			</div>
+                    <input type="submit" class="infinite-scrolling" value="{{i18n " button-load-more"}}"></input>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
 
 </div><!-- .content-box -->
