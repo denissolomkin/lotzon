@@ -7,13 +7,13 @@
             <div class="content-box-item-top clearfix">
 
                 <label>
-                    <input id="brt-points" name="mine" type="radio" value="true">
+                    <input id="brt-points" name="type" type="radio" value="all">
                     <label for="brt-points" class="input-radio"></label>
                     {{i18n "title-lottery-history-mine"}}
                 </label>
 
                 <label>
-                    <input id="brt-money" name="mine" type="radio" value="false" checked>
+                    <input id="brt-money" name="type" type="radio" value="mine" checked>
                     <label for="brt-money"></label>
                     {{i18n "title-lottery-history-all"}}
                 </label>
@@ -50,15 +50,16 @@
                         </div>
                     </a>
                     {{else}}
-                        No history :(
+                    No history :(
                     {{/reverse}}
                 </div>
 
                 <input type="submit" class="" value="{{i18n " button-load-more"}}"></input>
 
             </div>
-
         </form>
 
     </div>
+
+
 </div>

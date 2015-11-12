@@ -28,7 +28,7 @@
 
             },
 
-            сashout: function () {
+            cashout: function () {
 
                 var $input_money = $(I.moneyCashout),
                     input_money = Player.checkMoney($input_money.val());

@@ -5,7 +5,7 @@
         init: function () {
 
             livedateInterval = window.setInterval(function () {
-                $('.live-date:visible').each(function () {
+                $('.live-date').filter(':visible').each(function () {
                     var el = $(this),
                         date = Livedate.fn.from(el.data('stamp'));
                     if (date != el.text())

@@ -1,10 +1,44 @@
-	<div class="content-main home">
+<div class="content-main home">
 
-		<div class="content-box">
+    <div class="content-box">
 
-			<div class="content-box-content clearfix">
-			</div>
+        <div class="content-box-content clearfix">
 
-		</div>
+            <div class="content-box-item home-blog">
 
-	</div><!-- .content-main -->
+                <form class="filter-render-list" action="/blog/all" method="get">
+                    <div class="render-list-container render-list">
+                        {{#reverse .}}
+                        <div class="post-item clearfix">
+                            <div class="post-item-img">
+                                <img src=" {{ this.img }}" alt="">
+                            </div>
+                            <div class="post-item-description">
+                                <div class="post-item-inf clearfix">
+                                    <div class="post-item-date live-date" data-stamp="{{ date }}">{{from this.date}}
+                                    </div>
+                                    <div class="post-item-views-comments">
+                                        <div class="post-item-views-inf">{{ this.stat.views }}</div>
+                                        <div class="post-item-comments-inf">{{ this.stat.comments }}</div>
+                                    </div>
+                                </div>
+                                <div class="post-item-title">
+                                    {{ this.title }}
+                                </div>
+                            </div>
+                            <a href="/post/{{ id }}" class="post-more-btn">{{i18n "button-more"}}</a>
+                        </div>
+                        {{/reverse}}
+
+                    </div>
+
+                    <input type="submit" class="infinite-scrolling" value="{{i18n " button-load-more"}}"></input>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div><!-- .content-main -->

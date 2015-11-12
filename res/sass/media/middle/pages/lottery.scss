@@ -1,3 +1,193 @@
+.ticket-items {
+  margin: 70px 0 30px;
+  background: rgb(167, 209, 213);
+  padding-left: 0;
+}
+
+.ticket-tabs {
+  top: -40px;
+  background: transparent;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: -10;
+  display: block;
+  margin: 0;
+  padding: 6px 0 14px;
+  left: 0;
+  & li {
+    top: 9px;
+    width: 72px;
+    height: 85px;
+    margin-right: 10px;
+    line-height: 31px;
+    background: #4c4c4c;
+    color: #b2d0d4;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+    position: relative;
+    float: left;
+    border-radius: 5px 5px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    &.unavailable {
+      background: #8f8e8e;
+      &:hover {
+        & .ticket-number-sm {
+          background: transparent;
+        }
+      }
+    }
+    &.done {
+      background: #4c4c4c;
+      color: #b2d0d4;
+      text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+      &:after {
+        content: "";
+        display: inline-block;
+        background: url(img/sprite.png) center center no-repeat;
+        background-position: -597px -61px;
+        position: absolute;
+        width: 11px;
+        height: 8px;
+        right: 8px;
+        top: 12px;
+      }
+      &:before {
+        display: none;
+      }
+      &:hover .ticket-number-sm:before {
+        display: none;
+      }
+      & .ticket-number-sm:before {
+        display: none;
+      }
+    }
+    &.active {
+      height: 40px;
+      line-height: 40px;
+      color: #464444;
+      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      background: #b7cfd3;
+      & .ticket-number-sm {
+        background: transparent;
+      }
+    }
+    &:last-of-type {
+      background: #e8cf6b;
+      color: #4c4c4c;
+      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+      width: 120px;
+      &.active {
+        color: #4c4c4c;
+      }
+      &:hover {
+        color: #4c4c4c;
+      }
+      & .ticket-number-sm {
+        display: inline;
+        width: auto;
+        height: auto;
+        background: transparent;
+        line-height: 1;
+        border-radius: 0;
+        position: static;
+      }
+    }
+    & .ticket-number-sm {
+      display: inline !important;
+      width: auto !important;
+      height: auto !important;
+      background: transparent !important;
+      line-height: 1 !important;
+      border-radius: 0 !important;
+      position: static !important;
+    }
+    & .ticket-number-sm:before {
+      display: none !important;
+    }
+  }
+}
+
+.ticket-box {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.scroll-box {
+  height: auto;
+}
+
+.is-done {
+  padding-top: 0;
+}
+
+
+.ticket-done {
+  bottom: 0px;
+}
+
+.ticket-numbers-wrapper {
+  height: auto;
+  overflow: visible;
+}
+
+.ticket-tabs li:hover {
+  -webkit-transform: translate(0, -8px);
+  -moz-transform: translate(0, -8px);
+  -o-transform: translate(0, -8px);
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.ticket-item {
+  padding: 37px 20px 27px !important;
+  & .ticket-numbers {
+    height: auto;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 7px;
+    margin-right: -22px !important;
+    & li {
+      margin: 0 22px 21px 0 !important;
+    }
+  }
+
+  & .ticket-actions {
+    margin-left: 0 !important;
+    & li {
+      margin: 0 22px 21px 0 !important;
+    }
+  }
+}
+.is_done {
+  padding-right: 7px;
+}
+.add-ticket {
+  margin-right: 0 !important;
+}
+
+.balls-count {
+  bottom: 43px;
+}
+
+.ticket-btn {
+  padding: 0 40px;
+}
+
+.lottery-grid .title {
+  padding: 16px 0 16px 23px;
+}
+
+.matches-inf-wrapper.carousel .matches-inf {
+  width: 48.5%;
+}
 // TICKET-ITEMS ------------------------------ //
 
 .ticket-tabs li {
@@ -72,4 +262,35 @@
 
 .timer {
   width: 200px;
+}
+
+.ticket-items {
+  border-radius: 0 5px 5px 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 5px 0 7px;
+  padding-left: 10px;
+
+}
+
+.matches-inf-wrapper.carousel {
+  padding: 30px 0;
+  margin-bottom: 0;
+}
+
+.matches-inf {
+  margin-bottom: 0;
+}
+
+.cabinet-game-history .content-box-cat a:first-child {
+  padding-left: 35px;
+}
+.gh-item {
+  padding: 10px;
+  &:before {
+    top: 20px;
+  }
+}
+
+.gh-inf.gh-combination {
+  margin-right: 70px;
 }

@@ -14,37 +14,22 @@
 
         enableAutoload: function (event) {
 
-            var submit = this.querySelector('input[type="submit"]');
-            submit.classList.add('infinite-scrolling');
-
             D.log('Content.enableAutoload', this);
             event.preventDefault();
+
+            var submit = this.querySelector('input[type="submit"]');
+            submit.classList.add('infinite-scrolling');
 
             Content.autoload.call(this);
 
         },
 
-        catchFilter: function (event) {
+        changeFilter: function (event) {
 
-            D.log('Content.autoload', this);
+            D.log('Content.changeFilter', this);
+            event.preventDefault();
 
-            var form = this;
-            while (form && form.nodeName !== 'FORM')
-                form = form.parentElement;
-
-            var renderList = form.querySelector(".render-list"),
-                query = $(form).serializeObject();
-
-            query.first_id = renderList.firstElementChild.getAttribute('data-id');
-            query.last_id = renderList.lastElementChild.getAttribute('data-id');
-            query.offset = renderList.childElementCount;
-
-            R.push({
-                href: form.action,
-                replace: this.nodeName === 'INPUT' ? '.render-list-container' : '.render-list',
-                query: query,
-                after: Content.afterInfiniteScrolling
-            });
+            Content.autoload.call(this);
 
         },
 
@@ -53,19 +38,23 @@
             D.log('Content.autoload', this);
 
             var form = this;
+
             while (form && form.nodeName !== 'FORM')
                 form = form.parentElement;
 
             var renderList = form.querySelector(".render-list"),
-                query = $(form).serializeObject();
+                query = $(form).serializeObject(),
+                replace = this.nodeName === 'INPUT' ? '.render-list-container' : '.' + Object.keys(renderList.classList).map(function (key) {
+                    return renderList.classList[key]
+                }).join('.');
 
-            query.first_id = renderList.firstElementChild.getAttribute('data-id');
-            query.last_id = renderList.lastElementChild.getAttribute('data-id');
-            query.offset = renderList.childElementCount;
+            query.first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id');
+            query.last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id');
+            query.offset = renderList && renderList.childElementCount;
 
             R.push({
                 href: form.action,
-                replace: this.nodeName === 'INPUT' ? '.render-list-container' : '.render-list',
+                replace: replace,
                 query: query,
                 after: Content.afterInfiniteScrolling
             });
@@ -96,6 +85,8 @@
                 for (var i = 0; i < infiniteScrollingLoading.length; i++)
                     infiniteScrollingLoading[i].classList.remove('loading')
 
+            return this;
+
         },
 
         afterInfiniteScrolling: function (options) {
@@ -108,7 +99,8 @@
                     infiniteScrolling.remove();
             }
 
-            Content.clearLoading();
+            Content.clearLoading()
+                .infiniteScrolling();
 
         },
 
@@ -116,7 +108,7 @@
 
             y = y || 0;
             var bounds = this.getBoundingClientRect();
-            return bounds.top + y < window.innerHeight && bounds.bottom + y > 0;
+            return bounds.top + y < window.innerHeight && bounds.bottom - y > 0;
 
         }
 

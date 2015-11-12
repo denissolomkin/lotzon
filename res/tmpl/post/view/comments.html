@@ -1,16 +1,15 @@
-<div class="post-comments">
-    <div class="title">2 комментария</div>
+<div class="post-comments render-list">
 
     {{#each .}}
 
         <div class="comment-content">
             <div class="comment-top">
                 <div class="comment-img">
-                    <img src="{{user.avatar}}" alt="">
+                    <img src="{{this.user.avatar}}" alt="">
                 </div>
                 <div class="comment-inf">
-                    <span class="comment-name">{{user.name}}</span>
-                    <span class="comment-date"><span>{{date}}</span><span>{{time}}</span></span>
+                    <span class="comment-name">{{this.user.name}}</span>
+                    <span class="comment-date"><span >{{from this.date}}</span></span>
 										<span class="comment-reply">
 											<span class="separator">|</span>
 											<span class="comment-reply-btn">{{i18n "button-answer"}}</span>
@@ -20,7 +19,7 @@
             </div>
             <div class="comment-like">{{likes}}</div>
             <div class="comment-description">
-                {{text}}
+                {{this.text}}
             </div>
         </div>
 
@@ -48,6 +47,8 @@
     </div>
 
     {{/each}}
+
+    <!--
     <div class="comment liked">
         <div class="comment-content">
             <div class="comment-top">
@@ -72,7 +73,7 @@
             </div>
         </div>
 
-        <!-- COMMENT ANSWER -->
+        <!-- COMMENT ANSWER -- >
         <div class="comment answer">
             <div class="comment-content">
                 <div class="comment-top">
@@ -97,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <!-- end of COMMENT ANSWER -->
+        <!-- end of COMMENT ANSWER -- >
     </div>
 
 
@@ -125,21 +126,4 @@
         </div>
     </div>
 
-    <!-- COMMENT FORM -->
-    <div class="message-form-wrapper">
-        <div class="message-form">
-            <form action="">
-                <textarea class="message-form-area" name="" placeholder="Напишите комментарий" rows="1"></textarea>
-
-                <div class="message-form-actions clearfix">
-                    <label class="input-file-wrapper">
-                        <input type="file" class="input-file">
-                    </label>
-                    <button type="submit" class="message-form-btn">Отправить</button>
-                    <div class="message-form-smileys"></div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- end of  COMMENT FORM -->
 </div>

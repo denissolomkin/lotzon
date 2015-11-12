@@ -38,9 +38,8 @@ var slotMachine = {
             }), slotMachine.sounds.spinning = soundManager.createSound({
                 id: "spinning",
                 url: "/res/audio/games/spinning.mp3"
-            })
-        })
-//        , $('main, .content-top').addClass('fullscreen_mobile'); //fix - fullscreen in mobile
+            });
+        });
     },
     change_bet: function (n) {
         slotMachine.curBet += n, slotMachine.curBet = Math.min(Math.max(1, slotMachine.curBet), maxBet), slotMachine.show_won_state(!1), $("#bet").html(slotMachine.curBet), $("#prizes_list .tdPayout").each(function () {
@@ -99,7 +98,7 @@ var slotMachine = {
         })
     },
     show_won_state: function (n, e, t) {
-        n ? ($("#PageContainer, #SlotsOuterContainer").addClass(t ? t : "won"), $("#trPrize_" + e).addClass("won")) : ($(".trPrize").removeClass("won"), $("#PageContainer, #SlotsOuterContainer").removeClass(), $("#lastWin").html(""))
+        n ? ($("#PageContainer, #SlotsContainer").addClass(t ? t : "won"), $("#trPrize_" + e).addClass("won")) : ($(".trPrize").removeClass("won"), $("#PageContainer, #SlotsContainer").removeClass(), $("#lastWin").html(""))
     },
     end_spin: function (n) {
         null != n.prize ? (slotMachine.show_won_state(!0, n.prize.id, n.prize.winType), slotMachine._increment_payout_counter(n)) : slotMachine._end_spin_after_payout(n)

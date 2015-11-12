@@ -2,6 +2,8 @@
 
     Form = {
 
+        timeout: 0,
+        
         do: {
 
             validate: function () {

@@ -3,13 +3,15 @@
         Owl: null,
         initOwl: function () {
             // OWL CAROUSEL =========================== //
-//            console.error($matchesCarousel.css('box-shadow'));
-            
             if ($('.carousel-spin').length){
                 if (parseFloat(Device.get()) <= 0.5) {
                     $('.carousel-spin').owlCarousel({
                         singleItem: true,
-                        autoPlay: false
+                        autoPlay: false,
+                        autoHeight: false,
+                        afterInit: function(){
+                            this.jumpTo(1);
+                        }
                     });
                     Carousel.Owl = $('.carousel-spin').data('owlCarousel');
                     return;

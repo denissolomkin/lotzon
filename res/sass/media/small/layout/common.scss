@@ -1,5 +1,6 @@
 .container {
-  width: 728px;
+  width: 100%;
+  max-width: 768px;
   padding: 0;
 }
 
@@ -20,10 +21,6 @@
   padding: 0 20px;
 }
 
-.content-box-content {
-  min-height: 850px;
-}
-
 .content-box-item {
   padding: 20px;
 }
@@ -31,7 +28,19 @@
 .content-box-item-top {
   padding: 20px 20px 0;
 }
-
+.content-box-content {
+  padding-left: 3px;
+}
+.cabinet-game-history {
+  & .content-box-cat {
+    & a {
+      &:first-child {
+        padding: 5px 10px 5px 45px;
+        margin-left: 13px;
+      }
+    }
+  }
+}
 // BANNERS --------------------------------- //
 
 .banner-1,

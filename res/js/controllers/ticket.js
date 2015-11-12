@@ -260,11 +260,10 @@
 
         },
 
-     
         setBallsMargins: function () {
+            return;
 
             if (Device.get() < 0.6) {
-                console.log("Device.get() < 0.6", Device.get() < 0.6)
                 var ticketBox = $('.ticket-item');
                 var ticketBalls = $('.ticket-numbers li');
                 var ticketActions = $('.ticket-actions li');

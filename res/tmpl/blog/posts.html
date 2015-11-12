@@ -1,4 +1,6 @@
 <div class="content-box-item home-blog">
+    <form class="filter-render-list" action="/blog" method="get">
+          <div class="render-list">
 {{#each .}}
 					<div class="post-item clearfix">
 						<div class="post-item-img">
@@ -21,5 +23,10 @@
 
 {{/each}}
 {{^.}} No posts :({{/.}}
+
+          </div>
+
+        <input type="submit" class="infinite-scrolling" value="{{i18n " button-load-more"}}"></input>
+    </form>
 
 </div>

@@ -3,4 +3,138 @@
 	& > * {
 		padding: 0;	
 	}
+	& .title {
+    padding: 16px 10px;
+	}
+}
+
+.matches-inf {
+	& .lottery-grid {
+		& .ul-striped {
+			& li {
+				padding: 6px 10px 13px;
+				& p {
+					display: inline-block;		
+					&:first-child {
+						margin-right: 30px;
+						min-width: 125px;
+					}
+				}	
+				span {
+					display: inline-block;
+				}
+			}
+		}
+	}
+}
+
+.content-box-content {
+	padding-left: 10px;
+    margin: 0 auto;
+	& .gh-item {
+	    &:before {
+	    	left: -20px;
+	    }
+	}
+	& .gh-inf {
+		font-size: 15px;
+	}
+	& .gh-date {
+		margin-bottom: 15px;
+		display: block;
+	}
+}
+
+
+.cabinet-game-history {
+	padding: 52px 0 30px;
+}
+
+
+@media (min-width: 640px) {
+	.lottery-grid {
+		& .title {
+	    	padding: 16px 0 16px 30px;
+		}
+	}	
+
+
+
+	.matches-inf {
+		& .lottery-grid {
+			& .ul-striped {
+				& li {
+					padding: 6px 30px 13px;
+					& p {
+						display: inline-block;		
+						&:first-child {
+							margin-right: 30px;
+							min-width: 190px;
+						}
+					}	
+					span {
+						display: inline-block;
+					}
+
+				}
+			}
+		}
+	}
+
+	.content-box-content {
+	    margin: 0 auto;
+	    padding-left: 30px;
+		& .gh-item {
+		    &:before {
+		    	left: -20px;
+		    }
+		    & .arrow {
+
+				top: 5px;
+
+			}
+		}
+	}
+	.gh-inf {
+		font-size: 15px;
+		float: left; 
+		&.gh-combination {
+			float: right;
+			margin-right: 50px;
+		}
+	}
+	.gh-date {
+		margin-bottom: 0;
+		line-height: 30px;
+	}
+	.gh-item:before {
+		top: 15px;
+		left: -30px;
+	}
+
+
+	.ticket-tabs {
+		margin-left: -10px;
+    	margin-right: 10px;
+	}
+
+	.ticket-items {
+    	padding-left: 20px;
+	}	
+	.lottery-grid.timer-box {
+    	padding: 0 30px;
+	}
+	.cabinet-game-history {
+		.content-box-cat {
+			& a {
+				&:first-child {
+					padding: 5px 10px 5px 40px;
+    				margin-left: 30px;
+					&:before {
+						left: 10px
+					}
+				}
+			}
+		}
+	}
 }

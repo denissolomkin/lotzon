@@ -57,8 +57,8 @@
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
 
-            "blog": Blog.init,
-            "blog-post-view": Blog.loadPostData,
+           // "blog": Blog.init,
+            "post-view": Blog.loadPostData,
 
             "games-game": WebSocketAjaxClient,
             "games-spin": Carousel.initOwl,

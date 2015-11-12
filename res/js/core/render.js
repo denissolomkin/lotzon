@@ -87,6 +87,7 @@
             else if (!options.json && options.href.search(/all/) != -1) {
 
                 options.href = options.href.replace(/\/all/g, '');
+                options.init.template = options.template = options.template.replace(/\-all/g, '');
             }
 
             R.event.push(options);
@@ -249,15 +250,29 @@
 
             if (options.replace) {
 
-                D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing'], 'render');
 
-                if ($(options.rendered).is(options.replace)) {
-                    $(options.replace).replaceWith($(options.rendered));
-                } else if (options.replace === '.render-list') {
-                    var appendHTML = $(options.replace, options.rendered).html(),
-                        appendPlace = options.findClass + ' ' + options.replace;
+                if (options.replace.indexOf('.render-list') !== -1) {
+
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing .render-list'], 'render');
+
+                    var isSimilar = $(options.rendered).is(options.replace),
+                        appendHTML = isSimilar
+                            ? $(options.rendered).html()
+                            : $(options.replace, options.rendered).html(),
+                        appendPlace = isSimilar
+                            ? options.replace
+                            : options.findClass + ' ' + options.replace;
+
                     $(appendHTML).appendTo(appendPlace).hide().fadeIn();
+
+                } else if ($(options.rendered).is(options.replace)) {
+
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing self'], 'render');
+                    $(options.replace).replaceWith($(options.rendered));
+
                 } else {
+
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing '+options.replace], 'render');
                     $(options.replace).html($(options.replace, options.rendered).html()).hide().fadeIn(1000);
                 }
 
@@ -350,6 +365,7 @@
 
             }
 
+            Content.infiniteScrolling();
             R.event.complete(options);
 
         },

@@ -47,6 +47,17 @@ a {
 }
 
 button {
+  &.btn-flat {
+    border: 1px solid #000;
+    color: #000;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    padding: 0 35px;
+    text-transform: uppercase;
+    background: none;
+
+  }
   border: none;
   opacity: 0.8;
   &.on {
@@ -85,7 +96,9 @@ button {
   min-width: 320px;
   margin: auto;
 }
-
+.container-center {
+  text-align: center
+}
 .content-top {
   position: relative;
 }
@@ -492,9 +505,16 @@ input.input-radio:checked + label.input-radio:before {
   }
 }
 
+
+// **********************************TEXT STYLES
 .text-large {
   font-size: 36px;
   line-height: 1.2;
   text-shadow: 0.5px 0.7px 1px rgba(255, 255, 255, 0.5);
 }
 
+// **********************************VISIBILITY
+
+.hidden-x-small {
+  display: none
+}

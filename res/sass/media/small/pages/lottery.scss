@@ -1,114 +1,192 @@
 // TICKET-ITEMS ------------------------------ //
 
+// .ticket-items {
+//   margin: 70px 0 30px;
+//   background: rgb(167, 209, 213);
+//   padding-left: 0;
+// }
+
+// .ticket-tabs {
+//   top: -40px;
+//   background: transparent;
+//   width: 100%;
+//   position: absolute;
+//   overflow: hidden;
+//   z-index: -10;
+//   display: block;
+//   margin: 0;
+//   & li {
+//     top: 9px;
+//     width: 72px;
+//     height: 85px;
+//     margin-right: 10px;
+//     line-height: 31px;
+//     background: #4c4c4c;
+//     color: #b2d0d4;
+//     text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+//     position: relative;
+//     float: left;
+//     border-radius: 5px 5px 0 0;
+//     font-size: 14px;
+//     font-weight: bold;
+//     line-height: 30px;
+//     text-align: center;
+//     cursor: pointer;
+//     display: block;
+//     &.unavailable {
+//       background: #8f8e8e;
+//       &:hover {
+//         & .ticket-number-sm {
+//           background: transparent;
+//         }
+//       }
+//     }
+//     &.done {
+//       background: #4c4c4c;
+//       color: #b2d0d4;
+//       text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+//       &:after {
+//         content: "";
+//         display: inline-block;
+//         background: url(img/sprite.png) center center no-repeat;
+//         background-position: -597px -61px;
+//         position: absolute;
+//         width: 11px;
+//         height: 8px;
+//         right: 12px;
+//         top: 12px;
+//       }
+//       &:before {
+//         display: none;
+//       }
+//       &:hover .ticket-number-sm:before {
+//         display: none;
+//       }
+//       & .ticket-number-sm:before {
+//         display: none;
+//       }
+//     }
+//     &.active {
+//       height: 40px;
+//       line-height: 40px;
+//       color: #464444;
+//       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+//       box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+//       background: #b7cfd3;
+//       & .ticket-number-sm {
+//         background: transparent;
+//       }
+//     }
+//     &:last-of-type {
+//       background: #e8cf6b;
+//       color: #4c4c4c;
+//       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+//       width: 120px;
+//       &.active {
+//         color: #4c4c4c;
+//       }
+//       &:hover {
+//         color: #4c4c4c;
+//       }
+//       & .ticket-number-sm {
+//         display: inline;
+//         width: auto;
+//         height: auto;
+//         background: transparent;
+//         line-height: 1;
+//         border-radius: 0;
+//         position: static;
+//       }
+//     }
+//     & .ticket-number-sm {
+//       display: inline !important;
+//       width: auto !important;
+//       height: auto !important;
+//       background: transparent !important;
+//       line-height: 1 !important;
+//       border-radius: 0 !important;
+//       position: static !important;
+//     }
+//     & .ticket-number-sm:before {
+//       display: none !important;
+//     }
+//   }
+// }
+
+// TICKET-ITEMS ------------------------------ //
+
 .ticket-items {
-  margin: 70px 0 30px;
-  background: rgb(167, 209, 213);
+  padding-left: 13px;
+  & .ticket-numbers{
+    & li {
+      margin: 0 11px 20px 11px !important;
+    }
+  }
+  & .ticket-actions {
+    & li {
+      margin: 0 11px 0 11px !important;
+    }
+  }
+}
+
+.ticket-item {
+  min-height: 0;
 }
 
 .ticket-tabs {
-  top: -40px;
-  background: transparent;
-  width: 100%;
-  position: absolute;
-  overflow: hidden;
-  z-index: -10;
+  margin: 0;
   display: block;
-  padding-top: 0;
+  padding: 6px 13px 14px;
   & li {
-    top: 9px;
-    width: 72px;
-    height: 85px;
-    margin-right: 10px;
-    line-height: 31px;
-    background: #4c4c4c;
-    color: #b2d0d4;
-    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
-    position: relative;
+    width: 30px;
     float: left;
-    border-radius: 5px 5px 0 0;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 30px;
-    text-align: center;
-    cursor: pointer;
+    margin-right: 50px;
     display: block;
-    &.unavailable {
-      background: #8f8e8e;
-      &:hover {
+    &:last-of-type{
+      & .ticket-number-sm {
+        height: 30px;
+        line-height: 30px;
+        margin-top: 10px;
+        &:hover {
+          margin-top: 0;
+        }
+      }
+      &.active {
         & .ticket-number-sm {
-          background: transparent;
+          margin-top: 0;
         }
       }
     }
-    &.done {
-      background: #4c4c4c;
-      color: #b2d0d4;
-      text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
-      &:after {
-        content: "";
-        display: inline-block;
-        background: url(img/sprite.png) center center no-repeat;
-        background-position: -597px -61px;
-        position: absolute;
-        width: 11px;
-        height: 8px;
-        right: 12px;
-        top: 12px;
-      }
-      &:before {
-        display: none;
-      }
-      &:hover .ticket-number-sm:before {
-        display: none;
-      }
-      & .ticket-number-sm:before {
-        display: none;
+  }
+}
+.lottery-grid .title {
+  padding: 16px 23px;
+}
+
+.matches-inf .lottery-grid .ul-striped {
+  & li {
+    padding: 6px 23px 13px;
+    & p {
+      margin: 0;
+      min-width: 0;
+      &:first-child {
+        margin: 0;
+        min-width: 0;
       }
     }
-    &.active {
-      height: 40px;
-      line-height: 40px;
-      color: #464444;
-      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      background: #b7cfd3;
-      & .ticket-number-sm {
-        background: transparent;
-      }
-    }
-    &:last-of-type {
-      background: #e8cf6b;
-      color: #4c4c4c;
-      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
-      width: 120px;
-      &.active {
-        color: #4c4c4c;
-      }
-      &:hover {
-        color: #4c4c4c;
-      }
-      & .ticket-number-sm {
-        display: inline;
-        width: auto;
-        height: auto;
-        background: transparent;
-        line-height: 1;
-        border-radius: 0;
-        position: static;
-      }
-    }
-    & .ticket-number-sm {
-      display: inline !important;
-      width: auto !important;
-      height: auto !important;
-      background: transparent !important;
-      line-height: 1 !important;
-      border-radius: 0 !important;
-      position: static !important;
-    }
-    & .ticket-number-sm:before {
-      display: none !important;
-    }
+  }
+}
+.gh-inf.gh-combination {
+  margin-right: 90px;
+}
+
+.content-box-content .gh-item .arrow {
+  top: 10px;
+}
+.matches-inf-wrapper.carousel {
+  padding: 10px 30px; 
+  & .matches-inf {
+    width: 47%;
   }
 }
 
@@ -177,71 +255,6 @@
   }
 }
 
-.scroll-box {
-  height: auto;
-}
-
-.is-done {
-  padding-top: 0;
-}
-
-.balls-count {
-  color: #e7f6f7;
-  font-size: 15px;
-  position: absolute;
-  right: 235px;
-  bottom: 40px;
-  display: block;
-}
-
-.ticket-numbers-wrapper {
-  height: auto;
-  overflow: visible;
-}
-
-.ticket-tabs li:hover {
-  -webkit-transform: translate(0, -8px);
-  -moz-transform: translate(0, -8px);
-  -o-transform: translate(0, -8px);
-  -moz-transition: all 0.1s ease-in-out;
-  -o-transition: all 0.1s ease-in-out;
-  -webkit-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
-}
-
-.ticket-item {
-  padding: 37px 30px 27px !important;
-}
-
-.ticket-numbers {
-  height: auto;
-  margin-left: 0 !important;
-  margin-right: -40px !important;
-  margin-bottom: 7px;
-  & li {
-    margin: 0 30px 21px 0 !important;
-  }
-}
-
-.ticket-actions {
-  margin-left: 0 !important;
-}
-
-.ticket-actions li {
-  margin: 0 30px 0 0 !important;
-}
-
-.add-ticket {
-  margin-right: 0 !important;
-}
-
-.balls-count {
-  bottom: 43px;
-}
-
-.ticket-btn {
-  padding: 0 40px;
-}
 
 // MATCHES-INF ------------------------------ //
 
@@ -260,17 +273,17 @@
   position: relative;
 }
 
-.gh-item:hover:before {
-  content: "";
-  clear: none;
-  display: block;
-  position: absolute;
-  width: 17px;
-  height: 30px;
-  background: url(img/sprite.png) -214px -187px;
-  top: 13px;
-  right: 40px;
-}
+// .gh-item:hover:before {
+//   content: "";
+//   clear: none;
+//   display: block;
+//   position: absolute;
+//   width: 17px;
+//   height: 30px;
+//   background: url(img/sprite.png) -214px -187px;
+//   top: 13px;
+//   right: 40px;
+// }
 
 .ghd-numbers {
   width: 520px;
@@ -396,6 +409,8 @@
   padding: 50px 45px;
 }
 
-.ticket-item {
-  min-height: 420px;
+
+
+.ticket-box {
+  background-color: transparent;
 }

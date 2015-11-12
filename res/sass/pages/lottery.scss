@@ -7,9 +7,6 @@
   border-radius: 50%;
 }
 
-.cabinet-game-history .content-box-cat a:last-child {
-  padding: 0 15px;
-}
 
 .cabinet-game-history .content-box-cat a:first-child:after {
   @extend .gh-circle;
@@ -26,9 +23,6 @@
   margin: 0 -10px 20px;
   padding: 5px 10px;
   cursor: pointer;
-  &:hover {
-    background: #fafafa;
-  }
 }
 
 .gh-my-game .gh-date:after {
@@ -38,7 +32,7 @@
 
 .gh-inf {
   margin-bottom: 0;
-  font-size: 12px
+  font-size: 14px
 }
 
 .gh-inf-name {
@@ -71,6 +65,7 @@
 
 // ------------------------------- //
 
+
 @media (min-width: 520px) {
   .gh-header {
     display: block;
@@ -93,34 +88,15 @@
     width: 20%;
   }
   // ---------------------- //
-  .gh-item {
-    margin: 0 -10px 0;
-    padding: 10px;
-    line-height: 35px;
-  }
-  .gh-inf {
-    margin-bottom: 0;
-    float: left;
-  }
-  .gh-date {
-    width: 25%;
-  }
+  
+
   .gh-winners {
     width: 20%;
     position: relative;
     left: 55%;
   }
-  .gh-combination {
-    width: 55%;
-    position: relative;
-    left: -20%;
-  }
-  .gh-inf-name {
-    display: none;
-  }
-  .gh-combination .gh-inf-name {
-    display: none;
-  }
+
+ 
 }
 
 .Ghd-number {
@@ -322,10 +298,9 @@
 
 .ticket-items {
   margin: 0 0 20px;
-  border-radius: 0 5px 5px 5px;
   position: relative;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background: #A9D0D5;
+  padding-left: 10px;
 }
 
 .ticket-numbers-wrapper {
@@ -336,6 +311,7 @@
   background: #A9D0D5;
   display: table;
   padding: 6px 0 14px;
+  padding-right: 10px;
   & li {
     width: 1000px;
     height: 40px;
@@ -386,7 +362,7 @@
     &.active {
       top: 0;
       cursor: default;
-      text-shadow: 0 1px 0 rgba(233, 242, 244, 0.6);
+      text-shadow: 0 1px 0 rgb(76, 76, 76);
       color: #b2d0d4;
       & .ticket-number-sm {
         background: #4c4c4c;
@@ -458,6 +434,7 @@
   }
   & li:hover {
     color: #b2d0d4;
+    text-shadow: 0 1px 0 rgb(76, 76, 76);
     & .ticket-number-sm {
       background: #4c4c4c;
     }
@@ -536,10 +513,6 @@
   padding-top: 19px;
 }
 
-.balls-count {
-  display: none;
-}
-
 .active:hover {
   -webkit-transform: none !important;
   -moz-transform: none !important;
@@ -550,6 +523,7 @@
 .ticket-item {
   padding-top: 15px;
   padding-bottom: 15px;
+
 }
 
 // .scroll-box {
@@ -560,6 +534,7 @@
 
 .ticket-numbers {
   margin-bottom: 10px;
+  
   & li {
     @extend .ticket-ball;
     margin: 0 10px 20px 10px !important;
@@ -587,7 +562,7 @@
 }
 
 .ticket-btn {
-  @extend .ticket-ball;
+  @extend .ticket-ball;   
   float: right;
   width: auto !important;
   padding: 0 20px;
@@ -595,6 +570,9 @@
   text-transform: uppercase;
   background: #d0e2e4;
   box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
+    &.add-ticket {
+      padding: 0 37px; 
+    }
 }
 
 // ------------------------------------------- //
@@ -626,7 +604,7 @@
 
 .matches-inf {
   box-shadow: none;
-  margin: 0 0 30px;
+  margin: 0;
 }
 
 .matches-inf {
@@ -863,6 +841,18 @@
   padding: 15px 40px;
 }
 
+.balls-count {
+  color: #e7f6f7;
+  font-size: 15px;
+  bottom: 40px;
+  float: right;
+  margin-right: 20px;
+  display: none;
+  height: 40px;
+  line-height: 40px;
+  text-shadow: 0 1px 0 #A9C4C7;
+}
+
 .balls-count b {
   color: #4c4c4c;
   font-size: 15px;
@@ -1015,10 +1005,14 @@
 /***************************Timer drowing*********/
 .ticket-box {
   background-color: #A9D0D5;
+    .ticket-btn {
+    margin-right: 20px;
+  }
   
 }
 .lottery-grid {
   font-family: handbookpro-regular;
+  letter-spacing: 0.7px;
   padding: 0 16px;
 
   &:not( .width-100) {
@@ -1027,6 +1021,8 @@
 
   &.timer-box {
     padding: 0;
+    margin-left: 0;
+    padding: 0 15px;
 
     & .title {
       font-size: 12px;
@@ -1045,7 +1041,7 @@
   }
 
   & .title {
-    padding: 16px;
+    padding: 16px 16px 16px 22px;
     font-size: 15px;
     color: #4A4A4A;
     text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.5);
@@ -1085,7 +1081,7 @@
   }
   & .ul-striped {
     & li {
-      padding: 6px 16px 13px; 
+      padding: 6px 16px 13px 22px; 
     }
   }
 }
@@ -1100,19 +1096,6 @@
     background: #f8e71d;
   }
 }  
-
-// .gh-item:hover:before {
-//   content: "";
-//   clear: none;
-//   display: block;
-//   position: absolute;
-//   width: 17px;
-//   height: 30px;
-//   background: url(img/sprite.png) -214px -187px;
-//   top: 13px;
-//   right: 40px;
-
-// }
 
 .gh-item {
   position:relative;
@@ -1132,41 +1115,133 @@
     display: inline-block;
     width: 0;
     height: 0;
-    border-bottom: 20px solid transparent;
-    border-top: 20px solid transparent;
-    border-left: 17px solid transparent;
-    position: relative;
-    top: 10px;
-    left: 10px;
-  }
-  &:hover {
-    & .arrow {
-      display: inline-block;
+    border-bottom: 15px solid transparent;
+    border-top: 15px solid transparent;
+    border-left: 15px solid #4d4d4d;
+    position: absolute;
+    top: 40px;
+    left: auto;
+    right: 20px;
+    &:before {
+      content: "";
+      display: block;
       width: 0;
       height: 0;
-      border-bottom: 20px solid transparent;
-      border-top: 20px solid transparent;
-      border-left: 17px solid #4d4d4d;
-      position: relative;
-      &:before {
-        content: "";
-        display: block;
-        width: 0;
-        height: 0;
-        border-bottom: 20px solid transparent;
-        border-top: 20px solid transparent;
-        border-left: 17px solid #fff;
-        top: -20px;
-        right: 2px;
-        position: absolute;
-
-      }
+      border-bottom: 15px solid transparent;
+      border-top: 15px solid transparent;
+      border-left: 15px solid #fff;
+      top: -15px;
+      right: 2px;
+      position: absolute;
     }
   }
 }   
 
 .cabinet-game-history {
+  letter-spacing: 0.7px;
+  padding: 20px 10px 30px;
+  font-family: handbookpro-regular;
+  min-height: 0;
+  font-size: 15px;
+  color: #4D4D4D;
   & .content-box-item {
+    padding: 0;
+    min-height: 0;
+    &.with-cat {
+      padding-top: 62px;
+    }
+  }
+  & .content-box-item-content {
     padding: 10px 10px 10px 40px;
+  }
+  & .content-box-cat {
+    margin-top: 10px;
+    // font-family: handbookpro-regular;
+  	& a {
+      position: relative;
+  		padding: 5px 10px;
+      margin-right: 0;
+      &:hover {
+        border: none;
+        background: #4c4c4c;
+        color: #fff;
+        text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+      }
+      &.active {
+        border: none;
+        background: #4c4c4c;
+        color: #fff;
+        text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+      }
+      
+      &:after {
+        display:none;
+      }
+      &:first-child {
+        padding: 5px 10px 5px 50px;
+
+        &:after {
+          display:none;
+        }
+        &:before {
+          content: "";
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          background: #b7cfd3;
+          border-radius: 50%;
+          margin-right: 13px;
+          position: absolute;
+          left: 20px;
+          top: 10px;
+        }
+      }
+  	}
+  }
+  & .content-box-item-top  {
+    padding: 0;
+  }
+  & .gh-inf-name {
+    margin-right: 0;
+  }
+  & .gh-date {
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+}
+.lottery-history-items {
+  position: relative;
+  z-index: 10;
+}
+
+.ticket-done {
+  & b {
+    text-shadow: 0 1px 0 #A9C4C7;
+  }
+
+}
+
+@media (min-width: 360px) {
+  .ticket-items {
+    padding-left: 0;
+  }
+  .lottery-grid .title {
+    padding-left: 10px;
+  }
+  .lottery-grid .ul-striped li {
+    padding-left: 10px;
+  }
+  .lottery-grid.timer-box {
+    padding: 0 10px;
+  }
+  .ticket-tabs {
+    padding-right: 0;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .balls-count {
+    display: none!important;
   }
 }
