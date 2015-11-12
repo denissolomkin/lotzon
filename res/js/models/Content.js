@@ -84,7 +84,7 @@
                     infiniteScrolling.remove();
             }
 
-            this.clearLoading();
+            Content.clearLoading();
 
         },
 

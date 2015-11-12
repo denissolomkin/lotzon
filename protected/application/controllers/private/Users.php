@@ -311,6 +311,7 @@ class Users extends PrivateArea
                 $player->setQiwi($this->request()->post('qiwi'));
                 $player->setWebMoney($this->request()->post('webmoney'));
                 $player->setYandexMoney($this->request()->post('yandexmoney'));
+
                 if($this->request()->post('bd'))
                     $player->setBirthday(strtotime($this->request()->post('bd')));
 

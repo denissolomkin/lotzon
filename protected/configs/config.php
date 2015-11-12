@@ -244,6 +244,37 @@ Config::instance()->privateResources =  array(
     ),
     '/private/gamestats/'      => 'controllers\admin\ComingSoon:index',
     '/private/subscribes'   => 'controllers\admin\Subscribes:index',
+    /**
+     * maillist
+     */
+    '/private/maillist/' => array(
+        'get' => 'controllers\admin\Maillist:listTasks',
+    ),
+    '/private/maillist/tasks' => array(
+        'get'  => 'controllers\admin\Maillist:listTasks',
+        'post' => 'controllers\admin\Maillist:saveTask',
+    ),
+    '/private/maillist/messages' => array(
+        'get'    => 'controllers\admin\Maillist:listMessages',
+        'post'   => 'controllers\admin\Maillist:saveMessage',
+    ),
+    '/private/maillist/messages/:identifier' => array(
+        'get'    => 'controllers\admin\Maillist:getMessage',
+        'delete' => 'controllers\admin\Maillist:deleteMessage',
+    ),
+    '/private/maillist/tasks/:identifier' => array(
+        'get'    => 'controllers\admin\Maillist:getTask',
+        'delete' => 'controllers\admin\Maillist:deleteTask',
+    ),
+    '/private/maillist/template/:identifier' => array(
+        'get'    => 'controllers\admin\Maillist:getTemplatePreview',
+    ),
+    '/private/maillist/tasks/filter/' => array(
+        'post'    => 'controllers\admin\Maillist:getTaskFilterCount',
+    ),
+    '/private/maillist/tasks/statistic/player_games/:identifier' => array(
+        'get'    => 'controllers\admin\Maillist:getTaskStatisticPlayerGames',
+    ),
 );
 
 Config::instance()->publicResources = array(
@@ -319,7 +350,10 @@ Config::instance()->publicResources = array(
     '/quickgame/preview/:key' => array(
         'post' => 'controllers\production\Game:previewQuickGame',
     ),
-
+    '/unsubscribe/' => array(
+        'get'  => 'controllers\production\Maillist:unsubscribe',
+        'post' => 'controllers\production\Maillist:doUnsubscribe',
+    ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
 

@@ -292,7 +292,6 @@
             } else if ($(options.findClass).length) {
 
                 D.log(['Render.inputHTML into:', (options.findClass), 'Replace Block by Finding'], 'render');
-
                 $(options.findClass).html($(options.rendered).html()).show();
             }
 

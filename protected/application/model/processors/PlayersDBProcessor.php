@@ -230,6 +230,26 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function updateNewsSubscribe(Entity $player, $newsSubscribe)
+    {
+        $sql = "UPDATE `Players` SET
+                    `NewsSubscribe` = :newsSubscribe
+                WHERE `Id` = :id OR `Email` = :email";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'            => $player->getId(),
+                ':email'         => $player->getEmail(),
+                ':newsSubscribe' => $newsSubscribe,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        return $player;
+    }
+
     public function updateBalance(Entity $player, $currency, $quantity)
     {
         $sql = "UPDATE `Players` SET
@@ -803,13 +823,38 @@ class PlayersDBProcessor implements IProcessor
 
     public function getTickets($playerId)
     {
-        $sql = "SELECT `Lotteries`.`Date`, `Lotteries`.`Combination` WinCombination,
-              `LotteryTicketsArchive`.`TicketWinCurrency`, `LotteryTicketsArchive`.`TicketWin`, `LotteryTicketsArchive`.`TicketWin`,
-              `LotteryTicketsArchive`.`TicketNum`, `LotteryTicketsArchive`.`Combination`, `LotteryTicketsArchive`.`PlayerId`,
-              `LotteryTicketsArchive`.`LotteryId`, `LotteryTicketsArchive`.`Id`, `LotteryTicketsArchive`.`DateCreated`
-              FROM `LotteryTicketsArchive`
-              LEFT JOIN `Lotteries` ON `LotteryTickets`.`LotteryId`=`Lotteries`.`Id`
-              WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+        $sql = "SELECT
+                    `Lotteries`.`Date`,
+                    `Lotteries`.`Combination` WinCombination,
+                    `LotteryTicketsArchive`.`TicketWinCurrency`,
+                    `LotteryTicketsArchive`.`TicketWin`,
+                    `LotteryTicketsArchive`.`TicketWin`,
+                    `LotteryTicketsArchive`.`TicketNum`,
+                    `LotteryTicketsArchive`.`Combination`,
+                    `LotteryTicketsArchive`.`PlayerId`,
+                    `LotteryTicketsArchive`.`LotteryId`,
+                    `LotteryTicketsArchive`.`Id`,
+                    `LotteryTicketsArchive`.`DateCreated`
+                FROM `LotteryTicketsArchive`
+                LEFT JOIN `Lotteries`
+                  ON `LotteryTicketsArchive`.`LotteryId`=`Lotteries`.`Id`
+                WHERE `PlayerId` = :pid
+                UNION
+                    SELECT
+                        NULL,
+                        NULL,
+                        `LotteryTickets`.`TicketWinCurrency`,
+                        `LotteryTickets`.`TicketWin`,
+                        `LotteryTickets`.`TicketWin`,
+                        `LotteryTickets`.`TicketNum`,
+                        `LotteryTickets`.`Combination`,
+                        `LotteryTickets`.`PlayerId`,
+                        `LotteryTickets`.`LotteryId`,
+                        `LotteryTickets`.`Id`,
+                        `LotteryTickets`.`DateCreated`
+                    FROM `LotteryTickets`
+                    WHERE `PlayerId` = :pid
+              ORDER BY `Id` DESC";
 
         try {
             $res = DB::Connect()->prepare($sql);
@@ -822,10 +867,10 @@ class PlayersDBProcessor implements IProcessor
 
         $tickets = array();
         foreach ($res->fetchAll() as $ticketData) {
-            $ticketData['DateCreated']=date('d.m.Y H:i:s', $ticketData['DateCreated']);
-            $ticketData['Date']=date('d.m', $ticketData['Date']);
-            $ticketData['Combination']=unserialize($ticketData['Combination']);
-            $ticketData['WinCombination']=unserialize($ticketData['WinCombination']);
+            $ticketData['DateCreated']    = date('d.m.Y H:i:s', $ticketData['DateCreated']);
+            $ticketData['Date']           = date('d.m', $ticketData['Date']);
+            $ticketData['Combination']    = unserialize($ticketData['Combination']);
+            $ticketData['WinCombination'] = unserialize($ticketData['WinCombination']);
             $tickets[] = $ticketData;
         }
 
