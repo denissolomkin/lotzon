@@ -19,6 +19,7 @@ var slotMachine = {
     soundEnabled: !0,
     sounds: {},
     init: function () {
+
         $("#betSpinUp").click(function () {
             slotMachine.change_bet(1)
         }), $("#betSpinDown").click(function () {
@@ -39,6 +40,7 @@ var slotMachine = {
                 url: "/res/audio/games/spinning.mp3"
             })
         })
+//        , $('main, .content-top').addClass('fullscreen_mobile'); //fix - fullscreen in mobile
     },
     change_bet: function (n) {
         slotMachine.curBet += n, slotMachine.curBet = Math.min(Math.max(1, slotMachine.curBet), maxBet), slotMachine.show_won_state(!1), $("#bet").html(slotMachine.curBet), $("#prizes_list .tdPayout").each(function () {
@@ -51,7 +53,8 @@ var slotMachine = {
     },
     spin: function () {
         var n = parseInt($("#credits").html(), 10);
-        if ($("#spinButton").hasClass("disabled"))return !1;
+        if ($("#spinButton").hasClass("disabled"))
+            return !1;
         slotMachine.show_won_state(!1), $("#spinButton").addClass("disabled"), $("#credits").html(n - slotMachine.curBet), slotMachine._start_reel_spin(1, 0), slotMachine._start_reel_spin(2, slotMachine.secondReelStopTime), slotMachine._start_reel_spin(3, slotMachine.secondReelStopTime + slotMachine.thirdReelStopTime);
         try {
             slotMachine.sounds.spinning.play()
@@ -81,8 +84,8 @@ var slotMachine = {
 
                 n = n.res.games.spin;
 
-                if($i> n.length)
-                    $i=0;
+                if ($i > n.length)
+                    $i = 0;
                 $i++;
                 n = n[$i];
 
@@ -126,8 +129,8 @@ var slotMachine = {
         var a = window.setInterval(function () {
             var t = !1;
             if ($.each(["credits", "dayWinnings", "lifetimeWinnings"], function (i, s) {
-                    e[s] < n[s] && (e[s] += 1, e[s] = Math.min(e[s], n[s]), $("#" + s).html("credits" != s ? slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(e[s]) : e[s]), t = !0)
-                }), !t) {
+                e[s] < n[s] && (e[s] += 1, e[s] = Math.min(e[s], n[s]), $("#" + s).html("credits" != s ? slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(e[s]) : e[s]), t = !0)
+            }), !t) {
                 window.clearInterval(a);
                 try {
                     slotMachine.sounds[i].stop()

@@ -14,11 +14,11 @@
 
         enableAutoload: function (event) {
 
-            D.log('Content.enableAutoload', this);
-            event.preventDefault();
-
             var submit = this.querySelector('input[type="submit"]');
             submit.classList.add('infinite-scrolling');
+
+            D.log('Content.enableAutoload', this);
+            event.preventDefault();
 
             Content.autoload.call(this);
 
@@ -27,13 +27,14 @@
         autoload: function (event) {
 
             D.log('Content.autoload', this);
-            form = this;
+
+            var form = this,
+                renderList = form.querySelector(".render-list"),
+                query = $(form).serializeObject();
 
             while (form && form.nodeName !== 'FORM')
                 form = form.parentElement;
 
-            var renderList = form.querySelector(".render-list"),
-                query = $(form).serializeObject();
 
             query.first_id = renderList.firstElementChild.getAttribute('data-id');
             query.last_id = renderList.lastElementChild.getAttribute('data-id');

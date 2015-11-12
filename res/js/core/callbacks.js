@@ -61,6 +61,7 @@
             "blog-post-view": Blog.loadPostData,
 
             "games-game": WebSocketAjaxClient,
+            "games-spin": Carousel.initOwl,
 
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
