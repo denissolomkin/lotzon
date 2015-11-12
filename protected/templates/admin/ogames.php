@@ -85,7 +85,7 @@
                                 <div class="col-lg-6">
                                     <div class="input-group">
                                         <span class="input-group-addon"><?=$key;?></span>
-                                        <input type="text" class="form-control" name="game[Audio][<?=$key;?>]" value="http://192.168.1.253/tpl/audio/complete.ogg">
+                                        <input type="text" class="form-control" name="game[Audio][<?=$key;?>]" value="/tpl/audio/complete.ogg">
                                         <div class="input-group-btn">
                                             <button type="button" class="btn btn-default audio-play"><i class="fa fa-play-circle"></i></button>
                                             <button type="button" class="btn btn-default audio-refresh"><i class="fa fa-refresh"></i></button>

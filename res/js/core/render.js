@@ -251,7 +251,7 @@
             if (options.replace) {
 
 
-                if (options.replace.indexOf('.render-list') !== -1) {
+                if (options.replace.indexOf('.render-list') !== -1 && options.replace.indexOf('.render-list-container') === -1) {
 
                     D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing .render-list'], 'render');
 

@@ -28,7 +28,8 @@
                     <div class="gh-winners-name">{{i18n "title-winners"}}</div>
                 </div>
 
-                <div class="render-list render-list-container">
+                <div class="render-list-container">
+                <div class="render-list">
                     {{#reverse .}}
                     <a data-id="{{@key}}" href="/lottery/history/{{ id }}">
                         <div class="gh-item clearfix">
@@ -52,6 +53,7 @@
                     {{else}}
                     No history :(
                     {{/reverse}}
+                </div>
                 </div>
 
                 <input type="submit" class="" value="{{i18n " button-load-more"}}"></input>
