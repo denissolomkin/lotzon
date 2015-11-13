@@ -134,57 +134,16 @@ button.btn-flat {
   text-transform: uppercase;
   background: none;
 }
+button:hover {
+  background: #000;
+  color: #fff;
+}
 button.on {
   opacity: 1;
   border-color: black;
   color: black;
 }
-button.loading {
-  position: relative;
-  opacity: 0.8;
-  cursor: default;
-  background: #ffe400;
-  background-repeat: no-repeat;
-  background-position: 0;
-  background-image: url(../css/img/progress.png);
-  -webkit-animation: AnimationName 5s infinite linear;
-  -moz-animation: AnimationName 5s  infinite linear;
-  animation: AnimationName 5s  infinite linear;
-}
 
-@-webkit-keyframes AnimationName {
-  0% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 50% 0%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
-@-moz-keyframes AnimationName {
-  0% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 50% 0%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
-@keyframes AnimationName {
-  0% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 50% 0%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
 .status {
   display: none;
   text-align: center;
@@ -740,6 +699,7 @@ input.input-radio:checked + label.input-radio:before {
 .banner-3 {
   position: relative;
   float: left;
+  width: 100%;
 }
 
 .slider-top {
@@ -2409,17 +2369,13 @@ header .owl-theme .owl-controls .owl-page span {
     margin-right: 0;
   }
 }
-.gh-circle, .cabinet-game-history .content-box-cat > span:first-child:after, .gh-my-game .gh-date:after {
+.gh-circle, .gh-my-game .gh-date:after {
   content: "";
   display: inline-block;
   width: 10px;
   height: 10px;
   background: #b7cfd3;
   border-radius: 50%;
-}
-
-.cabinet-game-history .content-box-cat > span:first-child:after {
-  margin-left: 13px;
 }
 
 .gh-header {
@@ -2931,12 +2887,11 @@ header .owl-theme .owl-controls .owl-page span {
   left: 11px;
   width: 19px;
   height: 17px;
-  background: url(img/sprite.png) -198px -85px;
+  background: url(img/sprite.png) -449px -87px;
 }
 
 .ticket-btn {
   float: right;
-  width: auto !important;
   padding: 0 20px;
   border-radius: 17px;
   text-transform: uppercase;
@@ -2944,13 +2899,53 @@ header .owl-theme .owl-controls .owl-page span {
   box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
 }
 .ticket-btn.add-ticket {
-  padding: 0 37px;
+  padding: 0;
+  width: 160px;
 }
-.ticket-btn:hover {
+.ticket-btn.add-ticket:hover {
+  background: #d0e2e4;
+  color: #8f8e8e;
+}
+.ticket-btn.add-ticket.on:not(.loading):hover {
   background: #ffe400;
   color: #4c4c4c;
 }
+.ticket-btn.add-ticket.loading {
+  color: #4c4c4c;
+  position: relative;
+  opacity: 0.8;
+  cursor: default;
+  background: #ffe400;
+  background-repeat: no-repeat;
+  background-position: 0;
+  background: url(img/sprite.png) -430px 82px;
+  -webkit-animation: AnimationName 8s infinite linear;
+  -moz-animation: AnimationName 8s  infinite linear;
+  animation: AnimationName 8s  infinite linear;
+}
 
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: -556px 82px;
+  }
+  50% {
+    background-position: -493px 82px;
+  }
+  100% {
+    background-position: -430 82px;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: -556px 82px;
+  }
+  50% {
+    background-position: -493px 82px;
+  }
+  100% {
+    background-position: -430 82px;
+  }
+}
 .tickets .content-box-tab {
   padding: 0 20px;
 }
@@ -3085,14 +3080,6 @@ header .owl-theme .owl-controls .owl-page span {
     width: 40px;
     height: 40px;
     line-height: 42px;
-  }
-
-  .ticket-fc-btn:before {
-    width: 19px;
-    height: 17px;
-    top: 13px;
-    left: 11px;
-    background: url(img/sprite.png) -160px -84px;
   }
 
   .ticket-btn {
@@ -3489,43 +3476,53 @@ header .owl-theme .owl-controls .owl-page span {
   font-size: 15px;
   color: #4D4D4D;
 }
+.cabinet-game-history.with-cat {
+  padding-top: 0;
+}
 .cabinet-game-history .content-box-item {
   padding: 0;
   min-height: 0;
 }
-.cabinet-game-history .content-box-item.with-cat {
-  padding-top: 62px;
-}
 .cabinet-game-history .content-box-item-content {
-  padding: 10px 10px 10px 40px;
+  padding: 10px 10px 0 40px;
 }
 .cabinet-game-history .content-box-cat {
   margin-top: 10px;
-}
-.cabinet-game-history .content-box-cat > span {
-  position: relative;
-  padding: 5px 10px;
-  margin-right: 0;
-}
-.cabinet-game-history .content-box-cat > span:hover {
-  border: none;
-  background: #4c4c4c;
-  color: #fff;
-  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
-}
-.cabinet-game-history .content-box-cat > span.active {
-  border: none;
-  background: #4c4c4c;
-  color: #fff;
-  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+  margin-left: 5px;
 }
 .cabinet-game-history .content-box-cat > span:after {
   display: none;
+  content: none;
 }
-.cabinet-game-history .content-box-cat > span:first-child:after {
+.cabinet-game-history .content-box-cat > span label {
+  position: relative;
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 0;
+  text-transform: uppercase;
+}
+.cabinet-game-history .content-box-cat > span label:after {
   display: none;
 }
-.cabinet-game-history .content-box-cat > span:first-child:before {
+.cabinet-game-history .content-box-cat > span label:hover {
+  border: none;
+  background: #4c4c4c;
+  color: #fff;
+  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+}
+.cabinet-game-history .content-box-cat > span label.active {
+  border: none;
+  background: #4c4c4c;
+  color: #fff;
+  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+}
+.cabinet-game-history .content-box-cat > span label:after {
+  display: none;
+}
+.cabinet-game-history .content-box-cat > span:first-child label {
+  padding: 5px 10px 5px 35px;
+}
+.cabinet-game-history .content-box-cat > span:first-child label:before {
   content: "";
   display: inline-block;
   width: 10px;
@@ -3534,11 +3531,12 @@ header .owl-theme .owl-controls .owl-page span {
   border-radius: 50%;
   margin-right: 13px;
   position: absolute;
-  left: 20px;
+  left: 5px;
   top: 10px;
 }
 .cabinet-game-history .content-box-item-top {
   padding: 0;
+  position: static;
 }
 .cabinet-game-history .gh-inf-name {
   margin-right: 0;
@@ -3547,27 +3545,20 @@ header .owl-theme .owl-controls .owl-page span {
   margin-bottom: 20px;
   font-size: 15px;
 }
-.cabinet-game-history .input-radio {
+.cabinet-game-history label {
   display: inline-block;
-  position: absolute;
   top: 0;
   left: 0;
 }
 .cabinet-game-history input[type="radio"] {
-  opacity: 0;
+  display: none;
   z-index: 1;
 }
-
-.lottery-history input[type="radio"]:checked + label.input-radio:before {
-  content: "";
-  display: block;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  background: black;
-  border-radius: 50%;
+.cabinet-game-history input[type="radio"]:checked + label {
+  border: none;
+  background: #4c4c4c;
+  color: #fff;
+  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
 }
 
 .lottery-history-items {
@@ -5880,7 +5871,6 @@ span.input-prefix {
   }
 
   .inf-slider {
-    display: block;
     float: right;
     width: 300px;
     height: 55px;
@@ -6131,6 +6121,7 @@ span.input-prefix {
 @media (min-width: 768px) {
   .ticket-items {
     padding-left: 13px;
+    height: 440px;
   }
   .ticket-items .ticket-numbers li {
     margin: 0 11px 20px 11px !important;
@@ -6391,6 +6382,19 @@ span.input-prefix {
 
   .ticket-box {
     background-color: transparent;
+  }
+
+  .cabinet-game-history .content-box-cat > span:first-child label:before {
+    left: 5px;
+  }
+
+  .cabinet-game-history.with-cat {
+    padding: 0 0 30px 38px;
+  }
+
+  .content-box-content .gh-item:before {
+    left: -10px;
+    top: 20px;
   }
 
   .prizes-for-points .content-box-item-content {
@@ -6905,7 +6909,6 @@ span.input-prefix {
   }
 
   .banner-3 {
-    width: 680px;
     height: 135px;
   }
 
@@ -7299,7 +7302,7 @@ span.input-prefix {
     color: #464444;
     text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    background: #b7cfd3;
+    background: #a7d1d5;
   }
   .ticket-tabs li.active .ticket-number-sm {
     background: transparent;
@@ -7477,6 +7480,7 @@ span.input-prefix {
   }
 
   .ticket-items {
+    height: 406px;
     border-radius: 0 5px 5px 5px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin: 5px 0 7px;
@@ -7497,14 +7501,32 @@ span.input-prefix {
   }
 
   .gh-item {
-    padding: 10px;
+    padding: 10px 10px 10px 15px;
   }
   .gh-item:before {
     top: 20px;
+    left: -15px;
   }
 
   .gh-inf.gh-combination {
     margin-right: 70px;
+  }
+
+  .cabinet-game-history.with-cat {
+    padding: 0 0 30px 10px;
+  }
+
+  .cabinet-game-history .content-box-item-content {
+    padding: 10px 10px 0 50px;
+  }
+
+  .content-box-content .gh-item:before {
+    left: -20px;
+  }
+
+  .lottery-grid.timer-box {
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .prizes-for-points {
@@ -7616,12 +7638,13 @@ span.input-prefix {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1090px;
+    width: 1080px;
   }
 
   .content {
     width: 750px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 0;
   }
 
   .content-box-tab {
@@ -7636,10 +7659,6 @@ span.input-prefix {
     padding: 20px 30px 0;
   }
 
-  .banner-3 {
-    width: 790px;
-  }
-
   .notification-window {
     left: 10%;
     width: 270px;
@@ -7650,7 +7669,7 @@ span.input-prefix {
   }
 
   .header-left {
-    width: 790px;
+    width: 780px;
   }
 
   .header-logo {
@@ -7730,6 +7749,7 @@ span.input-prefix {
   }
 
   .ticket-items {
+    height: 416px;
     margin: 5px 0 7px;
     padding-left: 0;
   }
@@ -7746,6 +7766,10 @@ span.input-prefix {
     margin-right: -30px !important;
   }
 
+  .ticket-box {
+    margin-top: 34px;
+  }
+
   .matches-inf-wrapper {
     margin-bottom: 40px;
   }
@@ -7753,10 +7777,6 @@ span.input-prefix {
   .gh-header {
     margin: 0 -30px 20px;
     padding: 0 30px;
-  }
-
-  .gh-item {
-    margin: 0 -30px 0;
   }
 
   .gh-inf.gh-combination {
@@ -7828,6 +7848,31 @@ span.input-prefix {
 
   .matches-inf .lottery-grid .ul-striped li {
     padding: 6px 30px 13px;
+  }
+
+  .cabinet-game-history .content-box-cat > span:first-child label {
+    padding: 5px 10px 5px 40px;
+  }
+
+  .cabinet-game-history .content-box-cat > span:first-child label:before {
+    left: 10px;
+  }
+
+  .gh-item {
+    padding: 10px 10px 10px 25px;
+    margin: 0;
+  }
+
+  .content-box-content .gh-item:before {
+    left: -5px;
+  }
+
+  .cabinet-game-history .content-box-item-content {
+    padding: 10px 10px 0 20px;
+  }
+
+  .matches-inf-wrapper.carousel .matches-inf {
+    width: 48%;
   }
 
   .prizes-for-points {

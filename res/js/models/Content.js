@@ -5,9 +5,9 @@
         enableForm: function () {
 
             D.log('Content.enableForm', 'content');
-            if (form = document.querySelector('form.filter-render-list-unwatched')) {
-                form.classList.remove('filter-render-list-unwatched');
-                form.classList.add('filter-render-list');
+            if (form = document.querySelector('form.render-list-form-unwatched')) {
+                form.classList.remove('render-list-form-unwatched');
+                form.classList.add('render-list-form');
             }
 
         },
@@ -17,19 +17,11 @@
             D.log(['Content.enableAutoload', 'content']);
             event.preventDefault();
 
-            var submit = this.querySelector('input[type="submit"]');
-            submit.classList.add('infinite-scrolling');
-
-            Content.autoload.call(this, event);
-
-        },
-
-        changeFilter: function (event) {
-
-            D.log('Content.changeFilter', 'content');
-            event.preventDefault();
-
-            Content.autoload.call(this);
+            var submit = this.querySelector('button[type="submit"]:not(.loading):not(.infinite-scrolling)');
+            if (submit) {
+                submit.classList.add('infinite-scrolling');
+                Content.autoload.call(this, event);
+            }
 
         },
 
@@ -94,7 +86,7 @@
 
             if (options.replace.indexOf('.render-list-container') !== -1) { /* new filter, so update class render-list */
                 for (name in options.query) {
-                    if (['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1) { /* skip unimportant filters */
+                    if (options.query[name] && ['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1) { /* skip unimportant filters */
                         if (!(renderList = document.querySelector(options.replace + ' .render-list'))) {  /* break, if can't find render-list */
                             break;
                         }
@@ -106,11 +98,11 @@
 
             if (!Object.size(options.json)) {
 
-                if (infiniteScrolling = document.querySelector('.infinite-scrolling.loading'))
+                if (infiniteScrolling = document.querySelector(options.replace + ' .infinite-scrolling.loading'))
                     infiniteScrolling.remove();
             }
 
-            Content.clearLoading()
+            Content.clearLoading(options)
                 .infiniteScrolling();
 
         },

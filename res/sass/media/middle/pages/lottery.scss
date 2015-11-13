@@ -72,7 +72,7 @@
       color: #464444;
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
       box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      background: #b7cfd3;
+      background: #a7d1d5;
       & .ticket-number-sm {
         background: transparent;
       }
@@ -264,6 +264,7 @@
 }
 
 .ticket-items {
+  height: 406px;
   border-radius: 0 5px 5px 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 5px 0 7px;
@@ -284,12 +285,28 @@
   padding-left: 35px;
 }
 .gh-item {
-  padding: 10px;
+  padding: 10px 10px 10px 15px;
   &:before {
     top: 20px;
+    left: -15px;
   }
 }
 
 .gh-inf.gh-combination {
   margin-right: 70px;
+}
+
+.cabinet-game-history.with-cat {
+    padding: 0 0 30px 10px;
+}
+
+.cabinet-game-history .content-box-item-content {
+  padding: 10px 10px 0 50px;
+}
+.content-box-content .gh-item:before {
+  left: -20px;
+}
+.lottery-grid.timer-box {
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

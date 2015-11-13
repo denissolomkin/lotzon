@@ -1,6 +1,7 @@
 // TICKET-ITEMS ------------------------------ //
 
 .ticket-items {
+  height: 416px;
   margin: 5px 0 7px;
   padding-left: 0;
 }
@@ -16,6 +17,9 @@
 .ticket-numbers {
   margin-right: -30px !important;
 }
+.ticket-box {
+  margin-top: 34px;
+}
 
 // MATCHES-INF ------------------------------ //
 
@@ -26,10 +30,6 @@
 .gh-header {
   margin: 0 -30px 20px;
   padding: 0 30px;
-}
-
-.gh-item {
-  margin: 0 -30px 0;
 }
 
 .gh-inf.gh-combination {
@@ -104,4 +104,26 @@
 }
 .matches-inf .lottery-grid .ul-striped li {
   padding: 6px 30px 13px;
+}
+
+.cabinet-game-history .content-box-cat > span:first-child label {
+  padding: 5px 10px 5px 40px;
+}
+.cabinet-game-history .content-box-cat > span:first-child label:before {
+  left: 10px;
+}
+
+.gh-item {
+  padding: 10px 10px 10px 25px;
+  margin: 0;
+}
+
+.content-box-content .gh-item:before {
+  left: -5px;
+}
+.cabinet-game-history .content-box-item-content {
+  padding: 10px 10px 0 20px;
+}
+.matches-inf-wrapper.carousel .matches-inf {
+  width: 48%;
 }

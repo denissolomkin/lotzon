@@ -1,18 +1,19 @@
 {
     "res":{
             "RU": {
-                "message-autocomplete": "АВТОЗАПОЛНЕНИЕ",
-                "message-done-and-approved": "ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ",
-                "message-yet": "ЕЩЕ",
-                "message-numbers": "НОМЕРОВ",
-                "message-favorite": "ЛЮБИМАЯ КОМБИНАЦИЯ",
-                "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
-                "message-ticket-4": "для доступа к билету №4 вы должны принять участие в 100 розыгрышах",
-                "message-ticket-5": "для доступа к билету №5 вы должны принять участие в 100 розыгрышах",
-                "message-ticket-6": "для доступа к билету №6 вы должны принять участие в 100 розыгрышах",
-                "message-ticket-7": "для доступа к билету №7 вы должны принять участие в 100 розыгрышах",
-                "message-ticket-8": "для доступа к золотому билету №8 вы должны его приобрести",
-                "message-order-process-week": "Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.",
+                "message-lottery-ticket-autocomplete": "АВТОЗАПОЛНЕНИЕ",
+                "message-lottery-ticket-done": "ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ",
+                "message-lottery-ticket-yet": "ЕЩЕ",
+                "message-lottery-ticket-numbers": "НОМЕРОВ",
+                "message-lottery-ticket-favorite": "ЛЮБИМАЯ КОМБИНАЦИЯ",
+                "message-lottery-ticket-4": "для доступа к билету №4 вы должны принять участие в 100 розыгрышах",
+                "message-lottery-ticket-5": "для доступа к билету №5 вы должны принять участие в 100 розыгрышах",
+                "message-lottery-ticket-6": "для доступа к билету №6 вы должны принять участие в 100 розыгрышах",
+                "message-lottery-ticket-7": "для доступа к билету №7 вы должны принять участие в 100 розыгрышах",
+                "message-lottery-ticket-8": "для доступа к золотому билету №8 вы должны его приобрести",
+                "title-lottery-ticket": "Билет",
+                "button-lottery-ticket-favorite": "настраивается в кабинете",
+                "button-lottery-ticket-add": "Подтвердить",
 
                 "menu-blog": "Блог",
                 "menu-lottery": "Лотерея",
@@ -35,10 +36,6 @@
 
                 "menu-reports-referrals": "Мои рефералы",
 
-                "title-lottery-ticket": "Билет",
-
-                "button-lottery-set-favorite": "настраивается в кабинете",
-                "button-lottery-add-ticket": "Подтвердить",
 
                 "button-balance-cashout": "Вывести",
                 "button-balance-convert": "Конвертировать",
@@ -47,6 +44,7 @@
 
                 "button-more": "Подробнее",
                 "button-save": "Сохранить",
+                "button-load-more": "Показать еще",
 
                 "title-error": "Ошибка",
                 "title-points": "баллы",
@@ -88,6 +86,9 @@
                 "title-order-status": "Статус заявки",
                 "title-order-type":"Способ получения",
                 "title-order-prize":"Выигрыш",
+
+                "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
+                "message-order-process-week": "Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.",
 
                 "title-support-faq": "Часто задаваемые вопросы",
                 "title-support-rules": "Правила",

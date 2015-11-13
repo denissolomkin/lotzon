@@ -5,7 +5,7 @@
     <div class="content-box-content clearfix">
         <div class="content-box-item with-cat cabinet-transaction-history">
 
-            <form class="filter-render-list-unwatched" action="/reports/transactions" method="get">
+            <form class="render-list-form-unwatched" action="/reports/transactions" method="get">
 
                 <div class="content-box-item-top clearfix">
 
@@ -36,10 +36,17 @@
 
                 <div class="render-list-container content-box-item-content">
 
-                    <!--div class="th-date-range">Сегодня</div-->
+
 
                     <div class="render-list">
                         {{#each .}}
+
+                        {{#if (ne last_day (day this.date))}}
+                            <div class="th-date-range">{{day this.date}}</div>
+                        {{/if}}
+
+                        {{variable "last_day" (day this.date)}}
+
                         <div data-id={{@key}} class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
                             <div class="th-item-left">
                                 <div>{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
@@ -59,7 +66,9 @@
                         {{/each}}
                     </div>
 
-                    <input type="submit" class="infinite-scrolling" value="{{i18n " button-load-more"}}"></input>
+                    <div class="container-center">
+                        <button type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}</button>
+                    </div>
 
                 </div>
 

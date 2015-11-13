@@ -58,6 +58,10 @@ button {
     background: none;
 
   }
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
   border: none;
   opacity: 0.8;
   &.on {
@@ -65,39 +69,13 @@ button {
     border-color: black;
     color: black;
   }
-  &.loading {
-    position: relative;
-    opacity: 0.8;
-    cursor: default;
-    background: #ffe400;
-    background-repeat: no-repeat;
-    background-position: 0;
-    // background-size: contain;
-    background-image: url(../css/img/progress.png);
-    -webkit-animation: AnimationName 5s infinite linear;
-    -moz-animation: AnimationName 5s  infinite linear;
-    animation: AnimationName 5s  infinite linear;
+  
 
-  }
 }
 
 
 
-@-webkit-keyframes AnimationName {
-  0%{background-position:100% 0%}
-   50%{background-position:50% 0%}
-  100%{background-position: 0%  0% }
-}
-@-moz-keyframes AnimationName {
-  0%{background-position:100% 0%}
-   50%{background-position:50% 0%}
-  100%{background-position: 0%  0% }
-}
-@keyframes AnimationName { 
-  0%{background-position:100% 0%}
-  50%{background-position:50% 0%}
-  100%{background-position: 0%  0% }
-}
+
 .status {
   display: none;
   text-align: center;

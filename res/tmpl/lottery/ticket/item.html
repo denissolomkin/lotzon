@@ -1,4 +1,4 @@
-<div class="ticket-item clearfix{{#isGold}} gold{{/isGold}}">
+<div class="ticket-item clearfix">
 
     <form action="/lottery/ticket" method="post">
         <div class="ticket-numbers-wrapper clearfix">
@@ -17,7 +17,7 @@
 
 
         {{#isDone}}
-        <div class="ticket-done"><b>{{i18n "message-done-and-approved"}}</b></div>
+        <div class="ticket-done"><b>{{i18n "message-lottery-ticket-done"}}</b></div>
         {{/isDone}}
 
         {{^isDone}}
@@ -25,19 +25,19 @@
             <input type="hidden" name="tickNum" value="{{selectedTab}}">
             <ul class="ticket-actions">
                 <li class='ticket-random'>A
-                    <div class="after">{{i18n "message-autocomplete"}}</div>
+                    <div class="after">{{i18n "message-lottery-ticket-autocomplete"}}</div>
                 </li>
                 <li class="ticket-favorite ticket-fc-btn">
                     <div class="after">
-                        <b>{{i18n "message-favorite"}}</b><span>{{i18n "button-set-favorite"}}</span></div>
+                        <b>{{i18n "message-lottery-ticket-favorite"}}</b><span>{{i18n "button-lottery-ticket-favorite"}}</span></div>
                 </li>
             </ul>
-            <button type="submit" class="ticket-btn add-ticket">{{i18n "button-add-ticket"}}</button>
-            <div class="balls-count">{{i18n "message-yet"}} <b>{{requiredBalls}}</b> {{i18n "message-numbers"}}</div>
+            <button type="submit" class="ticket-btn add-ticket">{{i18n "button-lottery-ticket-add"}}</button>
+            <div class="balls-count">{{i18n "message-lottery-ticket-yet"}} <b>{{requiredBalls}}</b> {{i18n "message-lottery-ticket-numbers"}}</div>
         </div>
 
         {{/isDone}}
     </form>
 
 
-</div><!-- .ticket-item -->
+</div>

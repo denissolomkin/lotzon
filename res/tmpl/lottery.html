@@ -1,14 +1,18 @@
 <div class="content-main tickets">
 
     <div class="ticket-box">
+
         <div class="grid-container lottery-grid timer-box header-box">
-            <div id="ticketCountdownHolder" class="width-50 push-50"><span></span></div>
+            <div id="ticketCountdownHolder" class="width-50 push-50">
+                <span></span>
+            </div>
             <div class="width-50 pull-50">
                 <p class="title">
                     {{i18n "title-slider-timer"}}
                 </p>
             </div>
         </div>
+
         <div class="ticket-items">
 
             <ul class="ticket-tabs clearfix">
@@ -18,11 +22,12 @@
             <div class="ticket-item clearfix">
             </div>
             <!-- .ticket-item -->
+
         </div>
         <!-- .ticket-items -->
     </div>
 
-    <div class="matches-inf-wrapper clearfix carousel ">
+    <div class="matches-inf-wrapper clearfix carousel">
 
         {{#each (lottery "prizes")}}
         <div class="matches-inf {{@key}}">

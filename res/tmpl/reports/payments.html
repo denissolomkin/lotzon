@@ -18,7 +18,7 @@
                     <div class="ph-header-item ph-status-text">{{i18n "title-order-status"}}</div>
                 </div>
 
-                <form action="/reports/payments" class="filter-render-list" method="get">
+                <form action="/reports/payments" class="render-list-form" method="get">
 
                     <div class="render-list">
                         {{#reverse .}}
@@ -49,7 +49,9 @@
                         {{/reverse}}
                     </div>
 
-                    <input type="submit" class="" value="{{i18n " button-load-more"}}"></input>
+                    <div class="container-center">
+                        <button type="submit" class="btn-flat">{{i18n "button-load-more"}}</button>
+                    </div>
 
                 </form>
 

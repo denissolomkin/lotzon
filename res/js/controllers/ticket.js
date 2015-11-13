@@ -33,8 +33,7 @@
                 R.push({
                     box: '.ticket-tabs',
                     template: 'lottery-ticket-tabs',
-                    json: Tickets,
-                    url: false
+                    json: Tickets
                 });
 
             }
@@ -70,7 +69,11 @@
                     replace: '.ticket-item',
                     template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable'+Tickets.selectedTab,
                     json: Tickets,
-                    url: false
+                    after: function(){
+                        Tickets.isGold()
+                            ? $('.ticket-box').addClass('gold')
+                            : $('.ticket-box').removeClass('gold');
+                    }
                 });
 
             }

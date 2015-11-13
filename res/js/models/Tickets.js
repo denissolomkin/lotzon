@@ -24,7 +24,7 @@
         },
 
         "isGold": function () {
-            return this.selectedTab == 8;    
+            return this.selectedTab == this.totalTickets;
         },
 
         "countFilled": function () {
@@ -82,7 +82,7 @@
             for (i = 1; i <= this.totalBalls; i++) {
                 balls.push({
                     num: i,
-                    select: $.inArray(i, this.filledTickets[this.selectedTab]) !== -1
+                    select: this.filledTickets[this.selectedTab] && this.filledTickets[this.selectedTab].indexOf(i) !== -1
                 });
             }
 

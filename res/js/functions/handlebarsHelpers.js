@@ -6,16 +6,16 @@ $(function () {
 
             options = typeof options === 'string' ? options : null;
 
-            if(arguments.length > 2){
+            if (arguments.length > 2) {
                 var args = [];
                 for (var i = 1; i <= arguments.length; i++)
-                    typeof arguments[i] === 'string' && args .push('"'+arguments[i]+'"');
-                options = args .join(', ');
+                    typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
+                options = args.join(', ');
             }
 
             var response = eval("Player." + fn.toString());
             D.log('Player.' + fn + (options ? '(' + options + ')' : ''), 'func');
-            return typeof response === 'function' && eval("Player." + fn+"("+options+")") || response;
+            return typeof response === 'function' && eval("Player." + fn + "(" + options + ")") || response;
         },
 
         'number': Player.fineNumbers,
@@ -24,16 +24,16 @@ $(function () {
 
             options = typeof options === 'string' ? options : null;
 
-            if(arguments.length > 2){
+            if (arguments.length > 2) {
                 var args = [];
                 for (var i = 1; i <= arguments.length; i++)
-                    typeof arguments[i] === 'string' && args .push('"'+arguments[i]+'"');
-                options = args .join(', ');
+                    typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
+                options = args.join(', ');
             }
 
             var response = eval("Tickets." + fn.toString());
             D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'func');
-            return typeof response === 'function' && eval("Tickets." + fn+"("+options+")") || response;
+            return typeof response === 'function' && eval("Tickets." + fn + "(" + options + ")") || response;
         },
 
         'reverse': function (context, options) {
@@ -93,6 +93,23 @@ $(function () {
 
         },
 
+        variable: function (context) {
+            name, value
+            context[name] = value;
+        },
+
+        'renderPartial': function (partialName, options) {
+            if (!partialName) {
+                console.error('No partial name given.');
+                return '';
+            }
+            var partial = Handlebars.partials[partialName];
+            if (!partial) {
+                console.error('Couldnt find the compiled partial: ' + partialName);
+                return '';
+            }
+            return new Handlebars.SafeString(partial(options.hash));
+        },
 
         'cache': function () {
 

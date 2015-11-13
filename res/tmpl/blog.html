@@ -6,8 +6,7 @@
 
             <div class="content-box-item home-blog">
 
-                <form class="filter-render-list" action="/blog/all" method="get">
-                    <div class="render-list-container">
+                <form class="render-list-form" action="/blog/all" method="get">
                     <div class="render-list">
 
                         {{#reverse .}}
@@ -33,9 +32,9 @@
                         {{/reverse}}
 
                     </div>
+                    <div class="container-center">
+                        <button type="submit" class="infinite-scrolling btn-flat">{{i18n "button-load-more"}}</button>
                     </div>
-
-                    <input type="submit" class="infinite-scrolling" value="{{i18n " button-load-more"}}"></input>
                 </form>
 
             </div>

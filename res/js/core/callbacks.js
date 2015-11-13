@@ -25,11 +25,10 @@
             $(document).on('click', ".message-form-btn", Message.do.send);
 
             /* form */
-            $(document).on('click', 'form button[type="submit"]', Form.do.submit);
+            $(document).on('submit', 'form.render-list-form', Content.enableAutoload);
+            $(document).on('change', 'form.render-list-form', Content.autoload);
 
-            $(document).on('submit', 'form.filter-render-list', Content.enableAutoload);
-            $(document).on('change', 'form.filter-render-list', Content.autoload);
-
+            $(document).on('click', 'form:not(.render-list-form) button[type="submit"]', Form.do.submit);
             $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
