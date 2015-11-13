@@ -30,7 +30,7 @@
             }
         },
 
-        tickets = {
+        lottery = {
             "lastLotteryId": 353,
             "selectedTab": null,
             "totalBalls": 49,
@@ -45,7 +45,62 @@
                 "6": [32, 2, 14, 34, 15, 19],
                 "7": false,
                 "8": false
+            },
+            "prizes": {
+                "default": {
+                    "1": {
+                        "currency": "points",
+                        "sum": 5
+                    },
+                    "2": {
+                        "currency": "money",
+                        "sum": "0.10"
+                    },
+                    "3": {
+                        "currency": "money",
+                        "sum": "0.25"
+                    },
+                    "4": {
+                        "currency": "money",
+                        "sum": 10
+                    },
+                    "5": {
+                        "currency": "money",
+                        "sum": 200
+                    },
+                    "6": {
+                        "currency": "money",
+                        "sum": 100000
+                    }
+                },
+                "gold": {
+                    "1": {
+                        "currency": "points",
+                        "sum": 50
+                    },
+                    "2": {
+                        "currency": "money",
+                        "sum": 1
+                    },
+                    "3": {
+                        "currency": "money",
+                        "sum": "2.5"
+                    },
+                    "4": {
+                        "currency": "money",
+                        "sum": 100
+                    },
+                    "5": {
+                        "currency": "money",
+                        "sum": 2000
+                    },
+                    "6": {
+                        "currency": "money",
+                        "sum": 1000000
+                    }
+                }
             }
+
         },
 
         player = {
@@ -148,7 +203,7 @@ endforeach;
 
     $(function () {
 
-        Tickets.init(tickets);  // extend tickets
+        Tickets.init(lottery);  // extend tickets
         Player.init(player); // extend player
         D.init(debug); // init debugger
         Slider.init(slider); // echo slider

@@ -77,7 +77,6 @@
         return destination;
     };
 
-
     Object.size = function (obj) {
         var size = 0, key;
         for (key in obj) {
@@ -85,6 +84,14 @@
         }
         return size;
     };
+
+    isVisible = function (y) {
+
+        y = y || 0;
+        var bounds = this.getBoundingClientRect();
+        return bounds.top + y < window.innerHeight && bounds.bottom - y > 0;
+
+    },
 
     $.fn.getPath = function () {
         if (this.length != 1) throw 'Requires one element.';

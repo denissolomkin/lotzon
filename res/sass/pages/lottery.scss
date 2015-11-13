@@ -8,7 +8,7 @@
 }
 
 
-.cabinet-game-history .content-box-cat a:first-child:after {
+.cabinet-game-history .content-box-cat > span:first-child:after {
   @extend .gh-circle;
   margin-left: 13px;
 }
@@ -546,6 +546,10 @@
   @extend .ticket-ball;
   margin: 0 10px 0 10px !important;
   float: left;
+  &:hover {
+    background: #ffe400;
+    color: #4c4c4c;
+  }
 }
 
 .ticket-fc-btn {
@@ -572,6 +576,10 @@
   box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
     &.add-ticket {
       padding: 0 37px; 
+    }
+    &:hover {
+      background: #ffe400;
+      color: #4c4c4c;
     }
 }
 
@@ -1157,7 +1165,7 @@
   & .content-box-cat {
     margin-top: 10px;
     // font-family: handbookpro-regular;
-  	& a {
+  	& > span {
       position: relative;
   		padding: 5px 10px;
       margin-right: 0;
@@ -1178,7 +1186,7 @@
         display:none;
       }
       &:first-child {
-        padding: 5px 10px 5px 50px;
+        // padding: 5px 10px 5px 50px;
 
         &:after {
           display:none;
@@ -1208,7 +1216,32 @@
     margin-bottom: 20px;
     font-size: 15px;
   }
+  & .input-radio {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  & input[type="radio"] {
+    opacity: 0;
+    z-index: 1;
+
+  }
+
 }
+
+.lottery-history input[type="radio"]:checked + label.input-radio:before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: black;
+  border-radius: 50%;
+ }
+
 .lottery-history-items {
   position: relative;
   z-index: 10;

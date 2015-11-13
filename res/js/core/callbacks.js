@@ -27,8 +27,8 @@
             /* form */
             $(document).on('click', 'form button[type="submit"]', Form.do.submit);
 
-            $(document).on('change', 'form.filter-render-list input', Content.autoload);
             $(document).on('submit', 'form.filter-render-list', Content.enableAutoload);
+            $(document).on('change', 'form.filter-render-list', Content.autoload);
 
             $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);

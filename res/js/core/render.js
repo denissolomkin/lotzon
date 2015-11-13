@@ -253,17 +253,12 @@
 
                 if (options.replace.indexOf('.render-list') !== -1 && options.replace.indexOf('.render-list-container') === -1) {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing .render-list'], 'render');
-
-                    var isSimilar = $(options.rendered).is(options.replace),
-                        appendHTML = isSimilar
+                    var appendHTML = $(options.rendered).is('.render-list')
                             ? $(options.rendered).html()
-                            : $(options.replace, options.rendered).html(),
-                        appendPlace = isSimilar
-                            ? options.replace
-                            : options.findClass + ' ' + options.replace;
+                            : $('.render-list', options.rendered).html();
 
-                    $(appendHTML).appendTo(appendPlace).hide().fadeIn();
+                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing ', options.replace], 'render');
+                    $(appendHTML).appendTo(options.replace).hide().fadeIn();
 
                 } else if ($(options.rendered).is(options.replace)) {
 

@@ -39,16 +39,18 @@
   display: inline-block;
   zoom: 1;
   *display: inline;
+  border: 1px solid #000;
+  border-radius: 50%;
+  padding: 2px;
+  margin: 5px 5px;
 }
-
+// .owl-theme .owl-controls .owl-page.active span{
+// border: 1px solid #4a4a4a;
+// } 
 .owl-theme .owl-controls .owl-page span {
   display: block;
   width: 10px;
   height: 10px;
-  margin: 5px 5px;
-  border: 1px solid #4a4a4a;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
   border-radius: 50%;
   background: white;
 }

@@ -18,6 +18,24 @@ $(function () {
             return typeof response === 'function' && eval("Player." + fn+"("+options+")") || response;
         },
 
+        'number': Player.fineNumbers,
+
+        'lottery': function (fn, options) {
+
+            options = typeof options === 'string' ? options : null;
+
+            if(arguments.length > 2){
+                var args = [];
+                for (var i = 1; i <= arguments.length; i++)
+                    typeof arguments[i] === 'string' && args .push('"'+arguments[i]+'"');
+                options = args .join(', ');
+            }
+
+            var response = eval("Tickets." + fn.toString());
+            D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'func');
+            return typeof response === 'function' && eval("Tickets." + fn+"("+options+")") || response;
+        },
+
         'reverse': function (context, options) {
             var fn = options.fn, inverse = options.inverse;
             var length = 0, ret = "", data;

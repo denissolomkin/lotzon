@@ -124,6 +124,16 @@ button {
   border: none;
   opacity: 0.8;
 }
+button.btn-flat {
+  border: 1px solid #000;
+  color: #000;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  padding: 0 35px;
+  text-transform: uppercase;
+  background: none;
+}
 button.on {
   opacity: 1;
   border-color: black;
@@ -133,22 +143,48 @@ button.loading {
   position: relative;
   opacity: 0.8;
   cursor: default;
-}
-button.loading:before {
-  width: 20px;
-  position: absolute;
-  left: 10px;
+  background: #ffe400;
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-image: url(../css/img/preloader.gif);
-  content: "";
-  display: inline-block;
-  min-height: inherit;
-  height: 100%;
-  vertical-align: middle;
+  background-position: 0;
+  background-image: url(../css/img/progress.png);
+  -webkit-animation: AnimationName 5s infinite linear;
+  -moz-animation: AnimationName 5s  infinite linear;
+  animation: AnimationName 5s  infinite linear;
 }
 
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
 .status {
   display: none;
   text-align: center;
@@ -158,6 +194,10 @@ button.loading:before {
   padding: 0;
   min-width: 320px;
   margin: auto;
+}
+
+.container-center {
+  text-align: center;
 }
 
 .content-top {
@@ -560,6 +600,14 @@ input.input-radio:checked + label.input-radio:before {
   font-size: 36px;
   line-height: 1.2;
   text-shadow: 0.5px 0.7px 1px rgba(255, 255, 255, 0.5);
+}
+
+.hidden-x-small {
+  display: none;
+}
+
+.position-relative {
+  position: relative;
 }
 
 .footer {
@@ -2361,7 +2409,7 @@ header .owl-theme .owl-controls .owl-page span {
     margin-right: 0;
   }
 }
-.gh-circle, .cabinet-game-history .content-box-cat a:first-child:after, .gh-my-game .gh-date:after {
+.gh-circle, .cabinet-game-history .content-box-cat > span:first-child:after, .gh-my-game .gh-date:after {
   content: "";
   display: inline-block;
   width: 10px;
@@ -2370,11 +2418,7 @@ header .owl-theme .owl-controls .owl-page span {
   border-radius: 50%;
 }
 
-.cabinet-game-history .content-box-cat a:last-child {
-  padding: 0 15px;
-}
-
-.cabinet-game-history .content-box-cat a:first-child:after {
+.cabinet-game-history .content-box-cat > span:first-child:after {
   margin-left: 13px;
 }
 
@@ -2387,9 +2431,6 @@ header .owl-theme .owl-controls .owl-page span {
   padding: 5px 10px;
   cursor: pointer;
 }
-.gh-item:hover {
-  background: #fafafa;
-}
 
 .gh-my-game .gh-date:after {
   margin-left: 20px;
@@ -2397,7 +2438,7 @@ header .owl-theme .owl-controls .owl-page span {
 
 .gh-inf {
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .gh-inf-name {
@@ -2454,39 +2495,10 @@ header .owl-theme .owl-controls .owl-page span {
     width: 20%;
   }
 
-  .gh-item {
-    margin: 0 -10px 0;
-    padding: 10px;
-    line-height: 35px;
-  }
-
-  .gh-inf {
-    margin-bottom: 0;
-    float: left;
-  }
-
-  .gh-date {
-    width: 25%;
-  }
-
   .gh-winners {
     width: 20%;
     position: relative;
     left: 55%;
-  }
-
-  .gh-combination {
-    width: 55%;
-    position: relative;
-    left: -20%;
-  }
-
-  .gh-inf-name {
-    display: none;
-  }
-
-  .gh-combination .gh-inf-name {
-    display: none;
   }
 }
 .Ghd-number, .ghd-number, .ghd-ticket-number {
@@ -2675,10 +2687,9 @@ header .owl-theme .owl-controls .owl-page span {
 
 .ticket-items {
   margin: 0 0 20px;
-  border-radius: 0 5px 5px 5px;
   position: relative;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background: #A9D0D5;
+  padding-left: 10px;
 }
 
 .ticket-numbers-wrapper {
@@ -2689,6 +2700,7 @@ header .owl-theme .owl-controls .owl-page span {
   background: #A9D0D5;
   display: table;
   padding: 6px 0 14px;
+  padding-right: 10px;
 }
 .ticket-tabs li {
   width: 1000px;
@@ -2735,7 +2747,7 @@ header .owl-theme .owl-controls .owl-page span {
 .ticket-tabs li.active {
   top: 0;
   cursor: default;
-  text-shadow: 0 1px 0 rgba(233, 242, 244, 0.6);
+  text-shadow: 0 1px 0 #4c4c4c;
   color: #b2d0d4;
 }
 .ticket-tabs li.active .ticket-number-sm {
@@ -2804,6 +2816,7 @@ header .owl-theme .owl-controls .owl-page span {
 }
 .ticket-tabs li:hover {
   color: #b2d0d4;
+  text-shadow: 0 1px 0 #4c4c4c;
 }
 .ticket-tabs li:hover .ticket-number-sm {
   background: #4c4c4c;
@@ -2879,10 +2892,6 @@ header .owl-theme .owl-controls .owl-page span {
   padding-top: 19px;
 }
 
-.balls-count {
-  display: none;
-}
-
 .active:hover {
   -webkit-transform: none !important;
   -moz-transform: none !important;
@@ -2907,6 +2916,10 @@ header .owl-theme .owl-controls .owl-page span {
   margin: 0 10px 0 10px !important;
   float: left;
 }
+.ticket-actions li:hover {
+  background: #ffe400;
+  color: #4c4c4c;
+}
 
 .ticket-fc-btn {
   position: relative;
@@ -2929,6 +2942,13 @@ header .owl-theme .owl-controls .owl-page span {
   text-transform: uppercase;
   background: #d0e2e4;
   box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
+}
+.ticket-btn.add-ticket {
+  padding: 0 37px;
+}
+.ticket-btn:hover {
+  background: #ffe400;
+  color: #4c4c4c;
 }
 
 .tickets .content-box-tab {
@@ -2954,7 +2974,7 @@ header .owl-theme .owl-controls .owl-page span {
 
 .matches-inf {
   box-shadow: none;
-  margin: 0 0 30px;
+  margin: 0;
 }
 
 .matches-inf.content-box {
@@ -3182,6 +3202,18 @@ header .owl-theme .owl-controls .owl-page span {
   padding: 15px 40px;
 }
 
+.balls-count {
+  color: #e7f6f7;
+  font-size: 15px;
+  bottom: 40px;
+  float: right;
+  margin-right: 20px;
+  display: none;
+  height: 40px;
+  line-height: 40px;
+  text-shadow: 0 1px 0 #A9C4C7;
+}
+
 .balls-count b {
   color: #4c4c4c;
   font-size: 15px;
@@ -3332,9 +3364,13 @@ header .owl-theme .owl-controls .owl-page span {
 .ticket-box {
   background-color: #A9D0D5;
 }
+.ticket-box .ticket-btn {
+  margin-right: 20px;
+}
 
 .lottery-grid {
   font-family: handbookpro-regular;
+  letter-spacing: 0.7px;
   padding: 0 16px;
 }
 .lottery-grid:not(.width-100) {
@@ -3342,6 +3378,8 @@ header .owl-theme .owl-controls .owl-page span {
 }
 .lottery-grid.timer-box {
   padding: 0;
+  margin-left: 0;
+  padding: 0 15px;
 }
 .lottery-grid.timer-box .title {
   font-size: 12px;
@@ -3356,7 +3394,7 @@ header .owl-theme .owl-controls .owl-page span {
   padding-left: 16px;
 }
 .lottery-grid .title {
-  padding: 16px;
+  padding: 16px 16px 16px 22px;
   font-size: 15px;
   color: #4A4A4A;
   text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.5);
@@ -3392,7 +3430,7 @@ header .owl-theme .owl-controls .owl-page span {
   background: #A9D0D5;
 }
 .lottery-grid .ul-striped li {
-  padding: 6px 16px 13px;
+  padding: 6px 16px 13px 22px;
 }
 
 .matches-inf-wrapper .content-box {
@@ -3422,39 +3460,151 @@ header .owl-theme .owl-controls .owl-page span {
   display: inline-block;
   width: 0;
   height: 0;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
-  border-left: 17px solid transparent;
-  position: relative;
-  top: 10px;
-  left: 10px;
+  border-bottom: 15px solid transparent;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #4d4d4d;
+  position: absolute;
+  top: 40px;
+  left: auto;
+  right: 20px;
 }
-.gh-item:hover .arrow {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
-  border-left: 17px solid #4d4d4d;
-  position: relative;
-}
-.gh-item:hover .arrow:before {
+.gh-item .arrow:before {
   content: "";
   display: block;
   width: 0;
   height: 0;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
-  border-left: 17px solid #fff;
-  top: -20px;
+  border-bottom: 15px solid transparent;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #fff;
+  top: -15px;
   right: 2px;
   position: absolute;
 }
 
+.cabinet-game-history {
+  letter-spacing: 0.7px;
+  padding: 20px 10px 30px;
+  font-family: handbookpro-regular;
+  min-height: 0;
+  font-size: 15px;
+  color: #4D4D4D;
+}
 .cabinet-game-history .content-box-item {
+  padding: 0;
+  min-height: 0;
+}
+.cabinet-game-history .content-box-item.with-cat {
+  padding-top: 62px;
+}
+.cabinet-game-history .content-box-item-content {
   padding: 10px 10px 10px 40px;
 }
+.cabinet-game-history .content-box-cat {
+  margin-top: 10px;
+}
+.cabinet-game-history .content-box-cat > span {
+  position: relative;
+  padding: 5px 10px;
+  margin-right: 0;
+}
+.cabinet-game-history .content-box-cat > span:hover {
+  border: none;
+  background: #4c4c4c;
+  color: #fff;
+  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+}
+.cabinet-game-history .content-box-cat > span.active {
+  border: none;
+  background: #4c4c4c;
+  color: #fff;
+  text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+}
+.cabinet-game-history .content-box-cat > span:after {
+  display: none;
+}
+.cabinet-game-history .content-box-cat > span:first-child:after {
+  display: none;
+}
+.cabinet-game-history .content-box-cat > span:first-child:before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #b7cfd3;
+  border-radius: 50%;
+  margin-right: 13px;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+.cabinet-game-history .content-box-item-top {
+  padding: 0;
+}
+.cabinet-game-history .gh-inf-name {
+  margin-right: 0;
+}
+.cabinet-game-history .gh-date {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+.cabinet-game-history .input-radio {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cabinet-game-history input[type="radio"] {
+  opacity: 0;
+  z-index: 1;
+}
 
+.lottery-history input[type="radio"]:checked + label.input-radio:before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: black;
+  border-radius: 50%;
+}
+
+.lottery-history-items {
+  position: relative;
+  z-index: 10;
+}
+
+.ticket-done b {
+  text-shadow: 0 1px 0 #A9C4C7;
+}
+
+@media (min-width: 360px) {
+  .ticket-items {
+    padding-left: 0;
+  }
+
+  .lottery-grid .title {
+    padding-left: 10px;
+  }
+
+  .lottery-grid .ul-striped li {
+    padding-left: 10px;
+  }
+
+  .lottery-grid.timer-box {
+    padding: 0 10px;
+  }
+
+  .ticket-tabs {
+    padding-right: 0;
+  }
+}
+@media (max-width: 767px) {
+  .balls-count {
+    display: none !important;
+  }
+}
 .prizes-for-points.content-box-item.with-cat {
   padding-top: 130px;
 }
@@ -5440,6 +5590,10 @@ span.input-prefix {
     margin: auto;
   }
 
+  .hidden-x-small {
+    display: block;
+  }
+
   .js-detect {
     opacity: 0.5;
   }
@@ -5450,10 +5604,117 @@ span.input-prefix {
   .lottery-grid > * {
     padding: 0;
   }
+  .lottery-grid .title {
+    padding: 16px 10px;
+  }
+
+  .matches-inf .lottery-grid .ul-striped li {
+    padding: 6px 10px 13px;
+  }
+  .matches-inf .lottery-grid .ul-striped li p {
+    display: inline-block;
+  }
+  .matches-inf .lottery-grid .ul-striped li p:first-child {
+    margin-right: 30px;
+    min-width: 125px;
+  }
+  .matches-inf .lottery-grid .ul-striped li span {
+    display: inline-block;
+  }
+
+  .content-box-content {
+    padding-left: 10px;
+    margin: 0 auto;
+  }
+  .content-box-content .gh-item:before {
+    left: -20px;
+  }
+  .content-box-content .gh-inf {
+    font-size: 15px;
+  }
+  .content-box-content .gh-date {
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .cabinet-game-history {
+    padding: 52px 0 30px;
+  }
+}
+@media (min-width: 480px) and (min-width: 640px) {
+  .lottery-grid .title {
+    padding: 16px 0 16px 30px;
+  }
+
+  .matches-inf .lottery-grid .ul-striped li {
+    padding: 6px 30px 13px;
+  }
+  .matches-inf .lottery-grid .ul-striped li p {
+    display: inline-block;
+  }
+  .matches-inf .lottery-grid .ul-striped li p:first-child {
+    margin-right: 30px;
+    min-width: 190px;
+  }
+  .matches-inf .lottery-grid .ul-striped li span {
+    display: inline-block;
+  }
+
+  .content-box-content {
+    margin: 0 auto;
+    padding-left: 30px;
+  }
+  .content-box-content .gh-item:before {
+    left: -20px;
+  }
+  .content-box-content .gh-item .arrow {
+    top: 5px;
+  }
+
+  .gh-inf {
+    font-size: 15px;
+    float: left;
+  }
+  .gh-inf.gh-combination {
+    float: right;
+    margin-right: 50px;
+  }
+
+  .gh-date {
+    margin-bottom: 0;
+    line-height: 30px;
+  }
+
+  .gh-item:before {
+    top: 15px;
+    left: -30px;
+  }
+
+  .ticket-tabs {
+    margin-left: -10px;
+    margin-right: 10px;
+  }
+
+  .ticket-items {
+    padding-left: 20px;
+  }
+
+  .lottery-grid.timer-box {
+    padding: 0 30px;
+  }
+
+  .cabinet-game-history .content-box-cat a:first-child {
+    padding: 5px 10px 5px 40px;
+    margin-left: 30px;
+  }
+  .cabinet-game-history .content-box-cat a:first-child:before {
+    left: 10px;
+  }
 }
 @media (min-width: 768px) {
   .container {
-    width: 728px;
+    width: 100%;
+    max-width: 768px;
     padding: 0;
   }
 
@@ -5474,16 +5735,21 @@ span.input-prefix {
     padding: 0 20px;
   }
 
-  .content-box-content {
-    min-height: 850px;
-  }
-
   .content-box-item {
     padding: 20px;
   }
 
   .content-box-item-top {
     padding: 20px 20px 0;
+  }
+
+  .content-box-content {
+    padding-left: 3px;
+  }
+
+  .cabinet-game-history .content-box-cat a:first-child {
+    padding: 5px 10px 5px 45px;
+    margin-left: 13px;
   }
 
   .banner-1,
@@ -5864,113 +6130,71 @@ span.input-prefix {
 }
 @media (min-width: 768px) {
   .ticket-items {
-    margin: 70px 0 30px;
-    background: #a7d1d5;
+    padding-left: 13px;
+  }
+  .ticket-items .ticket-numbers li {
+    margin: 0 11px 20px 11px !important;
+  }
+  .ticket-items .ticket-actions li {
+    margin: 0 11px 0 11px !important;
+  }
+
+  .ticket-item {
+    min-height: 0;
   }
 
   .ticket-tabs {
-    top: -40px;
-    background: transparent;
-    width: 100%;
-    position: absolute;
-    overflow: hidden;
-    z-index: -10;
+    margin: 0;
     display: block;
-    padding-top: 0;
+    padding: 6px 13px 14px;
   }
   .ticket-tabs li {
-    top: 9px;
-    width: 72px;
-    height: 85px;
-    margin-right: 10px;
-    line-height: 31px;
-    background: #4c4c4c;
-    color: #b2d0d4;
-    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
-    position: relative;
+    width: 30px;
     float: left;
-    border-radius: 5px 5px 0 0;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 30px;
-    text-align: center;
-    cursor: pointer;
+    margin-right: 50px;
     display: block;
   }
-  .ticket-tabs li.unavailable {
-    background: #8f8e8e;
-  }
-  .ticket-tabs li.unavailable:hover .ticket-number-sm {
-    background: transparent;
-  }
-  .ticket-tabs li.done {
-    background: #4c4c4c;
-    color: #b2d0d4;
-    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
-  }
-  .ticket-tabs li.done:after {
-    content: "";
-    display: inline-block;
-    background: url(img/sprite.png) center center no-repeat;
-    background-position: -597px -61px;
-    position: absolute;
-    width: 11px;
-    height: 8px;
-    right: 12px;
-    top: 12px;
-  }
-  .ticket-tabs li.done:before {
-    display: none;
-  }
-  .ticket-tabs li.done:hover .ticket-number-sm:before {
-    display: none;
-  }
-  .ticket-tabs li.done .ticket-number-sm:before {
-    display: none;
-  }
-  .ticket-tabs li.active {
-    height: 40px;
-    line-height: 40px;
-    color: #464444;
-    text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    background: #b7cfd3;
-  }
-  .ticket-tabs li.active .ticket-number-sm {
-    background: transparent;
-  }
-  .ticket-tabs li:last-of-type {
-    background: #e8cf6b;
-    color: #4c4c4c;
-    text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
-    width: 120px;
-  }
-  .ticket-tabs li:last-of-type.active {
-    color: #4c4c4c;
-  }
-  .ticket-tabs li:last-of-type:hover {
-    color: #4c4c4c;
-  }
   .ticket-tabs li:last-of-type .ticket-number-sm {
-    display: inline;
-    width: auto;
-    height: auto;
-    background: transparent;
-    line-height: 1;
-    border-radius: 0;
-    position: static;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 10px;
   }
-  .ticket-tabs li .ticket-number-sm {
-    display: inline !important;
-    width: auto !important;
-    height: auto !important;
-    background: transparent !important;
-    line-height: 1 !important;
-    border-radius: 0 !important;
-    position: static !important;
+  .ticket-tabs li:last-of-type .ticket-number-sm:hover {
+    margin-top: 0;
   }
-  .ticket-tabs li .ticket-number-sm:before {
-    display: none !important;
+  .ticket-tabs li:last-of-type.active .ticket-number-sm {
+    margin-top: 0;
+  }
+
+  .lottery-grid .title {
+    padding: 16px 23px;
+  }
+
+  .matches-inf .lottery-grid .ul-striped li {
+    padding: 6px 23px 13px;
+  }
+  .matches-inf .lottery-grid .ul-striped li p {
+    margin: 0;
+    min-width: 0;
+  }
+  .matches-inf .lottery-grid .ul-striped li p:first-child {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .gh-inf.gh-combination {
+    margin-right: 90px;
+  }
+
+  .content-box-content .gh-item .arrow {
+    top: 10px;
+  }
+
+  .matches-inf-wrapper.carousel {
+    padding: 10px 30px;
+  }
+  .matches-inf-wrapper.carousel .matches-inf {
+    width: 47%;
   }
 
   #lottery-process {
@@ -6036,72 +6260,6 @@ span.input-prefix {
     top: 0px;
   }
 
-  .scroll-box {
-    height: auto;
-  }
-
-  .is-done {
-    padding-top: 0;
-  }
-
-  .balls-count {
-    color: #e7f6f7;
-    font-size: 15px;
-    position: absolute;
-    right: 235px;
-    bottom: 40px;
-    display: block;
-  }
-
-  .ticket-numbers-wrapper {
-    height: auto;
-    overflow: visible;
-  }
-
-  .ticket-tabs li:hover {
-    -webkit-transform: translate(0, -8px);
-    -moz-transform: translate(0, -8px);
-    -o-transform: translate(0, -8px);
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    -webkit-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-  }
-
-  .ticket-item {
-    padding: 37px 30px 27px !important;
-  }
-
-  .ticket-numbers {
-    height: auto;
-    margin-left: 0 !important;
-    margin-right: -40px !important;
-    margin-bottom: 7px;
-  }
-  .ticket-numbers li {
-    margin: 0 30px 21px 0 !important;
-  }
-
-  .ticket-actions {
-    margin-left: 0 !important;
-  }
-
-  .ticket-actions li {
-    margin: 0 30px 0 0 !important;
-  }
-
-  .add-ticket {
-    margin-right: 0 !important;
-  }
-
-  .balls-count {
-    bottom: 43px;
-  }
-
-  .ticket-btn {
-    padding: 0 40px;
-  }
-
   .matches-inf-wrapper {
     margin-bottom: 30px;
   }
@@ -6115,18 +6273,6 @@ span.input-prefix {
     margin: 0 -20px 0;
     padding: 10px 20px;
     position: relative;
-  }
-
-  .gh-item:hover:before {
-    content: "";
-    clear: none;
-    display: block;
-    position: absolute;
-    width: 17px;
-    height: 30px;
-    background: url(img/sprite.png) -214px -187px;
-    top: 13px;
-    right: 40px;
   }
 
   .ghd-numbers {
@@ -6243,8 +6389,8 @@ span.input-prefix {
     padding: 50px 45px;
   }
 
-  .ticket-item {
-    min-height: 420px;
+  .ticket-box {
+    background-color: transparent;
   }
 
   .prizes-for-points .content-box-item-content {
@@ -6727,12 +6873,13 @@ span.input-prefix {
 }
 @media (min-width: 1010px) {
   .container {
-    width: 984px;
+    width: 980px;
+    max-width: none;
   }
 
   .content {
     float: left;
-    width: 654px;
+    width: 660px;
     margin-bottom: 20px;
   }
 
@@ -6758,7 +6905,7 @@ span.input-prefix {
   }
 
   .banner-3 {
-    width: 684px;
+    width: 680px;
     height: 135px;
   }
 
@@ -6826,7 +6973,7 @@ span.input-prefix {
   }
 
   .header-left {
-    width: 684px;
+    width: 680px;
     margin-right: 0;
     position: relative;
     padding-right: 10px;
@@ -7078,13 +7225,199 @@ span.input-prefix {
   }
 }
 @media (min-width: 1010px) {
+  .ticket-items {
+    margin: 70px 0 30px;
+    background: #a7d1d5;
+    padding-left: 0;
+  }
+
+  .ticket-tabs {
+    top: -40px;
+    background: transparent;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: -10;
+    display: block;
+    margin: 0;
+    padding: 6px 0 14px;
+    left: 0;
+  }
+  .ticket-tabs li {
+    top: 9px;
+    width: 72px;
+    height: 85px;
+    margin-right: 10px;
+    line-height: 31px;
+    background: #4c4c4c;
+    color: #b2d0d4;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+    position: relative;
+    float: left;
+    border-radius: 5px 5px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+  }
+  .ticket-tabs li.unavailable {
+    background: #8f8e8e;
+  }
+  .ticket-tabs li.unavailable:hover .ticket-number-sm {
+    background: transparent;
+  }
+  .ticket-tabs li.done {
+    background: #4c4c4c;
+    color: #b2d0d4;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+  }
+  .ticket-tabs li.done:after {
+    content: "";
+    display: inline-block;
+    background: url(img/sprite.png) center center no-repeat;
+    background-position: -597px -61px;
+    position: absolute;
+    width: 11px;
+    height: 8px;
+    right: 8px;
+    top: 12px;
+  }
+  .ticket-tabs li.done:before {
+    display: none;
+  }
+  .ticket-tabs li.done:hover .ticket-number-sm:before {
+    display: none;
+  }
+  .ticket-tabs li.done .ticket-number-sm:before {
+    display: none;
+  }
+  .ticket-tabs li.active {
+    height: 40px;
+    line-height: 40px;
+    color: #464444;
+    text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: #b7cfd3;
+  }
+  .ticket-tabs li.active .ticket-number-sm {
+    background: transparent;
+  }
+  .ticket-tabs li:last-of-type {
+    background: #e8cf6b;
+    color: #4c4c4c;
+    text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+    width: 120px;
+  }
+  .ticket-tabs li:last-of-type.active {
+    color: #4c4c4c;
+  }
+  .ticket-tabs li:last-of-type:hover {
+    color: #4c4c4c;
+  }
+  .ticket-tabs li:last-of-type .ticket-number-sm {
+    display: inline;
+    width: auto;
+    height: auto;
+    background: transparent;
+    line-height: 1;
+    border-radius: 0;
+    position: static;
+  }
+  .ticket-tabs li .ticket-number-sm {
+    display: inline !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    line-height: 1 !important;
+    border-radius: 0 !important;
+    position: static !important;
+  }
+  .ticket-tabs li .ticket-number-sm:before {
+    display: none !important;
+  }
+
+  .ticket-box {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .scroll-box {
+    height: auto;
+  }
+
+  .is-done {
+    padding-top: 0;
+  }
+
+  .ticket-done {
+    bottom: 0px;
+  }
+
+  .ticket-numbers-wrapper {
+    height: auto;
+    overflow: visible;
+  }
+
+  .ticket-tabs li:hover {
+    -webkit-transform: translate(0, -8px);
+    -moz-transform: translate(0, -8px);
+    -o-transform: translate(0, -8px);
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .ticket-item .ticket-numbers {
+    height: auto;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 7px;
+    margin-right: -22px !important;
+  }
+  .ticket-item .ticket-numbers li {
+    margin: 0 22px 21px 0 !important;
+  }
+  .ticket-item .ticket-actions {
+    margin-left: 0 !important;
+  }
+  .ticket-item .ticket-actions li {
+    margin: 0 22px 21px 0 !important;
+  }
+
+  .is_done {
+    padding-right: 7px;
+  }
+
+  .add-ticket {
+    margin-right: 0 !important;
+  }
+
+  .balls-count {
+    bottom: 43px;
+  }
+
+  .ticket-btn {
+    padding: 0 40px;
+  }
+
+  .lottery-grid .title {
+    padding: 16px 0 16px 23px;
+  }
+
+  .matches-inf-wrapper.carousel .matches-inf {
+    width: 48.5%;
+  }
+
   .ticket-tabs li {
     width: 62px;
     margin-right: 8px;
   }
 
   .ticket-item {
-    padding: 25px 23px !important;
+    padding: 25px 23px 8px !important;
   }
 
   .ticket-numbers {
@@ -7141,6 +7474,37 @@ span.input-prefix {
 
   .timer {
     width: 200px;
+  }
+
+  .ticket-items {
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 5px 0 7px;
+    padding-left: 10px;
+  }
+
+  .matches-inf-wrapper.carousel {
+    padding: 30px 0;
+    margin-bottom: 0;
+  }
+
+  .matches-inf {
+    margin-bottom: 0;
+  }
+
+  .cabinet-game-history .content-box-cat a:first-child {
+    padding-left: 35px;
+  }
+
+  .gh-item {
+    padding: 10px;
+  }
+  .gh-item:before {
+    top: 20px;
+  }
+
+  .gh-inf.gh-combination {
+    margin-right: 70px;
   }
 
   .prizes-for-points {
@@ -7252,7 +7616,7 @@ span.input-prefix {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1140px;
+    width: 1090px;
   }
 
   .content {
@@ -7273,7 +7637,7 @@ span.input-prefix {
   }
 
   .banner-3 {
-    width: 840px;
+    width: 790px;
   }
 
   .notification-window {
@@ -7286,7 +7650,7 @@ span.input-prefix {
   }
 
   .header-left {
-    width: 840px;
+    width: 790px;
   }
 
   .header-logo {
@@ -7366,7 +7730,8 @@ span.input-prefix {
   }
 
   .ticket-items {
-    margin: 80px 0 40px;
+    margin: 5px 0 7px;
+    padding-left: 0;
   }
 
   .ticket-tabs li {
@@ -7374,7 +7739,7 @@ span.input-prefix {
   }
 
   .ticket-item {
-    padding: 37px 40px 27px !important;
+    padding: 37px 40px 6px 42px !important;
   }
 
   .ticket-numbers {
@@ -7392,7 +7757,10 @@ span.input-prefix {
 
   .gh-item {
     margin: 0 -30px 0;
-    padding: 10px 30px;
+  }
+
+  .gh-inf.gh-combination {
+    margin-right: 120px;
   }
 
   .raiting-item {
@@ -7429,9 +7797,37 @@ span.input-prefix {
     margin-left: 0px;
   }
 
+  .ticket-tabs {
+    top: -42px;
+    padding: 0 0 14px;
+  }
   .ticket-tabs li {
     width: 80px;
     margin-right: 8px;
+  }
+  .ticket-tabs li.active {
+    top: 3px;
+  }
+  .ticket-tabs li:hover {
+    -webkit-transform: translate(0, -6px);
+    -moz-transform: translate(0, -8px);
+    -o-transform: translate(0, -8px);
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .ticket-item .ticket-numbers li {
+    margin: 0 29px 21px 0 !important;
+  }
+
+  .lottery-grid .title {
+    padding: 16px 0 16px 30px;
+  }
+
+  .matches-inf .lottery-grid .ul-striped li {
+    padding: 6px 30px 13px;
   }
 
   .prizes-for-points {
@@ -8013,16 +8409,16 @@ span.input-prefix {
   display: inline-block;
   zoom: 1;
   *display: inline;
+  border: 1px solid #000;
+  border-radius: 50%;
+  padding: 2px;
+  margin: 5px 5px;
 }
 
 .owl-theme .owl-controls .owl-page span {
   display: block;
   width: 10px;
   height: 10px;
-  margin: 5px 5px;
-  border: 1px solid #4a4a4a;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
   border-radius: 50%;
   background: white;
 }

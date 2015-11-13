@@ -1,16 +1,16 @@
 <div class="content-main tickets">
 
     <div class="ticket-box">
-    <div class="grid-container lottery-grid timer-box header-box">
-        <div id="ticketCountdownHolder" class="width-50 push-50"><span></span></div>
-        <div class="width-50 pull-50">
-            <p class="title">
-                {{i18n "title-slider-timer"}}
-            </p>
+        <div class="grid-container lottery-grid timer-box header-box">
+            <div id="ticketCountdownHolder" class="width-50 push-50"><span></span></div>
+            <div class="width-50 pull-50">
+                <p class="title">
+                    {{i18n "title-slider-timer"}}
+                </p>
+            </div>
         </div>
-     </div>
         <div class="ticket-items">
-        
+
             <ul class="ticket-tabs clearfix">
             </ul>
             <!-- .ticket-tabs -->
@@ -23,122 +23,53 @@
     </div>
 
     <div class="matches-inf-wrapper clearfix carousel ">
-        <div class="matches-inf">
+
+        {{#each (lottery "prizes")}}
+        <div class="matches-inf {{@key}}">
             <div class="grid-container lottery-grid header-box grid-nomargin">
                 <div class="width-100">
                     <p class="title">
-                        Таблица выиграшей с 1-го по 7-ой билет
+                        {{i18n "title-lottery-prizes" @key}}
                     </p>
                 </div>
-            </div>    
-            <div class="grid-container lottery-grid grid-nomargin">     
+            </div>
+            <div class="grid-container lottery-grid grid-nomargin">
                 <ul class="width-100 ul-striped">
+
+                    {{#reverse .}}
                     <li>
                         <div>
-                            <p class="text-large">100 000 грн</p> 
-                            <p>Угадано 6 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div>    
+                            <p class="text-large">{{number this.sum}} {{#if (eq this.currency "money")}}{{player
+                                "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</p>
+
+                            <p>{{i18n "title-lottery-prizes-match"}} {{@key}} {{i18n "title-lottery-prizes-from"}}
+                                {{lottery "requiredBalls"}} {{i18n "title-lottery-prizes-balls"}} <span
+                                        class="hidden-x-small"> {{i18n "title-lottery-prizes-ticket"}}</span></p>
+                        </div>
                     </li>
-                    <li>
-                        <div>
-                            <p class="text-large">200 грн</p> 
-                            <p>Угадано 5 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div>     
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">10 грн</p> 
-                            <p>Угадано 4 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">0,25 грн</p> 
-                            <p>Угадано 3 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">0,10 грн</p> 
-                            <p>Угадано 2 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">5 баллов</p> 
-                            <p>Угадано 1 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                </ul>  
+                    {{/reverse}}
+
+                </ul>
             </div>
         </div>
-        <div class="matches-inf gold">
-            <div class="grid-container lottery-grid header-box grid-nomargin">
-                <div class="width-100">
-                    <p class="title">
-                        Таблица выиграшей золотого билета
-                    </p>
-                </div>
-            </div>    
-            <div class="grid-container lottery-grid grid-nomargin">     
-                <ul class="width-100 ul-striped">
-                    <li>
-                        <div>
-                            <p class="text-large">1000 000 грн</p> 
-                            <p>Угадано 5 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">2 000 грн</p> 
-                            <p>Угадано 5 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div>     
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">100 грн</p> 
-                            <p>Угадано 4 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">2,50 грн</p> 
-                            <p>Угадано 3 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">1 грн</p> 
-                            <p>Угадано 2 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                    <li>
-                        <div>
-                            <p class="text-large">5 баллов</p> 
-                            <p>Угадано 1 из 6 номеров <span class="hidden-x-small"> в одном билете</span></p>
-                        </div> 
-                    </li>
-                </ul>  
-            </div>
-        </div>
+        {{/each}}
 
     </div>
     <div class="grid-container lottery-grid header-box grid-nomargin">
         <div class="width-100">
             <p class="title">
-                История розыгрышей
+                {{i18n "title-lottery-history"}}
             </p>
         </div>
-    </div>    
-   
+    </div>
+
     <div class="content-box tickets">
 
 
-
         <div class="content-box-content clearfix">
-         <div class="content-box-item lottery-history with-cat cabinet-game-history">
-        
-    </div>
+            <div class="content-box-item lottery-history with-cat cabinet-game-history">
+
+            </div>
         </div>
 
     </div>

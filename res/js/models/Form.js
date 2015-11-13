@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
     Form = {
 
@@ -6,7 +6,7 @@
         
         do: {
 
-            validate: function () {
+            validate: function() {
 
                 var $form = $(this).closest('form'),
                     $incompleteElements = $('.incomplete', $form),
@@ -20,14 +20,14 @@
                 if ($form.length) {
 
                     if ($errorElements.length) {
-                        $.each($errorElements, function (index, element) {
+                        $.each($errorElements, function(index, element) {
                             // $(element).removeClass('error');
                         })
                     }
 
                     if ($requiredElements.length) {
 
-                        $.each($requiredElements, function (index, element) {
+                        $.each($requiredElements, function(index, element) {
                             // $(element).parent().addClass('error');
                         })
 
@@ -35,7 +35,7 @@
                     }
 
                     if ($incompleteElements.length) {
-                        $.each($incompleteElements, function (index, element) {
+                        $.each($incompleteElements, function(index, element) {
                             // $(element).parent().addClass('error');
                         })
 
@@ -50,13 +50,12 @@
                 }
 
                 valid
-                    ? $('button[type="submit"]', $form).addClass('on')
-                    : $('button[type="submit"]', $form).removeClass('on');
+                    ? $('button[type="submit"]', $form).addClass('on') : $('button[type="submit"]', $form).removeClass('on');
 
                 return valid;
             },
 
-            submit: function (event) {
+            submit: function(event) {
 
                 var $button = $(this),
                     $form = $button.closest('form'),
@@ -72,43 +71,45 @@
 
                     D.log('button.submit', 'info');
 
-                    $.ajax({
-                        url: formUrl,
-                        method: formMethod, // 'post'
-                        data: formData,
-                        dataType: 'json',
-                        statusCode: {
+                    setTimeout(function() {
+                        $.ajax({
+                            url: formUrl,
+                            method: formMethod, // 'post'
+                            data: formData,
+                            dataType: 'json',
+                            statusCode: {
 
-                            404: function (data) {
-                                throw(data.message);
-                            },
+                                404: function(data) {
+                                    throw (data.message);
+                                },
 
-                            200: function (data) {
+                                200: function(data) {
 
-                                Form.stop.call($button)
-                                    .message.call($button, data.message);
+                                    Form.stop.call($button)
+                                        .message.call($button, data.message);
 
-                                if (Callbacks[formMethod][formCallback]) {
-                                    D.log(['C.' + formMethod + '.callback']);
-                                    Callbacks[formMethod][formCallback](data.res);
+                                    if (Callbacks[formMethod][formCallback]) {
+                                        D.log(['C.' + formMethod + '.callback']);
+                                        Callbacks[formMethod][formCallback](data.res);
+                                    }
+
+                                },
+
+                                201: function(data) {
+                                    throw (data.message);
+                                },
+
+                                204: function(data) {
+                                    throw (data.message);
                                 }
-
-                            },
-
-                            201: function (data) {
-                                throw(data.message);
-                            },
-
-                            204: function (data) {
-                                throw(data.message);
                             }
-                        }
-                    });
+                        })
+                    }, 10000);
                 }
             }
         },
 
-        filterRequired: function () {
+        filterRequired: function() {
 
             var name = $(this).attr('name'),
                 type = $(this).attr('type'),
@@ -117,9 +118,7 @@
 
             switch (type) {
                 case 'text':
-                    filter = $(this).val() === ''
-                    || ($(this).hasClass('float') && parseFloat($(this).val()) <= 0)
-                    || ($(this).hasClass('int') && parseInt($(this).val()) <= 0);
+                    filter = $(this).val() === '' || ($(this).hasClass('float') && parseFloat($(this).val()) <= 0) || ($(this).hasClass('int') && parseInt($(this).val()) <= 0);
                     break;
                 case 'radio':
                     filter = $('[name="' + name + '"]', $form).filter(':checked').length !== 1
@@ -134,7 +133,7 @@
 
         },
 
-        start: function () {
+        start: function() {
 
             if (Form.do.validate.call(this)) {
                 D.log('button.loading', 'info');
@@ -144,7 +143,7 @@
             return Form;
         },
 
-        stop: function () {
+        stop: function() {
 
             if (this instanceof jQuery) {
                 this.removeClass('loading');
@@ -154,7 +153,7 @@
             return Form;
         },
 
-        message: function (message) {
+        message: function(message) {
 
             if (!message)
                 return Form;
@@ -163,7 +162,7 @@
             var $status = $('<div class="status">' + Cache.i18n(message) + '</div>');
 
             $button.fadeOut(200).delay(2400).fadeIn(200);
-            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function () {
+            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function() {
                 $(this).remove()
             });
         }
