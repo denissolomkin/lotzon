@@ -125,6 +125,7 @@ button {
   opacity: 0.8;
 }
 button.btn-flat {
+  cursor: pointer;
   border: 1px solid #000;
   color: #000;
   height: 30px;
@@ -982,8 +983,7 @@ div {
 .content-box-content th,
 .cabinet_cashout,
 .raiting-name,
-.c-friend-name,
-.content-box-cat {
+.c-friend-name {
   font-family: Handbook-bold;
 }
 
@@ -2383,7 +2383,7 @@ header .owl-theme .owl-controls .owl-page span {
 }
 
 .gh-item {
-  margin: 0 -10px 20px;
+  margin: 0 -10px 40px;
   padding: 5px 10px;
   cursor: pointer;
 }
@@ -2646,6 +2646,7 @@ header .owl-theme .owl-controls .owl-page span {
   position: relative;
   background: #A9D0D5;
   padding-left: 10px;
+  height: 740px;
 }
 
 .ticket-numbers-wrapper {
@@ -2672,6 +2673,9 @@ header .owl-theme .owl-controls .owl-page span {
 }
 .ticket-tabs li.gold {
   background: #f9dc42;
+}
+.ticket-tabs li.unavailable {
+  color: #808080;
 }
 .ticket-tabs li.unavailable:hover .ticket-number-sm {
   background: #8f8e8e;
@@ -2862,6 +2866,7 @@ header .owl-theme .owl-controls .owl-page span {
 
 .ticket-numbers {
   margin-bottom: 10px;
+  height: 600px;
 }
 .ticket-numbers li {
   margin: 0 10px 20px 10px !important;
@@ -2905,6 +2910,9 @@ header .owl-theme .owl-controls .owl-page span {
 .ticket-btn.add-ticket:hover {
   background: #d0e2e4;
   color: #8f8e8e;
+}
+.ticket-btn.add-ticket.on {
+  cursor: pointer;
 }
 .ticket-btn.add-ticket.on:not(.loading):hover {
   background: #ffe400;
@@ -2963,7 +2971,7 @@ header .owl-theme .owl-controls .owl-page span {
   background: white;
 }
 .matches-inf-wrapper.carousel {
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 4px transparent;
   padding-bottom: 5px;
 }
 
@@ -3219,12 +3227,16 @@ header .owl-theme .owl-controls .owl-page span {
 .afterspan {
   color: white;
 }
+.after b {
+  display: inline-block;
+}
 
 .ticket-done {
   position: absolute;
   height: 30px;
   right: 41px;
   bottom: 30px;
+  bottom: 0;
   color: #e7f6f7;
 }
 
@@ -3322,9 +3334,12 @@ header .owl-theme .owl-controls .owl-page span {
   margin-bottom: 15px;
 }
 
+.ticket-random {
+  position: relative;
+}
 .ticket-random .after {
-  left: 0;
-  bottom: 77px !important;
+  left: 75px;
+  bottom: 10px !important;
   display: none;
 }
 
@@ -3349,7 +3364,19 @@ header .owl-theme .owl-controls .owl-page span {
 }
 /***************************Timer drowing*********/
 .ticket-box {
-  background-color: #A9D0D5;
+  background-color: #E8CF6B;
+}
+.ticket-box.gold {
+  background: #E8CF6B;
+}
+.ticket-box.gold .header-box {
+  background: #E8CF6B;
+}
+.ticket-box.gold .ticket-items {
+  background: #E8CF6B;
+}
+.ticket-box.gold .ticket-items .ticket-tabs {
+  background: #E8CF6B;
 }
 .ticket-box .ticket-btn {
   margin-right: 20px;
@@ -3542,7 +3569,7 @@ header .owl-theme .owl-controls .owl-page span {
   margin-right: 0;
 }
 .cabinet-game-history .gh-date {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 15px;
 }
 .cabinet-game-history label {
@@ -3561,6 +3588,10 @@ header .owl-theme .owl-controls .owl-page span {
   text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
 }
 
+.render-list:not(.type-mine) .gh-item:before {
+  display: none;
+}
+
 .lottery-history-items {
   position: relative;
   z-index: 10;
@@ -3573,10 +3604,15 @@ header .owl-theme .owl-controls .owl-page span {
 @media (min-width: 360px) {
   .ticket-items {
     padding-left: 0;
+    height: 680px;
   }
 
   .lottery-grid .title {
     padding-left: 10px;
+  }
+
+  .content-box.tickets .title {
+    padding-left: 20px;
   }
 
   .lottery-grid .ul-striped li {
@@ -3589,6 +3625,23 @@ header .owl-theme .owl-controls .owl-page span {
 
   .ticket-tabs {
     padding-right: 0;
+  }
+
+  .ticket-numbers {
+    height: 540px;
+  }
+
+  .ticket-box .ticket-btn {
+    margin-right: 10px;
+  }
+}
+@media (min-width: 420px) {
+  .ticket-numbers {
+    height: 420px;
+  }
+
+  .ticket-items {
+    height: 560px;
   }
 }
 @media (max-width: 767px) {
@@ -5632,6 +5685,24 @@ span.input-prefix {
     padding: 52px 0 30px;
   }
 }
+@media (min-width: 480px) and (min-width: 540px) {
+  .ticket-numbers {
+    height: 360px;
+  }
+
+  .ticket-items {
+    height: 500px;
+  }
+}
+@media (min-width: 480px) and (min-width: 600px) {
+  .ticket-numbers {
+    height: 300px;
+  }
+
+  .ticket-items {
+    height: 440px;
+  }
+}
 @media (min-width: 480px) and (min-width: 640px) {
   .lottery-grid .title {
     padding: 16px 0 16px 30px;
@@ -5701,6 +5772,18 @@ span.input-prefix {
   .cabinet-game-history .content-box-cat a:first-child:before {
     left: 10px;
   }
+
+  .ticket-box .ticket-btn {
+    margin-right: 30px;
+  }
+
+  .cabinet-game-history .content-box-item-content {
+    padding: 10px 30px 0 40px;
+  }
+
+  .content-box.tickets .title {
+    padding-left: 40px;
+  }
 }
 @media (min-width: 768px) {
   .container {
@@ -5710,8 +5793,8 @@ span.input-prefix {
   }
 
   .content {
-    margin-bottom: 20px;
-    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-top: 0;
   }
 
   .content-box {
@@ -6121,7 +6204,6 @@ span.input-prefix {
 @media (min-width: 768px) {
   .ticket-items {
     padding-left: 13px;
-    height: 440px;
   }
   .ticket-items .ticket-numbers li {
     margin: 0 11px 20px 11px !important;
@@ -6150,8 +6232,8 @@ span.input-prefix {
     line-height: 30px;
     margin-top: 10px;
   }
-  .ticket-tabs li:last-of-type .ticket-number-sm:hover {
-    margin-top: 0;
+  .ticket-tabs li:last-of-type:hover .ticket-number-sm {
+    margin-top: 0px;
   }
   .ticket-tabs li:last-of-type.active .ticket-number-sm {
     margin-top: 0;
@@ -6182,10 +6264,10 @@ span.input-prefix {
   }
 
   .matches-inf-wrapper.carousel {
-    padding: 10px 30px;
+    padding: 10px 30px 0;
   }
   .matches-inf-wrapper.carousel .matches-inf {
-    width: 47%;
+    width: 47.5%;
   }
 
   #lottery-process {
@@ -6395,6 +6477,18 @@ span.input-prefix {
   .content-box-content .gh-item:before {
     left: -10px;
     top: 20px;
+  }
+
+  .ticket-box .ticket-btn {
+    margin-right: 20px;
+  }
+
+  .cabinet-game-history .content-box-item-content {
+    padding: 10px 50px 0 40px;
+  }
+
+  .content-box.tickets .title {
+    padding-left: 23px;
   }
 
   .prizes-for-points .content-box-item-content {
@@ -6884,7 +6978,6 @@ span.input-prefix {
   .content {
     float: left;
     width: 660px;
-    margin-bottom: 20px;
   }
 
   .content-box-item {
@@ -7232,6 +7325,7 @@ span.input-prefix {
     margin: 70px 0 30px;
     background: #a7d1d5;
     padding-left: 0;
+    height: 406px;
   }
 
   .ticket-tabs {
@@ -7267,6 +7361,7 @@ span.input-prefix {
   }
   .ticket-tabs li.unavailable {
     background: #8f8e8e;
+    color: #b2d0d4;
   }
   .ticket-tabs li.unavailable:hover .ticket-number-sm {
     background: transparent;
@@ -7374,7 +7469,7 @@ span.input-prefix {
   }
 
   .ticket-item .ticket-numbers {
-    height: auto;
+    height: 305px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 7px;
@@ -7411,7 +7506,7 @@ span.input-prefix {
   }
 
   .matches-inf-wrapper.carousel .matches-inf {
-    width: 48.5%;
+    width: 48%;
   }
 
   .ticket-tabs li {
@@ -7480,7 +7575,6 @@ span.input-prefix {
   }
 
   .ticket-items {
-    height: 406px;
     border-radius: 0 5px 5px 5px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin: 5px 0 7px;
@@ -7517,7 +7611,7 @@ span.input-prefix {
   }
 
   .cabinet-game-history .content-box-item-content {
-    padding: 10px 10px 0 50px;
+    padding: 10px 20px 0 50px;
   }
 
   .content-box-content .gh-item:before {
@@ -7527,6 +7621,23 @@ span.input-prefix {
   .lottery-grid.timer-box {
     border-radius: 5px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .ticket-box {
+    background-color: none;
+    margin-top: 30px;
+  }
+  .ticket-box.gold {
+    background: none;
+  }
+  .ticket-box.gold .header-box {
+    background: #A9D0D5;
+  }
+  .ticket-box.gold .ticket-items {
+    background: #E8CF6B;
+  }
+  .ticket-box.gold .ticket-items .ticket-tabs {
+    background: none;
   }
 
   .prizes-for-points {
@@ -7643,7 +7754,6 @@ span.input-prefix {
 
   .content {
     width: 750px;
-    margin-bottom: 30px;
     margin-top: 0;
   }
 
@@ -7749,9 +7859,9 @@ span.input-prefix {
   }
 
   .ticket-items {
-    height: 416px;
     margin: 5px 0 7px;
     padding-left: 0;
+    height: 416px;
   }
 
   .ticket-tabs li {
@@ -7764,6 +7874,7 @@ span.input-prefix {
 
   .ticket-numbers {
     margin-right: -30px !important;
+    height: 305px;
   }
 
   .ticket-box {
@@ -7875,6 +7986,46 @@ span.input-prefix {
     width: 48%;
   }
 
+  .ticket-btn.add-ticket {
+    width: 178px;
+    padding: 0;
+  }
+  .ticket-btn.add-ticket.loading {
+    color: #4c4c4c;
+    position: relative;
+    opacity: 0.8;
+    cursor: default;
+    background: #ffe400;
+    background-repeat: no-repeat;
+    background-position: 0;
+    background: url(img/sprite.png) -430px 82px;
+    -webkit-animation: AnimationName 8s infinite linear;
+    -moz-animation: AnimationName 8s  infinite linear;
+    animation: AnimationName 8s  infinite linear;
+  }
+
+  @-webkit-keyframes AnimationName {
+    0% {
+      background-position: -535px 82px;
+    }
+    50% {
+      background-position: -482px 82px;
+    }
+    100% {
+      background-position: -430 82px;
+    }
+  }
+  @keyframes AnimationName {
+    0% {
+      background-position: -535px 82px;
+    }
+    50% {
+      background-position: -482px 82px;
+    }
+    100% {
+      background-position: -430 82px;
+    }
+  }
   .prizes-for-points {
     padding-left: 30px;
     padding-right: 30px;

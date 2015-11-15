@@ -9,7 +9,7 @@
 
         activate: function () {
 
-            D.log('activateTicket');
+            D.log('Ticket.activate');
 
             Ticket.setBallsMargins();
             $(I.ticketBall).off().on('click', Ticket.action.clickBall);
@@ -22,7 +22,7 @@
 
         render: function () {
 
-            D.log('renderTicket');
+            D.log('Ticket.render');
 
             if (Tickets.isComplete()) {
 
@@ -42,7 +42,7 @@
 
         switch: function () {
 
-            D.log('switchTicket');
+            D.log('Ticket.switch');
 
             if (Tickets.isComplete()) {
 
@@ -56,7 +56,7 @@
                         ? $(this)
                         : ($(I.TicketTabs).not('.done').first() || $(I.TicketTabs).first());
 
-                if (!box.length)
+                if (!box.length || ($(this).is('li') && Ticket.isLoading()))
                     return;
 
                 $(I.TicketTabs).removeClass('active');
@@ -67,9 +67,9 @@
                 R.push({
                     tab: tab,
                     replace: '.ticket-item',
-                    template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable'+Tickets.selectedTab,
+                    template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable' + Tickets.selectedTab,
                     json: Tickets,
-                    after: function(){
+                    after: function () {
                         Tickets.isGold()
                             ? $('.ticket-box').addClass('gold')
                             : $('.ticket-box').removeClass('gold');
@@ -81,7 +81,7 @@
 
         complete: function () {
 
-            D.log('ticketComplete');
+            D.log('Ticket.complete');
             var box = $('.ticket-items').parent();
 
             if (!box.length)
@@ -103,16 +103,16 @@
         update: function (response) {
 
             Object.deepExtend(Tickets, response);
-            Ticket.switch();
+            Ticket.render();
             return true;
 
         },
 
-        action:{
+        action: {
 
             clickFavorite: function (e) {
 
-                if ($(e.target).hasClass('after'))
+                if ($(e.target).hasClass('after') || Ticket.isLoading())
                     return false;
 
                 Ticket.clearBalls();
@@ -130,7 +130,7 @@
 
                     $(this).addClass('select');
 
-                } else if(Device.get() >= 0.6) {
+                } else if (Device.get() >= 0.6) {
 
                     $(this).find('.after').fadeIn(200);
 
@@ -146,6 +146,7 @@
                 switch (true) {
 
                     case $(I.ticketTab).filter(':eq(' + (Tickets.selectedTab - 1) + ')').hasClass('done'): // if ticket already done
+                    case Ticket.isLoading(): // if ticket sending now
                     case Ticket.countBalls() === Tickets.requiredBalls && !li.hasClass('select'): // if balls already all
                     case !$(event.target).is('li'): // if target is not li
                         return true;
@@ -170,8 +171,9 @@
 
             clickRandom: function (e) {
 
-                if ($(e.target).hasClass('after'))
+                if ($(e.target).hasClass('after') || Ticket.isLoading())
                     return false;
+
 
                 Ticket.clearActionsAfter();
 
@@ -179,7 +181,7 @@
                     li = $(this),
                     after = $(this).find('.after');
 
-                if(Device.get() >= 0.6) {
+                if (Device.get() >= 0.6) {
                     after.fadeIn(300);
                     setTimeout(function () {
                         after.fadeOut(300);
@@ -197,6 +199,10 @@
 
             }
 
+        },
+
+        isLoading: function () {
+            return $('.add-ticket').hasClass('loading');
         },
 
         randomBalls: function (isLastIterration) {
@@ -279,19 +285,19 @@
                 var result = this.getBallsMargins(ticketBox, ticketBalls);
 
                 ticketScroll = $('.ticket-numbers-wrapper').width();
-                ticketScrollBox.width(ticketScroll + 16 );
+                ticketScrollBox.width(ticketScroll + 16);
                 ticketNumbersBox.width(ticketScroll);
 
                 ticketNumbersBox
                 ticketTabs.css({
-                    'margin': '0 ' + (result + 10)  + 'px'
+                    'margin': '0 ' + (result + 10) + 'px'
                 });
 
                 blocksForAligning.css({
-                    'margin': '0 ' + (result)  + 'px'
+                    'margin': '0 ' + (result) + 'px'
                 });
                 ticketBtn.css({
-                    'margin-right' : 10+  result  + 'px'
+                    'margin-right': 10 + result + 'px'
                 });
             }
         },
@@ -303,9 +309,9 @@
             var margin, padding, count;
 
 
-            if ((boxWidth ) % 60 > 0 ) {
-                console.log((boxWidth + 30) % 40 > 0 , '(boxWidth + 30) % 60', (boxWidth + 30) % 60 );
-                return boxWidth % 60/ 2 
+            if ((boxWidth ) % 60 > 0) {
+                console.log((boxWidth + 30) % 40 > 0, '(boxWidth + 30) % 60', (boxWidth + 30) % 60);
+                return boxWidth % 60 / 2
             }
         }
 

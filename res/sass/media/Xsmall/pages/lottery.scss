@@ -50,13 +50,29 @@
 	padding: 52px 0 30px;
 }
 
+@media (min-width: 540px) {
+	.ticket-numbers {
+    	height: 360px;
+  	}
+  	.ticket-items {
+  		height: 500px;
+  	}
+}
+@media (min-width: 600px) {
+ 	.ticket-numbers {
+		height: 300px;
+	}
+  	.ticket-items {
+  		height: 440px;
+  	}
+}
 
 @media (min-width: 640px) {
 	.lottery-grid {
 		& .title {
 	    	padding: 16px 0 16px 30px;
 		}
-	}	
+}		
 
 
 
@@ -137,4 +153,14 @@
 			}
 		}
 	}
+	.ticket-box .ticket-btn {
+	    margin-right: 30px;
+	}
+
+	.cabinet-game-history .content-box-item-content {
+		padding: 10px 30px 0 40px;
+	}
+	.content-box.tickets .title {
+    	padding-left: 40px;
+  	}
 }

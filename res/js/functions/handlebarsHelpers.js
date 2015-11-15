@@ -93,9 +93,9 @@ $(function () {
 
         },
 
-        variable: function (context) {
-            name, value
-            context[name] = value;
+        'variable': function (name, args, opt) {
+
+            console.log(this, name, args, opt);
         },
 
         'renderPartial': function (partialName, options) {

@@ -116,7 +116,7 @@
                 }
             },
             "img": "res/img/user_img.jpg",
-            "favorite": [1, 2],
+            "favorite": [],
             "title": {
                 "name": "Сергей",
                 "surname": "Шевченко",

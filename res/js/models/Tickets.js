@@ -15,7 +15,7 @@
         },
 
         "isComplete": function () {
-            return this.countFilled() === this.totalTickets;
+            return false && this.countFilled() === this.totalTickets;
         },
 
         "isAvailable": function (ticketId) {

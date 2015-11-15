@@ -1,9 +1,10 @@
 // TICKET-ITEMS ------------------------------ //
 
 .ticket-items {
-  height: 416px;
+
   margin: 5px 0 7px;
   padding-left: 0;
+  height: 416px;
 }
 
 .ticket-tabs li {
@@ -16,9 +17,11 @@
 
 .ticket-numbers {
   margin-right: -30px !important;
+  height: 305px;
 }
 .ticket-box {
   margin-top: 34px;
+
 }
 
 // MATCHES-INF ------------------------------ //
@@ -126,4 +129,40 @@
 }
 .matches-inf-wrapper.carousel .matches-inf {
   width: 48%;
+}
+.ticket-btn {
+  &.add-ticket {
+    width: 178px;
+    padding: 0;
+    &.loading {
+      color: #4c4c4c;
+      position: relative;
+      opacity: 0.8;
+      cursor: default;
+      background: #ffe400;
+      background-repeat: no-repeat;
+      background-position: 0;
+      // background-size: contain;
+      // background-image: url(../css/img/progress.png);
+      background: url(img/sprite.png) -430px 82px;
+      -webkit-animation: AnimationName 8s infinite linear;
+      -moz-animation: AnimationName 8s  infinite linear;
+      animation: AnimationName 8s  infinite linear;
+    }
+  }
+}
+@-webkit-keyframes AnimationName {
+  0%{background-position:-535px 82px}
+  50%{background-position:-482px 82px}
+  100%{background-position:  -430 82px}
+}
+// @-moz-keyframes AnimationName {
+//   0%{background-position:100% 0%}
+//    50%{background-position:50% 0%}
+//   100%{background-position: 0%  0% }
+// }
+@keyframes AnimationName { 
+  0%{background-position:-535px 82px}
+  50%{background-position:-482px 82px}
+  100%{background-position:  -430 82px}
 }

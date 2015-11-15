@@ -15,7 +15,7 @@
 }
 
 .gh-item {
-  margin: 0 -10px 20px;
+  margin: 0 -10px 40px;
   padding: 5px 10px;
   cursor: pointer;
 }
@@ -296,6 +296,7 @@
   position: relative;
   background: #A9D0D5;
   padding-left: 10px;
+  height: 740px;
 }
 
 .ticket-numbers-wrapper {
@@ -322,6 +323,7 @@
       background: #f9dc42;
     }
     &.unavailable {
+      color: #808080;
       &:hover {
         & .ticket-number-sm {
           background: #8f8e8e;
@@ -529,7 +531,7 @@
 
 .ticket-numbers {
   margin-bottom: 10px;
-  
+  height: 600px;
   & li {
     @extend .ticket-ball;
     margin: 0 10px 20px 10px !important;
@@ -576,6 +578,7 @@
       color: #8f8e8e;
     }
     &.on {
+      cursor: pointer;
       &:not(.loading):hover {
         background: #ffe400;
          color: #4c4c4c;
@@ -596,7 +599,6 @@
       -moz-animation: AnimationName 8s  infinite linear;
       animation: AnimationName 8s  infinite linear;
     }
-
   }
 }
   @-webkit-keyframes AnimationName {
@@ -636,7 +638,7 @@
   margin-bottom: 20px;
   background: white;
   &.carousel {
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0);
     padding-bottom: 5px;
   }
 }
@@ -902,6 +904,9 @@
   &span {
     color: white;
   }
+  & b{
+    display: inline-block;
+  }
 }
 
 .ticket-done {
@@ -909,6 +914,7 @@
   height: 30px;
   right: 41px;
   bottom: 30px;
+  bottom: 0;
   color: #e7f6f7;
 }
 
@@ -1008,10 +1014,13 @@
   margin-bottom: 15px;
 }
 
-.ticket-random .after {
-  left: 0;
-  bottom: 77px !important;
-  display: none;
+.ticket-random {
+  position: relative;
+  & .after {
+    left: 75px;
+    bottom: 10px !important;
+    display: none;
+  }
 }
 
 .after span {
@@ -1036,11 +1045,22 @@
 
 /***************************Timer drowing*********/
 .ticket-box {
-  background-color: #A9D0D5;
-    .ticket-btn {
-    margin-right: 20px;
+  background-color: #E8CF6B;
+  &.gold {
+    background: #E8CF6B;
+    & .header-box{
+      background: #E8CF6B;
+    }
+    & .ticket-items {
+      background: #E8CF6B;
+      & .ticket-tabs {
+        background: #E8CF6B;
+      }
+    }
   }
-  
+  .ticket-btn {
+    margin-right: 20px;
+  }  
 }
 .lottery-grid {
   font-family: handbookpro-regular;
@@ -1249,7 +1269,7 @@
     margin-right: 0;
   }
   & .gh-date {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 15px;
   }
   & label {
@@ -1269,18 +1289,15 @@
   }
 
 }
-
-// .lottery-history input[type="radio"]:checked + label:before {
-//   content: "";
-//   display: block;
-//   width: 14px;
-//   height: 14px;
-//   position: absolute;
-//   top: 2px;
-//   left: 2px;
-//   background: black;
-//   border-radius: 50%;
-//  }
+.render-list {
+  &:not(.type-mine) {
+    & .gh-item {
+      &:before {
+        display: none;
+      }  
+    }
+  }
+}
 
 .lottery-history-items {
   position: relative;
@@ -1297,9 +1314,13 @@
 @media (min-width: 360px) {
   .ticket-items {
     padding-left: 0;
+    height: 680px;
   }
   .lottery-grid .title {
     padding-left: 10px;
+  }
+  .content-box.tickets .title {
+    padding-left: 20px;
   }
   .lottery-grid .ul-striped li {
     padding-left: 10px;
@@ -1310,7 +1331,22 @@
   .ticket-tabs {
     padding-right: 0;
   }
+  .ticket-numbers {
+    height: 540px;
+  }
+  .ticket-box .ticket-btn {
+    margin-right: 10px;
+  }
 
+}
+
+@media (min-width: 420px) {
+  .ticket-numbers {
+    height: 420px;
+  }
+  .ticket-items {
+    height: 560px;
+  }
 }
 
 @media (max-width: 767px) {

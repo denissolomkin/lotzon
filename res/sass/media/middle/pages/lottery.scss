@@ -2,6 +2,8 @@
   margin: 70px 0 30px;
   background: rgb(167, 209, 213);
   padding-left: 0;
+  height: 406px;
+    
 }
 
 .ticket-tabs {
@@ -35,6 +37,7 @@
     display: block;
     &.unavailable {
       background: #8f8e8e;
+      color: #b2d0d4;
       &:hover {
         & .ticket-number-sm {
           background: transparent;
@@ -148,7 +151,7 @@
 
 .ticket-item {
   & .ticket-numbers {
-    height: auto;
+    height: 305px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 7px;
@@ -185,7 +188,7 @@
 }
 
 .matches-inf-wrapper.carousel .matches-inf {
-  width: 48.5%;
+  width: 48%;
 }
 // TICKET-ITEMS ------------------------------ //
 
@@ -264,7 +267,6 @@
 }
 
 .ticket-items {
-  height: 406px;
   border-radius: 0 5px 5px 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 5px 0 7px;
@@ -301,7 +303,7 @@
 }
 
 .cabinet-game-history .content-box-item-content {
-  padding: 10px 10px 0 50px;
+  padding: 10px 20px 0 50px;
 }
 .content-box-content .gh-item:before {
   left: -20px;
@@ -309,4 +311,21 @@
 .lottery-grid.timer-box {
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.ticket-box {
+  background-color: none;
+  margin-top: 30px;
+  &.gold {
+    background: none;
+    & .header-box{
+      background: #A9D0D5;
+    }
+    & .ticket-items {
+      background: #E8CF6B;
+      & .ticket-tabs {
+        background: none;
+      }
+    }
+  }
 }

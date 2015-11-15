@@ -36,16 +36,16 @@
 
                 <div class="render-list-container content-box-item-content">
 
-
-
                     <div class="render-list">
                         {{#each .}}
 
-                        {{#if (ne last_day (day this.date))}}
+                        <!--
+                        { {#if (ne last_day (day this.date))}}
                             <div class="th-date-range">{{day this.date}}</div>
-                        {{/if}}
+                        { {/if}}
+                        -->
 
-                        {{variable "last_day" (day this.date)}}
+                        {{variable "last_day" "x"}}
 
                         <div data-id={{@key}} class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
                             <div class="th-item-left">

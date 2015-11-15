@@ -86,10 +86,9 @@
 
             if (options.replace.indexOf('.render-list-container') !== -1) { /* new filter, so update class render-list */
                 for (name in options.query) {
-                    if (options.query[name] && ['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1) { /* skip unimportant filters */
-                        if (!(renderList = document.querySelector(options.replace + ' .render-list'))) {  /* break, if can't find render-list */
+                    if (options.query[name] && ['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1 && options.query[name]) { /* skip unimportant filters */
+                        if (!renderList && !(renderList = document.querySelector(options.replace + ' .render-list')))  /* break, if can't find render-list */
                             break;
-                        }
                         className = [name, options.query[name]];
                         renderList.classList.add(className.join('-'));
                     }
