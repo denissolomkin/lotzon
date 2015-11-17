@@ -191,7 +191,7 @@ class Review extends Entity
 
         if ($from == 'DB') {
             $this->setId($data['Id'])
-                 ->setReviewId($data['ReviewId'])
+                 ->setReviewId($data['ParentId'])
                  ->setStatus($data['Status'])
                  ->setPromo($data['IsPromo'])
                  ->setPlayerId($data['PlayerId'])
