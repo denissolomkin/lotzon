@@ -6,19 +6,20 @@ class ReviewsDBProcessor implements IProcessor
 {
     public function create(Entity $review)
     {
-        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ReviewId`,`PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `UserId`) VALUES (:id, :reviewid, :playerid, :text, :date, :image, :ispromo, :status, :userid)";
+        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ParentId`,`PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `AdminId`, `ModifyDate`) VALUES (:id, :parentid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':id'       => $review->getId(),
-                ':playerid' => $review->getPlayerId(),
-                ':reviewid' => $review->getReviewId()?:null,
-                ':text'     => $review->getText(),
-                ':date'     => $review->getDate()?:time(),
-                ':image'    => $review->getImage(),
-                ':ispromo'  => $review->isPromo(),
-                ':status'   => $review->getStatus(),
-                ':userid'   => $review->getUserId(),
+                ':id'         => $review->getId(),
+                ':playerid'   => $review->getPlayerId(),
+                ':parentid'   => $review->getReviewId()?:null,
+                ':text'       => $review->getText(),
+                ':date'       => $review->getDate()?:time(),
+                ':image'      => $review->getImage(),
+                ':ispromo'    => $review->isPromo(),
+                ':status'     => $review->getStatus(),
+                ':adminid'    => $review->getUserId(),
+                ':modifydate' => time(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
@@ -29,14 +30,15 @@ class ReviewsDBProcessor implements IProcessor
 
     public function update(Entity $review)
     {
-        $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Text` = :text, `UserId` = :userid WHERE `Id` = :id";
+        $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Text` = :text, `AdminId` = :adminid, `ModifyDate` = :modifydate WHERE `Id` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':id'    => $review->getId(),
-                ':status' => $review->getStatus(),
-                ':text'  => $review->getText(),
-                ':userid' => $review->getUserId(),
+                ':id'         => $review->getId(),
+                ':status'     => $review->getStatus(),
+                ':text'       => $review->getText(),
+                ':adminid'    => $review->getUserId(),
+                ':modifydate' => time(),
             ));       
         } catch (PDOexception $e) {
             throw new ModelException("Unable to proccess storage query", 500);    
@@ -67,7 +69,7 @@ class ReviewsDBProcessor implements IProcessor
         $sql = "SELECT `PlayerReviews`.*, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
-                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`AdminId`
                 WHERE `PlayerReviews`.`Id` = :id
                 LIMIT 1";
 
@@ -115,8 +117,8 @@ class ReviewsDBProcessor implements IProcessor
             $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
-                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
-                WHERE `PlayerReviews`.Id = :id OR `PlayerReviews`.ReviewId = :id
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`AdminId`
+                WHERE `PlayerReviews`.Id = :id OR `PlayerReviews`.ParentId = :id
                 ORDER BY `Id` ";
 
             try {
@@ -140,7 +142,7 @@ class ReviewsDBProcessor implements IProcessor
     {
         $sql = "SELECT Id
                 FROM `PlayerReviews`
-                WHERE `Status` = :status ".($ignore ? null : 'AND (`ReviewId` IS NULL OR `ReviewId` = 0)').
+                WHERE `Status` = :status ".($ignore ? null : 'AND (`ParentId` IS NULL OR `ParentId` = 0)').
                 "ORDER BY `Id` DESC";
         if (!is_null($limit)) {
             $sql .= " LIMIT " . (int)$limit;
@@ -168,8 +170,8 @@ class ReviewsDBProcessor implements IProcessor
             $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
-                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`UserId`
-                WHERE `Status` = :status AND ( `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ReviewId IN ({$ids}))
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`AdminId`
+                WHERE `Status` = :status AND ( `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ParentId IN ({$ids}))
                 ORDER BY `Id` ";
 
             try {
@@ -186,7 +188,7 @@ class ReviewsDBProcessor implements IProcessor
         if (count($list)) {
             foreach ($list as $reviewData) {
                 $reviewObj = new Review();
-                $reviews[$reviewData['ReviewId']?:$reviewData['Id']][] = $reviewObj->formatFrom('DB', $reviewData);
+                $reviews[$reviewData['ParentId']?:$reviewData['Id']][] = $reviewObj->formatFrom('DB', $reviewData);
             }
         }
 
