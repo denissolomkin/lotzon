@@ -24,14 +24,21 @@
             $(document).on('click', ".nm-friend", Message.do.setAddressee);
             $(document).on('click', ".message-form-btn", Message.do.send);
 
-            /* form */
-            $(document).on('submit', 'form.render-list-form', Content.enableAutoload);
-            $(document).on('change', 'form.render-list-form', Content.autoload);
+            /* new reply */
+            $(document).on('click', ".post-comments .comment-content .comment-reply .comment-reply-btn", Blog.do.replyForm);
+            $(document).on('click', ".post-comments .comment-content", Blog.do.mobileForm);
 
+            /* form */
             $(document).on('click', 'form:not(.render-list-form) button[type="submit"]', Form.do.submit);
             $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
+            $(document).on('change', 'form textarea.required', Form.do.validate);
+            $(document).on('change', 'form input[type="file"].required', Form.do.validate);
+
+            /* autoload */
+            $(document).on('submit', 'form.render-list-form', Content.enableAutoload);
+            $(document).on('change', 'form.render-list-form', Content.autoload);
 
             /* profile*/
             $(document).on('click', '.pi-ph.true i', Profile.do.removeAvatar);
@@ -57,7 +64,7 @@
             "menu-navigation": Navigation.ready,
 
            // "blog": Blog.init,
-            "post-view": Blog.loadPostData,
+            "blog-post-view": Blog.post.init,
 
             "games-game": WebSocketAjaxClient,
             "games-spin": Carousel.initOwl,
@@ -84,7 +91,16 @@
             "profile-convert": Profile.update.convert,
             "profile-cashout": Profile.update.cashout,
             "lottery-ticket": Ticket.update,
+            "lottery-gold": Ticket.update,
             "prizes-exchange-goods": Prize.update.exchange,
+            "blog-post-view-comments": Blog.after.reply,
+
+        },
+
+        "error":{
+
+            "lottery-gold": Ticket.error.gold,
+            "prizes-exchange-goods": Prize.error.exchange,
 
         },
 
@@ -104,6 +120,7 @@
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
             "prizes-exchange-goods": Prize.validate.exchange,
+            "blog-post-view-comments": Blog.validate.reply,
 
         }
 

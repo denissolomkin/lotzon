@@ -54,7 +54,7 @@
                     tab = $(this).is('li')
 
                         ? $(this)
-                        : ($(I.TicketTabs).not('.done').first() || $(I.TicketTabs).first());
+                        : ($(I.TicketTabs).not('.done').not('.unavailable').first() || $(I.TicketTabs).first());
 
                 if (!box.length || ($(this).is('li') && Ticket.isLoading()))
                     return;
@@ -313,6 +313,10 @@
                 console.log((boxWidth + 30) % 40 > 0, '(boxWidth + 30) % 60', (boxWidth + 30) % 60);
                 return boxWidth % 60 / 2
             }
+        },
+
+        error:{
+            gold: function(){}
         }
 
     }

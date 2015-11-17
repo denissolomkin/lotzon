@@ -176,6 +176,7 @@
                     });
 
                     Navigation.menu.hide();
+                    Content.updateBanners();
                 }
 
                 return false;

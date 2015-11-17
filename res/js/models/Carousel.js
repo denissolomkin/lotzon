@@ -4,13 +4,13 @@
         initOwl: function () {
             // OWL CAROUSEL =========================== //
             if ($('.carousel-spin').length){
-                if (parseFloat(Device.get()) <= 0.5) {
+                if ((parseFloat(Device.get()) <= 0.5 && parseFloat(Device.get()) != 0.3) || $(document).width() <= 768) {
                     $('.carousel-spin').owlCarousel({
                         singleItem: true,
                         autoPlay: false,
                         autoHeight: false,
                         afterInit: function(){
-                            this.jumpTo(1);
+//                            this.jumpTo(1);
                         }
                     });
                     Carousel.Owl = $('.carousel-spin').data('owlCarousel');

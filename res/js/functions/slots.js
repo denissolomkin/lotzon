@@ -28,6 +28,16 @@ var slotMachine = {
             slotMachine.spin()
         }), $("#soundOffButton").click(function () {
             slotMachine.toggle_sound()
+        }),$("#Gold").click(function () {
+            if(!$("#SlotsContainer").hasClass('gold')){
+                $("#SlotsContainer").addClass('gold'),$(this).addClass('active'),$("#Scores").removeClass('active');
+                // change credits code..
+            }
+        }),$("#Scores").click(function () {
+            if($("#SlotsContainer").hasClass('gold')){
+                $("#SlotsContainer").removeClass('gold'),$(this).addClass('active'),$("#Gold").removeClass('active');
+                // change credits code..
+            }
         }), slotMachine.soundEnabled && (soundManager.url = "/res/js/libs/", soundManager.onload = function () {
             slotMachine.sounds.payout = soundManager.createSound({
                 id: "payout",

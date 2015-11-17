@@ -1,66 +1,275 @@
-/* customs test styles*/
-#SlotsContainer .custom-block{
-    width: auto;
-    box-shadow: none;
-    background: transparent;
-    float: left; 
+/*
+border block - styles
+*/
+#SlotsContainer #Gold,
+#SlotsContainer.gold .slot-machine-fix,
+#SlotsContainer.gold .slot-block-outer {/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#dd8500+0,d77d05+2,d57d02+2,d47b07+2,d07703+3,cd7507+3,cc7504+3,c86f07+4,c56e05+4,c36b09+5,c56c04+14,cb7007+15,cb6e04+16,d47507+17,d67807+18,ce6f01+22,d17101+25,d17a09+28,d47c0e+28,d68212+31,d88316+31,da8a1b+33,dd9326+35,dc9225+35,de9628+36,e09d32+38,e4a53b+40,e3a63b+40,e7aa3f+41,eab74c+44,ecb950+44,eab950+45,edc158+46,f7d770+51,fce480+54,feec86+55,fdec92+57,feed95+58,ffec9d+59,ffeea0+60,ffeda8+61,ffeca7+62,ffec90+65,feeb8d+66,ffed89+66,ffed89+67,eec863+73,ebc45f+74,ecc560+74,e8c15c+74,e7bc56+75,e4b450+77,e5af4b+78,ecad46+81,f0ab44+81,f0a842+82,e9a13b+83,d38a24+86,cc801e+87,c97e19+88,cb7b18+89,c87815+89,c36d0a+94,c26a08+96,c36b09+100 */
+    background: rgb(221,133,0);/* Old browsers */
+    background: -moz-linear-gradient(top, rgba(221,133,0,1) 0%, rgba(215,125,5,1) 2%, rgba(213,125,2,1) 2%, rgba(212,123,7,1) 2%, rgba(208,119,3,1) 3%, rgba(205,117,7,1) 3%, rgba(204,117,4,1) 3%, rgba(200,111,7,1) 4%, rgba(197,110,5,1) 4%, rgba(195,107,9,1) 5%, rgba(197,108,4,1) 14%, rgba(203,112,7,1) 15%, rgba(203,110,4,1) 16%, rgba(212,117,7,1) 17%, rgba(214,120,7,1) 18%, rgba(206,111,1,1) 22%, rgba(209,113,1,1) 25%, rgba(209,122,9,1) 28%, rgba(212,124,14,1) 28%, rgba(214,130,18,1) 31%, rgba(216,131,22,1) 31%, rgba(218,138,27,1) 33%, rgba(221,147,38,1) 35%, rgba(220,146,37,1) 35%, rgba(222,150,40,1) 36%, rgba(224,157,50,1) 38%, rgba(228,165,59,1) 40%, rgba(227,166,59,1) 40%, rgba(231,170,63,1) 41%, rgba(234,183,76,1) 44%, rgba(236,185,80,1) 44%, rgba(234,185,80,1) 45%, rgba(237,193,88,1) 46%, rgba(247,215,112,1) 51%, rgba(252,228,128,1) 54%, rgba(254,236,134,1) 55%, rgba(253,236,146,1) 57%, rgba(254,237,149,1) 58%, rgba(255,236,157,1) 59%, rgba(255,238,160,1) 60%, rgba(255,237,168,1) 61%, rgba(255,236,167,1) 62%, rgba(255,236,144,1) 65%, rgba(254,235,141,1) 66%, rgba(255,237,137,1) 66%, rgba(255,237,137,1) 67%, rgba(238,200,99,1) 73%, rgba(235,196,95,1) 74%, rgba(236,197,96,1) 74%, rgba(232,193,92,1) 74%, rgba(231,188,86,1) 75%, rgba(228,180,80,1) 77%, rgba(229,175,75,1) 78%, rgba(236,173,70,1) 81%, rgba(240,171,68,1) 81%, rgba(240,168,66,1) 82%, rgba(233,161,59,1) 83%, rgba(211,138,36,1) 86%, rgba(204,128,30,1) 87%, rgba(201,126,25,1) 88%, rgba(203,123,24,1) 89%, rgba(200,120,21,1) 89%, rgba(195,109,10,1) 94%, rgba(194,106,8,1) 96%, rgba(195,107,9,1) 100%);/* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(221,133,0,1) 0%,rgba(215,125,5,1) 2%,rgba(213,125,2,1) 2%,rgba(212,123,7,1) 2%,rgba(208,119,3,1) 3%,rgba(205,117,7,1) 3%,rgba(204,117,4,1) 3%,rgba(200,111,7,1) 4%,rgba(197,110,5,1) 4%,rgba(195,107,9,1) 5%,rgba(197,108,4,1) 14%,rgba(203,112,7,1) 15%,rgba(203,110,4,1) 16%,rgba(212,117,7,1) 17%,rgba(214,120,7,1) 18%,rgba(206,111,1,1) 22%,rgba(209,113,1,1) 25%,rgba(209,122,9,1) 28%,rgba(212,124,14,1) 28%,rgba(214,130,18,1) 31%,rgba(216,131,22,1) 31%,rgba(218,138,27,1) 33%,rgba(221,147,38,1) 35%,rgba(220,146,37,1) 35%,rgba(222,150,40,1) 36%,rgba(224,157,50,1) 38%,rgba(228,165,59,1) 40%,rgba(227,166,59,1) 40%,rgba(231,170,63,1) 41%,rgba(234,183,76,1) 44%,rgba(236,185,80,1) 44%,rgba(234,185,80,1) 45%,rgba(237,193,88,1) 46%,rgba(247,215,112,1) 51%,rgba(252,228,128,1) 54%,rgba(254,236,134,1) 55%,rgba(253,236,146,1) 57%,rgba(254,237,149,1) 58%,rgba(255,236,157,1) 59%,rgba(255,238,160,1) 60%,rgba(255,237,168,1) 61%,rgba(255,236,167,1) 62%,rgba(255,236,144,1) 65%,rgba(254,235,141,1) 66%,rgba(255,237,137,1) 66%,rgba(255,237,137,1) 67%,rgba(238,200,99,1) 73%,rgba(235,196,95,1) 74%,rgba(236,197,96,1) 74%,rgba(232,193,92,1) 74%,rgba(231,188,86,1) 75%,rgba(228,180,80,1) 77%,rgba(229,175,75,1) 78%,rgba(236,173,70,1) 81%,rgba(240,171,68,1) 81%,rgba(240,168,66,1) 82%,rgba(233,161,59,1) 83%,rgba(211,138,36,1) 86%,rgba(204,128,30,1) 87%,rgba(201,126,25,1) 88%,rgba(203,123,24,1) 89%,rgba(200,120,21,1) 89%,rgba(195,109,10,1) 94%,rgba(194,106,8,1) 96%,rgba(195,107,9,1) 100%);/* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(221,133,0,1) 0%,rgba(215,125,5,1) 2%,rgba(213,125,2,1) 2%,rgba(212,123,7,1) 2%,rgba(208,119,3,1) 3%,rgba(205,117,7,1) 3%,rgba(204,117,4,1) 3%,rgba(200,111,7,1) 4%,rgba(197,110,5,1) 4%,rgba(195,107,9,1) 5%,rgba(197,108,4,1) 14%,rgba(203,112,7,1) 15%,rgba(203,110,4,1) 16%,rgba(212,117,7,1) 17%,rgba(214,120,7,1) 18%,rgba(206,111,1,1) 22%,rgba(209,113,1,1) 25%,rgba(209,122,9,1) 28%,rgba(212,124,14,1) 28%,rgba(214,130,18,1) 31%,rgba(216,131,22,1) 31%,rgba(218,138,27,1) 33%,rgba(221,147,38,1) 35%,rgba(220,146,37,1) 35%,rgba(222,150,40,1) 36%,rgba(224,157,50,1) 38%,rgba(228,165,59,1) 40%,rgba(227,166,59,1) 40%,rgba(231,170,63,1) 41%,rgba(234,183,76,1) 44%,rgba(236,185,80,1) 44%,rgba(234,185,80,1) 45%,rgba(237,193,88,1) 46%,rgba(247,215,112,1) 51%,rgba(252,228,128,1) 54%,rgba(254,236,134,1) 55%,rgba(253,236,146,1) 57%,rgba(254,237,149,1) 58%,rgba(255,236,157,1) 59%,rgba(255,238,160,1) 60%,rgba(255,237,168,1) 61%,rgba(255,236,167,1) 62%,rgba(255,236,144,1) 65%,rgba(254,235,141,1) 66%,rgba(255,237,137,1) 66%,rgba(255,237,137,1) 67%,rgba(238,200,99,1) 73%,rgba(235,196,95,1) 74%,rgba(236,197,96,1) 74%,rgba(232,193,92,1) 74%,rgba(231,188,86,1) 75%,rgba(228,180,80,1) 77%,rgba(229,175,75,1) 78%,rgba(236,173,70,1) 81%,rgba(240,171,68,1) 81%,rgba(240,168,66,1) 82%,rgba(233,161,59,1) 83%,rgba(211,138,36,1) 86%,rgba(204,128,30,1) 87%,rgba(201,126,25,1) 88%,rgba(203,123,24,1) 89%,rgba(200,120,21,1) 89%,rgba(195,109,10,1) 94%,rgba(194,106,8,1) 96%,rgba(195,107,9,1) 100%);/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dd8500', endColorstr='#c36b09',GradientType=0 );/* IE6-9 */
 }
-/*>>> owl carusel*/
-#slotsSelectorWrapper .matches-inf-wrapper{
-    background: transparent;
+#SlotsContainer  #Scores,
+#SlotsContainer .slot-machine-fix,
+#SlotsContainer .slot-block-outer {
+    background: rgb(220,218,221);/* Old browsers */
+    background: -moz-linear-gradient(top, rgba(220,218,221,1) 0%, rgba(234,230,231,1) 4%, rgba(244,240,241,1) 11%, rgba(241,237,238,1) 22%, rgba(235,231,232,1) 26%, rgba(227,223,224,1) 29%, rgba(226,222,223,1) 30%, rgba(194,192,195,1) 40%, rgba(179,178,176,1) 46%, rgba(180,175,172,1) 48%, rgba(175,172,167,1) 52%, rgba(178,171,163,1) 56%, rgba(180,171,162,1) 58%, rgba(188,179,170,1) 61%, rgba(195,186,181,1) 63%, rgba(211,207,198,1) 68%, rgba(216,211,207,1) 69%, rgba(224,219,216,1) 72%, rgba(227,223,222,1) 75%, rgba(226,221,225,1) 76%, rgba(222,218,219,1) 78%, rgba(217,215,216,1) 78%, rgba(211,209,214,1) 80%, rgba(203,198,202,1) 83%, rgba(190,190,192,1) 85%, rgba(178,177,182,1) 87%, rgba(168,168,168,1) 89%, rgba(138,138,138,1) 94%, rgba(130,130,130,1) 97%, rgba(130,130,130,1) 100%);/* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(220,218,221,1) 0%,rgba(234,230,231,1) 4%,rgba(244,240,241,1) 11%,rgba(241,237,238,1) 22%,rgba(235,231,232,1) 26%,rgba(227,223,224,1) 29%,rgba(226,222,223,1) 30%,rgba(194,192,195,1) 40%,rgba(179,178,176,1) 46%,rgba(180,175,172,1) 48%,rgba(175,172,167,1) 52%,rgba(178,171,163,1) 56%,rgba(180,171,162,1) 58%,rgba(188,179,170,1) 61%,rgba(195,186,181,1) 63%,rgba(211,207,198,1) 68%,rgba(216,211,207,1) 69%,rgba(224,219,216,1) 72%,rgba(227,223,222,1) 75%,rgba(226,221,225,1) 76%,rgba(222,218,219,1) 78%,rgba(217,215,216,1) 78%,rgba(211,209,214,1) 80%,rgba(203,198,202,1) 83%,rgba(190,190,192,1) 85%,rgba(178,177,182,1) 87%,rgba(168,168,168,1) 89%,rgba(138,138,138,1) 94%,rgba(130,130,130,1) 97%,rgba(130,130,130,1) 100%);/* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(220,218,221,1) 0%,rgba(234,230,231,1) 4%,rgba(244,240,241,1) 11%,rgba(241,237,238,1) 22%,rgba(235,231,232,1) 26%,rgba(227,223,224,1) 29%,rgba(226,222,223,1) 30%,rgba(194,192,195,1) 40%,rgba(179,178,176,1) 46%,rgba(180,175,172,1) 48%,rgba(175,172,167,1) 52%,rgba(178,171,163,1) 56%,rgba(180,171,162,1) 58%,rgba(188,179,170,1) 61%,rgba(195,186,181,1) 63%,rgba(211,207,198,1) 68%,rgba(216,211,207,1) 69%,rgba(224,219,216,1) 72%,rgba(227,223,222,1) 75%,rgba(226,221,225,1) 76%,rgba(222,218,219,1) 78%,rgba(217,215,216,1) 78%,rgba(211,209,214,1) 80%,rgba(203,198,202,1) 83%,rgba(190,190,192,1) 85%,rgba(178,177,182,1) 87%,rgba(168,168,168,1) 89%,rgba(138,138,138,1) 94%,rgba(130,130,130,1) 97%,rgba(130,130,130,1) 100%);/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdadd', endColorstr='#828282',GradientType=0 );/* IE6-9 */
+
+
+}
+#SlotsContainer .slot-machine-fix,
+#SlotsContainer .slot-block-outer {
+    border-radius: 15px;
+    padding: 7px;
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 4px 5px 10px 0px rgba(0,0,0,0.4);
+}
+#SlotsContainer .slot-machine-fix .fix-inner,
+#SlotsContainer .slot-block-inner {
+    border-radius: 15px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+    overflow: hidden;
+    box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.5) inset;
+    position: relative;
+}
+
+#SlotsContainer .slot-machine-fix {
+    display: block;
+    content: "";
+    width: calc(100% + 2px);
+    position: absolute;
+    bottom: 90%;
+    left: 0;
+    border-radius: 47% 47% 0px 0px;
+    padding: 25% 0 0 0;
+    background-size: 930% auto;
+    border-bottom: none;
+    box-shadow: none;
+    margin: 0 0 0 -1px;
+    overflow: hidden;
+}
+#SlotsContainer #Atention,
+#SlotsContainer .slot-machine-fix .fix-inner {
+    display: block;
+    content: "";
+    width: calc(100% - 14px);
     position: absolute;
     bottom: 0;
-    width: 100%;
-    margin: 0;
+    left: 7px;
+    border-radius: 47% 47% 0px 0px;
+    padding: calc(25% - 14px) 0 0 0;
+    border-bottom: none;
+    box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.5) inset;
+    overflow: hidden;
+    z-index: 100;
 }
-/* end customs*/
-
-#slot_machines_backgrounds, #slot_machines_backgrounds_container {
+/*
+end border block - styles
+*/
+/*
+main blocks - styles
+*/
+#SlotsContainer{
+    background: url(/res/img/games/card-table-bg.jpg) no-repeat transparent;
+    background-size: cover;
+    padding: 20px;
+}
+#SlotsContainer .matches-inf-wrapper{
+    position: relative;
+}
+#SlotsContainer .machine-stat{
+    width: 30%;
+    display: block;
+    padding-right: 10px;
+    box-sizing: border-box;
+    float: left;
+    bottom: 0;
     position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
+}
+#SlotsContainer .machine-roll{
+    width: 69%;
+    display: block;
+    box-sizing: border-box;
+    padding-left: 10px;
+    float: right;
+}
+/*
+END main blocks - styles
+*/
+
+/*
+styles for new Prizes list-block
+*/
+
+#SlotsContainer #machine_stat {
+    /* max-width: 200px; */
+    /* min-width: 160px; */
+}
+#SlotsContainer .prizes_list_outer{}
+#SlotsContainer #prizes_list {}
+#SlotsContainer #prizes_list_slotMachine1{}
+#SlotsContainer #prizes_list .tdReels {
+    display: inline-block;
+    width: 60%;
+    border-right: 1px solid #cfcfcf;
+    height: 100%;
+    box-sizing: border-box;
+}
+#SlotsContainer #prizes_list .tdPayout {
+    display: inline-block;
+    text-align: right;
+    width: 37%;
+    transform: translate(-5%, -50%);
+}
+#SlotsContainer #prizes_list .trPrize {
+    border-top: 1px solid #cfcfcf;
+    vertical-align: top;
+}
+#SlotsContainer #prizes_list .trPrize:first-child {
+    border-top: none;
+}
+#SlotsContainer #prizes_list .trPrize.won { background: transparent url(/res/img/games/spin/prize_won.png) 30% 30% no-repeat; background-size: 130% auto;}
+#SlotsContainer #prizes_list .reelIcon { background: transparent url(/res/img/games/spin/table_prizes_sprites.png) no-repeat; background-size: 100% auto;display: inline-block;width: 30%;padding-top: 30%;}
+#SlotsContainer #prizes_list .reelIcon.prize_1 { background-position: 0 0; }
+#SlotsContainer #prizes_list .reelIcon.prize_2 { background-position: 0 9.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_3 { background-position: 0 19.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_4 { background-position: 0 29.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_5 { background-position: 0 39.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_6 { background-position: 0% 49.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_stardot5 { background-position: 0 99.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_1slash3slash5 { background-position: 0 89.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_2slash4slash6 { background-position: -30px -30px; }
+#SlotsContainer #prizes_list .reelIcon.prize_1slash3 { background-position: 0 59.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_5slash2 { background-position: 0 69.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_4slash6 { background-position: 0 79.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_1slash5 { background-position: -150px -30px; }
+#SlotsContainer #prizes_list .reelIcon.prize_2slash3 { background-position: -180px -30px; }
+/*
+end styles for new Prizes list-block
+*/
+
+/*
+Beet container styles
+*/
+#SlotsContainer #betContainer { position: relative; }
+#SlotsContainer #betContainer .info_box {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%;
+    text-align: center;
+}
+#SlotsContainer #betContainer .spin_change_container {
+    display: inline-block;
+    width: 7%;
+    vertical-align: top;
+    overflow: hidden;
+}
+#SlotsContainer #betContainer #spinButton {
+    display: inline-block;
+    width: 24%;
+    padding-top: 13.3%;
+    background-image: url(/res/img/games/spin/spin_button.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: 0% 2%;
+    float: right;
+    cursor: pointer;
+}
+#SlotsContainer #betContainer #spinButton:hover { background-position: 0 32%; }
+#SlotsContainer #betContainer #spinButton:active { background-position: 0 63%; }
+#SlotsContainer #betContainer #spinButton.disabled { background-position: 0 93%; cursor: default; }
+
+#SlotsContainer #betContainer p {
+    display: block;
     width: 100%;
+    padding: 7% 0;
+}
+#SlotsContainer #betContainer span {
+    color: #e64e13;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#SlotsContainer #betContainer #betSpinUp,
+#SlotsContainer #betContainer #betSpinDown {
+    background: transparent url(/res/img/games/spin/sprites.png) 0 0 no-repeat;
+    cursor: pointer;
+}
+#SlotsContainer #betContainer #betSpinDown { top: 35px; background-position: 0 -50px; }
+
+#SlotsContainer #betContainer {/* min-width: 350px; */ height: auto; /* width: 370px; */margin-top: 20px;}
+#SlotsContainer #betContainer span {font-size: 100%;}
+#SlotsContainer #betContainer #dayWinnings { display: none; }
+#SlotsContainer #betContainer #lifetimeWinnings { display: none; }
+#SlotsContainer #betContainer #betSpinUp,
+#SlotsContainer #betContainer #betSpinDown {
+    width: 100%;
+    background-image: url(/res/img/games/spin/sprites.png);
+    padding-top: 100%;
+    background-position: 0 -5%;
+    background-size: 100% auto;
+}
+#SlotsContainer #betContainer #betSpinDown {
+    background-position-y: 29%;
+}
+/*
+END Beet container styles
+*/
+
+/*
+Slot-mashine styles
+*/
+#SlotsContainer #slotMachineContainer {
+    position: relative;
+    box-sizing: content-box;
+    /* width: 430px; */
+    padding-top: 0%;
+    margin-top: 100px;
+}
+#SlotsContainer #slotMachineContainer #Atention {
+    background: transparent url(/res/img/games/spin/won_bg.png) no-repeat;
+    background-size: 125% auto;
+    background-position: 50% 3%;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    top: 10px;
     height: 100%;
 }
-
-#SlotsContainer {
-    height: 620px;
-    position: relative;
-    margin: 0 auto;
-    z-index: 2;
-    /* overflow: hidden; */
-    background: url(/res/img/games/spin/main_bg.png) bottom center no-repeat;
-    background-size:cover;
+#SlotsContainer.won #slotMachineContainer #Atention {
+    background-position: 50% 97%;
 }
-/*---------*/
-#slotMachineContainer { position: relative; padding: 27% 5% 7%;box-sizing: content-box;}
-#slotMachineContainer #spinButton {
+#SlotsContainer #slotMachineContainer #spinButton {
     position: relative;
     cursor: pointer;
     background: transparent url(/res/img/games/spin/spin_button.png) 0 0 no-repeat;
 }
-#slotMachineContainer #spinButton:hover { background-position: 0 -100px; }
-#slotMachineContainer #spinButton:active { background-position: 0 -200px; }
-#slotMachineContainer #spinButton.disabled { background-position: 0 -300px; cursor: default; }
+#SlotsContainer #slotMachineContainer #spinButton:hover { background-position: 0 -100px; }
+#SlotsContainer #slotMachineContainer #spinButton:active { background-position: 0 -200px; }
+#SlotsContainer #slotMachineContainer #spinButton.disabled { background-position: 0 -300px; cursor: default; }
 
-#slotMachineContainer #betContainer { position: relative; }
-#slotMachineContainer #betContainer span {
+#SlotsContainer #slotMachineContainer #betContainer { position: relative; }
+#SlotsContainer #slotMachineContainer #betContainer span {
     display: block; position: absolute; text-align: right;
     width: 80px; height: 25px;
     color: #e64e13; font-weight: bold; font-size: 23px;
 }
 
-#slotMachineContainer #betContainer #betSpinUp,
-#slotMachineContainer #betContainer #betSpinDown {
+#SlotsContainer #slotMachineContainer #betContainer #betSpinUp,
+#SlotsContainer #slotMachineContainer #betContainer #betSpinDown {
     position: absolute;
     background: transparent url(/res/img/games/spin/sprites.png) 0 0 no-repeat;
     cursor: pointer;
 }
-#slotMachineContainer #betContainer #betSpinDown { top: 35px; background-position: 0 -50px; }
+#SlotsContainer #slotMachineContainer #betContainer #betSpinDown { top: 35px; background-position: 0 -50px; }
 
-#slotMachineContainer #loggedOutMessage,
-#slotMachineContainer #failedRequestMessage {
+#SlotsContainer #slotMachineContainer #loggedOutMessage,
+#SlotsContainer #slotMachineContainer #failedRequestMessage {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -78,260 +287,120 @@
 
 }
 
-/*---------*/
-
-#slotMachineContainer #ReelContainer {
+#SlotsContainer #slotMachineContainer .reel-wrapper {
+    width: 100%;
+    padding: 67% 0 0% 0;
+    margin-top: 8%;
     position: relative;
-    left: 13px;
-    top: 14px;
+}
+#SlotsContainer #slotMachineContainer #ReelContainer {
     width: 435px;
     height: 284px;
     overflow: hidden;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
+    margin: 0px auto;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(1.035);
+    position: absolute;
+    top: 50%;
 }
 
-#slotMachineContainer #ReelContainer #reelOverlay {
-    position: absolute; top: 0; left:0; right: 0; bottom: 0;
+#SlotsContainer #slotMachineContainer #ReelContainer #reelOverlay {
+    position: absolute;
+    top: 0;
+    left:0;
+    right: 0;
+    bottom: 0;
     z-index: 100;
     background: transparent url(/res/img/games/spin/reel_overlay.png) 0 center no-repeat;
 }
 
-#slotMachineContainer #ReelContainer .reel {
+#SlotsContainer #slotMachineContainer #ReelContainer .reel {
     position: absolute;
-    width: 121px; height: 2160px; /* set the height to 3 * the strip PNG height */
+    width: 121px; height: 2160px;  /*set the height to 3 * the strip PNG height*/ 
     background: transparent url(/res/img/games/spin/reel_strip.png) 0 0 repeat-y;
 }
 
-#slotMachineContainer #ReelContainer #reel1 { left: 10px; top: -1360px; }
-#slotMachineContainer #ReelContainer #reel2 { left: 158px; top: -992px; }
-#slotMachineContainer #ReelContainer #reel3 { left: 304px; top: -1116px; }
+#SlotsContainer #slotMachineContainer #ReelContainer #reel1 { left: 10px; top: -1360px; }
+#SlotsContainer #slotMachineContainer #ReelContainer #reel2 { left: 158px; top: -992px; }
+#SlotsContainer #slotMachineContainer #ReelContainer #reel3 { left: 304px; top: -1116px; }
 
+/*
+END Slot-mashine styles
+*/
 
-/*----------*/
-
-#soundOffButton {
-    position: absolute;
-    width: 32px; height: 32px; right: 20px; top: 507px;
-    background: transparent url(/res/img/games/spin/sprites.png) -50px -50px no-repeat;
+/*
+Slot-buttons styles
+*/
+#SlotsContainer .button:first-child{
+    border: none;
+}
+#SlotsContainer .button{
+    display: inline-block;
+    padding: 10px 15px;
+    border-left: 1px solid #cfcfcf;
     cursor: pointer;
+    color: #fff;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.7);
+    font-weight: 400;
+    box-shadow: inset 0px 0px 20px -4px rgba(0,0,0,0.8);
+}
+#SlotsContainer .button.active,
+#SlotsContainer .button:hover{
+    box-shadow: inset 0px 3px 11px 0px rgba(0,0,0,0.9);
 }
 
-#soundOffButton.off { background-position: -50px 0; }
-
-/*---------*/
-
-#prizes_list { position: relative; height: auto; }
-#prizes_list .trPrize {}
-#prizes_list .tdReels { float: left; clear: both; }
-#prizes_list .tdPayout { float: left; text-align: right; }
-
-#prizes_list .trPrize.won { }
-#prizes_list .trPrize.won .tdPayout { font-weight: bold; }
-
-#prizes_list .tdReels div.reelIcon {
-    width: 28px;
-    height: 28px;
-    float: left;
-    margin: 0 5px;
-    background-repeat: no-repeat;
+#SlotsContainer #Credits,
+#SlotsContainer #ExitBlock{
+    display: inline-block;
 }
+#SlotsContainer #ExitBlock{
+    position: absolute;
+    left: 0;
+}
+#SlotsContainer #ExitButton{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff1a00+0,d30000+57 */
+    background: rgb(255,26,0); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,26,0,1) 0%, rgba(211,0,0,1) 57%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,26,0,1) 0%,rgba(211,0,0,1) 57%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,26,0,1) 0%,rgba(211,0,0,1) 57%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', endColorstr='#d30000',GradientType=0 ); /* IE6-9 */
 
-/*------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------*/
-/*                         Specific for each machine!                                       */
-/*------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------*/
+}
+#SlotsContainer #Credits{
+    display: block;
+    max-width: 167px;
+    margin: 0px auto;
+}
+#SlotsContainer #Scores,
+#SlotsContainer #Gold{
+    background-size: 330%;
+    background-position: 0 40%;
+}
+/*
+END Slot-buttons styles
+*/
 
-.content-box-item.games-chance-view{
-    padding:0;
-}
-#slot_machines_container { /* overflow: visible; */ width: 100%;height: 100%;position: relative;}
-#slotsSelectorWrapper {  width: 100%; left: 0; top: 0;height: 100%;}
-
-/* Slot Machine 1 */
-#slotsSelectorWrapper.slotMachine1 .machine-stat {
-    background:transparent url(/res/img/games/spin/main_bg_stat.png) no-repeat;
-    background-position: 1% 40%;
-    width: 30%;
-    margin: 6% 0 0 0;
-    background-size: 100% auto;
-}
-#slotsSelectorWrapper.slotMachine1 .machine-roll {
-    background:transparent url(/res/img/games/spin/main_bg_roll.png) no-repeat;
-    background-position: 0% 0%;
-    box-sizing: content-box;
-    background-size: 100% auto;
-    width: 70%;
-}
-/*!!!!!!*/
-#slotsSelectorWrapper.slotMachine1 .won #Atention {     background: transparent url(/res/img/games/spin/won_bg.png) 12% 3px no-repeat; width: 100%; height: 107px; position: absolute; z-index: 101; top: 38px; background-size: auto 100%;}
-#slotsSelectorWrapper.slotMachine1 #spinButton { left: 342px; top: -12px; width: 127px; height: 80px; background-image: url(/res/img/games/spin/spin_button.png); }
-#slotsSelectorWrapper.slotMachine1 #betContainer { top: 65px; left: 0; width: 355px; height: 65px; }
-#slotsSelectorWrapper.slotMachine1 #betContainer span { top: 30px; }
-#slotsSelectorWrapper.slotMachine1 #betContainer #lastWin { left: 16px; }
-#slotsSelectorWrapper.slotMachine1 #betContainer #credits { left: 138px; }
-#slotsSelectorWrapper.slotMachine1 #betContainer #bet { left: 249px; width: 34px; }
-#slotsSelectorWrapper.slotMachine1 #betContainer #dayWinnings { display: none; }
-#slotsSelectorWrapper.slotMachine1 #betContainer #lifetimeWinnings { display: none; }
-#slotsSelectorWrapper.slotMachine1 #betContainer #betSpinUp,
-#slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown {
-    width: 27px; height: 22px; left: 316px; top: 13px;
-    background-image: url(/res/img/games/spin/sprites.png);
-}
-#slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown { top: 35px; }
-#slotsSelectorWrapper.slotMachine1 #soundOffButton { display: none; }
-
-#slotsSelectorWrapper.slotMachine1 #prizes_list {
-    width: auto;
-    padding: 30% 12% 20% 16%;
-    box-sizing: content-box;
-}
-#slotsSelectorWrapper.slotMachine1 #prizes_list .trPrize {
-    margin-top: -8%;/* we make each row much taller than it is, to accomodate the glow of the winning orange band */
-    height: 49px;
-}
-/* Reel Set 1 */
-#slotsSelectorWrapper.reelSet1 #ReelContainer .reel {
-    height: 2160px;
-    background-image: url(/res/img/games/spin/reel_strip.png);
-}
-
-/* Prizes lists for each reelset */
-#slotsSelectorWrapper #prizes_list .tdReels { padding: 9px 1px 0 0; }
-#slotsSelectorWrapper #prizes_list .tdPayout { padding: 14px 6px 0 0; width: 47px; }
-#prizes_list .trPrize.won { background: transparent url(/res/img/games/spin/prize_won.png) -30px 0 no-repeat; }
-#prizes_list .reelIcon { background: transparent url(/res/img/games/spin/prizes_sprites.png) 0 0 no-repeat; }
-#prizes_list .reelIcon.prize_1 { background-position: 0 0; }
-#prizes_list .reelIcon.prize_2 { background-position: -30px 0; }
-#prizes_list .reelIcon.prize_3 { background-position: -60px 0; }
-#prizes_list .reelIcon.prize_4 { background-position: -90px 0; }
-#prizes_list .reelIcon.prize_5 { background-position: -120px 0; }
-#prizes_list .reelIcon.prize_6 { background-position: -150px 0; }
-#prizes_list .reelIcon.prize_stardot5 { background-position: -180px 0; }
-#prizes_list .reelIcon.prize_1slash3slash5 { background-position: -0px -30px; }
-#prizes_list .reelIcon.prize_2slash4slash6 { background-position: -30px -30px; }
-#prizes_list .reelIcon.prize_1slash3 { background-position: -60px -30px; }
-#prizes_list .reelIcon.prize_5slash2 { background-position: -90px -30px; }
-#prizes_list .reelIcon.prize_4slash6 { background-position: -120px -30px; }
-#prizes_list .reelIcon.prize_1slash5 { background-position: -150px -30px; }
-#prizes_list .reelIcon.prize_2slash3 { background-position: -180px -30px; }
-
-#slotsSelectorWrapper.reelSet1 #prizes_list .reelIcon { background-image: url(/res/img/games/spin/prizes_sprites.png); }
 
 /*screen resizes*/
-@media  all and ( max-width: 1200px ){
-
-    #SlotsContainer {
-        height: 500px;
+@media  all and ( max-width: 1199px ){
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.875);
     }
-    #slotMachineContainer {
-        height: 340px;
-    }
-    #slotsSelectorWrapper.slotMachine1 .machine-stat {
-        width: 35%;
-    }
-    #slotsSelectorWrapper.slotMachine1 .machine-roll {
-        background:transparent url(/res/img/games/spin/main_bg_roll.png) no-repeat;
-        background-position: 0% 0%;
-        box-sizing: content-box;
-        background-size: 100% auto;
-        width: 65%;
-    }
-    #slotsSelectorWrapper.slotMachine1 .won #Atention {
-        height: 87px;
-        top: 30px;
-    }
-
-    #slotMachineContainer #ReelContainer {
-        transform: scale(0.8);
-        -o-transform: scale(0.8);
-        -moz-transform: scale(0.8);
-        -webkit-transform: scale(0.8);
-        -ms-transform: scale(0.8);
-        position: relative;
-        top: -15px;
-        left: -32px;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #spinButton { 
-        left: 262px; top: -76px; 
-        transform: scale(0.8);
-        -o-transform: scale(0.8);
-        -moz-transform: scale(0.8);
-        -webkit-transform: scale(0.8);
-        -ms-transform: scale(0.8);
-    }
-    #slotsSelectorWrapper.slotMachine1 #betContainer { top: -5px; left: 0; width: 275px; height: 57px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer span { top: 26px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #lastWin { left: 0px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #credits { left: 98px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #bet { left: 196px; width: 34px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinUp,
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown {
-        left: 250px;
-        top: 7px;
-    }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown { top: 31px; }
 }
-@media  all and ( max-width: 1010px) { 
-
-    #SlotsContainer {
-        height: 550px;
+@media  all and ( max-width: 1009px) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(1);
     }
-    #slotMachineContainer {
-        height: 375px;
-    }
-    #slotsSelectorWrapper.slotMachine1 .machine-stat {
-        width: 32%;
-    }
-    #slotsSelectorWrapper.slotMachine1 .machine-roll {
-        background:transparent url(/res/img/games/spin/main_bg_roll.png) no-repeat;
-        background-position: 0% 0%;
-        box-sizing: content-box;
-        background-size: 100% auto;
-        width: 65%;
-    }
-
-    #slotMachineContainer #ReelContainer {
-        transform: scale(0.9);
-        -o-transform: scale(0.9);
-        -moz-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-        position: relative;
-        top: 1px;
-        left: -11px;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #spinButton {
-        left: 299px;
-        top: -49px;
-        transform: scale(0.9);
-        -o-transform: scale(0.9);
-        -moz-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-    }
-
-    #slotsSelectorWrapper.slotMachine1 .won #Atention {
-        width: 100%; 
-        height: 107px; 
-        top: 34px; 
-        background-size: auto 92%;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #betContainer { top: 27px; left: 0px; width: 305px; height: 65px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer span { top: 30px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #lastWin { left: 5px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #credits { left: 116px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #bet { left: 219px; width: 34px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinUp,
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown {
-        left: 281px;
-        top: 10px;
-    }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown { top: 35px; }
 }
-@media  (max-width: 768px) {
+@media  all and (max-width: 768px) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(1.03);
+    }
+    /*Set FullScreen*/
     .content-main.games{
         animation: initial;
     }
@@ -345,278 +414,225 @@
         left: 0;
         background: #fff;
     }
-    #SlotsContainer {
-        height: 100%;
+    .content-main.games .single-game>*,
+    .content-main.games .single-game>*>*{
+        height: inherit;
     }
-    #slotMachineContainer {
-        height: 427px;
+    #SlotsContainer {
+        height: auto;
+        min-height: 100%;
+    }
+    /*END Set FullScreen*/
+
+    /*machine and table fix size for carousel*/
+    #SlotsContainer .machine-stat {
+        width: 50%;
+        margin: 0px auto;
+        display: block;
+        position: relative;
+        float: none;
+    }
+    #SlotsContainer .machine-roll {
+        display: block;
+        margin: 0px auto;
+        width: 490px;
+        float: none;
     }
 
     /*fix padding in carousel*/
     #SlotsContainer .matches-inf-wrapper{
         margin: 0;
+        background: transparent;
     }
-    /*!!!!!*/
-
-    #slotsSelectorWrapper.slotMachine1 .machine-stat {
-        width: 340px;
-        margin: 0 auto;
-        float: none;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 .machine-roll {
-        background-position: 0% 0%;
-        background-size: 100% auto;
-        width: 540px;
-        margin: 0 auto;
-        float: none;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 .won #Atention {
-        height: 121px;
-        top: 38px;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #spinButton {
-        left: 351px;
-        top: -14px;
-        transform: scale(1.01);
-        -o-transform: scale(1.01);
-        -moz-transform: scale(1.01);
-        -webkit-transform: scale(1.01);
-        -ms-transform: scale(1.01);
-    }
-
-    #slotMachineContainer #ReelContainer {
-        width: 438px;
-        height: 289px;
-        transform: scale(1.01);
-        -o-transform: scale(1.01);
-        -moz-transform: scale(1.01);
-        -webkit-transform: scale(1.01);
-        -ms-transform: scale(1.01);
-        position: relative;
-        top: 18px;
-        left: 18px;
-    }
-
-    #slotMachineContainer #ReelContainer #reelOverlay {
-        background-size: 101% auto;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #betContainer { top: 70px; left: 1px; width: 355px; height: 72px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer span { top: 30px; left: 13px;}
-    #slotsSelectorWrapper.slotMachine1 #betContainer #lastWin { left: 12px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #credits { left: 140px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #bet { left: 258px; width: 34px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinUp,
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown {
-        left: 321px;
-        top: 10px;
-    }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown { top: 35px; }
-
-
-    #slotsSelectorWrapper.slotMachine1 #prizes_list {
-        width: auto;
-        padding: 24% 12% 20% 16%;
-        box-sizing: content-box;
-    }
-    #slotsSelectorWrapper.slotMachine1 #prizes_list .trPrize {/* we make each row much taller than it is, to accomodate the glow of the winning orange band */
-        margin-top: 1px;
-        height: 53px;
-    }
-    /* Reel Set 1 */
-    #slotsSelectorWrapper.reelSet1 #ReelContainer .reel {
-        height: 2160px;
-        background-image: url(/res/img/games/spin/reel_strip.png);
-    }
-
-    /* Prizes lists for each reelset */
-    #slotsSelectorWrapper #prizes_list .tdReels { padding: 13px 1px 0 0; }
-    #slotsSelectorWrapper #prizes_list .tdPayout { padding: 19px 6px 0 0; width: 75px; }
-
-    #prizes_list .trPrize.won {
-        background: transparent url(/res/img/games/spin/prize_won.png) -11px -9px no-repeat;
-        background-size: 120% auto;
-    }
-    #prizes_list .tdReels div.reelIcon {
-        width: 28px;
-        height: 28px;
-        float: left;
-        margin: 0 13px;
-        background-repeat: no-repeat;
-    }
+    /*    !!!!!*/
 }
 @media  all and ( max-width: 650px) {
-    #slotMachineContainer {
-        height: 430px;
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(1.02);
+    }
+    #SlotsContainer .machine-stat {
+        width: 55%;
+    }
+    #SlotsContainer .machine-roll {
+        width: 490px;
     }
 }
-@media  all and ( max-width: 550px) { 
-    #slotMachineContainer {
-        height: 390px;
+@media  all and ( max-width: 550px) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.86);
     }
-    #slotsSelectorWrapper.slotMachine1 .machine-stat {
-        width: 340px;
-        margin: 0 auto;
-        float: none;
+    #SlotsContainer .machine-stat {
+        width: 55%;
     }
-
-    #slotsSelectorWrapper.slotMachine1 .machine-roll {
-        background-position: 0% 0%;
-        background-size: 100% auto;
-        width: 480px;
-        margin: 0 auto;
-        float: none;
-    }
-
-    #slotMachineContainer #ReelContainer {
-        width: 438px;
-        height: 289px;
-        transform: scale(0.9);
-        -o-transform: scale(0.9);
-        -moz-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-        position: relative;
-        top: -2px;
-        left: -9px;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 .won #Atention {
-        height: 107px;
-        top: 34px;
-    }
-
-    #slotMachineContainer #ReelContainer #reelOverlay {
-        background-size: 101% auto;
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #betContainer { top: 27px; left: 0px; width: 355px; height: 63px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer span { top: 30px; left: 4px;}
-    #slotsSelectorWrapper.slotMachine1 #betContainer #lastWin { left: 4px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #credits { left: 119px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #bet { left: 225px; width: 34px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinUp,
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown {
-        left: 285px;
-        top: 7px;
-    }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown { top: 35px; }
-
-    #slotsSelectorWrapper.slotMachine1 #spinButton {
-        left: 305px;
-        top: -48px;
-        transform: scale(0.9);
-        -o-transform: scale(0.9);
-        -moz-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-    }
-
-    #slotsSelectorWrapper.slotMachine1 #prizes_list .trPrize {/* we make each row much taller than it is, to accomodate the glow of the winning orange band */
-        margin-top: 1px;
-        height: 53px;
+    #SlotsContainer .machine-roll {
+        width: 420px;
     }
 }
 @media  all and ( max-width: 480px) {
-    #slotMachineContainer {
-        height: 260px;
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.78);
     }
-    #slotsSelectorWrapper.slotMachine1 .machine-stat {
-        width: 240px;
-        margin: 0 auto;
-        float: none;
+    #SlotsContainer .machine-stat {
+        /* width: 60%; */
     }
+    #SlotsContainer .machine-roll {
+        width: 380px;
+    }
+}
+@media  all and ( max-width: 320px) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.63);
+    }
+    #SlotsContainer .machine-stat {
+        width: 90%;
+    }
+    #SlotsContainer .machine-roll {
+        width: 320px;
+    }
+}
 
-    #slotsSelectorWrapper.slotMachine1 .machine-roll {
-        background-position: 0% 0%;
-        background-size: 100% auto;
-        width: 330px;
-        margin: 0 auto;
-        float: none;
-        position: relative;
-    }
+/*screen landscape orientation
+Sony Ericsson Xperia Ray	320	480
+iPhone                          320	480
+iPhone 4S                       320	568
+Blackberry Bold 9900            480	640
+T-Mobile MyTouch 4G Slide 	480	800
+Samsung Galaxy S II             480	800
+HTC Titan II                    480	800
+Sprint HTC EVO 4G               480	800
+Nokia Lumia 900                 480	800
+Sony Ericcson Xperia Arc S	480	854
+HTC Amaze 4G                    540	960
+Motorola Droid 4                540	960
+Motorola Droid Razr Maxx	540	960
+HTC One S                       540	960
+Kindle Fire HD 8.9"             600	960
+Samsung Focus 2                 640	800
+iPad Mini                       768	1024
+iPad                            703	1024*/
 
-    #slotMachineContainer #ReelContainer {
-        width: 438px;
-        height: 289px;
-        transform: scale(0.63);
-        -o-transform: scale(0.63);
-        -moz-transform: scale(0.63);
-        -webkit-transform: scale(0.63);
-        -ms-transform: scale(0.63);
-        position: relative;
-        top: -44px;
-        left: -76px;
+@media  all and ( max-height: 480px) and (max-width: 768px) and (orientation: landscape) {
+    /*Set FullScreen*/
+    .content-main.games{
+        animation: initial;
     }
+    .content-main.games .single-game{
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 1001;
+        top: 0px;
+        left: 0;
+        background: #fff;
+    }
+    .content-main.games .single-game>*,
+    .content-main.games .single-game>*>*{
+        height: inherit;
+    }
+    #SlotsContainer {
+        height: auto;
+    }
+    /*END Set FullScreen*/
 
-    #slotsSelectorWrapper.slotMachine1 .won #Atention {
-        height: 73px;
-        top: 22px;
+    #SlotsContainer #slotMachineContainer {
+        margin-top: 100px;
     }
-
-    #slotMachineContainer #ReelContainer #reelOverlay {
-        background-size: 101% auto;
+    #SlotsContainer #betContainer {
+        margin-top: 20px;
     }
-
-    #slotsSelectorWrapper.slotMachine1 #betContainer { top: -73px; left: 0px; width: 225px; height: 43px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer span { top: 22px; font-size: 90%;left: 4px;}
-    #slotsSelectorWrapper.slotMachine1 #betContainer #lastWin { left: -22px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #credits { left: 55px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #bet { left: 143px; width: 34px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinUp,
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown {
-        left: 190px;
-        top: -1px;
-        transform: scale(0.8);
-        -o-transform: scale(0.8);
-        -moz-transform: scale(0.8);
-        -webkit-transform: scale(0.8);
-        -ms-transform: scale(0.8);
+}
+@media  all and ( max-height: 414px) and (max-width: 736px) and (orientation: landscape) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.73);
     }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #betSpinDown { top: 24px; }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #dayWinnings {
-        left: -23px;
+    #SlotsContainer .machine-stat {
+        width: 35%;
     }
-    #slotsSelectorWrapper.slotMachine1 #betContainer #lifetimeWinnings {
-        left: -23px;
+    #SlotsContainer .machine-roll {
+        width: 360px;
     }
-
-    #slotsSelectorWrapper.slotMachine1 #spinButton {
-        left: 191px;
-        top: -136px;
-        transform: scale(0.6);
-        -o-transform: scale(0.6);
-        -moz-transform: scale(0.6);
-        -webkit-transform: scale(0.6);
-        -ms-transform: scale(0.6);
+    #SlotsContainer #slotMachineContainer {
+        margin-top: 65px;
     }
-
-    #slotsSelectorWrapper.slotMachine1 #prizes_list {
-        width: auto;
-        padding: 24% 12% 20% 16%;
-        box-sizing: content-box;
+    #SlotsContainer #betContainer {
+        margin-top: 10px;
     }
-
-    #slotsSelectorWrapper.slotMachine1 #prizes_list .trPrize {/* we make each row much taller than it is, to accomodate the glow of the winning orange band */
-        margin-top: 1px;
-        height: 37px;
+}
+@media  all and ( max-height: 375px) and (max-width: 667px) and (orientation: landscape) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.63);
     }
-
-    #slotsSelectorWrapper #prizes_list .tdReels { padding: 8px 1px 0 0; }
-    #slotsSelectorWrapper #prizes_list .tdPayout { padding: 13px 6px 0 0; width: 45px; }
-
-    #prizes_list .trPrize.won {
-        background: transparent url(/res/img/games/spin/prize_won.png) 0px 0px no-repeat;
-        background-size: 100% auto;
+    #SlotsContainer .machine-stat {
+        width: 35%;
     }
-    #prizes_list .tdReels div.reelIcon {
-        width: 28px;
-        height: 28px;
-        float: left;
-        margin: 0 5px;
-        background-repeat: no-repeat;
+    #SlotsContainer .machine-roll {
+        width: 320px;
+    }
+    #SlotsContainer #slotMachineContainer {
+        margin-top: 65px;
+    }
+    #SlotsContainer #betContainer {
+        margin-top: 10px;
+    }
+}
+@media  all and ( max-height: 480px) and (max-width: 640px) and (orientation: landscape) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.63);
+    }
+    #SlotsContainer .machine-stat {
+        width: 40%;
+    }
+    #SlotsContainer .machine-roll {
+        width: 320px;
+    }
+    #SlotsContainer #slotMachineContainer {
+        margin-top: 60px;
+    }
+    #SlotsContainer #betContainer {
+        margin-top: 10px;
+    }
+}
+@media  all and ( max-height: 320px) and (max-width: 568px) and (orientation: landscape) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.63);
+    }
+    #SlotsContainer .machine-stat {
+        width: 35%;
+    }
+    #SlotsContainer .machine-roll {
+        width: 320px;
+    }
+    #SlotsContainer #slotMachineContainer {
+        margin-top: 55px;
+    }
+    #SlotsContainer #betContainer {
+        margin-top: 0px;
+    }
+}
+@media  all and ( max-height: 320px) and (max-width: 480px) and (orientation: landscape) {
+    /*machine fix scale*/
+    #SlotsContainer #slotMachineContainer #ReelContainer{
+        transform: translate(-50%,-50%) scale(0.63);
+    }
+    #SlotsContainer .machine-stat {
+        width: 40%;
+    }
+    #SlotsContainer .machine-roll {
+        width: 320px;
+    }
+    #SlotsContainer #slotMachineContainer {
+        /* margin-top: 55px; */
+    }
+    #SlotsContainer #betContainer {
+        /* margin-top: 0px; */
     }
 }

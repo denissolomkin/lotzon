@@ -53,7 +53,6 @@ if(!class_exists('Config')){
 
         <aside class="sidebar">
             <div class="banner-4">
-                <?php include "layout/banner_4.php"; ?>
             </div>
             <div class="banner-5">
                 <?php include "layout/banner_5.php"; ?>

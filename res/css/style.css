@@ -2646,7 +2646,7 @@ header .owl-theme .owl-controls .owl-page span {
   position: relative;
   background: #A9D0D5;
   padding-left: 10px;
-  height: 740px;
+  min-height: 300px;
 }
 
 .ticket-numbers-wrapper {
@@ -2786,7 +2786,7 @@ header .owl-theme .owl-controls .owl-page span {
   position: relative;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: #a6d1d5;
+  background-color: #92D2D6;
   width: 1280px;
   max-width: calc(100% - 20px);
 }
@@ -2866,7 +2866,6 @@ header .owl-theme .owl-controls .owl-page span {
 
 .ticket-numbers {
   margin-bottom: 10px;
-  height: 600px;
 }
 .ticket-numbers li {
   margin: 0 10px 20px 10px !important;
@@ -2893,6 +2892,48 @@ header .owl-theme .owl-controls .owl-page span {
   width: 19px;
   height: 17px;
   background: url(img/sprite.png) -449px -87px;
+}
+
+.gold .add-ticket.ticket-btn {
+  background: #ebdb9c;
+  color: #8f8e8e;
+}
+.gold .add-ticket.ticket-btn:hover {
+  background: #ebdb9c;
+  color: #8f8e8e;
+}
+.gold .add-ticket.ticket-btn.on {
+  cursor: pointer;
+  background: #f6f3e6;
+  color: #4c4c4c;
+}
+.gold .add-ticket.ticket-btn.on:not(.loading):hover {
+  cursor: pointer;
+  background: #363636;
+  color: #ead377;
+}
+.gold .add-ticket.ticket-btn.loading {
+  color: #ead377;
+  position: relative;
+  opacity: 0.8;
+  cursor: default;
+  background: #ffe400;
+  background-repeat: no-repeat;
+  background-position: 0;
+  background: url(img/sprite.png) -244px 82px;
+  -webkit-animation: AnimationNGold 4s infinite linear;
+  -moz-animation: AnimationNGold 4s  infinite linear;
+  animation: AnimationNGold 4s  infinite linear;
+}
+.gold .select {
+  background: #363636;
+  color: #ead376;
+  text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+}
+.gold .ticket-actions li:hover {
+  background: #363636;
+  color: #ead376;
+  text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
 }
 
 .ticket-btn {
@@ -2927,12 +2968,12 @@ header .owl-theme .owl-controls .owl-page span {
   background-repeat: no-repeat;
   background-position: 0;
   background: url(img/sprite.png) -430px 82px;
-  -webkit-animation: AnimationName 8s infinite linear;
-  -moz-animation: AnimationName 8s  infinite linear;
-  animation: AnimationName 8s  infinite linear;
+  -webkit-animation: AnimationBlue 8s infinite linear;
+  -moz-animation: AnimationBlue 8s  infinite linear;
+  animation: AnimationBlue 8s  infinite linear;
 }
 
-@-webkit-keyframes AnimationName {
+@-webkit-keyframes AnimationBlue {
   0% {
     background-position: -556px 82px;
   }
@@ -2943,7 +2984,7 @@ header .owl-theme .owl-controls .owl-page span {
     background-position: -430 82px;
   }
 }
-@keyframes AnimationName {
+@-moz-keyframes AnimationBlue {
   0% {
     background-position: -556px 82px;
   }
@@ -2952,6 +2993,25 @@ header .owl-theme .owl-controls .owl-page span {
   }
   100% {
     background-position: -430 82px;
+  }
+}
+@keyframes AnimationBlue {
+  0% {
+    background-position: -556px 82px;
+  }
+  50% {
+    background-position: -493px 82px;
+  }
+  100% {
+    background-position: -430 82px;
+  }
+}
+@-webkit-keyframes AnimationNGold {
+  0% {
+    background-position: -244px 82px;
+  }
+  100% {
+    background-position: -223px 82px;
   }
 }
 .tickets .content-box-tab {
@@ -3170,7 +3230,7 @@ header .owl-theme .owl-controls .owl-page span {
 }
 
 .select {
-  background-color: #ffe400 !important;
+  background-color: #ffe400;
   -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   -moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   -ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -3229,15 +3289,6 @@ header .owl-theme .owl-controls .owl-page span {
 }
 .after b {
   display: inline-block;
-}
-
-.ticket-done {
-  position: absolute;
-  height: 30px;
-  right: 41px;
-  bottom: 30px;
-  bottom: 0;
-  color: #e7f6f7;
 }
 
 .add-ticket .on {
@@ -3517,6 +3568,9 @@ header .owl-theme .owl-controls .owl-page span {
   margin-top: 10px;
   margin-left: 5px;
 }
+.cabinet-game-history .content-box-cat > * {
+  cursor: pointer;
+}
 .cabinet-game-history .content-box-cat > span:after {
   display: none;
   content: none;
@@ -3527,6 +3581,7 @@ header .owl-theme .owl-controls .owl-page span {
   padding: 5px 10px;
   margin-right: 0;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .cabinet-game-history .content-box-cat > span label:after {
   display: none;
@@ -3597,14 +3652,23 @@ header .owl-theme .owl-controls .owl-page span {
   z-index: 10;
 }
 
+.ticket-done {
+  height: 30px;
+  margin-right: 20px;
+  bottom: 30px;
+  bottom: 0;
+  color: #e7f6f7;
+  float: right;
+}
 .ticket-done b {
   text-shadow: 0 1px 0 #A9C4C7;
+  padding: 20px 0;
+  color: #000;
 }
 
 @media (min-width: 360px) {
   .ticket-items {
     padding-left: 0;
-    height: 680px;
   }
 
   .lottery-grid .title {
@@ -3627,21 +3691,12 @@ header .owl-theme .owl-controls .owl-page span {
     padding-right: 0;
   }
 
-  .ticket-numbers {
-    height: 540px;
-  }
-
   .ticket-box .ticket-btn {
     margin-right: 10px;
   }
-}
-@media (min-width: 420px) {
-  .ticket-numbers {
-    height: 420px;
-  }
 
-  .ticket-items {
-    height: 560px;
+  .ticket-done {
+    margin-right: 10px;
   }
 }
 @media (max-width: 767px) {
@@ -5660,10 +5715,14 @@ span.input-prefix {
   }
   .matches-inf .lottery-grid .ul-striped li p:first-child {
     margin-right: 30px;
-    min-width: 125px;
+    min-width: 200px;
   }
   .matches-inf .lottery-grid .ul-striped li span {
     display: inline-block;
+  }
+
+  .ticket-done {
+    margin-right: 10px;
   }
 
   .content-box-content {
@@ -5685,24 +5744,6 @@ span.input-prefix {
     padding: 52px 0 30px;
   }
 }
-@media (min-width: 480px) and (min-width: 540px) {
-  .ticket-numbers {
-    height: 360px;
-  }
-
-  .ticket-items {
-    height: 500px;
-  }
-}
-@media (min-width: 480px) and (min-width: 600px) {
-  .ticket-numbers {
-    height: 300px;
-  }
-
-  .ticket-items {
-    height: 440px;
-  }
-}
 @media (min-width: 480px) and (min-width: 640px) {
   .lottery-grid .title {
     padding: 16px 0 16px 30px;
@@ -5716,7 +5757,6 @@ span.input-prefix {
   }
   .matches-inf .lottery-grid .ul-striped li p:first-child {
     margin-right: 30px;
-    min-width: 190px;
   }
   .matches-inf .lottery-grid .ul-striped li span {
     display: inline-block;
@@ -5783,6 +5823,10 @@ span.input-prefix {
 
   .content-box.tickets .title {
     padding-left: 40px;
+  }
+
+  .ticket-done {
+    margin-right: 30px;
   }
 }
 @media (min-width: 768px) {
@@ -6241,6 +6285,10 @@ span.input-prefix {
 
   .lottery-grid .title {
     padding: 16px 23px;
+  }
+
+  .ticket-done {
+    margin-right: 20px;
   }
 
   .matches-inf .lottery-grid .ul-striped li {
@@ -7451,6 +7499,8 @@ span.input-prefix {
 
   .ticket-done {
     bottom: 0px;
+    margin-top: 12px;
+    margin-right: 10px;
   }
 
   .ticket-numbers-wrapper {
@@ -7879,6 +7929,10 @@ span.input-prefix {
 
   .ticket-box {
     margin-top: 34px;
+  }
+
+  .ticket-done {
+    margin-right: 5px;
   }
 
   .matches-inf-wrapper {

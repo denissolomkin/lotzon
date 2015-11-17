@@ -296,7 +296,7 @@
   position: relative;
   background: #A9D0D5;
   padding-left: 10px;
-  height: 740px;
+  min-height: 300px;
 }
 
 .ticket-numbers-wrapper {
@@ -442,7 +442,7 @@
   position: relative;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: #a6d1d5;
+  background-color: #92D2D6;
   width: 1280px;
   max-width: calc(100% - 20px);
   & .ghd-won {
@@ -531,7 +531,6 @@
 
 .ticket-numbers {
   margin-bottom: 10px;
-  height: 600px;
   & li {
     @extend .ticket-ball;
     margin: 0 10px 20px 10px !important;
@@ -559,6 +558,55 @@
     width: 19px;
     height: 17px;
     background: url(img/sprite.png) -449px -87px;
+  }
+}
+.gold  {
+  & .add-ticket {
+    &.ticket-btn {
+      background: #ebdb9c;
+      color: #8f8e8e;
+      &:hover {
+        background: #ebdb9c;
+        color: #8f8e8e;
+      }
+      &.on {
+        cursor: pointer;
+        background: #f6f3e6;
+        color: #4c4c4c;
+        &:not(.loading):hover {
+        cursor: pointer;
+        background: #363636;
+        color: #ead377;
+        }
+      }
+      &.loading {
+        color: #ead377;
+        position: relative;
+        opacity: 0.8;
+        cursor: default;
+        background: #ffe400;
+        background-repeat: no-repeat;
+        background-position: 0;
+        background: url(img/sprite.png) -244px 82px;
+        -webkit-animation: AnimationNGold 4s infinite linear;
+        -moz-animation: AnimationNGold 4s  infinite linear;
+        animation: AnimationNGold 4s  infinite linear;
+      }
+    }
+  }
+  .select {
+    background: #363636;
+    color: #ead376;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+  }
+  .ticket-actions {
+    & li {
+      &:hover {
+        background: #363636;
+        color: #ead376;
+        text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+      }
+    }
   }
 }
 
@@ -595,27 +643,43 @@
       // background-size: contain;
       // background-image: url(../css/img/progress.png);
       background: url(img/sprite.png) -430px 82px;
-      -webkit-animation: AnimationName 8s infinite linear;
-      -moz-animation: AnimationName 8s  infinite linear;
-      animation: AnimationName 8s  infinite linear;
+      -webkit-animation: AnimationBlue 8s infinite linear;
+      -moz-animation: AnimationBlue 8s  infinite linear;
+      animation: AnimationBlue 8s  infinite linear;
     }
   }
+
 }
-  @-webkit-keyframes AnimationName {
+@-webkit-keyframes AnimationBlue {
   0%{background-position:-556px 82px}
   50%{background-position:-493px 82px}
   100%{background-position:  -430 82px}
 }
-// @-moz-keyframes AnimationName {
-//   0%{background-position:100% 0%}
-//    50%{background-position:50% 0%}
-//   100%{background-position: 0%  0% }
-// }
-@keyframes AnimationName { 
-  0%{background-position:-556px 82px }
+@-moz-keyframes AnimationBlue {
+  0%{background-position:-556px 82px}
   50%{background-position:-493px 82px}
-  100%{background-position: -430 82px}
+  100%{background-position:  -430 82px}
+ }
+@keyframes AnimationBlue { 
+  0%{background-position:-556px 82px}
+  50%{background-position:-493px 82px}
+  100%{background-position:  -430 82px}
 }
+@-webkit-keyframes AnimationNGold {
+  0%{background-position:-244px 82px }
+  // 50%{background-position:-223px 82px}
+  100%{background-position:-223px 82px}
+}
+// @-moz-keyframes AnimationNGold {
+//   0%{background-position:-556px 126px}
+//   50%{background-position:-493px 126px}
+//   100%{background-position:  -430 126px}
+//  }
+// @keyframes AnimationNGold { 
+//   0%{background-position:-244px 82px }
+//   50%{background-position:-223px 82px}
+//   100%{background-position: -244 82px}
+// }
 // ------------------------------------------- //
 
 .tickets .content-box-tab {
@@ -848,7 +912,7 @@
 }
 
 .select {
-  background-color: #ffe400 !important;
+  background-color: #ffe400;
   -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   -moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   -ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -909,14 +973,7 @@
   }
 }
 
-.ticket-done {
-  position: absolute;
-  height: 30px;
-  right: 41px;
-  bottom: 30px;
-  bottom: 0;
-  color: #e7f6f7;
-}
+
 
 .add-ticket .on {
   color: #4c4c4c;
@@ -1207,9 +1264,11 @@
     padding: 10px 10px 0 40px;
   }
   & .content-box-cat {
-      margin-top: 10px;
-      margin-left: 5px;
-    // font-family: handbookpro-regular;
+    margin-top: 10px;
+    margin-left: 5px;
+    &  > * {
+      cursor: pointer;
+    }
     &  > span  {
       &:after {
         display: none;
@@ -1221,6 +1280,7 @@
     		padding: 5px 10px;
         margin-right: 0;
         text-transform: uppercase;
+        cursor: pointer;
         &:after {
           display:none;
         }
@@ -1305,8 +1365,16 @@
 }
 
 .ticket-done {
+  height: 30px;
+  margin-right: 20px;
+  bottom: 30px;
+  bottom: 0;
+  color: #e7f6f7; 
+  float: right;
   & b {
     text-shadow: 0 1px 0 #A9C4C7;
+    padding: 20px 0;
+    color: #000;
   }
 
 }
@@ -1314,7 +1382,6 @@
 @media (min-width: 360px) {
   .ticket-items {
     padding-left: 0;
-    height: 680px;
   }
   .lottery-grid .title {
     padding-left: 10px;
@@ -1331,22 +1398,13 @@
   .ticket-tabs {
     padding-right: 0;
   }
-  .ticket-numbers {
-    height: 540px;
-  }
   .ticket-box .ticket-btn {
     margin-right: 10px;
   }
-
-}
-
-@media (min-width: 420px) {
-  .ticket-numbers {
-    height: 420px;
+  .ticket-done {
+    margin-right: 10px;
   }
-  .ticket-items {
-    height: 560px;
-  }
+
 }
 
 @media (max-width: 767px) {

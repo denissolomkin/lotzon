@@ -2,6 +2,15 @@
 
     Device = {
 
+        jsdetect: null,
+        gototop: null,
+
+        init: function(){
+            this.jsdetect = document.querySelector('.js-detect');
+            this.gototop = document.querySelector('.go-to-top');
+
+        },
+
         do: {
 
             hide: function (event) {
@@ -21,7 +30,7 @@
 
             scroll: function (event) {
                 Device.getScroll();
-                Device.switchGoTop();
+                /* Device.switchGoTop(); */
                 Navigation.menu.fix();
                 Content.infiniteScrolling();
             },
@@ -34,12 +43,12 @@
         },
 
         get: function () {
-            return parseFloat($('.js-detect').css('opacity')).toFixed(1);
+            return parseFloat(window.getComputedStyle(this.jsdetect).opacity).toFixed(1);
         },
 
         detect: function () {
 
-            switch (parseFloat($('.js-detect').css('opacity')).toFixed(1)) {
+            switch (this.get()) {
                 case '0.2':
                     return 'mobile-small';
                 case '0.3':
@@ -70,12 +79,23 @@
         },
 
         isMobile: function () {
-            return $('.js-detect').css('opacity') < 0.8;
+            return this.get() < 0.8;
         },
 
         switchGoTop: function () {
-            yScroll >= 150 ? $(I.goTop).fadeIn(200) : $(I.goTop).fadeOut(300);
+            yScroll >= 150
+                ? (!this.gototop.style.opacity || this.gototop.style.opacity === 0 || !this.gototop.style.display || this.gototop.style.display === 'none') && fadeIn(this.gototop)
+                : this.gototop.style.opacity === "1" && fadeOut(this.gototop);
         },
+
+        onScreen: function (y) {
+
+            y = y || 0;
+            var bounds = this.getBoundingClientRect();
+            return bounds.top + y < window.innerHeight && bounds.bottom - y > 0;
+
+        },
+
 
         toggleFullScreen: function () {
 
@@ -98,7 +118,6 @@
                 } else if (document.documentElement.webkitRequestFullscreen) {
                     document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
                 }
-                console.log("вызвался");
             }
             else {
                 cancelFullScreen.call(doc);

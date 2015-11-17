@@ -46,6 +46,7 @@
                 "7": false,
                 "8": false
             },
+	        "priceGold": 3,
             "prizes": {
                 "default": {
                     "1": {
@@ -173,14 +174,15 @@
             "config": {
                 "alert": false,
                 "render": true,
-                "cache": true,
+                "cache": false,
                 "i18n": false,
                 "func": true,
                 "info": true,
                 "warn": true,
                 "error": true,
                 "log": true,
-                "clean": true
+                "clean": true,
+	            'content': true
             }
         };
 </script>
@@ -209,6 +211,7 @@ endforeach;
         Slider.init(slider); // echo slider
         Navigation.init(menu); // init navigation
         Livedate.init(); // update dates in realtime
+	    Device.init(); // detect
 
         Cache.drop().init(); // init cache engine
         Callbacks.init(); // init callbacks

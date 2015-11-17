@@ -57,7 +57,7 @@ $(function () {
             this.selectedLanguage = Player.language.current;
             D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
 
-            include('/res/js/libs/moment-locale/'+this.selectedLanguage.toLowerCase()+'.js');
+            include('/res/js/libs/moment-locale/' + this.selectedLanguage.toLowerCase() + '.js');
 
             if (!this.language(this.selectedLanguage)) {
 
@@ -229,7 +229,7 @@ $(function () {
 
             var total = 0,
                 cache = {},
-                storages = ['localStorage','sessionStorage'];
+                storages = ['localStorage', 'sessionStorage'];
 
             for (var s in storages) {
                 for (var x in window[storages[s]]) {
@@ -289,24 +289,24 @@ $(function () {
 
         },
 
+        "partials": function (key) {
+
+            matches = [];
+            this.storage[this.templates][key].replace(
+                /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
+                function (m, p1) {
+                    matches.push(p1);
+                }
+            );
+            return matches;
+
+        },
+
         "template": function (key, template) {
 
             D.log(['Cache.template:', key, template], 'cache');
 
             if (template) {
-
-                var div = document.createElement("div");
-                div.innerHTML = template;
-                if(div.childNodes[0].nodeType == 8) {
-                    eval("var options = "+div.childNodes[0].data);
-                    if (options && typeof options === 'object' && Object.size(options) && options.aliases){
-                        for (alias in options.aliases) {
-                            if (options.aliases.hasOwnProperty(alias)) {
-                                this.compile(options.aliases[alias], template)
-                            }
-                        }
-                    }
-                }
 
                 return this.compile(key, template)
                     .save(this.templates)
@@ -367,7 +367,7 @@ $(function () {
 
         "i18n": function (key) {
 
-            if(typeof key === 'object') {
+            if (typeof key === 'object') {
                 var args = [];
                 for (var i = 0; i <= key.length; i++)
                     typeof key[i] === 'string' && key[i] !== 'i18n' && args.push(key[i]);

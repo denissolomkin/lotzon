@@ -186,44 +186,82 @@
 
         "renderTMPL": function (options) {
 
-            options.template = U.parse(options.template, 'tmpl');
+            var template = '',
+                partial = false;
+
+            if (options.partials && options.partials.length)
+                partial = template = U.parse(U.parse(options.partials.shift()), 'tmpl');
+            else
+                template = options.template = U.parse(options.template, 'tmpl');
 
             /* Insert into already exist DIV */
-            if ($('.template.' + options.template).length) {
+            if ($('.template.' + template).length) {
 
-                D.log(['Render.renderTMPL:', options.template, 'TMPL already in DOM', options.template], 'render');
+                D.log(['Render.renderTMPL:', template, 'TMPL already in DOM', template], 'render');
                 R.renderHTML(options);
 
                 /* Template from cache */
-            } else if (Cache.template(options.template)) {
+            } else if (Cache.template(template)) {
 
-                D.log(['Render.renderTMPL:', options.template, 'TMPL from Cache', options.init.template], 'render');
-                options.template = Cache.template(options.template);
+                D.log(['Render.renderTMPL:', template, 'TMPL from Cache', options.init.template], 'render');
+                if (!partial)
+                    options.template = Cache.template(template);
+
                 R.renderHTML(options);
 
                 /* Template from HTML template */
-            } else if ($('#tmpl-' + options.template).length) {
+            } else if ($('#tmpl-' + template).length) {
 
-                D.log(['Render.renderTMPL:', options.template, 'TMPL from HTML:', options.template], 'render');
-                options.template = Cache.template(options.template, $('#tmpl-' + options.template).html());
+                D.log(['Render.renderTMPL:', template, 'TMPL from HTML:', template], 'render');
+
+                var templateHTML = $('#tmpl-' + template).html();
+
+                if (partial)
+                    Cache.template(template, templateHTML);
+                else
+                    options.template = Cache.template(template, templateHTML);
+
                 R.renderHTML(options);
 
                 /* Template from AJAX template */
             } else {
 
-                $.get(U.generate(options.template, 'tmpl'), function (data) {
+                $.get(U.generate(template, 'tmpl'), function (data) {
 
                     if (!$(data).not('empty').first().attr('class')) {
-                        throw("Format Template Error: " + options.template);
+                        throw("Format Template Error: " + template);
                     } else {
 
-                        D.log(['Render.renderTMPL:', options.template, 'TMPL from AJAX:', options.init.template], 'warn');
-                        options.template = Cache.template(options.template, data);
-                        R.renderHTML(options);
+                        D.log(['Render.renderTMPL:', template, 'TMPL from AJAX:', options.init.template], 'warn');
+
+                        if (partial)
+                            Cache.template(template, data);
+                        else
+                            options.template = Cache.template(template, data);
+
+                        var partials = Cache.partials(template);
+
+                        if (partials && partials.length) {
+                            if (!options.partials)
+                                options.partials = [];
+                            for (var i = 0; i < partials.length; i++)
+                                options.partials.push(partials[i]);
+                        }
+
+                        R.includeTMPL(options);
                     }
 
                 });
             }
+
+        },
+
+        "includeTMPL": function (options) {
+
+            if (options.partials && options.partials.length)
+                R.renderTMPL(options);
+            else
+                R.renderHTML(options);
 
         },
 
@@ -246,28 +284,38 @@
 
         "inputHTML": function (options) {
 
+            var renderNode = $(options.rendered)[0],
+                boxNode = $(options.box)[0];
+
+            D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box)], 'render');
+
             options.findClass = '.' + $(options.rendered).not('empty').first().attr('class').replace(/ /g, '.');
 
-            if (options.replace) {
+            if (options.append) {
 
+                var appendHTML = $(options.rendered);
+                D.log(['Appending ', appendHTML], 'render');
+                appendHTML.appendTo(options.box).hide().fadeIn();
+
+            } else if (options.replace) {
 
                 if (options.replace.indexOf('.render-list') !== -1 && options.replace.indexOf('.render-list-container') === -1) {
 
                     var appendHTML = $(options.rendered).is('.render-list')
-                            ? $(options.rendered).html()
-                            : $('.render-list', options.rendered).html();
+                        ? $(options.rendered).html()
+                        : $('.render-list', options.rendered).html();
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing ', options.replace], 'render');
+                    D.log(['Replacing ', options.replace], 'render');
                     $(appendHTML).appendTo(options.replace).hide().fadeIn();
 
                 } else if ($(options.rendered).is(options.replace)) {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing self'], 'render');
+                    D.log(['Replacing self'], 'render');
                     $(options.replace).replaceWith($(options.rendered));
 
                 } else {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replacing '+options.replace], 'render');
+                    D.log(['Replacing ' + options.replace], 'render');
                     $(options.replace).html($(options.replace, options.rendered).html()).hide().fadeIn(1000);
                 }
 
@@ -277,31 +325,31 @@
 
                 if ($(options.findClass, options.box).length) {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Replace Block in Box'], 'render');
+                    D.log(['Replace Block in Box'], 'render');
 
                     $(options.findClass, options.box)
                         .html($(options.rendered).html()).show()
                         .parents().show();
 
                     // content-box-item with content-box-item-top
-                    if($(options.rendered).is('.content-box-item-content')) {
+                    if (renderNode.classList.contains('.content-box-item-content')) {
                         $(' > div', options.box).show();
                     }
 
                 } else if (options.box.is(options.findClass)) {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Box = Rendered'], 'render');
+                    D.log(['Box = Rendered'], 'render');
                     options.box.html($(options.rendered).html()).find(' > div').show();
 
                 } else {
 
-                    D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box), 'Append to Box'], 'render');
-                    options.box.append(options.rendered).find(options.findClass).hide().fadeIn();
+                    D.log(['Append to Box'], 'render');
+                    fadeIn(options.box.append(options.rendered).find(options.findClass)[0]);
                 }
 
             } else if ($(options.findClass).length) {
 
-                D.log(['Render.inputHTML into:', (options.findClass), 'Replace Block by Finding'], 'render');
+                D.log(['Replace Block by Finding'], 'render');
                 $(options.findClass).html($(options.rendered).html()).show();
             }
 

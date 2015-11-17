@@ -19,7 +19,10 @@
 
             var submit = this.querySelector('button[type="submit"]:not(.loading):not(.infinite-scrolling)');
             if (submit) {
-                submit.classList.add('infinite-scrolling');
+
+                if (!submit.classList.contains('never-infinite-scrolling'))
+                    submit.classList.add('infinite-scrolling');
+
                 Content.autoload.call(this, event);
             }
 
@@ -28,10 +31,15 @@
         autoload: function (event) {
 
             D.log('Content.autoload', 'content');
-            var form = this;
+            var form = event && event.target || this;
 
             while (form && form.nodeName !== 'FORM')
                 form = form.parentElement;
+
+            // can be reply form
+            if(!form.classList.contains('render-list-form'))
+                return true;
+
 
             /* Object.keys(renderList.classList).map(function (key) {
              return renderList.classList[key]
@@ -54,56 +62,67 @@
                 href: form.action,
                 replace: replacePlace,
                 query: query,
-                after: Content.afterInfiniteScrolling
+                after: Content.after.autoload
             });
 
         },
 
         infiniteScrolling: function () {
 
-            var infiniteScrolling = $('.infinite-scrolling:not(.loading)').filter(':visible').first()[0];
+            var infiniteScrolling = visible('.infinite-scrolling:not(.loading)');
 
-            if (infiniteScrolling && isVisible.call(infiniteScrolling, -200)) {
-
-                this.clearLoading();
-
-                D.log('Content.infiniteScrolling', 'func');
-                infiniteScrolling.classList.add("loading");
-
-                this.autoload.call(infiniteScrolling);
-
-            }
-
-        },
-
-        afterInfiniteScrolling: function (options) {
-
-            D.log('Content.checkInfiniteScrolling', 'content');
-
-            var name = null,
-                renderList = null,
-                className = [];
-
-            if (options.replace.indexOf('.render-list-container') !== -1) { /* new filter, so update class render-list */
-                for (name in options.query) {
-                    if (options.query[name] && ['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1 && options.query[name]) { /* skip unimportant filters */
-                        if (!renderList && !(renderList = document.querySelector(options.replace + ' .render-list')))  /* break, if can't find render-list */
-                            break;
-                        className = [name, options.query[name]];
-                        renderList.classList.add(className.join('-'));
+            if (infiniteScrolling.length) {
+                Content.clearLoading();
+                for (var i = 0; i < infiniteScrolling.length; i++){
+                    if (Device.onScreen.call(infiniteScrolling[i], -200)) {
+                        D.log('Content.infiniteScrolling', 'func');
+                        infiniteScrolling[i].classList.add("loading");
+                        Content.autoload.call(infiniteScrolling[i]);
                     }
                 }
             }
 
-            if (!Object.size(options.json)) {
 
-                if (infiniteScrolling = document.querySelector(options.replace + ' .infinite-scrolling.loading'))
-                    infiniteScrolling.remove();
+        },
+
+        updateBanners:function(){
+
+            if(/192.168.56.101|lotzon.com/.test(location.hostname)) {
+                R.push('/banner/top'); // 3
+                R.push('/banner/right'); // 4
             }
+        },
 
-            Content.clearLoading(options)
-                .infiniteScrolling();
+        after: {
 
+            autoload: function (options) {
+
+                D.log('Content.after.autoload', 'content');
+
+                var name = null,
+                    renderList = null,
+                    className = [];
+
+                if (options.replace.indexOf('.render-list-container') !== -1) { /* new filter, so update class render-list */
+                    for (name in options.query) {
+                        if (options.query[name] && ['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1 && options.query[name]) { /* skip unimportant filters */
+                            if (!renderList && !(renderList = document.querySelector(options.replace + ' .render-list')))  /* break, if can't find render-list */
+                                break;
+                            className = [name, options.query[name]];
+                            renderList.classList.add(className.join('-'));
+                        }
+                    }
+                }
+
+                if (!Object.size(options.json)) {
+                    if (infiniteScrolling = document.querySelector(options.replace + ' .infinite-scrolling.loading'))
+                        infiniteScrolling.remove();
+                }
+
+                Content.clearLoading(options)
+                    .infiniteScrolling();
+
+            }
         },
 
         clearLoading: function () {

@@ -26,7 +26,6 @@
 <div class="site-top">
     <div class="container">
         <div class="banner-3">
-            <?php include "banner_3.php"; ?>
         </div>
     </div>
 </div>

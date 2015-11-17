@@ -6,31 +6,8 @@
 
             <div class="content-box-item home-blog">
 
-                <form class="render-list-form" action="/blog/all" method="get">
+                <form class="render-list-form" action="/blog/posts" method="get">
                     <div class="render-list">
-
-                        {{#reverse .}}
-                        <div class="post-item clearfix">
-                            <div class="post-item-img">
-                                <img src=" {{ this.img }}" alt="">
-                            </div>
-                            <div class="post-item-description">
-                                <div class="post-item-inf clearfix">
-                                    <div class="post-item-date live-date" data-stamp="{{ date }}">{{from this.date}}
-                                    </div>
-                                    <div class="post-item-views-comments">
-                                        <div class="post-item-views-inf">{{ this.stat.views }}</div>
-                                        <div class="post-item-comments-inf">{{ this.stat.comments }}</div>
-                                    </div>
-                                </div>
-                                <div class="post-item-title">
-                                    {{ this.title }}
-                                </div>
-                            </div>
-                            <a href="/post/{{ id }}" class="post-more-btn">{{i18n "button-more"}}</a>
-                        </div>
-                        {{/reverse}}
-
                     </div>
                     <div class="container-center">
                         <button type="submit" class="infinite-scrolling btn-flat">{{i18n "button-load-more"}}</button>

@@ -19,6 +19,16 @@
                 return true;
 
             }
+        },
+
+        error:{
+
+            gold: function(){
+
+                return true;
+
+            }
+
         }
 
 

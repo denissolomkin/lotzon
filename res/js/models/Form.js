@@ -1,33 +1,33 @@
-(function() {
+(function () {
 
     Form = {
 
         timeout: 0,
-        
+
         do: {
 
-            validate: function() {
+            validate: function (event) {
 
                 var $form = $(this).closest('form'),
                     $incompleteElements = $('.incomplete', $form),
                     $errorElements = $('.error', $form),
                     $requiredElements = $('.required', $form).filter(Form.filterRequired),
                     valid = true,
-                    callback = U.parse($form.attr('action'));
+                    callback = U.parse(U.parse($form.attr('action')), 'tmpl');
 
                 D.log(['C.validate.' + callback]);
 
                 if ($form.length) {
 
                     if ($errorElements.length) {
-                        $.each($errorElements, function(index, element) {
+                        $.each($errorElements, function (index, element) {
                             // $(element).removeClass('error');
                         })
                     }
 
                     if ($requiredElements.length) {
 
-                        $.each($requiredElements, function(index, element) {
+                        $.each($requiredElements, function (index, element) {
                             // $(element).parent().addClass('error');
                         })
 
@@ -35,7 +35,7 @@
                     }
 
                     if ($incompleteElements.length) {
-                        $.each($incompleteElements, function(index, element) {
+                        $.each($incompleteElements, function (index, element) {
                             // $(element).parent().addClass('error');
                         })
 
@@ -44,7 +44,7 @@
 
 
                     if (Callbacks.validate[callback]) {
-                        valid = !Callbacks.validate[callback].call(this) ? false : valid;
+                        valid = !Callbacks.validate[callback].call(this, event) ? false : valid;
                     }
 
                 }
@@ -55,23 +55,24 @@
                 return valid;
             },
 
-            submit: function(event) {
+            submit: function (event) {
 
                 var $button = $(this),
                     $form = $button.closest('form'),
                     formData = $form.serializeObject(),
                     formMethod = $form.attr('method'),
                     formUrl = U.generate($form.attr('action'), formMethod),
-                    formCallback = U.parse($form.attr('action'));
+                    formCallback = U.parse(U.parse($form.attr('action')), 'tmpl');
 
                 event.preventDefault();
-                Form.start.call(this);
+                event.stopPropagation();
+                Form.start.call(this, event);
 
                 if ($button.hasClass('on')) {
 
                     D.log('button.submit', 'info');
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $.ajax({
                             url: formUrl,
                             method: formMethod, // 'post'
@@ -79,37 +80,37 @@
                             dataType: 'json',
                             statusCode: {
 
-                                404: function(data) {
+                                404: function (data) {
                                     throw (data.message);
                                 },
 
-                                200: function(data) {
+                                200: function (data) {
 
                                     Form.stop.call($button)
                                         .message.call($button, data.message);
 
                                     if (Callbacks[formMethod][formCallback]) {
                                         D.log(['C.' + formMethod + '.callback']);
-                                        Callbacks[formMethod][formCallback](data.res);
+                                        Callbacks[formMethod][formCallback].call($form[0], data.res);
                                     }
 
                                 },
 
-                                201: function(data) {
+                                201: function (data) {
                                     throw (data.message);
                                 },
 
-                                204: function(data) {
+                                204: function (data) {
                                     throw (data.message);
                                 }
                             }
                         })
-                    }, 10000);
+                    }, Form.timeout);
                 }
             }
         },
 
-        filterRequired: function() {
+        filterRequired: function () {
 
             var name = $(this).attr('name'),
                 type = $(this).attr('type'),
@@ -133,9 +134,9 @@
 
         },
 
-        start: function() {
+        start: function (event) {
 
-            if (Form.do.validate.call(this)) {
+            if (Form.do.validate.call(this, event)) {
                 D.log('button.loading', 'info');
                 $(this).hasClass('on') && $(this).addClass('loading');
             }
@@ -143,7 +144,7 @@
             return Form;
         },
 
-        stop: function() {
+        stop: function () {
 
             if (this instanceof jQuery) {
                 this.removeClass('loading');
@@ -153,7 +154,7 @@
             return Form;
         },
 
-        message: function(message) {
+        message: function (message) {
 
             if (!message)
                 return Form;
@@ -162,7 +163,7 @@
             var $status = $('<div class="status">' + Cache.i18n(message) + '</div>');
 
             $button.fadeOut(200).delay(2400).fadeIn(200);
-            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function() {
+            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function () {
                 $(this).remove()
             });
         }

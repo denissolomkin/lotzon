@@ -88,7 +88,6 @@ $(function () {
 
             args = args || {};
             var template = Cache.template(name);
-            console.log(name, args, template);
             return new Handlebars.SafeString(template(args));
 
         },
@@ -123,6 +122,15 @@ $(function () {
         'from': Livedate.fn.from,
         'day': Livedate.fn.day,
 
+        'false': function (v1) {
+            return v1 === false;
+        },
+        'null': function (v1) {
+            return v1 === null;
+        },
+        'true': function (v1) {
+            return v1 === true;
+        },
         'eq': function (v1, v2) {
             return v1 === v2;
         },

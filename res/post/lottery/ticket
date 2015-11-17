@@ -1,6 +1,4 @@
 {
-    "status": 1,
-    "message": "OK",
     "res":{
         "filledTickets": {
             "8": [1, 2, 3, 4, 5, 6],

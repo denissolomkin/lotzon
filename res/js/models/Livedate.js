@@ -5,12 +5,19 @@
         init: function () {
 
             livedateInterval = window.setInterval(function () {
-                $('.live-date').filter(':visible').each(function () {
-                    var el = $(this),
-                        date = Livedate.fn.from(el.data('stamp'));
-                    if (date != el.text())
-                        el.text(date).hide().fadeIn();
-                })
+
+                var livedates = visible('.live-date');
+
+                for(var i = 0; i<livedates.length;i++ ){
+                    var el = livedates[i],
+                        date = Livedate.fn.from(el.getAttribute('data-stamp'));
+
+                    if (date != el.innerHTML){
+                        el.innerHTML = date;
+                        fadeIn(el);
+                    }
+                }
+
             }, 1000 * 60);
 
         },

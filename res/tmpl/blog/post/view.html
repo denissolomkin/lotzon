@@ -33,34 +33,38 @@
             </div>
 
             <div class="post-comments">
-                <div class="title">{{i18n "title-post-comments"}} - {{ stat.comments}}</div>
-
-                <form action="/post/{{id}}/comments" method="get" class="filter-render-list">
-
-                    <div class="post-comments render-list"></div>
-
-                    {{#if (gt stat.comments 0)}}
-                        <input type="submit" class="" value="{{i18n "button-load-more"}}"></input>
-                    {{/if}}
-                </form>
+                <div class="title">{{i18n "title-post-comments"}} ({{ stat.comments}})</div>
 
                 <!-- COMMENT FORM -->
                 <div class="message-form-wrapper">
                     <div class="message-form">
-                        <form action="">
-                            <textarea class="message-form-area" name="" placeholder="Напишите комментарий" rows="1"></textarea>
+                        <form action="/blog/post/{{id}}/comments" method="post">
+                            <textarea class="message-form-area" name="" placeholder="{{i18n 'message-comments-write-comment'}}" rows="1"></textarea>
 
                             <div class="message-form-actions clearfix">
                                 <label class="input-file-wrapper">
                                     <input type="file" class="input-file">
                                 </label>
-                                <button type="submit" class="message-form-btn">Отправить</button>
+                                <button type="submit" class="message-form-btn">{{i18n "button-send"}}</button>
                                 <div class="message-form-smileys"></div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <!-- end of  COMMENT FORM -->
+
+                <form action="/blog/post/{{id}}/comments" method="get" class="render-list-form">
+
+                    <div class="post-comments render-list" id="blog-post-{{id}}-comments">
+                    </div>
+
+                    {{#if (gt stat.comments 0)}}
+                    <div class="container-center">
+                        <button type="submit" class="btn-flat never-infinite-scrolling">{{i18n "button-load-more"}}</button>
+                    </div>
+                    {{/if}}
+
+                </form>
 
             </div>
 

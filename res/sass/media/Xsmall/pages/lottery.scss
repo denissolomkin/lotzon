@@ -17,7 +17,7 @@
 					display: inline-block;		
 					&:first-child {
 						margin-right: 30px;
-						min-width: 125px;
+						min-width: 200px;
 					}
 				}	
 				span {
@@ -27,7 +27,9 @@
 		}
 	}
 }
-
+.ticket-done {
+	margin-right: 10px;
+}
 .content-box-content {
 	padding-left: 10px;
     margin: 0 auto;
@@ -50,22 +52,6 @@
 	padding: 52px 0 30px;
 }
 
-@media (min-width: 540px) {
-	.ticket-numbers {
-    	height: 360px;
-  	}
-  	.ticket-items {
-  		height: 500px;
-  	}
-}
-@media (min-width: 600px) {
- 	.ticket-numbers {
-		height: 300px;
-	}
-  	.ticket-items {
-  		height: 440px;
-  	}
-}
 
 @media (min-width: 640px) {
 	.lottery-grid {
@@ -85,7 +71,6 @@
 						display: inline-block;		
 						&:first-child {
 							margin-right: 30px;
-							min-width: 190px;
 						}
 					}	
 					span {
@@ -162,5 +147,8 @@
 	}
 	.content-box.tickets .title {
     	padding-left: 40px;
+  	}
+  	.ticket-done {
+  		margin-right: 30px;
   	}
 }

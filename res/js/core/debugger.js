@@ -20,10 +20,10 @@ $(function () {
                 }
             });
 
-            window.onerror = function (message, url, line, col, error) {
+            /*window.onerror = function (message, url, line, col, error) {
                 D.error([message, url, line]);
                 return true;
-            }
+            }*/
         },
 
         "log": function (log, type) {
