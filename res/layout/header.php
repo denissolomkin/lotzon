@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html style="overflow: auto;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
 
     <link rel="stylesheet" href="/res/css/olya.css">
-    <link rel="stylesheet" href="/res/css/zhenya.css">
 
 
 </head>
@@ -25,7 +24,8 @@
 <!-- SITE TOP -->
 <div class="site-top">
     <div class="container">
-        <div class="banner-3">
+        <div id="banner-desktop-header" class="banner-3">
+	        <div style="height: 100%; background: #ccc;"></div>
         </div>
     </div>
 </div>
@@ -42,7 +42,7 @@
             <a href="/blog" class="header-logo"></a>
 
             <!-- MENU -->
-            <nav class="menu"></nav>
+            <nav id="menu-navigation" class="menu"></nav>
             <!-- end of MENU -->
 
             <div class="menu-btns">
@@ -63,9 +63,9 @@
         <!-- Header Right -->
         <div class="header-right">
 
-            <div class="inf-slider"></div>
+            <div id="menu-slider" class="inf-slider"></div>
 
-            <div class="balance"></div>
+            <div id="menu-balance" class="balance"></div>
      <button class="tmp_but" onclick="Lottery.prepareData()">Start</button>
         </div>
         <!-- .header-right -->

@@ -1,62 +1,88 @@
 
-<div class="pop-box">
+<div id="lottery-animation-process" class="pop-box content-main">
     <div id="lottery-process" class="clearfix">
-        <ul class="balls-end-game clearfix">
-            {{#combination}}
-            <li class="g-oc_li unfilled">
-                {{#each this}}
-                <div class="goc_li-nb">
-                    <span class="g-oc_span">{{.}}</span>
-                </div>
-                {{/each}}
-                <div class="goc_li-sh"></div>
-                <div class="goc_li-sh2"></div>
-            </li>
-            {{/combination}}
-        </ul>
-        <section class="lottery-amimation-box">
-            <div class="ghd-tickets">
-
-                {{#if tickets}}
-                <ul>
-                    {{#tickets}}
-                    <li class="clearfix">
-                        <span>{{i18n "title-ticket"}} N°{{num}} </span>
-                        <ul>
-                            {{#combination}}
-                            <li class="filled-ball" data-num='{{ball}}'>
-                                {{ball}}
-                            </li>
-                            {{/combination}}
-                            {{^combination}}
-                            <li>
-                                не заполнен
-                            </li>
-                            {{/combination}}
-                            <li>
-                                {{prize}} {{currency}}
-                            </li>
-                        </ul>
-                    </li>
-                    {{/tickets}}
-                </ul>
-
-                {{#if win}}
-                <div class="ghd-text ghd-won">Ваш выигрыш:
-                    {{#each win}}
-                    {{prize}} {{currency}} &nbsp;
+    <button class="close won" onclick="parentNode.parentNode.remove()"></button>
+        <div class="container clearfix">
+            <div><a href="/lottery" class="header-logo"></a></div>
+            <ul class="balls-end-game clearfix">
+                {{#combination}}
+                <li class="g-oc_li unfilled">
+                    {{#each this}}
+                    <div class="goc_li-nb">
+                        <span class="g-oc_span">{{.}}</span>
+                    </div>
                     {{/each}}
+                    <div class="goc_li-sh"></div>
+                    <div class="goc_li-sh2"></div>
+                </li>
+                {{/combination}}
+            </ul>
+            <section class="lottery-amimation-box">
+                <div class="ghd-tickets">
+                    {{#if tickets}}
+                    <ul>
+                        {{#tickets}}
+                        <li class="clearfix">
+                            <span>{{#if (eq num (lottery 'totalTickets'))}} <span class="gold">GOLD</span> {{else}} {{i18n "title-lottery-ticket-num"}} N°{{num}} {{/if}}</span>
+                            <ul>
+                                {{#combination}}
+                                <li class="filled-ball" data-num='{{ball}}'>
+                                    {{ball}}
+                                </li>
+                                {{/combination}}
+                                {{^combination}}
+                                <li class="unfilled">
+                                    не заполнен
+                                </li>
+                                {{/combination}}
+                            </ul>
+                        </li>
+                        {{/tickets}}
+                    </ul>
+
+                    {{#if win}}
+                    <div class="ghd-text ghd-won">
+                        <div class="grid-container">
+                        
+                            <div class="width-50">
+
+                              <span>БАЛЛОВ ВЫИГРАНО:</span>
+                               <strong>
+                                {{#each win}}
+                                {{#if (eq currency 'points') }}  
+                                        {{prize}}
+                                {{else}}0{{/if}}
+                                {{/each}}
+
+                              </strong>
+                            </div>
+                            <div class="width-50">
+                              <span>ДЕНЕГ ВЫИГРАНО:</span> 
+
+                             <strong>
+                                {{#each win}}
+                                    {{#if (eq currency 'money') }}
+                                        {{prize}}
+                                    {{else}}0{{/if}}
+                                {{/each}}
+                              </strong>
+                        </div>                        
+                    </div>
+
+                    {{else}}
+                    <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
+                    {{/if}}
+
+                    {{else}}
+                    <div class="ghd-text">Вы не принимали участия в розыгрыше</div>
+                    {{/if}}
+                    </div>
                 </div>
-                {{else}}
-                <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
-                {{/if}}
-
-                {{else}}
-                <div class="ghd-text">Вы не принимали участия в розыгрыше</div>
-                {{/if}}
-
-            </div>
-        </section>
+            </section>
+        </div>
+        <div class="container-center won">
+            <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/history/{{ id }}">СМОТРЕТЬ ВСЕ РЕЗУЛЬТАТЫ</a> 
+        </div> 
     </div>
 </div>
 <!-- END PROCESS BLOCK -->

@@ -1,9 +1,8 @@
-﻿<div class="content-top">
-	<div class="content-main">
+﻿<div id="lottery-history-view" class="content-main">
 
 		<div class="content-box">
 
-            <div class="content-box-header back">{{date}}</div>
+            <div class="content-box-header back">{{day date}}</div>
 
 			<div class="content-box-content clearfix">
 				<div class="content-box-item game_history_detail" data-lotteryid="{{id}}">
@@ -13,7 +12,7 @@
                         {{/combination}}
 					</div>
 
-					<div class="ghd-tickets" style="min-height: 100px;">
+					<div id="lottery-tickets-view" class="ghd-tickets" style="min-height: 100px;">
 					</div>
 
 					<div class="ghd-game-inf clearfix">
@@ -38,4 +37,3 @@
 		</div>
 
 	</div><!-- .content-main -->
-</div><!-- .content-top -->

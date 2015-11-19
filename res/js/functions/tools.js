@@ -28,7 +28,7 @@
             for (i in el)
                 el.hasOwnProperty(i) && f(el[i]);
 
-        } else if(el && typeof el === 'object') {
+        } else if (el && typeof el === 'object') {
 
             console.log(el);
 
@@ -50,11 +50,11 @@
             el = document.querySelectorAll(el);
 
         if (el && el.hasOwnProperty('length')) {
-            for (i in el){
+            for (i in el) {
                 el.hasOwnProperty(i) && f(el[i]);
             }
 
-        } else if(el && typeof el === 'object') {
+        } else if (el && typeof el === 'object') {
 
             el.style.opacity = 0;
             el.style.display = display || "block";
@@ -77,21 +77,41 @@
         if (el.length) {
             for (i in el)
                 el.hasOwnProperty(i) && f(el[i]);
-        } else if(el && typeof el === 'object') {
+        } else if (el && typeof el === 'object') {
             isVisible(el) ? fadeOut(el) : fadeIn(el);
         }
     };
 
+    compare = function(array1, array2){
+
+        var check = false;
+
+        if(!array1 || !array2)
+            return check;
+
+        for( var i = 0; i < array1.length && !check ; i++ ) {
+            check = array2.indexOf(array1[i]) !== -1;
+        }
+
+        return check;
+
+    };
     visible = function (el, parent) {
 
         var visibleElements = [];
 
         if (typeof el === 'string')
-            el = parent && parent.querySelectorAll(el) || document.querySelectorAll(el);
+            el = [parent && parent.querySelectorAll(el) || document.querySelectorAll(el)];
 
-        for (i in el)
-            if (el.hasOwnProperty(i) && isVisible(el[i]))
-                visibleElements.push(el[i]);
+        else if (typeof el === 'object' && el.length)
+            for (i in el)
+                if (el.hasOwnProperty(i))
+                    el[i] = parent && parent.querySelectorAll(el[i]) || document.querySelectorAll(el[i])
+
+        for(var y=0;y<el.length;y++)
+            for (i in el[y])
+                if (el[y].hasOwnProperty(i) && isVisible(el[y][i]))
+                    visibleElements.push(el[y][i]);
 
         return visibleElements;
     };
@@ -101,7 +121,7 @@
         if (obj == document)
             return true;
 
-        if (!obj || !obj.parentNode || obj.style.opacity === '0' || obj.style.visibility === 'hidden' || obj.style.display === 'none' || obj.clientWidth == 0){
+        if (!obj || !obj.parentNode || obj.style.opacity === '0' || obj.style.visibility === 'hidden' || obj.style.display === 'none' || obj.clientWidth == 0) {
             return false;
         }
 

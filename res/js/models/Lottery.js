@@ -11,7 +11,7 @@
             Carousel.initOwl();
             Ticket.render();
             Tickets.countdown();
-            R.push('/lottery/history');
+            // R.push('/lottery/history');
         },
 
         update: function() {
@@ -105,7 +105,7 @@
                     sum = ballData.prize * ballData.matches;
 
                 lotterySummary[ballData.balls] = {
-                    currency: Player.getCurrency(ballData.currency),
+                    currency: ballData.currency,
                     prize: ballData.prize,
                     matches: ballData.matches,
                     sum: sum
@@ -158,8 +158,7 @@
                 template: 'lottery-history-tickets',
                 href: 'lottery-tickets-' + lotteryId,
                 format: Lottery.extendTickets,
-                arguments: [Lottery.summary, Lottery.data.combination],
-                box: '.ghd-tickets'
+                arguments: [Lottery.summary, Lottery.data.combination]
             })
 
         },
@@ -248,9 +247,8 @@
             console.log('renderAnimation: ', json);
 
             R.push({
-                box: 'header',
                 json: json,
-                template: 'lottery-animation-process',
+                href: 'lottery-animation-process',
                 after: Lottery.runAnimation
             })
         },
@@ -258,18 +256,13 @@
         runAnimation: function() {
             var randomInterval,
                 readyBalls = [];
+                
             if (readyBalls.length === Tickets.requiredBalls) {
+                $("#lottery-process").addClass('lottery-won');
                 D.log('Lottery.runAnimation: clearInterval', 'func');
                 window.clearInterval(intervalAnimation);
-                if ($("#lottery-process").find('li.won').length) {
-                    $('.ghd-won').css({
-                        'display': 'block'
-                    });
-                } else {
-                    $('.ghd-won').css({
-                        'display': 'block'
-                    });
-                }
+
+                
             }
 
             var counter = 400;
@@ -290,12 +283,12 @@
 
                 ball.addClass('random-ball');
                 ball.css({
-                    // 'transition' : 'all ' + counter + 'ms ease'
                     'transition': 'all ' + counter + 'ms cubic-bezier(0.3, 0.2, 0.1, 0.1)'
                 })
 
                 $.each($('.g-oc_li.unfilled'), function(index, li) {
                     readyBalls.push(index);
+                 
                     var ball = $('.goc_li-nb', li).not('.random-ball');
                     if (ball.length) {} else {
                         $(this).removeClass('unfilled')
@@ -307,10 +300,39 @@
                     }
 
                 })
-                intervalAnimation = setInterval(animation, count);
-            }
-            var intervalAnimation = setInterval(animation, counter);
+                console.log($('.g-oc_li.unfilled').length, "$('.unfilled').length");
+                if (!$('.g-oc_li.unfilled').length) {
+  
+                    if ($("#lottery-process li.won").length) {
 
+                       
+                    setTimeout(function(){
+                        
+                        $("#lottery-process").addClass('lottery-won');
+                        
+                        $('#lottery-process .ghd-won, #lottery-process .won').css({
+                            'display': 'block'
+                        });
+
+                        $(".goc_li-sh, .goc_li-sh2").css({'display': 'none'});
+
+                    }, 2000)
+
+                       
+                    } 
+            
+                    clearInterval(intervalAnimation);
+                }
+                else {
+                  intervalAnimation = setInterval(animation, count);  
+                }
+                
+       
+            }
+    
+
+            var intervalAnimation = setInterval(animation, counter);
+      
         }
 
     }

@@ -41,10 +41,14 @@
                 "button-balance-convert": "Конвертировать",
                 "button-balance-transactions": "История транзакций",
                 "button-balance-payments": "История выплат",
-
+                
                 "button-more": "Подробнее",
                 "button-save": "Сохранить",
                 "button-load-more": "Показать еще",
+
+                "button-games-exit": "Выход",
+                "button-games-money": "Деньги",
+                "button-games-points": "Баллы",
 
                 "title-error": "Ошибка",
                 "title-points": "баллы",
@@ -59,6 +63,9 @@
                 "title-games-online": "Игры Онлайн",
                 "title-games-chance": "Шансы",
                 "title-games-rating": "Рейтинг",
+                "title-games-lastWin": "выигрыш",
+                "title-games-credits": "баланс",
+                "title-games-bet": "ставка",
 
                 "title-slider-jackpot": "Джекпот",
                 "title-slider-players": "Участников",
@@ -81,6 +88,7 @@
                 "title-lottery-prizes-match": "Угадано",
                 "title-lottery-prizes-balls": "номеров",
                 "title-lottery-prizes-from": "из",
+                "title-lottery-ticket-num": "БИЛЕТ",
 
                 "title-order-date": "Дата заявки",
                 "title-order-status": "Статус заявки",

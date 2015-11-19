@@ -1,10 +1,13 @@
 <!-- COMMENT FORM -->
 <div class="message-form-wrapper">
     <div class="message-form">
-        <form action="/blog/post/{{post}}/comments" method="post">
+        <form action="/blog/post/{{#if post}}{{post}}{{else}}{{id}}{{/if}}/comments" method="post">
             <input type="hidden" name="user" value="{{user.id}}">
             <input type="hidden" name="comment" value="{{comment}}">
-            <textarea class="message-form-area" name="text" placeholder="{{i18n 'message-comments-write-comment'}}" rows="1">{{user.name}}, </textarea>
+            <textarea class="message-form-area"
+                      name="text"
+                      placeholder="{{i18n 'message-comments-write-comment'}}"
+                      rows="1">{{#if user.name}}{{user.name}},{{/if}}</textarea>
 
             <div class="message-form-actions clearfix">
                 <label class="input-file-wrapper">

@@ -47,36 +47,57 @@
              */
 
             var renderList = form.querySelector(".render-list"),
-                query = $(form).serializeObject(),
-                isFilterChange = event && event.type === 'change',
+                query = $(form).serializeObject();
+
+            /*
+
                 replaceForm = 'form[action="' + form.getAttribute('action') + '"]',
                 replacePlace = replaceForm + (isFilterChange
-                        ? ' .render-list-container' /* change filter */
-                        : ' .render-list') /* submit or scroll */;
+                        ? ' .render-list-container' // change filter
+                        : ' .render-list') // submit or scroll
+            */
 
-            query.first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id');
-            query.last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id');
-            query.offset = renderList && renderList.childElementCount;
 
-            R.push({
-                href: form.action,
-                replace: replacePlace,
-                query: query,
-                after: Content.after.autoload
-            });
+            if(event && event.type === 'change') {
+
+                R.push({
+                    href: form.action+'/list',
+                    json: {},
+                    query: query,
+                    after: Content.after.changeFilter
+                });
+
+            } else {
+
+                query.first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id');
+                query.last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id');
+                query.offset = renderList && renderList.childElementCount;
+
+                R.push({
+                    href: form.action,
+                    query: query,
+                    after: Content.after.autoload
+                });
+            }
 
         },
 
         infiniteScrolling: function () {
 
-            var infiniteScrolling = visible('.infinite-scrolling:not(.loading)');
+            var infiniteScrolling = visible(['.once-infinite-scrolling:not(.loading)','.infinite-scrolling:not(.loading)']);
 
             if (infiniteScrolling.length) {
-                Content.clearLoading();
+                // Content.clearLoading();
                 for (var i = 0; i < infiniteScrolling.length; i++){
                     if (Device.onScreen.call(infiniteScrolling[i], -200)) {
                         D.log('Content.infiniteScrolling', 'func');
                         infiniteScrolling[i].classList.add("loading");
+
+                        if (infiniteScrolling[i].classList.contains('once-infinite-scrolling')){
+                            infiniteScrolling[i].classList.remove('once-infinite-scrolling');
+                            infiniteScrolling[i].classList.add('never-infinite-scrolling');
+                        }
+
                         Content.autoload.call(infiniteScrolling[i]);
                     }
                 }
@@ -87,40 +108,48 @@
 
         updateBanners:function(){
 
-            if(/192.168.56.101|lotzon.com/.test(location.hostname)) {
-                R.push('/banner/top'); // 3
-                R.push('/banner/right'); // 4
+            if(0 && /192.168.56.101|lotzon.com/.test(location.hostname)) {
+                R.push('/banner/desktop/top');
+                R.push('/banner/desktop/right');
+                R.push('/banner/desktop/fixed');
+                R.push('/banner/tablet/top');
+                R.push('/banner/tablet/bottom');
             }
         },
 
         after: {
 
+            changeFilter: function (options) {
+
+                D.log('Content.after.changeFilter', 'content');
+
+                var name = null,
+                    className = [];
+
+                for (name in options.query) {
+                    if (options.query.hasOwnProperty(name) && options.query[name] && name.indexOf('date') === -1) { /* skip unimportant filters */
+                        className = [name, options.query[name]];
+                        options.rendered.classList.add(className.join('-'));
+                    }
+                }
+
+            },
+
             autoload: function (options) {
 
                 D.log('Content.after.autoload', 'content');
 
-                var name = null,
-                    renderList = null,
-                    className = [];
+                console.log(options.node, options.node.parentNode,  options.node.parentNode.querySelector('.loading'));
 
-                if (options.replace.indexOf('.render-list-container') !== -1) { /* new filter, so update class render-list */
-                    for (name in options.query) {
-                        if (options.query[name] && ['offset', 'first_id', 'last_id'].indexOf(name) === -1 && name.indexOf('date') === -1 && options.query[name]) { /* skip unimportant filters */
-                            if (!renderList && !(renderList = document.querySelector(options.replace + ' .render-list')))  /* break, if can't find render-list */
-                                break;
-                            className = [name, options.query[name]];
-                            renderList.classList.add(className.join('-'));
-                        }
+                if(infiniteScrolling = options.node.parentNode.querySelector('.loading')) {
+                    if (!Object.size(options.json)) {
+                        infiniteScrolling.remove();
+                    } else {
+                        infiniteScrolling.classList.remove('loading');
                     }
                 }
 
-                if (!Object.size(options.json)) {
-                    if (infiniteScrolling = document.querySelector(options.replace + ' .infinite-scrolling.loading'))
-                        infiniteScrolling.remove();
-                }
-
-                Content.clearLoading(options)
-                    .infiniteScrolling();
+                Content.infiniteScrolling();
 
             }
         },

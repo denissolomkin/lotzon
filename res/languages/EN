@@ -28,6 +28,10 @@
                 "button-payments": "История выплат",
                 "button-save": "Save",
 
+                "button-games-exit": "Exit",
+                "button-games-money": "Money",
+                "button-games-points": "Points",
+
                 "title-points": "points",
                 "title-ticket": "Билет",
                 "title-prizes-draw": "Розыгрыш призов",
@@ -37,6 +41,9 @@
                 "title-games-online": "Игры Онлайн",
                 "title-games-chance": "Шансы",
                 "title-games-rating": "Рейтинг",
+                "title-games-lastWin": "last win",
+                "title-games-credits": "credits",
+                "title-games-bet": "bet",
                 "title-error": "Ошибка",
                 "title-slider-jackpot": "Джекпот",
                 "title-slider-players": "Участников",

@@ -80,59 +80,70 @@
 }
 
 #lottery-process {
-  padding: 60px 20px;
-  background-color: #a6d1d5;
-  height: 720px;
-  & .ghd-won {
-    display: none;
-  }
-  & .ghd-fale {
-    display: none;
-  }
+  height: 680px;
+  & .container {
+    max-width: 520px;
+    margin: 0 auto;
+    min-width: 0;
+    padding: 0;
+    & > div {
+      height: 73px;
+      & a {
+        top: 27px;
+      }
+    }
+  }  
 }
-
+.ghd-tickets {
+  padding: 0 24px;
+}
 .balls-end-game {
   & .g-oc_li {
-    width: 105px;
-    height: 105px;
-    margin-right: 25px;
+    width: 72px;
+    height: 72px;
+    margin-right: 17px;
     float: left;
-    font: 50px / 100px Handbook-bold;
-    color: #8f8e8e;
+    font: 25px  Handbook-bold;
+    line-height: 70px;
+    color: #000;
     text-align: center;
     letter-spacing: -2px;
     position: relative;
     overflow: hidden;
+    &:last-of-type {
+      margin-right: 0;
+    }
     & .goc_li-sh {
-      width: 105px;
-      height: 105px;
+      width: 70px;
+      height: 70px;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 1;
-      background: url(../css/img/sprite.png);
-      background-position: -625px 0px;
+      // background: url(../css/img/sprite.png);
+      background: #fff;
+      background-position: -200px -383px;
     }
     & .goc_li-sh2 {
-      width: 105px;
-      height: 105px;
+      width: 73px;
+      height: 73px;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 100;
       background: url(../css/img/sprite.png);
-      background-position: -620px 274px;
+      background-position: -126px -383px;
     }
     & .goc_li-nb {
       background-color: #ffe400;
-      width: 100px;
-      height: 100px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       text-align: center;
       letter-spacing: -2px;
       position: absolute;
       left: 0;
-      top: -105px;
+      top: -73px;
       z-index: 2;
       &.random-ball {
         top: 105px;
@@ -143,8 +154,30 @@
     }
   }
 }
-
-
+.ghd-tickets li span {
+  min-width: 74px;
+}
+.ghd-tickets li ul li.filled-ball {
+  margin-right: 24px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  
+  &.won {
+    width: 40px;
+    height: 40px; 
+    line-height: 40px;
+  }
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+.ghd-tickets li span {
+  margin-right: 38px;
+}
+.ghd-tickets li {
+  font-size: 19px;
+}
 // MATCHES-INF ------------------------------ //
 
 .matches-inf-wrapper {
@@ -205,9 +238,6 @@
   margin-right: 5px;
 }
 
-.ghd-won {
-  font-size: 21px;
-}
 
 // ----------------------------- //
 
@@ -312,4 +342,12 @@
 }
 .content-box.tickets .title {
   padding-left: 23px;
+}
+
+@media (min-width: 769px) {
+  #lottery-process {
+    &.lottery-won {
+      background: url(img/1024.png) center center no-repeat;
+    }
+  }
 }

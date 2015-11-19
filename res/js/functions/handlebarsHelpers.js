@@ -14,7 +14,7 @@ $(function () {
             }
 
             var response = eval("Player." + fn.toString());
-            D.log('Player.' + fn + (options ? '(' + options + ')' : ''), 'func');
+            D.log('Player.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Player." + fn + "(" + options + ")") || response;
         },
 
@@ -32,7 +32,7 @@ $(function () {
             }
 
             var response = eval("Tickets." + fn.toString());
-            D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'func');
+            D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Tickets." + fn + "(" + options + ")") || response;
         },
 
@@ -97,18 +97,6 @@ $(function () {
             console.log(this, name, args, opt);
         },
 
-        'renderPartial': function (partialName, options) {
-            if (!partialName) {
-                console.error('No partial name given.');
-                return '';
-            }
-            var partial = Handlebars.partials[partialName];
-            if (!partial) {
-                console.error('Couldnt find the compiled partial: ' + partialName);
-                return '';
-            }
-            return new Handlebars.SafeString(partial(options.hash));
-        },
 
         'cache': function () {
 

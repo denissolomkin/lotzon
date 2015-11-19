@@ -157,7 +157,23 @@
 }
 
 .ghd-won {
-  font-size: 18px;
+  margin-top: 10px;
+  & .grid-container {
+    max-width: 260px;
+  }
+  & span{
+    max-width: 70px;
+    display: inline-block;
+    line-height: 18px;
+    &.hidden {
+      display: none;
+    }
+  } 
+  & strong{
+    font-size: 42px;
+    line-height: 34px;
+    font-family: Handbook-bold;
+  } 
 }
 
 // ----------------------------- //
@@ -355,6 +371,28 @@
         top: 5px;
         left: 8px;
       }
+      &:last-of-type {
+        & .ticket-number-sm {
+          background: #f8e71d;
+          &:before {
+            display: none;
+          }
+        }
+        &:hover {
+          & .ticket-number-sm {
+            &:before {
+              display: none;
+            }
+          }
+        }
+        &.active {
+          & .ticket-number-sm {
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
     }
     &.active {
       top: 0;
@@ -438,63 +476,118 @@
   }
 }
 
+
 #lottery-process {
-  position: relative;
+  position: absolute;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: #92D2D6;
-  width: 1280px;
-  max-width: calc(100% - 20px);
-  & .ghd-won {
+  background-color: #8ECADA;
+  width: 100%;
+  height: 568px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  & .won {
     display: none;
+    &.close {
+      position: absolute;
+      height: 25px;
+      width: 25px;
+      right: 20px;
+      top: 20px;
+      background: url(../css/img/sprite.png);
+      background-position: -98px -190px;
+
+    }
   }
-  & .ghd-fale {
+  & .container-center {
+    margin-top: 35px;
     display: none;
+    & .btn {
+        display:inline-block;
+        font: 14px handbookpro-regular;
+        line-height: 30px;
+    }
+  }
+  &.lottery-won {
+    background: url(img/320.png) center center no-repeat;
+  }
+  & .container{
+    max-width: 298px;
+    margin: 0 auto;
+    min-width: 0;
+    height: auto;
+    & .ghd-won {
+      display: none;
+    }
+    & .ghd-fale {
+      display: none;
+    }
+    & > div {
+      text-align: center;
+      height: 63px;
+      & a {
+        line-height: 63px;
+        display: inline-block;
+        float: none;
+        left: auto;
+        top: 22px;
+        width: 100px;
+        height: 20px;
+        background: url(../css/img/Lotzon-Logo.svg) no-repeat 0 0;
+        background-size: 100%;
+      }
+    }
   }
 }
 
 .balls-end-game {
   & .g-oc_li {
-    width: 105px;
-    height: 105px;
-    margin-right: 25px;
+    width: 41px;
+    height: 41px;
+    margin-right: 10px;
     float: left;
-    font: 50px / 100px Handbook-bold;
-    color: #8f8e8e;
+    font: 15px  Handbook-bold;
+    line-height: 40px;
+    color: #000;
     text-align: center;
     letter-spacing: -2px;
     position: relative;
     overflow: hidden;
+    &:last-of-type {
+      margin-right: 0;
+    }
     & .goc_li-sh {
-      width: 105px;
-      height: 105px;
+      width: 40px;
+      height: 40px;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 1;
-      background: url(../css/img/sprite.png);
-      background-position: -625px 0px;
+      // background: url(../css/img/sprite.png);
+      background: #fff;
+      background-position: -640px -208px;
     }
     & .goc_li-sh2 {
-      width: 105px;
-      height: 105px;
+      width: 42px;
+      height: 42px;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 100;
       background: url(../css/img/sprite.png);
-      background-position: -620px 274px;
+      background-position: -683px -208.5px;
     }
     & .goc_li-nb {
       background-color: #ffe400;
-      width: 100px;
-      height: 100px;
+      width: 41px;
+      height: 41px;
       border-radius: 50%;
       text-align: center;
       letter-spacing: -2px;
       position: absolute;
       left: 0;
-      top: -105px;
+      top: -42px;
       z-index: 2;
       &.random-ball {
         top: 105px;
@@ -533,9 +626,18 @@
   margin-bottom: 10px;
   & li {
     @extend .ticket-ball;
-    margin: 0 10px 20px 10px !important;
-    float: left;
+      margin: 0 10px 20px 10px !important;
+      float: left;
+      &.select {
+      background-color: #ffe400;
+      -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+      -moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+      -ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+      -o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+      transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
   }
+  
 }
 
 .ticket-actions li {
@@ -545,6 +647,14 @@
   &:hover {
     background: #ffe400;
     color: #4c4c4c;
+  }
+  &.select {
+    background-color: #ffe400;
+    -webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    -o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 }
 
@@ -573,11 +683,13 @@
         cursor: pointer;
         background: #f6f3e6;
         color: #4c4c4c;
+        // background: url(img/sprite.png) -244px -294px;
         &:not(.loading):hover {
         cursor: pointer;
         background: #363636;
         color: #ead377;
         }
+
       }
       &.loading {
         color: #ead377;
@@ -587,7 +699,7 @@
         background: #ffe400;
         background-repeat: no-repeat;
         background-position: 0;
-        background: url(img/sprite.png) -244px 82px;
+        background: url(img/sprite.png) -244px -294px;
         -webkit-animation: AnimationNGold 4s infinite linear;
         -moz-animation: AnimationNGold 4s  infinite linear;
         animation: AnimationNGold 4s  infinite linear;
@@ -606,7 +718,20 @@
         color: #ead376;
         text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
       }
+      & .select {
+        background: #363636;
+        color: #ead376;
+        text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+      }
     }
+  }
+  & .btn-flat {
+    &:hover {
+      color: #E8CF6B;
+    }
+  }
+  & .condition {
+    color: #000;
   }
 }
 
@@ -626,6 +751,7 @@
       color: #8f8e8e;
     }
     &.on {
+      
       cursor: pointer;
       &:not(.loading):hover {
         background: #ffe400;
@@ -640,9 +766,7 @@
       background: #ffe400;
       background-repeat: no-repeat;
       background-position: 0;
-      // background-size: contain;
-      // background-image: url(../css/img/progress.png);
-      background: url(img/sprite.png) -430px 82px;
+      background: url(img/sprite.png) -430px -292px;
       -webkit-animation: AnimationBlue 8s infinite linear;
       -moz-animation: AnimationBlue 8s  infinite linear;
       animation: AnimationBlue 8s  infinite linear;
@@ -651,35 +775,35 @@
 
 }
 @-webkit-keyframes AnimationBlue {
-  0%{background-position:-556px 82px}
-  50%{background-position:-493px 82px}
-  100%{background-position:  -430 82px}
+  0%{background-position:-556px -292px}
+  50%{background-position:-493px -292px}
+  100%{background-position:  -430px -292px}
 }
 @-moz-keyframes AnimationBlue {
-  0%{background-position:-556px 82px}
-  50%{background-position:-493px 82px}
-  100%{background-position:  -430 82px}
+  0%{background-position:-556px -292px}
+  50%{background-position:-493px -292px}
+  100%{background-position:  -430px -292px}
  }
 @keyframes AnimationBlue { 
-  0%{background-position:-556px 82px}
-  50%{background-position:-493px 82px}
-  100%{background-position:  -430 82px}
+  0%{background-position:-556px -292px}
+  50%{background-position:-493px -292px}
+  100%{background-position:  -430px -292px}
 }
 @-webkit-keyframes AnimationNGold {
-  0%{background-position:-244px 82px }
+  0%{background-position:-244px -294px }
   // 50%{background-position:-223px 82px}
-  100%{background-position:-223px 82px}
+  100%{background-position:-223px -294px}
 }
-// @-moz-keyframes AnimationNGold {
-//   0%{background-position:-556px 126px}
-//   50%{background-position:-493px 126px}
-//   100%{background-position:  -430 126px}
-//  }
-// @keyframes AnimationNGold { 
-//   0%{background-position:-244px 82px }
-//   50%{background-position:-223px 82px}
-//   100%{background-position: -244 82px}
-// }
+@-moz-keyframes AnimationNGold {
+0%{background-position:-244px -294px }
+  // 50%{background-position:-223px 82px}
+  100%{background-position:-223px -294px}
+ }
+@keyframes AnimationNGold { 
+0%{background-position:-244px -294px }
+  // 50%{background-position:-223px 82px}
+  100%{background-position:-223px -294px}
+}
 // ------------------------------------------- //
 
 .tickets .content-box-tab {
@@ -775,16 +899,28 @@
 
 .ghd-tickets {
   & li {
-    margin-bottom: 15px;
-    font: 15px / 1 Handbook-bold;
-    text-transform: uppercase;
-    padding-bottom: 2px;
+    font: 15px / 1 handbookpro-regular;
+    text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
     line-height: 38px;
+    margin-bottom: 1px;
+    color: #000;
+    &.unfilled {
+      margin-left: 9px;
+    }
     & span {
       float: left;
       display: inline-block;
       line-height: 38px;
       margin-right: 15px;
+      min-width: 62px;
+      &.gold {
+        font-family: Handbook-bold;
+        color: #f6ee89;
+        margin-right: 0;
+        text-shadow: 0 1px 0 #4c4c4c;
+        text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.7)
+
+      }
     }
     & ul {
       float: left;
@@ -793,24 +929,24 @@
         margin-bottom: 0;
         float: left;
         &.filled-ball {
-          width: 38px;
-          height: 38px;
-          border: 1px solid #2d2d2d;
-          color: #2d2d2d;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          // color: #2d2d2d;
           border-radius: 50%;
           float: left;
-          margin-right: 10px;
-          box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+          margin-right: 6px;
+          margin-top: 4px;
           text-align: center;
-          text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);
+          // text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);
           &.won {
-            background: #ffe400;
-            width: 40px;
-            height: 40px;
-            background-color: #ffe400;
+            background: #f6ee89;
+            width: 30px;
+            height: 30px;
+            background-color: #f6ee89;
             border: none;
-            box-shadow: inset 1px 1px 0px 0px rgba(20, 20, 20, 0.4), 0 1px 0px 0 rgba(255, 255, 255, 0.6);
-            line-height: 40px;
+            // box-shadow: inset 1px 1px 0px 0px rgba(20, 20, 20, 0.4), 0 1px 0px 0 rgba(255, 255, 255, 0.6);
+            line-height: 30px;
           }
         }
       }
@@ -820,10 +956,19 @@
 
 .lottery-amimation-box {
   float: left;
-  margin-top: 50px;
+  margin-top: 30px;
+  font: 15px / 1 handbookpro-regular;
+  text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
 }
 
 // ------------------------------------------- //
+@media (min-width: 321px) {
+  #lottery-process {
+    &.lottery-won {
+      background: url(img/480.png) center center no-repeat;
+    }
+  }
+}
 
 @media (min-width: 480px) {
   .ticket-ball {
@@ -1411,4 +1556,8 @@
   .balls-count {
     display: none!important;
   }
+}
+
+html {
+  overflow: hidden;
 }

@@ -47,35 +47,33 @@ a {
 }
 
 button {
-  &.btn-flat {
-    cursor: pointer;
-    border: 1px solid #000;
-    color: #000;
-    height: 30px;
-    line-height: 30px;
-    font-size: 14px;
-    padding: 0 35px;
-    text-transform: uppercase;
-    background: none;
-
-  }
+  opacity: 0.8;
   &:hover {
     background: #000;
     color: #fff;
   }
-  border: none;
-  opacity: 0.8;
   &.on {
     opacity: 1;
     border-color: black;
     color: black;
-  }
-  
-
+  } 
 }
 
-
-
+.btn-flat {
+  cursor: pointer;
+  border: 1px solid #000;
+  color: #000;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  padding: 0 35px;
+  text-transform: uppercase;
+  background: none;
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
 
 .status {
   display: none;

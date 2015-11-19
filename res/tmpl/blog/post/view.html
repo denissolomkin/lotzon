@@ -1,74 +1,62 @@
-<div class="content-box blog-view">
+<div id="blog-post-view" class="content-main">
+    <div class="content-box">
 
-    <div class="content-box-header back">{{ title }}</div>
+        <div class="content-box-header back">{{ title }}</div>
 
-    <div class="content-box-content clearfix">
-        <div class="content-box-item post">
+        <div class="content-box-content clearfix">
+            <div class="content-box-item post">
 
-            <h1 class="title">{{ title }}</h1>
+                <h1 class="title">{{ title }}</h1>
 
-            <div class="post-inf-wrapper clearfix">
-                <div class="post-inf clearfix">
-                    <div class="post-date">{{ date }}</div>
-                    <div class="post-views-comments">
-                        <div class="post-views-inf">{{ stat.views}}</div>
-                        <div class="post-comments-inf">{{ stat.comments}}</div>
+                <div class="post-inf-wrapper clearfix">
+                    <div class="post-inf clearfix">
+                        <div class="post-date">{{ date }}</div>
+                        <div class="post-views-comments">
+                            <div class="post-views-inf">{{ stat.views}}</div>
+                            <div class="post-comments-inf">{{ stat.comments}}</div>
+                        </div>
+                    </div>
+
+                    <div class="post-socials clearfix">
+                        <a href="#" class="fb">580</a>
+                        <a href="#" class="tw">220</a>
+                        <a href="#" class="gp">103</a>
                     </div>
                 </div>
 
-                <div class="post-socials clearfix">
-                    <a href="#" class="fb">580</a>
-                    <a href="#" class="tw">220</a>
-                    <a href="#" class="gp">103</a>
+                <div class="post-description clearfix">
+                    {{ text }}
                 </div>
-            </div>
 
-            <div class="post-description clearfix">
-                {{ text }}
-            </div>
-
-            <div class="more-posts clearfix">
-                <div class="title">{{i18n "title-post-similar"}}</div>
-                <div class="more-posts render-list"></div>
-            </div>
-
-            <div class="post-comments">
-                <div class="title">{{i18n "title-post-comments"}} ({{ stat.comments}})</div>
-
-                <!-- COMMENT FORM -->
-                <div class="message-form-wrapper">
-                    <div class="message-form">
-                        <form action="/blog/post/{{id}}/comments" method="post">
-                            <textarea class="message-form-area" name="" placeholder="{{i18n 'message-comments-write-comment'}}" rows="1"></textarea>
-
-                            <div class="message-form-actions clearfix">
-                                <label class="input-file-wrapper">
-                                    <input type="file" class="input-file">
-                                </label>
-                                <button type="submit" class="message-form-btn">{{i18n "button-send"}}</button>
-                                <div class="message-form-smileys"></div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="more-posts clearfix">
+                    <div class="title">{{i18n "title-post-similar"}}</div>
+                    <div class="more-posts render-list" id="blog-post-{{id}}-similar"></div>
                 </div>
-                <!-- end of  COMMENT FORM -->
 
-                <form action="/blog/post/{{id}}/comments" method="get" class="render-list-form">
+                <div class="post-comments">
+                    <div class="title">{{i18n "title-post-comments"}} ({{ stat.comments}})</div>
 
-                    <div class="post-comments render-list" id="blog-post-{{id}}-comments">
-                    </div>
+                    {{partial 'blog-post-comments-form' this}}
 
-                    {{#if (gt stat.comments 0)}}
-                    <div class="container-center">
-                        <button type="submit" class="btn-flat never-infinite-scrolling">{{i18n "button-load-more"}}</button>
-                    </div>
-                    {{/if}}
+                    <form action="/blog/post/{{id}}/comments" method="get" class="render-list-form">
 
-                </form>
+                        <div class="post-comments render-list" id="blog-post-{{id}}-comments">
+                        </div>
+
+                        {{#if (gt stat.comments 0)}}
+                        <div class="container-center">
+                            <button type="submit" class="btn-flat never-infinite-scrolling">{{i18n
+                                "button-load-more"}}
+                            </button>
+                        </div>
+                        {{/if}}
+
+                    </form>
+
+                </div>
 
             </div>
-
         </div>
-    </div>
 
+    </div>
 </div>

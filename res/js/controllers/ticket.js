@@ -31,8 +31,7 @@
             } else {
 
                 R.push({
-                    box: '.ticket-tabs',
-                    template: 'lottery-ticket-tabs',
+                    href: 'lottery-ticket-tabs',
                     json: Tickets
                 });
 
@@ -67,6 +66,7 @@
                 R.push({
                     tab: tab,
                     replace: '.ticket-item',
+                    href: 'lottery-ticket-item',
                     template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable' + Tickets.selectedTab,
                     json: Tickets,
                     after: function () {

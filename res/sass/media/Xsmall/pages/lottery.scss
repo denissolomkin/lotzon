@@ -47,20 +47,220 @@
 	}
 }
 
-
+#lottery-process {
+	max-width: 100%;
+	height: 634px;
+	&.lottery-won {
+      	background: url(img/600.png) center center no-repeat;
+    }
+	& .container{
+	    max-width: 410px;
+	    margin: 0 auto;
+	    min-width: 0;
+		& > div {
+			height: 73px;
+			& a {
+				top: 27px;
+			}
+		}
+	}
+}
+.balls-end-game {
+  	& .g-oc_li {
+	    width: 62px;
+	    height: 62px;
+	    margin-right: 7px;
+	    float: left;
+	    font: 25px  Handbook-bold;
+	    line-height: 60px;
+	    color: #000;
+	    text-align: center;
+	    letter-spacing: -2px;
+	    position: relative;
+	    overflow: hidden;
+	    &:last-of-type {
+	      	margin-right: 0;
+	    }
+	    & .goc_li-sh {
+		    width: 60px;
+		    height: 60px;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    z-index: 1;
+		    // background: url(../css/img/sprite.png);
+		    background: #fff;
+		    background-position: -65px -383px;
+	    }
+    	& .goc_li-sh2 {
+    		width: 63px;
+     		height: 63px;
+      		position: absolute;
+      		top: 0;
+      		left: 0;
+      		z-index: 100;
+      		background: url(../css/img/sprite.png);
+      		background-position: 0 -383px;
+    	}
+   		& .goc_li-nb {
+	      	background-color: #ffe400;
+	      	width: 60px;
+	      	height: 60px;
+	      	border-radius: 50%;
+	      	text-align: center;
+	      	letter-spacing: -2px;
+	      	position: absolute;
+	      	left: 0;
+	      	top: -60px;
+	      	z-index: 2;
+      		&.random-ball {
+        		top: 105px;
+        		&:first-child {
+         			top: 0px;
+         		}
+         	}	
+        }  
+    }  
+}
+.lottery-amimation-box {
+	margin-top: 40px;
+}
+.ghd-tickets li ul li.filled-ball {
+	margin-right: 24px;
+	&:last-of-type {
+		margin-right: 0;
+	}
+}
+.ghd-tickets li span {
+	margin-right: 37px;
+}
 .cabinet-game-history {
 	padding: 52px 0 30px;
 }
+.ghd-won {
+    margin-top: 24px;
+    & .grid-container {
+    	max-width: 320px;
+  	}
+}
+@media (min-width: 600px) {
 
+	.lottery-amimation-box {
+		margin-top: 30px
+	}
+	#lottery-process {
+		height: 658px;
+		&.lottery-won {
+      		background: url(img/768.png) center center no-repeat;
+    	}
+		& .container{
+	    max-width: 498px;
+	    margin: 0 auto;
+	    min-width: 0;
+			& > div {
+				height: 73px;
+				& a {
+					top: 27px;
+				}
+			}
+		}	
+	}
 
+	.balls-end-game {
+	  	& .g-oc_li {
+		    width: 72px;
+		    height: 72px;
+		    margin-right: 13px;
+		    float: left;
+		    font: 25px  Handbook-bold;
+		    line-height: 70px;
+		    color: #000;
+		    text-align: center;
+		    letter-spacing: -2px;
+		    position: relative;
+		    overflow: hidden;
+		    &:last-of-type {
+		      	margin-right: 0;
+		    }
+		    & .goc_li-sh {
+		      	width: 70px;
+		      	height: 70px;
+		      	position: absolute;
+		      	top: 0;
+		      	left: 0;
+		      	z-index: 1;
+		      	// background: url(../css/img/sprite.png);
+		      	background: #fff;
+		      	background-position: -200px -383px;
+		    }
+		    & .goc_li-sh2 {
+		      	width: 73px;
+		      	height: 73px;
+		      	position: absolute;
+		      	top: 0;
+		      	left: 0;
+		      	z-index: 100;
+		      	background: url(../css/img/sprite.png);
+		      	background-position: -126px -383px;
+		    }
+		    & .goc_li-nb {
+		      	background-color: #ffe400;
+		      	width: 70px;
+		      	height: 70px;
+		      	border-radius: 50%;
+		      	text-align: center;
+		      	letter-spacing: -2px;
+		      	position: absolute;
+		      	left: 0;
+		      	top: -73px;
+		      	z-index: 2;
+		      	&.random-ball {
+		        	top: 105px;
+		        	&:first-child {
+		          		top: 0px;
+		        	}
+		    	}
+		    }
+	    }
+	}
+
+	.ghd-tickets li ul li.filled-ball {
+		margin-right: 26px;
+		width: 40px;
+	    height: 40px;
+	    line-height: 40px;
+	    margin-top: 0;
+	    &.won {
+	    	width: 40px;
+	    	height: 40px;	
+	    	line-height: 40px;
+	    }
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
+	.ghd-tickets li span {
+		margin-right: 48px;
+	}
+	.cabinet-game-history {
+		padding: 52px 0 30px;
+	}
+	.ghd-tickets li {
+		font-size: 19px;
+		margin-bottom: 3px;
+	}
+	.ghd-tickets li span {
+		min-width: 74px;
+	}
+
+}
 @media (min-width: 640px) {
+
 	.lottery-grid {
 		& .title {
 	    	padding: 16px 0 16px 30px;
 		}
-}		
-
-
+	}		
 
 	.matches-inf {
 		& .lottery-grid {

@@ -146,25 +146,29 @@
       background-position: 0;
       // background-size: contain;
       // background-image: url(../css/img/progress.png);
-      background: url(img/sprite.png) -430px 82px;
-      -webkit-animation: AnimationName 8s infinite linear;
-      -moz-animation: AnimationName 8s  infinite linear;
-      animation: AnimationName 8s  infinite linear;
+      background: url(img/sprite.png) -430px -292px;
+      -webkit-animation: AnimationBlue 8s infinite linear;
+      -moz-animation: AnimationBlue 8s  infinite linear;
+      animation: AnimationBlue 8s  infinite linear;
     }
   }
 }
-@-webkit-keyframes AnimationName {
-  0%{background-position:-535px 82px}
-  50%{background-position:-482px 82px}
-  100%{background-position:  -430 82px}
+@-webkit-keyframes AnimationBlue {
+  0%{background-position:-535px -292px}
+  50%{background-position:-482px -292px}
+  100%{background-position:  -430 -292px}
 }
-// @-moz-keyframes AnimationName {
-//   0%{background-position:100% 0%}
-//    50%{background-position:50% 0%}
-//   100%{background-position: 0%  0% }
-// }
-@keyframes AnimationName { 
-  0%{background-position:-535px 82px}
-  50%{background-position:-482px 82px}
-  100%{background-position:  -430 82px}
+@-moz-keyframes AnimationBlue {
+  0%{background-position:-535px -292px}
+  50%{background-position:-482px -292px}
+  100%{background-position:  -430 -292px}
+}
+@keyframes AnimationBlue { 
+  0%{background-position:-535px -292px}
+  50%{background-position:-482px -292px}
+  100%{background-position:  -430 -292px}
+}
+
+.lottery-amimation-box {
+  margin-top: 34px;
 }

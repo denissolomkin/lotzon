@@ -73,10 +73,10 @@ $(function () {
             if (D.isEnable("clean"))
                 $(".modal-error").remove();
 
-            $(".modal-loading").remove();
+            // $(".modal-loading").remove();
 
             Form.stop();
-            R.isRendering && R.event.stop();
+            R.isRendering && R.event('stop');
 
             var box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first(),
                 error = $('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>'),
@@ -84,6 +84,13 @@ $(function () {
                 errors = null;
 
             box.append(error);
+
+
+            if(options && options.node) {
+                options.node.appendChild(
+                    DOM.create('<div class="modal-loading"><div></div></div>')
+                );
+            }
 
             if (D.isEnable("clean"))
                 if (errors = $(".modal-error"))

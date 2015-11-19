@@ -20,6 +20,7 @@
              json:      Source Object For Parsing
              url:       False for Skip U.update
              box:       Container (element or search by class)
+             node:      Container (element or search by id)
              tab:       Menu Item (element or search by href)
 
              # auto #
@@ -45,6 +46,27 @@
             options.box = typeof options.box !== 'object'
                 ? (options.box ? $(options.box).first() : null)
                 : options.box;
+
+
+            var node = U.parse(options.href);
+            if (!options.node && node) {
+
+                options.node = document.getElementById(node);
+
+                if (!options.node)
+                    options.node = document.getElementById(U.parse(node, 'tmpl'));
+
+                while (!options.node && node) {
+                    node = node.match(/(?:\w+)(?:-\w+)+$/) && node.replace(/-(\w+)$/, "");
+                    options.node = document.getElementById(node);
+                }
+
+                if (!options.node)
+                    options.node = document.getElementById('content');
+
+            }
+
+
             options.tab = options.tab
                 ? (typeof options.tab !== 'object' ? $('[href="' + options.tab + '"]').first() : options.tab)
                 : $(this);
@@ -54,6 +76,7 @@
                 box: options.box && options.box.attr('class') && ('.' + options.box.attr('class').split(' ').join('.')),
                 tab: options.tab.attr('href'),
                 after: null,
+                node: null,
                 callback: null,
                 url: false
             });
@@ -90,7 +113,7 @@
                 options.init.template = options.template = options.template.replace(/\-all/g, '');
             }
 
-            R.event.push(options);
+            R.event('push', options);
             R.queue.push(options);
 
             if (!R.isRendering)
@@ -103,17 +126,16 @@
             while (R.queue.length) {
 
                 R.isRendering = true;
-
                 var options = R.queue.shift();
 
-                R.event.start(options);
+                R.event('start', options);
 
                 setTimeout(function () {
                     R.json(options);
                 }, this.timeout)
             }
 
-            R.event.stop();
+            R.event('stop');
 
         },
 
@@ -194,32 +216,12 @@
             else
                 template = options.template = U.parse(options.template, 'tmpl');
 
-            /* Insert into already exist DIV */
-            if ($('.template.' + template).length) {
-
-                D.log(['Render.renderTMPL:', template, 'TMPL already in DOM', template], 'render');
-                R.renderHTML(options);
-
                 /* Template from cache */
-            } else if (Cache.template(template)) {
+            if (Cache.template(template)) {
 
                 D.log(['Render.renderTMPL:', template, 'TMPL from Cache', options.init.template], 'render');
                 if (!partial)
                     options.template = Cache.template(template);
-
-                R.renderHTML(options);
-
-                /* Template from HTML template */
-            } else if ($('#tmpl-' + template).length) {
-
-                D.log(['Render.renderTMPL:', template, 'TMPL from HTML:', template], 'render');
-
-                var templateHTML = $('#tmpl-' + template).html();
-
-                if (partial)
-                    Cache.template(template, templateHTML);
-                else
-                    options.template = Cache.template(template, templateHTML);
 
                 R.renderHTML(options);
 
@@ -228,7 +230,7 @@
 
                 $.get(U.generate(template, 'tmpl'), function (data) {
 
-                    if (!$(data).not('empty').first().attr('class')) {
+                    if (0 && !$(data).not('empty').first().attr('class')) {
                         throw("Format Template Error: " + template);
                     } else {
 
@@ -248,7 +250,7 @@
                                 options.partials.push(partials[i]);
                         }
 
-                        R.includeTMPL(options);
+                        R.partialTMPL(options);
                     }
 
                 });
@@ -256,7 +258,7 @@
 
         },
 
-        "includeTMPL": function (options) {
+        "partialTMPL": function (options) {
 
             if (options.partials && options.partials.length)
                 R.renderTMPL(options);
@@ -267,91 +269,64 @@
 
         "renderHTML": function (options) {
 
-            if (typeof options.template != 'function') {
-
-                options.rendered = $($('.template.' + options.template)[0].outerHTML).html(options.json);
-                D.log(['Render.renderHTML:', options.init.template, options.json, 'From HTML:', options.rendered], 'render');
-
-            } else {
-
-                options.rendered = options.template(options.json);
-                D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered], 'render');
-
-            }
+            options.rendered = options.template(options.json);
+            D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered], 'render');
 
             R.inputHTML(options);
         },
 
         "inputHTML": function (options) {
 
-            var renderNode = $(options.rendered)[0],
-                boxNode = $(options.box)[0];
+            var render = options.rendered = DOM.create(options.rendered),
+                node = options.node;
 
-            D.log(['Render.inputHTML into:', (options.box && typeof options.box == 'object' ? options.box.attr('class') : options.box)], 'render');
+            D.log(['Render.inputHTML into:', node], 'render');
 
-            options.findClass = '.' + $(options.rendered).not('empty').first().attr('class').replace(/ /g, '.');
+            if (node) {
 
-            if (options.append) {
+                if (render.length === 1) {
 
-                var appendHTML = $(options.rendered);
-                D.log(['Appending ', appendHTML], 'render');
-                appendHTML.appendTo(options.box).hide().fadeIn();
+                    options.rendered = render = render[0];
 
-            } else if (options.replace) {
+                    if (render.id == node.id) {
 
-                if (options.replace.indexOf('.render-list') !== -1 && options.replace.indexOf('.render-list-container') === -1) {
 
-                    var appendHTML = $(options.rendered).is('.render-list')
-                        ? $(options.rendered).html()
-                        : $('.render-list', options.rendered).html();
+                        if (compare(render.classList, ['content-box-item', 'content-main'])) {//such as games-online & games-chance
+                            DOM.hide(node.parentNode.children);
+                        }
 
-                    D.log(['Replacing ', options.replace], 'render');
-                    $(appendHTML).appendTo(options.replace).hide().fadeIn();
+                        node.parentNode.replaceChild(render, node);
+                        DOM.show(node);
+                        console.log('replaceChild');
 
-                } else if ($(options.rendered).is(options.replace)) {
+                    } else {
 
-                    D.log(['Replacing self'], 'render');
-                    $(options.replace).replaceWith($(options.rendered));
+                        if (compare(render.classList, ['content-main'])) {  //such as games & blog & lottery
+                            node = document.getElementById('content');
+                        } else if (compare(render.classList, ['content-box-item'])) {
+                            node = node.getElementsByClassName('content-box-content')[0]; // for content-box-item
+                        }
 
-                } else {
+                        if (compare(render.classList, ['content-box-item', 'content-main'])) {//such as games-online & games-chance
+                            DOM.hide(node.children);
+                        } else if (node.id == 'content')
+                            DOM.hide(node.children);
 
-                    D.log(['Replacing ' + options.replace], 'render');
-                    $(options.replace).html($(options.replace, options.rendered).html()).hide().fadeIn(1000);
-                }
-
-            } else if (options.box) {
-
-                $(' > div', options.box).hide();
-
-                if ($(options.findClass, options.box).length) {
-
-                    D.log(['Replace Block in Box'], 'render');
-
-                    $(options.findClass, options.box)
-                        .html($(options.rendered).html()).show()
-                        .parents().show();
-
-                    // content-box-item with content-box-item-top
-                    if (renderNode.classList.contains('.content-box-item-content')) {
-                        $(' > div', options.box).show();
+                        DOM.append(render, node);
+                        console.log('append ID');
                     }
 
-                } else if (options.box.is(options.findClass)) {
-
-                    D.log(['Box = Rendered'], 'render');
-                    options.box.html($(options.rendered).html()).find(' > div').show();
-
                 } else {
 
-                    D.log(['Append to Box'], 'render');
-                    fadeIn(options.box.append(options.rendered).find(options.findClass)[0]);
+                    DOM.append(render, node);
+                    console.log('append list');
                 }
 
-            } else if ($(options.findClass).length) {
-
-                D.log(['Replace Block by Finding'], 'render');
-                $(options.findClass).html($(options.rendered).html()).show();
             }
+
+            console.log('initNode: ', options.node);
+            console.log('appendNode: ', node);
+            console.log('renderNode: ', render);
 
             U.update(options);
             R.afterHTML(options);
@@ -409,34 +384,39 @@
             }
 
             Content.infiniteScrolling();
-            R.event.complete(options);
+            R.event('complete', options);
 
         },
 
-        "event": {
+        "event": function (event, options) {
 
-            "push": function (options) {
-                D.log(['Render.push:', options.template, options.href, options.json], 'info');
-            },
+            switch (event) {
 
-            "start": function (options) {
+                case "push":
+                    D.log(['Render.push:', options.template, options.href, options.json], 'info');
+                    break;
 
-                D.log(['Render.run:', options.template, options.href, options.json], 'info');
-                if (options.box)
-                    $('.modal-loading', options.box).length ? $('.modal-loading', options.box).show() : options.box.append('<div class="modal-loading"><div></div></div>');
+                case "start":
 
-            },
+                    D.log(['Render.run:', options.template, options.href, options.json], 'info');
+                    if (options.node) {
+                        DOM.append('<div class="modal-loading"><div></div></div>', options.node);
+                    }
 
-            "complete": function (options) {
-                if (options.box)
-                    $('.modal-loading', options.box).length ? $('.modal-loading', options.box).first().remove() : '';
-            },
+                    break;
 
-            "stop": function () {
+                case "complete":
 
-                D.log('Render.stop', 'render');
-                R.isRendering = false;
+                    if (options.node) {
+                        DOM.remove('.modal-loading', options.node);
+                    }
 
+                    break;
+
+                case "stop":
+                    D.log('Render.stop', 'render');
+                    R.isRendering = false;
+                    break;
             }
         }
 
