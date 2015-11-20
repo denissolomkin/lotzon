@@ -30,7 +30,7 @@
 .ticket-done {
 	margin-right: 10px;
 }
-.content-box-content {
+#lottery .content-box-content {
 	padding-left: 10px;
     margin: 0 auto;
 	& .gh-item {
@@ -230,7 +230,7 @@
 	    height: 40px;
 	    line-height: 40px;
 	    margin-top: 0;
-	    &.won {
+	    &.won_ball {
 	    	width: 40px;
 	    	height: 40px;	
 	    	line-height: 40px;
@@ -282,7 +282,7 @@
 		}
 	}
 
-	.content-box-content {
+	#lottery .content-box-content {
 	    margin: 0 auto;
 	    padding-left: 30px;
 		& .gh-item {

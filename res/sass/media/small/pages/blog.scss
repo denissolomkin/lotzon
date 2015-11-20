@@ -1,17 +1,9 @@
 // BLOG ------------------------------- //
 
-.post-item {
-  padding-left: 340px;
-}
 
-.post-item-img {
-  width: 320px;
-  height: 200px;
-  margin-left: -340px;
-}
 
 .post-inf {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .post-date {
@@ -32,3 +24,10 @@
     margin: 0;
   }
 }
+
+@media (min-width: 769px) {
+	.post-item-img {
+		margin: 0 ;
+	}
+}
+

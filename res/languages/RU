@@ -45,6 +45,7 @@
                 "button-more": "Подробнее",
                 "button-save": "Сохранить",
                 "button-load-more": "Показать еще",
+                "button-go-back": "Назад",
 
                 "button-games-exit": "Выход",
                 "button-games-money": "Деньги",
@@ -74,7 +75,7 @@
                 "title-slider-timer": "До следующего розыгрыша осталось",
                 "title-slider-date": "Розыгрыш от",
 
-                "title-post-similar": "Похожие статьи",
+                "title-post-similar": "ЕЩЕ СТАТЬИ",
                 "title-post-comments": "Комментарии",
 
                 "title-lottery-history" : "История розыгрышей",

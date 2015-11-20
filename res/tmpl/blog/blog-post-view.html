@@ -1,7 +1,7 @@
 <div id="blog-post-view" class="content-main">
     <div class="content-box">
 
-        <div class="content-box-header back">{{ title }}</div>
+        <div class="content-box-header back">{{i18n "button-go-back"}}</div>
 
         <div class="content-box-content clearfix">
             <div class="content-box-item post">
@@ -12,7 +12,6 @@
                     <div class="post-inf clearfix">
                         <div class="post-date">{{ date }}</div>
                         <div class="post-views-comments">
-                            <div class="post-views-inf">{{ stat.views}}</div>
                             <div class="post-comments-inf">{{ stat.comments}}</div>
                         </div>
                     </div>
@@ -25,11 +24,11 @@
                 </div>
 
                 <div class="post-description clearfix">
-                    {{ text }}
+                   {{{ text }}}
                 </div>
 
                 <div class="more-posts clearfix">
-                    <div class="title">{{i18n "title-post-similar"}}</div>
+                    <div class="title ">{{i18n "title-post-similar"}}</div>
                     <div class="more-posts render-list" id="blog-post-{{id}}-similar"></div>
                 </div>
 

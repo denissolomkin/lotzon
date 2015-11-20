@@ -19,18 +19,79 @@
 
 .post-item {
   margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   border-bottom: 1px solid #cbc7c4;
   &:last-child {
     border-bottom: none;
   }
 }
 
-.post-item-img {
-  margin-bottom: 20px;
-  overflow: hidden;
+#blog-post-view {
+  font-family: handbookpro-regular;
+  font-size: 15px;
+  & .post {
+    & .title {
+      font-family: Handbook-bold;
+      font-size: 25px;
+      line-height: 23px;
+      margin-bottom: 18px;
+      font-weight: bold;
+    }
+  }
+  & .content-box-header {
+    background: transparent;
+    text-align: left;
+    padding-left: 50px;
+    padding-top: 7px;
+    &:before {
+      left: 20px;
+      top: 17px;
+    }
+  }
+  & .post-item-date {
+    display: inline-block!important;
+    margin-right: 40px;
+  }
+  .post-item-title {
+    font-family: Handbook-bold;
+    font-size: 20px;
+    line-height: 23px;
+    margin-bottom: 19px;
+    font-weight: bold;
+  }
+  .content-box-item {
+    padding: 20px;
+  }
+  & .more-posts .title,
+  .post-comments .title {
+  margin: 0 -20px;
+  font: 17px handbookpro-regular; 
+  padding: 10px 20px;
+  background: #fafafa;
+  }
 }
 
+#blog-posts {
+  font-family: handbookpro-regular;
+  font-size: 15px;
+  & .post-item-date {
+    display: inline-block!important;
+    margin-right: 40px;
+  }
+  .post-item-title {
+    font-family: Handbook-bold;
+    font-size: 20px;
+    line-height: 23px;
+    margin-bottom: 19px;
+    font-weight: bold;
+  }
+  .content-box-item {
+    padding: 20px;
+  }
+}
+.post-item-img {
+  margin: 0 -20px;
+}
 .post-item-img img {
   display: block;
   width: 100%;
@@ -38,17 +99,11 @@
 }
 
 .post-item-inf {
-  font-size: 13px;
-  line-height: 1.39;
   margin-bottom: 10px;
 }
 
-.post-item-date {
-  float: left;
-}
-
 .post-item-views-comments {
-  float: right;
+  display: inline-block;
 }
 
 .post-item-views-inf {
@@ -69,14 +124,13 @@
 }
 
 .post-item-comments-inf {
-  float: left;
   position: relative;
   padding-left: 20px;
   &:before {
     content: "";
     display: block;
     position: absolute;
-    top: 3px;
+    top: 4px;
     left: 0;
     width: 15px;
     height: 14px;
@@ -85,9 +139,10 @@
 }
 
 .post-item-title {
-  font-size: 15px;
-  line-height: 1.27;
-  margin-bottom: 22px;
+  font-size: 20px;
+  line-height: 33px;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
 .post-more-btn {
@@ -112,26 +167,9 @@
 
 @media (min-width: 500px) {
   .post-item {
-    padding-left: 310px;
     position: relative;
   }
-  .post-item-img {
-    float: left;
-    width: 300px;
-    height: 200px;
-    margin-bottom: 0;
-    margin-left: -310px;
-  }
-  .post-item-description {
-    float: right;
-  }
-  .post-item-views-comments {
-    float: none;
-  }
-  .post-item-date {
-    float: none;
-    margin-bottom: 5px;
-  }
+
   .post-more-btn {
     position: absolute;
     right: 0;
@@ -139,15 +177,6 @@
   }
 }
 
-@media (min-width: 560px) {
-  .post-item-date {
-    float: left;
-    margin-bottom: 0;
-  }
-  .post-item-views-comments {
-    float: right;
-  }
-}
 
 .post .title {
   font-size: 21px;
@@ -155,13 +184,7 @@
   margin-bottom: 15px;
 }
 
-.more-posts .title,
-.post-comments .title {
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: #d2d1cd;
-  padding: 5px 2px;
-}
+
 
 .post-comments .title {
   text-align: center;
@@ -172,23 +195,17 @@
 // ---------------------------- //
 
 .post-inf {
-  margin-bottom: 15px;
   color: #4c4c4e;
   font-size: 14px;
   margin-bottom: 20px;
 }
 
 .post-date {
-  float: left;
-}
-
-.post-views-comments {
-  float: right;
+  display: inline-block;
 }
 
 .post-views-inf,
 .post-comments-inf {
-  float: left;
   position: relative;
   padding-left: 20px;
   &:before {
@@ -296,7 +313,7 @@
 
 .post-description {
   border-top: 1px solid #d2d1cd;
-  padding-top: 20px;
+  padding-top: 13px;
   margin: 0 0 30px;
   line-height: 1.5;
   & img {
@@ -330,14 +347,16 @@
 .post-comments {
   padding-bottom: 60px;
 }
-
+.content-box-item {
+  &.home-blog {
+    padding: 20px;
+  }
+}
 // ---------------------------- //
 
 @media (min-width: 550px) {
   .post-inf {
     margin-bottom: 0;
-    position: relative;
-    top: 3px;
     &:after {
       clear: none;
     }
@@ -346,12 +365,13 @@
     margin-right: 40px;
   }
   .post-views-comments {
-    float: left;
+    display: inline-block;
   }
   .post-socials {
-    float: right;
     & a {
       margin: 0 15px 15px 0;
     }
   }
 }
+
+

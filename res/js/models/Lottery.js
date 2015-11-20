@@ -294,7 +294,7 @@
                         counter = 400;
                         ball = parseInt($('.goc_li-nb', li).first().text());
                         window.setTimeout(function() {
-                            $("#lottery-process").find('li [data-num="' + ball + '"]').addClass('won')
+                            $("#lottery-process").find('li [data-num="' + ball + '"]').addClass('won_ball')
                         }, 1000);
                     }
 
@@ -302,7 +302,7 @@
                 console.log($('.g-oc_li.unfilled').length, "$('.unfilled').length");
                 if (!$('.g-oc_li.unfilled').length) {
   
-                    if ($("#lottery-process li.won").length) {
+                    if ($("#lottery-process li.won_ball").length) {
 
                        
                     setTimeout(function(){
