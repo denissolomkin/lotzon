@@ -510,3 +510,12 @@ header .owl-theme .owl-controls .owl-page span {
 }
 
 // -------------------------------- //
+.fixed {
+  & header {
+    position: fixed;
+    top: 0;
+  }
+  & > .container {
+    margin-top: 105px; 
+  }  
+}

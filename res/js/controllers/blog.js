@@ -2,27 +2,32 @@
 
     Blog = {
 
-        init: function () {
-            R.push({
-                'box': $('.content-box-content:visible'),
-                'template': 'blog-posts',
-                'node': visible('.content-box-content')
-            })
-        },
-
-        post: {
-
-            init: function (options) {
+        loadPostData: function (options) {
                 R.push(options.href + '/comments');
                 R.push(options.href + '/similar');
-            }
-
         },
 
         after: {
 
             reply: function (options) {
-                this.innerHTML = "New post added";
+
+                var form = this;
+
+                if(form.elements['comment_id'].value){
+                    setTimeout(function(){
+                        form.parentNode.removeChild(form);
+                    }, Form.getTimeout());
+                } else {
+                    form.getElementsByClassName('message-form-area')[0].innerHTML = '';
+                }
+            },
+
+            replyForm: function (options) {
+
+                if(!DOM.onScreen(options.rendered))
+                    DOM.scroll(options.rendered);
+                
+                DOM.cursor('.message-form-area', options.rendered);
             }
         },
 
@@ -37,40 +42,36 @@
 
             replyForm: function () {
 
-                var existingForms = [],
-                    button = this,
-                    model = {
+                var json = {
                         'user': {
-                            "name": button.getAttribute("data-user-name"),
-                            'id': button.getAttribute("data-user-id")
+                            "name": this.getAttribute("data-user-name"),
+                            'id': this.getAttribute("data-user-id")
                         },
-                        'comment': button.getAttribute("data-comment-id"),
-                        'post': button.getAttribute('data-post-id')
+                        'comment': this.getAttribute("data-comment-id"),
+                        'post': this.getAttribute('data-post-id')
                     },
-                    href = 'blog-post-comments-form',
-                    box = button.parentNode,
-                    commentsNode = box.parentNode;
+                    node = this.parentNode;
 
                 // up to comment block
-                while (!box.classList.contains('comment-content'))
-                    box = box.parentNode;
+                while (!node.classList.contains('comment') || node.classList.contains('answer'))
+                    node = node.parentNode;
 
                 // find other forms
+                var commentsNode = node.parentNode;
                 while (!commentsNode.classList.contains('render-list'))
                     commentsNode = commentsNode.parentNode;
 
-                existingForms = commentsNode.getElementsByClassName('message-form-wrapper');
+                // delete other forms
+                var existingForms = commentsNode.getElementsByTagName('FORM');
                 if (existingForms.length)
                     for (var i = 0; i < existingForms.length; i++)
                         existingForms[i].remove();
 
                 // push new form
                 R.push({
-                    append: true,
-                    href: href,
-                    json: model,
-                    box: $(box),
-                    node: box
+                    href: 'blog-post-view-replyform',
+                    json: json,
+                    node: node
                 });
 
             },
@@ -80,13 +81,13 @@
                 if (!Device.isMobile())
                     return;
 
-                if (this.getElementsByClassName('message-form').length)
+                if (this.getElementsByTagName('FORM').length)
                     return;
 
-                var forms = visible('.comment-reply');
+                var forms = DOM.visible('.comment-reply');
                 forms.push(this.querySelector('.comment-reply'));
 
-                toggle(forms); // hide
+                DOM.toggle(forms); // hide
 
                 /*
                  // todo

@@ -1350,7 +1350,15 @@
     background: #f8e71d;
   }
 }  
-
+.content-box-item-content {
+  & div:not(.type-mine) {
+    & .gh-item {
+      &:before {
+        display: none;
+      }  
+    }
+  }
+}
 .gh-item {
   position:relative;
   &:before {
@@ -1494,15 +1502,6 @@
   }
 
 }
-.render-list {
-  &:not(.type-mine) {
-    & .gh-item {
-      &:before {
-        display: none;
-      }  
-    }
-  }
-}
 
 .lottery-history-items {
   position: relative;
@@ -1558,6 +1557,6 @@
   }
 }
 
-html {
-  overflow: hidden;
-}
+// html {
+//   overflow: hidden;
+// }

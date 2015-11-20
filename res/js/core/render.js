@@ -51,15 +51,14 @@
             var node = U.parse(options.href);
             if (!options.node && node) {
 
-                options.node = document.getElementById(node);
+                options.node = document.getElementById(U.parse(node, 'tmpl'));
+
+                if (0 && !options.node)
+                    options.node = document.getElementById(node);
+
 
                 if (!options.node)
-                    options.node = document.getElementById(U.parse(node, 'tmpl'));
-
-                while (!options.node && node) {
-                    node = node.match(/(?:\w+)(?:-\w+)+$/) && node.replace(/-(\w+)$/, "");
-                    options.node = document.getElementById(node);
-                }
+                    options.node = DOM.byId(node);
 
                 if (!options.node)
                     options.node = document.getElementById('content');
@@ -164,7 +163,8 @@
                     statusCode: {
 
                         404: function (data) {
-                            throw(data.message);
+                            D.error.call(options, 'OBJECT NOT FOUND');
+                            return true;
                         },
 
                         200: function (data) {
@@ -216,7 +216,7 @@
             else
                 template = options.template = U.parse(options.template, 'tmpl');
 
-                /* Template from cache */
+            /* Template from cache */
             if (Cache.template(template)) {
 
                 D.log(['Render.renderTMPL:', template, 'TMPL from Cache', options.init.template], 'render');
@@ -228,32 +228,58 @@
                 /* Template from AJAX template */
             } else {
 
-                $.get(U.generate(template, 'tmpl'), function (data) {
+                $.ajax({
+                    url: U.generate(template, 'tmpl'),
+                    method: 'get',
+                    dataType: 'text',
+                    statusCode: {
 
-                    if (0 && !$(data).not('empty').first().attr('class')) {
-                        throw("Format Template Error: " + template);
-                    } else {
+                        404: function (data) {
+                            D.error.call(options, 'TEMPLATE NOT FOUND');
+                            return true;
+                        },
 
-                        D.log(['Render.renderTMPL:', template, 'TMPL from AJAX:', options.init.template], 'warn');
+                        200: function (data) {
 
-                        if (partial)
-                            Cache.template(template, data);
-                        else
-                            options.template = Cache.template(template, data);
+                            D.log(['Render.renderTMPL:', template, 'TMPL from AJAX:', options.init.template], 'warn');
 
-                        var partials = Cache.partials(template);
+                            if (0 && !$(data).not('empty').first().attr('class')) {
+                                throw("Format Template Error: " + template);
+                            } else {
 
-                        if (partials && partials.length) {
-                            if (!options.partials)
-                                options.partials = [];
-                            for (var i = 0; i < partials.length; i++)
-                                options.partials.push(partials[i]);
+                                if (partial)
+                                    Cache.template(template, data);
+                                else
+                                    options.template = Cache.template(template, data);
+
+                                var partials = Cache.partials(template);
+
+                                if (partials && partials.length) {
+                                    if (!options.partials)
+                                        options.partials = [];
+                                    for (var i = 0; i < partials.length; i++)
+                                        options.partials.push(partials[i]);
+                                }
+
+                                R.partialTMPL(options);
+                            }
+
+                        },
+
+                        201: function (data) {
+                            throw(data.message);
+                        },
+
+                        204: function (data) {
+                            throw(data.message);
+                        },
+
+                        500: function (data) {
+                            throw(data.message);
                         }
-
-                        R.partialTMPL(options);
                     }
-
                 });
+
             }
 
         },
@@ -278,7 +304,8 @@
         "inputHTML": function (options) {
 
             var render = options.rendered = DOM.create(options.rendered),
-                node = options.node;
+                node = options.node,
+                template = false;
 
             D.log(['Render.inputHTML into:', node], 'render');
 
@@ -289,7 +316,6 @@
                     options.rendered = render = render[0];
 
                     if (render.id == node.id) {
-
 
                         if (compare(render.classList, ['content-box-item', 'content-main'])) {//such as games-online & games-chance
                             DOM.hide(node.parentNode.children);
@@ -309,11 +335,23 @@
 
                         if (compare(render.classList, ['content-box-item', 'content-main'])) {//such as games-online & games-chance
                             DOM.hide(node.children);
-                        } else if (node.id == 'content')
+                        } else if (node.id == 'content') {
                             DOM.hide(node.children);
+                        }
 
-                        DOM.append(render, node);
-                        console.log('append ID');
+                        if (options.init.template.indexOf('-item') !== -1)
+                            template = Cache.get(U.parse(options.init.template, 'tmpl').replace('-item', ''), 'templates');
+
+                        if (template && template.indexOf('reverse') !== -1) {
+
+                            DOM.prepend(render, node);
+                            console.log('prepend ID');
+
+                        } else {
+                            DOM.append(render, node);
+                            console.log('append ID');
+                        }
+
                     }
 
                 } else {
@@ -322,6 +360,8 @@
                     console.log('append list');
                 }
 
+            } else {
+                console.log('node is absent');
             }
 
             console.log('initNode: ', options.node);
@@ -400,6 +440,8 @@
 
                     D.log(['Render.run:', options.template, options.href, options.json], 'info');
                     if (options.node) {
+
+                        DOM.remove('.modal-error', options.node);
                         DOM.append('<div class="modal-loading"><div></div></div>', options.node);
                     }
 

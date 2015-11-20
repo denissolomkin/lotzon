@@ -64,7 +64,8 @@
             "menu-navigation": Navigation.ready,
 
            // "blog": Blog.init,
-            "blog-post-view": Blog.post.init,
+            "blog-post-view": Blog.loadPostData,
+            "blog-post-view-replyform": Blog.after.replyForm,
 
             "games-game": WebSocketAjaxClient,
             "games-spin": Carousel.initOwl,

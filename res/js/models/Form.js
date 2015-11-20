@@ -2,7 +2,11 @@
 
     Form = {
 
-        timeout: 0,
+        timeout:{
+            remove: 3000,
+            fadeout: 200,
+            submit: 0
+        },
 
         do: {
 
@@ -87,12 +91,14 @@
                                 200: function (data) {
 
                                     Form.stop.call($button)
-                                        .message.call($button, data.message);
+                                        .message.call($form[0], data.message);
 
                                     if (Callbacks[formMethod][formCallback]) {
                                         D.log(['C.' + formMethod + '.callback']);
                                         Callbacks[formMethod][formCallback].call($form[0], data.res);
                                     }
+
+                                    Cache.update(data.res);
 
                                 },
 
@@ -105,7 +111,7 @@
                                 }
                             }
                         })
-                    }, Form.timeout);
+                    }, Form.timeout.submit);
                 }
             }
         },
@@ -154,18 +160,38 @@
             return Form;
         },
 
+        getTimeout: function(){
+            return this.timeout.fadeout + this.timeout.remove;
+        },
+
         message: function (message) {
+
+
+            this.reset();
 
             if (!message)
                 return Form;
 
-            var $button = this;
-            var $status = $('<div class="status">' + Cache.i18n(message) + '</div>');
+            //var $button = this;
+            //var $status = $('<div class="status">' + Cache.i18n(message) + '</div>');
 
-            $button.fadeOut(200).delay(2400).fadeIn(200);
-            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function () {
-                $(this).remove()
-            });
+            modal = DOM.create('<div class="modal-message"><div>' + Cache.i18n(message) + '</div></div>')[0];
+
+            DOM.append(modal, this);
+
+            setTimeout(
+                function () {
+                    DOM.fadeOut(modal);
+                    setTimeout(function () {
+                        modal.remove();
+                    }, Form.timeout.fadeout);
+                },
+                Form.timeout.remove);
+
+//            $button.fadeOut(200).delay(2400).fadeIn(200);
+//            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function () {
+//                $(this).remove()
+//            });
         }
 
     }

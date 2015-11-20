@@ -108,12 +108,12 @@
 
         updateBanners:function(){
 
-            if(0 && /192.168.56.101|lotzon.com/.test(location.hostname)) {
+            if(/192.168.56.101|lotzon.com/.test(location.hostname)) {
                 R.push('/banner/desktop/top');
                 R.push('/banner/desktop/right');
-                R.push('/banner/desktop/fixed');
-                R.push('/banner/tablet/top');
-                R.push('/banner/tablet/bottom');
+                //R.push('/banner/desktop/fixed');
+                //R.push('/banner/tablet/top');
+                //R.push('/banner/tablet/bottom');
             }
         },
 

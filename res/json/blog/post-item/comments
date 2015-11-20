@@ -24,7 +24,7 @@
                                               "name": "Tom Soyer"
                                           },
                                           "post_id": 1,
-                                          "comment_id": 0,
+                                          "comment_id": 1,
                                           "text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor voluptatem dolorem saepe nihil cum, delectus eius ea? Voluptatibus provident tempora consequatur repellat qui mollitia dolorem tenetur earum dicta, minus voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat quidem, id error sunt. Placeat laboriosam non obcaecati alias vel quibusdam dolor quaerat quod ipsa, autem voluptas. Aperiam deleniti quo reiciendis.",
                                           "date": "1432626126",
                                           "likes": 10
@@ -40,7 +40,7 @@
                                   "name": "Tom Soyer"
                               },
                               "post_id": 1,
-                              "comment_id": 3,
+                              "comment_id": 1,
                               "text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor voluptatem dolorem saepe nihil cum, delectus eius ea? Voluptatibus provident tempora consequatur repellat qui mollitia dolorem tenetur earum dicta, minus voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat quidem, id error sunt. Placeat laboriosam non obcaecati alias vel quibusdam dolor quaerat quod ipsa, autem voluptas. Aperiam deleniti quo reiciendis.",
                               "date": "1432626126",
                               "likes": 10

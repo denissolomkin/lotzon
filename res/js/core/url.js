@@ -27,7 +27,7 @@ $(function () {
                     break;
 
                 case "tmpl":
-                    url = U.parse(url, 'url') + '.html';
+                    url = url.split('-')[0] + '/' + url + '.html';
                     break;
 
                 default:

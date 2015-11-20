@@ -4,7 +4,7 @@
 
         getId: function (el) {
 
-            if (!(typeof el === 'object' && "nodeType" in el)) {
+            if (typeof el === 'string' || !(typeof el === 'object' && "nodeType" in el)) {
                 el = DOM.create(el).children()[0];
             }
 
@@ -13,16 +13,34 @@
 
         append: function (str, el) {
 
+            this.insert(str, el);
+
+        },
+
+        prepend: function (str, el) {
+
+            this.insert(str, el, true);
+
+        },
+
+        insert: function (str, el, prepend) {
+
             if (typeof str === 'string')
                 str = DOM.create(str);
 
             if (str) {
-                if (str.length)
+
+                if (str.length  && !("nodeType" in str)) {
                     while (str.length > 0) {
-                        el.appendChild(str[0]);
+                        !prepend
+                            ? el.appendChild(str[0])
+                            : el.insertBefore(str[0], el.firstChild);
                     }
-                else
-                    el.appendChild(str);
+                } else {
+                    !prepend
+                        ? el.appendChild(str)
+                        : el.insertBefore(str, el.firstChild);
+                }
             }
 
         },
@@ -46,6 +64,21 @@
             }
         },
 
+        byId: function (id, level) {
+
+            var node = document.getElementById(id),
+                level = typeof level !== 'undefined' && level || false,
+                l = 0;
+
+            while (!node && id && id.match(/(?:\w+)(?:-\w+)+$/) && (!level || l < level)) {
+                id = id.replace(/-(\w+)$/, "");
+                node = document.getElementById(id);
+                l++;
+            }
+
+            return node;
+        },
+
         show: function f(el, parent) {
 
             if (typeof el === 'object' && "nodeType" in el) {
@@ -53,6 +86,52 @@
             } else
                 this.all(f, el, parent)
 
+        },
+
+        scroll: function f(el) {
+
+            if (typeof el === 'object' && "nodeType" in el) {
+
+                if (!!el && el.scrollIntoView) {
+                    el.scrollIntoView(false);
+                } else {
+                    window.scroll(0, DOM.position(el));
+                }
+            } else
+                this.all(f, el)
+        },
+
+        cursor: function f(el, parent) {
+
+            if (typeof el === 'object' && "nodeType" in el) {
+                console.log(el);
+                var rng, sel;
+                if (document.createRange) {
+                    rng = document.createRange();
+                    rng.selectNodeContents(el);
+                    rng.collapse(false); // схлопываем в конечную точку
+                    sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(rng);
+                } else { // для IE нужно использовать TextRange
+                    var rng = document.body.createTextRange();
+                    rng.moveToElementText(el);
+                    rng.collapseToEnd();
+                    rng.select();
+                }
+
+            } else
+                this.all(f, el, parent)
+        },
+
+        position: function (el) {
+            var curtop = 0;
+            if (el.offsetParent) {
+                do {
+                    curtop += el.offsetTop;
+                } while (el = el.offsetParent);
+                return [curtop];
+            }
         },
 
         hide: function f(el, parent) {

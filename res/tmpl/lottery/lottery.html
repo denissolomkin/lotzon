@@ -27,40 +27,7 @@
         <!-- .ticket-items -->
     </div>
 
-    <div class="matches-inf-wrapper clearfix carousel">
-
-        {{#each (lottery "prizes")}}
-        <div class="matches-inf {{@key}}">
-            <div class="grid-container lottery-grid header-box grid-nomargin">
-                <div class="width-100">
-                    <p class="title">
-                        {{i18n "title-lottery-prizes" @key}}
-                    </p>
-                </div>
-            </div>
-            <div class="grid-container lottery-grid grid-nomargin">
-                <ul class="width-100 ul-striped">
-
-                    {{#reverse .}}
-                    <li>
-                        <div>
-                            <p class="text-large">{{number this.sum}} {{#if (eq this.currency "money")}}{{player
-                                "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</p>
-
-                            <p>{{i18n "title-lottery-prizes-match"}} {{@key}} {{i18n "title-lottery-prizes-from"}}
-                                {{lottery "requiredBalls"}} {{i18n "title-lottery-prizes-balls"}} <span
-                                        class="hidden-x-small"> {{i18n "title-lottery-prizes-ticket"}}</span></p>
-                        </div>
-                    </li>
-                    {{/reverse}}
-
-                </ul>
-            </div>
-        </div>
-        {{/each}}
-
-    </div>
-   
+    {{partial 'lottery-matches'}}   
 
     <div class="content-box tickets">
      <div class="grid-container lottery-grid header-box grid-nomargin">

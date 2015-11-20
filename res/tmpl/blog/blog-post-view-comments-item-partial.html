@@ -1,0 +1,26 @@
+<div class="comment-content">
+    <div class="comment-top">
+        <div class="comment-img">
+            <img src="{{this.user.avatar}}" alt="">
+        </div>
+        <div class="comment-inf">
+            <span class="comment-name">{{this.user.name}}</span>
+            <span class="comment-date"><span>{{from this.date}}</span></span>
+                <span class="comment-reply">
+                    <span class="separator">|</span>
+                        <!--a href="/blog/post/{{this.post_id}}/comments/{{#if this.comment_id}}{{this.comment_id}}/answers/{{/if}}{{this.id}}/new_answer">
+                        {{i18n "button-answer"}}</a-->
+                    <span data-user-name="{{this.user.name}}"
+                          data-user-id="{{this.user.id}}"
+                          data-post-id="{{this.post_id}}"
+                          data-comment-id="{{this.id}}"
+                          class="comment-reply-btn">{{i18n "button-answer"}}</span>
+                    <span class="comment-like-mob"></span>
+                </span>
+        </div>
+    </div>
+    <div class="comment-like">{{likes}}</div>
+    <div class="comment-description">
+        {{this.text}}
+    </div>
+</div>

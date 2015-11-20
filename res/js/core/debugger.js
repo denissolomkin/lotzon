@@ -13,13 +13,13 @@ $(function () {
 
             D.log('Debugger.init', 'func');
             Object.deepExtend(this, init);
-
+            /*
             $.ajaxSetup({
                 error: function (xhr, status, message) {
-                    D.error(['AJAX Error: ', message]);
+                    D.error.call(this,['AJAX Error: ', message]);
                 }
             });
-
+            */
             /*window.onerror = function (message, url, line, col, error) {
                 D.error([message, url, line]);
                 return true;
@@ -67,37 +67,37 @@ $(function () {
                 ? message.join(' ')
                 : message;
 
+            console.log(this);
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);
 
-            if (D.isEnable("clean"))
-                $(".modal-error").remove();
+            //if (D.isEnable("clean"))
+            //    $(".modal-error").remove();
 
             // $(".modal-loading").remove();
 
             Form.stop();
             R.isRendering && R.event('stop');
 
-            var box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first(),
-                error = $('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>'),
-                buttons = null,
-                errors = null;
+            //var box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first(),
+            //    error = $('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>'),
+            //    buttons = null,
+            //    errors = null;
 
-            box.append(error);
+            //box.append(error);
 
 
-            if(options && options.node) {
-                options.node.appendChild(
-                    DOM.create('<div class="modal-loading"><div></div></div>')
-                );
+            if(this && this.node) {
+                DOM.remove('.modal-loading', this.node);
+                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this.node);
             }
 
-            if (D.isEnable("clean"))
-                if (errors = $(".modal-error"))
+            if (0 && D.isEnable("clean"))
+                if (errors = DOM.all(".modal-error"))
                     setTimeout(function () {
-                        errors.fadeOut(500);
+                        DOM.fadeOut(errors);
                         setTimeout(function () {
-                            errors.remove();
+                            DOM.remove(errors);
                         }, 500)
                     }, 1000);
 

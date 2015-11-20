@@ -1,0 +1,34 @@
+form, .banner-1, .banner-2, .banner-3, .banner-4, .banner-5{
+    position: relative;
+}
+.comment, .answers {
+    position: relative;
+}
+.modal-message {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block !important;
+}
+
+/* already exist, just adding */
+.modal-error, .modal-loading, .modal-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+}
+
+/* already exist, just adding */
+.modal-message div {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    margin-left: -50%;
+    top: 20%;
+    left: 50%;
+    background-color: white;
+    border-radius: 3px;
+    padding: 0px;
+}

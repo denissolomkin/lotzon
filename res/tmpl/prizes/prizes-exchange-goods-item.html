@@ -1,0 +1,21 @@
+<div id="prizes-exhange-goods-{{this.id}}" class="prize category-{{ this.category }}">
+    <a href="/prizes/exchange/goods/{{ this.id }}">
+        <div class="prize-content">
+            <div class="prize-img">
+                <img src="{{ this.img }}" alt="">
+            </div>
+            <div class="prize-name">
+                {{ this.title }}
+            </div>
+            <div class="prize-price">
+                {{ this.price }}
+                <span>{{i18n "title-points"}}</span>
+            </div>
+        </div>
+        <div class="prize-inf">
+            {{i18n "title-limited-quantity"}}
+            <br>
+            {{ this.quantity }} {{i18n "title-pieces"}}
+        </div>
+    </a>
+</div>

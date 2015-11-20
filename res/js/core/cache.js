@@ -181,15 +181,21 @@ $(function () {
 
                 case typeof storage !== 'undefined':
 
-                    path = path.split('-');
                     cache = this.storage[this[storage]];
 
-                    while (path.length && cache) {
-                        needle = path.shift();
-                        cache = cache && cache.hasOwnProperty(needle) && cache[needle];
+                    if(storage === 'templates') {
+                        cache = cache.hasOwnProperty(path) && cache[path];
+                    } else {
+
+                        path = path.split('-');
+
+                        while (path.length && cache) {
+                            needle = path.shift();
+                            cache = cache && cache.hasOwnProperty(needle) && cache[needle];
+                        }
                     }
 
-                    D.log(['Cache.get:', path, storage, cache.toString()], 'cache');
+                    D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
                     return cache;
                     break;
 
@@ -244,6 +250,34 @@ $(function () {
             }
 
             cache['total'] = total.toFixed(2) + " MB";
+        },
+
+        "update": function(object, key){
+
+            if(typeof object === 'object') {
+
+                if (!key || !object.hasOwnProperty('id')) {
+
+                    for (prop in object) {
+                        var keys = key && key.slice() || [];
+                        keys.push(prop);
+                        this.update(object[prop], keys);
+                    }
+
+                } else if (object.hasOwnProperty('id')) {
+
+                    key = key.join('-');
+                    if(node = DOM.byId(key,1))
+
+                        console.log(key);
+                        R.push({
+                            href: key.replace(/-\d+$/g, '-item'),
+                            node: node,
+                            json: object
+                        });
+                    //console.log('href: ',key.join('-'), ', json: ',object)
+                }
+            }
         },
 
         "extend": function (data, path, storage) {

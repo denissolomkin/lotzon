@@ -1,0 +1,15 @@
+<div id="prizes-exchange" class="content-box-item with-cat">
+
+    <div class="content-box-item-top clearfix">
+        <div class="content-box-cat">
+            {{#each categories}}
+            <a href="#{{ id }}">{{ title }}</a>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="content-box-item-content">
+        {{partial 'prizes-exchange-goods' .}}
+    </div>
+
+</div>

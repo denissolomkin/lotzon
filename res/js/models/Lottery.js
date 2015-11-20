@@ -155,8 +155,7 @@
             Lottery.animateSummary();
 
             R.push({
-                template: 'lottery-history-tickets',
-                href: 'lottery-tickets-' + lotteryId,
+                href: 'lottery-history-' + lotteryId + '-tickets',
                 format: Lottery.extendTickets,
                 arguments: [Lottery.summary, Lottery.data.combination]
             })
@@ -195,7 +194,7 @@
 
         prepareTickets: function(id) {
 
-            var href = 'lottery-tickets-' + id,
+            var href = 'lottery-history-' + id + '-tickets',
                 json = ((id == Tickets.lastLotteryId + 1) ? {
                     key: href,
                     cache: "session",

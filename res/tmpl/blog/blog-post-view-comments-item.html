@@ -1,0 +1,11 @@
+<div class="comment" id="blog-post-{{this.post_id}}-comments-{{this.id}}" data-id="{{this.id}}">
+
+    {{partial 'blog-post-view-comments-item-partial' . }}
+
+    <div id="blog-post-{{this.post_id}}-comments-{{this.id}}-answers" class="answers">
+
+        {{partial 'blog-post-view-comments-view-answers' . }}
+
+    </div>
+
+</div>

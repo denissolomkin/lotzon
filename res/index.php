@@ -21,7 +21,7 @@
             <div id="banner-desktop-right" class="banner-4" >
 	            <div style="height: 100%; background: #ccc;"></div>
             </div>
-            <div class="banner-5">
+            <div id="banner-desktop-fixed" class="banner-5">
 	            <div style="height: 100%; background: #ccc;"></div>
             </div>
         </aside>

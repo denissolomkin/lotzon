@@ -11,6 +11,7 @@
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/res/css/style.css">
     <link rel="stylesheet" href="/res/css/animate.css">
+    <link rel="stylesheet" href="/res/css/denis.css">
 
     <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
 
@@ -24,7 +25,7 @@
 <!-- SITE TOP -->
 <div class="site-top">
     <div class="container">
-        <div id="banner-desktop-header" class="banner-3">
+        <div id="banner-desktop-top" class="banner-3">
 	        <div style="height: 100%; background: #ccc;"></div>
         </div>
     </div>

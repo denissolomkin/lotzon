@@ -1,0 +1,15 @@
+
+                    <form action="/blog/post/{{id}}/comments" method="get" class="render-list-form">
+
+                        <div class="post-comments render-list" id="blog-post-{{id}}-comments">
+                        </div>
+
+                        {{#if (gt stat.comments 0)}}
+                        <div class="container-center">
+                            <button type="submit" class="btn-flat never-infinite-scrolling">{{i18n
+                                "button-load-more"}}
+                            </button>
+                        </div>
+                        {{/if}}
+
+                    </form>
