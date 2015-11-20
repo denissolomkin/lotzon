@@ -33,7 +33,7 @@
                     foreach ($reviews as $review) {
                     $player = new Player;
                     $player->setId($review->getPlayerId())->fetch()->initDates()->initCounters();?>
-                    <tr data-id="<?=$review->getId()?>" data-playerid="<?=$review->getPlayerId()?>" data-ispromo="<?=$review->isPromo()?>" data-reviewid="<?=$review->getReviewId()?>">
+                    <tr data-id="<?=$review->getId()?>" data-playerid="<?=$review->getPlayerId()?>" data-ispromo="<?=$review->isPromo()?>" data-parentid="<?=$review->getReviewId()?>">
                         <td><?=$review->getDate('d.m.Y <b\r> H:i:s')?></td>
                         <td class="" style="position: relative;" >
                             <div onclick="window.open('/private/users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
@@ -223,8 +223,8 @@
 
                 <form class="form">
                     <input type="hidden" name="edit[Id]" id="edit-id" value="" />
-                    <input type="hidden" name="edit[ReviewId]" id="edit-reviewid" value="" />
-                    <input type="hidden" name="add[ReviewId]" id="add-reviewid" value="" />
+                    <input type="hidden" name="edit[ParentId]" id="edit-parentid" value="" />
+                    <input type="hidden" name="add[ParentId]" id="add-parentid" value="" />
                     <input type="hidden" name="add[Status]" value="1" />
 
                     <div class="form-group">
@@ -352,7 +352,7 @@
             $("#edit-review").modal('hide');
         });
 
-        $('#add-reviewid').val(tr.data('reviewid') ? tr.data('reviewid') : (tr.data('id') ? tr.data('id') : null));
+        $('#add-parentid').val(tr.data('parentid') ? tr.data('parentid') : (tr.data('id') ? tr.data('id') : null));
         $('#add-text').val('');
 
         if (!tr.length) {
