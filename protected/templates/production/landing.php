@@ -444,22 +444,18 @@
     });
 
     <? if(!$metrikaDisabled):?>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-56113090-1', 'auto');
-    ga('send', 'pageview');
-
+    <!-- Yandex.Metrika counter -->
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
             try {
-                w.yaCounter26806191 = new Ya.Metrika({id:26806191,
-                    webvisor:true,
+                w.yaCounter33719044 = new Ya.Metrika({
+                    id:33719044,
                     clickmap:true,
                     trackLinks:true,
-                    accurateTrackBounce:true});
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    trackHash:true
+                });
             } catch(e) { }
         });
 
@@ -468,12 +464,13 @@
             f = function () { n.parentNode.insertBefore(s, n); };
         s.type = "text/javascript";
         s.async = true;
-        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
 
         if (w.opera == "[object Opera]") {
             d.addEventListener("DOMContentLoaded", f, false);
         } else { f(); }
     })(document, window, "yandex_metrika_callbacks");
+    <!-- /Yandex.Metrika counter -->
     <? endif; ?>
 </script>
 
