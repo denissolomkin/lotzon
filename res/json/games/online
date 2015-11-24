@@ -11,7 +11,10 @@
                         "img": "/res/img/games/durak.jpg",
                         "title": "Дурак",
                         "price": "50000",
-                        "quantity": "0"
+                        "quantity": "0",
+                        "players": "12",
+                        "fund_points": "12000",
+                        "fund_money": "12000"
                     },
                     "2": {
                         "id": "1",
@@ -19,7 +22,10 @@
                         "img": "/res/img/games/durak.jpg",
                         "title": "Дурак",
                         "price": "50000",
-                        "quantity": "0"
+                        "quantity": "0",
+                        "players": "12",
+                        "fund_points": "12000",
+                        "fund_money": "12000"
                     },
                     "3": {
                         "id": "1",
@@ -27,7 +33,10 @@
                         "img": "/res/img/games/durak.jpg",
                         "title": "Дурак",
                         "price": "50000",
-                        "quantity": "0"
+                        "quantity": "0",
+                        "players": "12",
+                        "fund_points": "12000",
+                        "fund_money": "12000"
                     },
                     "4":
                     {
@@ -36,7 +45,10 @@
                         "img": "/res/img/games/durak.jpg",
                         "title": "Дурак",
                         "price": "50000",
-                        "quantity": "0"
+                        "quantity": "0",
+                        "players": "12",
+                        "fund_points": "12000",
+                        "fund_money": "12000"
                     }
 
 	}

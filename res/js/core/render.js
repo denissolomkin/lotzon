@@ -71,12 +71,12 @@
 
             options.tab = options.tab
                 ? (typeof options.tab !== 'object' ? $('[href="' + options.tab + '"]').first() : options.tab)
-                : $(this);
+                : 'nodeType' in this ? $(this) : null;
 
             options.init = $.extend({}, options, {
                 template: options.template,
                 box: options.box && options.box.attr('class') && ('.' + options.box.attr('class').split(' ').join('.')),
-                tab: options.tab.attr('href'),
+                tab: options.tab && options.tab.attr('href'),
                 after: null,
                 node: null,
                 callback: null,
@@ -305,9 +305,13 @@
 
         "inputHTML": function (options) {
 
+            console.log(options);
+
             var render = options.rendered = DOM.create(options.rendered),
                 node = options.node,
                 template = false;
+
+
 
             D.log(['Render.inputHTML into:', node], 'render');
 

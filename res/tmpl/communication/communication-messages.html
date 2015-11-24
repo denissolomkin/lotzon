@@ -1,23 +1,20 @@
 ﻿<div id="communication-messages" class="content-box-item clearfix">
-	<div class="cm-top">
-			<a href="/communication/messages/new" class="new-message">Новое сообщение</a>
-			<a href="/communication/messages/new?users=1" class="write-admin">Написать админу</a>
-		</div>
-		
-	{{#each .}}
-	
-		<div class="message">
-			<div class="message-img">
-				<img src="{{img}}" alt="">
-			</div>
-			<div class="message-name">{{title}}</div>
-			<div class="message-text">
-				{{text}}
-			</div>
-		</div>
-		
-	 {{/each}}
-	 {{^.}}No messages :({{/.}}
+    <div class="cm-top">
+        <a href="/communication/messages/new" class="new-message">{{i18n "button-new-message"}}</a>
+        <a href="/users/1/new_message" class="write-admin">{{i18n "button-admin-message"}}</a>
+    </div>
 
-	</div>
+
+    <form action="/communication/messages/list" method="get" class="render-list-form">
+
+        <div class="render-list" id="communication-messages-list">
+        </div>
+
+        <div class="container-center">
+            <button type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}
+            </button>
+        </div>
+
+    </form>
+
 </div>

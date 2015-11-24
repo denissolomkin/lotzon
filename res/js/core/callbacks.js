@@ -67,6 +67,8 @@
             "blog-post-view-comments-replyform": Comments.after.replyForm,
             "communication-comments-replyform": Comments.after.replyForm,
 
+            "games-online": Carousel.initOwl,
+            "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
 

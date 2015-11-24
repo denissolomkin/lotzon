@@ -10,7 +10,10 @@
                                 "img": "/res/img/games/slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
-                                "quantity": "0"
+                                "quantity": "0",
+                                "players": "12",
+                                "fund_points": "12000",
+                                "fund_money": "12000"
                             },
                 "2": {
                                 "id": "2",
@@ -18,7 +21,54 @@
                                 "img": "/res/img/games/slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
-                                "quantity": "0"
+                                "quantity": "0",
+                                "players": "12",
+                                "fund_points": "12000",
+                                "fund_money": "12000"
+                    },
+                "3":    {
+                                "id": "1",
+                                "category": "5",
+                                "img": "/res/img/games/slots.png",
+                                "title": "Игра Слоты",
+                                "price": "50000",
+                                "quantity": "0",
+                                "players": "12",
+                                "fund_points": "12000",
+                                "fund_money": "12000"
+                            },
+                "4": {
+                                "id": "2",
+                                "category": "5",
+                                "img": "/res/img/games/slots.png",
+                                "title": "Игра Слоты",
+                                "price": "50000",
+                                "quantity": "0",
+                                "players": "12",
+                                "fund_points": "12000",
+                                "fund_money": "12000"
+                    },
+                "5":    {
+                                "id": "1",
+                                "category": "5",
+                                "img": "/res/img/games/slots.png",
+                                "title": "Игра Слоты",
+                                "price": "50000",
+                                "quantity": "0",
+                                "players": "12",
+                                "fund_points": "12000",
+                                "fund_money": "12000"
+                            },
+                "6": {
+                                "id": "2",
+                                "category": "5",
+                                "img": "/res/img/games/slots.png",
+                                "title": "Игра Слоты",
+                                "price": "50000",
+                                "quantity": "0",
+                                "players": "12",
+                                "fund_points": "12000",
+                                "fund_money": "12000"
                     }
             }
 	    }

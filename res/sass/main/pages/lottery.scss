@@ -1,0 +1,1579 @@
+.gh-circle {
+	content: "";
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background: #b7cfd3;
+	border-radius: 50%;
+}
+
+
+// ------------------------------- //
+
+.gh-header {
+	display: none;
+}
+
+.gh-item {
+	margin: 0 -10px 40px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.gh-my-game .gh-date:after {
+	@extend .gh-circle;
+	margin-left: 20px;
+}
+
+.gh-inf {
+	margin-bottom: 0;
+	font-size: 14px
+}
+
+.gh-inf-name {
+	margin-right: 15px;
+}
+
+.gh-combination .gh-inf-name {
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+.gh-numbers {
+	display: inline-block;
+}
+
+.gh-number {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	background: #ffe800;
+	border-radius: 50%;
+	margin-right: 5px;
+	font-size: 14px;
+	line-height: 30px;
+	text-align: center;
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
+// ------------------------------- //
+
+
+@media (min-width: 520px) {
+	.gh-header {
+		display: block;
+		margin: 0 -10px 20px;
+		padding: 0 10px;
+		text-transform: uppercase;
+		font-weight: bold;
+		color: #3f3f3f;
+	}
+	.gh-header div {
+		float: left;
+	}
+	.gh-date-name {
+		width: 25%;
+	}
+	.gh-combination-name {
+		width: 55%;
+	}
+	.gh-winners-name {
+		width: 20%;
+	}
+	// ---------------------- //
+	
+
+	.gh-winners {
+		width: 20%;
+		position: relative;
+		left: 55%;
+	}
+
+ 
+}
+
+.Ghd-number {
+	background: #ffe700;
+	border-radius: 50%;
+	display: block;
+	text-align: center;
+}
+
+.ghd-numbers {
+	width: 295px;
+	margin: 0 auto 30px;
+}
+
+.ghd-number {
+	@extend .Ghd-number;
+	width: 45px;
+	height: 45px;
+	line-height: 45px;
+	font-size: 20px;
+	font-weight: bold;
+	float: left;
+	margin-right: 5px;
+	color: #4a4a4a;
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
+// ----------------------------- //
+
+.ghd-tickets table {
+	margin-bottom: 5px;
+}
+
+.ghd-tickets td:first-child {
+	padding-right: 5px;
+}
+
+.ghd-tickets td:last-child {
+	padding-left: 10px;
+}
+
+.ghd-tickets td {
+	padding-bottom: 15px;
+}
+
+.ghd-tickets td:first-child span {
+	display: none;
+}
+
+.ghd-ticket-number {
+	@extend .Ghd-number;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 29px;
+	font-size: 15px;
+	&.false {
+		background: white;
+		border: 1px solid #535353;
+	}
+}
+
+.ghd-won {
+	margin-top: 10px;
+	& .grid-container {
+		max-width: 260px;
+	}
+	& span{
+		max-width: 70px;
+		display: inline-block;
+		line-height: 18px;
+		&.hidden {
+			display: none;
+		}
+	} 
+	& strong{
+		font-size: 42px;
+		line-height: 34px;
+		font-family: Handbook-bold;
+	} 
+}
+
+// ----------------------------- //
+.ghd-game-inf .title {
+	font-size: 18px;
+	border-bottom: 1px solid #9b9b9b;
+	padding-bottom: 6px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+.ghd-game-inf table {
+	font-size: 15px;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.ghd-game-inf th {
+	padding-bottom: 10px;
+	&:nth-child(1) {
+		text-align: center;
+		padding-right: 20px;
+	}
+	&:nth-child(2) {
+		padding-left: 10px;
+	}
+	&:nth-child(3) {
+		padding-left: 10px;
+	}
+}
+
+.ghd-game-inf td {
+	padding-bottom: 10px;
+	&:nth-child(1) {
+		text-align: center;
+		padding-right: 20px;
+	}
+	&:nth-child(2) {
+		padding-left: 25px;
+	}
+	&:nth-child(3) {
+		padding-left: 30px;
+	}
+}
+
+.ghd-all-won {
+	border-top: 1px solid #9b9b9b;
+	padding: 10px 10px 0;
+	float: right;
+}
+
+// ----------------------------- //
+
+// ----------------------------- //
+
+// RATING ------------------------------- //
+
+.raiting-item {
+	float: left;
+	cursor: pointer;
+	width: 280px;
+	margin: 0 10px 30px 0;
+	padding: 10px 10px 10px 130px;
+	position: relative;
+	&:hover {
+		background: #f2f8f8;
+	}
+	&:nth-child(odd) {
+		margin-right: 0;
+	}
+}
+
+.raiting-img {
+	float: left;
+	width: 100px;
+	height: 100px;
+	margin-left: -120px;
+	position: relative;
+}
+
+.raiting-position {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 35px;
+	height: 35px;
+	background: url(img/sprite.png) -400px -190px;
+	color: white;
+	font-size: 13px;
+	line-height: 30px;
+	padding-right: 5px;
+	text-align: center;
+}
+
+.raiting-img img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 50%;
+}
+
+.raiting-name {
+	font-size: 16px;
+}
+
+.raiting-inf {
+	position: absolute;
+	bottom: 10px;
+	left: 130px;
+	font-size: 14px;
+}
+
+.raiting-inf td:nth-child(even) {
+	padding-left: 10px;
+}
+
+// TICKET-ITEMS ------------------------------ //
+
+.ticket-ball {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 42px;
+	text-align: center;
+	color: #6c6c6c;
+	cursor: pointer;
+	background: #eaf2f4;
+	box-shadow: 0px 2px 1px rgba(255, 255, 255, 0.5), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
+	padding-left: 2px;
+}
+
+.ticket-items {
+	margin: 0 0 20px;
+	position: relative;
+	background: #A9D0D5;
+	padding-left: 10px;
+	min-height: 300px;
+}
+
+.ticket-numbers-wrapper {
+	overflow: hidden;
+}
+
+.ticket-tabs {
+	background: #A9D0D5;
+	display: table;
+	padding: 6px 0 14px;
+	padding-right: 10px;
+	& li {
+		width: 1000px;
+		height: 40px;
+		font-size: 15px;
+		font-weight: bold;
+		line-height: 26px;
+		color: #4c4c4c;
+		text-align: center;
+		cursor: pointer;
+		display: table-cell;
+		vertical-align: bottom;
+		&.gold {
+			background: #f9dc42;
+		}
+		&.unavailable {
+			color: #808080;
+			&:hover {
+				& .ticket-number-sm {
+					background: #8f8e8e;
+				}
+			}
+		}
+		&.done {
+			& .ticket-number-sm:before {
+				content: "";
+				display: block;
+				background: url(img/sprite.png) center center no-repeat;
+				background-position: -597px -72px;
+				position: absolute;
+				width: 11px;
+				height: 8px;
+				text-align: center;
+				top: 5px;
+				left: 8px;
+			}
+			&:hover .ticket-number-sm:before {
+				content: "";
+				display: block;
+				background: url(img/sprite.png) center center no-repeat;
+				background-position: -597px -53px;
+				position: absolute;
+				width: 11px;
+				height: 8px;
+				text-align: center;
+				top: 5px;
+				left: 8px;
+			}
+			&:last-of-type {
+				& .ticket-number-sm {
+					background: #f8e71d;
+					&:before {
+						display: none;
+					}
+				}
+				&:hover {
+					& .ticket-number-sm {
+						&:before {
+							display: none;
+						}
+					}
+				}
+				&.active {
+					& .ticket-number-sm {
+						&:before {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+		&.active {
+			top: 0;
+			cursor: default;
+			text-shadow: 0 1px 0 rgb(76, 76, 76);
+			color: #b2d0d4;
+			& .ticket-number-sm {
+				background: #4c4c4c;
+			}
+		}
+		&.active.unavailable .ticket-number-sm {
+			background: #8f8e8e;
+		}
+		&.active.done .ticket-number-sm:before {
+			content: "";
+			display: block;
+			background: url(img/sprite.png) center center no-repeat;
+			background-position: -597px -53px;
+			position: absolute;
+			width: 11px;
+			height: 8px;
+			text-align: center;
+			top: 5px;
+			left: 8px;
+		}
+		&:last-of-type {
+			&:hover {
+				color: #cdcf9f;
+				& .ticket-number-sm {
+					display: inline-block;
+					width: 30px;
+					height: 40px;
+					line-height: 50px;
+					border-radius: 3px;
+					position: relative;
+					background: #4c4c4c;
+				}
+			}
+			& .ticket-number-sm {
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				border-radius: 3px;
+				position: relative;
+				padding-bottom: 20px;
+				background: #cdcf9f;
+			}
+		}
+		&.active:last-of-type {
+			color: #cdcf9f;
+			& .ticket-number-sm {
+				display: inline-block;
+				width: 30px;
+				height: 40px;
+				line-height: 50px;
+				border-radius: 3px;
+				position: relative;
+				background: #4c4c4c;
+			}
+		}
+	}
+	& span {
+		display: none;
+		text-transform: uppercase;
+	}
+	& .ticket-number-sm {
+		display: inline-block;
+		width: 30px;
+		height: 40px;
+		line-height: 50px;
+		border-radius: 3px;
+		position: relative;
+	}
+	& li:hover {
+		color: #b2d0d4;
+		text-shadow: 0 1px 0 rgb(76, 76, 76);
+		& .ticket-number-sm {
+			background: #4c4c4c;
+		}
+	}
+}
+
+
+#lottery-process {
+	position: absolute;
+	margin: 0 auto;
+	box-sizing: border-box;
+	background-color: #8ECADA;
+	width: 100%;
+	height: 568px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	& .won {
+		display: none;
+		&.close {
+			position: absolute;
+			height: 25px;
+			width: 25px;
+			right: 20px;
+			top: 20px;
+			background: url(../css/img/sprite.png);
+			background-position: -98px -190px;
+
+		}
+	}
+	& .container-center {
+		margin-top: 35px;
+		display: none;
+		& .btn {
+				display:inline-block;
+				font: 14px handbookpro-regular;
+				line-height: 30px;
+		}
+	}
+	&.lottery-won {
+		background: url(img/320.png) center center no-repeat;
+	}
+	& .container{
+		max-width: 298px;
+		margin: 0 auto;
+		min-width: 0;
+		height: auto;
+		& .ghd-won {
+			display: none;
+		}
+		& .ghd-fale {
+			display: none;
+		}
+		& > div {
+			text-align: center;
+			height: 63px;
+			& a {
+				line-height: 63px;
+				display: inline-block;
+				float: none;
+				left: auto;
+				top: 22px;
+				width: 100px;
+				height: 20px;
+				background: url(../css/img/Lotzon-Logo.svg) no-repeat 0 0;
+				background-size: 100%;
+			}
+		}
+	}
+}
+
+.balls-end-game {
+	& .g-oc_li {
+		width: 41px;
+		height: 41px;
+		margin-right: 10px;
+		float: left;
+		font: 15px  Handbook-bold;
+		line-height: 40px;
+		color: #000;
+		text-align: center;
+		letter-spacing: -2px;
+		position: relative;
+		overflow: hidden;
+		&:last-of-type {
+			margin-right: 0;
+		}
+		& .goc_li-sh {
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			// background: url(../css/img/sprite.png);
+			background: #fff;
+			background-position: -640px -208px;
+		}
+		& .goc_li-sh2 {
+			width: 42px;
+			height: 42px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			background: url(../css/img/sprite.png);
+			background-position: -683px -208.5px;
+		}
+		& .goc_li-nb {
+			background-color: #ffe400;
+			width: 41px;
+			height: 41px;
+			border-radius: 50%;
+			text-align: center;
+			letter-spacing: -2px;
+			position: absolute;
+			left: 0;
+			top: -42px;
+			z-index: 2;
+			&.random-ball {
+				top: 105px;
+				&:first-child {
+					top: 0px;
+				}
+			}
+		}
+	}
+}
+
+.is-done {
+	padding-top: 19px;
+}
+
+.active:hover {
+	-webkit-transform: none !important;
+	-moz-transform: none !important;
+	-o-transform: none !important;
+	transform: none !important;
+}
+
+.ticket-item {
+	padding-top: 15px;
+	padding-bottom: 15px;
+
+}
+
+// .scroll-box {
+//   height: 320px;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+// }
+
+.ticket-numbers {
+	margin-bottom: 10px;
+	& li {
+		@extend .ticket-ball;
+			margin: 0 10px 20px 10px !important;
+			float: left;
+			&.select {
+			background-color: #ffe400;
+			-webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+			-moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+			-ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+			-o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+			transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+	}
+	
+}
+
+.ticket-actions li {
+	@extend .ticket-ball;
+	margin: 0 10px 0 10px !important;
+	float: left;
+	&:hover {
+		background: #ffe400;
+		color: #4c4c4c;
+	}
+	&.select {
+		background-color: #ffe400;
+		-webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		-moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		-ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		-o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+}
+
+.ticket-fc-btn {
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+		top: 13px;
+		left: 11px;
+		width: 19px;
+		height: 17px;
+		background: url(img/sprite.png) -449px -87px;
+	}
+}
+.gold  {
+	& .add-ticket {
+		&.ticket-btn {
+			background: #ebdb9c;
+			color: #8f8e8e;
+			&:hover {
+				background: #ebdb9c;
+				color: #8f8e8e;
+			}
+			&.on {
+				cursor: pointer;
+				background: #f6f3e6;
+				color: #4c4c4c;
+				// background: url(img/sprite.png) -244px -294px;
+				&:not(.loading):hover {
+				cursor: pointer;
+				background: #363636;
+				color: #ead377;
+				}
+
+			}
+			&.loading {
+				color: #ead377;
+				position: relative;
+				opacity: 0.8;
+				cursor: default;
+				background: #ffe400;
+				background-repeat: no-repeat;
+				background-position: 0;
+				background: url(img/sprite.png) -244px -294px;
+				-webkit-animation: AnimationNGold 4s infinite linear;
+				-moz-animation: AnimationNGold 4s  infinite linear;
+				animation: AnimationNGold 4s  infinite linear;
+			}
+		}
+	}
+	& .ticket-numbers .select {
+		background-color: #363636;
+		color: #ead376;
+		text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+		-webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		-moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		-ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		-o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	.ticket-actions {
+		& li {
+			&:hover {
+				background: #363636;
+				color: #ead376;
+				text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+			}
+			&.select {
+				background: #363636;
+				color: #ead376;
+				text-shadow: 1px 0 0 rgba(0, 0, 0, 0.4);
+				-webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+				-moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+				-ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+				-o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+				transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+			}
+		}
+	}
+	& .btn-flat {
+		&:hover {
+			color: #E8CF6B;
+		}
+	}
+	& .condition {
+		color: #000;
+	}
+}
+
+.ticket-btn {
+	@extend .ticket-ball;   
+	float: right;
+	padding: 0 20px;
+	border-radius: 17px;
+	text-transform: uppercase;
+	background: #d0e2e4;
+	box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
+	&.add-ticket {
+		padding: 0; 
+		width: 160px;
+		&:hover {
+			background: #d0e2e4;
+			color: #8f8e8e;
+		}
+		&.on {
+			
+			cursor: pointer;
+			&:not(.loading):hover {
+				background: #ffe400;
+				 color: #4c4c4c;
+			}
+		}
+		&.loading {
+			color: #4c4c4c;
+			position: relative;
+			opacity: 0.8;
+			cursor: default;
+			background: #ffe400;
+			background-repeat: no-repeat;
+			background-position: 0;
+			background: url(img/sprite.png) -430px -292px;
+			-webkit-animation: AnimationBlue 8s infinite linear;
+			-moz-animation: AnimationBlue 8s  infinite linear;
+			animation: AnimationBlue 8s  infinite linear;
+		}
+	}
+
+}
+@-webkit-keyframes AnimationBlue {
+	0%{background-position:-556px -292px}
+	50%{background-position:-493px -292px}
+	100%{background-position:  -430px -292px}
+}
+@-moz-keyframes AnimationBlue {
+	0%{background-position:-556px -292px}
+	50%{background-position:-493px -292px}
+	100%{background-position:  -430px -292px}
+ }
+@keyframes AnimationBlue { 
+	0%{background-position:-556px -292px}
+	50%{background-position:-493px -292px}
+	100%{background-position:  -430px -292px}
+}
+@-webkit-keyframes AnimationNGold {
+	0%{background-position:-244px -294px }
+	// 50%{background-position:-223px 82px}
+	100%{background-position:-223px -294px}
+}
+@-moz-keyframes AnimationNGold {
+0%{background-position:-244px -294px }
+	// 50%{background-position:-223px 82px}
+	100%{background-position:-223px -294px}
+ }
+@keyframes AnimationNGold { 
+0%{background-position:-244px -294px }
+	// 50%{background-position:-223px 82px}
+	100%{background-position:-223px -294px}
+}
+// ------------------------------------------- //
+
+.tickets .content-box-tab {
+	padding: 0 20px;
+}
+
+.tickets-rules {
+	& dt {
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	& dd {
+		margin-bottom: 25px;
+	}
+}
+
+// MATCHES-INF ------------------------------ //
+
+.matches-inf-wrapper {
+	margin-bottom: 20px;
+	background: white;
+	&.carousel {
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0);
+		padding-bottom: 5px;
+	}
+}
+
+.matches-inf {
+	box-shadow: none;
+	margin: 0;
+}
+
+.matches-inf {
+	&.content-box {
+		margin: 0;
+	}
+	& .content-box-header {
+		text-align: left;
+		padding-left: 20px;
+		font-size: 14px;
+	}
+	&.gold .content-box-header {
+		background: #f8e71d;
+	}
+	& .content-box-content {
+		min-height: auto;
+		padding: 20px 0 0 20px;
+	}
+	& table {
+		width: 100%;
+	}
+	& th:first-child,
+	& td:first-child {
+		width: 63%;
+	}
+	& th {
+		font-size: 14px;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #191919;
+		padding-bottom: 20px;
+	}
+	& td {
+		font-size: 15px;
+		color: #2b2b2b;
+		padding-bottom: 15px;
+	}
+}
+
+.matches-ball {
+	display: block;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #d6e5e9;
+	border-radius: 50%;
+	background: #f6fafb;
+	&.true {
+		border: none;
+		background: #f8e71d;
+	}
+}
+
+.matches-balls {
+	& span {
+		@extend .matches-ball;
+		float: left;
+		margin-right: 7px;
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}
+
+.ghd-tickets {
+	& li {
+		font: 15px / 1 handbookpro-regular;
+		text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
+		line-height: 38px;
+		margin-bottom: 1px;
+		color: #000;
+		&.unfilled {
+			margin-left: 9px;
+		}
+		& span {
+			float: left;
+			display: inline-block;
+			line-height: 38px;
+			margin-right: 15px;
+			min-width: 62px;
+			&.gold {
+				font-family: Handbook-bold;
+				color: #f6ee89;
+				margin-right: 0;
+				text-shadow: 0 1px 0 #4c4c4c;
+				text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.7)
+
+			}
+		}
+		& ul {
+			float: left;
+			& li {
+				line-height: 38px;
+				margin-bottom: 0;
+				float: left;
+				&.filled-ball {
+					width: 30px;
+					height: 30px;
+					line-height: 30px;
+					// color: #2d2d2d;
+					border-radius: 50%;
+					float: left;
+					margin-right: 6px;
+					margin-top: 4px;
+					text-align: center;
+					// text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);
+					&.won_ball {
+						background: #f6ee89;
+						width: 30px;
+						height: 30px;
+						background-color: #f6ee89;
+						border: none;
+						// box-shadow: inset 1px 1px 0px 0px rgba(20, 20, 20, 0.4), 0 1px 0px 0 rgba(255, 255, 255, 0.6);
+						line-height: 30px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.lottery-amimation-box {
+	// float: left;
+	margin-top: 30px;
+	font: 15px / 1 handbookpro-regular;
+	text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
+}
+
+// ------------------------------------------- //
+@media (min-width: 321px) {
+	#lottery-process {
+		&.lottery-won {
+			background: url(img/480.png) center center no-repeat;
+		}
+	}
+}
+
+@media (min-width: 480px) {
+	.ticket-ball {
+		width: 40px;
+		height: 40px;
+		line-height: 42px;
+	}
+	.ticket-btn {
+		border-radius: 20px;
+		padding: 0 35px;
+	}
+}
+
+@media (min-width: 680px) {
+	.matches-inf-wrapper {
+		background: transparent;
+		&.carousel {
+			box-shadow: none;
+		}
+	}
+	.matches-inf {
+		width: 48%;
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+		&:first-child {
+			float: left;
+		}
+		&:last-child {
+			float: right;
+		}
+	}
+}
+
+.lottery-result {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	color: #4c4c4c;
+}
+
+.balls-result,
+.text-result {
+	float: left;
+	height: 100%;
+}
+
+.balls-result {
+	width: 100%;
+}
+
+.text-result {
+	width: 100%;
+	& span {
+		display: none;
+	}
+}
+
+.ticket-result {
+	width: 100%;
+	list-style: none;
+	position: relative;
+	float: left;
+	margin-bottom: 11px;
+	& li {
+		position: relative;
+		float: left;
+		font-weight: bold;
+	}
+}
+
+.ball-number-result {
+	width: 35px;
+	height: 35px;
+	border: 1px solid black;
+	border-radius: 50%;
+	line-height: 35px;
+	text-align: center;
+	margin-right: 6px;
+}
+
+.ticket-number-result {
+	line-height: 40px;
+	margin-right: 2%;
+	& span {
+		display: none;
+	}
+}
+
+.select {
+	background-color: #ffe400;
+	-webkit-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+	-moz-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+	-ms-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+	-o-transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+	transition: background 500ms cubic-bezier(0.215, 0.61, 0.355, 1), color 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.ticket-item.gold {
+	background: #e8cf6b;
+}
+
+.ticket-items.gold {
+	background: #e8cf6b;
+}
+
+.ticket-tabs.gold {
+	background: #e8cf6b;
+}
+
+.condition {
+	font-size: 26px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 15px 40px;
+}
+
+.balls-count {
+	color: #e7f6f7;
+	font-size: 15px;
+	bottom: 40px;
+	float: right;
+	margin-right: 20px;
+	display: none;
+	height: 40px;
+	line-height: 40px;
+	text-shadow: 0 1px 0 #A9C4C7;
+}
+
+.balls-count b {
+	color: #4c4c4c;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.after {
+	left: 50px;
+	bottom: -5px;
+	position: absolute;
+	font-size: 15px;
+	width: 200px;
+	line-height: 18px;
+	display: none;
+	&span {
+		color: white;
+	}
+	& b{
+		display: inline-block;
+	}
+}
+
+
+
+.add-ticket .on {
+	color: #4c4c4c;
+	cursor: pointer;
+}
+
+.add-ticket {
+	color: #8f8e8e;
+	cursor: default;
+}
+
+.add-ticket.on {
+	color: #4c4c4c;
+	cursor: pointer;
+}
+
+.tickets-number-result {
+	font-size: 15px;
+	line-height: 45px;
+	color: #4c4c4c;
+	font-weight: bold;
+	margin: 0 20px 0 0;
+	width: 12%;
+}
+
+.balls-box {
+	top: 4px;
+	margin-bottom: 5px;
+	position: relative;
+	height: 40px;
+	float: left;
+	margin-left: 3%;
+	width: 100%;
+}
+
+.balls-box li {
+	padding: 0;
+}
+
+.ball-circle {
+	border: 1px solid #4c4c4c;
+	border-radius: 50%;
+	position: relative;
+	float: left;
+	height: 35px;
+	width: 35px;
+	margin-right: 6%;
+	line-height: 40px;
+	text-align: center;
+}
+
+.ball-circle {
+	margin-right: 1%;
+}
+
+.balls-box {
+	margin-bottom: 2px;
+}
+
+.tickets-number-result {
+	&p {
+		line-height: 42px;
+	}
+}
+
+.tickets-number-result {
+	width: 5%;
+}
+
+.text-result {
+	color: #4c4c4c;
+	font-size: 16px;
+	line-height: 20px;
+	margin: 0;
+}
+
+.text-result p {
+	font-size: 18px;
+	&.text-result-top {
+		color: #e7f6f7;
+		margin-bottom: 20px;
+		font-size: 15px;
+	}
+}
+
+.tickets-number-result p {
+	margin: 0;
+}
+
+.tickets-number-result p {
+	text-align: right;
+}
+
+.ticket-numbers li {
+	margin-bottom: 15px;
+}
+
+.ticket-random {
+	position: relative;
+	& .after {
+		left: 75px;
+		bottom: 10px !important;
+		display: none;
+	}
+}
+
+.after span {
+	color: white;
+}
+
+@media (min-width: 415px) and (max-width: 500px) {
+	.ball-number-result {
+		margin-right: 6%;
+	}
+}
+
+@media (min-width: 501px) and (max-width: 768px) {
+	.ball-number-result {
+		margin-right: 6%;
+	}
+	.ticket-number-result {
+		margin-right: 5%;
+		padding-left: 3%;
+	}
+}
+
+/***************************Timer drowing*********/
+.ticket-box {
+	background-color: #E8CF6B;
+	&.gold {
+		background: #E8CF6B;
+		& .header-box{
+			background: #E8CF6B;
+		}
+		& .ticket-items {
+			background: #E8CF6B;
+			& .ticket-tabs {
+				background: #E8CF6B;
+			}
+		}
+	}
+	.ticket-btn {
+		margin-right: 20px;
+	}  
+}
+.lottery-grid {
+	font-family: handbookpro-regular;
+	letter-spacing: 0.7px;
+	padding: 0 16px;
+
+	&:not( .width-100) {
+		margin-left: -16px;
+	}
+
+	&.timer-box {
+		padding: 0;
+		margin-left: 0;
+		padding: 0 15px;
+
+		& .title {
+			font-size: 12px;
+			line-height: 14px;
+			padding: 16px 0;
+			max-width: 130px;
+		}
+		 & > * {
+			padding: 0;
+		}
+
+	}
+
+	& > * {
+		padding-left: 16px;
+	}
+
+	& .title {
+		padding: 16px 16px 16px 22px;
+		font-size: 15px;
+		color: #4A4A4A;
+		text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.5);
+		text-transform: uppercase;
+	}
+
+	& #ticketCountdownHolder {
+		text-align: right;
+		padding:16px 0;
+
+		&.is-countdown {
+			background-color: transparent;
+			font-size: 29px;
+			border: none;
+			width: 50%;
+			top: 0;
+			position: relative;
+			right: 0;
+		}
+		& .is-countdown {
+			background-color: transparent;
+			font-size: 36px;
+			line-height: 24px;
+			text-shadow: 0.5px 0.7px 1px rgba(255, 255, 255, 0.5);
+			color: #2E2E2E;
+			border: none;
+			width: auto;
+			top: 0;
+			position: static;
+			right: 0;
+			font-weight: 300;
+		}
+		
+	}
+	&.header-box {
+		background: #A9D0D5;
+	}
+	& .ul-striped {
+		& li {
+			padding: 6px 16px 13px 22px; 
+		}
+	}
+}
+.matches-inf-wrapper {
+	& .content-box {
+		margin: 0;
+	}
+}
+
+.gold {
+	& .header-box {
+		background: #f8e71d;
+	}
+}  
+// .content-box-item-content {
+// 	& div:not(.type-mine) {
+// 		& .gh-item {
+// 			&:before {
+// 				display: none;
+// 			}  
+// 		}
+// 	}
+// }
+.content-box-item-content {
+	& .type-mine{
+		& .gh-item {
+			position:relative;
+			&:before {
+				content: "";
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				background: #b7cfd3;
+				border-radius: 50%;
+				margin-right: 13px;
+				position: absolute;
+				left: -20px;
+				top: 10px;
+			}
+		}
+	}	
+	& .gh-item {		
+		& .arrow {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-bottom: 15px solid transparent;
+			border-top: 15px solid transparent;
+			border-left: 15px solid #4d4d4d;
+			position: absolute;
+			top: 40px;
+			left: auto;
+			right: 20px;
+			&:before {
+				content: "";
+				display: block;
+				width: 0;
+				height: 0;
+				border-bottom: 15px solid transparent;
+				border-top: 15px solid transparent;
+				border-left: 15px solid #fff;
+				top: -15px;
+				right: 2px;
+				position: absolute;
+			}
+		}
+	}
+	
+}   
+
+.cabinet-game-history {
+	letter-spacing: 0.7px;
+	padding: 20px 10px 30px;
+	font-family: handbookpro-regular;
+	min-height: 0;
+	font-size: 15px;
+	color: #4D4D4D;
+	&.with-cat {
+		padding-top: 0;
+	}
+	& .content-box-item {
+		padding: 0;
+		min-height: 0;
+	}
+	& .content-box-item-content {
+		padding: 10px 10px 0 40px;
+	}
+	& .content-box-cat {
+		margin-top: 10px;
+		margin-left: 5px;
+		&  > * {
+			cursor: pointer;
+		}
+		&  > span  {
+			&:after {
+				display: none;
+				content: none;
+			}
+			&  label {
+				position: relative;
+				display: inline-block;
+				padding: 5px 10px;
+				margin-right: 0;
+				text-transform: uppercase;
+				cursor: pointer;
+				&:after {
+					display:none;
+				}
+				&:hover {
+					border: none;
+					background: #4c4c4c;
+					color: #fff;
+					text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+				}
+				&.active {
+					border: none;
+					background: #4c4c4c;
+					color: #fff;
+					text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+				}
+				
+				&:after {
+					display:none;
+				}
+			}
+			&:first-child {
+				&  label {
+					padding: 5px 10px 5px 35px;
+					&:before {
+						content: "";
+						display: inline-block;
+						width: 10px;
+						height: 10px;
+						background: #b7cfd3;
+						border-radius: 50%;
+						margin-right: 13px;
+						position: absolute;
+						left: 5px;
+						top: 10px;
+					}
+				} 
+			} 
+		}
+	}
+
+	& .content-box-item-top  {
+		padding: 0;
+		position: static;
+	}
+	& .gh-inf-name {
+		margin-right: 0;
+	}
+	& .gh-date {
+		margin-bottom: 10px;
+		font-size: 15px;
+	}
+	& label {
+		display: inline-block;
+		top: 0;
+		left: 0;
+	}
+	& input[type="radio"] {
+		display: none;
+		z-index: 1;
+		&:checked + label {
+			border: none;
+			background: #4c4c4c;
+			color: #fff;
+			text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+		 } 
+	}
+
+}
+
+.lottery-history-items {
+	position: relative;
+	z-index: 10;
+}
+
+.ticket-done {
+	height: 30px;
+	margin-right: 20px;
+	bottom: 30px;
+	bottom: 0;
+	color: #e7f6f7; 
+	float: right;
+	& b {
+		text-shadow: 0 1px 0 #A9C4C7;
+		padding: 20px 0;
+		color: #000;
+	}
+
+}
+
+@media (min-width: 360px) {
+	.ticket-items {
+		padding-left: 0;
+	}
+	.lottery-grid .title {
+		padding-left: 10px;
+	}
+	.content-box.tickets .title {
+		padding-left: 20px;
+	}
+	.lottery-grid .ul-striped li {
+		padding-left: 10px;
+	}
+	.lottery-grid.timer-box {
+		padding: 0 10px;
+	}
+	.ticket-tabs {
+		padding-right: 0;
+	}
+	.ticket-box .ticket-btn {
+		margin-right: 10px;
+	}
+	.ticket-done {
+		margin-right: 10px;
+	}
+
+}
+
+@media (max-width: 767px) {
+	.balls-count {
+		display: none!important;
+	}
+}
+
+// html {
+//   overflow: hidden;
+// }

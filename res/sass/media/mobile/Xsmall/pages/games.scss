@@ -1,0 +1,17 @@
+@media (min-width: 500px) {
+  .games-chance {
+    width: 90%;
+    max-width: 530px;
+  }
+  .game {
+    float: left;
+    width: 38%;
+    margin-right: 22%;
+  }
+}
+
+@media (min-width: 500px) and (max-width: $screen-sm-min) {
+  .game:nth-child(even) {
+    margin-right: 0;
+  }
+}

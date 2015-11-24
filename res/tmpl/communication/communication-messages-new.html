@@ -1,10 +1,10 @@
-<div class="content-box communication-message">
+<div id="communication-messages-new" class="content-box">
 
     <div class="content-box-header back">{{i18n "title-message-new"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item communication-new-message">
-            <form action="/communication/message">
+            <form action="/communication/messages" method="post">
                 <div class="addressee">
                     <input type="hidden" name="id" value="{{ id }}">
                     {{#user}}

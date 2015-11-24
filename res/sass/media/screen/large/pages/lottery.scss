@@ -1,0 +1,180 @@
+// TICKET-ITEMS ------------------------------ //
+
+.ticket-items {
+
+  margin: 5px 0 7px;
+  padding-left: 0;
+  height: 416px;
+  background: #a7d1d5;
+}
+
+.ticket-tabs li {
+  margin-right: 15px;
+}
+
+.ticket-item {
+  padding: 37px 40px 6px 42px !important;
+}
+
+.ticket-numbers {
+  margin-right: -30px !important;
+  height: 305px;
+}
+.ticket-box {
+  margin-top: 34px;
+
+}
+.ticket-done {
+  margin-right: 5px;
+}
+// MATCHES-INF ------------------------------ //
+
+.matches-inf-wrapper {
+  margin-bottom: 40px;
+}
+
+.gh-header {
+  margin: 0 -30px 20px;
+  padding: 0 30px;
+}
+
+.gh-inf.gh-combination {
+    margin-right: 120px;
+}
+
+// RATING ------------------------------- //
+
+.raiting-item {
+  width: 350px;
+  margin-right: 40px;
+}
+
+.balls-result {
+  width: 57%;
+}
+
+.text-result {
+  width: 43%;
+}
+
+.ticket-number-result {
+  margin-right: 20px;
+}
+
+.ticket-number-result span {
+  display: inline;
+}
+
+.ball-number-result {
+  width: 40px;
+  height: 40px;
+}
+
+.text-result {
+  & span {
+    display: block;
+  }
+}
+
+.text-result-top {
+  margin-left: 0px;
+}
+.ticket-tabs {
+  top: -42px;
+  padding: 0 0 14px;
+  & li {
+    width: 80px;
+    margin-right: 8px;
+    &.active {
+      top: 3px;
+    }
+    &:hover {
+      -webkit-transform: translate(0, -6px);
+      -moz-transform: translate(0, -8px);
+      -o-transform: translate(0, -8px);
+      -moz-transition: all 0.1s ease-in-out;
+      -o-transition: all 0.1s ease-in-out;
+      -webkit-transition: all 0.1s ease-in-out;
+      transition: all 0.1s ease-in-out;
+    }
+  }
+}
+
+
+.ticket-item .ticket-numbers li {
+  margin: 0 29px 21px 0 !important;
+}
+
+.lottery-grid .title {
+  padding: 16px 0 16px 30px;
+}
+.matches-inf .lottery-grid .ul-striped li {
+  padding: 6px 30px 13px;
+}
+
+.cabinet-game-history .content-box-cat > span:first-child label {
+  padding: 5px 10px 5px 40px;
+}
+.cabinet-game-history .content-box-cat > span:first-child label:before {
+  left: 10px;
+}
+
+.gh-item {
+  padding: 10px 10px 10px 25px;
+  margin: 0;
+}
+
+.content-box-content .gh-item:before {
+  left: -5px;
+}
+.cabinet-game-history .content-box-item-content {
+  padding: 10px 10px 0 20px;
+}
+.matches-inf-wrapper.carousel .matches-inf {
+  width: 48%;
+}
+.ticket-btn {
+  &.add-ticket {
+    width: 178px;
+    padding: 0;
+    &.loading {
+      color: #4c4c4c;
+      position: relative;
+      opacity: 0.8;
+      cursor: default;
+      background: #ffe400;
+      background-repeat: no-repeat;
+      background-position: 0;
+      // background-size: contain;
+      // background-image: url(../css/img/progress.png);
+      background: url(img/sprite.png) -430px -292px;
+      -webkit-animation: AnimationBlue 8s infinite linear;
+      -moz-animation: AnimationBlue 8s  infinite linear;
+      animation: AnimationBlue 8s  infinite linear;
+    }
+  }
+}
+@-webkit-keyframes AnimationBlue {
+  0%{background-position:-535px -292px}
+  50%{background-position:-482px -292px}
+  100%{background-position:  -430 -292px}
+}
+@-moz-keyframes AnimationBlue {
+  0%{background-position:-535px -292px}
+  50%{background-position:-482px -292px}
+  100%{background-position:  -430 -292px}
+}
+@keyframes AnimationBlue { 
+  0%{background-position:-535px -292px}
+  50%{background-position:-482px -292px}
+  100%{background-position:  -430 -292px}
+}
+
+.lottery-amimation-box {
+  margin-top: 34px;
+}
+// @media (min-width: 1367px) {
+//   .balls-end-game .g-oc_li .goc_li-sh2 {
+//     background-position: -620px -100px;
+//   }
+// }

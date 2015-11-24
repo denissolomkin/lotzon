@@ -1,0 +1,170 @@
+.communication .content-box-tab span {
+  display: inline;
+}
+
+.communication .content-box-tab:before {
+  display: none;
+}
+
+.communication .content-box-tab.back-tab {
+  padding: 0 91px 0 20px;
+}
+
+.communication .content-box-tab.back-tab:before {
+  display: block;
+}
+
+.communication .content-box-tab .count {
+  margin-left: 6px;
+}
+
+.comment-content {
+  padding-left: 70px;
+}
+
+.comment-img {
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 0;
+}
+
+.comment-inf {
+  padding-left: 0;
+  padding-right: 60px;
+}
+
+.comment-name {
+  margin-right: 20px;
+}
+
+
+
+// COMMENT HOVER --------------------------- //
+
+
+// COMMENT ANSWER -------------------------- //
+
+.comment.answer {
+  margin-top: 20px;
+  padding-left: 70px;
+}
+
+// COMMENT NOTIFICATIONS ------------- //
+
+.c-notifications {
+  margin: 0 0 20px;
+}
+
+// ---------------------------------- //
+
+.c-notifications-list {
+  left: 0;
+  padding: 45px 0 10px;
+  border-radius: 2px;
+  & .close-list {
+    top: 5px;
+    cursor: pointer;
+  }
+}
+
+.c-notification {
+  cursor: pointer;
+}
+
+.close-notification {
+  cursor: pointer;
+}
+
+.c-notification-top {
+  min-height: auto;
+}
+
+.c-notification-question {
+  margin-top: 0;
+  display: inline;
+}
+
+.c-notification-description {
+  padding: 5px 0 0 50px;
+}
+
+.cm-top {
+  padding: 0 20px;
+  & .new-message {
+    padding: 5px 30px;
+  }
+}
+
+// ---------------------------- //
+
+.message {
+  padding-right: 20px;
+  margin-left: 70px;
+}
+
+.message-img,
+.message-name,
+.message-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.message-img {
+  float: none;
+  margin-left: -70px;
+  margin-right: 16px;
+}
+
+.message-name {
+  width: 19%;
+  margin-right: 1%;
+  margin-bottom: 0;
+}
+
+.message-text {
+  width: 79%;
+}
+
+// SELECTED FRIEND -------------------- //
+
+.nm-selected {
+  &.nm-change {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.comment.active > .comment-content {
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.95;
+    background: white;
+    z-index: 1;
+  }
+  & .comment-reply {
+    display: block;
+    width: 50%;
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    z-index: 1;
+  }
+  & .comment-like-mob {
+    display: block;
+    width: 30px;
+    height: 25px;
+    background: url(img/sprite.png) -345px -192px;
+    position: absolute;
+    top: 4px;
+    right: 0;
+    z-index: 1;
+  }
+}
