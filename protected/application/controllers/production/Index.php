@@ -5,7 +5,9 @@ use \OnlineGamesModel, \LotterySettingsModel, \SettingsModel, \StaticSiteTextsMo
 use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \GameSettingsModel, \QuickGamesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
+use \Detection\MobileDetect;
 
+require_once(PATH_ROOT . 'vendor/mobiledetect/mobiledetectlib/namespaced/Detection/MobileDetect.php');
 
 class Index extends \SlimController\SlimController
 {
@@ -93,6 +95,11 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
+        global $isMobile;
+
+        $detect = new MobileDetect;
+        $isMobile = $detect->isMobile();
+
         return include ("res/index.php");
 
         $session               = new Session();
