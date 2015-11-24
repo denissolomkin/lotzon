@@ -18,13 +18,15 @@ $screen-lg-min: 1200px;
   @import "pages/reports";
   @import "pages/users";
 
+    // LIBS ---------------------- //
+  @import "libs/daterangepicker";
+  @import "libs/owl.carousel";
+  @import "libs/owl.theme";
+
+
   // MEDIA --------------------- //
   @import "media/Xsmall/style";
   @import "media/small/style";
   @import "media/middle/style";
   @import "media/large/style";
 
-  // LIBS ---------------------- //
-  @import "libs/daterangepicker";
-  @import "libs/owl.carousel";
-  @import "libs/owl.theme";

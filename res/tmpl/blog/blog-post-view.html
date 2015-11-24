@@ -22,23 +22,13 @@
                         <a href="#" class="gp">103</a>
                     </div>
                 </div>
-
+                <hr>
                 <div class="post-description clearfix">
-                   {{{ text }}}
+                    {{{ text }}}
                 </div>
 
-                <div class="more-posts clearfix">
-                    <div class="title ">{{i18n "title-post-similar"}}</div>
-                    <div class="more-posts render-list" id="blog-post-{{id}}-similar"></div>
-                </div>
-
-                <div class="post-comments">
-                    <div class="title">{{i18n "title-post-comments"}} ({{ stat.comments}})</div>
-
-                    {{partial 'blog-post-view-replyform' this}}
-                    {{partial 'blog-post-view-comments-form' this}}
-
-                </div>
+                {{partial 'blog-post-view-similar' this}}
+                {{partial 'blog-post-view-comments' this}}
 
             </div>
         </div>

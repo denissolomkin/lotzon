@@ -14,16 +14,16 @@ $(function () {
             D.log('Debugger.init', 'func');
             Object.deepExtend(this, init);
             /*
-            $.ajaxSetup({
-                error: function (xhr, status, message) {
-                    D.error.call(this,['AJAX Error: ', message]);
-                }
-            });
-            */
+             $.ajaxSetup({
+             error: function (xhr, status, message) {
+             D.error.call(this,['AJAX Error: ', message]);
+             }
+             });
+             */
             /*window.onerror = function (message, url, line, col, error) {
-                D.error([message, url, line]);
-                return true;
-            }*/
+             D.error([message, url, line]);
+             return true;
+             }*/
         },
 
         "log": function (log, type) {
@@ -36,7 +36,7 @@ $(function () {
 
             if (D.isEnable(type)) {
 
-                if(!console[type])
+                if (!console[type])
                     type = 'log';
 
                 if (log && typeof log == 'object' && log.length) {
@@ -55,7 +55,7 @@ $(function () {
 
         },
 
-        "isEnable": function(key){
+        "isEnable": function (key) {
 
             return D["config"] && D["config"][key];
 
@@ -67,7 +67,7 @@ $(function () {
                 ? message.join(' ')
                 : message;
 
-            console.log(this);
+            console.log(this, this.node);
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);
 
@@ -87,9 +87,11 @@ $(function () {
             //box.append(error);
 
 
-            if(this && this.node) {
+            if (this && this.node) {
                 DOM.remove('.modal-loading', this.node);
                 DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this.node);
+            } else if (this && 'nodeType' in this) {
+                DOM.append('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>', this);
             }
 
             if (0 && D.isEnable("clean"))

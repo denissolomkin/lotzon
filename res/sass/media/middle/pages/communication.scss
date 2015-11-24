@@ -12,3 +12,41 @@
 .message-text {
   width: 76%;
 }
+
+.comment-reply {
+  display: inline;
+  font-size: 13px;
+  position: static;
+  opacity: 0;
+  transition: all 0.1s linear;
+  & .separator {
+    display: inline;
+    margin: 0 10px;
+  }
+}
+
+.comment-reply-btn {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.comment-like {
+  top: 0;
+  cursor: pointer;
+}
+.comment-reply .comment-reply-btn {
+	display: inline-block;
+}
+
+.comment-content:hover {
+  & .comment-like,
+  & .comment-reply {
+    opacity: 1;
+  }
+}
+
+div.comment-reply-btn {
+	display: none;
+}

@@ -30,7 +30,7 @@
 
             if (str) {
 
-                if (str.length  && !("nodeType" in str)) {
+                if (str.length && !("nodeType" in str)) {
                     while (str.length > 0) {
                         !prepend
                             ? el.appendChild(str[0])
@@ -72,7 +72,7 @@
 
             while (!node && id && id.match(/(?:\w+)(?:-\w+)+$/) && (!level || l < level)) {
                 id = id.replace(/-(\w+)$/, "");
-                node = document.getElementById(id);
+                node = document.getElementById(id) || document.getElementById(id+'-list');
                 l++;
             }
 
@@ -180,7 +180,7 @@
             if (typeof el === 'object' && "nodeType" in el) {
 
                 el.style.opacity = 0;
-                el.style.display = display || "block";
+                el.style.display = "block";
 
                 (function fade() {
                     var val = parseFloat(el.style.opacity);

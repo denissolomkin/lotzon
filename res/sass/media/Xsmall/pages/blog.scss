@@ -8,6 +8,27 @@
     }
 }
 
+#blog-post-view {
+  font-family: handbookpro-regular;
+  font-size: 15px;
+  & .post {
+    & .title {
+      font-family: Handbook-bold;
+      font-size: 23px;
+      line-height: 27px;
+      margin-bottom: 18px;
+      font-weight: bold;
+    }
+  }
+}
+
+#blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
+    margin: 0 -20px;
+    font: 17px handbookpro-regular;
+    padding: 10px 20px;
+    background: #fafafa;
+    text-align: left; 
+}
 @media (min-width: 640px) {
   #blog-posts {
     & .post-item-title {
@@ -16,5 +37,25 @@
       margin-bottom: 15px;
       font-weight: bold;
     }
+  }
+  #blog-post-view {
+    font-family: handbookpro-regular;
+    font-size: 15px;
+    & .post {
+      & .title {
+        font-family: Handbook-bold;
+        font-size: 25px;
+        line-height: 23px;
+        margin-bottom: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+  #blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
+    margin: 0 -20px;
+    font: 17px handbookpro-regular;
+    padding: 10px 20px;
+    background: #fafafa;
+    text-align: left; 
   }
 }

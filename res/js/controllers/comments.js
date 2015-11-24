@@ -1,6 +1,7 @@
 (function () {
 
     Comments = {
+
         hide: function (event) {
 
             $(I.comment).removeClass('active');
@@ -12,31 +13,91 @@
             }
         },
 
+        after: {
+
+            reply: function (options) {
+
+                var form = this;
+
+                if(form.elements['comment_id'].value){
+                    setTimeout(function(){
+                        form.parentNode.removeChild(form);
+                    }, Form.getTimeout());
+                } else {
+                    form.getElementsByClassName('message-form-area')[0].innerHTML = '';
+                }
+            },
+
+            replyForm: function (options) {
+
+                if(!DOM.onScreen(options.rendered))
+                    DOM.scroll(options.rendered);
+
+                DOM.cursor('.message-form-area', options.rendered);
+            }
+        },
+
+        validate: {
+
+            reply: function (event) {
+                return true;
+            }
+        },
+
         do: {
 
-            renderForm: function () {
+            replyForm: function () {
 
-                var button = this,
-                    json = {
-                        'userid': button.getAttribute('data-userid'),
-                        'commentid': button.getAttribute('data-commentid'),
-                        'postid': button.getAttribute('data-postid')
+                var json = {
+                        'user': {
+                            "name": this.getAttribute("data-user-name"),
+                            'id': this.getAttribute("data-user-id")
+                        },
+                        'comment': this.getAttribute("data-comment-id"),
+                        'post': this.getAttribute('data-post-id')
                     },
-                    href = 'communication-comments-form',
-                    box = button.parentNode;
+                    node = this.parentNode;
 
-                while (!box.classList.contains(''))
-                    box = box.parentNode;
+                // up to comment block
+                while (!node.classList.contains('comment') || node.classList.contains('answer'))
+                    node = node.parentNode;
 
+                // find other forms
+                var commentsNode = node.parentNode;
+                while (!commentsNode.classList.contains('render-list'))
+                    commentsNode = commentsNode.parentNode;
 
+                // delete other forms
+                var existingForms = commentsNode.getElementsByTagName('FORM');
+                if (existingForms.length)
+                    for (var i = 0; i < existingForms.length; i++)
+                        existingForms[i].remove();
+
+                // push new form
                 R.push({
-                    href: href,
+                    href: (json.post ? 'blog-post-view' : 'communication' ) + '-comments-replyform',
                     json: json,
-                    box: box
-                })
+                    node: node
+                });
+
+            },
+
+            mobileForm: function () {
+
+                if (!Device.isMobile())
+                    return;
+
+                if (this.getElementsByTagName('FORM').length)
+                    return;
+
+                var forms = DOM.visible('.comment-reply');
+                forms.push(this.querySelector('.comment-reply'));
+
+                DOM.toggle(forms); // hide
 
             }
         }
+
     }
 
 })();

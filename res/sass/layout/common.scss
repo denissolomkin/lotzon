@@ -41,7 +41,7 @@ a {
   width: 20px;
   height: 20px;
   margin-top: -10px;
-  background: url(img/sprite.png) -80px -50px;
+  background: url(img/sprite.png) -80px -50px; 
   content: "";
   z-index: 1;
 }
@@ -65,7 +65,7 @@ button {
   color: #000;
   height: 30px;
   line-height: 30px;
-  font-size: 14px;
+  font-size: 13px;
   padding: 0 35px;
   text-transform: uppercase;
   background: none;
@@ -328,9 +328,9 @@ input.input-radio:checked + label.input-radio:before {
 
 .message-form-smileys {
   float: right;
-  width: 22px;
-  height: 22px;
-  background: url(img/sprite.png) -301px -191px;
+  width: 18px;
+  height: 18px;
+  background: url(img/sprite.png) -4px -228px;
   position: relative;
   top: 3px;
   cursor: pointer;

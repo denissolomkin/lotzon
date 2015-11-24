@@ -25,8 +25,9 @@
             $(document).on('click', ".message-form-btn", Message.do.send);
 
             /* new reply */
-            $(document).on('click', ".post-comments .comment-content .comment-reply .comment-reply-btn", Blog.do.replyForm);
-            $(document).on('click', ".post-comments .comment-content", Blog.do.mobileForm);
+
+            $(document).on('click', ".comment-content .comment-reply-btn", Comments.do.replyForm);
+            $(document).on('click', ".comment-content", Comments.do.mobileForm);
 
             /* form */
             $(document).on('click', 'form:not(.render-list-form) button[type="submit"]', Form.do.submit);
@@ -63,12 +64,11 @@
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
 
-           // "blog": Blog.init,
-            "blog-post-view": Blog.loadPostData,
-            "blog-post-view-replyform": Blog.after.replyForm,
+            "blog-post-view-comments-replyform": Comments.after.replyForm,
+            "communication-comments-replyform": Comments.after.replyForm,
 
             "games-game": WebSocketAjaxClient,
-            "games-spin": Carousel.initOwl,
+            "games-spin": slotMachine.init,
 
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
@@ -94,7 +94,7 @@
             "lottery-ticket": Ticket.update,
             "lottery-gold": Ticket.update,
             "prizes-exchange-goods": Prize.update.exchange,
-            "blog-post-view-comments": Blog.after.reply,
+            "blog-post-view-comments": Comments.after.reply,
 
         },
 
@@ -121,7 +121,7 @@
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
             "prizes-exchange-goods": Prize.validate.exchange,
-            "blog-post-view-comments": Blog.validate.reply,
+            "blog-post-view-comments": Comments.validate.reply,
 
         }
 

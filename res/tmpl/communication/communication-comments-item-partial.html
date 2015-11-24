@@ -1,5 +1,4 @@
 <div class="comment-content">
-    <div class="comment-reply-btn" data-user-name="{{this.user.name}}" data-user-id="{{this.user.id}}" data-post-id="{{this.post_id}}"data-comment-id="{{this.id}}"></div>
     <div class="comment-top">
         <div class="comment-img">
             <img src="{{this.user.avatar}}" alt="">
@@ -9,12 +8,9 @@
             <span class="comment-date"><span>{{from this.date}}</span></span>
                 <span class="comment-reply">
                     <span class="separator">|</span>
-                        <!--a href="/blog/post/{{this.post_id}}/comments/{{#if this.comment_id}}{{this.comment_id}}/answers/{{/if}}{{this.id}}/new_answer">
-                        {{i18n "button-answer"}}</a-->
                     <span data-user-name="{{this.user.name}}"
                           data-user-id="{{this.user.id}}"
-                          data-post-id="{{this.post_id}}"
-                          data-comment-id="{{this.id}}"
+                          data-comment-id="{{#if this.comment_id}}{{this.comment_id}}{{else}}{{this.id}}{{/if}}"
                           class="comment-reply-btn">{{i18n "button-answer"}}</span>
                     <span class="comment-like-mob"></span>
                 </span>

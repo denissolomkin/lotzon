@@ -1,6 +1,21 @@
 
+{{#notifications}}
+<!-- NOTIFICATIONS -->
+<div class="c-notifications">
+    <div class="title">
+        У вас {{notifications}} новых ответа <span class="c-show-notifications">смотреть</span>
+        <span class="c-hide-notifications"></span>
+    </div>
 
-		{{#each .}}
+    <div class="c-notifications-list">
+        <div class="close-list">Отметить все как прочитанные</div>
+
+    </div>
+</div>
+<!-- end of NOTIFICATIONS -->
+{{/notifications}}
+
+		{{#each notifications}}
 		
 
 							<div class="c-notification clearfix">
@@ -21,4 +36,3 @@
 							</div>
 					
         {{/each}}
-        {{^.}}No notifications :({{/.}}

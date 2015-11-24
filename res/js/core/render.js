@@ -48,10 +48,13 @@
                 : options.box;
 
 
-            var node = U.parse(options.href);
+            var node = options.template;
             if (!options.node && node) {
 
-                options.node = document.getElementById(U.parse(node, 'tmpl'));
+                options.node = document.getElementById(U.parse(options.href));
+
+                if (!options.node)
+                    options.node = document.getElementById(U.parse(node, 'tmpl'));
 
                 if (0 && !options.node)
                     options.node = document.getElementById(node);
@@ -107,7 +110,6 @@
 
             /* fix JSON for "/all" template */
             else if (!options.json && options.href.search(/all/) != -1) {
-
                 options.href = options.href.replace(/\/all/g, '');
                 options.init.template = options.template = options.template.replace(/\-all/g, '');
             }
@@ -140,7 +142,7 @@
 
         "json": function (options) {
 
-            options.href = U.parse(options.href);
+            options.href = U.parse(options.href, 'get');
 
             if (typeof options.json === 'object') {
 
@@ -340,7 +342,7 @@
                         }
 
                         if (options.init.template.indexOf('-item') !== -1)
-                            template = Cache.get(U.parse(options.init.template, 'tmpl').replace('-item', ''), 'templates');
+                            template = Cache.get(U.parse(options.init.template, 'tmpl').replace('-item', '-list'), 'templates');
 
                         if (template && template.indexOf('reverse') !== -1) {
 

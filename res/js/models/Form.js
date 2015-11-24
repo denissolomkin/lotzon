@@ -2,7 +2,7 @@
 
     Form = {
 
-        timeout:{
+        timeout: {
             remove: 3000,
             fadeout: 200,
             submit: 0
@@ -61,41 +61,41 @@
 
             submit: function (event) {
 
-                var $button = $(this),
-                    $form = $button.closest('form'),
-                    formData = $form.serializeObject(),
-                    formMethod = $form.attr('method'),
-                    formUrl = U.generate($form.attr('action'), formMethod),
-                    formCallback = U.parse(U.parse($form.attr('action')), 'tmpl');
+                var button = this,
+                    form = button.form,
+                    formData = $(form).serializeObject(),
+                    formUrl = U.generate(form.action, form.method),
+                    formCallback = U.parse(U.parse(form.action), 'tmpl');
 
                 event.preventDefault();
                 event.stopPropagation();
-                Form.start.call(this, event);
 
-                if ($button.hasClass('on')) {
+                Form.start.call(button, event);
+
+                if (button.classList.contains('on')) {
 
                     D.log('button.submit', 'info');
 
                     setTimeout(function () {
                         $.ajax({
                             url: formUrl,
-                            method: formMethod, // 'post'
+                            method: form.method, // 'post'
                             data: formData,
                             dataType: 'json',
                             statusCode: {
 
                                 404: function (data) {
-                                    throw (data.message);
+                                    D.error.call(form, data.message || 'NOT FOUND');
                                 },
 
                                 200: function (data) {
 
-                                    Form.stop.call($button)
-                                        .message.call($form[0], data.message);
+                                    Form.stop.call(button)
+                                        .message.call(form, data.message);
 
-                                    if (Callbacks[formMethod][formCallback]) {
-                                        D.log(['C.' + formMethod + '.callback']);
-                                        Callbacks[formMethod][formCallback].call($form[0], data.res);
+                                    if (Callbacks[form.method][formCallback]) {
+                                        D.log(['C.' + form.method + '.callback']);
+                                        Callbacks[form.method][formCallback].call(form, data.res);
                                     }
 
                                     Cache.update(data.res);
@@ -144,7 +144,7 @@
 
             if (Form.do.validate.call(this, event)) {
                 D.log('button.loading', 'info');
-                $(this).hasClass('on') && $(this).addClass('loading');
+                this.classList.contains('on') && this.classList.add('loading');
             }
 
             return Form;
@@ -152,46 +152,38 @@
 
         stop: function () {
 
-            if (this instanceof jQuery) {
-                this.removeClass('loading');
-            } else
-                $('button.loading').removeClass('loading');
+            if ('nodeType' in this) {
+                this.classList.remove('loading');
+            } else {
+                // DOM.all('button.loading').removeClass('loading');
+            }
 
             return Form;
         },
 
-        getTimeout: function(){
+        getTimeout: function () {
             return this.timeout.fadeout + this.timeout.remove;
         },
 
         message: function (message) {
 
-
-            this.reset();
+            var form = this;
+            form.reset();
 
             if (!message)
                 return Form;
 
-            //var $button = this;
-            //var $status = $('<div class="status">' + Cache.i18n(message) + '</div>');
-
-            modal = DOM.create('<div class="modal-message"><div>' + Cache.i18n(message) + '</div></div>')[0];
-
-            DOM.append(modal, this);
+            var modal = DOM.create('<div class="modal-message"><div>' + Cache.i18n(message) + '</div></div>')[0];
+            form.appendChild(modal);
 
             setTimeout(
                 function () {
                     DOM.fadeOut(modal);
                     setTimeout(function () {
-                        modal.remove();
+                        modal && form && form.removeChild(modal);
                     }, Form.timeout.fadeout);
                 },
                 Form.timeout.remove);
-
-//            $button.fadeOut(200).delay(2400).fadeIn(200);
-//            $status.delay(200).insertAfter($button).fadeIn(200).delay(2000).fadeOut(200, function () {
-//                $(this).remove()
-//            });
         }
 
     }

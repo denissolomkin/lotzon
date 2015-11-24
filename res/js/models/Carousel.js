@@ -11,6 +11,7 @@
                         autoHeight: false,
                         afterInit: function(){
 //                            this.jumpTo(1);
+//                              console.error(this.$elem.context);
                         }
                     });
                     Carousel.Owl = $('.carousel-spin').data('owlCarousel');

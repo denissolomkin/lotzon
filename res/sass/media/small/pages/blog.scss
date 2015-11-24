@@ -16,14 +16,6 @@
 
 // ---------------------------- //
 
-.more-posts a {
-  float: left;
-  width: 24%;
-  margin: 0 14% 0 0;
-  &:last-child {
-    margin: 0;
-  }
-}
 
 @media (min-width: 769px) {
 	.post-item-img {

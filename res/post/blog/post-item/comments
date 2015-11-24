@@ -15,7 +15,7 @@
                                               "user":{
                                                   "id": 1,
                                                   "avatar": "/res/img/comment_img.jpg",
-                                                  "name": "Tom Soyer"
+                                                  "name": "Tom Soyer1"
                                               },
                                               "post_id": 1,
                                               "comment_id": 1,
@@ -31,7 +31,7 @@
                                   "user":{
                                       "id": 1,
                                       "avatar": "/res/img/comment_img.jpg",
-                                      "name": "Tom Soyer"
+                                      "name": "Tom Soyer2"
                                   },
                                   "post_id": 1,
                                   "comment_id": 1,
@@ -47,7 +47,7 @@
                                   "user":{
                                       "id": 1,
                                       "avatar": "/res/img/comment_img.jpg",
-                                      "name": "Tom Soyer"
+                                      "name": "Tom Soyer3"
                                   },
                                   "post_id": 1,
                                   "comment_id": 3,

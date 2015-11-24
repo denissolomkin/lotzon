@@ -49,13 +49,13 @@
 
             } else {
 
-                var box = $('.ticket-item'),
+                var node = document.getElementById('lottery-ticket-item'),
                     tab = $(this).is('li')
 
                         ? $(this)
                         : ($(I.TicketTabs).not('.done').not('.unavailable').first() || $(I.TicketTabs).first());
 
-                if (!box.length || ($(this).is('li') && Ticket.isLoading()))
+                if (!node || ($(this).is('li') && Ticket.isLoading()))
                     return;
 
                 $(I.TicketTabs).removeClass('active');
@@ -65,14 +65,13 @@
 
                 R.push({
                     tab: tab,
-                    replace: '.ticket-item',
                     href: 'lottery-ticket-item',
                     template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable' + Tickets.selectedTab,
                     json: Tickets,
                     after: function () {
                         Tickets.isGold()
-                            ? $('.ticket-box').addClass('gold')
-                            : $('.ticket-box').removeClass('gold');
+                            ? document.querySelector('.ticket-box').classList.add('gold')
+                            : document.querySelector('.ticket-box').classList.remove('gold');
                     }
                 });
 

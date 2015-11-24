@@ -88,7 +88,7 @@
 }
 
 .comment {
-  margin-bottom: 30px;
+  margin-bottom: 21px;
 }
 
 .comment-content {
@@ -102,9 +102,12 @@
 }
 
 .comment-img {
-  display: table-cell;
+  // display: table-cell;
   width: 50px;
   height: 50px;
+  top: 4px;
+  position: absolute;
+  left: 0;
   & img {
     display: block;
     width: 100%;
@@ -145,11 +148,12 @@
 }
 
 .comment-like {
-  opacity: 0;
+  opacity: 1;
   position: absolute;
-  top: 15px;
+  top: 0;
   right: 0;
   padding-left: 30px;
+  font-size: 14px;
   &:before {
     content: "";
     display: block;

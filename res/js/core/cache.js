@@ -6,6 +6,15 @@ $(function () {
         "storage": {},
         "compiledStorage": {},
 
+        "storages": {
+            "templates": 'templatesStorage',
+            "languages": 'languagesStorage',
+            "local": 'localStorage',
+            "session": 'sessionStorage',
+            "cache": 'cacheStorage',
+            "validity": 'cacheValidity'
+        },
+
         "templates": 'templatesStorage',
         "languages": 'languagesStorage',
         "local": 'localStorage',
@@ -18,7 +27,7 @@ $(function () {
 
         "init": function () {
 
-            D.log(['Cache.init'], 'cache');
+            D.log('Cache.init', 'cache');
             this.detect() // set is enabled storage
                 .load() // compile templates
                 .compile() // compile templates
@@ -36,7 +45,7 @@ $(function () {
                 sessionStorage.clear();
             }
 
-            for (var key in this)
+            for (var key in this.storages)
                 if (typeof this[key] !== 'function' && this.storage[this[key]]) {
                     this.storage[this[key]] = {};
                 }
@@ -55,7 +64,7 @@ $(function () {
         "localize": function () {
 
             this.selectedLanguage = Player.language.current;
-            D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
+            D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.storages.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
 
             include('/res/js/libs/moment-locale/' + this.selectedLanguage.toLowerCase() + '.js');
 
@@ -107,11 +116,11 @@ $(function () {
 
                 case !this.isEnabled:
                     var storage = {};
-                    storage[this.templates]
-                        = storage[this.languages]
-                        = storage[this.validity]
-                        = storage[this.local]
-                        = storage[this.session]
+                    storage[this.storages.templates]
+                        = storage[this.storages.languages]
+                        = storage[this.storages.validity]
+                        = storage[this.storages.local]
+                        = storage[this.storages.session]
                         = {};
                     this.storage = storage;
                     return this;
@@ -119,11 +128,11 @@ $(function () {
 
                 case this.isEnabled:
                     var storage = {};
-                    storage[this.templates] = JSON.parse(localStorage.getItem(this.templates)) || {};
-                    storage[this.languages] = JSON.parse(localStorage.getItem(this.languages)) || {};
-                    storage[this.validity] = JSON.parse(localStorage.getItem(this.validity)) || {};
-                    storage[this.local] = JSON.parse(localStorage.getItem(this.cache)) || {};
-                    storage[this.session] = JSON.parse(sessionStorage.getItem(this.cache)) || {};
+                    storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.templates)) || {};
+                    storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.languages)) || {};
+                    storage[this.storages.validity] = JSON.parse(localStorage.getItem(this.validity)) || {};
+                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.cache)) || {};
+                    storage[this.storages.session] = JSON.parse(sessionStorage.getItem(this.cache)) || {};
                     this.storage = storage;
                     return this;
                     break;
@@ -142,29 +151,29 @@ $(function () {
                     break;
 
                 case cache === this.session:
-                    sessionStorage.setItem(this.cache, JSON.stringify(this.storage[this.session]));
+                    sessionStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.session]));
                     break;
 
                 case cache === this.local:
-                    localStorage.setItem(this.cache, JSON.stringify(this.storage[this.local]));
+                    localStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.local]));
                     break;
 
                 case cache === this.templates:
-                    localStorage.setItem(this.templates, JSON.stringify(this.storage[this.templates]));
+                    localStorage.setItem(this.storages.templates, JSON.stringify(this.storage[this.storages.templates]));
                     break;
 
                 case cache === this.languages:
-                    localStorage.setItem(this.languages, JSON.stringify(this.storage[this.languages]));
+                    localStorage.setItem(this.storages.languages, JSON.stringify(this.storage[this.storages.languages]));
                     break;
 
                 case cache === this.validity:
-                    localStorage.setItem(this.validity, JSON.stringify(this.storage[this.validity]));
+                    localStorage.setItem(this.storages.validity, JSON.stringify(this.storage[this.storages.validity]));
                     break;
 
                 case !cache:
-                    for (var key in this)
-                        if (typeof this[key] !== 'function' && this.storage[this[key]])
-                            this.save(this[key]);
+                    for (var key in this.storages)
+                        if (typeof this.storages[key] !== 'function' && this.storage[this.storages[key]])
+                            this.save(this.storages[key]);
                     break;
             }
 
@@ -181,9 +190,9 @@ $(function () {
 
                 case typeof storage !== 'undefined':
 
-                    cache = this.storage[this[storage]];
+                    cache = this.storage[this.storages[storage]];
 
-                    if(storage === 'templates') {
+                    if (storage === 'templates') {
                         cache = cache.hasOwnProperty(path) && cache[path];
                     } else {
 
@@ -252,9 +261,9 @@ $(function () {
             cache['total'] = total.toFixed(2) + " MB";
         },
 
-        "update": function(object, key){
+        "update": function (object, key) {
 
-            if(typeof object === 'object') {
+            if (typeof object === 'object') {
 
                 if (!key || !object.hasOwnProperty('id')) {
 
@@ -267,15 +276,13 @@ $(function () {
                 } else if (object.hasOwnProperty('id')) {
 
                     key = key.join('-');
-                    if(node = DOM.byId(key,1))
-
-                        console.log(key);
+                    if (node = DOM.byId(key, 1)) {
                         R.push({
                             href: key.replace(/-\d+$/g, '-item'),
                             node: node,
                             json: object
                         });
-                    //console.log('href: ',key.join('-'), ', json: ',object)
+                    }
                 }
             }
         },
@@ -289,13 +296,13 @@ $(function () {
 
             switch (true) {
                 case storage === 'session':
-                    storage = this.session;
+                    storage = this.storages.session;
                     break;
                 case storage === null:
                 case storage === 'local':
                 case storage:
                 case isNumeric(storage):
-                    storage = this.local;
+                    storage = this.storages.local;
                     break;
                 default:
                     storage = storage;
@@ -326,7 +333,7 @@ $(function () {
         "partials": function (key) {
 
             matches = [];
-            this.storage[this.templates][key].replace(
+            this.storage[this.storages.templates][key].replace(
                 /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
                 function (m, p1) {
                     matches.push(p1);
@@ -343,7 +350,7 @@ $(function () {
             if (template) {
 
                 return this.compile(key, template)
-                    .save(this.templates)
+                    .save(this.storages.templates)
                     .template(key);
 
             } else {
@@ -355,13 +362,13 @@ $(function () {
 
 
             if (!templatesOrKey)
-                templatesOrKey = this.storage[this.templates];
+                templatesOrKey = this.storage[this.storages.templates];
 
             D.log(['Cache.compile:', templatesOrKey, perhapsTemplate], 'cache');
 
             if (perhapsTemplate) {
 
-                this.storage[this.templates][templatesOrKey] = perhapsTemplate;
+                this.storage[this.storages.templates][templatesOrKey] = perhapsTemplate;
                 this.compiledStorage[templatesOrKey] = Handlebars.compile(perhapsTemplate);
 
             } else if (typeof templatesOrKey === 'object') {
@@ -370,7 +377,7 @@ $(function () {
                     if (isNumeric(key)) {
                         this.compile(templatesOrKey[key]);
                     } else {
-                        this.storage[this.templates][key] = templatesOrKey[key];
+                        this.storage[this.storages.templates][key] = templatesOrKey[key];
                         this.compiledStorage[key] = Handlebars.compile(templatesOrKey[key]);
                     }
                 }
@@ -390,12 +397,12 @@ $(function () {
 
             if (language) {
 
-                return this.extend(language, null, this.languages)
-                    .save(this.languages)
+                return this.extend(language, null, this.storages.languages)
+                    .save(this.storages.languages)
                     .language(key);
 
             } else {
-                return this.storage[this.languages] && this.storage[this.languages][key];
+                return this.storage[this.storages.languages] && this.storage[this.storages.languages][key];
             }
         },
 

@@ -1,12 +1,12 @@
 // BLOG ------------------------------- //
 
 
-.more-posts a {
-  width: 28%;
-  margin: 0 8% 0 0;
-}
 .content-box-item {
 	&.home-blog {
 		padding: 20px;
 	}
+}
+
+.post-item-title {
+	font-size: 10px;
 }

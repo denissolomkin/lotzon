@@ -23,7 +23,7 @@ $(function () {
                 case "post":
                 case "delete":
                 case "put":
-                    url = U.parse(url, 'url');
+                    url = U.parse(url.replace(document.location.origin, ""), 'url');
                     break;
 
                 case "tmpl":
@@ -54,7 +54,7 @@ $(function () {
                     break;
 
                 case "get":
-                    return url.replace(/-view/g, '');
+                    return this.parse(url).replace(/-list/g, '');
                     break;
 
                 case "tmpl":

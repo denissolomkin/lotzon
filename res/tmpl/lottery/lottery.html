@@ -1,75 +1,7 @@
 <div id="lottery" class="content-main tickets">
 
-    <div id="lottery-ticket" class="ticket-box">
-
-        <div class="grid-container lottery-grid timer-box header-box">
-            <div id="ticketCountdownHolder" class="width-50 push-50">
-                <span></span>
-            </div>
-            <div class="width-50 pull-50">
-                <p class="title">
-                    {{i18n "title-slider-timer"}}
-                </p>
-            </div>
-        </div>
-
-        <div class="ticket-items">
-
-            <ul id="lottery-ticket-tabs" class="ticket-tabs clearfix">
-            </ul>
-            <!-- .ticket-tabs -->
-
-            <div id="lottery-ticket-item" class="ticket-item clearfix">
-            </div>
-            <!-- .ticket-item -->
-
-        </div>
-        <!-- .ticket-items -->
-    </div>
-
-    {{partial 'lottery-matches'}}   
-
-    <div class="content-box tickets">
-     <div class="grid-container lottery-grid header-box grid-nomargin">
-            <div class="width-100">
-                <p class="title">
-                    {{i18n "title-lottery-history"}}
-                </p>
-            </div>
-        </div>
-
-        <div class="content-box-content clearfix">
-
-            <div class="content-box-item lottery-history with-cat cabinet-game-history">
-
-                <div class="content-box-item">
-
-                    <form action="/lottery/history" class="render-list-form" method="get">
-
-                        <div class="content-box-item-top clearfix">
-                            <div class="content-box-cat">
-                    <span class="position-relative">
-                        <input id="brt-points" name="type" type="radio" value="mine">
-                        <label for="brt-points">{{i18n "title-lottery-history-mine"}} </label>
-                    </span>
-                    <span class="position-relative">
-                        <input id="brt-money" name="type" type="radio" value="" checked>
-                        <label for="brt-money">{{i18n "title-lottery-history-all"}}</label>
-                    </span>
-                            </div>
-
-                        </div>
-
-                        <div class="content-box-item-content">
-                            {{partial 'lottery-history-list'}}
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+    {{partial 'lottery-ticket'}}
+    {{partial 'lottery-matches'}}
+    {{partial 'lottery-history'}}
 
 </div>

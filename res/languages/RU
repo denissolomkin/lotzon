@@ -46,6 +46,8 @@
                 "button-save": "Сохранить",
                 "button-load-more": "Показать еще",
                 "button-go-back": "Назад",
+                "button-send": "ОТПРАВИТЬ",
+                "button-answer": "ОТВЕТИТЬ",
 
                 "button-games-exit": "Выход",
                 "button-games-money": "Деньги",
@@ -98,6 +100,7 @@
 
                 "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
                 "message-order-process-week": "Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.",
+                "message-comments-write-comment": "Напишите комментарий", 
 
                 "title-support-faq": "Часто задаваемые вопросы",
                 "title-support-rules": "Правила",
