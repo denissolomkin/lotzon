@@ -6,10 +6,10 @@ $(function () {
         "href": null,
         "path": {
 
-            "put": "/res/put/",
-            "post": "/res/post/",
-            "delete": "/res/delete/",
-            "get": "/res/json/",
+            "put": "/",
+            "post": "/",
+            "delete": "/",
+            "get": "/",
             "tmpl": "/res/tmpl/"
 
         },
