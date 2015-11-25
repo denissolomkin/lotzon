@@ -1,15 +1,20 @@
-<div id="users" class="content-main users">
-		<div class="content-box communication communication-friends">
+<div id="users" class="content-main">
+		<div class="content-box">
 
 			<div class="content-box-header">
 
 				<!-- TABS -->
 				<div class="content-box-tabs clearfix">
-                    <a href="/users/friends" class="content-box-tab communication-friends-tab"><span>Друзья</span></a>
-                    <a href="/users/chronicle" class="content-box-tab communication-friends-tab"><span>Хроника</span><span class="chronicle-count">4</span></a>
-                    <a href="/users/birthdays" class="content-box-tab communication-friends-tab"><span>Дни рождения</span></a>
-                    <a href="/users/requests" class="content-box-tab communication-friends-tab"><span>Запросы</span></a>
-                    <a href="/users/search" class="content-box-tab communication-friends-tab"><span>Найти друзей</span></a>
+                    <a href="/users/friends" class="content-box-tab"><span>{{i18n "title-users-friends"}}</span></a>
+                    <a href="/users/chronicle" class="content-box-tab">
+                        <span>{{i18n "title-users-chronicle"}}</span>
+                        <span class="count count-chronicle">{{player "count.chronicle"}}</span></a>
+                    <a href="/users/birthdays" class="content-box-tab"><span>{{i18n "title-users-birthdays"}}</span></a>
+                    <a href="/users/requests" class="content-box-tab">
+                        <span>{{i18n "title-users-requests"}}</span>
+                        <span class="count count-requests">{{player "count.requests"}}</span></a>
+                    </a>
+                    <a href="/users/search" class="content-box-tab"><span>{{i18n "title-users-search"}}</span></a>
 				</div>
 				<!-- end of TABS -->
 			</div>

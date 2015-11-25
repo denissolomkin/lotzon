@@ -21,8 +21,8 @@
             },
 
             resize: function (event) {
-                Navigation.menu.switch();
-                Ticket.setBallsMargins();
+                // Navigation.menu.switch();
+                // Ticket.setBallsMargins();
                 Carousel.initOwl();
                 Cards.setupForDevices();
 

@@ -1,24 +1,19 @@
-<div id="communication-notifications">
-{{#notifications}}
-<!-- NOTIFICATIONS -->
-<div class="c-notifications">
+<div id="communication-notifications" class="c-notifications"> <!-- NOTIFICATIONS -->
+
+    {{#if (player "count.notifications")}}
+
     <div class="title">
-        У вас {{notifications}} новых ответа <span class="c-show-notifications">смотреть</span>
+        {{i18n "message-notifications-you-have"}} {{player "count.notifications"}} {{i18n "message-notifications-new-answers"}} <span class="c-show-notifications">{{i18n "button-see"}}</span>
         <span class="c-hide-notifications"></span>
     </div>
 
     <div class="c-notifications-list">
-        <div class="close-list">Отметить все как прочитанные</div>
-
+        <div class="close-list">{{i18n "button-mark-all-as-read"}}</div>
+        <div id="communication-notifications-list">
+        </div>
     </div>
-</div>
-<!-- end of NOTIFICATIONS -->
-{{/notifications}}
 
-		{{#each notifications}}
-		
+    {{/if}}
 
-
-					
-        {{/each}}
+    <!-- end of NOTIFICATIONS -->
 </div>

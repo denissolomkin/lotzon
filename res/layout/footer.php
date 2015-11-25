@@ -116,6 +116,12 @@
                     "UA": "Украiнська"
                 }
             },
+            "count": {
+                "notifications": 4,
+                "messages": 100,
+                "chronicle": 2,
+                "requests": 11
+            },
             "img": "res/img/user_img.jpg",
             "favorite": [],
             "title": {

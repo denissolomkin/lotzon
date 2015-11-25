@@ -93,6 +93,23 @@
                 "title-lottery-prizes-from": "из",
                 "title-lottery-ticket-num": "БИЛЕТ",
 
+                "title-users-friends": "Друзья",
+                "title-users-chronicle": "Хроника",
+                "title-users-birthdays": "Дни рождения",
+                "title-users-requests": "Запросы",
+                "title-users-search": "Поиск друзей",
+
+                "title-messages-new-message": "Новое сообщение",
+
+                "button-mark-all-as-read":"Пометить всё как прочитанное",
+                "button-see": "смотреть",
+
+                "message-notifications-new-answers": "новых ответов",
+                "message-notifications-you-have": "У Вас",
+
+                "button-message-new": "Новое сообщение",
+                "button-message-admin": "Написать админу",
+
                 "title-order-date": "Дата заявки",
                 "title-order-status": "Статус заявки",
                 "title-order-type":"Способ получения",

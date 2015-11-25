@@ -10,7 +10,17 @@
                 if ($(I.notificationsList).is(':visible')) {
                     $(I.notificationsList).slideUp('fast');
                 }
+            } else {
+
+                R.push({
+                    href: 'communication-notifications-list',
+                    after: Comments.showNotifications
+                });
             }
+        },
+
+        showNotifications:function(){
+            $(I.notificationsList).slideDown('fast');
         },
 
         after: {

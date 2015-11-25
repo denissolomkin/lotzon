@@ -64,7 +64,8 @@
                 var button = this,
                     form = button.form,
                     formData = $(form).serializeObject(),
-                    formUrl = U.generate(form.action, form.method),
+                    formMethod = form.getAttribute('method'),
+                    formUrl = U.generate(form.action, formMethod),
                     formCallback = U.parse(U.parse(form.action), 'tmpl');
 
                 event.preventDefault();
@@ -79,7 +80,7 @@
                     setTimeout(function () {
                         $.ajax({
                             url: formUrl,
-                            method: form.method, // 'post'
+                            method: formMethod,
                             data: formData,
                             dataType: 'json',
                             statusCode: {
@@ -93,9 +94,9 @@
                                     Form.stop.call(button)
                                         .message.call(form, data.message);
 
-                                    if (Callbacks[form.method][formCallback]) {
-                                        D.log(['C.' + form.method + '.callback']);
-                                        Callbacks[form.method][formCallback].call(form, data.res);
+                                    if (Callbacks[formMethod][formCallback]) {
+                                        D.log(['C.' + formMethod + '.callback']);
+                                        Callbacks[formMethod][formCallback].call(form, data.res);
                                     }
 
                                     Cache.update(data.res);

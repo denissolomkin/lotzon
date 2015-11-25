@@ -335,6 +335,9 @@
 
                         if (compare(render.classList, ['content-main'])) {  //such as games & blog & lottery
                             node = document.getElementById('content');
+                        } if (compare(render.classList, ['content-box'])) {  //such as view
+                            node = document.getElementById('content');
+                            render.classList.add('slideInRight');
                         } else if (compare(render.classList, ['content-box-item'])) {
                             node = node.getElementsByClassName('content-box-content')[0]; // for content-box-item
                         }
