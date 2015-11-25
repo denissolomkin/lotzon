@@ -14,7 +14,9 @@ RewriteRule ^(.*)/([0-9]+)/(.*)$ $1-item/$3 [L]
 RewriteCond "%{REQUEST_URI}" !^(.*)(list)(.*)$
 RewriteRule ^(.*)/([0-9]+)/(.*)/([0-9]+)$ $1/view/$3-list/$4 [L]
 
-# if json file exists
+# if json file exists and ajax request
+RewriteCond %{HTTP:X-Requested-With} =XMLHttpRequest
+RewriteCond %{HTTP:X-REQUESTED-WITH} ^(XMLHttpRequest)$
 RewriteCond %{DOCUMENT_ROOT}/res/%{REQUEST_METHOD}/$1 -f
 RewriteRule ^(.*)$ res/%{REQUEST_METHOD}/$1 [QSA,L]
 
