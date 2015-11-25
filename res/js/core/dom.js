@@ -74,7 +74,7 @@
 
             while (!node && id && id.match(/(?:\w+)(?:-\w+)+$/) && (!level || l < level)) {
                 id = id.replace(/-(\w+)$/, "");
-                node = document.getElementById(id) || document.getElementById(id + '-list');
+                node = document.getElementById(id + '-list') || document.getElementById(id);
                 l++;
             }
 

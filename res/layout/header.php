@@ -29,6 +29,7 @@
 <body>
 <div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
 </div>
+<div class="site-overlay"></div>
 <div class="wrapper">
 <span class="js-detect"></span>
 

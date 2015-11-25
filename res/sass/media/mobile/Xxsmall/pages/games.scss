@@ -1,0 +1,19 @@
+// GAMES <<CHANCE>> -------------------- //
+// screen - ? mobile/Xxsmall //
+
+@media  all and ( max-width: 450px) {
+    .games-previews .flex-box{
+        padding: 5px 10px;
+        a{
+            margin: 15px 0;
+        }
+    }
+}
+@media  all and ( max-width: 430px) {
+    .games-previews .flex-box{
+        padding: 20px 15px;
+        a{
+            margin: 0px auto;
+        }
+    }
+}

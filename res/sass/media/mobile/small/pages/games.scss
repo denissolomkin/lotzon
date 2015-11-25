@@ -1,13 +1,20 @@
 // GAMES <<CHANCE>> -------------------- //
+// sizes 768px  - mobile/small //
 
-.games-chance {
-  width: auto;
-  max-width: none;
-  padding: 20px 30px 0;
+.games-previews{
+    padding: 5px 35px;
+    a{
+        margin: 15px 0;
+    }
 }
 
-.game {
-  width: 160px;
-  margin-right: 94px;
+@media  all and ( max-width: 660px) {
+    .games-previews{
+        padding: 5px 80px;
+    }
 }
-
+@media  all and ( max-width: 600px) {
+    .games-previews{
+        padding: 5px 50px;
+    }
+}

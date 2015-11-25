@@ -28,7 +28,8 @@
 
 @font-face {
   font-family: handbookpro-regular;
-  src: url(../css/fonts/pfhandbookpro-regular-webfont.woff);
+  src: url(../css/fonts/pfhandbookpro-regular-webfont.woff) format('woff'), url(../css/fonts/pfhandbookpro-regular-webfont.ttf)  format('truetype'),
+  url(../css/fonts/pfhandbookpro-regular-webfont.eot) format('eot'), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format('svg');
 }
 
 

@@ -264,6 +264,7 @@
         "update": function (object, key) {
 
             if (object && typeof object === 'object') {
+                console.log(key, object);
 
                 if (!key || !object.hasOwnProperty('id')) {
 

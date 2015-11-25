@@ -98,6 +98,7 @@
             "lottery-gold": Ticket.update,
             "prizes-exchange-goods": Prize.update.exchange,
             "blog-post-view-comments": Comments.after.reply,
+            "communication-comments": Comments.after.reply,
 
         },
 

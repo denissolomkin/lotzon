@@ -1,9 +1,20 @@
 <div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
+ 	<div class="menu-balance-inf clearfix">
+        <div>{{player "balance.money"}}<span> грн</span></div>
+        <div>{{player "balance.points"}}<span> баллов</span></div>
+    </div>
+    <hr>
     {{#each .}}
     <ul class="{{@key}}">
         {{#each this}}
             <li><a href="/{{.}}">{{i18n "menu" .}}</a></li>
+
         {{/each}}
+    	<hr>   
     </ul>
+
     {{/each}}
+<!--     <ul class="logut-menu clearfix">
+     	<div>Выйти</div>
+    </ul> -->
 </nav>

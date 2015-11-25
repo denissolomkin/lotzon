@@ -1,19 +1,11 @@
 // GAMES <<CHANCE>> -------------------- //
+// size - ? screen/middle //
 
-.games-chance {
-  padding: 20px 20px 0;
-}
-
-.game {
-  margin-right: 67px;
-}
-
-@media (max-width: $screen-lg-min) {
-  .game:nth-child(3n+3) {
-    margin-right: 0;
-  }
-}
-
-.game:nth-child(3n+3) {
-   margin-right: 0;
+@media  all and ( max-width: 1024px) {
+    .games-previews{
+        padding: 5px 20px;
+        a{
+            margin: 15px 0;
+        }
+    }
 }

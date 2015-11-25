@@ -148,12 +148,12 @@
 
                 options.json = Cache.set(options.href, options.json);
                 D.log(['Render.json:', options.href, 'JSON from Object:', options.json], 'render');
-                R.formatJSON(options);
+                R.sortJSON(options);
 
             } else if (options.json = Cache.get(options.href)) {
 
                 D.log(['Render.json:', options.href, 'JSON from Cache:', options.json], 'render');
-                R.formatJSON(options);
+                R.sortJSON(options);
 
             } else {
 
@@ -173,7 +173,7 @@
 
                             options.json = Cache.set(options.href, data);
                             D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
-                            R.formatJSON(options);
+                            R.sortJSON(options);
 
                         },
 
@@ -191,6 +191,23 @@
                     }
                 });
             }
+
+        },
+
+        "sortJSON": function (options) {
+
+            if(typeof options.json === 'object') {
+                options.json = (function (s) {
+                    var t = {};
+                    Object.keys(s).sort().forEach(function (k) {
+                        t[k] = s[k]
+                    });
+                    return t
+                })(options.json);
+            }
+
+            D.log(['sortJSON:', options.json]);
+            R.formatJSON(options);
 
         },
 
@@ -333,7 +350,8 @@
 
                         if (compare(render.classList, ['content-main'])) {  //such as games & blog & lottery
                             node = document.getElementById('content');
-                        } if (compare(render.classList, ['content-box'])) {  //such as view
+                        }
+                        if (compare(render.classList, ['content-box'])) {  //such as view
                             node = document.getElementById('content');
                             render.classList.add('slideInRight');
                         } else if (compare(render.classList, ['content-box-item'])) {

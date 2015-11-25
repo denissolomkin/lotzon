@@ -99,6 +99,7 @@
                                         Callbacks[formMethod][formCallback].call(form, data.res);
                                     }
 
+                                    console.log(data.res);
                                     Cache.update(data.res);
 
                                 },

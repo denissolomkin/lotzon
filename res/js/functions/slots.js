@@ -32,13 +32,13 @@ var slotMachine = {
     xFactor: 0.1,
     sounds: {},
     init: function () {
-//        alert("slotMachine.init");
         slotMachine.change_bet(0);
         try {
             Player.updateBalance();
         } catch (e) {
         }
-//        Player.updateBalance(); // resset static data
+        Carousel.initOwl();
+
         $("#betSpinUp").click(function () {
             slotMachine.change_bet(1);
         }), $("#betSpinDown").click(function () {

@@ -1,5 +1,5 @@
 .header {
-  height: 55px;
+  height: 50px;
   margin-bottom: 20px;
   .container {
     position: relative;
@@ -8,7 +8,7 @@
 }
 
 .header-left {
-  height: 55px;
+  height: 50px;
   float: left;
 }
 
@@ -20,7 +20,7 @@
 // MENU BUTTONS ------------------------- //
 
 .menu-btns {
-  height: 55px;
+  height: 50px;
 }
 
 .menu-btn-item {
@@ -42,13 +42,129 @@
 // -------------------------------- //
 
 .header-right {
-  height: 55px;
+  height: 50px;
 }
 
 .inf-slider {
   // display: block;
   float: right;
   width: 300px;
-  height: 55px;
+  height: 50px;
   background: #ffe700;
+}
+
+.menu-btn-item.active {
+  box-shadow: none;
+  background: none;
+}
+
+
+
+.pushy {
+    width: 400px;
+}
+
+.pushy-left {
+    -webkit-transform: translate3d(400px,0,0);
+    -moz-transform: translate3d(400px,0,0);
+    -ms-transform: translate3d(400px,0,0);
+    -o-transform: translate3d(400px,0,0);
+    transform: translate3d(400px,0,0);
+}
+
+.wrapper {
+    position: relative;
+}
+.wrapper-push, .push-push {
+    -webkit-transform: translate3d(-400px,0,0);
+    -moz-transform: translate3d(-400px,0,0);
+    -ms-transform: translate3d(-400px,0,0);
+    -o-transform: translate3d(-400px,0,0);
+    transform: translate3d(-400px,0,0);
+}
+
+#menu-navigation-mobile {
+    font: 15px / 45px Handbook-bold;
+    & .menu-balance-inf  {
+        font-size: 17px;
+        height: 49px;
+        line-height: 49px;
+        margin-bottom: 0;
+        & > div {
+            float: left;
+            width: auto;
+            margin-right: 20px;
+            height: 49px;
+            & > span {
+                font-size:  15px;
+                font-weight: bold;
+            }
+        }   
+    }
+    & .menu-main {
+       padding-bottom: 0;
+        &:after {
+            display: none;
+        } 
+        & li {
+            padding: 0;
+            line-height: 1;  
+            margin: 15px 0 10px;   
+            & a {
+                text-transform: none;
+                padding: 0;
+            } 
+            &:first-of-type {
+                & a {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+    }
+    & .menu-more  {
+        // padding-bottom: 10px;
+        padding-top: 0;
+        & li {
+            padding: 0;
+            line-height: 1;   
+            margin: 15px 0 10px;   
+            & a {
+                padding: 0;
+            }
+            &:last-child {
+                & a {
+                    margin-top: 0;       
+                }
+            }
+        }
+    }
+    & .menu-profile  {
+        // padding: 0 0 10px;
+        min-width: 0;
+        padding: 0;
+        & li {
+            padding: 0;
+            line-height: 1;   
+            margin: 15px 0 10px; 
+            & a {
+                padding: 0;
+            }
+            &:last-child {
+                & a {
+                    margin-top: 0;       
+                }
+            }
+        }
+    }
+    & hr {
+        margin: 0 0 0 -20px;
+        border: none;
+        border-bottom: 1px solid #cbc7c6;
+    }
+
+}   
+
+.menu-balance-btn {
+    display: none;
 }

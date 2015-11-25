@@ -1,42 +1,83 @@
 // GAMES <<CHANCE>> -------------------- //
 
-.games-chance {
-  width: 50%;
-  max-width: 200px;
-  margin: auto;
-}
+.games-previews{
+    .flex-box{
+        font-family: handbookpro-regular;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: stretch;
+        padding: 0 20px;
 
-.game {
-  margin-bottom: 40px;
-  cursor: pointer;
-  &:hover .game-img {
-    opacity: 0.7;
-  }
-}
+        a{
+            height: 320px;
+            width: 200px;
+            background: #c0c0c0;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+        a:active,
+            a:hover{
+            /*need animation*/   
+        }
 
-.game-img {
-  position: relative;
-  margin-bottom: 12px;
-  &:before {
-    content: "";
-    display: block;
-    padding-top: 100%;
-  }
-}
+        .game-img{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            img{
+                width: 100%;
+            }
+        }
 
-.game-img img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
+        .game-info{
+            background: #fff;
+            width: 100%;
+            position: relative;
+            margin: 100px 0 0 0;
+            min-height: 180px;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .game-name{
+            font-family: Handbook-bold;
+            font-size: 20px;
+            text-transform: uppercase;
+            line-height: 2;
+        }
+        .fund_title{
+            font-family: Handbook-bold;
+            color: #605b5c;
+            font-size: 14px;
+            line-height: 2;
+        }
+        .game-fund>div{
+            font-family: Handbook-bold;
+            text-transform: uppercase;
+            font-size: 24px;
+        }
+        .game-fund>div>span{
+            font-size: 14px;
+            color: #2f2f2f;
+        }
+        .players{
+            font-family: Handbook-bold;
+            padding-top: 20px;
+            font-size: 14px;
+        }
+        .game-button{
+            position: relative;
+            text-align: center;
+            line-height: 2;
+            min-height: 40px;
+            font-size: 18px;
+        }
+    }
 }
-
-.game-name {
-  height: 40px;
-  font-size: 15px;
-  line-height: 1.27;
-}
-

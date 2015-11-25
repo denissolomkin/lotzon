@@ -19,12 +19,15 @@
         menuMore: '.menu-more',
         menuProfile: '.menu-profile',
         menuBalance: '.menu-balance',
+        menuLogout: '.menu-logout',
+        menuMobileBalance: '.menu-balance-inf',
         menuItem: '.menu-item',
         menuBtn: '.menu-btn',
         menuProfileBtn: '.menu-profile-btn',
         menuBalanceBtn: '.menu-balance-btn',
         menuBtnItem: '.menu-btn-item',
         balanceBtn: '.balance-btn',
+        
 
         /* communication */
         comment: '.comment',

@@ -85,7 +85,7 @@
                     menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
 
                 Navigation.menu.hide();
-                return;
+                // return;
                 if (isActive)
                     return false;
                 else
@@ -94,12 +94,14 @@
                 switch (menuClass) {
                     case I.menuBtn:
                         if (isMobile) {
-                            // $(I.menuMain).show();
-                            // $(I.menuMore).show();
-                            // $(I.menu).fadeIn(200);
-
-                            $(I.menuMobile).toggleClass('pushy-left').toggleClass('pushy-open');
-                            $('.wrapper').toggleClass('wrapper-push');
+                            $(I.menuMobile).removeClass('pushy-left').addClass('pushy-open');
+                            $('.wrapper').addClass('wrapper-push');
+                            $(I.menuMain).show();
+                            $(I.menuMore).show();
+                            $(I.menuLogout).show();
+                            $(I.menuProfile).hide();
+                            $(I.menuMobileBalance).show();
+                            $('body').addClass('pushy-active');
                         } else {
                             $(I.menuMore).fadeIn(200);
                         }
@@ -107,9 +109,15 @@
 
                     case I.menuProfileBtn:
                         if (isMobile) {
+                            $(I.menuMobile).removeClass('pushy-left').addClass('pushy-open');
+                            $('.wrapper').addClass('wrapper-push');
                             $(I.menuProfile).show();
                             $(I.menuMain).hide();
-                            $(I.menu).fadeIn(200);
+                            $(I.menuMore).hide();
+                            $(I.menuLogout).hide();
+                            $(I.menuMobileBalance).hide();
+                            $('body').addClass('pushy-active');
+                            
                         } else {
                             $(I.menuProfile).fadeIn(200);
                         }
@@ -151,8 +159,9 @@
                 $(I.menuMore + ":visible").fadeOut(200);
 
                 if (Device.isMobile()) {
-                    $(I.menuMobile).toggleClass('pushy-left').toggleClass('pushy-open');
-                    $('.wrapper').toggleClass('wrapper-push');
+                    $(I.menuMobile).removeClass('pushy-open').addClass('pushy-left');
+                    $('.wrapper').removeClass('wrapper-push');
+                    $('body').removeClass('pushy-active');
                     // $(I.menu + ":visible").hide();
                     // $(I.menuMain + ":visible").fadeOut(200);
                 }
