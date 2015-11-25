@@ -5,7 +5,7 @@
         getId: function (el) {
 
             if (typeof el === 'string' || !(typeof el === 'object' && "nodeType" in el)) {
-                el = DOM.create(el).children()[0];
+                el = this.create(el).children()[0];
             }
 
             return el.id;
@@ -26,7 +26,7 @@
         insert: function f(str, el, prepend) {
 
             if (typeof str === 'string')
-                str = DOM.create(str);
+                str = this.create(str);
 
 
             if (str) {
@@ -199,7 +199,7 @@
         remove: function f(el, parent) {
 
             if (typeof el === 'object' && "nodeType" in el) {
-                el.remove();
+                el.parentNode.removeChild(el);
             } else {
                 this.all(f, el, parent)
             }
@@ -215,20 +215,18 @@
 
         visible: function (el, parent) {
 
-
             var visibleElements = [];
 
             if (typeof el === 'string')
                 el = [parent && parent.querySelectorAll(el) || document.querySelectorAll(el)];
 
             else if (typeof el === 'object' && el.length)
-                for (i in el)
-                    if (el.hasOwnProperty(i))
-                        el[i] = parent && parent.querySelectorAll(el[i]) || document.querySelectorAll(el[i])
+                for (var i = 0; i < el.length; i++)
+                    el[i] = parent && parent.querySelectorAll(el[i]) || document.querySelectorAll(el[i])
 
-            for(var y=0;y<el.length;y++)
-                for (i in el[y])
-                    if (el[y].hasOwnProperty(i) && isVisible(el[y][i]))
+            for (var y = 0; y < el.length; y++)
+                for (var i = 0; i < el[y].length; i++)
+                    if (el[y].hasOwnProperty(i) && DOM.isVisible(el[y][i]))
                         visibleElements.push(el[y][i]);
 
             return visibleElements;

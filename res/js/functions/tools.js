@@ -10,11 +10,11 @@
     };
 
     requestAnimationFrame =
-        requestAnimationFrame ||
-        webkitRequestAnimationFrame ||
-        mozRequestAnimationFrame ||
-        oRequestAnimationFrame ||
-        msRequestAnimationFrame ||
+        typeof requestAnimationFrame === 'function' && requestAnimationFrame ||
+        typeof webkitRequestAnimationFrame === 'function' && webkitRequestAnimationFrame ||
+        typeof mozRequestAnimationFrame === 'function' && mozRequestAnimationFrame ||
+        typeof oRequestAnimationFrame === 'function' && oRequestAnimationFrame ||
+        typeof msRequestAnimationFrame === 'function' && msRequestAnimationFrame ||
         function (/* function */ draw) {
             window.setTimeout(draw, 1000 / 60);
         };
