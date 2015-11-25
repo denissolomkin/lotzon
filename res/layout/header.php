@@ -27,6 +27,8 @@
 
 </head>
 <body>
+<div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
+</div>
 <div class="wrapper">
 <span class="js-detect"></span>
 
@@ -75,7 +77,7 @@
             <div id="menu-slider" class="inf-slider"></div>
 
             <div id="menu-balance" class="balance"></div>
-     <button class="tmp_but" onclick="Lottery.prepareData()">Start</button>
+
         </div>
         <!-- .header-right -->
 

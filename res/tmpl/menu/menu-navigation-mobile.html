@@ -1,0 +1,9 @@
+<div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
+    {{#each .}}
+    <ul class="{{@key}}">
+        {{#each this}}
+            <li><a href="/{{.}}">{{i18n "menu" .}}</a></li>
+        {{/each}}
+    </ul>
+    {{/each}}
+</nav>

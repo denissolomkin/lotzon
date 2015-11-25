@@ -37,13 +37,13 @@
                 form = form.parentElement;
 
             // can be reply form
-            if(!form.classList.contains('render-list-form'))
+            if (!form.classList.contains('render-list-form'))
                 return true;
 
             var renderList = form.querySelector(".render-list"),
                 query = $(form).serializeObject();
 
-            if(event && event.type === 'change') {
+            if (event && event.type === 'change') {
 
                 R.push({
                     href: form.action.replace('list', 'container'),
@@ -54,9 +54,17 @@
 
             } else {
 
-                query.first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id');
-                query.last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id');
-                query.offset = renderList && renderList.childElementCount;
+                var first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
+                    last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null;
+
+                if (first_id && last_id) {
+                    if (first_id < last_id)
+                        query.before_id = first_id;
+                    else
+                        query.after_id = last_id;
+                }
+
+                query.offset = renderList && renderList.childElementCount || null;
 
                 R.push({
                     href: form.action,
@@ -77,12 +85,12 @@
 
             if (infiniteScrolling.length) {
                 // Content.clearLoading();
-                for (var i = 0; i < infiniteScrolling.length; i++){
+                for (var i = 0; i < infiniteScrolling.length; i++) {
                     if (Device.onScreen.call(infiniteScrolling[i], -200)) {
                         D.log('Content.infiniteScrolling', 'func');
                         infiniteScrolling[i].classList.add("loading");
 
-                        if (infiniteScrolling[i].classList.contains('once-infinite-scrolling')){
+                        if (infiniteScrolling[i].classList.contains('once-infinite-scrolling')) {
                             infiniteScrolling[i].classList.remove('once-infinite-scrolling');
                             infiniteScrolling[i].classList.add('never-infinite-scrolling');
                         }
@@ -95,9 +103,9 @@
 
         },
 
-        updateBanners:function(){
+        updateBanners: function () {
 
-            if(/192.168.56.101|lotzon.com/.test(location.hostname)) {
+            if (/192.168.56.101|lotzon.com/.test(location.hostname)) {
                 R.push('/banner/desktop/top');
                 R.push('/banner/desktop/right');
                 //R.push('/banner/desktop/fixed');
@@ -127,10 +135,10 @@
             autoload: function (options) {
 
                 D.log('Content.after.autoload', 'content');
-                
-                if(infiniteScrolling = options.node.parentNode.querySelector('.loading')) {
+
+                if (infiniteScrolling = options.node.parentNode.querySelector('.loading')) {
                     if (!Object.size(options.json) || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
-                        infiniteScrolling.remove();
+                        infiniteScrolling.parentNode.removeChild(infiniteScrolling);
                     } else {
                         infiniteScrolling.classList.remove('loading');
                     }
@@ -150,6 +158,16 @@
 
             return this;
 
+        },
+
+        style: function () {
+
+            if ((css = document.querySelector("link[href='/res/css/screen/style.css']"))
+                || (css = document.querySelector("link[href='" + location.origin + "/res/css/screen/style.css']")))
+                css.href = css.href.replace('screen', 'mobile');
+            else if ((css = document.querySelector("link[href='/res/css/mobile/style.css']"))
+                || (css = document.querySelector("link[href='" + location.origin + "/res/css/mobile/style.css']")))
+                css.href = css.href.replace('mobile', 'screen');
         }
 
     };

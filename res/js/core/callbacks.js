@@ -12,6 +12,7 @@
             /* navigation */
             $(document).on('click', I.Tabs, Navigation.do.switchTab);
             $(document).on('click', I.Cats, Navigation.do.switchCat);
+            $(document).on('click', '.menu-mobile a', Navigation.do.loadPage);
             $(document).on('click', 'a', Navigation.do.loadBlock);
             $(document).on('click', 'div.back', Navigation.do.backBlock);
 

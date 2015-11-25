@@ -143,7 +143,9 @@ div {
 }
 
 // MENUS ------------------------- //
-
+.menu-mobile {
+  display: none;
+}
 .menu-item,
 .menu {
   overflow: hidden;

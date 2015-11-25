@@ -1,6 +1,7 @@
 @media (min-width: $screen-xsm-min) {
   @import "layout/common";
   @import "layout/footer";
+  @import "layout/header";
   @import "pages/blog";
   @import "pages/bonuses";
   @import "pages/communication";

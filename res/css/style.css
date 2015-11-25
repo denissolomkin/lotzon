@@ -663,6 +663,9 @@ div {
   position: absolute;
   right: 0; }
 
+.menu-mobile {
+  display: none; }
+
 .menu-item,
 .menu {
   overflow: hidden;

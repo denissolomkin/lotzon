@@ -13,6 +13,7 @@
         TicketTabs: '.ticket-tabs li',
 
         /* menu */
+        menuMobile: '.menu-mobile',
         menu: '.menu',
         menuMain: '.menu-main',
         menuMore: '.menu-more',

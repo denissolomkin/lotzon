@@ -256,6 +256,10 @@ endforeach;
     });
 
 </script>
+
+<button style="position: fixed;bottom:0;" onclick="Content.style()">Desktop/Mobile</button>
+<button style="position: fixed;bottom:0;left:100px;" onclick="Lottery.prepareData()">Lottery</button>
+
 </div>
 </body>
 </html>
