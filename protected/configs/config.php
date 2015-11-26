@@ -275,6 +275,13 @@ Config::instance()->privateResources =  array(
     '/private/maillist/tasks/statistic/player_games/:identifier' => array(
         'get'    => 'controllers\admin\Maillist:getTaskStatisticPlayerGames',
     ),
+    /**
+     * linkredirect
+     */
+    '/private/linkredirect/' => array(
+        'get'  => 'controllers\admin\LinkRedirectController:getLink',
+        'post' => 'controllers\admin\LinkRedirectController:postLink',
+    ),
 );
 
 Config::instance()->publicResources = array(
@@ -353,6 +360,9 @@ Config::instance()->publicResources = array(
     '/unsubscribe/' => array(
         'get'  => 'controllers\production\Maillist:unsubscribe',
         'post' => 'controllers\production\Maillist:doUnsubscribe',
+    ),
+    '/lnk/:uin' => array(
+        'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
