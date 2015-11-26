@@ -129,7 +129,6 @@
 .menu-balance-btn {
   display: none; }
 
-
 .menu-btn-item.active {
   box-shadow: none;
   background: none; }
@@ -146,7 +145,6 @@
     .games-previews .flex-box a {
       margin: 0px auto; } }
 
-
 @media (min-width: 480px) {
   .container {
     min-width: 320px;
@@ -158,8 +156,7 @@
   #blog-posts .post-item-title {
     font-size: 23px;
     line-height: 27px;
-    margin-bottom: 15px;
-    font-weight: bold; }
+    margin-bottom: 15px; }
   #blog-post-view {
     font-family: handbookpro-regular;
     font-size: 15px; }
@@ -167,8 +164,7 @@
       font-family: Handbook-bold;
       font-size: 23px;
       line-height: 27px;
-      margin-bottom: 18px;
-      font-weight: bold; }
+      margin-bottom: 18px; }
   #blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
     margin: 0 -20px;
     font: 17px handbookpro-regular;
@@ -180,8 +176,7 @@
   #blog-posts .post-item-title {
     font-size: 25px;
     line-height: 30px;
-    margin-bottom: 15px;
-    font-weight: bold; }
+    margin-bottom: 15px; }
   #blog-post-view {
     font-family: handbookpro-regular;
     font-size: 15px; }
@@ -189,8 +184,7 @@
       font-family: Handbook-bold;
       font-size: 25px;
       line-height: 23px;
-      margin-bottom: 18px;
-      font-weight: bold; }
+      margin-bottom: 18px; }
   #blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
     margin: 0 -20px;
     font: 17px handbookpro-regular;

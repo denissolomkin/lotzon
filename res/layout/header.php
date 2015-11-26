@@ -23,9 +23,8 @@
     <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
 
     <link rel="stylesheet" href="/res/css/olya.css">
-
-
 </head>
+
 <body>
 <div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
 </div>
@@ -59,13 +58,14 @@
 
             <div class="menu-btns">
                 <!-- Menu Button -->
-                <div class="menu-btn menu-btn-item"></div>
 
+                <div class="menu-btn menu-btn-item"></div>
                 <!-- Profile Menu Button -->
                 <div class="menu-profile-btn menu-btn-item"></div>
 
                 <!-- Balance Menu Button -->
                 <div class="menu-balance-btn menu-btn-item"></div>
+                 <div class="menu-logout-btn menu-btn-item"></div>
             </div>
 
 

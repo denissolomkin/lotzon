@@ -76,10 +76,10 @@
         menu: {
 
             click: function (event) {
-
+                // alert("click works");
                 D.log(['Navigation.menu.click'], 'func');
                 event.stopPropagation();
-
+                // alert("click works after stopPropagation");
                 var isActive = $(this).hasClass('active'),
                     isMobile = Device.isMobile(),
                     menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
@@ -87,6 +87,7 @@
                 Navigation.menu.hide();
                 // return;
                 if (isActive)
+                    // alert("click works aisActive");
                     return false;
                 else
                     $(this).addClass('active');
@@ -104,6 +105,7 @@
                             $('body').addClass('pushy-active');
                         } else {
                             $(I.menuMore).fadeIn(200);
+                            $(I.menuLogout).fadeIn(200);
                         }
                         break;
 
@@ -140,10 +142,12 @@
                 if (Device.isMobile()) {
                     $(I.menuMore).removeClass('menu-item');
                     $(I.menuProfile).removeClass('menu-item');
+                    $(I.menuLogout).removeClass('menu-item');
                     $(I.balanceBtn).hide();
                 } else {
                     $(I.menuMore).addClass('menu-item');
                     $(I.menuProfile).addClass('menu-item');
+                    $(I.menuLogout).addClass('menu-item');
                     $(I.balanceBtn).show();
                 }
 
@@ -152,18 +156,17 @@
             },
 
             hide: function () {
-
+                // alert("hide works");
                 D.log('Navigation.menu.hide', 'func');
                 $(I.menuProfile + ":visible").fadeOut(200);
                 $(I.menuBalance + ":visible").fadeOut(200);
                 $(I.menuMore + ":visible").fadeOut(200);
+                $(I.menuLogout + ":visible").fadeOut(200);
 
                 if (Device.isMobile()) {
                     $(I.menuMobile).removeClass('pushy-open').addClass('pushy-left');
                     $('.wrapper').removeClass('wrapper-push');
                     $('body').removeClass('pushy-active');
-                    // $(I.menu + ":visible").hide();
-                    // $(I.menuMain + ":visible").fadeOut(200);
                 }
 
                 $(I.menuBtnItem + ".active").removeClass('active');

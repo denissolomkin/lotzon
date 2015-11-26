@@ -55,7 +55,7 @@
 
         "detect": function () {
 
-            this.isEnabled = typeof localStorage !== 'undefined' && typeof sessionStorage !== 'undefined'
+            this.isEnabled = typeof localStorage !== 'undefined' && typeof sessionStorage !== 'undefined';
             D.log(['Cache.detect:', this.isEnabled], 'cache');
 
             return this;
@@ -145,36 +145,43 @@
 
             D.log(['Cache.save:', cache], 'cache');
 
-            switch (true) {
+            try {
 
-                case !this.isEnabled:
-                    break;
+                switch (true) {
 
-                case cache === this.session:
-                    sessionStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.session]));
-                    break;
+                    case !this.isEnabled:
+                        break;
 
-                case cache === this.local:
-                    localStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.local]));
-                    break;
+                    case cache === this.storages['session']:
+                        sessionStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.session]));
+                        break;
 
-                case cache === this.templates:
-                    localStorage.setItem(this.storages.templates, JSON.stringify(this.storage[this.storages.templates]));
-                    break;
+                    case cache === this.storages['local']:
+                        localStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.local]));
+                        break;
 
-                case cache === this.languages:
-                    localStorage.setItem(this.storages.languages, JSON.stringify(this.storage[this.storages.languages]));
-                    break;
+                    case cache === this.storages['templates']:
+                        localStorage.setItem(this.storages.templates, JSON.stringify(this.storage[this.storages.templates]));
+                        break;
 
-                case cache === this.validity:
-                    localStorage.setItem(this.storages.validity, JSON.stringify(this.storage[this.storages.validity]));
-                    break;
+                    case cache === this.storages['languages']:
+                        localStorage.setItem(this.storages.languages, JSON.stringify(this.storage[this.storages.languages]));
+                        break;
 
-                case !cache:
-                    for (var key in this.storages)
-                        if (typeof this.storages[key] !== 'function' && this.storage[this.storages[key]])
-                            this.save(this.storages[key]);
-                    break;
+                    case cache === this.storages['validity']:
+                        localStorage.setItem(this.storages.validity, JSON.stringify(this.storage[this.storages.validity]));
+                        break;
+
+                    case !cache:
+                        for (var key in this.storages)
+                            if (typeof this.storages[key] !== 'function' && this.storage[this.storages[key]])
+                                this.save(this.storages[key]);
+                        break;
+                }
+
+            } catch(err) {
+                D.error('Cache сrach');
+                Cache.isEnabled = false;
             }
 
             return this;
@@ -297,13 +304,13 @@
 
             switch (true) {
                 case storage === 'session':
-                    storage = this.storages.session;
+                    storage = this.storages['session'];
                     break;
                 case storage === null:
                 case storage === 'local':
                 case storage:
                 case isNumeric(storage):
-                    storage = this.storages.local;
+                    storage = this.storages['local'];
                     break;
                 default:
                     storage = storage;

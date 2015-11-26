@@ -157,7 +157,6 @@ button {
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
   text-align: center;
   text-transform: uppercase;
-  font-weight: bold;
   position: relative; }
 
 .content-box-header.back {
@@ -181,7 +180,6 @@ button {
   display: block;
   float: left;
   font-size: 14px;
-  font-weight: bold;
   height: 100%;
   line-height: 50px;
   padding: 0 10px;
@@ -232,7 +230,6 @@ button {
   text-align: center;
   color: #3f3f3f;
   font-size: 13px;
-  font-weight: bold;
   text-transform: uppercase;
   margin-right: 40px;
   line-height: 1.39; }
@@ -369,9 +366,11 @@ input.input-radio:checked + label.input-radio:before {
     background-color: white;
     border-radius: 3px;
     padding: 20px; }
-  .modal-error span {
-    display: block;
-    color: red; }
+    .modal-error div p {
+      margin-top: 10px; }
+    .modal-error div span {
+      display: block;
+      color: red; }
 
 .modal-loading {
   background-color: rgba(255, 255, 255, 0.5); }
@@ -574,12 +573,25 @@ input.input-radio:checked + label.input-radio:before {
   src: url(../css/fonts/pfhandbookpro-regular-webfont.woff) format("woff"), url(../css/fonts/pfhandbookpro-regular-webfont.ttf) format("truetype"), url(../css/fonts/pfhandbookpro-regular-webfont.eot) format("eot"), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format("svg"); }
 
 @font-face {
-  font-family: handbookpro-italic;
-  src: url(../css/pfhandbookpro-italic-webfont.woff); }
+  font-family: 'Handbook-bold';
+  src: url("fonts/handbookBold/pfhandbookpro-bold-webfont.eot");
+  src: url("fonts/handbookBold/pfhandbookpro-bold-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/handbookBold/pfhandbookpro-bold-webfont.woff") format("woff"), url("fonts/handbookBold/pfhandbookpro-bold-webfont.ttf") format("truetype"), url("fonts/handbookBold/pfhandbookpro-bold-webfont.svg#Handbook-bold") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
 @font-face {
-  font-family: Handbook-bold;
-  src: url(../css/fonts/pfhandbookpro-bold-webfont.woff); }
+  font-family: 'Handbook-medium';
+  src: url("fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot");
+  src: url("fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.woff") format("woff"), url("fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.ttf") format("truetype"), url("fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.svg#Handbook-medium") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Handbook-italic';
+  src: url("fonts/handbookItalic/pfhandbookpro-italic-webfont.eot");
+  src: url("fonts/handbookItalic/pfhandbookpro-italic-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/handbookItalic/pfhandbookpro-italic-webfont.woff") format("woff"), url("fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf") format("truetype"), url("fonts/handbookItalic/pfhandbookpro-italic-webfont.svg#Handbook-italic") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
 .site-top {
   width: 100%;
@@ -656,7 +668,6 @@ div {
 .is-countdown {
   background-color: #fee518;
   font-size: 50px;
-  font-weight: bold;
   border: none;
   width: 90px;
   top: 0;
@@ -734,7 +745,6 @@ div {
 
 .menu-balance-inf {
   font-size: 31px;
-  font-weight: bold;
   line-height: 0.7;
   margin-bottom: 15px; }
 
@@ -1001,7 +1011,7 @@ header .owl-theme .owl-controls .owl-page span {
     font-size: 20px;
     line-height: 23px;
     margin-bottom: 18px;
-    font-weight: bold; }
+    font-weight: normal; }
   #blog-post-view .content-box-header {
     background: transparent;
     text-align: left;
@@ -1019,8 +1029,7 @@ header .owl-theme .owl-controls .owl-page span {
     font-family: Handbook-bold;
     font-size: 20px;
     line-height: 23px;
-    margin-bottom: 19px;
-    font-weight: bold; }
+    margin-bottom: 19px; }
   #blog-post-view .content-box-item {
     padding: 20px 20px 30px; }
   #blog-post-view .more-posts .title,
@@ -1118,8 +1127,7 @@ div.comment-reply-btn {
     font-family: Handbook-bold;
     font-size: 20px;
     line-height: 23px;
-    margin-bottom: 19px;
-    font-weight: bold; }
+    margin-bottom: 19px; }
   #blog-posts .content-box-item {
     padding: 20px; }
   #blog-posts .post-inf {
@@ -1179,8 +1187,7 @@ div.comment-reply-btn {
 .post-item-title {
   font-size: 20px;
   line-height: 33px;
-  margin-bottom: 15px;
-  font-weight: bold; }
+  margin-bottom: 15px; }
 
 .post-more-btn {
   float: right;
@@ -1661,269 +1668,12 @@ div.comment-reply-btn {
 #communication .content-box-tab {
   padding: 0 15px; }
 
-#communication-comments .communication-comments {
-  padding-bottom: 100px; }
-
-#communication-comments .comment {
-  margin-bottom: 21px; }
-
-#communication-comments .comment-content {
-  position: relative; }
-
-#communication-comments .comment-top {
-  display: table;
-  width: 100%;
-  margin-bottom: 10px; }
-
-#communication-comments .comment-img {
-  width: 50px;
-  height: 50px;
-  top: 4px;
-  position: absolute;
-  left: 0; }
-  #communication-comments .comment-img img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 50%; }
-
-#communication-comments .comment-inf {
-  display: table-cell;
-  vertical-align: middle; }
-
-#communication-comments .comment-name {
-  font-weight: bold;
-  margin-right: 13px; }
-
-#communication-comments .comment-date {
-  font-size: 13px;
-  color: #5a5a5a; }
-  #communication-comments .comment-date span:first-child {
-    margin-right: 15px; }
-
-#communication-comments .comment-reply {
-  display: none;
-  font-size: 21px;
-  color: #4a90e2;
-  position: absolute;
-  top: 45%;
-  left: 17%; }
-  #communication-comments .comment-reply .separator {
-    display: none; }
-
-#communication-comments .comment-like {
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding-left: 30px;
-  font-size: 14px; }
-  #communication-comments .comment-like:before {
-    content: "";
-    display: block;
-    width: 18px;
-    height: 15px;
-    background: url(img/sprite.png) -364px -54px;
-    position: absolute;
-    top: 2px;
-    left: 0; }
-
-#communication-comments .comment-like-mob {
-  display: none; }
-
-#communication-comments .comment.liked > .comment-content .comment-like {
-  opacity: 1; }
-
-#communication-comments .comment.liked > .comment-content .comment-inf {
-  padding-right: 60px; }
-
-#communication-comments .comment.answer {
-  margin-top: 20px;
-  padding-left: 20px; }
-
-#communication-comments .communication-comments .message-form-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0; }
-
-#communication-comments .communication-comments .message-form {
-  padding: 0 10px; }
-
-#communication-notifications .c-notifications {
-  margin: 0 -10px 20px;
-  position: relative; }
-  #communication-notifications .c-notifications .title {
-    padding: 6px 10px;
-    background: #f2f8f8;
-    position: relative;
-    font-size: 14px; }
-
-#communication-notifications .c-show-notifications {
-  text-decoration: underline;
-  cursor: pointer; }
-  #communication-notifications .c-show-notifications:hover {
-    text-decoration: none; }
-
-#communication-notifications .c-hide-notifications {
-  display: block;
-  width: 15px;
-  height: 15px;
-  background: url(img/sprite.png) -156px -55px;
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  cursor: pointer; }
-
-#communication-notifications .c-notifications-list {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  background: white;
-  padding: 45px 0 10px;
-  z-index: 2; }
-  #communication-notifications .c-notifications-list .close-list {
-    position: absolute;
-    top: 8px;
-    right: 10px; }
-
-#communication-notifications .c-notification {
-  position: relative;
-  font-size: 14px;
-  margin-bottom: 5px;
-  padding: 5px 10px; }
-  #communication-notifications .c-notification:hover {
-    background: #f2f8f8; }
-
-#communication-notifications .close-notification {
-  width: 10px;
-  height: 10px;
-  background: white;
-  border: 1px solid black;
-  border-radius: 50%;
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  z-index: 3; }
-
-#communication-notifications .c-notification-top {
-  padding-left: 50px;
-  min-height: 45px;
-  position: relative; }
-
-#communication-notifications .c-notification-img {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 0;
-  left: 0; }
-  #communication-notifications .c-notification-img img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 50%; }
-
-#communication-notifications .c-notification-name {
-  font-weight: bold; }
-
-#communication-notifications .c-notification-date {
-  font-size: 13px;
-  color: #5a5a5a;
-  white-space: nowrap; }
-  #communication-notifications .c-notification-date span:first-child {
-    margin-right: 5px; }
-
-#communication-notifications .c-notification-question {
-  margin-top: 3px; }
-  #communication-notifications .c-notification-question span {
-    color: #4a8fec; }
-
-#communication-notifications .c-notification-description {
-  line-height: 1.4; }
-
-#communication-messages .content-box-item {
-  padding-top: 80px;
-  padding-right: 0; }
-
-#communication-messages .cm-top {
-  width: 100%;
-  position: absolute;
-  top: 20px;
-  left: 0;
-  padding: 0 10px; }
-  #communication-messages .cm-top a {
-    display: block;
-    color: black;
-    font-size: 14px; }
-  #communication-messages .cm-top .new-message {
-    float: left;
-    border: 1px solid black;
-    border-radius: 2px;
-    text-decoration: none;
-    text-align: center;
-    padding: 5px 22px; }
-  #communication-messages .cm-top .write-admin {
-    float: right;
-    line-height: 30px;
-    text-decoration: underline; }
-    #communication-messages .cm-top .write-admin:hover {
-      text-decoration: none; }
-
-#communication-messages .message {
-  padding: 15px 10px 15px 0;
-  margin-left: 60px;
-  border-bottom: 1px solid #dbdbdb;
-  cursor: pointer; }
-  #communication-messages .message.new .message-text {
-    color: black; }
-  #communication-messages .message.online .message-img:before {
-    background: #7ed31e; }
-  #communication-messages .message.admin .message-img:before {
-    display: none; }
-  #communication-messages .message.admin .message-name {
-    font-weight: bold; }
-
-#communication-messages .message-img {
-  position: relative;
-  display: block;
-  width: 50px;
-  height: 50px;
-  float: left;
-  margin-left: -60px; }
-  #communication-messages .message-img img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 50%; }
-  #communication-messages .message-img:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #d2d2d2; }
-
-#communication-messages .message-name {
-  margin-bottom: 8px;
-  line-height: 1.27; }
-
-#communication-messages .message-text {
-  color: #8b8d8c;
-  line-height: 1.27; }
-
-#communication-messages #communication-messages-new .content-box-item {
-  padding-top: 40px; }
-
-#communication-messages .nm-search {
+.nm-search {
   position: relative;
   max-width: 354px;
   margin: 0 auto 100px; }
 
-#communication-messages .enter-friend-name {
+.enter-friend-name {
   width: 210px;
   display: block;
   margin: auto;
@@ -1932,20 +1682,20 @@ div.comment-reply-btn {
   border-color: #9b9b9b;
   padding: 0 3px 1px;
   line-height: 1.4; }
-  #communication-messages .enter-friend-name.error {
+  .enter-friend-name.error {
     border-color: #ff4343; }
-    #communication-messages .enter-friend-name.error::-webkit-input-placeholder {
+    .enter-friend-name.error::-webkit-input-placeholder {
       color: #ff4343; }
-    #communication-messages .enter-friend-name.error:-moz-placeholder {
+    .enter-friend-name.error:-moz-placeholder {
       color: #ff4343; }
-    #communication-messages .enter-friend-name.error::-moz-placeholder {
+    .enter-friend-name.error::-moz-placeholder {
       color: #ff4343; }
-  #communication-messages .enter-friend-name:focus {
+  .enter-friend-name:focus {
     border-width: 0 0 2px;
     border-color: #98b9be;
     padding-bottom: 0; }
 
-#communication-messages .nm-search-results {
+.nm-search-results {
   position: absolute;
   top: 95%;
   left: 0;
@@ -1957,60 +1707,317 @@ div.comment-reply-btn {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 100; }
 
-#communication-messages .nm-friend {
+.nm-friend {
   padding: 10px 20px; }
-  #communication-messages .nm-friend:hover {
+  .nm-friend:hover {
     background: #f2f7f8;
     cursor: pointer; }
 
-#communication-messages .nm-friend-img {
+.nm-friend-img {
   display: inline-block;
   width: 50px;
   height: 50px;
   margin-right: 15px;
   vertical-align: middle; }
-  #communication-messages .nm-friend-img img {
+  .nm-friend-img img {
     display: block;
     width: 100%;
     height: auto;
     border-radius: 50%; }
 
-#communication-messages .nm-friend-name {
+.nm-friend-name {
   display: inline-block;
   vertical-align: middle; }
 
-#communication-messages .nm-selected {
+.nm-selected {
   display: table;
   width: 100%;
   position: relative;
   margin: 0 auto 50px; }
-  #communication-messages .nm-selected .nm-friend {
+  .nm-selected .nm-friend {
     cursor: default;
     padding: 0; }
-    #communication-messages .nm-selected .nm-friend:hover {
+    .nm-selected .nm-friend:hover {
       background: none; }
-  #communication-messages .nm-selected .nm-friend-img {
+  .nm-selected .nm-friend-img {
     display: block;
     margin: 0 auto 10px; }
-  #communication-messages .nm-selected .nm-friend-name {
+  .nm-selected .nm-friend-name {
     display: block;
     text-align: center;
     font-weight: bold; }
-  #communication-messages .nm-selected .nm-change {
+  .nm-selected .nm-change {
     display: table;
     margin: 0 auto 20px;
     font-size: 14px;
     color: #ff4343;
     cursor: pointer; }
-    #communication-messages .nm-selected .nm-change:hover {
+    .nm-selected .nm-change:hover {
       text-decoration: underline; }
 
-#communication-messages .nm-sended-msg {
+.nm-sended-msg {
   padding-top: 20px;
   border-top: 1px solid #98b9be;
   text-transform: uppercase;
   font-size: 20px;
   text-align: center; }
+
+.communication-comments {
+  padding-bottom: 100px; }
+
+.comment {
+  margin-bottom: 21px; }
+
+.comment-content {
+  position: relative; }
+
+.comment-top {
+  display: table;
+  width: 100%;
+  margin-bottom: 10px; }
+
+.comment-img {
+  width: 50px;
+  height: 50px;
+  top: 4px;
+  position: absolute;
+  left: 0; }
+  .comment-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%; }
+
+.comment-inf {
+  display: table-cell;
+  vertical-align: middle; }
+
+.comment-name {
+  font-weight: bold;
+  margin-right: 13px; }
+
+.comment-date {
+  font-size: 13px;
+  color: #5a5a5a; }
+  .comment-date span:first-child {
+    margin-right: 15px; }
+
+.comment-reply {
+  display: none;
+  font-size: 21px;
+  color: #4a90e2;
+  position: absolute;
+  top: 45%;
+  left: 17%; }
+  .comment-reply .separator {
+    display: none; }
+
+.comment-like {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-left: 30px;
+  font-size: 14px; }
+  .comment-like:before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 15px;
+    background: url(img/sprite.png) -364px -54px;
+    position: absolute;
+    top: 2px;
+    left: 0; }
+
+.comment-like-mob {
+  display: none; }
+
+.comment.liked > .comment-content .comment-like {
+  opacity: 1; }
+
+.comment.liked > .comment-content .comment-inf {
+  padding-right: 60px; }
+
+.comment.answer {
+  margin-top: 20px;
+  padding-left: 20px; }
+
+.communication-comments .message-form-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+
+.communication-comments .message-form {
+  padding: 0 10px; }
+
+.c-notifications {
+  margin: 0 -10px 20px;
+  position: relative; }
+  .c-notifications .title {
+    padding: 6px 10px;
+    background: #f2f8f8;
+    position: relative;
+    font-size: 14px; }
+
+.c-show-notifications {
+  text-decoration: underline;
+  cursor: pointer; }
+  .c-show-notifications:hover {
+    text-decoration: none; }
+
+.c-hide-notifications {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url(img/sprite.png) -156px -55px;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer; }
+
+.c-notifications-list {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  background: white;
+  padding: 45px 0 10px;
+  z-index: 2; }
+  .c-notifications-list .close-list {
+    position: absolute;
+    top: 8px;
+    right: 10px; }
+
+.c-notification {
+  position: relative;
+  font-size: 14px;
+  margin-bottom: 5px;
+  padding: 5px 10px; }
+  .c-notification:hover {
+    background: #f2f8f8; }
+
+.close-notification {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3; }
+
+.c-notification-top {
+  padding-left: 50px;
+  min-height: 45px;
+  position: relative; }
+
+.c-notification-img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0; }
+  .c-notification-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%; }
+
+.c-notification-name {
+  font-weight: bold; }
+
+.c-notification-date {
+  font-size: 13px;
+  color: #5a5a5a;
+  white-space: nowrap; }
+  .c-notification-date span:first-child {
+    margin-right: 5px; }
+
+.c-notification-question {
+  margin-top: 3px; }
+  .c-notification-question span {
+    color: #4a8fec; }
+
+.c-notification-description {
+  line-height: 1.4; }
+
+.content-box-item {
+  padding-top: 80px;
+  padding-right: 0; }
+
+.cm-top {
+  width: 100%;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  padding: 0 10px; }
+  .cm-top a {
+    display: block;
+    color: black;
+    font-size: 14px; }
+  .cm-top .new-message {
+    float: left;
+    border: 1px solid black;
+    border-radius: 2px;
+    text-decoration: none;
+    text-align: center;
+    padding: 5px 22px; }
+  .cm-top .write-admin {
+    float: right;
+    line-height: 30px;
+    text-decoration: underline; }
+    .cm-top .write-admin:hover {
+      text-decoration: none; }
+
+.message {
+  padding: 15px 10px 15px 0;
+  margin-left: 60px;
+  border-bottom: 1px solid #dbdbdb;
+  cursor: pointer; }
+  .message.new .message-text {
+    color: black; }
+  .message.online .message-img:before {
+    background: #7ed31e; }
+  .message.admin .message-img:before {
+    display: none; }
+  .message.admin .message-name {
+    font-weight: bold; }
+
+.message-img {
+  position: relative;
+  display: block;
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-left: -60px; }
+  .message-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%; }
+  .message-img:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #d2d2d2; }
+
+.message-name {
+  margin-bottom: 8px;
+  line-height: 1.27; }
+
+.message-text {
+  color: #8b8d8c;
+  line-height: 1.27; }
+
+#communication-messages-new .content-box-item {
+  padding-top: 40px; }
 
 .games-previews .flex-box {
   font-family: handbookpro-regular;

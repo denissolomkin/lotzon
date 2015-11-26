@@ -133,7 +133,7 @@ html {
     line-height: 55px;
     text-transform: uppercase;
     padding: 0 13px;
-    font-weight: bold; }
+    font-weight: normal; }
     .menu-main a:hover, .menu-main a.active {
       background: #ffe700; }
   .menu-main:after {
@@ -141,11 +141,11 @@ html {
 
 .menu-more {
   display: none;
-  padding: 20px 30px; }
+  padding: 20px 30px 45px; }
   .menu-more a {
     margin-bottom: 5px; }
   .menu-more li:last-child a {
-    margin-top: 25px; }
+    margin-top: 0; }
 
 .menu-balance {
   width: 250px;
@@ -287,11 +287,23 @@ html {
 .is-countdown {
   width: 200px; }
 
+.menu-logout {
+  display: none;
+  top: auto;
+  bottom: -160px;
+  z-index: 51;
+  width: 167px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px 30px;
+  border-top: 1px solid #CBC7C4;
+  box-shadow: none; }
+
 #blog-posts .post-item-title {
   font-size: 25px;
   line-height: 30px;
   margin-bottom: 14px;
-  font-weight: bold; }
+  font-weight: normal; }
 
 @media (max-width: 479px) {
   #blog-post-view .comment-content {
@@ -313,7 +325,7 @@ html {
   font-size: 25px;
   line-height: 30px;
   margin-bottom: 14px;
-  font-weight: bold; }
+  font-weight: normal; }
 
 #blog-post-view .message-form-wrapper button[type="submit"] {
   font-family: Handbook-bold; }

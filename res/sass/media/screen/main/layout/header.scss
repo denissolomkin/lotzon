@@ -64,7 +64,7 @@
     line-height: 55px;
     text-transform: uppercase;
     padding: 0 13px;
-    font-weight: bold;
+    font-weight: normal;
     &:hover,
     &.active {
       background: #ffe700;
@@ -77,12 +77,12 @@
 
 .menu-more {
   display: none;
-  padding: 20px 30px;
+  padding: 20px 30px 45px;
   a {
     margin-bottom: 5px;
   }
   li:last-child a {
-    margin-top: 25px;
+    margin-top: 0;
   }
 }
 
@@ -268,4 +268,17 @@
 
 .is-countdown {
   width: 200px;
+}
+
+.menu-logout {
+  display: none;
+  top: auto;
+  bottom: -160px;
+  z-index: 51;
+  width: 167px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px 30px;
+  border-top: 1px solid #CBC7C4;
+  box-shadow: none;
 }
