@@ -161,6 +161,7 @@ class MaillistDBProcessor implements IProcessor
         } else {
             $sql     = 'SELECT DISTINCT p.Id, p.Email, p.Lang FROM `Players` as p ';
             $where[] = '(p.NewsSubscribe = 1)';
+            $where[] = '(p.Ban = 0)';
             if (count($tables)>0) {
                 $sql .= ' JOIN '.implode('JOIN ',array_unique($tables));
             }
