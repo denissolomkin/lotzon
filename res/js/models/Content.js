@@ -58,8 +58,8 @@
                     last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null;
 
                 if (first_id && last_id) {
-                    if (first_id < last_id)
-                        query.before_id = first_id;
+                    if (first_id > last_id)
+                        query.before_id = last_id;
                     else
                         query.after_id = last_id;
                 }
