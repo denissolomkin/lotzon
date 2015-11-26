@@ -169,12 +169,12 @@
                 $(I.menuBtnItem + ".active").removeClass('active');
             },
 
-            // fix: function () {
-            //     D.log('Navigation.menu.fix', 'func');
-            //     (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)
-            //         ? $('body').addClass('fixed')
-            //         : $('body').removeClass('fixed');
-            // }
+            fix: function () {
+                D.log('Navigation.menu.fix', 'func');
+                (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)
+                    ? $('body').addClass('fixed')
+                    : $('body').removeClass('fixed');
+            }
         },
 
         'do': {

@@ -1,6 +1,5 @@
-$screen-lg-min: 1200px;
+$screen-1200-min: 1200px;
 
   // MEDIA --------------------- //
-@import "middle/style";
-@import "large/style";
-
+@import "main/style";
+@import "1200/style";

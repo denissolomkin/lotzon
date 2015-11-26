@@ -24,7 +24,7 @@ var slotMachine = {
     bounceTime: 1e3,
     winningsFormatPrefix: "",
     machine_name: "slotmachine1",
-    spinURL: "/res/json/games/spin",
+    spinURL: "/res/GET/games/spin",
     curBet: 1,
     isActive: !1,
     useMoney: !1,
@@ -32,6 +32,8 @@ var slotMachine = {
     xFactor: 0.1,
     sounds: {},
     init: function () {
+        console.info('slots.init!!!!');
+        
         slotMachine.change_bet(0);
         try {
             Player.updateBalance();
