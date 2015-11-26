@@ -141,10 +141,11 @@
         },
 
         getAvatar: function (img, id) {
-            console.log('avatar: ',arguments);
             img = img || this.img;
             id = id || this.id;
-            return '/filestorage/avatars/' + (Math.ceil(id / 100)) + '/' + img;
+            return (img
+                ? '/filestorage/avatars/' + ((Math.ceil(id / 100)) + '/' + img)
+                : '/res/img/default.jpg');
         }
 
     };

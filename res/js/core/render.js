@@ -338,7 +338,7 @@
 
                     if (render.id == node.id) {
 
-                        if (compare(render.classList, ['content-box-item', 'content-main'])) {//such as games-online & games-chance
+                        if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {//such as blog-post-vew, games-online & games-chance
                             DOM.hide(node.parentNode.children);
                         }
 
