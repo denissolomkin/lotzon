@@ -140,6 +140,13 @@
             return calc_points;
         },
 
+        getAvatar: function (img, id) {
+            console.log('avatar: ',arguments);
+            img = img || this.img;
+            id = id || this.id;
+            return '/filestorage/avatars/' + (Math.ceil(id / 100)) + '/' + img;
+        }
+
     };
 
 })();

@@ -4,7 +4,7 @@
    [
             {
                 "id": "1",
-                "img": "/res/img/post.jpg",
+                "img": "post.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "date": 1447078996 ,
                 "stat": {
@@ -14,7 +14,7 @@
             },
             {
                 "id": "1",
-                "img": "/res/img/post.jpg",
+                "img": "post.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "date": 1447074996 ,
                 "stat": {
@@ -24,7 +24,7 @@
             },
             {
                 "id": "1",
-                "img": "/res/img/post.jpg",
+                "img": "post.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "date":1447008996 ,
                 "stat": {
@@ -35,7 +35,7 @@
 
             {
                 "id": "1",
-                "img": "/res/img/post.jpg",
+                "img": "post.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "date": 1447078996 ,
                 "stat": {
@@ -45,7 +45,7 @@
             },
             {
                 "id": "1",
-                "img": "/res/img/post.jpg",
+                "img": "post.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "date": 1447074996 ,
                 "stat": {
@@ -55,7 +55,7 @@
             },
             {
                 "id": "1",
-                "img": "/res/img/post.jpg",
+                "img": "post.jpg",
                 "title": "Ноутбук Asus X551MA",
                 "date":1447008996 ,
                 "stat": {
@@ -65,7 +65,7 @@
             },
             {
                             "id": "1",
-                            "img": "/res/img/post.jpg",
+                            "img": "post.jpg",
                             "title": "Ноутбук Asus X551MA",
                             "date": 1447078996 ,
                             "stat": {
@@ -75,7 +75,7 @@
                         },
                         {
                             "id": "1",
-                            "img": "/res/img/post.jpg",
+                            "img": "post.jpg",
                             "title": "Ноутбук Asus X551MA",
                             "date": 1447074996 ,
                             "stat": {
@@ -85,7 +85,7 @@
                         },
                         {
                             "id": "1",
-                            "img": "/res/img/post.jpg",
+                            "img": "post.jpg",
                             "title": "Ноутбук Asus X551MA",
                             "date":1447008996 ,
                             "stat": {
@@ -96,7 +96,7 @@
 
                         {
                             "id": "1",
-                            "img": "/res/img/post.jpg",
+                            "img": "post.jpg",
                             "title": "Ноутбук Asus X551MA",
                             "date": 1447078996 ,
                             "stat": {

@@ -123,7 +123,7 @@
                 "chronicle": 2,
                 "requests": 11
             },
-            "img": "res/img/user_img.jpg",
+            "img": "user_img.jpg",
             "favorite": [],
             "title": {
                 "name": "Сергей",

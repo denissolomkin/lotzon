@@ -1,36 +1,34 @@
-<div id="blog-post-view" class="content-main">
-    <div class="content-box">
+<div id="blog-post-view" class="content-box">
 
-        <div class="content-box-header back">{{i18n "button-go-back"}}</div>
+    <div class="content-box-header back">{{i18n "button-go-back"}}</div>
 
-        <div class="content-box-content clearfix">
-            <div class="content-box-item post">
+    <div class="content-box-content clearfix">
+        <div class="content-box-item post">
 
-                <h1 class="title">{{ title }}</h1>
+            <h1 class="title">{{ title }}</h1>
 
-                <div class="post-inf-wrapper clearfix">
-                    <div class="post-inf clearfix">
-                        <div class="post-date">{{ date }}</div>
-                        <div class="post-views-comments">
-                            <div class="post-comments-inf">{{ stat.comments}}</div>
-                        </div>
-                    </div>
-
-                    <div class="post-socials clearfix">
-                        <a href="#" class="fb">580</a>
-                        <a href="#" class="tw">220</a>
-                        <a href="#" class="gp">103</a>
+            <div class="post-inf-wrapper clearfix">
+                <div class="post-inf clearfix">
+                    <div class="post-date">{{ date }}</div>
+                    <div class="post-views-comments">
+                        <div class="post-comments-inf">{{ stat.comments}}</div>
                     </div>
                 </div>
-                <hr>
-                <div class="post-description clearfix">
-                    {{{ text }}}
+
+                <div class="post-socials clearfix">
+                    <a href="#" class="fb">580</a>
+                    <a href="#" class="tw">220</a>
+                    <a href="#" class="gp">103</a>
                 </div>
-
-                {{partial 'blog-post-view-similar' this}}
-                {{partial 'blog-post-view-comments' this}}
-
             </div>
+            <hr>
+            <div class="post-description clearfix">
+                {{{ text }}}
+            </div>
+
+            {{partial 'blog-post-view-similar' this}}
+            {{partial 'blog-post-view-comments' this}}
+
         </div>
     </div>
 </div>

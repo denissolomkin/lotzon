@@ -4,7 +4,7 @@
         <a href="/games/game">
             <div class="game">
                 <div class="game-img">
-                    <img src="{{ img }}" alt="">
+                    <img src="/filestorage/games/{{ img }}" alt="">
                 </div>
                 <div class="game-info">
                     <div class="game-name">{{ title }}</div>
@@ -19,6 +19,5 @@
             </div>
         </a>
         {{/each}}
-        {{^.}}No games :({{/.}}
     </div>
 </div>

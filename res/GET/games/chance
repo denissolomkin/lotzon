@@ -7,7 +7,7 @@
                 "1":    {
                                 "id": "1",
                                 "category": "5",
-                                "img": "/res/img/games/slots.png",
+                                "img": "slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
                                 "quantity": "0",
@@ -18,7 +18,7 @@
                 "2": {
                                 "id": "2",
                                 "category": "5",
-                                "img": "/res/img/games/slots.png",
+                                "img": "slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
                                 "quantity": "0",
@@ -29,7 +29,7 @@
                 "3":    {
                                 "id": "1",
                                 "category": "5",
-                                "img": "/res/img/games/slots.png",
+                                "img": "slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
                                 "quantity": "0",
@@ -40,7 +40,7 @@
                 "4": {
                                 "id": "2",
                                 "category": "5",
-                                "img": "/res/img/games/slots.png",
+                                "img": "slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
                                 "quantity": "0",
@@ -51,7 +51,7 @@
                 "5":    {
                                 "id": "1",
                                 "category": "5",
-                                "img": "/res/img/games/slots.png",
+                                "img": "slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
                                 "quantity": "0",
@@ -62,7 +62,7 @@
                 "6": {
                                 "id": "2",
                                 "category": "5",
-                                "img": "/res/img/games/slots.png",
+                                "img": "slots.png",
                                 "title": "Игра Слоты",
                                 "price": "50000",
                                 "quantity": "0",

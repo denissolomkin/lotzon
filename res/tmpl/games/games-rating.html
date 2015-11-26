@@ -1,29 +1,28 @@
-<div id="games-rating" class="content-box-item raiting">
-        {{#each .}}
-					<div class="raiting-item clearfix">
-                        <a href = '/users/{{ id }}'>
-						<div class="raiting-img">
-							<img src="{{ img }}" alt="">
-							<div class="raiting-position">{{ position }}</div>
-						</div>
-						<div class="raiting-name">{{ title }}</div>
-						<table class="raiting-inf">
-							<tr>
-								<td>Розыгрышей</td>
-								<td>{{ games }}</td>
-							</tr>
-							<tr>
-								<td>Денег ({{player "getCurrency"}})</td>
-								<td>{{ money }}</td>
-							</tr>
-							<tr>
-								<td>Баллов</td>
-								<td>{{ points }}</td>
-							</tr>
-						</table>
-                        </a>
-					</div>
+<div id="games-rating" class="content-box-item">
+    {{#each .}}
+    <div class="raiting-item clearfix">
+        <a href='/users/{{ id }}'>
+            <div class="raiting-img">
+                <img src="{{ img }}" alt="">
 
-        {{/each}}
-        {{^.}}No rating :({{/.}}
+                <div class="raiting-position">{{ position }}</div>
+            </div>
+            <div class="raiting-name">{{ title }}</div>
+            <table class="raiting-inf">
+                <tr>
+                    <td>Розыгрышей</td>
+                    <td>{{ games }}</td>
+                </tr>
+                <tr>
+                    <td>Денег ({{player "getCurrency"}})</td>
+                    <td>{{ money }}</td>
+                </tr>
+                <tr>
+                    <td>Баллов</td>
+                    <td>{{ points }}</td>
+                </tr>
+            </table>
+        </a>
+    </div>
+    {{/each}}
 </div>

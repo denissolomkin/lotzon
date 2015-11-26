@@ -4,6 +4,9 @@ deny from 31.131.18.3
 
 RewriteEngine On
 
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ $1 [QSA,L]
+
 # temporary for json files
 RewriteCond "%{REQUEST_URI}" !^(.*)(list)(.*)$
 RewriteRule ^(.*)/([0-9]+)$ $1-list/$2 [L]

@@ -40,7 +40,7 @@
                             "id": "1",
                             "category": "5",
                             "type": "item",
-                            "img": "/res/img/prize.png",
+                            "img": "prize.png",
                             "title": "Ноутбук Asus X551MA",
                             "price": "50000",
                             "quantity": "0"
@@ -48,7 +48,7 @@
                         "2":{
                             "id": "1",
                             "category": "5",
-                            "img": "/res/img/prize.png",
+                            "img": "prize.png",
                             "title": "Ноутбук Asus X551MA",
                             "price": "50000",
                             "quantity": "0"
@@ -56,7 +56,7 @@
                         "3":{
                             "id": "1",
                             "category": "5",
-                            "img": "/res/img/prize.png",
+                            "img": "prize.png",
                             "title": "Ноутбук Asus X551MA",
                             "price": "50000",
                             "quantity": "0"
@@ -64,7 +64,7 @@
                         "4":{
                             "id": "1",
                             "category": "1",
-                            "img": "/res/img/prize.png",
+                            "img": "prize.png",
                             "title": "Ноутбук Asus X551MA",
                             "price": "50000",
                             "quantity": "0"
@@ -72,7 +72,7 @@
                         "5":{
                             "id": "2",
                             "category": "2",
-                            "img": "/res/img/prize.png",
+                            "img": "prize.png",
                             "title": "Смартфон Lenovo X551MA",
                             "price": 10000,
                             "quantity": "5"
@@ -80,7 +80,7 @@
                         "6":{
                             "id": "3",
                             "category": "3",
-                            "img": "/res/img/prize.png",
+                            "img": "prize.png",
                             "title": "Mp3-плеер Ipod X551MA",
                             "price": "10000",
                             "quantity": null

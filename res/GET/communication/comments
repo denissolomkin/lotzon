@@ -2,10 +2,10 @@
    "res":{
       "communication":{
          "comments":{
-            "17800":{
+            "178":{
                "player":{
-                  "id":"14821",
-                  "img":"",
+                  "id":"14",
+                  "img":"comment_img.jpg",
                   "title":"sunbas"
                },
                "id":"17800",
@@ -15,8 +15,8 @@
                "answers":{
                   "17801":{
                      "player":{
-                        "id":"1698",
-                        "img":"54a25ec21d559.jpg",
+                        "id":"20",
+                        "img":"comment_img.jpg",
                         "title":"\u0410\u0434\u043c\u0438\u043d"
                      },
                      "id":"17801",

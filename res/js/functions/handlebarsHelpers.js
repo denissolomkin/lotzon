@@ -2,6 +2,8 @@ $(function () {
 
     Handlebars.registerHelper({
 
+        'avatar': Player.getAvatar,
+
         'player': function (fn, options) {
 
             options = typeof options === 'string' ? options : null;

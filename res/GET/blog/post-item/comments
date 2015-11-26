@@ -4,7 +4,7 @@
       "id": 1,
       "user": {
         "id": 1,
-        "avatar": "/res/img/comment_img.jpg",
+        "avatar": "comment_img.jpg",
         "name": "Gerald Barnett"
       },
       "post_id": 1,
@@ -17,7 +17,7 @@
           "id": 3,
           "user": {
             "id": 1,
-            "avatar": "/res/img/comment_img.jpg",
+            "avatar": "comment_img.jpg",
             "name": "Tom Soyer"
           },
           "post_id": 1,
@@ -30,7 +30,7 @@
           "id": 4,
           "user": {
             "id": 1,
-            "avatar": "/res/img/comment_img.jpg",
+            "avatar": "comment_img.jpg",
             "name": "Tom Soyer"
           },
           "post_id": 1,
@@ -45,7 +45,7 @@
       "id": 3,
       "user": {
         "id": 4,
-        "avatar": "/res/img/comment_img.jpg",
+        "avatar": "comment_img.jpg",
         "name": "Tom Soyer"
       },
       "post_id": 1,
@@ -58,7 +58,7 @@
       "id": 2,
       "user": {
         "id": 1,
-        "avatar": "/res/img/comment_img.jpg",
+        "avatar": "comment_img.jpg",
         "name": "Tom Soyer"
       },
       "post_id": 1,
