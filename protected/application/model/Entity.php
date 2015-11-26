@@ -21,6 +21,37 @@ abstract class Entity
 
     }
 
+    /**
+     * Обработчик вызовов к несуществующим методам get*(), set*()
+     * При обращении, например, к getParentId вернёт значение свойства $_parentId
+     * При обращении, например, к setParentId($id) запишет в свойство $_parentId значение $id
+     *
+     * @param      $method
+     * @param null $params
+     *
+     * @return $this|null  $this при set*(), value|null при get*()
+     * @throws Exception   Если get обращение к несуществующему и не обрабатываемому свойству
+     */
+    public function __call($method, $params = null)
+    {
+        $methodPrefix = substr($method, 0, 3);
+        $key          = lcfirst(substr($method, 3));
+        if (($methodPrefix == 'set') && (count($params) == 1)) {
+            $value           = $params[0];
+            $property        = '_'.$key;
+            $this->$property = $value;
+            return $this;
+        } elseif ($methodPrefix == 'get') {
+            $property = '_'.$key;
+            if (isset($this->$property)) {
+                return $this->$property;
+            } else {
+                return NULL;
+            }
+        }
+        throw new Exception("Method $method is not defined!");
+    }
+
     public function setModelClass($modelClassName)
     {
         if (class_exists($modelClassName) && is_subclass_of($modelClassName, 'Model')) {
