@@ -83,18 +83,19 @@
             });
 
             /* substitution JSON with profile if template has "/profile/" */
-            if (options.template.search(/profile/) != -1) {
+            if (options.template.search(/profile/) !== -1) {
                 options.json = Player;
             }
 
             /* disable JSON for header and support menu */
-            else if (options.template.search(/-/) == -1 || options.template.search(/support/) !== -1) {
+            else if (options.template.search(/-/) === -1 || options.template.search(/support/) !== -1) {
                 options.json = {};
             }
 
             /* OLD disable JSON for "/new" template without "?object:id" */
-            else if (!options.json && options.href.search(/new/) != -1) {
-
+            else if (!options.json && options.href.search(/\/new$/) !== -1) {
+                options.json = {};
+                /*
                 var url = options.href.split('?'),
                     template = options.template.split('?');
 
@@ -105,6 +106,7 @@
 
                 if (template.length > 1)
                     options.template = template[0];
+                    */
             }
 
             /* OLD fix JSON for "/all" template */
