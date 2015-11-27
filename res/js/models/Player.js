@@ -140,9 +140,16 @@
             return calc_points;
         },
 
+        renderFavorite: function(){
+            balls = {};
+            for(var i = 1; i<=Tickets.totalBalls; i++)
+                balls[i] = this.favorite.indexOf(i) !== -1;
+            return balls;
+        },
+
         getAvatar: function (img, id) {
-            img = img || this.img;
-            id = id || this.id;
+            img = typeof img === 'string' ? img : this.img;
+            id = typeof id === 'string' ? id : this.id;
             return (img
                 ? '/filestorage/avatars/' + ((Math.ceil(id / 100)) + '/' + img)
                 : '/res/img/default.jpg');

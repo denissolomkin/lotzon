@@ -55,7 +55,8 @@
             } else {
 
                 var first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
-                    last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null;
+                    last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
+                    offset = renderList && renderList.childElementCount || null;
 
                 if (first_id && last_id) {
                     if (first_id > last_id)
@@ -64,7 +65,8 @@
                         query.after_id = last_id;
                 }
 
-                query.offset = renderList && renderList.childElementCount || null;
+                if(offset)
+                    query.offset = offset;
 
                 R.push({
                     href: form.action,

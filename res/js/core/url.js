@@ -54,7 +54,7 @@
                     break;
 
                 case "get":
-                    return this.parse(url).replace(/-list/g, '');
+                    return this.parse(url);
                     break;
 
                 case "tmpl":
@@ -76,7 +76,7 @@
             var url = null;
 
             if (options.url === true) {
-                url = typeof options.href != 'object' ? options.href : options.init.template
+                url = typeof options.init.href != 'object' ? U.parse(options.init.href) : options.init.template
 
                 if (url) {
 

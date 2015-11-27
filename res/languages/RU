@@ -41,7 +41,7 @@
                 "button-balance-convert": "Конвертировать",
                 "button-balance-transactions": "История транзакций",
                 "button-balance-payments": "История выплат",
-                
+
                 "button-more": "Подробнее",
                 "button-save": "Сохранить",
                 "button-load-more": "Показать еще",
@@ -93,13 +93,43 @@
                 "title-lottery-prizes-from": "из",
                 "title-lottery-ticket-num": "БИЛЕТ",
 
+                "title-profile-name": "Имя",
+                "title-profile-surname": "Фамилия",
+                "title-profile-patronymic": "Отчество",
+                "title-profile-nickname": "Ник",
+                "title-profile-country": "Страна",
+                "title-profile-city": "Город/Село",
+                "title-profile-address": "Адрес",
+                "title-profile-birthday": "Дата рождения",
+                "title-profile-socials": "Привязаные соцсети",
+
+                "title-profile-favorite":"Любимая комбинация",
+                "title-profile-billing": "Платежная информация",
+                "title-profile-details": "Контактные данные",
+                "title-profile-edit": "Редактирование профиля",
+                "title-profile-statistics-total-win": "Всего выиграно",
+
+                "message-input-correct-data": "<p>Вводите только свои актуальные данные.<br>Неправильные или неполные данные могут негативно отразится при обработке запроса на выводвыигрыша.</p><p>Привязывайте только реальные страницы соцсетей, это даст Вам ряд дополнительных возможностей.</p>",
+                "message-input-billing-information": "Введите Ваши платежные данные:",
+
+                "button-profile-edit": "Изменить данные",
+
+                "title-billing-phone": "Телефон",
+                "title-billing-yandexmoney": "Yandex.Деньги",
+                "title-billing-webmoney": "Webmoney",
+                "title-billing-qiwi": "QIWI кошелек",
+
+
                 "title-users-friends": "Друзья",
                 "title-users-chronicle": "Хроника",
                 "title-users-birthdays": "Дни рождения",
                 "title-users-requests": "Запросы",
                 "title-users-search": "Поиск друзей",
-
+                "title-comments": "КОММЕНТАРИИ",
+                "title-messages": "СООБЩЕНИЯ",
                 "title-messages-new-message": "Новое сообщение",
+                "title-messages-enter-name": "Введите имя",
+                "title-messages-change-user": "Изменить получателя",
 
                 "button-mark-all-as-read":"Пометить всё как прочитанное",
                 "button-see": "смотреть",
@@ -117,7 +147,8 @@
 
                 "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
                 "message-order-process-week": "Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.",
-                "message-comments-write-comment": "Напишите комментарий", 
+                "message-comments-write-comment": "Напишите комментарий",
+                "message-comment-sent-success": "Комментарий отправлен на модерацию",
 
                 "title-support-faq": "Часто задаваемые вопросы",
                 "title-support-rules": "Правила",

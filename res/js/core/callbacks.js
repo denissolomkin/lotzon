@@ -7,10 +7,17 @@
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
             $(document).on('click', Device.do.hide);
-            $(document).on('click', Device.do.hide);
-            $(I.goTop).on('click', Device.do.goTop);
+
 
             /* navigation */
+            $(document).on('touchstart', '.site-overlay', function() {
+                return false
+            });
+            $(document).on('touchmove', '.site-overlay', function() {
+                return false
+            });
+            $(document).on('touchend', '.site-overlay', Device.do.hide);
+            $(I.goTop).on('click', Device.do.goTop);
             $(document).on('click', I.Tabs, Navigation.do.switchTab);
             $(document).on('click', I.Cats, Navigation.do.switchCat);
             $(document).on('click', '.menu-mobile a', Navigation.do.loadPage);
@@ -21,10 +28,9 @@
             $(document).on('click', I.TicketTabs, Ticket.switch);
 
             /* new message*/
-            $(document).on('input', ".enter-friend-name", Message.do.searchAddressee);
-            $(document).on('click', ".nm-change", Message.do.clearAddressee);
-            $(document).on('click', ".nm-friend", Message.do.setAddressee);
-            $(document).on('click', ".message-form-btn", Message.do.send);
+            $(document).on('input', ".enter-friend-name", Message.do.searchUser);
+            $(document).on('click', ".nm-change", Message.do.clearUser);
+            $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
 
             /* new reply */
 
@@ -77,7 +83,7 @@
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
 
-            "communications-messages": Message.init,
+            "communication-messages": Message.init,
 
             "lottery": Lottery.init,
             "lottery-history-view": Lottery.view,

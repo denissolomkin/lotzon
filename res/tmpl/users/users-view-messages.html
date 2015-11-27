@@ -1,0 +1,24 @@
+<div id="users-view-messages" class="content-box">
+
+    <div class="content-box-header back">{{name}}</div>
+
+    <div class="content-box-content clearfix">
+        <div class="content-box-item">
+
+            {{partial 'users-view-messages-replyform' this}}
+
+            <form action="/users/{{id}}/messages/list" method="get" class="render-list-form">
+
+                <div class="render-list" id="users-{{id}}-messages-list">
+                </div>
+
+                <div class="container-center">
+                    <button type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

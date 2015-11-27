@@ -53,20 +53,26 @@
 
             if (++Navigation.loadedBlocks === Navigation.requiredBlocks) {
 
-                Navigation.path = window.location.pathname.split('/');
-                Navigation.path[1] = Navigation.path[1] || 'blog';
-
                 D.log('Navigation.ready', 'func');
                 $("header a, .menu-mobile a").off().on('click', Navigation.do.loadPage);
-
                 $(I.menuBtnItem).off().on('click', Navigation.menu.click);
 
-                var element = [];
+                /*
+                 Navigation.path = window.location.pathname.split('/');
+                 Navigation.path[1] = Navigation.path[1] || 'blog';
 
-                while (Navigation.path.length > 1 && !element.length) {
-                    element = $('[href="' + Navigation.path.join("/") + '"]').first().click();
-                    Navigation.path.pop();
-                }
+                 var element = [];
+
+                 while (Navigation.path.length > 1 && !element.length) {
+                 element = $('[href="' + Navigation.path.join("/") + '"]').first().click();
+                 Navigation.path.pop();
+                 }
+                 */
+
+                window.location.pathname === '/' && (window.location.pathname = '/blog');
+
+                if (!($('[href="' + window.location.pathname + '"]').first().click().length))
+                    R.push(window.location.pathname);
 
                 Navigation.menu.switch();
             }
@@ -76,10 +82,9 @@
         menu: {
 
             click: function (event) {
-                // alert("click works");
+
                 D.log(['Navigation.menu.click'], 'func');
                 event.stopPropagation();
-                // alert("click works after stopPropagation");
                 var isActive = $(this).hasClass('active'),
                     isMobile = Device.isMobile(),
                     menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
@@ -87,7 +92,7 @@
                 Navigation.menu.hide();
                 // return;
                 if (isActive)
-                    // alert("click works aisActive");
+                
                     return false;
                 else
                     $(this).addClass('active');
@@ -119,7 +124,7 @@
                             $(I.menuLogout).hide();
                             $(I.menuMobileBalance).hide();
                             $('body').addClass('pushy-active');
-                            
+
                         } else {
                             $(I.menuProfile).fadeIn(200);
                         }
@@ -156,7 +161,7 @@
             },
 
             hide: function () {
-                // alert("hide works");
+
                 D.log('Navigation.menu.hide', 'func');
                 $(I.menuProfile + ":visible").fadeOut(200);
                 $(I.menuBalance + ":visible").fadeOut(200);

@@ -14,10 +14,6 @@
   display: block;
 }
 
-#communication .content-box-tab .count {
-  margin-left: 6px;
-}
-
 .comment-content {
   padding-left: 70px;
 }
@@ -38,7 +34,9 @@
   margin-right: 20px;
 }
 
-
+#communication .content-box-tab {
+  padding: 0 20px;
+}
 
 // COMMENT HOVER --------------------------- //
 

@@ -307,7 +307,7 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -383px -84px;
   cursor: pointer;
   position: relative;
-  top: 4px;
+  top: -3px;
 }
 
 .input-file {
@@ -326,7 +326,7 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 .message-form-smileys {
-  float: right;
+  float: left;
   width: 18px;
   height: 18px;
   background: url(img/sprite.png) -4px -228px;

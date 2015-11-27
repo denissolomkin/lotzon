@@ -68,53 +68,47 @@
 
         do: {
 
-            clearAddressee: function () {
+            clearUser: function () {
+
+                document.getElementById('communication-messages-new')
+                    .getElementsByTagName('FORM')[0]
+                    .elements['recipient_id'].value = '';
+
                 R.push({
-                    'template': 'communication-messages-new',
-                    'replace': '.addressee'
+                    'href': 'communication-messages-new-user',
+                    'json': {}
                 });
+
             },
 
-            setAddressee: function () {
-                var userId = $(this).data('userid');
+            setUser: function () {
+
+                var user = {
+                    id: this.getAttribute('data-user-id'),
+                    name: this.getAttribute('data-user-name'),
+                    img: this.getAttribute('data-user-img')
+                };
+
+                document.getElementById('communication-messages-new')
+                    .getElementsByTagName('FORM')[0]
+                    .elements['recipient_id'].value = user.id;
+
+                document.getElementById('communication-messages-new-users').innerHTML = '';
+
                 R.push({
-                    'template': 'communication-messages-new?users=' + userId,
-                    'replace': '.addressee'
+                    template: 'communication-messages-new-user',
+                    json: user
                 });
+
             },
 
-            searchAddressee: function () {
-                var search = $(this).val();
-                $.getJSON(
-                    U.Generate.Json('/users/search?match=' + search),
-                    function (data) {
-                        R.push({
-                            'json': data.res,
-                            'template': 'communication-messages-new',
-                            'replace': '.addressee .nm-search-result-box'
-                        });
+            searchUser: function () {
 
-                    });
-            },
-
-            send: function () {
-                event.preventDefault();
-                var formData = $(this).parents('form').serializeObject();
-                if (formData.userid && formData.message)
-                    $.post(
-                        U.Generate.Post('/communications/messages/addMessage'),
-                        formData,
-                        function (data) {
-                            if (data.status == 1) {
-                                R.push({
-                                    'json': data.res,
-                                    'template': 'communication-messages-new',
-                                    'replace': '.addressee .nm-search-result-box'
-                                });
-                            } else {
-                                throw(data.message);
-                            }
-                        }, "json");
+                R.push({
+                    template: 'communication-messages-new-users',
+                    href: '/users/search',
+                    query: {name: this.value}
+                });
             }
         }
     }

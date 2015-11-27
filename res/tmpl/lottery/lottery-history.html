@@ -13,10 +13,10 @@
 
             <div class="content-box-item">
 
-<form action="/lottery/history/list" class="render-list-form" method="get">
+                <form action="/lottery/history/list" class="render-list-form" method="get">
 
-    <div class="content-box-item-top clearfix">
-        <div class="content-box-cat">
+                    <div class="content-box-item-top clearfix">
+                        <div class="content-box-cat">
                     <span class="position-relative">
                         <input id="brt-points" name="type" type="radio" value="mine">
                         <label for="brt-points">{{i18n "title-lottery-history-mine"}} </label>
@@ -25,15 +25,15 @@
                         <input id="brt-money" name="type" type="radio" value="" checked>
                         <label for="brt-money">{{i18n "title-lottery-history-all"}}</label>
                     </span>
-        </div>
+                        </div>
 
-    </div>
+                    </div>
 
-    <div class="content-box-item-content">
-        {{partial 'lottery-history-container'}}
-    </div>
+                    <div class="content-box-item-content">
+                        {{partial 'lottery-history-container'}}
+                    </div>
 
-</form>
+                </form>
 
             </div>
         </div>

@@ -79,7 +79,6 @@
                 tab: options.tab && options.tab.attr('href'),
                 after: null,
                 node: null,
-                callback: null,
                 url: false
             });
 
@@ -93,8 +92,8 @@
                 options.json = {};
             }
 
-            /* disable JSON for "/new" template without "?object:id" */
-            else if (!options.json && options.template.search(/new/) != -1) {
+            /* OLD disable JSON for "/new" template without "?object:id" */
+            else if (!options.json && options.href.search(/new/) != -1) {
 
                 var url = options.href.split('?'),
                     template = options.template.split('?');
@@ -108,10 +107,20 @@
                     options.template = template[0];
             }
 
-            /* fix JSON for "/all" template */
+            /* OLD fix JSON for "/all" template */
             else if (!options.json && options.href.search(/all/) != -1) {
                 options.href = options.href.replace(/\/all/g, '');
                 options.init.template = options.template = options.template.replace(/\-all/g, '');
+            }
+
+            /* replace JSON to self for "/list" items */
+            else if (options.href.indexOf('list') !== -1) {
+                options.href = options.href.replace(/\/list/g, '').replace(/\-list/g, '');
+            }
+
+            /* rewrite JSON to user model when "/users" templates */
+            else if (/users\/\d+\/\w*$/.test(options.href)) {
+                options.href = options.href.replace(/\/\w*$/, '');
             }
 
             R.event('push', options);
@@ -171,9 +180,13 @@
 
                         200: function (data) {
 
-                            options.json = Cache.set(options.href, data);
-                            D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
-                            R.sortJSON(options);
+                            if ('responseText' in data) {
+                                D.error('OBJECT NOT FOUND');
+                            } else {
+                                options.json = Cache.set(options.href, data);
+                                D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
+                                R.sortJSON(options);
+                            }
 
                         },
 
@@ -196,7 +209,7 @@
 
         "sortJSON": function (options) {
 
-            if(typeof options.json === 'object') {
+            if (typeof options.json === 'object') {
                 options.json = (function (s) {
                     var t = {};
                     Object.keys(s).sort().forEach(function (k) {
@@ -238,7 +251,7 @@
             /* Template from cache */
             if (Cache.template(template)) {
 
-                D.log(['Render.renderTMPL:', template, 'TMPL from Cache', options.init.template], 'render');
+                D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from Cache', options.init.template], 'render');
                 if (!partial)
                     options.template = Cache.template(template);
 
@@ -260,28 +273,24 @@
 
                         200: function (data) {
 
-                            D.log(['Render.renderTMPL:', template, 'TMPL from AJAX:', options.init.template], 'warn');
+                            D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from AJAX:', options.init.template], 'warn');
 
-                            if (0 && !$(data).not('empty').first().attr('class')) {
-                                throw("Format Template Error: " + template);
-                            } else {
+                            if (partial)
+                                Cache.template(template, data);
+                            else
+                                options.template = Cache.template(template, data);
 
-                                if (partial)
-                                    Cache.template(template, data);
-                                else
-                                    options.template = Cache.template(template, data);
+                            var partials = Cache.partials(template);
 
-                                var partials = Cache.partials(template);
-
-                                if (partials && partials.length) {
-                                    if (!options.partials)
-                                        options.partials = [];
-                                    for (var i = 0; i < partials.length; i++)
-                                        options.partials.push(partials[i]);
-                                }
-
-                                R.partialTMPL(options);
+                            if (partials && partials.length) {
+                                if (!options.partials)
+                                    options.partials = [];
+                                for (var i = 0; i < partials.length; i++)
+                                    options.partials.push(partials[i]);
                             }
+
+                            R.partialTMPL(options);
+
 
                         },
 
@@ -342,9 +351,11 @@
                             DOM.hide(node.parentNode.children);
                         }
 
-                        node.parentNode.replaceChild(render, node);
-                        DOM.show(node);
-                        console.log('replaceChild');
+                        if(node.parentNode) {
+                            node.parentNode.replaceChild(render, node);
+                            DOM.show(node);
+                            console.log('replaceChild');
+                        }
 
                     } else {
 

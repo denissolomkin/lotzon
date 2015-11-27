@@ -1,0 +1,72 @@
+@media (max-width: 479px) {
+	#communication {
+		& .comment-content {
+    		padding-left: 0;
+		}
+
+		& .comment-top {
+		    position: relative;
+		    display: block;
+		    height: 50px;
+		    margin-bottom: 10px;
+		}
+	
+		& .comment-img {
+	    	top: 0;
+		}	
+		& .comment-inf {
+		    display: block;
+		    max-width: 80%;
+		    padding-left: 70px;
+		    position: relative;
+		    top: 50%;
+		    transform: translateY(-50%);
+		}	
+		& .comment-like {
+	    	top: 18px;
+		}
+		& .c-notifications-list {
+			& .c-notification-date {
+				margin-left: 0;
+			}
+		}
+		& .render-list-form .message-form-wrapper {
+	    	padding-left: 0;
+	    }
+	    & .comment .message-form {
+	    	margin: 0 -20px;
+		}
+	}
+}
+
+#communication {
+  	& .content-box-tab 	{
+  		padding: 0 20px 0 30px;
+  		& span {
+    		display: none;
+  		}
+	}
+	// & .content-box-tab {
+	// 	&:before {
+	// 	    content: "";
+	// 	    display: inline-block;
+	// 	    vertical-align: top;
+	// 	    position: relative;
+	// 	    background-image: url(img/sprite.png);
+	//     }
+ //  	}
+
+ //  	& .communication-comments-tab {
+ //  		&:before {
+	// 	    width: 31px;
+	// 	    height: 32px;
+	// 	    top: 9px;
+	// 	    background-position: -347px -130px;
+	//     }
+ //  	}
+
+  	& .communication-messages-tab {
+		padding: 0 20px;
+  	}
+  	
+}

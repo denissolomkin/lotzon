@@ -25,6 +25,16 @@
   left: 10px;
   background: url(img/sprite.png) -227px 0;
 }
+@font-face {
+  font-family: 'fontello';
+  src: url('fonts/fontello/fontello.eot?59386181');
+  src: url('fonts/fontello/fontello.eot?59386181#iefix') format('embedded-opentype'),
+    url('fonts/fontello/fontello.woff?59386181') format('woff'),
+    url('fonts/fontello/fontello.ttf?59386181') format('truetype'),
+    url('fonts/fontello/fontello.svg?59386181#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @font-face {
   font-family: handbookpro-regular;
@@ -32,50 +42,24 @@
   url(../css/fonts/pfhandbookpro-regular-webfont.eot) format('eot'), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format('svg');
 }
 
-
-// @font-face {
-//   font-family: handbookpro-italic;
-//   src: url(../css/fonts/handbookItalic/pfhandbookpro-italic-webfont.woff) format('woff'), url(../css/fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf)  format('truetype'),
-//   url(../css/fonts/handbookItalic/pfhandbookpro-italic-webfont.eot) format('eot'), url(../css/fonts/handbookItalic/pfhandbookpro-italic-webfont.svg) format('svg');
-// }
-
-
-// @font-face {
-//   font-family: Handbook-bold;
-//   src: url(../css/fonts/handbookBold/pfhandbookpro-bold-webfont.woff) format('woff'), url(../css/fonts/handbookBold/pfhandbookpro-bold-webfont.ttf)  format('truetype'),
-//   url(../css/fonts/handbookBold/pfhandbookpro-bold-webfont.eot) format('eot'), url(../css/fonts/handbookBold/pfhandbookpro-bold-webfont.svg) format('svg');
-// }
-
-
-// @font-face {
-//     font-family: 'Handbook-regular';
-//     src: url('fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.eot');
-//     src: url('fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
-//     url('fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.woff') format('woff'),
-//     url('fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.ttf') format('truetype'),
-//     url('fonts/PFHandbookPro-Regular/pfhandbookpro-regular-webfont.svg#Handbook-regular') format('svg');
-//     font-weight: normal;
-//     font-style: normal;
-// }
-
 @font-face {
-    font-family: 'Handbook-bold';
-    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot');
-    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
+  font-family: 'Handbook-bold';
+  src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot');
+  src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
     url('fonts/handbookBold/pfhandbookpro-bold-webfont.woff') format('woff'),
     url('fonts/handbookBold/pfhandbookpro-bold-webfont.ttf') format('truetype'),
     url('fonts/handbookBold/pfhandbookpro-bold-webfont.svg#Handbook-bold') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
     font-family: 'Handbook-medium';
     src: url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot');
     src: url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot?#iefix') format('embedded-opentype'),
-    url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.woff') format('woff'),
-    url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.ttf') format('truetype'),
-    url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.svg#Handbook-medium') format('svg');
+      url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.woff') format('woff'),
+      url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.ttf') format('truetype'),
+      url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.svg#Handbook-medium') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -84,9 +68,9 @@
     font-family: 'Handbook-italic';
     src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot');
     src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot?#iefix') format('embedded-opentype'),
-    url('fonts/handbookItalic/pfhandbookpro-italic-webfont.woff') format('woff'),
-    url('fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf') format('truetype'),
-    url('fonts/handbookItalic/pfhandbookpro-italic-webfont.svg#Handbook-italic') format('svg');
+      url('fonts/handbookItalic/pfhandbookpro-italic-webfont.woff') format('woff'),
+      url('fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf') format('truetype'),
+      url('fonts/handbookItalic/pfhandbookpro-italic-webfont.svg#Handbook-italic') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -566,3 +550,50 @@ header .owl-theme .owl-controls .owl-page span {
     margin-top: 105px; 
   }  
 }
+// ------------ICONS----------- //
+[class^="i-"]:before, [class*=" i-"]:before {
+  font-family: "fontello";
+  display: inline-block;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+}
+.i-play:before { content: '\e800'; } /* '' */
+.i-plus:before { content: '\e801'; } /* '' */
+.i-star:before { content: '\e802'; } /* '' */
+.i-refresh:before { content: '\e803'; } /* '' */
+.i-purse:before { content: '\e804'; } /* '' */
+.i-vk-black:before { content: '\e805'; } /* '' */
+.i-arrow-down:before { content: '\e806'; } /* '' */
+.i-arrow-left:before { content: '\e807'; } /* '' */
+.i-arrow-right:before { content: '\e808'; } /* '' */
+.i-arrow-top:before { content: '\e809'; } /* '' */
+.i-person:before { content: '\e80a'; } /* '' */
+.i-ok-black:before { content: '\e80b'; } /* '' */
+.i-picture:before { content: '\e80c'; } /* '' */
+.i-menu:before { content: '\e80d'; } /* '' */
+.i-hart:before { content: '\e80e'; } /* '' */
+.i-msg {
+  font-size: 26px;
+  &:before { 
+    content: '\e80f'; font-size: 26px;
+  } /* '' */
+}
+.i-person2:before { content: '\e810'; } /* '' */
+.i-msg2   {
+  font-size: 24px;
+  &:before { 
+    content: '\e811'; font-size: 24px;
+  } /* '' */  
+}
+.i-fb:before { content: '\e812'; } /* '' */
+.i-vk:before { content: '\e813'; } /* '' */
+.i-ok:before { content: '\e814'; } /* '' */
+.i-tw:before { content: '\e815'; } /* '' */
+.i-tw-black:before { content: '\e816'; } /* '' */
+.i-fb-black:before { content: '\e817'; } /* '' */
+.i-lotzon:before { content: '\e818'; } /* '' */

@@ -1,0 +1,9 @@
+<div id="users-{{#if (like (player 'id') user.id)}}{{recipient_id}}{{else}}{{user.id}}{{/if}}-messages-{{id}}" class="message">
+        <div class="message-img">
+            <img src="{{avatar user.img user.id}}" alt="">
+        </div>
+        <div class="message-name">{{user.name}}</div>
+        <div class="message-text">
+            {{{text}}}
+        </div>
+</div>

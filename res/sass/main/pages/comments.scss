@@ -123,13 +123,14 @@
   position: relative;
   & .title {
     padding: 6px 10px;
-    background: #f2f8f8;
+    background: #fafafa;
     position: relative;
-    font-size: 14px;
   }
 }
 
 .c-show-notifications {
+  margin-left: 15px;
+  color: #4a90e2;
   text-decoration: underline;
   cursor: pointer;
   &:hover {
@@ -157,22 +158,27 @@
   left: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   background: white;
-  padding: 45px 0 10px;
+  padding: 40px 0 10px;
   z-index: 2;
   & .close-list {
     position: absolute;
     top: 8px;
     right: 10px;
+    font-family: 'Handbook-bold';
+
+  }
+  & .c-notification-date {
+    margin-left: 20px;
   }
 }
 
 .c-notification {
   position: relative;
-  font-size: 14px;
+  font-size: 15px;
   margin-bottom: 5px;
   padding: 5px 10px;
   &:hover {
-    background: #f2f8f8;
+    background: #fafafa;
   }
 }
 
@@ -184,7 +190,7 @@
   border-radius: 50%;
   position: absolute;
   top: 8px;
-  right: 10px;
+  right: 15px;
   z-index: 3;
 }
 
@@ -213,8 +219,6 @@
 }
 
 .c-notification-date {
-  font-size: 13px;
-  color: #5a5a5a;
   white-space: nowrap;
   & span:first-child {
     margin-right: 5px;
@@ -239,36 +243,8 @@
 
   // ---------------------------- //
 
-.cm-top {
-  width: 100%;
-  position: absolute;
-  top: 20px;
-  left: 0;
-  padding: 0 10px;
-  & a {
-    display: block;
-    color: black;
-    font-size: 14px;
-  }
-  & .new-message {
-    float: left;
-    border: 1px solid black;
-    border-radius: 2px;
-    text-decoration: none;
-    text-align: center;
-    padding: 5px 22px;
-  }
-  & .write-admin {
-    float: right;
-    line-height: 30px;
-    text-decoration: underline;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-}
 
-  // ---------------------------- //
+
 
 .message {
   padding: 15px 10px 15px 0;
@@ -331,3 +307,6 @@
   padding-top: 40px;
 }
 
+.comment-description, .message-form-area {
+  line-height: 1.5;
+}

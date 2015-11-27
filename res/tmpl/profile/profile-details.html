@@ -1,5 +1,5 @@
-<div class="content-box profile-details">
-    <div class="content-box-header back">Контактные данные</div>
+<div id="profile-details" class="content-box">
+    <div class="content-box-header back">{{i18n "title-profile-details"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-account">
@@ -8,16 +8,16 @@
                 <div class="c-user-inf-wrapper clearfix">
                     <div class="c-user-inf">
                         <div class="c-user-img">
-                            <img src="/res/img/user_img.jpg" alt="">
+                            <img src="{{avatar}}" alt="">
 
-                            <div class="c-user-nickname">Zachary Stewart</div>
+                            <div class="c-user-nickname">{{title.nickname}}</div>
                         </div>
                         <div class="c-social">
-                            <div class="c-social-inf">Привязаные соцсети<span>3/6</span></div>
+                            <div class="c-social-inf">{{i18n "title-profile-socials"}}</div>
                             <div class="c-social-icons clearfix">
-                                <a href="#" class="c-social-item soc-1"></a>
-                                <a href="#" class="c-social-item soc-2"></a>
-                                <a href="#" class="c-social-item soc-3"></a>
+                                {{#each social}}
+                                <a href="{{social @key .}}" class="c-social-item soc-{{@key}}"></a>
+                                {{/each}}
                             </div>
                         </div>
                     </div>
@@ -25,80 +25,52 @@
                     <div class="c-user-personal-inf clearfix">
                         <table>
                             <tr>
-                                <td>Имя</td>
-                                <td>Дмитрий</td>
+                                <td>{{i18n "title-profile-name"}}</td>
+                                <td>{{ title.name }}</td>
                             </tr>
                             <tr>
-                                <td>Фамилия</td>
-                                <td>Сидоров</td>
+                                <td>{{i18n "title-profile-surname"}}</td>
+                                <td>{{ title.surname }}</td>
                             </tr>
                             <tr>
-                                <td>Отчество</td>
-                                <td>Анатолиевич</td>
+                                <td>{{i18n "title-profile-patronymic"}}</td>
+                                <td>{{ title.patronymic }}</td>
                             </tr>
                             <tr>
-                                <td>Дата рождения</td>
-                                <td>31.12.1983</td>
+                                <td>{{i18n "title-profile-birthday"}}</td>
+                                <td>{{day birthday }}</td>
                             </tr>
                             <tr>
-                                <td>Страна</td>
-                                <td>Украина</td>
+                                <td>{{i18n "title-profile-country"}}</td>
+                                <td>{{ location.country }}</td>
                             </tr>
                             <tr>
-                                <td>Город/Село</td>
-                                <td>Киев</td>
+                                <td>{{i18n "title-profile-city"}}</td>
+                                <td>{{ location.city }}</td>
                             </tr>
                             <tr>
-                                <td>Адрес</td>
-                                <td>Горького 14А кв. 88</td>
+                                <td>{{i18n "title-profile-address"}}</td>
+                                <td>{{ location.address }}</td>
                             </tr>
+
                             <tr class="c-favorite-combination">
-                                <td>Любимая комбинация</td>
+                                <td>{{i18n "title-profile-favorite"}}</td>
                                 <td>
-                                    <span>Любимая комбинация<br><br></span>
-                                    <span class="c-favorite-combination-item">3</span>
-                                    <span class="c-favorite-combination-item">12</span>
-                                    <span class="c-favorite-combination-item">24</span>
-                                    <span class="c-favorite-combination-item">29</span>
-                                    <span class="c-favorite-combination-item">36</span>
-                                    <span class="c-favorite-combination-item">47</span>
+                                    <span>{{i18n "title-profile-favorite"}}<br><br></span>
+
+                                    {{#each favorite}}
+                                    <span class="c-favorite-combination-item">{{.}}</span>
+                                    {{/each}}
+
                                 </td>
                             </tr>
                         </table>
-                        <a href="/profile/edit" class="personal-inf-edit-btn">Изменить данные</a>
+                        <a href="/profile/edit" class="personal-inf-edit-btn">{{i18n "button-profile-edit"}}</a>
                     </div>
                 </div>
 
-                <div class="c-play-inf">
-                    <div class="c-play-inf-win">Всего выиграно<span>246.96 руб / 58 900 баллов</span></div>
-                    <table>
-                        <tr>
-                            <td>Рызыгрышей</td>
-                            <td>167</td>
-                            <td>45.24 руб / 43 560 баллов</td>
-                        </tr>
-                        <tr>
-                            <td>Морской Бой</td>
-                            <td>56</td>
-                            <td>12 руб / 4 569 баллов</td>
-                        </tr>
-                        <tr>
-                            <td>Кто Больше</td>
-                            <td>34</td>
-                            <td>-12.28 руб / 198 баллов</td>
-                        </tr>
-                        <tr>
-                            <td>Пять в ряд</td>
-                            <td>458</td>
-                            <td>13.56 руб / 4 561 баллов</td>
-                        </tr>
-                        <tr>
-                            <td>Дурак</td>
-                            <td>217</td>
-                            <td>12 руб / 4 569 баллов</td>
-                        </tr>
-                    </table>
-                </div>
+                {{partial "users-view-statistics" .}}
+
             </div>
 
         </div>

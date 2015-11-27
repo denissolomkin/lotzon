@@ -96,6 +96,8 @@
             for (var mid in maskOpts.list) {
                 var mask = maskOpts.list[mid][maskOpts.listKey];
                 var pass = true;
+
+                if(mask)
                 for (var it=0, im=0; (it<mtxt.length && im<mask.length);) {
                     var chm = mask.charAt(im);
                     var cht = mtxt.charAt(it);

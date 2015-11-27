@@ -1,29 +1,25 @@
 {
-    "status": 1,
-    "message": "OK",
-    "res":{
-        "items":[
+    "res":[
             {
                 "id": "1",
-                "img": "/res/img/user_img.jpg",
-                "title": "Ноутбук Asus X551MA",
+                "img": "user_img.jpg",
+                "name": "Вячеслав Калиткин",
                 "games": "50000",
                 "money": "0"
             },
             {
                 "id": "2",
-                "img": "/res/img/user_img.jpg",
-                "title": "Смартфон Lenovo X551MA",
+                "img": "user_img.jpg",
+                "name": "Николай Федоров",
                 "games": 10000,
                 "money": "5"
             },
             {
                 "id": "3",
-                "img": "/res/img/user_img.jpg",
-                "title": "Mp3-плеер Ipod X551MA",
+                "img": "user_img.jpg",
+                "name": "Лаврентий Феодосович",
                 "games": "10000",
                 "money": null
             }
 	    ]
-	}
 }

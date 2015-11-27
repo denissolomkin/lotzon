@@ -133,6 +133,40 @@
   box-shadow: none;
   background: none; }
 
+@media (max-width: 479px) {
+  #communication .comment-content {
+    padding-left: 0; }
+  #communication .comment-top {
+    position: relative;
+    display: block;
+    height: 50px;
+    margin-bottom: 10px; }
+  #communication .comment-img {
+    top: 0; }
+  #communication .comment-inf {
+    display: block;
+    max-width: 80%;
+    padding-left: 70px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+  #communication .comment-like {
+    top: 18px; }
+  #communication .c-notifications-list .c-notification-date {
+    margin-left: 0; }
+  #communication .render-list-form .message-form-wrapper {
+    padding-left: 0; }
+  #communication .comment .message-form {
+    margin: 0 -20px; } }
+
+#communication .content-box-tab {
+  padding: 0 20px 0 30px; }
+  #communication .content-box-tab span {
+    display: none; }
+
+#communication .communication-messages-tab {
+  padding: 0 20px; }
+
 @media all and (max-width: 450px) {
   .games-previews .flex-box {
     padding: 5px 10px; }
@@ -655,8 +689,6 @@
     padding: 0 91px 0 20px; }
   .communication .content-box-tab.back-tab:before {
     display: block; }
-  #communication .content-box-tab .count {
-    margin-left: 6px; }
   .comment-content {
     padding-left: 70px; }
   .comment-img {
@@ -669,6 +701,8 @@
     padding-right: 60px; }
   .comment-name {
     margin-right: 20px; }
+  #communication .content-box-tab {
+    padding: 0 20px; }
   .comment.answer {
     margin-top: 20px;
     padding-left: 70px; }

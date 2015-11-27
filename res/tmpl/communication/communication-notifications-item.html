@@ -2,10 +2,10 @@
     <div class="close-notification"></div>
     <div class="c-notification-top">
         <div class="c-notification-img">
-            <img src="{{user.img}}" alt="">
+            <img src="{{avatar this.user.img this.user.id}}" alt="">
         </div>
         <div class="c-notificaion-inf">
-            <span class="c-notification-name">{{user.title}}</span>
+            <span class="c-notification-name">{{user.name}}</span>
             <span class="c-notification-date"><span>сегодня в</span><span>{{date}}</span></span>
             <div class="c-notification-question">на <span>{{theme}}</span></div>
         </div>

@@ -3,70 +3,12 @@
     <div class="content-box-header back">{{i18n "title-messages-new-message"}}</div>
 
     <div class="content-box-content clearfix">
-        <div class="content-box-item communication-new-message">
-            <form action="/communication/messages" method="post">
-                <div class="addressee">
-                    <input type="hidden" name="id" value="{{ id }}">
-                    {{#user}}
-                    <div class="nm-selected">
-                        <input type="hidden" class="required int" name="userid" value="{{ id }}">
-                        {{^messages}}
-                        <div class="nm-change">{{#i18n}}title-change-addressee{{/i18n}}</div>
-                        {{/messages}}
-                        <div class="nm-friend">
-                            <div class="nm-friend-img">
-                                <img src="{{ img }}" alt="">
-                            </div>
-                            <div class="nm-friend-name">{{ title }}</div>
-                        </div>
-                    </div>
-                    {{/user}}
+        <div class="content-box-item">
 
-                    <div class="nm-search">
-                        {{^user}}
-                        <input type="text" name="" placeholder="Введите имя друга" class="enter-friend-name">
-                        {{/user}}
+            {{partial "communication-messages-new-user" null}}
+            {{partial "communication-messages-new-users" null}}
+            {{partial "users-view-messages-replyform" null}}
 
-                        <div class="nm-search-result-box">
-                            <div class="nm-search-results">
-                                {{#users}}
-                                <div class="nm-friend" data-userid="{{ id }}">
-                                    <div class="nm-friend-img">
-                                        <img src="{{ img }}" alt="">
-                                    </div>
-                                    <div class="nm-friend-name">{{ title }}</div>
-                                </div>
-                                {{/users}}
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="nm-messages">
-                        {{#messages}}
-                        <div class="nm-message">
-                            {{ text }}
-                        </div>
-                        {{/messages}}
-                    </div>
-
-                </div>
-
-                <div class="message-form-wrapper">
-                    <div class="message-form">
-                            <textarea class="message-form-area" name="message" placeholder="Напишите комментарий"rows="1"></textarea>
-                            <div class="message-form-actions clearfix">
-                                <label class="input-file-wrapper">
-                                    <input type="file" class="input-file">
-                                </label>
-                                <button type="submit" class="message-form-btn">{{i18n "button-send"}}</button>
-                                <div class="message-form-smileys"></div>
-                            </div>
-                    </div>
-                </div>
-
-                <div class="nm-sended-msg">Сообщение отправлено</div>
-            </form>
         </div>
     </div>
 

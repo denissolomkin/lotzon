@@ -102,8 +102,34 @@ $(function () {
 
         'cache': function () {
 
-
         },
+
+        'social': function (network, id) {
+
+            var href = '';
+
+            switch (network){
+                case "Facebook":
+                    href = ""
+                    break;
+                case "Google":
+                    href = ""
+                    break;
+                case "Twitter":
+                    href = ""
+                    break;
+                case "Vkontakte":
+                    href = ""
+                    break;
+                case "Odnoklassniki":
+                    href = ""
+                    break;
+
+            }
+
+            return href+'/'+id;
+        },
+
 
         'i18n': function () {
             return Cache.i18n(arguments);
@@ -123,6 +149,9 @@ $(function () {
         },
         'eq': function (v1, v2) {
             return v1 === v2;
+        },
+        'like': function (v1, v2) {
+            return v1 == v2;
         },
         'ne': function (v1, v2) {
             return v1 !== v2;

@@ -1,0 +1,23 @@
+<div id="communication-messages-new-users">
+
+    {{#if .}}
+    <div class="nm-search">
+        <div class="nm-search-result-box">
+            <div class="nm-search-results">
+                {{#each .}}
+                <div class="nm-friend"
+                     data-user-id="{{ id }}"
+                     data-user-img="{{ img }}"
+                     data-user-name="{{ name }}">
+                    <div class="nm-friend-img">
+                        <img src="{{avatar img id}}" alt="">
+                    </div>
+                    <div class="nm-friend-name">{{ name }}</div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+</div>

@@ -1,64 +1,119 @@
 // COMMUNICATION ---------------------------------------- //
 
 #communication {
+  font-family: 'handbookpro-regular';
+  font-size: 15px;
 
-  .content-box-tab {
+  & .content-box-tab {
     padding: 0 20px;
     position: relative;
   }
 
-  .content-box-tab span {
-    display: none;
-  }
 
-  .content-box-tab:before {
-    content: "";
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-    background-image: url(img/sprite.png);
-  }
 
-  .content-box-tab.back-tab {
+  & .content-box-tab.back-tab {
     padding: 0 20px 0 10px;
   }
-
-  .communication-comments-tab:before {
-    width: 31px;
-    height: 32px;
-    top: 9px;
-    background-position: -347px -130px;
+  .content-box-header {
+    background: #a8d1d5;
   }
 
-  .communication-messages-tab:before {
-    width: 32px;
-    height: 24px;
-    top: 13px;
-    background-position: -290px -130px;
-  }
 
-  .content-box-tab .count {
+  & .content-box-tab .count {
     display: inline-block;
     text-align: center;
-    color: #ffe700;
-    background: #4a4a4a;
-    border-radius: 20px;
-    height: 20px;
-    line-height: 20px;
-    padding: 0 7px;
+    color: #e6faff;
+    background: #ff2a46;
+    border-radius: 0;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 4px;
     font-weight: normal;
     text-shadow: none;
     font-size: 14px;
-    margin-left: 15px;
+    margin-left: 17px;
     vertical-align: baseline;
+    position: absolute;
+    top: 3px;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 #FF2A46;
   }
 
-  .content-box-tab {
+  & .content-box-tab.active {
+    background: #4a4a4a;
+    cursor: default;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px rgb(74, 74, 74);
+  }
+
+  & .content-box-tab {
     padding: 0 15px;
+  }
+  & .message-form-smileys {
+    margin-left: 20px;
+    top: -1px;
+  }
+  & .message-form-wrapper button[type="submit"] {
+    float: right;
+    border: none;
+    font-size: 13px;
+    background: none;
+    color: #4a90e2;
+    cursor: pointer;
+    font-family: Handbook-bold;
+  }
+     
+  & hr {
+    margin: 5px -20px 5px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3;
+  }
+  .content-box-item {
+    padding: 0 20px 30px;
+  }
+  & .render-list-form {
+    & .message-form-wrapper {
+      padding-left: 70px;
+      margin-top: -10px;
+      padding-top: 0;
+      & .message-form {
+        background: #fafafa;
+        padding: 10px 20px 0;
+      }
+      hr {
+      display: none;
+      }
+    }
+  } 
+  .comment-content {
+    margin-bottom: 20px;
+    padding-left: 70px;
+  }
+  .modal-message {
+    background: #fff;
+    bottom: -5px;
+    height: auto;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    & div {
+      margin: 0 auto;
+      text-align: center;
+      transform: translate(0, -50%);
+      position: absolute;
+      left: auto;
+      text-transform: uppercase;
+      font-size: 17px;
+      top: 50%;
+    }
   }
 }
 
-
+#communication-notifications-list {
+  & .c-notification  {
+    padding: 7px 15px 7px 10px;
+  }
+}
 .nm-search {
   position: relative;
   max-width: 354px;
@@ -177,3 +232,57 @@
   font-size: 20px;
   text-align: center;
 }
+
+#communication-messages {
+  & .cm-top {
+    width: 100%;
+    position: absolute;
+    top: -8px;
+    left: 0;
+    padding: 0 10px;
+    height: 68px;
+    & a {
+      display: block;
+      color: black;
+      font-size: 14px;
+    }
+    & .new-message {
+      float: left;
+      border: 1px solid black;
+      text-decoration: none;
+      text-align: center;
+      text-transform: uppercase;
+      position: relative;
+      @include translate(0, -52%);
+      top: 50%;
+      font-size: 13px;
+    }
+    & .write-admin {
+      float: right;
+      border: none;
+      font-size: 13px;
+      background: none;
+      color: #4a90e2;
+      cursor: pointer;
+      font-family: Handbook-bold;
+      text-transform: uppercase;
+      position: relative;
+      transform: translateY(-50%);
+      top: 50%;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    hr {
+      clear: both;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+
+  // ---------------------------- //

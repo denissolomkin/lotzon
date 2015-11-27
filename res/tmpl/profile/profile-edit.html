@@ -1,29 +1,21 @@
-<div class="content-box profile-edit">
-    <div class="content-box-header back">Редактирование профиля</div>
+<div id="profile-edit" class="content-box">
+    <div class="content-box-header back">{{i18n "title-profile-edit"}}</div>
 
     <div class="content-box-content clearfix">
-        <div class="content-box-item cabinet-account-edit">
+        <div class="content-box-item">
 
             <div class="ae-top clearfix">
                 <div class="ae-user-img">
-                    <img src="/res/img/user_img.jpg" alt="">
+                    <img src="{{avatar}}" alt="">
                 </div>
 
                 <div class="ae-inf">
-                    <p>
-                        Вводите только свои актуальные данные.<br>
-                        Неправильные или неполные данные могут негативно отразится при обработке запроса на вывод
-                        выигрыша.
-                    </p>
-
-                    <p>
-                        Привязывайте только реальные страницы соцсетей, это даст Вам ряд дополнительных возможностей.
-                    </p>
+                    {{i18n "message-input-correct-data"}}
                 </div>
             </div>
 
             <div class="ae-personal-inf">
-                <form action="">
+                <form action="/profile/edit" method="put">
 
                     <ul class="ae-personal-form">
                         <li class="ae-personal-form-names">
@@ -40,82 +32,34 @@
                         </li>
                         <li class="ae-personal-form-values">
                             <ul>
-                                <li><input type="text" value="Qwerty" class="error"><span class="error-msg">Никнейм уже занят</span>
+                                <li><input type="text" value="{{title.nickname}}" class="error">
+                                    <span class="error-msg">Никнейм уже занят</span>
                                 </li>
-                                <li><input type="text" value="Дмитрий"></li>
-                                <li><input type="text" value="Сидоров"></li>
-                                <li><input type="text" value="Анатолиевич"></li>
-                                <li><input type="text" value="31.12.1983"></li>
-                                <li><input type="text" value="Украина"></li>
-                                <li><input type="text" value="Киев"></li>
-                                <li><input type="text" value="ул. Горького 14А"></li>
+                                <li><input type="text" value="{{title.name}}"></li>
+                                <li><input type="text" value="{{title.surname}}"></li>
+                                <li><input type="text" value="{{title.patronymic}}"></li>
+                                <li><input type="text" value="{{day birthday}}"></li>
+                                <li><input type="text" value="{{location.country}}"></li>
+                                <li><input type="text" value="{{location.city}}"></li>
+                                <li><input type="text" value="{{location.address}}"></li>
                             </ul>
                         </li>
                     </ul>
 
                     <div class="ae-combination clearfix">
-                        <div class="title">Любимая комбинация</div>
+                        <div class="title">{{i18n "title-profile-favorite"}}</div>
 
                         <div class="ae-favorite-combination">
                             <ul class="ae-combination-box clearfix">
-                                <li>1</li>
-                                <li>2</li>
-                                <li>3</li>
-                                <li>4</li>
-                                <li class="selected">5</li>
-                                <li>6</li>
-                                <li>7</li>
-                                <li>8</li>
-                                <li>9</li>
-                                <li class="selected">10</li>
-                                <li>11</li>
-                                <li>12</li>
-                                <li>13</li>
-                                <li>14</li>
-                                <li class="selected">15</li>
-                                <li>16</li>
-                                <li>17</li>
-                                <li>18</li>
-                                <li>19</li>
-                                <li class="selected">20</li>
-                                <li>21</li>
-                                <li>22</li>
-                                <li>23</li>
-                                <li>24</li>
-                                <li class="selected">25</li>
-                                <li>26</li>
-                                <li>27</li>
-                                <li>28</li>
-                                <li>29</li>
-                                <li class="selected">30</li>
-                                <li>31</li>
-                                <li>32</li>
-                                <li>33</li>
-                                <li>34</li>
-                                <li>35</li>
-                                <li>36</li>
-                                <li>37</li>
-                                <li>38</li>
-                                <li>39</li>
-                                <li>40</li>
-                                <li>41</li>
-                                <li>42</li>
-                                <li>43</li>
-                                <li>44</li>
-                                <li>45</li>
-                                <li>46</li>
-                                <li>47</li>
-                                <li>48</li>
-                                <li>49</li>
+                                {{#each (player "renderFavorite")}}
+                                    <li{{#if (true .)}} class="selected"{{/if}}>{{@key}}</li>
+                                {{/each}}
                             </ul>
 
                             <ul class="ae-current-combination clearfix">
-                                <li>5</li>
-                                <li>10</li>
-                                <li>15</li>
-                                <li>20</li>
-                                <li>25</li>
-                                <li>30</li>
+                                {{#each favorite}}
+                                <li>{{.}}</li>
+                                {{/each}}
                             </ul>
                         </div>
                     </div>
@@ -140,10 +84,12 @@
                         </div>
                     </div>
 
-                    <button class="ae-save-btn">Сохранить</button>
+                    <button type="submit" class="ae-save-btn">{{i18n "button-save"}}</button>
                 </form>
             </div>
 
-        </div><!-- .content-box-item -->
-    </div><!-- .content-box-content -->
+        </div>
+        <!-- .content-box-item -->
+    </div>
+    <!-- .content-box-content -->
 </div><!-- .content-box -->

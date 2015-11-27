@@ -19,7 +19,7 @@
             }
         },
 
-        showNotifications:function(){
+        showNotifications: function () {
             $(I.notificationsList).slideDown('fast');
         },
 
@@ -29,18 +29,17 @@
 
                 var form = this;
 
-                if(form.elements['comment_id'].value){
-                    setTimeout(function(){
-                        form.parentNode.removeChild(form);
-                    }, Form.getTimeout());
-                } else {
-                    form.getElementsByClassName('message-form-area')[0].innerHTML = '';
+                if (form.elements['comment_id'].value) {
+                    setTimeout(function () {
+                        if (form.parentNode)
+                            form.parentNode.removeChild(form);
+                    }, form.getElementsByClassName('modal-message').length ? Form.getTimeout() : 0);
                 }
             },
 
             replyForm: function (options) {
 
-                if(!DOM.onScreen(options.rendered))
+                if (!DOM.onScreen(options.rendered))
                     DOM.scroll(options.rendered);
 
                 DOM.cursor('.message-form-area', options.rendered);
@@ -58,15 +57,21 @@
 
             replyForm: function () {
 
-                var json = {
-                        'user': {
-                            "name": this.getAttribute("data-user-name"),
-                            'id': this.getAttribute("data-user-id")
-                        },
-                        'comment': this.getAttribute("data-comment-id"),
-                        'post': this.getAttribute('data-post-id')
-                    },
+                var comment = this.parentNode,
                     node = this.parentNode;
+
+                // up to first comment-content block
+                while (!comment.classList.contains('comment-content'))
+                    comment = comment.parentNode;
+
+                json = {
+                    'user': {
+                        "name": comment.getAttribute("data-user-name"),
+                        'id': comment.getAttribute("data-user-id")
+                    },
+                    'comment_id': comment.getAttribute("data-comment-id"),
+                    'post_id': comment.getAttribute('data-post-id')
+                };
 
                 // up to comment block
                 while (!node.classList.contains('comment') || node.classList.contains('answer'))
@@ -85,7 +90,7 @@
 
                 // push new form
                 R.push({
-                    href: (json.post ? 'blog-post-view' : 'communication' ) + '-comments-replyform',
+                    href: (json.post_id ? 'blog-post-view' : 'communication' ) + '-comments-replyform',
                     json: json,
                     node: node
                 });

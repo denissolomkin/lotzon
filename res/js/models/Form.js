@@ -63,10 +63,15 @@
 
                 var button = this,
                     form = button.form,
-                    formData = $(form).serializeObject(),
                     formMethod = form.getAttribute('method'),
                     formUrl = U.generate(form.action, formMethod),
-                    formCallback = U.parse(U.parse(form.action), 'tmpl');
+                    formCallback = U.parse(U.parse(form.action), 'tmpl'),
+                    formData = $(form).serializeObject(),
+                    formContenteditable = form.querySelectorAll("div[contenteditable='true']");
+
+                for(var i = 0; i<formContenteditable.length;i++){
+                    formData[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
+                }
 
                 event.preventDefault();
                 event.stopPropagation();
@@ -91,6 +96,12 @@
 
                                 200: function (data) {
 
+                                    if ('responseText' in data) {
+
+                                        D.error('SERVER RESPONSE ERROR');
+
+                                    } else {
+
                                     Form.stop.call(button)
                                         .message.call(form, data.message);
 
@@ -102,6 +113,8 @@
                                     console.log(data.res);
                                     Cache.update(data.res);
 
+                                    }
+
                                 },
 
                                 201: function (data) {
@@ -110,6 +123,10 @@
 
                                 204: function (data) {
                                     throw (data.message);
+                                },
+
+                                405: function () {
+                                    D.error('METHOD NOT ALLOWED');
                                 }
                             }
                         })
@@ -125,17 +142,29 @@
                 filter = true,
                 $form = $(this).closest('form');
 
-            switch (type) {
-                case 'text':
-                    filter = $(this).val() === '' || ($(this).hasClass('float') && parseFloat($(this).val()) <= 0) || ($(this).hasClass('int') && parseInt($(this).val()) <= 0);
-                    break;
-                case 'radio':
-                    filter = $('[name="' + name + '"]', $form).filter(':checked').length !== 1
-                    break;
-                case 'checkbox':
-                    filter = $('[name="' + name + '"]', $form).filter(':checked').length === 0
+            switch (this.tagName){
+
+                case 'INPUT':
+
+                    switch (type) {
+                        case 'text':
+                        case 'hidden':
+                            filter = $(this).val() === '' || ($(this).hasClass('float') && parseFloat($(this).val()) <= 0) || ($(this).hasClass('int') && parseInt($(this).val()) <= 0);
+                            break;
+                        case 'radio':
+                            filter = $('[name="' + name + '"]', $form).filter(':checked').length !== 1
+                            break;
+                        case 'checkbox':
+                            filter = $('[name="' + name + '"]', $form).filter(':checked').length === 0
+                            break;
+
+                    }
+
                     break;
 
+                case 'DIV':
+                    filter = this.innerHTML === '';
+                    break;
             }
 
             return filter;
@@ -169,8 +198,14 @@
 
         message: function (message) {
 
-            var form = this;
+            var form = this,
+                formContenteditable = form.querySelectorAll("div[contenteditable='true']");
+
             form.reset();
+
+            for(var i = 0; i<formContenteditable.length;i++){
+                formContenteditable[i].innerHTML = '';
+            }
 
             if (!message)
                 return Form;

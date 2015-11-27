@@ -1,8 +1,8 @@
 ﻿<div id="communication-comments" class="content-box-item clearfix">
 
-    {{partial 'communication-notifications' this}}
     {{partial 'communication-comments-replyform' this}}
-
+    {{partial 'communication-notifications' this}}
+    
     <form action="/communication/comments/list" method="get" class="render-list-form">
 
         <div class="render-list" id="communication-comments-list">

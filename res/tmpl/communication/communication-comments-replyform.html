@@ -3,7 +3,7 @@
     <div class="message-form-wrapper">
         <div class="message-form">
             <input type="hidden" name="user_id" value="{{user.id}}">
-            <input type="hidden" name="comment_id" value="{{comment}}">
+            <input type="hidden" name="comment_id" value="{{comment_id}}">
 
             <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">{{#if user.name}}{{user.name}},&nbsp;{{/if}}</div>
 
@@ -12,7 +12,7 @@
                     <input type="file" class="input-file">
                 </label>
             <div class="clearfix">  
-                <button type="submit" class="btn-flat">{{i18n "button-send"}}</button>
+                <button type="submit">{{i18n "button-send"}}</button>
                 <div class="message-form-smileys"></div>
             </div>      
             <hr>

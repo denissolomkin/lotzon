@@ -1,9 +1,11 @@
 ﻿<div id="communication-messages-{{id}}" class="message">
-    <div class="message-img">
-        <img src="{{img}}" alt="">
-    </div>
-    <div class="message-name">{{title}}</div>
-    <div class="message-text">
-        {{text}}
-    </div>
+    <a href="/users/{{user.id}}/messages">
+        <div class="message-img">
+            <img src="{{avatar user.img user.id}}" alt="">
+        </div>
+        <div class="message-name">{{user.name}}</div>
+        <div class="message-text">
+            {{{text}}}
+        </div>
+    </a>
 </div>

@@ -1,4 +1,7 @@
-<div class="comment-content">
+<div class="comment-content"
+     data-user-name="{{this.user.name}}"
+     data-user-id="{{this.user.id}}"
+     data-comment-id="{{or comment_id id}}">
     <div class="comment-top">
         <div class="comment-img">
             <img src="{{avatar this.user.img this.user.id}}" alt="">
@@ -8,16 +11,15 @@
             <span class="comment-date"><span>{{from this.date}}</span></span>
                 <span class="comment-reply">
                     <span class="separator">|</span>
-                    <span data-user-name="{{this.user.name}}"
-                          data-user-id="{{this.user.id}}"
-                          data-comment-id="{{#if this.comment_id}}{{this.comment_id}}{{else}}{{this.id}}{{/if}}"
-                          class="comment-reply-btn">{{i18n "button-answer"}}</span>
+                    <span class="comment-reply-btn">{{i18n "button-answer"}}</span>
                     <span class="comment-like-mob"></span>
                 </span>
         </div>
     </div>
     <div class="comment-like">{{likes}}</div>
     <div class="comment-description">
+        <div class="comment-reply-btn">
+        </div>
         {{this.text}}
     </div>
 </div>

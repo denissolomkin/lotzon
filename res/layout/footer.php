@@ -106,9 +106,14 @@
         },
 
         player = {
-            "id": 3628,
-            "lang": "RU",
-            "timezone": -3,
+            "id": 37,
+            "img": "user_img.jpg",
+            "title": {
+                "name": "Сергей",
+                "surname": "Шевченко",
+                "patronymic": "Иванович",
+                "nickname": "Участник 3628"
+            },
             "language": {
                 "current": "RU",
                 "available": {
@@ -117,24 +122,18 @@
                     "UA": "Украiнська"
                 }
             },
+            "birthday": 151415167,
             "count": {
                 "notifications": 4,
                 "messages": 100,
                 "chronicle": 2,
                 "requests": 11
             },
-            "img": "user_img.jpg",
-            "favorite": [],
-            "title": {
-                "name": "Сергей",
-                "surname": "Шевченко",
-                "patronymic": "Иванович",
-                "nickname": "Участник 3628"
-            },
+            "favorite": [1,null,null,null,5,null],
             "location": {
                 "country": "UA",
                 "city": "Kyiv",
-                "home": "Obolonska, 29"
+                "address": "Obolonska, 29"
             },
             "balance": {
                 "points": 100,
