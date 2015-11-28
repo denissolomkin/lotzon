@@ -1,12 +1,21 @@
 <div id="users-search" class="content-box-item c-search">
 
-    <div class="content-box-item-top">
-        <div class="friends-search">
-            <input type="text" class="friends-search-input" placeholder="Поиск">
-            <input type="text" class="friends-search-input" placeholder="Поиск по городу">
+    <form action="/users/search/list" method="get" class="render-list-form">
+
+        <div class="content-box-item-top">
+            <div class="friends-search">
+                <input type="text" class="friends-search-input" placeholder="Поиск">
+                <input type="text" class="friends-search-input" placeholder="Поиск по городу">
+            </div>
         </div>
-    </div>
+
+        <div class="container-center">
+            <button name="submit" type="submit" class="infinite-scrolling btn-flat">{{i18n "button-load-more"}}</button>
+        </div>
+
+    </form>
 
     {{partial 'users-search-container'}}
+
 
 </div>
