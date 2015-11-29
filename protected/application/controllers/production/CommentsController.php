@@ -155,7 +155,55 @@ class CommentsController extends \AjaxController
                             "like" => array(
                                 "id" => $commentId,
                                 "likes" => CommentsModel::instance()->getLikes($commentId),
-                                "is_liked" => $is_liked
+                                "is_liked" => true
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($response,200);
+        return true;
+    }
+
+    public function dislikeAction($commentId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $comment = new Comment;
+        try {
+            $comment->setId($commentId)->fetch();
+        } catch (\EntityException $e) {
+            $this->ajaxResponseNotFound($e->getMessage());
+            return false;
+        }
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $is_liked = CommentsModel::instance()->isLiked($commentId, $playerId);
+
+        try {
+            if ($is_liked) {
+                CommentsModel::instance()->dislike($commentId, $playerId);
+            }
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $response = array(
+            "res" => array(
+                "communication" => array(
+                    "comments" => array(
+                        "$commentId" => array(
+                            "like" => array(
+                                "id" => $commentId,
+                                "likes" => CommentsModel::instance()->getLikes($commentId),
+                                "is_liked" => false
                             )
                         )
                     )
