@@ -1,24 +1,28 @@
 ﻿<div id="lottery-history-view-tickets" class="ghd-tickets">
 
     {{#if tickets}}
-    <table>
+
+    <ul>
         {{#tickets}}
-        <tr>
-            <td><span>{{i18n "title-ticket"}} </span>N°{{num}}</td>
-            {{#combination}}
-            <td>
-                <span class="ghd-ticket-number{{^win}} false{{/win}}">{{ball}}</span>
-            </td>
-            {{/combination}}
-            {{^combination}}
-            <td colspan="6">
-                не заполнен
-            </td>
-            {{/combination}}
-            <td>{{prize}} {{currency}}</td>
-        </tr>
+        <li class="clearfix">
+            <span>{{#if (eq num (lottery 'totalTickets'))}} <span class="gold">GOLD</span> {{else}} {{i18n "title-lottery-ticket-num"}} N°{{num}} {{/if}}</span>
+            <ul>
+                {{#combination}}
+                <li class="filled-ball" data-num='{{ball}}' class='{{^win}} won_ball{{/win}}' >
+                    {{ball}}
+                </li>
+                {{/combination}}
+                {{^combination}}
+                <li class="unfilled">
+                    не заполнен
+                </li>
+                {{/combination}}
+            </ul>
+        </li>
         {{/tickets}}
-    </table>
+    </ul>
+
+
 
     {{#if win}}
     <div class="ghd-won">Ваш выигрыш:

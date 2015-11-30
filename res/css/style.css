@@ -1929,9 +1929,9 @@ div.comment-reply-btn {
 #communication-messages .cm-top {
   width: 100%;
   position: absolute;
-  top: -8px;
+  top: -10px;
   left: 0;
-  padding: 0 10px;
+  padding: 0 20px;
   height: 68px; }
   #communication-messages .cm-top a {
     display: block;
@@ -1973,6 +1973,30 @@ div.comment-reply-btn {
     left: 0;
     margin: 0;
     width: 100%; }
+
+#communication-messages-list {
+  padding-top: 55px; }
+  #communication-messages-list .message hr {
+    margin: 15px -40px 5px -90px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3; }
+
+.message {
+  padding: 15px 10px 5px 0;
+  margin-left: 60px;
+  cursor: pointer; }
+  .message.new .message-text {
+    color: black; }
+  .message.online .message-img:before {
+    background: #7ed31e; }
+  .message.admin .message-img:before {
+    display: none; }
+  .message.admin .message-name {
+    font-weight: bold; }
+  .message hr {
+    margin: 15px -40px 5px -90px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3; }
 
 .communication-comments {
   padding-bottom: 100px; }
@@ -2061,6 +2085,24 @@ div.comment-reply-btn {
 
 .communication-comments .message-form {
   padding: 0 10px; }
+
+.message-form-wrapper button[type="submit"] {
+  float: right;
+  border: none;
+  font-size: 13px;
+  background: none;
+  color: #4a90e2;
+  cursor: pointer;
+  font-family: Handbook-bold; }
+
+.message-form-wrapper .message-form-smileys {
+  margin-left: 20px;
+  top: -1px; }
+
+.message-form-wrapper hr {
+  margin: 5px -20px 5px;
+  border: none;
+  border-bottom: 1px solid #c3c3c3; }
 
 .c-notifications {
   margin: 0 -10px 20px;
@@ -2161,20 +2203,6 @@ div.comment-reply-btn {
   padding-top: 80px;
   padding-right: 0; }
 
-.message {
-  padding: 15px 10px 15px 0;
-  margin-left: 60px;
-  border-bottom: 1px solid #dbdbdb;
-  cursor: pointer; }
-  .message.new .message-text {
-    color: black; }
-  .message.online .message-img:before {
-    background: #7ed31e; }
-  .message.admin .message-img:before {
-    display: none; }
-  .message.admin .message-name {
-    font-weight: bold; }
-
 .message-img {
   position: relative;
   display: block;
@@ -2210,7 +2238,10 @@ div.comment-reply-btn {
   padding-top: 40px; }
 
 .comment-description, .message-form-area {
-  line-height: 1.5; }
+  line-height: 22px; }
+
+.message-form-area {
+  min-height: 22px; }
 
 .games-previews .flex-box {
   font-family: handbookpro-regular;
@@ -3381,48 +3412,6 @@ div.comment-reply-btn {
     min-height: 0; }
   .cabinet-game-history .content-box-item-content {
     padding: 10px 10px 0 40px; }
-  .cabinet-game-history .content-box-cat {
-    margin-top: 10px;
-    margin-left: 5px; }
-    .cabinet-game-history .content-box-cat > * {
-      cursor: pointer; }
-    .cabinet-game-history .content-box-cat > span:after {
-      display: none;
-      content: none; }
-    .cabinet-game-history .content-box-cat > span label {
-      position: relative;
-      display: inline-block;
-      padding: 5px 10px;
-      margin-right: 0;
-      text-transform: uppercase;
-      cursor: pointer; }
-      .cabinet-game-history .content-box-cat > span label:after {
-        display: none; }
-      .cabinet-game-history .content-box-cat > span label:hover {
-        border: none;
-        background: #4c4c4c;
-        color: #fff;
-        text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
-      .cabinet-game-history .content-box-cat > span label.active {
-        border: none;
-        background: #4c4c4c;
-        color: #fff;
-        text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
-      .cabinet-game-history .content-box-cat > span label:after {
-        display: none; }
-    .cabinet-game-history .content-box-cat > span:first-child label {
-      padding: 5px 10px 5px 35px; }
-      .cabinet-game-history .content-box-cat > span:first-child label:before {
-        content: "";
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background: #b7cfd3;
-        border-radius: 50%;
-        margin-right: 13px;
-        position: absolute;
-        left: 5px;
-        top: 10px; }
   .cabinet-game-history .content-box-item-top {
     padding: 0;
     position: static; }
@@ -3431,18 +3420,90 @@ div.comment-reply-btn {
   .cabinet-game-history .gh-date {
     margin-bottom: 10px;
     font-size: 15px; }
-  .cabinet-game-history label {
-    display: inline-block;
-    top: 0;
-    left: 0; }
-  .cabinet-game-history input[type="radio"] {
+
+.content-box-cat {
+  margin-top: 10px;
+  margin-left: 5px; }
+  .content-box-cat > * {
+    cursor: pointer; }
+  .content-box-cat > span:after {
     display: none;
-    z-index: 1; }
-    .cabinet-game-history input[type="radio"]:checked + label {
+    content: none; }
+  .content-box-cat > span label {
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 0;
+    text-transform: uppercase;
+    cursor: pointer; }
+    .content-box-cat > span label:after {
+      display: none; }
+    .content-box-cat > span label:hover {
       border: none;
       background: #4c4c4c;
       color: #fff;
       text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
+    .content-box-cat > span label.active {
+      border: none;
+      background: #4c4c4c;
+      color: #fff;
+      text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
+    .content-box-cat > span label:after {
+      display: none; }
+  .content-box-cat > span:first-child label {
+    padding: 5px 10px 5px 35px; }
+    .content-box-cat > span:first-child label:before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #b7cfd3;
+      border-radius: 50%;
+      margin-right: 13px;
+      position: absolute;
+      left: 5px;
+      top: 10px; }
+  .content-box-cat label {
+    display: inline-block;
+    top: 0;
+    left: 0; }
+  .content-box-cat input[type="radio"] {
+    display: none;
+    z-index: 1; }
+    .content-box-cat input[type="radio"]:checked + label {
+      border: none;
+      background: #4c4c4c;
+      color: #fff;
+      text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
+
+#lottery-history-view {
+  background: url(img/bg-win.png); }
+  #lottery-history-view .content-box {
+    background: none; }
+  #lottery-history-view .content-box-header {
+    background: none; }
+  #lottery-history-view .container {
+    max-width: 500px;
+    margin: 0 auto; }
+    #lottery-history-view .container .balls-end-game {
+      font-size: 30px; }
+      #lottery-history-view .container .balls-end-game .g-oc_li {
+        width: 70px;
+        height: 70px;
+        font-size: 30px;
+        line-height: 70px; }
+        #lottery-history-view .container .balls-end-game .g-oc_li .goc_li-nb {
+          width: 70px;
+          height: 70px;
+          top: 0;
+          line-height: 70px; }
+  #lottery-history-view .ghd-tickets li ul li.filled-ball {
+    margin-right: 19px; }
+  #lottery-history-view .ghd-tickets li span {
+    margin-right: 35px; }
+
+#lottery-history-view-tickets {
+  padding: 0; }
 
 .lottery-history-items {
   position: relative;

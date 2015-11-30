@@ -112,7 +112,26 @@
     padding: 0 10px;
   }
 }
-
+.message-form-wrapper {
+  & button[type="submit"] {
+    float: right;
+    border: none;
+    font-size: 13px;
+    background: none;
+    color: #4a90e2;
+    cursor: pointer;
+    font-family: Handbook-bold;
+  }
+  & .message-form-smileys {
+    margin-left: 20px;
+    top: -1px;
+  }
+  & hr {
+    margin: 5px -20px 5px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3;
+  }
+}
 // COMMENT ACTIVE FOR MOBILE ---------------- //
 
 // COMMENT NOTIFICATIONS ------------- //
@@ -246,26 +265,7 @@
 
 
 
-.message {
-  padding: 15px 10px 15px 0;
-  margin-left: 60px;
-  border-bottom: 1px solid #dbdbdb;
-  cursor: pointer;
-  &.new .message-text {
-    color: black;
-  }
-  &.online .message-img:before {
-    background: #7ed31e;
-  }
-  &.admin {
-    & .message-img:before {
-      display: none;
-    }
-    & .message-name {
-      font-weight: bold;
-    }
-  }
-}
+
 
 .message-img {
   position: relative;
@@ -308,5 +308,9 @@
 }
 
 .comment-description, .message-form-area {
-  line-height: 1.5;
+  line-height: 22px;
+  
+}
+.message-form-area { 
+  min-height: 22px;
 }

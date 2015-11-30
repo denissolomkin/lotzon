@@ -1360,15 +1360,7 @@
 		background: #f8e71d;
 	}
 }  
-// .content-box-item-content {
-// 	& div:not(.type-mine) {
-// 		& .gh-item {
-// 			&:before {
-// 				display: none;
-// 			}  
-// 		}
-// 	}
-// }
+
 .content-box-item-content {
 	& .type-mine{
 		& .gh-item {
@@ -1433,64 +1425,7 @@
 	& .content-box-item-content {
 		padding: 10px 10px 0 40px;
 	}
-	& .content-box-cat {
-		margin-top: 10px;
-		margin-left: 5px;
-		&  > * {
-			cursor: pointer;
-		}
-		&  > span  {
-			&:after {
-				display: none;
-				content: none;
-			}
-			&  label {
-				position: relative;
-				display: inline-block;
-				padding: 5px 10px;
-				margin-right: 0;
-				text-transform: uppercase;
-				cursor: pointer;
-				&:after {
-					display:none;
-				}
-				&:hover {
-					border: none;
-					background: #4c4c4c;
-					color: #fff;
-					text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
-				}
-				&.active {
-					border: none;
-					background: #4c4c4c;
-					color: #fff;
-					text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
-				}
-				
-				&:after {
-					display:none;
-				}
-			}
-			&:first-child {
-				&  label {
-					padding: 5px 10px 5px 35px;
-					&:before {
-						content: "";
-						display: inline-block;
-						width: 10px;
-						height: 10px;
-						background: #b7cfd3;
-						border-radius: 50%;
-						margin-right: 13px;
-						position: absolute;
-						left: 5px;
-						top: 10px;
-					}
-				} 
-			} 
-		}
-	}
-
+	
 	& .content-box-item-top  {
 		padding: 0;
 		position: static;
@@ -1501,6 +1436,66 @@
 	& .gh-date {
 		margin-bottom: 10px;
 		font-size: 15px;
+	}
+	
+
+}
+
+& .content-box-cat {
+	margin-top: 10px;
+	margin-left: 5px;
+	&  > * {
+		cursor: pointer;
+	}
+	&  > span  {
+		&:after {
+			display: none;
+			content: none;
+		}
+		&  label {
+			position: relative;
+			display: inline-block;
+			padding: 5px 10px;
+			margin-right: 0;
+			text-transform: uppercase;
+			cursor: pointer;
+			&:after {
+				display:none;
+			}
+			&:hover {
+				border: none;
+				background: #4c4c4c;
+				color: #fff;
+				text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+			}
+			&.active {
+				border: none;
+				background: #4c4c4c;
+				color: #fff;
+				text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
+			}
+			
+			&:after {
+				display:none;
+			}
+		}
+		&:first-child {
+			&  label {
+				padding: 5px 10px 5px 35px;
+				&:before {
+					content: "";
+					display: inline-block;
+					width: 10px;
+					height: 10px;
+					background: #b7cfd3;
+					border-radius: 50%;
+					margin-right: 13px;
+					position: absolute;
+					left: 5px;
+					top: 10px;
+				}
+			} 
+		} 
 	}
 	& label {
 		display: inline-block;
@@ -1517,7 +1512,57 @@
 			text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5);
 		 } 
 	}
+}
 
+#lottery-history-view {
+	background: url(img/bg-win.png);
+	& .content-box {
+		background: none;
+	}
+	& .content-box-header {
+		background: none;
+	}
+	& .container {
+		max-width: 500px;
+		margin: 0 auto;
+		& .balls-end-game {
+			font-size: 30px;
+			& .g-oc_li {
+				width: 70px;
+				height: 70px;
+				font-size: 30px;
+				line-height: 70px;
+				& .goc_li-nb {
+					width: 70px;
+					height: 70px;
+					top: 0;
+					line-height: 70px;
+				}
+				
+			}
+		}
+	}			
+
+	& .ghd-tickets {
+		& li {
+			& ul {
+				& li {
+					&.filled-ball {
+				 		margin-right: 19px;
+				 	}
+				}
+			}
+		}
+		& li {
+			& span {
+    			margin-right: 35px;
+			}
+		}
+	}
+}
+
+#lottery-history-view-tickets {
+	padding: 0;
 }
 
 .lottery-history-items {

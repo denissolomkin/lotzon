@@ -1,29 +1,27 @@
 {
-    "status": 1,
-    "message": "OK",
     "res":{
-        "items":[
-            {
+        "users":{
+        "birthdays":{
+            "1":{
                 "id": "1",
-                "img": "/res/img/user_img.jpg",
-                "title": "Ноутбук Asus X551MA",
-                "games": "50000",
-                "money": "0"
+                "img": "user_img.jpg",
+                "name": "Кирилл",
+                "date": "14141414"
             },
-            {
+            "2":{
                 "id": "2",
-                "img": "/res/img/user_img.jpg",
-                "title": "Смартфон Lenovo X551MA",
-                "games": 10000,
-                "money": "5"
+                "img": "user_img.jpg",
+                "name": "Витя",
+                "date": 100000000,
+                "is_online": true
             },
-            {
+            "3":{
                 "id": "3",
-                "img": "/res/img/user_img.jpg",
-                "title": "Mp3-плеер Ipod X551MA",
-                "games": "10000",
-                "money": null
+                "img": "user_img.jpg",
+                "name": "Оля",
+                "date": "1414111616"
             }
-	    ]
+        }
+        }
 	}
 }

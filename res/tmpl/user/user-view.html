@@ -1,4 +1,4 @@
-<div id="users-view" class="content-box">
+<div id="user-view" class="content-box">
 
     <div class="content-box-header back">{{ title.nickname }}</div>
 
@@ -37,16 +37,16 @@
                         <div class="c-social-inf">{{i18n "title-profile-socials"}}</div>
                         <div class="c-social-icons clearfix">
                             {{#each this.social}}
-                            <a href="{{social @key .}}" class="c-social-item soc-{{@key}}"></a>
+                            {{#if .}}<a href="{{social @key .}}" class="c-social-item soc-{{@key}}"></a>{{/if}}
                             {{/each}}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{partial "users-view-statistics" .}}
+            {{partial "user-view-statistics" .}}
 
-            <a href="/users/{{id}}/message" class="send-msg">{{i18n "button-message-new"}}</a>
+            <a href="/users/{{id}}/message" class="send-msg">{{i18n "button-users-write-message"}}</a>
 
         </div>
     </div>

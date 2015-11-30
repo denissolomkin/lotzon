@@ -91,6 +91,24 @@
             return this;
         },
 
+        updateCount: function (count, value) {
+
+            if(typeof count === 'object' && !value){
+                Object.deepExtend(this.count, count);
+            } else if(typeof count === 'string' && value){
+                this.count[count] = value;
+            }
+
+            return this;
+        },
+
+        getCount: function (key) {
+
+            if(typeof key === 'string')
+                return Player.count[key];
+
+        },
+
         updateMoney: function (newSum) {
 
             var holders = document.querySelectorAll('.holder-money');
@@ -109,9 +127,7 @@
         },
 
         updateBalance: function () {
-            this.updatePoints();
-            this.updateMoney();
-            return this;
+            return Player.updatePoints().updateMoney();
         },
 
         checkMoney: function (input_money) {

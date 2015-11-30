@@ -192,10 +192,6 @@
 
                         },
 
-                        201: function (data) {
-                            throw(data.message);
-                        },
-
                         204: function (data) {
                             throw(data.message);
                         },

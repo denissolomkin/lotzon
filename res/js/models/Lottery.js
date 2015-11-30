@@ -225,7 +225,7 @@
                 tickets = Lottery.extendTickets(
                     this.tickets, [Lottery.getSummary(this.data), this.data.combination]
                 ),
-                combination = this.data.combination;
+                combination = this.data.combination.slice();
 
             Object.deepExtend(json, tickets);
 

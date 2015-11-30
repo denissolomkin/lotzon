@@ -1,173 +1,49 @@
-<div class="content-box profile-referrals">
+<div id="reports-referrals" class="content-box">
 
-    <div class="content-box-header back">{{#i18n}}title-profile-referrals{{/i18n}}</div>
+    <div class="content-box-header back">{{i18n "title-reports-referrals"}}</div>
 
     <div class="content-box-content clearfix">
+
         <div class="content-box-item with-cat cabinet-referrals">
+            <form class="render-list-form-unwatched" action="/reports/referrals/list" method="get">
 
-            <div class="content-box-item-top clearfix">
-
-                <div class="calendar-range">
-                    <input type="text" name="daterange" class="daterange" value="01.01.2015 - 02.02.2015">
+                <div class="content-box-item-top clearfix">
+                    <div class="calendar-range">
+                        <input type="text" name="daterange" class="daterange" value="01.01.2015 - 02.02.2015">
+                    </div>
+                    <div class="content-box-cat">
+                    <span class="position-relative">
+                        <input id="radio-referrals-all" name="type" type="radio" value="" checked>
+                        <label for="radio-referrals-all">{{i18n "title-reports-referrals-all"}} {{count "referralsTotal"}}</label>
+                    </span>
+                    <span class="position-relative">
+                        <input id="radio-referrals-active" name="type" type="radio" value="active">
+                        <label for="radio-referrals-active">{{i18n "title-reports-referrals-active"}} {{count "referralsActive"}}</label>
+                    </span>
+                    <span class="position-relative">
+                        <input id="radio-referrals-passive" name="type" type="radio" value="passive">
+                        <label for="radio-referrals-passive">{{i18n "title-reports-referrals-passive"}} {{count "referralsPassive"}}</label>
+                    </span>
+                    </div>
                 </div>
 
-                <div class="content-box-cat">
-                    <a href="#" class="active">Все 356</a>
-                    <a href="#">Активные 239</a>
-                    <a href="#">Не играют 87</a>
-                </div>
+                <div class="content-box-item-content">
 
-            </div>
+                    <div class="r-header clearfix">
+                        <div class="r-header-item r-nickname-text">{{i18n "title-users-referrals-nickname"}}</div>
+                        <div class="r-header-item r-registered-text">{{i18n "title-users-referrals-registered"}}</div>
+                        <div class="r-header-item r-games-text">{{i18n "title-users-referrals-lotteries"}}</div>
+                        <div class="r-header-item r-active-text">{{i18n "title-users-referrals-activity"}}</div>
+                        <div class="r-header-item r-profit-text">{{i18n "title-users-referrals-profit"}}</div>
+                    </div>
 
-            <div class="content-box-item-content">
-
-                <div class="r-header clearfix">
-                    <div class="r-header-item r-nickname-text">Никнейм</div>
-                    <div class="r-header-item r-registered-text">Регистрация</div>
-                    <div class="r-header-item r-games-text">Игр</div>
-                    <div class="r-header-item r-active-text">Активность</div>
-                    <div class="r-header-item r-profit-text">Доход</div>
-                </div>
-
-
-                <div>
-
-                    <a href="communication_friend_detail.php">
-                        <div class="r-item clearfix">
-                            <div class="r-inf-names">
-                                <div class="r-inf-name">Никнейм</div>
-                                <div class="r-inf-name">Регистрация</div>
-                                <div class="r-inf-name">Сыграно игр</div>
-                                <div class="r-inf-name">Активность</div>
-                                <div class="r-inf-name">Доход баллов</div>
-                            </div>
-                            <div class="r-inf">
-                                <div class="r-inf-item r-nickname">Участник 238872</div>
-                                <div class="r-inf-item r-registered">14.06.2015</div>
-                                <div class="r-inf-item r-games">47</div>
-                                <div class="r-inf-item r-active">
-                                    <div class="r-active-icon"></div>
-                                    <div class="r-active-inf">Последняя&nbsp;дата&nbsp;игры<br>14.02.2015</div>
-                                </div>
-                                <div class="r-inf-item r-profit">70</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="communication_friend_detail.php">
-                        <div class="r-item online clearfix">
-                            <div class="r-inf-names">
-                                <div class="r-inf-name">Никнейм</div>
-                                <div class="r-inf-name">Регистрация</div>
-                                <div class="r-inf-name">Сыграно игр</div>
-                                <div class="r-inf-name">Активность</div>
-                                <div class="r-inf-name">Доход баллов</div>
-                            </div>
-                            <div class="r-inf">
-                                <div class="r-inf-item r-nickname">Участник 238872</div>
-                                <div class="r-inf-item r-registered">14.06.2015</div>
-                                <div class="r-inf-item r-games">47</div>
-                                <div class="r-inf-item r-active">
-                                    <div class="r-active-icon"></div>
-                                    <div class="r-active-inf">Последняя&nbsp;дата&nbsp;игры<br>14.02.2015</div>
-                                </div>
-                                <div class="r-inf-item r-profit">70</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="communication_friend_detail.php">
-                        <div class="r-item online clearfix">
-                            <div class="r-inf-names">
-                                <div class="r-inf-name">Никнейм</div>
-                                <div class="r-inf-name">Регистрация</div>
-                                <div class="r-inf-name">Сыграно игр</div>
-                                <div class="r-inf-name">Активность</div>
-                                <div class="r-inf-name">Доход баллов</div>
-                            </div>
-                            <div class="r-inf">
-                                <div class="r-inf-item r-nickname">Участник 238872</div>
-                                <div class="r-inf-item r-registered">14.06.2015</div>
-                                <div class="r-inf-item r-games">47</div>
-                                <div class="r-inf-item r-active">
-                                    <div class="r-active-icon"></div>
-                                    <div class="r-active-inf">Последняя&nbsp;дата&nbsp;игры<br>14.02.2015</div>
-                                </div>
-                                <div class="r-inf-item r-profit">70</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="communication_friend_detail.php">
-                        <div class="r-item clearfix">
-                            <div class="r-inf-names">
-                                <div class="r-inf-name">Никнейм</div>
-                                <div class="r-inf-name">Регистрация</div>
-                                <div class="r-inf-name">Сыграно игр</div>
-                                <div class="r-inf-name">Активность</div>
-                                <div class="r-inf-name">Доход баллов</div>
-                            </div>
-                            <div class="r-inf">
-                                <div class="r-inf-item r-nickname">Участник 238872</div>
-                                <div class="r-inf-item r-registered">14.06.2015</div>
-                                <div class="r-inf-item r-games">47</div>
-                                <div class="r-inf-item r-active">
-                                    <div class="r-active-icon"></div>
-                                    <div class="r-active-inf">Последняя&nbsp;дата&nbsp;игры<br>14.02.2015</div>
-                                </div>
-                                <div class="r-inf-item r-profit">70</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="communication_friend_detail.php">
-                        <div class="r-item online clearfix">
-                            <div class="r-inf-names">
-                                <div class="r-inf-name">Никнейм</div>
-                                <div class="r-inf-name">Регистрация</div>
-                                <div class="r-inf-name">Сыграно игр</div>
-                                <div class="r-inf-name">Активность</div>
-                                <div class="r-inf-name">Доход баллов</div>
-                            </div>
-                            <div class="r-inf">
-                                <div class="r-inf-item r-nickname">Участник 238872</div>
-                                <div class="r-inf-item r-registered">14.06.2015</div>
-                                <div class="r-inf-item r-games">47</div>
-                                <div class="r-inf-item r-active">
-                                    <div class="r-active-icon"></div>
-                                    <div class="r-active-inf">Последняя&nbsp;дата&nbsp;игры<br>14.02.2015</div>
-                                </div>
-                                <div class="r-inf-item r-profit">70</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="communication_friend_detail.php">
-                        <div class="r-item online clearfix">
-                            <div class="r-inf-names">
-                                <div class="r-inf-name">Никнейм</div>
-                                <div class="r-inf-name">Регистрация</div>
-                                <div class="r-inf-name">Сыграно игр</div>
-                                <div class="r-inf-name">Активность</div>
-                                <div class="r-inf-name">Доход баллов</div>
-                            </div>
-                            <div class="r-inf">
-                                <div class="r-inf-item r-nickname">Участник 238872</div>
-                                <div class="r-inf-item r-registered">14.06.2015</div>
-                                <div class="r-inf-item r-games">47</div>
-                                <div class="r-inf-item r-active">
-                                    <div class="r-active-icon"></div>
-                                    <div class="r-active-inf">Последняя&nbsp;дата&nbsp;игры<br>14.02.2015</div>
-                                </div>
-                                <div class="r-inf-item r-profit">70</div>
-                            </div>
-                        </div>
-                    </a>
+                    {{partial 'reports-referrals-container' this}}
 
                 </div>
 
-            </div>
-
-        </div><!-- .content-box-item -->
-    </div><!-- .content-box-content -->
+            </form>
+        </div>
+        <!-- .content-box-item -->
+    </div>
+    <!-- .content-box-content -->
 </div><!-- .content-box -->

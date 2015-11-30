@@ -1,11 +1,11 @@
-<div class="content-box balance-transactions">
+<div id="reports-transactions" class="content-box">
 
     <div class="content-box-header back">{{i18n "title-reports-transactions"}}</div>
 
     <div class="content-box-content clearfix">
-        <div class="content-box-item with-cat cabinet-transaction-history">
 
-            <form class="render-list-form-unwatched" action="/reports/transactions" method="get">
+        <div class="content-box-item with-cat cabinet-transaction-history">
+            <form class="render-list-form-unwatched" action="/reports/transactions/list" method="get">
 
                 <div class="content-box-item-top clearfix">
 
@@ -14,64 +14,20 @@
                     </div>
 
                     <div class="content-box-cat">
-
-                        <label>
-                            <input id="brt-money" name="currency" type="radio" value="money" checked>
-                            <label for="brt-money"></label>
-                            {{i18n "title-money"}}
-                        </label>
-
-                        <label>
-                            <input id="brt-points" name="currency" type="radio" value="points">
-                            <label for="brt-points" class="input-radio"></label>
-                            {{i18n "title-points"}}
-                        </label>
-
-                        {{#each currency1}}
-                        <a href="/reports/transactions/{{.}}">{{i18n "title" .}}</a>
-                        {{/each}}
+                        <span class="position-relative">
+                            <input id="radio-transactions-points" name="currency" type="radio" value="points">
+                            <label for="radio-transactions-points">{{i18n "title-points"}}</label>
+                        </span>
+                        <span class="position-relative">
+                            <input id="radio-transactions-money" name="currency" type="radio" value="money" checked>
+                            <label for="radio-transactions-money">{{i18n "title-money"}}</label>
+                        </span>
                     </div>
 
                 </div>
 
-                <div class="render-list-container content-box-item-content">
-
-                    <div class="render-list">
-                        {{#each .}}
-
-                        <!--
-                        { {#if (ne last_day (day this.date))}}
-                            <div class="th-date-range">{{day this.date}}</div>
-                        { {/if}}
-                         {{variable "last_day" "x"}}
-                        -->
-
-                        <div class="th-date-range ">{{day this.date}}</div>
-
-
-                        <div data-id={{@key}} class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
-                            <div class="th-item-left">
-                                <div>{{{day this.date "DD.MM.YYYY<br>HH:MM"}}}</div>
-                                <div>{{this.description}}</div>
-                            </div>
-                            <div class="th-item-right">
-                                <div class="th-item-sum">{{this.sum}}
-                                    {{#if (eq this.type "money") }}
-                                    {{player "getCurrency"}}
-                                    {{else}}
-                                    {{i18n "title-points"}}
-                                    {{/if}}
-                                </div>
-                                <div>{{this.balance}}</div>
-                            </div>
-                        </div>
-                        {{/each}}
-                    </div>
-
-                    <div class="container-center">
-                        <button type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}</button>
-                    </div>
-
+                <div class="content-box-item-content">
+                    {{partial 'reports-transactions-container' this}}
                 </div>
 
             </form>

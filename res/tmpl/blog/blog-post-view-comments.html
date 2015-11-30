@@ -3,18 +3,17 @@
 
     {{partial 'blog-post-view-comments-replyform' this}}
 
+    <div class="render-list" id="blog-post-{{id}}-comments-list">
+    </div>
+
+    {{#if (gt stat.comments 0)}}
     <form action="/blog/post/{{id}}/comments/list" method="get" class="render-list-form">
-
-        <div class="render-list" id="blog-post-{{id}}-comments-list">
-        </div>
-
-        {{#if (gt stat.comments 0)}}
         <div class="container-center">
-            <button type="submit" class="btn-flat once-infinite-scrolling">{{i18n "button-load-more"}}</button>
+            <button name="submit" type="submit" class="btn-flat once-infinite-scrolling">{{i18n "button-load-more"}}
+            </button>
         </div>
-        {{/if}}
-
     </form>
+    {{/if}}
 
 
 </div>

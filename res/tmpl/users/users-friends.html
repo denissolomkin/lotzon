@@ -1,32 +1,16 @@
-<div class="content-box-item c-friends">
+<div id="users-friends" class="content-box-item c-friends">
 
-    <div class="content-box-item-top">
-        <div class="friends-count">Друзей<span>{{friends}}</span></div>
-        <div class="friends-search">
-            <input type="text" class="friends-search-input" placeholder="Поиск среди друзей">
-        </div>
-    </div>
+    <form action="/users/friends/list" method="get" class="render-list-form">
 
-    <div>
-        {{#items}}
-	<a href="/users/{{ id }}">
-        <div class="c-friend online clearfix">
-            <div class="c-friend-img">
-                <img src="{{ img }}" alt="">
-            </div>
-            <div class="c-friend-description">
-                <div class="c-friend-name">{{ title }}</div>
-                <div class="c-friend-inf">
-                    <div>Игр: {{ games }}</div>
-                    <div>Денег: {{ money }}</div>
-                    <div>Баллов: {{ points }}</div>
-                </div>
-                <a href="/communication/messages/new?users={{ id }}" class="c-friend-msg">Написать сообщение</a>
+        <div class="content-box-item-top">
+            <div class="friends-count">{{i18n "title-users-of-friends"}}<span>{{player "count.friends"}}</span></div>
+            <div class="friends-search">
+                <input type="text" name="match" class="friends-search-input" placeholder='{{i18n "placeholder-search-from-friends"}}'>
             </div>
         </div>
-	</a>
-        {{/items}}
-        {{^items}}No friends :({{/items}}
 
-    </div>
+        {{partial 'users-friends-container' this}}
+
+    </form>
+
 </div>

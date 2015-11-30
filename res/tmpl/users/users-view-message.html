@@ -6,19 +6,19 @@
 
         <div class="content-box-item">
 
-                <div class="addressee">
-                    <input type="hidden" name="recipient_id" value="{{ id }}">
-                    
-                    <div class="nm-selected">
-                        <div class="nm-friend">
-                            <div class="nm-friend-img">
-                                <img src="{{avatar img id}}" alt="">
-                            </div>
-                            <div class="nm-friend-name">{{ name }}</div>
-                        </div>
-                    </div>
+            <div class="addressee">
+                <input type="hidden" name="recipient_id" value="{{ id }}">
 
+                <div class="nm-selected">
+                    <div class="nm-friend">
+                        <div class="nm-friend-img">
+                            <img src="{{avatar img id}}" alt="">
+                        </div>
+                        <div class="nm-friend-name">{{ name }}</div>
+                    </div>
                 </div>
+
+            </div>
 
             {{partial 'users-view-messages-replyform' this}}
 

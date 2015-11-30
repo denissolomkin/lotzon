@@ -1,7 +1,6 @@
 {
-    "status": 1,
     "message": "OK",
-    "res":{
+    "player":{
         "balance": {
             "money": 14141.14,
             "points": 11111,

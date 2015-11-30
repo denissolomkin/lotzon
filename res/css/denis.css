@@ -1,4 +1,4 @@
-form, .banner-1, .banner-2, .banner-3, .banner-4, .banner-5{
+form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner-5{
     position: relative;
 }
 .comment, .answers {

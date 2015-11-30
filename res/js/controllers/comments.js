@@ -86,7 +86,7 @@
                 var existingForms = commentsNode.getElementsByTagName('FORM');
                 if (existingForms.length)
                     for (var i = 0; i < existingForms.length; i++)
-                        existingForms[i].remove();
+                        existingForms[i].parentNode.removeChild(existingForms[i]);
 
                 // push new form
                 R.push({

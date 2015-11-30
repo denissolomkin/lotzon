@@ -12,121 +12,167 @@
 
             validate: function (event) {
 
-                var $form = $(this).closest('form'),
-                    $incompleteElements = $('.incomplete', $form),
-                    $errorElements = $('.error', $form),
-                    $requiredElements = $('.required', $form).filter(Form.filterRequired),
+                var form = this;
+
+                while (form.nodeName !== 'FORM')
+                    form = form.parentNode;
+
+                var submit = form.elements['submit'],
                     valid = true,
-                    callback = U.parse(U.parse($form.attr('action')), 'tmpl');
+                    incompleteElements = form.querySelectorAll('.incomplete'),
+                    errorElements = form.querySelectorAll('.error'),
+                    requiredElements = form.querySelectorAll('.required'),
+                    filterRequiredElements = Array.prototype.filter.call(requiredElements, Form.filterRequired),
+                    callback = U.parse(U.parse(form.action), 'tmpl');
 
                 D.log(['C.validate.' + callback]);
 
-                if ($form.length) {
+                if (form.nodeName === 'FORM') {
 
-                    if ($errorElements.length) {
-                        $.each($errorElements, function (index, element) {
+                    if (errorElements.length) {
+                        $.each($(errorElements), function (index, element) {
                             // $(element).removeClass('error');
-                        })
-                    }
-
-                    if ($requiredElements.length) {
-
-                        $.each($requiredElements, function (index, element) {
-                            // $(element).parent().addClass('error');
-                        })
-
+                        });
+                        console.log(1);
                         valid = false;
                     }
 
-                    if ($incompleteElements.length) {
-                        $.each($incompleteElements, function (index, element) {
-                            // $(element).parent().addClass('error');
-                        })
+                    if (filterRequiredElements.length) {
 
+                        $.each($(filterRequiredElements), function (index, element) {
+                            // $(element).parent().addClass('error');
+                        });
+                        console.log(2);
+                        valid = false;
+                    }
+
+                    if (incompleteElements.length) {
+                        $.each($(incompleteElements), function (index, element) {
+                            // $(element).parent().addClass('error');
+                        });
+                        console.log(3);
                         valid = false;
                     }
 
 
                     if (Callbacks.validate[callback]) {
+                        console.log(4);
                         valid = !Callbacks.validate[callback].call(this, event) ? false : valid;
                     }
 
                 }
 
-                valid
-                    ? $('button[type="submit"]', $form).addClass('on') : $('button[type="submit"]', $form).removeClass('on');
+                if(submit)
+                    valid ? submit.classList.add('on') : submit.classList.remove('on');
 
                 return valid;
             },
 
             submit: function (event) {
 
-                var button = this,
-                    form = button.form,
+                console.log(this, event);
+
+                var form = this;
+
+                while (form.nodeName !== 'FORM')
+                    form = form.parentNode;
+
+                var button = form.elements['submit'],
                     formMethod = form.getAttribute('method'),
                     formUrl = U.generate(form.action, formMethod),
                     formCallback = U.parse(U.parse(form.action), 'tmpl'),
                     formData = $(form).serializeObject(),
                     formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
-                for(var i = 0; i<formContenteditable.length;i++){
+                D.log(['Form.submit.', form.action]);
+
+                for (var i = 0; i < formContenteditable.length; i++) {
                     formData[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
                 }
 
-                event.preventDefault();
-                event.stopPropagation();
+                event && event.preventDefault() && event.stopPropagation();
 
-                Form.start.call(button, event);
+                Form.start.call(form, event);
 
-                if (button.classList.contains('on')) {
+                if (!button || button.classList.contains('on')) {
 
                     D.log('button.submit', 'info');
 
                     setTimeout(function () {
                         $.ajax({
                             url: formUrl,
-                            method: formMethod,
+                            method: "post", // formMethod
                             data: formData,
                             dataType: 'json',
                             statusCode: {
 
                                 404: function (data) {
-                                    D.error.call(form, data.message || 'NOT FOUND');
+                                    Form.stop.call(form);
+                                    D.error.call(form, data.message || 'NOT FOUND: '+formUrl+'');
                                 },
 
                                 200: function (data) {
 
                                     if ('responseText' in data) {
 
-                                        D.error('SERVER RESPONSE ERROR');
+                                        Form.stop.call(form);
+                                        D.error.call(form,'SERVER RESPONSE ERROR: '+formUrl);
 
                                     } else {
 
-                                    Form.stop.call(button)
-                                        .message.call(form, data.message);
+                                        Form.stop.call(form)
+                                            .message.call(form, data.message);
 
-                                    if (Callbacks[formMethod][formCallback]) {
-                                        D.log(['C.' + formMethod + '.callback']);
-                                        Callbacks[formMethod][formCallback].call(form, data.res);
-                                    }
+                                        if(data.player)
+                                            Player.init(data.player);
 
-                                    console.log(data.res);
-                                    Cache.update(data.res);
+                                        if (Callbacks[formMethod][formCallback]) {
+                                            D.log(['C.' + formMethod + '.callback']);
+                                            Callbacks[formMethod][formCallback].call(form, data.res);
+                                        }
+
+                                        if(data.res)
+                                            Cache.update(data.res);
 
                                     }
 
                                 },
 
-                                201: function (data) {
-                                    throw (data.message);
+                                200: function (data) {
+
+                                    if ('responseText' in data) {
+
+                                        Form.stop.call(form);
+                                        D.error.call(form,'SERVER RESPONSE ERROR: '+formUrl);
+
+                                    } else {
+
+                                        Form.stop.call(form)
+                                            .message.call(form, data.message);
+
+                                        if(data.player)
+                                            Player.init(data.player);
+
+                                        if (Callbacks[formMethod][formCallback]) {
+                                            D.log(['C.' + formMethod + '.callback']);
+                                            Callbacks[formMethod][formCallback].call(form, data.res);
+                                        }
+
+                                        if(data.res)
+                                            Cache.update(data.res);
+
+                                    }
+
                                 },
 
                                 204: function (data) {
+                                    Form.stop.call(form);
                                     throw (data.message);
                                 },
 
                                 405: function () {
-                                    D.error('METHOD NOT ALLOWED');
+                                    Form.stop.call(form);
+                                    D.error.call(form,'METHOD NOT ALLOWED: '+formMethod+'');
                                 }
                             }
                         })
@@ -135,35 +181,33 @@
             }
         },
 
-        filterRequired: function () {
+        filterRequired: function (node) {
 
-            var name = $(this).attr('name'),
-                type = $(this).attr('type'),
-                filter = true,
-                $form = $(this).closest('form');
+            var filter = true;
 
-            switch (this.tagName){
+            switch (node.tagName) {
 
                 case 'INPUT':
 
-                    switch (type) {
+                    switch (node.type) {
                         case 'text':
                         case 'hidden':
-                            filter = $(this).val() === '' || ($(this).hasClass('float') && parseFloat($(this).val()) <= 0) || ($(this).hasClass('int') && parseInt($(this).val()) <= 0);
+                            filter = node.value === ''
+                                || (node.classList.contains('float') && parseFloat(node.value) <= 0)
+                                || (node.classList.contains('int') && parseInt(node.value) <= 0);
                             break;
                         case 'radio':
-                            filter = $('[name="' + name + '"]', $form).filter(':checked').length !== 1
+                            filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length !== 1
                             break;
                         case 'checkbox':
-                            filter = $('[name="' + name + '"]', $form).filter(':checked').length === 0
+                            filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length === 0
                             break;
-
                     }
 
                     break;
 
                 case 'DIV':
-                    filter = this.innerHTML === '';
+                    filter = node.innerHTML === '';
                     break;
             }
 
@@ -173,9 +217,11 @@
 
         start: function (event) {
 
+            var button = this.elements['submit'];
+
             if (Form.do.validate.call(this, event)) {
                 D.log('button.loading', 'info');
-                this.classList.contains('on') && this.classList.add('loading');
+                button && button.classList.contains('on') && button.classList.add('loading') || this.classList.add('loading');
             }
 
             return Form;
@@ -184,7 +230,8 @@
         stop: function () {
 
             if ('nodeType' in this) {
-                this.classList.remove('loading');
+                var button = this.elements['submit'];
+                button && button.classList.contains('loading') && button.classList.remove('loading') || this.classList.remove('loading');
             } else {
                 // DOM.all('button.loading').removeClass('loading');
             }
@@ -192,8 +239,10 @@
             return Form;
         },
 
-        getTimeout: function () {
-            return this.timeout.fadeout + this.timeout.remove;
+        getTimeout: function (name) {
+            return name
+                ? (this.timeout.hasOwnProperty(name) ? this.timeout[name] : 0)
+                : this.timeout.fadeout + this.timeout.remove;
         },
 
         message: function (message) {
@@ -201,10 +250,12 @@
             var form = this,
                 formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
-            form.reset();
-
-            for(var i = 0; i<formContenteditable.length;i++){
-                formContenteditable[i].innerHTML = '';
+            // clear form after adding new entities
+            if(form.getAttribute('method') === 'post' || form.getAttribute('method') === 'POST') {
+                form.reset();
+                for (var i = 0; i < formContenteditable.length; i++) {
+                    formContenteditable[i].innerHTML = '';
+                }
             }
 
             if (!message)

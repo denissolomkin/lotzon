@@ -21,6 +21,7 @@ $(function () {
         },
 
         'number': Player.fineNumbers,
+        'count': Player.getCount,
 
         'lottery': function (fn, options) {
 

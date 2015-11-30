@@ -57,6 +57,11 @@
                 "title-points": "баллы",
                 "title-money": "деньги",
                 "title-of-points": "баллов",
+                "title-of-lotteries": "лотерей",
+                "title-of-money": "денег",
+
+                "title-users-of-friends": "Друзей",
+                "placeholder-search-from-friends": "Поиск среди друзей",
 
                 "title-prizes-draw": "Розыгрыш призов",
                 "title-prizes-exchange": "Обмен на баллы",
@@ -93,6 +98,21 @@
                 "title-lottery-prizes-from": "из",
                 "title-lottery-ticket-num": "БИЛЕТ",
 
+                "title-profile-settings": "Персональные настройки",
+                "title-profile-password": "Изменение пароля",
+                "title-profile-bonuses": "Бонусы",
+                "title-reports-transactions": "История транзакций",
+                "title-reports-payments": "История выплат",
+                "title-reports-referrals": "Мои рефераллы",
+                "title-reports-referrals-last-lottery": "Последняя&nbsp;дата&nbsp;игры",
+                "title-reports-payments-status-paid": "Выплачено",
+                "title-reports-payments-status-processed": "В обработке",
+                "title-reports-payments-status-denied": "Отказано",
+                "title-reports-payments-order-date": "Дата заявки",
+                "title-reports-payments-order-status": "Статус заявки",
+                "title-reports-payments-order-type":"Способ получения",
+                "title-reports-payments-order-prize":"Выигрыш",
+
                 "title-profile-name": "Имя",
                 "title-profile-surname": "Фамилия",
                 "title-profile-patronymic": "Отчество",
@@ -114,11 +134,30 @@
 
                 "button-profile-edit": "Изменить данные",
 
+                "button-users-write-message": "Написать сообщение",
+                "button-users-friendship": "Дружить",
+                "button-users-give-gift": "Подарить подарок",
+                "button-users-requests-approve": "Дружить",
+                "button-users-requests-deny": "Отказаться",
+                "title-users-requests-approved": "Одобрено",
+                "title-users-requests-denied": "Отказано",
+                "title-users-requests-suggested": "Предлагает дружить",
+
+                "title-reports-referrals-all": "Все",
+                "title-reports-referrals-active": "Активные",
+                "title-reports-referrals-passive": "Не играют",
+                "title-users-referrals-last-lottery":"Последняя&nbsp;дата&nbsp;игры",
+                "title-users-referrals-nickname": "Никнейм",
+                "title-users-referrals-registered": "Регистрация",
+                "title-users-referrals-lotteries": "Сыграно игр",
+                "title-users-referrals-activity": "Активность",
+                "title-users-referrals-profit": "Доход баллов",
+
+
                 "title-billing-phone": "Телефон",
                 "title-billing-yandexmoney": "Yandex.Деньги",
                 "title-billing-webmoney": "Webmoney",
                 "title-billing-qiwi": "QIWI кошелек",
-
 
                 "title-users-friends": "Друзья",
                 "title-users-chronicle": "Хроника",
@@ -140,14 +179,10 @@
                 "button-message-new": "Новое сообщение",
                 "button-message-admin": "Написать админу",
 
-                "title-order-date": "Дата заявки",
-                "title-order-status": "Статус заявки",
-                "title-order-type":"Способ получения",
-                "title-order-prize":"Выигрыш",
-
                 "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
                 "message-order-process-week": "Все заявки на вывод денег и призов обрабатываются в течении 7-ми рабочих дней.",
                 "message-comments-write-comment": "Напишите комментарий",
+                "message-users-write-message" : "Напишите сообщение",
                 "message-comment-sent-success": "Комментарий отправлен на модерацию",
 
                 "title-support-faq": "Часто задаваемые вопросы",

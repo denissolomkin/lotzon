@@ -1,0 +1,17 @@
+{{!<div class="th-date-range ">{{day this.date}}</div>}}
+<div data-id="{{id}}" class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
+    <div class="th-item-left">
+        <div>{{{day date "DD.MM.YYYY<br>HH:MM"}}}</div>
+        <div>{{description}}</div>
+    </div>
+    <div class="th-item-right">
+        <div class="th-item-sum">{{this.sum}}
+            {{#if (eq type "money") }}
+            {{player "getCurrency"}}
+            {{else}}
+            {{i18n "title-points"}}
+            {{/if}}
+        </div>
+        <div>{{balance}}</div>
+    </div>
+</div>

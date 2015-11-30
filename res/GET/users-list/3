@@ -4,23 +4,7 @@
     "3":{
                         "id": "3",
                         "img": "user_img.jpg",
-                        "title":{
-                        "nickname": "Участник №151",
-                        "name": "Валера",
-                        "surname": "Игнатенко",
-                        "patronymic": "Леонидович"
-                        },
-                        "location":{
-                            "country": "UA",
-                            "city":"Киев",
-                            "address": "Горького 14А кв. 88"
-                            },
-                                         "social": {
-                                             "Facebook": "R333289102947",
-                                             "Odnoklassniki": "411141590761950",
-                                             "Google": null,
-                                             "Twitter": null
-                                         }
+                        "name": "Валера"
                         }
     }
 

@@ -1,0 +1,29 @@
+<div id="users-requests-{{id}}" data-id="{{id}}" class="c-friend clearfix">
+    <a href="/user/{{user.id}}">
+        <div class="c-friend-img">
+            <img src="{{avatar user.img user.id}}" alt="">
+        </div>
+    </a>
+
+    <div class="c-friend-description">
+        <div class="c-friend-name">{{ user.name }}</div>
+        <div class="c-friend-date">{{from date }}</div>
+        <div class="c-friend-news">{{i18n "title-users-requests-suggested"}}</div>
+        {{#if (like status 0)}}
+        <div class="c-friend-actions">
+            <form action="/users/requests/{{id}}" method="put">
+                <input type="hidden" name="status" value="">
+                <button type="submit" onclick="this.form.elements['status'].value=1;" class="yes">{{i18n "button-users-requests-approve"}}
+                </button>
+                <button type="submit" onclick="this.form.elements['status'].value=2;" class="no">{{i18n "button-users-requests-approve"}}
+                </button>
+            </form>
+        </div>
+        {{else if (like status 1)}}
+        {{i18n "title-users-requests-approved"}}
+        {{else if (like status 2)}}
+        {{i18n "title-users-requests-denied"}}
+        {{/if}}
+    </div>
+
+</div>

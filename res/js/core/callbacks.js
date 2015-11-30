@@ -33,12 +33,12 @@
             $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
 
             /* new reply */
-
             $(document).on('click', ".comment-content .comment-reply-btn", Comments.do.replyForm);
             $(document).on('click', ".comment-content", Comments.do.mobileForm);
 
             /* form */
-            $(document).on('click', 'form:not(.render-list-form) button[type="submit"]', Form.do.submit);
+            /* $(document).on('click', 'form:not(.render-list-form) [type="submit"]', Form.do.submit); */
+            $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
             $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
@@ -47,6 +47,7 @@
 
             /* autoload */
             $(document).on('submit', 'form.render-list-form', Content.enableAutoload);
+            $(document).on('input', 'form.render-list-form input', Content.autoload);
             $(document).on('change', 'form.render-list-form', Content.autoload);
 
             /* profile*/
@@ -90,7 +91,8 @@
             "lottery-ticket-item": Ticket.activate,
             "lottery-ticket-tabs": Ticket.switch,
 
-            "reports-transactions": Reports.init,
+            "reports-transactions": Content.initDaterange,
+            "reports-referrals": Content.initDaterange,
 
             "support-rules": Support.init,
             "support-faq": Support.init
@@ -99,8 +101,8 @@
 
         "post": { // new
 
-            "profile-convert": Profile.update.convert,
-            "profile-cashout": Profile.update.cashout,
+            "profile-convert": Player.updateBalance,
+            "profile-cashout": Player.updateBalance,
             "lottery-ticket": Ticket.update,
             "lottery-gold": Ticket.update,
             "prizes-exchange-goods": Prize.update.exchange,

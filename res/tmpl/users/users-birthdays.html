@@ -1,19 +1,15 @@
-<div class="content-box-item c-birthdays">
-    <div>
-        {{#items}}
+<div id="users-birthdays" class="content-box-item c-birthdays">
 
-                        <div class="c-friend clearfix">
-                            <div class="c-friend-img">
-                                <img src="{{ img }}" alt="">
-                            </div>
-                            <div class="c-friend-description">
-                                <div class="c-friend-name">{{ title }}</div>
-                                <div class="c-friend-date">{{ date }}</div>
-                                <a href="communication_gift" class="c-friend-gift">Подарить подарок</a>
-                                <a href="communication_new_message_selected" class="c-friend-msg">Написать сообщение</a>
-                            </div>
-                        </div>
-        {{/items}}
-        {{^items}}No friends :({{/items}}
-    </div>
+    <form action="/users/birthdays/list" method="get" class="render-list-form">
+
+        <div id="users-birthdays-list" class="render-list">
+            {{partial "users-birthdays-list" this}}
+        </div>
+
+        <div class="container-center">
+            <button name="submit" type="submit" class="infinite-scrolling btn-flat">{{i18n "button-load-more"}}</button>
+        </div>
+
+    </form>
+
 </div>

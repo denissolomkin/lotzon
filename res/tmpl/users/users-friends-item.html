@@ -1,0 +1,16 @@
+﻿<div id="users-friends-{{id}}" data-id="{{id}}" class="c-friend{{#if is_online}} online{{/if}} clearfix">
+    <a href="/user/{{ id }}">
+        <div class="c-friend-img">
+            <img src="{{avatar img id}}" alt="">
+        </div>
+        <div class="c-friend-description">
+            <div class="c-friend-name">{{ name }}</div>
+            <div class="c-friend-inf">
+                <div>{{i18n "title-of-lotteries"}}: {{ lotteries }}</div>
+                <div>{{i18n "title-of-money"}}: {{ money }}</div>
+                <div>{{i18n "title-of-points"}}: {{ points }}</div>
+            </div>
+            <a href="/users/{{ id }}/message" class="c-friend-msg">{{i18n "button-users-write-message"}}</a>
+        </div>
+    </a>
+</div>

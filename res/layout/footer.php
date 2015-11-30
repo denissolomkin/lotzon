@@ -124,10 +124,12 @@
             },
             "birthday": 151415167,
             "count": {
+                "lotteries": 121,
                 "notifications": 4,
                 "messages": 100,
                 "chronicle": 2,
-                "requests": 11
+                "requests": 11,
+                "friends": 56
             },
             "favorite": [1,null,null,null,5,null],
             "location": {

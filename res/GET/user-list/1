@@ -1,0 +1,32 @@
+{
+    "status": 1,
+    "message": "OK",
+    "res":{
+    "user":{
+    "1":{
+                        "id": "1",
+                        "img": "user_img.jpg",
+                        "birthday": 1231323131,
+                        "title":{
+                        "nickname": "Участник №151",
+                        "name": "Валера",
+                        "surname": "Игнатенко",
+                        "patronymic": "Леонидович"
+                        },
+
+                                                 "location":{
+                                                     "country": "UA",
+                                                     "city":"Киев",
+                                                     "address": "Горького 14А кв. 88"
+                                                     },
+                                                                                               "social": {
+                                                                                                   "Facebook": "R333289102947",
+                                                                                                   "Odnoklassniki": "411141590761950",
+                                                                                                   "Google": null,
+                                                                                                   "Twitter": null
+                                                                                               }
+        }
+    }
+
+	}
+}

@@ -237,9 +237,9 @@
   & .cm-top {
     width: 100%;
     position: absolute;
-    top: -8px;
+    top: -10px;
     left: 0;
-    padding: 0 10px;
+    padding: 0 20px;
     height: 68px;
     & a {
       display: block;
@@ -284,5 +284,40 @@
   }
 }
 
+#communication-messages-list {
+  padding-top: 55px;
+  & .message {
+      & hr {
+      margin: 15px -40px 5px -90px;
+      border: none;
+      border-bottom: 1px solid #c3c3c3;
+    }
+  }
+}
+
+.message {
+  padding: 15px 10px 5px 0;
+  margin-left: 60px;
+  cursor: pointer;
+  &.new .message-text {
+    color: black;
+  }
+  &.online .message-img:before {
+    background: #7ed31e;
+  }
+  &.admin {
+    & .message-img:before {
+      display: none;
+    }
+    & .message-name {
+      font-weight: bold;
+    }
+  }
+  & hr {
+    margin: 15px -40px 5px -90px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3;
+  }
+}
 
   // ---------------------------- //

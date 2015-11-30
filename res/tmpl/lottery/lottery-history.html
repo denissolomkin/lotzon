@@ -1,4 +1,4 @@
-<div class="content-box tickets">
+<div id="lottery-history" class="content-box tickets">
     <div class="grid-container lottery-grid header-box grid-nomargin">
         <div class="width-100">
             <p class="title">
@@ -17,16 +17,15 @@
 
                     <div class="content-box-item-top clearfix">
                         <div class="content-box-cat">
-                    <span class="position-relative">
-                        <input id="brt-points" name="type" type="radio" value="mine">
-                        <label for="brt-points">{{i18n "title-lottery-history-mine"}} </label>
-                    </span>
-                    <span class="position-relative">
-                        <input id="brt-money" name="type" type="radio" value="" checked>
-                        <label for="brt-money">{{i18n "title-lottery-history-all"}}</label>
-                    </span>
+                            <span class="position-relative">
+                                <input id="radio-lottery-mine" name="type" type="radio" value="mine">
+                                <label for="radio-lottery-mine">{{i18n "title-lottery-history-mine"}} </label>
+                            </span>
+                            <span class="position-relative">
+                                <input id="radio-lottery-all" name="type" type="radio" value="" checked>
+                                <label for="radio-lottery-all">{{i18n "title-lottery-history-all"}}</label>
+                            </span>
                         </div>
-
                     </div>
 
                     <div class="content-box-item-content">

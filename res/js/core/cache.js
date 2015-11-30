@@ -231,6 +231,9 @@
                 cache = data.cache || false,
                 source = data.res || data;
 
+            if(data.player)
+                Player.init(data.player);
+
             /* if receive data for extend cache */
             if (cache) {
                 this.extend(data, path, cache)
@@ -271,7 +274,6 @@
         "update": function (object, key) {
 
             if (object && typeof object === 'object') {
-                console.log(key, object);
 
                 if (!key || !object.hasOwnProperty('id')) {
 

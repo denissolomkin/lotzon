@@ -1,0 +1,13 @@
+<div data-id="{{id}}" class='c-friend{{#if new}} new{{/if}}{{#if user.is_online}} online{{/if}} clearfix'>
+    <a href="/user/{{user.id}}">
+        <div class="c-friend-img">
+            <img src="{{avatar user.img user.id}}" alt="">
+        </div>
+        <div class="c-friend-description">
+            <div class="c-friend-name">{{ user.name }}</div>
+            <div class="c-friend-date">{{from date }}</div>
+            <div class="c-friend-news">{{ news }}</div>
+            <a href="/users/{{user.id}}/message" class="c-friend-msg">{{i18n "button-users-write-message"}}</a>
+        </div>
+    </a>
+</div>

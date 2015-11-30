@@ -148,38 +148,22 @@
 
         update: {
 
-            convert: function (data) {
-                Player.init(data)
-                    .updateBalance();
-            },
-
-            cashout: function (data) {
-                Player.init(data)
-                    .updateBalance();
-            },
-
             billing: function (data) {
-                Player.init(data);
                 R.push({
-                    template: 'profile-billing',
-                    replace: '.ci-personal-form-values'
+                    template: 'profile-billing'
                 });
             },
 
             details: function (data) {
-                Player.init(data);
                 R.push({
-                    template: 'profile-details',
-                    replace: '.ci-personal-form-values'
+                    template: 'profile-details'
                 });
 
             },
 
             settings: function (data) {
-                Player.init(data);
                 R.push({
-                    template: 'profile-settings',
-                    replace: '.ci-personal-form-values'
+                    template: 'profile-settings'
                 });
 
             }

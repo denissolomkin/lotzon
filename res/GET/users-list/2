@@ -1,13 +1,12 @@
 {
-    "status": 1,
-    "message": "OK",
     "res":{
-    "item":{
-                "id": "1",
-                "img": "/res/img/user_img.jpg",
-                "title": "Ноутбук Asus X551MA",
-                "games": "50000",
-                "money": "0"
-                }
+    "users":{
+    "2":{
+                        "id": "2",
+                        "img": "user_img.jpg",
+                        "name": "Участник №2"
+        }
+    }
+
 	}
 }

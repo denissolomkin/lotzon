@@ -28,22 +28,20 @@
             if (typeof str === 'string')
                 str = this.create(str);
 
-
             if (str) {
-
+console.log('str', str);
                 if (str.length && !("nodeType" in str)) {
                     while (str.length > 0) {
                         !prepend
                             ? el.appendChild(str[0])
                             : el.insertBefore(str[0], el.firstChild);
                     }
-                } else {
+                } else if ("nodeType" in str){
                     !prepend
                         ? el.appendChild(str)
                         : el.insertBefore(str, el.firstChild);
                 }
             }
-
 
         },
 

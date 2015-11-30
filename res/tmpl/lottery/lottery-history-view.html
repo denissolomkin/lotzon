@@ -2,19 +2,25 @@
 
 		<div class="content-box">
 
-            <div class="content-box-header back">{{day date}}</div>
+            <div class="content-box-header back"><span>назад</span>{{day date}}</div>
 
 			<div class="content-box-content clearfix">
 				<div class="content-box-item game_history_detail" data-lotteryid="{{id}}">
-					<div class="ghd-numbers clearfix">
-                        {{#combination}}
-						<span class="ghd-number">{{.}}</span>
-                        {{/combination}}
-					</div>
+					<div class="container clearfix">
+						<ul class="balls-end-game clearfix">
+		                {{#combination}}
+		                <li class="g-oc_li unfilled">
+		
+		                    <div class="goc_li-nb">
+		                        <span class="g-oc_span">{{.}}</span>
+		                    </div>
+		                </li>
+		                {{/combination}}
+		            	</ul>
 
-					<div id="lottery-history-view-tickets" class="ghd-tickets" style="min-height: 100px;">
+						<div id="lottery-history-view-tickets" class="ghd-tickets" style="min-height: 100px;">
+						</div>
 					</div>
-
 					<div class="ghd-game-inf clearfix">
 						<div class="title">Общая информация о розыгрыше</div>
 						<table>

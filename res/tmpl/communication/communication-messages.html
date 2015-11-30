@@ -7,15 +7,13 @@
 
 
     <form action="/communication/messages/list" method="get" class="render-list-form">
-
         <div class="render-list" id="communication-messages-list">
+            {{partial 'communication-messages-list' this}}
         </div>
 
         <div class="container-center">
-            <button type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}
-            </button>
+            <button name="submit" type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}</button>
         </div>
-
     </form>
 
 </div>

@@ -1,7 +1,6 @@
 {
-    "status": 1,
     "message": "OK",
-    "res":{
+    "player":{
         "billing": {
             "webMoney": "R333289102947",
             "yandexMoney": "410011590761950",

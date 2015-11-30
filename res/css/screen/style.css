@@ -203,6 +203,9 @@ html {
 .menu-balance-btn {
   display: none; }
 
+.menu-btn-item.menu-logout-btn {
+  display: none; }
+
 .header-right {
   position: relative;
   float: right; }

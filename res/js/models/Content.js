@@ -2,6 +2,19 @@
 
     Content = {
 
+        initDaterange: function () {
+
+            D.log('Reports.init');
+            if ($('.daterange')
+                    .filter(':visible')
+                    .filter(function () {
+                        return !$(this).data('daterangepicker')
+                    })
+                    .daterangepicker().length)
+                Content.enableForm();
+
+        },
+
         enableForm: function () {
 
             D.log('Content.enableForm', 'content');
@@ -40,7 +53,7 @@
             if (!form.classList.contains('render-list-form'))
                 return true;
 
-            var renderList = form.querySelector(".render-list"),
+            var renderList = form.querySelector(".render-list") || form.previousSibling,
                 query = $(form).serializeObject();
 
             if (event && event.type === 'change') {
@@ -107,7 +120,7 @@
 
         updateBanners: function () {
 
-            if (/192.168.56.101|lotzon.com/.test(location.hostname)) {
+            if (/lotzon.com/.test(location.hostname)) {
                 R.push('/banner/desktop/top');
                 R.push('/banner/desktop/right');
                 //R.push('/banner/desktop/fixed');
@@ -136,9 +149,9 @@
 
             autoload: function (options) {
 
-                D.log('Content.after.autoload', 'content');
+                D.log(['Content.after.autoload',options.node.id], 'content');
 
-                if (infiniteScrolling = options.node.parentNode.querySelector('.loading')) {
+                if (infiniteScrolling = options.node.parentNode.querySelector('.infinite-scrolling.loading')) {
                     if (!Object.size(options.json) || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
                         infiniteScrolling.parentNode.removeChild(infiniteScrolling);
                     } else {

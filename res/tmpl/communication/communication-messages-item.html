@@ -1,4 +1,4 @@
-﻿<div id="communication-messages-{{id}}" class="message">
+﻿<div id="communication-messages-{{id}}" data-id="{{id}}" class="message">
     <a href="/users/{{user.id}}/messages">
         <div class="message-img">
             <img src="{{avatar user.img user.id}}" alt="">
@@ -8,4 +8,5 @@
             {{{text}}}
         </div>
     </a>
+    <hr>
 </div>
