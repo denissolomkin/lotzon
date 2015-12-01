@@ -101,7 +101,7 @@
                     setTimeout(function () {
                         $.ajax({
                             url: formUrl,
-                            method: "post", // formMethod
+                            method: /192.168.56.101/.test(location.hostname) ? "post" : formMethod,
                             data: formData,
                             dataType: 'json',
                             statusCode: {

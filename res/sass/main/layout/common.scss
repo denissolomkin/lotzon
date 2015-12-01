@@ -11,6 +11,11 @@ body {
   position: relative;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
+
+}
+.wrapper {
+  height: 100%;
+  min-height: 100%;
   padding-bottom: 50px;
 }
 
@@ -520,3 +525,20 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 
+.content-box-header {
+  &.back {
+    font-family: handbookpro-regular;
+    padding-left: 50px;
+    padding-top: 7px;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 15px;
+      height: 30px;
+      background: url(img/sprite.png) -178px -188px;
+    }
+  } 
+}

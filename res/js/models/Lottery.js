@@ -131,7 +131,7 @@
                 if (!isNumeric(i))
                     continue;
 
-                $('tr.balls-matches-' + i + ' td:eq(1)', $table).append(lotterySummary[i].currency)
+                $('tr.balls-matches-' + i + ' td:eq(0)')
                     .delay(1000)
                     .next().html(lotterySummary[i].matches).spincrement()
                     .next().html('<span>' + lotterySummary[i].sum + '</span> <span>' + lotterySummary[i].currency + '</span>')

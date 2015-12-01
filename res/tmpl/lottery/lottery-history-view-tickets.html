@@ -14,7 +14,7 @@
                 {{/combination}}
                 {{^combination}}
                 <li class="unfilled">
-                    не заполнен
+                    не активен
                 </li>
                 {{/combination}}
             </ul>
@@ -24,15 +24,40 @@
 
 
 
+
     {{#if win}}
-    <div class="ghd-won">Ваш выигрыш:
-        {{#each win}}
-        {{prize}} {{currency}} &nbsp;
-        {{/each}}
+    <div class="ghd-text ghd-won">
+        <div class="grid-container">
+        
+            <div class="width-50">
+
+              <span>БАЛЛОВ ВЫИГРАНО:</span>
+               <strong>
+                {{#each win}}
+                {{#if (eq currency 'points') }}  
+                        {{prize}}
+                {{else}}0{{/if}}
+                {{/each}}
+
+              </strong>
+            </div>
+            <div class="width-50">
+              <span>ДЕНЕГ ВЫИГРАНО:</span> 
+
+             <strong>
+                {{#each win}}
+                    {{#if (eq currency 'money') }}
+                        {{prize}}
+                    {{else}}0{{/if}}
+                {{/each}}
+              </strong>
+        </div>                        
     </div>
+
     {{else}}
-    <div class="ghd-won">Ничего не выиграно</div>
+        <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
     {{/if}}
+
 
 
     {{else}}

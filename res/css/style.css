@@ -74,6 +74,10 @@ body {
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
+  min-height: 100%; }
+
+.wrapper {
+  height: 100%;
   min-height: 100%;
   padding-bottom: 50px; }
 
@@ -481,6 +485,20 @@ input.input-radio:checked + label.input-radio:before {
 
 .position-relative {
   position: relative; }
+
+.content-box-header.back {
+  font-family: handbookpro-regular;
+  padding-left: 50px;
+  padding-top: 7px; }
+  .content-box-header.back:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 15px;
+    height: 30px;
+    background: url(img/sprite.png) -178px -188px; }
 
 .footer {
   background: #ffe700;
@@ -1502,7 +1520,7 @@ div.comment-reply-btn {
   #blog-post-view .comment-img {
     top: 0; }
   #blog-post-view .comment .message-form {
-    margin: 0 -20px; } }
+    margin: 0; } }
 
 @media (min-width: 550px) {
   .post-inf {
@@ -3481,29 +3499,74 @@ div.comment-reply-btn {
   #lottery-history-view .content-box {
     background: none; }
   #lottery-history-view .content-box-header {
-    background: none; }
+    background: none;
+    padding-left: 0;
+    font-size: 20px;
+    font-weight: bold; }
+    #lottery-history-view .content-box-header span {
+      float: left;
+      position: relative;
+      left: 50px;
+      top: 2px;
+      font-size: 15px;
+      font-weight: normal; }
   #lottery-history-view .container {
     max-width: 500px;
     margin: 0 auto; }
     #lottery-history-view .container .balls-end-game {
-      font-size: 30px; }
+      font-size: 30px;
+      margin-top: 5px; }
       #lottery-history-view .container .balls-end-game .g-oc_li {
         width: 70px;
         height: 70px;
         font-size: 30px;
-        line-height: 70px; }
+        line-height: 70px;
+        margin-right: 16px; }
+        #lottery-history-view .container .balls-end-game .g-oc_li:last-child {
+          margin-right: 0; }
         #lottery-history-view .container .balls-end-game .g-oc_li .goc_li-nb {
           width: 70px;
           height: 70px;
           top: 0;
-          line-height: 70px; }
-  #lottery-history-view .ghd-tickets li ul li.filled-ball {
-    margin-right: 19px; }
+          line-height: 70px;
+          left: 0; }
+  #lottery-history-view .ghd-tickets li {
+    font-size: 15px;
+    margin-bottom: 0; }
+    #lottery-history-view .ghd-tickets li ul li.filled-ball {
+      margin-right: 17px; }
   #lottery-history-view .ghd-tickets li span {
-    margin-right: 35px; }
+    margin-right: 25px; }
+  #lottery-history-view .ghd-won {
+    font: 15px / 1 handbookpro-regular; }
+  #lottery-history-view .ghd-game-inf {
+    font-family: 'Handbook-bold';
+    margin-top: 30px;
+    padding: 0; }
+    #lottery-history-view .ghd-game-inf .title {
+      background: #8ac7cc;
+      margin: 0 -20px;
+      border-bottom: 0;
+      height: 40px;
+      line-height: 40px;
+      text-transform: uppercase;
+      margin-bottom: 15px; }
+    #lottery-history-view .ghd-game-inf .ghd-all-won {
+      border: 0;
+      text-transform: uppercase; }
+    #lottery-history-view .ghd-game-inf tr th {
+      text-align: center;
+      padding-bottom: 0 0 30px; }
+    #lottery-history-view .ghd-game-inf tr td {
+      text-align: center;
+      padding: 0; }
+      #lottery-history-view .ghd-game-inf tr td:nth-child(3) {
+        text-align: left;
+        padding-left: 100px; }
 
 #lottery-history-view-tickets {
-  padding: 0; }
+  padding: 0;
+  margin-top: 32px; }
 
 .lottery-history-items {
   position: relative;

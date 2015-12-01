@@ -1521,41 +1521,96 @@
 	}
 	& .content-box-header {
 		background: none;
+		padding-left: 0;
+		font-size: 20px;
+    	font-weight: bold;
+		& span {
+			float: left;
+			position: relative;
+			left: 50px;
+			top: 2px;
+			font-size: 15px;
+			font-weight: normal;
+		}
 	}
 	& .container {
 		max-width: 500px;
 		margin: 0 auto;
 		& .balls-end-game {
 			font-size: 30px;
+			margin-top: 5px;
 			& .g-oc_li {
 				width: 70px;
 				height: 70px;
 				font-size: 30px;
 				line-height: 70px;
+				margin-right: 16px;
+				&:last-child {
+					margin-right: 0;
+				}
 				& .goc_li-nb {
 					width: 70px;
 					height: 70px;
 					top: 0;
 					line-height: 70px;
+					left: 0;
 				}
 				
 			}
 		}
 	}			
-
 	& .ghd-tickets {
 		& li {
+			font-size: 15px;
+			margin-bottom: 0;
 			& ul {
 				& li {
 					&.filled-ball {
-				 		margin-right: 19px;
+				 		margin-right: 17px;
 				 	}
 				}
 			}
 		}
 		& li {
 			& span {
-    			margin-right: 35px;
+    			margin-right: 25px;
+			}
+		}
+	}
+	& .ghd-won {
+		font: 15px / 1 handbookpro-regular;
+	}
+	& .ghd-game-inf {
+		font-family: 'Handbook-bold';
+		margin-top: 30px;
+		padding: 0;
+		& .title {
+			background: #8ac7cc;
+			margin: 0 -20px;
+			border-bottom: 0;
+			height: 40px;
+			line-height: 40px;
+			text-transform: uppercase;
+			margin-bottom: 15px;
+		}
+		& .ghd-all-won {
+			border: 0;
+			text-transform: uppercase;
+		}
+		& tr {
+			& th {
+				text-align: center;
+				padding-bottom: 0 0 30px;	
+
+			}
+
+			& td {
+				text-align: center;
+				padding: 0;
+				&:nth-child(3) {
+					text-align: left;
+					padding-left: 100px;
+				}
 			}
 		}
 	}
@@ -1563,6 +1618,7 @@
 
 #lottery-history-view-tickets {
 	padding: 0;
+	margin-top: 32px;
 }
 
 .lottery-history-items {
