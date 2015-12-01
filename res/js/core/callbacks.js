@@ -73,6 +73,7 @@
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
 
+            "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,
             "communication-comments-replyform": Comments.after.replyForm,
 
