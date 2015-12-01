@@ -368,6 +368,9 @@ Config::instance()->publicResources = array(
         'get'  => 'controllers\production\CommentsController:list',
         'post' => 'controllers\production\CommentsController:create'
     ),
+    '/communication/comments/:commentId/like' => array(
+        'post' => 'controllers\production\CommentsController:like'
+    ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
 

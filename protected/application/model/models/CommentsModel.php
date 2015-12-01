@@ -18,4 +18,24 @@ class CommentsModel extends Model
     {
         return $this->getProcessor()->getList($module, $objectId, $count, $beforeId, $afterId, $status);
     }
+
+    public function getLikes($commentId)
+    {
+        return $this->getProcessor()->getLikes($commentId);
+    }
+
+    public function isLiked($commentId, $playerId)
+    {
+        return $this->getProcessor()->isLiked($commentId, $playerId);
+    }
+
+    public function like($commentId, $playerId)
+    {
+        return $this->getProcessor()->like($commentId, $playerId);
+    }
+
+    public function dislike($commentId, $playerId)
+    {
+        return $this->getProcessor()->dislike($commentId, $playerId);
+    }
 }

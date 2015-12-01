@@ -144,4 +144,88 @@ class CommentsDBProcessor implements IProcessor
 
         return $comments;
     }
+
+    public function getLikes($commentId)
+    {
+        $sql = "SELECT
+                    count(*) as c
+                FROM
+                  `PlayerReviewsLikes`
+                WHERE
+                  CommentId=:commentid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':commentid' => $commentId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $count = $sth->fetch()['c'];
+
+        return $count;
+    }
+
+    public function isLiked($commentId, $playerId)
+    {
+        $sql = "SELECT
+                    *
+                FROM
+                  `PlayerReviewsLikes`
+                WHERE
+                  CommentId=:commentid
+                AND
+                  PlayerId=:playerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':commentid' => $commentId,
+                ':playerid'  => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if (!$sth->rowCount()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function like($commentId, $playerId)
+    {
+        $sql = "INSERT INTO `PlayerReviewsLikes` (`CommentId`, `PlayerId`) VALUES (:commentid, :playerid)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':commentid' => $commentId,
+                ':playerid'  => $playerId,
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Like already set", 500);
+        }
+
+        return true;
+    }
+
+    public function dislike($commentId, $playerId)
+    {
+        $sql = "DELETE FROM `PlayerReviewsLikes` WHERE `CommentId`=:commentid AND `PlayerId`=:playerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':commentid' => $commentId,
+                ':playerid'  => $playerId,
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Like not set", 500);
+        }
+
+        return true;
+    }
+
 }
