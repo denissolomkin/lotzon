@@ -45,7 +45,7 @@ class Comment extends Entity
                     'name' => $this->getPlayerName(),
                 ),
                 'id'    => $this->getId(),
-                'date'  => date('d.m.Y H:i',$this->getDate()),
+                'date'  => $this->getDate(),
                 'text'  => $this->getText(),
                 'likes' => $this->getLikesCount(),
                 'img'   => $this->getImage()===NULL?"":$this->getImage(),
