@@ -1,11 +1,11 @@
 <form action="/communication/comments" method="post">
     <!-- COMMENT FORM -->
-    <div class="message-form-wrapper">
+    <div class="message-form-wrapper zoomInDown animated">
         <div class="message-form">
             <input type="hidden" name="user_id" value="{{user.id}}">
             <input type="hidden" name="comment_id" value="{{comment_id}}">
 
-            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">{{#if user.name}}{{user.name}},&nbsp;{{/if}}</div>
+            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">{{#if user.name}}<span>{{user.name}}</span>,&nbsp;{{/if}}</div>
 
             <div class="message-form-actions clearfix">
                  <label class="input-file-wrapper">

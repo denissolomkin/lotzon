@@ -318,13 +318,20 @@ input.input-radio:checked + label.input-radio:before {
 .input-file-wrapper {
   display: block;
   float: left;
-  overflow: hidden;
-  width: 21px;
-  height: 20px;
-  background: url(img/sprite.png) -383px -84px;
+  width: 20px;
+  height: 24px;
   cursor: pointer;
-  position: relative;
-  top: -3px; }
+  font-family: "fontello";
+  display: inline-block;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 20px; }
+  .input-file-wrapper:before {
+    content: '\e80c';
+    font-size: 18px; }
 
 .input-file {
   opacity: 0; }
@@ -346,7 +353,15 @@ input.input-radio:checked + label.input-radio:before {
   background: url(img/sprite.png) -4px -228px;
   position: relative;
   top: 3px;
-  cursor: pointer; }
+  cursor: pointer;
+  font-family: "fontello";
+  display: inline-block;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
 
 .modal-error,
 .modal-loading {
@@ -488,13 +503,12 @@ input.input-radio:checked + label.input-radio:before {
 
 .content-box-header.back {
   font-family: handbookpro-regular;
-  padding-left: 50px;
-  padding-top: 7px; }
+  padding-left: 0; }
   .content-box-header.back:before {
     content: "";
     display: block;
     position: absolute;
-    top: 20px;
+    top: 10px;
     left: 20px;
     width: 15px;
     height: 30px;
@@ -1201,16 +1215,16 @@ header .owl-theme .owl-controls .owl-page span {
     margin: 5px -20px 5px; }
   #blog-post-view .message-form-wrapper:hover hr {
     border-color: #b7cfd3; }
-  #blog-post-view .post-comments .render-list-form .message-form-wrapper {
+  #blog-post-view .post-comments .render-list .message-form-wrapper {
     padding-left: 70px;
     margin-top: -10px;
     padding-top: 0; }
-    #blog-post-view .post-comments .render-list-form .message-form-wrapper .message-form {
+    #blog-post-view .post-comments .render-list .message-form-wrapper .message-form {
       background: #fafafa;
       padding: 10px 20px 0; }
-    #blog-post-view .post-comments .render-list-form .message-form-wrapper hr {
+    #blog-post-view .post-comments .render-list .message-form-wrapper hr {
       display: none; }
-  #blog-post-view .render-list-form {
+  #blog-post-view .render-list {
     margin-top: 5px; }
   #blog-post-view .comment-content {
     margin-bottom: 20px;
@@ -1352,7 +1366,7 @@ div.comment-reply-btn {
     height: 21px;
     background: url(img/sprite.png) -360px -80px; }
 
-.render-list-form {
+.render-list {
   margin-top: 10px; }
 
 @media (min-width: 500px) {
@@ -1503,7 +1517,7 @@ div.comment-reply-btn {
     padding-left: 0; }
   #blog-post-view .comment-like {
     top: 18px; }
-  #blog-post-view .post-comments .render-list-form .message-form-wrapper {
+  #blog-post-view .post-comments .render-list .message-form-wrapper {
     padding-left: 0; }
   #blog-post-view .comment-inf {
     display: block;
@@ -1769,38 +1783,6 @@ div.comment-reply-btn {
 #communication {
   font-family: 'handbookpro-regular';
   font-size: 15px; }
-  #communication .content-box-tab {
-    padding: 0 20px;
-    position: relative; }
-  #communication .content-box-tab.back-tab {
-    padding: 0 20px 0 10px; }
-  #communication .content-box-header {
-    background: #a8d1d5; }
-  #communication .content-box-tab .count {
-    display: inline-block;
-    text-align: center;
-    color: #e6faff;
-    background: #ff2a46;
-    border-radius: 0;
-    height: 18px;
-    line-height: 18px;
-    padding: 0 4px;
-    font-weight: normal;
-    text-shadow: none;
-    font-size: 14px;
-    margin-left: 17px;
-    vertical-align: baseline;
-    position: absolute;
-    top: 3px;
-    border-radius: 3px;
-    text-shadow: 0 1px 0 #FF2A46; }
-  #communication .content-box-tab.active {
-    background: #4a4a4a;
-    cursor: default;
-    color: #ffffff;
-    text-shadow: 1px 1px 1px #4a4a4a; }
-  #communication .content-box-tab {
-    padding: 0 15px; }
   #communication .message-form-smileys {
     margin-left: 20px;
     top: -1px; }
@@ -1818,14 +1800,14 @@ div.comment-reply-btn {
     border-bottom: 1px solid #c3c3c3; }
   #communication .content-box-item {
     padding: 0 20px 30px; }
-  #communication .render-list-form .message-form-wrapper {
+  #communication .render-list .message-form-wrapper {
     padding-left: 70px;
     margin-top: -10px;
     padding-top: 0; }
-    #communication .render-list-form .message-form-wrapper .message-form {
+    #communication .render-list .message-form-wrapper .message-form {
       background: #fafafa;
       padding: 10px 20px 0; }
-    #communication .render-list-form .message-form-wrapper hr {
+    #communication .render-list .message-form-wrapper hr {
       display: none; }
   #communication .comment-content {
     margin-bottom: 20px;
@@ -1847,23 +1829,66 @@ div.comment-reply-btn {
       font-size: 17px;
       top: 50%; }
 
+.content-box-tab {
+  padding: 0 20px;
+  position: relative; }
+
+.content-box-tab.back-tab {
+  padding: 0 20px 0 10px; }
+
+.content-box-header {
+  background: #a8d1d5; }
+
+.content-box-tab .count {
+  display: inline-block;
+  text-align: center;
+  color: #e6faff;
+  background: #ff2a46;
+  border-radius: 0;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 4px;
+  font-weight: normal;
+  text-shadow: none;
+  font-size: 14px;
+  margin-left: 17px;
+  vertical-align: baseline;
+  position: absolute;
+  top: 3px;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 #FF2A46; }
+  .content-box-tab .count:empty {
+    display: none; }
+
+.content-box-tab.active {
+  background: #4a4a4a;
+  cursor: default;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px #4a4a4a; }
+
+.content-box-tab {
+  padding: 0 15px; }
+
 #communication-notifications-list .c-notification {
   padding: 7px 15px 7px 10px; }
 
 .nm-search {
   position: relative;
   max-width: 354px;
-  margin: 0 auto 100px; }
+  margin: 0 auto 0; }
 
 .enter-friend-name {
-  width: 210px;
+  width: 130px;
   display: block;
   margin: auto;
   border-width: 0 0 1px;
   border-style: solid;
-  border-color: #9b9b9b;
+  border-color: #979797;
   padding: 0 3px 1px;
-  line-height: 1.4; }
+  line-height: 1;
+  font-family: 'handbookpro-regular';
+  font-size: 15px;
+  margin-bottom: 20px; }
   .enter-friend-name.error {
     border-color: #ff4343; }
     .enter-friend-name.error::-webkit-input-placeholder {
@@ -1879,7 +1904,7 @@ div.comment-reply-btn {
 
 .nm-search-results {
   position: absolute;
-  top: 95%;
+  top: -20px;
   left: 0;
   width: 100%;
   max-width: 354px;
@@ -1912,28 +1937,30 @@ div.comment-reply-btn {
   vertical-align: middle; }
 
 .nm-selected {
-  display: table;
-  width: 100%;
   position: relative;
-  margin: 0 auto 50px; }
+  margin: 0 auto 0; }
   .nm-selected .nm-friend {
     cursor: default;
-    padding: 0; }
+    padding: 0;
+    text-align: center;
+    margin-top: -20px; }
     .nm-selected .nm-friend:hover {
       background: none; }
   .nm-selected .nm-friend-img {
-    display: block;
+    display: inline-block;
     margin: 0 auto 10px; }
   .nm-selected .nm-friend-name {
-    display: block;
+    display: inline-block;
     text-align: center;
-    font-weight: bold; }
+    font-weight: bold;
+    margin-left: 20px; }
   .nm-selected .nm-change {
-    display: table;
-    margin: 0 auto 20px;
-    font-size: 14px;
+    font-size: 15px;
     color: #ff4343;
-    cursor: pointer; }
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 21px; }
     .nm-selected .nm-change:hover {
       text-decoration: underline; }
 
@@ -1999,6 +2026,10 @@ div.comment-reply-btn {
     border: none;
     border-bottom: 1px solid #c3c3c3; }
 
+#communication-messages-new {
+  font-family: 'handbookpro-regular';
+  font-size: 15px; }
+
 .message {
   padding: 15px 10px 5px 0;
   margin-left: 60px;
@@ -2046,7 +2077,8 @@ div.comment-reply-btn {
   display: table-cell;
   vertical-align: middle; }
 
-.comment-name {
+.comment-name a {
+  display: inline-block;
   font-weight: bold;
   margin-right: 13px; }
 
@@ -2072,7 +2104,11 @@ div.comment-reply-btn {
   top: 0;
   right: 0;
   padding-left: 30px;
-  font-size: 14px; }
+  font-size: 14px;
+  background: none; }
+  .comment-like:hover {
+    background: none;
+    color: #000; }
   .comment-like:before {
     content: "";
     display: block;
@@ -2082,6 +2118,9 @@ div.comment-reply-btn {
     position: absolute;
     top: 2px;
     left: 0; }
+
+form.loading > * {
+  opacity: 0.5; }
 
 .comment-like-mob {
   display: none; }
@@ -2104,23 +2143,24 @@ div.comment-reply-btn {
 .communication-comments .message-form {
   padding: 0 10px; }
 
-.message-form-wrapper button[type="submit"] {
-  float: right;
-  border: none;
-  font-size: 13px;
-  background: none;
-  color: #4a90e2;
-  cursor: pointer;
-  font-family: Handbook-bold; }
-
-.message-form-wrapper .message-form-smileys {
-  margin-left: 20px;
-  top: -1px; }
-
-.message-form-wrapper hr {
-  margin: 5px -20px 5px;
-  border: none;
-  border-bottom: 1px solid #c3c3c3; }
+.message-form-wrapper {
+  font-family: handbookpro-regular;
+  font-size: 15px; }
+  .message-form-wrapper button[type="submit"] {
+    float: right;
+    border: none;
+    font-size: 13px;
+    background: none;
+    color: #4a90e2;
+    cursor: pointer;
+    font-family: Handbook-bold; }
+  .message-form-wrapper .message-form-smileys {
+    margin-left: 20px;
+    top: -1px; }
+  .message-form-wrapper hr {
+    margin: 5px -20px 5px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3; }
 
 .c-notifications {
   margin: 0 -10px 20px;
@@ -2260,6 +2300,9 @@ div.comment-reply-btn {
 
 .message-form-area {
   min-height: 22px; }
+  .message-form-area span {
+    font-weight: bold;
+    color: #000; }
 
 .games-previews .flex-box {
   font-family: handbookpro-regular;
@@ -4850,23 +4893,6 @@ span.input-prefix {
     padding-top: 8px;
     margin-right: 30px; } }
 
-#users .content-box-tab .count {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: #3d3d3d;
-  color: #ffe700;
-  font-size: 13px;
-  line-height: 1;
-  padding: 1px 4px; }
-
-#users .content-box-tab:before {
-  width: 25px;
-  height: 25px;
-  top: 11px;
-  background-position: -235px -130px; }
-
 #users .c-friend-date {
   color: #9b9b9b;
   font-size: 12px;
@@ -5010,6 +5036,9 @@ span.input-prefix {
 #users .c-friend-inf {
   font-size: 13px;
   margin-bottom: 9px; }
+
+#users .c-friend-inf div {
+  text-transform: capitalize; }
 
 #users .c-friend-msg {
   font-size: 14px;

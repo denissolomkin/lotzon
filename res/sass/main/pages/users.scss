@@ -3,24 +3,24 @@
 
 #users {
 
-  .content-box-tab .count {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #3d3d3d;
-    color: #ffe700;
-    font-size: 13px;
-    line-height: 1;
-    padding: 1px 4px;
-  }
+  // .content-box-tab .count {
+  //   display: block;
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   background: #3d3d3d;
+  //   color: #ffe700;
+  //   font-size: 13px;
+  //   line-height: 1;
+  //   padding: 1px 4px;
+  // }
 
-  .content-box-tab:before {
-    width: 25px;
-    height: 25px;
-    top: 11px;
-    background-position: -235px -130px;
-  }
+  // .content-box-tab:before {
+  //   width: 25px;
+  //   height: 25px;
+  //   top: 11px;
+  //   background-position: -235px -130px;
+  // }
 
   .c-friend-date {
     color: #9b9b9b;
@@ -196,7 +196,9 @@
     font-size: 13px;
     margin-bottom: 9px;
   }
-
+  .c-friend-inf div {
+      text-transform: capitalize;
+  }
   .c-friend-msg {
     font-size: 14px;
     color: #4a90e2;

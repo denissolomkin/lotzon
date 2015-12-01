@@ -167,14 +167,15 @@
                 "title-comments": "КОММЕНТАРИИ",
                 "title-messages": "СООБЩЕНИЯ",
                 "title-messages-new-message": "Новое сообщение",
-                "title-messages-enter-name": "Введите имя",
-                "title-messages-change-user": "Изменить получателя",
+                "title-messages-enter-name": "Введите имя друга",
+                "title-messages-change-user": "изменить",
 
                 "button-mark-all-as-read":"Пометить всё как прочитанное",
                 "button-see": "смотреть",
 
                 "message-notifications-new-answers": "новых ответов",
                 "message-notifications-you-have": "У Вас",
+                "title-notifications-answer-on": "на",
 
                 "button-message-new": "Новое сообщение",
                 "button-message-admin": "Написать админу",

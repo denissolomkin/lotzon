@@ -1,3 +1,13 @@
+.content-box {
+  margin: 0 -10px; }
+
+#communication-messages-new .content-box-item {
+  padding: 40px 20px 0; }
+
+.content-box-item {
+  padding-left: 20px;
+  padding-right: 20px; }
+
 .pushy, .wrapper, .push {
   -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.16, 0.68, 0.43, 0.99);
   -moz-transition: -moz-transform 0.2s cubic-bezier(0.16, 0.68, 0.43, 0.99);
@@ -133,6 +143,13 @@
   box-shadow: none;
   background: none; }
 
+#blog-post-view .post-comments .render-list .message-form-wrapper {
+  padding-left: 0; }
+
+@media (max-width: 479px) {
+  #blog-post-view .comment .message-form {
+    margin: 0 -20px; } }
+
 @media (max-width: 479px) {
   #communication .comment-content {
     padding-left: 0; }
@@ -154,10 +171,8 @@
     top: 18px; }
   #communication .c-notifications-list .c-notification-date {
     margin-left: 0; }
-  #communication .render-list-form .message-form-wrapper {
-    padding-left: 0; }
-  #communication .comment .message-form {
-    margin: 0 -20px; } }
+  #communication .render-list .message-form-wrapper {
+    padding-left: 0; } }
 
 #communication .content-box-tab {
   padding: 0 20px 0 30px; }

@@ -22,6 +22,12 @@
                         el.innerHTML = date;
                         fadeIn(el);
                     }
+
+                    /* todo set different interval for newest and older timestamps
+                     if(Math.abs(moment.unix(Livedate.fn.diff(date)).diff(moment(), 'days')) >= 2){
+                     }
+                    * */
+
                 }
 
             }, 1000 * 60);
@@ -33,7 +39,7 @@
             day: function (date, format) {
 
                 format = typeof format === 'string' && format || 'DD.MM.YYYY';
-                date = parseInt(date) + Livedate.diff;
+                date = Livedate.fn.diff(date);
 
                 switch (moment.unix(date).diff(moment(), 'days')) {
                     case -0:
@@ -48,12 +54,17 @@
             },
 
             from: function (date) {
-                return moment.unix((parseInt(date) + Livedate.diff)).fromNow();
+                return moment.unix(Livedate.fn.diff(date)).fromNow();
             },
 
             destroy: function () {
                 window.clearInterval(livedateInterval);
+            },
+
+            diff: function(date){
+                return parseInt(date) + Livedate.diff;
             }
+
         }
 
     }

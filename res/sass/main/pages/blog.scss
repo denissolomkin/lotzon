@@ -107,7 +107,7 @@
     }
   }
   & .post-comments {
-    & .render-list-form {
+    & .render-list{
       & .message-form-wrapper {
         padding-left: 70px;
         margin-top: -10px;
@@ -122,7 +122,7 @@
       }
     }
   }    
-  & .render-list-form {
+  & .render-list {
     margin-top: 5px;
   }
   & .comment-content {
@@ -295,7 +295,7 @@ div.comment-reply-btn {
   }
 }
 
-.render-list-form {
+.render-list {
   margin-top: 10px;
 }
 
@@ -495,7 +495,7 @@ div.comment-reply-btn {
     & .comment-like {
       top: 18px;
     }
-    .post-comments .render-list-form .message-form-wrapper {
+    .post-comments .render-list .message-form-wrapper {
       padding-left: 0;
     }
 

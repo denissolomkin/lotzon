@@ -53,39 +53,46 @@
             if (!form.classList.contains('render-list-form'))
                 return true;
 
-            var renderList = form.parentNode.querySelector(".render-list"),
-                query = $(form).serializeObject();
+            try {
 
-            if (event && event.type === 'change') {
+                var renderList = document.getElementById(U.parse(form.action)) || form.parentNode.querySelector(".render-list"),
+                    query = $(form).serializeObject();
 
-                R.push({
-                    href: form.action.replace('list', 'container'),
-                    json: {},
-                    query: query,
-                    after: Content.after.changeFilter
-                });
+                console.log(renderList);
 
-            } else {
+                if (event && event.type === 'change') {
 
-                var first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
-                    last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
-                    offset = renderList && renderList.childElementCount || null;
+                    R.push({
+                        href: form.action.replace('list', 'container'),
+                        json: {},
+                        query: query,
+                        after: Content.after.changeFilter
+                    });
 
-                if (first_id && last_id) {
-                    if (first_id > last_id)
-                        query.before_id = last_id;
-                    else
-                        query.after_id = last_id;
+                } else {
+
+                    var first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
+                        last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
+                        offset = renderList && renderList.childElementCount || null;
+
+                    if (first_id && last_id) {
+                        if (first_id > last_id)
+                            query.before_id = last_id;
+                        else
+                            query.after_id = last_id;
+                    }
+
+                    if (offset)
+                        query.offset = offset;
+
+                    R.push({
+                        href: form.action,
+                        query: query,
+                        after: Content.after.autoload
+                    });
                 }
-
-                if(offset)
-                    query.offset = offset;
-
-                R.push({
-                    href: form.action,
-                    query: query,
-                    after: Content.after.autoload
-                });
+            } catch (e) {
+                D.error.call(form, e.message);
             }
 
         },
@@ -149,7 +156,7 @@
 
             autoload: function (options) {
 
-                D.log(['Content.after.autoload',options.node.id], 'content');
+                D.log(['Content.after.autoload', options.node.id], 'content');
 
                 if (infiniteScrolling = options.node.parentNode.querySelector('button.loading')) {
                     if (!Object.size(options.json) || infiniteScrolling.classList.contains('die-infinite-scrolling')) {

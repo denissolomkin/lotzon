@@ -471,13 +471,13 @@ div.comment-reply-btn {
   background: white;
   z-index: 1; }
 
-#communication .content-box-tab {
-  padding: 0 20px 0 30px; }
-  #communication .content-box-tab [class^="i-"] {
+.content-box-tab {
+  padding: 0 30px 0 20px; }
+  .content-box-tab [class^="i-"] {
     display: none; }
-  #communication .content-box-tab [class*=" i-"] {
+  .content-box-tab [class*=" i-"] {
     display: none; }
-  #communication .content-box-tab .count {
+  .content-box-tab .count {
     position: static; }
 
 @media all and (max-width: 1024px) {

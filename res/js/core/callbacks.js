@@ -10,12 +10,7 @@
 
 
             /* navigation */
-            $(document).on('touchstart', '.site-overlay', function() {
-                return false
-            });
-            $(document).on('touchmove', '.site-overlay', function() {
-                return false
-            });
+            $(document).on('touchstart, touchmove', '.site-overlay', function() { return false });
             $(document).on('touchend', '.site-overlay', Device.do.hide);
             $(I.goTop).on('click', Device.do.goTop);
             $(document).on('click', I.Tabs, Navigation.do.switchTab);
@@ -36,8 +31,12 @@
             $(document).on('click', ".comment-content .comment-reply-btn", Comments.do.replyForm);
             $(document).on('click', ".comment-content", Comments.do.mobileForm);
 
+            /* notifications */
+            $(document).on('click', ".c-notification-description", Comments.do.viewComment);
+            $(document).on('click', ".close-notification", Comments.do.closeNotification);
+            $(document).on('click', ".c-show-notifications", Comments.showNotifications);
+
             /* form */
-            /* $(document).on('click', 'form:not(.render-list-form) [type="submit"]', Form.do.submit); */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
             $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
@@ -72,6 +71,7 @@
             "menu-slider": Slider.after,
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
+            "menu-navigation-mobile": Navigation.ready,
 
             "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,

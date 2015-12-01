@@ -4,18 +4,33 @@
 
         hide: function (event) {
 
-            $(I.comment).removeClass('active');
+            if (!DOM.parent('c-notifications',event.target))
+                Comments.hideNotifications();
 
-            if (!$(event.target).hasClass('c-show-notifications')) {
-                if ($(I.notificationsList).is(':visible')) {
-                    $(I.notificationsList).slideUp('fast');
+            /*
+
+             $(I.comment).removeClass('active');
+
+            else {
+
+                if (1 || document.getElementById('communication-notifications-list').children.length) {
+                    Comments.showNotifications();
+                    Content.infiniteScrolling();
+                } else {
+                    R.push({
+                        href: 'communication-notifications-list',
+                        after: Comments.showNotifications
+                    });
                 }
-            } else {
+            }
+            */
 
-                R.push({
-                    href: 'communication-notifications-list',
-                    after: Comments.showNotifications
-                });
+        },
+
+        hideNotifications: function () {
+
+            if ($(I.notificationsList).is(':visible')) {
+                $(I.notificationsList).slideUp('fast');
             }
         },
 
@@ -54,6 +69,33 @@
         },
 
         do: {
+
+            closeNotification: function(event){
+
+                var notification = this;
+                while(!notification.classList.contains('c-notification'))
+                    notification = notification.parentNode;
+
+                notification.parentNode.remove(notification);
+                //Cache.update({delete:{communication:{notifications:1}}});
+            },
+
+            viewComment: function(event){
+
+                var notification = this;
+                while(!notification.classList.contains('c-notification'))
+                    notification = notification.parentNode;
+
+                if(comment = document.getElementById(U.parse(this.action))){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    Comments.hideNotifications();
+                    DOM.scroll(comment);
+                }
+
+                Comments.do.closeNotification.call(this);
+
+            },
 
             replyForm: function () {
 

@@ -101,7 +101,7 @@
             if(node.querySelector('.modal-error div')){
                 DOM.append('<p>' + message + '<p>', node.querySelector('.modal-error div'));
             } else {
-                DOM.append('<div onclick="this.parentNode.removeChild(this)" class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span><p>' + message + '</p></div></div>', node);
+                DOM.append('<div onclick="this.parentNode.removeChild(this)" class="modal-error"><div class="animated zoomIn"><span>' + Cache.i18n('title-error') + '</span><p>' + message + '</p></div></div>', node);
             }
 
             if (0 && D.isEnable("clean"))

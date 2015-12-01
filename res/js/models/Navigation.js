@@ -4,7 +4,8 @@
 
         path: [],
         loadedBlocks: 0,
-        requiredBlocks: 2,
+        requiredBlocks: 3,
+        body: null,
 
         init: function (init) {
 
@@ -16,7 +17,6 @@
                 if (event.state)
                     R.push(event.state);
             };
-
 
             return this;
 
@@ -178,10 +178,16 @@
             },
 
             fix: function () {
-                D.log('Navigation.menu.fix', 'func');
-                (!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)
-                    ? $('body').addClass('fixed')
-                    : $('body').removeClass('fixed');
+
+                !this.body && (this.body = document.getElementsByTagName('body')[0]);
+
+                if((!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)){
+                    D.log('Navigation.menu.fix.add', 'func');
+                    this.body.classList.add('fixed');
+                } else if (this.body.classList.contains('fixed')){
+                    D.log('Navigation.menu.fix.remove', 'func');
+                    this.body.classList.remove('fixed');
+                }
             }
         },
 

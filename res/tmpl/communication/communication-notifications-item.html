@@ -1,16 +1,19 @@
 <div id="communication-notifications-{{id}}" class="c-notification clearfix">
     <div class="close-notification"></div>
-    <div class="c-notification-top">
-        <div class="c-notification-img">
-            <img src="{{avatar this.user.img this.user.id}}" alt="">
+    <a href="/communication/comments/{{comment_id}}">
+        <div class="c-notification-top">
+            <div class="c-notification-img">
+                <img src="{{avatar user.img user.id}}" alt="">
+            </div>
+            <div class="c-notificaion-inf">
+                <span class="c-notification-name">{{user.name}}</span>
+                <span class="c-notification-date"><span>{{from date}}</span></span>
+                <div class="c-notification-question">{{i18n "title-notifications-answer-on"}} <span>{{theme}}</span>
+                </div>
+            </div>
         </div>
-        <div class="c-notificaion-inf">
-            <span class="c-notification-name">{{user.name}}</span>
-            <span class="c-notification-date"><span>сегодня в</span><span>{{date}}</span></span>
-            <div class="c-notification-question">на <span>{{theme}}</span></div>
+        <div class="c-notification-description">
+            {{text}}
         </div>
-    </div>
-    <div class="c-notification-description">
-        {{text}}
-    </div>
+    </a>
 </div>

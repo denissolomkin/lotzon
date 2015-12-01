@@ -23,13 +23,24 @@
 
         },
 
+        parent: function(str, el){
+
+            var node = el;
+
+            while (node.parentNode && typeof node.classList !== "undefined" && !node.classList.contains(str)){
+                node = node.parentNode;
+            }
+
+            return node.classList && node.classList.contains(str) && node;
+
+        },
+
         insert: function f(str, el, prepend) {
 
             if (typeof str === 'string')
                 str = this.create(str);
 
             if (str) {
-console.log('str', str);
                 if (str.length && !("nodeType" in str)) {
                     while (str.length > 0) {
                         !prepend

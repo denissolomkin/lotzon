@@ -187,9 +187,11 @@ div.comment-reply-btn {
   }
 }
 
-#communication {
-  & .content-box-tab  {
-    padding: 0 20px 0 30px;
+// #communication {
+  
+// }
+& .content-box-tab  {
+    padding: 0 30px 0 20px;
     & [class^="i-"] {
       display: none;
     }
@@ -200,4 +202,3 @@ div.comment-reply-btn {
       position: static;
     }
   }
-}

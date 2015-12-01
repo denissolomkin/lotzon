@@ -6,6 +6,9 @@
         "queue": [],
         "isRendering": false,
         "timeout": 0,
+        "animation":{
+            "loading": false
+        },
 
         "init": function () {
         },
@@ -473,8 +476,7 @@
                 case "start":
 
                     D.log(['Render.run:', options.template, options.href, options.json], 'info');
-                    if (options.node) {
-
+                    if (options.node && R.animation.loading) {
                         DOM.remove('.modal-error', options.node);
                         DOM.append('<div class="modal-loading"><div></div></div>', options.node);
                     }

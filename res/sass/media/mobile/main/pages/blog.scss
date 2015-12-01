@@ -1,0 +1,11 @@
+#blog-post-view .post-comments .render-list .message-form-wrapper {
+	padding-left: 0;
+}
+// #blog-post-view .content-box-item {
+//     padding: 20px 10px 20px;
+// }
+@media (max-width: 479px) {
+	#blog-post-view .comment .message-form {
+	    margin: 0 -20px;
+	}
+}
