@@ -83,7 +83,7 @@
                     commentsNode = commentsNode.parentNode;
 
                 // delete other forms
-                var existingForms = commentsNode.getElementsByTagName('FORM');
+                var existingForms = commentsNode.querySelectorAll('.comment > form');
                 if (existingForms.length)
                     for (var i = 0; i < existingForms.length; i++)
                         existingForms[i].parentNode.removeChild(existingForms[i]);
