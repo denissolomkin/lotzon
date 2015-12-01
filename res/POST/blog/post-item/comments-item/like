@@ -1,0 +1,20 @@
+{
+  "res": {
+    "blog": {
+      "post": {
+        "1": {
+          "comments": {
+            "1": {
+                "like":{
+                    "id": 1,
+                    "likes": 12,
+                    "is_liked": true,
+                    "post_id": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

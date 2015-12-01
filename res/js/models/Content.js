@@ -53,7 +53,7 @@
             if (!form.classList.contains('render-list-form'))
                 return true;
 
-            var renderList = form.querySelector(".render-list") || form.previousSibling,
+            var renderList = form.parentNode.querySelector(".render-list"),
                 query = $(form).serializeObject();
 
             if (event && event.type === 'change') {

@@ -1,0 +1,5 @@
+<form id="communication-comments-{{or comment_id id}}-like"
+      method="{{#if is_liked}}delete{{else}}post{{/if}}"
+      action="/communication/comments/{{or comment_id id}}/like">
+    <button type="submit" class="{{#if is_liked}}is-liked{{/if}} comment-like">{{likes}}</button>
+</form>

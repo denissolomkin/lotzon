@@ -1,6 +1,9 @@
 form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner-5{
     position: relative;
 }
+.comment-content form{
+    position: initial;
+}
 .comment, .answers {
     position: relative;
 }
@@ -17,6 +20,9 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
     width: 100%;
     height: 100%;
     z-index: 20;
+}
+.modal-error div {
+    border: lightgray 1px solid;
 }
 
 /* already exist, just adding */
