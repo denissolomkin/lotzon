@@ -141,8 +141,6 @@ class CommentsController extends \AjaxController
         try {
             if (!$is_liked) {
                 CommentsModel::instance()->like($commentId, $playerId);
-            } else {
-                CommentsModel::instance()->dislike($commentId, $playerId);
             }
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
