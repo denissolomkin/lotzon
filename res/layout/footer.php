@@ -165,6 +165,8 @@
             "settings": {}
         },
 
+        timestamp = <?php echo time();?>,
+
         slider = {
             "sum": 353944,
             "winners": 34260,
@@ -173,7 +175,7 @@
             "timer": 353944,
             "lottery": {
                 "id": 345,
-                "date": '20.41.2014',
+                "date": '441676800',
                 "balls": [5, 1, 32, 18, 14, 49]
             }
         },
@@ -249,7 +251,7 @@ endforeach;
         D.init(debug); // init debugger
         Slider.init(slider); // echo slider
         Navigation.init(menu); // init navigation
-        Livedate.init(); // update dates in realtime
+        Livedate.init(timestamp); // update dates in realtime
 	    Device.init(); // detect
 
         Cache.drop().init(); // init cache engine

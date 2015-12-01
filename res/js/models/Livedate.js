@@ -2,7 +2,13 @@
 
     Livedate = {
 
-        init: function () {
+        diff: 0,
+
+        init: function (unix) {
+
+            this.diff = (Math.abs(moment().unix() - unix) > 10) ? (moment().unix() - unix) : (1);
+
+            console.log("Livedate Diff:", moment().unix(), unix, this.diff);
 
             livedateInterval = window.setInterval(function () {
 
@@ -27,7 +33,7 @@
             day: function (date, format) {
 
                 format = typeof format === 'string' && format || 'DD.MM.YYYY';
-                date = parseInt(date);
+                date = parseInt(date) + Livedate.diff;
 
                 switch (moment.unix(date).diff(moment(), 'days')) {
                     case -0:
@@ -42,7 +48,7 @@
             },
 
             from: function (date) {
-                return moment.unix(parseInt(date)).fromNow();
+                return moment.unix((parseInt(date) + Livedate.diff)).fromNow();
             },
 
             destroy: function () {
