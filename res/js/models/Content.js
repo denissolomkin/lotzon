@@ -151,7 +151,7 @@
 
                 D.log(['Content.after.autoload',options.node.id], 'content');
 
-                if (infiniteScrolling = options.node.parentNode.querySelector('.infinite-scrolling.loading')) {
+                if (infiniteScrolling = options.node.parentNode.querySelector('button.loading')) {
                     if (!Object.size(options.json) || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
                         infiniteScrolling.parentNode.removeChild(infiniteScrolling);
                     } else {
