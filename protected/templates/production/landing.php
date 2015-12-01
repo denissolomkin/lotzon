@@ -185,6 +185,7 @@
             <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="3"></a>
         </div>
     </section>
+    <?php /* ?>
     <section id="slide3" class="display-slide">
         <div class="a-dt-b">
             <div class="a-dt_tr top">
@@ -232,6 +233,7 @@
             <a href="javascript:void(0)" class="_a-b-b to-slide" data-slide="4"></a>
         </div>
     </section>
+    <?php */ ?>
 </article>
 
 <!--  ct-on -->

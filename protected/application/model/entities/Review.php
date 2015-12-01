@@ -6,19 +6,20 @@ class Review extends Entity
     const IMAGE_WIDTH = 960;//480;
     const IMAGE_HEIGHT = 600;//150;
 
-    private $_id            = 0;
-    private $_reviewId      = null;
-    private $_status        = '';
-    private $_image         = '';
-    private $_text          = '';
-    private $_playerName    = '';
-    private $_playerAvatar  = '';
-    private $_playerId      = '';
-    private $_playerEmail   = '';
-    private $_userId        = 0;
-    private $_isPromo        = 0;
-    private $_userName      = '';
-    private $_date          = '';
+    private   $_id           = 0;
+    private   $_reviewId     = null;
+    private   $_status       = '';
+    private   $_image        = '';
+    private   $_text         = '';
+    private   $_playerName   = '';
+    private   $_playerAvatar = '';
+    private   $_playerId     = '';
+    private   $_playerEmail  = '';
+    private   $_userId       = 0;
+    private   $_isPromo      = 0;
+    private   $_userName     = '';
+    private   $_date         = '';
+    protected $_toPlayerId   = null;
     
     public function init()
     {

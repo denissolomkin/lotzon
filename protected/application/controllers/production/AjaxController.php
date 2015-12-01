@@ -28,4 +28,21 @@ class AjaxController extends \SlimController\SlimController {
 
         die(json_encode($response));
     }
+
+    public function ajaxResponseCode(array $data, $code = 200) {
+        http_response_code($code);
+        die(json_encode($data));
+    }
+
+    public function ajaxResponseUnauthorized() {
+        $this->ajaxResponseCode(array(),401);
+    }
+
+    public function ajaxResponseInternalError($message = NULL) {
+        if ($message) {
+            $response = array("message"=>$message);
+        } else
+            $response = array();
+        $this->ajaxResponseCode($response,500);
+    }
 }

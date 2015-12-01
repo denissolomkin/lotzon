@@ -132,7 +132,8 @@ class Reviews extends PrivateArea
                 $review = new Review;
                 $review->formatFrom('DB',$data)
                     ->setDate(time())
-                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId());
+                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setToPlayerId($this->request()->post('edit')['PlayerId']);
                 $reviews[] = $review;
             }
 

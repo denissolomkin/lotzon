@@ -364,6 +364,10 @@ Config::instance()->publicResources = array(
     '/lnk/:uin' => array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
+    '/communication/comments/' => array(
+        'get'  => 'controllers\production\CommentsController:list',
+        'post' => 'controllers\production\CommentsController:create'
+    ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
 

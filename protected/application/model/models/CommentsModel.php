@@ -14,8 +14,8 @@ class CommentsModel extends Model
         return __CLASS__;
     }
 
-    public function getList()
+    public function getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status = 1)
     {
-        return $this->getProcessor()->getList();
+        return $this->getProcessor()->getList($module, $objectId, $count, $beforeId, $afterId, $status);
     }
 }

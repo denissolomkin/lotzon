@@ -173,7 +173,7 @@ class Index extends \SlimController\SlimController
         }
 
         $lotterySettings = LotterySettingsModel::instance()->loadSettings();
-        $comments = CommentsModel::instance()->getList();
+        //$comments = CommentsModel::instance()->getList();
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getMaxId(),
