@@ -1,0 +1,137 @@
+#lottery-history-view {
+	background: url(../img/bg-win.png);
+	& .content-box {
+		background: none;
+	}
+	& .content-box-header {
+		background: none;
+		padding-left: 0;
+		font-size: 20px;
+    	font-weight: bold;
+		& span {
+			float: left;
+			position: relative;
+			left: 50px;
+			top: 2px;
+			font-size: 15px;
+			font-weight: normal;
+		}
+	}
+	& .content-box-item {
+		padding-top: 10px;
+	}
+	& .container {
+		max-width: 298px;
+		margin: 0 auto;
+		min-width: 0;
+		& .balls-end-game {
+			font-size: 30px;
+			margin-top: 5px;
+			& .g-oc_li {
+				width: 41px;
+				height: 41px;
+				font-size: 30px;
+				line-height: 40px;
+				margin-right: 10px;
+				font: 15px Handbook-bold;
+				&:last-child {
+					margin-right: 0;
+				}
+				& .goc_li-nb {
+					width: 41px;
+					height: 41px;
+					top: 0;
+					line-height: 40px;
+					left: 0;
+				}
+				
+			}
+		}
+	}			
+	& .ghd-tickets {
+		& li {
+			font-size: 15px;
+			margin-bottom: 0;
+			& ul {
+				& li {
+					&.filled-ball {
+				 		margin-right: 6px;
+				 	}
+				}
+			}
+		}
+		& li {
+			& span {
+    			margin-right: 15px;
+	    		&.gold {
+	    			margin-right: 0;
+	    		}
+			}
+		}
+	}
+	& .ghd-won {
+		font: 15px / 1 handbookpro-regular;
+		& .grid-container {
+			max-width: 290px;
+		}
+	}
+	& .ghd-game-inf {
+		margin-top: 30px;
+		padding: 0;
+		& .title {
+			background: #87c1cd;
+			margin: 0 -20px;
+			border-bottom: 0;
+			height: 40px;
+			line-height: 40px;
+			text-transform: uppercase;
+			margin-bottom: 15px;
+		}
+		& .ghd-all-won {
+			border: 0;
+			text-transform: uppercase;
+			float: none;
+			padding-top: 5px;
+			& span {
+				margin-left: 5px;
+				&:nth-of-type(2) {
+					margin-left: 20px;
+				}
+			}
+		}
+		& table {
+			width: 298px;
+    		margin: 0 auto 10px;
+		}
+		& tr {
+			& th {
+				text-align: left;
+				vertical-align: top;
+				padding:  0 0 15px;
+				&:nth-child(2) {
+					padding:   0 15px 15px 0;
+				}
+				&:nth-child(3) {
+					padding:   0  15px 15px;
+				}
+
+			}
+
+			& td {
+				text-align: left;
+				padding-bottom: 6px;
+				&:nth-child(3) {
+					text-align: left;
+					padding-left: 15px;
+				}
+				&:nth-child(2) {
+					padding: 0 15px 6px 0;
+				}
+			}
+		}
+	}
+}
+
+#lottery-history-view .content-box-header span {
+	display: none;
+}

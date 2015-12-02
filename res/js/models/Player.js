@@ -197,7 +197,7 @@
         getAvatar: function (img, id, width) {
             img = typeof img === 'string' ? img : this.img;
             id = typeof id === 'string' ? id : this.id;
-            width = typeof id === 'string' ? width : 200;
+            width = typeof width === 'number' ? width : 200;
             return (img
                 ? '/filestorage/users/' + width + '/' + img
                 : '/res/img/default.jpg');

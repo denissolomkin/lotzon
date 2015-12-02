@@ -84,8 +84,6 @@ html {
 
 .header {
   margin-bottom: 30px; }
-  .header .container {
-    padding: 0; }
 
 .header-left {
   width: 680px;
@@ -187,11 +185,7 @@ html {
     margin-bottom: 0; }
 
 .menu-btn-item {
-  padding: 0 20px;
-  float: right;
-  height: 100%;
-  cursor: pointer;
-  transition: all 0.2s linear; }
+  padding: 0 20px; }
   .menu-btn-item.menu-btn:before {
     top: 18px; }
   .menu-btn-item.menu-profile-btn:before {
@@ -892,7 +886,7 @@ div.comment-reply-btn {
 .ghd-won {
   margin-top: 24px; }
   .ghd-won .grid-container {
-    max-width: 320px; }
+    max-width: 360px; }
 
 @media (min-width: 1024px) {
   #lottery-process.lottery-won {

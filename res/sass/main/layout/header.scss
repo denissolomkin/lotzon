@@ -5,15 +5,12 @@
 .header {
   background: #f2efed;
   position: relative;
+  width: 100%;
+  z-index: 100;
 }
 
-.header .container {
-  padding: 0;
-}
 
-.header-left {
-  height: 40px;
-}
+
 
 .header-logo {
   float: left;
@@ -135,10 +132,7 @@ div {
   right: 32px;
 }
 
-.header {
-  width: 100%;
-  z-index: 100;
-}
+
 
 .menu {
   overflow: visible;
@@ -191,10 +185,6 @@ div {
 }
 
 .menu {
-  padding: 20px 0;
-  font-size: 15px;
-  width: 250px;
-  display: none;
   a {
     display: block;
     text-decoration: none;
@@ -209,7 +199,6 @@ div {
 }
 
 .menu-main {
-  padding-bottom: 15px;
   a {
     text-transform: uppercase;
     padding-top: 8px;
@@ -229,7 +218,6 @@ div {
 }
 
 .menu-more {
-  padding-top: 15px;
   a {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -310,12 +298,7 @@ div {
 
 // MENU BUTTONS ------------------------- //
 
-.menu-btns {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 40px;
-}
+
 
 .menu-btn-item {
   float: right;
