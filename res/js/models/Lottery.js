@@ -125,25 +125,41 @@
             var lotterySummary = this.summary,
                 $won = $('.ghd-game-inf .ghd-all-won'),
                 $table = $('.ghd-game-inf table');
-
-            for (var i in lotterySummary) {
-
-                if (!isNumeric(i))
-                    continue;
-
-                $('tr.balls-matches-' + i + ' td:eq(0)')
-                    .delay(1000)
-                    .next().html(lotterySummary[i].matches).spincrement()
-                    .next().html('<span>' + lotterySummary[i].sum + '</span> <span>' + lotterySummary[i].currency + '</span>')
-                    .find('span').first().spincrement();
+            setTimeout(function() {    
+            if ((document.querySelector('.ghd-game-inf .ghd-all-won') != undefined) && Device.onScreen.call(document.querySelector('.ghd-game-inf .ghd-all-won'), 100)) { 
+                summaryVisible();
             }
+            else {
 
-            $won.hide().delay(2000).fadeIn(1000);
-            setTimeout(function() {
-                for (var currency in lotterySummary.totalSum)
-                    $('span.' + currency, $won).html(lotterySummary.totalSum[currency]).spincrement()
-            }, 3000);
+                    $(window).on('scroll', summaryVisible);
+                }
 
+
+            }, 600); 
+
+       
+            function summaryVisible() {
+
+                for (var i in lotterySummary) {
+
+                    if (!isNumeric(i))
+                        continue;
+
+                    $('tr.balls-matches-' + i + ' td:eq(0)')
+                        .delay(1000)
+                        .next().html(lotterySummary[i].matches).spincrement()
+                        .next().html('<span>' + lotterySummary[i].sum + '</span> <span>' + lotterySummary[i].currency + '</span>')
+                        .find('span').first().spincrement();
+                }
+
+                $won.hide().delay(2000).fadeIn(1000);
+                setTimeout(function() {
+                    for (var currency in lotterySummary.totalSum)
+                        $('span.' + currency, $won).html(lotterySummary.totalSum[currency]).spincrement()
+                }, 3000);
+               $(window).off('scroll', summaryVisible); 
+            
+            }
         },
 
         view: function() {
@@ -246,6 +262,7 @@
             console.log('renderAnimation: ', json);
 
             R.push({
+                url: false,
                 json: json,
                 href: 'lottery-animation-process',
                 after: Lottery.runAnimation

@@ -161,7 +161,7 @@
 
 
                 if (infiniteScrolling = options.node.parentNode.querySelector('button.loading')) {
-                    if (!Object.size(options.json) || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
+                    if (!Object.size(options.json) || options.hasOwnProperty('lastItem') || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
                         DOM.remove(infiniteScrolling);
                     } else {
                         infiniteScrolling.classList.remove('loading');

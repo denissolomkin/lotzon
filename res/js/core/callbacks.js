@@ -7,6 +7,7 @@
             // handlers
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
+            
             $(document).on('click', Device.do.hide);
 
             /* navigation */

@@ -272,7 +272,6 @@
                 vpH = (window.innerHeight || document.documentElement.clientHeight),
                 st = document.body.scrollTop,
                 y = document.body.scrollTop + rect.top;
-
             return (y < (vpH + st)) && (y > (st - rect.height));
         }
     };
