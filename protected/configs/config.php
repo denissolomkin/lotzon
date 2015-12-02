@@ -380,6 +380,9 @@ Config::instance()->publicResources = array(
     '/lnk/:uin' => array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
+    /**
+     * Comments
+     */
     '/communication/comments/' => array(
         'get'  => 'controllers\production\CommentsController:list',
         'post' => 'controllers\production\CommentsController:create'
@@ -388,6 +391,12 @@ Config::instance()->publicResources = array(
         'post'   => 'controllers\production\CommentsController:like',
         'delete' => 'controllers\production\CommentsController:dislike'
     ),
+    '/communication/comments/:commentId' => array(
+        'get' => 'controllers\production\CommentsController:item'
+    ),
+    /**
+     * Blog
+     */
     '/blog/posts/' => array(
         'get' => 'controllers\production\BlogsController:list'
     ),

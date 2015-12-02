@@ -128,7 +128,7 @@ class CommentsDBProcessor implements IProcessor
         return $count;
     }
 
-    public function getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL)
+    public function getList($module, $objectId, $count = NULL, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL)
     {
         $sql = "SELECT
                     `PlayerReviews`.*,
@@ -150,8 +150,8 @@ class CommentsDBProcessor implements IProcessor
                 . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < $beforeId)")
                 . (($afterId === NULL)  ? "" : " AND (`PlayerReviews`.`Id` > $afterId)")
                 . "
-                ORDER BY `PlayerReviews`.`Id` DESC
-                LIMIT " . (int)$count;
+                ORDER BY `PlayerReviews`.`Id` DESC"
+                . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
