@@ -1,0 +1,58 @@
+{
+   "res":{
+      "communication":{
+         "comments":{
+            "3404":{
+               "user":{
+                  "id":"14",
+                  "img":"",
+                  "name":"sunbas"
+               },
+               "id":"3404",
+               "date":"12414213",
+               "text":"#3404 testets23",
+               "img":"",
+               "answers":{
+                  "17801":{
+                     "user":{
+                        "id":"20",
+                        "img":"comment_img.jpg",
+                        "name":"sunbas"
+                     },
+                     "comment_id": 3404,
+                     "id":"17801",
+                     "date":"125142131",
+                     "text":"#17801 sunbas, 23",
+                     "img":""
+                  },
+                  
+                  "17802":{
+                     "user":{
+                        "id":"20",
+                        "img":"comment_img.jpg",
+                        "name":"sunbas"
+                     },
+                     "comment_id": 3404,
+                     "id":"17802",
+                     "date":"154124124124",
+                     "text":"#17802 sunbas, 23",
+                     "img":""
+                  },
+                  "17803":{
+                     "user":{
+                        "id":"20",
+                        "img":"comment_img.jpg",
+                        "name":"sunbas"
+                     },
+                     "comment_id": 3404,
+                     "id":"17803",
+                     "date":"251241231",
+                     "text":"#17803 sunbas, 23",
+                     "img":""
+                  }
+               }
+            }
+   }
+}
+}
+}

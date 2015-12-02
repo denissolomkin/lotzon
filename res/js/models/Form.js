@@ -8,6 +8,107 @@
             submit: 0
         },
 
+        send: function (form) {
+
+            var that = this;
+
+            form.callback = U.parse(U.parse(form.action), 'tmpl');
+            form.url = U.generate(form.action, form.method);
+
+            /* FORM
+             * method: GET | POST | PUT | DELETE
+             * url: ACTION | HREF
+             * data: JSON
+             * callback: FUNCTION
+             * */
+
+            setTimeout(function () {
+                $.ajax({
+                    url: form.url,
+                    method: /192.168.56.101/.test(location.hostname) ? "post" : form.method,
+                    data: form.data,
+                    dataType: 'json',
+                    statusCode: {
+
+                        400: function (data) {
+                            Form.stop.call(that);
+                            D.error.call(that, (data.responseJSON.message || 'NOT FOUND') + "<br>" + form.url + '');
+                        },
+
+                        404: function (data) {
+                            Form.stop.call(that);
+                            D.error.call(that, (data.responseJSON.message || 'NOT FOUND') + "<br>" + form.url + '');
+                        },
+
+                        200: function (data) {
+
+                            if ('responseText' in data) {
+
+                                Form.stop.call(that);
+                                D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
+
+                            } else {
+
+                                Form.stop.call(that)
+                                    .message.call(that, data.message);
+
+                                if (data.player)
+                                    Player.init(data.player);
+
+                                if (Callbacks[form.method][form.callback]) {
+                                    D.log(['C.' + form.method + '.callback']);
+                                    Callbacks[form.method][form.callback].call(that, data.res);
+                                }
+
+                                if (data.res)
+                                    Cache.update(data.res);
+
+                            }
+
+                        },
+
+                        201: function (data) {
+
+                            if ('responseText' in data) {
+
+                                Form.stop.call(that);
+                                D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
+
+                            } else {
+
+                                Form.stop.call(that)
+                                    .message.call(that, data.message);
+
+                                if (data.player)
+                                    Player.init(data.player);
+
+                                if (Callbacks[form.method][form.callback]) {
+                                    D.log(['C.' + form.method + '.callback']);
+                                    Callbacks[form.method][form.callback].call(that, data.res);
+                                }
+
+                                if (data.res)
+                                    Cache.update(data.res);
+
+                            }
+
+                        },
+
+                        204: function (data) {
+                            Form.stop.call(that);
+                            throw (data.message);
+                        },
+
+                        405: function () {
+                            Form.stop.call(that);
+                            D.error.call(that, 'METHOD NOT ALLOWED: ' + form.method + '');
+                        }
+                    }
+                })
+            }, Form.timeout.submit);
+
+        },
+
         do: {
 
             validate: function (event) {
@@ -54,7 +155,6 @@
                         valid = false;
                     }
 
-
                     if (Callbacks.validate[callback]) {
                         console.log(4);
                         valid = !Callbacks.validate[callback].call(this, event) ? false : valid;
@@ -62,7 +162,7 @@
 
                 }
 
-                if(submit)
+                if (submit)
                     valid ? submit.classList.add('on') : submit.classList.remove('on');
 
                 return valid;
@@ -70,113 +170,31 @@
 
             submit: function (event) {
 
-                console.log(this, event);
-
                 var form = this;
 
                 while (form.nodeName !== 'FORM')
                     form = form.parentNode;
 
                 var button = form.elements['submit'],
-                    formMethod = form.getAttribute('method'),
-                    formUrl = U.generate(form.action, formMethod),
-                    formCallback = U.parse(U.parse(form.action), 'tmpl'),
-                    formData = $(form).serializeObject(),
+                    ajax = {
+                        action: form.action,
+                        method: form.getAttribute('method'),
+                        data: $(form).serializeObject()
+                    },
                     formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
                 D.log(['Form.submit.', form.action]);
 
                 for (var i = 0; i < formContenteditable.length; i++) {
-                    formData[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
+                    ajax.data[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
                 }
 
                 event && event.preventDefault() && event.stopPropagation();
-
                 Form.start.call(form, event);
 
                 if (!button || button.classList.contains('on')) {
-
                     D.log('button.submit', 'info');
-
-                    setTimeout(function () {
-                        $.ajax({
-                            url: formUrl,
-                            method: /192.168.56.101/.test(location.hostname) ? "post" : formMethod,
-                            data: formData,
-                            dataType: 'json',
-                            statusCode: {
-
-                                404: function (data) {
-                                    Form.stop.call(form);
-                                    D.error.call(form, data.message || 'NOT FOUND: '+formUrl+'');
-                                },
-
-                                200: function (data) {
-
-                                    if ('responseText' in data) {
-
-                                        Form.stop.call(form);
-                                        D.error.call(form,'SERVER RESPONSE ERROR: '+formUrl);
-
-                                    } else {
-
-                                        Form.stop.call(form)
-                                            .message.call(form, data.message);
-
-                                        if(data.player)
-                                            Player.init(data.player);
-
-                                        if (Callbacks[formMethod][formCallback]) {
-                                            D.log(['C.' + formMethod + '.callback']);
-                                            Callbacks[formMethod][formCallback].call(form, data.res);
-                                        }
-
-                                        if(data.res)
-                                            Cache.update(data.res);
-
-                                    }
-
-                                },
-
-                                201: function (data) {
-
-                                    if ('responseText' in data) {
-
-                                        Form.stop.call(form);
-                                        D.error.call(form,'SERVER RESPONSE ERROR: '+formUrl);
-
-                                    } else {
-
-                                        Form.stop.call(form)
-                                            .message.call(form, data.message);
-
-                                        if(data.player)
-                                            Player.init(data.player);
-
-                                        if (Callbacks[formMethod][formCallback]) {
-                                            D.log(['C.' + formMethod + '.callback']);
-                                            Callbacks[formMethod][formCallback].call(form, data.res);
-                                        }
-
-                                        if(data.res)
-                                            Cache.update(data.res);
-
-                                    }
-
-                                },
-
-                                204: function (data) {
-                                    Form.stop.call(form);
-                                    throw (data.message);
-                                },
-
-                                405: function () {
-                                    Form.stop.call(form);
-                                    D.error.call(form,'METHOD NOT ALLOWED: '+formMethod+'');
-                                }
-                            }
-                        })
-                    }, Form.timeout.submit);
+                    Form.send.call(form, ajax);
                 }
             }
         },
@@ -190,17 +208,18 @@
                 case 'INPUT':
 
                     switch (node.type) {
+
                         case 'text':
                         case 'hidden':
                             filter = node.value === ''
-                                || (node.classList.contains('float') && parseFloat(node.value) <= 0)
-                                || (node.classList.contains('int') && parseInt(node.value) <= 0);
+                            || (node.classList.contains('float') && parseFloat(node.value) <= 0)
+                            || (node.classList.contains('int') && parseInt(node.value) <= 0);
                             break;
                         case 'radio':
-                            filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length !== 1
+                            filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length !== 1;
                             break;
                         case 'checkbox':
-                            filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length === 0
+                            filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length === 0;
                             break;
                     }
 
@@ -251,7 +270,7 @@
                 formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
             // clear form after adding new entities
-            if(form.getAttribute('method') === 'post' || form.getAttribute('method') === 'POST') {
+            if (form.getAttribute('method') === 'post' || form.getAttribute('method') === 'POST') {
                 form.reset();
                 for (var i = 0; i < formContenteditable.length; i++) {
                     formContenteditable[i].innerHTML = '';
@@ -261,7 +280,7 @@
             if (!message)
                 return Form;
 
-            var modal = DOM.create('<div class="modal-message"><div>' + Cache.i18n(message) + '</div></div>')[0];
+            var modal = DOM.create('<div class="modal-message"><div>' + Cache.i18n(message) + '</div></div>');
             form.appendChild(modal);
 
             setTimeout(

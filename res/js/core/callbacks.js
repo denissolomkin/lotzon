@@ -3,24 +3,24 @@
     Callbacks = {
 
         "init": function () {
+
             // handlers
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
             $(document).on('click', Device.do.hide);
 
-
             /* navigation */
-            $(document).on('touchstart, touchmove', '.site-overlay', function() { return false });
+            $(document).on('touchstart', '.site-overlay', function () {
+                return false
+            });
+            $(document).on('touchmove', '.site-overlay', function () {
+                return false
+            });
             $(document).on('touchend', '.site-overlay', Device.do.hide);
-            $(I.goTop).on('click', Device.do.goTop);
-            $(document).on('click', I.Tabs, Navigation.do.switchTab);
-            $(document).on('click', I.Cats, Navigation.do.switchCat);
-            $(document).on('click', '.menu-mobile a', Navigation.do.loadPage);
-            $(document).on('click', 'a', Navigation.do.loadBlock);
-            $(document).on('click', 'div.back', Navigation.do.backBlock);
+            $('.go-to-top').on('click', Device.do.goTop);
 
             /* ticket */
-            $(document).on('click', I.TicketTabs, Ticket.switch);
+            $(document).on('click', Ticket.tabs, Ticket.switch);
 
             /* new message*/
             $(document).on('input', ".enter-friend-name", Message.do.searchUser);
@@ -32,9 +32,14 @@
             $(document).on('click', ".comment-content", Comments.do.mobileForm);
 
             /* notifications */
-            $(document).on('click', ".c-notification-description", Comments.do.viewComment);
+            $(document).on('click', ".c-notification a", Comments.do.viewComment);
             $(document).on('click', ".close-notification", Comments.do.closeNotification);
-            $(document).on('click', ".c-show-notifications", Comments.showNotifications);
+            $(document).on('click', ".c-hide-notifications, .close-list", Comments.do.deleteNotifications);
+            $(document).on('click', ".c-show-notifications", Comments.do.showNotifications);
+
+
+            /* navigation : after notifications*/
+            $(document).on('click', 'div.back', Navigation.do.backBlock);
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -112,7 +117,7 @@
 
         },
 
-        "error":{
+        "error": {
 
             "lottery-gold": Ticket.error.gold,
             "prizes-exchange-goods": Prize.error.exchange,

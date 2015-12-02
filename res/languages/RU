@@ -12,8 +12,10 @@
                 "message-lottery-ticket-7": "для доступа к билету №7 вы должны принять участие в 100 розыгрышах",
                 "message-lottery-ticket-8": "для доступа к золотому билету №8 вы должны его приобрести",
                 "title-lottery-ticket": "Билет",
+                "title-lottery-ticket-gold-price": "Цена золотого билета",
                 "button-lottery-ticket-favorite": "настраивается в кабинете",
                 "button-lottery-ticket-add": "Подтвердить",
+                "button-lottery-ticket-gold-buy": "Купить золотой билет",
 
                 "menu-blog": "Блог",
                 "menu-lottery": "Лотерея",

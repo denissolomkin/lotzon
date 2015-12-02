@@ -46,7 +46,7 @@
             switch (type) {
 
                 case "url":
-                    return url.replace(/^\//, "").replace(/-/g, '/');
+                    return url.replace(document.location.origin, "/").replace(/^\//, "").replace(/-/g, '/');
                     break;
 
                 case "anchor":
@@ -87,6 +87,9 @@
                     if (url !== window.location.pathname) {
                         console.log(options.init);
                         D.log(['updateURL:', url], 'info');
+                        $("html, body").animate({scrollTop: 0}, 'slow');
+                        Navigation.menu.hide();
+                        Content.updateBanners();
                         history.pushState(options.init, "Lotzon", url);
                     }
 

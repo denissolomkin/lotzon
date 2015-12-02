@@ -69,7 +69,6 @@
         }
     };
 
-
     compare = function(array1, array2){
 
         var check = false;
@@ -84,6 +83,7 @@
         return check;
 
     };
+
     visible = function (el, parent) {
 
         var visibleElements = [];

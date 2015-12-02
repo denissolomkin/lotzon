@@ -23,15 +23,26 @@
 
         },
 
-        parent: function(str, el){
+        up: function (str, el, method) {
 
-            var node = el;
-
-            while (node.parentNode && typeof node.classList !== "undefined" && !node.classList.contains(str)){
-                node = node.parentNode;
+            switch (method){
+                case "class":
+                default:
+                    while (el && el.classList && !el.classList.contains(str) && el.parentNode)
+                        el = el.parentNode;
+                    return el.classList && el.classList.contains(str) && el;
+                    break;
+                case "id":
+                    while (el && el.id !== str && el.parentNode)
+                        el = el.parentNode;
+                    break;
+                case "tag":
+                    while (el && el.nodeName !== str && el.parentNode)
+                        el = el.parentNode;
+                    break;
             }
 
-            return node.classList && node.classList.contains(str) && node;
+            return el;
 
         },
 
@@ -47,7 +58,7 @@
                             ? el.appendChild(str[0])
                             : el.insertBefore(str[0], el.firstChild);
                     }
-                } else if ("nodeType" in str){
+                } else if ("nodeType" in str) {
                     !prepend
                         ? el.appendChild(str)
                         : el.insertBefore(str, el.firstChild);
@@ -57,9 +68,12 @@
         },
 
         create: function (str) {
+
             var div = document.createElement('div');
             div.innerHTML = str;
-            return div.children;
+            return div.children.length === 1
+                ? div.children[0]
+                : div.children;
         },
 
         all: function (f, el, parent) {

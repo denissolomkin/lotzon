@@ -38,3 +38,83 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
     border-radius: 3px;
     padding: 0px;
 }
+
+@-webkit-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@-moz-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@-ms-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+.highlight {
+    -webkit-animation: highlight-fade 2s ease-out;
+    -moz-animation: highlight-fade 2s ease-out;
+    -o-animation: highlight-fade 2s ease-out;
+    animation: highlight-fade 2s ease-out;
+}
+
+#debug-stat-box {
+    position: fixed;
+    height: 300px;
+    width: 20%;
+    min-width: 200px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+}
+#debug-stat-box div{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(243,243,243,1) 50%, rgba(237,237,237,1) 51%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+#debug-stat-box h2{
+    font-weight: bold;
+}
+#debug-stat-box h2 span{
+    display: inline !important;;
+    font-weight: normal;
+}
+
+#debug-stat-box span{
+    display: none;
+}
+
+#debug-stat-box b{
+    color: red;
+    font-weight: bold;
+}

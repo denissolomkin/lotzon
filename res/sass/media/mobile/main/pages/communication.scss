@@ -39,13 +39,13 @@
 	}
 }
 
-#communication {
-  	& .content-box-tab 	{
-  		padding: 0 20px 0 30px;
-  		& span {
-    		display: none;
-  		}
-	}
+
+	& .content-box-tab 	{
+		padding: 0 20px 0 30px;
+		& span {
+		display: none;
+		}
+}
 	// & .content-box-tab {
 	// 	&:before {
 	// 	    content: "";
@@ -69,4 +69,3 @@
 		padding: 0 20px;
   	}
   	
-}

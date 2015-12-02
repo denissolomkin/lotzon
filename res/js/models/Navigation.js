@@ -1,5 +1,28 @@
 (function () {
 
+    if (typeof I === 'undefined') I = {};
+    Object.deepExtend(I, {
+        /* menu */
+        menuMobile: '.menu-mobile',
+        menu: '.menu',
+        menuMain: '.menu-main',
+        menuMore: '.menu-more',
+        menuProfile: '.menu-profile',
+        menuBalance: '.menu-balance',
+        menuLogout: '.menu-logout',
+        menuMobileBalance: '.menu-balance-inf',
+        menuItem: '.menu-item',
+        menuBtn: '.menu-btn',
+        menuProfileBtn: '.menu-profile-btn',
+        menuBalanceBtn: '.menu-balance-btn',
+        menuBtnItem: '.menu-btn-item',
+        balanceBtn: '.balance-btn',
+
+        /* navigation and tabs */
+        Tabs: '.content-box-tabs a',
+        Cats: '.content-box-cat a'
+    });
+
     Navigation = {
 
         path: [],
@@ -12,10 +35,34 @@
             D.log('Navigation.init', 'func');
             Object.deepExtend(this, init);
 
+            var getParentAnchor = function (element) {
+                while (element !== null) {
+                    if (element.tagName && element.tagName.toUpperCase() === "A") {
+                        return element;
+                    }
+                    element = element.parentNode;
+                }
+                return null;
+            };
+
+            document.querySelector("body").addEventListener('click', function (e) {
+                var anchor = getParentAnchor(e.target);
+                if (anchor !== null) {
+                    R.push.call(anchor, e)
+                }
+            }, false);
+
             window.onpopstate = function (event) {
                 D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)], 'info');
-                if (event.state)
-                    R.push(event.state);
+
+                var state = event.state || {href: document.location.pathname};
+                if (page = document.getElementById(U.parse(state.href))) {
+                    DOM.hide(page.parentNode.children);
+                    DOM.show(page);
+                } else {
+                    R.push(state);
+                }
+
             };
 
             return this;
@@ -54,25 +101,14 @@
             if (++Navigation.loadedBlocks === Navigation.requiredBlocks) {
 
                 D.log('Navigation.ready', 'func');
-                $("header a, .menu-mobile a").off().on('click', Navigation.do.loadPage);
                 $(I.menuBtnItem).off().on('click', Navigation.menu.click);
 
-                /*
-                 Navigation.path = window.location.pathname.split('/');
-                 Navigation.path[1] = Navigation.path[1] || 'blog';
-
-                 var element = [];
-
-                 while (Navigation.path.length > 1 && !element.length) {
-                 element = $('[href="' + Navigation.path.join("/") + '"]').first().click();
-                 Navigation.path.pop();
-                 }
-                 */
-
                 window.location.pathname === '/' && (window.location.pathname = '/blog');
+                var selector = 'a[href="/' + U.parse(window.location.pathname, 'url') + '"]',
+                    anchor = document.querySelector(selector);
 
-                if (!($('[href="' + window.location.pathname + '"]').first().click().length))
-                    R.push(window.location.pathname);
+                if (anchor) anchor.click();
+                else R.push(window.location.pathname);
 
                 Navigation.menu.switch();
             }
@@ -92,7 +128,7 @@
                 Navigation.menu.hide();
                 // return;
                 if (isActive)
-                
+
                     return false;
                 else
                     $(this).addClass('active');
@@ -181,10 +217,12 @@
 
                 !this.body && (this.body = document.getElementsByTagName('body')[0]);
 
-                if((!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)){
-                    D.log('Navigation.menu.fix.add', 'func');
-                    this.body.classList.add('fixed');
-                } else if (this.body.classList.contains('fixed')){
+                if ((!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)) {
+                    if (!this.body.classList.contains('fixed')) {
+                        D.log('Navigation.menu.fix.add', 'func');
+                        this.body.classList.add('fixed');
+                    }
+                } else if (this.body.classList.contains('fixed')) {
                     D.log('Navigation.menu.fix.remove', 'func');
                     this.body.classList.remove('fixed');
                 }
@@ -193,156 +231,21 @@
 
         'do': {
 
-            loadPage: function (event) {
-
-                if (!event.isPropagationStopped()) {
-
-                    event.stopPropagation();
-                    var tab = $(this),
-                        box = $('.content-top');
-
-                    D.log(['Navigation.loadPage:', tab.attr('href')], 'info');
-
-                    R.push.call(this, {
-                        box: box,
-                        after: function () {
-                            $("html, body").animate({scrollTop: 0}, 'slow');
-                        },
-                        url: true
-                    });
-
-                    Navigation.menu.hide();
-                    Content.updateBanners();
-                }
-
-                return false;
-
-            },
-
-            loadBlock: function (event) {
-
-                if (!event.isPropagationStopped()) {
-
-                    event.stopPropagation();
-                    var tab = $(this),
-                        box = tab.parents('.content-main').length ? tab.parents('.content-main') : tab.parents('.content-top');
-
-                    D.log(['Navigation.loadBlock:', tab.attr('href')], 'info');
-
-                    R.push.call(this, {
-                        box: box,
-                        after: function (options) {
-                            $(options.findClass).addClass('slideInRight');
-                            $("html, body").animate({scrollTop: 0}, 'slow');
-                        },
-                        url: true
-                    });
-
-                }
-
-                return false;
-
-            },
-
             backBlock: function (event) {
 
                 if (!event.isPropagationStopped()) {
 
                     event.stopPropagation();
-                    var tab = $(this),
-                        box = $(this).parents('.content-box');
-
-
-                    D.log(['Navigation.backBlock:', tab.attr('href')], 'info');
-
-                    box.prev().addClass('slideInLeft').show()
-                        .find(I.Tabs + '.active').click();
-
-                    $(this).parents('.content-box').remove();
+                    D.log(['Navigation.backBlock:', this.parentNode.id], 'info');
+                    DOM.remove(DOM.up('content-box', this));
                     history.back();
 
                 }
 
                 return false;
 
-            },
-
-            switchTab: function (event) {
-
-                if (!event.isPropagationStopped()) {
-
-                    event.stopPropagation();
-                    var tab = $(this),
-                        box = tab.parents('.content-box').find('.content-box-content'),
-                        href = tab.attr('href');
-
-                    D.log(['Navigation.switchTab:', href], 'info');
-
-                    if (U.isAnchor(href)) {
-
-                        $(I.Tabs, tab.parents('.content-box-header')).removeClass('active');
-                        $(' > div', box).hide();
-                        $('.content-box-item.' + href, box).show();
-                        tab.addClass('active');
-                    }
-
-                    else {
-                        R.push.call(this, {
-                            box: box
-                        });
-                    }
-                }
-
-                return false;
-            },
-
-            switchCat: function (event) {
-
-                if (!event.isPropagationStopped()) {
-
-                    event.stopPropagation();
-                    var tab = $(this),
-                        box = tab.parents('.with-cat'),
-                        href = this.href;
-
-                    D.log(['switchCat:', this.href], 'info');
-
-                    if (U.isAnchor(href)) {
-
-                        href = U.parse(href, 'anchor')
-
-                        // with animation
-                        if ($(I.Cats, box).filter('.active').length) {
-
-                            $(I.Cats, box).removeClass('active');
-                            $('.content-box-item-content > div', box).fadeOut(200);
-                            setTimeout(function () {
-                                $('.content-box-item-content > div.category-' + href, box).fadeIn(200);
-                            }, 200);
-
-                        }
-
-                        // without animation
-                        else {
-                            $('.content-box-item-content > div', box).hide();
-                            $('.content-box-item-content > div.category-' + href, box).show();
-                        }
-
-                        tab.addClass('active');
-
-                    } else {
-
-                        R.push.call(this, {
-                            box: box,
-                            href: href,
-                            tab: tab
-                        });
-                    }
-
-                }
-
-                return false;
             }
+
         }
 
     };

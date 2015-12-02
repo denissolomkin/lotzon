@@ -179,7 +179,7 @@
                         break;
                 }
 
-            } catch(err) {
+            } catch (err) {
                 D.error('Cache сrach');
                 Cache.isEnabled = false;
             }
@@ -231,7 +231,7 @@
                 cache = data.cache || false,
                 source = data.res || data;
 
-            if(data.player)
+            if (data.player)
                 Player.init(data.player);
 
             /* if receive data for extend cache */
@@ -269,6 +269,27 @@
             }
 
             cache['total'] = total.toFixed(2) + " MB";
+        },
+
+        "remove": function (object, key) {
+
+            if (object) {
+
+                for (prop in object) {
+                    var keys = key && key.slice() || [];
+                    keys.push(prop);
+                    this.remove(object[prop], keys);
+                }
+
+            } else if (typeof object === 'object') {
+
+                /* todo delete also from cache
+                 * */
+
+                D.log('Cache.remove:' + key.join('-'));
+                DOM.remove(document.getElementById(key.join('-')));
+            }
+
         },
 
         "update": function (object, key) {
@@ -431,6 +452,8 @@
             key = key && key.replace(/\/|=/g, '-');
             return lang && lang[key] || key;
         }
-    };
+    }
+    ;
 
-})();
+})
+();
