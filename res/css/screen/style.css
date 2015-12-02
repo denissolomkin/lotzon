@@ -973,7 +973,11 @@ div.comment-reply-btn {
   padding-right: 60px; }
 
 .prize {
-  margin-right: 94px; }
+  width: 245px;
+  padding-right: 25px;
+  margin: 0; }
+  .prize:nth-child(2n+2) {
+    float: right; }
 
 .ex-prize-description {
   width: 274px; }
@@ -1228,7 +1232,9 @@ div.comment-reply-btn {
     padding-left: 30px;
     padding-right: 30px; }
   .prize {
-    margin-right: 40px; }
+    width: 245px;
+    padding-right: 25px;
+    margin: 0; }
   .prize:nth-child(3n+3) {
     margin-right: 0; }
   .ex-prize-description {

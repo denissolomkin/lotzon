@@ -123,7 +123,15 @@
 .prize:nth-child(even) {
     margin-right: 0;
 }
-
+#prizes-exchange {
+  padding: 0 20px 20px;
+  & .content-box-item-top {
+    padding: 0;
+  }
+  & .content-box-item-content {
+    margin-right: -25px;
+  }
+}
 @media (min-width: 540px) {
   .prizes-for-points .content-box-item-content {
     width: 92%;

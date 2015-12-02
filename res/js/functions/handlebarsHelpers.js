@@ -95,13 +95,13 @@ $(function () {
         'partial': function f(name, args) {
 
             var template = Cache.template(name);
-            args = args || {};
 
             if (!template || typeof template !== 'function') {
                 setTimeout(function () {
-                    (name, args);
+                    f(name, args);
                 }, 100);
             } else {
+                args = args || {};
                 return new Handlebars.SafeString(template(args));
             }
 

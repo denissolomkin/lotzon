@@ -4,6 +4,7 @@
     R = {
 
         "queue": [],
+        "rendering": {},
         "isRendering": false,
         "timeout": {
             "ajax": 10000,
@@ -66,8 +67,6 @@
              };
 
              ---------------------------------------------------- */
-
-            console.log(this, options);
 
             if (options) {
                 if (typeof options === 'object') {
@@ -178,6 +177,7 @@
             if(!options.stat)
                 options.stat = R.stat();
             options.stat.ajax.timer = new Date().getTime();
+
             options.href = U.parse(options.href, 'get');
 
             if (typeof options.json === 'object') {
@@ -200,7 +200,6 @@
                     dataType: 'json',
                     success: function (data) {
 
-
                         if ('responseText' in data) {
                             D.error.call(options, 'OBJECT NOT FOUND');
                         } else {
@@ -214,7 +213,6 @@
 
                     },
                     error: function (data) {
-                        console.log(data);
                         D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'OBJECT NOT FOUND');
                     },
                     timeout: R.timeout.ajax
@@ -309,7 +307,6 @@
 
                     },
                     error: function (data) {
-                        console.log(data);
                         D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'TEMPLATE NOT FOUND');
                     },
                     timeout: R.timeout.template

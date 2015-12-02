@@ -212,9 +212,6 @@ button {
   padding: 20px 10px 20px;
   min-height: 500px; }
 
-.content-box-item.with-cat {
-  padding-top: 52px; }
-
 .ticket-item {
   padding: 15px 0 !important; }
 
@@ -3733,6 +3730,13 @@ form.loading > * {
 
 .prize:nth-child(even) {
   margin-right: 0; }
+
+#prizes-exchange {
+  padding: 0 20px 20px; }
+  #prizes-exchange .content-box-item-top {
+    padding: 0; }
+  #prizes-exchange .content-box-item-content {
+    margin-right: -25px; }
 
 @media (min-width: 540px) {
   .prizes-for-points .content-box-item-content {

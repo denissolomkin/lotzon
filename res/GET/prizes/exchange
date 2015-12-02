@@ -4,36 +4,33 @@
         "prizes":{
         "exchange":{
 
-             "categories":{
-                            "5":{
+             "categories":[
+                            {
                                 "id":"5",
-                                "title":"Ноутбуки",
-                                "goods":{
-
-                                }
+                                "title":"Ноутбуки"
                             },
-                            "4":{
+                            {
                                 "id":"4",
                                 "title":"Смартфоны"
                             },
-                            "3":{
+                            {
                                 "id":"3",
                                 "title":"Отдых"
                             },
-                            "2":{
+                            {
                                 "id":"2",
-                                "title":"Ноутбуки"
+                                "title":"Всячина"
                             },
-                            "1":{
+                            {
                                 "id":"1",
                                 "title":"Игрушки"
                             },
-                            "6":{
+                            {
                                 "id":"6",
                                 "title":"Техника"
 
                             }
-                    },
+                    ],
 
                     "goods":{
                         "1":{
@@ -47,39 +44,42 @@
                         },
                         "2":{
                             "id": "1",
-                            "category": "5",
+                            "category": "1",
+                            "type": "item",
                             "img": "prize.png",
-                            "title": "Ноутбук Asus X551MA",
+                            "title": "Свисток",
                             "price": "50000",
                             "quantity": "0"
                         },
                         "3":{
                             "id": "1",
-                            "category": "5",
+                            "category": "2",
+                            "type": "mobile",
                             "img": "prize.png",
-                            "title": "Ноутбук Asus X551MA",
+                            "title": "Пополняшка на 15 грн",
                             "price": "50000",
                             "quantity": "0"
                         },
                         "4":{
                             "id": "1",
-                            "category": "1",
+                            "category": "3",
                             "img": "prize.png",
-                            "title": "Ноутбук Asus X551MA",
+                            "type": "webmoney",
+                            "title": "Ваучер WM на 100 грн",
                             "price": "50000",
                             "quantity": "0"
                         },
                         "5":{
-                            "id": "2",
-                            "category": "2",
+                            "id": "1",
+                            "category": "4",
                             "img": "prize.png",
                             "title": "Смартфон Lenovo X551MA",
                             "price": 10000,
                             "quantity": "5"
                         },
                         "6":{
-                            "id": "3",
-                            "category": "3",
+                            "id": "1",
+                            "category": "5",
                             "img": "prize.png",
                             "title": "Mp3-плеер Ipod X551MA",
                             "price": "10000",

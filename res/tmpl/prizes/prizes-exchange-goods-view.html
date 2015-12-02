@@ -1,13 +1,12 @@
 ﻿<div id="prizes-exchange-goods-view" class="content-box">
 
-    <div class="content-box-header back">{{i18n "title-prize-exchange"}}</div>
+    <div class="content-box-header back">{{ title }}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item">
-            <form action="/prizes/exchange/goods/" method="post">
+            <form action="/prizes/exchange/goods/{{id}}" method="post">
 
-                <input type="hidden" name="itemId" value="{{id}}">
-                <input type="hidden" name="itemPrice" value="{{price}}">
+                <input type="hidden" name="price" value="{{price}}">
 
                 <div class="ex-prize clearfix">
                     <div class="ex-prize-img">

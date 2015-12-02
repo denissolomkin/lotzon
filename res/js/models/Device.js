@@ -126,7 +126,6 @@
 
             y = y || 0;
             var bounds = this.getBoundingClientRect();
-            console.log(bounds.top + y, 'bounds.top + y', window.innerHeight, 'window.innerHeight', bounds.bottom - y, 'bounds.bottom - y' );
             return bounds.top + y < window.innerHeight && bounds.bottom - y > 0;
 
         },

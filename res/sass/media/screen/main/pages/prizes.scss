@@ -6,10 +6,13 @@
 }
 
 .prize {
-  margin-right: 94px;
+	width: 245px;
+  padding-right: 25px;
+  margin: 0;
+  &:nth-child(2n+2) {
+  	float: right;
+  }
 }
-
-
 
 .ex-prize-description {
   width: 274px;

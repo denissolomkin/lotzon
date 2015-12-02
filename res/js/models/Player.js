@@ -131,7 +131,7 @@
         },
 
         getCount: function (key) {
-            return typeof key === 'string' && this.count.hasOwnProperty(key) && this.count[key];
+            return typeof key === 'string' && Player.count.hasOwnProperty(key) && Player.count[key];
         },
 
         updatePoints: function (newSum) {

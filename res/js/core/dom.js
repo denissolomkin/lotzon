@@ -106,7 +106,7 @@
 
         show: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
                 el.style.display = "block";
             } else
                 this.all(f, el, parent)
@@ -161,7 +161,7 @@
 
         hide: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
                 el.style.display = "none";
             } else
                 this.all(f, el, parent)

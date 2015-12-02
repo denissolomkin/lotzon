@@ -60,8 +60,6 @@
                 var renderList = document.getElementById(U.parse(form.action)) || form.parentNode.querySelector(".render-list"),
                     query = $(form).serializeObject();
 
-                console.log(renderList);
-
                 if (event && event.type === 'change') {
 
                     R.push({
@@ -146,12 +144,13 @@
                 var name = null,
                     className = [];
 
-                for (name in options.query) {
-                    if (options.query.hasOwnProperty(name) && options.query[name] && name.indexOf('date') === -1) { /* skip unimportant filters */
-                        className = [name, options.query[name]];
-                        options.rendered.classList.add(className.join('-'));
+                if (options.rendered && typeof options.rendered === 'object' && options.rendered.hasOwnProperty('classList'))
+                    for (name in options.query) {
+                        if (options.query.hasOwnProperty(name) && options.query[name] && name.indexOf('date') === -1) { /* skip unimportant filters */
+                            className = [name, options.query[name]];
+                            options.rendered.classList.add(className.join('-'));
+                        }
                     }
-                }
 
             },
 
