@@ -139,7 +139,11 @@ class CommentsDBProcessor implements IProcessor
         foreach ($sth->fetchAll() as $commentData) {
             $comment = new \Comment;
             $comments[$commentData['Id']] = $comment->formatFrom('DB',$commentData)->export('JSON');
-            $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
+            if (!$commentData['ParentId']) {
+                $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
+            } else {
+                $comments[$commentData['Id']]['comment_id'] = $commentData['ParentId'];
+            }
         }
 
         return $comments;
