@@ -194,11 +194,12 @@
             return balls;
         },
 
-        getAvatar: function (img, id) {
+        getAvatar: function (img, id, width) {
             img = typeof img === 'string' ? img : this.img;
             id = typeof id === 'string' ? id : this.id;
+            width = typeof id === 'string' ? width : 200;
             return (img
-                ? '/filestorage/avatars/' + ((Math.ceil(id / 100)) + '/' + img)
+                ? '/filestorage/users/' + width + '/' + img
                 : '/res/img/default.jpg');
         }
 
