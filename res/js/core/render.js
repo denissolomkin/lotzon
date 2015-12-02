@@ -17,6 +17,31 @@
         "init": function () {
         },
 
+        "stat": function () {
+
+            return {
+                total: {
+                    timer: new Date().getTime(),
+                    size: null
+                },
+                ajax: {
+                    timer: null,
+                    size: null
+                },
+                templates: {
+                    count: 0,
+                    timer: null,
+                    size: 0
+                },
+                render: {
+                    timer: null
+                },
+                after: {
+                    timer: null
+                }
+            };
+        },
+
         "push": function (options) {
 
             /* ----------------------------------------------------
@@ -62,29 +87,7 @@
 
             options.template = options.template || U.parse(this.href || options.href);
             options.href = options.href || this.href || options.template;
-
-            var start = new Date().getTime();
-            options.stat = {
-                total: {
-                    timer: start,
-                    size: null
-                },
-                ajax: {
-                    timer: null,
-                    size: null
-                },
-                templates: {
-                    count: 0,
-                    timer: null,
-                    size: 0
-                },
-                render: {
-                    timer: null
-                },
-                after: {
-                    timer: null
-                }
-            };
+            options.stat = R.stat();
 
             if ('nodeType' in this)
                 options.target = this;
@@ -172,6 +175,8 @@
 
         "json": function (options) {
 
+            if(!options.stat)
+                options.stat = R.stat();
             options.stat.ajax.timer = new Date().getTime();
             options.href = U.parse(options.href, 'get');
 

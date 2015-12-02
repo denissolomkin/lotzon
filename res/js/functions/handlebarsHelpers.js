@@ -1,23 +1,36 @@
 $(function () {
 
+    var prepareHelper = function(options,arguments){
+
+        options = typeof options === 'string' ? options : null;
+
+        if (arguments.length > 2) {
+            var args = [];
+            for (var i = 1; i <= arguments.length; i++)
+                typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
+            options = args.join(', ');
+        }
+
+        return options;
+    };
+
     Handlebars.registerHelper({
 
         'avatar': Player.getAvatar,
 
         'player': function (fn, options) {
 
-            options = typeof options === 'string' ? options : null;
-
-            if (arguments.length > 2) {
-                var args = [];
-                for (var i = 1; i <= arguments.length; i++)
-                    typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
-                options = args.join(', ');
-            }
-
+            options = prepareHelper(options,arguments);
             var response = eval("Player." + fn.toString());
             D.log('Player.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Player." + fn + "(" + options + ")") || response;
+        },
+
+        'device': function (fn, options) {
+            options = prepareHelper(options,arguments);
+            var response = eval("Device." + fn.toString());
+            D.log('Device.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
+            return typeof response === 'function' && eval("Device." + fn + "(" + options + ")") || response;
         },
 
         'number': Player.fineNumbers,
@@ -25,15 +38,7 @@ $(function () {
 
         'lottery': function (fn, options) {
 
-            options = typeof options === 'string' ? options : null;
-
-            if (arguments.length > 2) {
-                var args = [];
-                for (var i = 1; i <= arguments.length; i++)
-                    typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
-                options = args.join(', ');
-            }
-
+            options = prepareHelper(options,arguments);
             var response = eval("Tickets." + fn.toString());
             D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Tickets." + fn + "(" + options + ")") || response;

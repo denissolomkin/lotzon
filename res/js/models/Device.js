@@ -4,11 +4,45 @@
 
         jsdetect: null,
         gototop: null,
+        mobile: false,
+        width: 768,
 
-        init: function(){
+        init: function(init){
+
+            Object.deepExtend(this, init);
             this.jsdetect = document.querySelector('.js-detect');
             this.gototop = document.querySelector('.go-to-top');
+            if(this.mobile){
+                this.setWidth();
+                window.addEventListener('resize', Device.setWidth, true);
+            }
+        },
 
+        setWidth: function(){
+
+            var width = screen.width;
+            switch (true){
+
+                case width <= 320:
+                    Device.width = 320;
+                    break;
+
+                case width <= 360:
+                    Device.width = 360;
+                    break;
+
+                case width <= 480:
+                    Device.width = 480;
+                    break;
+
+                case width <= 640:
+                    Device.width = 640;
+                    break;
+
+                default:
+                    Device.width = 768;
+                    break;
+            }
         },
 
         do: {
