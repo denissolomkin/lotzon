@@ -1,6 +1,6 @@
 $(function () {
 
-    var prepareHelper = function(options,arguments){
+    var prepareHelper = function (options, arguments) {
 
         options = typeof options === 'string' ? options : null;
 
@@ -20,29 +20,29 @@ $(function () {
 
         'player': function (fn, options) {
 
-            options = prepareHelper(options,arguments);
+            options = prepareHelper(options, arguments);
             var response = eval("Player." + fn.toString());
             D.log('Player.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Player." + fn + "(" + options + ")") || response;
         },
 
         'device': function (fn, options) {
-            options = prepareHelper(options,arguments);
+            options = prepareHelper(options, arguments);
             var response = eval("Device." + fn.toString());
             D.log('Device.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Device." + fn + "(" + options + ")") || response;
         },
 
-        'number': Player.fineNumbers,
-        'count': Player.getCount,
-
         'lottery': function (fn, options) {
 
-            options = prepareHelper(options,arguments);
+            options = prepareHelper(options, arguments);
             var response = eval("Tickets." + fn.toString());
             D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
             return typeof response === 'function' && eval("Tickets." + fn + "(" + options + ")") || response;
         },
+
+        'number': Player.fineNumbers,
+        'count': Player.getCount,
 
         'reverse': function (context, options) {
             var fn = options.fn, inverse = options.inverse;
@@ -92,11 +92,19 @@ $(function () {
             return ret;
         },
 
-        'partial': function (name, args) {
+        'partial': function f(name, args) {
 
-            args = args || {};
             var template = Cache.template(name);
-            return new Handlebars.SafeString(template(args));
+            args = args || {};
+
+            if (!template || typeof template !== 'function') {
+                setTimeout(function () {
+                    (name, args);
+                }, 100);
+            } else {
+                return new Handlebars.SafeString(template(args));
+            }
+
 
         },
 
@@ -114,7 +122,7 @@ $(function () {
 
             var href = '';
 
-            switch (network){
+            switch (network) {
                 case "Facebook":
                     href = ""
                     break;
@@ -133,7 +141,7 @@ $(function () {
 
             }
 
-            return href+'/'+id;
+            return href + '/' + id;
         },
 
 

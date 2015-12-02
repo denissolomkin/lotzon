@@ -49,6 +49,8 @@
             while (form && form.nodeName !== 'FORM')
                 form = form.parentElement;
 
+            form.elements['submit'].classList.add("loading");
+
             // can be reply form
             if (!form.classList.contains('render-list-form'))
                 return true;
@@ -110,7 +112,6 @@
                 for (var i = 0; i < infiniteScrolling.length; i++) {
                     if (Device.onScreen.call(infiniteScrolling[i], -200)) {
                         D.log('Content.infiniteScrolling', 'func');
-                        infiniteScrolling[i].classList.add("loading");
 
                         if (infiniteScrolling[i].classList.contains('once-infinite-scrolling')) {
                             infiniteScrolling[i].classList.remove('once-infinite-scrolling');
@@ -158,9 +159,10 @@
 
                 D.log(['Content.after.autoload', options.node.id], 'content');
 
+
                 if (infiniteScrolling = options.node.parentNode.querySelector('button.loading')) {
                     if (!Object.size(options.json) || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
-                        infiniteScrolling.parentNode.removeChild(infiniteScrolling);
+                        DOM.remove(infiniteScrolling);
                     } else {
                         infiniteScrolling.classList.remove('loading');
                     }

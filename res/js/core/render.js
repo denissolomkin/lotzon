@@ -359,7 +359,7 @@
 
                         if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
                             //such as blog-post-vew, games-online & games-chance
-                            DOM.hide(node.parentNode.children);
+                            DOM.hide(node.parentNode && node.parentNode.children);
                         }
 
                         if (node.parentNode) {
@@ -457,7 +457,8 @@
                     }
                 }
 
-                options.url = true;
+                if(options.url !== false)
+                    options.url = true;
 
             } else if (options.target && options.target.classList) {
 
@@ -467,7 +468,7 @@
                     for (var i = 0; i < tabs.length; i++) {
                         tabs[i].classList.remove('active');
                     }
-                } else
+                } else if(options.url !== false)
                     options.url = true;
 
             }

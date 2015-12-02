@@ -1,6 +1,6 @@
 (function () {
 
-    if (typeof I === 'undefined') I = {};
+    typeof I === 'undefined' && (I = {});
     Object.deepExtend(I, {
         /* menu */
         menuMobile: '.menu-mobile',
