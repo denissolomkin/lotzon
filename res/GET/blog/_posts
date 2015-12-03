@@ -1,0 +1,44 @@
+{
+    "res": {
+        "blog": {
+            "posts": {
+                "1": {
+                    "id": "1",
+                    "img": "post.jpg",
+                    "title": "Тест1",
+                    "date": "1448981255",
+                    "stat": {
+                        "comments": "20"
+                    }
+                },
+                "2": {
+                    "id": "2",
+                    "img": "post.jpg",
+                    "title": "Тест2",
+                    "date": "1448981255",
+                    "stat": {
+                        "comments": "10"
+                    }
+                },
+                "3": {
+                    "id": "3",
+                    "img": "post.jpg",
+                    "title": "Тест3",
+                    "date": "1448981255",
+                    "stat": {
+                        "comments": "10"
+                    }
+                },
+                "4": {
+                    "id": "4",
+                    "img": "post.jpg",
+                    "title": "Тест4",
+                    "date": "1448981255",
+                    "stat": {
+                        "comments": "0"
+                    }
+                }
+            }
+        }
+    }
+}

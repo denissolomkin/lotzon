@@ -372,6 +372,41 @@ Config::instance()->publicResources = array(
         'post'   => 'controllers\production\CommentsController:like',
         'delete' => 'controllers\production\CommentsController:dislike'
     ),
+    '/blog/posts/' => array(
+        'get' => 'controllers\production\BlogsController:list'
+    ),
+    '/blog/post/:identifier' => array(
+        'get' => 'controllers\production\BlogsController:post'
+    ),
+    '/blog/post/:identifier/comments' => array(
+        'get'  => array(
+            'controllers\production\CommentsController:list',
+            function ($obj) {
+                $obj->setParams(array(
+                        "module"   => "blog",
+                        "objectId" => $obj->getParams()['identifier']
+                    )
+                );
+            }
+        ),
+        'post'  => array(
+            'controllers\production\CommentsController:create',
+            function ($obj) {
+                $obj->setParams(array(
+                        "module"   => "blog",
+                        "objectId" => $obj->getParams()['identifier']
+                    )
+                );
+            }
+        )
+    ),
+    '/blog/post/:identifier/comments/like' => array(
+        'post'   => 'controllers\production\CommentsController:like',
+        'delete' => 'controllers\production\CommentsController:dislike'
+    ),
+    '/blog/post/:blogId/similar' => array(
+        'get' => 'controllers\production\BlogsController:similar'
+    ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
 

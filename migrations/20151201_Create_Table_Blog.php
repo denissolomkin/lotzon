@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `Blog`(
+`Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+`Title` VARCHAR(255) NOT NULL,
+`Img` VARCHAR(255) NOT NULL,
+`Text` TEXT NOT NULL,
+`Lang` VARCHAR(2) NOT NULL,
+`DateCreated` INT(11) NOT NULL,
+`DateModify` INT(11) NOT NULL,
+`Enable` BOOL NOT NULL DEFAULT 0,
+PRIMARY KEY (`Id`),
+KEY `list` (`Enable`,`Lang`,`Id`,`DateCreated`)
+);
