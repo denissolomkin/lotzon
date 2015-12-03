@@ -15,13 +15,18 @@ class BlogsModel extends Model
         return __CLASS__;
     }
 
-    public function getList($lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1)
+    public function getList($lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1, $offset = NULL)
     {
-        return $this->getProcessor()->getList($lang, $count, $beforeId, $afterId, $enable);
+        return $this->getProcessor()->getList($lang, $count, $beforeId, $afterId, $enable, $offset);
     }
 
     public function getSimilarList($blogId, $lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1)
     {
         return $this->getProcessor()->getSimilarList($blogId,$lang, $count, $beforeId, $afterId, $enable);
+    }
+
+    public function getCount($lang)
+    {
+        return $this->getProcessor()->getCount($lang);
     }
 }

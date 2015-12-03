@@ -282,6 +282,22 @@ Config::instance()->privateResources =  array(
         'get'  => 'controllers\admin\LinkRedirectController:getLink',
         'post' => 'controllers\admin\LinkRedirectController:postLink',
     ),
+    /**
+     * Blog
+     */
+    '/private/blogs/'            => array(
+        'get' => 'controllers\admin\Blogs:index',
+    ),
+    '/private/blogs/:lang'       => array(
+        'get'  => 'controllers\admin\Blogs:index',
+        'post' => 'controllers\admin\Blogs:save',
+    ),
+    '/private/blogs/:identifier' => array(
+        'delete' => 'controllers\admin\Blogs:delete',
+    ),
+    '/private/blogs/uploadPhoto/' => array(
+        'post' => 'controllers\admin\Blogs:uploadPhoto',
+    ),
 );
 
 Config::instance()->publicResources = array(

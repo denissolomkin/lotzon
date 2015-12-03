@@ -2,6 +2,38 @@
 
 class Common
 {
+    /**
+     * Сохранение картинки сразу в нескольких разрешениях
+     *
+     * @param      $imgPostName     string      имя параметра картинки из $_FILES
+     * @param      $path            string      путь сохранения к которому прибавится $width/
+     * @param      $new_name        string      имя файла
+     * @param      $resolutions     array       массив разрешений array(array(width,[height]))
+     * @param null $imgFile         string      прямое имя файла для загрузки картинки (если брать не из $_FILES)
+     */
+    public static function saveImageMultiResolution($imgPostName, $path, $new_name, $resolutions, $imgFile = NULL)
+    {
+        foreach ($resolutions as $res) {
+            if (is_array($res)) {
+                if (isset($res[0]) && isset($res[1])) {
+                    $width  = $res[0];
+                    $height = $res[1];
+                } else {
+                    $width  = $res[0];
+                    $height = NULL;
+                }
+            } else {
+                continue;
+            }
+            if ($imgFile) {
+                $img = \WideImage::load($imgfile);
+            } else {
+                $img = \WideImage::loadFromUpload($imgPostName);
+            }
+            $img->resize($width, $height)->saveToFile($path . $width . "/" . $new_name);
+        }
+    }
+
     public static function sendEmail($to, $subject, $template, $data = array(), $headers = array())
     {
         $headers[] = "From: Lotzon.com <" . Config::instance()->defaultSenderEmail .">";

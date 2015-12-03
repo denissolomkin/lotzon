@@ -91,25 +91,27 @@ class BlogsDBProcessor implements IProcessor
         return $blog;
     }
 
-    public function getList($lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1)
+    public function getList($lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1, $offset = NULL)
     {
         $sql = "SELECT
                     *
                 FROM `Blog`
-                WHERE
-                    `Enable` = :enable
-                AND
+                WHERE"
+                . (($enable === NULL) ? "" : " (`Enable` = $enable) AND ")
+                . "
                     `Lang` = :lang"
                 . (($beforeId === NULL) ? "" : " AND (`Id` < $beforeId)")
                 . (($afterId === NULL) ? "" : " AND (`Id` > $afterId)")
                 . "
                 ORDER BY `DateCreated` DESC
                 LIMIT " . (int)$count;
+        if (!is_null($offset)) {
+            $sql .= " OFFSET " . (int)$offset;
+        }
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':lang'   => $lang,
-                ':enable' => $enable,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
@@ -162,6 +164,21 @@ class BlogsDBProcessor implements IProcessor
         }
 
         return $blogs;
+    }
+
+    public function getCount($lang) {
+        $sql = "SELECT COUNT(*) FROM `Blog` WHERE `Lang` = :lang";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':lang' => $lang,
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return $sth->fetchColumn(0);
     }
 
 }

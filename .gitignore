@@ -7,3 +7,6 @@
 /lastLottery
 /res/.gitignore
 /res/.gitattributes
+
+/filestorage/*/*
+!/filestorage/**/index.html

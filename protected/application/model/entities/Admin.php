@@ -39,6 +39,7 @@ class Admin extends Entity
                 'partners'=>array('icon'=>'suitcase','name'=>'Партнеры'),
                 'maillist'=>array('icon'=>'envelope','name'=>'email рассылка'),
                 'linkredirect'=>array('icon'=>'refresh','name'=>'Link Redirect'),
+                'blogs'=>array('icon'=>'calendar','name'=>'Блог'),
             )),
 
         'Игры'=>array('icon'=>'trophy',
