@@ -20,7 +20,9 @@ class Review extends Entity
     private   $_userName     = '';
     private   $_date         = '';
     protected $_toPlayerId   = null;
-    
+    protected $_module       = 'comments';
+    protected $_objectId      = 0;
+
     public function init()
     {
         $this->setModelClass('ReviewsModel');
@@ -203,7 +205,9 @@ class Review extends Entity
                  ->setPlayerName($data['PlayerName'])
                  ->setDate($data['Date'])
                  ->setImage($data['Image'])
-                 ->setText($data['Text']);
+                 ->setText($data['Text'])
+                 ->setModule($data['Module'])
+                 ->setObjectId($data['ObjectId']);
         }
 
         return $this;
@@ -214,11 +218,10 @@ class Review extends Entity
         switch ($action) {
             case 'create' :
             case 'update' :
+                $this->setText(htmlspecialchars(strip_tags($this->getText())));
                 if (!$this->getText()) {
                     throw new EntityException("Text can not be empty", 400);
                 }
-                $this->setText(htmlspecialchars(strip_tags($this->getText())));
-
             break;
 
             case 'fetch' :
