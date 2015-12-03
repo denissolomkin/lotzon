@@ -6,20 +6,23 @@ class Review extends Entity
     const IMAGE_WIDTH = 960;//480;
     const IMAGE_HEIGHT = 600;//150;
 
-    private $_id            = 0;
-    private $_reviewId      = null;
-    private $_status        = '';
-    private $_image         = '';
-    private $_text          = '';
-    private $_playerName    = '';
-    private $_playerAvatar  = '';
-    private $_playerId      = '';
-    private $_playerEmail   = '';
-    private $_userId        = 0;
-    private $_isPromo        = 0;
-    private $_userName      = '';
-    private $_date          = '';
-    
+    private   $_id           = 0;
+    private   $_reviewId     = null;
+    private   $_status       = '';
+    private   $_image        = '';
+    private   $_text         = '';
+    private   $_playerName   = '';
+    private   $_playerAvatar = '';
+    private   $_playerId     = '';
+    private   $_playerEmail  = '';
+    private   $_userId       = 0;
+    private   $_isPromo      = 0;
+    private   $_userName     = '';
+    private   $_date         = '';
+    protected $_toPlayerId   = null;
+    protected $_module       = 'comments';
+    protected $_objectId      = 0;
+
     public function init()
     {
         $this->setModelClass('ReviewsModel');
@@ -202,7 +205,9 @@ class Review extends Entity
                  ->setPlayerName($data['PlayerName'])
                  ->setDate($data['Date'])
                  ->setImage($data['Image'])
-                 ->setText($data['Text']);
+                 ->setText($data['Text'])
+                 ->setModule($data['Module'])
+                 ->setObjectId($data['ObjectId']);
         }
 
         return $this;
@@ -213,11 +218,10 @@ class Review extends Entity
         switch ($action) {
             case 'create' :
             case 'update' :
+                $this->setText(htmlspecialchars(strip_tags($this->getText())));
                 if (!$this->getText()) {
                     throw new EntityException("Text can not be empty", 400);
                 }
-                $this->setText(htmlspecialchars(strip_tags($this->getText())));
-
             break;
 
             case 'fetch' :
