@@ -58,6 +58,7 @@ class Comment extends Entity
     {
         switch ($action) {
             case 'create' :
+                $this->setText(htmlspecialchars(strip_tags($this->getText())));
                 if ($this->getParentId()) {
                     $parent = new Comment;
                     $new_parent_id = $parent->setId($this->getParentId())->fetch()->getParentId();
