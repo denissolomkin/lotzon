@@ -79,7 +79,7 @@ class CommentsController extends \AjaxController
         return true;
     }
 
-    public function createAction($module = 'comments', $objectId=0)
+    public function createAction($module = 'comments', $objectId = 0)
     {
         if (!$this->request()->isAjax()) {
             return false;
@@ -89,8 +89,15 @@ class CommentsController extends \AjaxController
 
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
-        $parentId   = $this->request()->post('comment_id');
-        $toPlayerId = $this->request()->post('user_id');
+        $parentId   = $this->request()->post('comment_id', NULL);
+        $toPlayerId = $this->request()->post('user_id', NULL);
+
+        if ($parentId) {
+            $parentComment = new Comment;
+            $parentComment->setId($parentId)->fetch();
+            $module   = $parentComment->getModule();
+            $objectId = $parentComment->getObjectId();
+        }
 
         $obj = new Comment;
         $obj->setPlayerId($playerId)
