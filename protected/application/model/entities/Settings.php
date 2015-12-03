@@ -4,8 +4,8 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Settings extends Entity
 {
-    private $_key        = '';
-    private $_value       = array();
+    private $_key = '';
+    private $_value = array();
 
     public function init()
     {
@@ -14,7 +14,7 @@ class Settings extends Entity
 
     public function setKey($key)
     {
-       $this->_key = $key;
+        $this->_key = $key;
 
         return $this;
     }
@@ -30,15 +30,19 @@ class Settings extends Entity
         return $this;
     }
 
-    public function getValue($value=null)
+    public function getValue($value = null)
     {
-        if($value){
-            if(isset($this->_value[$value]))
+        if ($value) {
+
+            if (isset($this->_value[$value])) {
                 $value = $this->_value[$value];
-            else
-                $value = 0;
-        } else
+            } else {
+                $value = null;
+            }
+
+        } else {
             $value = $this->_value;
+        }
 
         return $value;
     }
@@ -48,22 +52,22 @@ class Settings extends Entity
         switch ($event) {
             case 'update' :
 
-            break;
+                break;
 
             case 'delete' :
 
-            break;
+                break;
 
             case 'fetch' :
 
-            break;
+                break;
 
             case 'create' :
                 $this->isValidKey();
-            break;
+                break;
             default:
                 throw new EntityException("Object does not pass validation", 400);
-            break;
+                break;
         }
 
         return true;
@@ -82,12 +86,13 @@ class Settings extends Entity
         return false;
     }
 
-    public function formatFrom($from, $data) {
+    public function formatFrom($from, $data)
+    {
         switch ($from) {
             case 'DB' :
                 $this->setKey($data['Key'])
-                     ->setValue(@unserialize($data['Value']));
-            break;
+                    ->setValue(@unserialize($data['Value']));
+                break;
             case 'CLASS' :
                 $this->setKey($data->getKey())
                     ->setValue($data->getValue());

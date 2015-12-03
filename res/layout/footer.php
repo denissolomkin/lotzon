@@ -27,7 +27,7 @@
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
                 'menu-profile': ['profile/details', 'profile/billing', 'profile/settings', 'profile/password', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': ['support/feedback', 'support/rules', 'support/faq', 'support/help'],
-                'menu-logout': ['logout'],
+                'menu-logout': ['logout']
             }
         },
 
@@ -182,6 +182,7 @@
 
         debug = {
             "config": {
+                "stat": true,
                 "alert": false,
                 "render": true,
                 "cache": false,
@@ -228,7 +229,7 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
-<?php $dirs = array('libs', 'plugins', 'controllers', 'models', 'functions', 'core');
+<?php $dirs = array('libs', 'plugins', 'functions', 'controllers', 'models', 'core');
 foreach ($dirs as $dir):
     if (!is_dir('./res/js/' . $dir . '/'))
         continue; ?>
@@ -263,6 +264,7 @@ endforeach;
 
 <button style="position: fixed;bottom:0;left:0" onclick="Content.style()">Desktop/Mobile</button>
 <button style="position: fixed;bottom:0;left:110px;" onclick="Lottery.prepareData()">Lottery</button>
+<div id="debug-stat-box"></div>
 
 </div>
 </body>

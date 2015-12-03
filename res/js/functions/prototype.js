@@ -18,10 +18,11 @@
     }
 
     if (typeof Array.isArray === 'undefined') {
-        Array.isArray = function(obj) {
+        Array.isArray = function (obj) {
             return Object.prototype.toString.call(obj) === '[object Array]';
         }
-    };
+    }
+    ;
 
     String.prototype.replaceArray = function (find, replace) {
         var replaceString = this;
@@ -49,6 +50,12 @@
         return JSON.parse(this.getItem(key))
     };
 
+    Object.filter = function f(o) {
+        for (var p in o)
+            if (Object.isObjectLiteral(o[p])) f(o[p]);
+            else if (!o[p]) delete o[p];
+        return o;
+    };
 
     // not very sure if this work cross-frame
     Object.isObjectLiteral = function (object) {
@@ -123,8 +130,6 @@
 
         return obj;
     };
-
-
 
 
 })();

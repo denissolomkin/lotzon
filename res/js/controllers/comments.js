@@ -4,26 +4,8 @@
 
         hide: function (event) {
 
-            if (!DOM.parent('c-notifications',event.target))
+            if (!DOM.up('c-notifications', event.target))
                 Comments.hideNotifications();
-
-            /*
-
-             $(I.comment).removeClass('active');
-
-            else {
-
-                if (1 || document.getElementById('communication-notifications-list').children.length) {
-                    Comments.showNotifications();
-                    Content.infiniteScrolling();
-                } else {
-                    R.push({
-                        href: 'communication-notifications-list',
-                        after: Comments.showNotifications
-                    });
-                }
-            }
-            */
 
         },
 
@@ -34,13 +16,9 @@
             }
         },
 
-        showNotifications: function () {
-            $(I.notificationsList).slideDown('fast');
-        },
-
         after: {
 
-            reply: function (options) {
+            reply: function (data) {
 
                 var form = this;
 
@@ -70,65 +48,95 @@
 
         do: {
 
-            closeNotification: function(event){
-
-                var notification = this;
-                while(!notification.classList.contains('c-notification'))
-                    notification = notification.parentNode;
-
-                notification.parentNode.remove(notification);
-                //Cache.update({delete:{communication:{notifications:1}}});
+            showNotifications: function () {
+                $(I.notificationsList).slideDown('fast');
+                Content.infiniteScrolling();
             },
 
-            viewComment: function(event){
+            closeNotification: function (event) {
 
-                var notification = this;
-                while(!notification.classList.contains('c-notification'))
-                    notification = notification.parentNode;
+                var notification = DOM.up('c-notification', this),
+                    obj = {
+                        communication: {
+                            notifications: {}
+                        }
+                    };
 
-                if(comment = document.getElementById(U.parse(this.action))){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    Comments.hideNotifications();
-                    DOM.scroll(comment);
+                obj.communication.notifications[notification.getAttribute('data-id')] = null;
+                Player.decrement('notifications');
+                Cache.remove(obj);
+
+            },
+
+            deleteNotifications: function (event) {
+
+                Player.setCount('notifications', 0);
+                Form.send.call(this, {
+                    action: '/communication/notifications',
+                    method: 'DELETE'
+                });
+                Cache.remove({
+                    communication: {
+                        notifications: null
+                    }
+                });
+                R.push({
+                    href: 'communication-notifications',
+                    json: {}
+                })
+
+            },
+
+            viewComment: function (event) {
+
+                var selector = '.c-notification [href="' + U.parse(this.href, 'url') + '"]',
+                    notifications = document.getElementById('communication-notifications').querySelectorAll(selector),
+                    loadedComment = document.getElementById(U.parse(this.href)),
+                    obj = {
+                        communication: {
+                            notifications: {}
+                        }
+                    };
+
+                Player.setCount('notifications', Player.setCount('notifications') - notifications.length);
+
+                for (var i = 0; i < notifications.length; i++) {
+                    obj.communication.notifications[notifications[i].parentNode.getAttribute('data-id')] = null;
                 }
 
-                Comments.do.closeNotification.call(this);
+                Cache.remove(obj);
+
+                if (loadedComment) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    DOM.scroll(loadedComment);
+                    loadedComment.classList.add('highlight');
+                }
+
+                Comments.hideNotifications();
 
             },
 
             replyForm: function () {
 
-                var comment = this.parentNode,
-                    node = this.parentNode;
+                var comment = DOM.up('comment-content', this),
+                    node = DOM.up('comment', comment),
+                    commentsList = DOM.up('render-list', node),
+                    json = {
+                        'user': {
+                            "name": comment.getAttribute("data-user-name"),
+                            'id': comment.getAttribute("data-user-id")
+                        },
+                        'comment_id': comment.getAttribute("data-comment-id"),
+                        'post_id': comment.getAttribute('data-post-id')
+                    };
 
-                // up to first comment-content block
-                while (!comment.classList.contains('comment-content'))
-                    comment = comment.parentNode;
-
-                json = {
-                    'user': {
-                        "name": comment.getAttribute("data-user-name"),
-                        'id': comment.getAttribute("data-user-id")
-                    },
-                    'comment_id': comment.getAttribute("data-comment-id"),
-                    'post_id': comment.getAttribute('data-post-id')
-                };
+                // delete other forms
+                DOM.remove('.comment > form', commentsList);
 
                 // up to comment block
                 while (!node.classList.contains('comment') || node.classList.contains('answer'))
                     node = node.parentNode;
-
-                // find other forms
-                var commentsNode = node.parentNode;
-                while (!commentsNode.classList.contains('render-list'))
-                    commentsNode = commentsNode.parentNode;
-
-                // delete other forms
-                var existingForms = commentsNode.querySelectorAll('.comment > form');
-                if (existingForms.length)
-                    for (var i = 0; i < existingForms.length; i++)
-                        existingForms[i].parentNode.removeChild(existingForms[i]);
 
                 // push new form
                 R.push({
@@ -151,15 +159,6 @@
                 forms.push(this.querySelector('.comment-reply'));
 
                 DOM.toggle(forms); // hide
-
-                /*
-                 // todo
-                 width: 100%;
-                 height: 100%;
-                 left: 0;
-                 top: 0;
-                 background-color: rgba(255,255,255,0.5);
-                 */
             }
         }
 

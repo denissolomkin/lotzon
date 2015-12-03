@@ -148,10 +148,10 @@ html {
     margin-top: 0; }
 
 .menu-balance {
-  width: 250px;
-  padding: 70px 25px 20px;
+  width: 300px;
+  padding: 74px 20px 20px;
   top: 0;
-  right: 23px; }
+  right: 0; }
 
 .menu-balance-inf {
   display: none; }
@@ -165,9 +165,12 @@ html {
 
 .menu-balance-item {
   margin-bottom: 10px;
-  background: #b7cfd3;
+  background: #e9e9e9;
   font-weight: bold;
-  border: none; }
+  border: none;
+  line-height: 40px;
+  font-weight: normal;
+  font-size: 15px; }
   .menu-balance-item.active:after {
     content: "";
     display: block;
@@ -200,6 +203,18 @@ html {
   top: 0;
   right: 0; }
 
+.cabinet-balance-count:first-child {
+  margin-right: 15px; }
+
+.cabinet-balance-count span {
+  font-size: 15px; }
+
+.cabinet-balance-count .holder-money, .cabinet-balance-count .holder-points {
+  font-weight: bold;
+  font-family: handbookpro-regular;
+  text-shadow: 0.5px 0 0 black;
+  font-size: 22px; }
+
 .menu-balance-btn {
   display: none; }
 
@@ -208,22 +223,31 @@ html {
 
 .header-right {
   position: relative;
-  float: right; }
+  float: right;
+  width: 300px;
+  height: 55px; }
+
+.balance {
+  height: 55px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
 
 .balance-btn {
   float: none;
   position: relative;
   z-index: 51;
   display: block;
-  height: 55px;
   text-align: center;
-  font-size: 24px;
+  height: auto;
+  font-size: 20px;
   font-weight: bold;
-  padding-top: 10px;
   text-transform: uppercase;
-  box-shadow: none !important; }
-  .balance-btn span span {
-    font-size: 12px; }
+  box-shadow: none !important;
+  padding-top: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'handbookpro-regular'; }
   .balance-btn.active, .balance-btn:hover {
     background: transparent; }
 
@@ -501,7 +525,7 @@ div.comment-reply-btn {
   z-index: -10;
   display: block;
   margin: 0;
-  padding: 6px 0 14px;
+  padding: 0 0 14px;
   left: 0; }
   .ticket-tabs li {
     top: 9px;
@@ -555,6 +579,16 @@ div.comment-reply-btn {
       background: #a7d1d5; }
       .ticket-tabs li.active .ticket-number-sm {
         background: transparent; }
+      .ticket-tabs li.active:hover {
+        -webkit-transform: none;
+        -moz-transform: none;
+        -o-transform: none;
+        -moz-transition: all 0s ease 0s;
+        -o-transition: all 0s ease 0s;
+        -webkit-transition: all 0s ease 0s;
+        transition: all 0s ease 0s; }
+      .ticket-tabs li.active.done:after {
+        top: 16px; }
     .ticket-tabs li:last-of-type {
       background: #e8cf6b;
       color: #4c4c4c;
@@ -958,7 +992,7 @@ div.comment-reply-btn {
   padding: 0 0 0 10px; }
 
 .cabinet-balance-count:first-child {
-  margin-right: 5px; }
+  margin-right: 15px; }
 
 .cabinet-balance-count span {
   margin-left: 2px; }
@@ -1169,7 +1203,7 @@ div.comment-reply-btn {
       background: #ffe400;
       background-repeat: no-repeat;
       background-position: 0;
-      background: url(img/sprite.png) -430px -292px;
+      background: url(../img/sprite.png) -430px -292px;
       -webkit-animation: AnimationBlue 8s infinite linear;
       -moz-animation: AnimationBlue 8s  infinite linear;
       animation: AnimationBlue 8s  infinite linear; }

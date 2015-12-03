@@ -15,7 +15,7 @@
   z-index: -10;
   display: block;
   margin: 0;
-  padding: 6px 0 14px;
+  padding: 0 0 14px;
   left: 0;
   & li {
     top: 9px;
@@ -78,6 +78,21 @@
       background: #a7d1d5;
       & .ticket-number-sm {
         background: transparent;
+      }
+      &:hover {
+        // top: 9px;
+        -webkit-transform: none;
+        -moz-transform: none;
+        -o-transform: none;
+        -moz-transition: all 0s ease 0s;
+        -o-transition: all 0s ease 0s;
+        -webkit-transition: all 0s ease 0s;
+        transition: all 0s ease 0s;
+      }
+      &.done {
+        &:after {
+          top:16px;
+        }
       }
     }
     &:last-of-type {

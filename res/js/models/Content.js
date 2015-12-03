@@ -87,7 +87,7 @@
 
                     R.push({
                         href: form.action,
-                        query: query,
+                        query: Object.filter(query),
                         after: Content.after.autoload
                     });
                 }

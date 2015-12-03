@@ -5,8 +5,12 @@
 
         "queue": [],
         "isRendering": false,
-        "timeout": 0,
-        "animation":{
+        "timeout": {
+            "ajax": 10000,
+            "template": 10000,
+            "delay": 0
+        },
+        "animation": {
             "loading": false
         },
 
@@ -22,9 +26,8 @@
              href:      Parse Href or Template
              json:      Source Object For Parsing
              url:       False for Skip U.update
-             box:       Container (element or search by class)
              node:      Container (element or search by id)
-             tab:       Menu Item (element or search by href)
+             target:    Initiative element
 
              # auto #
              init:      For History PushState and check is exists Callback by Template name
@@ -39,17 +42,52 @@
 
              ---------------------------------------------------- */
 
-            console.log(options);
+            console.log(this, options);
 
-            if (typeof options !== 'object')
-                options = {'href': options};
+            if (options) {
+                if (typeof options === 'object') {
+
+                    if ('target' in options) {
+                        options.preventDefault();
+                        options.stopPropagation();
+                    }
+
+                    if ('nodeType' in this)
+                        options = {'href': this.getAttribute('href')};
+
+                } else if (typeof options === 'string')
+                    options = {'href': options};
+            }
+
 
             options.template = options.template || U.parse(this.href || options.href);
-            options.href = options.href || this.href || options.template; //U.parse();
-            options.box = typeof options.box !== 'object'
-                ? (options.box ? $(options.box).first() : null)
-                : options.box;
+            options.href = options.href || this.href || options.template;
 
+            var start = new Date().getTime();
+            options.stat = {
+                total: {
+                    timer: start,
+                    size: null
+                },
+                ajax: {
+                    timer: null,
+                    size: null
+                },
+                templates: {
+                    count: 0,
+                    timer: null,
+                    size: 0
+                },
+                render: {
+                    timer: null
+                },
+                after: {
+                    timer: null
+                }
+            };
+
+            if ('nodeType' in this)
+                options.target = this;
 
             var node = options.template;
             if (!options.node && node) {
@@ -62,7 +100,6 @@
                 if (0 && !options.node)
                     options.node = document.getElementById(node);
 
-
                 if (!options.node)
                     options.node = DOM.byId(node);
 
@@ -71,18 +108,9 @@
 
             }
 
-
-            options.tab = options.tab
-                ? (typeof options.tab !== 'object' ? $('[href="' + options.tab + '"]').first() : options.tab)
-                : 'nodeType' in this ? $(this) : null;
-
-            options.init = $.extend({}, options, {
-                template: options.template,
-                box: options.box && options.box.attr('class') && ('.' + options.box.attr('class').split(' ').join('.')),
-                tab: options.tab && options.tab.attr('href'),
-                after: null,
-                node: null,
-                url: false
+            options.init = Object.deepExtend({}, {
+                href: options.href,
+                template: options.template
             });
 
             /* substitution JSON with profile if template has "/profile/" */
@@ -98,18 +126,6 @@
             /* OLD disable JSON for "/new" template without "?object:id" */
             else if (!options.json && options.href.search(/\/new$/) !== -1) {
                 options.json = {};
-                /*
-                var url = options.href.split('?'),
-                    template = options.template.split('?');
-
-                if (url.length > 1)
-                    options.href = url[1];
-                else
-                    options.json = {};
-
-                if (template.length > 1)
-                    options.template = template[0];
-                    */
             }
 
             /* OLD fix JSON for "/all" template */
@@ -147,7 +163,7 @@
 
                 setTimeout(function () {
                     R.json(options);
-                }, this.timeout)
+                }, this.timeout.delay)
             }
 
             R.event('stop');
@@ -156,6 +172,7 @@
 
         "json": function (options) {
 
+            options.stat.ajax.timer = new Date().getTime();
             options.href = U.parse(options.href, 'get');
 
             if (typeof options.json === 'object') {
@@ -171,38 +188,29 @@
 
             } else {
 
-                $.ajax({
+                var xhr = $.ajax({
                     url: U.generate(options.href),
                     data: options.query,
                     method: 'get',
                     dataType: 'json',
-                    statusCode: {
+                    success: function (data) {
 
-                        404: function (data) {
+
+                        if ('responseText' in data) {
                             D.error.call(options, 'OBJECT NOT FOUND');
-                            return true;
-                        },
-
-                        200: function (data) {
-
-                            if ('responseText' in data) {
-                                D.error('OBJECT NOT FOUND');
-                            } else {
-                                options.json = Cache.set(options.href, data);
-                                D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
-                                R.sortJSON(options);
-                            }
-
-                        },
-
-                        204: function (data) {
-                            throw(data.message);
-                        },
-
-                        500: function (data) {
-                            throw(data.message);
+                        } else {
+                            options.stat.ajax.size = xhr.responseText.length;
+                            options.json = Cache.set(options.href, data);
+                            D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
+                            R.sortJSON(options);
                         }
-                    }
+
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'OBJECT NOT FOUND');
+                    },
+                    timeout: R.timeout.ajax
                 });
             }
 
@@ -241,6 +249,11 @@
 
         "renderTMPL": function (options) {
 
+            if (!options.stat.templates.timer) {
+                options.stat.ajax.timer -= new Date().getTime();
+                options.stat.templates.timer = new Date().getTime();
+            }
+
             var template = '',
                 partial = false;
 
@@ -261,52 +274,38 @@
                 /* Template from AJAX template */
             } else {
 
-                $.ajax({
+                var xhr = $.ajax({
                     url: U.generate(template, 'tmpl'),
                     method: 'get',
                     dataType: 'text',
-                    statusCode: {
+                    success: function (data) {
 
-                        404: function (data) {
-                            D.error.call(options, 'TEMPLATE NOT FOUND');
-                            return true;
-                        },
+                        D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from AJAX:', options.init.template], 'warn');
 
-                        200: function (data) {
+                        if (partial)
+                            Cache.template(template, data);
+                        else
+                            options.template = Cache.template(template, data);
 
-                            D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from AJAX:', options.init.template], 'warn');
+                        var partials = Cache.partials(template);
 
-                            if (partial)
-                                Cache.template(template, data);
-                            else
-                                options.template = Cache.template(template, data);
-
-                            var partials = Cache.partials(template);
-
-                            if (partials && partials.length) {
-                                if (!options.partials)
-                                    options.partials = [];
-                                for (var i = 0; i < partials.length; i++)
-                                    options.partials.push(partials[i]);
-                            }
-
-                            R.partialTMPL(options);
-
-
-                        },
-
-                        201: function (data) {
-                            throw(data.message);
-                        },
-
-                        204: function (data) {
-                            throw(data.message);
-                        },
-
-                        500: function (data) {
-                            throw(data.message);
+                        if (partials && partials.length) {
+                            if (!options.partials)
+                                options.partials = [];
+                            for (var i = 0; i < partials.length; i++)
+                                options.partials.push(partials[i]);
                         }
-                    }
+
+                        options.stat.templates.size += parseInt(xhr.getResponseHeader('Content-Length')) || data.length;
+                        options.stat.templates.count++;
+                        R.partialTMPL(options);
+
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'TEMPLATE NOT FOUND');
+                    },
+                    timeout: R.timeout.template
                 });
 
             }
@@ -324,8 +323,15 @@
 
         "renderHTML": function (options) {
 
+            if (options.stat.templates.timer)
+                options.stat.templates.timer -= new Date().getTime();
+            options.stat.render.timer = new Date().getTime();
+
             options.rendered = options.template(options.json);
             D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered], 'render');
+
+            options.stat.render.timer -= new Date().getTime();
+            options.stat.after.timer = new Date().getTime();
 
             R.inputHTML(options);
         },
@@ -342,17 +348,16 @@
 
             if (node) {
 
-                if (render.length === 1) {
-
-                    options.rendered = render = render[0];
+                if ('nodeType' in render) {
 
                     if (render.id == node.id) {
 
-                        if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {//such as blog-post-vew, games-online & games-chance
+                        if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
+                            //such as blog-post-vew, games-online & games-chance
                             DOM.hide(node.parentNode.children);
                         }
 
-                        if(node.parentNode) {
+                        if (node.parentNode) {
                             node.parentNode.replaceChild(render, node);
                             DOM.show(node);
                             console.log('replaceChild');
@@ -360,24 +365,35 @@
 
                     } else {
 
-                        if (compare(render.classList, ['content-main'])) {  //such as games & blog & lottery
+                        if (compare(render.classList, ['content-main'])) {
+                            //such as games & blog & lottery
                             node = document.getElementById('content');
                         }
-                        if (compare(render.classList, ['content-box'])) {  //such as view
+
+                        if (compare(render.classList, ['content-box'])) {
+                            //such as view
                             node = document.getElementById('content');
                             render.classList.add('slideInRight');
                         } else if (compare(render.classList, ['content-box-item'])) {
-                            node = node.getElementsByClassName('content-box-content')[0]; // for content-box-item
+                            // for content-box-item
+                            node = node.getElementsByClassName('content-box-content')[0];
                         }
 
-                        if (compare(render.classList, ['content-box-item', 'content-main'])) {//such as games-online & games-chance
+                        if (!node)
+                            node = document.getElementById('content');
+
+                        if (compare(render.classList, ['content-box-item', 'content-main'])) {
+                            //such as games-online & games-chance
+                            console.log(node);
                             DOM.hide(node.children);
                         } else if (node.id == 'content') {
                             DOM.hide(node.children);
                         }
 
                         if (options.init.template.indexOf('-item') !== -1)
-                            template = Cache.get(U.parse(options.init.template, 'tmpl').replace('-item', '-list'), 'templates');
+                            template = Cache.get(
+                                U.parse(options.init.template, 'tmpl')
+                                    .replace('-item', '-list'), 'templates');
 
                         if (template && template.indexOf('reverse') !== -1) {
 
@@ -405,14 +421,12 @@
             console.log('appendNode: ', node);
             console.log('renderNode: ', render);
 
-            U.update(options);
             R.afterHTML(options);
 
         },
 
         "afterHTML": function (options) {
 
-            D.log(['Render.afterHTML class:', options.findClass], 'render');
 
             if (options.after) {
                 D.log(['Render.after', typeof options.after], 'render');
@@ -424,44 +438,49 @@
                 callback(options);
             }
 
-            /* parent box functionality after rendering */
-            if (options.box) {
-
-                /* if new box has tabs */
-                if ($(I.Tabs, options.box).filter(":visible").length) {
-
-                    /* click on unactive tab */
-                    if (!$(I.Tabs, options.box).filter(".active:visible").length) {
-                        D.log(['clickTab:', $(I.Tabs, options.box).not(".active").filter(":visible").first().attr('href')]);
-                        $(I.Tabs, options.box).not(".active").filter(":visible").first().click();
-                    }
-
+            if (options.rendered && options.rendered.classList && options.rendered.classList.contains('content-main')) {
+                var boxes = options.rendered.getElementsByClassName('content-box-tabs');
+                for (var i = 0; i < boxes.length; i++) {
+                    var tab = boxes[i].getElementsByClassName('content-box-tab')[0];
+                    tab && tab.click();
                 }
 
-                /* rendered box functionality after rendering */
-            } else if (!$(I.Cats, $(options.findClass)).filter(".active").length) {
-                if ($(I.Cats, $(options.findClass)).filter(":visible").length) {
-                    D.log(['clickCat:', $(I.Cats, $(options.findClass)).first().attr('href')]);
-                    $(I.Cats, $(options.findClass)).first().click();
-                }
-            }
-
-            /* tab functionality after click on tab */
-            if (options.tab) {
-
-                $('a.active', options.tab.parent().parent()).removeClass('active');
-                options.tab.addClass('active');
-
-                if (!$(I.Cats, options.tab.parents('.content-box')).filter(".active").length)
-                    if ($(I.Cats, options.tab.parents('.content-box')).filter(":visible").length) {
-                        D.log(['clickCat:', $(I.Cats, options.box).first().attr('href')]);
-                        $(I.Cats, options.tab.parents('.content-box')).first().click();
+                if (options.target && options.target.parentNode.tagName === 'LI') {
+                    var items = options.target.parentNode.parentNode.getElementsByClassName('active');
+                    for (var i = 0; i < items.length; i++) {
+                        items[i].classList.remove('active');
                     }
+                }
+
+                options.url = true;
+
+            } else if (options.target && options.target.classList) {
+
+                /* for tabs */
+                if (options.target.classList.contains('content-box-tab')) {
+                    var tabs = options.target.parentNode.getElementsByClassName('active');
+                    for (var i = 0; i < tabs.length; i++) {
+                        tabs[i].classList.remove('active');
+                    }
+                } else
+                    options.url = true;
 
             }
 
+            if (options.target)
+                options.target.classList.add('active');
+
+
+            D.log(['Render.afterHTML class:', options.findClass], 'render');
+
+            U.update(options);
             Content.infiniteScrolling();
             R.event('complete', options);
+
+            options.stat.after.timer -= new Date().getTime();
+            options.stat.total.size = options.stat.ajax.size + options.stat.templates.size;
+            options.stat.total.timer -= new Date().getTime();
+            D.stat(options);
 
         },
 

@@ -566,7 +566,11 @@ header .owl-theme .owl-controls .owl-page span {
 .i-plus:before { content: '\e801'; } /* '' */
 .i-star:before { content: '\e802'; } /* '' */
 .i-refresh:before { content: '\e803'; } /* '' */
-.i-purse:before { content: '\e804'; } /* '' */
+.i-purse:before { 
+  content: '\e804';
+  font-size: 20px;
+  margin-right: 10px;
+ } /* '' */
 .i-vk-black:before { content: '\e805'; } /* '' */
 .i-arrow-down:before { content: '\e806'; } /* '' */
 .i-arrow-left:before { content: '\e807'; } /* '' */

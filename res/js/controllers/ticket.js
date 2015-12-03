@@ -6,16 +6,20 @@
     /* ========================================================= */
 
     Ticket = {
+        
+        tabs: '.ticket-items .ticket-tabs li',
+        balls:'.ticket-item .ticket-balls li',
+        actions: '.ticket-item .ticket-actions li',
 
         activate: function () {
 
             D.log('Ticket.activate');
 
             Ticket.setBallsMargins();
-            $(I.ticketBall).off().on('click', Ticket.action.clickBall);
-            $(I.ticketAction).filter('.ticket-random').off().on('click', Ticket.action.clickRandom);
-            $(I.ticketAction).filter('.ticket-favorite').off().on('click', Ticket.action.clickFavorite);
-            $(I.ticketAction).find('.after i').off().on('click', function () {
+            $(Ticket.balls).off().on('click', Ticket.action.clickBall);
+            $(Ticket.actions).filter('.ticket-random').off().on('click', Ticket.action.clickRandom);
+            $(Ticket.actions).filter('.ticket-favorite').off().on('click', Ticket.action.clickFavorite);
+            $(Ticket.actions).find('.after i').off().on('click', function () {
                 $('.profile .ul_li[data-link="profile-info"]').click();
             });
         },
@@ -53,12 +57,12 @@
                     tab = $(this).is('li')
 
                         ? $(this)
-                        : ($(I.TicketTabs).not('.done').not('.unavailable').first() || $(I.TicketTabs).first());
+                        : ($(Ticket.tabs).not('.done').not('.unavailable').first() || $(Ticket.tabs).first());
 
                 if (!node || ($(this).is('li') && Ticket.isLoading()))
                     return;
 
-                $(I.TicketTabs).removeClass('active');
+                $(Ticket.tabs).removeClass('active');
                 tab.addClass('active');
 
                 Tickets.selectedTab = 1 + tab.index();
@@ -122,9 +126,9 @@
 
                         /* increase in performance */
                         if (parseInt(num) + 1 === Player.favorite.length) {
-                            $(I.ticketBall).filter(':eq(' + (Player.favorite[num] - 1) + ')').click();
+                            $(Ticket.balls).filter(':eq(' + (Player.favorite[num] - 1) + ')').click();
                         } else {
-                            $(I.ticketBall).filter(':eq(' + (Player.favorite[num] - 1) + ')').addClass('select').find('input').prop('checked', true);
+                            $(Ticket.balls).filter(':eq(' + (Player.favorite[num] - 1) + ')').addClass('select').find('input').prop('checked', true);
                         }
 
                     $(this).addClass('select');
@@ -144,7 +148,7 @@
 
                 switch (true) {
 
-                    case $(I.ticketTab).filter(':eq(' + (Tickets.selectedTab - 1) + ')').hasClass('done'): // if ticket already done
+                    case $(Ticket.tabs).filter(':eq(' + (Tickets.selectedTab - 1) + ')').hasClass('done'): // if ticket already done
                     case Ticket.isLoading(): // if ticket sending now
                     case Ticket.countBalls() === Tickets.requiredBalls && !li.hasClass('select'): // if balls already all
                     case !$(event.target).is('li'): // if target is not li
@@ -222,11 +226,11 @@
 
                     /* increase in performance */
                     ( ticketCache.length === Tickets.requiredBalls
-                        ? $(I.ticketBall).filter(':eq(' + rand + ')').click()
-                        : $(I.ticketBall).filter(':eq(' + rand + ')').addClass('select').find('input').prop('checked', true));
+                        ? $(Ticket.balls).filter(':eq(' + rand + ')').click()
+                        : $(Ticket.balls).filter(':eq(' + rand + ')').addClass('select').find('input').prop('checked', true));
 
                 } else {
-                    $(I.ticketBall).filter(':eq(' + rand + ')').addClass('select');
+                    $(Ticket.balls).filter(':eq(' + rand + ')').addClass('select');
                 }
 
 
@@ -241,7 +245,7 @@
 
         clearBalls: function () {
 
-            var $selectedBalls = $(I.ticketBall).filter('.select'),
+            var $selectedBalls = $(Ticket.balls).filter('.select'),
                 count = $selectedBalls.length;
 
             if (count)
@@ -257,14 +261,14 @@
 
         clearActionsAfter: function (fade) {
 
-            if ($(I.ticketAction).find('.after:visible').length)
-                $(I.ticketAction).find('.after:visible').fadeOut(fade ? 150 : 0);
+            if ($(Ticket.actions).find('.after:visible').length)
+                $(Ticket.actions).find('.after:visible').fadeOut(fade ? 150 : 0);
 
         },
 
         clearActions: function () {
 
-            $(I.ticketAction).filter('.select').removeClass('select');
+            $(Ticket.actions).filter('.select').removeClass('select');
 
         },
 

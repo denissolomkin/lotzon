@@ -2,6 +2,10 @@
 
     Profile = {
 
+        moneyConvert: 'input.cc-sum',
+        pointsConvert: '.cc-income .cc-sum',
+        moneyCashout: 'input.cco-sum',
+        
         init: function () {
 
             $('input[type="text"][name="bd"]').inputmask("d.m.y", {autoUnmask: false});
@@ -16,8 +20,8 @@
 
             convert: function () {
 
-                var $input_money = $(I.moneyConvert),
-                    $calc_points = $(I.pointsConvert, $input_money.closest('form')),
+                var $input_money = $(Profile.moneyConvert),
+                    $calc_points = $(Profile.pointsConvert, $input_money.closest('form')),
                     input_money = Player.checkMoney($input_money.val()),
                     calc_points = Player.calcPoints(input_money);
 
@@ -30,7 +34,7 @@
 
             cashout: function () {
 
-                var $input_money = $(I.moneyCashout),
+                var $input_money = $(Profile.moneyCashout),
                     input_money = Player.checkMoney($input_money.val());
 
                 $input_money.val(input_money);
@@ -61,7 +65,7 @@
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
 
                 var input = form.find('input[type="file"]').damnUploader({
-                    url: '/profile/updateAvatar',
+                    url: '/profile/avatar',
                     fieldName: 'image',
                     dataType: 'json',
                 });
@@ -149,30 +153,20 @@
         update: {
 
             billing: function (data) {
-                R.push({
-                    template: 'profile-billing'
-                });
+                R.push('profile-billing');
             },
 
             details: function (data) {
-                R.push({
-                    template: 'profile-details'
-                });
-
+                R.push('profile-details');
             },
 
             settings: function (data) {
-                R.push({
-                    template: 'profile-settings'
-                });
-
+                R.push('profile-settings');
             }
 
         }
 
-
-
-    }
+    };
 
     /* ========================================================= */
     //                        CABINET

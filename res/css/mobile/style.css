@@ -174,12 +174,12 @@
   #communication .render-list .message-form-wrapper {
     padding-left: 0; } }
 
-#communication .content-box-tab {
+.content-box-tab {
   padding: 0 20px 0 30px; }
-  #communication .content-box-tab span {
+  .content-box-tab span {
     display: none; }
 
-#communication .communication-messages-tab {
+.communication-messages-tab {
   padding: 0 20px; }
 
 @media all and (max-width: 450px) {

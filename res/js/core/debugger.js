@@ -8,11 +8,14 @@
     D = {
 
         "config": {},
+        "statBox": null,
 
         "init": function (init) {
 
             D.log('Debugger.init', 'func');
             Object.deepExtend(this, init);
+            this.statBox = document.getElementById('debug-stat-box');
+
             /*
              $.ajaxSetup({
              error: function (xhr, status, message) {
@@ -22,9 +25,9 @@
              */
             /**/
             window.onerror = function (message, url, line, col, error) {
-             D.error([message, url, line]);
-             return true;
-             }
+                D.error([message, url, line]);
+                return true;
+            }
         },
 
         "log": function (log, type) {
@@ -54,6 +57,57 @@
                 console[type](d.toLocaleTimeString('ru-RU') + ' ' + pre + output);
             }
 
+        },
+
+        "stat": function (options) {
+
+            if (this.isEnable('stat') && this.statBox) {
+
+                stat = options.stat;
+
+                if(typeof stat ==='object'){
+                    var message = "<h2>"+ U.parse(options.href,'url')+" ";
+                    for(part in stat)
+                    {
+
+                        if(!Object.size(Object.filter(stat[part])))
+                            continue;
+
+                        message += '<span>'+(part!=='total' ? part+': ' : '');
+
+
+                        for(prop in stat[part])
+                        {
+
+                            switch (prop){
+                                case "count":
+                                    message += (stat[part]["count"])+' in ';
+                                    break;
+                                case "timer":
+                                    if(stat[part]["timer"] < -1000)
+                                        message += '<b>';
+                                    message += (stat[part]["timer"]*-1)+'ms ';
+                                    if(stat[part]["timer"] < -1000)
+                                        message += '</b>';
+                                    break;
+                                case "size":
+                                    message += (stat[part]["size"])+'bytes ';
+                                    break;
+
+                            }
+
+                        }
+
+                        if(part!=='total')
+                            message += '</span>';
+                        else
+                            message += '</span></h2>';
+                    }
+                }
+                console.log(options.stat);
+
+                DOM.prepend('<div onclick="DOM.toggle(\'span\',this)">'+message+'</div>', this.statBox);
+            }
         },
 
         "isEnable": function (key) {
@@ -87,7 +141,6 @@
             //box.append(error);
 
 
-
             if (this && this.node) {
                 node = this.node;
             } else if (this && 'nodeType' in this) {
@@ -98,7 +151,7 @@
 
             DOM.remove('.modal-loading', node);
 
-            if(node.querySelector('.modal-error div')){
+            if (node.querySelector('.modal-error div')) {
                 DOM.append('<p>' + message + '<p>', node.querySelector('.modal-error div'));
             } else {
                 DOM.append('<div onclick="this.parentNode.removeChild(this)" class="modal-error"><div class="animated zoomIn"><span>' + Cache.i18n('title-error') + '</span><p>' + message + '</p></div></div>', node);

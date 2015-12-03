@@ -1,5 +1,0 @@
-<form id="blog-post-{{post_id}}-comments-{{or comment_id id}}-like"
-      method="{{#if is_liked}}delete{{else}}post{{/if}}"
-      action="/blog/post/{{post_id}}/comments/{{or comment_id id}}/like">
-    <button type="submit" class="{{#if is_liked}}is-liked{{/if}} comment-like">{{likes}}</button>
-</form>

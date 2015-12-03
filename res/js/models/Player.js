@@ -4,10 +4,43 @@
 
     Player = {
 
+        count: {},
+        balance: {},
+        currency: {},
+        language: {},
+        favorite: [],
+
         init: function (init) {
 
             D.log('Player.init', 'func');
-            Object.deepExtend(this, init);
+
+            if (typeof init === 'object') {
+
+                if (init.hasOwnProperty('count')) {
+                    for (key in init.count) {
+                        if (this.count.hasOwnProperty(key)) {
+                            var holders = document.getElementsByClassName('count-' + key);
+                            for (var i = 0; i < holders.length; i++) {
+                                holders[i].innerHTML = init.count[key];
+                            }
+                        }
+                    }
+                }
+
+                if (init.hasOwnProperty('balance')) {
+                    for (key in init.balance) {
+                        if (this.balance.hasOwnProperty(key)) {
+                            var holders = document.getElementsByClassName('holder-' + key);
+                            for (var i = 0; i < holders.length; i++) {
+                                holders[i].innerHTML = this.fineNumbers(init.balance[key]);
+                            }
+                        }
+                    }
+                }
+
+                Object.deepExtend(this, init);
+
+            }
 
             return this;
         },
@@ -78,48 +111,46 @@
             }
         },
 
-        updatePoints: function (newSum) {
-
-            var holders = document.querySelectorAll('.holder-points');
-            this.balance.points = parseInt(newSum) || this.balance.points;
-            newSum = this.fineNumbers(this.balance.points);
-
-            for (var i = 0; i < holders.length; i++) {
-                holders[i].innerHTML = newSum;
-            }
-
-            return this;
+        decrement: function (count) {
+            return this.getCount(count) && this.setCount(count, this.getCount(count) - 1);
         },
 
-        updateCount: function (count, value) {
+        setCount: function (count, value) {
 
-            if(typeof count === 'object' && !value){
-                Object.deepExtend(this.count, count);
-            } else if(typeof count === 'string' && value){
-                this.count[count] = value;
+            var obj = {count: {}};
+
+            if (typeof count === 'object' && !value) {
+                obj.count = count;
+                this.init(obj);
+            } else if (typeof count === 'string' && value) {
+                obj.count[count] = value;
+                this.init(obj);
             }
 
             return this;
         },
 
         getCount: function (key) {
+            return typeof key === 'string' && this.count.hasOwnProperty(key) && this.count[key];
+        },
 
-            if(typeof key === 'string')
-                return Player.count[key];
+        updatePoints: function (newSum) {
+            var balance = {
+                balance: {
+                    points: typeof newSum !== 'undefined' && parseInt(newSum) || this.balance.points
+                }
+            };
+            return this.init(balance);
 
         },
 
         updateMoney: function (newSum) {
-
-            var holders = document.querySelectorAll('.holder-money');
-            this.balance.money = newSum && parseFloat(newSum).toFixed(2) || this.balance.money;
-            newSum = this.fineNumbers(this.balance.money);
-
-            for (var i = 0; i < holders.length; i++) {
-                holders[i].innerHTML = newSum;
-            }
-
-            return this;
+            var balance = {
+                balance: {
+                    money: typeof newSum !== 'undefined' && parseFloat(newSum).toFixed(2) || this.balance.money
+                }
+            };
+            return this.init(balance);
         },
 
         fineNumbers: function (sum) {
@@ -156,9 +187,9 @@
             return calc_points;
         },
 
-        renderFavorite: function(){
+        renderFavorite: function () {
             balls = {};
-            for(var i = 1; i<=Tickets.totalBalls; i++)
+            for (var i = 1; i <= Tickets.totalBalls; i++)
                 balls[i] = this.favorite.indexOf(i) !== -1;
             return balls;
         },
