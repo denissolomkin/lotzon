@@ -8,7 +8,7 @@
             <span>{{#if (eq num (lottery 'totalTickets'))}} <span class="gold">GOLD</span> {{else}} {{i18n "title-lottery-ticket-num"}} N°{{num}} {{/if}}</span>
             <ul>
                 {{#combination}}
-                <li class="filled-ball" data-num='{{ball}}' class='{{^win}} won_ball{{/win}}' >
+                <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>
                     {{ball}}
                 </li>
                 {{/combination}}
@@ -21,9 +21,6 @@
         </li>
         {{/tickets}}
     </ul>
-
-
-
 
     {{#if win}}
     <div class="ghd-text ghd-won">
@@ -57,8 +54,6 @@
     {{else}}
         <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
     {{/if}}
-
-
 
     {{else}}
     <div class="ghd-won">Вы не принимали участия в розыгрыше</div>

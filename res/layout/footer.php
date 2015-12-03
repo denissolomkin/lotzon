@@ -22,6 +22,10 @@
 <script>
 
     var
+        device = {
+            mobile: <?php echo (isset($isMobile) && $isMobile) ? "true" : "false";?>
+        },
+
         menu = {
             navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
@@ -182,7 +186,7 @@
 
         debug = {
             "config": {
-                "stat": true,
+                "stat": /192.168.56.101/.test(location.hostname),
                 "alert": false,
                 "render": true,
                 "cache": false,
@@ -253,7 +257,7 @@ endforeach;
         Slider.init(slider); // echo slider
         Navigation.init(menu); // init navigation
         Livedate.init(timestamp); // update dates in realtime
-	    Device.init(); // detect
+	    Device.init(device); // detect
 
         Cache.drop().init(); // init cache engine
         Callbacks.init(); // init callbacks

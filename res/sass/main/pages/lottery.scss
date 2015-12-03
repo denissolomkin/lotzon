@@ -484,9 +484,9 @@
 	background-color: #8ECADA;
 	width: 100%;
 	height: 568px;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
+	// left: 50%;
+	// top: 50%;
+	// transform: translate(-50%, -50%);
 	& .won {
 		display: none;
 		&.close {
@@ -1578,10 +1578,10 @@
 		}
 	}
 	& .ghd-won {
-		font: 15px / 1 handbookpro-regular;
+		font: 15px / 1 'handbookpro-regular';
 	}
 	& .ghd-game-inf {
-		font-family: 'Handbook-bold';
+		font-family:'handbookpro-regular';
 		margin-top: 30px;
 		padding: 0;
 		& .title {
@@ -1592,16 +1592,25 @@
 			line-height: 40px;
 			text-transform: uppercase;
 			margin-bottom: 15px;
+			text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
 		}
 		& .ghd-all-won {
 			border: 0;
 			text-transform: uppercase;
+			text-align: right;
+			padding: 10px 0;
 		}
 		& tr {
 			& th {
 				text-align: center;
-				padding-bottom: 0 0 30px;	
-
+				padding: 0 0 30px;	
+				&:nth-child(2) {
+					padding-left: 40px;
+				}
+				&:nth-child(3) {
+					padding-left: 40px;
+					text-align: left;
+				}
 			}
 
 			& td {
@@ -1609,7 +1618,10 @@
 				padding: 0;
 				&:nth-child(3) {
 					text-align: left;
-					padding-left: 100px;
+					padding-left: 40px;
+				}
+				&:nth-child(2) {
+					padding-left: 40px;
 				}
 			}
 		}

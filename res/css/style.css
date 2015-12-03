@@ -132,6 +132,8 @@ button {
   .btn-flat:hover {
     background: #000;
     color: #fff; }
+  .btn-flat.loading {
+    opacity: 0.5; }
 
 .status {
   display: none;
@@ -583,13 +585,9 @@ input.input-radio:checked + label.input-radio:before {
 
 .header {
   background: #f2efed;
-  position: relative; }
-
-.header .container {
-  padding: 0; }
-
-.header-left {
-  height: 40px; }
+  position: relative;
+  width: 100%;
+  z-index: 100; }
 
 .header-logo {
   float: left;
@@ -681,10 +679,6 @@ div {
 .write-admin {
   right: 32px; }
 
-.header {
-  width: 100%;
-  z-index: 100; }
-
 .menu {
   overflow: visible; }
 
@@ -729,44 +723,37 @@ div {
 .menu-item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3); }
 
-.menu {
-  padding: 20px 0;
-  font-size: 15px;
-  width: 250px;
-  display: none; }
-  .menu a {
-    display: block;
-    text-decoration: none;
-    text-align: right;
-    color: #4a4a4a;
-    padding-right: 15px; }
-    .menu a.active, .menu a:hover {
-      background: #b7ced3; }
+.menu a {
+  display: block;
+  text-decoration: none;
+  text-align: right;
+  color: #4a4a4a;
+  padding-right: 15px; }
+  .menu a.active, .menu a:hover {
+    background: #b7ced3; }
 
-.menu-main {
-  padding-bottom: 15px; }
-  .menu-main a {
-    text-transform: uppercase;
-    padding-top: 8px;
-    padding-bottom: 8px; }
-  .menu-main:after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: #9b9b9b;
-    float: right;
-    width: 80%;
-    position: relative;
-    top: 15px;
-    right: 15px; }
+.menu-main a {
+  text-transform: uppercase;
+  padding-top: 8px;
+  padding-bottom: 8px; }
 
-.menu-more {
-  padding-top: 15px; }
-  .menu-more a {
-    padding-top: 5px;
-    padding-bottom: 5px; }
-  .menu-more li:last-child a {
-    margin-top: 25px; }
+.menu-main:after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: #9b9b9b;
+  float: right;
+  width: 80%;
+  position: relative;
+  top: 15px;
+  right: 15px; }
+
+.menu-more a {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.menu-more li:last-child a {
+  margin-top: 25px; }
 
 .menu-profile {
   display: none;
@@ -821,12 +808,6 @@ div {
   position: relative; }
   .menu-balance-item:last-child {
     margin-bottom: 0; }
-
-.menu-btns {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 40px; }
 
 .menu-btn-item {
   float: right;
@@ -1159,7 +1140,7 @@ header .owl-theme .owl-controls .owl-page span {
     border-bottom: none; }
 
 #blog .content-box-item {
-  padding: 20px; }
+  padding: 20px 20px 30px; }
 
 #blog-post-view {
   font-family: handbookpro-regular;
@@ -1279,7 +1260,7 @@ div.comment-reply-btn {
   color: #9c9c9a; }
 
 #blog-posts {
-  font-family: handbookpro-regular;
+  font-family: 'handbookpro-regular';
   font-size: 15px; }
   #blog-posts .post-item-date {
     display: inline-block !important;
@@ -1302,6 +1283,9 @@ div.comment-reply-btn {
       border-bottom: 1px solid #cbc7c4;
       margin: 0 -20px !important;
       display: block; }
+    #blog-posts .post-item:last-child hr {
+      border: none;
+      padding-bottom: 10px; }
 
 .post-item-img {
   margin: 0 -20px; }
@@ -2734,10 +2718,7 @@ form.loading > * {
   box-sizing: border-box;
   background-color: #8ECADA;
   width: 100%;
-  height: 568px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); }
+  height: 568px; }
   #lottery-process .won {
     display: none; }
     #lottery-process .won.close {
@@ -3577,9 +3558,9 @@ form.loading > * {
   #lottery-history-view .ghd-tickets li span {
     margin-right: 25px; }
   #lottery-history-view .ghd-won {
-    font: 15px / 1 handbookpro-regular; }
+    font: 15px / 1 'handbookpro-regular'; }
   #lottery-history-view .ghd-game-inf {
-    font-family: 'Handbook-bold';
+    font-family: 'handbookpro-regular';
     margin-top: 30px;
     padding: 0; }
     #lottery-history-view .ghd-game-inf .title {
@@ -3589,19 +3570,29 @@ form.loading > * {
       height: 40px;
       line-height: 40px;
       text-transform: uppercase;
-      margin-bottom: 15px; }
+      margin-bottom: 15px;
+      text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4); }
     #lottery-history-view .ghd-game-inf .ghd-all-won {
       border: 0;
-      text-transform: uppercase; }
+      text-transform: uppercase;
+      text-align: right;
+      padding: 10px 0; }
     #lottery-history-view .ghd-game-inf tr th {
       text-align: center;
-      padding-bottom: 0 0 30px; }
+      padding: 0 0 30px; }
+      #lottery-history-view .ghd-game-inf tr th:nth-child(2) {
+        padding-left: 40px; }
+      #lottery-history-view .ghd-game-inf tr th:nth-child(3) {
+        padding-left: 40px;
+        text-align: left; }
     #lottery-history-view .ghd-game-inf tr td {
       text-align: center;
       padding: 0; }
       #lottery-history-view .ghd-game-inf tr td:nth-child(3) {
         text-align: left;
-        padding-left: 100px; }
+        padding-left: 40px; }
+      #lottery-history-view .ghd-game-inf tr td:nth-child(2) {
+        padding-left: 40px; }
 
 #lottery-history-view-tickets {
   padding: 0;
