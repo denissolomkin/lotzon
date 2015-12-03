@@ -100,6 +100,34 @@ class CommentsDBProcessor implements IProcessor
         return $comment;
     }
 
+    public function getCount($module, $objectId, $status = 1)
+    {
+        $sql = "SELECT
+                    count(*) as c
+                FROM
+                  `PlayerReviews`
+                WHERE
+                    `Module` = :module
+                AND
+                    `Status` = :status
+                AND
+                    `ObjectId` = :objectId";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':module'   => $module,
+                ':objectId' => $objectId,
+                ':status'   => $status,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        $count = $sth->fetch()['c'];
+
+        return $count;
+    }
+
     public function getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL)
     {
         $sql = "SELECT
