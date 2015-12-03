@@ -128,7 +128,6 @@
 
         currentEdit.text = text;
         currentEdit.enable = $('input[name="enable"]').prop("checked");
-        currentEdit.img    = $('img#image').attr('data-image');
 
         $("#errorForm").hide();
         $(this).find('.glyphicon').remove();
@@ -183,6 +182,7 @@
             e.uploadItem.completeCallback = function(succ, data, status) {
                 image.attr('src', data.imageWebPath+"?"+(new Date().getTime()));
                 image.attr('data-image', data.imageName);
+                currentEdit.img = data.imageName;
             };
 
             e.uploadItem.progressCallback = function(perc) {}
