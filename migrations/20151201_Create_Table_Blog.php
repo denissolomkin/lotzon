@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS `Blog`(
 `Enable` BOOL NOT NULL DEFAULT 0,
 PRIMARY KEY (`Id`),
 KEY `list` (`Enable`,`Lang`,`Id`,`DateCreated`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
