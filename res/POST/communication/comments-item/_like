@@ -1,15 +1,15 @@
 {
-  "res": {
-    "communication": {
-          "comments": {
-            "1": {
-                "like":{
-                    "id": 1,
-                    "likes": 12,
-                    "is_liked": true
-              }
+    "res": {
+        "communication": {
+            "comments": {
+                "1": {
+                    "like": {
+                        "id": "1",
+                        "likes": "1",
+                        "is_liked": true
+                    }
+                }
             }
         }
     }
-  }
 }
