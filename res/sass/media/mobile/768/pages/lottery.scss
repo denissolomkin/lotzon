@@ -72,6 +72,10 @@
 .content-box-content .gh-item .arrow {
   top: 10px;
 }
+#lottery .content-box-content .gh-item:before {
+    left: -10px;
+    top: 20px;
+}
 .matches-inf-wrapper.carousel {
   padding: 10px 30px 0; 
   & .matches-inf {
@@ -326,11 +330,6 @@
 }
 .cabinet-game-history.with-cat {
   padding: 0 0 30px 38px;
-}
-
-.content-box-content .gh-item:before {
-  left: -10px;
-  top: 20px;
 }
 
 .ticket-box .ticket-btn {

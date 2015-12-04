@@ -86,7 +86,9 @@
 
             options.template = options.template || U.parse(this.href || options.href);
             options.href = options.href || this.href || options.template;
-            options.stat = R.stat();
+
+            if(D.isEnable('stat'))
+                options.stat = R.stat();
 
             if ('nodeType' in this)
                 options.target = this;
@@ -125,15 +127,9 @@
                 options.json = {};
             }
 
-            /* OLD disable JSON for "/new" template without "?object:id" */
+            /* disable JSON for "/new" template */
             else if (!options.json && options.href.search(/\/new$/) !== -1) {
                 options.json = {};
-            }
-
-            /* OLD fix JSON for "/all" template */
-            else if (!options.json && options.href.search(/all/) != -1) {
-                options.href = options.href.replace(/\/all/g, '');
-                options.init.template = options.template = options.template.replace(/\-all/g, '');
             }
 
             /* replace JSON to self for "/list" items */
@@ -146,11 +142,26 @@
                 options.href = options.href.replace(/\/\w*$/, '');
             }
 
-            R.event('push', options);
-            R.queue.push(options);
+            if(options.target || options.state)
+                var page = document.getElementById(U.parse(U.parse(options.href),'tmpl'));
 
-            if (!R.isRendering)
-                R.render();
+            if (page && page.classList.contains('content-main')) {
+
+                DOM.hide(page.parentNode.children);
+                DOM.show(page);
+                options.url !== false && (options.url = true);
+                R.afterHTML(options);
+                U.update(options);
+
+            } else {
+
+                R.event('push', options);
+                R.queue.push(options);
+
+                if (!R.isRendering)
+                    R.render();
+
+            }
 
         },
 
@@ -174,9 +185,11 @@
 
         "json": function (options) {
 
-            if(!options.stat)
-                options.stat = R.stat();
-            options.stat.ajax.timer = new Date().getTime();
+            if(D.isEnable('stat')) {
+                if (!options.stat)
+                    options.stat = R.stat();
+                options.stat.ajax.timer = new Date().getTime();
+            }
 
             options.href = U.parse(options.href, 'get');
 
@@ -203,7 +216,10 @@
                         if ('responseText' in data) {
                             D.error.call(options, 'OBJECT NOT FOUND');
                         } else {
-                            options.stat.ajax.size = xhr.responseText.length;
+
+                            if(D.isEnable('stat'))
+                                options.stat.ajax.size = xhr.responseText.length;
+
                             options.json = Cache.set(options.href, data);
                             if(data.hasOwnProperty('lastItem'))
                                 options.lastItem = true;
@@ -254,9 +270,11 @@
 
         "renderTMPL": function (options) {
 
-            if (!options.stat.templates.timer) {
-                options.stat.ajax.timer -= new Date().getTime();
-                options.stat.templates.timer = new Date().getTime();
+            if(D.isEnable('stat')) {
+                if (!options.stat.templates.timer) {
+                    options.stat.ajax.timer -= new Date().getTime();
+                    options.stat.templates.timer = new Date().getTime();
+                }
             }
 
             var template = '',
@@ -301,8 +319,10 @@
                                 options.partials.push(partials[i]);
                         }
 
-                        options.stat.templates.size += parseInt(xhr.getResponseHeader('Content-Length')) || data.length;
-                        options.stat.templates.count++;
+                        if(D.isEnable('stat')) {
+                            options.stat.templates.size += parseInt(xhr.getResponseHeader('Content-Length')) || data.length;
+                            options.stat.templates.count++;
+                        }
                         R.partialTMPL(options);
 
                     },
@@ -327,15 +347,20 @@
 
         "renderHTML": function (options) {
 
-            if (options.stat.templates.timer)
-                options.stat.templates.timer -= new Date().getTime();
-            options.stat.render.timer = new Date().getTime();
+            if(D.isEnable('stat')) {
+                if (options.stat.templates.timer)
+                    options.stat.templates.timer -= new Date().getTime();
+                options.stat.render.timer = new Date().getTime();
+            }
 
             options.rendered = options.template(options.json);
             D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered], 'render');
 
-            options.stat.render.timer -= new Date().getTime();
-            options.stat.after.timer = new Date().getTime();
+
+            if(D.isEnable('stat')) {
+                options.stat.render.timer -= new Date().getTime();
+                options.stat.after.timer = new Date().getTime();
+            }
 
             R.inputHTML(options);
         },
@@ -431,7 +456,6 @@
 
         "afterHTML": function (options) {
 
-
             if (options.after) {
                 D.log(['Render.after', typeof options.after], 'render');
                 options.after(options);
@@ -442,50 +466,44 @@
                 callback(options);
             }
 
+            if (options.target) {
+
+                var items = options.target.parentNode;
+                if(!options.target.classList.contains('content-box-tab')){
+                    items = items.parentNode;
+                    if(options.url !== false)
+                        options.url = true;
+                }
+                items = items.getElementsByClassName('active');
+                for (var i = 0; i < items.length; i++) {
+                    items[i].classList.remove('active');
+                }
+                options.target.classList.add('active');
+            }
+
             if (options.rendered && options.rendered.classList && options.rendered.classList.contains('content-main')) {
                 var boxes = options.rendered.getElementsByClassName('content-box-tabs');
                 for (var i = 0; i < boxes.length; i++) {
                     var tab = boxes[i].getElementsByClassName('content-box-tab')[0];
                     tab && tab.click();
                 }
-
-                if (options.target && options.target.parentNode.tagName === 'LI') {
-                    var items = options.target.parentNode.parentNode.getElementsByClassName('active');
-                    for (var i = 0; i < items.length; i++) {
-                        items[i].classList.remove('active');
-                    }
-                }
-
                 if(options.url !== false)
                     options.url = true;
-
-            } else if (options.target && options.target.classList) {
-
-                /* for tabs */
-                if (options.target.classList.contains('content-box-tab')) {
-                    var tabs = options.target.parentNode.getElementsByClassName('active');
-                    for (var i = 0; i < tabs.length; i++) {
-                        tabs[i].classList.remove('active');
-                    }
-                } else if(options.url !== false)
-                    options.url = true;
-
             }
 
-            if (options.target)
-                options.target.classList.add('active');
 
-
-            D.log(['Render.afterHTML class:', options.findClass], 'render');
+            D.log(['Render.afterHTML callback:', U.parse(options.init.template, 'tmpl')], 'render');
 
             U.update(options);
             Content.infiniteScrolling();
             R.event('complete', options);
 
-            options.stat.after.timer -= new Date().getTime();
-            options.stat.total.size = options.stat.ajax.size + options.stat.templates.size;
-            options.stat.total.timer -= new Date().getTime();
-            D.stat(options);
+            if(D.isEnable('stat')) {
+                options.stat.after.timer -= new Date().getTime();
+                options.stat.total.size = options.stat.ajax.size + options.stat.templates.size;
+                options.stat.total.timer -= new Date().getTime();
+                D.stat(options);
+            }
 
         },
 

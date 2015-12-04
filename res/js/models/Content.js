@@ -71,8 +71,8 @@
 
                 } else {
 
-                    var first_id = renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
-                        last_id = renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
+                    var first_id = renderList && renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
+                        last_id = renderList && renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
                         offset = renderList && renderList.childElementCount || null;
 
                     if (first_id && last_id) {
@@ -106,7 +106,7 @@
             ]);
 
             if (infiniteScrolling.length) {
-                // Content.clearLoading();
+
                 for (var i = 0; i < infiniteScrolling.length; i++) {
                     if (Device.onScreen.call(infiniteScrolling[i], -200)) {
                         D.log('Content.infiniteScrolling', 'func');
@@ -126,12 +126,15 @@
 
         updateBanners: function () {
 
-            if (/lotzon.com/.test(location.hostname)) {
-                R.push('/banner/desktop/top');
-                R.push('/banner/desktop/right');
-                //R.push('/banner/desktop/fixed');
-                //R.push('/banner/tablet/top');
-                //R.push('/banner/tablet/bottom');
+            if (/new.lotzon.com/.test(location.hostname)) {
+                if(Device.mobile){
+                    R.push('/banner/tablet/top');
+                    R.push('/banner/tablet/bottom');
+                } else {
+                    // R.push('/banner/desktop/fixed');
+                    R.push('/banner/desktop/top');
+                    R.push('/banner/desktop/right');
+                }
             }
         },
 
@@ -144,7 +147,7 @@
                 var name = null,
                     className = [];
 
-                if (options.rendered && typeof options.rendered === 'object' && options.rendered.hasOwnProperty('classList'))
+                if (options.rendered && typeof options.rendered === 'object' && options.rendered.classList)
                     for (name in options.query) {
                         if (options.query.hasOwnProperty(name) && options.query[name] && name.indexOf('date') === -1) { /* skip unimportant filters */
                             className = [name, options.query[name]];
@@ -157,7 +160,6 @@
             autoload: function (options) {
 
                 D.log(['Content.after.autoload', options.node.id], 'content');
-
 
                 if (infiniteScrolling = options.node.parentNode.querySelector('button.loading')) {
                     if (!Object.size(options.json) || options.hasOwnProperty('lastItem') || infiniteScrolling.classList.contains('die-infinite-scrolling')) {

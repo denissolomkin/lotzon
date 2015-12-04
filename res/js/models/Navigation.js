@@ -56,12 +56,8 @@
                 D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)], 'info');
 
                 var state = event.state || {href: document.location.pathname};
-                if (page = document.getElementById(U.parse(state.href))) {
-                    DOM.hide(page.parentNode.children);
-                    DOM.show(page);
-                } else {
-                    R.push(state);
-                }
+                state.state = true;
+                R.push(state);
 
             };
 

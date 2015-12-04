@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/res/css/denis.css">
 
     <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
-    <link rel="stylesheet" href="/res/css/social-likes_classic.css">
+    <link rel="stylesheet" href="/res/css/social-likes_birman.css">
 
     <link rel="stylesheet" href="/res/css/olya.css">
 </head>

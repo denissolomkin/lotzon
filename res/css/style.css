@@ -225,7 +225,11 @@ button {
   padding: 20px 10px 0; }
 
 .content-box-cat {
-  float: left; }
+  float: left;
+  letter-spacing: 0.7px;
+  font-family: 'handbookpro-regular';
+  font-size: 15px;
+  color: #4D4D4D; }
 
 .content-box-cat a {
   display: block;
@@ -1853,7 +1857,8 @@ div.comment-reply-btn {
   padding: 0 15px; }
 
 #communication-notifications-list .c-notification {
-  padding: 7px 15px 7px 10px; }
+  padding: 7px 15px 7px 10px;
+  margin-bottom: 0; }
 
 .nm-search {
   position: relative;
@@ -2238,7 +2243,9 @@ form.loading > * {
     color: #4a8fec; }
 
 .c-notification-description {
-  line-height: 1.4; }
+  line-height: 1.4;
+  max-height: 45px;
+  overflow: hidden; }
 
 .content-box-item {
   padding-top: 80px;
@@ -3396,9 +3403,9 @@ form.loading > * {
 .gold .header-box {
   background: #f8e71d; }
 
-.content-box-item-content .type-mine .gh-item {
+.type-mine .gh-item {
   position: relative; }
-  .content-box-item-content .type-mine .gh-item:before {
+  .type-mine .gh-item:before {
     content: "";
     display: inline-block;
     width: 10px;
@@ -3485,19 +3492,6 @@ form.loading > * {
       text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
     .content-box-cat > span label:after {
       display: none; }
-  .content-box-cat > span:first-child label {
-    padding: 5px 10px 5px 35px; }
-    .content-box-cat > span:first-child label:before {
-      content: "";
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background: #b7cfd3;
-      border-radius: 50%;
-      margin-right: 13px;
-      position: absolute;
-      left: 5px;
-      top: 10px; }
   .content-box-cat label {
     display: inline-block;
     top: 0;
@@ -3510,6 +3504,20 @@ form.loading > * {
       background: #4c4c4c;
       color: #fff;
       text-shadow: 0.2px 0.6px 1px rgba(0, 0, 0, 0.5); }
+
+.cabinet-game-history .content-box-cat span:first-child label {
+  padding: 5px 10px 5px 35px; }
+  .cabinet-game-history .content-box-cat span:first-child label:before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #b7cfd3;
+    border-radius: 50%;
+    margin-right: 13px;
+    position: absolute;
+    left: 5px;
+    top: 10px; }
 
 #lottery-history-view {
   background: url(img/bg-win.png); }
@@ -3661,6 +3669,8 @@ form.loading > * {
   .prize:hover .prize-price {
     color: #ffe700;
     background: black; }
+  .prize > a {
+    border: 1px solid #e1e1e1; }
 
 .prize-img {
   position: relative;
@@ -3732,11 +3742,18 @@ form.loading > * {
   margin-right: 0; }
 
 #prizes-exchange {
-  padding: 0 20px 20px; }
+  padding: 0 20px 20px;
+  position: relative; }
   #prizes-exchange .content-box-item-top {
-    padding: 0; }
+    width: auto;
+    padding: 0;
+    left: 5px; }
   #prizes-exchange .content-box-item-content {
     margin-right: -25px; }
+  #prizes-exchange .render-list {
+    margin-top: 0; }
+  #prizes-exchange .render-list-container {
+    padding-top: 70px; }
 
 @media (min-width: 540px) {
   .prizes-for-points .content-box-item-content {

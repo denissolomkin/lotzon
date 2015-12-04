@@ -13,9 +13,10 @@
             </div>
         </div>
         <div class="prize-inf">
-            {{i18n "title-limited-quantity"}}
-            <br>
-            {{ this.quantity }} {{i18n "title-pieces"}}
+            {{#if (lt (player "balance.points") this.price)}} {{i18n "title-pieces"}} {{/if}}
+         </div>
+          <div class="prize-inf">
+            {{#if (like this.quantity 0)}}  {{i18n "title-limited-quantity"}} {{/if}}
         </div>
     </a>
 </div>

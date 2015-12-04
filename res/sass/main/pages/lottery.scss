@@ -1361,24 +1361,28 @@
 	}
 }  
 
-.content-box-item-content {
-	& .type-mine{
-		& .gh-item {
-			position:relative;
-			&:before {
-				content: "";
-				display: inline-block;
-				width: 10px;
-				height: 10px;
-				background: #b7cfd3;
-				border-radius: 50%;
-				margin-right: 13px;
-				position: absolute;
-				left: -20px;
-				top: 10px;
-			}
+
+& .type-mine{
+	& .gh-item {
+		position:relative;
+		&:before {
+			content: "";
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			background: #b7cfd3;
+			border-radius: 50%;
+			margin-right: 13px;
+			position: absolute;
+			left: -20px;
+			top: 10px;
 		}
-	}	
+	}
+}	
+
+
+.content-box-item-content {
+	
 	& .gh-item {		
 		& .arrow {
 			display: inline-block;
@@ -1479,23 +1483,7 @@
 				display:none;
 			}
 		}
-		&:first-child {
-			&  label {
-				padding: 5px 10px 5px 35px;
-				&:before {
-					content: "";
-					display: inline-block;
-					width: 10px;
-					height: 10px;
-					background: #b7cfd3;
-					border-radius: 50%;
-					margin-right: 13px;
-					position: absolute;
-					left: 5px;
-					top: 10px;
-				}
-			} 
-		} 
+		
 	}
 	& label {
 		display: inline-block;
@@ -1513,6 +1501,32 @@
 		 } 
 	}
 }
+
+.cabinet-game-history {
+	& .content-box-cat {
+		& span {
+			&:first-child {
+				&  label {
+					padding: 5px 10px 5px 35px;
+					&:before {
+						content: "";
+						display: inline-block;
+						width: 10px;
+						height: 10px;
+						background: #b7cfd3;
+						border-radius: 50%;
+						margin-right: 13px;
+						position: absolute;
+						left: 5px;
+						top: 10px;
+					}
+
+				} 
+			} 
+		}
+	}
+}
+
 
 #lottery-history-view {
 	background: url(img/bg-win.png);

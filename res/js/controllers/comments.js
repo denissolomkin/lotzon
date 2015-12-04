@@ -36,6 +36,24 @@
                     DOM.scroll(options.rendered);
 
                 DOM.cursor('.message-form-area', options.rendered);
+            },
+
+            deleteNotifications: function () {
+
+                Player.setCount('notifications', 0);
+                Cache.remove({
+                    communication: {
+                        notifications: null
+                    }
+                });
+                R.push({
+                    href: 'communication-notifications',
+                    json: {}
+                });
+            },
+
+            showComment: function (options) {
+                options.rendered.querySelector('.comment-content .comment-reply-btn').click();
             }
         },
 
@@ -55,6 +73,9 @@
 
             closeNotification: function (event) {
 
+                event.preventDefault();
+                event.stopPropagation();
+
                 var notification = DOM.up('c-notification', this),
                     obj = {
                         communication: {
@@ -70,20 +91,10 @@
 
             deleteNotifications: function (event) {
 
-                Player.setCount('notifications', 0);
                 Form.send.call(this, {
                     action: '/communication/notifications',
                     method: 'DELETE'
                 });
-                Cache.remove({
-                    communication: {
-                        notifications: null
-                    }
-                });
-                R.push({
-                    href: 'communication-notifications',
-                    json: {}
-                })
 
             },
 

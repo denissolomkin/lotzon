@@ -307,6 +307,9 @@
     margin: 0 -20px 0;
     position: relative;
   }
+
+}
+#lottery {
   & .type-mine {
     & .gh-item {
       &:before {
@@ -314,8 +317,9 @@
         left: -20px;
       }
     }
-  }
+  } 
 }
+
 .content-box-item-content .gh-item .arrow {
   top: 10px;
 }
@@ -334,6 +338,7 @@
 .content-box-content .gh-item:before {
   left: -20px;
 }
+
 .lottery-grid.timer-box {
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);

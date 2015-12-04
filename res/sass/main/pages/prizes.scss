@@ -39,6 +39,9 @@
     color: #ffe700;
     background: black;
   }
+  & > a {
+    border: 1px solid #e1e1e1;
+  }
 }
 
 .prize-img {
@@ -118,18 +121,25 @@
 .prize-finished .prize-content {
   opacity: 0.5;
 }
-
-
 .prize:nth-child(even) {
     margin-right: 0;
 }
 #prizes-exchange {
   padding: 0 20px 20px;
+  position: relative;
   & .content-box-item-top {
+    width: auto;
     padding: 0;
+    left: 5px;
   }
   & .content-box-item-content {
     margin-right: -25px;
+  }
+  & .render-list {
+    margin-top: 0;
+  }
+  & .render-list-container {
+    padding-top: 70px;
   }
 }
 @media (min-width: 540px) {

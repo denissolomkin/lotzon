@@ -94,15 +94,12 @@ $(function () {
 
         'partial': function f(name, args) {
 
+            try{
             var template = Cache.template(name);
-
-            if (!template || typeof template !== 'function') {
-                setTimeout(function () {
-                    f(name, args);
-                }, 100);
-            } else {
-                args = args || {};
-                return new Handlebars.SafeString(template(args));
+            args = args || {};
+            return new Handlebars.SafeString(template(args));
+            } catch(e){
+                D.error(e.message);
             }
 
 

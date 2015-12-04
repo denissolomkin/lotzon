@@ -264,6 +264,8 @@ form.loading > * {
 
 .c-notification-description {
   line-height: 1.4;
+  max-height: 45px;
+  overflow: hidden;
 }
 
 .content-box-item {

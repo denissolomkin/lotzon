@@ -236,7 +236,7 @@
 
         start: function (event) {
 
-            var button = this.elements['submit'];
+            var button = this.elements && this.elements['submit'];
 
             if (Form.do.validate.call(this, event)) {
                 D.log('button.loading', 'info');
@@ -249,7 +249,7 @@
         stop: function () {
 
             if ('nodeType' in this) {
-                var button = this.elements['submit'];
+                var button = this.elements && this.elements['submit'];
                 button && button.classList.contains('loading') && button.classList.remove('loading') || this.classList.remove('loading');
             } else {
                 // DOM.all('button.loading').removeClass('loading');

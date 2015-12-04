@@ -82,6 +82,7 @@
             "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,
             "communication-comments-replyform": Comments.after.replyForm,
+            "communication-comments-view": Comments.after.showComment,
 
             "games-online": Carousel.initOwl,
             "games-chance": Carousel.initOwl,
