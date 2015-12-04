@@ -104,7 +104,6 @@
                             message += '</span></h2>';
                     }
                 }
-                console.log(options.stat);
 
                 DOM.prepend('<div onclick="DOM.toggle(\'span\',this)">'+message+'</div>', this.statBox);
             }

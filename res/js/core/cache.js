@@ -203,7 +203,7 @@
                         cache = cache.hasOwnProperty(path) && cache[path];
                     } else {
 
-                        path = path.split('-');
+                        path = (path.indexOf('/') !== -1 ? path.split('/') : path.split('-')).filter(Boolean);
 
                         while (path.length && cache) {
                             needle = path.shift();
@@ -226,7 +226,9 @@
 
         "set": function (key, data) {
 
-            var path = data.key && (data.key.indexOf('/') !== -1 && data.key.split('/') || data.key.split('-')) || key.split('-'),
+            var path = (data.key
+                    ? (data.key.indexOf('/') !== -1 ? data.key.split('/') : data.key.split('-'))
+                    : (key.indexOf('/') !== -1 ? key.split('/') : key.split('-'))).filter(Boolean),
                 needle = path.last(),
                 cache = data.cache || false,
                 source = data.res || data;
@@ -361,10 +363,10 @@
 
         },
 
-        "partials": function (key) {
+        "partials": function (template) {
 
             matches = [];
-            this.storage[this.storages.templates][key].replace(
+            template.replace(
                 /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
                 function (m, p1) {
                     matches.push(p1);

@@ -4,7 +4,7 @@
     R = {
 
         "queue": [],
-        "rendering": {},
+        "rendering": [],
         "isRendering": false,
         "timeout": {
             "ajax": 10000,
@@ -84,8 +84,10 @@
             }
 
 
-            options.template = options.template || U.parse(this.href || options.href);
-            options.href = options.href || this.href || options.template;
+            options.template = U.parse( options.template || U.parse(this.href || options.href), 'tmpl');
+            options.href = U.parse( options.href || this.href || options.template, 'url');
+
+            console.log("Start:" ,options);
 
             if(D.isEnable('stat'))
                 options.stat = R.stat();
@@ -93,16 +95,13 @@
             if ('nodeType' in this)
                 options.target = this;
 
-            var node = options.template;
+            var node = U.parse(options.href); //options.template;
             if (!options.node && node) {
 
-                options.node = document.getElementById(U.parse(options.href));
+                options.node = document.getElementById(node);
 
                 if (!options.node)
                     options.node = document.getElementById(U.parse(node, 'tmpl'));
-
-                if (0 && !options.node)
-                    options.node = document.getElementById(node);
 
                 if (!options.node)
                     options.node = DOM.byId(node);
@@ -145,6 +144,11 @@
             if(options.target || options.state)
                 var page = document.getElementById(U.parse(U.parse(options.href),'tmpl'));
 
+            if(R.rendering.indexOf(options.href)!== -1){
+                console.error("Dublicate:", options);
+                return false;
+            }
+
             if (page && page.classList.contains('content-main')) {
 
                 DOM.hide(page.parentNode.children);
@@ -157,6 +161,7 @@
 
                 R.event('push', options);
                 R.queue.push(options);
+                R.rendering.push(options.href);
 
                 if (!R.isRendering)
                     R.render();
@@ -190,8 +195,6 @@
                     options.stat = R.stat();
                 options.stat.ajax.timer = new Date().getTime();
             }
-
-            options.href = U.parse(options.href, 'get');
 
             if (typeof options.json === 'object') {
 
@@ -239,7 +242,7 @@
 
         "sortJSON": function (options) {
 
-            if (typeof options.json === 'object') {
+            if (typeof options.json === 'object' && isNumeric(Object.keys(options.json)[0])) {
                 options.json = (function (s) {
                     var t = {};
                     Object.keys(s).sort().forEach(function (k) {
@@ -268,7 +271,7 @@
 
         },
 
-        "renderTMPL": function (options) {
+        "renderTMPL": function f(options, partial) {
 
             if(D.isEnable('stat')) {
                 if (!options.stat.templates.timer) {
@@ -277,22 +280,16 @@
                 }
             }
 
-            var template = '',
-                partial = false;
-
-            if (options.partials && options.partials.length)
-                partial = template = U.parse(U.parse(options.partials.shift()), 'tmpl');
-            else
-                template = options.template = U.parse(options.template, 'tmpl');
+            var template = partial || options.template;
 
             /* Template from cache */
             if (Cache.template(template)) {
 
-                D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from Cache', options.init.template], 'render');
+                D.log(['Render.renderTMPL:', template, (!options.partial ? 'TEMPLATE' : 'PARTIAL') + ' from Cache', options.init.template], 'render');
                 if (!partial)
                     options.template = Cache.template(template);
 
-                R.renderHTML(options);
+                R.partialTMPL(options, partial);
 
                 /* Template from AJAX template */
             } else {
@@ -305,25 +302,28 @@
 
                         D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from AJAX:', options.init.template], 'warn');
 
-                        if (partial)
-                            Cache.template(template, data);
-                        else
-                            options.template = Cache.template(template, data);
-
-                        var partials = Cache.partials(template);
-
-                        if (partials && partials.length) {
-                            if (!options.partials)
-                                options.partials = [];
-                            for (var i = 0; i < partials.length; i++)
-                                options.partials.push(partials[i]);
-                        }
-
                         if(D.isEnable('stat')) {
                             options.stat.templates.size += parseInt(xhr.getResponseHeader('Content-Length')) || data.length;
                             options.stat.templates.count++;
                         }
-                        R.partialTMPL(options);
+
+                        var partials = Cache.partials(data);
+                        if (partials && partials.length) {
+                            if(!options.partials)
+                                options.partials = [];
+
+                            for (var i = 0; i < partials.length; i++){
+                                options.partials.push(partials[i]);
+                                R.renderTMPL(options, partials[i]);
+                            }
+                        }
+
+                        template = Cache.template(template, data);
+
+                        if (!partial)
+                            options.template = template;
+
+                        R.partialTMPL(options, partial);
 
                     },
                     error: function (data) {
@@ -336,12 +336,24 @@
 
         },
 
-        "partialTMPL": function (options) {
+        "partialTMPL": function f(options, partial) {
 
-            if (options.partials && options.partials.length)
-                R.renderTMPL(options);
-            else
+            if(partial){
+                options.partials.splice(options.partials.indexOf(partial), 1);
+                if(!options.partials.length)
+                    delete options.partials;
+            }
+
+            if (!options.partials){
                 R.renderHTML(options);
+            } else {
+                D.log('Not ready: ' + partial || options.partials);
+                /*
+                setTimeout(function () {
+                    f(options);
+                }, 100);
+                */
+            }
 
         },
 
@@ -367,7 +379,7 @@
 
         "inputHTML": function (options) {
 
-            console.log(options);
+            console.log("Complete:" ,options);
 
             var render = options.rendered = DOM.create(options.rendered),
                 node = options.node,
@@ -449,7 +461,7 @@
             console.log('initNode: ', options.node);
             console.log('appendNode: ', node);
             console.log('renderNode: ', render);
-
+            R.rendering.splice(R.rendering.indexOf(options.href), 1);
             R.afterHTML(options);
 
         },
