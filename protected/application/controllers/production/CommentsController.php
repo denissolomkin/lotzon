@@ -29,6 +29,38 @@ class CommentsController extends \AjaxController
         return true;
     }
 
+    public function itemAction($commentId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $comment = new Comment;
+        $comment->setId($commentId)->fetch();
+
+        $comments = array();
+        $comments[$commentId] = $comment->export('JSON');
+
+        if (!$comment->getParentId()) {
+            $comments[$commentId]['answers'] = CommentsModel::instance()->getList($comment->getModule(), $comment->getObjectId(), NULL, NULL, NULL, 1, $commentId);
+        } else {
+            $comments[$commentId]['comment_id'] = $comment->getParentId();
+        }
+
+        $response = array(
+            'res' => array(
+                'communication' => array(
+                    'comments' => $comments,
+                ),
+            ),
+        );
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
     public function listAction($module = 'comments', $objectId = 0)
     {
         if (!$this->request()->isAjax()) {

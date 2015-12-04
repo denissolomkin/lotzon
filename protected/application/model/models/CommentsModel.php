@@ -19,9 +19,9 @@ class CommentsModel extends Model
         return $this->getProcessor()->getCount($module, $objectId, $status);
     }
 
-    public function getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status = 1)
+    public function getList($module, $objectId, $count = NULL, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL)
     {
-        return $this->getProcessor()->getList($module, $objectId, $count, $beforeId, $afterId, $status);
+        return $this->getProcessor()->getList($module, $objectId, $count, $beforeId, $afterId, $status, $parentId);
     }
 
     public function getLikes($commentId)
