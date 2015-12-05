@@ -28,8 +28,8 @@
         "init": function () {
 
             D.log('Cache.init', 'cache');
-            this.detect() // set is enabled storage
-                .load() // compile templates
+            return this.detect() // set is enabled storage
+                .load() // load from storage to memory
                 .compile() // compile templates
                 .localize(); // loading required language
         },
@@ -50,12 +50,13 @@
                     this.storage[this[key]] = {};
                 }
 
-            return this;
+            return this.init();
         },
 
         "detect": function () {
 
-            this.isEnabled = typeof localStorage !== 'undefined' && typeof sessionStorage !== 'undefined';
+            if(this.isEnabled === null)
+                this.isEnabled = typeof localStorage !== 'undefined' && typeof sessionStorage !== 'undefined';
             D.log(['Cache.detect:', this.isEnabled], 'cache');
 
             return this;
@@ -74,34 +75,20 @@
                     url: '/res/languages/' + this.selectedLanguage,
                     method: 'get',
                     dataType: 'json',
-                    statusCode: {
-
-                        404: function (data) {
-                            throw(data.message);
-                        },
-
-                        200: function (data) {
-                            D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
-                            Cache.language(Cache.selectedLanguage, data);
-                            Cache.ready();
-                        },
-
-                        201: function (data) {
-                            throw(data.message);
-                        },
-
-                        204: function (data) {
-                            throw(data.message);
-                        },
-
-                        500: function (data) {
-                            throw(data.message);
-                        }
+                    success: function (data) {
+                        D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
+                        Cache.language(Cache.selectedLanguage, data);
+                        Cache.ready();
+                    },
+                    error: function (data) {
+                        D.error('LANGUAGE ERROR: ' + data.message);
                     }
                 });
 
             } else
                 this.ready();
+
+            return this;
         },
 
         "ready": function () {
@@ -112,32 +99,31 @@
 
             D.log(['Cache.load'], 'cache');
 
+            var storage = {};
+
             switch (true) {
 
                 case !this.isEnabled:
-                    var storage = {};
                     storage[this.storages.templates]
                         = storage[this.storages.languages]
                         = storage[this.storages.validity]
                         = storage[this.storages.local]
                         = storage[this.storages.session]
                         = {};
-                    this.storage = storage;
-                    return this;
                     break;
 
                 case this.isEnabled:
-                    var storage = {};
                     storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.templates)) || {};
                     storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.languages)) || {};
                     storage[this.storages.validity] = JSON.parse(localStorage.getItem(this.validity)) || {};
                     storage[this.storages.local] = JSON.parse(localStorage.getItem(this.cache)) || {};
                     storage[this.storages.session] = JSON.parse(sessionStorage.getItem(this.cache)) || {};
-                    this.storage = storage;
-                    return this;
                     break;
 
             }
+
+            this.storage = storage;
+            return this;
 
         },
 
@@ -252,7 +238,7 @@
 
         },
 
-        "size": function () {
+        "stat": function () {
 
             var total = 0,
                 cache = {},
@@ -271,6 +257,7 @@
             }
 
             cache['total'] = total.toFixed(2) + " MB";
+            return cache;
         },
 
         "remove": function (object, key) {
@@ -376,12 +363,16 @@
 
         },
 
+        "hasTemplate": function (key) {
+            return this.compiledStorage.hasOwnProperty(key);
+        },
+
         "template": function (key, template) {
 
             D.log(['Cache.template:', key, template], 'cache');
 
             if (template) {
-
+                D.log(['Cache.template: ', key, template]);
                 return this.compile(key, template)
                     .save(this.storages.templates)
                     .template(key);

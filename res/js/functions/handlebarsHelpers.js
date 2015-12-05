@@ -1,6 +1,6 @@
 $(function () {
 
-    var prepareHelper = function (options, arguments) {
+    var prepareHelper = function (fn, options, arguments, model) {
 
         options = typeof options === 'string' ? options : null;
 
@@ -11,38 +11,69 @@ $(function () {
             options = args.join(', ');
         }
 
-        return options;
+        var response = eval(model + "." + fn.toString());
+        D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
+        return typeof response === 'function' && eval(model + "." + fn + "(" + options + ")") || response;
     };
 
     Handlebars.registerHelper({
 
         'avatar': Player.getAvatar,
+        'number': Player.fineNumbers,
+        'count': Player.getCount,
+        'from': Livedate.fn.from,
+        'day': Livedate.fn.day,
+        'i18n': function () {
+            return Cache.i18n(arguments);
+        },
 
         'player': function (fn, options) {
-
-            options = prepareHelper(options, arguments);
-            var response = eval("Player." + fn.toString());
-            D.log('Player.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-            return typeof response === 'function' && eval("Player." + fn + "(" + options + ")") || response;
+            return prepareHelper(fn, options, arguments, 'Player');
         },
 
         'device': function (fn, options) {
-            options = prepareHelper(options, arguments);
-            var response = eval("Device." + fn.toString());
-            D.log('Device.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-            return typeof response === 'function' && eval("Device." + fn + "(" + options + ")") || response;
+            return prepareHelper(fn, options, arguments, 'Device');
         },
 
         'lottery': function (fn, options) {
-
-            options = prepareHelper(options, arguments);
-            var response = eval("Tickets." + fn.toString());
-            D.log('Tickets.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-            return typeof response === 'function' && eval("Tickets." + fn + "(" + options + ")") || response;
+            return prepareHelper(fn, options, arguments, 'Tickets');
         },
 
-        'number': Player.fineNumbers,
-        'count': Player.getCount,
+        'partial': function f(name, args) {
+
+            try {
+                var template = Cache.template(name);
+                args = args || {};
+                return new Handlebars.SafeString(template(args));
+            } catch (e) {
+                D.error(name + ': ' + e.message);
+            }
+        },
+
+        'social': function (network, id) {
+
+            var href = "";
+            switch (network) {
+                case "Facebook":
+                    href = "https://facebook.com/"
+                    break;
+                case "Google":
+                    href = "https://plus.google.com/"
+                    break;
+                case "Twitter":
+                    href = "https://twitter.com/intent/user?user_id="
+                    break;
+                case "Vkontakte":
+                    href = "http://vk.com/id"
+                    break;
+                case "Odnoklassniki":
+                    href = "http://www.odnoklassniki.ru/profile/"
+                    break;
+
+            }
+
+            return href + id;
+        },
 
         'reverse': function (context, options) {
             var fn = options.fn, inverse = options.inverse;
@@ -92,18 +123,6 @@ $(function () {
             return ret;
         },
 
-        'partial': function f(name, args) {
-
-            try {
-                var template = Cache.template(name);
-                args = args || {};
-                return new Handlebars.SafeString(template(args));
-            } catch (e) {
-                D.error(name + ': ' + e.message);
-            }
-
-
-        },
 
         'variable': function (name, args, opt) {
 
@@ -114,40 +133,6 @@ $(function () {
         'cache': function () {
 
         },
-
-        'social': function (network, id) {
-
-            var href = '';
-
-            switch (network) {
-                case "Facebook":
-                    href = ""
-                    break;
-                case "Google":
-                    href = ""
-                    break;
-                case "Twitter":
-                    href = ""
-                    break;
-                case "Vkontakte":
-                    href = ""
-                    break;
-                case "Odnoklassniki":
-                    href = ""
-                    break;
-
-            }
-
-            return href + '/' + id;
-        },
-
-
-        'i18n': function () {
-            return Cache.i18n(arguments);
-        },
-
-        'from': Livedate.fn.from,
-        'day': Livedate.fn.day,
 
         'false': function (v1) {
             return v1 === false;

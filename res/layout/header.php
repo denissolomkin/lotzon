@@ -78,7 +78,7 @@
 
             <div id="menu-slider" class="inf-slider"></div>
 
-            <div id="menu-balance" class="balance"></div>
+            <div id="menu-balance"></div>
 
         </div>
         <!-- .header-right -->

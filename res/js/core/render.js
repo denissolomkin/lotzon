@@ -84,12 +84,12 @@
             }
 
 
-            options.template = U.parse( options.template || U.parse(this.href || options.href), 'tmpl');
-            options.href = U.parse( options.href || this.href || options.template, 'url');
+            options.template = U.parse(options.template || U.parse(this.href || options.href), 'tmpl');
+            options.href = U.parse(options.href || this.href || options.template, 'url');
 
-            console.log("Start:" ,options);
+            console.log("Start:", options);
 
-            if(D.isEnable('stat'))
+            if (D.isEnable('stat'))
                 options.stat = R.stat();
 
             if ('nodeType' in this)
@@ -141,10 +141,10 @@
                 options.href = options.href.replace(/\/\w*$/, '');
             }
 
-            if(options.target || options.state)
-                var page = document.getElementById(U.parse(U.parse(options.href),'tmpl'));
+            if (options.target || options.state)
+                var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
 
-            if(R.rendering.indexOf(options.href)!== -1){
+            if (R.rendering.indexOf(options.href) !== -1) {
                 console.error("Dublicate:", options);
                 return false;
             }
@@ -190,7 +190,7 @@
 
         "json": function (options) {
 
-            if(D.isEnable('stat')) {
+            if (D.isEnable('stat')) {
                 if (!options.stat)
                     options.stat = R.stat();
                 options.stat.ajax.timer = new Date().getTime();
@@ -220,11 +220,11 @@
                             D.error.call(options, 'OBJECT NOT FOUND');
                         } else {
 
-                            if(D.isEnable('stat'))
+                            if (D.isEnable('stat'))
                                 options.stat.ajax.size = xhr.responseText.length;
 
                             options.json = Cache.set(options.href, data);
-                            if(data.hasOwnProperty('lastItem'))
+                            if (data.hasOwnProperty('lastItem'))
                                 options.lastItem = true;
                             D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
                             R.sortJSON(options);
@@ -273,7 +273,7 @@
 
         "renderTMPL": function f(options, partial) {
 
-            if(D.isEnable('stat')) {
+            if (D.isEnable('stat')) {
                 if (!options.stat.templates.timer) {
                     options.stat.ajax.timer -= new Date().getTime();
                     options.stat.templates.timer = new Date().getTime();
@@ -283,11 +283,12 @@
             var template = partial || options.template;
 
             /* Template from cache */
-            if (Cache.template(template)) {
+            if (Cache.hasTemplate(template)) {
 
-                D.log(['Render.renderTMPL:', template, (!options.partial ? 'TEMPLATE' : 'PARTIAL') + ' from Cache', options.init.template], 'render');
-                if (!partial)
+                D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from Cache'], 'render');
+                if (!partial) {
                     options.template = Cache.template(template);
+                }
 
                 R.partialTMPL(options, partial);
 
@@ -302,7 +303,7 @@
 
                         D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from AJAX:', options.init.template], 'warn');
 
-                        if(D.isEnable('stat')) {
+                        if (D.isEnable('stat')) {
                             options.stat.templates.size += parseInt(xhr.getResponseHeader('Content-Length')) || data.length;
                             options.stat.templates.count++;
                         }
@@ -311,17 +312,17 @@
                         if (partials && partials.length) {
                             if(!options.partials)
                                 options.partials = [];
-
-                            for (var i = 0; i < partials.length; i++){
-                                options.partials.push(partials[i]);
+                            options.partials = options.partials.concat(partials);
+                            for (var i = 0; i < partials.length; i++) {
                                 R.renderTMPL(options, partials[i]);
                             }
                         }
 
                         template = Cache.template(template, data);
 
-                        if (!partial)
+                        if (!partial) {
                             options.template = template;
+                        }
 
                         R.partialTMPL(options, partial);
 
@@ -338,28 +339,34 @@
 
         "partialTMPL": function f(options, partial) {
 
-            if(partial){
-                options.partials.splice(options.partials.indexOf(partial), 1);
-                if(!options.partials.length)
-                    delete options.partials;
+            D.log(['R.partialTMPL: ', partial, options.partials]);
+            if (!partial && options.partials) {
+                D.log(['Not ready: waiting ' + options.partials.length + ' partials', options.partials]);
+            } else if (Cache.hasTemplate(partial || options.init.template)) {
+
+                if (partial) {
+                    options.partials.splice(options.partials.indexOf(partial), 1);
+                    if (!options.partials.length)
+                        delete options.partials;
+                    f(options);
+                } else {
+                    R.renderHTML(options);
+                }
+
+            } else {
+
+                D.log(['Not ready, waiting compile: ' + partial ? partial : options.init.template]);
+                setTimeout(function () {
+                    f(options, partial);
+                }, 100);
             }
 
-            if (!options.partials){
-                R.renderHTML(options);
-            } else {
-                D.log('Not ready: ' + partial || options.partials);
-                /*
-                setTimeout(function () {
-                    f(options);
-                }, 100);
-                */
-            }
 
         },
 
         "renderHTML": function (options) {
 
-            if(D.isEnable('stat')) {
+            if (D.isEnable('stat')) {
                 if (options.stat.templates.timer)
                     options.stat.templates.timer -= new Date().getTime();
                 options.stat.render.timer = new Date().getTime();
@@ -369,7 +376,7 @@
             D.log(['Render.renderHTML:', options.init.template, options.json, 'From Template:', options.rendered], 'render');
 
 
-            if(D.isEnable('stat')) {
+            if (D.isEnable('stat')) {
                 options.stat.render.timer -= new Date().getTime();
                 options.stat.after.timer = new Date().getTime();
             }
@@ -379,7 +386,7 @@
 
         "inputHTML": function (options) {
 
-            console.log("Complete:" ,options);
+            console.log("Complete:", options);
 
             var render = options.rendered = DOM.create(options.rendered),
                 node = options.node,
@@ -481,9 +488,9 @@
             if (options.target) {
 
                 var items = options.target.parentNode;
-                if(!options.target.classList.contains('content-box-tab')){
+                if (!options.target.classList.contains('content-box-tab')) {
                     items = items.parentNode;
-                    if(options.url !== false)
+                    if (options.url !== false)
                         options.url = true;
                 }
                 items = items.getElementsByClassName('active');
@@ -499,7 +506,7 @@
                     var tab = boxes[i].getElementsByClassName('content-box-tab')[0];
                     tab && tab.click();
                 }
-                if(options.url !== false)
+                if (options.url !== false)
                     options.url = true;
             }
 
@@ -510,7 +517,7 @@
             Content.infiniteScrolling();
             R.event('complete', options);
 
-            if(D.isEnable('stat')) {
+            if (D.isEnable('stat')) {
                 options.stat.after.timer -= new Date().getTime();
                 options.stat.total.size = options.stat.ajax.size + options.stat.templates.size;
                 options.stat.total.timer -= new Date().getTime();

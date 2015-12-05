@@ -53,7 +53,9 @@
             },
 
             showComment: function (options) {
-                options.rendered.querySelector('.comment-content .comment-reply-btn').click();
+                var commentReply = options.rendered.querySelector('.comment-content .comment-reply-btn');
+                if(commentReply)
+                    commentReply.click();
             }
         },
 

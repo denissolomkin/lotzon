@@ -71,21 +71,18 @@
 
             // Balance menu
             R.push({
-                'box': '.balance',
                 'template': 'menu-balance',
                 'json': Player
             });
 
             // Navigation menu
             R.push({
-                'box': '.menu',
                 'template': 'menu-navigation',
                 'json': this.navigation
             });
 
             // Navigation menu mobile
             R.push({
-                'box': 'nav-mobile',
                 'template': 'menu-navigation-mobile',
                 'json': this.navigation
             });
