@@ -32,7 +32,7 @@
 
         init: function (init) {
 
-            D.log('Navigation.init', 'func');
+            D.log('Navigation.init', 'menu');
             Object.deepExtend(this, init);
 
             var getParentAnchor = function (element) {
@@ -93,7 +93,7 @@
 
             if (++Navigation.loadedBlocks === Navigation.requiredBlocks) {
 
-                D.log('Navigation.ready', 'func');
+                D.log('Navigation.ready', 'menu');
                 $(I.menuBtnItem).off().on('click', Navigation.menu.click);
 
                 window.location.pathname === '/' && (window.location.pathname = '/blog');
@@ -112,7 +112,7 @@
 
             click: function (event) {
 
-                D.log(['Navigation.menu.click'], 'func');
+                D.log(['Navigation.menu.click'], 'menu');
                 event.stopPropagation();
                 var isActive = $(this).hasClass('active'),
                     isMobile = Device.isMobile(),
@@ -172,7 +172,7 @@
 
             switch: function () {
 
-                D.log('Navigation.menu.switch', 'func');
+                D.log('Navigation.menu.switch', 'menu');
                 if (Device.isMobile()) {
                     $(I.menuMore).removeClass('menu-item');
                     $(I.menuProfile).removeClass('menu-item');
@@ -191,7 +191,7 @@
 
             hide: function () {
 
-                D.log('Navigation.menu.hide', 'func');
+                D.log('Navigation.menu.hide', 'menu');
                 $(I.menuProfile + ":visible").fadeOut(200);
                 $(I.menuBalance + ":visible").fadeOut(200);
                 $(I.menuMore + ":visible").fadeOut(200);
@@ -212,11 +212,11 @@
 
                 if ((!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)) {
                     if (!this.body.classList.contains('fixed')) {
-                        D.log('Navigation.menu.fix.add', 'func');
+                        D.log('Navigation.menu.fix.add', 'menu');
                         this.body.classList.add('fixed');
                     }
                 } else if (this.body.classList.contains('fixed')) {
-                    D.log('Navigation.menu.fix.remove', 'func');
+                    D.log('Navigation.menu.fix.remove', 'menu');
                     this.body.classList.remove('fixed');
                 }
             }

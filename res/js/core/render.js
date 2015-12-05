@@ -98,16 +98,16 @@
             var node = U.parse(options.href); //options.template;
             if (!options.node && node) {
 
-                options.node = document.getElementById(node);
-
-                if (!options.node)
-                    options.node = document.getElementById(U.parse(node, 'tmpl'));
-
-                if (!options.node)
-                    options.node = DOM.byId(node);
-
-                if (!options.node)
+                if (options.node = document.getElementById(U.parse(node, 'tmpl'))) {
+                    console.log("Try Node 1:", U.parse(node, 'tmpl'));
+                } else if (options.node = document.getElementById(node)) {
+                    console.log("Try Node 2:", node);
+                } else if (options.node = DOM.byId(node)) {
+                    console.log("Try Node 3:", node);
+                } else {
                     options.node = document.getElementById('content');
+                    console.log("Try Node 4: content");
+                }
 
             }
 
@@ -310,7 +310,7 @@
 
                         var partials = Cache.partials(data);
                         if (partials && partials.length) {
-                            if(!options.partials)
+                            if (!options.partials)
                                 options.partials = [];
                             options.partials = options.partials.concat(partials);
                             for (var i = 0; i < partials.length; i++) {
@@ -353,12 +353,11 @@
                     R.renderHTML(options);
                 }
 
-            } else {
-
-                D.log(['Not ready, waiting compile: ' + partial ? partial : options.init.template]);
+            } else if (partial) {
                 setTimeout(function () {
                     f(options, partial);
                 }, 100);
+                D.log(['Not ready, waiting compile: ', partial]);
             }
 
 

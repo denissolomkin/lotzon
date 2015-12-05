@@ -372,7 +372,6 @@
             D.log(['Cache.template:', key, template], 'cache');
 
             if (template) {
-                D.log(['Cache.template: ', key, template]);
                 return this.compile(key, template)
                     .save(this.storages.templates)
                     .template(key);

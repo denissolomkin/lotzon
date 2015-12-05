@@ -85,7 +85,6 @@
                     this.href = url;
 
                     if (url !== window.location.pathname) {
-                        console.log(options.init);
                         D.log(['updateURL:', url], 'info');
                         $("html, body").animate({scrollTop: 0}, 'slow');
                         Navigation.menu.hide();
