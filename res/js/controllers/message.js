@@ -105,6 +105,24 @@
 
         do: {
 
+            markMessage: function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                var notification = DOM.up('c-notification', this),
+                    obj = {
+                        communication: {
+                            notifications: {}
+                        }
+                    };
+
+                obj.communication.notifications[notification.getAttribute('data-id')] = null;
+                Player.decrement('notifications');
+                Cache.remove(obj);
+
+            },
+
             clearUser: function () {
 
                 document.getElementById('communication-messages-new')

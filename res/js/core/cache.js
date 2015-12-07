@@ -15,13 +15,6 @@
             "validity": 'cacheValidity'
         },
 
-        "templates": 'templatesStorage',
-        "languages": 'languagesStorage',
-        "local": 'localStorage',
-        "session": 'sessionStorage',
-        "cache": 'cacheStorage',
-        "validity": 'cacheValidity',
-
         "isEnabled": null,
         "selectedLanguage": null,
 
@@ -113,11 +106,11 @@
                     break;
 
                 case this.isEnabled:
-                    storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.templates)) || {};
-                    storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.languages)) || {};
-                    storage[this.storages.validity] = JSON.parse(localStorage.getItem(this.validity)) || {};
-                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.cache)) || {};
-                    storage[this.storages.session] = JSON.parse(sessionStorage.getItem(this.cache)) || {};
+                    storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.storages.templates)) || {};
+                    storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.storages.languages)) || {};
+                    storage[this.storages.validity] = JSON.parse(localStorage.getItem(this.storages.validity)) || {};
+                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.cache)) || {};
+                    storage[this.storages.session] = JSON.parse(sessionStorage.getItem(this.storages.cache)) || {};
                     break;
 
             }
@@ -431,6 +424,8 @@
 
         "i18n": function (key) {
 
+            var lang = this.language(Player.language.current);
+
             if (typeof key === 'object') {
                 var args = [];
                 for (var i = 0; i <= key.length; i++)
@@ -439,8 +434,6 @@
             }
 
             D.log(['Cache.i18n:', key], 'i18n');
-
-            var lang = this.language(Player.language.current);
             key = key && key.replace(/\/|=/g, '-');
             return lang && lang[key] || key;
         }

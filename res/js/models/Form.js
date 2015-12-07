@@ -28,81 +28,35 @@
                     method: /192.168.56.101/.test(location.hostname) ? "post" : form.method,
                     data: form.data,
                     dataType: 'json',
-                    statusCode: {
+                    success: function (data) {
 
-                        400: function (data) {
+                        if ('responseText' in data) {
+
                             Form.stop.call(that);
-                            D.error.call(that, (data.responseJSON.message || 'NOT FOUND') + "<br>" + form.url + '');
-                        },
+                            D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
 
-                        404: function (data) {
-                            Form.stop.call(that);
-                            D.error.call(that, (data.responseJSON.message || 'NOT FOUND') + "<br>" + form.url + '');
-                        },
+                        } else {
 
-                        200: function (data) {
+                            Form.stop.call(that)
+                                .message.call(that, data.message);
 
-                            if ('responseText' in data) {
+                            if (data.player)
+                                Player.init(data.player);
 
-                                Form.stop.call(that);
-                                D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
-
-                            } else {
-
-                                Form.stop.call(that)
-                                    .message.call(that, data.message);
-
-                                if (data.player)
-                                    Player.init(data.player);
-
-                                if (Callbacks[form.method][form.callback]) {
-                                    D.log(['C.' + form.method + '.callback']);
-                                    Callbacks[form.method][form.callback].call(that, data.res);
-                                }
-
-                                if (data.res)
-                                    Cache.update(data.res);
-
+                            if (Callbacks[form.method][form.callback]) {
+                                D.log(['C.' + form.method + '.callback']);
+                                Callbacks[form.method][form.callback].call(that, data.res);
                             }
 
-                        },
+                            if (data.res)
+                                Cache.update(data.res);
 
-                        201: function (data) {
-
-                            if ('responseText' in data) {
-
-                                Form.stop.call(that);
-                                D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
-
-                            } else {
-
-                                Form.stop.call(that)
-                                    .message.call(that, data.message);
-
-                                if (data.player)
-                                    Player.init(data.player);
-
-                                if (Callbacks[form.method][form.callback]) {
-                                    D.log(['C.' + form.method + '.callback']);
-                                    Callbacks[form.method][form.callback].call(that, data.res);
-                                }
-
-                                if (data.res)
-                                    Cache.update(data.res);
-
-                            }
-
-                        },
-
-                        204: function (data) {
-                            Form.stop.call(that);
-                            throw (data.message);
-                        },
-
-                        405: function () {
-                            Form.stop.call(that);
-                            D.error.call(that, 'METHOD NOT ALLOWED: ' + form.method + '');
                         }
+
+                    },
+                    error: function (data) {
+                        Form.stop.call(that);
+                        D.error.call(that, (data.responseJSON.message || 'NOT FOUND') + "<br>" + form.url + '');
                     }
                 })
             }, Form.timeout.submit);

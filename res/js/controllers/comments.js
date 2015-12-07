@@ -111,7 +111,7 @@
                         }
                     };
 
-                Player.setCount('notifications', Player.setCount('notifications') - notifications.length);
+                Player.setCount('notifications', Player.getCount('notifications') - notifications.length);
 
                 for (var i = 0; i < notifications.length; i++) {
                     obj.communication.notifications[notifications[i].parentNode.getAttribute('data-id')] = null;
@@ -122,11 +122,12 @@
                 if (loadedComment) {
                     event.preventDefault();
                     event.stopPropagation();
+                    event.cancelBubble = true;
+                    Comments.hideNotifications();
                     DOM.scroll(loadedComment);
                     loadedComment.classList.add('highlight');
                 }
 
-                Comments.hideNotifications();
 
             },
 

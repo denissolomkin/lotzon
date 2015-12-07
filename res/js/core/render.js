@@ -97,18 +97,12 @@
 
             var node = U.parse(options.href); //options.template;
             if (!options.node && node) {
-
-                if (options.node = document.getElementById(U.parse(node, 'tmpl'))) {
-                    console.log("Try Node 1:", U.parse(node, 'tmpl'));
+                if (options.node = document.getElementById(options.template)) { // U.parse(node, 'tmpl')
                 } else if (options.node = document.getElementById(node)) {
-                    console.log("Try Node 2:", node);
                 } else if (options.node = DOM.byId(node)) {
-                    console.log("Try Node 3:", node);
                 } else {
                     options.node = document.getElementById('content');
-                    console.log("Try Node 4: content");
                 }
-
             }
 
             options.init = Object.deepExtend({}, {
@@ -484,19 +478,22 @@
                 callback(options);
             }
 
-            if (options.target) {
+            if (options.target && options.target.parentNode) {
 
                 var items = options.target.parentNode;
+
                 if (!options.target.classList.contains('content-box-tab')) {
                     items = items.parentNode;
                     if (options.url !== false)
                         options.url = true;
                 }
-                items = items.getElementsByClassName('active');
+
+                items = items && items.getElementsByClassName('active') || [];
                 for (var i = 0; i < items.length; i++) {
                     items[i].classList.remove('active');
                 }
                 options.target.classList.add('active');
+
             }
 
             if (options.rendered && options.rendered.classList && options.rendered.classList.contains('content-main')) {

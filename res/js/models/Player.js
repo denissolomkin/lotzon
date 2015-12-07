@@ -1,5 +1,3 @@
-// jQuery less
-
 (function () {
 
     Player = {
@@ -119,10 +117,10 @@
 
             var obj = {count: {}};
 
-            if (typeof count === 'object' && !value) {
+            if (typeof count === 'object' && !isNumeric(value)) {
                 obj.count = count;
                 this.init(obj);
-            } else if (typeof count === 'string' && value) {
+            } else if (typeof count === 'string' && isNumeric(value)) {
                 obj.count[count] = value;
                 this.init(obj);
             }
@@ -194,12 +192,16 @@
             return balls;
         },
 
+        isOnline:function(ping){
+            return ping + Config.timeout.online > new Date();
+        },
+
         getAvatar: function (img, id, width) {
             img = typeof img === 'string' ? img : this.img;
             id = typeof id === 'string' ? id : this.id;
             width = typeof width === 'number' ? width : 200;
             return (img
-                ? '/filestorage/users/' + width + '/' + img
+                ? Config.filestorage + '/users/' + width + '/' + img
                 : '/res/img/default.jpg');
         }
 

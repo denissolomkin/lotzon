@@ -51,7 +51,7 @@
                 "7": false,
                 "8": false
             },
-	        "priceGold": 3,
+            "priceGold": 3,
             "prizes": {
                 "default": {
                     "1": {
@@ -135,7 +135,7 @@
                 "requests": 11,
                 "friends": 56
             },
-            "favorite": [1,null,null,null,5,null],
+            "favorite": [1, null, null, null, 5, null],
             "location": {
                 "country": "UA",
                 "city": "Kyiv",
@@ -184,6 +184,17 @@
             }
         },
 
+        config = {
+            timeout: {
+                ping: 60 * 1000,
+                online: 180 * 1000
+            },
+            adminId: 100,
+            tempFilestorage: '/filestorage/temp',
+            filestorage: '/filestorage',
+            websocketPort: 8081
+        },
+
         debug = {
             "config": {
                 "stat": /192.168.56.101/.test(location.hostname),
@@ -197,7 +208,7 @@
                 "error": true,
                 "log": true,
                 "clean": true,
-	            'content': true
+                'content': true
             }
         };
 </script>
@@ -205,32 +216,39 @@
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
+        (w[c] = w[c] || []).push(function () {
             try {
                 w.yaCounter33719044 = new Ya.Metrika({
-                    id:33719044,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true,
-                    trackHash:true
+                    id: 33719044,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true,
+                    webvisor: true,
+                    trackHash: true
                 });
-            } catch(e) { }
+            } catch (e) {
+            }
         });
 
         var n = d.getElementsByTagName("script")[0],
             s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
+            f = function () {
+                n.parentNode.insertBefore(s, n);
+            };
         s.type = "text/javascript";
         s.async = true;
         s.src = "https://mc.yandex.ru/metrika/watch.js";
 
         if (w.opera == "[object Opera]") {
             d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
+        } else {
+            f();
+        }
     })(document, window, "yandex_metrika_callbacks");
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 
 <?php $dirs = array('libs', 'plugins', 'functions', 'controllers', 'models', 'core');
@@ -255,11 +273,13 @@ endforeach;
         Player.init(player); // extend player
         D.init(debug); // init debugger
         Slider.init(slider); // echo slider
+        Config.init(config); // init config
         Navigation.init(menu); // init navigation
         Livedate.init(timestamp); // update dates in realtime
-	    Device.init(device); // detect
+        Device.init(device); // detect
 
         Cache.drop(); // init cache engine
+        Event.init(); // init event engine
         Callbacks.init(); // init callbacks
 
     });

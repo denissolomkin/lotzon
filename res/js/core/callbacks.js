@@ -4,10 +4,40 @@
 
         "init": function () {
 
+            Event.on({
+
+                'click': [
+
+                    /* global */
+                    ['a', R.push],
+
+                    /* notifications */
+                    {".close-notification": Comments.do.closeNotification},
+                    {".c-show-notifications": Comments.do.showNotifications},
+                    [["c-hide-notifications", ".close-list"], Comments.do.deleteNotifications],
+                    [".view-comment", Comments.do.viewComment, 1],
+
+                    /* new reply */
+                    {".comment-reply-btn": Comments.do.replyForm},
+                    {".comment-content": Comments.do.mobileForm},
+
+                    {".mark-message": Message.do.markMessage},
+
+                ]
+            });
+
+            /*
+             Event.window([
+             {'resize': Device.do.resize},
+             {'scroll': Device.do.scroll}
+             ])
+             */
+
+
             // handlers
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
-            
+
             $(document).on('click', Device.do.hide);
 
             /* navigation */
@@ -27,16 +57,6 @@
             $(document).on('input', ".enter-friend-name", Message.do.searchUser);
             $(document).on('click', ".nm-change", Message.do.clearUser);
             $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
-
-            /* new reply */
-            $(document).on('click', ".comment-content .comment-reply-btn", Comments.do.replyForm);
-            $(document).on('click', ".comment-content", Comments.do.mobileForm);
-
-            /* notifications */
-            $(document).on('click', ".c-notification a", Comments.do.viewComment);
-            $(document).on('click', ".close-notification", Comments.do.closeNotification);
-            $(document).on('click', ".c-hide-notifications, .close-list", Comments.do.deleteNotifications);
-            $(document).on('click', ".c-show-notifications", Comments.do.showNotifications);
 
 
             /* navigation : after notifications*/

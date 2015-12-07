@@ -35,23 +35,6 @@
             D.log('Navigation.init', 'menu');
             Object.deepExtend(this, init);
 
-            var getParentAnchor = function (element) {
-                while (element !== null) {
-                    if (element.tagName && element.tagName.toUpperCase() === "A") {
-                        return element;
-                    }
-                    element = element.parentNode;
-                }
-                return null;
-            };
-
-            document.querySelector("body").addEventListener('click', function (e) {
-                var anchor = getParentAnchor(e.target);
-                if (anchor !== null) {
-                    R.push.call(anchor, e)
-                }
-            }, false);
-
             window.onpopstate = function (event) {
                 D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)], 'info');
 

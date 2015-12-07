@@ -16,9 +16,9 @@
 
         "generate": function (url, type) {
 
-            type = type || 'get';
+            type = type && type.toLowerCase() || 'get';
 
-            switch (type) {
+            switch (type.toLowerCase()) {
 
                 case "post":
                 case "delete":
