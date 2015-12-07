@@ -109,68 +109,7 @@
 
         },
 
-        <?php use Symfony\Component\HttpFoundation\Session\Session; $session = new Session(); $player = $session->get(Player::IDENTITY)->fetch(); ?>
-
-        player = {
-            "id": <?=$player->getId()?>,
-            "img": "<?=$player->getAvatar()?>",
-            "title": {
-                "name": "<?=$player->getName()?>",
-                "surname": "<?=$player->getSurname()?>",
-                "patronymic": "<?=$player->getSecondName()?>",
-                "nickname": "<?=$player->getNicName()?>",
-            },
-            "language": {
-                "current": "RU",
-                "available": {
-                    "RU": "Русский",
-                    "EN": "English",
-                    "UA": "Украiнська"
-                }
-            },
-            "birthday": 151415167,
-            "count": {
-                "lotteries": 121,
-                "notifications": 4,
-                "birthdays": 0,
-                "messages": <?php echo \MessagesModel::instance()->getStatusCount($player->getId(), 0); ?>,
-                "chronicle": 2,
-                "requests": 11,
-                "friends": 56
-            },
-            "favorite": [1, null, null, null, 5, null],
-            "location": {
-                "country": "UA",
-                "city": "Kyiv",
-                "address": "Obolonska, 29"
-            },
-            "balance": {
-                "points": 100,
-                "money": 15.41,
-                "lotzon": 1500
-            },
-            "currency": {
-                "coefficient": 3,
-                "few": "гривни",
-                "iso": "грн",
-                "many": "гривен",
-                "one": "гривна",
-                "rate": 100
-            },
-            "billing": {
-                "webMoney": "R111289102111",
-                "yandexMoney": "410011141000",
-                "qiwi": null,
-                "phone": null
-            },
-            "social": {
-                "vk": "R333289102947",
-                "ok": "411141590761950",
-                "gl": null,
-                "tw": null
-            },
-            "settings": {}
-        },
+        player = <?=json_encode($player)?>,
 
         timestamp = <?php echo time();?>,
 

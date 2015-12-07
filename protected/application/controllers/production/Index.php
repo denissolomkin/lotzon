@@ -95,10 +95,74 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
-        global $isMobile;
+        global $isMobile, $player;
 
         $detect = new MobileDetect;
         $isMobile = $detect->isMobile();
+
+        $session = new Session();
+        $player  = $session->get(Player::IDENTITY)->fetch();
+
+        $player = array(
+            "id"       => $player->getId(),
+            "img"      => $player->getAvatar(),
+            "title"    => array(
+                "name"       => $player->getName(),
+                "surname"    => $player->getSurname(),
+                "patronymic" => $player->getSecondName(),
+                "nickname"   => $player->getNicName(),
+            ),
+            "language" => array(
+                "current"   => "RU",
+                "available" => array(
+                    "RU" => "Русский",
+                    "EN" => "English",
+                    "UA" => "Украiнська"
+                )
+            ),
+            "birthday" => 151415167,
+            "count"    => array(
+                "lotteries"     => 121,
+                "notifications" => 4,
+                "birthdays"     => 0,
+                "messages"      => \MessagesModel::instance()->getStatusCount($player->getId(), 0),
+                "chronicle"     => 2,
+                "requests"      => 11,
+                "friends"       => 56
+            ),
+            "favorite" => array(1, null, null, null, 5, null),
+            "location" => array(
+                "country" => "UA",
+                "city"    => "Kyiv",
+                "address" => "Obolonska, 29"
+            ),
+            "balance"  => array(
+                "points" => 100,
+                "money"  => 15.41,
+                "lotzon" => 1500
+            ),
+            "currency" => array(
+                "coefficient" => 3,
+                "few"         => "гривни",
+                "iso"         => "грн",
+                "many"        => "гривен",
+                "one"         => "гривна",
+                "rate"        => 100
+            ),
+            "billing"  => array(
+                "webMoney"    => "R111289102111",
+                "yandexMoney" => "410011141000",
+                "qiwi"        => null,
+                "phone"       => null
+            ),
+            "social"   => array(
+                "vk" => "R333289102947",
+                "ok" => "411141590761950",
+                "gl" => null,
+                "tw" => null
+            ),
+            "settings" => array()
+        );
 
         return include ("res/index.php");
 
