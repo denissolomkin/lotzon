@@ -180,22 +180,23 @@
 
         prepareData: function(id) {
 
-            var href = id ? '/lottery/history/' + id : '/lastLottery',
+            var href = id ? '/lottery/history/' + id : '/lastResult',
+                lastLotteryId = parseInt(Tickets.lastLotteryId),
                 format = function(json) {
 
                     Lottery.data = json;
 
                     switch (true) {
-                        case Lottery.data.id == Tickets.lastLotteryId:
+                        case Lottery.data.id == lastLotteryId:
                         default:
                             setTimeout(function() {
                                 Lottery.prepareData(id)
                             }, 3000);
                             break;
-                        case Lottery.data.id > Tickets.lastLotteryId + 1:
+                        case Lottery.data.id > lastLotteryId + 1:
                             Lottery.update();
                             break;
-                        case Lottery.data.id == Tickets.lastLotteryId + 1:
+                        case Lottery.data.id == lastLotteryId + 1:
                             console.log('prepareData: ', Lottery.data);
                             Lottery.prepareTickets(Lottery.data.id);
                             break;
@@ -211,7 +212,7 @@
         prepareTickets: function(id) {
 
             var href = 'lottery-history-' + id + '-tickets',
-                json = ((id == Tickets.lastLotteryId + 1) ? {
+                json = ((id == parseInt(Tickets.lastLotteryId) + 1) ? {
                     key: href,
                     cache: "session",
                     res: Tickets.filledTickets

@@ -22,10 +22,6 @@
 <script>
 
     var
-        device = {
-            mobile: <?php echo (isset($isMobile) && $isMobile) ? "true" : "false";?>
-        },
-
         menu = {
             navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
@@ -35,108 +31,12 @@
             }
         },
 
-        lottery = {
-            "lastLotteryId": 353,
-            "selectedTab": null,
-            "totalBalls": 49,
-            "requiredBalls": 6,
-            "totalTickets": 8,
-            "filledTickets": {
-                "1": [37, 2, 3, 4, 5, 6],
-                "2": [3, 2, 8, 34, 15, 19],
-                "3": null,
-                "4": [1, 2, 3, 4, 16, 6],
-                "5": [31, 22, 13, 44, 25, 9],
-                "6": [32, 2, 14, 34, 15, 19],
-                "7": false,
-                "8": false
-            },
-            "priceGold": 3,
-            "prizes": {
-                "default": {
-                    "1": {
-                        "currency": "points",
-                        "sum": 5
-                    },
-                    "2": {
-                        "currency": "money",
-                        "sum": "0.10"
-                    },
-                    "3": {
-                        "currency": "money",
-                        "sum": "0.25"
-                    },
-                    "4": {
-                        "currency": "money",
-                        "sum": 10
-                    },
-                    "5": {
-                        "currency": "money",
-                        "sum": 200
-                    },
-                    "6": {
-                        "currency": "money",
-                        "sum": 100000
-                    }
-                },
-                "gold": {
-                    "1": {
-                        "currency": "points",
-                        "sum": 50
-                    },
-                    "2": {
-                        "currency": "money",
-                        "sum": 1
-                    },
-                    "3": {
-                        "currency": "money",
-                        "sum": "2.5"
-                    },
-                    "4": {
-                        "currency": "money",
-                        "sum": 100
-                    },
-                    "5": {
-                        "currency": "money",
-                        "sum": 2000
-                    },
-                    "6": {
-                        "currency": "money",
-                        "sum": 1000000
-                    }
-                }
-            }
-
-        },
-
-        player = <?=json_encode($player)?>,
-
+        device = {mobile: <?php echo json_encode($isMobile);?>},
+        lottery = <?php echo json_encode($lottery, JSON_PRETTY_PRINT);?>,
+        player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>,
+        slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT);?>,
+        config = <?php echo json_encode($config, JSON_PRETTY_PRINT);;?>,
         timestamp = <?php echo time();?>,
-
-        slider = {
-            "sum": 353944,
-            "winners": 34260,
-            "jackpot": 100000,
-            "players": 54000,
-            "timer": 353944,
-            "lottery": {
-                "id": 345,
-                "date": '441676800',
-                "balls": [5, 1, 32, 18, 14, 49]
-            }
-        },
-
-        config = {
-            timeout: {
-                ping: 60 * 1000,
-                online: 180 * 1000
-            },
-            adminId: <?php echo (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'); ?>,
-            tempFilestorage: '/filestorage/temp',
-            filestorage: '/filestorage',
-            websocketPort: 8081
-        },
-
         debug = {
             "config": {
                 "stat": /192.168.56.101/.test(location.hostname),

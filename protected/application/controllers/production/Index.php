@@ -1,6 +1,7 @@
 <?php
 
 namespace controllers\production;
+
 use \OnlineGamesModel, \LotterySettingsModel, \SettingsModel, \StaticSiteTextsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
 use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \GameSettingsModel, \QuickGamesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
@@ -101,19 +102,19 @@ class Index extends \SlimController\SlimController
         $isMobile = $detect->isMobile();
 
         $session = new Session();
-        $player  = $session->get(Player::IDENTITY)->fetch();
+        $player = $session->get(Player::IDENTITY)->fetch();
 
         $player = array(
-            "id"       => $player->getId(),
-            "img"      => $player->getAvatar(),
-            "title"    => array(
-                "name"       => $player->getName(),
-                "surname"    => $player->getSurname(),
+            "id" => $player->getId(),
+            "img" => $player->getAvatar(),
+            "title" => array(
+                "name" => $player->getName(),
+                "surname" => $player->getSurname(),
                 "patronymic" => $player->getSecondName(),
-                "nickname"   => $player->getNicName(),
+                "nickname" => $player->getNicName(),
             ),
             "language" => array(
-                "current"   => "RU",
+                "current" => "RU",
                 "available" => array(
                     "RU" => "Русский",
                     "EN" => "English",
@@ -121,41 +122,41 @@ class Index extends \SlimController\SlimController
                 )
             ),
             "birthday" => 151415167,
-            "count"    => array(
-                "lotteries"     => 121,
+            "count" => array(
+                "lotteries" => 121,
                 "notifications" => 4,
-                "birthdays"     => 0,
-                "messages"      => \MessagesModel::instance()->getStatusCount($player->getId(), 0),
-                "chronicle"     => 2,
-                "requests"      => 11,
-                "friends"       => 56
+                "birthdays" => 0,
+                "messages" => \MessagesModel::instance()->getStatusCount($player->getId(), 0),
+                "chronicle" => 2,
+                "requests" => 11,
+                "friends" => 56
             ),
             "favorite" => array(1, null, null, null, 5, null),
             "location" => array(
                 "country" => "UA",
-                "city"    => "Kyiv",
+                "city" => "Kyiv",
                 "address" => "Obolonska, 29"
             ),
-            "balance"  => array(
+            "balance" => array(
                 "points" => 100,
-                "money"  => 15.41,
+                "money" => 15.41,
                 "lotzon" => 1500
             ),
             "currency" => array(
                 "coefficient" => 3,
-                "few"         => "гривни",
-                "iso"         => "грн",
-                "many"        => "гривен",
-                "one"         => "гривна",
-                "rate"        => 100
+                "few" => "гривни",
+                "iso" => "грн",
+                "many" => "гривен",
+                "one" => "гривна",
+                "rate" => 100
             ),
-            "billing"  => array(
-                "webMoney"    => "R111289102111",
+            "billing" => array(
+                "webMoney" => "R111289102111",
                 "yandexMoney" => "410011141000",
-                "qiwi"        => null,
-                "phone"       => null
+                "qiwi" => null,
+                "phone" => null
             ),
-            "social"   => array(
+            "social" => array(
                 "vk" => "R333289102947",
                 "ok" => "411141590761950",
                 "gl" => null,
@@ -164,65 +165,107 @@ class Index extends \SlimController\SlimController
             "settings" => array()
         );
 
-        return include ("res/index.php");
+        $lottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
+        $lottery = array_shift($lottery);
 
-        $session               = new Session();
-        $seo                   = SEOModel::instance()->getSEOSettings();
-        $seo['pages']          = ($seo['pages']?$page:0);
-        $player                = $session->get(Player::IDENTITY)->fetch();
-        $lotterySettings       = LotterySettingsModel::instance()->loadSettings();
-        $gameSettings          = GameSettingsModel::instance()->getList();
+        $slider = array(
+            "sum" => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            "winners" => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
+            "jackpot" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)[6]['sum'],
+            "players" => PlayersModel::instance()->getMaxId(),
+            "timer" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            "lottery" => array(
+                "id" => $lottery->getId(),
+                "date" => $lottery->getDate(),
+                "balls" => $lottery->getCombination()
+            )
+        );
+
+        $lottery = array(
+
+            "lastLotteryId" => $lottery->getId(),
+            "selectedTab" => null,
+            "totalBalls" => 49,
+            "requiredBalls" => 6,
+            "totalTickets" => 8,
+            /* todo player tickets */
+            "filledTickets" => array(
+                "1" => array(37, 2, 3, 4, 5, 6),
+                "2" => array(3, 2, 8, 34, 15, 19),
+                "3" => null,
+                "4" => array(1, 2, 3, 4, 16, 6),
+                "5" => array(31, 22, 13, 44, 25, 9),
+                "6" => array(32, 2, 14, 34, 15, 19),
+                "7" => false,
+                "8" => false
+            ),
+            /* todo gold price */
+            "priceGold" => 3,
+            "prizes" => array(
+                "default" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
+                /* todo gold prizes */
+                "gold" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)
+            ));
+
+        return include("res/index.php");
+
+        $session = new Session();
+        $seo = SEOModel::instance()->getSEOSettings();
+        $seo['pages'] = ($seo['pages'] ? $page : 0);
+        $player = $session->get(Player::IDENTITY)->fetch();
+        $lotterySettings = LotterySettingsModel::instance()->loadSettings();
+        $gameSettings = GameSettingsModel::instance()->getList();
 
         if (!$session->has('MomentLastDate'))
             $session->set('MomentLastDate', time());
 
         if (!$session->has('QuickGameLastDate'))
-            $session->set('QuickGameLastDate',time());
+            $session->set('QuickGameLastDate', time());
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getMaxId(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
-            'nextLottery'  => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            'lotteryWins'  => $lotterySettings->getPrizes($this->country),
+            'winners' => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
+            'win' => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            'nextLottery' => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'lotteryWins' => $lotterySettings->getPrizes($this->country),
         );
 
         $blockedReferers = SettingsModel::instance()->getSettings('blockedReferers')->getValue();
-        if(is_array($blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], $blockedReferers) && !$session->has('REFERER'))
-            $session->set('REFERER',parse_url($_SERVER['HTTP_REFERER'])['host']);
+        if (is_array($blockedReferers) && parse_url($_SERVER['HTTP_REFERER'])['host'] && in_array(parse_url($_SERVER['HTTP_REFERER'])['host'], $blockedReferers) && !$session->has('REFERER'))
+            $session->set('REFERER', parse_url($_SERVER['HTTP_REFERER'])['host']);
 
         $reviews = ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE'), null, false, 'json');
 
         $templates = array(
-            'Reviews'=> $reviews
+            'Reviews' => $reviews
         );
 
         $this->render('production/game_new', array(
-            'layout'      => false,
-            'templates'   => $templates,
-            'gameInfo'    => $gameInfo,
-            'shop'        => ShopModel::instance()->loadShop(),
-            'currency'    => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
-            'notices'     => NoticesModel::instance()->getPlayerUnreadNotices($player),
-            'reviews'     => ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE')),
-            'player'      => $player,
-            'tickets'     => TicketsModel::instance()->getPlayerUnplayedTickets($player),
-            'MUI'         => StaticTextsModel::instance()->setLang($this->lang),
-            'bonuses'     => SettingsModel::instance()->getSettings('bonuses'),
-            'counters'    => SettingsModel::instance()->getSettings('counters'),
-            'lotteries'   => LotteriesModel::instance()->getPublishedLotteriesList(SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
-            'playerPlayedLotteries' => LotteriesModel::instance()->getPlayerPlayedLotteries($player->getId(),SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
-            'seo'         => $seo,
+            'layout' => false,
+            'templates' => $templates,
+            'gameInfo' => $gameInfo,
+            'shop' => ShopModel::instance()->loadShop(),
+            'currency' => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
+            'notices' => NoticesModel::instance()->getPlayerUnreadNotices($player),
+            'reviews' => ReviewsModel::instance()->getList(1, SettingsModel::instance()->getSettings('counters')->getValue('REVIEWS_PER_PAGE')),
+            'player' => $player,
+            'tickets' => TicketsModel::instance()->getPlayerUnplayedTickets($player),
+            'MUI' => StaticTextsModel::instance()->setLang($this->lang),
+            'bonuses' => SettingsModel::instance()->getSettings('bonuses'),
+            'counters' => SettingsModel::instance()->getSettings('counters'),
+            'lotteries' => LotteriesModel::instance()->getPublishedLotteriesList(SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
+            'playerPlayedLotteries' => LotteriesModel::instance()->getPlayerPlayedLotteries($player->getId(), SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE')),
+            'seo' => $seo,
             'onlineGames' => OnlineGamesModel::instance()->getList(),
-            'langs'       => ($seo['multilanguage'] ? \LanguagesModel::instance()->getList() : null),
-            'debug'       => (\Session2::connect()->has(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
-            'quickGames'  => QuickGamesModel::instance()->getList(),
-            'gameSettings'=> $gameSettings,
-            'chanceGame'  => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,
-            'quickGame'   => array(
+            'langs' => ($seo['multilanguage'] ? \LanguagesModel::instance()->getList() : null),
+            'debug' => (\Session2::connect()->has(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
+            'quickGames' => QuickGamesModel::instance()->getList(),
+            'gameSettings' => $gameSettings,
+            'chanceGame' => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,
+            'quickGame' => array(
                 'current' => $session->has('QuickGame'),
-                'timer'   => $session->get('QuickGameLastDate') +  $gameSettings['QuickGame']->getOption('min')  * 60 - time()),
-            'banners'     => SettingsModel::instance()->getSettings('banners')->getValue(),
+                'timer' => $session->get('QuickGameLastDate') + $gameSettings['QuickGame']->getOption('min') * 60 - time()),
+            'banners' => SettingsModel::instance()->getSettings('banners')->getValue(),
         ));
     }
 
@@ -241,14 +284,14 @@ class Index extends \SlimController\SlimController
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getMaxId(),
-            'winners'      => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
-            'win'          => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
-            'nextLottery'  => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            'lotteryWins'  => $lotterySettings->getPrizes($this->country),
+            'winners' => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
+            'win' => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            'nextLottery' => $lotterySettings->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'lotteryWins' => $lotterySettings->getPrizes($this->country),
         );
 
         if (SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE') && count($comments) > SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE')) {
-            $ids = array_rand($comments,SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE'));
+            $ids = array_rand($comments, SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE'));
             $stripped = array();
 
             foreach ($ids as $id) {
@@ -258,45 +301,45 @@ class Index extends \SlimController\SlimController
         }
         $lastLottery = LotteriesModel::instance()->getLastPublishedLottery();
 
-        if($session->has('SOCIAL_IDENTITY'))
-        {
-            if($session->has('SOCIAL_IDENTITY_DISABLED')){
+        if ($session->has('SOCIAL_IDENTITY')) {
+            if ($session->has('SOCIAL_IDENTITY_DISABLED')) {
                 $session->remove('SOCIAL_IDENTITY');
                 $session->remove('SOCIAL_IDENTITY_DISABLED');
-            }
-            else{
+            } else {
                 $socialIdentity = $session->get('SOCIAL_IDENTITY');
-                $session->set('SOCIAL_IDENTITY_DISABLED',1);
+                $session->set('SOCIAL_IDENTITY_DISABLED', 1);
             }
         }
 
-        if($session->has('ERROR') OR $_SESSION['ERROR']){
-            $error=$session->get('ERROR')?:$_SESSION['ERROR'];
-            $session->remove('ERROR');unset($_SESSION['ERROR']);
+        if ($session->has('ERROR') OR $_SESSION['ERROR']) {
+            $error = $session->get('ERROR') ?: $_SESSION['ERROR'];
+            $session->remove('ERROR');
+            unset($_SESSION['ERROR']);
         }
 
-        $referer=parse_url($_SERVER['HTTP_REFERER']);
+        $referer = parse_url($_SERVER['HTTP_REFERER']);
         $blockedReferers = SettingsModel::instance()->getSettings('blockedReferers')->getValue();
-        if($referer && is_array($blockedReferers) && !$session->has('REFERER')
-            && ( ($referer['host'] && in_array(str_replace('www','',$referer['host']), $blockedReferers)) OR ($referer['path'] && in_array(str_replace('www','',$referer['path']), $blockedReferers)))){
-            $session->set('REFERER',$referer['host']?:$referer['path']);
+        if ($referer && is_array($blockedReferers) && !$session->has('REFERER')
+            && (($referer['host'] && in_array(str_replace('www', '', $referer['host']), $blockedReferers)) OR ($referer['path'] && in_array(str_replace('www', '', $referer['path']), $blockedReferers)))
+        ) {
+            $session->set('REFERER', $referer['host'] ?: $referer['path']);
         }
 
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,
-            'showEmail'   => $showEmail,
-            'gameInfo'    => $gameInfo,
-            'socialIdentity'  => $socialIdentity,
-            'MUI'         => StaticTextsModel::instance()->setLang($this->lang),
-            'debug'       => (\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
-            'error'       => $error,
-            'partners'    => SettingsModel::instance()->getSettings('partners')->getValue(),
-            'currency'    => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getTitle('iso'),
-            'layout'      => false,
-            'rules'       => (bool) stristr($_SERVER['REQUEST_URI'],'rules'),
-            'comments'    => $comments,
+            'showEmail' => $showEmail,
+            'gameInfo' => $gameInfo,
+            'socialIdentity' => $socialIdentity,
+            'MUI' => StaticTextsModel::instance()->setLang($this->lang),
+            'debug' => (\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug'] ? true : false),
+            'error' => $error,
+            'partners' => SettingsModel::instance()->getSettings('partners')->getValue(),
+            'currency' => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getTitle('iso'),
+            'layout' => false,
+            'rules' => (bool)stristr($_SERVER['REQUEST_URI'], 'rules'),
+            'comments' => $comments,
             'lastLottery' => $lastLottery,
-            'ref'         => $this->ref,
+            'ref' => $this->ref,
             'metrikaDisabled' => $session->get('REFERER'),
         ));
     }
@@ -305,12 +348,12 @@ class Index extends \SlimController\SlimController
     {
 
         try {
-            $geoReader =  new Reader(PATH_MMDB_FILE);
+            $geoReader = new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country->isoCode;
 
-            if (!CountriesModel::instance()->isCountry($country)){
+            if (!CountriesModel::instance()->isCountry($country)) {
                 $this->country = CountriesModel::instance()->defaultCountry();
-                $this->lang  = CountriesModel::instance()->defaultLang();
+                $this->lang = CountriesModel::instance()->defaultLang();
             } else {
                 $this->country = $country;
                 $this->lang = CountriesModel::instance()->getCountry($country)->getLang();
@@ -324,30 +367,29 @@ class Index extends \SlimController\SlimController
         if ($this->request()->isAjax()) {
             $info = array(
                 'participants' => Common::viewNumberFormat(PlayersModel::instance()->getMaxId()),
-                'winners'      => Common::viewNumberFormat(LotteriesModel::instance()->getWinnersCount()  + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD')),
-                'win'          => Common::viewNumberFormat(
+                'winners' => Common::viewNumberFormat(LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD')),
+                'win' => Common::viewNumberFormat(
                         round(LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient()) . ' <span>' .
                     CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getTitle('iso') . '</span>',
             );
 
             die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => $info)));
-            
+
         }
         $this->redirect('/');
     }
 
-    public function VKProxyAction() 
+    public function VKProxyAction()
     {
         $upload_url = $this->request()->post('uurl');
 
         // if use php<=5.5.0
         if (!function_exists('curl_file_create')) {
-            $post_params['photo'] = "@".PATH_ROOT . 'tpl/img/social-share.jpg'.";filename=".basename(PATH_ROOT . 'tpl/img/social-share.jpg');
-        }
-        else {
+            $post_params['photo'] = "@" . PATH_ROOT . 'tpl/img/social-share.jpg' . ";filename=" . basename(PATH_ROOT . 'tpl/img/social-share.jpg');
+        } else {
             $post_params['photo'] = curl_file_create(PATH_ROOT . 'tpl/img/social-share.jpg');
         }
-     
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $upload_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -355,16 +397,16 @@ class Index extends \SlimController\SlimController
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
         $result = curl_exec($ch);
         curl_close($ch);
-       
+
         die(json_encode(array('status' => 1, 'message' => 'OK', 'res' => json_decode($result))));
     }
 
     public function feedbackAction()
     {
         $response = array(
-            'status'  => 1,
+            'status' => 1,
             'message' => 'OK',
-            'res'     => array(),
+            'res' => array(),
         );
 
         $email = $this->request()->post('email');
@@ -384,7 +426,7 @@ class Index extends \SlimController\SlimController
         $text = htmlspecialchars(strip_tags($text));
 
         Common::sendEmail('partners@lotozon.com', 'Вопрос от ' . $email, 'feedback', array(
-            'email'  => $email,
+            'email' => $email,
             'text' => $text,
         ));
 
