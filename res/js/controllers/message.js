@@ -1,6 +1,6 @@
 (function () {
 
-    if(typeof I === 'undefined') I={};
+    if (typeof I === 'undefined') I = {};
     Object.deepExtend(I, {
 
         /* communication */
@@ -32,7 +32,7 @@
     });
 
 //user is "finished typing," do something
-    function doneTyping () {
+    function doneTyping() {
         //do something
     }
 
@@ -161,13 +161,14 @@
                 var find = this.value;
                 document.getElementById('communication-messages-new-users').innerHTML = '';
                 Message.typingTimer && clearTimeout(Message.typingTimer);
-                Message.typingTimer = setTimeout(function(){
-                    R.push({
-                        template: 'communication-messages-new-users',
-                        href: '/users/search',
-                        query: {name: find}
-                    });
-                }, 1000);
+                if (find.length >= 3)
+                    Message.typingTimer = setTimeout(function () {
+                        R.push({
+                            template: 'communication-messages-new-users',
+                            href: '/users/search',
+                            query: {name: find}
+                        });
+                    }, 1000);
 
             }
         }
