@@ -203,6 +203,10 @@
             return (img
                 ? Config.filestorage + '/users/' + width + '/' + img
                 : '/res/img/default.jpg');
+        },
+
+        getAdmin: function(){
+            return Config.adminId;
         }
 
     };
