@@ -18,6 +18,15 @@ class Players extends \AjaxController
         parent::init();
     }
 
+    private function authorizedOnly()
+    {
+        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
+            $this->ajaxResponseUnauthorized();
+            return false;
+        }
+        $this->session->get(Player::IDENTITY)->markOnline();
+        return true;
+    }
 
     public function registerAction()
     {
@@ -481,5 +490,69 @@ class Players extends \AjaxController
         } else {
             $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
         }
+    }
+
+    /**
+     * Малая визитка пользователя
+     *
+     * @param $playerId
+     *
+     * @throws EntityException
+     */
+    public function cardAction($playerId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new Player();
+        $player->setId($playerId)->fetch();
+
+        $response = array(
+            'res' => array(
+                'users' => array(
+                    "$playerId" => $player->export('card')
+                )
+            )
+        );
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
+    /**
+     * Поиск пользователей
+     *
+     * @return bool
+     */
+    public function searchAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $search = $this->request()->get('name');
+        $search = trim(strip_tags($search));
+
+        if (mb_strlen($search, 'utf-8')<3) {
+            $this->ajaxResponseCode(array("message" => "Request too short",),400);
+            return false;
+        }
+
+        $list   = \PlayersModel::instance()->search($search);
+
+        $response = array('res' => array());
+        foreach ($list as $user) {
+            $response['res'][] = array(
+                'id'   => $user['Id'],
+                'img'  => $user['Img'],
+                'name' => $user['Name']
+            );
+        }
+        $this->ajaxResponseCode($response);
+        return true;
     }
 }

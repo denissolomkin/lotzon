@@ -1285,4 +1285,24 @@ class PlayersDBProcessor implements IProcessor
 
         return $player;
     }
+
+    public function search($search, $count = 10)
+    {
+        $sql = "SELECT
+                    `Players`.`Id` Id,
+                    `Players`.`Avatar` Img,
+                    `Players`.`Nicname` Name
+                FROM `Players`
+                WHERE LOWER(`Players`.`Nicname`) LIKE LOWER('%".$search."%')
+                "
+                . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        return $sth->fetchAll();
+    }
 }

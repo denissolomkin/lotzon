@@ -395,6 +395,16 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\CommentsController:item'
     ),
     /**
+     * Messages
+     */
+    '/communication/messages/' => array(
+        'get'  => 'controllers\production\MessagesController:index',
+        'post' => 'controllers\production\MessagesController:create'
+    ),
+    '/users/:userid/messages' => array(
+        'get'  => 'controllers\production\MessagesController:list'
+    ),
+    /**
      * Blog
      */
     '/blog/posts/' => array(
@@ -431,6 +441,15 @@ Config::instance()->publicResources = array(
     ),
     '/blog/post/:blogId/similar' => array(
         'get' => 'controllers\production\BlogsController:similar'
+    ),
+    /**
+     * Users
+     */
+    '/users/search/' => array(
+        'get' => 'controllers\production\Players:search'
+    ),
+    '/users/:userId' => array(
+        'get' => 'controllers\production\Players:card'
     ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
