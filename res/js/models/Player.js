@@ -22,9 +22,9 @@
 
                                 holders[i].innerHTML = init.count[key];
 
-                                if(!init.count[key])
+                                if (!init.count[key])
                                     DOM.fadeOut(holders[i]);
-                                else if(holders[i].style.display === 'none')
+                                else
                                     DOM.fadeIn(holders[i]);
                             }
                         }
@@ -198,7 +198,7 @@
             return balls;
         },
 
-        isOnline:function(ping){
+        isOnline: function (ping) {
             return ping + Config.timeout.online > new Date();
         },
 
@@ -211,8 +211,8 @@
                 : '/res/img/default.jpg');
         },
 
-        getAdmin: function(){
-            return Config.adminId;
+        getAdmin: function (id) {
+            return id ? id == Config.adminId : Config.adminId;
         }
 
     };

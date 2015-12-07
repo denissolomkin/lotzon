@@ -22,13 +22,13 @@
                     {".comment-content": Comments.do.mobileForm},
 
                     {".mark-message": Message.do.markMessage},
-                    // {".nm-search .nm-friend": Message.do.setUser},
+                    //
                      {"div.back": Navigation.do.backBlock}
 
                 ]
             });
 
-            /*
+            /* todo
              Event.window([
              {'resize': Device.do.resize},
              {'scroll': Device.do.scroll}
@@ -40,10 +40,7 @@
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
 
-            $(document).on('click', 'a', function (e) {
-                e.preventDefault();
-                return false;
-            });
+            $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
 
             $(document).on('click', Device.do.hide);
 
@@ -63,10 +60,6 @@
             /* new message*/
             $(document).on('input', ".enter-friend-name", Message.do.searchUser);
             $(document).on('click', ".nm-change", Message.do.clearUser);
-
-
-            /* navigation : after notifications*/
-            // $(document).on('click', 'div.back', Navigation.do.backBlock);
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
