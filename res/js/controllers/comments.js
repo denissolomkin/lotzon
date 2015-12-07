@@ -31,7 +31,7 @@
             },
 
             replyForm: function (options) {
-
+t
                 if (!DOM.onScreen(options.rendered))
                     DOM.scroll(options.rendered);
                 options.rendered.firstElementChild.classList.add('animated');

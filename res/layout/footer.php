@@ -132,6 +132,7 @@
             "count": {
                 "lotteries": 121,
                 "notifications": 4,
+                "birthdays": 0,
                 "messages": <?php echo \MessagesModel::instance()->getStatusCount($player->getId(), 0); ?>,
                 "chronicle": 2,
                 "requests": 11,
