@@ -126,16 +126,7 @@
             }
         },
 
-        config = {
-            timeout: {
-                ping: 60 * 1000,
-                online: 180 * 1000
-            },
-            adminId: <?php echo (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'); ?>,
-            tempFilestorage: '/filestorage/temp',
-            filestorage: '/filestorage',
-            websocketPort: 8081
-        },
+        config = <?=json_encode($config)?>,
 
         debug = {
             "config": {

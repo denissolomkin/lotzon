@@ -95,7 +95,7 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
-        global $isMobile, $player;
+        global $isMobile, $player, $config;
 
         $detect = new MobileDetect;
         $isMobile = $detect->isMobile();
@@ -162,6 +162,18 @@ class Index extends \SlimController\SlimController
                 "tw" => null
             ),
             "settings" => array()
+        );
+
+        $config = array(
+            "timeout"         => array(
+                "ping"   => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') * 1000,
+                "online" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') * 1000
+            ),
+            "adminId"         => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
+            "tempFilestorage" => '/filestorage/temp',
+            "filestorage"     => '/filestorage',
+            "websocketPort"   => \Config::instance()->wsPort,
+            "SSL"             => \Config::instance()->SSLEnabled,
         );
 
         return include ("res/index.php");
