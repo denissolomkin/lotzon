@@ -9,7 +9,7 @@
                 </a>
                 <a href="/communication/messages" class="content-box-tab communication-messages-tab">
                     <span>{{i18n "title-messages"}}</span>
-                    <span class="count-messages count">{{player "count.messages"}}</span><i class="i-msg"></i>
+                    <span class="count-messages count"{{#if (like 0 (count 'messages'))}} style="display:none;"{{/if}}>{{count "messages"}}</span><i class="i-msg"></i>
                 </a>
             </div>
             <!-- end of TABS -->

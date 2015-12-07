@@ -11,9 +11,10 @@ $(function () {
             options = args.join(', ');
         }
 
+        console.log(fn, options, arguments, model);
         var response = eval(model + "." + fn.toString());
         D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-        return typeof response === 'function' && eval(model + "." + fn + "(" + options + ")") || response;
+        return typeof response === 'function' ? eval(model + "." + fn + "(" + (options ? options : '') + ")") : response;
     };
 
     Handlebars.registerHelper({

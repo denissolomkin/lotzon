@@ -8,13 +8,13 @@
                     <span>{{i18n "title-users-friends"}}</span></a>
                 <a href="/users/chronicle" class="content-box-tab">
                     <span>{{i18n "title-users-chronicle"}}</span>
-                    <span class="count count-chronicle">{{player "count.chronicle"}}</span></a>
+                    <span class="count count-chronicle"{{#if (like 0 (count 'chronicle'))}} style="display:none;"{{/if}}>{{count "chronicle"}}</span></a>
                 <a href="/users/birthdays" class="content-box-tab">
                     <span>{{i18n "title-users-birthdays"}}</span>
-                    <span class="count count-birthdays">{{player "count.birthdays"}}</span> </a>
+                    <span class="count count-birthdays"{{#if (like 0 (count 'birthdays'))}} style="display:none;"{{/if}}>{{count "birthdays"}}</span> </a>
                 <a href="/users/requests" class="content-box-tab">
                     <span>{{i18n "title-users-requests"}}</span>
-                    <span class="count count-requests">{{player "count.requests"}}</span></a>
+                    <span class="count count-requests"{{#if (like 0 (count 'requests'))}} style="display:none;"{{/if}}>{{count "requests"}}</span></a>
                 </a>
                 <a href="/users/search" class="content-box-tab">
                     <span>{{i18n "title-users-search"}}</span></a>
