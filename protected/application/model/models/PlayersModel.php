@@ -218,4 +218,9 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->validateHash($hash);
     }
+
+    public function search($search)
+    {
+        return $this->getProcessor()->search($search);
+    }
 }

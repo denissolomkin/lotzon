@@ -1631,4 +1631,16 @@ class Player extends Entity
         setcookie(self::AUTOLOGIN_HASH_COOKIE, "", -1, '/');
     }
 
+    public function export($to)
+    {
+        if ($to == 'card') {
+            $ret = array(
+                'id'   => $this->getId(),
+                'img'  => $this->getAvatar(),
+                'name' => $this->getNicName()
+            );
+            return $ret;
+        }
+    }
+
 }

@@ -109,14 +109,16 @@
 
         },
 
+        <?php use Symfony\Component\HttpFoundation\Session\Session; $session = new Session(); $player = $session->get(Player::IDENTITY)->fetch(); ?>
+
         player = {
-            "id": 37,
-            "img": "user_img.jpg",
+            "id": <?=$player->getId()?>,
+            "img": "<?=$player->getAvatar()?>",
             "title": {
-                "name": "Сергей",
-                "surname": "Шевченко",
-                "patronymic": "Иванович",
-                "nickname": "Участник 3628"
+                "name": "<?=$player->getName()?>",
+                "surname": "<?=$player->getSurname()?>",
+                "patronymic": "<?=$player->getSecondName()?>",
+                "nickname": "<?=$player->getNicName()?>",
             },
             "language": {
                 "current": "RU",
@@ -130,7 +132,7 @@
             "count": {
                 "lotteries": 121,
                 "notifications": 4,
-                "messages": 100,
+                "messages": <?php echo \MessagesModel::instance()->getStatusCount($player->getId(), 0); ?>,
                 "chronicle": 2,
                 "requests": 11,
                 "friends": 56
@@ -189,7 +191,7 @@
                 ping: 60 * 1000,
                 online: 180 * 1000
             },
-            adminId: 100,
+            adminId: <?php echo (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'); ?>,
             tempFilestorage: '/filestorage/temp',
             filestorage: '/filestorage',
             websocketPort: 8081
