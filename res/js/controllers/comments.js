@@ -34,6 +34,8 @@
 
                 if (!DOM.onScreen(options.rendered))
                     DOM.scroll(options.rendered);
+                options.rendered.firstElementChild.classList.add('animated');
+                options.rendered.firstElementChild.classList.add('zoomInDown');
 
                 DOM.cursor('.message-form-area', options.rendered);
             },

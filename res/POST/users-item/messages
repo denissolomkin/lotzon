@@ -1,21 +1,45 @@
 {
-  "message": "message-sent-success",
-  "res": {
-    "users": {
-      "1": {
-        "messages": {
-                "10004": {
-                  "id": 10004,
-                  "user": {
-                    "id": 1,
-                    "img": "comment_img.jpg",
-                    "name": "Tom Soyer2"
-                  },
-                  "text": "Обновленный четвертый ответ на первый пост L1231 dsf sd foremdsfsdf ipsum dolor sit amet, consectetur adipisicing elit. Dolor voluptatem dolorem saepe nihil cum, delectus eius ea? Voluptatibus provident tempora consequatur repellat qui mollitia dolorem tenetur earum dicta, minus voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat quidem, id error sunt. Placeat laboriosam non obcaecati alias vel quibusdam dolor quaerat quod ipsa, autem voluptas. Aperiam deleniti quo reiciendis.",
-                  "date": "1432626126"
-                }
-        }
-      }
-    }
-  }
+   "message": "message-successfully-sent",
+   "res": {
+      "users": {
+         "1": {
+            "messages": {
+               "35": {
+                  "user": {
+                     "id": "14821",
+                     "img": "",
+                     "name": "sunbas"
+                  },
+                  "id": "35",
+                  "recipient_id": "1",
+                  "date": "1449496737",
+                  "text": "test9",
+                  "img": ""
+               }
+            }
+         }
+      },
+      "communication": {
+         "messages": [
+            {
+               "user": {
+                  "id": "1",
+                  "img": "55cc6c451a1c5.jpg",
+                  "name": "vestestores"
+               },
+               "id": "1",
+               "date": "1449496737",
+               "text": "test9",
+               "img": null
+            }
+         ]
+      }
+   },
+   "delete": {
+      "communication": {
+         "messages": {
+            "1": null
+         }
+      }
+   }
 }

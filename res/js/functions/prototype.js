@@ -17,12 +17,18 @@
         return this;
     }
 
+    Array.prototype.contains = function(element){
+        return this.indexOf(element) > -1;
+    };
+
     if (typeof Array.isArray === 'undefined') {
         Array.isArray = function (obj) {
             return Object.prototype.toString.call(obj) === '[object Array]';
         }
     }
     ;
+    Event.prototype.stopPropagation = function(){ this.cancelBubble = true; }
+    Event.prototype.isPropagationStopped  = function(){ return this.cancelBubble; }
 
     String.prototype.replaceArray = function (find, replace) {
         var replaceString = this;

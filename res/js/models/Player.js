@@ -19,7 +19,13 @@
                         if (this.count.hasOwnProperty(key)) {
                             var holders = document.getElementsByClassName('count-' + key);
                             for (var i = 0; i < holders.length; i++) {
+
                                 holders[i].innerHTML = init.count[key];
+
+                                if(!init.count[key])
+                                    DOM.fadeOut(holders[i]);
+                                else if(holders[i].style.display === 'none')
+                                    DOM.fadeIn(holders[i]);
                             }
                         }
                     }

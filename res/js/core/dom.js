@@ -205,7 +205,7 @@
             if (typeof el === 'object' && "nodeType" in el) {
 
                 el.style.opacity = 0;
-                el.style.display = "block";
+                el.style.display = null;
 
                 (function fade() {
                     var val = parseFloat(el.style.opacity);

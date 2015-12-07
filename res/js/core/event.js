@@ -1,6 +1,6 @@
 (function () {
 
-    Event = {
+    EventListener = {
 
         detect: null,
         body: null,
@@ -15,48 +15,82 @@
         catch: function (event) {
 
             event = event || window.event;
-            var target = event.target || event.srcElement;
+            var target = event.target || event.srcElement,
+                current = target;
 
             loop:
-                while (target !== null) {
-                    for (priority in Event.handlers[event.type]) {
-                        for (el in Event.handlers[event.type][priority]) {
-                            switch (el[0]) {
+                for (priority in EventListener.handlers[event.type]) {
+                    for (str in EventListener.handlers[event.type][priority]) {
+                        if (typeof EventListener.handlers[event.type][priority][str] === 'function') {
 
-                                case ".":
-                                    if (target.classList && target.classList.contains(el.replace(".", ''))) {
-                                        Event.handlers[event.type][priority][el].call(target, event);
-                                    }
-                                    break;
+                            while (current !== null) {
 
-                                case "#":
-                                    if (target.id === el.replace("#", '')) {
-                                        Event.handlers[event.type][priority][el].call(target, event);
-                                    }
-                                    break;
+                                if (EventListener.checkNode(str, current, target))
+                                    EventListener.handlers[event.type][priority][str].call(current, event);
 
-                                default:
-                                    if (target.tagName && target.tagName.toUpperCase() === el.toUpperCase()) {
-                                        Event.handlers[event.type][priority][el].call(target, event);
-                                    }
-                                    break;
+                                if (event.cancelBubble)
+                                    break loop;
+
+                                current = current.parentNode;
                             }
 
-                            if (event.cancelBubble) {
-                                break loop;
-                            }
+                            current = target;
+
+                        } else {
+
                         }
                     }
 
-                    target = target.parentNode;
 
                 }
+        },
+
+        checkNode: function (str, current, target) {
+
+            var check = false,
+                contains = ['[', '(', ':'],
+                isSimple = true;
+
+            while (contains.length && isSimple)
+                isSimple = str.indexOf(contains.shift()) === -1 && str.indexOf('.',1) === -1;
+
+
+            if (isSimple) {
+                switch (str[0]) {
+
+                    case ".":
+                        if (current.classList && current.classList.contains(str.replace(".", '')))
+                            check = true;
+                        break;
+
+                    case "#":
+                        if (current.id === str.replace("#", ''))
+                            check = true;
+                        break;
+
+                    default:
+                        if (current.tagName && current.tagName.toUpperCase() === str.toUpperCase())
+                            check = true;
+                        break;
+                }
+            } else {
+
+                var elements = current.parentNode && current.parentNode.querySelectorAll(str) || [];
+                for (var i = 0; i < elements.length; i++) {
+                    if (elements[i].contains(target)) {
+                        check = true;
+                        break;
+                    }
+                }
+            }
+
+            return check;
         },
 
         on: function (event, el, func, priority) {
 
             if (this.detect === null) {
-                D.error('First init Event');
+                D.error('First init EventListener');
                 return false;
             }
 
@@ -72,7 +106,7 @@
 
             // { event: [ ... ] }
             if (typeof event === 'object') {
-                for(type in event){
+                for (type in event) {
                     this.on(type, event[type]);
                 }
 
@@ -111,9 +145,19 @@
         },
 
         attach: function (event, el, func, priority) {
+
             if (!this.handlers[event][priority])
                 this.handlers[event][priority] = {};
-            this.handlers[event][priority][el] = func;
+
+            if (el.indexOf(' ') === -1) {
+                this.handlers[event][priority][el] = func;
+            } else {
+                this.handlers[event][priority][el] = {
+                    selectors: el.split(' '),
+                    function: func
+                };
+            }
+
         },
 
         off: function (event, el) {

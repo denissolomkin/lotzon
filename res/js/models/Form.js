@@ -47,7 +47,7 @@
                                 D.log(['C.' + form.method + '.callback']);
                                 Callbacks[form.method][form.callback].call(that, data.res);
                             }
-                            
+
                             if (data.delete)
                                 Cache.remove(data.delete);
 

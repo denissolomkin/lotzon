@@ -4,7 +4,7 @@
 
         "init": function () {
 
-            Event.on({
+            EventListener.on({
 
                 'click': [
 
@@ -22,6 +22,8 @@
                     {".comment-content": Comments.do.mobileForm},
 
                     {".mark-message": Message.do.markMessage},
+                    // {".nm-search .nm-friend": Message.do.setUser},
+                     {"div.back": Navigation.do.backBlock}
 
                 ]
             });
@@ -37,6 +39,11 @@
             // handlers
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
+
+            $(document).on('click', 'a', function (e) {
+                e.preventDefault();
+                return false;
+            });
 
             $(document).on('click', Device.do.hide);
 
@@ -56,11 +63,10 @@
             /* new message*/
             $(document).on('input', ".enter-friend-name", Message.do.searchUser);
             $(document).on('click', ".nm-change", Message.do.clearUser);
-            $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
 
 
             /* navigation : after notifications*/
-            $(document).on('click', 'div.back', Navigation.do.backBlock);
+            // $(document).on('click', 'div.back', Navigation.do.backBlock);
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
