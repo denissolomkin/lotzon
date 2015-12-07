@@ -255,6 +255,7 @@
 
         "remove": function (object, key) {
 
+            console.log(object, key);
             if (object) {
 
                 for (prop in object) {

@@ -35,7 +35,7 @@
         lottery = <?php echo json_encode($lottery, JSON_PRETTY_PRINT);?>,
         player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>,
         slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT);?>,
-        config = <?php echo json_encode($config, JSON_PRETTY_PRINT);;?>,
+        config = <?php echo json_encode($config, JSON_PRETTY_PRINT);?>,
         timestamp = <?php echo time();?>,
         debug = {
             "config": {

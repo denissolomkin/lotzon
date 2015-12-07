@@ -115,8 +115,9 @@
             }
         },
 
-        decrement: function (count) {
-            return this.getCount(count) && this.setCount(count, this.getCount(count) - 1);
+        decrement: function (count, value) {
+            value = value || 1;
+            return this.getCount(count) && this.setCount(count, this.getCount(count) - value);
         },
 
         setCount: function (count, value) {

@@ -14,7 +14,8 @@
                     /* notifications */
                     {".close-notification": Comments.do.closeNotification},
                     {".c-show-notifications": Comments.do.showNotifications},
-                    [["c-hide-notifications", ".close-list"], Comments.do.deleteNotifications],
+                    [".c-hide-notifications", Comments.do.deleteNotifications],
+                    [".close-list", Comments.do.closeNotifications],
                     [".view-comment", Comments.do.viewComment, 1],
 
                     /* new reply */

@@ -4,16 +4,19 @@ class LotterySettings
 {
     const CURRENCY_POINT = 'POINT';
     const CURRENCY_MONEY = 'MONEY';
+    const TOTAL_TICKETS  = 8;
+    const TOTAL_BALLS    = 49;
+    const REQUIRED_BALLS = 6;
 
     private $_model = null;
 
     private $_countryPrizes = array();
-    private $_total = 0;
-    private $_jackpot = false;
-    private $_gameTimes = array();
-    private $_gameSettings = array();
+    private $_total         = 0;
+    private $_jackpot       = false;
+    private $_gameTimes     = array();
+    private $_gameSettings  = array();
 
-    public function __construct() 
+    public function __construct()
     {
         $this->_model = LotterySettingsModel::instance();
     }
@@ -27,7 +30,7 @@ class LotterySettings
     }
 
     public function getTotalWinSum()
-    {   
+    {
         return $this->_total;
     }
 
@@ -45,7 +48,7 @@ class LotterySettings
     {
         if (count($prizes)) {
             if (!isset($this->_countryPrizes[$country])) {
-                $this->_countryPrizes[$country] = array();    
+                $this->_countryPrizes[$country] = array();
             }
 
             foreach ($prizes as $ballsCount => $prize) {
@@ -59,7 +62,7 @@ class LotterySettings
                 }
 
                 $this->_countryPrizes[$country][$ballsCount] = array(
-                    'sum' => $prize['sum'],
+                    'sum'      => $prize['sum'],
                     'currency' => $prize['currency'],
                 );
             }
@@ -91,7 +94,7 @@ class LotterySettings
         return $this->_gameSettings;
     }
 
-    public function addGameTime($time) 
+    public function addGameTime($time)
     {
         if (!is_numeric($time)) {
             $time = strtotime($time, 0);
@@ -105,7 +108,7 @@ class LotterySettings
         // sort dates asc
         sort($this->_gameTimes, SORT_NUMERIC);
         if ($nearest) {
-            $now = strtotime(date('H:i'), 0);
+            $now     = strtotime(date('H:i'), 0);
             $nearest = 0;
             foreach ($this->_gameTimes as $time) {
                 if ($time > $now) {
@@ -116,6 +119,7 @@ class LotterySettings
             if (!$nearest) {
                 $nearest = array_shift($this->_gameTimes) + 86400;
             }
+
             return $nearest;
         }
 

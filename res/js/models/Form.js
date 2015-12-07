@@ -59,7 +59,7 @@
                     },
                     error: function (data) {
                         Form.stop.call(that);
-                        D.error.call(that, (data.responseJSON.message || 'NOT FOUND') + "<br>" + form.url + '');
+                        D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
                     }
                 })
             }, Form.timeout.submit);

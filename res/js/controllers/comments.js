@@ -93,6 +93,28 @@
 
             },
 
+            closeNotifications: function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                var notifications = document.getElementById('communication-notifications').getElementsByClassName('c-notification'),
+                    obj = {
+                        communication: {
+                            notifications: {}
+                        }
+                    };
+
+                Player.decrement('notifications', notifications.length);
+
+                for (var i = 0; i < notifications.length; i++) {
+                    obj.communication.notifications[notifications[i].getAttribute('data-id')] = null;
+                }
+
+                Cache.remove(obj);
+
+            },
+
             deleteNotifications: function (event) {
 
                 Form.send.call(this, {
@@ -113,7 +135,7 @@
                         }
                     };
 
-                Player.setCount('notifications', Player.getCount('notifications') - notifications.length);
+                Player.decrement('notifications', notifications.length);
 
                 for (var i = 0; i < notifications.length; i++) {
                     obj.communication.notifications[notifications[i].parentNode.getAttribute('data-id')] = null;
@@ -124,7 +146,6 @@
                 if (loadedComment) {
                     event.preventDefault();
                     event.stopPropagation();
-                    event.cancelBubble = true;
                     Comments.hideNotifications();
                     DOM.scroll(loadedComment);
                     loadedComment.classList.add('highlight');

@@ -460,9 +460,9 @@ class Player extends Entity
     public function getFavoriteCombination()
     {
         if (!is_array($this->_favoriteCombination)) {
-            return array();
+            return array_fill(1,\LotterySettings::REQUIRED_BALLS, null);
         }
-        return $this->_favoriteCombination;
+        return array_pad($this->_favoriteCombination, \LotterySettings::REQUIRED_BALLS, null);
     }
 
     public function setPoints($points)
