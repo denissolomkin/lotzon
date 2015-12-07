@@ -100,45 +100,45 @@ class Index extends \SlimController\SlimController
         $detect = new MobileDetect;
         $isMobile = $detect->isMobile();
 
-        $session = new Session();
-        $player  = $session->get(Player::IDENTITY)->fetch();
+        $session   = new Session();
+        $playerObj = $session->get(Player::IDENTITY)->fetch();
 
         $player = array(
-            "id"       => $player->getId(),
-            "img"      => $player->getAvatar(),
+            "id"       => $playerObj->getId(),
+            "img"      => $playerObj->getAvatar(),
             "title"    => array(
-                "name"       => $player->getName(),
-                "surname"    => $player->getSurname(),
-                "patronymic" => $player->getSecondName(),
-                "nickname"   => $player->getNicName(),
+                "name"       => $playerObj->getName(),
+                "surname"    => $playerObj->getSurname(),
+                "patronymic" => $playerObj->getSecondName(),
+                "nickname"   => $playerObj->getNicName(),
             ),
             "language" => array(
-                "current"   => "RU",
+                "current"   => $playerObj->getLang(),
                 "available" => array(
                     "RU" => "Русский",
                     "EN" => "English",
                     "UA" => "Украiнська"
                 )
             ),
-            "birthday" => 151415167,
+            "birthday" => $playerObj->getBirthday(),
             "count"    => array(
-                "lotteries"     => 121,
+                "lotteries"     => $playerObj->getGamesPlayed(),
                 "notifications" => 4,
                 "birthdays"     => 0,
-                "messages"      => \MessagesModel::instance()->getStatusCount($player->getId(), 0),
+                "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0),
                 "chronicle"     => 2,
                 "requests"      => 11,
                 "friends"       => 56
             ),
-            "favorite" => array(1, null, null, null, 5, null),
+            "favorite" => $playerObj->getFavoriteCombination(),
             "location" => array(
                 "country" => "UA",
                 "city"    => "Kyiv",
                 "address" => "Obolonska, 29"
             ),
             "balance"  => array(
-                "points" => 100,
-                "money"  => 15.41,
+                "points" => $playerObj->getPoints(),
+                "money"  => $playerObj->getMoney(),
                 "lotzon" => 1500
             ),
             "currency" => array(
@@ -150,10 +150,10 @@ class Index extends \SlimController\SlimController
                 "rate"        => 100
             ),
             "billing"  => array(
-                "webMoney"    => "R111289102111",
-                "yandexMoney" => "410011141000",
-                "qiwi"        => null,
-                "phone"       => null
+                "webMoney"    => $playerObj->getWebMoney(),
+                "yandexMoney" => $playerObj->getYandexMoney(),
+                "qiwi"        => $playerObj->getQiwi(),
+                "phone"       => $playerObj->getPhone()
             ),
             "social"   => array(
                 "vk" => "R333289102947",
