@@ -17,11 +17,17 @@
         },
 
         renderNotifications: function () {
-            if(document.getElementById('communication-notifications')) {
-                R.push({
-                    href: 'communication-notifications',
-                    json: {}
-                });
+
+            var notifications = document.getElementById('communication-notifications'),
+                force = Player.getCount('notifications') === 0;
+
+            if (notifications) {
+                var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
+                if (force || (notificationsList && notificationsList.style.display !== 'block'))
+                    R.push({
+                        href: 'communication-notifications',
+                        json: {}
+                    });
             }
         },
 
@@ -155,12 +161,12 @@
                     node = DOM.up('comment', comment),
                     commentsList = DOM.up('render-list', node),
                     json = {
-                        'user'      : {
+                        'user': {
                             "name": comment.getAttribute("data-user-name"),
-                            'id'  : comment.getAttribute("data-user-id")
+                            'id': comment.getAttribute("data-user-id")
                         },
                         'comment_id': comment.getAttribute("data-comment-id"),
-                        'post_id'   : comment.getAttribute('data-post-id')
+                        'post_id': comment.getAttribute('data-post-id')
                     };
 
                 // delete other forms
