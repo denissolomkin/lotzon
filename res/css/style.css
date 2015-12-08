@@ -2458,6 +2458,9 @@ form.loading > * {
     font-weight: bold;
     color: #000; }
 
+div > .games-previews {
+  padding: 0; }
+
 .games-previews .flex-box {
   font-family: handbookpro-regular;
   display: flex;
@@ -2522,6 +2525,327 @@ form.loading > * {
     line-height: 2;
     min-height: 40px;
     font-size: 18px; }
+
+.games-view .game-settings .settings-tabs div.active, .games-view .game-settings .settings-tabs div:hover {
+  background: #474747;
+  color: #fff;
+  text-align: center;
+  box-sizing: border-box; }
+
+.game-settings [type="radio"]:checked + label, .game-settings [type="radio"]:not(:checked) + label {
+  position: relative;
+  padding: 5px 15px;
+  cursor: pointer; }
+
+.games-view {
+  padding: 20px;
+  font-family: handbook-bold; }
+  .games-view .info-top {
+    width: 100%; }
+    .games-view .info-top .title-wrap {
+      position: relative;
+      padding: 20px; }
+    .games-view .info-top .back-button {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      font-size: 25px;
+      transform: translateY(-50%); }
+    .games-view .info-top .game-title {
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #343434; }
+    .games-view .info-top .player-info {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center; }
+    .games-view .info-top .balance {
+      text-transform: uppercase;
+      margin-left: 10px;
+      height: auto;
+      top: initial;
+      transform: translate(0, 0); }
+      .games-view .info-top .balance > * {
+        display: block;
+        float: left; }
+      .games-view .info-top .balance i:before {
+        font-size: 37px;
+        padding-right: 10px;
+        color: #474747; }
+    .games-view .info-top .points {
+      font-size: 14px;
+      display: block; }
+      .games-view .info-top .points span {
+        font-size: 18px;
+        font-weight: 600; }
+    .games-view .info-top .money {
+      font-size: 14px;
+      display: block; }
+      .games-view .info-top .money span {
+        font-size: 18px;
+        font-weight: 600; }
+    .games-view .info-top .photo img {
+      overflow: hidden;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px; }
+  .games-view .wrapper {
+    padding: 20px 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    color: #474747;
+    font-size: 15px; }
+  .games-view .description-block {
+    box-sizing: border-box;
+    width: 50%;
+    padding-right: 10px; }
+    .games-view .description-block .game-fund {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: stretch;
+      word-wrap: break-word;
+      word-spacing: 200px;
+      word-break: break-word;
+      text-align: center;
+      text-transform: uppercase;
+      background: #ffe700;
+      letter-spacing: -1px; }
+      .games-view .description-block .game-fund div {
+        display: inline-block;
+        padding: 10px 0; }
+        .games-view .description-block .game-fund div span {
+          word-spacing: normal;
+          font-size: 32px; }
+      .games-view .description-block .game-fund .title {
+        border-right: 1px solid #fff;
+        padding-top: 18px;
+        width: calc(25% - 1px); }
+      .games-view .description-block .game-fund .money {
+        width: 35%; }
+      .games-view .description-block .game-fund .points {
+        width: 40%; }
+    .games-view .description-block .game-description {
+      padding-top: 20px; }
+    .games-view .description-block .read-more {
+      background: none;
+      width: 100%;
+      color: #5a90b7;
+      text-align: left;
+      margin-top: 20px;
+      cursor: pointer;
+      text-transform: uppercase; }
+      .games-view .description-block .read-more i {
+        float: right; }
+  .games-view .game-settings {
+    box-sizing: border-box;
+    font-weight: 600;
+    width: 50%;
+    padding-left: 10px;
+    line-height: 1.2;
+    color: #474747; }
+    .games-view .game-settings .settings-tabs {
+      text-transform: uppercase;
+      text-align: center;
+      background: #a7d1d5;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: stretch;
+      min-height: 75px; }
+      .games-view .game-settings .settings-tabs div {
+        min-height: 40px;
+        padding: 10px;
+        display: inline-block;
+        width: calc(100%/3);
+        box-sizing: border-box;
+        position: relative;
+        cursor: pointer; }
+        .games-view .game-settings .settings-tabs div span {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          display: block;
+          left: 0;
+          width: 100%; }
+        .games-view .game-settings .settings-tabs div i {
+          font-size: 120%;
+          margin-right: 6px; }
+
+.game-settings .games-online {
+  font-family: handbookpro-regular;
+  font-weight: normal; }
+
+.game-settings .filter {
+  display: block;
+  padding: 15px 10px; }
+  .game-settings .filter li {
+    float: left;
+    font-size: 13px;
+    display: block;
+    text-transform: uppercase; }
+
+.game-settings .games-list {
+  font-size: 15px;
+  width: 100%; }
+  .game-settings .games-list .render-list {
+    margin-bottom: 30px; }
+  .game-settings .games-list .game {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 15px 20px 15px 5px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center; }
+    .game-settings .games-list .game > div {
+      padding-right: 15px;
+      min-width: 60px; }
+    .game-settings .games-list .game .bet {
+      min-width: 27%;
+      text-transform: uppercase; }
+    .game-settings .games-list .game .players {
+      text-align: left;
+      padding: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-height: 20px;
+      transition: all 1.9s ease; }
+    .game-settings .games-list .game > i {
+      transition: all 0.1s ease-in 0.1s;
+      position: absolute;
+      left: 100%;
+      margin-left: -20px;
+      top: 50%;
+      transform: translateY(-50%); }
+    .game-settings .games-list .game.available {
+      cursor: pointer; }
+      .game-settings .games-list .game.available:hover > i {
+        margin-left: 0;
+        font-size: 120%; }
+  .game-settings .games-list > div:first-child {
+    border-top: 1px solid #e5e5e5; }
+
+.game-settings .players-list {
+  font-size: 13px;
+  color: #474747;
+  counter-reset: my-awesome-counter; }
+  .game-settings .players-list .render-list {
+    margin-bottom: 30px; }
+  .game-settings .players-list .player {
+    counter-increment: my-awesome-counter;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    transition: background .5s linear; }
+    .game-settings .players-list .player .name {
+      flex-grow: 1;
+      font-size: 15px; }
+      .game-settings .players-list .player .name:before {
+        content: counter(my-awesome-counter);
+        display: block;
+        font-size: 13px; }
+    .game-settings .players-list .player:hover {
+      background: #f4f4f4; }
+    .game-settings .players-list .player:first-child {
+      border-top: 1px solid #e5e5e5; }
+    .game-settings .players-list .player .photo {
+      overflow: hidden;
+      border-radius: 50px;
+      margin: 0 10px;
+      max-width: 50px; }
+      .game-settings .players-list .player .photo img {
+        display: block;
+        max-width: 50px;
+        max-height: 50px; }
+    .game-settings .players-list .player .rating i {
+      margin-left: 5px;
+      color: #ffe634; }
+
+.game-settings [type="radio"]:checked {
+  position: absolute;
+  left: -9999px; }
+  .game-settings [type="radio"]:checked + label {
+    background: #474747;
+    color: #fff; }
+
+.game-settings [type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px; }
+  .game-settings [type="radio"]:not(:checked) + label:hover {
+    background: #474747;
+    color: #fff; }
+
+.game-settings [type="radio"]:disabled + label {
+  color: #aaa;
+  background: transparent; }
+  .game-settings [type="radio"]:disabled + label:hover {
+    color: #aaa;
+    background: transparent; }
+
+.create-game {
+  color: #474747;
+  font-size: 14px; }
+  .create-game .title {
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 15px 0 11px; }
+  .create-game .buttons-group {
+    background: #f4f4f4;
+    margin-bottom: 5px;
+    position: relative; }
+    .create-game .buttons-group > * {
+      float: right; }
+      .create-game .buttons-group > * > label {
+        padding: 10px 15px !important;
+        display: block; }
+    .create-game .buttons-group .title {
+      padding: 10px 15px !important;
+      display: block;
+      font-size: 13px;
+      float: left; }
+    .create-game .buttons-group .button {
+      cursor: pointer;
+      min-width: 14%;
+      text-align: center;
+      height: 100%; }
+      .create-game .buttons-group .button.active {
+        background: #474747;
+        color: #fff; }
+      .create-game .buttons-group .button:hover {
+        background: #474747;
+        color: #fff; }
+      .create-game .buttons-group .button:first-child:nth-last-child(1) {
+        width: 100%; }
+  .create-game .start-game {
+    margin-top: 20px;
+    border: 1px solid #4f4f4f;
+    text-align: center;
+    cursor: pointer;
+    padding: 7px;
+    text-transform: uppercase;
+    font-weight: normal; }
+
+@media all and (max-width: 768px) {
+  .games-view .game-settings {
+    width: 100%;
+    padding: 0; }
+  .games-view .description-block {
+    width: 100%;
+    padding: 0; } }
 
 .gh-circle, .gh-my-game .gh-date:after {
   content: "";

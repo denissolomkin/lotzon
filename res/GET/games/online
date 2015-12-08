@@ -1,57 +1,206 @@
 {
-    "status": 1,
-    "message": "OK",
-    "res":{
-    "games":{
-    "online":{
+    "cache":true,
+    "res": {
+        "games": {
+            "online": {
+                "1": {
+                    "id": "1",
+                    "category": "5",
+                    "img": "durak.jpg",
+                    "title": "Дурак",
+                    "price": "50000",
+                    "quantity": "0",
+                    "players": "12",
 
-                   "1": {
-                        "id": "1",
-                        "category": "5",
-                        "img": "durak.jpg",
-                        "title": "Дурак",
-                        "price": "50000",
-                        "quantity": "0",
-                        "players": "12",
-                        "fund_points": "12000",
-                        "fund_money": "12000"
+                    "key": "Durak",
+                    "audio": {
+                        "Move-m-1": "11.ogg",
+                        "Move-o-1": "14.ogg",
+                        "Move-m-2": "12.ogg",
+                        "Move-o-2": "14.ogg",
+                        "Move-m-3": "8.ogg",
+                        "Move-o-3": "16.ogg"
                     },
-                    "2": {
-                        "id": "1",
-                        "category": "5",
-                        "img": "durak.jpg",
-                        "title": "Дурак",
-                        "price": "50000",
-                        "quantity": "0",
-                        "players": "12",
-                        "fund_points": "12000",
-                        "fund_money": "12000"
+                    "modes": {
+                        "MONEY": ["0.25", "0.5", 1, 2, 3],
+                        "POINT": [25, 50, 100, 200, 300]
                     },
-                    "3": {
-                        "id": "1",
-                        "category": "5",
-                        "img": "durak.jpg",
-                        "title": "Дурак",
-                        "price": "50000",
-                        "quantity": "0",
-                        "players": "12",
-                        "fund_points": "12000",
-                        "fund_money": "12000"
+                    "variations": {
+                        "cards": {
+                            "t": "Колода",
+                            "v": {
+                                "24": "24",
+                                "36": "36",
+                                "52": "52"
+                            },
+                            "d": "36"
+                        },
+                        "type": {
+                            "t": "Тип игры",
+                            "v": {
+                                "revert": "переводной",
+                                "throw": "подкидной"
+                            },
+                            "d": "throw"
+                        }
                     },
-                    "4":
-                    {
-                        "id": "1",
-                        "category": "5",
-                        "img": "durak.jpg",
-                        "title": "Дурак",
-                        "price": "50000",
-                        "quantity": "0",
-                        "players": "12",
-                        "fund_points": "12000",
-                        "fund_money": "12000"
-                    }
+                    "fund": {
+                        "MONEY": 0.26,
+                        "POINT": 598
+                    },
+                    "rating": [],
+                    "maxPlayers": "4",
+                    "create": "on"
+                },
+                "2": {
+                    "id": "222",
+                    "category": "5",
+                    "img": "durak.jpg",
+                    "title": "Дурак",
+                    "price": "50000",
+                    "quantity": "0",
+                    "players": "12",
 
-	}
+                    "key": "Durak",
+                    "audio": {
+                        "Move-m-1": "11.ogg",
+                        "Move-o-1": "14.ogg",
+                        "Move-m-2": "12.ogg",
+                        "Move-o-2": "14.ogg",
+                        "Move-m-3": "8.ogg",
+                        "Move-o-3": "16.ogg"
+                    },
+                    "modes": {
+                        "MONEY": ["0.25", "0.5", 1, 2, 3],
+                        "POINT": [25, 50, 100, 200, 300]
+                    },
+                    "variations": {
+                        "cards": {
+                            "t": "Колода",
+                            "v": {
+                                "24": "24",
+                                "36": "36",
+                                "52": "52"
+                            },
+                            "d": "36"
+                        },
+                        "type": {
+                            "t": "Тип игры",
+                            "v": {
+                                "revert": "переводной",
+                                "throw": "подкидной"
+                            },
+                            "d": "throw"
+                        }
+                    },
+                    "fund": {
+                        "MONEY": 0.26,
+                        "POINT": 598
+                    },
+                    "rating": [],
+                    "maxPlayers": "4",
+                    "create": "on"
+                },
+                "3": {
+                    "id": "33333",
+                    "category": "5",
+                    "img": "durak.jpg",
+                    "title": "Дурак",
+                    "price": "50000",
+                    "quantity": "0",
+                    "players": "12",
+
+                    "key": "Durak",
+                    "audio": {
+                        "Move-m-1": "11.ogg",
+                        "Move-o-1": "14.ogg",
+                        "Move-m-2": "12.ogg",
+                        "Move-o-2": "14.ogg",
+                        "Move-m-3": "8.ogg",
+                        "Move-o-3": "16.ogg"
+                    },
+                    "modes": {
+                        "MONEY": ["0.25", "0.5", 1, 2, 3],
+                        "POINT": [25, 50, 100, 200, 300]
+                    },
+                    "variations": {
+                        "cards": {
+                            "t": "Колода",
+                            "v": {
+                                "24": "24",
+                                "36": "36",
+                                "52": "52"
+                            },
+                            "d": "36"
+                        },
+                        "type": {
+                            "t": "Тип игры",
+                            "v": {
+                                "revert": "переводной",
+                                "throw": "подкидной"
+                            },
+                            "d": "throw"
+                        }
+                    },
+                    "fund": {
+                        "MONEY": 0.26,
+                        "POINT": 598
+                    },
+                    "rating": [],
+                    "maxPlayers": "4",
+                    "create": "on"
+                },
+                "4": {
+                    "id": "44444",
+                    "category": "5",
+                    "img": "durak.jpg",
+                    "title": "Дурак",
+                    "price": "50000",
+                    "quantity": "0",
+                    "players": "12",
+
+                    "key": "Durak",
+                    "audio": {
+                        "Move-m-1": "11.ogg",
+                        "Move-o-1": "14.ogg",
+                        "Move-m-2": "12.ogg",
+                        "Move-o-2": "14.ogg",
+                        "Move-m-3": "8.ogg",
+                        "Move-o-3": "16.ogg"
+                    },
+                    "modes": {
+                        "MONEY": ["0.25", "0.5", 1, 2, 3],
+                        "POINT": [25, 50, 100, 200, 300]
+                    },
+                    "variations": {
+                        "cards": {
+                            "t": "Колода",
+                            "v": {
+                                "24": "24",
+                                "36": "36",
+                                "52": "52"
+                            },
+                            "d": "36"
+                        },
+                        "type": {
+                            "t": "Тип игры",
+                            "v": {
+                                "revert": "переводной",
+                                "throw": "подкидной"
+                            },
+                            "d": "throw"
+                        }
+                    },
+                    "fund": {
+                        "MONEY": 0.26,
+                        "POINT": 598
+                    },
+                    "rating": [],
+                    "maxPlayers": "4",
+                    "create": "on"
+                }
+
+            }
+        }
+    }
 }
-    }
-    }

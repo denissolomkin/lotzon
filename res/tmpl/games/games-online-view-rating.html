@@ -1,0 +1,22 @@
+<div id="games-online-view-rating" class="top-players" style="display:none;">
+
+    <form action="/games/online/{{id}}/rating/list" method="get" class="render-list-form">
+
+        <ul class="filter clearfix">
+            <li class="view-money">
+                <input id="view-tating-money" name="type" type="radio" value="" checked>
+                <label for="view-tating-money">Деньги</label>
+            </li>
+            <li class="view-points">
+                <input id="view-tating-points" name="type" type="radio" value="mine">
+                <label for="view-tating-points">Баллы</label>
+            </li>
+        </ul>
+        
+        <div class="players-list">
+            {{partial 'games-online-view-rating-container'}}
+        </div>
+
+    </form>
+
+</div>

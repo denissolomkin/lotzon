@@ -1,0 +1,19 @@
+<div id="games-online-view-connect-{{id}}" data-id="{{id}}" class="game {{#if (gt (getSplittedEl mode "-" "2") players.length )}}available{{/if}}">
+
+
+    <div class="bet">{{getSplittedEl mode "-" "1"}} {{#if (eq (getSplittedEl mode "-" "0") "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
+    <div class="players-number">{{getSplittedEl mode "-" "2"}} <i class="i-person2"></i></div>
+    {{#if variation}}
+    <div class="game-type">
+        {{#each variation}}
+        <i class="i-star i-games-{{@key}}-{{this}}"></i>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    <div class="players">{{#each players}} {{this}} {{/each}}</div>
+    {{#if (gt (getSplittedEl mode "-" "2") players.length )}}
+    <i class="i-arrow-right"></i>
+    {{/if}}
+
+</div>

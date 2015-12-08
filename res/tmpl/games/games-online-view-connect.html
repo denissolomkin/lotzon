@@ -1,0 +1,23 @@
+<div id="games-online-view-connect" class="games-online" style="display:block;">
+
+    <form action="/games/online/{{id}}/connect/list" method="get" class="render-list-form">
+
+        <ul class="filter clearfix">
+            <li class="view-money">
+                <input id="view-connect-all" name="type" type="radio" value="" checked>
+                <label for="view-connect-all">Все</label>
+            </li>
+            <li class="view-points">
+                <input id="view-connect-free" name="type" type="radio" value="free">
+                <label for="view-connect-free">Свободные</label>
+            </li>
+        </ul>
+        
+        <div class="games-list">
+            <div class="" style="display: none;">Запущенных игр нет, создайте свою</div>
+            {{partial 'games-online-view-connect-container'}}
+        </div>
+
+    </form>
+
+</div>

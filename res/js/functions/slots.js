@@ -1,3 +1,6 @@
+//путь к урлу
+soundManager.url = "/res/js/plugins/";
+
 /* global soundManager */
 var machineName = 'slotmachine1';
 var minBet = 1;
@@ -32,7 +35,7 @@ var slotMachine = {
     xFactor: 0.1,
     sounds: {},
     init: function () {
-        console.info('slots.init!!!!');
+//        console.info('slots.init!!!!');
         
         slotMachine.change_bet(0);
         try {
@@ -51,7 +54,7 @@ var slotMachine = {
             slotMachine.toggle_sound();
         }), $("#Gold, #Scores").click(function () {
             slotMachine.change_currency(this);
-        }), slotMachine.soundEnabled && (soundManager.url = "/res/js/libs/", soundManager.onload = function () {
+        }), slotMachine.soundEnabled && (soundManager.url = "/res/js/plugins/", soundManager.onload = function () {
             slotMachine.sounds.payout = soundManager.createSound({
                 id: "payout",
                 url: "/res/audio/games/payout.mp3"

@@ -17,7 +17,30 @@ $(function () {
     };
 
     Handlebars.registerHelper({
-
+        /**
+         * @description loop for(max > min; max--) return current counter
+         * @param {int} max
+         * @param {int} min
+         * @param {fn} options
+         * @returns {String}
+         */
+        'forMaxToMin': function (max, min, options) {
+            var ret = "";
+            for (; max >= min; max--) {
+                ret = ret + options.fn(max);
+            }
+            return ret;
+        },
+        /**
+         * @description return one splitted element getSplittedEl("1-2-3","-", 0)
+         * @param {str} str
+         * @param {str} delimiter
+         * @param {int} el
+         * @returns {str}
+         */
+        'getSplittedEl': function (str, delimiter, el) {
+            return str.split(delimiter)[el];
+        },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
         'count': Player.getCount,

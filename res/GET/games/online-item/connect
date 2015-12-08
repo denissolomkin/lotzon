@@ -1,0 +1,74 @@
+{
+    "cache": false,
+    "res": 
+        [{
+                "id": "565d61bd1f492",
+                "mode": "POINT-25-2",
+                "players": ["Дэни", "Светлана."]
+        }, {
+                "id": "565d648d4d2e5",
+                "mode": "POINT-100-4",
+                "variation": {
+                        "cards": "36",
+                        "type": "revert"
+                },
+                "players": ["Антоха18", "Olimp", "Участник 43390 roman", "Участник 43390 roman"]
+        }, {
+                "id": "565d67087210b",
+                "mode": "POINT-25-2",
+                "variation": {
+                        "field": "10x10"
+                },
+                "players": ["Ленуська", "Участник 54339"]
+        }, {
+                "id": "565d672f40112",
+                "mode": "POINT-25-2",
+                "variation": {
+                        "cards": "24",
+                        "type": "revert"
+                },
+                "players": [".Юлек.", "Участник 32770"]
+        }, {
+                "id": "565d6732ca4b1",
+                "mode": "POINT-25-2",
+                "variation": {
+                        "cards": "36",
+                        "type": "throw"
+                },
+                "players": ["Бэтмен)", "Участник 60727"]
+        }, {
+                "id": "565d677ccab4f",
+                "mode": "MONEY-0.25-2",
+                "variation": {
+                        "cards": "36",
+                        "type": "throw"
+                },
+                "players": ["Катюшка"]
+        }, {
+                "id": "565d678a50916",
+                "mode": "POINT-25-3",
+                "variation": {
+                        "cards": "36",
+                        "type": "revert"
+                },
+                "players": ["Участник ALEX", "Участник 34208", "Чемпион"]
+        }, {
+                "id": "565d67998e773",
+                "mode": "POINT-100-2",
+                "variation": {
+                        "cards": "36",
+                        "type": "throw"
+                },
+                "players": ["Kowalewski Max aka Surudisasembler aka Pirodolotonotraus"]
+        }, {
+                "id": "565d67b618a47",
+                "mode": "MONEY-0.25-2",
+                "variation": {
+                        "cards": "24",
+                        "type": "throw"
+                },
+                "players": ["Участник 45002", "Участник 12086"]
+        }]
+
+    
+}

@@ -197,6 +197,18 @@
   right: -5px;
   top: 5px; }
 
+@media all and (max-width: 660px) {
+  .games-previews .flex-box {
+    padding: 5px 80px; } }
+
+@media all and (max-width: 600px) {
+  .games-previews .flex-box {
+    padding: 5px 50px; } }
+
+@media all and (max-width: 500px) {
+  .games-previews .flex-box {
+    padding: 5px 30px; } }
+
 @media all and (max-width: 450px) {
   .games-previews .flex-box {
     padding: 5px 10px; }
@@ -1234,17 +1246,7 @@
   .games-previews {
     padding: 5px 35px; }
     .games-previews a {
-      margin: 15px 0; } }
-
-@media all and (min-width: 768px) and (max-width: 660px) {
-  .games-previews {
-    padding: 5px 80px; } }
-
-@media all and (min-width: 768px) and (max-width: 600px) {
-  .games-previews {
-    padding: 5px 50px; } }
-
-@media (min-width: 768px) {
+      margin: 15px 0; }
   .ticket-items {
     padding-left: 13px; }
     .ticket-items .ticket-numbers li {

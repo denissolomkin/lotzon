@@ -105,6 +105,7 @@
             "communication-comments-view": Comments.after.showComment,
 
             "games-online": Carousel.initOwl,
+            "games-online-view": Games.init,
             "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
