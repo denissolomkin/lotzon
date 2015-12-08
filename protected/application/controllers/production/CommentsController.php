@@ -195,7 +195,7 @@ class CommentsController extends \AjaxController
             );
 
             if ($lastItem) {
-                $response['lastItem'] = false;
+                $response['lastItem'] = true;
             }
 
         } catch (\PDOException $e) {
