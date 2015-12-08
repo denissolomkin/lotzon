@@ -179,7 +179,9 @@ class CommentsController extends \AjaxController
                 $comments[] = $comment;
             }
 
-            CommentsModel::instance()->setNotificationsDate($playerId, $comment["date"]);
+            if (isset($comment["date"])) {
+                CommentsModel::instance()->setNotificationsDate($playerId, $comment["date"]);
+            }
 
             $response = array(
                 'res'    => array(
