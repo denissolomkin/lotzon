@@ -122,14 +122,16 @@
                 '</div>' +
                 '<div class="ranges">' +
                     '<div class="range_inputs">' +
-                        '<button class="applyBtn" disabled="disabled" type="button"></button> ' +
-                        '<button class="cancelBtn" type="button"></button>' +
+                        '<button class="applyBtn btn-flat" disabled="disabled" type="button"></button> ' +
+                        '<button class="cancelBtn btn-flat" type="button"></button>' +
                     '</div>' +
                 '</div>' +
             '</div>';
 
         this.parentEl = (options.parentEl && $(options.parentEl).length) ? $(options.parentEl) : $(this.parentEl);
-        this.container = $(options.template).appendTo(this.parentEl);
+        // this.container = $(options.template).appendTo(this.parentEl);
+        this.container = $(options.template).appendTo($(".calendar-range"));
+        
 
         //
         // handle all the possible options overriding defaults
@@ -1051,7 +1053,7 @@
 
             this.updateView();
             this.container.show();
-            this.move();
+            // this.move();
             this.element.trigger('show.daterangepicker', this);
             this.isShowing = true;
         },
@@ -1108,7 +1110,7 @@
 
         showCalendars: function() {
             this.container.addClass('show-calendar');
-            this.move();
+            // this.move();
             this.element.trigger('showCalendar.daterangepicker', this);
         },
 

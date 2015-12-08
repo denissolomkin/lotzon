@@ -8,7 +8,7 @@
 .prize {
 	width: 245px;
   padding-right: 25px;
-  margin: 0;
+  float: left;
   &:nth-child(2n+2) {
   	float: right;
   }
@@ -20,4 +20,8 @@
 
 .prize:nth-child(3n+3) {
   margin-right: 0;
+}
+
+#prizes-exchange .content-box-item-content {
+  padding: 0 30px;
 }

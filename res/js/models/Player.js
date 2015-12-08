@@ -14,20 +14,11 @@
 
             if (typeof init === 'object') {
 
+                /* +/- */
                 if (init.hasOwnProperty('count')) {
                     for (key in init.count) {
-                        if (this.count.hasOwnProperty(key)) {
-                            var holders = document.getElementsByClassName('count-' + key);
-                            for (var i = 0; i < holders.length; i++) {
-
-                                init.count[key] = parseInt(init.count[key]);
-                                holders[i].innerHTML = init.count[key];
-
-                                if (!init.count[key])
-                                    DOM.fadeOut(holders[i]);
-                                else
-                                    DOM.fadeIn(holders[i]);
-                            }
+                        if (init.count.hasOwnProperty(key)) {
+                            init.count[key] = this.prepareCount(key, init.count[key]);
                         }
                     }
                 }
@@ -45,6 +36,27 @@
                 }
 
                 Object.deepExtend(this, init);
+
+                if (init.hasOwnProperty('count')) {
+                    for (key in init.count) {
+                        if (this.count.hasOwnProperty(key)) {
+
+                            var holders = document.getElementsByClassName('count-' + key);
+
+                            for (var i = 0; i < holders.length; i++) {
+                                var count = this.getCount(key);
+                                holders[i].innerHTML = count;
+                                if(count)
+                                    DOM.fadeIn(holders[i]);
+                                else
+                                    DOM.fadeOut(holders[i]);
+                            }
+
+                            if(key === 'notifications')
+                                Comments.renderNotifications();
+                        }
+                    }
+                }
 
             }
 
@@ -69,7 +81,30 @@
             return currency;
         },
 
-        formatCurrency: function (value, part) {
+        "prepareCount": function(key, value, count){
+
+            if(typeof value === 'object'){
+                for(var prop in value){
+                    if(value.hasOwnProperty(prop)){
+                        value[prop] = this.prepareCount(prop, value[prop], this.count[key] && this.count[key][prop] || 0);
+                    }
+                }
+            } else {
+                switch(value[0]){
+                    case '+':
+                    case '-':
+                        value = count + parseInt(value);
+                        break;
+
+                    default :
+                        value = parseInt(value);
+                }
+            }
+
+            return value;
+        },
+
+        "formatCurrency": function (value, part) {
 
             function round(a, b) {
                 b = b || 0;
@@ -138,7 +173,16 @@
         },
 
         getCount: function (key) {
-            return typeof key === 'string' && Player.count.hasOwnProperty(key) && Player.count[key];
+
+            var count = 0;
+            if (typeof key === 'string' && Player.count.hasOwnProperty(key))
+                if (typeof Player.count[key] === 'object') {
+                    for (var prop in Player.count[key]) {
+                        count += parseInt(Player.count[key][prop]);
+                    }
+                } else
+                    count = parseInt(Player.count[key]);
+            return count;
         },
 
         updatePoints: function (newSum) {

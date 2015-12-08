@@ -33,39 +33,24 @@
 		& .render-list .message-form-wrapper {
 	    	padding-left: 0;
 	    }
-	 //    & .comment .message-form {
-	 //    	margin: 0 -20px;
-		// }
+
 	}
 }
 
 
-	& .content-box-tab 	{
-		padding: 0 20px 0 30px;
-		& span {
+& .content-box-tab 	{
+	padding: 0 20px 0 30px;
+	& span {
 		display: none;
-		}
+	}
 }
-	// & .content-box-tab {
-	// 	&:before {
-	// 	    content: "";
-	// 	    display: inline-block;
-	// 	    vertical-align: top;
-	// 	    position: relative;
-	// 	    background-image: url(img/sprite.png);
-	//     }
- //  	}
 
- //  	& .communication-comments-tab {
- //  		&:before {
-	// 	    width: 31px;
-	// 	    height: 32px;
-	// 	    top: 9px;
-	// 	    background-position: -347px -130px;
-	//     }
- //  	}
 
-  	& .communication-messages-tab {
-		padding: 0 20px;
-  	}
+& .communication-messages-tab {
+	padding: 0 20px;
+}
   	
+#communication-messages-list .message .close-notification {
+	right: -5px;
+    top: 5px;
+}

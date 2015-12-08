@@ -34,6 +34,7 @@
   font-size: 15px;
   width: auto;
   display: block;
+  font: 15px "PT Sans", sans-serif;
   a {
     text-align: left;
     padding: 0;
@@ -293,4 +294,36 @@
   padding: 10px 30px;
   border-top: 1px solid #CBC7C4;
   box-shadow: none;
+}
+#lottery-history-view {
+  & .ghd-game-inf {
+    & tr {
+      & th {
+        &:nth-child(2) {
+          padding-left: 90px;
+        }
+        &:nth-child(3) {
+          padding-left: 90px;
+          text-align: left;
+        }
+      }
+
+      & td {
+        &:nth-child(3) {
+          text-align: left;
+          padding-left: 90px;
+        }
+        &:nth-child(2) {
+          padding-left: 140px;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+#lottery-history-view .ghd-game-inf .ghd-all-won {
+  padding: 10px 30px 10px 0;
+  & .points {
+    margin-left: 15px;
+  }
 }

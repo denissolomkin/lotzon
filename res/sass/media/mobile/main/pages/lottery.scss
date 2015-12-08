@@ -135,3 +135,20 @@
 #lottery-history-view .content-box-header span {
 	display: none;
 }
+
+.cabinet-game-history .content-box-item-content {
+  min-height: 482px;
+}
+.gh-item {
+	position: relative;
+}
+.content-box-item-content .gh-item .arrow {
+	top: 0;
+	right: 0;
+}
+@media (max-width: 360px) {
+	.content-box-item-content .gh-item .arrow {
+		top: 0;
+		right: -5px;
+	}
+}

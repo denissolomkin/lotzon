@@ -282,7 +282,6 @@
 }
 
 .ticket-items {
-  border-radius: 0 5px 5px 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 5px 0 7px;
   padding-left: 10px;
@@ -340,7 +339,6 @@
 }
 
 .lottery-grid.timer-box {
-  border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -599,4 +597,7 @@
       background: url(../img/1366.png) center center no-repeat;
     }
   }
+}
+.cabinet-game-history .content-box-item-content {
+  min-height: 310px;
 }

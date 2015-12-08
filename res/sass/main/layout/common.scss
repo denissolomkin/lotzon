@@ -5,6 +5,7 @@ html {
 
 body {
   font: 15px "PT Sans", sans-serif;
+  font: 15px "handbookpro-regular";
   background: #f9f9f9;
   overflow-x: hidden;
   position: relative;
@@ -35,7 +36,36 @@ a {
   background: rgba(0, 0, 0, 0.6);
 
 }
-
+.service-pop-up{
+  display: none;
+  width: 150px;
+  font-size: 14px;
+  padding: 2px 0;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: -71px;
+  left: -67px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -110%);
+  z-index: 20;
+  color: #fff;
+  &:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 98%;
+    left: 67px;
+    border: 8px solid transparent;
+    border-top: 8px solid #4A4A4A;
+  }
+}
 .error {
   position: relative;
 }
@@ -229,21 +259,27 @@ button {
 .calendar-range {
   width: 200px;
   height: 30px;
-  margin: 0 auto 30px;
   border-bottom: 1px solid #9b9b9b;
   cursor: pointer;
   position: relative;
-  &:before {
-    content: "";
-    display: block;
+  font-family: "fontello";
+  display: inline-block;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  &:before {;
+    display: inline-block;
     position: absolute;
     top: 5px;
     right: 5px;
     width: 20px;
     height: 20px;
-    background: url(img/sprite.png) -257px -192px;
     z-index: -1;
+    font-size: 20px;
+    color: #4a4a4a;
   }
+
 }
 
 .calendar-range input.daterange {
@@ -254,7 +290,9 @@ button {
   border: none;
   line-height: 30px;
   cursor: pointer;
-  padding-left: 10px;
+  padding-left: 25px;
+  font-size: 14px;
+  font-family: 'handbookpro-regular';
 }
 
 // Input Radio ----------------------- //
@@ -327,7 +365,7 @@ input.input-radio:checked + label.input-radio:before {
     -moz-osx-font-smoothing: grayscale;
     line-height: 20px;
   &:before {
-    content: '\e80c';
+    // content: '\e80c';
     font-size: 18px;
   }
 }
@@ -441,6 +479,7 @@ input.input-radio:checked + label.input-radio:before {
 
 .sidebar {
   display: none;
+  position: relative
 }
 
 // BANNERS -------------------------------- //
@@ -572,3 +611,13 @@ input.input-radio:checked + label.input-radio:before {
     }
   } 
 }
+//***********************************Daterangepicker
+
+.daterangepicker.dropdown-menu {
+  padding-bottom: 55px;
+  .ranges {
+    position: absolute;
+    bottom: 10px;
+  }
+}
+

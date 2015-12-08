@@ -110,7 +110,7 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
 }
 
 #debug-stat-box span{
-    display: none;
+    display: block;
 }
 
 #debug-stat-box b{

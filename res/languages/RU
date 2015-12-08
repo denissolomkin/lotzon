@@ -151,12 +151,12 @@
                 "title-reports-referrals-all": "Все",
                 "title-reports-referrals-active": "Активные",
                 "title-reports-referrals-passive": "Не играют",
-                "title-users-referrals-last-lottery":"Последняя&nbsp;дата&nbsp;игры",
+                "title-users-referrals-last-lottery":"Последняя дата входа",
                 "title-users-referrals-nickname": "Никнейм",
                 "title-users-referrals-registered": "Регистрация",
-                "title-users-referrals-lotteries": "Сыграно игр",
+                "title-users-referrals-lotteries": "Игр",
                 "title-users-referrals-activity": "Активность",
-                "title-users-referrals-profit": "Доход баллов",
+                "title-users-referrals-profit": "Доход",
 
 
                 "title-billing-phone": "Телефон",
@@ -176,6 +176,8 @@
                 "title-messages-change-user": "изменить",
 
                 "button-mark-all-as-read":"Пометить всё как прочитанное",
+                "title-mark-as-read":"Отметить как прочитанное",
+                "title-mark-online":"Онлайн",
                 "button-see": "смотреть",
 
                 "message-notifications-new-answers": "новых ответов",

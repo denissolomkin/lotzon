@@ -1,9 +1,7 @@
-<div id="communication-notifications" class="c-notifications"> <!-- NOTIFICATIONS -->
-
-    {{#if (player "count.notifications")}}
-
+<div id="communication-notifications" class="c-notifications">
+    {{#if (player "getCount" "notifications")}}
     <div class="title">
-        {{i18n "message-notifications-you-have"}} <span class="count-notifications">{{player "count.notifications"}}</span> {{i18n "message-notifications-new-answers"}} <span class="c-show-notifications">{{i18n "button-see"}}</span>
+        {{i18n "message-notifications-you-have"}} <span class="count-notifications">{{player "getCount" "notifications"}}</span> {{i18n "message-notifications-new-answers"}} <span class="c-show-notifications">{{i18n "button-see"}}</span>
         <span class="c-hide-notifications"></span>
     </div>
 
@@ -22,8 +20,5 @@
 
         </form>
     </div>
-
     {{/if}}
-
-    <!-- end of NOTIFICATIONS -->
 </div>

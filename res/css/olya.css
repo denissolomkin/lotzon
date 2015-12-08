@@ -1131,3 +1131,7 @@ border: 1px solid black;
     left: 10px;
 }*/
 
+
+#debug-stat-box {
+    display: none;
+}

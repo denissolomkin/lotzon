@@ -137,6 +137,8 @@
             "blog-post-view-comments": Comments.after.reply,
             "communication-comments": Comments.after.reply,
 
+            "communication-notifications": Comments.renderNotifications, // delete
+
         },
 
         "error": {
@@ -154,7 +156,11 @@
 
         },
 
-        "delete": {},
+        "delete": {
+
+            "communication-notifications": Comments.renderNotifications,
+
+        },
 
         "validate": {
 

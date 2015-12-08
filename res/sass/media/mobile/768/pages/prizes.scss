@@ -12,6 +12,27 @@
 
 
 
+.prize {
+  width: 245px;
+  padding-right: 25px;
+  float: left;
+  margin: 0 0 30px;
+}
+#prizes-exchange .content-box-item-content {
+  margin-right: -25px;
+}
+#prizes-exchange {
+  max-width: 710px;
+  margin: 0 auto;
+  padding: 0 0 20px;
+}
+.prize:nth-child(2n+2) {
+  float: left;
+}
+
+
+
+
 .exchange-prize .content-box-item {
   text-align: left;
 }

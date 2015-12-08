@@ -1,0 +1,63 @@
+@media (min-width: 540px) {
+  .prize {
+    width: 245px;
+    padding-right: 25px;
+    float: left;
+  }
+  .prize:nth-child(2n+2) {
+    float: right;
+	}
+
+	#prizes-exchange .content-box-item-content {
+    margin-right: -25px;
+	}
+	#prizes-exchange {
+    padding: 0 40px 20px;
+  }
+
+  #prizes-exchange .render-list-container {
+    padding-top: 70px;
+	}
+}
+
+@media (min-width: 600px) {
+  // .prizes-for-points .content-box-item-content {
+  //   width: 92%;
+  //   max-width: 625px;
+  // }
+	#prizes-exchange {
+    padding: 0 70px 20px;
+  }
+}
+
+@media (min-width: 640px) {
+  // .prizes-for-points .content-box-item-content {
+  //   width: 92%;
+  //   max-width: 625px;
+  // }
+	#prizes-exchange {
+    padding: 0 90px 20px;
+  }
+}
+@media (min-width: 740px) and (max-width: 768px) {
+  // .prizes-for-points .content-box-item-content {
+  //   width: 92%;
+  //   max-width: 625px;
+  // }
+ 	.prize {
+    width: 235px;
+    padding-right: 15px;
+    float: left;
+  }
+ 	#prizes-exchange .content-box-item-content {
+    margin-right: -15px;
+	}
+	#prizes-exchange {
+		max-width: 690px;
+		margin: 0 auto;
+    padding: 0 0 20px;
+  }
+  .prize:nth-child(2n+2) {
+    float: left;
+	}
+}

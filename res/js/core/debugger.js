@@ -14,8 +14,12 @@
 
             D.log('Debugger.init', 'func');
             Object.deepExtend(this, init);
-            this.statBox = document.getElementById('debug-stat-box');
 
+            if(this.isEnable('stat')){
+
+                this.statBox = DOM.create('<div id="debug-stat-box"></div>');;
+                DOM.append(this.statBox, document.getElementsByTagName('body')[0]);
+            }
             /*
              $.ajaxSetup({
              error: function (xhr, status, message) {
@@ -73,7 +77,7 @@
                         if(!Object.size(Object.filter(stat[part])))
                             continue;
 
-                        message += '<span>'+(part!=='total' ? part+': ' : '');
+                        message += '<span style="display: none;">'+(part!=='total' ? part+': ' : '');
 
 
                         for(prop in stat[part])

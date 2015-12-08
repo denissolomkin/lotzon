@@ -124,7 +124,10 @@ class Index extends \SlimController\SlimController
             "birthday" => $playerObj->getBirthday(),
             "count"    => array(
                 "lotteries"     => $playerObj->getGamesPlayed(),
-                "notifications" => 4,
+                "notifications" => array(
+                    "server" => 4,
+                    "session" => "+4"
+                ),
                 "birthdays"     => 0,
                 "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0),
                 "chronicle"     => 2,

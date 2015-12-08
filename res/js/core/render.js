@@ -98,10 +98,14 @@
             var node = U.parse(options.href); //options.template;
             if (!options.node && node) {
                 if (options.node = document.getElementById(options.template)) { // U.parse(node, 'tmpl')
+                    console.log('1 NODE:'+options.template);
                 } else if (options.node = document.getElementById(node)) {
+                    console.log('2 NODE:'+node);
                 } else if (options.node = DOM.byId(node)) {
+                    console.log('3 NODE:'+node);
                 } else {
                     options.node = document.getElementById('content');
+                    console.log('4 NODE');
                 }
             }
 

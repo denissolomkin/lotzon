@@ -62,9 +62,6 @@
 .site-overlay {
   display: none; }
 
-.pushy-active {
-  position: fixed; }
-
 .pushy-active .site-overlay {
   display: block;
   position: fixed;
@@ -196,6 +193,10 @@
 .communication-messages-tab {
   padding: 0 20px; }
 
+#communication-messages-list .message .close-notification {
+  right: -5px;
+  top: 5px; }
+
 @media all and (max-width: 450px) {
   .games-previews .flex-box {
     padding: 5px 10px; }
@@ -303,6 +304,140 @@
 
 #lottery-history-view .content-box-header span {
   display: none; }
+
+.cabinet-game-history .content-box-item-content {
+  min-height: 482px; }
+
+.gh-item {
+  position: relative; }
+
+.content-box-item-content .gh-item .arrow {
+  top: 0;
+  right: 0; }
+
+@media (max-width: 360px) {
+  .content-box-item-content .gh-item .arrow {
+    top: 0;
+    right: -5px; } }
+
+#prizes-exchange .content-box-item-content {
+  margin-right: 0; }
+
+.prize {
+  width: 220px;
+  margin: 0 auto 30px; }
+
+#prizes-exchange .content-box-item-top {
+  left: 15px; }
+
+#prizes-exchange .render-list-container {
+  padding-top: 95px; }
+
+@media (max-width: 500px) {
+  .content-box-item.cabinet-referrals {
+    padding: 120px 20px 30px;
+    min-height: 0; }
+  .r-item:nth-child(even) {
+    background: #fff; }
+  .r-item:nth-child(odd) {
+    background: #fafafa; }
+  .r-item {
+    padding: 15px 20px; }
+  .cabinet-referrals .calendar-range {
+    float: none;
+    margin: 25px auto 25px; }
+  .daterangepicker.dropdown-menu {
+    left: auto;
+    right: -10px;
+    width: 280px;
+    top: 32px; }
+  .daterangepicker .ranges, .daterangepicker .calendar {
+    float: none; }
+  .daterangepicker .calendar.right, .daterangepicker .calendar.left {
+    margin: 5px; }
+  .daterangepicker .left .daterangepicker_input {
+    padding-right: 0; }
+  .daterangepicker.dropdown-menu.opensright:before {
+    right: 18px;
+    left: auto;
+    border-bottom: 7px solid #F2EFED;
+    border-bottom-color: #F2EFED;
+    top: -6px; }
+  .daterangepicker.dropdown-menu.opensright:after {
+    display: none; }
+  .cabinet-referrals .content-box-cat {
+    margin-left: 10px; }
+  .cabinet-referrals .content-box-item-top {
+    display: table;
+    margin-left: 10px;
+    margin-top: 10px; }
+  .cabinet-referrals .content-box-cat {
+    float: none;
+    display: table-header-group; } }
+
+@media (min-width: 530px) {
+  .r-header,
+  .r-item {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px; }
+  .r-header {
+    display: block; }
+  .r-header-item {
+    float: left; }
+  .r-item {
+    padding: 14px 20px;
+    border-bottom: none;
+    line-height: 1.4; }
+    .r-item:hover:before {
+      top: 10px;
+      right: 10px; }
+  .r-inf-names {
+    display: none; }
+  .r-inf {
+    float: none; }
+  .r-inf-item {
+    float: left; }
+  .r-active {
+    text-align: center; }
+  .r-nickname,
+  .r-nickname-text {
+    width: 33%; }
+  .r-registered,
+  .r-registered-text {
+    width: 23%; }
+  .r-games,
+  .r-games-text {
+    width: 10%; }
+  .r-active,
+  .r-active-text {
+    width: 21%;
+    text-align: center; }
+  .r-profit,
+  .r-profit-text {
+    width: 13%; } }
+
+@media (min-width: 580px) {
+  .cabinet-transaction-history .content-box-cat {
+    float: none;
+    display: table;
+    margin: auto; }
+  .cabinet-transaction-history .content-box-cat a {
+    display: table-cell;
+    padding: 0 10px;
+    margin-right: 5px; } }
+
+@media (min-width: 530px) {
+  .content-box-item.cabinet-transaction-history {
+    padding-top: 90px; }
+  .cabinet-transaction-history .calendar-range {
+    float: left;
+    margin-bottom: 0; }
+  .cabinet-transaction-history .content-box-cat {
+    float: right;
+    padding-top: 8px;
+    margin-right: 30px; } }
 
 @media (min-width: 480px) {
   .container {
@@ -631,6 +766,11 @@
         height: 40px;
         line-height: 40px; } }
 
+@media (min-width: 480px) {
+  .cabinet-game-history .content-box-item-content {
+    padding: 10px 30px 0 40px;
+    min-height: 502px; } }
+
 @media (min-width: 480px) and (min-width: 640px) {
   .lottery-grid .title {
     padding: 16px 0 16px 30px; }
@@ -676,11 +816,106 @@
   .ticket-box .ticket-btn {
     margin-right: 30px; }
   .cabinet-game-history .content-box-item-content {
-    padding: 10px 30px 0 40px; }
+    padding: 10px 30px 0 40px;
+    min-height: 430px; }
   .content-box.tickets .title {
     padding-left: 40px; }
   .ticket-done {
     margin-right: 30px; } }
+
+@media (min-width: 480px) {
+  .content-box-item-content .gh-item .arrow {
+    top: 0;
+    right: 15px; } }
+
+@media (min-width: 480px) and (min-width: 540px) {
+  .prize {
+    width: 245px;
+    padding-right: 25px;
+    float: left; }
+  .prize:nth-child(2n+2) {
+    float: right; }
+  #prizes-exchange .content-box-item-content {
+    margin-right: -25px; }
+  #prizes-exchange {
+    padding: 0 40px 20px; }
+  #prizes-exchange .render-list-container {
+    padding-top: 70px; } }
+
+@media (min-width: 480px) and (min-width: 600px) {
+  #prizes-exchange {
+    padding: 0 70px 20px; } }
+
+@media (min-width: 480px) and (min-width: 640px) {
+  #prizes-exchange {
+    padding: 0 90px 20px; } }
+
+@media (min-width: 480px) and (min-width: 740px) and (max-width: 768px) {
+  .prize {
+    width: 235px;
+    padding-right: 15px;
+    float: left; }
+  #prizes-exchange .content-box-item-content {
+    margin-right: -15px; }
+  #prizes-exchange {
+    max-width: 690px;
+    margin: 0 auto;
+    padding: 0 0 20px; }
+  .prize:nth-child(2n+2) {
+    float: left; } }
+
+@media (min-width: 480px) and (min-width: 530px) {
+  .r-header,
+  .r-item {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px; }
+  .r-header {
+    display: block; }
+  .r-header-item {
+    float: left; }
+  .r-item {
+    padding: 14px 20px;
+    border-bottom: none;
+    line-height: 1.4; }
+    .r-item:hover:before {
+      top: 10px;
+      right: 10px; }
+  .r-inf-names {
+    display: none; }
+  .r-inf {
+    float: none; }
+  .r-inf-item {
+    float: left; }
+  .r-active {
+    text-align: center; }
+  .r-nickname,
+  .r-nickname-text {
+    width: 33%; }
+  .r-registered,
+  .r-registered-text {
+    width: 23%; }
+  .r-games,
+  .r-games-text {
+    width: 10%; }
+  .r-active,
+  .r-active-text {
+    width: 21%;
+    text-align: center; }
+  .r-profit,
+  .r-profit-text {
+    width: 13%; } }
+
+@media (min-width: 480px) and (min-width: 580px) {
+  .cabinet-transaction-history .content-box-cat {
+    float: none;
+    display: table;
+    margin: auto; }
+  .cabinet-transaction-history .content-box-cat a {
+    display: table-cell;
+    padding: 0 10px;
+    margin-right: 5px; } }
 
 @media (min-width: 768px) {
   .container {
@@ -993,6 +1228,9 @@
     top: 4px;
     right: 0;
     z-index: 1; }
+  #communication-messages-list .message .close-notification {
+    right: -15px;
+    top: 5px; }
   .games-previews {
     padding: 5px 35px; }
     .games-previews a {
@@ -1225,12 +1463,27 @@
     background: url(../img/1024.png) center center no-repeat; } }
 
 @media (min-width: 768px) {
+  .cabinet-game-history .content-box-item-content {
+    min-height: 310px; }
   .prizes-for-points .content-box-item-content {
     width: auto;
     max-width: none; }
   .prize {
     width: 220px;
     margin-right: 14px; }
+  .prize {
+    width: 245px;
+    padding-right: 25px;
+    float: left;
+    margin: 0 0 30px; }
+  #prizes-exchange .content-box-item-content {
+    margin-right: -25px; }
+  #prizes-exchange {
+    max-width: 710px;
+    margin: 0 auto;
+    padding: 0 0 20px; }
+  .prize:nth-child(2n+2) {
+    float: left; }
   .exchange-prize .content-box-item {
     text-align: left; }
   .ex-prize-img {

@@ -68,7 +68,10 @@
   height: 47px;
   font-size: 15px;
   line-height: 1.27;
-  padding-left: 15px;
+  padding: 0 10px;
+  font-family: 'handbookpro-regular';
+  text-shadow: none;
+  font-weight: bold;
 }
 
 .prize-price {
@@ -121,9 +124,7 @@
 .prize-finished .prize-content {
   opacity: 0.5;
 }
-.prize:nth-child(even) {
-    margin-right: 0;
-}
+
 #prizes-exchange {
   padding: 0 20px 20px;
   position: relative;
@@ -142,17 +143,7 @@
     padding-top: 70px;
   }
 }
-@media (min-width: 540px) {
-  .prizes-for-points .content-box-item-content {
-    width: 92%;
-    max-width: 625px;
-  }
-  .prize {
-    float: left;
-    width: 45%;
-    margin-right: 10%;
-  }
-}
+
 
 @media (min-width: 540px) and (max-width: 768px) {
   .prize:nth-child(even) {

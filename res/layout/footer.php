@@ -130,7 +130,6 @@ endforeach;
 
 <button style="position: fixed;bottom:0;left:0" onclick="Content.style()">Desktop/Mobile</button>
 <button style="position: fixed;bottom:0;left:110px;" onclick="Lottery.prepareData()">Lottery</button>
-<div id="debug-stat-box"></div>
 
 </div>
 </body>
