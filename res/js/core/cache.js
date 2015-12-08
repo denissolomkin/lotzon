@@ -11,7 +11,6 @@
             "languages": 'languagesStorage',
             "local"    : 'localStorage',
             "session"  : 'sessionStorage',
-            "cache"    : 'cacheStorage',
             "validity" : 'cacheValidity'
         },
 
@@ -239,23 +238,27 @@
             if (storage) {
 
                 switch (true) {
+
                     case storage === 'session':
                         storage = this.storages['session'];
                         break;
-                    case storage === null:
+
                     case storage === 'local':
-                    case storage:
+                    case storage === 'true':
+                    case storage === true:
                     case isNumeric(storage):
                         storage = this.storages['local'];
                         break;
+
                     default:
-                        storage = storage;
+                        storage = false;
                         break;
 
                 }
 
-                this.extend(data, path, storage)
-                    .save(storage);
+                if(storage)
+                    this.extend(data, path, storage)
+                        .save(storage);
             }
 
             if (!data.key && data.res)

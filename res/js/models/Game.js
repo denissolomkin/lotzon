@@ -8,14 +8,11 @@ $(function () {
          * @returns {Boolean}
          */
         isRun: function () {
-            var checkGameBlock = $('.single-game');
-            if (checkGameBlock.length) {
-                return true;
-            }else{
-                return false;
-            }
+            return document.getElementsByClassName('.single-game').length;
         },
         run: function () { // отрисовка игроков
+
+            Player.id = 37;
 
             D.log('Game.run', 'game');
             $('.tmp_but').html(Device.detect() + Device.get() + document.documentElement.clientWidth);
