@@ -4,11 +4,12 @@ class QuickGamesDBProcessor
 {
     public function save(Entity $game)
     {
-        $sql = "REPLACE INTO `QuickGames` (`Id`, `Title`, `Description`, `Prizes`, `Field`, `Audio`, `Enabled`) VALUES (:id, :t, :d, :p, :f, :a, :e)";
+        $sql = "REPLACE INTO `QuickGames` (`Id`, `Key`, `Title`, `Description`, `Prizes`, `Field`, `Audio`, `Enabled`) VALUES (:id, :key, :t, :d, :p, :f, :a, :e)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $game->getId(),
+                ':key'   => $game->getKey(),
                 ':t'     => @serialize($game->getTitle()),
                 ':d'     => @serialize($game->getDescription()),
                 ':p'     => @serialize($game->getPrizes()),

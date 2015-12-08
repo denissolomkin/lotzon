@@ -7,7 +7,13 @@
                 <button type="button" class="btn btn-md btn-success tab" data-tab="text">
                     <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
                 </button>
+                <button type="button" class="btn btn-md btn-success tab" data-tab="key">
+                    <span class="fa fa-key" aria-hidden="true"></span>
+                </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="image">
+                    <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-md btn-success tab" data-tab="image_new">
                     <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="audio">
@@ -56,12 +62,17 @@
 
 
                     <div class="row-fluid tab" id="key">
-                        <input class="k" value="">
+                        <div class="chanceId"></div>
+                        <input name='game[Key]' class="k" value="">
                     </div>
 
                         <div class="row-fluid tab" id="image">
                             <img class="i">
                         </div>
+
+                    <div class="row-fluid tab" data-path="filestorage/" id="image_new">
+                        <img class="i_new">
+                    </div>
 
                     <div class="row-fluid tab" id="audio">
                         <? $audio=array('start','click','hit','miss','win','lose');
@@ -401,8 +412,9 @@
 
             holder=$("#editGame").find('form');
             holder.find('.lang').first().click();
-            holder.find('.k').val('Chance'+game.Id);
-            holder.find('.p').val(game.Field.p);
+            holder.find('.chanceId').html('Chance'+game.Id);
+            holder.find('.k').val(typeof game.Key !== "undefined" && game.Key?game.Key:'');
+            holder.find('.p').val(game.p);
             holder.find('.m').val(game.Field.m);
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
@@ -449,6 +461,7 @@
             //holder.find('[name="game[Description]"]').text(game.Description);
 
             $('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/Chance' + game.Id + ".png?" + (new Date().getTime()));
+            $('.i_new').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/filestorage/games/Chance' + game.Id + ".png?" + (new Date().getTime()));
 
             if(game.Field.f){
                 $('[data-format="'+game.Field.f+'"]', holder).click();
