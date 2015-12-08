@@ -200,7 +200,8 @@ class CommentsController extends \AjaxController
                 'player' => array(
                     'count' => array(
                         'notifications' => array(
-                            "server" => CommentsModel::instance()->getNotificationsCount($playerId)
+                            "server"  => CommentsModel::instance()->getNotificationsCount($playerId),
+                            "session" => "+".count($comments)
                         )
                     )
                 )
