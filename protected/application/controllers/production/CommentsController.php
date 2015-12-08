@@ -9,11 +9,13 @@ class CommentsController extends \AjaxController
 {
     private $session;
 
+    static $notificationsPerPage;
     static $commentsPerPage;
 
     public function init()
     {
         self::$commentsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE') ? : 10;
+        self::$notificationsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('NOTIFICATIONS_PER_PAGE') ? : 10;
 
         $this->session = new Session();
         parent::init();
@@ -108,6 +110,101 @@ class CommentsController extends \AjaxController
         }
 
         $this->ajaxResponseCode($response);
+        return true;
+    }
+
+    public function deleteNotificationsAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
+        try {
+            CommentsModel::instance()->setNotificationsDate($playerId);
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $response = array(
+            'player' => array(
+                'count' => array(
+                    'notifications' => 0
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($response,200);
+        return true;
+    }
+
+    public function notificationsAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $offset   = $this->request()->get('offset', NULL);
+        $count    = $this->request()->get('count', self::$notificationsPerPage);
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
+        try {
+            $list = CommentsModel::instance()->getNotificationsList($playerId, $count + 1, $offset);
+
+            $lastItem = true;
+            $comments = array();
+            foreach ($list as $commentData) {
+                if (count($comments) == $count) {
+                    $lastItem = false;
+                    continue;
+                }
+                $comment    = array(
+                    "user"       => array(
+                        "id"   => $commentData['PlayerId'],
+                        "img"  => $commentData['PlayerImg'],
+                        "name" => $commentData['PlayerName'],
+                    ),
+                    "id"         => $commentData['Id'],
+                    "comment_id" => $commentData['ParentId'],
+                    "date"       => $commentData['Date'],
+                    "text"       => $commentData['Text'],
+                    "theme"      => $commentData['ParentText'],
+                );
+                $comments[] = $comment;
+            }
+
+            CommentsModel::instance()->setNotificationsDate($playerId, $comment["date"]);
+
+            $response = array(
+                'res'    => array(
+                    'communication' => array(
+                        'notifications' => $comments,
+                    ),
+                ),
+                'player' => array(
+                    'count' => array(
+                        'notifications' => CommentsModel::instance()->getNotificationsCount($playerId)
+                    )
+                )
+            );
+
+            if ($lastItem) {
+                $response['lastItem'] = false;
+            }
+
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+
+            return false;
+        }
+
+        $this->ajaxResponseCode($response,200);
         return true;
     }
 
@@ -253,4 +350,5 @@ class CommentsController extends \AjaxController
         $this->ajaxResponseCode($response,200);
         return true;
     }
+
 }
