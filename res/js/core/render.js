@@ -217,9 +217,11 @@
                             if (D.isEnable('stat'))
                                 options.stat.ajax.size = xhr.responseText.length;
 
-                            options.json = Cache.set(options.href, data);
+                            options.json = Cache.init(data, options.href);
+
                             if (data.hasOwnProperty('lastItem'))
                                 options.lastItem = true;
+
                             D.log(['Render.json:', options.href, 'JSON from AJAX:', options.json], 'warn');
                             R.sortJSON(options);
                         }

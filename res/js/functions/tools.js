@@ -151,6 +151,57 @@
             1)) && mixed_var !== '' && !isNaN(mixed_var);
     };
 
+
+    isEmpty = function (value){
+        if (!value) {
+            return true;
+        }
+        if (isArray(value) && value.length === 0) {
+            return true;
+        } else if (!isString(value)) {
+            for (var i in value) {
+                if (Object.prototype.hasOwnProperty.call(value, i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    getKey = function(key){
+        var intKey = parseInt(key);
+        if (intKey.toString() === key) {
+            return intKey;
+        }
+        return key;
+    }
+
+    toString = function (type){
+        return Object.prototype.toString.call(type);
+    }
+
+    isNumber = function (value){
+        return typeof value === 'number' || toString(value) === "[object Number]";
+    }
+
+    isString = function (obj){
+        return typeof obj === 'string' || toString(obj) === "[object String]";
+    }
+
+    isObject = function (obj){
+        return typeof obj === 'object' && toString(obj) === "[object Object]";
+    }
+
+    isArray = function (obj){
+        return typeof obj === 'object' && typeof obj.length === 'number' && toString(obj) === '[object Array]';
+    }
+
+    isBoolean = function (obj){
+        return typeof obj === 'boolean' || toString(obj) === '[object Boolean]';
+    }
+
+
     isBot = /Googlebot|Yandex/.test(navigator.userAgent);
     isFile = window.location.protocol == 'file:';
     isMobile = /android|meego|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

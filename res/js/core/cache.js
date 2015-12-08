@@ -3,43 +3,65 @@
     // Cache Engine
     Cache = {
 
-        "storage": {},
+        "storage"        : {},
         "compiledStorage": {},
 
         "storages": {
             "templates": 'templatesStorage',
             "languages": 'languagesStorage',
-            "local": 'localStorage',
-            "session": 'sessionStorage',
-            "cache": 'cacheStorage',
-            "validity": 'cacheValidity'
+            "local"    : 'localStorage',
+            "session"  : 'sessionStorage',
+            "cache"    : 'cacheStorage',
+            "validity" : 'cacheValidity'
         },
 
-        "isEnabled": null,
+        "isEnabled"       : null,
         "selectedLanguage": null,
 
-        "init": function () {
+        "init": function (init, key) {
 
-            D.log('Cache.init', 'cache');
-            return this.detect() // set is enabled storage
-                .load() // load from storage to memory
-                .compile() // compile templates
-                .localize(); // loading required language
+            if (init) {
+
+                if (init.player)
+                    Player.init(init.player);
+
+                if (init.delete)
+                    this.remove(init.delete);
+
+                if (key) {
+                    return this.set(key, init);
+                } else if (init.res) {
+                    this.update(init.res);
+                }
+
+            } else {
+                D.log('Cache.init', 'cache');
+                return this.detect() // set is enabled storage
+                    .load() // load from storage to memory
+                    .compile() // compile templates
+                    .localize(); // loading required language
+            }
         },
 
-        "drop": function () {
+        "drop": function (session) {
 
             this.detect();
 
             D.log(['Cache.drop'], 'cache');
 
             if (this.isEnabled) {
-                localStorage.clear();
+
+                if (!session) {
+                    localStorage.clear();
+                } else {
+                    localStorage.setItem(this.storages.session, null);
+                }
+
                 sessionStorage.clear();
             }
 
             for (var key in this.storages)
-                if (typeof this[key] !== 'function' && this.storage[this[key]]) {
+                if (typeof this[key] !== 'function' && this.storage[this[key]] && (!session || key === this.storages.session)) {
                     this.storage[this[key]] = {};
                 }
 
@@ -48,7 +70,7 @@
 
         "detect": function () {
 
-            if(this.isEnabled === null)
+            if (this.isEnabled === null)
                 this.isEnabled = typeof localStorage !== 'undefined' && typeof sessionStorage !== 'undefined';
             D.log(['Cache.detect:', this.isEnabled], 'cache');
 
@@ -65,15 +87,15 @@
             if (!this.language(this.selectedLanguage)) {
 
                 $.ajax({
-                    url: '/res/languages/' + this.selectedLanguage,
-                    method: 'get',
+                    url     : '/res/languages/' + this.selectedLanguage,
+                    method  : 'get',
                     dataType: 'json',
-                    success: function (data) {
+                    success : function (data) {
                         D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
                         Cache.language(Cache.selectedLanguage, data);
                         Cache.ready();
                     },
-                    error: function (data) {
+                    error   : function (data) {
                         D.error('LANGUAGE ERROR: ' + data.message);
                     }
                 });
@@ -109,8 +131,8 @@
                     storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.storages.templates)) || {};
                     storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.storages.languages)) || {};
                     storage[this.storages.validity] = JSON.parse(localStorage.getItem(this.storages.validity)) || {};
-                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.cache)) || {};
-                    storage[this.storages.session] = JSON.parse(sessionStorage.getItem(this.storages.cache)) || {};
+                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.local)) || {};
+                    storage[this.storages.session] = JSON.parse(localStorage.getItem(this.storages.session)) || {};
                     break;
 
             }
@@ -132,11 +154,11 @@
                         break;
 
                     case cache === this.storages['session']:
-                        sessionStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.session]));
+                        localStorage.setItem(this.storages.session, JSON.stringify(this.storage[this.storages.session]));
                         break;
 
                     case cache === this.storages['local']:
-                        localStorage.setItem(this.storages.cache, JSON.stringify(this.storage[this.storages.local]));
+                        localStorage.setItem(this.storages.local, JSON.stringify(this.storage[this.storages.local]));
                         break;
 
                     case cache === this.storages['templates']:
@@ -182,7 +204,7 @@
                         cache = cache.hasOwnProperty(path) && cache[path];
                     } else {
 
-                        path = (path.indexOf('/') !== -1 ? path.split('/') : path.split('-')).filter(Boolean);
+                        path = this.split(path);
 
                         while (path.length && cache) {
                             needle = path.shift();
@@ -205,20 +227,35 @@
 
         "set": function (key, data) {
 
-            var path = (data.key
-                    ? (data.key.indexOf('/') !== -1 ? data.key.split('/') : data.key.split('-'))
-                    : (key.indexOf('/') !== -1 ? key.split('/') : key.split('-'))).filter(Boolean),
+            var path = data.key ? this.split(data.key) : this.split(key),
                 needle = path.last(),
-                cache = data.cache || false,
+                storage = data.cache || false,
                 source = data.res || data;
 
             if (data.player)
                 Player.init(data.player);
 
             /* if receive data for extend cache */
-            if (cache) {
-                this.extend(data, path, cache)
-                    .save(cache);
+            if (storage) {
+
+                switch (true) {
+                    case storage === 'session':
+                        storage = this.storages['session'];
+                        break;
+                    case storage === null:
+                    case storage === 'local':
+                    case storage:
+                    case isNumeric(storage):
+                        storage = this.storages['local'];
+                        break;
+                    default:
+                        storage = storage;
+                        break;
+
+                }
+
+                this.extend(data, path, storage)
+                    .save(storage);
             }
 
             if (!data.key && data.res)
@@ -255,23 +292,105 @@
 
         "remove": function (object, key) {
 
-            console.log(object, key);
-            if (object) {
+            if (object && (Object.size(object) || typeof object !== 'object')) {
 
-                for (prop in object) {
+                if (Array.isArray(object)) {
+
+                    for (var i = 0; i < object.length; i++) {
+
+                        var keys = key && key.slice() || [];
+                        if (typeof object[i] !== 'object') {
+                            keys.push(object[i]);
+                            object[i] = null;
+                        }
+
+                        this.remove(object[i], keys);
+                    }
+
+                } else if (typeof object === 'object') {
+
+                    for (var prop in object) {
+                        if (object.hasOwnProperty(prop)) {
+
+                            var keys = key && key.slice() || [];
+                            keys.push(prop);
+                            this.remove(object[prop], keys);
+
+                        }
+                    }
+
+                } else {
+
                     var keys = key && key.slice() || [];
-                    keys.push(prop);
-                    this.remove(object[prop], keys);
+                    keys.push(object);
+                    this.remove(null, keys);
                 }
 
-            } else if (typeof object === 'object') {
-
-                /* todo delete also from cache
-                 * */
+            } else {
 
                 D.log('Cache.remove:' + key.join('-'));
                 DOM.remove(document.getElementById(key.join('-')));
+
+                if (this.delete(this.storages.local, key))
+                    this.save(this.storages.local);
+                else if (this.delete(this.storages.session, key))
+                    this.save(this.storages.session);
+
             }
+        },
+
+        "delete": function (obj, path) {
+
+            if (isString(obj))
+                obj = this.storage[obj];
+
+            if (isNumber(path)) {
+                path = [path];
+            }
+
+            if (isEmpty(obj)) {
+                return void 0;
+            }
+
+            if (isEmpty(path)) {
+                return obj;
+            }
+
+            if (isString(path)) {
+                return this.delete(obj, this.split(path));
+            }
+
+            var currentPath = getKey(path[0]);
+            var oldVal = obj[currentPath];
+
+            if (path.length === 1) {
+                if (oldVal !== void 0) {
+                    if (isArray(obj)) {
+                        obj.splice(currentPath, 1);
+                    } else {
+                        delete obj[currentPath];
+                    }
+                }
+            } else {
+                if (obj[currentPath] !== void 0) {
+                    this.delete(obj[currentPath], path.slice(1));
+                    return true;
+                }
+            }
+
+            return obj;
+        },
+
+        split: function (path) {
+            if(!isArray(path)){
+                path = path.indexOf('.') !== -1 && path.split('.')
+                || path.indexOf('-') !== -1 && path.split('-')
+                || path.split('/');
+            }
+            return path.filter(Boolean);
+        },
+
+        "deleteById": function () {
 
         },
 
@@ -303,26 +422,9 @@
 
         "extend": function (data, path, storage) {
 
-
-            var source = data.res || data;
-
             D.log(['Cache.extend', storage, path, source], 'cache');
 
-            switch (true) {
-                case storage === 'session':
-                    storage = this.storages['session'];
-                    break;
-                case storage === null:
-                case storage === 'local':
-                case storage:
-                case isNumeric(storage):
-                    storage = this.storages['local'];
-                    break;
-                default:
-                    storage = storage;
-                    break;
-
-            }
+            var source = data.res || data;
 
             if (data.key)
                 while (path.length) {
@@ -349,8 +451,8 @@
             matches = [];
             template.replace(
                 /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
-                function (m, p1) {
-                    matches.push(p1);
+                function (m, p) {
+                    matches.push(p);
                 }
             );
             return matches;

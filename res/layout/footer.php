@@ -120,7 +120,7 @@ endforeach;
         Livedate.init(timestamp); // update dates in realtime
         Device.init(device); // detect
 
-        Cache.drop(); // init cache engine
+        Cache.init(); // init cache engine
         EventListener.init(); // init event engine
         Callbacks.init(); // init callbacks
 

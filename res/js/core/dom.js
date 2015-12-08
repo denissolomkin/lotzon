@@ -115,7 +115,7 @@
 
         scroll: function f(el) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
 
                 if (!!el && el.scrollIntoView) {
                     el.scrollIntoView(false);
@@ -128,7 +128,7 @@
 
         cursor: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
                 console.log(el);
                 var rng, sel;
                 if (document.createRange) {
@@ -183,7 +183,7 @@
 
         fadeOut: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
 
                 el.style.opacity = 1;
 
@@ -202,7 +202,7 @@
 
         fadeIn: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
 
                 el.style.opacity = 0;
                 el.style.display = null;
@@ -221,7 +221,7 @@
 
         remove: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
                 el.parentNode.removeChild(el);
             } else {
                 this.all(f, el, parent)
@@ -230,7 +230,7 @@
 
         toggle: function f(el, parent) {
 
-            if (typeof el === 'object' && "nodeType" in el) {
+            if (el && typeof el === 'object' && "nodeType" in el) {
                 DOM.isVisible(el) ? DOM.fadeOut(el) : DOM.fadeIn(el);
             } else
                 this.all(f, el, parent)

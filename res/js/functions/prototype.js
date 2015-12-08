@@ -17,7 +17,7 @@
         return this;
     }
 
-    Array.prototype.contains = function(element){
+    Array.prototype.contains = function (element) {
         return this.indexOf(element) > -1;
     };
 
@@ -27,8 +27,12 @@
         }
     }
     ;
-    Event.prototype.stopPropagation = function(){ this.cancelBubble = true; }
-    Event.prototype.isPropagationStopped  = function(){ return this.cancelBubble; }
+    Event.prototype.stopPropagation = function () {
+        this.cancelBubble = true;
+    }
+    Event.prototype.isPropagationStopped = function () {
+        return this.cancelBubble;
+    }
 
     String.prototype.replaceArray = function (find, replace) {
         var replaceString = this;
@@ -83,9 +87,11 @@
 
     Object.size = function (obj) {
         var size = 0, key;
-        for (key in obj) {
-            if (obj.hasOwnProperty(key)) size++;
-        }
+        if (Array.isArray(obj))
+            size = obj.length;
+        else
+            for (key in obj)
+                if (obj.hasOwnProperty(key)) size++;
         return size;
     };
 

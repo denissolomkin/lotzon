@@ -40,19 +40,12 @@
                             Form.stop.call(that)
                                 .message.call(that, data.message);
 
-                            if (data.player)
-                                Player.init(data.player);
+                            Cache.init(data);
 
                             if (Callbacks[form.method][form.callback]) {
                                 D.log(['C.' + form.method + '.callback']);
                                 Callbacks[form.method][form.callback].call(that, data.res);
                             }
-
-                            if (data.delete)
-                                Cache.remove(data.delete);
-
-                            if (data.res)
-                                Cache.update(data.res);
 
                         }
 

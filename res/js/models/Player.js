@@ -20,6 +20,7 @@
                             var holders = document.getElementsByClassName('count-' + key);
                             for (var i = 0; i < holders.length; i++) {
 
+                                init.count[key] = parseInt(init.count[key]);
                                 holders[i].innerHTML = init.count[key];
 
                                 if (!init.count[key])
@@ -36,6 +37,7 @@
                         if (this.balance.hasOwnProperty(key)) {
                             var holders = document.getElementsByClassName('holder-' + key);
                             for (var i = 0; i < holders.length; i++) {
+                                init.balance[key] = parseFloat(init.balance[key]);
                                 holders[i].innerHTML = this.fineNumbers(init.balance[key]);
                             }
                         }
