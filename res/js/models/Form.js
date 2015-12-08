@@ -42,9 +42,9 @@
 
                             Cache.init(data);
 
-                            if (Callbacks[form.method][form.callback]) {
-                                D.log(['C.' + form.method + '.callback']);
-                                Callbacks[form.method][form.callback].call(that, data.res);
+                            if (Callbacks[form.method.toLowerCase()][form.callback]) {
+                                D.log(['C.' + form.method.toLowerCase() + '.callback']);
+                                Callbacks[form.method.toLowerCase()][form.callback].call(that, data.res);
                             }
 
                         }

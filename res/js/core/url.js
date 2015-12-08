@@ -18,7 +18,7 @@
 
             type = type && type.toLowerCase() || 'get';
 
-            switch (type.toLowerCase()) {
+            switch (type) {
 
                 case "post":
                 case "delete":
