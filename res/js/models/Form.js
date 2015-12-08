@@ -139,7 +139,11 @@
                     ajax.data[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
                 }
 
-                event && event.preventDefault() && event.stopPropagation();
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
                 Form.start.call(form, event);
 
                 if (!button || button.classList.contains('on')) {

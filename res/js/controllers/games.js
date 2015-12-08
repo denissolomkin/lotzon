@@ -31,7 +31,7 @@ var Games = {
 //                console.error("else",element);
                 clearTimeout(timeout);
             }
-            GamesView.timeouts(element, time);
+            Games.timeouts(element, time);
         }, time);
     }
 };
