@@ -22,7 +22,7 @@ Application::import(PATH_CONFIGS . '*');
  require_once dirname(__DIR__) . '/../../../protected/configs/config.php';
  */
 $memcache = new \Memcache;
-$memcache->connect('localhost', 11211);
+$memcache->connect(Config::instance()->memcacheHost, 11211);
 
 $loop = Factory::create();
 $webSock = new Server($loop);

@@ -99,8 +99,9 @@ class Images extends PrivateArea
     public function uploadAction()
     {
             $folder = $this->request()->get('folder', false);
+            $path = $this->request()->post('path',  false) ? : "tpl/img/";
             $imageName = trim($this->request()->post('name', false)) ?: basename($_FILES['image']['name']);
-            $saveDir = "tpl/img/" . ($folder ? $folder . '/' : '');
+            $saveDir = $path . ($folder ? $folder . '/' : '');
 
             try {
                 move_uploaded_file($_FILES['image']['tmp_name'], PATH_ROOT . $saveDir . $imageName);

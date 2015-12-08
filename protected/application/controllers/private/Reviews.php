@@ -105,6 +105,9 @@ class Reviews extends PrivateArea
             );
             $reviews = array();
 
+            $module   = 'comments';
+            $objectId = 0;
+
             if ($this->request()->post('edit') && $this->request()->post('edit')['Text']){
 
                 $data=$this->request()->post('edit');
@@ -121,6 +124,9 @@ class Reviews extends PrivateArea
                     ->setStatus($data['Status'])
                     ->setPromo($data['IsPromo']);
                 $reviews[] = $review;
+
+                $module   = $review->getModule();
+                $objectId = $review->getObjectId();
             }
 
             if ($this->request()->post('add') && $this->request()->post('add')['Text']){
@@ -132,7 +138,10 @@ class Reviews extends PrivateArea
                 $review = new Review;
                 $review->formatFrom('DB',$data)
                     ->setDate(time())
-                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId());
+                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setToPlayerId($this->request()->post('edit')['PlayerId'])
+                    ->setModule($module)
+                    ->setObjectId($objectId);
                 $reviews[] = $review;
             }
 

@@ -6,12 +6,13 @@ class ReviewsDBProcessor implements IProcessor
 {
     public function create(Entity $review)
     {
-        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ParentId`,`PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `AdminId`, `ModifyDate`) VALUES (:id, :parentid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate)";
+        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ParentId`, `ToPlayerId`, `PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `AdminId`, `ModifyDate`, `Module`, `ObjectId`) VALUES (:id, :parentid, :toplayerid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate, :module, :objectid)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'         => $review->getId(),
                 ':playerid'   => $review->getPlayerId(),
+                ':toplayerid' => $review->getToPlayerId(),
                 ':parentid'   => $review->getReviewId()?:null,
                 ':text'       => $review->getText(),
                 ':date'       => $review->getDate()?:time(),
@@ -20,6 +21,8 @@ class ReviewsDBProcessor implements IProcessor
                 ':status'     => $review->getStatus(),
                 ':adminid'    => $review->getUserId(),
                 ':modifydate' => time(),
+                ':module'     => $review->getModule(),
+                ':objectid'   => $review->getObjectId(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);            

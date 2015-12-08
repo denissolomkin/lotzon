@@ -49,6 +49,7 @@ class QuickGames extends PrivateArea
             $game = new QuickGame();
 
             $game->setId($post['Id'])
+                ->setKey($post['Key'])
                 ->setTitle($post['Title'])
                 ->setDescription($post['Description'])
                 ->setPrizes($post['Prizes'])
