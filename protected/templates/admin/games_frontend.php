@@ -50,12 +50,16 @@ $(function() {
     });
 
     $('#image').on('click', initUpload);
+    $('#image_new').on('click', initUpload);
     function initUpload() {
 
         // create form
-        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-        var image = $(this).find('img');
-        var input = form.find('input[type="file"]').damnUploader({
+        var that = this,
+            form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>'),
+            image = $(this).find('img'),
+            path = that.getAttribute('data-path') || '',
+            name = document.getElementById('key').getElementsByClassName('chanceId')[0].innerHTML && document.getElementById('key').getElementsByClassName('chanceId')[0].innerHTML + '.png',
+            input = form.find('input[type="file"]').damnUploader({
             url: '/private/images?folder=games',
             fieldName: 'image',
             dataType: 'json'
@@ -73,7 +77,8 @@ $(function() {
 
             e.uploadItem.progressCallback = function (perc) {
             }
-            e.uploadItem.addPostData('name', image.parent().prev().find('input').val() + '.png');
+            e.uploadItem.addPostData('name', name);
+            e.uploadItem.addPostData('path', path);
             e.uploadItem.upload();
         });
 
