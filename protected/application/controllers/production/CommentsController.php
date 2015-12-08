@@ -131,9 +131,17 @@ class CommentsController extends \AjaxController
         }
 
         $response = array(
+            'delete' => array(
+                'communication' => array(
+                    'notifications'
+                )
+            ),
             'player' => array(
                 'count' => array(
-                    'notifications' => 0
+                    'notifications' => array(
+                        'session' => 0,
+                        'server'  => 0
+                    )
                 )
             )
         );
@@ -191,7 +199,9 @@ class CommentsController extends \AjaxController
                 ),
                 'player' => array(
                     'count' => array(
-                        'notifications' => CommentsModel::instance()->getNotificationsCount($playerId)
+                        'notifications' => array(
+                            "server" => CommentsModel::instance()->getNotificationsCount($playerId)
+                        )
                     )
                 )
             );
