@@ -39,7 +39,7 @@
         timestamp = <?php echo time();?>,
         debug = {
             "config": {
-                "stat": /192.168.56.101/.test(location.hostname),
+                "stat": false && /192.168.56.101/.test(location.hostname),
                 "alert": false,
                 "render": true,
                 "cache": false,

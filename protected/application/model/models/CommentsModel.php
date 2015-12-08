@@ -43,4 +43,19 @@ class CommentsModel extends Model
     {
         return $this->getProcessor()->dislike($commentId, $playerId);
     }
+
+    public function setNotificationsDate($playerId, $time = NULL)
+    {
+        return $this->getProcessor()->setNotificationsDate($playerId, $time);
+    }
+
+    public function getNotificationsCount($playerId, $module = 'comments', $objectId = 0)
+    {
+        return $this->getProcessor()->getNotificationsCount($playerId, $module, $objectId);
+    }
+
+    public function getNotificationsList($playerId, $count = 10, $offset = NULL)
+    {
+        return $this->getProcessor()->getNotificationsList($playerId, $count, $offset);
+    }
 }

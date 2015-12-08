@@ -260,4 +260,122 @@ class CommentsDBProcessor implements IProcessor
         return true;
     }
 
+    public function setNotificationsDate($playerId, $time = NULL)
+    {
+        $sql = "UPDATE `PlayerDates` SET `Notification` = :date WHERE `PlayerId` = :playerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':playerid' => $playerId,
+                ':date'     => ($time ? $time : time()),
+            ));
+        } catch (PDOexception $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
+
+    public function getNotificationsCount($playerId, $module = 'comments', $objectId = 0)
+    {
+        $sql = "SELECT
+                    count(*) as c
+                FROM `PlayerReviews` AS pr
+                LEFT JOIN
+                    `PlayerReviews` AS prparent
+                ON
+                    prparent.`Id` = pr.`ParentId`
+                LEFT JOIN
+                    `Players`
+                ON
+                    `Players`.`Id` = pr.`PlayerId`
+                JOIN
+                    `PlayerDates` AS pd
+                ON
+                    pd.`PlayerId` = :playerid
+                WHERE
+                    pr.`Module` = :module
+                AND
+                    pr.`Status` = 1
+                AND
+                    pr.`ObjectId` = :objectId
+                AND
+                    pr.`Date` > pd.`Notification`
+                AND (
+                        pr.`ToPlayerId` = :playerid
+                    OR
+                        prparent.`PlayerId` = :playerid
+                    )
+                AND
+                    pr.`PlayerId`<>:playerid";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':module'   => $module,
+                ':objectId' => $objectId,
+                ':playerid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        $count = $sth->fetch()['c'];
+
+        return $count;
+    }
+
+    public function getNotificationsList($playerId, $count = 10, $offset = NULL, $module = 'comments', $objectId = 0)
+    {
+        $sql = "SELECT
+                    pr.*,
+                    `Players`.`Avatar` PlayerImg,
+                    `Players`.`Nicname` PlayerName,
+                    prparent.`Text` ParentText
+                FROM `PlayerReviews` AS pr
+                LEFT JOIN
+                    `PlayerReviews` AS prparent
+                ON
+                    prparent.`Id` = pr.`ParentId`
+                LEFT JOIN
+                    `Players`
+                ON
+                    `Players`.`Id` = pr.`PlayerId`
+                JOIN
+                    `PlayerDates` AS pd
+                ON
+                    pd.`PlayerId` = :playerid
+                WHERE
+                    pr.`Module` = :module
+                AND
+                    pr.`Status` = 1
+                AND
+                    pr.`ObjectId` = :objectId
+                AND
+                    pr.`Date` > pd.`Notification`
+                AND (
+                        pr.`ToPlayerId` = :playerid
+                    OR
+                        prparent.`PlayerId` = :playerid
+                    )
+                AND
+                    pr.`PlayerId`<>:playerid
+                ORDER BY pr.`Id`"
+            . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
+        if ($offset) {
+            $sql .= " OFFSET " . (int)$offset;
+        }
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':module'   => $module,
+                ':objectId' => $objectId,
+                ':playerid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        return $sth->fetchAll();
+    }
+
 }

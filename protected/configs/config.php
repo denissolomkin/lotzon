@@ -394,6 +394,10 @@ Config::instance()->publicResources = array(
     '/communication/comments/:commentId' => array(
         'get' => 'controllers\production\CommentsController:item'
     ),
+    '/communication/notifications' => array(
+        'get'    => 'controllers\production\CommentsController:notifications',
+        'delete' => 'controllers\production\CommentsController:deleteNotifications'
+    ),
     /**
      * Messages
      */
