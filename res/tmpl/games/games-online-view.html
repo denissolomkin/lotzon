@@ -3,7 +3,7 @@
         <div class="title-wrap">
             <div class="back-button back"><i class="i-arrow-left"></i></div>
             <div class="game-title">
-                game title
+                {{title}}
             </div>
         </div>
         <div class="player-info">
@@ -13,8 +13,8 @@
             <div class="balance clearfix">
                 <i class="i-purse" ></i>
                 <div>
-                    <span class="points"><span>32300</span> баллов</span>
-                    <span class="money"><span>12,43</span> гривен</span>
+                    <span class="points"><span>{{player 'balance.points'}}</span> {{i18n "title-of-points"}}</span>
+                    <span class="money"><span>{{player 'balance.money'}}</span> {{player 'getCurrency'}}</span>
                 </div>
             </div>
         </div>
@@ -56,14 +56,12 @@
                 <!--create game block-->
                 {{partial 'games-online-view-create' this}}
                 <!--end create game block-->
-
+                
                 <!--players rating-->
                 {{partial 'games-online-view-rating' this}}
                 <!--end players rating-->
-
             </div>
             <!--<button class="create btn-flat">Создать</button>-->
         </div>
     </div>
-
 </div>

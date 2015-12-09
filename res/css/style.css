@@ -2800,7 +2800,10 @@ div > .games-previews {
     cursor: pointer;
     padding: 7px;
     text-transform: uppercase;
-    font-weight: normal; }
+    font-weight: normal;
+    font-family: handbook-bold;
+    width: 100%;
+    background: #fff; }
 
 @media all and (max-width: 768px) {
   .games-view .game-settings {

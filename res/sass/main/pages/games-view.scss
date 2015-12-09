@@ -432,6 +432,9 @@ $font_1: handbookpro-regular;
 		padding: 7px;
 		text-transform: uppercase;
 		font-weight: normal;
+                font-family: $font_0;
+                width: 100%;
+                background: #fff;
 	}
 }
 @media all and(max-width: 768px) {
