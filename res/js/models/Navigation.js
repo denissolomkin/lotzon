@@ -35,14 +35,14 @@
             D.log('Navigation.init', 'menu');
             Object.deepExtend(this, init);
 
-            window.onpopstate = function (event) {
+            window.addEventListener('popstate', function(event) {
+                event.stopPropagation();
+                event.preventDefault();
                 D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)], 'info');
-
                 var state = event.state || {href: document.location.pathname};
                 state.state = true;
                 R.push(state);
-
-            };
+            }, false);
 
             return this;
 
@@ -83,8 +83,13 @@
                 var selector = 'a[href="/' + U.parse(window.location.pathname, 'url') + '"]',
                     anchor = document.querySelector(selector);
 
-                if (anchor) anchor.click();
-                else R.push(window.location.pathname);
+                if (anchor){
+                    console.info('byClick')
+                    DOM.click(anchor);
+                }  else {
+                    console.info('byPush')
+                    R.push(window.location.pathname);
+                }
 
                 Navigation.menu.switch();
             }

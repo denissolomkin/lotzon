@@ -198,6 +198,22 @@
 
                 DOM.toggle(forms); // hide
             }
+        },
+        showPreviewImage: function(e) {
+            var $input = $(this);
+            var inputFiles = this.files;
+            if(inputFiles == undefined || inputFiles.length == 0) return;
+            var inputFile = inputFiles[0];
+            var img = $('<img/>',{'class':'preview'});
+            img.appendTo($('.message-form-actions'));
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                img.attr("src", event.target.result);
+            };
+            reader.onerror = function(event) {
+                alert("I AM ERROR: " + event.target.error.code);
+            };
+            reader.readAsDataURL(inputFile);
         }
 
     }

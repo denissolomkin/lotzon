@@ -87,7 +87,7 @@
             options.template = U.parse(options.template || U.parse(this.href || options.href), 'tmpl');
             options.href = U.parse(options.href || this.href || options.template, 'url');
 
-            console.log("Start:", options);
+            console.log("Start:", options.href, options.template);
 
             if (D.isEnable('stat'))
                 options.stat = R.stat();
@@ -463,7 +463,6 @@
             console.log('initNode: ', options.node);
             console.log('appendNode: ', node);
             console.log('renderNode: ', render);
-            R.rendering.splice(R.rendering.indexOf(options.href), 1);
             R.afterHTML(options);
 
         },
@@ -502,7 +501,7 @@
                 var boxes = options.rendered.getElementsByClassName('content-box-tabs');
                 for (var i = 0; i < boxes.length; i++) {
                     var tab = boxes[i].getElementsByClassName('content-box-tab')[0];
-                    tab && tab.click();
+                    tab && DOM.click(tab);
                 }
                 if (options.url !== false)
                     options.url = true;
@@ -510,8 +509,8 @@
 
 
             D.log(['Render.afterHTML callback:', U.parse(options.init.template, 'tmpl')], 'render');
-
             U.update(options);
+
             Content.infiniteScrolling();
             R.event('complete', options);
 
@@ -548,12 +547,20 @@
                         DOM.remove('.modal-loading', options.node);
                     }
 
+                    console.log('R.rendering:',JSON.stringify(R.rendering));
+                    R.rendering.splice(R.rendering.indexOf(options.href), 1);
+
                     break;
 
                 case "stop":
                     D.log('Render.stop', 'render');
-                    R.rendering = [];
                     R.isRendering = false;
+                    break;
+
+                case "error":
+                    D.log('Render.error', 'render');
+                    R.rendering = [];
+                    R.event('stop');
                     break;
             }
         }

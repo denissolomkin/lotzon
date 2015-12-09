@@ -184,6 +184,12 @@
             }
         },
 
+        click: function(el){
+            var ev = document.createEvent("HTMLEvents");
+            ev.initEvent("click", true, true);
+            el.dispatchEvent(ev);
+        },
+
         hide: function f(el, parent) {
 
             if (el && typeof el === 'object' && "nodeType" in el) {

@@ -779,7 +779,8 @@ div {
 .menu-main a {
   text-transform: uppercase;
   padding-top: 8px;
-  padding-bottom: 8px; }
+  padding-bottom: 8px;
+  transition: all 0.2s linear; }
 
 .menu-main:after {
   content: "";

@@ -5,7 +5,13 @@
     <ul>
         {{#tickets}}
         <li class="clearfix">
-            <span>{{#if (eq num (lottery 'totalTickets'))}} <span class="gold">GOLD</span> {{else}} {{i18n "title-lottery-ticket-num"}} N°{{num}} {{/if}}</span>
+            
+            {{#if (eq num (lottery 'totalTickets'))}}
+             <span class="gold">GOLD</span> 
+            {{else}}
+             <span>{{i18n "title-lottery-ticket-num"}} N°{{num}} </span>
+            {{/if}}
+            
             <ul>
                 {{#combination}}
                 <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>

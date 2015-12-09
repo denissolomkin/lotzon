@@ -3,6 +3,9 @@
     // URL Handler
     U = {
 
+        "init": function(){
+            document.location.origin = document.location.origin || document.location.protocol+'//'+document.location.host;
+        },
         "href": null,
         "path": {
 

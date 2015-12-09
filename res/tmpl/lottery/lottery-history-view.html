@@ -1,48 +1,46 @@
-﻿<div id="lottery-history-view" class="content-box" data-lottery-id="{{id}}">
+<div id="lottery-history-view" class="content-box" data-lottery-id="{{id}}">
 
     <div class="content-box-header back"><span>назад</span>{{day date}}</div>
 
-    <div class="content-box-content clearfix">
-        <div class="content-box-item">
-            <div class="container clearfix">
-                <ul class="balls-end-game clearfix">
-                    {{#combination}}
-                    <li class="g-oc_li unfilled">
+	<div class="content-box-content clearfix">
+		<div class="content-box-item" data-lotteryid="{{id}}">
+			<div class="container clearfix">
+				<ul class="balls-end-game clearfix">
+                {{#combination}}
+                <li class="g-oc_li unfilled">
 
-                        <div class="goc_li-nb">
-                            <span class="g-oc_span">{{.}}</span>
-                        </div>
-                    </li>
-                    {{/combination}}
-                </ul>
+                    <div class="goc_li-nb">
+                        <span class="g-oc_span">{{.}}</span>
+                    </div>
+                </li>
+                {{/combination}}
+            	</ul>
 
-                <div id="lottery-history-view-tickets" class="ghd-tickets" style="min-height: 100px;">
-                </div>
+				<div id="lottery-history-view-tickets" class="ghd-tickets" style="min-height: 100px;">
+				</div>
 
-
-            </div>
-            <div class="ghd-game-inf clearfix">
-                <div class="title">информация о розыгрыше</div>
-                <table>
-                    <tr>
-                        <th>Угаданных чисел</th>
-                        <th>Выигрышей</th>
-                        <th>Общий выигрыш</th>
-                    </tr>
+				
+			</div>
+			<div class="ghd-game-inf clearfix">
+				<div class="title">{{i18n "title-lottery-info"}}</div>
+				<table>
+					<tr>
+						<th> {{i18n "title-lottery-guessed-numbers"}}</th>
+						<th> {{i18n "title-lottery-quantity-winnings"}}</th>
+						<th>{{i18n "title-lottery-general-winning"}}</th>
+					</tr>
                     {{#statistics}}
-                    <tr class="balls-matches-{{balls}}">
+					<tr class="balls-matches-{{balls}}">
                         <td>{{balls}} x 6</td>
                         <td></td>
                         <td></td>
                     </tr>
                     {{/statistics}}
-                </table>
-                <div class="ghd-all-won container">Всего выиграно: <span class="money">0</span> грн&nbsp;&nbsp;<span
-                        class="points">0</span> баллов
-                </div>
-            </div>
+				</table>
+				<div class="ghd-all-won container">{{i18n "title-lottery-all-won"}}: <span class="money">0</span> {{player "currency.iso"}} <span class="points">0</span> {{i18n "title-of-points"}}</div>
+			</div>
 
-        </div>
-    </div>
+		</div>
+	</div>
 
 </div>

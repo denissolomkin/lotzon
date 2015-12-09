@@ -134,7 +134,7 @@
             // $(".modal-loading").remove();
 
             Form.stop();
-            R.isRendering && R.event('stop');
+            R.event('error');
 
             //var box = $('.content-box:visible').length == 1 ? $('.content-box:visible').first() : $('.content-top:visible').first(),
             //    error = $('<div class="modal-error"><div><span>' + Cache.i18n('title-error') + '</span>' + message + '</div></div>'),

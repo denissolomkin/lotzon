@@ -114,6 +114,7 @@ endforeach;
         Tickets.init(lottery);  // extend tickets
         Player.init(player); // extend player
         D.init(debug); // init debugger
+        U.init(); // init url handler
         Slider.init(slider); // echo slider
         Config.init(config); // init config
         Navigation.init(menu); // init navigation
