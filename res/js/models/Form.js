@@ -12,11 +12,6 @@
 
             var that = this;
 
-            if ('getAttribute' in form) {
-                form.action = form.getAttribute('action');
-                form.method = form.getAttribute('method');
-            }
-
             form.callback = U.parse(U.parse(form.action), 'tmpl');
             form.url = U.generate(form.action, form.method);
 
@@ -79,7 +74,7 @@
                     errorElements = form.querySelectorAll('.error'),
                     requiredElements = form.querySelectorAll('.required'),
                     filterRequiredElements = Array.prototype.filter.call(requiredElements, Form.filterRequired),
-                    callback = U.parse(U.parse(form.action), 'tmpl');
+                    callback = U.parse(U.parse(form.getAttribute('action')), 'tmpl');
 
                 D.log(['C.validate.' + callback]);
 
@@ -132,7 +127,7 @@
 
                 var button = form.elements['submit'],
                     ajax = {
-                        action: form.action,
+                        action: form.getAttribute('action'),
                         method: form.getAttribute('method'),
                         data: $(form).serializeObject()
                     },
