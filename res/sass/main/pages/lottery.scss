@@ -1,3 +1,8 @@
+
+#lottery {
+	-webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
 .gh-circle {
 	content: "";
 	display: inline-block;
@@ -613,6 +618,7 @@
 .ticket-item {
 	padding-top: 15px;
 	padding-bottom: 15px;
+	height: 100%;
 
 }
 
@@ -744,6 +750,8 @@
 		color: #000;
 	}
 }
+
+
 
 .ticket-btn {
 	@extend .ticket-ball;   
@@ -1088,10 +1096,17 @@
 }
 
 .condition {
-	font-size: 26px;
+	font-size: 19px;
 	font-weight: bold;
 	text-transform: uppercase;
-	padding: 15px 40px;
+	padding: 15px 40px 63px;
+	max-width: 320px;
+	position: relative;
+	transform: translate(0, -50%);
+	top: 50%;
+	& .btn-flat {
+		margin-top: 20px;
+	}
 }
 
 .balls-count {

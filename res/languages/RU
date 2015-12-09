@@ -71,6 +71,7 @@
                 "title-prizes-pieces": "шт.",
                 "title-pieces":"НЕ ДОСТАТОЧНО БАЛЛОВ",
                 "title-limited-quantity":"CЛЕДИТЕ ЗА ПОСТУПЛЕНИЯМИ" ,
+                "title-prise-order" : "ОФОРМЛЕНИЕ ПРИЗА",
 
                 "title-games-online": "Игры Онлайн",
                 "title-games-chance": "Шансы",
@@ -192,12 +193,27 @@
                 "message-comments-write-comment": "Напишите комментарий",
                 "message-users-write-message" : "Напишите сообщение",
                 "message-comment-sent-success": "Комментарий отправлен на модерацию",
+                "message-prize-exchange": "Баллы за приз будут автоматически списаны с Вашего счета.",
+                "message-prize-exchange-info": "В течении 7-ми рабочих дней с Вами свяжутся для уточнения информации.",
+                "message-prize-isnt-many": "НЕ ДОСТАТОЧНО БАЛЛОВ",
+                "button-prize-send-request" : "ОФОРМИТЬ ЗАКАЗ",
+                "title-prize-goods-delivery" : "ИНФОРМАЦИЯ ДЛЯ ДОСТАВКИ ПРИЗА",
+                "title-info-edit" : "Редактировать",
+                "title-surname" : "Фамилия",
+                "title-name" : "Имя",
+                "title-patronymic" : "Отчество",
+                "title-country" : "Страна",
+                "title-city" : "Город",
+                "title-street" : "Улица",
+                "title-building" : "Дом",
+                "title-appartment" : "Квартира",
+                "title-phone" : "Телефон",
 
                 "title-support-faq": "Часто задаваемые вопросы",
                 "title-support-rules": "Правила",
-
                 "text-support-rules":"<h1>Правило №1</h1><p>Кто чаще билеты заполняет, тот больше шансов получает</p><h1>Правило №2</h1><p>Кто по рекламе нажимает, тот в лотерее побеждает</p>",
                 "text-support-faq":"<h1>1. Как часто выигрывают?</h1><p>Ежесекундно</p><h1>2. Как много выигрывают?</h1><p>Миллионы и золотые горы</p>"
+
             }
 	}
 }

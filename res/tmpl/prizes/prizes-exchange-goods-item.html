@@ -1,6 +1,6 @@
-<div data-id="{{ id }}" id="prizes-exchange-goods-{{ id }}" class="prize">
-    <a href="/prizes/exchange/goods/{{ id }}">
-        <div class="prize-content">
+<div data-id="{{ id }}" id="prizes-exchange-goods-{{ id }}" class="prize"  onclick="Content.modal.call(this,'message-prize-isnt-many');">
+    <a href="/prizes/exchange/goods/{{ id }}"> </a>
+        <div class="prize-content"  >
             <div class="prize-img">
                 <img src="/filestorage/shop/{{ this.img }}" alt="">
             </div>
@@ -12,11 +12,8 @@
                 <span>{{i18n "title-points"}}</span>
             </div>
         </div>
-        <div class="prize-inf">
-            {{#if (lt (player "balance.points") this.price)}} {{i18n "title-pieces"}} {{/if}}
-         </div>
-          <div class="prize-inf">
-            {{#if (like this.quantity 0)}}  {{i18n "title-limited-quantity"}} {{/if}}
-        </div>
-    </a>
+          
+            {{#if (like this.quantity 0)}} <div class="prize-inf"> {{i18n "title-limited-quantity"}}</div> {{/if}}
+        
+   
 </div>

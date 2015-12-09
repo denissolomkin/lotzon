@@ -37,17 +37,7 @@
   text-align: left;
 }
 
-.ex-prize-img {
-  float: left;
-  margin: 0 40px 0 0;
-  width: 300px;
-}
 
-.ex-prize-description {
-  float: left;
-  width: 348px;
-  padding-top: 20px;
-}
 
 .ex-prize-name {
   margin-bottom: 15px;
@@ -99,4 +89,48 @@
 
 .ex-prize-not-filled {
   margin: 0 -20px;
+}
+
+
+.ex-prize-img {
+  width: 300px;
+  float: left;
+  margin-right: 0;
+}
+.ex-prize-img:before {
+  display: none;
+
+}
+.ex-prize-img img {
+  width: 100%;
+  position: static;
+}
+.ex-prize-description {
+  width: 390px;
+  float: right;
+  padding-left: 20px;
+}
+
+.ex-prize-description {
+  padding-left: 30px;
+
+}
+.personal-data-inf-header {
+  padding: 0 20px;
+  margin: 0 -20px 10px;
+}
+.personal-data-edit {
+  display: inline-block;
+  line-height: 50px;
+  position: absolute;
+  top: 3px;
+  right: 20px;
+  color: #4a90e2;
+  cursor: pointer;
+}
+.prize-delivery-inf td:first-child { 
+  padding-left: 20px;
+}
+.prize-delivery-inf {
+  margin: 0 -20px 20px;
 }

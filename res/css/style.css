@@ -1053,68 +1053,12 @@ header .owl-theme .owl-controls .owl-page span {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.i-play:before {
-  content: '\e800'; }
-
-/* '' */
-.i-plus:before {
-  content: '\e801'; }
-
-/* '' */
-.i-star:before {
-  content: '\e802'; }
-
-/* '' */
-.i-refresh:before {
-  content: '\e803'; }
-
-/* '' */
 .i-purse:before {
   content: '\e804';
   font-size: 20px;
   margin-right: 10px; }
 
 /* '' */
-.i-vk-black:before {
-  content: '\e805'; }
-
-/* '' */
-.i-arrow-down:before {
-  content: '\e806'; }
-
-/* '' */
-.i-arrow-left:before {
-  content: '\e807'; }
-
-/* '' */
-.i-arrow-right:before {
-  content: '\e808'; }
-
-/* '' */
-.i-arrow-top:before {
-  content: '\e809'; }
-
-/* '' */
-.i-person:before {
-  content: '\e80a'; }
-
-/* '' */
-.i-ok-black:before {
-  content: '\e80b'; }
-
-/* '' */
-.i-picture:before {
-  content: '\e80c'; }
-
-/* '' */
-.i-menu:before {
-  content: '\e80d'; }
-
-/* '' */
-.i-hart:before {
-  content: '\e80e'; }
-
-/* '' */
 .i-msg {
   font-size: 26px;
   /* '' */ }
@@ -1122,10 +1066,6 @@ header .owl-theme .owl-controls .owl-page span {
     content: '\e80f';
     font-size: 26px; }
 
-.i-person2:before {
-  content: '\e810'; }
-
-/* '' */
 .i-msg2 {
   font-size: 24px;
   /* '' */ }
@@ -1133,134 +1073,158 @@ header .owl-theme .owl-controls .owl-page span {
     content: '\e811';
     font-size: 24px; }
 
-.i-play:before {
+.i-arrow-down:before {
   content: '\e800'; }
 
 /* '' */
-.i-plus:before {
+.i-arrow-left:before {
   content: '\e801'; }
 
 /* '' */
-.i-star:before {
+.i-arrow-right:before {
   content: '\e802'; }
 
 /* '' */
-.i-refresh:before {
+.i-arrow-slim-down:before {
   content: '\e803'; }
 
 /* '' */
-.i-purse:before {
+.i-arrow-slim-left:before {
   content: '\e804'; }
 
 /* '' */
-.i-vk-black:before {
+.i-arrow-slim-right:before {
   content: '\e805'; }
 
 /* '' */
-.i-arrow-down:before {
+.i-arrow-slim-top:before {
   content: '\e806'; }
 
 /* '' */
-.i-arrow-left:before {
+.i-arrow-top:before {
   content: '\e807'; }
 
 /* '' */
-.i-arrow-right:before {
+.i-calendar:before {
   content: '\e808'; }
 
 /* '' */
-.i-arrow-top:before {
+.i-fb:before {
   content: '\e809'; }
 
 /* '' */
-.i-person:before {
+.i-fb-black:before {
   content: '\e80a'; }
 
 /* '' */
-.i-ok-black:before {
+.i-games-cards-24:before {
   content: '\e80b'; }
 
 /* '' */
-.i-ok:before {
+.i-games-cards-36:before {
   content: '\e80c'; }
 
 /* '' */
-.i-tw:before {
+.i-games-cards-52:before {
   content: '\e80d'; }
 
 /* '' */
-.i-tw-black:before {
+.i-games-type-revert:before {
   content: '\e80e'; }
 
 /* '' */
-.i-fb-black:before {
+.i-games-type-throw:before {
   content: '\e80f'; }
 
 /* '' */
-.i-lotzon:before {
+.i-hart:before {
   content: '\e810'; }
 
 /* '' */
-.i-calendar:before {
+.i-hart2:before {
   content: '\e811'; }
 
 /* '' */
-.i-games-cards-throw:before {
+.i-lotzon:before {
   content: '\e812'; }
 
 /* '' */
-.i-games-cards-revert:before {
+.i-menu:before {
   content: '\e813'; }
 
 /* '' */
-.i-games-cards-24:before {
+.i-msg:before {
   content: '\e814'; }
 
 /* '' */
-.i-games-cards-36:before {
+.i-msg2:before {
   content: '\e815'; }
 
 /* '' */
-.i-games-cards-52:before {
+.i-ok:before {
   content: '\e816'; }
 
 /* '' */
-.i-arrow-slim-left:before {
+.i-ok-black:before {
   content: '\e817'; }
 
 /* '' */
-.i-picture:before {
+.i-person:before {
   content: '\e818'; }
 
 /* '' */
-.i-menu:before {
+.i-person2:before {
   content: '\e819'; }
 
 /* '' */
-.i-hart:before {
+.i-picture:before {
   content: '\e81a'; }
 
 /* '' */
-.i-msg:before {
+.i-play:before {
   content: '\e81b'; }
 
 /* '' */
-.i-person2:before {
+.i-plus:before {
   content: '\e81c'; }
 
 /* '' */
-.i-msg2:before {
+.i-purse:before {
   content: '\e81d'; }
 
 /* '' */
-.i-fb:before {
+.i-question:before {
   content: '\e81e'; }
 
 /* '' */
-.i-vk:before {
+.i-refresh:before {
   content: '\e81f'; }
 
 /* '' */
+.i-smile:before {
+  content: '\e820'; }
+
+/* '' */
+.i-star:before {
+  content: '\e821'; }
+
+/* '' */
+.i-tw:before {
+  content: '\e822'; }
+
+/* '' */
+.i-tw-black:before {
+  content: '\e823'; }
+
+/* '' */
+.i-wk:before {
+  content: '\e824'; }
+
+/* '' */
+.i-wk-black:before {
+  content: '\e825'; }
+
+/* '' */
 .content-box-scroll-top {
   float: right;
   position: relative;
@@ -2412,7 +2376,6 @@ form.loading > * {
   overflow: hidden; }
 
 .content-box-item {
-  padding-top: 80px;
   padding-right: 0; }
 
 .message-img {
@@ -2846,6 +2809,10 @@ div > .games-previews {
   .games-view .description-block {
     width: 100%;
     padding: 0; } }
+
+#lottery {
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
 
 .gh-circle, .gh-my-game .gh-date:after {
   content: "";
@@ -3306,7 +3273,8 @@ div > .games-previews {
 
 .ticket-item {
   padding-top: 15px;
-  padding-bottom: 15px; }
+  padding-bottom: 15px;
+  height: 100%; }
 
 .ticket-numbers {
   margin-bottom: 10px; }
@@ -3686,10 +3654,16 @@ div > .games-previews {
   background: #e8cf6b; }
 
 .condition {
-  font-size: 26px;
+  font-size: 19px;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 15px 40px; }
+  padding: 15px 40px 63px;
+  max-width: 320px;
+  position: relative;
+  transform: translate(0, -50%);
+  top: 50%; }
+  .condition .btn-flat {
+    margin-top: 20px; }
 
 .balls-count {
   color: #e7f6f7;
@@ -4201,19 +4175,19 @@ div > .games-previews {
   margin-left: 10px; }
 
 .prize-inf {
-  width: 100%;
-  height: 60px;
-  padding-top: 10px;
-  line-height: 1.36;
+  width: 220px;
+  height: 50px;
+  line-height: 50px;
   font-size: 15px;
   font-weight: bold;
   color: white;
   text-transform: uppercase;
   text-align: center;
   position: absolute;
-  top: 23%;
+  top: 27%;
   left: 0;
-  border-radius: 2px; }
+  background-color: rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.3px; }
 
 .prize-few-points .prize-inf {
   background: rgba(255, 66, 66, 0.8);
@@ -4243,6 +4217,25 @@ div > .games-previews {
   #prizes-exchange .render-list-container {
     padding-top: 70px; }
 
+.prize .modal-message {
+  max-width: 220px;
+  background-color: transparent; }
+  .prize .modal-message div {
+    height: 50px;
+    background-color: rgba(234, 75, 44, 0.7);
+    border-radius: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 27%;
+    left: 0; }
+    .prize .modal-message div p {
+      text-align: center;
+      line-height: 50px;
+      font-weight: bold;
+      color: #fff; }
+
 @media (min-width: 540px) and (max-width: 768px) {
   .prize:nth-child(even) {
     margin-right: 0; } }
@@ -4256,11 +4249,11 @@ div > .games-previews {
     margin-bottom: 0;
     width: 100px; } }
 
+#prizes-exchange-goods-view {
+  font: 15px "handbookpro-regular"; }
+
 .exchange-prize .content-box-item {
   text-align: center; }
-
-.ex-prize {
-  margin-bottom: 30px; }
 
 .ex-prize-img {
   position: relative;
@@ -4290,10 +4283,15 @@ div > .games-previews {
   font-weight: bold; }
 
 .ex-prize-price span {
-  margin-left: 15px; }
+  margin-left: 7px;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px; }
 
 .ex-prize-details {
-  font-size: 15px; }
+  font-size: 15px;
+  margin-bottom: 30px;
+  letter-spacing: 0.3px; }
 
 .ex-prize-details p {
   margin-bottom: 20px;
@@ -4302,49 +4300,64 @@ div > .games-previews {
     margin-bottom: 0; }
 
 .prize-delivery-inf {
-  margin-bottom: 30px; }
+  margin: 0 -30px 30px; }
 
 .personal-data-inf-header {
-  padding: 0 5px 7px;
-  margin: 0 -5px 10px;
-  border-bottom: 1px solid #dbdbdb; }
+  padding: 0 30px;
+  margin: 0 -30px 10px;
+  border-bottom: 1px solid #fafafa;
+  background: #fafafa;
+  height: 50px;
+  position: relative; }
 
 .personal-data-inf-title {
-  float: left;
-  font-size: 19px;
-  line-height: 0.91; }
+  text-align: left;
+  line-height: 0.91;
+  line-height: 50px;
+  font-family: 'Handbook-bold'; }
 
 .personal-data-edit {
-  float: right;
-  display: block;
-  width: 15px;
-  height: 15px;
-  position: relative;
-  top: 3px;
-  background: url(img/sprite.png) -332px -54px; }
+  display: inline-block;
+  line-height: 50px;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  color: #4a90e2;
+  cursor: pointer; }
 
 .personal-data-edit span {
-  display: none; }
+  background: none;
+  color: #4a90e2;
+  cursor: pointer;
+  font-family: Handbook-bold; }
+
+.prize-delivery-inf table {
+  width: 100%; }
 
 .prize-delivery-inf tbody {
-  display: block;
   margin-bottom: 20px; }
   .prize-delivery-inf tbody:last-child {
     margin-bottom: 0; }
 
+.prize-delivery-inf tr {
+  height: 30px;
+  border-bottom: 1px solid #ededed; }
+
 .prize-delivery-inf td:first-child {
   opacity: 0.5;
   font-size: 15px;
-  line-height: 1.27; }
+  line-height: 1.27;
+  padding-left: 30px; }
 
 .prize-delivery-inf td:last-child {
   padding-left: 50px;
-  font-size: 18px;
-  line-height: 1.28; }
+  line-height: 1.28;
+  font-family: 'Handbook-bold'; }
 
 .personal-data-attention {
   margin-bottom: 20px;
-  font-size: 15px; }
+  font-size: 15px;
+  text-align: center; }
 
 .personal-data-attention span {
   color: #ff4666; }

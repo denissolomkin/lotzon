@@ -44,6 +44,7 @@
             $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
 
             $(document).on('click', Device.do.hide);
+            // $(document).on('click', '.prize a', Prize.validate.balance);
 
             /* navigation */
             $(document).on('touchstart', '.site-overlay', function () {

@@ -14,6 +14,17 @@
         },
 
         validate: {
+            balance: function (event) {
+
+                if (1) {
+                    alert("pfijfs")
+                event.stopPropagation();
+                event.preventDefault();
+                Content.modal.call(this.children[0], "message-prize-isnt-many");
+                }
+
+
+            }, 
             exchange: function () {
 
                 return true;

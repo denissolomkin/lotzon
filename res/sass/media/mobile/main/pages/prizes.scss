@@ -15,3 +15,18 @@
 #prizes-exchange .render-list-container {
     padding-top: 95px;
 }
+
+.personal-data-edit {
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 18px;
+  right: 30px;
+  background: url(../img/sprite.png) -332px -54px;
+}
+
+.personal-data-edit span {
+  display: none;
+}
+

@@ -332,6 +332,12 @@
     top: 0;
     right: -5px; } }
 
+.condition {
+  font-size: 25px;
+  padding: 25px 40px 63px;
+  transform: translate(0, -10%);
+  top: 0; }
+
 #prizes-exchange .content-box-item-content {
   margin-right: 0; }
 
@@ -344,6 +350,18 @@
 
 #prizes-exchange .render-list-container {
   padding-top: 95px; }
+
+.personal-data-edit {
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 18px;
+  right: 30px;
+  background: url(../img/sprite.png) -332px -54px; }
+
+.personal-data-edit span {
+  display: none; }
 
 @media (max-width: 500px) {
   .content-box-item.cabinet-referrals {
@@ -1437,8 +1455,7 @@
     margin-right: 5%; }
   .condition {
     font-size: 20px;
-    text-transform: uppercase;
-    padding: 85px 77px 67px 77px; }
+    text-transform: uppercase; }
   .ticket-item.gold {
     background: #e8cf6b; }
   .ticket-itmes.gold {
@@ -1488,14 +1505,6 @@
     float: left; }
   .exchange-prize .content-box-item {
     text-align: left; }
-  .ex-prize-img {
-    float: left;
-    margin: 0 40px 0 0;
-    width: 300px; }
-  .ex-prize-description {
-    float: left;
-    width: 348px;
-    padding-top: 20px; }
   .ex-prize-name {
     margin-bottom: 15px; }
   .ex-prize-price {
@@ -1526,6 +1535,36 @@
     margin: 0; }
   .ex-prize-not-filled {
     margin: 0 -20px; }
+  .ex-prize-img {
+    width: 300px;
+    float: left;
+    margin-right: 0; }
+  .ex-prize-img:before {
+    display: none; }
+  .ex-prize-img img {
+    width: 100%;
+    position: static; }
+  .ex-prize-description {
+    width: 390px;
+    float: right;
+    padding-left: 20px; }
+  .ex-prize-description {
+    padding-left: 30px; }
+  .personal-data-inf-header {
+    padding: 0 20px;
+    margin: 0 -20px 10px; }
+  .personal-data-edit {
+    display: inline-block;
+    line-height: 50px;
+    position: absolute;
+    top: 3px;
+    right: 20px;
+    color: #4a90e2;
+    cursor: pointer; }
+  .prize-delivery-inf td:first-child {
+    padding-left: 20px; }
+  .prize-delivery-inf {
+    margin: 0 -20px 20px; }
   .cabinet .content-box-tab span {
     display: inline; }
   .cabinet .content-box-tab {

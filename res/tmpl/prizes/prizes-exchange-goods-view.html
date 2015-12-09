@@ -1,6 +1,6 @@
 ﻿<div id="prizes-exchange-goods-view" class="content-box">
 
-    <div class="content-box-header back">{{ title }}</div>
+    <div class="content-box-header back">{{ i18n "title-prise-order" }}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item">
@@ -9,68 +9,73 @@
                 <input type="hidden" name="price" value="{{price}}">
 
                 <div class="ex-prize clearfix">
-                    <div class="ex-prize-img">
-                        <img src="/filestorage/shop/{{ img }}" alt="">
-                    </div>
                     <div class="ex-prize-description">
                         <div class="ex-prize-name">{{ title }}</div>
                         <div class="ex-prize-price">{{ price }}<span>{{i18n "title-points"}}</span></div>
                         <div class="ex-prize-details">
                             {{i18n "message-prize-exchange"}}
                         </div>
+                        <div class="ex-prize-details">
+                            {{i18n "message-prize-exchange-info"}}
+                        </div>
                     </div>
+                    <div class="ex-prize-img">
+                        <img src="/filestorage/shop/{{ img }}" alt="">
+                    </div>
+
                 </div>
 
                 {{#if (eq type 'item')}}
 
                 {{#if (player "location")}}
                 <!-- Данные заполнены -->
+                <div class="personal-data-inf-header clearfix">
+                    <div class="personal-data-inf-title">{{i18n "title-prize-goods-delivery"}}</div>
+                    <a href="/profile/details" class="personal-data-edit"><span>{{i18n "title-info-edit"}}</span></a>
+                </div>
                 <div class="prize-delivery-inf">
-                    <div class="personal-data-inf-header clearfix">
-                        <div class="personal-data-inf-title">Информация для доставки приза</div>
-                        <a href="/profile/details" class="personal-data-edit"><span>Редактировать</span></a>
-                    </div>
+
                     <table>
                         <tbody>
                         <tr>
-                            <td>Фамилия</td>
-                            <td>Маслов</td>
+                            <td>{{i18n "title-surname"}}</td>
+                            <td>{{player "title.surname"}}</td>
                         </tr>
                         <tr>
-                            <td>Имя</td>
-                            <td>Дмитрий</td>
+                            <td>{{i18n "title-name"}}</td>
+                            <td>{{player "title.name"}}</td>
                         </tr>
                         <tr>
-                            <td>Отчество</td>
-                            <td>Андреевич</td>
+                            <td>{{i18n "title-patronymic"}}/td>
+                            <td>{{player "title.patronymic"}}</td>
                         </tr>
                         </tbody>
                         <tbody>
                         <tr>
-                            <td>Страна</td>
+                            <td>{{i18n "title-country"}}</td>
                             <td>{{player "location.country"}}</td>
                         </tr>
                         <tr>
-                            <td>Город</td>
+                            <td>{{i18n "title-city"}}</td>
                             <td>{{player "location.city"}}</td>
                         </tr>
                         <tr>
-                            <td>Улица</td>
+                            <td>{{i18n "title-street"}}</td>
                             <td>{{player "location.street"}}</td>
                         </tr>
                         <tr>
-                            <td>Дом</td>
-                            <td>14а</td>
+                            <td>{{i18n "title-building"}}</td>
+                            <td>{{player "location.building"}}</td>
                         </tr>
                         <tr>
-                            <td>Квартира</td>
-                            <td>32</td>
+                            <td>{{i18n "title-appartment"}}</td>
+                            <td>{{player "location.appartment"}}</td>
                         </tr>
                         </tbody>
                         <tbody>
                         <tr>
-                            <td>Телефон</td>
-                            <td>{{player "billing.phone"}}</td>
+                            <td>{{i18n "title-phone"}}</td>
+                            <td>{{player "location.phone"}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -78,8 +83,8 @@
                 <div class="personal-data-attention">
                     <span>Внимание!</span> Убедитесь в правильности заполненных данных.
                 </div>
-                <div class="ex-prize-submit-wrapper">
-                    <button name="submit" type="submit" class="ex-prize-submit">{{i18n "button-send-request"}}</button>
+                <div class="ex-prize-submit-wrapper container-center">
+                    <button name="submit" type="submit" class="btn-flat">{{i18n "button-prize-send-request"}}</button>
                 </div>
                 <!-- end of Данные заполнены -->
 

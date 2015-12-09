@@ -1,0 +1,44 @@
+<div id="games-online-view-create" class="create-game" style="display: none;">
+    <div class="title">
+        Ставка
+    </div>
+
+    {{#each modes as |mod key|}}
+    <div class="buttons-group clearfix" data-currency="{{key}}" style="display: block;">
+        <div class="title">{{key}}</div>
+        {{#each mod}}
+        <div class="button">
+            <input type="radio" name="mode" id="{{key}}-{{this}}" value="{{key}}-{{this}}" /><label for="{{key}}-{{this}}">{{this}}</label>
+        </div>
+        {{/each}}
+    </div>
+    {{/each}}
+
+    <div class="title">
+        Настройки                                    
+    </div>
+
+    <div class="buttons-group clearfix" data-variation="players">
+        <div class="title">Игроков</div>
+        {{#forMaxToMin maxPlayers 2}}
+        <div class="button">
+            <input {{#if (eq this 2)}}checked{{/if}} type="radio" name="combine" id="players-{{this}}" value="{{this}}" /><label for="players-{{this}}">{{this}}</label>
+        </div>
+        {{/forMaxToMin}}
+    </div>
+
+    {{#if variations}}
+    {{#each variations as | variation |}}
+    <div class="buttons-group clearfix" data-variation="{{@key}}">
+        <div class="title">{{variation.t}}</div>
+        {{#each variation.v}}
+        <div class="button">
+            <input {{#if variation.d}} {{#if (eq variation.d @key)}} checked {{/if}}{{else}}{{#if @first}} checked {{/if}}{{/if}} type="radio" name="{{variation.t}}" id="{{@key}}-{{this}}" value="{{this}}" /><label for="{{@key}}-{{this}}">{{this}}</label>
+        </div>
+        {{/each}}
+    </div>
+    {{/each}}
+    {{/if}}
+
+    <div class="start-game">Создать</div>
+</div>

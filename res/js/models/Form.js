@@ -12,11 +12,16 @@
 
             var that = this;
 
+            if ('getAttribute' in form) {
+                form.action = form.getAttribute('action');
+                form.method = form.getAttribute('method');
+            }
+
             form.callback = U.parse(U.parse(form.action), 'tmpl');
             form.url = U.generate(form.action, form.method);
 
             /* FORM
-             * method: GET | POST | PUT | DELETE
+             * method: GET | POST | PUT | DELETE | WEBSOCKET
              * url: ACTION | HREF
              * data: JSON
              * callback: FUNCTION
