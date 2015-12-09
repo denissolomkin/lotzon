@@ -164,7 +164,7 @@
 
         view: function() {
 
-            var lotteryId = parseInt($('.game_history_detail').data('lotteryid'));
+            var lotteryId = parseInt(document.getElementById('lottery-history-view').getAttribute('data-lottery-id')); 
 
             Lottery.data = Cache.get('lottery-history-' + lotteryId);
             Lottery.summary = Lottery.getSummary();
