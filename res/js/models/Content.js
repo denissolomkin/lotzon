@@ -30,7 +30,7 @@
             D.log(['Content.enableAutoload', 'content']);
             event.preventDefault();
 
-            var submit = this.querySelector('button[type="submit"]:not(.loading):not(.infinite-scrolling)');
+            var submit = this.querySelector('button[type="submit"]:not(.loading)');
             if (submit) {
 
                 if (!submit.classList.contains('never-infinite-scrolling'))
@@ -197,41 +197,9 @@
 
         modal:  function (message) {
 
-            message = typeof message === 'object'
-                ? message.join(' ')
-                : message;
+            message = '<div class="modal-message"><div class="animated zoomIn"><p>' + Cache.i18n(message) + '</p></div></div>';
+            DOM.append(message, this);
 
-            D.log(message, 'error');
-            D.isEnable("alert") && alert(message);
-            Form.stop();
-            R.isRendering && R.event('stop');
-
-            if (this && this.node) {
-                node = this.node;
-            } else if (this && 'nodeType' in this) {
-                node = this;
-            } else {
-                node = document.getElementById('content');
-            }
-
-            DOM.remove('.modal-loading', node);
-
-            if (node.querySelector('.modal-message div')) {
-                DOM.append('<p>' + message + '<p>', node.querySelector('.modal-message div'));
-            } else {
-                DOM.append('<div onclick="this.parentNode.removeChild(this)" class="modal-message"><div class="animated zoomIn"><p>' + Cache.i18n(message) + '</p></div></div>', node);
-            }
-
-            if (0 && D.isEnable("clean"))
-                if (errors = DOM.all(".modal-message"))
-                    setTimeout(function () {
-                        DOM.fadeOut(errors);
-                        setTimeout(function () {
-                            DOM.remove(errors);
-                        }, 500)
-                    }, 1000);
-
-            return false;
         }
     };
 

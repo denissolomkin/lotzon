@@ -161,9 +161,14 @@
             }
 
 
-            if(node.classList.contains('loading')) node.classList.remove('loading');
-            DOM.removeClass('loading', node.getElementsByClassName('loading'));
-            console.log(node, node.getElementsByClassName('loading'));
+            if(node.classList.contains('loading'))
+                node.classList.remove('loading');
+
+            DOM.removeClass('loading',
+                Array.prototype.filter.call(
+                    document.getElementsByTagName('button'),
+                    function (el) { return el.classList.contains('loading');}
+                ));
 
             if (0 && D.isEnable("clean"))
                 if (errors = DOM.all(".modal-error"))
@@ -171,7 +176,7 @@
                         DOM.fadeOut(errors);
                         setTimeout(function () {
                             DOM.remove(errors);
-                        }, 500)
+                        }, 500);
                     }, 1000);
 
             return false;

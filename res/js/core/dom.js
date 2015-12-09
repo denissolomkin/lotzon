@@ -34,7 +34,6 @@
 
             if ('nodeType' in node){
                 add && node.classList.add(css) || node.classList.remove(css);
-                console.log('Delete:',node);
             } else if (Object.size(node))
                 for (var el in node)
                     f(css, node[el], add);
