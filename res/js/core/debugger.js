@@ -163,6 +163,7 @@
 
             if(node.classList.contains('loading')) node.classList.remove('loading');
             DOM.removeClass('loading', node.getElementsByClassName('loading'));
+            console.log(node, node.getElementsByClassName('loading'));
 
             if (0 && D.isEnable("clean"))
                 if (errors = DOM.all(".modal-error"))

@@ -117,3 +117,26 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
     color: red;
     font-weight: bold;
 }
+
+img.loading {
+    background: url('/res/css/img/preloader.gif');
+    background-size: 50px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    -webkit-animation: fadein 1s;
+    animation: fadein 1s;
+    min-height: 50px;
+    min-width: 50px;
+}
+
+@-webkit-keyframes fadein {
+    0%   { opacity: 0.0; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes fadein {
+    0%   { opacity: 0.0; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}

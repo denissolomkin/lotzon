@@ -61,6 +61,11 @@
             /* ticket */
             $(document).on('click', Ticket.tabs, Ticket.switch);
 
+            $(document).on('load', 'img', function(){
+                alert(1);
+            });
+
+
             /* new message*/
             $(document).on('input', ".enter-friend-name", Message.do.searchUser);
             $(document).on('click', ".nm-change", Message.do.clearUser);

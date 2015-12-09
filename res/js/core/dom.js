@@ -32,9 +32,10 @@
             if(!node)
                 return;
 
-            if ('nodeType' in node)
+            if ('nodeType' in node){
                 add && node.classList.add(css) || node.classList.remove(css);
-            else if (Object.size(node))
+                console.log('Delete:',node);
+            } else if (Object.size(node))
                 for (var el in node)
                     f(css, node[el], add);
 

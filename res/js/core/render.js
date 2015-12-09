@@ -7,8 +7,8 @@
         "rendering": [],
         "isRendering": false,
         "timeout": {
-            "ajax": 10000,
-            "template": 10000,
+            "ajax": 1000,
+            "template": 1000,
             "delay": 0
         },
         "animation": {
