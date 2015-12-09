@@ -4,8 +4,15 @@
 
         "init": function(init){
 
+            if('timeToLottery' in init && 'timeToLottery' in this){
+                Slider.countdown(this.timeToLottery);
+                Tickets.countdown(this.timeToLottery);
+            }
+
             D.log('Tickets.init', 'func');
             Object.deepExtend(this, init);
+
+
 
         },
 
@@ -39,41 +46,25 @@
         "renderTickets": function () {
 
             var tickets = [];
-            $.each(this.filledTickets, function (index, balls) {
+            for (var n = 0; n <= this.filledTickets.length; n++) {
                 var ticket = {
-                    index: index,
+                    index: n,
                     balls: []
                 };
-                $.each(balls, function (number, ball) {
-                    ticket.balls.push(ball);
-                });
+
+                for (var b = 0; b <= this.filledTickets[n].length; b++) {
+                    ticket.balls.push(this.filledTickets[n][b]);
+                }
+
                 tickets.push(ticket);
-            });
+
+            }
 
             return tickets;
         },
 
-
-
         "update": function () {
-
-            var url = '/lottery/tickets';
-            
-            $.getJSON(url, function(response) {
-
-                if (response.res.id == Tickets.lastLotteryId) {
-
-                    setTimeout(function() {
-                        Tickets.update()
-                    }, 3000)
-
-                } else {
-                    
-                    $.extend(Tickets, data.res);
-                    Ticket.switch();
-                }
-
-            });
+            Form.send('/lottery/tickets');
         },
 
         "renderBalls": function () {
@@ -109,15 +100,20 @@
 
         },
         
-        countdown: function () {
+        countdown: function (timeout) {
 
             D.log('Ticket.countdown', 'func');
-            $("#ticketCountdownHolder span").countdown({
-                until: ($.countdown.periodsToSeconds($('#countdownHolder').countdown('getTimes'))),
-                layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
-            });
+            var timer = $("#ticketCountdownHolder span");
+            if(timer.length) {
+                $("#ticketCountdownHolder span")
+                    .countdown('destroy')
+                    .countdown({
+                        until : (timeout || $.countdown.periodsToSeconds($('#countdownHolder').countdown('getTimes'))),
+                        layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}'
+                    });
+            }
 
-        },
+        }
 
 
     };

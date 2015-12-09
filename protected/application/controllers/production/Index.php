@@ -184,12 +184,13 @@ class Index extends \SlimController\SlimController
             "adminId"         => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
             "tempFilestorage" => '/filestorage/temp',
             "filestorage"     => '/filestorage',
-            "url"   => 'ws'.\Config::instance()->SSLEnabled ? 's' :''.'://'.$_SERVER['SERVER_NAME'].':'.\Config::instance()->wsPort,
+            "url"             => 'ws' . \Config::instance()->SSLEnabled ? 's' : '' . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
         );
 
         $lottery = array(
 
             "lastLotteryId" => $lottery->getId(),
+            "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
             "selectedTab"   => null,
             "totalBalls"    => \LotterySettings::TOTAL_BALLS,
             "requiredBalls" => \LotterySettings::REQUIRED_BALLS,

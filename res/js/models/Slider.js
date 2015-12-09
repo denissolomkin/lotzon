@@ -43,11 +43,13 @@
 
         },
 
-        countdown: function () {
+        countdown: function (timer) {
 
             D.log('Slider.countdown', 'func');
-            $("#countdownHolder").countdown({
-                until: (Slider.timer),
+            $("#countdownHolder")
+                .countdown('destroy')
+                .countdown({
+                until: (timer || Slider.timer),
                 layout: '{hnn}<span>:</span>{mnn}<span>:</span>{snn}',
                 onExpiry: Slider.timeout
             });

@@ -2,6 +2,10 @@
 
     DOM = {
 
+        isNode: function(node){
+            return ('nodeType' in node);
+        },
+
         getId: function (el) {
 
             if (typeof el === 'string' || !(typeof el === 'object' && "nodeType" in el)) {
@@ -243,7 +247,8 @@
         remove: function f(el, parent) {
 
             if (el && typeof el === 'object' && "nodeType" in el) {
-                el.parentNode.removeChild(el);
+                if(el.parentNode)
+                    el.parentNode.removeChild(el);
             } else {
                 this.all(f, el, parent)
             }

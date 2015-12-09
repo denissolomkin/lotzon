@@ -12,6 +12,13 @@
 
             var that = this;
 
+            if(typeof form === 'string')
+                form = {
+                    action: form,
+                    method: 'get',
+                    data: null
+                };
+
             form.callback = U.parse(U.parse(form.action), 'tmpl');
             form.url = U.generate(form.action, form.method);
 
@@ -221,10 +228,15 @@
         message: function (message) {
 
             var form = this,
-                formContenteditable = form.querySelectorAll("div[contenteditable='true']");
+                formContenteditable;
+
+            if(!DOM.isNode(form))
+                return Form;
+
+            formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
             // clear form after adding new entities
-            if (form.getAttribute('method') === 'post' || form.getAttribute('method') === 'POST') {
+            if (form.getAttribute('method').toLowerCase() === 'post') {
                 form.reset();
                 for (var i = 0; i < formContenteditable.length; i++) {
                     formContenteditable[i].innerHTML = '';
@@ -241,7 +253,7 @@
                 function () {
                     DOM.fadeOut(modal);
                     setTimeout(function () {
-                        modal && form && form.removeChild(modal);
+                        DOM.remove(modal);
                     }, Form.timeout.fadeout);
                 },
                 Form.timeout.remove);

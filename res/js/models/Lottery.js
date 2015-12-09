@@ -301,7 +301,7 @@
                 ball.addClass('random-ball');
                 ball.css({
                     'transition': 'all ' + counter + 'ms cubic-bezier(0.3, 0.2, 0.1, 0.1)'
-                })
+                });
 
                 $.each($('.g-oc_li.unfilled'), function(index, li) {
                     readyBalls.push(index);
@@ -316,8 +316,8 @@
                         }, 1000);
                     }
 
-                })
-                console.log($('.g-oc_li.unfilled').length, "$('.unfilled').length");
+                });
+
                 if (!$('.g-oc_li.unfilled').length) {
   
                     if ($("#lottery-process li.won_ball").length) {
