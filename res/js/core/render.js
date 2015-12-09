@@ -552,6 +552,7 @@
 
                 case "stop":
                     D.log('Render.stop', 'render');
+                    R.rendering = [];
                     R.isRendering = false;
                     break;
             }
