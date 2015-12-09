@@ -160,6 +160,10 @@
                 DOM.append('<div onclick="this.parentNode.removeChild(this)" class="modal-error"><div class="animated zoomIn"><span>' + Cache.i18n('title-error') + '</span><p>' + message + '</p></div></div>', node);
             }
 
+
+            if(node.classList.contains('loading')) node.classList.remove('loading');
+            DOM.removeClass('loading', node.getElementsByClassName('loading'));
+
             if (0 && D.isEnable("clean"))
                 if (errors = DOM.all(".modal-error"))
                     setTimeout(function () {

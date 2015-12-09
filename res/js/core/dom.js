@@ -23,9 +23,30 @@
 
         },
 
+        class: function f(css, node, add) {
+
+            if(!node)
+                return;
+
+            if ('nodeType' in node)
+                add && node.classList.add(css) || node.classList.remove(css);
+            else if (Object.size(node))
+                for (var el in node)
+                    f(css, node[el], add);
+
+        },
+
+        addClass: function (css, node) {
+            this.class(css, node, true);
+        },
+
+        removeClass: function f(css, node) {
+            this.class(css, node);
+        },
+
         up: function (str, el, method) {
 
-            switch (method){
+            switch (method) {
                 case "class":
                 default:
                     while (el && el.classList && !el.classList.contains(str) && el.parentNode)
