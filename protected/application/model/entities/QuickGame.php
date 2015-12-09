@@ -743,6 +743,7 @@ class QuickGame extends Entity
     {
         if ($from == 'DB') {
             $this->setId($data['Id'])
+                ->setKey($data['Key'])
                 ->setTitle(@unserialize($data['Title']))
                 ->setDescription(@unserialize($data['Description']))
                 ->setAudio(@unserialize($data['Audio']))

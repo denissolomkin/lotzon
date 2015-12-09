@@ -20,7 +20,7 @@ Application::import(PATH_CONTROLLERS . '*');
 
 
 $memcache = new Memcache;
-$memcache->connect('localhost', 11211);
+$memcache->connect(Config::instance()->memcacheHost, 11211);
 $storage = new NativeSessionStorage(array(), new MemcacheSessionHandler($memcache));
 $session = new Session($storage);
 $session->start();
