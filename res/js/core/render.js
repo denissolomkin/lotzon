@@ -184,6 +184,10 @@
 
         "json": function (options) {
 
+            if (typeof options === 'string') {
+                options = { href: options };
+            }
+
             if (D.isEnable('stat')) {
                 if (!options.stat)
                     options.stat = R.stat();

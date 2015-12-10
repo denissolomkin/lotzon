@@ -208,10 +208,10 @@
 
                         path = this.split(path);
 
-                        while (path.length && cache) {
+                        do {
                             needle = path.shift();
-                            cache = cache && cache.hasOwnProperty(needle) && cache[needle];
-                        }
+                            cache = needle && cache && cache.hasOwnProperty(needle) && cache[needle];
+                        } while (path.length && cache)
                     }
 
                     D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
@@ -388,7 +388,9 @@
         },
 
         split: function (path) {
-            if(!isArray(path)){
+            if(!path)
+                return [];
+            else if(!isArray(path)){
                 path = path.indexOf('.') !== -1 && path.split('.')
                 || path.indexOf('-') !== -1 && path.split('-')
                 || path.split('/');
