@@ -162,9 +162,12 @@
                 D.log(['Content.after.autoload', options.node.id], 'content');
 
                 if (infiniteScrolling = options.node.parentNode.querySelector('button.loading')) {
-                    if (!Object.size(options.json) || options.hasOwnProperty('lastItem') || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
+                    if (!Object.size(options.json)
+                        || options.hasOwnProperty('lastItem')
+                        || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
                         DOM.remove(infiniteScrolling);
                     } else {
+                        console.log(infiniteScrolling);
                         infiniteScrolling.classList.remove('loading');
                     }
                 }

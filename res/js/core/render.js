@@ -469,6 +469,8 @@
 
         "afterHTML": function (options) {
 
+            R.event('complete', options);
+            
             if (options.after) {
                 D.log(['Render.after', typeof options.after], 'render');
                 options.after(options);
@@ -512,7 +514,6 @@
             U.update(options);
 
             Content.infiniteScrolling();
-            R.event('complete', options);
 
             if (D.isEnable('stat')) {
                 options.stat.after.timer -= new Date().getTime();
