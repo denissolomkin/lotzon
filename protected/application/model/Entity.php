@@ -29,26 +29,54 @@ abstract class Entity
      * @param      $method
      * @param null $params
      *
-     * @return $this|null  $this при set*(), value|null при get*()
+     * @return $this|null  $this при set*(), (bool)value|null при is*(), value|null при get*()
+     *                     array[prop]|null при get*(prop)
      * @throws Exception   Если get обращение к несуществующему и не обрабатываемому свойству
      */
     public function __call($method, $params = null)
     {
+
         $methodPrefix = substr($method, 0, 3);
-        $key          = lcfirst(substr($method, 3));
-        if (($methodPrefix == 'set') && (count($params) == 1)) {
-            $value           = $params[0];
-            $property        = '_'.$key;
-            $this->$property = $value;
-            return $this;
-        } elseif ($methodPrefix == 'get') {
-            $property = '_'.$key;
-            if (isset($this->$property)) {
-                return $this->$property;
-            } else {
-                return NULL;
+        $key = lcfirst(substr($method, 3));
+        $property = '_' . $key;
+
+        if (property_exists($this, $property)) {
+            if (($methodPrefix == 'set') && (count($params) == 1)) {
+                $value = $params[0];
+                $this->$property = $value;
+                return $this;
+            } elseif ($methodPrefix == 'get') {
+                if (isset($this->$property)) {
+
+                    if((count($params) == 1 && ($value = $params[0]) && is_array($this->$property))){
+                        $property = $this->$property;
+                        if (isset($property[$value]) && $property[$value] && $property[$value] != '')
+                            return nl2br($property[$value]);
+                        else
+                            return nl2br(reset($property));
+                    }
+
+                    return $this->$property;
+                } else {
+                    return NULL;
+                }
             }
         }
+
+        $methodPrefix = substr($method, 0, 2);
+        $key = lcfirst(substr($method, 2));
+        $property = '_' . $key;
+
+        if (property_exists($this, $property)) {
+            if ($methodPrefix == 'is') {
+                if (isset($this->$property)) {
+                    return (bool)$this->$property;
+                } else {
+                    return NULL;
+                }
+            }
+        }
+
         throw new Exception("Method $method is not defined!");
     }
 
@@ -124,7 +152,6 @@ abstract class Entity
 
         return $this;
     }
-
 
     public function serialize()
     {
