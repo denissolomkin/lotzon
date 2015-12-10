@@ -381,6 +381,26 @@ Config::instance()->publicResources = array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
     /**
+     * Chance games
+     */
+    '/games/chance/'                          => array(
+        'get' => 'controllers\production\ChanceController:list',
+    ),
+    '/games/chance/:id'                       => array(
+        'get'  => array(
+            'controllers\production\ChanceController:item',
+            function ($obj) {
+                $obj->setParams(array(
+                        "key"      => "ChanceGame",
+                        "objectId" => $obj->getParams()['id']
+                    )
+                );
+            }
+        ),
+        'post' => 'controllers\production\ChanceController:start',
+        'put'  => 'controllers\production\ChanceController:play',
+    ),
+    /**
      * Comments
      */
     '/communication/comments/' => array(
