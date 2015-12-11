@@ -145,8 +145,8 @@
 
                 if (res.Field && res.Field.x) {
                     var html = '';
-                    for (var x = 1; x < res.Field.x; x++)
-                        for (var y = 1; y < res.Field.y; y++)
+                    for (var x = 1; x <= res.Field.x; x++)
+                        for (var y = 1; y <= res.Field.y; y++)
                             html += "<button type=button onclick=\"Form.get.call(" +
                             "this,{" +
                             "href:'/games/chance/{{id}}/play', " +
