@@ -149,7 +149,7 @@
                         for (var y = 1; y <= res.Field.y; y++)
                             html += "<button type=button onclick=\"Form.get.call(" +
                             "this,{" +
-                            "href:'/games/moment/{{id}}/play', " +
+                            "href:'/games/moment/play', " +
                             "data: {cell:'" + x + "x" + y + "'}," +
                             "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
                 }
