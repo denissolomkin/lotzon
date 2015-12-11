@@ -21,6 +21,7 @@
                 {{^combination}}
                 <li class="unfilled">
                     не активен
+                    {{i18n "title-lottery-ticket-unactive"}}
                 </li>
                 {{/combination}}
             </ul>
@@ -58,10 +59,10 @@
     </div>
 
     {{else}}
-        <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
+        <div class="ghd-text ghd-fale">{{i18n "title-lottery-not-won"}}</div>
     {{/if}}
 
     {{else}}
-    <div class="ghd-won">Вы не принимали участия в розыгрыше</div>
+    <div class="ghd-won">{{i18n "title-lottery-not-play"}}</div>
     {{/if}}
 </div>

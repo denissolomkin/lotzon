@@ -111,6 +111,11 @@ a {
   border-radius: 2px;
   top: 0;
   left: 50%;
+  -webkit-transform: translate(-50%, -110%);
+  -khtml-transform: translate(-50%, -110%);
+  -moz-transform: translate(-50%, -110%);
+  -ms-transform: translate(-50%, -110%);
+  -o-transform: translate(-50%, -110%);
   transform: translate(-50%, -110%);
   z-index: 20;
   color: #fff; }
@@ -139,8 +144,12 @@ a {
   content: "";
   z-index: 1; }
 
+input {
+  -webkit-appearance: none; }
+
 button {
-  opacity: 0.8; }
+  opacity: 0.8;
+  -webkit-appearance: none; }
   button:hover {
     background: #000;
     color: #fff; }
@@ -525,10 +534,10 @@ input.input-radio:checked + label.input-radio:before {
   padding: 0;
   list-style: none; }
   .ul-striped li {
-    background: #fff;
+    background: #fafafa;
     padding: 16px; }
     .ul-striped li:nth-of-type(odd) {
-      background: #fafafa; }
+      background: #fff; }
 
 .text-large {
   font-size: 36px;
@@ -843,7 +852,6 @@ div {
 
 .menu-balance-item {
   display: block;
-  border: 1px solid #a5a5a5;
   border-radius: 2px;
   text-decoration: none;
   color: black;
@@ -1041,8 +1049,8 @@ header .owl-theme .owl-controls .owl-page span {
   position: fixed;
   top: 0; }
 
-.fixed > .container {
-  margin-top: 105px; }
+.fixed > .wrapper > .container {
+  margin-top: 70px; }
 
 [class^="i-"]:before, [class*=" i-"]:before {
   font-family: "fontello";
@@ -1254,6 +1262,8 @@ header .owl-theme .owl-controls .owl-page span {
 #blog-post-view {
   font-family: handbookpro-regular;
   font-size: 15px; }
+  #blog-post-view .social-likes {
+    margin: 0 0 20px -6px; }
   #blog-post-view .post .title {
     font-family: Handbook-bold;
     font-size: 20px;
@@ -1333,6 +1343,11 @@ header .owl-theme .owl-controls .owl-page span {
     #blog-post-view .modal-message div {
       margin: 0 auto;
       text-align: center;
+      -webkit-transform: translate(0, -50%);
+      -khtml-transform: translate(0, -50%);
+      -moz-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+      -o-transform: translate(0, -50%);
       transform: translate(0, -50%);
       position: absolute;
       left: auto;
@@ -1620,7 +1635,12 @@ div.comment-reply-btn {
     padding-left: 70px;
     position: relative;
     top: 50%;
-    transform: translateY(-50%); }
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
   #blog-post-view .comment-top {
     position: relative;
     display: block;
@@ -1917,6 +1937,11 @@ div.comment-reply-btn {
     #communication .modal-message div {
       margin: 0 auto;
       text-align: center;
+      -webkit-transform: translate(0, -50%);
+      -khtml-transform: translate(0, -50%);
+      -moz-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+      -o-transform: translate(0, -50%);
       transform: translate(0, -50%);
       position: absolute;
       left: auto;
@@ -2103,7 +2128,12 @@ div.comment-reply-btn {
     font-family: Handbook-bold;
     text-transform: uppercase;
     position: relative;
-    transform: translateY(-50%);
+    -webkit-transform: translate(0%, -50%);
+    -khtml-transform: translate(0%, -50%);
+    -moz-transform: translate(0%, -50%);
+    -ms-transform: translate(0%, -50%);
+    -o-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
     top: 50%;
     letter-spacing: 0.3px; }
     #communication-messages .cm-top .write-admin:hover {
@@ -2155,6 +2185,11 @@ div.comment-reply-btn {
 
 .online .message-img:hover .service-pop-up {
   display: block;
+  -webkit-transform: translate(-19%, -140%);
+  -khtml-transform: translate(-19%, -140%);
+  -moz-transform: translate(-19%, -140%);
+  -ms-transform: translate(-19%, -140%);
+  -o-transform: translate(-19%, -140%);
   transform: translate(-19%, -140%);
   line-height: 1.5;
   width: 70px;
@@ -2339,6 +2374,11 @@ form.loading > * {
   right: 15px; }
   .close-notification:hover .service-pop-up {
     display: block;
+    -webkit-transform: translate(-50%, -145%);
+    -khtml-transform: translate(-50%, -145%);
+    -moz-transform: translate(-50%, -145%);
+    -ms-transform: translate(-50%, -145%);
+    -o-transform: translate(-50%, -145%);
     transform: translate(-50%, -145%); }
 
 .c-notification-top {
@@ -2514,7 +2554,12 @@ div > .games-previews {
       left: 0;
       top: 50%;
       font-size: 25px;
-      transform: translateY(-50%); }
+      -webkit-transform: translate(0, -50%);
+      -khtml-transform: translate(0, -50%);
+      -moz-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+      -o-transform: translate(0, -50%);
+      transform: translate(0, -50%); }
     .games-view .info-top .game-title {
       text-align: center;
       font-weight: bold;
@@ -2531,6 +2576,11 @@ div > .games-previews {
       margin-left: 10px;
       height: auto;
       top: initial;
+      -webkit-transform: translate(0, 0);
+      -khtml-transform: translate(0, 0);
+      -moz-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+      -o-transform: translate(0, 0);
       transform: translate(0, 0); }
       .games-view .info-top .balance > * {
         display: block;
@@ -2636,7 +2686,12 @@ div > .games-previews {
         .games-view .game-settings .settings-tabs div span {
           position: absolute;
           top: 50%;
-          transform: translateY(-50%);
+          -webkit-transform: translate(0, -50%);
+          -khtml-transform: translate(0, -50%);
+          -moz-transform: translate(0, -50%);
+          -ms-transform: translate(0, -50%);
+          -o-transform: translate(0, -50%);
+          transform: translate(0, -50%);
           display: block;
           left: 0;
           width: 100%; }
@@ -2690,7 +2745,12 @@ div > .games-previews {
       left: 100%;
       margin-left: -20px;
       top: 50%;
-      transform: translateY(-50%); }
+      -webkit-transform: translate(0, -50%);
+      -khtml-transform: translate(0, -50%);
+      -moz-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+      -o-transform: translate(0, -50%);
+      transform: translate(0, -50%); }
     .game-settings .games-list .game.available {
       cursor: pointer; }
       .game-settings .games-list .game.available:hover > i {
@@ -3333,7 +3393,7 @@ div > .games-previews {
       background: #363636;
       color: #ead377; }
   .gold .add-ticket.ticket-btn.loading {
-    color: #ead377;
+    color: #f3e198;
     position: relative;
     opacity: 0.8;
     cursor: default;
@@ -3344,6 +3404,9 @@ div > .games-previews {
     -webkit-animation: AnimationNGold 4s infinite linear;
     -moz-animation: AnimationNGold 4s  infinite linear;
     animation: AnimationNGold 4s  infinite linear; }
+  .gold .add-ticket.ticket-btn.error {
+    color: #fadbdb;
+    background: url(img/sprite.png) -300px -384px; }
 
 .gold .ticket-numbers .select {
   background-color: #363636;
@@ -3406,6 +3469,38 @@ div > .games-previews {
       -webkit-animation: AnimationBlue 8s infinite linear;
       -moz-animation: AnimationBlue 8s  infinite linear;
       animation: AnimationBlue 8s  infinite linear; }
+    .ticket-btn.add-ticket.error {
+      color: #fadbdb;
+      position: relative;
+      opacity: 0.8;
+      cursor: default;
+      background: #ffe400;
+      background-repeat: no-repeat;
+      background-position: 0;
+      background: url(img/sprite.png) -300px -384px;
+      -webkit-animation: AnimationRed 6s infinite linear;
+      -moz-animation: AnimationRed 6s  infinite linear;
+      animation: AnimationRed 6s  infinite linear; }
+      .ticket-btn.add-ticket.error:after {
+        display: none; }
+
+@-webkit-keyframes AnimationRed {
+  from {
+    background-position: -362px -384px; }
+  to {
+    background-position: -300px -384px; } }
+
+@-moz-keyframes AnimationRed {
+  from {
+    background-position: -362px -384px; }
+  to {
+    background-position: -300px -384px; } }
+
+@keyframes AnimationRed {
+  from {
+    background-position: -362px -384px; }
+  to {
+    background-position: -300px -384px; } }
 
 @-webkit-keyframes AnimationBlue {
   0% {
@@ -3539,8 +3634,7 @@ div > .games-previews {
       font-family: Handbook-bold;
       color: #f6ee89;
       margin-right: 0;
-      text-shadow: 0 1px 0 #4c4c4c;
-      text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.7); }
+      text-shadow: none; }
   .ghd-tickets li ul {
     float: left; }
     .ghd-tickets li ul li {
@@ -3664,6 +3758,11 @@ div > .games-previews {
   padding: 15px 40px 63px;
   max-width: 320px;
   position: relative;
+  -webkit-transform: translate(0, -50%);
+  -khtml-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
   transform: translate(0, -50%);
   top: 50%; }
   .condition .btn-flat {

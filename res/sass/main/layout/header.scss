@@ -285,10 +285,9 @@ div {
 
 .menu-balance-item {
   display: block;
-  border: 1px solid #a5a5a5;
   border-radius: 2px;
   text-decoration: none;
-  color: black;
+  color: rgba(0,0,0,1);
   font-size: 13px;
   line-height: 35px;
   margin-bottom: 15px;
@@ -531,8 +530,8 @@ header .owl-theme .owl-controls .owl-page span {
     position: fixed;
     top: 0;
   }
-  & > .container {
-    margin-top: 105px; 
+  & > .wrapper > .container {
+    margin-top: 70px; 
   }  
 }
 // ------------ICONS----------- //

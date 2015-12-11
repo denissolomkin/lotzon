@@ -132,11 +132,13 @@
       padding: 10px 10px 10px 25px;
       margin: 0 ;
       position: relative;
-      &:before {
-        left: -5px;
-      }
+
     }
   }
+}
+
+#lottery .type-mine .gh-item:before {
+  left: -5px;
 }
 
 .content-box-content .gh-item:before {
@@ -187,3 +189,16 @@
   margin-top: 34px;
 }
 
+#lottery-history-view .ghd-game-inf .title {
+  margin: 0 -30px 15px;
+}
+
+#lottery-process {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #8ECADA;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}

@@ -31,7 +31,7 @@
                                 {{/combination}}
                                 {{^combination}}
                                 <li class="unfilled">
-                                    не заполнен
+                                    {{i18n "title-lottery-ticket-unfilled"}}
                                 </li>
                                 {{/combination}}
                             </ul>
@@ -56,7 +56,7 @@
                               </strong>
                             </div>
                             <div class="width-50">
-                              <span>ДЕНЕГ ВЫИГРАНО:</span> 
+                              <span>{{i18n 'title-lottery-won-money'}}:</span> 
 
                              <strong>
                                 {{#each win}}
@@ -69,18 +69,18 @@
                     </div>
 
                     {{else}}
-                    <div class="ghd-text ghd-fale">Вы ничего не выиграли. Принимайте участие в следующих розыгрышах</div>
+                    <div class="ghd-text ghd-fale">{{i18n 'title-lottery-not-won'}}</div>
                     {{/if}}
 
                     {{else}}
-                    <div class="ghd-text">Вы не принимали участия в розыгрыше</div>
+                    <div class="ghd-text">{{i18n 'title-lottery-not-play'}}</div>
                     {{/if}}
                     </div>
                 </div>
             </section>
         </div>
         <div class="container-center won">
-            <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/history/{{ id }}">СМОТРЕТЬ ВСЕ РЕЗУЛЬТАТЫ</a> 
+            <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/history/{{ id }}">{{i18n 'title-lottery-look-results'}}</a> 
         </div> 
     </div>
 </div>

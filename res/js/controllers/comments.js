@@ -199,23 +199,93 @@
                 DOM.toggle(forms); // hide
             }
         },
-        showPreviewImage: function(e) {
-            var $input = $(this);
-            var inputFiles = this.files;
-            if(inputFiles == undefined || inputFiles.length == 0) return;
-            var inputFile = inputFiles[0];
-            var img = $('<img/>',{'class':'preview'});
-            img.appendTo($('.message-form-actions'));
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                img.attr("src", event.target.result);
-            };
-            reader.onerror = function(event) {
-                alert("I AM ERROR: " + event.target.error.code);
-            };
-            reader.readAsDataURL(inputFile);
+
+        showPreviewImage: function(){
+ 
+                var img = $(".image-container");
+                var $that = $(this),
+                        formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму
+                        formData.append('date_upl', new Date()); // добавляем данные, не относящиеся к форме
+                $.ajax({
+                    url: $that.attr('action'),
+                    type: $that.attr('method'),
+                    contentType: false, // важно - убираем форматирование данных по умолчанию
+                    processData: false, // важно - убираем преобразование строк по умолчанию
+                    data: formData,
+                    dataType: 'json',
+                    success: function(json){
+                        if(json){
+                            img.attr("src", json);
+                        }
+                    }
+                });
+           
         }
+
+
+
+
+    // $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
+    //     e.stopPropagation();
+
+    //     removePlayerAvatar(function(data) {
+    //         $('form[name="profile"]').find('.image-container').find('img').remove();
+    //         $('form[name="profile"]').find('.image-container').removeClass('true');
+    //     }, function() {}, function() {});
+    // });
+    // $('form[name="profile"]').find('.pi-ph').on('click', function(){
+    //     // create form
+    //     form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
+
+    //     var input = form.find('input[type="file"]').damnUploader({
+    //         url: '/players/updateAvatar',
+    //         fieldName: 'image',
+    //         dataType: 'json',
+    //     });
+
+    //     var image = $('<img></img>');
+    //     var holder = $(this);
+    //     if (holder.find('img').length) {
+    //         image = holder.find('img');
+    //     }
+
+    //     input.off('du.add').on('du.add', function(e) {
+
+    //         e.uploadItem.completeCallback = function(succ, data, status) {
+    //             image.attr('src', data.res.imageWebPath);
+
+    //             holder.addClass('true');
+    //             holder.append(image);
+
+    //             $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
+    //                 e.stopPropagation();
+
+    //                 removePlayerAvatar(function(data) {
+    //                     $('form[name="profile"]').find('.pi-ph').find('img').remove();
+    //                     $('form[name="profile"]').find('.pi-ph').removeClass('true');
+    //                 }, function() {}, function() {});
+    //             });
+    //         };
+
+    //         e.uploadItem.progressCallback = function(perc) {}
+    //         e.uploadItem.upload();
+    //     });
+
+    //     form.find('input[type="file"]').click();
+    // })
+
+
+
+
+
+
+
+
+
+
 
     }
 
 })();
+
+

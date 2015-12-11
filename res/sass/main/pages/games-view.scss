@@ -52,8 +52,7 @@ $font_1: handbookpro-regular;
 			left: 0;
 			top: 50%;
 			font-size: 25px;
-			//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-			transform: translateY(-50%);
+			@include translate(0, -50%);
 		}
 		.game-title {
 			text-align: center;
@@ -74,7 +73,7 @@ $font_1: handbookpro-regular;
 			height: auto;
 			top: initial;
 			//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-			transform: translate(0,0);
+			@include translate(0,0);
 			> * {
 				display: block;
 				float: left;
@@ -206,8 +205,7 @@ $font_1: handbookpro-regular;
 				span {
 					position: absolute;
 					top: 50%;
-					//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-					transform: translateY(-50%);
+					@include translate(0, -50%);
 					display: block;
 					left: 0;
 					width: 100%;
@@ -284,8 +282,7 @@ $font_1: handbookpro-regular;
 				left: 100%;
 				margin-left: -20px;
 				top: 50%;
-				//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-				transform: translateY(-50%);
+				@include translate(0, -50%);
 			}
 			&.available {
 				cursor: pointer;

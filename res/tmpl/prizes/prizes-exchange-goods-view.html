@@ -81,7 +81,7 @@
                     </table>
                 </div>
                 <div class="personal-data-attention">
-                    <span>Внимание!</span> Убедитесь в правильности заполненных данных.
+                    <span>{{i18n "title-attantion"}}</span> {{i18n "title-shure-right-datas"}}
                 </div>
                 <div class="ex-prize-submit-wrapper container-center">
                     <button name="submit" type="submit" class="btn-flat">{{i18n "button-prize-send-request"}}</button>
@@ -91,8 +91,9 @@
                 {{else}}
                 <!-- Данные НЕ заполнены -->
                 <div class="ex-prize-not-filled">
-                    Информация для доставки приза отсутствует!<br>
-                    Заполните ее в разделе <a href="/profile/details">«Мои данные»</a>
+                    {{i18n "title-delivery-info-absent"}}<br>
+
+                    {{i18n "title-delivery-info-fill"}}<a href="/profile/details">{{i18n "title-my-datas"}}</a>
                 </div>
                 <!-- end of Данные НЕ заполнены -->
                 {{/if}}

@@ -20,7 +20,7 @@
 		    padding-left: 70px;
 		    position: relative;
 		    top: 50%;
-		    transform: translateY(-50%);
+		    @include translate(0, -50%);
 		}	
 		& .comment-like {
 	    	top: 18px;

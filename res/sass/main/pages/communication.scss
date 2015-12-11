@@ -55,7 +55,7 @@
     & div {
       margin: 0 auto;
       text-align: center;
-      transform: translate(0, -50%);
+      @include translate(0, -50%);
       position: absolute;
       left: auto;
       text-transform: uppercase;
@@ -279,7 +279,7 @@
       font-family: Handbook-bold;
       text-transform: uppercase;
       position: relative;
-      transform: translateY(-50%);
+      @include translate(0%, -50%);
       top: 50%;
       letter-spacing: 0.3px;
       &:hover {
@@ -350,7 +350,7 @@
 .online .message-img:hover {
   & .service-pop-up {
     display: block;
-    transform: translate(-19%, -140%);
+    @include translate(-19%, -140%);
     line-height: 1.5;
     width: 70px;
     border-radius: 0;

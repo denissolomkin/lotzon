@@ -51,7 +51,7 @@ a {
   border-radius: 2px;
   top: 0;
   left: 50%;
-  transform: translate(-50%, -110%);
+  @include translate(-50%, -110%);
   z-index: 20;
   color: #fff;
   &:after {
@@ -81,9 +81,12 @@ a {
   content: "";
   z-index: 1;
 }
-
+input {
+  -webkit-appearance: none;
+}
 button {
   opacity: 0.8;
+  -webkit-appearance: none;
   &:hover {
     background: #000;
     color: #fff;
@@ -567,10 +570,10 @@ input.input-radio:checked + label.input-radio:before {
   padding: 0;
   list-style: none;
   & li {
-    background: #fff;
+    background: #fafafa;
     padding: 16px;
     &:nth-of-type(odd) {
-      background: #fafafa;
+      background:#fff; 
     }
   }
 }

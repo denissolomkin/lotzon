@@ -489,9 +489,6 @@
 	background-color: #8ECADA;
 	width: 100%;
 	height: 568px;
-	// left: 50%;
-	// top: 50%;
-	// transform: translate(-50%, -50%);
 	& .won {
 		display: none;
 		&.close {
@@ -698,7 +695,7 @@
 
 			}
 			&.loading {
-				color: #ead377;
+				color: #f3e198;
 				position: relative;
 				opacity: 0.8;
 				cursor: default;
@@ -709,6 +706,10 @@
 				-webkit-animation: AnimationNGold 4s infinite linear;
 				-moz-animation: AnimationNGold 4s  infinite linear;
 				animation: AnimationNGold 4s  infinite linear;
+			}
+			&.error {
+				color: #fadbdb;
+				background: url(img/sprite.png)  -300px -384px;;
 			}
 		}
 	}
@@ -789,9 +790,40 @@
 			-moz-animation: AnimationBlue 8s  infinite linear;
 			animation: AnimationBlue 8s  infinite linear;
 		}
+		&.error {
+			color: #fadbdb;
+			position: relative;
+			opacity: 0.8;
+			cursor: default;
+			background: #ffe400;
+			background-repeat: no-repeat;
+			background-position: 0;
+			background: url(img/sprite.png)  -300px -384px;;
+			-webkit-animation: AnimationRed 6s infinite linear;
+			-moz-animation: AnimationRed 6s  infinite linear;
+			animation: AnimationRed 6s  infinite linear;
+			&:after {
+				display: none;
+			}
+		}
 	}
 
 }
+@-webkit-keyframes AnimationRed {
+	from {background-position: -362px -384px;}
+	to {background-position:  -300px -384px;}
+}
+@-moz-keyframes AnimationRed {
+	from {background-position: -362px -384px;}
+	to {background-position:  -300px -384px;}
+ }
+@keyframes AnimationRed { 
+	from {background-position: -362px -384px;}
+	to {background-position:  -300px -384px;}
+}
+
+
+
 @-webkit-keyframes AnimationBlue {
 	0%{background-position:-556px -292px}
 	50%{background-position:-493px -292px}
@@ -935,8 +967,7 @@
 				font-family: Handbook-bold;
 				color: #f6ee89;
 				margin-right: 0;
-				text-shadow: 0 1px 0 #4c4c4c;
-				text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.7)
+				text-shadow: none;
 
 			}
 		}
@@ -1102,7 +1133,7 @@
 	padding: 15px 40px 63px;
 	max-width: 320px;
 	position: relative;
-	transform: translate(0, -50%);
+	@include translate(0, -50%);
 	top: 50%;
 	& .btn-flat {
 		margin-top: 20px;

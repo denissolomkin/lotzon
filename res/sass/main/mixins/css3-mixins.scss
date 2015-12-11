@@ -294,6 +294,9 @@
   @include css3-prefix("transform", translate($properties));
 }
 
+@mixin translate3d($properties...) {
+  @include css3-prefix("transform", translate3d($properties));
+}
 /// Transform
 /// @param {List} $params - Params
 /// @require {mixin} css3-prefix

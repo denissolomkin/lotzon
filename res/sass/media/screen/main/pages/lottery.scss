@@ -132,8 +132,7 @@
 }
 
 .ticket-box {
-  display: flex;
-  flex-direction: column-reverse;
+  display: table;
   background-color: transparent;
 }
 
@@ -158,9 +157,7 @@
 }
 
 .ticket-tabs li:hover {
-  -webkit-transform: translate(0, -8px);
-  -moz-transform: translate(0, -8px);
-  -o-transform: translate(0, -8px);
+  @include translate(0, -8px);
   -moz-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   -webkit-transition: all 0.1s ease-in-out;
@@ -285,6 +282,7 @@
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
   margin: 5px 0 7px;
   padding-left: 10px;
+  display: table-header-group;
 
 }
 
@@ -340,6 +338,7 @@
 
 .lottery-grid.timer-box {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
 }
 
 .ticket-box {
@@ -480,7 +479,7 @@
     font-size: 15px;
 }
 #lottery-process.lottery-won {
-  background: url(../img/768.png) center center no-repeat;
+  min-width: 1024px;
   & .balls-end-game .g-oc_li .goc_li-nb{
     position: static;
   }
@@ -492,11 +491,12 @@
   }
 }
 
-@media (min-width: 1024px) {
+
   #lottery-process.lottery-won {
   background: url(../img/1024.png) center center no-repeat;
   }
   #lottery-process {
+    min-width: 1024px;
     height: 768px;
     & .container {
       max-width: 700px;
@@ -589,7 +589,7 @@
     margin-right: 55px;
 
   }
-}
+
 
 @media (min-width: 1025px) {
   #lottery-process {

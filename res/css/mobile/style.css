@@ -1,3 +1,16 @@
+/* -------------------------------------------------------------
+ *  Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library
+ *  By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
+ *
+ *  List of CSS3 Sass Mixins File to be @imported and @included as you need
+ *
+ *  The purpose of this library is to facilitate the use of CSS3 on different browsers avoiding HARD TO READ and NEVER
+ *  ENDING css files
+ *
+ *  note: All CSS3 Properties are being supported by Safari 5
+ *  more info: http://www.findmebyip.com/litmus/#css3-properties
+ *
+ *------------------------------------------------------------- */
 .content-box {
   margin: 0 -10px; }
 
@@ -23,6 +36,7 @@
 .pushy-open {
   display: block;
   -webkit-transform: translate3d(0, 0, 0);
+  -khtml-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
@@ -44,6 +58,7 @@
 
 .pushy-left {
   -webkit-transform: translate3d(270px, 0, 0);
+  -khtml-transform: translate3d(270px, 0, 0);
   -moz-transform: translate3d(270px, 0, 0);
   -ms-transform: translate3d(270px, 0, 0);
   -o-transform: translate3d(270px, 0, 0);
@@ -54,6 +69,7 @@
 
 .wrapper-push, .push-push {
   -webkit-transform: translate3d(-270px, 0, 0);
+  -khtml-transform: translate3d(-270px, 0, 0);
   -moz-transform: translate3d(-270px, 0, 0);
   -ms-transform: translate3d(-270px, 0, 0);
   -o-transform: translate3d(-270px, 0, 0);
@@ -177,7 +193,12 @@
     padding-left: 70px;
     position: relative;
     top: 50%;
-    transform: translateY(-50%); }
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
   #communication .comment-like {
     top: 18px; }
   #communication .c-notifications-list .c-notification-date {
@@ -335,6 +356,11 @@
 .condition {
   font-size: 25px;
   padding: 25px 40px 63px;
+  -webkit-transform: translate(0, -10%);
+  -khtml-transform: translate(0, -10%);
+  -moz-transform: translate(0, -10%);
+  -ms-transform: translate(0, -10%);
+  -o-transform: translate(0, -10%);
   transform: translate(0, -10%);
   top: 0; }
 
@@ -1053,6 +1079,7 @@
     padding-left: 30px; }
   .pushy-left {
     -webkit-transform: translate3d(400px, 0, 0);
+    -khtml-transform: translate3d(400px, 0, 0);
     -moz-transform: translate3d(400px, 0, 0);
     -ms-transform: translate3d(400px, 0, 0);
     -o-transform: translate3d(400px, 0, 0);
@@ -1061,6 +1088,7 @@
     position: relative; }
   .wrapper-push, .push-push {
     -webkit-transform: translate3d(-400px, 0, 0);
+    -khtml-transform: translate3d(-400px, 0, 0);
     -moz-transform: translate3d(-400px, 0, 0);
     -ms-transform: translate3d(-400px, 0, 0);
     -o-transform: translate3d(-400px, 0, 0);

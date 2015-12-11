@@ -223,7 +223,7 @@ form.loading > * {
   right: 15px;
   &:hover .service-pop-up {
     display: block;
-    transform: translate(-50%, -145%);
+    @include translate(-50%, -145%);
   }
 }
 
