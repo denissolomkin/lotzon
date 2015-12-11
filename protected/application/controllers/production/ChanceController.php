@@ -212,7 +212,7 @@ class ChanceController extends \AjaxController
         if (isset($game)) {
 
             $banner = new Banner;
-            $response['block'] = $banner
+            $response['res']['block'] = $banner
                 ->setGroup('game' . $game->getId())
                 ->setCountry($player->getCountry())
                 ->setTemplate('chance')
