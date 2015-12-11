@@ -3,12 +3,12 @@ use \ShopItem;
 
 class QuickGame extends Entity
 {
-    protected $_id           = '';
+    protected $_id           = 0;
     protected $_uid          = '';
     protected $_key          = '';
     protected $_title        = array();
-    protected $_time         = '';
-    protected $_timeout      = '';
+    protected $_time         = 0;
+    protected $_timeout      = 0;
     protected $_over         = false;
     protected $_userId       = 0;
     protected $_lang         = '';
@@ -593,7 +593,7 @@ class QuickGame extends Entity
                 $ret = array(
                     'id'          => $this->getId(),
                     'title'       => $this->getTitle($this->getLang()),
-                    'description' => $this->getDescription(),
+                    'description' => $this->getDescription($this->getLang()),
                     'key'         => $this->getKey(),
                     'prizes'      => $this->exportPrizes(),
                     'audio'       => $this->getAudio(),

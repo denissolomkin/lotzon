@@ -381,24 +381,129 @@ Config::instance()->publicResources = array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
     /**
-     * Chance games
+     * Random games
      */
-    '/games/chance/'                          => array(
-        'get' => 'controllers\production\ChanceController:list',
-    ),
-    '/games/chance/:id'                       => array(
+    '/games/moment' => array(
         'get'  => array(
-            'controllers\production\ChanceController:item',
-            function ($obj) {
-                $obj->setParams(array(
-                        "key"      => "ChanceGame",
-                        "objectId" => $obj->getParams()['id']
+            'controllers\production\ChanceController:start',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "Moment"
                     )
                 );
             }
         ),
-        'post' => 'controllers\production\ChanceController:start',
-        'put'  => 'controllers\production\ChanceController:play',
+        'put'  => array(
+            'controllers\production\ChanceController:play',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "Moment"
+                    )
+                );
+            }
+        ),
+    ),
+    '/games/moment/play' => array(
+        'get'  => array(
+            'controllers\production\ChanceController:play',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "Moment"
+                    )
+                );
+            }
+        ),
+    ),
+    /**
+     * Random games
+     */
+    '/games/random' => array(
+        'get'  => array(
+            'controllers\production\ChanceController:start',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "QuickGame"
+                    )
+                );
+            }
+        ),
+        'put'  => array(
+            'controllers\production\ChanceController:play',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "QuickGame"
+                    )
+                );
+            }
+        ),
+    ),
+    '/games/random/play' => array(
+        'get'  => array(
+            'controllers\production\ChanceController:play',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "QuickGame"
+                    )
+                );
+            }
+        ),
+    ),
+    /**
+     * Chance games
+     */
+    '/games/chance/' => array(
+        'get'  => array(
+            'controllers\production\ChanceController:list',
+            function ($route) {
+                $route->setParams(
+                    array("key" => "ChanceGame")
+                );
+            }
+        ),
+    ),
+    '/games/chance/:id' => array(
+        'get'  => array(
+            'controllers\production\ChanceController:item',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        ),
+        'post'  => array(
+            'controllers\production\ChanceController:start',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        ),
+        'put'  => array(
+            'controllers\production\ChanceController:play',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        ),
+    ),
+    '/games/chance/:id/play' => array(
+        'get'  => array(
+            'controllers\production\ChanceController:play',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        ),
     ),
     /**
      * Comments

@@ -1,9 +1,12 @@
 <?php
+
 use \SettingsModel;
+
+Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Banner extends Entity
 {
-    private
+    protected
         $_id = 0,
         $_group = '',
         $_key = '',
@@ -46,7 +49,15 @@ class Banner extends Entity
 
     public function render()
     {
-        if($this->isTitle())
-            return include_once(PATH_TEMPLATES.'banner/'.$this->getTemplate().'.php');
+        $response = null;
+
+        if($this->isTitle()) {
+            ob_start();
+            include_once(PATH_TEMPLATES . 'banner/' . $this->getTemplate() . '.php');
+            $response = ob_get_contents();
+            ob_end_clean();
+        }
+
+        return $response;
     }
 }

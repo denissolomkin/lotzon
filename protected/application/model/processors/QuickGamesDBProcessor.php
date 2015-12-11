@@ -51,9 +51,10 @@ class QuickGamesDBProcessor
 
     }
 
-    public function getList($count = NULL, $beforeId = NULL, $afterId = NULL, $offset = NULL)
+    public function getList($publishedGames = NULL, $count = NULL, $beforeId = NULL, $afterId = NULL, $offset = NULL)
     {
         $sql = "SELECT * FROM `QuickGames` WHERE 1"
+            . (($publishedGames === NULL) ? "" : " AND `QuickGames`.`Id` IN (" . implode(',', $publishedGames) . ")")
             . (($beforeId === NULL) ? "" : " AND `QuickGames`.`Id` < $beforeId")
             . (($afterId === NULL) ? "" : " AND `QuickGames`.`Id` > $afterId")
             . " ORDER BY `QuickGames`.`Id` DESC"

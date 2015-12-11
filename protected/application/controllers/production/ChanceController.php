@@ -2,11 +2,12 @@
 
 namespace controllers\production;
 
-use \Application, \Player, \EntityException, \CountriesModel, \LotterySettings, \QuickGamesModel;
-use \ChanceGamesModel, \GameSettingsModel;
+use \Application, \Player, \EntityException, \Banner, \CountriesModel, \LotterySettings, \QuickGamesModel;
+use \ChanceGamesModel, \GameSettingsModel, \SettingsModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
+Application::import(PATH_APPLICATION . 'model/entities/Banner.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class ChanceController extends \AjaxController
@@ -37,7 +38,7 @@ class ChanceController extends \AjaxController
         return true;
     }
 
-    public function listAction()
+    public function listAction($key)
     {
 
         if (!$this->request()->isAjax()) {
@@ -46,19 +47,21 @@ class ChanceController extends \AjaxController
 
         $this->authorizedOnly();
 
-        $count = $this->request()->get('count', self::$messagesPerPage);
+        $count = $this->request()->get('count', self::$chancesPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId = $this->request()->get('after_id', NULL);
         $offset = $this->request()->get('offset', NULL);
+        $lang = $this->session->get(Player::IDENTITY)->getLang();
+        $publishedGames = GameSettingsModel::instance()->getSettings($key)->getGames();
 
         try {
-            $list = MessagesModel::instance()->getList($count, $beforeId, $afterId, $offset);
+            $list = QuickGamesModel::instance()->getList($publishedGames, $count, $beforeId, $afterId, $offset);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
         }
 
-        $resp = array(
+        $response = array(
             'res' => array(
                 'games' => array(
                     'chance' => array()
@@ -66,14 +69,18 @@ class ChanceController extends \AjaxController
             )
         );
 
-        foreach ($list as $id => $chance) {
-            $response['res']['games']['chance'][$chance->getId()] = $chance->export('talk');
+        foreach ($list as $id => $game) {
+
+            $game->setLang($lang)
+                ->loadPrizes();
+
+            $response['res']['games']['chance'][$game->getId()] = $game->export('list');
         }
 
-        $this->ajaxResponse($resp);
+        $this->ajaxResponseCode($response);
     }
 
-    public function previewAction($key = 'QuickGame')
+    public function itemAction($key = 'QuickGame', $id = null)
     {
         if (!$this->request()->isAjax()) {
             return false;
@@ -81,29 +88,50 @@ class ChanceController extends \AjaxController
 
         $this->authorizedOnly();
 
-        $id = $key == 'ChanceGame' ? $this->request()->get('id', null) : null;
-        $settings = GameSettingsModel::instance()->getSettings($key);
-        $player = $this->session->get(Player::IDENTITY);
+        $publishedGames = GameSettingsModel::instance()->getSettings($key);
 
-        if (!$settings) {
+        if (!$publishedGames || !is_array($publishedGames->getGames())) {
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
-        } elseif (is_array($settings->getGames()) &&
-            $game = QuickGamesModel::instance()->getList()[$id ?: $settings->getGames()[array_rand($settings->getGames())]]
-        ) {
+        }
+
+        switch($key){
+            case 'ChanceGame':
+                break;
+            case 'QuickGame':
+            case 'Moment':
+                $id = $publishedGames->getGames()[array_rand($publishedGames->getGames())];
+                break;
+        }
+
+        if (!$id) {
+            $this->ajaxResponse(array(), 0, 'GAME_LIST_EMPTY');
+        }
+
+        $lang = $this->session->get(Player::IDENTITY)->getLang();
+
+        if ($game = QuickGamesModel::instance()->getList()[$id]) {
 
             $game->setKey($key)
-                ->setLang($player->getLang())
+                ->setLang($lang)
                 ->loadPrizes();
 
-            $resp = $game->getStat();
-            $this->ajaxResponse($resp);
+            $response = array(
+                'res' => array(
+                    'games' => array(
+                        'chance' => array()
+                    )
+                )
+            );
+
+            $response['res']['games']['chance'][$game->getId()] = $game->export('item');
+            $this->ajaxResponseCode($response);
 
         }
 
         $this->ajaxResponse(array(), 0, 'GAME_NOT_FOUND');
     }
 
-    public function startAction($key = 'QuickGame')
+    public function startAction($key = 'QuickGame', $id = null)
     {
 
         if (!$this->request()->isAjax()) {
@@ -112,20 +140,47 @@ class ChanceController extends \AjaxController
 
         $this->authorizedOnly();
 
-        $id = $key == 'ChanceGame' ? $this->request()->get('id', null) : null;
-        $player = $this->session->get(Player::IDENTITY);
-        $settings = GameSettingsModel::instance()->getSettings($key);
+        $publishedGames = GameSettingsModel::instance()->getSettings($key);
+        $response = array();
 
-        if (!$settings) {
-            $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
+        switch($key){
+            case 'ChanceGame':
+                break;
+            case 'QuickGame':
+            case 'Moment':
+                $id = $publishedGames->getGames()[array_rand($publishedGames->getGames())];
+                break;
+        }
 
-        } elseif ($settings->getOption('min') && $this->session->get($key . 'LastDate') + $settings->getOption('min') * 60 > time()) {
-            $this->ajaxResponse(array(), 0, 'TIME_NOT_YET');
+        switch(true){
+            case !($player = $this->session->get(Player::IDENTITY)):
+                $error = 'PLAYER_NOT_FOUND';
+                break;
 
-        } elseif ($this->session->has($key) && $game = $this->session->get($key)) {
-            $resp = $game->getStat();
+            case !$id:
+                $error = 'GAME_LIST_EMPTY';
+                break;
 
-        } elseif (is_array($settings->getGames()) && $game = QuickGamesModel::instance()->getList()[$id ?: $settings->getGames()[array_rand($settings->getGames())]]) {
+            case !$publishedGames:
+                $error = 'GAME_NOT_ENABLED';
+                break;
+
+            case $publishedGames->getOption('min') && $this->session->get($key . 'LastDate') + $publishedGames->getOption('min') * 60 > time():
+                $error = 'TIME_NOT_YET';
+                break;
+
+            default:
+                $error = false;
+                break;
+        }
+
+        if ($error)
+            $this->ajaxResponse(array(), 0, $error);
+
+        if ($this->session->has($key) && $game = $this->session->get($key)) {
+            $response['res'] = $game->export('stat');
+
+        } elseif ($game = QuickGamesModel::instance()->getList()[$id]) {
 
             if ($game->getOption('p'))
                 if ($player->getBalance()['Points'] < $game->getOption('p'))
@@ -133,8 +188,14 @@ class ChanceController extends \AjaxController
                 else
                     $player->addPoints($game->getOption('p') * -1, $game->getTitle($player->getLang()));
 
+            $response['player'] = array(
+                "balance" => array(
+                    "points" => $player->getPoints()
+                )
+            );
+
             $game->setUserId($player->getId())
-                ->setTimeout($settings->getOption('timeout'))
+                ->setTimeout($publishedGames->getOption('timeout'))
                 ->setTime(time())
                 ->setKey($key)
                 ->setLang($player->getLang())
@@ -145,13 +206,13 @@ class ChanceController extends \AjaxController
             while (!$this->session->has($key))
                 $this->session->set($key, $game);
 
-            $resp = $game->getStat();
+            $response['res'] = $game->export('stat');
         }
 
         if (isset($game)) {
 
-            $banner = new \Banner;
-            $resp['block'] = $banner
+            $banner = new Banner;
+            $response['block'] = $banner
                 ->setGroup('game' . $game->getId())
                 ->setCountry($player->getCountry())
                 ->setTemplate('chance')
@@ -161,12 +222,12 @@ class ChanceController extends \AjaxController
         }
 
         if ($this->session->has($key))
-            $this->ajaxResponse($resp);
+            $this->ajaxResponseCode($response);
         else
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
     }
 
-    public function playAction($key = 'QuickGame')
+    public function playAction($key = 'QuickGame', $id = null)
     {
 
         if (!$this->request()->isAjax()) {
@@ -175,26 +236,37 @@ class ChanceController extends \AjaxController
 
         $this->authorizedOnly();
 
-        $error = false;
+        switch(true){
+            case !($player = $this->session->get(Player::IDENTITY)):
+                $error = 'PLAYER_NOT_FOUND';
+                break;
 
-        if (!($player = $this->session->get(Player::IDENTITY))) {
+            case !$this->session->has($key):
+                $error = 'GAME_NOT_FOUND';
+                break;
 
-        } elseif (!$this->session->has($key)) {
-            $error = 'GAME_NOT_FOUND';
-        } elseif (!($cell = $this->request()->post('cell', null))) {
-            $error = 'CELL_NOT_SELECT';
-        } elseif (!($game = $this->session->get($key))) {
-            $error = 'WRONG_GAME';
-        } elseif ($game->isOver()) {
-            $error = 'GAME_IS_OVER';
-            $this->session->remove($key);
+            case !($cell = $this->request()->get('cell', null)):
+                $error = 'CELL_NOT_SELECT';
+                break;
+
+            case !($game = $this->session->get($key)):
+                $error = 'WRONG_GAME';
+                break;
+
+            case $game->isOver():
+                $error = 'GAME_IS_OVER';
+                $this->session->remove($key);
+                break;
+
+            default:
+                $error = false;
+                break;
         }
 
-        if ($error) {
-            $this->ajaxResponse(array(), 0, 'PLAYER_NOT_FOUND');
-        }
+        if ($error)
+            $this->ajaxResponse(array(), 0, $error);
 
-        $res = $game->doMove($cell);
+        $response = $game->doMove($cell);
 
         if ($game->isOver()) {
 
@@ -219,6 +291,6 @@ class ChanceController extends \AjaxController
 
         }
 
-        $this->ajaxResponse($res);
+        $this->ajaxResponseCode($response);
     }
 }

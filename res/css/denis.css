@@ -140,3 +140,10 @@ img.loading {
     50%  { opacity: 0.5; }
     100% { opacity: 1.0; }
 }
+
+pre {    font-family: monospace;
+    padding: 20px;
+    background: aliceblue;
+    margin: 20px;
+    border-radius: 10px;
+    border: 1px solid black;}

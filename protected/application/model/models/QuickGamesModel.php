@@ -10,7 +10,7 @@ class QuickGamesModel extends Model
 {
     public function init()
     {
-        $this->setProcessor(Config::instance()->cacheEnabled ? new QuickGamesCacheProcessor() : new QuickGamesDBProcessor());
+        $this->setProcessor(0 && Config::instance()->cacheEnabled ? new QuickGamesCacheProcessor() : new QuickGamesDBProcessor());
     }
 
     public static function myClassName()

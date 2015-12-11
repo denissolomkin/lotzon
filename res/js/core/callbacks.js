@@ -114,6 +114,7 @@
 
             "games-online": Carousel.initOwl,
             "games-online-view": Games.init,
+            "games-chance-view": function(data){document.getElementById('games-chance-view-item').innerHTML = JSON.stringify(data.json, null, 2)},
             "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
@@ -132,7 +133,54 @@
             "reports-referrals": Content.initDaterange,
 
             "support-rules": Support.init,
-            "support-faq": Support.init
+            "support-faq": Support.init,
+
+            "games-moment": function(res) {
+
+                res = res.json;
+                var node;
+
+                if(node = document.getElementById('games-moment-build'))
+                    node.innerHTML = JSON.stringify(res, null, 2);
+
+                if (res.Field && res.Field.x) {
+                    var html = '';
+                    for (var x = 1; x < res.Field.x; x++)
+                        for (var y = 1; y < res.Field.y; y++)
+                            html += "<button type=button onclick=\"Form.get.call(" +
+                            "this,{" +
+                            "href:'/games/chance/{{id}}/play', " +
+                            "data: {cell:'" + x + "x" + y + "'}," +
+                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
+                }
+
+                if(node = document.getElementById('games-moment-cells'))
+                    node.innerHTML = html;
+            },
+
+            "games-random": function(res) {
+
+                res = res.json;
+                var node;
+                
+                if(node = document.getElementById('games-random-build'))
+                    node.innerHTML = JSON.stringify(res, null, 2);
+
+
+                if (res.Field && res.Field.x) {
+                    var html = '';
+                    for (var x = 1; x <= res.Field.x; x++)
+                        for (var y = 1; y <= res.Field.y; y++)
+                            html += "<button type=button onclick=\"Form.get.call(" +
+                            "this,{" +
+                            "href:'/games/random/play', " +
+                            "data: {cell:'" + x + "x" + y + "'}," +
+                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
+                }
+
+                if(node = document.getElementById('games-random-cells'))
+                    node.innerHTML = html;
+            }
 
         },
 
@@ -147,6 +195,23 @@
             "communication-comments": Comments.after.reply,
 
             "communication-notifications": Comments.renderNotifications, // delete
+            "games-chance-view": function(res) {
+
+                this.nextElementSibling.nextElementSibling.innerHTML = '';
+                this.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = ''
+                if (res.Field && res.Field.x) {
+                    var html = '';
+                    for (var x = 1; x < res.Field.x; x++)
+                        for (var y = 1; y < res.Field.y; y++)
+                            html += "<button type=button onclick=\"Form.get.call(" +
+                            "this,{" +
+                            "href:'/games/chance/{{id}}/play', " +
+                            "data: {cell:'" + x + "x" + y + "'}," +
+                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
+                }
+                this.nextElementSibling.nextElementSibling.innerHTML = html;
+                console.log(this,html)
+            }
 
         },
 
