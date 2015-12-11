@@ -8,16 +8,47 @@
             submit: 0
         },
 
-        send: function (form) {
+        get: function(form){
+            form = Form.parseForm(form);
+            form.method = 'get';
+            Form.send.call(this, form)
+        },
 
-            var that = this;
+        post: function(form){
+            form = Form.parseForm(form);
+            form.method = 'post';
+            Form.send.call(this, form)
+        },
 
+        put: function(form){
+            form = Form.parseForm(form);
+            form.method = 'put';
+            Form.send.call(this, form)
+        },
+
+        delete: function(form){
+            form = Form.parseForm(form);
+            form.method = 'delete';
+            Form.send.call(this, form)
+        },
+
+        parseForm: function(form){
             if(typeof form === 'string')
                 form = {
                     action: form,
-                    method: 'get',
+                    method: 'delete',
                     data: null
                 };
+            return form;
+        },
+
+        send: function (form) {
+
+            var that = this;
+            form = Form.parseForm(form);
+            if (form.href){
+                form.action = form.href;
+            }
 
             form.callback = U.parse(U.parse(form.action), 'tmpl');
             form.url = U.generate(form.action, form.method);
@@ -32,7 +63,9 @@
             setTimeout(function () {
                 $.ajax({
                     url: form.url,
-                    method: /192.168.56.101/.test(location.hostname) ? "post" : form.method,
+                    method: /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
+                        ? "post"
+                        : form.method,
                     data: form.data,
                     dataType: 'json',
                     success: function (data) {
@@ -44,6 +77,8 @@
 
                         } else {
 
+                            form.json = data;
+
                             Form.stop.call(that)
                                 .message.call(that, data.message);
 
@@ -54,6 +89,9 @@
                                 Callbacks[form.method.toLowerCase()][form.callback].call(that, data.res);
                             }
 
+                            if ('after' in form && typeof form.after === 'function') {
+                                form.after.call(that, form);
+                            }
                         }
 
                     },
@@ -233,10 +271,9 @@
             if(!DOM.isNode(form))
                 return Form;
 
-            formContenteditable = form.querySelectorAll("div[contenteditable='true']");
-
             // clear form after adding new entities
-            if (form.getAttribute('method').toLowerCase() === 'post') {
+            if (form.tagName === 'FORM' && form.getAttribute('method').toLowerCase() === 'post') {
+                formContenteditable = form.querySelectorAll("div[contenteditable='true']");
                 form.reset();
                 for (var i = 0; i < formContenteditable.length; i++) {
                     formContenteditable[i].innerHTML = '';

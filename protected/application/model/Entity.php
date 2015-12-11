@@ -3,7 +3,7 @@
 Application::import(PATH_APPLICATION . 'model/Model.php');
 Application::import(PATH_APPLICATION . 'model/models/*');
 
-abstract class Entity 
+abstract class Entity
 {
 
     /**
@@ -86,7 +86,7 @@ abstract class Entity
             $this->_modelClass = $modelClassName;
 
             return $this;
-        } 
+        }
 
         throw new EntityException("Invalid model class specified", 500);
     }
@@ -114,7 +114,7 @@ abstract class Entity
     }
 
     public function update()
-    {   
+    {
         $this->validate('update');
         try {
             $model = $this->getModelClass();
@@ -136,7 +136,7 @@ abstract class Entity
             throw new EntityException($e->getMessage(), $e->getCode());
         }
 
-        return null;        
+        return null;
     }
 
     public function fetch()
@@ -145,7 +145,7 @@ abstract class Entity
         try {
             $model = $this->getModelClass();
             $model::instance()->fetch($this);
-            
+
         }  catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
         }
@@ -164,7 +164,7 @@ abstract class Entity
     }
 }
 
-class EntityException extends ApplicationException 
+class EntityException extends ApplicationException
 {
 
 }
