@@ -1,0 +1,42 @@
+{
+	"player": {
+		"balance": {
+			"points": "1117"
+		}
+	},
+	"res": {
+		"Title": "\u0428\u0430\u043d\u0441 \u043d\u0430 75 \u0431\u0430\u043b\u043b\u043e\u0432",
+		"Description": "\u0417\u0430 \u043e\u0434\u043d\u043e\u0439 \u0438\u0437 \u044f\u0447\u0435\u0435\u043a \u0441\u043a\u0440\u044b\u0442\u044b 75 \u0431\u0430\u043b\u043b\u043e\u0432: ",
+		"Prizes": [{
+			"t": "points",
+			"v": "75"
+		}],
+		"Audio": {
+			"start": "",
+			"click": "",
+			"hit": "",
+			"miss": "",
+			"win": "",
+			"lose": ""
+		},
+		"Uid": "566fd1995a450",
+		"Id": "2",
+		"Key": "QuickGame",
+		"Timeout": false,
+		"Field": {
+			"p": "",
+			"c": 1,
+			"m": "",
+			"e": "scale",
+			"s": "",
+			"r": "5",
+			"b": "5",
+			"w": "100",
+			"h": "100",
+			"x": "6",
+			"y": "1"
+		},
+		"GameField": []
+	},
+	"block": null
+}

@@ -1,23 +1,29 @@
-.ph-date,
-.ph-date-text {
-  width: 22%;
-}
+
 
 .ph-won,
 .ph-won-text {
-  width: 24%;
+  width: 35%;
+  padding: 0 20px 0 20px ;
 }
 
 .ph-method,
 .ph-method-text {
-  width: 36%;
+  width: 35%;
+  padding: 0 50px 0 0 ;
 }
 
 .ph-status,
 .ph-status-text {
-  width: 18%;
+  width: 15%;
 }
 
+.ph-header {
+  margin: 0 -20px 0;
+  padding: 0 20px;
+  height: 45px;
+  line-height: 45px;
+  background: #FAFAFA;
+}
 // ------------------ //
 
 .r-nickname,
@@ -54,6 +60,7 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
 // ------------------ //
 .r-header {
   display: block;
@@ -118,4 +125,13 @@
   display: table-cell;
   padding: 0 10px;
   margin-right: 5px;
+}
+
+.cabinet-referrals  {
+  .content-box-cat {
+    margin-bottom: 20px;
+  }
+}
+.cabinet-referrals .content-box-item-top {
+    padding: 0 10px 0;
 }

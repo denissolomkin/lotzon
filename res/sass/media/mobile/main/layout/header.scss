@@ -192,3 +192,12 @@ padding: 20px 0;
   box-shadow: none;
   background: none;
 }
+.fixed {
+  & header {
+    position: fixed;
+    top: 0;
+  }
+  & > .wrapper > .container {
+    margin-top: 40px; 
+  }  
+}

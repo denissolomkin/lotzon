@@ -1,6 +1,28 @@
+
+
+.ph-won,
+.ph-won-text {
+  width: 35%;
+  padding: 0 20px 0 20px ;
+}
+
+.ph-method,
+.ph-method-text {
+  width: 35%;
+  padding: 0 50px 0 0 ;
+}
+
+.ph-status,
+.ph-status-text {
+  width: 15%;
+}
+
 .ph-header {
-  margin: 0 -30px 30px;
-  padding: 0 30px;
+  margin: 0 -20px 0;
+  padding: 0 20px;
+  height: 45px;
+  line-height: 45px;
+  background: #FAFAFA;
 }
 
 .ph-item {
@@ -11,14 +33,10 @@
 
 // ------------------ //
 
-.ph-date,
-.ph-date-text {
-  width: 25%;
-}
 
 .ph-won,
 .ph-won-text {
-  width: 24%;
+  width: 35%;
 }
 
 .ph-method,
@@ -28,12 +46,12 @@
 
 .ph-status,
 .ph-status-text {
-  width: 16%;
+  width: 15%;
 }
 
 
 .cabinet-referrals .content-box-item-top {
-  padding: 20px 10px 0;
+  padding: 0 10px 0;
 }
 
 

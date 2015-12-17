@@ -2,11 +2,11 @@
 
 
     <div class="bet">{{getSplittedEl mode "-" "1"}} {{#if (eq (getSplittedEl mode "-" "0") "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
-    <div class="players-number">{{getSplittedEl mode "-" "2"}} <i class="i-person2"></i></div>
+    <div class="players-number">{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>
     {{#if variation}}
     <div class="game-type">
         {{#each variation}}
-        <i class="i-star i-games-{{@key}}-{{this}}"></i>
+        <i class="i-games-{{@key}}-{{this}}"></i>
         {{/each}}
     </div>
     {{/if}}

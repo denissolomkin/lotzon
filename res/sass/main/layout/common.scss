@@ -87,10 +87,6 @@ input {
 button {
   opacity: 0.8;
   -webkit-appearance: none;
-  &:hover {
-    background: #000;
-    color: #fff;
-  }
   &.on {
     opacity: 1;
     border-color: black;
@@ -100,21 +96,51 @@ button {
 
 .btn-flat {
   cursor: pointer;
-  border: 1px solid #000;
-  color: #000;
+  border: 1px solid rgba(0,0,0,1);
+  color: rgba(0,0,0,1);
   height: 30px;
   line-height: 30px;
   font-size: 13px;
   padding: 0 35px;
   text-transform: uppercase;
   background: none;
+  transition: all 0.2s linear;
   &:hover {
-    background: #000;
-    color: #fff;
+    border: 1px solid rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.5);
+  }
+  &.active {
+    border: 1px solid rgba(0,0,0,0.3);
+    color: rgba(0,0,0,0.3);
   }
   &.loading {
-    opacity: 0.5;
+    border: 1px solid rgba(225,225,225,1);
+    color: rgba(0,0,0,0.5);
+    position: relative;
+    cursor: default;
+    background: url(img/sprite.png) 0 -473px;
+    -webkit-animation: AnimationFlat 4s infinite linear;
+    -moz-animation: AnimationFlat 4s  infinite linear;
+    animation: AnimationFlat 4s  infinite linear;
   }
+}
+
+
+@-webkit-keyframes AnimationFlat {
+  0%{background-position:-52px -473px;}
+  50%{background-position:-26px -473px;}
+  100%{background-position:  0 -473px;}
+}
+
+@-moz-keyframes AnimationFlat {
+  0%{background-position:-52px -473px;}
+  50%{background-position:-26px -473px;}
+  100%{background-position:  0 -473px;}
+ }
+@keyframes AnimationFlat { 
+  0%{background-position:-52px -473px;}
+  50%{background-position:-26px -473px;}
+  100%{background-position:  0 -473px;}
 }
 
 .status {
@@ -154,22 +180,31 @@ button {
   position: relative;
 }
 
-.content-box-header.back {
+& .back {
   cursor: pointer;
-  &:hover {
-    background: #d1e3e5;
-  }
-  &:before {
-    content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 35px;
+  height: 50px;
+  padding: 10px;
+    &:before {
     display: block;
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 3px;
     width: 15px;
     height: 30px;
-    background: url(img/sprite.png) -178px -188px;
+    font-size: 30px;
+    transition: all 0.2s linear;
+  }
+  &:hover {
+    &:before {
+      opacity:0.5;
+    }
   }
 }
+
 
 .content-box-tabs {
   height: 100%;
@@ -207,13 +242,10 @@ button {
 }
 
 .content-box-item {
+  padding-top: 20px;
   padding: 20px 10px 20px;
   min-height: 500px;
 }
-
-// .content-box-item.with-cat {
-//   padding-top: 52px;
-// }
 
 .ticket-item {
   padding: 15px 0 !important;
@@ -396,7 +428,6 @@ input.input-radio:checked + label.input-radio:before {
   position: relative;
   top: 3px;
   cursor: pointer;
-
   font-family: "fontello";
   display: inline-block;
   text-align: center;
@@ -405,9 +436,8 @@ input.input-radio:checked + label.input-radio:before {
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  &:before {
-
-  }
+  font-size: 19px;
+  font-weight: normal
 
 }
 

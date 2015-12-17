@@ -170,6 +170,13 @@
   box-shadow: none;
   background: none; }
 
+.fixed header {
+  position: fixed;
+  top: 0; }
+
+.fixed > .wrapper > .container {
+  margin-top: 40px; }
+
 #blog-post-view .post-comments .render-list .message-form-wrapper {
   padding-left: 0; }
 
@@ -338,6 +345,9 @@
 #lottery-history-view .content-box-header span {
   display: none; }
 
+#lottery-history-view .content-box-header span.back {
+  display: inline-block; }
+
 .cabinet-game-history .content-box-item-content {
   min-height: 482px; }
 
@@ -393,10 +403,10 @@
   .content-box-item.cabinet-referrals {
     padding: 120px 20px 30px;
     min-height: 0; }
-  .r-item:nth-child(even) {
-    background: #fff; }
-  .r-item:nth-child(odd) {
-    background: #fafafa; }
+  .r-item {
+    border-top: 1px solid #fafafa; }
+  .r-item:last-child {
+    border-bottom: 1px solid #fafafa; }
   .r-item {
     padding: 15px 20px; }
   .cabinet-referrals .calendar-range {
@@ -495,6 +505,36 @@
     padding-top: 8px;
     margin-right: 30px; } }
 
+@media (max-width: 767px) {
+  .ph-inf-name {
+    display: block;
+    float: left; }
+  .ph-won,
+  .ph-won-text {
+    width: 100%; }
+  .ph-method,
+  .ph-method-text {
+    width: 100%; }
+  .ph-status,
+  .ph-status-text {
+    width: 100%; }
+  .ph-date, .ph-date-text {
+    width: 100%; }
+  .ph-item {
+    height: 139px; }
+    .ph-item > div {
+      display: block;
+      float: left;
+      height: 45px;
+      transform: none;
+      position: static;
+      height: 34px; }
+      .ph-item > div > div {
+        position: relative;
+        top: 50%;
+        transform: translate(0, -50%);
+        min-width: 100px; } }
+
 @media (min-width: 480px) {
   .container {
     min-width: 320px;
@@ -518,6 +558,7 @@
   #blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
     margin: 0 -20px;
     font: 17px handbookpro-regular;
+    padding-top: 20px;
     padding: 10px 20px;
     background: #fafafa;
     text-align: left; } }
@@ -946,8 +987,7 @@
     float: left; }
   .r-active {
     text-align: center; }
-  .r-nickname,
-  .r-nickname-text {
+  .r-nickname, .r-nickname-text {
     width: 33%; }
   .r-registered,
   .r-registered-text {
@@ -972,6 +1012,13 @@
     display: table-cell;
     padding: 0 10px;
     margin-right: 5px; } }
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .ph-item > div > div {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    min-width: 135px; } }
 
 @media (min-width: 768px) {
   .container {
@@ -1148,6 +1195,10 @@
       border-bottom: 1px solid #cbc7c6; }
   .menu-balance-btn {
     display: none; }
+  .menu-btn-item.menu-btn .i-menu:before {
+    top: 13px; }
+  .menu-btn-item.menu-profile-btn .i-person:before {
+    top: 17px; }
   .post-inf {
     margin-bottom: 20px; }
   .post-date {
@@ -1740,18 +1791,24 @@
     margin: 0 -20px;
     padding-left: 20px;
     padding-right: 20px; }
-  .ph-date,
-  .ph-date-text {
-    width: 22%; }
   .ph-won,
   .ph-won-text {
-    width: 22%; }
+    width: 35%;
+    padding: 0 20px 0 20px; }
   .ph-method,
   .ph-method-text {
-    width: 38%; }
+    width: 35%;
+    padding: 0 50px 0 0; }
   .ph-status,
   .ph-status-text {
-    width: 18%; }
+    width: 15%; }
+  .ph-header {
+    display: block;
+    margin: 0 -20px 0;
+    padding: 0 20px;
+    height: 45px;
+    line-height: 45px;
+    background: #FAFAFA; }
   .r-header,
   .r-item {
     margin-left: -20px;

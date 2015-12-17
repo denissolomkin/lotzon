@@ -160,3 +160,16 @@
 .menu-balance-btn {
     display: none;
 }
+
+.menu-btn-item {
+  &.menu-btn .i-menu {
+    &:before {
+      top: 13px;
+    }
+  }
+  &.menu-profile-btn .i-person {
+    &:before {
+      top: 17px;
+    }
+  }
+}

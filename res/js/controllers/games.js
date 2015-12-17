@@ -1,7 +1,7 @@
 var Games = {
     init: function () {
         Games.tabs();
-        Games.timeouts("#games-online-view-connect > form",5000);
+//        Games.timeouts("#games-online-view-connect > form",5000);
         
         return;
     },

@@ -1587,11 +1587,15 @@
 		& span {
 			float: left;
 			position: relative;
-			left: 50px;
+			left: 15px;
 			top: 2px;
 			font-size: 15px;
 			font-weight: normal;
+			&.back {
+				left: 10px;
+			}
 		}
+
 	}
 	& .container {
 		max-width: 500px;

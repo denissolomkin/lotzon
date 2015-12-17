@@ -4,18 +4,18 @@
         <a href="/games/chance/{{id}}">
             <div class="game">
                 <div class="game-img">
-                    <img src="/filestorage/games/Chance{{ id }}.png" alt="">
+                    <img src="/filestorage/games/{{ img }}" alt="">
                 </div>
                 <div class="game-info">
                     <div class="game-name">{{ title }}</div>
                     <div class="game-fund">
-                        <span class="fund_title">Призовой фонд</span>
-                        <div class="fund_points">{{ fund_points }} <span>{{i18n "title-of-points"}}</span></div>
-                        <div class="fund_money">{{ fund_money }} <span>грн</span></div>
+                        <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
+                        <div class="fund_points">{{number fund_points }} <span>{{i18n "title-of-points"}}</span></div>
+                        <div class="fund_money">{{number fund_money }} <span>{{player "getCurrency"}}</span></div>
                     </div>
-                    <div class="players">{{ players }} игроков</div>
+                    <div class="players">{{ players }} {{i18n "title-games-players"}}</div>
                 </div>
-                <div class="game-button">подробней</div>
+                <div class="game-button">{{i18n "button-games-details"}}</div>
             </div>
         </a>
         {{/each}}

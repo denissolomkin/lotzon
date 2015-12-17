@@ -234,6 +234,7 @@
 
         renderAnimation: function() {
 
+
             var json = this.data,
                 arrRandom = [],
                 renderBalls = {

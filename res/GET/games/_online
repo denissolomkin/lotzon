@@ -46,7 +46,7 @@
                     },
                     "fund": {
                         "MONEY": 0.26,
-                        "POINT": 598
+                        "POINT": 59800
                     },
                     "rating": [],
                     "maxPlayers": "4",
@@ -143,8 +143,8 @@
                         }
                     },
                     "fund": {
-                        "MONEY": 0.26,
-                        "POINT": 598
+                        "MONEY": 10000.26,
+                        "POINT": 59800000
                     },
                     "rating": [],
                     "maxPlayers": "4",

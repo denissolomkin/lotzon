@@ -66,6 +66,12 @@
                 "button-games-exit": "Выход",
                 "button-games-money": "Деньги",
                 "button-games-points": "Баллы",
+                "button-games-read-more": "Читать далее",
+                "button-games-details": "подробней",
+                "button-games-online": "online",
+                "button-games-create": "создать",
+                "button-games-spin": "спин",
+                "button-games-rating": "рейтинг",
 
                 "title-error": "Ошибка",
                 "title-points": "баллы",
@@ -93,6 +99,10 @@
                 "title-games-lastWin": "выигрыш",
                 "title-games-credits": "баланс",
                 "title-games-bet": "ставка",
+                "title-games-settings": "настройки",
+                "title-games-prize-fund": "Призовой фонд",
+                "title-games-rules": "Правила игры",
+                "title-games-players": "игроков",
 
                 "title-slider-jackpot": "Джекпот",
                 "title-slider-players": "Участников",
@@ -127,10 +137,10 @@
                 "title-reports-payments-status-paid": "Выплачено",
                 "title-reports-payments-status-processed": "В обработке",
                 "title-reports-payments-status-denied": "Отказано",
-                "title-reports-payments-order-date": "Дата заявки",
-                "title-reports-payments-order-status": "Статус заявки",
-                "title-reports-payments-order-type":"Способ получения",
-                "title-reports-payments-order-prize":"Выигрыш",
+                "title-reports-payments-order-date": "Дата",
+                "title-reports-payments-order-status": "Статус",
+                "title-reports-payments-order-type":"Получения",
+                "title-reports-payments-order-prize":"Вывод",
 
 
                 "title-profile-name": "Имя",

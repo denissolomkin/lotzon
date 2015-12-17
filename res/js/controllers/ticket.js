@@ -121,7 +121,7 @@
                 Ticket.clearBalls();
 
                 if (Player.favorite.length) {
-
+                   
                     for (num in Player.favorite)
 
                         /* increase in performance */

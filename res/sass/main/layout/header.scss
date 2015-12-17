@@ -233,7 +233,7 @@ div {
   display: none;
   min-width: 250px;
   padding: 20px;
-  right: 60px;
+  right: 69px;
 }
 
 // BALANCE MENU ----------------------------- //
@@ -321,19 +321,24 @@ div {
     box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.3);
   }
 }
-
-.menu-btn:before {
-  width: 20px;
-  height: 18px;
-  background-position: 0 -192px;
-  top: 11px;
+.menu-btn .i-menu {
+  position: relative;
+  display:inline-block;
 }
-
-.menu-profile-btn:before {
-  width: 20px;
-  height: 20px;
-  background-position: -566px -55px;
+.menu-btn .i-menu:before {
+  background: none;
+  top: 6px;
+  font-size: 29px;
+  position: relative;
+}
+.menu-profile-btn .i-person {
+  position: relative;
+}
+.menu-profile-btn .i-person:before {
+  background:none;
   top: 10px;
+  font-size: 21px;
+  position: relative;
 }
 
 .menu-balance-btn:before {
@@ -530,9 +535,9 @@ header .owl-theme .owl-controls .owl-page span {
     position: fixed;
     top: 0;
   }
-  & > .wrapper > .container {
-    margin-top: 70px; 
-  }  
+  // & > .wrapper > .container {
+  //   margin-top: 70px; 
+  // }  
 }
 // ------------ICONS----------- //
 [class^="i-"]:before, [class*=" i-"]:before {
@@ -604,3 +609,6 @@ header .owl-theme .owl-controls .owl-page span {
 .i-tw-black:before { content: '\e823'; } /* '' */
 .i-wk:before { content: '\e824'; } /* '' */
 .i-wk-black:before { content: '\e825'; } /* '' */
+.i-pencil:before { content: '\e826'; } /* '' */
+.i-x:before { content: '\e827'; } /* '' */
+.i-o:before { content: '\e828'; } /* '' */

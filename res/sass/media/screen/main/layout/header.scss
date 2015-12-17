@@ -133,14 +133,14 @@
 }
 .menu-btn-item {
   padding: 0 20px;
-  &.menu-btn {
+  &.menu-btn .i-menu {
     &:before {
-      top: 18px;
+      top: 13px;
     }
   }
-  &.menu-profile-btn {
+  &.menu-profile-btn .i-person {
     &:before {
-      top: 18px;
+      top: 17px;
     }
   }
 }

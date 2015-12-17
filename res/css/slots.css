@@ -75,7 +75,7 @@ border block - styles
     border-bottom: none;
     box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.5) inset;
     overflow: hidden;
-    z-index: 100;
+    z-index: 1;
 }
 /*
 end border block - styles
@@ -182,18 +182,47 @@ Beet container styles
 #SlotsContainer #betContainer #spinButton {
     display: inline-block;
     width: 24%;
-    padding-top: 13.3%;
-    background-image: url(/res/img/games/spin/spin_button.png);
+    padding-top: 12.3%;
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: 0% 2%;
     float: right;
     cursor: pointer;
+    position: relative;
+    background: #7dd121;
+    border-radius: 15px;
+    box-shadow: inset 0px -1px 3px 0px rgba(0,0,0,0.35), 1px 2px 5px 0px rgba(0,0,0,0.55);
+    color: #fff;
+    margin: 0.5%;
+    transition: all .2s ease;
+    border: 1px solid rgba(0,0,0,0.35);
 }
-#SlotsContainer #betContainer #spinButton:hover { background-position: 0 32%; }
-#SlotsContainer #betContainer #spinButton:active { background-position: 0 63%; }
-#SlotsContainer #betContainer #spinButton.disabled { background-position: 0 93%; cursor: default; }
+#SlotsContainer #betContainer #spinButton > span{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: block;
+    text-align: center;
+    transform: translateY(-50%);
+    color: #fff;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.4);
+    text-transform: uppercase;
+    box-sizing: border-box;
+    padding: 5px;
+}
+#SlotsContainer #betContainer #spinButton:hover {
+    box-shadow: inset 0px -1px 2px 0px rgba(0,0,0,0.15), 1px 1px 2px 0px rgba(0,0,0,0.35);
+}
+#SlotsContainer #betContainer #spinButton:hover > span{}
 
+#SlotsContainer #betContainer #spinButton.disabled {
+    background: #ccc;
+    box-shadow: inset 0px 1px 1px 0px rgba(0,0,0,0.15), 0px 0px 0px 0px rgba(0,0,0,0);
+    border: 1px solid rgba(0,0,0,0.40);
+}
+#SlotsContainer #betContainer #spinButton.disabled > span{
+    text-shadow: 0px 1px 0px rgba(0,0,0,0.6);
+}
 #SlotsContainer #betContainer p {
     display: block;
     width: 100%;
@@ -214,7 +243,7 @@ Beet container styles
 }
 #SlotsContainer #betContainer #betSpinDown { top: 35px; background-position: 0 -50px; }
 
-#SlotsContainer #betContainer {/* min-width: 350px; */ height: auto; /* width: 370px; */margin-top: 20px;}
+#SlotsContainer #betContainer {height: auto; margin-top: 20px;}
 #SlotsContainer #betContainer span {}
 #SlotsContainer #betContainer #dayWinnings { display: none; }
 #SlotsContainer #betContainer #lifetimeWinnings { display: none; }
@@ -236,23 +265,36 @@ END Beet container styles
 /*
 Slot-mashine styles
 */
-#SlotsContainer #slotMachineContainer:after,
-#SlotsContainer #slotMachineContainer:before {
-    content: "⏵";
-    font-size: 60px;
+/*-webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    transform: rotateY(-180deg);*/
+
+#SlotsContainer #slotMachineContainer > .i-play{
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    transform: rotateY(-180deg);
+    font-size: 35px;
     position: absolute;
-    top: 50%;
-    left: -30px;
-    transform: translateY(-23%);
-    color: #ff1938;
+    top: 51.5%;
     text-shadow: 3px 1px 6px rgba(0,0,0,0.6);
+    color: #ff1938;
+    right: -20px;
+    z-index: 1;
+    display: block;
 }
-#SlotsContainer #slotMachineContainer:before {
-    content: "⏴";
-    left: initial;
-    text-shadow: -3px 1px 6px rgba(0,0,0,0.6);
-    z-index: 11111;
-    right: -30px;
+#SlotsContainer #slotMachineContainer > .i-play:first-child{
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(deg);
+    -o-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    text-shadow: 3px 1px 6px rgba(0,0,0,0.6);
+    left: -20px;
+    right: initial;
 }
 #SlotsContainer #slotMachineContainer {
     position: relative;
@@ -431,16 +473,16 @@ END Slot-buttons styles
 
 
 /*screen resizes*/
-@media  all and ( max-width: 1199px ){
-    /*machine fix scale*/
+/*@media  all and ( max-width: 1199px ){
+    machine fix scale
     #SlotsContainer #slotMachineContainer #ReelContainer{
-        transform: translate(-50%,-50%) scale(0.875);
+         transform: translate(-50%,-50%) scale(0.875); 
         -o-transform: translate(-50%,-50%) scale(0.875);
         -ms-transform: translate(-50%,-50%) scale(0.875);
         -moz-transform: translate(-50%,-50%) scale(0.875);
-        -webkit-transform: translate(-50%,-50%) scale(0.875);
+         -webkit-transform: translate(-50%,-50%) scale(0.875); 
     }
-}
+}*/
 @media  all and ( max-width: 1009px) {
     /*machine fix scale*/
     #SlotsContainer #slotMachineContainer #ReelContainer{
@@ -525,16 +567,13 @@ END Slot-buttons styles
     #SlotsContainer #betContainer {
         margin-top: 20px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 60px;
-        transform: translateY(-23%);
-        right: -6%;
-        left: initial;
+    #SlotsContainer #slotMachineContainer .i-play {
+        font-size: 35px;
+        right: -5%;
+        top: 51%;
     }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
+    #SlotsContainer #slotMachineContainer .i-play:first-child{
+        left: -5%;
     }
     #SlotsContainer .button{
         padding: 20px;
@@ -568,17 +607,6 @@ END Slot-buttons styles
     #SlotsContainer #betContainer {
         margin-top: 15px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 50px;
-        transform: translateY(-20%);
-        right: -6%;
-        left: initial;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
-    }
     #SlotsContainer .button{
         padding: 17px;
     }
@@ -604,16 +632,9 @@ END Slot-buttons styles
     #SlotsContainer #betContainer {
         margin-top: 20px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 50px;
-        transform: translateY(-26%);
-        right: -6%;
-        left: inherit;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: inherit;
+    #SlotsContainer #slotMachineContainer .i-play {
+        font-size: 30px;
+        top: 52%;
     }
     #SlotsContainer .button{}
     #SlotsContainer #betContainer p {
@@ -642,16 +663,12 @@ END Slot-buttons styles
     #SlotsContainer #betContainer {
         margin-top: 15px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 40px;
-        transform: translateY(-26%);
-        right: -6%;
-        left: inherit;
+    #SlotsContainer #slotMachineContainer .i-play {
+        font-size: 20px;
+        right: -4%;
     }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
+    #SlotsContainer #slotMachineContainer .i-play:first-child{
+        left: -4%;
     }
     #SlotsContainer .button{
         padding: 13px;
@@ -684,16 +701,6 @@ END Slot-buttons styles
     }
     #SlotsContainer #betContainer {
         margin-top: 10px;
-    }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 40px;
-        transform: translateY(-26%);
-        left: -6%;
-    }
-    #SlotsContainer #slotMachineContainer:before{
-        right: -6%;
-        left: inherit;
     }
     #SlotsContainer .button{
         padding: 12px;
@@ -772,16 +779,13 @@ iPad                            703	1024*/
     #SlotsContainer #betContainer {
         margin-top: 15px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 50px;
-        transform: translateY(-26%);
-        right: -6%;
-        left: initial;
+    #SlotsContainer #slotMachineContainer .i-play {
+        font-size: 20px;
+        right: -4%;
+        top: 52.5%;
     }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
+    #SlotsContainer #slotMachineContainer .i-play:first-child{
+        left: -4%;
     }
     #SlotsContainer .button{
         padding: 11px;
@@ -817,17 +821,6 @@ iPad                            703	1024*/
     #SlotsContainer #betContainer {
         margin-top: 10px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 50px;
-        transform: translateY(-28%);
-        right: -6%;
-        left: initial;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
-    }
     #SlotsContainer .button{
         padding: 11px;
     }
@@ -861,17 +854,6 @@ iPad                            703	1024*/
     }
     #SlotsContainer #betContainer {
         margin-top: 10px;
-    }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 40px;
-        transform: translateY(-26%);
-        right: -6%;
-        left: initial;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
     }
     #SlotsContainer .button{
         padding: 11px;
@@ -907,17 +889,6 @@ iPad                            703	1024*/
     #SlotsContainer #betContainer {
         margin-top: 10px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 50px;
-        transform: translateY(-31%);
-        right: -6%;
-        left: initial;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
-    }
     #SlotsContainer .button{
         padding: 11px;
     }
@@ -952,17 +923,6 @@ iPad                            703	1024*/
     #SlotsContainer #betContainer {
         margin-top: 0px;
     }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 40px;
-        transform: translateY(-26%);
-        right: -6%;
-        left: initial;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
-    }
     #SlotsContainer .button{
         padding: 11px;
     }
@@ -990,17 +950,6 @@ iPad                            703	1024*/
     }
     #SlotsContainer .machine-roll {
         width: 320px;
-    }
-    #SlotsContainer #slotMachineContainer:after,
-    #SlotsContainer #slotMachineContainer:before {
-        font-size: 40px;
-        transform: translateY(-26%);
-        right: -6%;
-        left: initial;
-    }
-    #SlotsContainer #slotMachineContainer:after{
-        left: -6%;
-        right: initial;
     }
     #SlotsContainer .button{
         padding: 11px;

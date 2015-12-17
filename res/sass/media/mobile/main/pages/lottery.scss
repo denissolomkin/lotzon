@@ -135,7 +135,9 @@
 #lottery-history-view .content-box-header span {
 	display: none;
 }
-
+#lottery-history-view .content-box-header span.back {
+	display: inline-block;
+}
 .cabinet-game-history .content-box-item-content {
   min-height: 482px;
 }

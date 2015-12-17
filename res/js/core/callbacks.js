@@ -24,7 +24,7 @@
 
                     {".mark-message": Message.do.markMessage},
                     //
-                     {"div.back": Navigation.do.backBlock}
+                     {".back": Navigation.do.backBlock}
 
                 ]
             });
@@ -136,7 +136,7 @@
             "support-faq": Support.init,
 
             "games-moment": function(res) {
-
+                alert(1);
                 res = res.json;
                 var node;
 

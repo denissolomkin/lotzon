@@ -36,8 +36,7 @@
     text-align: center;
   }
   // ------------------ //
-  .r-nickname,
-  .r-nickname-text {
+  .r-nickname, .r-nickname-text {
     width: 33%;
   }
   .r-registered,
@@ -72,5 +71,18 @@
     display: table-cell;
     padding: 0 10px;
     margin-right: 5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ph-item {
+    & > div {
+        & > div {
+        position: relative; 
+        top: 50%;
+        transform: translate(0, -50%);
+        min-width: 135px;
+      }
+    }
   }
 }

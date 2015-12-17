@@ -3,11 +3,11 @@
 		padding: 120px 20px 30px;
     	min-height: 0;
 	}
-	.r-item:nth-child(even) {
-		background: #fff;
+	.r-item {
+		border-top: 1px solid #fafafa;
 	}
-	.r-item:nth-child(odd){
-		background: #fafafa;
+	.r-item:last-child{
+		border-bottom: 1px solid #fafafa;
 	}
 	.r-item{
 		padding: 15px 20px;
@@ -146,3 +146,43 @@
   }
 }
 
+@media (max-width: 767px) {
+  .ph-inf-name {
+    display: block;
+    float: left;
+  }
+  .ph-won,
+  .ph-won-text {
+    width: 100%
+  }
+
+  .ph-method,
+  .ph-method-text {
+    width: 100%
+  }
+
+  .ph-status,
+  .ph-status-text {
+    width: 100%;
+  }
+  .ph-date, .ph-date-text {
+    width: 100%;
+  }
+  .ph-item {
+    height: 139px;
+    & > div {
+      display: block;
+      float: left;
+      height: 45px;
+      transform: none;
+      position: static;
+      height: 34px;
+        & > div {
+        position: relative; 
+        top: 50%;
+        transform: translate(0, -50%);
+        min-width: 100px;
+      }
+    }
+  }
+}

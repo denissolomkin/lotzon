@@ -196,10 +196,10 @@ html {
 
 .menu-btn-item {
   padding: 0 20px; }
-  .menu-btn-item.menu-btn:before {
-    top: 18px; }
-  .menu-btn-item.menu-profile-btn:before {
-    top: 18px; }
+  .menu-btn-item.menu-btn .i-menu:before {
+    top: 13px; }
+  .menu-btn-item.menu-profile-btn .i-person:before {
+    top: 17px; }
 
 .menu-btns {
   height: 55px;
@@ -435,7 +435,8 @@ html {
   transition: all 0.1s linear; }
   .comment-reply .separator {
     display: inline;
-    margin: 0 10px; }
+    margin: 0 10px;
+    margin-top: 0; }
 
 .comment-reply-btn {
   cursor: pointer; }
@@ -1097,21 +1098,26 @@ div.comment-reply-btn {
 .content-box-item.cabinet-convert {
   padding: 30px 20px; }
 
-.ph-date,
-.ph-date-text {
-  width: 22%; }
-
 .ph-won,
 .ph-won-text {
-  width: 24%; }
+  width: 35%;
+  padding: 0 20px 0 20px; }
 
 .ph-method,
 .ph-method-text {
-  width: 36%; }
+  width: 35%;
+  padding: 0 50px 0 0; }
 
 .ph-status,
 .ph-status-text {
-  width: 18%; }
+  width: 15%; }
+
+.ph-header {
+  margin: 0 -20px 0;
+  padding: 0 20px;
+  height: 45px;
+  line-height: 45px;
+  background: #FAFAFA; }
 
 .r-nickname,
 .r-nickname-text {
@@ -1198,6 +1204,12 @@ div.comment-reply-btn {
   padding: 0 10px;
   margin-right: 5px; }
 
+.cabinet-referrals .content-box-cat {
+  margin-bottom: 20px; }
+
+.cabinet-referrals .content-box-item-top {
+  padding: 0 10px 0; }
+
 .c-friend {
   width: 297px;
   margin: 0 20px 30px 0; }
@@ -1223,7 +1235,7 @@ div.comment-reply-btn {
   .js-detect {
     opacity: 1; }
   .header-left {
-    width: 780px; }
+    width: 770px; }
   .header-logo {
     margin-right: 65px; }
   .text-result {
@@ -1425,27 +1437,38 @@ div.comment-reply-btn {
     margin: 30px 30px 40px; }
   .content-box-item.cabinet-convert {
     padding: 30px 95px; }
+  .ph-won,
+  .ph-won-text {
+    width: 35%;
+    padding: 0 20px 0 20px; }
+  .ph-method,
+  .ph-method-text {
+    width: 35%;
+    padding: 0 50px 0 0; }
+  .ph-status,
+  .ph-status-text {
+    width: 15%; }
   .ph-header {
-    margin: 0 -30px 30px;
-    padding: 0 30px; }
+    margin: 0 -20px 0;
+    padding: 0 20px;
+    height: 45px;
+    line-height: 45px;
+    background: #FAFAFA; }
   .ph-item {
     margin: 0 -30px;
     padding-left: 30px;
     padding-right: 30px; }
-  .ph-date,
-  .ph-date-text {
-    width: 25%; }
   .ph-won,
   .ph-won-text {
-    width: 24%; }
+    width: 35%; }
   .ph-method,
   .ph-method-text {
     width: 35%; }
   .ph-status,
   .ph-status-text {
-    width: 16%; }
+    width: 15%; }
   .cabinet-referrals .content-box-item-top {
-    padding: 20px 10px 0; }
+    padding: 0 10px 0; }
   .c-friend {
     width: 350px;
     margin: 0 40px 30px 0; }

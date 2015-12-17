@@ -41,6 +41,26 @@ $(function () {
         'getSplittedEl': function (str, delimiter, el) {
             return str.split(delimiter)[el];
         },
+        /**
+         * @description оборачивает аргументы 
+         * 
+         * @param {string} funcNmae
+         * @returns {String}
+         */
+        'createFunc': function(funcNmae){
+            if(arguments.length > 1){
+                var params = "";
+                for (var i = 1; i < arguments.length -1; i++){
+                    params+=arguments[i];
+                    if(i < arguments.length - 2){
+                        params+=",";
+                    }
+                        
+                }
+
+                return funcNmae+"("+params+")";
+            }
+        },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
         'count': Player.getCount,

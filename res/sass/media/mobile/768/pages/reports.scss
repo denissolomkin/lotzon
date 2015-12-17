@@ -9,26 +9,33 @@
   padding-right: 20px;
 }
 
-// ------------------ //
 
-.ph-date,
-.ph-date-text {
-  width: 22%;
-}
+
 
 .ph-won,
 .ph-won-text {
-  width: 22%;
+  width: 35%;
+  padding: 0 20px 0 20px ;
 }
 
 .ph-method,
 .ph-method-text {
-  width: 38%;
+  width: 35%;
+  padding: 0 50px 0 0 ;
 }
 
 .ph-status,
 .ph-status-text {
-  width: 18%;
+  width: 15%;
+}
+
+.ph-header {
+  display: block;
+  margin: 0 -20px 0;
+  padding: 0 20px;
+  height: 45px;
+  line-height: 45px;
+  background: #FAFAFA;
 }
 
 // ------------------ //
