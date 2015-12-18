@@ -1,0 +1,1 @@
+ALTER TABLE `SEO` ADD `WebSocketReload` INT(1) NULL AFTER `Debug`;
