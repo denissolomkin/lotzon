@@ -96,7 +96,7 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
-        global $isMobile, $player, $config;
+        global $isMobile, $player, $config, $slider, $lottery;
 
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
