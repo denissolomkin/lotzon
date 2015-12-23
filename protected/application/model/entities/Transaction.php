@@ -104,4 +104,20 @@ class Transaction extends Entity
     {
         return true;
     }
+
+    public function export($to)
+    {
+        switch ($to) {
+            case 'list':
+                $ret = array(
+                    'date'        => $this->getDate(),
+                    'description' => $this->getDescription(),
+                    'sum'         => $this->getSum(),
+                    'balance'     => $this->getBalance(),
+                );
+                break;
+        }
+
+        return $ret;
+    }
 }

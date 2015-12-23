@@ -580,7 +580,12 @@ Config::instance()->publicResources = array(
     '/lottery/gold' => array(
         'post'   => 'controllers\production\LotteryController:buyGoldTicket'
     ),
-
+    /**
+     * Reports
+     */
+    '/reports/transactions' => array(
+        'get' => 'controllers\production\ReportsController:transactions'
+    ),
     /**
      * Users
      */
