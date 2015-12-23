@@ -144,6 +144,17 @@ class ReportsController extends \AjaxController
         }
 
         foreach ($list as $order) {
+            switch ($order['status']) {
+                case 1:
+                    $status = 'paid';
+                    break;
+                case
+                    2:$status = 'denied';
+                    break;
+                default:
+                    $status = 'processed';
+            }
+            $order['status'] = $status;
             $response['res']['reports']['payments'][] = $order;
         }
 
