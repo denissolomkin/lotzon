@@ -29,6 +29,7 @@ class Lottery extends \PrivateArea
             'title'              => 'Lottery settings',
             'activeMenu'         => $this->activeMenu,
             'supportedCountries' => $supportedCountries,
+            'goldPrice'          => SettingsModel::instance()->getSettings('goldPrice')->getValue(),
             'settings'           => $settings,
         ));
     }
@@ -103,11 +104,19 @@ class Lottery extends \PrivateArea
 
             $settings = new LotterySettings();
 
-            $prizes = $this->request()->post('prizes', array());
-            $lotteries = $this->request()->post('lotteries', array());
+            $prizes     = $this->request()->post('prizes', array());
+            $goldPrizes = $this->request()->post('goldPrizes', array());
+            $lotteries  = $this->request()->post('lotteries', array());
+            $goldPrice  = $this->request()->post('goldPrice', array());
+
+            SettingsModel::instance()->getSettings('goldPrice')->setValue($goldPrice)->create();
 
             foreach ($prizes as $country => $prize) {
                 $settings->setPrizes($country, $prize);
+            }
+
+            foreach ($goldPrizes as $country => $prize) {
+                $settings->setGoldPrizes($country, $prize);
             }
 
             foreach ($lotteries as $time) {

@@ -33,16 +33,31 @@
                     <span style="color: #CCCCCC;font-size:21pt;">&bull;</span>
                 <? } ?>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div class="input-group pull-right" data-balls="<?=$i?>">
-                    <input type="text" class="form-control input-md" value="<?=@$settings->getPrizes('UA')[$i]['sum']?>"> 
+                    <input type="text" class="form-control input-md" value="<?=@$settings->getPrizes('UA')[$i]['sum']?>">
                     <span class="input-group-addon">
                         <input type="checkbox" <?=(@$settings->getPrizes('UA')[$i]['currency'] == LotterySettings::CURRENCY_MONEY || $i > 3 ? 'checked' : '')?>>
                     </span>
                 </div>
             </div>
+            <div class="col-md-4" style="background-color: #E8CF6B;">
+                <div class="input-group pull-right" data-balls-gold="<?=$i?>">
+                    <input type="text" class="form-control input-md" value="<?=@$settings->getGoldPrizes('UA')[$i]['sum']?>" style="background-color: #E8CF6B;">
+                    <span class="input-group-addon"  style="background-color: #E8CF6B;">
+                        <input type="checkbox" <?=(@$settings->getGoldPrizes('UA')[$i]['currency'] == LotterySettings::CURRENCY_MONEY || $i > 3 ? 'checked' : '')?>>
+                    </span>
+                </div>
+            </div>
         </div>  
         <? } ?>
+
+        <div class="row">
+            <div class="col-md-4 pull-right">
+                Цена Gold-билета
+                <input type="text" class="form-control input-md" value="<?=@$goldPrice['UA']?>" name="goldPrice">
+            </div>
+        </div>
 
         <div class="row">
 
@@ -199,16 +214,26 @@ $ajaxedSettings = array(
     'lotteryTotal' => array(),
     'isJackpot'    => array(),
     'prizes'       => array(),
+    'goldPrizes'   => array(),
     'lotteries'    => array(),
+    'goldPrice'    => array(),
 ); 
 
 $ajaxedSettings['countryCoefficients'] = (object)$ajaxedSettings['countryCoefficients'];
 $ajaxedSettings['countryRates'] = (object)$ajaxedSettings['countryRates'];
 
+foreach ($goldPrice as $country => $price) {
+    $ajaxedSettings['goldPrice'][$country] = $price;
+}
 foreach ($settings->getPrizes() as $country => $prize) {
     $ajaxedSettings['prizes'][$country] = $prize;
 }
-$ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
+foreach ($settings->getGoldPrizes() as $country => $prize) {
+    $ajaxedSettings['goldPrizes'][$country] = $prize;
+}
+$ajaxedSettings['goldPrice']  = (object)$ajaxedSettings['goldPrice'];
+$ajaxedSettings['prizes']     = (object)$ajaxedSettings['prizes'];
+$ajaxedSettings['goldPrizes'] = (object)$ajaxedSettings['goldPrizes'];
 
 ?>
 <script>
@@ -330,6 +355,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         gameSettings.isJackpot = $('.jackpot').hasClass('btn-success') ? 1 : 0;
         gameSettings.countryCoefficients[country] = $('input[name="coof"]').val();
         gameSettings.countryRates[country] = $('input[name="rate"]').val();
+        gameSettings.goldPrice[country] = $('input[name="goldPrice"]').val();
 
         gameSettings.prizes[country] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
@@ -337,6 +363,17 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
             var currency = $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? 'money' : 'point';
 
             gameSettings.prizes[country][ballsCount] = {
+                'sum' : won,
+                'currency' : currency
+            }
+        });
+
+        gameSettings.goldPrizes[country] = {};
+        $([1,2,3,4,5,6]).each(function(id, ballsCount) {
+            var won = $('[data-balls-gold="' + ballsCount + '"]').find('input[type="text"]').val();
+            var currency = $('[data-balls-gold="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? 'money' : 'point';
+
+            gameSettings.goldPrizes[country][ballsCount] = {
                 'sum' : won,
                 'currency' : currency
             }
@@ -449,6 +486,7 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
         // save pervious country data
         gameSettings.countryCoefficients[prevCountry] = $('input[name="coof"]').val();
         gameSettings.countryRates[prevCountry] = $('input[name="rate"]').val();
+        gameSettings.goldPrice[prevCountry] = $('input[name="goldPrice"]').val();
 
         gameSettings.prizes[prevCountry] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
@@ -460,11 +498,22 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
                 'currency' : currency
             }
         });
+        gameSettings.goldPrizes[prevCountry] = {};
+        $([1,2,3,4,5,6]).each(function(id, ballsCount) {
+            var won = $('[data-balls-gold="' + ballsCount + '"]').find('input[type="text"]').val();
+            var currency = $('[data-balls-gold="' + ballsCount + '"]').find('input[type="checkbox"]:checked').length ? '<?=LotterySettings::CURRENCY_MONEY?>' : '<?=LotterySettings::CURRENCY_POINT?>';
 
-        // rebuild form values to current country data
+            gameSettings.goldPrizes[prevCountry][ballsCount] = {
+                'sum' : won,
+                'currency' : currency
+            }
+        });
+
+            // rebuild form values to current country data
         $('input[name="coof"]').val(gameSettings.countryCoefficients[currentCountry] || "0");
         $('input[name="rate"]').val(gameSettings.countryRates[currentCountry] || "0");
-        
+        $('input[name="goldPrice"]').val(gameSettings.goldPrice[currentCountry] || "0");
+
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             if (gameSettings.prizes[currentCountry] != undefined) {
                 $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val(gameSettings.prizes[currentCountry][ballsCount].sum);
@@ -472,6 +521,13 @@ $ajaxedSettings['prizes'] = (object)$ajaxedSettings['prizes'];
             } else {
                 $('[data-balls="' + ballsCount + '"]').find('input[type="text"]').val("0");
                 $('[data-balls="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', ballsCount > 3 ? true : false);
+            }
+            if (gameSettings.goldPrizes[currentCountry] != undefined) {
+                $('[data-balls-gold="' + ballsCount + '"]').find('input[type="text"]').val(gameSettings.goldPrizes[currentCountry][ballsCount].sum);
+                $('[data-balls-gold="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', gameSettings.goldPrizes[currentCountry][ballsCount].currency == '<?=LotterySettings::CURRENCY_MONEY?>');
+            } else {
+                $('[data-balls-gold="' + ballsCount + '"]').find('input[type="text"]').val("0");
+                $('[data-balls-gold="' + ballsCount + '"]').find('input[type="checkbox"]').prop('checked', ballsCount > 3 ? true : false);
             }
         });  
     });

@@ -195,23 +195,11 @@ class Index extends \SlimController\SlimController
             "totalBalls"    => \LotterySettings::TOTAL_BALLS,
             "requiredBalls" => \LotterySettings::REQUIRED_BALLS,
             "totalTickets"  => \LotterySettings::TOTAL_TICKETS,
-            /* todo player tickets */
-            "filledTickets" => array(
-                "1" => array(37, 2, 3, 4, 5, 6),
-                "2" => array(3, 2, 8, 34, 15, 19),
-                "3" => null,
-                "4" => array(1, 2, 3, 4, 16, 6),
-                "5" => array(31, 22, 13, 44, 25, 9),
-                "6" => array(32, 2, 14, 34, 15, 19),
-                "7" => false,
-                "8" => false
-            ),
-            /* todo gold price */
-            "priceGold"     => 3,
+            "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($playerObj->getId()),
+            "priceGold"     => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
             "prizes"        => array(
                 "default" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
-                /* todo gold prizes */
-                "gold"    => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)
+                "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country)
             ));
 
         return include("res/index.php");

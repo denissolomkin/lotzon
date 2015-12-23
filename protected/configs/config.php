@@ -572,6 +572,16 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\BlogsController:similar'
     ),
     /**
+     * Lottery
+     */
+    '/lottery/ticket' => array(
+        'post'   => 'controllers\production\LotteryController:createTicket'
+    ),
+    '/lottery/gold' => array(
+        'post'   => 'controllers\production\LotteryController:buyGoldTicket'
+    ),
+
+    /**
      * Users
      */
     '/users/search/' => array(
