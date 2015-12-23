@@ -26,4 +26,9 @@ class ShopOrdersModel extends Model
     {
         return $this->getProcessor()->getOrdersToProcessCount($status);
     }
+
+    public function getOrdersList($playerId, $limit = NULL, $offset = NULL)
+    {
+        return $this->getProcessor()->getOrdersList($playerId, $limit, $offset);
+    }
 }

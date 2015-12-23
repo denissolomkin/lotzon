@@ -586,6 +586,9 @@ Config::instance()->publicResources = array(
     '/reports/transactions' => array(
         'get' => 'controllers\production\ReportsController:transactions'
     ),
+    '/reports/payments' => array(
+        'get' => 'controllers\production\ReportsController:payments'
+    ),
     /**
      * Users
      */
