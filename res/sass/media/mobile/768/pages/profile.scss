@@ -132,7 +132,6 @@
 
 .ae-combination {
   margin-bottom: 0;
-  border-bottom: 1px solid #b4aeae;
 }
 
 .ae-favorite-combination {
@@ -241,4 +240,21 @@ span.input-prefix {
 
 .content-box-item.cabinet-convert {
   padding: 30px 58px;
+}
+
+#profile-settings .hidden-notice { 
+  margin: 0;
+}
+
+#profile-settings .settings .strip {
+  border-top: 1px solid #f5f5f5;
+  margin-right: -20px;
+  margin-left: -20px;
+  padding-right: 30px;
+  padding-left: 30px;
+  height: 45px;
+}
+
+.ae-combination-box {
+    margin: 0 -20px;
 }

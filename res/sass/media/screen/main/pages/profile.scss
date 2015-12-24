@@ -39,4 +39,24 @@
 .ae-name-block {
     width: 470px;
 }
+
+.settings .strip {
+    border-top: 1px solid #f5f5f5;
+    margin-right: -20px;
+    margin-left: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    height: 45px;
+}
+.ae-combination-box {
+    margin: 0 -20px;
+}
+}
+
+.mobile-notice {
+  display:none!important;   
+}
+
+#profile-settings .hidden-notice { 
+  margin: 0;
 }

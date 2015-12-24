@@ -201,3 +201,10 @@ padding: 20px 0;
     margin-top: 40px; 
   }  
 }
+@media (max-width: 767px) {
+  .i-mobile-pensil {
+    &:before {
+      content: '\e826'; 
+    }
+  }
+}
