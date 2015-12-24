@@ -10,6 +10,9 @@
                 <button type="button" class="btn btn-md btn-success tab" data-tab="image">
                     <span class="glyphicon glyphicon-picture"></span>
                 </button>
+                <button type="button" class="btn btn-md btn-success tab" data-tab="image_new">
+                    <span class="glyphicon glyphicon-picture"></span>
+                </button>
                 <button type="button" class="btn btn-md btn-success tab" data-tab="audio">
                     <span class="fa fa-volume-up"></span>
                 </button>
@@ -58,11 +61,16 @@
                     </div>
 
                         <div class="row-fluid tab" id="key">
+                            <div class="gameId"></div>
                             <input type="text" name='game[Key]' class="form-control k" placeholder="KeyName">
                         </div>
 
                         <div class="row-fluid tab" id="image">
                             <img class="i">
+                        </div>
+
+                        <div class="row-fluid tab" data-path="filestorage/" id="image_new">
+                            <img class="i_new">
                         </div>
 
                         <div class="row-fluid tab" id="variations">
@@ -336,6 +344,7 @@
 
             holder = $("#editGame").find('form');
             holder.find('.lang').first().click();
+            holder.find('.gameId').html('Online'+game.Id);
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
             holder.find('.t').val(game.Field.t);
@@ -359,11 +368,12 @@
             }).bootstrapToggle((game.Field.v == 1 || game.Field.v == 'on' ? 'on' : 'off'));
 
             if (game.Key) {
-                $('#editGame button[data-tab="text"]').next().attr('data-tab', 'image');
+                $('#editGame button[data-tab="text"]').next().attr('data-tab', 'image').next().show();
                 holder.find('.k').val(game.Key);
-                holder.find('.i').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
+                holder.find('.i').attr('src', '//<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
+                holder.find('.i_new').attr('src', '//<?=$_SERVER['SERVER_NAME']?>/filestorage/games/Online' + game.Id + ".png?" + (new Date().getTime()));
             } else {
-                $('#editGame button[data-tab="text"]').next().attr('data-tab', 'key');
+                $('#editGame button[data-tab="text"]').next().attr('data-tab', 'key').next().hide();
                 holder.find('.k').val('');
             }
 
@@ -504,7 +514,7 @@
                 (game.Field.f ? '<i class="fa fa-flag-checkered"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-flag-checkered fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')+
                 (game.Field.v ? '<i class="fa fa-eye"></i>' : '<span class="fa-stack fa-lg"><i class="fa fa-eye fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>')
             );
-            holder.find('img').attr('src', 'http://<?=$_SERVER['SERVER_NAME']?>/tpl/img/games/' + game.Key + ".png?" + (new Date().getTime()));
+            holder.find('img').attr('src', '//<?=$_SERVER['SERVER_NAME']?>/filestorage/games/Online' + game.Id + ".png?" + (new Date().getTime()));
 
         };
 

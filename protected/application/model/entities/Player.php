@@ -4,6 +4,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/Entity.php');
 Application::import(PATH_APPLICATION . 'model/entities/Transaction.php');
+Application::import(PATH_APPLICATION . 'model/entities/LotterySettings.php');
 
 class Player extends Entity
 {
@@ -1315,6 +1316,28 @@ class Player extends Entity
 
     }
 
+    public function checkBalance($currency, $sum, $withCoefficient = true)
+    {
+        $balance = $this->getBalance();
+        switch ($currency) {
+
+            case LotterySettings::CURRENCY_MONEY:
+            case 'Money':
+                if($withCoefficient) {
+                    $sum *= \CountriesModel::instance()->getCountry($this->getCountry())->loadCurrency()->getCoefficient();
+                }
+                return $balance['Money'] >= $sum;
+                break;
+
+            case LotterySettings::CURRENCY_POINT:
+            case 'Points':
+                return $balance['Points'] >= $sum;
+                break;
+
+        }
+
+    }
+
     public function disableSocial()
     {
         $model = $this->getModelClass();
@@ -1602,7 +1625,6 @@ class Player extends Entity
             if (isset($data['TicketsFilled'])) {
                 $this->_isTicketsFilled = $data['TicketsFilled'];
             }
-
             if (isset($data['Ping'])) {
                 $this->initDates($data);
             }

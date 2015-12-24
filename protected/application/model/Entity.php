@@ -12,7 +12,8 @@ abstract class Entity
      */
     private $_modelClass = '';
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->init();
     }
 
@@ -37,23 +38,22 @@ abstract class Entity
     {
 
         $methodPrefix = substr($method, 0, 3);
-        $key = lcfirst(substr($method, 3));
-        $property = '_' . $key;
+        $key          = lcfirst(substr($method, 3));
+        $property     = '_' . $key;
 
         if (property_exists($this, $property)) {
             if (($methodPrefix == 'set') && (count($params) == 1)) {
-                $value = $params[0];
+                $value           = $params[0];
                 $this->$property = $value;
+
                 return $this;
             } elseif ($methodPrefix == 'get') {
                 if (isset($this->$property)) {
 
-                    if((count($params) == 1 && ($value = $params[0]) && is_array($this->$property))){
+                    if ((count($params) == 1 && ($value = $params[0]) && is_array($this->$property))) {
                         $property = $this->$property;
-                        if (isset($property[$value]) && $property[$value] && $property[$value] != '')
-                            return nl2br($property[$value]);
-                        else
-                            return nl2br(reset($property));
+
+                        return isset($property[$value]) ? $property[$value] : null;
                     }
 
                     return $this->$property;
@@ -64,8 +64,8 @@ abstract class Entity
         }
 
         $methodPrefix = substr($method, 0, 2);
-        $key = lcfirst(substr($method, 2));
-        $property = '_' . $key;
+        $key          = lcfirst(substr($method, 2));
+        $property     = '_' . $key;
 
         if (property_exists($this, $property)) {
             if ($methodPrefix == 'is') {
@@ -77,7 +77,7 @@ abstract class Entity
             }
         }
 
-        throw new Exception("Method $method is not defined!");
+        throw new Exception("Method $method is not defined in " . get_class($this) . "!");
     }
 
     public function setModelClass($modelClassName)
@@ -89,6 +89,32 @@ abstract class Entity
         }
 
         throw new EntityException("Invalid model class specified", 500);
+    }
+
+    public function getTitle()
+    {
+        $key = func_num_args() ? func_get_arg(0) : null;
+        if ($key && is_array($this->_title)) {
+            if (isset($this->_title[$key]) && $this->_title[$key] && $this->_title[$key] != '')
+                return nl2br($this->_title[$key]);
+            else
+                return nl2br(reset($this->_title[$key]));
+        }
+
+        return $this->_title;
+    }
+
+    public function getDescription()
+    {
+        $key = func_num_args() ? func_get_arg(0) : null;
+        if ($key && is_array($this->_description)) {
+            if (isset($this->_description[$key]) && $this->_description[$key] && $this->_description[$key] != '')
+                return nl2br($this->_description[$key]);
+            else
+                return nl2br(reset($this->_description[$key]));
+        }
+
+        return $this->_description;
     }
 
     public function getModelClass()

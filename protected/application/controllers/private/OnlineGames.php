@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \SettingsModel, \LanguagesModel, \OnlineGame, \OnlineGamesModel, \EntityException, \Admin, \Session2;
+use \Application, \PrivateArea, \SettingsModel, \LanguagesModel, \GameConstructor, \GameConstructorModel, \EntityException, \Admin, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -20,7 +20,7 @@ class OnlineGames extends PrivateArea
 
     public function indexAction()
     {
-       $games = OnlineGamesModel::instance()->getList();
+       $games = GameConstructorModel::instance()->getList()['online'];
        $langs = LanguagesModel::instance()->getList();
        $defaultLang = LanguagesModel::instance()->defaultLang();
 
@@ -38,17 +38,15 @@ class OnlineGames extends PrivateArea
     public function saveAction()
     {
         if ($this->request()->isAjax()) {
+
             $response = array(
                 'status'  => 1,
                 'message' => 'OK',
                 'data'    => array(),
             );
+
             $post=$this->request()->post('game');
-            $game = new OnlineGame();
-
-
-            //if(isset($post['Field']['Variations']))
-            //    $post['Field']['Variations'] = array_filter($post['Field']['Variations']);
+            $game = new GameConstructor();
 
             $game->setId($post['Id'])
                 ->setKey($post['Key'])
@@ -57,10 +55,11 @@ class OnlineGames extends PrivateArea
                 ->setModes($post['Prizes'])
                 ->setOptions($post['Field'])
                 ->setAudio($post['Audio'])
-                ->setEnabled($post['Enabled']?true:false);
+                ->setEnabled($post['Enabled']?true:false)
+                ->setType('online');
 
             try {
-                $game->save();
+                $game->update();
                 $response['data'] = array('Id'  => $game->getId());
             } catch (EntityException $e) {
                 $response['status'] = 0;

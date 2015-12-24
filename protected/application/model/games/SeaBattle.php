@@ -439,7 +439,7 @@ class SeaBattle extends Game
             list($x, $y, $f) = $this->generateHit($cell,array($cell),time());
         } else {
 
-            $miss = $this->getMode() ? rand(0, $this->getMode()) : true;
+            $miss = $this->isSuccessMove() ? rand(0, $this->isSuccessMove()) : true;
             $i=0;
 
             do {

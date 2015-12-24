@@ -531,13 +531,13 @@ min-height: 17px;
     /*border: 1px solid gray;*/
     border-radius: 5px;
 }
-.qgames#editGame #image:hover, .ogames#editGame #image:hover, #image .modal-body div:hover img{ opacity: 0.5; }
-.ogames#editGame #image:hover, #image .modal-body div{
+.qgames#editGame #image_new:hover, .ogames#editGame #image_new:hover, .qgames#editGame #image:hover, .ogames#editGame #image:hover, #image .modal-body div:hover img{ opacity: 0.5; }
+.ogames#editGame #image_new:hover, .ogames#editGame #image:hover,  #image .modal-body div{
     cursor: pointer;
     display:inline-block;
     position: relative;
 }
-.qgames#editGame #image:hover::after, .ogames#editGame #image:hover::after, #image .modal-body div:hover::after {
+.qgames#editGame #image_new:hover::after, .ogames#editGame #image_new:hover::after, .qgames#editGame #image:hover::after, .ogames#editGame #image:hover::after, #image .modal-body div:hover::after {
     position: absolute;
     margin: -20px;
     padding: 10px 12px;
