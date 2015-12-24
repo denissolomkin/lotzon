@@ -132,7 +132,7 @@ abstract class Entity
         try {
             $model = $this->getModelClass();
             $model::instance()->create($this);
-        } catch (ModelException $e) {
+        }  catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
         }
 
@@ -145,7 +145,7 @@ abstract class Entity
         try {
             $model = $this->getModelClass();
             $model::instance()->update($this);
-        } catch (ModelException $e) {
+        }  catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
         }
 
@@ -158,7 +158,7 @@ abstract class Entity
         try {
             $model = $this->getModelClass();
             $model::instance()->delete($this);
-        } catch (ModelException $e) {
+        }  catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
         }
 
@@ -172,7 +172,7 @@ abstract class Entity
             $model = $this->getModelClass();
             $model::instance()->fetch($this);
 
-        } catch (ModelException $e) {
+        }  catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
         }
 
