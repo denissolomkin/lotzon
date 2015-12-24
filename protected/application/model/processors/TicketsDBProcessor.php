@@ -13,8 +13,8 @@ class TicketsDBProcessor implements IProcessor
 			$filds[]= 'B'.((int)$ball);
 		}
 
-		$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`, ".implode(',', $filds).")
-				VALUES							(:playerid, :combination, :dc, :tn, 1, 1, 1, 1, 1, 1)";
+		$sql = "INSERT INTO `LotteryTickets`	(`PlayerId`, `Combination`, `DateCreated`, `TicketNum`, `IsGold`, ".implode(',', $filds).")
+				VALUES							(:playerid, :combination, :dc, :tn, :gold, 1, 1, 1, 1, 1, 1)";
 
 		try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -22,6 +22,7 @@ class TicketsDBProcessor implements IProcessor
                 ':combination' => @serialize($comb),
                 ':dc'          => time(),
                 ':tn'          => $ticket->getTicketNum(),
+                ':gold'        => $ticket->getIsGold(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -145,6 +146,58 @@ class TicketsDBProcessor implements IProcessor
         }
 
         return $sth->fetchColumn(0);
+    }
+
+    public function getUnplayedTickets($playerId=0)
+    {
+        $sql = "SELECT * FROM `LotteryTickets` WHERE `PlayerId` = :playerid AND Id>(SELECT `LastTicketId` FROM `Lotteries` ORDER BY ID DESC LIMIT 1)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':playerid' => $playerId));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $ticketsData = $sth->fetchAll();
+        $tickets     = array();
+        foreach ($ticketsData as $ticketData) {
+            $ticket = new LotteryTicket();
+            $ticket->formatFrom('DB', $ticketData);
+            $tickets[$ticket->getTicketNum()] = $ticket;
+        }
+
+        return $tickets;
+    }
+
+    public function beginTransaction()
+    {
+        try {
+            DB::Connect()->beginTransaction();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        return true;
+    }
+
+    public function commit()
+    {
+        try {
+            DB::Connect()->commit();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        return true;
+    }
+
+    public function rollBack()
+    {
+        try {
+            DB::Connect()->rollBack();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        return true;
     }
 
 }

@@ -75,20 +75,31 @@ class TransactionsDBProcessor implements IProcessor
         return true;
     }
 
-    public function playerPointsHistory($playerId, $limit = 0, $offset = 0)
+    public function playerPointsHistory($playerId, $limit = 0, $offset = 0, $fromDate = null, $toDate = null)
     {
-        return $this->playerHistory($playerId, LotterySettings::CURRENCY_POINT, $limit, $offset);
+        return $this->playerHistory($playerId, LotterySettings::CURRENCY_POINT, $limit, $offset, $fromDate, $toDate);
     }
 
 
-    public function playerMoneyHistory($playerId, $limit = 0, $offset = 0)
+    public function playerMoneyHistory($playerId, $limit = 0, $offset = 0, $fromDate = null, $toDate = null)
     {
-        return $this->playerHistory($playerId, LotterySettings::CURRENCY_MONEY, $limit, $offset);
+        return $this->playerHistory($playerId, LotterySettings::CURRENCY_MONEY, $limit, $offset, $fromDate, $toDate);
     }
 
-    public function playerHistory($playerId, $currency, $limit=null, $offset=null)
+    public function playerHistory($playerId, $currency, $limit=null, $offset=null, $fromDate = null, $toDate = null)
     {   
-        $sql = "SELECT * FROM `Transactions` WHERE `PlayerId` = :plid AND `Currency` = :curr ORDER BY `Date` DESC";
+        $sql = "SELECT
+                *
+                FROM `Transactions`
+                WHERE
+                `PlayerId` = :plid
+                AND
+                `Currency` = :curr
+                "
+            . (($fromDate === NULL) ? "" : " AND (`Date` > $fromDate)")
+            . (($toDate === NULL)  ? "" : " AND (`Date` < $toDate)")
+                ."
+                ORDER BY `Date` DESC";
         if (!is_null($limit)) {
             $sql .= " LIMIT " . (int) $limit;
         }

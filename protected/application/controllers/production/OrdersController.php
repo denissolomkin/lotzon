@@ -105,4 +105,138 @@ class OrdersController extends \AjaxController
             'orderId'   => $order->getId(),
         ));
     }
+
+    public function convertAction()
+    {
+        $sum = $this->request()->post('sum');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId());
+
+        $order = new MoneyOrder();
+        $order->setPlayer($this->session->get(Player::IDENTITY))
+            ->setType('points');
+
+        $data = array(
+            "summ" => array(
+                "title" => "summ",
+                "value" => $sum
+            )
+        );
+
+        $order->setData($data);
+        try {
+            $order->beginTransaction();
+            $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
+            if ($money<$sum) {
+                throw new \Exception();
+            }
+            $order->create();
+            $sum = $order->getData()['summ']['value'];
+            $order->getPlayer()->addMoney(-1*$sum, $order->getText());
+            $order->commit();
+        } catch (\Exception $e) {
+            \TicketsModel::instance()->rollBack();
+            $res = array(
+                "message" => "MONEY_NO_ENOUGH",
+                "res"     => array()
+            );
+            $this->ajaxResponseCode($res, 402);
+        }
+        catch(EntityException $e) {
+            $order->rollBack();
+            $this->ajaxResponseInternalError();
+        }
+
+        $player->fetch();
+        $res = array(
+            "player" => array(
+                "balance" => array(
+                    "money"  => $player->getMoney(),
+                    "points" => $player->getPoints(),
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($res);
+    }
+
+    public function cashoutAction()
+    {
+        $sum    = $this->request()->post('sum');
+        $method = $this->request()->post('method');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        $order = new MoneyOrder();
+        $order->setPlayer($this->session->get(Player::IDENTITY))
+            ->setType($method);
+
+        switch ($method) {
+            case \MoneyOrder::GATEWAY_PHONE:
+                $number = $player->getPhone();
+                break;
+            case \MoneyOrder::GATEWAY_QIWI:
+                $number = $player->getQiwi();
+                break;
+            case \MoneyOrder::GATEWAY_WEBMONEY:
+                $number = $player->getWebMoney();
+                break;
+            case \MoneyOrder::GATEWAY_YANDEX:
+                $number = $player->getYandexMoney();
+                break;
+            default:
+                $this->ajaxResponseInternalError();
+        }
+
+
+        $data = array(
+            $method => array(
+                "title" => $method,
+                "value" => $number
+            ),
+            "summ" => array(
+                "title" => "Сумма",
+                "value" => $sum
+            )
+        );
+
+        $order->setData($data);
+        try {
+            $order->beginTransaction();
+            $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
+            if ($money<$sum) {
+                throw new \Exception();
+            }
+            $order->create();
+            $sum = $order->getData()['summ']['value'];
+            $order->getPlayer()->addMoney(-1*$sum, $order->getText());
+            $order->commit();
+        } catch (\Exception $e) {
+            \TicketsModel::instance()->rollBack();
+            $res = array(
+                "message" => "MONEY_NO_ENOUGH",
+                "res"     => array()
+            );
+            $this->ajaxResponseCode($res, 402);
+        }
+        catch(EntityException $e) {
+            $order->rollBack();
+            $this->ajaxResponseInternalError();
+        }
+
+        $player->fetch();
+        $res = array(
+            "message" => "message-cashout-success",
+            "player"  => array(
+                "balance" => array(
+                    "money"  => $player->getMoney(),
+                    "points" => $player->getPoints(),
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($res);
+    }
 }

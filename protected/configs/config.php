@@ -572,6 +572,33 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\BlogsController:similar'
     ),
     /**
+     * Lottery
+     */
+    '/lottery/ticket' => array(
+        'post'   => 'controllers\production\LotteryController:createTicket'
+    ),
+    '/lottery/gold' => array(
+        'post'   => 'controllers\production\LotteryController:buyGoldTicket'
+    ),
+    /**
+     * Reports
+     */
+    '/reports/transactions' => array(
+        'get' => 'controllers\production\ReportsController:transactions'
+    ),
+    '/reports/payments' => array(
+        'get' => 'controllers\production\ReportsController:payments'
+    ),
+    /**
+     * Profile orders
+     */
+    '/profile/convert' => array(
+        'post' => 'controllers\production\OrdersController:convert'
+    ),
+    '/profile/cashout' => array(
+        'post' => 'controllers\production\OrdersController:cashout'
+    ),
+    /**
      * Users
      */
     '/users/search/' => array(

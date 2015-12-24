@@ -223,4 +223,9 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->search($search);
     }
+
+    public function updateGoldTicket(Entity $player, $quantity)
+    {
+        return $this->getProcessor()->updateGoldTicket($player, $quantity);
+    }
 }

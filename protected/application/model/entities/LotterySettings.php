@@ -10,11 +10,12 @@ class LotterySettings
 
     private $_model = null;
 
-    private $_countryPrizes = array();
-    private $_total         = 0;
-    private $_jackpot       = false;
-    private $_gameTimes     = array();
-    private $_gameSettings  = array();
+    private   $_countryPrizes     = array();
+    protected $_countryGoldPrizes = array();
+    private   $_total             = 0;
+    private   $_jackpot           = false;
+    private   $_gameTimes         = array();
+    private   $_gameSettings      = array();
 
     public function __construct()
     {
@@ -71,6 +72,33 @@ class LotterySettings
         return $this;
     }
 
+    public function setGoldPrizes($country, array $prizes)
+    {
+        if (count($prizes)) {
+            if (!isset($this->_countryGoldPrizes[$country])) {
+                $this->_countryGoldPrizes[$country] = array();
+            }
+
+            foreach ($prizes as $ballsCount => $prize) {
+                if (!empty($prize['ballsCount'])) {
+                    $ballsCount = $prize['ballsCount'];
+                }
+                $prize['currency'] = strtoupper($prize['currency']);
+
+                if (!in_array($prize['currency'], array(self::CURRENCY_MONEY, self::CURRENCY_POINT))) {
+                    throw new LotterySettingsException("Invalid prize internal currency", 400);
+                }
+
+                $this->_countryGoldPrizes[$country][$ballsCount] = array(
+                    'sum'      => $prize['sum'],
+                    'currency' => $prize['currency'],
+                );
+            }
+        }
+
+        return $this;
+    }
+
     public function getPrizes($country = null)
     {
         if (!empty($country)) {
@@ -78,6 +106,15 @@ class LotterySettings
         }
 
         return $this->_countryPrizes;
+    }
+
+    public function getGoldPrizes($country = null)
+    {
+        if (!empty($country)) {
+            return $this->_countryGoldPrizes[$country];
+        }
+
+        return $this->_countryGoldPrizes;
     }
 
     public function addLotterySettings($settings)

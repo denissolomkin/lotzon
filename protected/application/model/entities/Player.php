@@ -80,6 +80,8 @@ class Player extends Entity
     private $_referalId = 0;
     private $_referalPaid = 0;
 
+    protected $_goldTicket = 0;
+
     private $_newsSubscribe = 1;
 
     private $_additionalData = array();
@@ -1594,7 +1596,8 @@ class Player extends Entity
                  ->setReferalPaid($data['ReferalPaid'])
                  ->setNewsSubscribe($data['NewsSubscribe'])
                  ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
-                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null);
+                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null)
+                 ->setGoldTicket($data['GoldTicket']);
 
             if (isset($data['TicketsFilled'])) {
                 $this->_isTicketsFilled = $data['TicketsFilled'];

@@ -162,4 +162,48 @@ class ShopOrdersDBProcessor implements IProcessor
 
         return $sth->fetchColumn(0);
     }
+
+    public function getOrdersList($playerId, $limit = NULL, $offset = NULL)
+    {
+        $sql = "SELECT
+                so.`DateOrdered` as date,
+                'shop'           as type,
+                so.`Address`     as data,
+                si.`Title`       as prize,
+                so.`Status`      as status
+                FROM `ShopOrders` as so
+                JOIN `ShopItems` as si
+                ON si.`Id` = so.`ItemId`
+                WHERE
+                so.`PlayerId` = :plid
+                UNION
+                SELECT
+                mo.`DateOrdered` as date,
+                mo.`Type`        as type,
+                mo.`Number`      as data,
+                mo.`Sum`         as prize,
+                mo.`Status`      as status
+                FROM `MoneyOrders` as mo
+                WHERE
+                mo.`PlayerId` = :plid
+                AND
+                mo.`Type` <> 'points'
+                ORDER BY date DESC";
+        if (!is_null($limit)) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        if (!is_null($offset)) {
+            $sql .= " OFFSET " . (int)$offset;
+        }
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':plid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchAll();
+    }
 }

@@ -36,6 +36,22 @@ class LotterySettingsDBProcessor
             }
         }
         $prizesSql = sprintf($prizesSql, join(",", $parts));
+
+        $goldPrizesSql = "INSERT INTO `LotterySettings` (`BallsCount`, `CountryCode`, `Prize`, `Currency`, `Gold`) VALUES %s";
+        $parts = array();
+
+        foreach ($settings->getGoldPrizes() as $country => $prizes) {
+            foreach ($prizes as $ballsCount => $prize) {
+                $parts[] = vsprintf(("(%s,%s,%s,%s,%s)"), array(
+                    DB::Connect()->quote($ballsCount),
+                    DB::Connect()->quote($country),
+                    DB::Connect()->quote($prize['sum']),
+                    DB::Connect()->quote($prize['currency']),
+                    DB::Connect()->quote(1),
+                ));
+            }
+        }
+        $goldPrizesSql = sprintf($goldPrizesSql, join(",", $parts));
         DB::Connect()->beginTransaction();
         try {
             foreach ($cleanup as $query) {
@@ -44,6 +60,7 @@ class LotterySettingsDBProcessor
 
             DB::Connect()->query($timesSql);
             DB::Connect()->query($prizesSql);
+            DB::Connect()->query($goldPrizesSql);
             DB::Connect()->commit();
         } catch (PDOException $e) {
             DB::Connect()->rollback();
@@ -76,21 +93,34 @@ class LotterySettingsDBProcessor
 
 
         $lots = $lots->fetchAll();
-        $prizes = array();
+
+        $prizes     = array();
+        $goldPrizes = array();
         foreach ($lots as $lottery) {
-
-            if (!isset($prizes[$lottery['CountryCode']])) {
-                $prizes[$lottery['CountryCode']] = array();
+            if($lottery['Gold']) {
+                if (!isset($goldPrizes[$lottery['CountryCode']])) {
+                    $goldPrizes[$lottery['CountryCode']] = array();
+                }
+                $goldPrizes[$lottery['CountryCode']][$lottery['BallsCount']] = array(
+                    'sum'      => $lottery['Prize'],
+                    'currency' => $lottery['Currency']
+                );
+            } else {
+                if (!isset($prizes[$lottery['CountryCode']])) {
+                    $prizes[$lottery['CountryCode']] = array();
+                }
+                $prizes[$lottery['CountryCode']][$lottery['BallsCount']] = array(
+                    'sum'      => $lottery['Prize'],
+                    'currency' => $lottery['Currency']
+                );
             }
-
-            $prizes[$lottery['CountryCode']][$lottery['BallsCount']] = array(
-                'sum' => $lottery['Prize'],
-                'currency' => $lottery['Currency']
-            );
         }
 
         foreach ($prizes as $country => $prize) {
             $settings->setPrizes($country, $prize);
+        }
+        foreach ($goldPrizes as $country => $prize) {
+            $settings->setGoldPrizes($country, $prize);
         }
 
         return $settings;
