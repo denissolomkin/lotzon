@@ -186,7 +186,7 @@ Config::instance()->privateResources =  array(
         'post' => 'controllers\admin\Banners:save',
     ),
     '/private/banner/'      => array(
-              'post' => 'controllers\admin\Banners:banner',
+        'post' => 'controllers\admin\Banners:banner',
     ),
     '/private/bonuses/' => array(
         'get'  => 'controllers\admin\Bonuses:index',
@@ -504,6 +504,21 @@ Config::instance()->publicResources = array(
                 );
             }
         ),
+    ),
+
+    /**
+     * Games
+     */
+    '/games/:key/' => array(
+        'get'  => 'controllers\production\GamesController:list'
+    ),
+    '/games/:key/:id' => array(
+        'get'   => 'controllers\production\GamesController:item',
+        'post'  => 'controllers\production\GamesController:start',
+        'put'   => 'controllers\production\GamesController:play'
+    ),
+    '/games/:key/:id/play' => array(
+        'get'  => 'controllers\production\GamesController:play',
     ),
     /**
      * Comments
