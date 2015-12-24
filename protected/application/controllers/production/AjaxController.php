@@ -29,6 +29,12 @@ class AjaxController extends \SlimController\SlimController {
         die(json_encode($response));
     }
 
+    protected function validateRequest()
+    {
+        return $this->request()->isAjax();
+        die('NONE_AJAX_REQUEST_DENIED');
+    }
+
     public function ajaxResponseCode(array $data, $code = 200) {
         http_response_code($code);
         die(json_encode($data));

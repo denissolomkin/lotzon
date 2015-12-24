@@ -22,13 +22,20 @@ class GamesController extends \AjaxController
         parent::init();
     }
 
-    public function listAction($key = NULL)
-    {
 
-        if (!$this->request()->isAjax()) {
+    private function authorizedOnly()
+    {
+        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
+            $this->ajaxResponseUnauthorized();
             return false;
         }
+        $this->session->get(Player::IDENTITY)->markOnline();
+        return true;
+    }
 
+    public function listAction($key = NULL)
+    {
+        $this->validateRequest();
         $this->authorizedOnly();
 
         if (!$key) {
@@ -73,10 +80,7 @@ class GamesController extends \AjaxController
     public function itemAction($key = null, $id = null)
     {
 
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
+        $this->validateRequest();
         $this->authorizedOnly();
 
         if (!$key) {
@@ -137,9 +141,10 @@ class GamesController extends \AjaxController
     public function nowAction($key = NULL)
     {
 
-        if (!$this->request()->isAjax()) {
-            return false;
-        } else if (!$key) {
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        if (!$key) {
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
         }
 
@@ -194,9 +199,10 @@ class GamesController extends \AjaxController
     public function ratingAction($key = NULL, $id = NULL)
     {
 
-        if (!$this->request()->isAjax()) {
-            return false;
-        } else if (!$key) {
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        if (!$key) {
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
         }
 
