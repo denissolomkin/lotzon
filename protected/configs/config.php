@@ -590,6 +590,15 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\ReportsController:payments'
     ),
     /**
+     * Profile orders
+     */
+    '/profile/convert' => array(
+        'post' => 'controllers\production\OrdersController:convert'
+    ),
+    '/profile/cashout' => array(
+        'post' => 'controllers\production\OrdersController:cashout'
+    ),
+    /**
      * Users
      */
     '/users/search/' => array(
