@@ -1,7 +1,6 @@
 $(function () {
 
     var prepareHelper = function (fn, options, arguments, model) {
-
         options = typeof options === 'string' ? options : null;
 
         if (arguments.length > 2) {
@@ -19,6 +18,7 @@ $(function () {
     Handlebars.registerHelper({
         /**
          * @description loop for(max > min; max--) return current counter
+         * 
          * @param {int} max
          * @param {int} min
          * @param {fn} options
@@ -29,6 +29,45 @@ $(function () {
             for (; max >= min; max--) {
                 ret = ret + options.fn(max);
             }
+            return ret;
+        },
+//        ^ delete that sh... 'forMaxToMin'
+
+        /**
+         * @description loop for(num "operator >:>=:<:<=" num2) return current counter Example {{#each (for 3 "<" 0) as |value key|}} {{this}} {{/each}} // return 3 2 1
+         * 
+         * @param {int} num
+         * @param {string} operator 
+         * @param {int} num2
+         * @param {fn} options
+         * @returns {String} counter
+         */
+        'for': function (num, operator, num2) {
+            var ret = [];
+
+            switch (operator) {
+                default: //" < "
+                    for (; num < num2; num++) {
+                        ret.push(num);
+                    }
+                    break;
+                case "<=":
+                    for (; num <= num2; num++) {
+                        ret.push(num);
+                    }
+                    break;
+                case ">=":
+                    for (; num >= num2; num--) {
+                        ret.push(num);
+                    }
+                    break;
+                case ">":
+                    for (; num > num2; num--) {
+                        ret.push(num);
+                    }
+                    break;
+            }
+            ;
             return ret;
         },
         /**
@@ -42,24 +81,28 @@ $(function () {
             return str.split(delimiter)[el];
         },
         /**
-         * @description оборачивает аргументы 
+         * @description оборачивает аргументы из шаблонизатора в функцию funcNmae(args,args2,...)
          * 
          * @param {string} funcNmae
-         * @returns {String}
+         * @returns {String} "funcNmae(args,args2,...)"
          */
-        'createFunc': function(funcNmae){
-            if(arguments.length > 1){
+        'createFunc': function (funcNmae) {
+            if (arguments.length > 1) {
                 var params = "";
-                for (var i = 1; i < arguments.length -1; i++){
-                    params+=arguments[i];
-                    if(i < arguments.length - 2){
-                        params+=",";
+                for (var i = 1; i < arguments.length - 1; i++) {
+                    params += arguments[i];
+                    if (i < arguments.length - 2) {
+                        params += ",";
                     }
-                        
+
                 }
 
-                return funcNmae+"("+params+")";
+                return funcNmae + "(" + params + ")";
             }
+        },
+        reverseNum: function(num1, num2){
+//           console.error(arguments);
+           return num1-num2;
         },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
@@ -69,19 +112,15 @@ $(function () {
         'i18n': function () {
             return Cache.i18n(arguments);
         },
-
         'player': function (fn, options) {
             return prepareHelper(fn, options, arguments, 'Player');
         },
-
         'device': function (fn, options) {
             return prepareHelper(fn, options, arguments, 'Device');
         },
-
         'lottery': function (fn, options) {
             return prepareHelper(fn, options, arguments, 'Tickets');
         },
-
         'partial': function f(name, args) {
 
             try {
@@ -92,7 +131,6 @@ $(function () {
                 D.error(name + ': ' + e.message);
             }
         },
-
         'social': function (network, id) {
 
             var href = "";
@@ -117,7 +155,6 @@ $(function () {
 
             return href + id;
         },
-
         'reverse': function (context, options) {
             var fn = options.fn, inverse = options.inverse;
             var length = 0, ret = "", data;
@@ -165,18 +202,13 @@ $(function () {
 
             return ret;
         },
-
-
         'variable': function (name, args, opt) {
 
             console.log(this, name, args, opt);
         },
-
-
         'cache': function () {
 
         },
-
         'false': function (v1) {
             return v1 === false;
         },

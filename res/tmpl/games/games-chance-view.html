@@ -1,20 +1,39 @@
-﻿<div id="games-chance-view" class="content-box">
-
-    <button type=button
-            onclick="Form.get.call(this, {href:'/games/chance/{{id}}', after: function(data){this.nextElementSibling.innerHTML = JSON.stringify(data, null, 2);}})">
-        Preview
-    </button>
-    <pre id="games-chance-view-item"></pre>
-
-    <button type=button onclick="Form.post.call(this, {
-        href:'/games/chance/{{id}}',
-        after: function(data){
-        this.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2);}})">
-        Build
-    </button>
-    <pre id="games-chance-view-build"></pre>
-    <div id="games-chance-view-cells">
+<div id="games-chance-view" class="content-box">
+    <div class="title-wrap">
+        <div class="back-button back"><i class="i-arrow-left"></i></div>
+        <div class="game-title">
+            {{title}}
+        </div>
     </div>
-    <pre id="games-chance-view-play"></pre>
+    {{#if (eq key "ChanceGame")}}
+        {{partial "games-chancegame" this}}
+    {{/if}}
+    <!--debug-->
+    <div class="debug" style="display: none;">
+        <button type=button
+                onclick="Form.get.call(this, {
+                        href:'/games/chance/{{id}}',
+                                    after: function(data){
+                                    alert('pre[id$=\"-view-build\"]');
+                                    this.parentNode.parentNode.parentNode.querySelector('pre[id$=\"-view-item\"]').innerHTML = JSON.stringify(data, null, 2);
+                                    }
+                            })">
+            Preview
+        </button>
+        <pre id="games-chance-view-item"></pre>    
 
+        <button type=button onclick="Form.post.call(this, {
+                href:'/games/chance/{{id}}',
+                            after: function(data){
+                            alert('pre[id$=\"-view-build\"]');
+                            this.parentNode.parentNode.parentNode.querySelector('pre[id$=\"-view-build\"]').innerHTML = JSON.stringify(data.json, null, 2);
+                            }})">
+            Build
+        </button>
+        <pre id="games-chance-view-build"></pre>
+        <!--<div id="games-chance-view-cells"></div>-->
+        <pre id="games-chance-view-play"></pre>
+        <!--debug-->
+    </div>
 </div>
+

@@ -4,30 +4,112 @@
     <div class="content-box-content clearfix">
         <div class="content-box-item">
 
-            <form action="settings" method="post">
-
-                <div class="s-lang">
-                    <div class="title">Язык сайта</div>
-                    {{#each language.available}}
-                    <label class="radio-text">
-                        <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
-                        <span>{{.}}</span>
-                    </label>
-                    {{/each}}
+            <form action="settings" method="post" class="settings clearfix" >
+                <div class="setting-block">
+                    <div class="s-account_delete clearfix strip">
+                        <div class="title">Регистрация</div>
+                        <div> {{#if (day registration)}}
+                            <span> {{day registration}} </span> {{else}} 
+                            <span class="uk-disabled">день</span> {{/if}}
+                        </div>
+                        <div class="uk-float-right delete-reg show-option">
+                            <span class='change'>Удалить аккаунт<span>     
+                        </div> 
+                        <div class="uk-float-right delete-reg hidden option">
+                             <div class="choice">
+                                 <label class="radio-text">
+                                    <input type="radio" name="email" value="1" checked>
+                                    <span>Да</span>
+                                </label>
+                                <label class="radio-text">
+                                    <input type="radio" name="email" value="2">
+                                    <span class="change">Нет</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class=" s-notice hidden option"><p>{{i18n "text-registration-delete-notice"}}</p></div>
+                </div>    
+                <div class="setting-block">
+                    <div class="s-lang clearfix strip">
+                        <div class="title">Язык сайта</div>
+                        {{#each language.available}}
+                        <label class="radio-text">
+                            <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
+                            <span>{{.}}</span>
+                        </label>
+                        {{/each}}
+                    </div>
                 </div>
+                <div class="setting-block">
+                    <div class="s-pass clearfix strip">
+                        <div class="title">Пароль</div>
 
-                <div class="s-email">
-                    <div class="title">Получать email письма</div>
-                    <label class="radio-text">
-                        <input type="radio" name="email" value="1" checked>
-                        <span>Да</span>
-                    </label>
-                    <label class="radio-text">
-                        <input type="radio" name="email" value="2">
-                        <span>Нет</span>
-                    </label>
+                         <div class="uk-float-right show-option">
+                            <span class='change'>Изменить</span>     
+                        </div> 
+                        <div class="uk-float-right delete-reg hidden option">
+                             <div class="choice">
+                                <span class="change">Отмена</span>    
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="option clearfix strip hidden">
+                        <div class="title">Старый пароль</div>
+                        <input type="text" name="old-pass" value="">
+                    </div>
+                    <div class="option clearfix strip hidden">
+                        <div class="title">Новый пароль</div>
+                        <input type="text" name="new-pass" value="">
+                    </div>
+                    <div class="option clearfix strip hidden">
+                        <div class="title">Повтор пароля</div>
+                        <input type="text" name="repeat-pass" value="">
+                    </div>
                 </div>
-
+                <div class="setting-block">
+                    <div class="tight-soc clearfix strip">
+                        <div class="title">Привязать соцсети(?)</div>
+                        <div class="ae-social uk-float-left">
+                            <a href="#" class="i-fb-black ae-social-item"></a>
+                            <a href="#" class="i-tw-black ae-social-item"></a>
+                            <a href="#" class="i-wk-black ae-social-item"></a>
+                         </div>
+                    </div>
+                </div>    
+                <div class="setting-block">
+                    <div class="s-email clearfix strip">
+                        <div class="title">Получать email письма</div>
+                        <label class="radio-text">
+                            <input type="radio" name="email" value="1" checked>
+                            <span>Да</span>
+                        </label>
+                        <label class="radio-text">
+                            <input type="radio" name="email" value="2">
+                            <span>Нет</span>
+                        </label>
+                    </div>
+                </div>  
+                <div class="setting-block">  
+                    <div class="ae-combination clearfix">
+                    <div class="s-email clearfix strip">
+                        <div class="title">{{i18n "title-profile-favorite"}}</div>
+                        <ul class="ae-current-combination clearfix">
+                            {{#each favorite}}
+                                <li>{{.}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>    
+                    <div class="ae-favorite-combination">
+                        <ul class="ae-combination-box hidden clearfix">
+                            {{#each (player "renderFavorite")}}
+                                <li{{#if (true .)}} class="selected"{{/if}}>{{@key}}</li>
+                            {{/each}}
+                        </ul>
+                        </div>
+                    </div>
+                </div>
                 <button name="submit" type="submit" class="settings-btn">{{i18n "button-save"}}</button>
             </form>
 

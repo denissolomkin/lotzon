@@ -656,7 +656,8 @@ div.comment-reply-btn {
 
 .ticket-box {
   display: table;
-  background-color: transparent; }
+  background-color: transparent;
+  width: 100%; }
 
 .scroll-box {
   height: auto; }
@@ -933,6 +934,10 @@ div.comment-reply-btn {
   .ghd-won .grid-container {
     max-width: 360px; }
 
+#lottery-ticket-item {
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+  height: inherit; }
+
 #lottery-process.lottery-won {
   background: url(../img/1024.png) center center no-repeat; }
 
@@ -1097,6 +1102,10 @@ div.comment-reply-btn {
 
 .content-box-item.cabinet-convert {
   padding: 30px 20px; }
+
+@media (max-width: 1366px) {
+  .ae-name-block {
+    width: 470px; } }
 
 .ph-won,
 .ph-won-text {

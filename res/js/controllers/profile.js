@@ -108,6 +108,15 @@
                 $('form[name="profile"]').find('.pi-ph').removeClass('true');
             },
 
+            openOption: function() {
+                console.log($(this).find('.setting-block').closest('.option'), "$(this).closest('.option')");
+                $(this).closest('.setting-block').find('.option, .show-option .change').toggleClass('hidden');
+            },
+
+            // $(document).on('click', '.ae-current-combination li', Profile.do.openFavorite);
+            // $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
+
+
             hideFavorite: function (event) {
 
                 if (!$(event.target).closest(".ae-current-combination").length && !$(event.target).closest(".ae-combination-box").length) {
@@ -119,16 +128,17 @@
 
             openFavorite: function () {
                 $('.ae-save-btn').addClass('save');
-
+                if ($(this).text !="") {
+                    $(this).addClass('on')
+                }
                 if (!$(this).hasClass('on')) {
-                    $('.ae-current-combination li').removeClass('on');
+                    // $('.ae-current-combination li').removeClass('on');
                     var n = $(this).text();
 
                     $('.ae-combination-box li.selected').each(function () {
                         if ($(this).text() == n)$(this).removeClass('selected');
                     });
 
-                    $(this).text('');
                     $(this).addClass('on');
                     $('.ae-combination-box').fadeIn(200);
                 }
@@ -140,14 +150,26 @@
 
             selectFavorite: function () {
                 if (!$(this).hasClass('selected')) {
-                    var n = $(this).text();
-                    $('.ae-current-combination li.on').text(n);
-                    $(this).addClass('selected');
-                    $('.ae-combination-box').fadeOut(200);
-                    $('.ae-current-combination li.on').removeClass('on');
+                    if ($('.ae-combination-box li.selected').length < 6) {
+                        var n = $(this).text();
+                        var last = $('.ae-current-combination li.on:last-child');
+                        if (last) {
+                            last.next.addClass('on').text(n);
+                        }
+                        else {
+                            $('.ae-current-combination li:first-child').addClass('on').text(n);
+                        }
+                        $(this).addClass('selected');
+                        $('.ae-current-combination li.on').removeClass('on');
+                    }
+                    else {
+                        $('.ae-combination-box li:not(.selected)').addClass('unavailable');
+                    }
+                }
+                else {
+                    $(this).removeClass('selected');
                 }
             }
-
         },
 
         update: {

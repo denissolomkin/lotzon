@@ -399,6 +399,66 @@
 .personal-data-edit span {
   display: none; }
 
+.ae-top {
+  float: none;
+  margin-bottom: 20px;
+  text-align: center; }
+  .ae-top .ae-user-img {
+    text-align: center;
+    float: none; }
+
+.ae-name-block {
+  width: auto; }
+
+#profile-edit .content-box-header {
+  background: none; }
+
+.ae-personal-inf .uk-float-right {
+  float: none; }
+
+.ae-name-block li {
+  padding-left: 0;
+  height: 45px; }
+  .ae-name-block li.empty {
+    display: none; }
+
+.ae-name-block.ae-personal-form-values, .ae-personal-form-values {
+  margin-left: -10px;
+  margin-right: -10px; }
+  .ae-name-block.ae-personal-form-values li, .ae-personal-form-values li {
+    padding: 0 10px; }
+
+.ae-personal-form-values i {
+  min-width: 85px;
+  max-width: 85px;
+  padding-right: 10px; }
+
+.ae-personal-form-values li {
+  height: 45px; }
+
+.ae-personal-form-values li > * {
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top; }
+
+.ae-social-item {
+  line-height: 45px;
+  display: inline-block;
+  vertical-align: top; }
+
+.ae-personal-form .error-msg {
+  top: 50%;
+  right: 10px; }
+
+.ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
+  top: 0; }
+
+.ae-social {
+  height: 45px; }
+
 @media (max-width: 500px) {
   .content-box-item.cabinet-referrals {
     padding: 120px 20px 30px;

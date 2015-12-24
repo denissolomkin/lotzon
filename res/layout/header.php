@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/res/css/social-likes_birman.css">
 
     <link rel="stylesheet" href="/res/css/olya.css">
+    <link rel="stylesheet" href="/res/css/zerg.css">
 </head>
 
 <body>

@@ -50,8 +50,7 @@
             hide: function (event) {
                 Navigation.menu.hide(event);
                 Comments.hide(event);
-                Profile.do.hideFavorite(event);
-
+ Profile.do.hideFavorite(event);
             },
 
             resize: function (event) {

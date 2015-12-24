@@ -24,7 +24,7 @@
 
                     {".mark-message": Message.do.markMessage},
                     //
-                     {".back": Navigation.do.backBlock}
+                     {"div.back": Navigation.do.backBlock}
 
                 ]
             });
@@ -87,10 +87,12 @@
             $(document).on('click', '.pi-ph.true i', Profile.do.removeAvatar);
             $(document).on('click', '.pi-ph.true i', Profile.do.updateAvatar);
 
+            
+
             $(document).on('click', '.ae-current-combination li', Profile.do.openFavorite);
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
-
+            $(document).on('click', '.change', Profile.do.openOption);
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
@@ -113,8 +115,9 @@
             "communication-comments-view": Comments.after.showComment,
 
             "games-online": Carousel.initOwl,
-            "games-online-view": Games.init,
-            "games-chance-view": function(data){document.getElementById('games-chance-view-item').innerHTML = JSON.stringify(data.json, null, 2)},
+            "games-online-view": Games.online.init,
+//            "games-chance-view": function(data){document.getElementById('games-chance-view-item').innerHTML = JSON.stringify(data.json, null, 2)},
+            "games-chance-view": Games.chance.init,
             "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
@@ -195,23 +198,28 @@
             "communication-comments": Comments.after.reply,
 
             "communication-notifications": Comments.renderNotifications, // delete
-            "games-chance-view": function(res) {
-
-                this.nextElementSibling.nextElementSibling.innerHTML = '';
-                this.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = ''
-                if (res.Field && res.Field.x) {
-                    var html = '';
-                    for (var x = 1; x < res.Field.x; x++)
-                        for (var y = 1; y < res.Field.y; y++)
-                            html += "<button type=button onclick=\"Form.get.call(" +
-                            "this,{" +
-                            "href:'/games/chance/{{id}}/play', " +
-                            "data: {cell:'" + x + "x" + y + "'}," +
-                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
-                }
-                this.nextElementSibling.nextElementSibling.innerHTML = html;
-                console.log(this,html)
-            }
+//            "games-chance-view": function(res) {
+//
+//                this.parentNode.parentNode.parentNode.querySelector("[id$='-view-cells']").innerHTML = '1';
+//                this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("[id$='-view-play']").innerHTML = '2'
+//                if (res.Field && res.Field.x) {
+////                    console.error(">>>>>",res)
+//                    var html = '';
+//                    for (var x = 1; x <= res.Field.x; x++){
+//                        html += "<div class='same-width-childs same-height-childs clearfix'>";
+//                        for (var y = 1; y <= res.Field.y; y++){
+//                            html += "<div><div class='inner'><button type=button onclick=\"Form.get.call(" +
+//                            "this,{" +
+//                            "href:'/games/chance/{{id}}/play', " +
+//                            "data: {cell:'" + x  + "x" + y + "'}," +
+//                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "<i class='i-question'></i></button></div></div>";
+//                        }
+//                        html += "</div>";
+//                    }
+//                }
+//                this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("[id$='-view-cells']").innerHTML = html;
+////                console.log(this,html)
+//            }
 
         },
 
