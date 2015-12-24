@@ -58,7 +58,10 @@ $(function() {
             form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>'),
             image = $(this).find('img'),
             path = that.getAttribute('data-path') || '',
-            name = document.getElementById('key').getElementsByClassName('chanceId')[0].innerHTML && document.getElementById('key').getElementsByClassName('chanceId')[0].innerHTML + '.png',
+            name = (that.id == "image_new"
+                ? document.getElementById('key').getElementsByClassName('gameId')[0] && document.getElementById('key').getElementsByClassName('gameId')[0].innerHTML
+                : document.getElementById('key').getElementsByTagName('input')[0].value)
+                + '.png',
             input = form.find('input[type="file"]').damnUploader({
             url: '/private/images?folder=games',
             fieldName: 'image',

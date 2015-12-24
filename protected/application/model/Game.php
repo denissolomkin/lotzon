@@ -6,7 +6,7 @@ class Game
     protected $_gameKey = '';
     protected $_gameModes = array();
     protected $_gameTitle = array();
-    protected $_gameOptions = array();
+    protected $_options = array();
     protected $_gameVariation = array();
 
     private $_gameCurrency = '';
@@ -46,6 +46,41 @@ class Game
             ->setIdentifier(uniqid())
             ->setTime(time())
             ->init();
+    }
+
+    public function __call($method, $params = null)
+    {
+
+        $methodPrefix = substr($method, 0, 3);
+        $key          = lcfirst(substr($method, 3));
+        $property     = '_' . $key;
+
+        if (property_exists($this, $property)) {
+            if (($methodPrefix == 'set') && (count($params) == 1)) {
+                $value           = $params[0];
+                $this->$property = $value;
+
+                return $this;
+
+            } elseif ($methodPrefix == 'get') {
+                if (isset($this->$property)) {
+
+                    if ((count($params) == 1 && ($value = $params[0]) && is_array($this->$property))) {
+                        $property = $this->$property;
+
+                        return isset($property[$value]) ? $property[$value] : null;
+                    }
+
+                    return $this->$property;
+
+                } else {
+
+                    return NULL;
+                }
+            }
+        }
+
+        throw new Exception("Method $method is not defined in " . get_class($this) . "!");
     }
 
     public function init()
@@ -247,9 +282,9 @@ class Game
             #echo ''.time().' '. "ход игрока\n";
             $cell = explode('x',$data->cell);}
 
-        if($error=$this->checkError($cell))
+        if($error=$this->checkError($cell)) {
             $this->setCallback(array('error' => $error));
-        else {
+        } else {
             #echo $this->time().' '. "делаем ход\n";
             $this->doMove($cell);
 
@@ -406,8 +441,8 @@ class Game
         //$minimum=( rand(1,5) < 2 ? ($this->FIELD_SIZE_X*$this->FIELD_SIZE_Y/2):0 );
         //$minimum=0;
 
-        if($this->getMode()>0)
-            $minimum=(!rand(0,$this->getMode()-1) ? ($this->getOption('x') * $this->getOption('y')) - ($this->getOption('m') * ($this->getOption('p') + 1)) : 0);
+        if($this->isSuccessMove()>0)
+            $minimum=(!rand(0,$this->isSuccessMove()-1) ? ($this->getOption('x') * $this->getOption('y')) - ($this->getOption('m') * ($this->getOption('p') + 1)) : 0);
         else
             $minimum=0;
 
@@ -597,6 +632,7 @@ class Game
                     'points'    => 0,
                     'avatar'    => $client->avatar,
                     'lang'      => isset($client->lang) ? $client->lang : 'RU',
+                    'country'   => isset($client->country) ? $client->country : 'RU',
                     'name'      => $client->name,
                     'timeout'   => time() + $this->getOption('t')
                 );
@@ -662,6 +698,11 @@ class Game
         return $this;
     }
 
+    public function getUid()
+    {
+        return $this->_gameIdentifier;
+    }
+
     public function getIdentifier()
     {
         return $this->_gameIdentifier;
@@ -707,19 +748,29 @@ class Game
 
     public function getMode()
     {
+        return implode('-', array(
+            $this->getCurrency(),
+            $this->getPrice(),
+            $this->getNumberPlayers(),
+            http_build_query($this->getVariation())
+        ));
+    }
+
+    public function isSuccessMove()
+    {
         return isset($this->_gameModes[$this->_gameCurrency]) && isset($this->_gameModes[$this->_gameCurrency][$this->_gamePrice])
             ? $this->_gameModes[$this->_gameCurrency][$this->_gamePrice] : false;
     }
 
     public function setOptions($array)
     {
-        $this->_gameOptions = $array;
+        $this->_options = $array;
         return $this;
     }
 
     public function getOption($key=null)
     {
-        return isset($key) ? (isset($this->_gameOptions[$key]) ? $this->_gameOptions[$key] : false) : $this->_gameOptions;
+        return isset($key) ? (isset($this->_options[$key]) ? $this->_options[$key] : false) : $this->_options;
     }
 
     public function setVariation($variation)
@@ -968,8 +1019,5 @@ class Game
     public function time($space=true) {
         return ($space?' ':'').date('H:i:s',time());
     }
-
-
-
 
 }

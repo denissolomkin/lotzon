@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \LanguagesModel, \SettingsModel, \ShopModel, \QuickGame, \QuickGamesModel, \EntityException, \Admin,  \Session2;
+use \Application, \PrivateArea, \LanguagesModel, \SettingsModel, \ShopModel, \GameConstructor, \GameConstructorModel, \EntityException, \Admin,  \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -19,9 +19,9 @@ class QuickGames extends PrivateArea
     }
 
     public function indexAction()
-    {   
+    {
         $shopItems = ShopModel::instance()->getAllItems(false);
-        $games = QuickGamesModel::instance()->getGamesSettings();
+        $games = GameConstructorModel::instance()->getList()['chance'];
         $langs = LanguagesModel::instance()->getList();
         $defaultLang = LanguagesModel::instance()->defaultLang();
 
@@ -46,7 +46,7 @@ class QuickGames extends PrivateArea
                 'data'    => array(),
             );
             $post=$this->request()->post('game');
-            $game = new QuickGame();
+            $game = new GameConstructor();
 
             $game->setId($post['Id'])
                 ->setKey($post['Key'])
@@ -55,9 +55,10 @@ class QuickGames extends PrivateArea
                 ->setPrizes($post['Prizes'])
                 ->setField($post['Field'])
                 ->setAudio($post['Audio'])
-                ->setEnabled($post['Enabled']?true:false);
+                ->setEnabled($post['Enabled']?true:false)
+                ->setType('chance');;
             try {
-                $game->save();
+                $game->update();
                 $response['data'] = array('Id'  => $game->getId());
             } catch (EntityException $e) {
                 $response['status'] = 0;
