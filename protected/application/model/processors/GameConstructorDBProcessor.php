@@ -100,7 +100,7 @@ class GameConstructorDBProcessor
                 break;
         }
 
-        $sql = "SELECT * FROM `" . $table . "` WHERE Id = :id OR (Key = :key AND Key IS NOT NULL)";
+        $sql = "SELECT * FROM `" . $table . "` WHERE Id = :id OR (`Key` = :key AND `Key` IS NOT NULL)";
 
         try {
             $sth = DB::Connect()->prepare($sql);
