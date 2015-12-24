@@ -130,12 +130,12 @@ class LotteryController extends \AjaxController
 
         $player->fetch();
         $res = array(
-            "res"     => array(
-                "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
-                "player" => array(
-                    "balance" => array(
-                        "money"  => $player->getMoney(),
-                    )
+            "res"    => array(
+                "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
+            ),
+            "player" => array(
+                "balance" => array(
+                    "money" => $player->getMoney(),
                 )
             )
         );
