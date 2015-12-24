@@ -110,6 +110,22 @@ class GamePlayersDBProcessor implements IProcessor
         return $players;
     }
 
+    public function getOnline($gameId)
+    {
+        $sql = "SELECT COUNT(*) FROM `GamesTmpPlayers`
+                WHERE AppId = :id";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(':id'=>$gameId));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $res->fetchColumn(0);
+    }
+
     public function getStack($key = null, $mode = null)
     {
         $sql = "SELECT * FROM `GamesTmpPlayers`
