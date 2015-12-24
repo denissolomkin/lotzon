@@ -129,6 +129,24 @@ class GamesController extends \AjaxController
 
             $response['res']['games'][$game->getType()][$game->getId()] = $game->export('item');
 
+            if($key == 'OnlineGame') {
+
+                $fund = \OnlineGamesModel::instance()->getFund($game->getId());
+                try {
+                    $comission = $game->getOptions('r') ? $game->getOptions('r') / 100 : 0;
+                } catch (\EntityException $e) {
+                    echo $e->getMessage();
+                }
+
+                if (!empty($fund)) {
+                    foreach ($fund as $currency => &$total) {
+                        $total = ($currency == 'POINT') ? ceil($total * $comission) : ceil($total * $comission * 100) / 100;
+                    }
+                }
+
+                $response['res']['games'][$game->getType()][$game->getId()]['fund'] = $fund;
+            }
+
             $this->ajaxResponseCode($response);
 
         } else {
