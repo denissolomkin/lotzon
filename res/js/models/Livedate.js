@@ -8,8 +8,6 @@
 
             this.diff = (Math.abs(moment().unix() - unix) > 10) ? (moment().unix() - unix) : (1);
 
-            console.log("Livedate Diff:", moment().unix(), unix, this.diff);
-
             livedateInterval = window.setInterval(function () {
 
                 var livedates = DOM.visible('.live-date');

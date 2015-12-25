@@ -3,41 +3,41 @@
     Form = {
 
         timeout: {
-            remove: 3000,
+            remove : 3000,
             fadeout: 200,
-            submit: 0
+            submit : 0
         },
 
-        get: function(form){
+        get: function (form) {
             form = Form.parseForm(form);
             form.method = 'get';
             Form.send.call(this, form)
         },
 
-        post: function(form){
+        post: function (form) {
             form = Form.parseForm(form);
             form.method = 'post';
             Form.send.call(this, form)
         },
 
-        put: function(form){
+        put: function (form) {
             form = Form.parseForm(form);
             form.method = 'put';
             Form.send.call(this, form)
         },
 
-        delete: function(form){
+        delete: function (form) {
             form = Form.parseForm(form);
             form.method = 'delete';
             Form.send.call(this, form)
         },
 
-        parseForm: function(form){
-            if(typeof form === 'string')
+        parseForm: function (form) {
+            if (typeof form === 'string')
                 form = {
                     action: form,
-                    method: 'delete',
-                    data: null
+                    method: 'get',
+                    data  : null
                 };
             return form;
         },
@@ -46,7 +46,7 @@
 
             var that = this;
             form = Form.parseForm(form);
-            if (form.href){
+            if (form.href) {
                 form.action = form.href;
             }
 
@@ -62,13 +62,13 @@
 
             setTimeout(function () {
                 $.ajax({
-                    url: form.url,
-                    method: /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
+                    url     : form.url,
+                    method  : /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
                         ? "post"
                         : form.method,
-                    data: form.data,
+                    data    : form.data,
                     dataType: 'json',
-                    success: function (data) {
+                    success : function (data) {
 
                         if ('responseText' in data) {
 
@@ -95,7 +95,7 @@
                         }
 
                     },
-                    error: function (data) {
+                    error   : function (data) {
                         Form.stop.call(that);
                         D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
                     }
@@ -174,7 +174,7 @@
                     ajax = {
                         action: form.getAttribute('action'),
                         method: form.getAttribute('method'),
-                        data: $(form).serializeObject()
+                        data  : $(form).serializeObject()
                     },
                     formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
@@ -268,7 +268,7 @@
             var form = this,
                 formContenteditable;
 
-            if(!DOM.isNode(form))
+            if (!DOM.isNode(form))
                 return Form;
 
             // clear form after adding new entities
