@@ -82,7 +82,8 @@ class GamePlayer extends Entity
 
         } else if ($from == 'player') {
 
-            $this->setCountry($data->getCountry())
+            $this->setId($data->getId())
+                ->setCountry($data->getCountry())
                 ->setLang($data->getLang())
                 ->setName($data->getNicname())
                 ->setAvatar($data->getAvatar())

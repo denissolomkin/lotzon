@@ -407,7 +407,7 @@
 }
 
 .ae-combination {
-  margin-bottom: 15px;
+  border-bottom: 1px solid #f5f5f5;
 }
 
 
@@ -449,12 +449,12 @@
   float: left;
   width: 35px;
   height: 35px;
-  border: 1px solid black;
+  // border: 1px solid black;
   border-radius: 50%;
   line-height: 34px;
   font-size: 16px;
   text-align: center;
-  margin-right: 10px;
+  // margin-right: 10px;
   cursor: pointer;
   &:last-child {
     margin-right: 0;
@@ -484,24 +484,76 @@
   display: inline-block;
   text-decoration: none;
   margin-right: 5px;
-  border-radius: 3px;
+  font-size: 30px;
+  position: relative;
+  height: 25px;
+  width: 30px;
   &:before {
-    border-left: 10px solid #3c5a96;
-    border-right: 10px solid #3c5a96;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 34px;
   }
-  &.i-fb-black {
+  &.i-fb-rectangle {
     &:before {
       color: #3c5a96;
     }
   }
-  &.i-tw-black {
+  &.i-tw-rectangle {
     &:before {
       color: #d8d8d8;
     }
   }
-  &.i-wk-black {
+  &.i-g_plus-rectangle {
     &:before {
-      color: #d8d8d8;
+      color: #bd4c3a;
+    }
+  }
+  &.i-inst-rectangle {
+    &:before {
+      color: #417398;
+    }
+  }
+  &.i-vk-rectangle {
+    &:before {
+      color:  #537599;
+    }
+  }
+  &.i-ok-rectangle {
+    &:before {
+      color:  #e0a53f;
+    }
+  }
+  .tooltip {
+    display: none;
+  }
+  &:hover .tooltip {
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    @include translate(-50%, 0);
+    background: #4a4a4a;
+    color: #fff;
+    font-size: 11px;
+    min-width: 240px;
+    z-index: 10;
+    padding: 5px 10px;
+    text-align: center;
+    margin: 0;
+    &:after {
+      content: "";
+      display: block;
+      width: 0px;
+      height: 0px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #4a4a4a;
+      position: absolute;
+      top: 95%;
+      left: 50%;
+      @include translate(-50%, 0);
     }
   }
 }
@@ -934,10 +986,6 @@ span.input-prefix {
   }
 }
 
-.settings .title {
-  font-size: 21px;
-}
-
 .s-pass {
   & ul {
     position: relative;
@@ -1008,7 +1056,8 @@ span.input-prefix {
 
 
 .settings {
-  & .option {
+
+  &  .option {
       float: none;
       background: #fafafa;
   }
@@ -1033,9 +1082,18 @@ span.input-prefix {
       float: left;
       }
       &.uk-float-right {
+        background: transparent;
         float: right;
         width: auto;
       }
+    }
+    & .hidden-notice {
+    display: none;
+    color: #ff4c4b;
+    float: right;
+    height: auto;
+    line-height: 45px;
+    top: 0;
     }
   }
   .title {
@@ -1064,6 +1122,26 @@ span.input-prefix {
   }
   input {
     border: none;
+    background: transparent;
 
+  }
+  & .change {
+    cursor: pointer;
+    color: #4990e2;
+  }
+  & .danger {
+    color: #ff4c4b;
+  }
+  & .btn-flat {
+    margin-top: 30px;
+  }
+
+  & .hidden-notice {
+    display: none;
+    color: #ff4c4b;
+    float: right;
+    height: auto;
+    line-height: 45px;
+    top: 0;
   }
 }

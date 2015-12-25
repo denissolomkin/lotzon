@@ -1205,7 +1205,7 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e811'; }
 
 /* '' */
-.i-lotzon:before {
+.i-fb-rectangle:before {
   content: '\e812'; }
 
 /* '' */
@@ -1297,6 +1297,30 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e828'; }
 
 /* '' */
+.i-ok-rectangle:before {
+  content: '\e829'; }
+
+/* '' */
+.i-vk-rectangle:before {
+  content: '\e82a'; }
+
+/* '' */
+.i-g_plus-rectangle:before {
+  content: '\e82b'; }
+
+/* '' */
+.i-tw-rectangle:before {
+  content: '\e82c'; }
+
+/* '' */
+.i-inst-rectangle:before {
+  content: '\e82d'; }
+
+/* '' */
+.i-lotzon:before {
+  content: '\e82e'; }
+
+/* '' */
 .content-box-scroll-top {
   float: right;
   position: relative;
@@ -4946,7 +4970,7 @@ div > .games-previews {
   margin-bottom: 10px; }
 
 .ae-combination {
-  margin-bottom: 15px; }
+  border-bottom: 1px solid #f5f5f5; }
 
 .ae-combination-box {
   margin: 0 -30px;
@@ -4976,12 +5000,10 @@ div > .games-previews {
   float: left;
   width: 35px;
   height: 35px;
-  border: 1px solid black;
   border-radius: 50%;
   line-height: 34px;
   font-size: 16px;
   text-align: center;
-  margin-right: 10px;
   cursor: pointer; }
   .ae-current-combination li:last-child {
     margin-right: 0; }
@@ -5002,16 +5024,66 @@ div > .games-previews {
   display: inline-block;
   text-decoration: none;
   margin-right: 5px;
-  border-radius: 3px; }
+  font-size: 30px;
+  position: relative;
+  height: 25px;
+  width: 30px; }
   .ae-social-item:before {
-    border-left: 10px solid #3c5a96;
-    border-right: 10px solid #3c5a96; }
-  .ae-social-item.i-fb-black:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 34px; }
+  .ae-social-item.i-fb-rectangle:before {
     color: #3c5a96; }
-  .ae-social-item.i-tw-black:before {
+  .ae-social-item.i-tw-rectangle:before {
     color: #d8d8d8; }
-  .ae-social-item.i-wk-black:before {
-    color: #d8d8d8; }
+  .ae-social-item.i-g_plus-rectangle:before {
+    color: #bd4c3a; }
+  .ae-social-item.i-inst-rectangle:before {
+    color: #417398; }
+  .ae-social-item.i-vk-rectangle:before {
+    color: #537599; }
+  .ae-social-item.i-ok-rectangle:before {
+    color: #e0a53f; }
+  .ae-social-item .tooltip {
+    display: none; }
+  .ae-social-item:hover .tooltip {
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -khtml-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    background: #4a4a4a;
+    color: #fff;
+    font-size: 11px;
+    min-width: 240px;
+    z-index: 10;
+    padding: 5px 10px;
+    text-align: center;
+    margin: 0; }
+    .ae-social-item:hover .tooltip:after {
+      content: "";
+      display: block;
+      width: 0px;
+      height: 0px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #4a4a4a;
+      position: absolute;
+      top: 95%;
+      left: 50%;
+      -webkit-transform: translate(-50%, 0);
+      -khtml-transform: translate(-50%, 0);
+      -moz-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+      -o-transform: translate(-50%, 0);
+      transform: translate(-50%, 0); }
 
 .ae-personal-inf .text-notice {
   margin-top: 25px; }
@@ -5351,9 +5423,6 @@ span.input-prefix {
     margin-bottom: 30px;
     font-size: 21px; } }
 
-.settings .title {
-  font-size: 21px; }
-
 .s-pass ul {
   position: relative;
   line-height: 50px; }
@@ -5434,8 +5503,16 @@ span.input-prefix {
     .settings .strip > * .option {
       float: left; }
     .settings .strip > *.uk-float-right {
+      background: transparent;
       float: right;
       width: auto; }
+  .settings .strip .hidden-notice {
+    display: none;
+    color: #ff4c4b;
+    float: right;
+    height: auto;
+    line-height: 45px;
+    top: 0; }
 
 .settings .title {
   float: left; }
@@ -5466,7 +5543,26 @@ span.input-prefix {
   margin-left: 20px; }
 
 .settings input {
-  border: none; }
+  border: none;
+  background: transparent; }
+
+.settings .change {
+  cursor: pointer;
+  color: #4990e2; }
+
+.settings .danger {
+  color: #ff4c4b; }
+
+.settings .btn-flat {
+  margin-top: 30px; }
+
+.settings .hidden-notice {
+  display: none;
+  color: #ff4c4b;
+  float: right;
+  height: auto;
+  line-height: 45px;
+  top: 0; }
 
 .ph-notice {
   text-align: center;

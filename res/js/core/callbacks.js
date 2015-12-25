@@ -24,7 +24,7 @@
 
                     {".mark-message": Message.do.markMessage},
                     //
-                     {"div.back": Navigation.do.backBlock}
+                    {".back": Navigation.do.backBlock}
 
                 ]
             });
@@ -78,21 +78,27 @@
             $(document).on('change', 'form textarea.required', Form.do.validate);
             $(document).on('change', 'form input[type="file"].required', Form.do.validate);
 
+
             /* autoload */
             $(document).on('submit', 'form.render-list-form', Content.enableAutoload);
             $(document).on('input', 'form.render-list-form input', Content.autoload);
             $(document).on('change', 'form.render-list-form', Content.autoload);
 
+
             /* profile*/
             $(document).on('click', '.pi-ph.true i', Profile.do.removeAvatar);
             $(document).on('click', '.pi-ph.true i', Profile.do.updateAvatar);
 
+            $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
+
             
 
-            $(document).on('click', '.ae-current-combination li', Profile.do.openFavorite);
+
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
+            $(document).on('click', '.change-favorite', Profile.do.openFavorite);
+            $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);

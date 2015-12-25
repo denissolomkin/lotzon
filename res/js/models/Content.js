@@ -49,11 +49,12 @@
             while (form && form.nodeName !== 'FORM')
                 form = form.parentElement;
 
-            form.elements['submit'].classList.add("loading");
-
             // can be reply form
             if (!form.classList.contains('render-list-form'))
                 return true;
+
+            if(form.elements['submit'])
+                form.elements['submit'].classList.add("loading");
 
             try {
 
