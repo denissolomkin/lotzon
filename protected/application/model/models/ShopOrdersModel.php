@@ -31,4 +31,19 @@ class ShopOrdersModel extends Model
     {
         return $this->getProcessor()->getOrdersList($playerId, $limit, $offset);
     }
+
+    public function beginTransaction()
+    {
+        return $this->getProcessor()->beginTransaction();
+    }
+
+    public function commit()
+    {
+        return $this->getProcessor()->commit();
+    }
+
+    public function rollBack()
+    {
+        return $this->getProcessor()->rollBack();
+    }
 }

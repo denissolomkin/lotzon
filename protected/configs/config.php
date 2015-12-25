@@ -623,6 +623,19 @@ Config::instance()->publicResources = array(
         'post' => 'controllers\production\OrdersController:cashout'
     ),
     /**
+     * Prizes
+     */
+    '/prizes/exchange' => array(
+        'get' => 'controllers\production\PrizesController:list'
+    ),
+    '/prizes/exchange/goods' => array(
+        'get' => 'controllers\production\PrizesController:list'
+    ),
+    '/prizes/exchange/goods/:itemId' => array(
+        'get'  => 'controllers\production\PrizesController:good',
+        'post' => 'controllers\production\PrizesController:order',
+    ),
+    /**
      * Users
      */
     '/users/search/' => array(

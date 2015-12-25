@@ -117,6 +117,26 @@ class ShopItem extends Entity
         return $this->_image;
     }
 
+    public function exportTo($to)
+    {
+        switch ($to) {
+            case 'list':
+                $ret = array(
+                    'id'       => $this->getId(),
+                    'category' => $this->getCategory()->getId(),
+                    'title'    => $this->getTitle(),
+                    'price'    => $this->getPrice(),
+                    'quantity' => $this->getQuantity(),
+                    'type'     => 'item',
+                    'img'      => $this->getImage()
+                );
+
+                return $ret;
+                break;
+        }
+        return false;
+    }
+
     public function create()
     {
         $this->validate('create');

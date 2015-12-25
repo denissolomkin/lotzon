@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
-                VALUES (:email, :passwd, :salt, :cc, :cl, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
+                VALUES (:email, :passwd, :salt, :cc, :city, :zip, :address, :cl, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -15,6 +15,11 @@ class PlayersDBProcessor implements IProcessor
                 ':passwd'   => $player->getPassword(),
                 ':salt'     => $player->getSalt(),
                 ':cc'       => $player->getCountry(),
+
+                ':city'      => $player->getCity(),
+                ':zip'       => $player->getZip(),
+                ':address'   => $player->getAddress(),
+
                 ':cl'       => $player->getLang(),
                 ':vis'      => 1,
                 ':ip'       => $player->getIP(),
@@ -193,6 +198,7 @@ class PlayersDBProcessor implements IProcessor
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
                     `Phone` = :phone, `Qiwi` = :qiwi, `YandexMoney` = :ym, `WebMoney` = :wm,
                     `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
+                    `City` = :city, `Zip` = :zip, `Address` = :address,
                     `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `Ip` = :ip, `LastIp` = :lip, `Agent` = :agent
                 WHERE `Id` = :id OR `Email` = :email";
 
@@ -206,6 +212,11 @@ class PlayersDBProcessor implements IProcessor
                 ':surname'  => $player->getSurname(),
                 ':secname'  => $player->getSecondName(),
                 ':phone'    => $player->getPhone(),
+
+                ':city'      => $player->getCity(),
+                ':zip'       => $player->getZip(),
+                ':address'   => $player->getAddress(),
+
                 ':qiwi'     => $player->getQiwi(),
                 ':wm'       => $player->getWebMoney(),
                 ':ym'       => $player->getYandexMoney(),
