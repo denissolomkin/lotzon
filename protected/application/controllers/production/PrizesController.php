@@ -123,11 +123,10 @@ class PrizesController extends \AjaxController
 
         try {
             $order->create();
-
+            $order->getPlayer()->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
             if ($order->getItem()->getQuantity()) {
                 $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
             }
-
         } catch(EntityException $e) {
             $this->ajaxResponseInternalError();
         }
