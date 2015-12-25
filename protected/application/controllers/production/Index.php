@@ -136,8 +136,9 @@ class Index extends \SlimController\SlimController
             "favorite" => $playerObj->getFavoriteCombination(),
             "location" => array(
                 "country" => $this->country,
-                "city"    => "Kyiv",
-                "address" => "Obolonska, 29"
+                "city"    => $playerObj->getCity(),
+                "zip"     => $playerObj->getZip(),
+                "address" => $playerObj->getAddress(),
             ),
             "balance"  => array(
                 "points" => $playerObj->getPoints(),

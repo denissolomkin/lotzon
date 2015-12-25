@@ -206,4 +206,5 @@ class ShopOrdersDBProcessor implements IProcessor
 
         return $sth->fetchAll();
     }
+
 }

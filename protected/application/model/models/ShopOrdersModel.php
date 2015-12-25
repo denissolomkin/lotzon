@@ -31,4 +31,5 @@ class ShopOrdersModel extends Model
     {
         return $this->getProcessor()->getOrdersList($playerId, $limit, $offset);
     }
+
 }

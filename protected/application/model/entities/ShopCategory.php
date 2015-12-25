@@ -65,6 +65,21 @@ class ShopCategory extends Entity
         return $this->_items;
     }
 
+    public function exportTo($to)
+    {
+        switch ($to) {
+            case 'list':
+                $ret = array(
+                    'id'       => $this->getId(),
+                    'title'    => $this->getName(),
+                );
+
+                return $ret;
+                break;
+        }
+        return false;
+    }
+
     public function create()
     {
         $this->validate('create');

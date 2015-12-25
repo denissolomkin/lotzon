@@ -61,6 +61,10 @@ class Player extends Entity
     private $_money       = 0;
     private $_gamesPlayed = 0;
 
+    protected $_city    = '';
+    protected $_zip     = '00000';
+    protected $_address = '';
+
     /**
      * @var array Счётчик оставшихся оплачиваемых реф.ссылок в соц.сетях [имя соц.сети]=>[количество]
      */
@@ -1598,6 +1602,9 @@ class Player extends Entity
                  //->setDateAdBlocked($data['DateAdBlocked'])
                  //->setWebSocket($data['WebSocket'])
                  ->setCountry($data['Country'])
+                 ->setCity($data['City'])
+                 ->setZip($data['Zip'])
+                 ->setAddress($data['Address'])
                  ->setLang($data['Lang'])
                  ->setAvatar($data['Avatar'])
                  ->setAgent($data['Agent'])
