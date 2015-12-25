@@ -13,12 +13,12 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 class ChanceController extends \AjaxController
 {
     private $session;
-    static $chancesPerPage;
+    static  $chancesPerPage;
 
     public function init()
     {
         self::$chancesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('CHANCES_PER_PAGE') ?: 10;
-        $this->session = new Session();
+        $this->session        = new Session();
         parent::init();
         if ($this->validRequest()) {
             if (!$this->session->get(Player::IDENTITY) instanceof PLayer) {
@@ -32,9 +32,11 @@ class ChanceController extends \AjaxController
     {
         if (!$this->session->get(Player::IDENTITY) instanceof Player) {
             $this->ajaxResponseUnauthorized();
+
             return false;
         }
         $this->session->get(Player::IDENTITY)->markOnline();
+
         return true;
     }
 
@@ -47,17 +49,18 @@ class ChanceController extends \AjaxController
 
         $this->authorizedOnly();
 
-        $count = $this->request()->get('count', self::$chancesPerPage);
-        $beforeId = $this->request()->get('before_id', NULL);
-        $afterId = $this->request()->get('after_id', NULL);
-        $offset = $this->request()->get('offset', NULL);
-        $lang = $this->session->get(Player::IDENTITY)->getLang();
+        $count          = $this->request()->get('count', self::$chancesPerPage);
+        $beforeId       = $this->request()->get('before_id', NULL);
+        $afterId        = $this->request()->get('after_id', NULL);
+        $offset         = $this->request()->get('offset', NULL);
+        $lang           = $this->session->get(Player::IDENTITY)->getLang();
         $publishedGames = GameSettingsModel::instance()->getSettings($key)->getGames();
 
         try {
             $list = QuickGamesModel::instance()->getList($publishedGames, $count, $beforeId, $afterId, $offset);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
+
             return false;
         }
 
@@ -94,7 +97,7 @@ class ChanceController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
         }
 
-        switch($key){
+        switch ($key) {
             case 'ChanceGame':
                 break;
             case 'QuickGame':
@@ -141,9 +144,9 @@ class ChanceController extends \AjaxController
         $this->authorizedOnly();
 
         $publishedGames = GameSettingsModel::instance()->getSettings($key);
-        $response = array();
+        $response       = array();
 
-        switch($key){
+        switch ($key) {
             case 'ChanceGame':
                 break;
             case 'QuickGame':
@@ -152,7 +155,7 @@ class ChanceController extends \AjaxController
                 break;
         }
 
-        switch(true){
+        switch (true) {
             case !($player = $this->session->get(Player::IDENTITY)):
                 $error = 'PLAYER_NOT_FOUND';
                 break;
@@ -211,7 +214,7 @@ class ChanceController extends \AjaxController
 
         if (isset($game)) {
 
-            $banner = new Banner;
+            $banner                   = new Banner;
             $response['res']['block'] = $banner
                 ->setGroup('game' . $game->getId())
                 ->setCountry($player->getCountry())
@@ -236,7 +239,7 @@ class ChanceController extends \AjaxController
 
         $this->authorizedOnly();
 
-        switch(true){
+        switch (true) {
             case !($player = $this->session->get(Player::IDENTITY)):
                 $error = 'PLAYER_NOT_FOUND';
                 break;
@@ -284,6 +287,13 @@ class ChanceController extends \AjaxController
                             } elseif ($currency == LotterySettings::CURRENCY_POINT)
                                 $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
                         }
+
+                $response['player'] = array(
+                    "balance" => array(
+                        "points" => $player->getPoints(),
+                        "money"  => $player->getMoney()
+                    ));
+
             } else {
                 $player->writeLog(array('action' => 'CHEAT', 'desc' => $key, 'status' => 'danger'));
                 $this->ajaxResponse(array(), 0, 'CHEAT_GAME');
