@@ -2,8 +2,8 @@
 
     Player = {
 
-        count: {},
-        balance: {},
+        count   : {},
+        balance : {},
         currency: {},
         language: {},
         favorite: [],
@@ -46,19 +46,21 @@
                             for (var i = 0; i < holders.length; i++) {
                                 var count = this.getCount(key);
                                 holders[i].innerHTML = count;
-                                if(count)
+                                if (count)
                                     DOM.fadeIn(holders[i]);
                                 else
                                     DOM.fadeOut(holders[i]);
                             }
 
-                            if(key === 'notifications')
+                            if (key === 'notifications')
                                 Comments.renderNotifications();
                         }
                     }
                 }
 
             }
+
+            this.ping();
 
             return this;
         },
@@ -81,16 +83,16 @@
             return currency;
         },
 
-        "prepareCount": function(key, value, count){
+        "prepareCount": function (key, value, count) {
 
-            if(typeof value === 'object'){
-                for(var prop in value){
-                    if(value.hasOwnProperty(prop)){
+            if (typeof value === 'object') {
+                for (var prop in value) {
+                    if (value.hasOwnProperty(prop)) {
                         value[prop] = this.prepareCount(prop, value[prop], this.count[key] && this.count[key][prop] || 0);
                     }
                 }
             } else {
-                switch(value[0]){
+                switch (value[0]) {
                     case '+':
                     case '-':
                         value = count + parseInt(value);
@@ -210,6 +212,19 @@
 
         updateBalance: function () {
             return Player.updatePoints().updateMoney();
+        },
+
+        ping: function () {
+
+            if (this.pingInterval) {
+                window.clearInterval(this.pingInterval);
+                delete this.pingInterval;
+            }
+
+            this.pingInterval = window.setInterval(function () {
+                Form.send('/ping')
+            }, 1000 * 6);
+
         },
 
         checkMoney: function (input_money) {
