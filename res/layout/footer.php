@@ -25,7 +25,7 @@
         menu = {
             navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
-                'menu-profile': ['profile/details', 'profile/billing', 'profile/settings', 'profile/password', 'reports/referrals', 'profile/bonuses'],
+                'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'profile/password', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': ['support/feedback', 'support/rules', 'support/faq', 'support/help'],
                 'menu-logout': ['logout']
             }

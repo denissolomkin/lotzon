@@ -229,7 +229,7 @@
   left: 0;
   text-align: right;
   color: #b4aeae;
-  font-size: 14px;
+  font-size: 15px;
   z-index: 1;
 }
 
@@ -244,7 +244,7 @@
 .ae-personal-form .error-msg {
   display: none;
   color: #ff4242;
-  font-size: 14px;
+  font-size: 15px;
   position: absolute;
   top: 0;
   right: 30px;
@@ -260,6 +260,7 @@
   padding: 0;
   padding-bottom: 1px;
   padding-left: 5px;
+  font: 15px "handbookpro-regular";
   &:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -284,6 +285,7 @@
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
+  font: 15px "handbookpro-regular";
   &:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -351,6 +353,7 @@
     position: relative;
     background: transparent;
     outline: none;
+    font: 15px "handbookpro-regular";
     &:focus {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -1143,5 +1146,45 @@ span.input-prefix {
     height: auto;
     line-height: 45px;
     top: 0;
+  }
+}
+
+#profile-edit {
+  & .ae-social-item {
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 5px;
+    font-size: 30px;
+    position: relative;
+    height: 42px;
+    width: 30px;
+    line-height: 42px;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30px;
+      height: 42px;
+      line-height: 42px;
+    }
+  }
+  & .ae-social-item:hover .tooltip {
+    line-height: 1.2;
+  }
+  & .calendar-range {
+    width: auto;
+    & input {
+      width: 100px;
+      padding-right: 20px;
+      background: transparent;
+      z-index: 1;
+      position: relative;
+      cursor: pointer;
+    }
+  }
+  & .wrapper-calendar {
+    &:before {
+      right:5px; 
+    }
   }
 }

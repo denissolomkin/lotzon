@@ -13,6 +13,16 @@
             $('input[type="tel"][name="billing[qiwi]"]').inputmasks(phoneMask);
             $('input[type="text"][name="billing[yandexMoney]"]').inputmask({mask: '410019{7,10}', placeholder: ''});
             $('input[type="text"][name="billing[webMoney]"]').inputmask('a999999999999');
+            $('input.datepicker').daterangepicker({singleDatePicker : true, startDate: '', endDate:'', autoUpdateInput : false});
+            // if ($('.datepicker')
+            //         .filter(':visible')
+            //         .filter(function () {
+            //             return !$(this).data('daterangepicker')
+            //         })
+            //         .daterangepicker({
+            //             singleDatePicker : true
+            //         }).length)
+            //     Content.enableForm();
         },
 
 
@@ -127,9 +137,7 @@
                         text = $(this).text();
                         Profile.arrFavorite.push(text);
                         $(this).addClass('on');
-                    }
-                    
-                      
+                    }        
                 });
 
                 $('.ae-combination-box li').each(function () {
@@ -137,8 +145,7 @@
                     $('.ae-current-combination li').each(function(){
                         if (x.text() == $(this).text()) {
                             x.addClass('selected');
-                        }
-                           
+                        }    
                     });
                    
                 });
@@ -152,11 +159,10 @@
                     if ($('.ae-combination-box li.selected').length < 6) {
 
                         var n = $(this).text();
-                        var last = $('.ae-current-combination li.on:last');
+                        var first = $('.ae-current-combination li:not(.on):first');
 
-                        if (last) {
-                            var next = $(last).next('li');
-                            next.addClass('on').text(n);    
+                        if (first) {
+                            first.addClass('on').text(n);    
                         }
 
                         else {
@@ -171,7 +177,15 @@
                     }
                 }
                 else {
-                    $(this).removeClass('selected');
+                    
+                    var x  =  $(this);
+                    $('.ae-current-combination li').each(function(){
+                        if (x.text() == $(this).text()) {
+                            $(this).text('') ;
+                            $(this).removeClass('on');
+                        }    
+                    });
+                    x.removeClass('selected');
                 }
             },
             cancelFavorite: function () {
@@ -191,7 +205,7 @@
             },
 
             details: function (data) {
-                R.push('profile-details');
+                R.push('profile-edit');
             },
 
             settings: function (data) {

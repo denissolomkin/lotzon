@@ -454,6 +454,17 @@
 
         },
 
+        "timing": function (key, forUpdate) {
+
+            return 1;
+
+            if(forUpdate)
+                return this.compiledStorage.hasOwnProperty(key);
+            else
+                return this.compiledStorage.hasOwnProperty(key);
+
+        },
+
         "partials": function (template) {
 
             matches = [];

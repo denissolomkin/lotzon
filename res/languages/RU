@@ -36,7 +36,7 @@
                 "menu-users": "Друзья",
                 "menu-prizes": "Витрина",
 
-                "menu-profile-details": "Контактные данные",
+                "menu-profile-edit": "Контактные данные",
                 "menu-profile-billing": "Платежные данные",
                 "menu-profile-settings": "Настройки",
                 "menu-profile-password": "Сменить пароль",
@@ -150,7 +150,8 @@
                 "title-profile-name": "Имя",
                 "title-profile-surname": "Фамилия",
                 "title-profile-patronymic": "Отчество",
-                "title-profile-nickname": "Ник",
+                "title-profile-nickname": "Никнейм",
+                "title-profile-nickname-unavalable": "Никнейм уже занят",
                 "title-profile-country": "Страна",
                 "title-profile-city": "Город/Село",
                 "title-profile-address": "Адрес",

@@ -140,7 +140,7 @@
 
             "reports-transactions": Content.initDaterange,
             "reports-referrals": Content.initDaterange,
-
+            
             "support-rules": Support.init,
             "support-faq": Support.init,
 

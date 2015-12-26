@@ -661,4 +661,9 @@ input.input-radio:checked + label.input-radio:before {
     bottom: 10px;
   }
 }
-
+.daterangepicker.dropdown-menu.single {
+  width: 260px;
+  & i {
+    min-width: 0;
+  }
+}

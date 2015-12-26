@@ -2,7 +2,7 @@
 
     Content = {
 
-        initDaterange: function () {
+        initDaterange : function () {
 
             D.log('Reports.init');
             if ($('.daterange')
@@ -14,8 +14,11 @@
                 Content.enableForm();
 
         },
+        initDatepicker: function () {
 
-        enableForm: function () {
+
+        },
+        enableForm    : function () {
 
             D.log('Content.enableForm', 'content');
             if (form = document.querySelector('form.render-list-form-unwatched')) {
@@ -53,42 +56,40 @@
             if (!form.classList.contains('render-list-form'))
                 return true;
 
-            if(form.elements['submit'])
+            if (form.elements['submit'])
                 form.elements['submit'].classList.add("loading");
 
             try {
 
-                var renderList = document.getElementById(U.parse(form.action)) || form.parentNode.querySelector(".render-list"),
-                    query = $(form).serializeObject();
+                var pingForm = Content.form4Ping.call(form);
+                pingForm = pingForm[Object.keys(pingForm)[0]];
 
                 if (event && event.type === 'change') {
 
                     R.push({
-                        href: form.action.replace('list', 'container'),
-                        json: {},
-                        query: query,
+                        href : form.action.replace('list', 'container'),
+                        json : {},
+                        query: pingForm.query,
                         after: Content.after.changeFilter
                     });
 
                 } else {
 
-                    var first_id = renderList && renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
-                        last_id = renderList && renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
-                        offset = renderList && renderList.childElementCount || null;
-
-                    if (first_id && last_id) {
-                        if (first_id > last_id)
-                            query.before_id = last_id;
+                    if (pingForm.first_id && pingForm.last_id) {
+                        if (pingForm.first_id > pingForm.last_id)
+                            pingForm.query.before_id = pingForm.last_id;
                         else
-                            query.after_id = last_id;
+                            pingForm.query.after_id = pingForm.last_id;
                     }
 
-                    if (offset)
-                        query.offset = offset;
+                    if (pingForm.offset) {
+                        pingForm.query.offset = pingForm.offset;
+                        Object.deepExtend(pingForm.query.ping, pingForm);
+                    }
 
                     R.push({
-                        href: form.action,
-                        query: Object.filter(query),
+                        href : form.action,
+                        query: pingForm.query,
                         after: Content.after.autoload
                     });
                 }
@@ -125,10 +126,47 @@
 
         },
 
+        forms4ping: function () {
+
+            var renderForms = DOM.visible('.render-list-form:not(.track-disabled)'),
+                parseForms = [];
+
+            if (renderForms.length) {
+                for (var i = 0; i < renderForms.length; i++) {
+                    parseForms.push(Content.form4Ping.call(renderForms[i]));
+                }
+            }
+
+            return parseForms;
+
+        },
+
+        form4Ping: function () {
+
+            var renderList = document.getElementById(U.parse(this.action)) || this.parentNode.querySelector(".render-list"),
+                query = $(this).serializeObject(),
+                first_id = renderList && renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
+                last_id = renderList && renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
+                offset = renderList && renderList.childElementCount || null,
+                timing = Cache.timing(U.parse(this.action)),
+                res = [];
+
+            res[U.parse(this.action)] = Object.filter({
+                'query'   : Object.filter(query),
+                'offset'  : offset,
+                'timing'  : timing,
+                'first_id': first_id,
+                'last_id' : last_id
+            });
+
+            return res;
+
+        },
+
         updateBanners: function () {
 
             if (/new.lotzon.com/.test(location.hostname)) {
-                if(Device.mobile){
+                if (Device.mobile) {
                     R.push('/banner/tablet/top');
                     R.push('/banner/tablet/bottom');
                 } else {
@@ -199,7 +237,7 @@
                 css.href = css.href.replace('mobile', 'screen');
         },
 
-        modal:  function (message) {
+        modal: function (message) {
 
             message = '<div class="modal-message"><div class="animated zoomIn"><p>' + Cache.i18n(message) + '</p></div></div>';
             DOM.append(message, this);
