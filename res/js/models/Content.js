@@ -59,40 +59,40 @@
             if (form.elements['submit'])
                 form.elements['submit'].classList.add("loading");
 
-            try {
 
                 var pingForm = Content.form4Ping.call(form);
-                pingForm = pingForm[Object.keys(pingForm)[0]];
+                pingForm = {'ping': pingForm[Object.keys(pingForm)[0]]};
 
                 if (event && event.type === 'change') {
 
                     R.push({
                         href : form.action.replace('list', 'container'),
                         json : {},
-                        query: pingForm.query,
+                        query: pingForm.ping.query,
                         after: Content.after.changeFilter
                     });
 
                 } else {
 
-                    if (pingForm.first_id && pingForm.last_id) {
-                        if (pingForm.first_id > pingForm.last_id)
-                            pingForm.query.before_id = pingForm.last_id;
+                    if (pingForm.ping.first_id && pingForm.ping.last_id) {
+                        if (pingForm.ping.first_id > pingForm.ping.last_id)
+                            pingForm.before_id = pingForm.ping.last_id;
                         else
-                            pingForm.query.after_id = pingForm.last_id;
+                            pingForm.after_id = pingForm.ping.last_id;
                     }
 
-                    if (pingForm.offset) {
-                        pingForm.query.offset = pingForm.offset;
-                        Object.deepExtend(pingForm.query.ping, pingForm);
+                    if (pingForm.ping.offset) {
+                        pingForm.offset = pingForm.ping.offset;
                     }
 
                     R.push({
                         href : form.action,
-                        query: pingForm.query,
+                        query: pingForm,
                         after: Content.after.autoload
                     });
                 }
+
+            try {
             } catch (e) {
                 D.error.call(form, e.message);
             }
@@ -129,11 +129,11 @@
         forms4ping: function () {
 
             var renderForms = DOM.visible('.render-list-form:not(.track-disabled)'),
-                parseForms = [];
+                parseForms = {};
 
             if (renderForms.length) {
                 for (var i = 0; i < renderForms.length; i++) {
-                    parseForms.push(Content.form4Ping.call(renderForms[i]));
+                    Object.deepExtend(parseForms, Content.form4Ping.call(renderForms[i]));
                 }
             }
 
@@ -144,19 +144,15 @@
         form4Ping: function () {
 
             var renderList = document.getElementById(U.parse(this.action)) || this.parentNode.querySelector(".render-list"),
-                query = $(this).serializeObject(),
-                first_id = renderList && renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
-                last_id = renderList && renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null,
-                offset = renderList && renderList.childElementCount || null,
-                timing = Cache.timing(U.parse(this.action)),
-                res = [];
+                key = U.parse(this.action).replace(/-list|-container/g, ''),
+                res = {};
 
-            res[U.parse(this.action)] = Object.filter({
-                'query'   : Object.filter(query),
-                'offset'  : offset,
-                'timing'  : timing,
-                'first_id': first_id,
-                'last_id' : last_id
+            res[key] = Object.filter({
+                'query'   : Object.filter($(this).serializeObject()),
+                'offset'  : renderList && renderList.childElementCount || null,
+                'timing'  : Cache.validate(key),
+                'first_id': renderList && renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
+                'last_id' : renderList && renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null
             });
 
             return res;

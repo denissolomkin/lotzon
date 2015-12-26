@@ -222,7 +222,7 @@
             }
 
             this.pingInterval = window.setInterval(function () {
-                Form.get({
+                Form.post({
                     action: '/ping',
                     data: {forms: Content.forms4ping()}
                 })

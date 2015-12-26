@@ -32,12 +32,14 @@
 
         },
 
+
+
         fn: {
 
             day: function (date, format) {
 
                 format = typeof format === 'string' && format || 'DD.MM.YYYY';
-                date = Livedate.fn.diff(date);
+                date = Livedate.fn.now(date);
 
                 switch (moment.unix(date).diff(moment(), 'days')) {
                     case -0:
@@ -52,14 +54,15 @@
             },
 
             from: function (date) {
-                return moment.unix(Livedate.fn.diff(date)).fromNow();
+                return moment.unix(Livedate.fn.now(date)).fromNow();
             },
 
             destroy: function () {
                 window.clearInterval(livedateInterval);
             },
 
-            diff: function(date){
+            now: function(date){
+                date = date || moment().unix();
                 return parseInt(date) + Livedate.diff;
             }
 

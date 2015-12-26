@@ -234,6 +234,8 @@
                 storage = data.cache || false,
                 source = data.res || data;
 
+            this.validate(path.join('-'), true);
+
             if (data.player)
                 Player.init(data.player);
 
@@ -259,16 +261,18 @@
 
                 }
 
-                if(storage)
+                if (storage)
                     this.extend(data, path, storage)
                         .save(storage);
             }
+
 
             if (!data.key && data.res)
                 while (path.length && source) {
                     needle = path.shift();
                     source = source && source.hasOwnProperty(needle) && source[needle];
                 }
+
 
             return source || data.res || data;
 
@@ -388,9 +392,9 @@
         },
 
         split: function (path) {
-            if(!path)
+            if (!path)
                 return [];
-            else if(!isArray(path)){
+            else if (!isArray(path)) {
                 path = path.indexOf('.') !== -1 && path.split('.')
                 || path.indexOf('-') !== -1 && path.split('-')
                 || path.split('/');
@@ -454,14 +458,17 @@
 
         },
 
-        "timing": function (key, forUpdate) {
+        "validate": function (key, forUpdate) {
 
-            return 1;
+            if(key) {
 
-            if(forUpdate)
-                return this.compiledStorage.hasOwnProperty(key);
-            else
-                return this.compiledStorage.hasOwnProperty(key);
+                if (forUpdate) {
+                    this.storage[this.storages['validity']][key] = Livedate.fn.now();
+                    return this.save('validity');
+                } else {
+                    return this.storage[this.storages['validity']][key];
+                }
+            }
 
         },
 

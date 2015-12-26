@@ -61,6 +61,7 @@
              * */
 
             setTimeout(function () {
+                console.log(form.data);
                 $.ajax({
                     url     : form.url,
                     method  : /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
