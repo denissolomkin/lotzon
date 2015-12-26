@@ -28,9 +28,9 @@ class QuickGamesModel extends Model
       return $this->getProcessor()->getGamesSettings();
    }
 
-    public function getList()
+    public function getList($count = NULL, $beforeId = NULL, $afterId = NULL, $offset = NULL)
     {
-        return $this->getProcessor()->getList();
+        return $this->getProcessor()->getList($count, $beforeId, $afterId, $offset);
     }
 
     public function getRandomGame()
