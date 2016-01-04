@@ -667,3 +667,68 @@ input.input-radio:checked + label.input-radio:before {
     min-width: 0;
   }
 }
+
+
+/*Разметка для сетки*/
+
+// одинаковая высота ширина и пропорциональный размер шрифта в зависимости от количества элементов:детей
+// макс количество 20 - править в scss 
+// .vw - задает пропорционально ширину для детей  
+// .vh - задает пропорционально высоту (при помощи :: padding-top) для детей  
+// .vf - устанавливает пропорционально шрифт в %
+
+// <div class='vw vh vf clearfix'> -- родительский блок
+//     <div> -- {width: 50%; padding-top: 50%; font-size: 50%} для 2-х детей, для 10 - 10% соответственно
+//         <div> -- если установлен класс .vh нужна обертка (т.к .vh задаеться паддингом )
+//             some text
+//         </div>
+//     </div>
+//     <div> -- --||--
+//         <div>
+//             some text
+//         </div>
+//     </div>
+// </div>
+.vw > *{
+    float: left;
+}
+.vh > *{
+    margin: 0;
+    padding: 0;
+    height: 0;
+    position: relative;
+    > *{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+    }
+}
+@for $i from 1 through 20 {
+    .vw > *:first-child:nth-last-child(#{$i}) {
+        width: (100%/$i);
+        @if $i > 1 {
+            ~ * {
+                width: (100%/$i);
+            }
+        }
+    }
+    .vh > *:first-child:nth-last-child(#{$i}) {
+        padding-top: (100%/$i);
+        @if $i > 1 {
+            ~ * {
+                padding-top: (100%/$i);
+            }
+        }
+    }
+    .vf > *:first-child:nth-last-child(#{$i}) {
+        font-size: (100%/$i);
+        @if $i > 1 {
+            ~ * {
+                font-size: (100%/$i);
+            }
+        }
+    }
+}

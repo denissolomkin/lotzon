@@ -6,7 +6,7 @@
                 
                 <div>
                     <!-- описание --> 
-                    {{description}}
+                    {{{description}}}
                 </div>
 
     </div>
@@ -30,17 +30,16 @@
                     {{/reverse}}
                 </div>
                 <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play"}}</button>
+                <p>игра началась</p>
                 <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
             </div>
             <div class="win">
-                <span class="title">{{i18n "title-games-prize"}}</span>
+                <span class="title">{{i18n "title-games-chance-card-win"}}</span>
                 <div>
                     {{#reverse prizes}}
                     <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
                         {{#if n}}
                         <span class="item">{{n}}</span>
-                        <span class="instruction">{{../field.c}} желтых {{reverseNum ../prizes.length-1 @index}} промахов </span>
-                        <!--<img src="{{s}}" alt="">-->
                         {{else}}
                         <span class="item">{{v}} </span>
                         <span class="currency">{{t}} </span>
@@ -48,26 +47,17 @@
                     </div>
                     {{/reverse}}
                 </div>
-                <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play"}}</button>
+                <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play-again"}}</button>
                 <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
             </div>
             <div class="lose">
-                <span class="title">{{i18n "title-games-prize"}}</span>
+                <span class="title">{{i18n "title-games-chance-card-lose"}}</span>
                 <div>
-                    {{#reverse prizes}}
-                    <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
-                        {{#if n}}
-                        <span class="item">{{n}}</span>
-                        <span class="instruction">{{../field.c}} желтых {{reverseNum ../prizes.length-1 @index}} промахов </span>
-                        <!--<img src="{{s}}" alt="">-->
-                        {{else}}
-                        <span class="item">{{v}} </span>
-                        <span class="currency">{{t}} </span>
-                        {{/if}}
+                    <div>
+                        <i class="i-x"></i>
                     </div>
-                    {{/reverse}}
                 </div>
-                <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play"}}</button>
+                <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play-again"}}</button>
                 <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
             </div>
             <!-- ^ remake this sh.. -->
@@ -76,7 +66,7 @@
         <div id="games-chance-view-cells" class="game">
             {{#each (for 1 "<=" field.x) as |value key| }}
 
-            <div class='same-width-childs same-height-childs clearfix'>
+            <div class='vw vh vf clearfix'>
                 {{#each (for 1 "<=" ../field.y) }}
                 <div>
                     <div class='inner'>

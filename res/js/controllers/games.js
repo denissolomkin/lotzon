@@ -3,7 +3,7 @@ var Games = {
         init: function () {
 //        alert("Online");
             Games.online.tabs();
-            Games.online.timeouts("#games-online-view-connect > form", 5000);
+//            Games.online.timeouts("#games-online-view-connect > form", 5000);
 
             return;
         },
@@ -53,7 +53,9 @@ var Games = {
             Games.chance.conf.data = data.json;
 //            alert('chance get init!!!');
             console.error(" data.json.id >>>>>>>", data.json.id);
-            Games.chance.get("#games-chance-view-cells button:not([class$='played'])", data.json.id);
+            Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
+            // in multiple prizes set first prize as @current@
+            $("#games-chancegame *:first-child[data-current] ").addClass('currennt');
             return;
 
         },
@@ -64,13 +66,15 @@ var Games = {
                 if (!Games.chance.conf.play) return false;
                 
                 var cell = $(this).data('cell'), that = this;
-
+                console.info('>>>', $(that).attr('class'));
                 // send 
                 Form.get.call(this,
                         {
                             href: '/games/chance/' + id + '/play',
                             data: {'cell': cell},
                             after: function (data) {
+                                console.log(data.json);
+                                if(data.json.error) return;
                                 // code after 
                                 console.info(JSON.stringify(data.json, null, 2));
                                 // prize
@@ -85,6 +89,11 @@ var Games = {
                                 }
                                 // Game winner Fields
                                 if (data.json.GameField) {
+                                    if(data.json.Prize){
+                                        $("#games-chancegame").addClass('win');
+                                    }else{
+                                        $("#games-chancegame").addClass('lose');
+                                    }
                                     Games.chance.end(data.json.GameField);
                                 }
                                 $(that).addClass('played');
@@ -94,22 +103,23 @@ var Games = {
             });
         },
         play: function (id) {
-            // delete
             Form.post.call(this, {
                 href: '/games/chance/' + id,
                 after: function (data) {
 //                    alert(JSON.stringify(data.json, null, 2));
                     // update trigger 'game ready'
                     Games.chance.conf.play = !0;
-                    $("#games-chancegame").attr('class', 'game-started');
                     // update all cells to default state
                     Games.chance.resset();
+//                    add class for css styles
+                    $("#games-chancegame").attr('class','game-started');
                 }
             });
         },
         end: function (fields) {
             for (var i in fields) {
                 if (fields[i]) {
+                    $("#games-chancegame").removeClass('game-started');
                     $('#games-chancegame button[data-cell="' + i + '"]').addClass('win');
                     Games.chance.conf.play = !1;
                 }
@@ -117,7 +127,7 @@ var Games = {
 
         },
         prizesMoves: function(moves) {
-            console.error(">> moves >",moves);
+//            console.error(">> moves >",moves);
             var missCounter = Games.chance.conf.data.field.m - moves;
 //            data-current
             $("#games-chancegame [data-current]").removeClass('currennt');

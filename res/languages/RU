@@ -72,6 +72,7 @@
                 "button-games-create": "создать",
                 "button-games-spin": "спин",
                 "button-games-play": "Играть",
+                "button-games-play-again": "Играть еще раз",
                 "button-games-rating": "рейтинг",
 
                 "title-error": "Ошибка",
@@ -94,6 +95,9 @@
 
                 "title-games-online": "Игры Онлайн",
                 "title-games-chance": "Шансы",
+                "title-games-chance-game-is-started": "Игра началась",
+                "title-games-chance-card-win": "Поздравляем! Выигрыш зачислен на ваш счет",
+                "title-games-chance-card-lose": "В этот раз не повезло",
                 "title-games-random": "Случайная игра",
                 "title-games-moment": "Моментальный шанс",
                 "title-games-rating": "Рейтинг",
