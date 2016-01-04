@@ -2,7 +2,7 @@
 
     Content = {
 
-        initDaterange : function () {
+        initDaterange: function () {
 
             D.log('Reports.init');
             if ($('.daterange')
@@ -14,11 +14,8 @@
                 Content.enableForm();
 
         },
-        initDatepicker: function () {
 
-
-        },
-        enableForm    : function () {
+        enableForm: function () {
 
             D.log('Content.enableForm', 'content');
             if (form = document.querySelector('form.render-list-form-unwatched')) {
@@ -85,7 +82,7 @@
                         pingForm.offset = pingForm.ping.offset;
                     }
 
-                    if(form.classList.contains('track-disabled')) {
+                    if (form.classList.contains('track-disabled')) {
                         delete pingForm.ping;
                     }
 

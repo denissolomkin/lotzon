@@ -57,7 +57,7 @@ var Games = {
             console.error(" data.json.id >>>>>>>", data.json.id);
             Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
             // in multiple prizes set first prize as @current@
-            $("#games-chancegame *:first-child[data-current] ").addClass('currennt');
+            $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
             return;
 
         },
@@ -92,9 +92,9 @@ var Games = {
                                 // Game winner Fields
                                 if (data.json.GameField) {
                                     if(data.json.Prize){
-                                        $("#games-chancegame").addClass('win');
+                                        $("#games-chance-view-chance").addClass('win');
                                     }else{
-                                        $("#games-chancegame").addClass('lose');
+                                        $("#games-chance-view-chance").addClass('lose');
                                     }
                                     Games.chance.end(data.json.GameField);
                                 }
@@ -114,15 +114,15 @@ var Games = {
                     // update all cells to default state
                     Games.chance.resset();
 //                    add class for css styles
-                    $("#games-chancegame").attr('class','game-started');
+                    $("#games-chance-view-chance").attr('class','game-started');
                 }
             });
         },
         end: function (fields) {
             for (var i in fields) {
                 if (fields[i]) {
-                    $("#games-chancegame").removeClass('game-started');
-                    $('#games-chancegame button[data-cell="' + i + '"]').addClass('win');
+                    $("#games-chance-view-chance").removeClass('game-started');
+                    $('#games-chance-view-chance button[data-cell="' + i + '"]').addClass('win');
                     Games.chance.conf.play = !1;
                 }
             }
@@ -132,8 +132,8 @@ var Games = {
 //            console.error(">> moves >",moves);
             var missCounter = Games.chance.conf.data.field.m - moves;
 //            data-current
-            $("#games-chancegame [data-current]").removeClass('currennt');
-            $("#games-chancegame [data-current="+missCounter+"]").addClass('currennt');
+            $("#games-chance-view-chance [data-current]").removeClass('currennt');
+            $("#games-chance-view-chance [data-current="+missCounter+"]").addClass('currennt');
         },
         resset: function () {
             $("#games-chance-view-cells button").removeAttr('class');

@@ -11,6 +11,9 @@
             </div><!-- .content-top -->
 
 
+            <div id="badges">
+            </div>
+
             <div id="banner-tablet-bottom" class="banner-2">
 	            <div style="height: 100%; background: #ccc;"></div>
             </div>

@@ -207,7 +207,8 @@ class GamesController extends \AjaxController
         }
 
         $response = array(
-            'res' => array(
+            'lastItem' => true,
+            'res'      => array(
                 'games' => array()
             )
         );

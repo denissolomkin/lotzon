@@ -399,9 +399,11 @@
 
                     if (render.id == node.id) {
 
-                        if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
-                            //such as blog-post-vew, games-online & games-chance
-                            DOM.hide(node.parentNode && node.parentNode.children);
+                        if(!render.classList.contains('pop-box')) {
+                            if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
+                                //such as blog-post-view, games-online & games-chance
+                                DOM.hide(node.parentNode && node.parentNode.children);
+                            }
                         }
 
                         if (node.parentNode) {
@@ -429,12 +431,13 @@
                         if (!node)
                             node = document.getElementById('content');
 
-                        if (compare(render.classList, ['content-box-item', 'content-main'])) {
-                            //such as games-online & games-chance
-                            console.log(node);
-                            DOM.hide(node.children);
-                        } else if (node.id == 'content') {
-                            DOM.hide(node.children);
+                        if(!render.classList.contains('pop-box')) {
+                            if (compare(render.classList, ['content-box-item', 'content-main'])) {
+                                //such as games-online & games-chance
+                                DOM.hide(node.children);
+                            } else if (node.id == 'content') {
+                                DOM.hide(node.children);
+                            }
                         }
 
                         if (options.init.template.indexOf('-item') !== -1)
@@ -448,6 +451,7 @@
                             console.log('prepend ID');
 
                         } else {
+
                             DOM.append(render, node);
                             console.log('append ID');
                         }
