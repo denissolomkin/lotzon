@@ -59,20 +59,20 @@
             if (form.elements['submit'])
                 form.elements['submit'].classList.add("loading");
 
-
-                var pingForm = Content.form4Ping.call(form);
-                pingForm = {'ping': pingForm[Object.keys(pingForm)[0]]};
-
+            try {
                 if (event && event.type === 'change') {
 
                     R.push({
                         href : form.action.replace('list', 'container'),
                         json : {},
-                        query: pingForm.ping.query,
+                        query: Object.filter($(form).serializeObject()),
                         after: Content.after.changeFilter
                     });
 
                 } else {
+
+                    var pingForm = Content.form4Ping.call(form);
+                    pingForm = {'ping': pingForm[Object.keys(pingForm)[0]]};
 
                     if (pingForm.ping.first_id && pingForm.ping.last_id) {
                         if (pingForm.ping.first_id > pingForm.ping.last_id)
@@ -92,7 +92,6 @@
                     });
                 }
 
-            try {
             } catch (e) {
                 D.error.call(form, e.message);
             }
