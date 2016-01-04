@@ -41,7 +41,7 @@
 
             }
 
-            return U.path[type] + url;
+            return (U.path[type] ? U.path[type] : '') + url;
         },
 
         "parse": function (url, type) {

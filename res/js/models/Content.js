@@ -85,6 +85,10 @@
                         pingForm.offset = pingForm.ping.offset;
                     }
 
+                    if(form.classList.contains('track-disabled')) {
+                        delete pingForm.ping;
+                    }
+
                     R.push({
                         href : form.action,
                         query: pingForm,

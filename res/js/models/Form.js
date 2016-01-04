@@ -2,6 +2,8 @@
 
     Form = {
 
+        websocketConnection: null,
+
         timeout: {
             remove : 3000,
             fadeout: 200,
@@ -17,6 +19,12 @@
         post: function (form) {
             form = Form.parseForm(form);
             form.method = 'post';
+            Form.send.call(this, form)
+        },
+
+        ws: function (form) {
+            form = Form.parseForm(form);
+            form.method = 'ws';
             Form.send.call(this, form)
         },
 
@@ -61,46 +69,135 @@
              * */
 
             setTimeout(function () {
+
                 console.log(form.data);
-                $.ajax({
-                    url     : form.url,
-                    method  : /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
-                        ? "post"
-                        : form.method,
-                    data    : form.data,
-                    dataType: 'json',
-                    success : function (data) {
 
-                        if ('responseText' in data) {
+                if (form.method === 'ws') {
 
-                            Form.stop.call(that);
-                            D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
+                    var conn = Form.websocketConnection,
+                        path = form.url,
+                        data = form.data;
 
-                        } else {
+                    if (!conn || conn.readyState !== 1) {
 
-                            form.json = data;
+                        conn = new WebSocket(Config.websocketUrl);
 
+                        conn.onopen = function (e) {
+                            console.info('Socket open');
+                            conn.send(JSON.stringify({'path': path, 'data': data}));
+                        };
+
+                        conn.onerror = function (e) {
+                            var message = 'There was an un-identified Web Socket error';
                             Form.stop.call(that)
-                                .message.call(that, data.message);
+                                .message.call(that, message);
+                            console.error(message);
+                        };
 
-                            Cache.init(data);
+                        conn.onmessage = function (e) {
 
-                            if (Callbacks[form.method.toLowerCase()][form.callback]) {
-                                D.log(['C.' + form.method.toLowerCase() + '.callback']);
-                                Callbacks[form.method.toLowerCase()][form.callback].call(that, data.res);
+                            data = JSON.parse(e.data);
+
+                            if (data.error) {
+                                Form.stop.call(that)
+                                    .message.call(that, data.error);
+                            } else {
+
+                                sample = null;
+                                path = data.path;
+                                if (data.res) {
+
+                                    if (data.res.appId && data.res.appId != App.id) {
+                                        App = {};
+                                    } else if (App.winner) {
+                                        App['winner'] = null;
+                                        App['fields'] = null;
+                                    }
+
+                                    Object.deepExtend(App, data.res);
+
+                                    if ('appName' in data.res)
+                                        App.name = data.res.appName;
+
+                                    if ('appMode' in data.res)
+                                        App.mode = data.res.appMode;
+
+                                    if ('appId' in data.res) {
+                                        App.id = data.res.appId;
+                                        data = null;
+                                    }
+
+                                    Apps.playAudio([App.name, App.action]);
+                                }
+
+                                action = data && data.res && data.res.action ? data.res.action : path;
+
+                                switch ('function') {
+
+                                    case App.name && typeof eval(App.name + '.' + action):
+                                        eval(App.name + '.' + action)(data);
+                                        break;
+
+                                    case typeof Game.callback[action] :
+                                        eval('Game.callback.' + action)(data);
+                                        break;
+
+                                    case App.name && typeof eval(App.name + '.action'):
+                                        eval(App.name + '.action')(data);
+                                        break;
+
+                                }
+
                             }
 
-                            if ('after' in form && typeof form.after === 'function') {
-                                form.after.call(that, form);
-                            }
-                        }
+                        };
 
-                    },
-                    error   : function (data) {
-                        Form.stop.call(that);
-                        D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
+                    } else {
+                        conn.send(JSON.stringify({'path': path, 'data': data}));
                     }
-                })
+
+                } else {
+
+                    $.ajax({
+                        url     : form.url,
+                        method  : /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
+                            ? "post"
+                            : form.method,
+                        data    : form.data,
+                        dataType: 'json',
+                        success : function (data) {
+
+                            if ('responseText' in data) {
+
+                                Form.stop.call(that);
+                                D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
+
+                            } else {
+
+                                form.json = data;
+
+                                Form.stop.call(that)
+                                    .message.call(that, data.message);
+
+                                Cache.init(data);
+
+                                if (Callbacks[form.method.toLowerCase()][form.callback]) {
+                                    D.log(['C.' + form.method.toLowerCase() + '.callback']);
+                                    Callbacks[form.method.toLowerCase()][form.callback].call(that, data.res);
+                                }
+
+                                if ('after' in form && typeof form.after === 'function') {
+                                    form.after.call(that, form);
+                                }
+                            }
+
+                        },
+                        error   : function (data) {
+                            Form.stop.call(that);
+                            D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
+                        }
+                    })
+                }
             }, Form.timeout.submit);
 
         },
@@ -297,6 +394,6 @@
                 Form.timeout.remove);
         }
 
-    }
+    };
 
 })();

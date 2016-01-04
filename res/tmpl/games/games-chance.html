@@ -8,6 +8,21 @@
                 </div>
                 <div class="game-info">
                     <div class="game-name">{{ title }}</div>
+                    {{#if prizes}}
+                    <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
+                    <div class="game-fund">
+                        {{#each prizes as |prize pkey|}}
+                        {{#if (eq prize.t "item")}}
+                        <div class="">{{ prize.n }}</div>
+                        {{else}}
+                        <div class="">{{ prize.v }} <span>{{#if (eq prize.t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}}</span></div>
+                        {{/if}}
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                    {{#if winners}}
+                        <div class="">{{ number (or winners 0) }} {{i18n "title-games-winners"}}</div>
+                    {{/if}}
                 </div>
                 <div class="game-button">{{i18n "button-games-details"}}</div>
             </div>

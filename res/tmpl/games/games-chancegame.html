@@ -60,17 +60,16 @@
                 <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play-again"}}</button>
                 <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
             </div>
-            <!-- ^ remake this sh.. -->
         </div>
 
-        <div id="games-chance-view-cells" class="game">
-            {{#each (for 1 "<=" field.x) as |value key| }}
+        <div id="games-chance-view-cells" class="minefield">
+            {{#each (for 1 "<=" field.y) as |value key| }}
 
             <div class='vw vh vf clearfix'>
-                {{#each (for 1 "<=" ../field.y) }}
+                {{#each (for 1 "<=" ../field.x) }}
                 <div>
                     <div class='inner'>
-                        <button type=button data-cell="{{value}}x{{this}}"><i class='i-question'></i><i class='i-o'></i><i class='i-x'></i></button>
+                        <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i class='i-o'></i><i class='i-x'></i></button>
                     </div>
                 </div>
                 {{/each}}

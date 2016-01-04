@@ -2905,9 +2905,10 @@ div > .games-previews {
     text-align: center; }
   .games-previews .flex-box .game-name {
     font-family: Handbook-bold;
-    font-size: 20px;
+    font-size: 15px;
     text-transform: uppercase;
-    line-height: 2; }
+    line-height: 1;
+    margin: 5px 0; }
   .games-previews .flex-box .fund_title {
     font-family: Handbook-bold;
     color: #605b5c;
@@ -2929,7 +2930,18 @@ div > .games-previews {
     text-align: center;
     line-height: 2;
     min-height: 40px;
-    font-size: 18px; }
+    font-size: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3); }
+
+#games-chance .game-info {
+  background: transparent; }
+
+#games-chance .game-fund > div {
+  font-size: 15px;
+  margin: 10px 0; }
+  #games-chance .game-fund > div:first-child:nth-last-child(1) {
+    font-size: 24px;
+    margin: 20px 0; }
 
 .games-view .game-settings .settings-tabs div.active, .games-view .game-settings .settings-tabs div:hover {
   background: #474747;
@@ -3058,8 +3070,6 @@ div > .games-previews {
       color: #4a4a4a;
       font-family: handbookpro-regular; }
       .games-view .description-block .game-description > div {
-        /*>>>>>>>>>>>>>>>>>>>>>*/
-        max-height: calc((15px * 1.3)*3);
         overflow: hidden;
         transition: 1s max-height ease-in-out;
         height: auto; }
@@ -3074,6 +3084,7 @@ div > .games-previews {
         .games-view .description-block .game-description #read-more-description:checked ~ div {
           max-height: 2000px; }
         .games-view .description-block .game-description #read-more-description + label {
+          display: none;
           color: #5a90b7;
           text-align: left;
           cursor: pointer;
@@ -3120,6 +3131,7 @@ div > .games-previews {
       align-items: stretch;
       height: 65px; }
       .games-view .game-settings .settings-tabs div {
+        transition: all .5s ease;
         min-height: 40px;
         padding: 10px;
         display: inline-block;
@@ -3137,6 +3149,8 @@ div > .games-previews {
         .games-view .game-settings .settings-tabs div i {
           font-size: 20px;
           margin-right: 6px; }
+        .games-view .game-settings .settings-tabs div:hover {
+          opacity: 0.5; }
 
 .game-settings .games-online {
   font-family: handbookpro-regular;
@@ -3248,18 +3262,23 @@ div > .games-previews {
   left: -9999px; }
   .game-settings [type="radio"]:checked + label {
     background: #474747;
-    color: #fff; }
+    color: #fff;
+    transition: all .5s ease; }
 
 .game-settings [type="radio"]:not(:checked) {
   position: absolute;
   left: -9999px; }
-  .game-settings [type="radio"]:not(:checked) + label:hover {
-    background: #474747;
-    color: #fff; }
+  .game-settings [type="radio"]:not(:checked) + label {
+    transition: all .5s ease; }
+    .game-settings [type="radio"]:not(:checked) + label:hover {
+      background: #474747;
+      opacity: 0.5;
+      color: #fff; }
 
 .game-settings [type="radio"]:disabled + label {
   color: #aaa;
-  background: transparent; }
+  background: transparent;
+  transition: all .5s ease; }
   .game-settings [type="radio"]:disabled + label:hover {
     color: #aaa;
     background: transparent; }
@@ -3463,13 +3482,13 @@ div > .games-previews {
         background: transparent;
         border: 1px solid #fff;
         color: #fff; }
-  #games-chance-view .game {
+  #games-chance-view .minefield {
     display: inline-block;
     vertical-align: top;
     width: 59%;
     box-sizing: border-box;
     position: relative; }
-    #games-chance-view .game:before {
+    #games-chance-view .minefield:before {
       content: '';
       display: block;
       position: absolute;
@@ -3539,7 +3558,7 @@ div > .games-previews {
     position: relative;
     overflow: hidden;
     min-height: 430px; }
-  #games-chance-view .game {
+  #games-chance-view .minefield {
     min-height: 430px;
     display: inline-block;
     vertical-align: top;
@@ -3594,7 +3613,7 @@ div > .games-previews {
     padding-bottom: 7px; }
   #games-chance-view .prizes .lose i.i-x {
     padding: 10px 0; }
-  #games-chance-view .game {
+  #games-chance-view .minefield {
     display: block;
     position: relative;
     height: auto; }
@@ -3642,6 +3661,15 @@ div > .games-previews {
     left: 50%;
     transform: translateX(-50%); }
 
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04.01.2016, 14:38:43
+    Author     : squama
+*/
 #lottery {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both; }

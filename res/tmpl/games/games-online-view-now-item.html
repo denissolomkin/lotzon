@@ -1,4 +1,5 @@
-<div id="games-online-view-connect-{{id}}" data-id="{{id}}" class="game {{#if (gt (getSplittedEl mode "-" "2") players.length )}}available{{/if}}">
+{{#if mode}}
+<div id="games-online-view-now-{{id}}" data-id="{{id}}" class="game {{#if (gt (getSplittedEl mode "-" "2") players.length )}}available{{/if}}">
 
 
     <div class="bet">{{getSplittedEl mode "-" "1"}} {{#if (eq (getSplittedEl mode "-" "0") "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
@@ -17,3 +18,4 @@
     {{/if}}
 
 </div>
+{{/if}}

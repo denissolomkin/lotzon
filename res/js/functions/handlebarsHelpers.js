@@ -78,6 +78,7 @@ $(function () {
          * @returns {str}
          */
         'getSplittedEl': function (str, delimiter, el) {
+            if(!str || !delimiter || !el) return;
             return str.split(delimiter)[el];
         },
         /**

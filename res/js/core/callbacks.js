@@ -167,29 +167,7 @@
                     node.innerHTML = html;
             },
 
-            "games-random": function(res) {
-
-                res = res.json;
-                var node;
-                
-                if(node = document.getElementById('games-random-build'))
-                    node.innerHTML = JSON.stringify(res, null, 2);
-
-
-                if (res.Field && res.Field.x) {
-                    var html = '';
-                    for (var x = 1; x <= res.Field.x; x++)
-                        for (var y = 1; y <= res.Field.y; y++)
-                            html += "<button type=button onclick=\"Form.get.call(" +
-                            "this,{" +
-                            "href:'/games/random/play', " +
-                            "data: {cell:'" + x + "x" + y + "'}," +
-                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
-                }
-
-                if(node = document.getElementById('games-random-cells'))
-                    node.innerHTML = html;
-            }
+            "games-random": Games.random.init
 
         },
 

@@ -1,8 +1,19 @@
-﻿<div id="games-random" class="content-box">
-
-    <pre id="games-random-build"></pre>
-    <div id="games-random-cells">
+<div id="games-random" class="content-box">
+    <div class="nav">
+        <h1><i class="i-x"></i> Random Chances</h1>
     </div>
-    <pre id="games-random-play"></pre>
+    <div id="games-random-cells" class="minefield">
+        {{#each (for 1 "<=" Field.y) as |value key| }}
 
+        <div class='vw vh vf clearfix'>
+            {{#each (for 1 "<=" ../Field.x) }}
+            <div>
+                <div class='inner'>
+                    <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i class='i-o'></i><i class='i-x'></i></button>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+    </div>
 </div>

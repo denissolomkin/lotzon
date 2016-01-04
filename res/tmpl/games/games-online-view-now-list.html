@@ -1,0 +1,7 @@
+{{#if .}}
+    {{#each .}}
+        {{partial 'games-online-view-now-item' this}}
+    {{/each}}
+{{else}}
+    <div>{{i18n "games-online-create-own-game"}}</div>
+{{/if}}

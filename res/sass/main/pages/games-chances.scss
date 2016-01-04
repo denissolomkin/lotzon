@@ -169,7 +169,7 @@ $black_15: rgba(0,0,0,0.15);
 			}
 		}
 	}
-	.game {
+	.minefield {
 		display: inline-block;
 		vertical-align: top;
 		width: 59%;
@@ -281,7 +281,7 @@ $black_15: rgba(0,0,0,0.15);
 			overflow: hidden;
 			min-height: 430px;
 		}
-		.game {
+		.minefield {
 			min-height: 430px;
 			display: inline-block;
 			vertical-align: top;
@@ -366,7 +366,7 @@ $black_15: rgba(0,0,0,0.15);
 				padding: 10px 0;
 			}
 		}
-		.game {
+		.minefield {
 			display: block;
 			position: relative;
 			height: auto;

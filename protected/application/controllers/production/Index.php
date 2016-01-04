@@ -185,7 +185,7 @@ class Index extends \SlimController\SlimController
             "adminId"         => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
             "tempFilestorage" => '/filestorage/temp',
             "filestorage"     => '/filestorage',
-            "url"             => 'ws' . \Config::instance()->SSLEnabled ? 's' : '' . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
+            "websocketUrl"    => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
         );
 
         $lottery = array(

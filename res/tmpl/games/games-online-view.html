@@ -1,8 +1,9 @@
 <div id="games-online-view" class="content-box games-view">
+    <form action="now/Durak" method="ws"><button>WebSocket</button></form>
     <div class="info-top">
         <div class="title-wrap">
 
-            <div class="back-button back"><i class="i-arrow-left"></i> <span>{{i18n "title-games-online"}}</span></div>
+            <div class="back-button back"><i class="i-arrow-left"></i></div>
             <div class="game-title">
                 {{title}}
             </div>
@@ -25,8 +26,8 @@
         <div class="description-block">
             <div class="game-fund">
                 <div class="title">{{i18n "title-games-prize-fund"}}</div>
-                <div class="money"><span>{{fund.MONEY}}</span> <br> {{player 'getCurrency'}}</div>
-                <div class="points"><span>{{fund.POINT}}</span> <br> {{i18n "title-of-points"}}</div>
+                <div class="money"><span>{{#if fund.MONEY}} {{fund.MONEY}} {{else}} 0 {{/if}}</span> <br> {{player 'getCurrency'}}</div>
+                <div class="points"><span>{{#if fund.POINT}} {{fund.POINT}} {{else}} 0 {{/if}}</span> <br> {{i18n "title-of-points"}}</div>
             </div>
             <div class="game-description">
                 <input type="checkbox" name="" id="read-more-description">
@@ -34,19 +35,7 @@
                 
                 <div>
                     <!-- описание --> 
-                    Классическая игра «Дурак»<br>
-                    <br>
-                    В блоке справа можно вступить в существующую игру или создать свою.<br>
-                    <br>
-                    Последний игрок, оставшийся с картами, проигрывает. Действует правило "последняя рука хуже дурака".<br>
-                    Каждая победа увеличивает рейтинг игрока.<br>
-                    <br>
-                    С каждой игры отчисляется 10% (6 - призовой фонд, 4 - комиссия).<br>
-                    <br>
-                    По итогам месяца, десять лучших игроков на баллы и деньги, разделят призовой фонд соответственно.<br>
-                    <br>
-                    1 место - 30%; 2 место - 20%; 3 место - 15%; 4 место - 10%; 5 место - 5%; 6-10 места по 4%.
-                    <br>
+                    {{{description}}}
                 </div>
 
                 <!--<button class="read-more clearfix">{{i18n "button-games-read-more"}} <i class="i-arrow-down"></i></button>-->
@@ -54,13 +43,13 @@
         </div>
         <div class="game-settings">
             <div id="games-online-view-tabs" class="settings-tabs">
-                <div data-to="#games-online-view-connect" class="active"><span><i class="i-play"></i>{{i18n "button-games-online"}}</span></div>
+                <div data-to="#games-online-view-now" class="active"><span><i class="i-play"></i>{{i18n "button-games-online"}}</span></div>
                 <div data-to="#games-online-view-create" ><span><i class="i-plus"></i>{{i18n "button-games-create"}}</span></div>
                 <div data-to="#games-online-view-rating"><span><i class="i-star"></i>{{i18n "button-games-rating"}}</span></div>
             </div>
             <div class="blocks">
                 <!--online players-->
-                {{partial 'games-online-view-connect' this}}
+                {{partial 'games-online-view-now' this}}
                 <!--end online players-->
 
                 <!--create game block-->

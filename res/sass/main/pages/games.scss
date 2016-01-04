@@ -51,9 +51,11 @@ div > .games-previews{
         }
         .game-name{
             font-family: Handbook-bold;
-            font-size: 20px;
+            font-size: 15px;
             text-transform: uppercase;
-            line-height: 2;
+            line-height: 1;
+            margin: 5px 0;
+            
         }
         .fund_title{
             font-family: Handbook-bold;
@@ -81,6 +83,22 @@ div > .games-previews{
             line-height: 2;
             min-height: 40px;
             font-size: 18px;
+            border-top: 1px solid rgba(255,255,255,0.3);
         }
     }
+}
+
+#games-chance{
+    .game-info{
+        background: transparent;
+    }
+    .game-fund > div{
+        font-size: 15px;
+        margin: 10px 0;
+        &:first-child:nth-last-child(1){
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    }
+    
 }

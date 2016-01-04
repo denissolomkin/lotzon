@@ -189,7 +189,7 @@ class GamesController extends \AjaxController
 
     }
 
-    public function nowAction($key = NULL)
+    public function nowAction($key = NULL, $id = null)
     {
 
         $this->validateRequest();
@@ -200,8 +200,8 @@ class GamesController extends \AjaxController
         }
 
         try {
-            $gameApps  = \GameAppsModel::instance()->getList($key);
-            $gameStack = \GamePlayersModel::instance()->getStack($key);
+            $gameApps  = \GameAppsModel::instance()->getList($id);
+            $gameStack = \GamePlayersModel::instance()->getStack($id);
         } catch (\PDOException $e) {
             $this->ajaxResponse(array(), 0, 'INTERNAL_ERROR');
         }
@@ -214,7 +214,7 @@ class GamesController extends \AjaxController
 
         $games = array();
 
-        foreach ($gameApps as $id => $game) {
+        foreach ($gameApps as $uid => $game) {
 
             $players = array();
 
@@ -223,7 +223,7 @@ class GamesController extends \AjaxController
             }
 
             $games[] = array(
-                'id'        => $id,
+                'id'        => $uid,
                 'mode'      => $game->getApp()->getCurrency() . '-' . $game->getApp()->getPrice() . '-' . $game->getApp()->getNumberPlayers(),
                 'variation' => $game->getApp()->getVariation(),
                 'players'   => $players
@@ -231,7 +231,7 @@ class GamesController extends \AjaxController
         }
 
         foreach ($gameStack as $mode => $clients) {
-            foreach ($clients as $id => $client) {
+            foreach ($clients as $clientId => $client) {
                 $games[] = array(
                     'id'      => 0,
                     'mode'    => $mode,
@@ -240,7 +240,7 @@ class GamesController extends \AjaxController
             }
         }
 
-        $response['res']['games'][$key] = array(
+        $response['res']['games'][$key][$id] = array(
             'now' => $games
         );
 

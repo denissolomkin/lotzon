@@ -3,7 +3,9 @@ var Games = {
         init: function () {
 //        alert("Online");
             Games.online.tabs();
-//            Games.online.timeouts("#games-online-view-connect > form", 5000);
+            if(!Games.online.timeout){
+                Games.online.timeouts("#games-online-view-now > form", 5000);
+            }
 
             return;
         },
@@ -28,13 +30,13 @@ var Games = {
 
         },
         timeouts: function (element, time) {
-            var timeout = setTimeout(function () {
+            Games.online.timeout = setTimeout(function () {
                 if ($(element).is(":visible")) {
-//                console.error("visible",element);
+                console.error("timeout>>>>>>> on:visible ",element);
                     $(element).change();
                 } else {
 //                console.error("else",element);
-                    clearTimeout(timeout);
+                    clearTimeout(Games.online.timeout);
                 }
                 Games.online.timeouts(element, time);
             }, time);
@@ -135,6 +137,21 @@ var Games = {
         },
         resset: function () {
             $("#games-chance-view-cells button").removeAttr('class');
+        }
+    },
+    random: {
+        conf: {
+            data: {},
+            play: !1
+        },
+        init: function (data) {
+            if (!data.json)
+                return false;
+            // make config
+            Games.random.conf.data = data.json;
+//            alert('random get init!!!');
+            console.error(" data.json >>>>>>>", data.json);
+//            Games.random.get("#games-chance-view-cells button:not(.played)", data.json.id);
         }
     }
 
