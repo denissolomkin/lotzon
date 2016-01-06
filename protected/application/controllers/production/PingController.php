@@ -117,9 +117,9 @@ class PingController extends \AjaxController
             if ($diff < 0)
                 $badges[] = array(
                     'key'     => $key,
-                    'title'   => 'title-random',
-                    'action'  => '/games/random',
-                    'button'  => 'button-play'
+                    'title'   => 'title-games-random',
+                    'button'  => 'button-games-play',
+                    'action'  => '/games/random'
                 );
         }
 
@@ -149,11 +149,11 @@ class PingController extends \AjaxController
                     case ($this->session->get($key . 'LastDate') + $gameSettings[$key]->getOption('max') * 60 - time()):
                         $badges[] = array(
                             'key'     => $key,
-                            'title'   => 'title-moment',
+                            'title'   => 'title-games-moment',
+                            'button'  => 'button-games-play',
+                            'action'  => '/games/moment',
                             'timer'   => $gameSettings[$key]->getOption('timeout') * 60,
-                            'timeout' => 'close',
-                            'button'  => 'button-play',
-                            'action'  => '/games/moment'
+                            'timeout' => 'close'
                         );
                         break;
                 }

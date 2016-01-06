@@ -1,103 +1,103 @@
-$(function(){
-R.push({
-    template: 'badges-list',
-    json: [{
-            "key": "Moment",
-            "title": "title-moment-chance",
-            "text": "text-moment-will-be-available-for",
-            "button": "button-play",
-            "action": "/games/moment",
-            "timer": 60,
-            "timeout": "button"
-        },
-        {
-            "key": "Random",
-            "title": "title-random-chance",
-            "text": "text-random-will-be-available-in",
-            "button": "button-play",
-            "action": "/games/random",
-            "timer": 100,
-            "timeout": "close"
-        },
-        {
-            "key": "message",
-            "id": 10,
-            "title": "title-new-message",
-            "text": "Привет, как дела?",
-            "action": "/messages/123",
-            "timer": 3,
-            "timeout": "close"
-        }]
-});    
-})
-
-
-var fakeCounter = 0;
-var fakeRandomData = [{
-        "Uid": "568b9d3875b2b",
-        "Prize": {
-            "t": "item",
-            "v": "96",
-            "s": "5436a10e394a3.jpg",
-            "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-        },
-        "Cell": "1x1",
-        "Moves": 3,
-        "comb": []
-    }, {
-        "Uid": "568b9d3875b2b",
-        "Prize": {
-            "t": "points",
-            "v": "250"
-        },
-        "Cell": "2x1",
-        "Moves": 2,
-        "comb": []
-    }, {
-        "Uid": "568b9d3875b2b",
-        "Prize": {
-            "t": "money",
-            "v": "25"
-        },
-        "Cell": "2x1",
-        "Moves": 1,
-        "comb": []
-    }, {
-        "Uid": "568b9d3875b2b",
-        "Prize": false,
-        "Cell": "3x1",
-        "Moves": 0,
-        "GameField": {
-            "1x1": {
-                "t": "item",
-                "v": "96",
-                "s": "5436a10e394a3.jpg",
-                "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-            },
-            "2x1": {
-                "t": "points",
-                "v": "25"
-            },
-            "3x1": false
-        },
-        "GamePrizes": {
-            "POINT": 25,
-            "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-        },
-        "comb": [],
-        "player": {
-            "balance": {
-                "points": 1097,
-                "money": "2307.85"
-            }
-        }
-    },
-    {
-        "status": 0,
-        "message": "\u0418\u0433\u0440\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430",
-        "res": []
-    }
-];
+//$(function(){
+//R.push({
+//    template: 'badges-list',
+//    json: [{
+//            "key": "Moment",
+//            "title": "title-moment-chance",
+//            "text": "text-moment-will-be-available-for",
+//            "button": "button-play",
+//            "action": "/games/moment",
+//            "timer": 60,
+//            "timeout": "button"
+//        },
+//        {
+//            "key": "Random",
+//            "title": "title-random-chance",
+//            "text": "text-random-will-be-available-in",
+//            "button": "button-play",
+//            "action": "/games/random",
+//            "timer": 100,
+//            "timeout": "close"
+//        },
+//        {
+//            "key": "message",
+//            "id": 10,
+//            "title": "title-new-message",
+//            "text": "Привет, как дела?",
+//            "action": "/messages/123",
+//            "timer": 3,
+//            "timeout": "close"
+//        }]
+//});    
+//})
+//
+//
+//var fakeCounter = 0;
+//var fakeRandomData = [{
+//        "Uid": "568b9d3875b2b",
+//        "Prize": {
+//            "t": "item",
+//            "v": "96",
+//            "s": "5436a10e394a3.jpg",
+//            "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+//        },
+//        "Cell": "1x1",
+//        "Moves": 3,
+//        "comb": []
+//    }, {
+//        "Uid": "568b9d3875b2b",
+//        "Prize": {
+//            "t": "points",
+//            "v": "250"
+//        },
+//        "Cell": "2x1",
+//        "Moves": 2,
+//        "comb": []
+//    }, {
+//        "Uid": "568b9d3875b2b",
+//        "Prize": {
+//            "t": "money",
+//            "v": "25"
+//        },
+//        "Cell": "2x1",
+//        "Moves": 1,
+//        "comb": []
+//    }, {
+//        "Uid": "568b9d3875b2b",
+//        "Prize": false,
+//        "Cell": "3x1",
+//        "Moves": 0,
+//        "GameField": {
+//            "1x1": {
+//                "t": "item",
+//                "v": "96",
+//                "s": "5436a10e394a3.jpg",
+//                "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+//            },
+//            "2x1": {
+//                "t": "points",
+//                "v": "25"
+//            },
+//            "3x1": false
+//        },
+//        "GamePrizes": {
+//            "POINT": 25,
+//            "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+//        },
+//        "comb": [],
+//        "player": {
+//            "balance": {
+//                "points": 1097,
+//                "money": "2307.85"
+//            }
+//        }
+//    },
+//    {
+//        "status": 0,
+//        "message": "\u0418\u0433\u0440\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430",
+//        "res": []
+//    }
+//];
 
 var Games = {
     online: {
@@ -257,51 +257,9 @@ var Games = {
                     return false;
                 var cell = $(this).data('cell'), that = this;
 
-                if (fakeRandomData) {
-                    // prize
-                    var data = {json: fakeRandomData[fakeCounter]};
-
-                    if (data.json.error)
-                        return;
-
-                    if (data.json.Prize) {
-                        $(that).addClass('win');
-                        $(that).html(Games.random.makePrizeCell(data.json.Prize));
-                    } else {
-                        $(that).addClass('lose');
-                    }
-                    // steps
-                    if (data.json.Moves) {
-                        console.error("data.json.Moves >>>", data.json.Moves);
-//                        Games.random.prizesMoves(data.json.Moves);
-                    }
-                    // Game winner Fields
-                    if (data.json.GameField) {
-                        console.error("data.json.GameField >>>>>>", data.json.GameField);
-                        if (data.json.Prize) {
-                            $("#games-random").addClass('win');
-                        } else {
-                            $("#games-random").addClass('lose');
-                        }
-                        Games.random.end(data.json.GameField);
-                    }
-                    $(that).addClass('played');
-
-
-                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-
-                }
-
-
-                // send
-
-//                Form.get.call(this,
-//                        {
-//                            href: '/games/random/play',
-//                            data: {'cell': cell},
-//                            after: function (data) {
-////                                >>> code from top add here!!!
-////                                var data = {json: fakeRandomData[fakeCounter]};
+//                if (fakeRandomData) {
+//                    // prize
+//                    var data = {json: fakeRandomData[fakeCounter]};
 //
 //                    if (data.json.error)
 //                        return;
@@ -328,10 +286,52 @@ var Games = {
 //                        Games.random.end(data.json.GameField);
 //                    }
 //                    $(that).addClass('played');
-////                                >>> code from top add here!!!
-//                                    
-//                            }
-//                        });
+//
+//
+//                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
+//
+//                }
+
+
+                // send
+
+                Form.get.call(this,
+                        {
+                            href: '/games/random/play',
+                            data: {'cell': cell},
+                            after: function (data) {
+//                                >>> code from top add here!!!
+//                                var data = {json: fakeRandomData[fakeCounter]};
+
+                    if (data.json.error)
+                        return;
+
+                    if (data.json.Prize) {
+                        $(that).addClass('win');
+                        $(that).html(Games.random.makePrizeCell(data.json.Prize));
+                    } else {
+                        $(that).addClass('lose');
+                    }
+                    // steps
+                    if (data.json.Moves) {
+                        console.error("data.json.Moves >>>", data.json.Moves);
+//                        Games.random.prizesMoves(data.json.Moves);
+                    }
+                    // Game winner Fields
+                    if (data.json.GameField) {
+                        console.error("data.json.GameField >>>>>>", data.json.GameField);
+                        if (data.json.Prize) {
+                            $("#games-random").addClass('win');
+                        } else {
+                            $("#games-random").addClass('lose');
+                        }
+                        Games.random.end(data.json.GameField);
+                    }
+                    $(that).addClass('played');
+//                                >>> code from top add here!!!
+                                    
+                            }
+                        });
             });
         },
         makePrizeCell: function (prize) {
