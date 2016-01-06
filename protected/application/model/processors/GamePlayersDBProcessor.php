@@ -17,7 +17,7 @@ class GamePlayersDBProcessor implements IProcessor
             ));
 
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
         }
 
         if (!$sth->rowCount()) {
@@ -55,7 +55,7 @@ class GamePlayersDBProcessor implements IProcessor
                 ':ping'    => $player->getPing()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
         }
 
         return $player;
@@ -97,7 +97,7 @@ class GamePlayersDBProcessor implements IProcessor
             $res->execute();
         } catch (PDOException $e) {
             echo $e->getMessage();
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
         }
 
         $players = array();
@@ -120,7 +120,7 @@ class GamePlayersDBProcessor implements IProcessor
             $res->execute(array(':id'=>$gameId));
         } catch (PDOException $e) {
             echo $e->getMessage();
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: ". $e->getMessage() , 500);
         }
 
         return $res->fetchColumn(0);
@@ -153,7 +153,7 @@ class GamePlayersDBProcessor implements IProcessor
             $res->execute();
         } catch (PDOException $e) {
             echo $e->getMessage();
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
         }
 
         $stack = array();

@@ -2,6 +2,8 @@
 
 class GameConstructorOnline extends GameConstructor
 {
+    protected $_type = 'online';
+
     public function initVariation($inputVariation = array())
     {
         $variations = $this->getOptions('Variations') ?: array();
