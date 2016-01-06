@@ -114,15 +114,16 @@ class PingController extends \AjaxController
             if ($diff / 60 < 5 AND !$this->session->get($key . 'Important'))
                 $this->session->set($key . 'Important', true);
 
-            $badges[] = array(
-                'key'     => $key,
-                'title'   => 'title-random',
-                'text'    => 'text-random-will-be-available-in',
-                'timer'   => $diff,
-                'timeout' => 'button',
-                'action'  => '/games/random',
-                'button'  => 'button-play'
-            );
+            if ($diff < 0)
+                $badges[] = array(
+                    'key'     => $key,
+                    'title'   => 'title-random',
+                    'text'    => 'text-random-will-be-available-in',
+                    'timer'   => $diff,
+                    'timeout' => 'button',
+                    'action'  => '/games/random',
+                    'button'  => 'button-play'
+                );
         }
 
         /* 
@@ -152,8 +153,7 @@ class PingController extends \AjaxController
                         $badges[] = array(
                             'key'     => $key,
                             'title'   => 'title-moment',
-                            'text'    => 'text-moment-will-be-available-for',
-                            'timer'   => $this->session->get($key)->getTimeout() * 60,
+                            'timer'   => $gameSettings[$key]->getOption('timeout') * 60,
                             'timeout' => 'close',
                             'button'  => 'button-play',
                             'action'  => '/games/moment'
