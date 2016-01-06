@@ -39,7 +39,7 @@
                     R.push({
                         template: 'badges-list',
                         json    : init.badges.filter(function (el) {
-                            return !document.getElementById('badges-' + el.key + '-' + (el.id ? el.id : ''));
+                            return !document.getElementById('badges-' + el.key + (el.id ?  '-' + el.id : ''));
                         })
                     });
                 }

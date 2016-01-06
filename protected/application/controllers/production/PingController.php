@@ -118,9 +118,6 @@ class PingController extends \AjaxController
                 $badges[] = array(
                     'key'     => $key,
                     'title'   => 'title-random',
-                    'text'    => 'text-random-will-be-available-in',
-                    'timer'   => $diff,
-                    'timeout' => 'button',
                     'action'  => '/games/random',
                     'button'  => 'button-play'
                 );
