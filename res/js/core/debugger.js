@@ -28,7 +28,7 @@
              });
              */
             /**/
-            window.onerror = function (message, url, line, col, error) {
+            window.onerror2 = function (message, url, line, col, error) {
                 D.error([message, url, line]);
                 return true;
             }

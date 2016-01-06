@@ -1,3 +1,12 @@
 <div id="badges-{{key}}-{{id}}">
-   {{i18n title}}
+    title: {{i18n title}}
+    <br> text: {{{i18n text}}}
+    <br> action: {{action}}
+    {{#if button}}
+    <br><button>{{{i18n button}}}</button>
+    {{/if}}
+    {{#if timer}}
+    <br>timer: {{timer}}
+    <br>timeout: {{timeout}}
+    {{/if}}
 </div>

@@ -99,9 +99,11 @@
             $(document).on('click', '.change', Profile.do.openOption);
             $(document).on('click', '.change-favorite', Profile.do.openFavorite);
             $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
+
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
+            $(document).on('click', '.mx .exit', Game.do.exit);
 
             /* support */
             $(document).on('click', '.support h1', Support.do.collapse);

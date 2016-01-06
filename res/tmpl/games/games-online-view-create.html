@@ -1,5 +1,5 @@
 <div id="games-online-view-create" class="create-game" style="display: none;">
-    <form action="app/Durak/0" method="websocket" class="">
+    <form action="/app/{{key}}/0" method="ws" class="">
         <div class="title">
             {{i18n "title-games-bet"}}
         </div>
@@ -22,7 +22,7 @@
             <div class="title">{{#if (eq key "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
             {{#each mod}}
             <div class="button">
-                <input type="radio" name="mode" id="{{key}}-{{this}}" value="{{key}}-{{this}}" />
+                <input type="radio" name="mode" id="{{key}}-{{this}}" class="required" value="{{key}}-{{this}}" />
                 <label for="{{key}}-{{this}}">{{this}}</label>
             </div>
             {{/each}}
@@ -69,6 +69,6 @@
         {{/each}}
         {{/if}}
 
-        <input class="start-game" type="submit" value="{{i18n "button-games-create"}}" />
+        <input class="start-game" name="submit" type="submit" value="{{i18n "button-games-create"}}" />
     </form>
 </div>

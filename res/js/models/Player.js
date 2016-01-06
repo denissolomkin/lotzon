@@ -35,6 +35,11 @@
                     }
                 }
 
+                if (init.hasOwnProperty('game') && init.game.uid) {
+                    WebSocketAjaxClient('app/' + init.game.key + '/' + init.game.uid, {action: 'start'});
+                    delete init.game;
+                }
+
                 Object.deepExtend(this, init);
 
                 if (init.hasOwnProperty('count')) {
@@ -60,7 +65,7 @@
 
             }
 
-            this.ping();
+            this.initPing();
 
             return this;
         },
@@ -214,21 +219,28 @@
             return Player.updatePoints().updateMoney();
         },
 
-        ping: function () {
+        initPing: function () {
 
             if (this.pingInterval) {
                 window.clearInterval(this.pingInterval);
                 delete this.pingInterval;
             }
 
-            this.pingInterval = window.setInterval(function () {
-                Form.post({
-                    action: '/ping',
-                    data: {forms: Content.forms4ping()}
-                })
+            this.pingInterval = window.setInterval(Player.ping, Config.timeout.ping * 1000);
 
-            }, 1000 * 6);
+        },
 
+        ping: function () {
+
+            Form.post({
+                action: '/ping',
+                data  : {forms: Content.forms4ping()},
+                after : function (data) {
+
+                    if (data.json)
+                        Cache.init(data.json);
+                }
+            })
         },
 
         checkMoney: function (input_money) {

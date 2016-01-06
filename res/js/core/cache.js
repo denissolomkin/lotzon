@@ -30,6 +30,19 @@
                 if (init.delete)
                     this.remove(init.delete);
 
+                if (init.callback) {
+                    eval(init.callback);
+                }
+
+                if (init.badges && Object.size(init.badges)) {
+                    R.push({
+                        template: 'badges-list',
+                        json    : init.badges.filter(function (el) {
+                            return !document.getElementById('badges-' + el.key + '-' + el.id);
+                        })
+                    });
+                }
+
                 if (key) {
                     return this.set(key, init);
                 } else if (init.res) {
@@ -460,7 +473,7 @@
 
         "validate": function (key, forUpdate) {
 
-            if(key) {
+            if (key) {
 
                 if (forUpdate) {
                     this.storage[this.storages['validity']][key] = Livedate.fn.now();
@@ -566,8 +579,11 @@
             key = key && key.replace(/\/|=/g, '-');
             return lang && lang[key] || key;
         }
-    }
-    ;
+    };
+
+    i18n = function (key) {
+        return Cache.i18n(key);
+    };
 
 })
 ();

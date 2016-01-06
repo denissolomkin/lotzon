@@ -104,6 +104,9 @@ class Index extends \SlimController\SlimController
         $session   = new Session();
         $playerObj = $session->get(Player::IDENTITY)->fetch();
 
+        $gamePlayer = new \GamePlayer();
+        $gamePlayer->setId($playerObj->getId())->fetch();
+
         $player = array(
             "id"       => $playerObj->getId(),
             "img"      => $playerObj->getAvatar(),
@@ -158,7 +161,11 @@ class Index extends \SlimController\SlimController
                 "gl" => null,
                 "tw" => null
             ),
-            "settings" => array()
+            "settings" => array(),
+            "game" => array(
+                'key' => $gamePlayer->getApp('Key'),
+                'uid' => $gamePlayer->getApp('Uid')
+            )
         );
 
         $lottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
@@ -179,8 +186,8 @@ class Index extends \SlimController\SlimController
 
         $config = array(
             "timeout"         => array(
-                "ping"   => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') * 1000,
-                "online" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') * 1000
+                "ping"   => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT'),
+                "online" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')
             ),
             "adminId"         => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
             "tempFilestorage" => '/filestorage/temp',

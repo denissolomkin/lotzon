@@ -147,3 +147,136 @@ pre {    font-family: monospace;
     margin: 20px;
     border-radius: 10px;
     border: 1px solid black;}
+
+
+/* ==========================================================================
+                            time_circles styles
+   ========================================================================== */
+
+.circle-timer, .circle{
+    width: 74px;
+    height: 74px;
+    left: -7px;
+    top: -7px;
+    position: absolute;
+    display: inline-block;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+}
+
+.circle {background: #FF4242;}
+.beater .circle{background: #7ED321;}
+
+@-webkit-keyframes timer-slide {
+    0%   { -webkit-transform: rotate(-225deg);
+        border-top-color: transparent; }
+    50%  { -webkit-transform: rotate(-45deg);
+        border-top-color: transparent;}
+    100% { -webkit-transform: rotate(-45deg);
+        border-top-color: transparent;}
+}
+
+@-webkit-keyframes timer-toggle {
+    0%  { opacity: 0;}
+    50% { opacity: 0;}
+    51% {
+        -webkit-transform: rotate(-45deg);
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(137deg);
+        opacity: 1;
+    }
+}
+
+@keyframes timer-slide {
+    0%   { transform: rotate(-225deg);
+        border-top-color: transparent; }
+    50%  { transform: rotate(-45deg);
+        border-top-color: transparent;}
+    100% { transform: rotate(-45deg);
+        border-top-color: transparent;}
+}
+
+@keyframes timer-toggle {
+    0%  { opacity: 0;}
+    50% { opacity: 0;}
+    51% {
+        transform: rotate(-45deg);
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        transform: rotate(137deg);
+        opacity: 1;
+    }
+}
+
+.timer-l, .timer-r {
+    border-radius: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    width: 60px;
+    height: 60px;
+    margin-left: -37px;
+    margin-top: -37px;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: reverse;
+}
+
+
+
+.timer-l, .timer-r {
+    /* border: 7px solid #48f; blue */
+    border: 7px solid #FF4242;
+    border-left-color: transparent;
+    border-top-color: #FF4242;
+}
+
+.beater .timer-l, .beater .timer-r {
+    border: 7px solid #7ED321;
+    border-left-color: transparent;
+    border-top-color: #7ED321;
+}
+
+.timer-l {
+    animation-name: timer-slide;
+    animation-timing-function: ease-in;
+    -webkit-animation-name: timer-slide;
+    -webkit-animation-timing-function: ease-in;
+    z-index: 5;
+    left: 0;
+}
+
+.timer-r {
+    animation-name: timer-toggle;
+    animation-timing-function: ease-out;
+    -webkit-animation-name: timer-toggle;
+    -webkit-animation-timing-function: ease-out;
+}
+
+.timer-slot {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    overflow: hidden;
+}

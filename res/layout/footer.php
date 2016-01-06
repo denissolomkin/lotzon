@@ -111,12 +111,12 @@ endforeach;
 
     $(function () {
 
+        Config.init(config); // init config
         Tickets.init(lottery);  // extend tickets
         Player.init(player); // extend player
         D.init(debug); // init debugger
         U.init(); // init url handler
         Slider.init(slider); // echo slider
-        Config.init(config); // init config
         Navigation.init(menu); // init navigation
         Livedate.init(timestamp); // update dates in realtime
         Device.init(device); // detect
@@ -130,7 +130,8 @@ endforeach;
 </script>
 
 <button style="position: fixed;bottom:0;left:0" onclick="Content.style()">Desktop/Mobile</button>
-<button style="position: fixed;bottom:0;left:110px;" onclick="Lottery.prepareData()">Lottery</button>
+<button style="position: fixed;bottom:0;left:90px;" onclick="Lottery.prepareData()">Lottery</button>
+<button style="position: fixed;bottom:0;left:140px;" onclick="Player.ping()">Ping</button>
 
 </div>
 </body>

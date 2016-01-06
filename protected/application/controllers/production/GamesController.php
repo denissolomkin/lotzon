@@ -159,10 +159,22 @@ class GamesController extends \AjaxController
 
                 $gamePlayer = new \GamePlayer();
                 $gamePlayer
-                    ->formatFrom('player', $this->session->get(Player::IDENTITY))
-                    ->setAppId($game->getId())
-                    ->setAppName($game->getKey())
-                    ->update();
+                    ->setId($this->session->get(Player::IDENTITY)->getId())
+                    ->fetch();
+                $gamePlayer
+                    ->formatFrom('player', $this->session->get(Player::IDENTITY));
+
+                if(!$gamePlayer->getApp('Uid'))
+                    $gamePlayer
+                        ->setAppId($game->getId())
+                        ->setAppName($game->getKey())
+                        ->setAppMode(null);
+                 else
+                    $response['player']['game'] = array(
+                        'key' => $gamePlayer->getApp('Key'),
+                        'uid' => $gamePlayer->getApp('Uid'));
+
+                $gamePlayer->update();
 
                 $fund = \OnlineGamesModel::instance()->getFund($game->getId());
                 try {

@@ -2,29 +2,37 @@ $(function () {
 
     Durak = {
 
+        run: function () {
+
+            Cards.createCardsWrapper();
+            Cards.setVariation();
+            Cards.emptyFields();
+            Cards.drawTrump();
+
+        },
+
         action: function () {
 
-            /*
-             1) если действие "ждем", "старт" или "готовы", но все обязаны подтердить готовность
-             или 2) еще нет блоков игроков
-             */
-            if (($.inArray(App.action, ['move', 'timeout', 'pass']) == -1 &&
-                (App.action != 'ready' || Object.size(App.players) == App.current.length)
-                ) || !$('.mx .players').children('div').length) {
+            if (!document.getElementById('games-online-field')) {
 
-                Game.run();
-                Cards.createCardsWrapper();
-                Cards.setVariation();
-                Cards.emptyFields();
-                Cards.drawTrump();
+                R.push({
+                    'template': 'games-online-field',
+                    'json'    : {},
+                    'url'     : false,
+                    'after'   : Durak.action
+                });
+
+            } else {
+
+                Game.run() && Durak.run();
+                Cards.setupForDevices();
+                Cards.drawFields();
+                Cards.premove();
+                Cards.initStatuses();
+                Game.updateTimeOut(App.timeout);
+                Game.end();
             }
 
-            Cards.setupForDevices();
-            Cards.drawFields();
-            Cards.premove();
-            Cards.initStatuses();
-            Game.updateTimeOut(App.timeout);
-            Game.end();
         },
 
         error: function () {

@@ -62,7 +62,7 @@
             form.url = U.generate(form.action, form.method);
 
             /* FORM
-             * method: GET | POST | PUT | DELETE | WEBSOCKET
+             * method: GET | POST | PUT | DELETE | WS
              * url: ACTION | HREF
              * data: JSON
              * callback: FUNCTION
@@ -72,7 +72,7 @@
 
                 console.log(form.data);
 
-                if (form.method === 'ws') {
+                if (form.method.toLowerCase() === 'ws') {
 
                     var conn = Form.websocketConnection,
                         path = form.url,
@@ -84,6 +84,7 @@
 
                         conn.onopen = function (e) {
                             console.info('Socket open');
+                            Form.websocketConnection = conn;
                             conn.send(JSON.stringify({'path': path, 'data': data}));
                         };
 
@@ -107,53 +108,64 @@
                                 path = data.path;
                                 if (data.res) {
 
-                                    if (data.res.appId && data.res.appId != App.id) {
+                                    if (data.res.app && data.res.app.uid && data.res.app.uid != App.uid) {
                                         App = {};
                                     } else if (App.winner) {
                                         App['winner'] = null;
                                         App['fields'] = null;
                                     }
 
-                                    Object.deepExtend(App, data.res);
+                                    for (var key in data.res) {
+                                        if (key !== 'app') {
+                                            App[key] = data.res[key]
+                                        }
+                                    }
 
-                                    if ('appName' in data.res)
-                                        App.name = data.res.appName;
-
-                                    if ('appMode' in data.res)
-                                        App.mode = data.res.appMode;
-
-                                    if ('appId' in data.res) {
-                                        App.id = data.res.appId;
+                                    if('app' in data.res){
+                                        for (var key in data.res['app'])
+                                            App[key] = data.res['app'][key]
                                         data = null;
                                     }
 
-                                    Apps.playAudio([App.name, App.action]);
+                                    Apps.playAudio([App.key, App.action]);
                                 }
 
-                                action = data && data.res && data.res.action ? data.res.action : path;
+                                action = data && (data.res && data.res.action || path) || App.action;
+                                console.log(path, action, data);
 
                                 switch ('function') {
 
-                                    case App.name && typeof eval(App.name + '.' + action):
-                                        eval(App.name + '.' + action)(data);
-                                        break;
-
-                                    case typeof Game.callback[action] :
+                                    case data && typeof Game.callback[action]:
+                                        console.log('Game.callback.' + action);
                                         eval('Game.callback.' + action)(data);
                                         break;
 
-                                    case App.name && typeof eval(App.name + '.action'):
-                                        eval(App.name + '.action')(data);
+                                    case App.key && typeof eval(App.key + '.' + action):
+                                        console.log(App.key + '.' + action);
+                                        eval(App.key + '.' + action)(data);
                                         break;
 
+                                    case !data && typeof Game.action[action]:
+                                        console.log('Game.action.' + action);
+                                        eval('Game.action.' + action)(data);
+                                        break;
+
+                                    case App.key && typeof eval(App.key + '.action'):
+                                        console.log(App.key + '.action');
+                                        eval(App.key + '.action')(data);
+                                        break;
                                 }
 
+                                Form.stop.call(that)
+                                    .message.call(that, data && data.message);
                             }
-
                         };
 
                     } else {
-                        conn.send(JSON.stringify({'path': path, 'data': data}));
+                        conn.send(JSON.stringify({
+                            'path': path,
+                            'data': data
+                        }));
                     }
 
                 } else {
@@ -192,7 +204,8 @@
                             }
 
                         },
-                        error   : function (data) {
+
+                        error: function (data) {
                             Form.stop.call(that);
                             D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
                         }
@@ -227,7 +240,6 @@
                         $.each($(errorElements), function (index, element) {
                             // $(element).removeClass('error');
                         });
-                        console.log(1);
                         valid = false;
                     }
 
@@ -236,7 +248,6 @@
                         $.each($(filterRequiredElements), function (index, element) {
                             // $(element).parent().addClass('error');
                         });
-                        console.log(2);
                         valid = false;
                     }
 
@@ -244,12 +255,10 @@
                         $.each($(incompleteElements), function (index, element) {
                             // $(element).parent().addClass('error');
                         });
-                        console.log(3);
                         valid = false;
                     }
 
                     if (Callbacks.validate[callback]) {
-                        console.log(4);
                         valid = !Callbacks.validate[callback].call(this, event) ? false : valid;
                     }
 
@@ -394,6 +403,14 @@
                 Form.timeout.remove);
         }
 
+    };
+
+    WebSocketAjaxClient = function (url, data) {
+        Form.send({
+            action: url,
+            data  : data,
+            method: 'ws'
+        })
     };
 
 })();
