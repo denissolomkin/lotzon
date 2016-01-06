@@ -1,12 +1,23 @@
-<div id="badges-{{key}}-{{id}}">
-    title: {{i18n title}}
-    <br> text: {{{i18n text}}}
-    <br> action: {{action}}
-    {{#if button}}
-    <br><button>{{{i18n button}}}</button>
-    {{/if}}
-    {{#if timer}}
-    <br>timer: {{timer}}
-    <br>timeout: {{timeout}}
-    {{/if}}
+<div id="badges-{{key}}{{#if id}}-{{id}}{{/if}}">
+   <section>
+       <div class="title">{{i18n title}}</div>
+       {{#if (eq key "message")}}
+       <div class="txt">{{{text}}}</div>
+       <i class="i-x"></i>
+       {{/if}}
+       
+       {{#if button}}
+       <button class="start" >{{i18n button}}</button>
+       {{/if}}
+       
+<!--       <br>
+       key::{{key}} <br>
+       title::{{title}} <br>
+       text::{{text}} <br>
+       button::{{button}} <br>
+       action::{{action}} <br>
+       timer in sec::{{timer}} <br>
+       timeout::{{timeout}} <br>-->
+
+   </section>
 </div>

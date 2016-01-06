@@ -78,7 +78,8 @@ $(function () {
          * @returns {str}
          */
         'getSplittedEl': function (str, delimiter, el) {
-            if(!str || !delimiter || !el) return;
+            if (!str || !delimiter || !el)
+                return;
             return str.split(delimiter)[el];
         },
         /**
@@ -101,9 +102,12 @@ $(function () {
                 return funcNmae + "(" + params + ")";
             }
         },
-        reverseNum: function(num1, num2){
-//           console.error(arguments);
-           return num1-num2;
+        'reverseNum': function (num1, num2) {
+            return num1 - num2;
+        },
+        'countdown': function (time) {
+            console.error(":::::::", this.parentNode);
+            return time;
         },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
@@ -268,4 +272,5 @@ $(function () {
         }
     };
 
-});
+}
+);

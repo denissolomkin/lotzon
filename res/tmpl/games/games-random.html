@@ -1,19 +1,21 @@
 <div id="games-random" class="content-box">
-    <div class="nav">
-        <h1><i class="i-x"></i> Random Chances</h1>
-    </div>
-    <div id="games-random-cells" class="minefield">
-        {{#each (for 1 "<=" Field.y) as |value key| }}
+    <div class="inner">
+        <div class="title">
+            <h1><i class="i-x back"></i> Random Chances {{countdown 100}}</h1>
+        </div>
+        <div id="games-random-cells" class="minefield">
+            {{#each (for 1 "<=" Field.y) as |value key| }}
 
-        <div class='vw vh vf clearfix'>
-            {{#each (for 1 "<=" ../Field.x) }}
-            <div>
-                <div class='inner'>
-                    <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i class='i-o'></i><i class='i-x'></i></button>
+            <div class='vw vh vf clearfix'>
+                {{#each (for 1 "<=" ../Field.x) }}
+                <div>
+                    <div class='inner'>
+                        <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i class='i-x'></i></button>
+                    </div>
                 </div>
+                {{/each}}
             </div>
             {{/each}}
         </div>
-        {{/each}}
     </div>
 </div>

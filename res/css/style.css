@@ -1473,170 +1473,178 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e805'; }
 
 /* '' */
-.i-arrow-slim-top:before {
+.i-games-cards-24:before {
   content: '\e806'; }
 
 /* '' */
-.i-arrow-top:before {
+.i-games-cards-36:before {
   content: '\e807'; }
 
 /* '' */
-.i-calendar:before {
+.i-games-cards-52:before {
   content: '\e808'; }
 
 /* '' */
-.i-fb:before {
+.i-games-type-revert:before {
   content: '\e809'; }
 
 /* '' */
-.i-fb-black:before {
+.i-games-type-throw:before {
   content: '\e80a'; }
 
 /* '' */
-.i-games-cards-24:before {
+.i-hart:before {
   content: '\e80b'; }
 
 /* '' */
-.i-games-cards-36:before {
+.i-ok-black:before {
   content: '\e80c'; }
 
 /* '' */
-.i-games-cards-52:before {
+.i-person:before {
   content: '\e80d'; }
 
 /* '' */
-.i-games-type-revert:before {
+.i-person2:before {
   content: '\e80e'; }
 
 /* '' */
-.i-games-type-throw:before {
+.i-picture:before {
   content: '\e80f'; }
 
 /* '' */
-.i-hart:before {
+.i-play:before {
   content: '\e810'; }
 
 /* '' */
-.i-hart2:before {
+.i-plus:before {
   content: '\e811'; }
 
 /* '' */
-.i-fb-rectangle:before {
+.i-tw-rectangle:before {
   content: '\e812'; }
 
 /* '' */
-.i-menu:before {
+.i-tw:before {
   content: '\e813'; }
 
 /* '' */
-.i-msg:before {
+.i-tw-black:before {
   content: '\e814'; }
 
 /* '' */
-.i-msg2:before {
+.i-wk:before {
   content: '\e815'; }
 
 /* '' */
-.i-ok:before {
+.i-wk-black:before {
   content: '\e816'; }
 
 /* '' */
-.i-ok-black:before {
+.i-pencil:before {
   content: '\e817'; }
 
 /* '' */
-.i-person:before {
+.i-x:before {
   content: '\e818'; }
 
 /* '' */
-.i-person2:before {
+.i-inst-rectangle:before {
   content: '\e819'; }
 
 /* '' */
-.i-picture:before {
+.i-lotzon:before {
   content: '\e81a'; }
 
 /* '' */
-.i-play:before {
+.i-x-slim:before {
   content: '\e81b'; }
 
 /* '' */
-.i-plus:before {
+.i-kubok:before {
   content: '\e81c'; }
 
 /* '' */
-.i-purse:before {
+.i-arrow-slim-top:before {
   content: '\e81d'; }
 
 /* '' */
-.i-question:before {
+.i-arrow-top:before {
   content: '\e81e'; }
 
 /* '' */
-.i-refresh:before {
+.i-calendar:before {
   content: '\e81f'; }
 
 /* '' */
-.i-smile:before {
+.i-fb:before {
   content: '\e820'; }
 
 /* '' */
-.i-star:before {
+.i-fb-black:before {
   content: '\e821'; }
 
 /* '' */
-.i-tw:before {
+.i-purse:before {
   content: '\e822'; }
 
 /* '' */
-.i-tw-black:before {
+.i-question:before {
   content: '\e823'; }
 
 /* '' */
-.i-wk:before {
+.i-refresh:before {
   content: '\e824'; }
 
 /* '' */
-.i-wk-black:before {
+.i-smile:before {
   content: '\e825'; }
 
 /* '' */
-.i-pencil:before {
+.i-star:before {
   content: '\e826'; }
 
 /* '' */
-.i-x:before {
+.i-hart2:before {
   content: '\e827'; }
 
 /* '' */
-.i-o:before {
+.i-menu:before {
   content: '\e828'; }
 
 /* '' */
-.i-ok-rectangle:before {
+.i-msg:before {
   content: '\e829'; }
 
 /* '' */
-.i-vk-rectangle:before {
+.i-msg2:before {
   content: '\e82a'; }
 
 /* '' */
-.i-g_plus-rectangle:before {
+.i-ok:before {
   content: '\e82b'; }
 
 /* '' */
-.i-tw-rectangle:before {
+.i-fb-rectangle:before {
   content: '\e82c'; }
 
 /* '' */
-.i-inst-rectangle:before {
+.i-ok-rectangle:before {
   content: '\e82d'; }
 
 /* '' */
-.i-lotzon:before {
+.i-vk-rectangle:before {
   content: '\e82e'; }
 
 /* '' */
+.i-g_plus-rectangle:before {
+  content: '\e82f'; }
+
+/* '' */
+.i-o:before {
+  content: '\e830'; }
+
+/* '' */
 .content-box-scroll-top {
   float: right;
   position: relative;
@@ -3461,11 +3469,11 @@ div > .games-previews {
       padding-top: 20px;
       transform: translateY(0); }
     #games-chance-view .prizes .item {
-      text-transform: uppercase;
-      font-size: 25px; }
+      /*text-transform: uppercase;*/
+      font-size: 22px; }
     #games-chance-view .prizes .currency {
-      text-transform: uppercase;
-      font-size: 25px; }
+      /*text-transform: uppercase;*/
+      font-size: 22px; }
     #games-chance-view .prizes .ticket_price {
       margin-top: 25px; }
     #games-chance-view .prizes .lose {
