@@ -302,6 +302,7 @@ Config::instance()->privateResources =  array(
 
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
+    '/ping' => 'controllers\production\PingController:index',
     '/:page/' => 'controllers\production\Index:index',
     '/vkproxy/' => 'controllers\production\Index:VKProxy',
     '/feedback/' => 'controllers\production\Index:feedback',
@@ -505,7 +506,6 @@ Config::instance()->publicResources = array(
             }
         ),
     ),
-
     /**
      * Games
      */
