@@ -89,7 +89,7 @@
 
                     R.push({
                         href : form.action,
-                        query: pingForm.ping.query,
+                        query: query,
                         after: Content.after.autoload
                     });
                 }
