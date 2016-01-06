@@ -85,6 +85,22 @@ class GamesDBProcessor
 
                 $sql_transactions_players[] = '(?,?,?,?,?,?)';
 
+                /* select balance for transaction */
+                $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+
+                try {
+                    $sth = DB::Connect()->prepare($sql);
+                    $sth->execute(array(':id' => $player['pid']));
+                } catch (PDOException $e) {
+                    echo $this->time(0,'ERROR')." Error processing storage query в таблице Players при получении баланса\n";
+                }
+
+                if (!$sth->rowCount()) {
+                    echo $this->time(0,'ERROR')." player #{$player['pid']} не найден в таблице Players при получении баланса\n";
+                }
+
+                $balance = $sth->fetch();
+
                 /* update balance after game */
                 $sql = "UPDATE Players SET " . $currency . " = " . $currency . ($win < 0 ? '' : '+') . ($win) . " WHERE Id=" . $player['pid'];
 
