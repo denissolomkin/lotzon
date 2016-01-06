@@ -17,7 +17,7 @@ class GameAppsDBProcessor implements IProcessor
             ));
 
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
         }
 
         if (!$sth->rowCount()) {
@@ -46,7 +46,7 @@ class GameAppsDBProcessor implements IProcessor
             $res->execute();
         } catch (PDOException $e) {
             echo $e->getMessage();
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
         }
 
         $apps = array();
@@ -90,7 +90,7 @@ class GameAppsDBProcessor implements IProcessor
                 ':ping'     => $app->getPing()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
         }
 
         return $app;

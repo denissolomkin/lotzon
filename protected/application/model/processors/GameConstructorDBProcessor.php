@@ -9,6 +9,7 @@ class GameConstructorDBProcessor
     {
         $games = array();
 
+        /* todo merge tables */
         foreach (array('online' => 'OnlineGames',
                        'chance' => 'QuickGames') as $key => $table) {
 
@@ -18,7 +19,7 @@ class GameConstructorDBProcessor
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute();
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query", 500);
+                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
             }
 
             $games[$key] = array();
@@ -43,6 +44,7 @@ class GameConstructorDBProcessor
     public function update(Entity $game)
     {
 
+        /* todo merge tables */
         switch ($game->getType()) {
 
             case 'chance':
@@ -89,8 +91,8 @@ class GameConstructorDBProcessor
 
     public function fetch($game)
     {
+        /* todo merge tables */
         switch ($game->getType()) {
-
             case "online":
                 $table = 'OnlineGames';
                 break;
@@ -103,16 +105,17 @@ class GameConstructorDBProcessor
         $sql = "SELECT * FROM `" . $table . "` WHERE Id = :id OR (`Key` = :key AND `Key` IS NOT NULL)";
 
         try {
+
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(
                 array(
                     ':id'  => $game->getId(),
                     ':key' => $game->getKey()
                 )
-
             );
+
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
 
         $data         = $sth->fetch();

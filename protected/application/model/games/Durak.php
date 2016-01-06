@@ -131,6 +131,12 @@ class Durak extends Game
                 'price' => $this->getPrice(),
                 'playerNumbers' => $this->getNumberPlayers(),
                 'currency' => $this->getCurrency(),
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getIdentifier(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
@@ -154,6 +160,12 @@ class Durak extends Game
 
 
             $callback = array(
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getIdentifier(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
@@ -214,6 +226,12 @@ class Durak extends Game
                     'fields' => $fields,
                     'price' => $this->getPrice(),
                     'currency' => $this->getCurrency(),
+                    'app'       => array(
+                        'id'   => $this->getId(),
+                        'uid'  => $this->getIdentifier(),
+                        'key'  => $this->getKey(),
+                        'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                    ),
                     'appId' => $this->getIdentifier(),
                     'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                     'appName' => $this->getKey(),
@@ -247,6 +265,12 @@ class Durak extends Game
                     if (!isset($client->bot)) {
 
                         $this->setCallback(array(
+                            'app'       => array(
+                                'id'   => $this->getId(),
+                                'uid'  => $this->getIdentifier(),
+                                'key'  => $this->getKey(),
+                                'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                            ),
                             'appId' => $this->getIdentifier(),
                             'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                             'appName' => $this->getKey(),

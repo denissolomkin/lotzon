@@ -102,6 +102,12 @@ class SeaBattle extends Game
                     $this->setCallback(array(
                         'current' => $this->currentPlayer()['pid'],
                         'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : 1),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
+                        'app'       => array(
+                            'id'   => $this->getId(),
+                            'uid'  => $this->getIdentifier(),
+                            'key'  => $this->getKey(),
+                            'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                        ),
                         'appId' => $this->getIdentifier(),
                         'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                         'appName' => $this->getKey(),
@@ -117,6 +123,12 @@ class SeaBattle extends Game
             $this->setResponse($this->getClient());
             $this->setCallback(array(
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getIdentifier(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                 'appName' => $this->getKey(),
@@ -130,6 +142,12 @@ class SeaBattle extends Game
             $this->setResponse($this->getClients());
             $this->setCallback(array(
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getIdentifier(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
                 'appId' => $this->getIdentifier(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                 'appName' => $this->getKey(),
