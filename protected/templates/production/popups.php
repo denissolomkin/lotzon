@@ -117,10 +117,10 @@
                             <input type="radio" name="cash" id="phone" hidden />
                             <label for="phone"><?=$MUI->getText('label-mobile-refill')?></label>
                         </li>
-                        <li>
+                        <!--li>
                             <input type="radio" name="cash" id="qiwi" hidden />
                             <label for="qiwi"><?=$MUI->getText('label-qiwi')?></label>
-                        </li>
+                        </li-->
                         <li>
                             <input type="radio" name="cash" id="webmoney" hidden />
                             <label for="webmoney"><?=$MUI->getText('label-webmoney')?></label>
