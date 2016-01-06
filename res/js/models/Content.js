@@ -70,16 +70,17 @@
 
                     var pingForm = Content.form4Ping.call(form);
                     pingForm = {'ping': pingForm[Object.keys(pingForm)[0]]};
+                    var query = pingForm.ping.query;
 
                     if (pingForm.ping.first_id && pingForm.ping.last_id) {
                         if (pingForm.ping.first_id > pingForm.ping.last_id)
-                            pingForm.before_id = pingForm.ping.last_id;
+                            query.before_id = pingForm.ping.last_id;
                         else
-                            pingForm.after_id = pingForm.ping.last_id;
+                            query.after_id = pingForm.ping.last_id;
                     }
 
                     if (pingForm.ping.offset) {
-                        pingForm.offset = pingForm.ping.offset;
+                        query.offset = pingForm.ping.offset;
                     }
 
                     if (form.classList.contains('track-disabled')) {
@@ -88,7 +89,7 @@
 
                     R.push({
                         href : form.action,
-                        query: pingForm,
+                        query: pingForm.ping.query,
                         after: Content.after.autoload
                     });
                 }

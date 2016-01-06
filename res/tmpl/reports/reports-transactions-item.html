@@ -6,10 +6,11 @@
     </div>
     <div class="th-item-right">
         <div class="th-item-sum">{{this.sum}}
-            {{#if (eq type "money") }}
-            {{player "getCurrency"}}
-            {{else}}
-            {{i18n "title-of-points"}}
+            {{#if (eq currency "money") }}
+                {{player "getCurrency"}}
+            {{/if}}
+            {{#if (eq currency "points") }}
+                {{i18n "title-of-points"}}
             {{/if}}
         </div>
         <div>{{balance}}</div>

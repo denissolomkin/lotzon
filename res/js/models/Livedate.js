@@ -12,11 +12,11 @@
 
                 var livedates = DOM.visible('.live-date');
 
-                for(var i = 0; i<livedates.length;i++ ){
+                for (var i = 0; i < livedates.length; i++) {
                     var el = livedates[i],
                         date = Livedate.fn.from(el.getAttribute('data-stamp'));
 
-                    if (date != el.innerHTML){
+                    if (date != el.innerHTML) {
                         el.innerHTML = date;
                         fadeIn(el);
                     }
@@ -24,14 +24,13 @@
                     /* todo set different interval for newest and older timestamps
                      if(Math.abs(moment.unix(Livedate.fn.diff(date)).diff(moment(), 'days')) >= 2){
                      }
-                    * */
+                     * */
 
                 }
 
             }, 1000 * 60);
 
         },
-
 
 
         fn: {
@@ -41,9 +40,8 @@
                 format = typeof format === 'string' && format || 'DD.MM.YYYY';
                 date = Livedate.fn.now(date);
 
-                switch (moment.unix(date).diff(moment(), 'days')) {
-                    case -0:
-                    case -1:
+                switch (true) {
+                    case ( moment.unix(date).diff(moment(), 'days') === -1 || moment.unix(date).diff(moment(), 'days') === -0) && format === 'DD.MM.YYYY':
                         return moment.unix(date).calendar();
                         break;
                     default:
@@ -61,7 +59,7 @@
                 window.clearInterval(livedateInterval);
             },
 
-            now: function(date){
+            now: function (date) {
                 date = date || moment().unix();
                 return parseInt(date) + Livedate.diff;
             }
