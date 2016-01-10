@@ -92,7 +92,8 @@ class ReportsController extends \AjaxController
         }
 
         foreach ($list as $id=>$transaction) {
-            $response['res']['reports']['transactions'][$transaction->getId()] = $transaction->export('list');
+            $response['res']['reports']['transactions'][$transaction->getId()]             = $transaction->export('list');
+            $response['res']['reports']['transactions'][$transaction->getId()]['currency'] = $currency;
             if (date('d', $transaction->getDate())!=$lastDay) {
                 $response['res']['reports']['transactions'][$transaction->getId()]["isDay"] = true;
                 $lastDay = date('d', $transaction->getDate());
