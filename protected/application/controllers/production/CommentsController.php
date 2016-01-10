@@ -76,34 +76,26 @@ class CommentsController extends \AjaxController
         $afterId  = $this->request()->get('after_id', NULL);
 
         try {
-            $list = CommentsModel::instance()->getList($module, $objectId, $count, $beforeId, $afterId);
+            $list = CommentsModel::instance()->getList($module, $objectId, $count+1, $beforeId, $afterId);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
         }
 
+        $response = array();
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
+
         switch ($module) {
             case 'comments' :
-                $response = array(
-                    'res' => array(
-                        'communication' => array(
-                            'comments' => $list,
-                        ),
-                    ),
-                );
+                $response['res']['communication']['comments'] = $list;
                 break;
             case 'blog' :
-                $response = array(
-                    'res' => array(
-                        'blog' => array(
-                            'post' => array(
-                                "$objectId" => array(
-                                    'comments' => $list,
-                                ),
-                            ),
-                        ),
-                    ),
-                );
+                $response['res']['blog']['post'][$objectId]['comments'] = $list;
                 break;
             default:
                 $response = array();

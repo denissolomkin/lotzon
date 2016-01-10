@@ -80,7 +80,7 @@ class BlogsController extends \AjaxController
         $afterId  = $this->request()->get('after_id', NULL);
 
         try {
-            $list = BlogsModel::instance()->getList($lang, $count, $beforeId, $afterId);
+            $list = BlogsModel::instance()->getList($lang, $count+1, $beforeId, $afterId);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -94,6 +94,12 @@ class BlogsController extends \AjaxController
                 ),
             ),
         );
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
 
         foreach ($list as $id=>$blog) {
             $response['res']['blog']['posts'][$id] = $blog->exportTo('list');
@@ -117,7 +123,7 @@ class BlogsController extends \AjaxController
         $afterId  = $this->request()->get('after_id', NULL);
 
         try {
-            $list = BlogsModel::instance()->getSimilarList($blogId, $lang, $count, $beforeId, $afterId);
+            $list = BlogsModel::instance()->getSimilarList($blogId, $lang, $count+1, $beforeId, $afterId);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -127,6 +133,12 @@ class BlogsController extends \AjaxController
             'res' => array(
             ),
         );
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
 
         foreach ($list as $id=>$blog) {
             $response['res'][$id] = $blog->exportTo('similar');
