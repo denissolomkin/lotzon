@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
     <?php } } ?>
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
-	<script src="/res/js/libs/jquery.magnific-popup.min.js"></script>
+	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
     <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>
 	
 </head>

@@ -1,4 +1,8 @@
 <div id="logout" class="pop-box content-main">
-<button onclick="document.location.href = '/players/logout';">{{i18n 'button-logout'}}</button>
-<button onclick="this.parentNode.parentNode.removeChild(this.parentNode)">{{i18n 'button-cancel'}}</button>
+	<div>
+		<div class="i-x-slim close"></div>
+		<p>{{i18n "title-logout-worning"}}</p>
+		<button onclick="document.location.href = '/players/logout';" class="btn-flat uk-float-left">{{i18n 'button-logout'}}</button>
+		<button onclick="this.parentNode.parentNode.removeChild(this.parentNode)" class="btn-flat uk-float-right">{{i18n 'button-cancel-logout'}}</button>
+	</div>
 </div>

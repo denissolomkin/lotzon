@@ -196,7 +196,7 @@
         updatePoints: function (newSum) {
             var balance = {
                 balance: {
-                    points: typeof newSum !== 'undefined' && parseInt(newSum) || this.balance.points
+                    points: typeof newSum !== 'undefined' && parseFloat(newSum).toFixed(2) || this.balance.points
                 }
             };
             return this.init(balance);

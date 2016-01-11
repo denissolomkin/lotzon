@@ -300,7 +300,6 @@ var Games = {
                             data: {'cell': cell},
                             after: function (data) {
 //                                >>> code from top add here!!!
-                                var data = {json: fakeRandomData[fakeCounter]};
                                 if (data.json.error)
                                     return;
                                 if (data.json.Prize) {
