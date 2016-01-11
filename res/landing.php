@@ -11,7 +11,8 @@
     <?php } else { ?>
         <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
     <?php } } ?>
-	<script src="js/lib/jquery.magnific-popup.min.js"></script>
+	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
+	<script src="/res/js/libs/jquery.magnific-popup.min.js"></script>
 	
 </head>
 <body class="landing">
@@ -23,8 +24,8 @@
 		</div>
 		<h1 class="lending-title"><strong>Выигрывает каждый</strong><span> совершенно новый формат online игр</span></h1>
 		<button class="landing_button go-play">Играть Бесплатно</button>
-		<p class="landing_large"><?php echo $lottery['win'] ?> 1 456 874 <span>руб уже выплачено</span></p>
-		<p class="landing_middle"><?php echo$lottery['players'] ?> 55 768 <span>зарегистрированных</span></p>
+		<p class="landing_large"><?php echo $lottery['win'] ?> <span>руб уже выплачено</span></p>
+		<p class="landing_middle"><?php echo$lottery['players'] ?> <span>зарегистрированных</span></p>
 	</div>
 
 <div class="login-popup popup" id="login-block">
@@ -519,7 +520,8 @@
         return false;
     });
     </script>	
-    <script src="js/promo.js"></script>
+    <script src="/res/js/landing/promo.js"></script>
+    <script src="/res/js/landing/backend.js"></script>
 </body>
 </html>
 

@@ -2666,7 +2666,7 @@ div.comment-reply-btn {
   .online .message-img:hover .service-pop-up:after {
     left: 27px; }
 
-.unread .message-text {
+.message-unread .message-text {
   color: #000; }
 
 .communication-comments {

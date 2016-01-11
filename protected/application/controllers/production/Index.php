@@ -300,7 +300,7 @@ class Index extends \SlimController\SlimController
             $session->set('REFERER', $referer['host'] ?: $referer['path']);
         }
 
-        // return include("res/landing.php");
+        return include("res/landing.php");
 
         $showEmail       = $this->request()->get('m', false);
         $showLoginScreen = false;
