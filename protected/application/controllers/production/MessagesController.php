@@ -105,6 +105,28 @@ class MessagesController extends \AjaxController
         return true;
     }
 
+    public function markReadAction($userId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
+        try {
+            MessagesModel::instance()->markRead($userId, $playerId);
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+
+            return false;
+        }
+
+        $this->ajaxResponseCode(array());
+
+        return true;
+    }
 
     public function createAction()
     {

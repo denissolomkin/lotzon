@@ -57,6 +57,9 @@ class Message extends Entity
                     'text'         => $this->getText(),
                     'img'          => $this->getImage() === NULL ? "" : $this->getImage(),
                 );
+                if ($this->getStatus()==0) {
+                    $ret['isUnread'] = true;
+                }
                 break;
         }
 
