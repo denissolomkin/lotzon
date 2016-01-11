@@ -22,7 +22,7 @@
         do: {
 
             markRead: function (event) {
-                Form.delete.call(this, '/communication/messages/' + DOM.up('message', this).getAttribute('data-id'));
+                Form.delete.call(this, '/users/' + DOM.up('message', this).getAttribute('data-id') + '/messages');
             },
 
             clearUser: function () {
