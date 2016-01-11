@@ -42,7 +42,7 @@ class MessagesController extends \AjaxController
         $offset   = $this->request()->get('offset', NULL);
 
         try {
-            $list = MessagesModel::instance()->getLastTalks($playerId, $count, $offset);
+            $list = MessagesModel::instance()->getLastTalks($playerId, $count+1, $offset);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -55,6 +55,12 @@ class MessagesController extends \AjaxController
                 ),
             ),
         );
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
 
         foreach ($list as $id=>$message) {
             $response['res']['communication']['messages'][$message->getId()] = $message->export('talk');
@@ -79,7 +85,7 @@ class MessagesController extends \AjaxController
         $offset   = $this->request()->get('offset', NULL);
 
         try {
-            $list = MessagesModel::instance()->getList($playerId, $userId, $count, $beforeId, $afterId, $offset);
+            $list = MessagesModel::instance()->getList($playerId, $userId, $count+1, $beforeId, $afterId, $offset);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -94,6 +100,12 @@ class MessagesController extends \AjaxController
                 ),
             ),
         );
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
 
         foreach ($list as $id=>$message) {
             $response['res']['users'][$userId]['messages'][$id] = $message->export('list');
