@@ -397,6 +397,13 @@
 
                 if ('nodeType' in render) {
 
+                    if (options.hasOwnProperty('lastItem') && options.lastItem) {
+                        var infiniteScrolling = render.querySelector('button.infinite-scrolling');
+                        if(infiniteScrolling){
+                            infiniteScrolling.parentNode.removeChild(infiniteScrolling);
+                        }
+                    }
+
                     if (render.id == node.id) {
 
                         if(!render.classList.contains('pop-box')) {

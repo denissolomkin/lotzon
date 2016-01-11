@@ -135,21 +135,25 @@
 
                                 switch ('function') {
 
+                                    /* Common Game Callback Action */
                                     case data && typeof Game.callback[action]:
                                         console.log('Game.callback.' + action);
                                         eval('Game.callback.' + action)(data);
                                         break;
 
+                                    /* Specific App action */
                                     case App.key && typeof eval(App.key + '.' + action):
                                         console.log(App.key + '.' + action);
                                         eval(App.key + '.' + action)(data);
                                         break;
 
+                                    /* Common Game Action */
                                     case !data && typeof Game.action[action]:
                                         console.log('Game.action.' + action);
                                         eval('Game.action.' + action)(data);
                                         break;
 
+                                    /* Default App Action */
                                     case App.key && typeof eval(App.key + '.action'):
                                         console.log(App.key + '.action');
                                         eval(App.key + '.action')(data);
@@ -179,7 +183,7 @@
                         dataType: 'json',
                         success : function (data) {
 
-                            if ('responseText' in data) {
+                            if (data.hasOwnProperty('responseText')) {
 
                                 Form.stop.call(that);
                                 D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
@@ -193,13 +197,12 @@
 
                                 Cache.init(data);
 
-                                console.log('aaaaaaaaaaa',form.method.toLowerCase(), form.callback);
                                 if (Callbacks[form.method.toLowerCase()][form.callback]) {
                                     D.log(['C.' + form.method.toLowerCase() + '.callback']);
                                     Callbacks[form.method.toLowerCase()][form.callback].call(that, data.res);
                                 }
 
-                                if ('after' in form && typeof form.after === 'function') {
+                                if (form.hasOwnProperty('after') && typeof form.after === 'function') {
                                     form.after.call(that, form);
                                 }
                             }
