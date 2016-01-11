@@ -13,6 +13,7 @@
     <?php } } ?>
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/libs/jquery.magnific-popup.min.js"></script>
+    <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>
 	
 </head>
 <body class="landing">
@@ -25,7 +26,7 @@
 		<h1 class="lending-title"><strong>Выигрывает каждый</strong><span> совершенно новый формат online игр</span></h1>
 		<button class="landing_button go-play">Играть Бесплатно</button>
 		<p class="landing_large"><?php echo $lottery['win'] ?> <span>руб уже выплачено</span></p>
-		<p class="landing_middle"><?php echo$lottery['players'] ?> <span>зарегистрированных</span></p>
+		<p class="landing_middle"><?php echo $lottery['players'] ?> <span>зарегистрированных</span></p>
 	</div>
 
 <div class="login-popup popup" id="login-block">
