@@ -152,6 +152,7 @@
             "support-faq": Support.init,
             "games-random": Games.random.init
 
+
         },
 
         "post": { // new
@@ -184,7 +185,7 @@
         "delete": {
 
             "communication-notifications": Comments.renderNotifications,
-            "users-item-messages": Messages.after.markRead,
+            "users-view-messages": Messages.after.markRead,
 
         },
 

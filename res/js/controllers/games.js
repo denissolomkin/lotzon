@@ -1,104 +1,104 @@
-//$(function(){
-//R.push({
-//    template: 'badges-list',
-//    json: [{
-//            "key": "Moment",
-//            "title": "title-moment-chance",
-//            "text": "text-moment-will-be-available-for",
-//            "button": "button-play",
-//            "action": "/games/moment",
-//            "timer": 60,
-//            "timeout": "button"
-//        },
-//        {
-//            "key": "Random",
-//            "title": "title-random-chance",
-//            "text": "text-random-will-be-available-in",
-//            "button": "button-play",
-//            "action": "/games/random",
-//            "timer": 100,
-//            "timeout": "close"
-//        },
-//        {
-//            "key": "message",
-//            "id": 10,
-//            "title": "title-new-message",
-//            "text": "Привет, как дела?",
-//            "action": "/messages/123",
-//            "timer": 3,
-//            "timeout": "close"
-//        }]
-//});    
-//})
-//
-//
-//var fakeCounter = 0;
-//var fakeRandomData = [{
-//        "Uid": "568b9d3875b2b",
-//        "Prize": {
-//            "t": "item",
-//            "v": "96",
-//            "s": "5436a10e394a3.jpg",
-//            "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-//        },
-//        "Cell": "1x1",
-//        "Moves": 3,
-//        "comb": []
-//    }, {
-//        "Uid": "568b9d3875b2b",
-//        "Prize": {
-//            "t": "points",
-//            "v": "250"
-//        },
-//        "Cell": "2x1",
-//        "Moves": 2,
-//        "comb": []
-//    }, {
-//        "Uid": "568b9d3875b2b",
-//        "Prize": {
-//            "t": "money",
-//            "v": "25"
-//        },
-//        "Cell": "2x1",
-//        "Moves": 1,
-//        "comb": []
-//    }, {
-//        "Uid": "568b9d3875b2b",
-//        "Prize": false,
-//        "Cell": "3x1",
-//        "Moves": 0,
-//        "GameField": {
-//            "1x1": {
-//                "t": "item",
-//                "v": "96",
-//                "s": "5436a10e394a3.jpg",
-//                "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+$(function () {
+//    R.push({
+//        template: 'badges-list',
+//        json: [{
+//                "key": "Moment",
+//                "title": "title-games-moment",
+//                "text": "text-moment-will-be-available-for",
+//                "button": "button-games-play",
+//                "action": "/games/moment",
+//                "timer": 5,
+//                "timeout": "close"
 //            },
-//            "2x1": {
-//                "t": "points",
-//                "v": "25"
+//            {
+//                "key": "Random",
+//                "title": "title-games-random",
+//                "text": "text-random-will-be-available-in",
+//                "button": "button-games-play",
+//                "action": "/games/random",
+//                "timer": 10,
+//                "timeout": "close"
 //            },
-//            "3x1": false
-//        },
-//        "GamePrizes": {
-//            "POINT": 25,
-//            "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-//        },
-//        "comb": [],
-//        "player": {
-//            "balance": {
-//                "points": 1097,
-//                "money": "2307.85"
-//            }
-//        }
-//    },
-//    {
-//        "status": 0,
-//        "message": "\u0418\u0433\u0440\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430",
-//        "res": []
-//    }
-//];
+//            {
+//                "key": "message",
+//                "id": 10,
+//                "image": "/filestorage/users/50/comment_img.jpg",
+//                "title": "title-messages-new-message",
+//                "text": "Привет, как дела?",
+//                "action": "/messages/123",
+//                "timer": 3,
+//                "timeout": "close"
+//            }]
+//    });
+})
 
+
+var fakeCounter = 0;
+var fakeRandomData = [{
+        "Uid": "568b9d3875b2b",
+        "Prize": {
+            "t": "item",
+            "v": "96",
+            "s": "5436a10e394a3.jpg",
+            "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+        },
+        "Cell": "1x1",
+        "Moves": 3,
+        "comb": []
+    }, {
+        "Uid": "568b9d3875b2b",
+        "Prize": {
+            "t": "points",
+            "v": "250"
+        },
+        "Cell": "2x1",
+        "Moves": 2,
+        "comb": []
+    }, {
+        "Uid": "568b9d3875b2b",
+        "Prize": {
+            "t": "money",
+            "v": "25"
+        },
+        "Cell": "2x1",
+        "Moves": 1,
+        "comb": []
+    }, {
+        "Uid": "568b9d3875b2b",
+        "Prize": false,
+        "Cell": "3x1",
+        "Moves": 0,
+        "GameField": {
+            "1x1": {
+                "t": "item",
+                "v": "96",
+                "s": "5436a10e394a3.jpg",
+                "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+            },
+            "2x1": {
+                "t": "points",
+                "v": "25"
+            },
+            "3x1": false
+        },
+        "GamePrizes": {
+            "POINT": 25,
+            "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
+        },
+        "comb": [],
+        "player": {
+            "balance": {
+                "points": 1097,
+                "money": "2307.85"
+            }
+        }
+    },
+    {
+        "status": 0,
+        "message": "\u0418\u0433\u0440\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430",
+        "res": []
+    }
+];
 var Games = {
     online: {
         init: function () {
@@ -249,21 +249,20 @@ var Games = {
             Games.random.conf.play = !0;
             $("#games-random").attr('class', 'game-started');
             Games.random.get("#games-random-cells button:not(.played)", data.json.id); // data.json.id -- не используеться пока
+
+            if (data.json.block) Content.banner(data);
         },
         get: function (elements, id) {
-            console.error("Games.random.get >>>>", elements);
+//            console.error("Games.random.get >>>>", elements);
             $(elements).click(function () {
                 if (!Games.random.conf.play)
                     return false;
                 var cell = $(this).data('cell'), that = this;
-
-//                if (fakeRandomData) {
-//                    // prize
+                if (fakeRandomData) {
+                    // prize
 //                    var data = {json: fakeRandomData[fakeCounter]};
-//
 //                    if (data.json.error)
 //                        return;
-//
 //                    if (data.json.Prize) {
 //                        $(that).addClass('win');
 //                        $(that).html(Games.random.makePrizeCell(data.json.Prize));
@@ -286,11 +285,8 @@ var Games = {
 //                        Games.random.end(data.json.GameField);
 //                    }
 //                    $(that).addClass('played');
-//
-//
 //                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-//
-//                }
+                }
 
 
                 // send
@@ -357,15 +353,20 @@ var Games = {
                     $("#games-random").removeClass('game-started');
                     $('#games-random button[data-cell="' + i + '"]').html(Games.random.makePrizeCell(fields[i])).addClass('win');
                     Games.random.conf.play = !1;
+                    Games.random.destroy(5);
                 }
             }
 
+        },
+//        remove block by timeout
+        destroy: function (timer) {
+            timer = timer || 0;
+            console.error(timer);
+            setTimeout(function () {
+                $("#games-random").remove();
+            }, timer * 1000);
         }
     }
-
-
-
-
 };
 
 

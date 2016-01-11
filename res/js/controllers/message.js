@@ -14,7 +14,8 @@
 
                 var node = DOM.up('message', this);
                 node.classList.remove('message-unread');
-                DOM.remove('mark-read',node);
+                Player.decrement('messages');
+                DOM.remove(this);
 
             }
         },

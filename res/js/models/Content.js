@@ -46,6 +46,7 @@
                 }
             }
         },
+
         enableForm: function () {
 
             D.log('Content.enableForm', 'content');

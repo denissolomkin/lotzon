@@ -1,15 +1,24 @@
-<div id="badges-{{key}}{{#if id}}-{{id}}{{/if}}">
-   <section>
-       <div class="title">{{i18n title}}</div>
-       {{#if (eq key "message")}}
-       <div class="txt">{{{text}}}</div>
-       <i class="i-x-slim"></i>
-       {{/if}}
-       
-       {{#if button}}
-       <button class="start" >{{i18n button}}</button>
-       {{/if}}
-       
+<div id="badges-{{key}}{{#if id}}-{{id}}{{/if}}" >
+    <!--start timout-->
+    <!--<img src="" onerror='countdown({{key}}, {{timeout}}, {{time}})'>-->
+     {{badgesCountdown}}
+    
+     <section class="clearfix {{#if image}}{{/if}}contain-img">
+        <a href="{{action}}" class="start {{#if button}}visieble{{else}}invisieble{{/if}}" onclick=" $(this).closest('div[id^=\'badges-\']').remove(); ">{{i18n button}}</a>
+        <div class="title">{{i18n title}}</div>
+        {{#if (eq key "message")}}
+        
+        {{#if image}}
+        <img src="{{{image}}}" alt="">
+        {{/if}}
+        
+        <div class="txt">{{{text}}}</div>
+        <i class="i-x-slim" onclick=" $(this).closest('div[id^=\'badges-\']').remove(); "></i>
+        {{/if}}
+    </section>
+</div>
+
+
 <!--       <br>
        key::{{key}} <br>
        title::{{title}} <br>
@@ -18,6 +27,3 @@
        action::{{action}} <br>
        timer in sec::{{timer}} <br>
        timeout::{{timeout}} <br>-->
-
-   </section>
-</div>

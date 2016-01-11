@@ -1,11 +1,13 @@
-<div id="games-random" class="content-box">
+<div id="games-random" class="pop-box">
     <div class="inner">
         <div class="title">
-            <h1><i class="i-x back"></i> Random Chances</h1>
+            <h1>{{i18n "title-games-random"}}</h1>
+        </div>
+        <div class="description">
+            {{{Description}}}
         </div>
         <div id="games-random-cells" class="minefield">
             {{#each (for 1 "<=" Field.y) as |value key| }}
-
             <div class='vw vh vf clearfix'>
                 {{#each (for 1 "<=" ../Field.x) }}
                 <div>
@@ -16,6 +18,8 @@
                 {{/each}}
             </div>
             {{/each}}
+        </div>
+        <div class="ad">
         </div>
     </div>
 </div>

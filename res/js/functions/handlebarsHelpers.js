@@ -105,9 +105,30 @@ $(function () {
         'reverseNum': function (num1, num2) {
             return num1 - num2;
         },
-        'countdown': function (time) {
-            console.error(":::::::", this.parentNode);
-            return time;
+        'badgesCountdown': function () {
+            if (!this.key && !this.timeout && !this.timer)
+                return;
+            var data = this;
+
+            setTimeout(function () {
+                var item = document.querySelector('[id$="' + data.key + (data.id?"-"+data.id:"") + '"]');
+
+                if (!item) {
+                    return "no item found";
+                }
+                
+
+                switch (data.timeout) {
+                    case "close":
+                        item.parentNode.removeChild(item);
+                        break;s
+                    case "button":
+                        return "There no code for 'Button' action!... ";
+                        break;
+                }
+            }, data.timer * 1000);
+
+            return;
         },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
@@ -208,8 +229,9 @@ $(function () {
             return ret;
         },
         'variable': function (name, args, opt) {
+            http://www.w3schools.com/jsref/event_onload.asp
 
-            console.log(this, name, args, opt);
+                    console.log(this, name, args, opt);
         },
         'cache': function () {
 

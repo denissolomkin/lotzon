@@ -193,6 +193,7 @@
 
                                 Cache.init(data);
 
+                                console.log('aaaaaaaaaaa',form.method.toLowerCase(), form.callback);
                                 if (Callbacks[form.method.toLowerCase()][form.callback]) {
                                     D.log(['C.' + form.method.toLowerCase() + '.callback']);
                                     Callbacks[form.method.toLowerCase()][form.callback].call(that, data.res);
