@@ -128,7 +128,7 @@ class PrizesController extends \AjaxController
                 $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
             }
         } catch(EntityException $e) {
-            $this->ajaxResponseCode(array("message" => $e->getMessage()), 400);
+            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
 
             return false;
         }
