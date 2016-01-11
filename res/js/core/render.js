@@ -404,6 +404,8 @@
                                 //such as blog-post-view, games-online & games-chance
                                 DOM.hide(node.parentNode && node.parentNode.children);
                             }
+                        } else {
+                            options.url = false;
                         }
 
                         if (node.parentNode) {
@@ -438,6 +440,8 @@
                             } else if (node.id == 'content') {
                                 DOM.hide(node.children);
                             }
+                        } else {
+                            options.url = false;
                         }
 
                         if (options.init.template.indexOf('-item') !== -1)

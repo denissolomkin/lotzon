@@ -15,18 +15,7 @@
 // ----------------------------------- //
 
 .bonus-share-url-copy {
-  padding-left: 30px;
   position: relative;
-  &:before {
-    content: "";
-    display: block;
-    width: 15px;
-    height: 17px;
-    background: url(../img/sprite.png) -82px -83px;
-    position: absolute;
-    left: 0;
-    top: 7px;
-  }
 }
 
 .bonus-share-url-copy input {
@@ -40,11 +29,3 @@
 
 // ----------------------------------- //
 
-.bonus-share-banner-view {
-  width: 70%;
-  margin: auto;
-}
-
-.bonus-banner-view-item:nth-child(even) {
-  float: right;
-}

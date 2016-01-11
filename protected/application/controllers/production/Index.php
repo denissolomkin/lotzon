@@ -274,9 +274,36 @@ class Index extends \SlimController\SlimController
 
     protected function landing()
     {
+
+        global $isMobile, $lottery, $error;
+
+        $detect   = new MobileDetect;
+        $isMobile = $detect->isMobile();
+
+        $lottery = array(
+            "win"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            "players" => PlayersModel::instance()->getMaxId()
+        );
+
+        $session         = new Session();
+        if ($session->has('ERROR') OR $_SESSION['ERROR']) {
+            $error = $session->get('ERROR') ?: $_SESSION['ERROR'];
+            $session->remove('ERROR');
+            unset($_SESSION['ERROR']);
+        }
+
+        $referer         = parse_url($_SERVER['HTTP_REFERER']);
+        $blockedReferers = SettingsModel::instance()->getSettings('blockedReferers')->getValue();
+        if ($referer && is_array($blockedReferers) && !$session->has('REFERER')
+            && (($referer['host'] && in_array(str_replace('www', '', $referer['host']), $blockedReferers)) OR ($referer['path'] && in_array(str_replace('www', '', $referer['path']), $blockedReferers)))
+        ) {
+            $session->set('REFERER', $referer['host'] ?: $referer['path']);
+        }
+
+        return include("res/landing.php");
+
         $showEmail       = $this->request()->get('m', false);
         $showLoginScreen = false;
-        $session         = new Session();
 
         if (!empty($_COOKIE['showLoginScreen'])) {
             $showLoginScreen = true;
@@ -314,19 +341,6 @@ class Index extends \SlimController\SlimController
             }
         }
 
-        if ($session->has('ERROR') OR $_SESSION['ERROR']) {
-            $error = $session->get('ERROR') ?: $_SESSION['ERROR'];
-            $session->remove('ERROR');
-            unset($_SESSION['ERROR']);
-        }
-
-        $referer         = parse_url($_SERVER['HTTP_REFERER']);
-        $blockedReferers = SettingsModel::instance()->getSettings('blockedReferers')->getValue();
-        if ($referer && is_array($blockedReferers) && !$session->has('REFERER')
-            && (($referer['host'] && in_array(str_replace('www', '', $referer['host']), $blockedReferers)) OR ($referer['path'] && in_array(str_replace('www', '', $referer['path']), $blockedReferers)))
-        ) {
-            $session->set('REFERER', $referer['host'] ?: $referer['path']);
-        }
 
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,

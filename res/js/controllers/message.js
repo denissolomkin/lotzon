@@ -1,126 +1,28 @@
 (function () {
 
-    if (typeof I === 'undefined') I = {};
-    Object.deepExtend(I, {
+    Messages = {
 
-        /* communication */
-        comment: '.comment',
-        notifications: '.c-notifications',
-        showNotifications: '.c-show-notifications',
-        hideNotifications: '.c-hide-notifications',
-        notificationsList: '.c-notifications-list',
-        closeList: '.c-notifications-list .close-list',
-        closeNotification: '.c-notification .close-notification',
-        textArea: '.message-form-area'
-
-    });
-
-//setup before functions
-    var typingTimer;                //timer identifier
-    var doneTypingInterval = 5000;  //time in ms, 5 second for example
-    var $input = $('#myInput');
-
-//on keyup, start the countdown
-    $input.on('keyup', function () {
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
-    });
-
-//on keydown, clear the countdown
-    $input.on('keydown', function () {
-        clearTimeout(typingTimer);
-    });
-
-//user is "finished typing," do something
-    function doneTyping() {
-        //do something
-    }
-
-    Message = {
-
+        doneTypingInterval: 1000,
         typingTimer: null,
         init: function () {
 
-            /* ========================================================= */
-            //                     COMMUNICATION
-            /* ========================================================= */
+        },
 
-            // COMMENTS ============================== //
+        after:{
 
-            $(I.comment).on('click', function (event) {
-                event.stopPropagation();
-                $(I.comment).removeClass('active');
-                if (Device.detect() === 'mobile') {
-                    $(this).addClass('active');
-                }
-            });
+            markRead: function () {
 
-            $(I.hideNotifications).on('click', function () {
-                $(I.notifications).fadeOut('fast', function () {
-                    $(I.notifications).remove();
-                });
-            });
+                var node = DOM.up('message', this);
+                node.classList.remove('message-unread');
+                DOM.remove('mark-read',node);
 
-            $(I.closeList).on('click', function () {
-                $(I.notifications).slideUp('fast', function () {
-                    $(I.notifications).remove();
-                });
-            });
-
-            $(I.closeNotification).on('click', function () {
-                if ($(I.notificationsList).find('.c-notification').length < 2) {
-                    $(I.notifications).slideUp('fast', function () {
-                        $(I.notifications).remove();
-                    });
-                } else {
-                    $(this).parent().slideUp('fast', function () {
-                        $(this).remove();
-                    });
-                }
-            });
-
-            $(I.showNotifications).on('click', function (event) {
-                $(I.notificationsList).slideDown('fast');
-            });
-
-            $(I.notificationsList).on('click', function (event) {
-                event.stopPropagation();
-            });
-
-            // $notifications.on('click', function(event) {
-            // 	event.stopPropagation();
-            // });
-
-            // TEXTAREA ------------------------- //
-            function h(e) {
-                $(e).css({'height': 'auto', 'overflow-y': 'hidden'}).height(e.scrollHeight);
             }
-
-            $(I.textArea).each(function () {
-                h(this);
-            }).on('input', function () {
-                h(this);
-            });
         },
 
         do: {
 
-            markMessage: function (event) {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                var notification = DOM.up('c-notification', this),
-                    obj = {
-                        communication: {
-                            notifications: {}
-                        }
-                    };
-
-                obj.communication.notifications[notification.getAttribute('data-id')] = null;
-                Player.decrement('notifications');
-                Cache.remove(obj);
-
+            markRead: function (event) {
+                Form.delete.call(this, '/communication/messages/' + DOM.up('message', this).getAttribute('data-id'));
             },
 
             clearUser: function () {
@@ -160,15 +62,15 @@
             searchUser: function () {
                 var find = this.value;
                 document.getElementById('communication-messages-new-users').innerHTML = '';
-                Message.typingTimer && clearTimeout(Message.typingTimer);
+                Messages.typingTimer && clearTimeout(Messages.typingTimer);
                 if (find.length >= 3)
-                    Message.typingTimer = setTimeout(function () {
+                    Messages.typingTimer = setTimeout(function () {
                         R.push({
                             template: 'communication-messages-new-users',
                             href: '/users/search',
                             query: {name: find}
                         });
-                    }, 1000);
+                    }, Messages.doneTypingInterval);
 
             }
         }

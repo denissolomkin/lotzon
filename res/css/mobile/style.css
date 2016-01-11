@@ -188,6 +188,19 @@
   #blog-post-view .comment .message-form {
     margin: 0 -20px; } }
 
+@media (max-width: 768px) {
+  .bonus-share-url-copy input {
+    padding-left: 0; }
+  .bonus-form .bonus-share-url-copy-btn {
+    padding-top: 0;
+    float: right; }
+  .bonus-banner-view-item {
+    margin-right: 10px; }
+  .popup-banner-download {
+    float: right; }
+  .banner-copy-btn {
+    margin: 0 0 0 10px; } }
+
 @media (max-width: 479px) {
   #communication .comment-content {
     padding-left: 0; }
@@ -225,7 +238,7 @@
 .communication-messages-tab {
   padding: 0 20px; }
 
-#communication-messages-list .message .close-notification {
+#communication-messages-list .message .mark-read {
   right: -5px;
   top: 5px; }
 
@@ -509,7 +522,7 @@
 
 @media (max-width: 500px) {
   .content-box-item.cabinet-referrals {
-    padding: 120px 20px 30px;
+    padding: 0 20px 30px;
     min-height: 0; }
   .r-item {
     border-top: 1px solid #fafafa; }
@@ -542,12 +555,14 @@
   .cabinet-referrals .content-box-cat {
     margin-left: 10px; }
   .cabinet-referrals .content-box-item-top {
-    display: table;
-    margin-left: 10px;
-    margin-top: 10px; }
+    display: table; }
   .cabinet-referrals .content-box-cat {
     float: none;
     display: table-header-group; } }
+
+@media (max-width: 530px) {
+  .r-item:first-child {
+    border-top: 1px solid #f3efec; } }
 
 @media (min-width: 530px) {
   .r-header,
@@ -562,7 +577,6 @@
     float: left; }
   .r-item {
     padding: 14px 20px;
-    border-bottom: none;
     line-height: 1.4; }
     .r-item:hover:before {
       top: 10px;
@@ -579,18 +593,17 @@
   .r-nickname-text {
     width: 33%; }
   .r-registered,
-  .r-registered-text {
+  .r-subreferrals-text {
     width: 23%; }
   .r-games,
   .r-games-text {
     width: 10%; }
   .r-active,
   .r-active-text {
-    width: 21%;
-    text-align: center; }
+    width: 17%; }
   .r-profit,
   .r-profit-text {
-    width: 13%; } }
+    width: 15%; } }
 
 @media (min-width: 580px) {
   .cabinet-transaction-history .content-box-cat {
@@ -613,7 +626,7 @@
     padding-top: 8px;
     margin-right: 30px; } }
 
-@media (max-width: 767px) {
+@media (min-width: 530px) and (max-width: 767px) {
   .ph-inf-name {
     display: block;
     float: left; }
@@ -1082,7 +1095,6 @@
     float: left; }
   .r-item {
     padding: 14px 20px;
-    border-bottom: none;
     line-height: 1.4; }
     .r-item:hover:before {
       top: 10px;
@@ -1096,20 +1108,16 @@
   .r-active {
     text-align: center; }
   .r-nickname, .r-nickname-text {
-    width: 33%; }
+    width: 45%; }
   .r-registered,
-  .r-registered-text {
+  .r-subreferrals-text {
     width: 23%; }
-  .r-games,
-  .r-games-text {
-    width: 10%; }
   .r-active,
   .r-active-text {
-    width: 21%;
-    text-align: center; }
+    width: 17%; }
   .r-profit,
   .r-profit-text {
-    width: 13%; } }
+    width: 15%; } }
 
 @media (min-width: 480px) and (min-width: 580px) {
   .cabinet-transaction-history .content-box-cat {
@@ -1127,6 +1135,20 @@
     top: 50%;
     transform: translate(0, -50%);
     min-width: 135px; } }
+
+@media (min-width: 480px) and (min-width: 530px) and (max-width: 767px) {
+  .r-nickname,
+  .r-nickname-text {
+    width: 40%; }
+  .r-registered,
+  .r-subreferrals-text {
+    width: 23%; }
+  .r-active,
+  .r-active-text {
+    width: 17%; }
+  .r-profit,
+  .r-profit-text {
+    width: 20%; } }
 
 @media (min-width: 768px) {
   .container {
@@ -1326,27 +1348,12 @@
   .bonus-social-item {
     margin-right: 10px; }
   .bonus-share-url-copy {
-    padding-left: 30px;
     position: relative; }
-    .bonus-share-url-copy:before {
-      content: "";
-      display: block;
-      width: 15px;
-      height: 17px;
-      background: url(../img/sprite.png) -82px -83px;
-      position: absolute;
-      left: 0;
-      top: 7px; }
   .bonus-share-url-copy input {
     margin: 0 30px 0 0;
     width: 434px; }
   .bonus-share-url-copy-btn {
     width: 120px; }
-  .bonus-share-banner-view {
-    width: 70%;
-    margin: auto; }
-  .bonus-banner-view-item:nth-child(even) {
-    float: right; }
   .communication .content-box-tab span {
     display: inline; }
   .communication .content-box-tab:before {
@@ -1383,7 +1390,7 @@
       cursor: pointer; }
   .c-notification {
     cursor: pointer; }
-  .close-notification {
+  .mark-read {
     cursor: pointer; }
   .c-notification-top {
     min-height: auto; }
@@ -1445,7 +1452,7 @@
     top: 4px;
     right: 0;
     z-index: 1; }
-  #communication-messages-list .message .close-notification {
+  #communication-messages-list .message .mark-read {
     right: -15px;
     top: 5px; }
   .games-previews {
@@ -1937,19 +1944,19 @@
     padding-right: 20px; }
   .r-nickname,
   .r-nickname-text {
-    width: 44%; }
+    width: 45%; }
   .r-registered,
-  .r-registered-text {
-    width: 20%; }
+  .r-subreferrals-text {
+    width: 23%; }
   .r-games,
   .r-games-text {
     width: 9%; }
   .r-active,
   .r-active-text {
-    width: 18%; }
+    width: 17%; }
   .r-profit,
   .r-profit-text {
-    width: 9%; }
+    width: 15%; }
   .th-item {
     margin: 0 -20px;
     padding: 13px 20px 0; }

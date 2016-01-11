@@ -1,5 +1,9 @@
 (function () {
 
+
+    if (typeof I === 'undefined') I = {};
+    Object.deepExtend(I, {notificationsList: '.c-notifications-list'});
+
     Comments = {
 
         hide: function (event) {

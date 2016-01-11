@@ -306,7 +306,7 @@
       border: none;
       border-bottom: 1px solid #c3c3c3;
     }
-    & .close-notification {
+    & .mark-read {
       right: -15px;
       top: 5px;
     }
@@ -360,3 +360,7 @@
   }
 }
   // ---------------------------- //
+
+.unread .message-text{
+  color: #000;
+}

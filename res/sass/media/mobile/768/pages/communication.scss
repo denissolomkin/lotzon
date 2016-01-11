@@ -70,7 +70,7 @@
   cursor: pointer;
 }
 
-.close-notification {
+.mark-read {
   cursor: pointer;
 }
 
@@ -166,7 +166,7 @@
     z-index: 1;
   }
 }
-#communication-messages-list .message .close-notification {
+#communication-messages-list .message .mark-read {
   right: -15px;
     top: 5px;
 }

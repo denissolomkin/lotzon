@@ -2,8 +2,7 @@
   "player": {
     "count": {
       "referralsTotal": 128,
-      "referralsActive": 41,
-      "referralsPassive": 78
+      "referralsIncome": 78
     }
   },
   "res": {
@@ -13,9 +12,8 @@
           "id": 1,
           "name": "Участник 238872",
           "date": {
-          "last_lottery":"144715529",
-          "ping":"144715529",
-          "registered":"1447155829"
+          "subreferrals" : "324",
+          "active_referals": 24
           },
           "count":{"lotteries":11},
           "is_online": true,
@@ -25,9 +23,8 @@
           "id": 2,
           "name": "Участник 238872",
           "date": {
-          "last_lottery":"144715529",
-          "ping":"144715529",
-          "registered":"1447155829"
+          "subreferrals" : "324",
+          "active_referals": 24 
           },
           "count":{"lotteries":11},
           "is_online": false,
@@ -37,9 +34,8 @@
           "id": 3,
           "name": "Участник 238872",
           "date": {
-          "last_lottery":"144715529",
-          "ping":"144715529",
-          "registered":"1447155829"
+          "subreferrals" : "324",
+          "active_referals": 24 
           },
           "count":{"lotteries":11},
           "is_online": false,

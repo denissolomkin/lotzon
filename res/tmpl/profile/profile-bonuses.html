@@ -1,114 +1,230 @@
 <div id="profile-bonuses" class="content-box">
 
-    <div class="content-box-header"><span class="back i-arrow-left"></span>{{i18n "title-profile-bonuses"}}</div>
+    <div class="content-box-header"><span class="back i-arrow-left"></span>{{i18n "title-bonuses"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-bonuses">
 
             <div class="content-box-item-content">
-                <p>
-                    В этом разделе можно приглашать друзей, знакомых или просто кого угодно. И получать за это баллы.
+                <p class="bold">
+                    {{i18n "text-bonuses-description"}}
                 </p>
 
                 <form action="" class="bonus-form clearfix">
-                    <p class="title">Пригласить по email +20 баллов</p>
-                    <input type="text" placeholder="напишите email приглашаемого">
-                    <button type="submit">Отправить</button>
-                </form>
-
-                <div class="bonus-share-post">
-                    <p class="title">Опубликовать пост на свою страницу в соцсеть +20 баллов</p>
-
-                    <p>
-                        За каждого нового участника, который перейдет по этому посту и зарегистрируется в lotzon, Вам
-                        будут зачислены баллы
-                    </p>
-
-                    <div class="bonus-social clearfix">
-                        <a href="#" class="bonus-social-item soc-1"></a>
-                        <a href="#" class="bonus-social-item soc-2"></a>
-                        <a href="#" class="bonus-social-item soc-3"></a>
-                        <a href="#" class="bonus-social-item soc-4"></a>
-                        <a href="#" class="bonus-social-item soc-5"></a>
-                        <a href="#" class="bonus-social-item soc-6"></a>
-                        <a href="#" class="bonus-social-item soc-7"></a>
-                        <a href="#" class="bonus-social-item soc-8"></a>
-                        <a href="#" class="bonus-social-item soc-9"></a>
-                        <a href="#" class="bonus-social-item soc-10"></a>
-                        <a href="#" class="bonus-social-item soc-11"></a>
-                        <a href="#" class="bonus-social-item soc-12"></a>
-                        <a href="#" class="bonus-social-item soc-13"></a>
-                    </div>
-                </div>
-
-                <div class="bonus-share-url">
-                    <p class="title">Разместить уникальную ссылку +20 баллов</p>
-
-                    <p>
-                        Разместить вашу ссылку можно где угодно. Все новые зарегистрированные по ней участники принесут
-                        Вам 20 баллов.
-                    </p>
 
                     <div class="bonus-share-url-copy clearfix">
-                        <input type="text" value="http://lotzon.com/?ref=23476">
+                        <label> {{i18n "title-bonuses-unique-link"}} </label>
+                        <input type="text" name="unick-name" value="http://lotzon.com/?ref=23476">
 
-                        <div class="bonus-share-url-copy-btn">Копировать</div>
+                        <div class="bonus-share-url-copy-btn">{{i18n "title-bonuses-link-copy"}}</div>
+                    </div>
+
+                <div class="bonus-share-post">
+                    <p class="title">{{i18n "title-bonuses-share-post"}} </p>
+                    <div class="strip clearfix">
+                        <div class="ae-social uk-float-left">
+                            <a href="#" class="ae-social-item i-vk-rectangle" title="">
+                                <span class="tooltip">
+                                    {{i18n 'text-soc-net-tie'}}
+                                </span>
+                            </a>
+                            <a href="#" class="ae-social-item i-fb-rectangle" title="">
+                                <span class="tooltip">
+                                    {{i18n 'text-soc-net-tie'}}
+                                </span>
+                            </a>
+                            <a href="#" class="ae-social-item i-tw-rectangle">
+                                <span class="tooltip">
+                                    {{i18n 'text-soc-net-tie'}}
+                                </span>
+                            </a>
+                            <a href="#" class="ae-social-item i-g_plus-rectangle">
+                                <span class="tooltip">
+                                    {{i18n 'text-soc-net-tie'}}
+                                </span>
+                            </a>
+                            <a href="#" class="ae-social-item i-inst-rectangle">
+                                <span class="tooltip">
+                                    {{i18n 'text-soc-net-tie'}}
+                                </span>
+                            </a>
+                            <a href="#" class="ae-social-item i-ok-rectangle">
+                                <span class="tooltip">
+                                {{i18n 'text-soc-net-tie'}}
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-
+               
+                    
                 <div class="bonus-share-banner">
-                    <p class="title">Разместить рекламный баннер +20 баллов</p>
+                    <p class="title">{{i18n "title-bonuses-link-banner"}}</p>
 
-                    <p>
-                        Есть свой сайт, блог или просто знаете где можно разместить банер?<br>
-                        Специально для этого у нас есть красивые банера, размещайте их, бонусные баллы начнут появлятся
-                        на счету.
-                    </p>
-
-                    <div class="bonus-share-banner-view clearfix">
-                        <div class="bonus-banner-view-item">
-                            <div class="bonus-banner-view-img"></div>
-                            <div class="bonus-banner-view-size">240x400 px</div>
-                            <div class="bonus-banner-view-btn">смотреть</div>
+                    <div class="bonus-share-banner-view strip clearfix">
+                        <div class="bonus-banner-view-item" id='240x400'>
+                            <div class="bonus-banner-view-size bonus-banner-view-btn">240 x 400</div>
                         </div>
-                        <div class="bonus-banner-view-item">
-                            <div class="bonus-banner-view-img"></div>
-                            <div class="bonus-banner-view-size">240x400 px</div>
-                            <div class="bonus-banner-view-btn">смотреть</div>
+                        <div class="bonus-banner-view-item" id='300x250'>
+                            <div class="bonus-banner-view-size bonus-banner-view-btn">300 x 250</div>
                         </div>
-                        <div class="bonus-banner-view-item">
-                            <div class="bonus-banner-view-img"></div>
-                            <div class="bonus-banner-view-size">240x400 px</div>
-                            <div class="bonus-banner-view-btn">смотреть</div>
+                        <div class="bonus-banner-view-item" id='468x60'>
+                            <div class="bonus-banner-view-size bonus-banner-view-btn">468 x 60</div>
                         </div>
-                        <div class="bonus-banner-view-item">
-                            <div class="bonus-banner-view-img"></div>
-                            <div class="bonus-banner-view-size">240x400 px</div>
-                            <div class="bonus-banner-view-btn">смотреть</div>
+                        <div class="bonus-banner-view-item" id='728x90'>
+                            <div class="bonus-banner-view-size bonus-banner-view-btn">728 x 90</div>
                         </div>
+                        <div class="close i-x uk-float-right"></div>
                     </div>
                 </div>
+                <div class="show-banner">
+                    <div class="240x400">
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/240х400_open.jpg" alt="">
+                            <img class="small-visible" src="/res/img/240х400_open_small.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span>
+                            <div class="banner-copy-btn">копировать</div><a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value='<a href="http://lotzon.com/tpl/res/img/banners/banner-240x400.gif?ref=234679" target="_blank">'>
+                        </div>
+                        <hr>
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/240х400_open2.jpg" alt="">
+                            <img class="small-visible" src="/res/img/240х400_open_small2.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span><div class="banner-copy-btn">копировать</div>
+                            <a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value="http://lotzon.com/tpl/res/img/banners/banner-240x400.gif?ref=234679">
+                        </div>  
+                        <hr>
+                    </div>      
+
+                </div>
+                <div class="show-banner">
+                    <div class="300x250">
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/240х400_open.jpg" alt="">
+                            <img class="small-visible" src="/res/img/240х400_open_small.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span>
+                            <div class="banner-copy-btn">копировать</div><a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value='<a href="http://lotzon.com/tpl/res/img/banners/banner-300x250.gif?ref=234679" target="_blank">'>
+                        </div>
+                        <hr>
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/240х400_open2.jpg" alt="">
+                            <img class="small-visible" src="/res/img/240х400_open_small2.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span><div class="banner-copy-btn">копировать</div>
+                            <a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value="http://lotzon.com/tpl/res/img/banners/banner-300x250.gif?ref=234679">
+                        </div>  
+                        <hr>
+                    </div>      
+                </div>
+                <div class="show-banner">
+                    <div class="468x60">
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/240х400_open.jpg" alt="">
+                            <img class="small-visible" src="/res/img/240х400_open_small.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span>
+                            <div class="banner-copy-btn">копировать</div><a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value='<a href="http://lotzon.com/tpl/res/img/banners/banner-468x60.gif?ref=234679" target="_blank">'>
+                        </div>
+                        <hr>
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/240х400_open2.jpg" alt="">
+                            <img class="small-visible" src="/res/img/240х400_open_small2.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span><div class="banner-copy-btn">копировать</div>
+                            <a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value="http://lotzon.com/tpl/res/img/banners/banner-468x60.gif?ref=234679">
+                        </div>  
+                        <hr>
+                    </div>      
+                </div>
+                <div class="show-banner">
+                    <div class="728x90">
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/728x90open.jpg" alt="">
+                            <img class="small-visible" src="/res/img/728x90open.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span>
+                            <div class="banner-copy-btn">копировать</div><a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value='<a href="http://lotzon.com/tpl/res/img/banners/banner-728x90.gif?ref=234679" target="_blank">'>
+                        </div>
+                        <hr>
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/res/img/728x90open2.jpg" alt="">
+                            <img class="small-visible" src="/res/img/728x90open2.jpg" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <span class="title">Код для вставки:</span><div class="banner-copy-btn">копировать</div>
+                            <a href="#" class="popup-banner-download">скачать баннер</a>
+                            <input type="text" value="http://lotzon.com/tpl/res/img/banners/banner-728x90.gif?ref=234679">
+                        </div>  
+                        <hr>
+                    </div>      
+                </div>
+            </div>
+            </form>
+            <div class="info_block">
+            <p class="bold">{{i18n "title-bonuses-count"}}
+            </p>
+            <p>{{i18n "text-bonuses-count"}}
+            </p>
+
+            <p class="bold">{{i18n "title-bonuses-how-works"}}
+            </p>
+            <p>{{i18n "text-bonuses-how-works"}}
+            </p>
+            <p class="bold">{{i18n "title-bonuses-new-users"}}
+            </p>
+            <p>{{i18n "text1-bonuses-new-users"}}
+            </p>
+             <p>{{i18n "text2-bonuses-new-users"}}
+            </p>
+             <p>{{i18n "text3-bonuses-new-users"}}
+            </p>
             </div>
 
 
+
             <!-- POPUP BANNER -->
-            <div class="popup-banner">
+<!--             <div class="popup-banner">
                 <div class="title">Баннер 468x60</div>
-                <div class="popup-banner-slide clearfix">
-                    <img src="/res/img/popup_banner.jpg" alt="">
+                <div class="banner-slide clearfix">
+                    <img src="/res/img/240х400_open.jpg" alt="">
                     <a href="#" class="popup-banner-download">скачать</a>
                 </div>
-                <div class="popup-banner-copy clearfix">
+                <div class="banner-copy clearfix">
+
+                    <input type="text" value='<a href="http://lotzon.com/tpl/res/img/banners/banner-468x60.gif?ref=234679" target="_blank">'>
+                    <div class="banner-copy-btn">копировать ссылку</div>
+                </div>
+                <div class="banner-slide clearfix">
+                    <img src="/res/img/240х400_open2.jpg" alt="">
+                    <a href="#" class="popup-banner-download">скачать</a>
+                </div>
+                <div class="banner-copy clearfix">
                     <input type="text" value="http://lotzon.com/tpl/res/img/banners/banner-468x60.gif?ref=234679">
 
-                    <div class="popup-banner-copy-btn">копировать ссылку</div>
+                    <div class="banner-copy-btn">копировать ссылку</div>
                 </div>
                 <p>
                     Разместите этот код в месте желаемого отображения банера или скачайте его и закачайте на свой сайт.
                 </p>
 
                 <div class="close"></div>
-            </div>
+            </div> -->
             <!-- end of POPUP BANNER -->
 
 

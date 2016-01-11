@@ -3,20 +3,16 @@
 
         <div class="r-inf-names">
             <div class="r-inf-name">{{i18n "title-users-referrals-nickname"}}</div>
-            <div class="r-inf-name">{{i18n "title-users-referrals-registered"}}</div>
-            <div class="r-inf-name">{{i18n "title-users-referrals-lotteries"}}</div>
+            <div class="r-inf-name">{{i18n "title-users-referrals-subreferrals"}}</div>
             <div class="r-inf-name">{{i18n "title-users-referrals-activity"}}</div>
             <div class="r-inf-name">{{i18n "title-users-referrals-profit"}}</div>
         </div>
 
         <div class="r-inf">
             <div class="r-inf-item r-nickname">{{name}}</div>
-            <div class="r-inf-item r-registered">{{day date.registered}}</div>
-            <div class="r-inf-item r-games">{{count.lotteries}}</div>
-            <div class="r-inf-item r-active">
-                <div class="r-active-icon"></div>
-                <div class="r-active-inf service-pop-up">{{i18n "title-users-referrals-last-lottery"}}<br>{{day date.last_lottery}}</div>
-            </div>
+            <div class="r-inf-item r-registered">{{date.subreferrals}}</div>
+            <div class="r-inf-item r-active-text">{{date.active_referals}}</div>
+
             <div class="r-inf-item r-profit">{{profit}}</div>
         </div>
 

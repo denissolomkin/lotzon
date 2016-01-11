@@ -1,5 +1,7 @@
-﻿<div id="communication-messages-{{id}}" data-id="{{id}}" class="message">
-        <div class="close-notification"><div class="service-pop-up">{{i18n "title-mark-as-read"}}</div></div>
+﻿<div id="communication-messages-{{id}}" data-id="{{id}}" class="message {{#if isUnread}}message-unread{{/if}}">
+    {{#if isUnread}}
+        <div class="mark-read"><div class="service-pop-up">{{i18n "title-mark-as-read"}}</div></div>
+    {{/if}}
     <a href="/users/{{user.id}}/messages">
         <div class="message-img">
         <div class="service-pop-up">{{i18n "title-mark-online"}}</div>

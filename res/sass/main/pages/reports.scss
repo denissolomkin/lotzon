@@ -113,8 +113,11 @@
 
 
 .content-box-item.cabinet-referrals {
-  padding: 58px 20px 30px;
+  padding: 0 20px 30px;
   min-height: 0;
+  & .content-box-item-content {
+    padding-top: 60px;
+  }
 }
 
 .cabinet-referrals .content-box-cat {
@@ -148,19 +151,51 @@ border: none;
   margin-top: 0;
   margin-bottom: 30px;
 }
+
+#reports-referrals {
+  & .content-box-item-top {
+    padding: 0;
+    & .report-top-wrapper {
+      margin-top: 20px;
+      letter-spacing: 0.7px;
+      font-family: 'handbookpro-regular';
+      font-size: 15px;
+      color: #4D4D4D;
+      & > div {
+        position: relative;
+        display: inline-block;
+        padding: 0 0 20px 0;
+        margin-right: 0;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+    }
+  }
+  & .r-header-item {
+    & .tooltip-block{
+      position: relative;
+      color: #4990e2;
+      display: inline-block;
+      & .tooltip {
+        top: -60px;
+      }
+    }
+  }
+}
+
 .r-item {
   line-height: 1.7;
   margin: 0 -20px;
   padding: 20px 20px;
   cursor: pointer;
   position: relative;
-  &:nth-child(even) {
-    border-bottom: 1px solid #fafafa;
-    border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #f3efec;
+  &:first-child {
+    // border-bottom: 0;
   }
   &.r-header {
     background: #fafafa;
-    // border-bottom: 1px solid #fafafa;
+    border-bottom:0;
 
     color: #000;
     font-family: 'Handbook-bold';

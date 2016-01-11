@@ -7,23 +7,15 @@
         <div class="content-box-item with-cat cabinet-referrals">
             <form class="render-list-form-unwatched" action="/reports/referrals/list" method="get">
 
-                <div class="content-box-item-top clearfix">
-                    <div class="calendar-range i-calendar">
-                        <input type="text" name="daterange" class="daterange" value="01.01.2015-02.02.2015">
-                    </div>
-                    <div class="content-box-cat">
-                    <span class="position-relative">
-                        <input id="radio-referrals-all" name="type" type="radio" value="" checked>
-                        <label for="radio-referrals-all">{{i18n "title-reports-referrals-all"}} {{count "referralsTotal"}}</label>
-                    </span>
-                    <span class="position-relative">
-                        <input id="radio-referrals-active" name="type" type="radio" value="active">
-                        <label for="radio-referrals-active">{{i18n "title-reports-referrals-active"}} {{count "referralsActive"}}</label>
-                    </span>
-                    <span class="position-relative">
-                        <input id="radio-referrals-passive" name="type" type="radio" value="passive">
-                        <label for="radio-referrals-passive">{{i18n "title-reports-referrals-passive"}} {{count "referralsPassive"}}</label>
-                    </span>
+                <div class="content-box-item-top ">
+                    <div class="report-top-wrapper clearfix">
+                        <div class="position-relative uk-float-left">
+                            {{i18n "title-reports-referrals-all"}} {{count "referralsTotal"}}
+                        </div>
+
+                        <div class="position-relative uk-float-right">
+                            {{i18n "title-reports-profit-all"}} {{count "referralsIncome"}}
+                        </div>
                     </div>
                 </div>
 
@@ -31,10 +23,25 @@
 
                     <div class="r-header clearfix r-item">
                         <div class="r-header-item r-nickname-text">{{i18n "title-users-referrals-nickname"}}</div>
-                        <div class="r-header-item r-registered-text">{{i18n "title-users-referrals-registered"}}</div>
-                        <div class="r-header-item r-games-text">{{i18n "title-users-referrals-lotteries"}}</div>
-                        <div class="r-header-item r-active-text">{{i18n "title-users-referrals-activity"}}</div>
-                        <div class="r-header-item r-profit-text">{{i18n "title-users-referrals-profit"}}</div>
+                        <div class="r-header-item r-subreferrals-text">{{i18n "title-users-referrals-subreferrals"}}
+                        <div class="tooltip-block"> (?)
+                        <span class="tooltip">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                        </span>
+                        </div>
+
+                        </div>
+                        <div class="r-header-item r-active-text">{{i18n "title-users-referrals-activity"}}
+                        <div class="tooltip-block"> (?)
+                            <span class="tooltip">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                            </span>
+                        </div>
+                        </div>
+                        <div class="r-header-item r-profit-text">{{i18n "title-users-referrals-profit"}}
+                        </div>
                     </div>
 
                     {{partial 'reports-referrals-container' this}}

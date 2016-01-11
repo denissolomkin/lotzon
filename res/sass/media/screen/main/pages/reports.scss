@@ -32,14 +32,14 @@
 }
 
 .r-registered,
-.r-registered-text {
+.r-subreferrals-text{
   width: 15%;
 }
 
 .r-games,
 .r-games-text {
   width: 10%;
-  text-align: center;
+
 }
 
 .r-active,
@@ -71,7 +71,6 @@
 // ------------------ //
 .r-item {
   padding: 14px 20px;
-  border-bottom: none;
   line-height: 1.4;
   &:hover:before {
     top: 10px;
@@ -93,24 +92,23 @@
 // ------------------ //
 .r-nickname,
 .r-nickname-text {
-  width: 33%;
+  width: 45%;
 }
 .r-registered,
-.r-registered-text {
+.r-subreferrals-text{
   width: 23%;
 }
 .r-games,
 .r-games-text {
-  width: 10%;
+  width: 20%;
 }
 .r-active,
 .r-active-text {
-  width: 21%;
-  text-align: center;
+  width: 17%;
 }
 .r-profit,
 .r-profit-text {
-  width: 13%;
+  width: 15%;
 }
 
 

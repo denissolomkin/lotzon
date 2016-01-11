@@ -15,6 +15,37 @@
 
         },
 
+        banner: function (data){
+
+            var node = data.hasOwnProperty('node') && data.node.getElementsByClassName('ad')[0];
+
+            if(node && data.json.hasOwnProperty('block') && data.json.block) {
+                var div = document.createElement('div');
+                div.innerHTML = data.json.block;
+
+                while (div.children.length > 0) {
+                    if (div.children[0].tagName === 'SCRIPT') {
+                        var s = document.getElementsByTagName('script')[0],
+                            po = document.createElement('script');
+                        po.type = 'text/javascript';
+                        po.async = true;
+
+                        if (div.children[0].src) {
+                            po.src = div.children[0].src;
+                        } else {
+                            po.innerHTML = div.children[0].innerHTML;
+                        }
+
+                        div.removeChild(div.children[0]);
+                        s.parentNode.insertBefore(po, s);
+
+                    } else {
+                        node.appendChild(div.children[0]);
+                    }
+
+                }
+            }
+        },
         enableForm: function () {
 
             D.log('Content.enableForm', 'content');

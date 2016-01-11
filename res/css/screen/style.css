@@ -394,6 +394,13 @@ html {
 .comment-description, .message-form-area {
   line-height: 1.5; }
 
+@media (max-width: 1200px) {
+  #profile-bonuses .strip {
+    margin-right: -20px;
+    margin-left: -20px;
+    padding-right: 20px;
+    padding-left: 20px; } }
+
 .communication .content-box-tab.back-tab {
   padding: 0 74px 0 20px; }
 
@@ -475,7 +482,7 @@ div.comment-reply-btn {
 .c-notification {
   cursor: pointer; }
 
-.close-notification {
+.mark-read {
   cursor: pointer; }
 
 .c-notification-top {
@@ -1148,13 +1155,12 @@ div.comment-reply-btn {
   width: 37%; }
 
 .r-registered,
-.r-registered-text {
+.r-subreferrals-text {
   width: 15%; }
 
 .r-games,
 .r-games-text {
-  width: 10%;
-  text-align: center; }
+  width: 10%; }
 
 .r-active,
 .r-active-text {
@@ -1179,7 +1185,6 @@ div.comment-reply-btn {
 
 .r-item {
   padding: 14px 20px;
-  border-bottom: none;
   line-height: 1.4; }
   .r-item:hover:before {
     top: 10px;
@@ -1199,24 +1204,23 @@ div.comment-reply-btn {
 
 .r-nickname,
 .r-nickname-text {
-  width: 33%; }
+  width: 45%; }
 
 .r-registered,
-.r-registered-text {
+.r-subreferrals-text {
   width: 23%; }
 
 .r-games,
 .r-games-text {
-  width: 10%; }
+  width: 20%; }
 
 .r-active,
 .r-active-text {
-  width: 21%;
-  text-align: center; }
+  width: 17%; }
 
 .r-profit,
 .r-profit-text {
-  width: 13%; }
+  width: 15%; }
 
 .cabinet-transaction-history .content-box-cat {
   float: none;
@@ -1275,8 +1279,6 @@ div.comment-reply-btn {
     padding: 20px; }
   .post-item-title {
     font-size: 10px; }
-  .bonus-share-banner-view {
-    width: 60%; }
   .communication .content-box-tab {
     padding: 0 30px; }
   .communication .content-box-tab.back-tab {

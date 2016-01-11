@@ -11,6 +11,9 @@
                     /* global */
                     ['a', R.push],
 
+                    /* messages */
+                    {".mark-read": Messages.do.markRead},
+
                     /* notifications */
                     {".close-notification": Comments.do.closeNotification},
                     {".c-show-notifications": Comments.do.showNotifications},
@@ -22,7 +25,6 @@
                     {".comment-reply-btn": Comments.do.replyForm},
                     {".comment-content": Comments.do.mobileForm},
 
-                    {".mark-message": Message.do.markMessage},
                     //
                     {".back": Navigation.do.backBlock}
 
@@ -41,7 +43,7 @@
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
 
-            $(document).on('click', ".nm-search .nm-friend", Message.do.setUser);
+            $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
 
             $(document).on('click', Device.do.hide);
             // $(document).on('change', '.input-file-wrapper', function(){alert('aupdlfjsl');});
@@ -67,8 +69,8 @@
 
 
             /* new message*/
-            $(document).on('input', ".enter-friend-name", Message.do.searchUser);
-            $(document).on('click', ".nm-change", Message.do.clearUser);
+            $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
+            $(document).on('click', ".nm-change", Messages.do.clearUser);
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -100,6 +102,10 @@
             $(document).on('click', '.change-favorite', Profile.do.openFavorite);
             $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
 
+            $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
+            $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
+            $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
+
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
@@ -124,7 +130,6 @@
 
             "games-online": Carousel.initOwl,
             "games-online-view": Games.online.init,
-//            "games-chance-view": function(data){document.getElementById('games-chance-view-item').innerHTML = JSON.stringify(data.json, null, 2)},
             "games-chance-view": Games.chance.init,
             "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,
@@ -133,7 +138,7 @@
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
 
-            "communication-messages": Message.init,
+            "communication-messages": Messages.init,
 
             "lottery": Lottery.init,
             "lottery-history-view": Lottery.view,
@@ -145,30 +150,6 @@
             
             "support-rules": Support.init,
             "support-faq": Support.init,
-
-            "games-moment": function(res) {
-                alert(1);
-                res = res.json;
-                var node;
-
-                if(node = document.getElementById('games-moment-build'))
-                    node.innerHTML = JSON.stringify(res, null, 2);
-
-                if (res.Field && res.Field.x) {
-                    var html = '';
-                    for (var x = 1; x <= res.Field.x; x++)
-                        for (var y = 1; y <= res.Field.y; y++)
-                            html += "<button type=button onclick=\"Form.get.call(" +
-                            "this,{" +
-                            "href:'/games/moment/play', " +
-                            "data: {cell:'" + x + "x" + y + "'}," +
-                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "</button>";
-                }
-
-                if(node = document.getElementById('games-moment-cells'))
-                    node.innerHTML = html;
-            },
-
             "games-random": Games.random.init
 
         },
@@ -182,31 +163,7 @@
             "prizes-exchange-goods": Prize.update.exchange,
             "blog-post-view-comments": Comments.after.reply,
             "communication-comments": Comments.after.reply,
-
-            "communication-notifications": Comments.renderNotifications, // delete
-//            "games-chance-view": function(res) {
-//
-//                this.parentNode.parentNode.parentNode.querySelector("[id$='-view-cells']").innerHTML = '1';
-//                this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("[id$='-view-play']").innerHTML = '2'
-//                if (res.Field && res.Field.x) {
-////                    console.error(">>>>>",res)
-//                    var html = '';
-//                    for (var x = 1; x <= res.Field.x; x++){
-//                        html += "<div class='same-width-childs same-height-childs clearfix'>";
-//                        for (var y = 1; y <= res.Field.y; y++){
-//                            html += "<div><div class='inner'><button type=button onclick=\"Form.get.call(" +
-//                            "this,{" +
-//                            "href:'/games/chance/{{id}}/play', " +
-//                            "data: {cell:'" + x  + "x" + y + "'}," +
-//                            "after: function(data){this.parentNode.nextElementSibling.innerHTML = JSON.stringify(data.json, null, 2)+this.parentNode.nextElementSibling.innerHTML;}})\">" + x + "x" + y + "<i class='i-question'></i></button></div></div>";
-//                        }
-//                        html += "</div>";
-//                    }
-//                }
-//                this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("[id$='-view-cells']").innerHTML = html;
-////                console.log(this,html)
-//            }
-
+            "communication-notifications": Comments.renderNotifications,
         },
 
         "error": {
@@ -227,6 +184,7 @@
         "delete": {
 
             "communication-notifications": Comments.renderNotifications,
+            "users-item-messages": Messages.after.markRead,
 
         },
 

@@ -234,7 +234,6 @@
 
         renderAnimation: function() {
 
-
             var json = this.data,
                 arrRandom = [],
                 renderBalls = {
@@ -264,7 +263,6 @@
             console.log('renderAnimation: ', json);
 
             R.push({
-                url: false,
                 json: json,
                 href: 'lottery-animation-process',
                 after: Lottery.runAnimation

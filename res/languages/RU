@@ -139,10 +139,10 @@
                 "title-profile-settings": "Настройки",
                 "title-account-settings": "Общие настройки аккаунта",
                 "title-profile-password": "Изменение пароля",
-                "title-profile-bonuses": "Бонусы",
+                "title-bonuses": "Бонусы",
                 "title-reports-transactions": "История транзакций",
                 "title-reports-payments": "История выплат",
-                "title-reports-referrals": "Мои рефераллы",
+                "title-reports-referrals": "Мои приглашенные",
                 "title-reports-referrals-last-lottery": "Последняя&nbsp;дата&nbsp;игры",
                 "title-reports-payments-status-paid": "Выплачено",
                 "title-reports-payments-status-processed": "В обработке",
@@ -184,15 +184,17 @@
                 "title-users-requests-denied": "Отказано",
                 "title-users-requests-suggested": "Предлагает дружить",
 
-                "title-reports-referrals-all": "Все",
+                "title-reports-profit-all": "Общий доход",
+                "title-reports-referrals-all": "Рефералов",
                 "title-reports-referrals-active": "Активные",
                 "title-reports-referrals-passive": "Не играют",
                 "title-users-referrals-last-lottery":"Последняя дата входа",
                 "title-users-referrals-nickname": "Никнейм",
                 "title-users-referrals-registered": "Регистрация",
+                "title-users-referrals-subreferrals": "Подрефералов",
                 "title-users-referrals-lotteries": "Игр",
-                "title-users-referrals-activity": "Активность",
-                "title-users-referrals-profit": "Доход",
+                "title-users-referrals-activity": "Активных",
+                "title-users-referrals-profit": "Доход (баллов)",
 
 
                 "title-billing-phone": "Телефон",
@@ -248,15 +250,29 @@
                 "title-delivery-info-absent": "Информация для доставки приза отсутствует!",
                 "title-delivery-info-fill": "Заполните ее в разделе",
                 "title-my-datas": "«Мои данные»",
-
                 "title-support-faq": "Часто задаваемые вопросы",
                 "title-support-rules": "Правила",
+                "title-bonuses-link-banner":" Банеры с вашей ссылкой",
+                "title-bonuses-link-copy":"копировать",
+                "title-bonuses-count": "Сколько баллов будет начисляться?",
+                "title-bonuses-how-works": "Сколько баллов будет начисляться?",
+                "title-bonuses-new-users" : "Каким образом я могу приводить новых участников?",
+                "title-bonuses-unique-link": "Ваша уникальная ссылка:",
+                "title-bonuses-share-post": "Сделайте пост в соц.сетях и получайте дополнительные баллы",
+
                 "text-profile-notice":"Убедитесь в точности введенных данных. Неправильные или неполные данные могут негативно отразиться при обработке запроса на вывод выигрыша.",
                 "text-registration-delete-notice":"Вы уверены? Вся информация будет удалена и востановить ее будет невозможно!",
                 "text-support-rules":"<h1>Правило №1</h1><p>Кто чаще билеты заполняет, тот больше шансов получает</p><h1>Правило №2</h1><p>Кто по рекламе нажимает, тот в лотерее побеждает</p>",
                 "text-support-faq":"<h1>1. Как часто выигрывают?</h1><p>Ежесекундно</p><h1>2. Как много выигрывают?</h1><p>Миллионы и золотые горы</p>",
                 "text-soc-net-tie":"Для упрощенного входа в аккаунт. За каждую привязанную страницу ві получите 20 баллов",
-                "text-unvalid-pass-repeat":"Неверный повтор пароля"
+                "text-unvalid-pass-repeat":"Неверный повтор пароля",
+                "text-bonuses-description":" У каждого участника есть возможность приглашать в Lotzon друзей, знакомых и не знакомых людей. От каждого сыгранного ими розыгрыша вы будете получать дополнительные баллы.",
+                "text-bonuses-count": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.?",
+                "text-bonuses-how-works": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.?",
+                "text1-bonuses-new-users": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.?",
+                "text2-bonuses-new-users": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.?",
+                "text3-bonuses-new-users": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.?"
+
 
             }
 	}
