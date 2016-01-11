@@ -519,7 +519,6 @@
         return false;
     });
     </script>	
-    <script src="js/backend.js"></script>
     <script src="js/promo.js"></script>
 </body>
 </html>
