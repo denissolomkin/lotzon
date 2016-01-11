@@ -3827,7 +3827,7 @@ and open the template in the editor.
     Created on : 11.01.2016, 15:09:51
     Author     : squama
 */
-#games-random {
+.moment-game-box {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -3835,11 +3835,11 @@ and open the template in the editor.
   left: 0;
   z-index: 101;
   background: rgba(0, 0, 0, 0.35); }
-  #games-random .title {
+  .moment-game-box .title {
     font-size: 20px;
     text-transform: uppercase;
     padding: 10px 0; }
-    #games-random .title i.i-x-slim {
+    .moment-game-box .title i.i-x-slim {
       cursor: pointer;
       padding: 0 10px 0 0;
       position: relative;
@@ -3848,11 +3848,13 @@ and open the template in the editor.
       width: 45px;
       height: 45px;
       display: inline-block; }
-  #games-random .minefield {
+  .moment-game-box .message {
+    transition: all .4s ease-out; }
+  .moment-game-box .minefield {
     margin: 20px 0; }
-    #games-random .minefield .inner {
+    .moment-game-box .minefield .inner {
       padding: 4%; }
-    #games-random .minefield button {
+    .moment-game-box .minefield button {
       background: #b9dadd;
       color: #000;
       width: 100%;
@@ -3863,42 +3865,42 @@ and open the template in the editor.
       transform: rotateY(0deg);
       transition: all .4s ease-in;
       border: 1px solid rgba(0, 0, 0, 0.1); }
-      #games-random .minefield button.win {
+      .moment-game-box .minefield button.win {
         background: #ffe700; }
-        #games-random .minefield button.win .flipFix * {
+        .moment-game-box .minefield button.win .flipFix * {
           display: block;
           font-size: .3em;
           line-height: .9;
           text-transform: uppercase; }
-          #games-random .minefield button.win .flipFix *:first-child {
+          .moment-game-box .minefield button.win .flipFix *:first-child {
             font-size: .7em;
             font-weight: bold; }
-        #games-random .minefield button.win .flipFix :first-child:nth-last-child(1) {
+        .moment-game-box .minefield button.win .flipFix :first-child:nth-last-child(1) {
           display: block;
           font-size: .4em;
           text-transform: none; }
-        #games-random .minefield button.win:not(.played) {
+        .moment-game-box .minefield button.win:not(.played) {
           transform: rotateY(180deg);
           transition: all .4s ease-out;
           opacity: 0.7; }
-      #games-random .minefield button.played {
+      .moment-game-box .minefield button.played {
         transform: rotateY(180deg);
         transition: all .4s ease-out; }
-      #games-random .minefield button.lose {
+      .moment-game-box .minefield button.lose {
         background: #fff; }
-        #games-random .minefield button.lose i:not(.i-x) {
+        .moment-game-box .minefield button.lose i:not(.i-x) {
           display: none; }
-      #games-random .minefield button > *:not(i) {
+      .moment-game-box .minefield button > *:not(i) {
         opacity: 0;
         display: block;
         transform: rotateY(180deg);
         transition: all 1.4s ease-out; }
-      #games-random .minefield button:not([class]) i:not(.i-question) {
+      .moment-game-box .minefield button:not([class]) i:not(.i-question) {
         display: none; }
-    #games-random .minefield button[class] .flipFix {
+    .moment-game-box .minefield button[class] .flipFix {
       opacity: 1;
       transition: all 1.4s ease-out; }
-  #games-random > .inner {
+  .moment-game-box > .inner {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -3906,30 +3908,53 @@ and open the template in the editor.
     margin: 0 20%;
     background: #fff;
     padding: 20px; }
+  .moment-game-box:not(.game-started) .message {
+    position: absolute;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 0, 0, 0.1); }
+
+@media all and (min-width: 1600px) {
+  .moment-game-box .minefield button {
+    font-size: 30em; } }
+
+@media all and (max-width: 1600px) {
+  .moment-game-box .minefield button {
+    font-size: 22em; } }
+
+@media all and (max-width: 1366px) {
+  .moment-game-box .minefield button {
+    font-size: 16em; } }
 
 @media all and (max-width: 1024px) {
-  #games-random > .inner {
+  .moment-game-box > .inner {
     width: 80%;
     margin: 0 10%; } }
 
 @media all and (max-width: 768px) {
-  #games-random .minefield button {
-    font-size: 16em; }
-  #games-random > .inner {
+  .moment-game-box > .inner {
     width: 100%;
     min-height: 100%;
-    margin: 0; } }
+    margin: 0;
+    background: #ffe700; }
+  .moment-game-box .minefield div .inner button {
+    font-size: 16em;
+    background: #000;
+    color: #ffe700; } }
 
 @media all and (max-width: 525px) {
-  #games-random > .inner {
+  .moment-game-box > .inner {
     width: 100%;
     min-height: 100%;
     margin: 0;
     padding: 10px 0; }
-    #games-random > .inner > *:not(.minefield) {
+    .moment-game-box > .inner > *:not(.minefield) {
       padding-left: 15px;
       padding-right: 15px; }
-  #games-random .minefield button {
+  .moment-game-box .minefield button {
     font-size: 14em; } }
 
 #lottery {

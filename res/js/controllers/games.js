@@ -82,6 +82,7 @@ var fakeRandomData = [{
             "3x1": false
         },
         "GamePrizes": {
+            "MONEY": 250,
             "POINT": 25,
             "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
         },
@@ -247,10 +248,11 @@ var Games = {
             // make config
             Games.random.conf.data = data.json;
             Games.random.conf.play = !0;
-            $("#games-random").attr('class', 'game-started');
-            Games.random.get("#games-random-cells button:not(.played)", data.json.id); // data.json.id -- не используеться пока
+            $(".moment-game-box").addClass('game-started');
+            Games.random.get(".minefield button:not(.played)", data.json.id); // data.json.id -- не используеться пока
 
-            if (data.json.block) Content.banner(data);
+            if (data.json.block)
+                Content.banner(data);
         },
         get: function (elements, id) {
 //            console.error("Games.random.get >>>>", elements);
@@ -258,7 +260,7 @@ var Games = {
                 if (!Games.random.conf.play)
                     return false;
                 var cell = $(this).data('cell'), that = this;
-                if (fakeRandomData) {
+//                if (fakeRandomData) {
                     // prize
 //                    var data = {json: fakeRandomData[fakeCounter]};
 //                    if (data.json.error)
@@ -276,56 +278,56 @@ var Games = {
 //                    }
 //                    // Game winner Fields
 //                    if (data.json.GameField) {
-//                        console.error("data.json.GameField >>>>>>", data.json.GameField);
+//                        console.error("data.json.GameField >>>>>>", data.json);
 //                        if (data.json.Prize) {
-//                            $("#games-random").addClass('win');
+//                            alert(1);
+//                            $(".moment-game-box").addClass('win');
 //                        } else {
-//                            $("#games-random").addClass('lose');
+//                            $(".moment-game-box").addClass('lose');
 //                        }
-//                        Games.random.end(data.json.GameField);
+//                        Games.random.end(data.json);
 //                    }
 //                    $(that).addClass('played');
 //                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-                }
+//                }
 
 
                 // send
-
+//                return;
                 Form.get.call(this,
                         {
                             href: '/games/random/play',
                             data: {'cell': cell},
                             after: function (data) {
 //                                >>> code from top add here!!!
-//                                var data = {json: fakeRandomData[fakeCounter]};
-
-                    if (data.json.error)
-                        return;
-
-                    if (data.json.Prize) {
-                        $(that).addClass('win');
-                        $(that).html(Games.random.makePrizeCell(data.json.Prize));
-                    } else {
-                        $(that).addClass('lose');
-                    }
-                    // steps
-                    if (data.json.Moves) {
-                        console.error("data.json.Moves >>>", data.json.Moves);
+                                var data = {json: fakeRandomData[fakeCounter]};
+                                if (data.json.error)
+                                    return;
+                                if (data.json.Prize) {
+                                    $(that).addClass('win');
+                                    $(that).html(Games.random.makePrizeCell(data.json.Prize));
+                                } else {
+                                    $(that).addClass('lose');
+                                }
+                                // steps
+                                if (data.json.Moves) {
+                                    console.error("data.json.Moves >>>", data.json.Moves);
 //                        Games.random.prizesMoves(data.json.Moves);
-                    }
-                    // Game winner Fields
-                    if (data.json.GameField) {
-                        console.error("data.json.GameField >>>>>>", data.json.GameField);
-                        if (data.json.Prize) {
-                            $("#games-random").addClass('win');
-                        } else {
-                            $("#games-random").addClass('lose');
-                        }
-                        Games.random.end(data.json.GameField);
-                    }
-                    $(that).addClass('played');
+                                }
+                                // Game winner Fields
+                                if (data.json.GameField) {
+                                    console.error("data.json.GameField >>>>>>", data.json);
+                                    if (data.json.Prize) {
+                                        alert(1);
+                                        $(".moment-game-box").addClass('win');
+                                    } else {
+                                        $(".moment-game-box").addClass('lose');
+                                    }
+                                    Games.random.end(data.json);
+                                }
+                                $(that).addClass('played');
 //                                >>> code from top add here!!!
-                                    
+
                             }
                         });
             });
@@ -347,23 +349,44 @@ var Games = {
             }
             return html += "</div>";
         },
-        end: function (fields) {
+        end: function (data) {
+            var fields = data.GameField;
             for (var i in fields) {
                 if (fields[i]) {
-                    $("#games-random").removeClass('game-started');
-                    $('#games-random button[data-cell="' + i + '"]').html(Games.random.makePrizeCell(fields[i])).addClass('win');
+                    $(".moment-game-box").removeClass('game-started');
+                    $('.moment-game-box button[data-cell="' + i + '"]').html(Games.random.makePrizeCell(fields[i])).addClass('win');
                     Games.random.conf.play = !1;
-                    Games.random.destroy(5);
+
+                    Games.random.showMessage(data.GamePrizes);
+                    Games.random.destroy(500);
                 }
             }
 
         },
+        showMessage: function (data) {
+            var msg = "<p>";
+            if (data) {
+                msg += Cache.i18n("title-games-chance-card-win") + " ";
+                for (var key in data) {
+                    msg += "<span>" + data[key] + " ";
+                    if (key === "POINT")
+                        msg += Cache.i18n("title-of-points") + " ";
+                    if (key === "MONEY")
+                        msg += Player.getCurrency() + " ";
+                    msg += "</span>";
+                }
+            } else {
+                msg += Cache.i18n("title-games-chance-card-lose");
+            }
+            msg += "</p>";
+
+            $(".moment-game-box .message").html(msg);
+        },
 //        remove block by timeout
         destroy: function (timer) {
-            timer = timer || 0;
-            console.error(timer);
+//            console.error(timer);
             setTimeout(function () {
-                $("#games-random").remove();
+                $(".moment-game-box").remove();
             }, timer * 1000);
         }
     }

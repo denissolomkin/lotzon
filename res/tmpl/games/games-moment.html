@@ -1,8 +1,26 @@
-﻿<div id="games-moment" class="content-box">
-    <h1>momment</h1>
-    <pre id="games-moment-build"></pre>
-    <div id="games-moment-cells">
+<div id="games-moment" class="pop-box moment-game-box">
+    <div class="inner">
+        <div class="title">
+            <h1>{{i18n "title-games-moment"}}</h1>
+        </div>
+        <div class="description">
+            {{{Description}}}
+        </div>
+        <div class="message"></div>
+        <div id="games-moment-cells" class="minefield">
+            {{#each (for 1 "<=" Field.y) as |value key| }}
+            <div class='vw vh vf clearfix'>
+                {{#each (for 1 "<=" ../Field.x) }}
+                <div>
+                    <div class='inner'>
+                        <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i class='i-x'></i></button>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{/each}}
+        </div>
+        <div class="ad">
+        </div>
     </div>
-    <pre id="games-moment-play"></pre>
-
 </div>

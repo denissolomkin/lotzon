@@ -9,15 +9,16 @@ and open the template in the editor.
 */
 
 //colors
+$color_turbo_approx: #ffe700;
+$black: #000;
 $black_35: rgba(0, 0, 0, 0.35);
 $white: #fff;
-$color_ziggurat_approx: #b9dadd;
-$black: #000;
+$white_90: rgba(255,255,255, 0.9);
 $black_10: rgba(0,0,0,0.1);
+$color_ziggurat_approx: #b9dadd;
 $gray: #808080;
-$color_turbo_approx: #ffe700;
 
-#games-random {
+.moment-game-box {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -39,6 +40,10 @@ $color_turbo_approx: #ffe700;
 			height: 45px;
 			display: inline-block;
 		}
+	}
+	.message {
+		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+		transition: all .4s ease-out;
 	}
 	.minefield {
 		margin: 20px 0;
@@ -129,31 +134,55 @@ $color_turbo_approx: #ffe700;
 		background: $white;
 		padding: 20px;
 	}
+	&:not(.game-started) .message {
+		position: absolute;
+		z-index: 1;
+		background: $white_90;
+		padding: 20px;
+		top: 50%;
+		//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+		transform: translateY(-50%);
+		border: 1px solid $black_10;
+	}
+}
+@media all and(min-width: 1600px) {
+	.moment-game-box .minefield button {
+		font-size: 30em;
+	}
+}
+@media all and(max-width: 1600px) {
+	.moment-game-box .minefield button {
+		font-size: 22em;
+	}
+}
+@media all and(max-width: 1366px) {
+	.moment-game-box .minefield button {
+		font-size: 16em;
+	}
 }
 @media all and(max-width: 1024px) {
-	#games-random > .inner {
+	.moment-game-box > .inner {
 		width: 80%;
 		margin: 0 10%;
 	}
 }
 @media all and(max-width: 768px) {
-	#games-random {
-		.minefield {
-			.inner {
-			}
-			button {
-				font-size: 16em;
-			}
-		}
+	.moment-game-box {
 		> .inner {
 			width: 100%;
 			min-height: 100%;
 			margin: 0;
+			background: $color_turbo_approx;
+		}
+		.minefield div .inner button {
+			font-size: 16em;
+			background: $black;
+			color: $color_turbo_approx;
 		}
 	}
 }
 @media all and(max-width: 525px) {
-	#games-random {
+	.moment-game-box {
 		> .inner {
 			width: 100%;
 			min-height: 100%;

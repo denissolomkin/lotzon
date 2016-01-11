@@ -18,7 +18,7 @@ $(function () {
     Handlebars.registerHelper({
         /**
          * @description loop for(max > min; max--) return current counter
-         * 
+         *
          * @param {int} max
          * @param {int} min
          * @param {fn} options
@@ -35,9 +35,9 @@ $(function () {
 
         /**
          * @description loop for(num "operator >:>=:<:<=" num2) return current counter Example {{#each (for 3 "<" 0) as |value key|}} {{this}} {{/each}} // return 3 2 1
-         * 
+         *
          * @param {int} num
-         * @param {string} operator 
+         * @param {string} operator
          * @param {int} num2
          * @param {fn} options
          * @returns {String} counter
@@ -84,11 +84,11 @@ $(function () {
         },
         /**
          * @description оборачивает аргументы из шаблонизатора в функцию funcNmae(args,args2,...)
-         * 
-         * @param {string} funcNmae
-         * @returns {String} "funcNmae(args,args2,...)"
+         *
+         * @param {string} funcName
+         * @returns {String} "funcName(args,args2,...)"
          */
-        'createFunc': function (funcNmae) {
+        'createFunc': function (funcName) {
             if (arguments.length > 1) {
                 var params = "";
                 for (var i = 1; i < arguments.length - 1; i++) {
@@ -99,7 +99,7 @@ $(function () {
 
                 }
 
-                return funcNmae + "(" + params + ")";
+                return funcName + "(" + params + ")";
             }
         },
         'reverseNum': function (num1, num2) {
@@ -116,7 +116,7 @@ $(function () {
                 if (!item) {
                     return "no item found";
                 }
-                
+
 
                 switch (data.timeout) {
                     case "close":

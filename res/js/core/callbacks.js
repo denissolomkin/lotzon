@@ -150,7 +150,8 @@
             
             "support-rules": Support.init,
             "support-faq": Support.init,
-            "games-random": Games.random.init
+            "games-random": Games.random.init,
+            "games-moment": Games.random.init
 
 
         },
