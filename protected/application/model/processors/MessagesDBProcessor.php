@@ -99,7 +99,7 @@ class MessagesDBProcessor implements IProcessor
     public function getStatusCount($playerId, $status = 0)
     {
         $sql = "SELECT
-                    count(*) as c
+                    count(DISTINCT PlayerId) as c
                 FROM
                   `Messages`
                 WHERE
@@ -180,7 +180,8 @@ class MessagesDBProcessor implements IProcessor
                     mes.*,
                     `Players`.`Id` PlayerId,
                     `Players`.`Avatar` PlayerImg,
-                    `Players`.`Nicname` PlayerName
+                    `Players`.`Nicname` PlayerName,
+                    (SELECT IFNULL(MIN(m2.Status),1) FROM Messages as m2 WHERE m2.PlayerId = `Players`.Id AND m2.ToPlayerId = :playerid) as Status
                 FROM `Messages` as mes
                 JOIN
                 (
