@@ -15,9 +15,9 @@ class BlogsModel extends Model
         return __CLASS__;
     }
 
-    public function getList($lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1, $offset = NULL)
+    public function getList($lang, $count = NULL, $beforeId = NULL, $afterId = NULL, $enable = 1, $offset = NULL, $modifyDate = NULL)
     {
-        return $this->getProcessor()->getList($lang, $count, $beforeId, $afterId, $enable, $offset);
+        return $this->getProcessor()->getList($lang, $count, $beforeId, $afterId, $enable, $offset, $modifyDate);
     }
 
     public function getSimilarList($blogId, $lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1)
