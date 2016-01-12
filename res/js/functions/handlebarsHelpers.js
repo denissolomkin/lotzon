@@ -130,6 +130,15 @@ $(function () {
 
             return;
         },
+        'countHTML': function(key){
+            var count = Player.getCount(key);
+            return '<span class="count count-'
+            + key + '"'
+            + (count ? '' : ' style="display:none;"')
+            + '>'
+            + count
+            + '</span></a>';
+        },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
         'count': Player.getCount,

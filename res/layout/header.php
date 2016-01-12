@@ -52,7 +52,7 @@
         <div class="header-left clearfix">
 
             <!-- Logo -->
-            <a href="/blog" class="header-logo"></a>
+            <span class="header-logo"></span>
 
             <!-- MENU -->
             <nav id="menu-navigation" class="menu"></nav>

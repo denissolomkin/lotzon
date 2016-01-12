@@ -20,13 +20,13 @@
 	<div class="landing-bg"></div>
 	<div class="container">
 		<div class="header clearfix">
-			<div class="header-left i-lotzon"></div>
-			<div class="header-right i-play">немного о нас</div>
+			<div class="header-left i-lotzon"></div> 
+			<div class="header-right i-play popup-vimeo" href="https://vimeo.com/114883943">немного о нас</div>
 		</div>
 		<h1 class="lending-title"><strong>Выигрывает каждый</strong><span> совершенно новый формат online игр</span></h1>
 		<button class="landing_button go-play">Играть Бесплатно</button>
-		<p class="landing_large"><?php echo $lottery['win'] ?> <span>руб уже выплачено</span></p>
-		<p class="landing_middle"><?php echo $lottery['players'] ?> <span>зарегистрированных</span></p>
+		<p class="landing_large"><?php echo $slider['sum'] ?> <span>руб уже выплачено</span></p>
+		<p class="landing_middle"><?php echo $slider['players'] ?> <span>зарегистрированных</span></p>
 	</div>
 
 <div class="login-popup popup" id="login-block">

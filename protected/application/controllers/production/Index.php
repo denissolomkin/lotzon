@@ -130,7 +130,9 @@ class Index extends \SlimController\SlimController
                 "notifications" => array(
                     "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId())
                 ),
-                "posts"         => 4,
+                "blog"          => 4,
+                "communication" => 4,
+                "users"         => 12,
                 "birthdays"     => 0,
                 "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0),
                 "chronicle"     => 2,

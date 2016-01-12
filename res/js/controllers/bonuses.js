@@ -1,38 +1,11 @@
-var ZeroClipboard;
-(function () {
-
-    /* ========================================================= */
-    //                         BONUSES
-    /* ========================================================= */
-
-    // POPUP BANNER ---------------------- //
-
-    $(document).on('click','.bonus-banner-view-btn', function () {
-
-        var $popupBanner = $('.popup-banner');
-
-        $popupBanner.css({
-            top: ($(window).outerHeight() / 2 - $popupBanner.outerHeight() / 2) + 'px',
-            left: ($(window).outerWidth() / 2 - $popupBanner.outerWidth() / 2) + 'px'
-        }).fadeIn('fast');
-    });
-
-
-    //  --------------------------------- //
-
-    /* ========================================================= */
-    /* ========================================================= */
-
-
-
-    ZeroClipboard = {
+var ZeroClipboard = {
     
     version: "1.0.7",
     clients: {}, // registered upload clients on page, indexed by id
     moviePath: 'ZeroClipboard.swf', // URL to movie
     nextId: 1, // ID of next movie
     
-    $: function(thingy) {
+    $ : function(thingy) {
         // simple DOM lookup utility function
         if (typeof(thingy) == 'string') thingy = document.getElementById(thingy);
         if (!thingy.addClass) {
@@ -335,6 +308,36 @@ ZeroClipboard.Client.prototype = {
 };
 
 
+
+(function () {
+
+    /* ========================================================= */
+    //                         BONUSES
+    /* ========================================================= */
+
+    // POPUP BANNER ---------------------- //
+
+    $(document).on('click','.bonus-banner-view-btn', function () {
+
+        var $popupBanner = $('.popup-banner');
+
+        $popupBanner.css({
+            top: ($(window).outerHeight() / 2 - $popupBanner.outerHeight() / 2) + 'px',
+            left: ($(window).outerWidth() / 2 - $popupBanner.outerWidth() / 2) + 'px'
+        }).fadeIn('fast');
+    });
+
+
+    //  --------------------------------- //
+
+    /* ========================================================= */
+    /* ========================================================= */
+
+
+
+    
+
+
     
 
 
@@ -359,8 +362,9 @@ ZeroClipboard.Client.prototype = {
         copyBanner: function () {  
             var copyLink = $(this).closest('.banner-copy').find('input').text();
             console.log('$(this).closest(".banner-copy").find("input").text()',copyLink);
-            ZeroClipboard.setMoviePath('res/img/ZeroClipboard.swf');
+           
             var clip = new ZeroClipboard.Client(); 
+             ZeroClipboard.setMoviePath('res/img/ZeroClipboard.swf');
             clip.setText(''); 
             clip.addEventListener( 'complete', function(client, text) { 
                 alert("Текст уже в буфере: " + text ); 
