@@ -115,7 +115,6 @@ $(function () {
 
             setTimeout(function () {
                 var item = document.querySelector('#badges-' + (data.key?"notifications-"+data.key:"messages-"+data.id));
-                console.error('#badges-' + (data.key?"notifications-"+data.key:"messages-"+data.id));
                 if (!item) {
                     return "no item found";
                 }
@@ -123,7 +122,7 @@ $(function () {
                 switch (data.timeout) {
                     case "close":
                         item.parentNode.removeChild(item);
-                        break;s
+                        break;
                     case "button":
                         return "There no code for 'Button' action!... ";
                         break;
