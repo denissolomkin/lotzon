@@ -25,6 +25,11 @@ class MessagesModel extends Model
         return $this->getProcessor()->getList($playerFirst, $playerSecond, $count, $beforeId, $afterId, $offset);
     }
 
+    public function getUnreadMessages($playerId)
+    {
+        return $this->getProcessor()->getUnreadMessages($playerId);
+    }
+
     public function getLastTalks($playerId, $count = NULL, $offset = NULL, $modifyDate = NULL)
     {
         return $this->getProcessor()->getLastTalks($playerId, $count, $offset, $modifyDate);
@@ -33,5 +38,10 @@ class MessagesModel extends Model
     public function markRead($playerId, $toPlayerId)
     {
         return $this->getProcessor()->markRead($playerId, $toPlayerId);
+    }
+
+    public function setNotificationsDate($playerId, $time = NULL)
+    {
+        return $this->getProcessor()->setNotificationsDate($playerId, $time);
     }
 }

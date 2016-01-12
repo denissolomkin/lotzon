@@ -208,6 +208,25 @@ class PingController extends \AjaxController
             }
         }
         $counters['messages'] = \MessagesModel::instance()->getStatusCount($player->getId(), 0);
+        if ($counters['messages'] > 0) {
+            $list = \MessagesModel::instance()->getUnreadMessages($player->getId());
+            if (count($list)>0) {
+                \MessagesModel::instance()->setNotificationsDate($player->getId());
+                foreach ($list as $message) {
+                    $badges['messages'][] = array(
+                        "id" => $message->getId(), /* messageId */
+                        "user" => array(
+                            'id'   => $message->getPlayerId(),
+                            'img'  => $message->getPlayerImg(),
+                            'name' => $message->getPlayerName(),
+                        ),
+                        "text"    => $message->getText(),
+                        'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:3,
+                        'timeout' => 'close'
+                    );
+                }
+            }
+        }
 
         /**
          * Blog

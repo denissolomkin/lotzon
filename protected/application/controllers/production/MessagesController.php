@@ -119,7 +119,8 @@ class MessagesController extends \AjaxController
                     "communication" => array(
                         "messages" => array(
                             $userId => array(
-                                "isUnread" => false
+                                "isUnread" => false,
+                                "id"       => $userId
                             )
                         )
                     )

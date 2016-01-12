@@ -174,6 +174,42 @@ class MessagesDBProcessor implements IProcessor
         return $messages;
     }
 
+    public function getUnreadMessages($playerId)
+    {
+        $sql = "SELECT
+                    `Messages`.*,
+                    `Players`.`Avatar` PlayerImg,
+                    `Players`.`Nicname` PlayerName
+                FROM `Messages`
+                LEFT JOIN
+                    `Players`
+                  ON
+                    `Players`.`Id` = `Messages`.`PlayerId`
+                WHERE
+                    `Messages`.`ToPlayerId` = :playerid
+                AND
+                    `Messages`.Date > (SELECT MessageNotification FROM `PlayerDates` WHERE PlayerId = :playerid)
+                AND
+                    `Messages`.Status = 0
+                ORDER BY `Messages`.`Id` DESC";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':playerid'   => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        $messages = array();
+        foreach ($sth->fetchAll() as $messageData) {
+            $message = new \Message;
+            $messages[] = $message->formatFrom('DB',$messageData);
+        }
+
+        return $messages;
+    }
+
     public function getLastTalks($playerId, $count = NULL, $offset = NULL, $modifyDate = NULL)
     {
         $sql = "SELECT
@@ -229,6 +265,22 @@ class MessagesDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':playerid'   => $playerId,
                 ':toplayerid' => $toPlayerId
+            ));
+        } catch (PDOexception $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
+
+    public function setNotificationsDate($playerId, $time = NULL)
+    {
+        $sql = "UPDATE `PlayerDates` SET `MessageNotification` = :date WHERE `PlayerId` = :playerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':playerid' => $playerId,
+                ':date'     => ($time ? $time : time()),
             ));
         } catch (PDOexception $e) {
             throw new ModelException("Unable to proccess storage query", 500);
