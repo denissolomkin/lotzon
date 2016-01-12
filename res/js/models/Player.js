@@ -57,8 +57,9 @@
                                     DOM.fadeOut(holders[i]);
                             }
 
-                            if (key === 'notifications')
+                            if (key === 'notifications'){
                                 Comments.renderNotifications();
+                            }
                         }
                     }
                 }

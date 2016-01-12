@@ -23,7 +23,7 @@
         renderNotifications: function () {
 
             var notifications = document.getElementById('communication-notifications'),
-                force = Player.getCount('notifications') === 0;
+                force = Player.getCount('notifications') !== 0;
 
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
