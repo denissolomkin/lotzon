@@ -186,7 +186,7 @@ class PingController extends \AjaxController
          * Comments
          */
         if (isset($forms['communication-comments'])) {
-            $list = \CommentsModel::instance()->getList('comments', 0, NULL, NULL, $forms['communication-comments']['first_id'], 1, NULL, $forms['communication-comments']['timing']);
+            $list = \CommentsModel::instance()->getList('comments', 0, NULL, NULL, $forms['communication-comments']['last_id']-1, 1, NULL, $forms['communication-comments']['timing']);
             if (count($list) > 0) {
                 $response['res']['communication']['comments'] = $list;
             }
@@ -214,7 +214,7 @@ class PingController extends \AjaxController
          */
         if (isset($forms['blog-posts'])) {
             $lang = $this->session->get(Player::IDENTITY)->getLang();
-            $list = \BlogsModel::instance()->getList($lang, NULL, NULL, $forms['blog-posts']['first_id'], 1, NULL, $forms['blog-posts']['timing']);
+            $list = \BlogsModel::instance()->getList($lang, NULL, NULL, $forms['blog-posts']['last_id']-1, 1, NULL, $forms['blog-posts']['timing']);
             if (count($list) > 0) {
                 $response['res']['blog']['posts'] = array();
                 foreach ($list as $id => $blog) {
