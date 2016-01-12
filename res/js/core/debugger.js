@@ -12,8 +12,9 @@
 
         "init": function (init) {
 
-            D.log('Debugger.init', 'func');
+            console.log('aaaa',init);
             Object.deepExtend(this, init);
+            D.log('Debugger.init', 'func');
 
             if(this.isEnable('stat')){
 
@@ -28,7 +29,7 @@
              });
              */
             /**/
-            window.onerror2 = function (message, url, line, col, error) {
+            window.onerror = function (message, url, line, col, error) {
                 D.error([message, url, line]);
                 return true;
             }

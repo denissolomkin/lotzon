@@ -1,4 +1,4 @@
-var fakeCounter = 0, debug = 0;
+var fakeCounter = 0, debug = 1;
 var fakeRandomData = [{
         "Uid": "568b9d3875b2b",
         "Prize": {
@@ -303,7 +303,7 @@ var Games = {
                     Games.random.conf.play = !1;
 
                     Games.random.showMessage(data.GamePrizes);
-                    Games.random.destroy(50);
+                    Games.random.destroy(5);
                 }
             }
 

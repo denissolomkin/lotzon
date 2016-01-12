@@ -200,7 +200,7 @@
                 D.log(['Render.json:', options.href, 'JSON from Object:', options.json], 'render');
                 R.sortJSON(options);
 
-            } else if (options.json = Cache.get(options.href)) {
+            } else if (options.json = Cache.get(options)) {
 
                 D.log(['Render.json:', options.href, 'JSON from Cache:', options.json], 'render');
                 R.sortJSON(options);

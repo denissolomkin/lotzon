@@ -37,12 +37,12 @@
         slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT);?>,
         config = <?php echo json_encode($config, JSON_PRETTY_PRINT);?>,
         timestamp = <?php echo time();?>,
-        debug = {
+        debugConf = {
             "config": {
                 "stat": false && /192.168.56.101/.test(location.hostname),
                 "alert": false,
-                "render": true,
-                "cache": false,
+                "render": false,
+                "cache": true,
                 "i18n": false,
                 "func": true,
                 "info": true,
@@ -114,7 +114,7 @@ endforeach;
         Config.init(config); // init config
         Tickets.init(lottery);  // extend tickets
         Player.init(player); // extend player
-        D.init(debug); // init debugger
+        D.init(debugConf); // init debugger
         U.init(); // init url handler
         Slider.init(slider); // echo slider
         Navigation.init(menu); // init navigation

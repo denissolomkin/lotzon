@@ -3931,17 +3931,14 @@ and open the template in the editor.
     font-size: 20px;
     text-transform: uppercase;
     padding: 10px 0; }
-    .moment-game-box .title i.i-x-slim {
-      cursor: pointer;
-      padding: 0 10px 0 0;
-      position: relative;
-      left: 0;
-      top: 13px;
-      width: 45px;
-      height: 45px;
-      display: inline-block; }
   .moment-game-box .message {
-    transition: all .4s ease-out; }
+    transition: all .4s ease-out;
+    text-transform: uppercase;
+    /*font-weight: bold;*/ }
+    .moment-game-box .message span {
+      padding: 0 10px; }
+      .moment-game-box .message span:before, .moment-game-box .message span:after {
+        content: '"'; }
   .moment-game-box .minefield {
     margin: 20px 0; }
     .moment-game-box .minefield .inner {
@@ -4011,14 +4008,14 @@ and open the template in the editor.
   .moment-game-box:not(.game-started) .message {
     position: absolute;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
     top: 50%;
-    transform: translateY(-50%);
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin: 0;
-    width: 90%;
-    left: 5%; }
+    width: 500px;
+    left: 50%;
+    transform: translate(-50%, -50%); }
 
 @media all and (min-width: 1600px) {
   .moment-game-box .minefield button {
@@ -4038,11 +4035,23 @@ and open the template in the editor.
     margin: 0 10%; } }
 
 @media all and (max-width: 768px) {
+  .moment-game-box:not(.game-started) .message {
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    width: 90%;
+    left: 5%; }
   .moment-game-box > .inner {
     width: 100%;
     min-height: 100%;
     margin: 0;
     background: #ffe700; }
+    .moment-game-box > .inner > i.i-x-slim {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      font-size: 18px;
+      color: #000; }
   .moment-game-box .minefield div .inner button {
     font-size: 16em;
     background: #000;
@@ -4057,8 +4066,34 @@ and open the template in the editor.
     .moment-game-box > .inner > *:not(.minefield) {
       padding-left: 15px;
       padding-right: 15px; }
-  .moment-game-box .minefield button {
-    font-size: 14em; } }
+  .moment-game-box .minefield div .inner button {
+    font-size: 13em; }
+    .moment-game-box .minefield div .inner button.win .flipFix * {
+      font-size: .35em;
+      line-height: .9; }
+      .moment-game-box .minefield div .inner button.win .flipFix *:first-child {
+        font-size: .7em; }
+    .moment-game-box .minefield div .inner button.win .flipFix :first-child:nth-last-child(1) {
+      font-size: .5em; } }
+
+@media all and (max-width: 434px) {
+  .moment-game-box .minefield div .inner button {
+    font-size: 8em; }
+    .moment-game-box .minefield div .inner button.win .flipFix * {
+      font-size: .5em;
+      line-height: .9; }
+      .moment-game-box .minefield div .inner button.win .flipFix *:first-child {
+        font-size: .9em; }
+    .moment-game-box .minefield div .inner button.win .flipFix :first-child:nth-last-child(1) {
+      font-size: .6em; } }
+
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  .moment-game-box .minefield {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0; } }
 
 #lottery {
   -webkit-animation-fill-mode: both;

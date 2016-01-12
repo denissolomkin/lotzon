@@ -214,6 +214,7 @@
                         localStorage.setItem(this.storages['validity']['languages'], JSON.stringify(this.storage[this.storages['validity']['languages']]));
                         break;
 
+                    /* todo save all validity */
                     case !cache:
                         for (var key in this.storages)
                             if (typeof this.storages[key] !== 'function' && this.storage[this.storages[key]])
@@ -248,18 +249,24 @@
                         cache = cache.hasOwnProperty(path) && cache[path];
                     } else {
 
-                        path = this.split(path);
+                        if (typeof path === 'object') {
+                            var keys = this.split(path.href),
+                                offset = path.query && path.query.offset || 0;
+                        } else
+                            var keys = this.split(path);
+
                         var list = null;
                         do {
-                            needle = path.shift();
+                            needle = keys.shift();
                             cache = needle && cache && cache.hasOwnProperty(needle)
                             && (isNumeric(needle)
                                 ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
                                 : cache[needle]);
                             list = cache || list;
-                        } while (path.length && cache)
+                        } while (keys.length && cache)
 
                         if (!cache && isNumeric(needle) && list) {
+
                             for (var index in list) {
                                 if (list.hasOwnProperty(index) && list[index].hasOwnProperty('id') && list[index]['id'] == needle) {
                                     cache = list[index];
@@ -267,6 +274,31 @@
                                     break;
                                 }
                             }
+
+                        } else if (cache) {
+
+                            if(Object.size(list) > offset) {
+
+                                cache = {};
+                                var i = 0,
+                                    limit = 10;
+
+                                for (var index in list) {
+                                    if (list.hasOwnProperty(index)) {
+                                        if (i >= offset) {
+                                            cache[index] = list[index];
+                                        }
+                                        i++;
+                                        if (Object.size(cache) >= limit)
+                                            break;
+                                    }
+                                }
+
+                            } else
+                                cache = false;
+
+                            if(cache && !Object.size(cache))
+                                cache = false;
                         }
                     }
 
@@ -301,8 +333,15 @@
             if (data.player)
                 Player.init(data.player);
 
+
+            if (!data.key && data.res)
+                while (path.length && source) {
+                    needle = path.shift();
+                    source = source && source.hasOwnProperty(needle) && source[needle];
+                }
+
             /* if receive data for extend cache */
-            if (storage) {
+            if (source && storage) {
 
                 switch (true) {
 
@@ -324,16 +363,10 @@
                 }
 
                 if (storage)
-                    this.extend(data, path, storage)
+                    this.extend(data, storage)
                         .save(storage);
             }
 
-
-            if (!data.key && data.res)
-                while (path.length && source) {
-                    needle = path.shift();
-                    source = source && source.hasOwnProperty(needle) && source[needle];
-                }
 
 
             return source || data.res || data;
@@ -513,13 +546,13 @@
             }
         },
 
-        "extend": function (data, path, storage) {
+        "extend": function (data, storage) {
 
-            D.log(['Cache.extend', storage, path, source], 'cache');
 
             var source = data.res || data;
 
-            if (data.key)
+            if (data.key) {
+                var path = this.split(data.key);
                 while (path.length) {
 
                     var temp = {},
@@ -529,6 +562,9 @@
                     source = temp;
 
                 }
+            }
+
+            D.log(['Cache.extend', storage, path, source], 'cache');
 
             Object.deepExtend(this.storage[storage], source);
             return this;
@@ -625,7 +661,7 @@
 
             if (language) {
 
-                return this.extend(language, null, this.storages.languages)
+                return this.extend(language, this.storages.languages)
                     .save(this.storages.languages)
                     .language(key);
 
