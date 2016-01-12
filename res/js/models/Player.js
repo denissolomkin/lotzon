@@ -94,6 +94,39 @@
             return value;
         },
 
+        decrement: function (count, value) {
+            value = value || 1;
+            return this.getCount(count) && this.setCount(count, this.getCount(count) - value);
+        },
+
+        setCount: function (count, value) {
+
+            var obj = {count: {}};
+
+            if (typeof count === 'object' && !isNumeric(value)) {
+                obj.count = count;
+                this.init(obj);
+            } else if (typeof count === 'string' && isNumeric(value)) {
+                obj.count[count] = value;
+                this.init(obj);
+            }
+
+            return this;
+        },
+
+        getCount: function (key) {
+
+            var count = 0;
+            if (typeof key === 'string' && Player.count.hasOwnProperty(key))
+                if (typeof Player.count[key] === 'object') {
+                    for (var prop in Player.count[key]) {
+                        if(Player.count[key].hasOwnProperty(prop))
+                            count += parseInt(Player.count[key][prop]);
+                    }
+                } else
+                    count = parseInt(Player.count[key]);
+            return count;
+        },
 
         getCurrency: function (currency) {
 
@@ -161,39 +194,6 @@
             }
         },
 
-        decrement: function (count, value) {
-            value = value || 1;
-            return this.getCount(count) && this.setCount(count, this.getCount(count) - value);
-        },
-
-        setCount: function (count, value) {
-
-            var obj = {count: {}};
-
-            if (typeof count === 'object' && !isNumeric(value)) {
-                obj.count = count;
-                this.init(obj);
-            } else if (typeof count === 'string' && isNumeric(value)) {
-                obj.count[count] = value;
-                this.init(obj);
-            }
-
-            return this;
-        },
-
-        getCount: function (key) {
-
-            var count = 0;
-            if (typeof key === 'string' && Player.count.hasOwnProperty(key))
-                if (typeof Player.count[key] === 'object') {
-                    for (var prop in Player.count[key]) {
-                        count += parseInt(Player.count[key][prop]);
-                    }
-                } else
-                    count = parseInt(Player.count[key]);
-            return count;
-        },
-
         updatePoints: function (newSum) {
             var balance = {
                 balance: {
@@ -236,12 +236,7 @@
 
             Form.post({
                 action: '/ping',
-                data  : {forms: Content.forms4ping()},
-                after : function (data) {
-
-                    if (data.json)
-                        Cache.init(data.json);
-                }
+                data  : {forms: Content.forms4ping()}
             })
         },
 

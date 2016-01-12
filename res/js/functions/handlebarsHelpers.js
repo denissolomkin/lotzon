@@ -132,12 +132,9 @@ $(function () {
         },
         'countHTML': function(key){
             var count = Player.getCount(key);
-            return '<span class="count count-'
-            + key + '"'
+            return '<span class="count count-' + key + '"'
             + (count ? '' : ' style="display:none;"')
-            + '>'
-            + count
-            + '</span></a>';
+            + '>' + count + '</span>';
         },
         'avatar': Player.getAvatar,
         'number': Player.fineNumbers,
