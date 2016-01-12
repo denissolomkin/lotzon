@@ -521,6 +521,51 @@ class Players extends \AjaxController
         return true;
     }
 
+    public function billingAction() {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        $billing = $this->request()->put('billing', array());
+
+        try {
+            if (!$player->getPhone() && $billing['phone'])
+                $player->setPhone($billing['phone']);
+            if (!$player->getQiwi() && $billing['qiwi'])
+                $player->setQiwi($billing['qiwi']);
+            if (!$player->getWebMoney() && $billing['webmoney'])
+                $player->setWebMoney($billing['webmoney']);
+            if (!$player->getYandexMoney() && $billing['yandex'])
+                $player->setYandexMoney($billing['yandex']);
+            $player->update();
+        } catch (EntityException $e) {
+            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+
+            return false;
+        }
+
+        $res = array(
+            "message" => "OK",
+            "player"  => array(
+                "billing"  => array(
+                    "webMoney"    => $player->getWebMoney(),
+                    "yandexMoney" => $player->getYandexMoney(),
+                    "qiwi"        => $player->getQiwi(),
+                    "phone"       => $player->getPhone()
+                ),
+            )
+        );
+
+        $this->ajaxResponseCode($res);
+
+        return true;
+    }
+
     /**
      * Поиск пользователей
      *

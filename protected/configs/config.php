@@ -637,6 +637,12 @@ Config::instance()->publicResources = array(
         'post' => 'controllers\production\PrizesController:order',
     ),
     /**
+     * Profile
+     */
+    '/profile/billing' => array(
+        'put' => 'controllers\production\Players:billing'
+    ),
+    /**
      * Users
      */
     '/users/search/' => array(
