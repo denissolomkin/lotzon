@@ -53,6 +53,7 @@
             switch (method) {
                 case "class":
                 default:
+                    str = str.indexOf('.') === 0 ? str.substring(1) : str;
                     while (el && el.classList && !el.classList.contains(str) && el.parentNode)
                         el = el.parentNode;
                     return el.classList && el.classList.contains(str) && el;

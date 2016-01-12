@@ -8,7 +8,10 @@
             <div id="content" class="content-top">
             </div><!-- .content-top -->
 
-            <div id="badges">
+            <div id="badges-messages">
+            </div>
+
+            <div id="badges-notifications">
             </div>
 
             <div id="banner-tablet-bottom" class="banner-2">

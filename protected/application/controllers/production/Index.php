@@ -130,6 +130,7 @@ class Index extends \SlimController\SlimController
                 "notifications" => array(
                     "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId())
                 ),
+                "posts"         => 4,
                 "birthdays"     => 0,
                 "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0),
                 "chronicle"     => 2,
@@ -275,13 +276,13 @@ class Index extends \SlimController\SlimController
     protected function landing()
     {
 
-        global $isMobile, $lottery, $player, $error;
+        global $isMobile, $slider, $player, $error;
 
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
 
-        $lottery = array(
-            "win"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+        $slider = array(
+            "sum"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
             "players" => PlayersModel::instance()->getMaxId()
         );
 

@@ -38,13 +38,30 @@ class PingController extends \AjaxController
 
         $this->authorizedOnly();
 
-        $badges          = array();
+        $badges          = array(
+            'notifications' => array(),
+            'messages'      => array()
+        );
         $response        = array();
         $counters        = array();
         $player          = $this->session->get(Player::IDENTITY);
-        $gameSettings    = \GameSettingsModel::instance()->getList();
+        $gameSettings    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
 
+        /*
+        * New Messages
+        */
+
+        $badges['messages'][] = array(
+            "user" => array(
+                "id" => 1,
+                "name" => "Участник №1",
+                "img" => null
+            ),
+            "text"    => "Привет, как дела?",
+            'timer'   => 3,
+            'timeout' => 'close'
+        );
 
         /* 
         * Unread Notices
@@ -52,8 +69,8 @@ class PingController extends \AjaxController
 
         if ($notice = \NoticesModel::instance()->getPlayerLastUnreadNotice($player)) {
 
-            $counters['notices'] = \NoticesModel::instance()->getPlayerUnreadNotices($player);
-            $badges[]            = array(
+            $counters['notices']       = \NoticesModel::instance()->getPlayerUnreadNotices($player);
+            $badges['notifications'][] = array(
                 'key'     => 'notice',
                 'title'   => 'title-notice',
                 'text'    => $notice,
@@ -115,11 +132,11 @@ class PingController extends \AjaxController
                 $this->session->set($key . 'Important', true);
 
             if ($diff < 0)
-                $badges[] = array(
-                    'key'     => $key,
-                    'title'   => 'title-games-random',
-                    'button'  => 'button-games-play',
-                    'action'  => '/games/random'
+                $badges['notifications'][] = array(
+                    'key'    => $key,
+                    'title'  => 'title-games-random',
+                    'button' => 'button-games-play',
+                    'action' => '/games/random'
                 );
         }
 
@@ -147,7 +164,7 @@ class PingController extends \AjaxController
 
                     case (($rnd = mt_rand(0, 100)) <= 100 / (($gameSettings[$key]->getOption('max') - $gameSettings[$key]->getOption('min')) ?: 1)):
                     case ($this->session->get($key . 'LastDate') + $gameSettings[$key]->getOption('max') * 60 - time()):
-                        $badges[] = array(
+                        $badges['notifications'][] = array(
                             'key'     => $key,
                             'title'   => 'title-games-moment',
                             'button'  => 'button-games-play',

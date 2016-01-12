@@ -1,0 +1,11 @@
+<div id="badges-messages-{{user.id}}" class="badge">
+    {{badgesCountdown}}
+    <section class="clearfix contain-img">
+        <a href="/users/{{user.id}}/messages" onclick="DOM.remove(DOM.up('.badge',this))">
+        <div class="title">{{i18n user.name}}</div>
+        <img src="{{player "avatar" user.id img 50}}" alt="">
+        <div class="txt">{{{text}}}</div>
+        </a>
+        <i class="i-x-slim" onclick="DOM.remove(DOM.up('.badge',this))"></i>
+    </section>
+</div>
