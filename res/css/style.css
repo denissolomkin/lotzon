@@ -2969,18 +2969,111 @@ form.loading > * {
     font-weight: bold;
     color: #000; }
 
-#badges {
+.badges-container {
   position: fixed;
-  left: 20px;
-  bottom: 40px;
+  bottom: 0;
+  right: 10px;
+  width: 300px;
   z-index: 100;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3); }
-  #badges section {
+  left: initial; }
+
+#badges-notifications > * {
+  margin-bottom: 5px; }
+
+#badges-notifications section {
+  min-width: 100%;
+  display: block;
+  position: relative;
+  padding-right: 20px; }
+  #badges-notifications section a.start.visieble {
+    background: transparent;
+    padding: 5px 22px;
+    border: 1px solid #000;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    max-width: 100px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all .2s ease-out; }
+  #badges-notifications section a.start.invisible {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; }
+  #badges-notifications section a.start:hover {
+    opacity: 0.99;
+    color: #fff;
+    background: #000; }
+  #badges-notifications section a.visible + .title {
+    display: block;
+    padding-right: 110px; }
+
+#badges-notifications > div[id^="badges-"] {
+  padding: 22px;
+  background: #ffe700;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: default;
+  width: 300px; }
+
+#badges-notifications > div[id^="badges-messages"] {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff; }
+  #badges-notifications > div[id^="badges-messages"] section > * {
+    display: block;
+    width: auto; }
+
+#badges-notifications .title {
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 0 0 4px 0; }
+
+#badges-notifications .txt {
+  font-size: 15px; }
+
+#badges-notifications img {
+  border-radius: 50em;
+  max-width: 40px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%); }
+
+#badges-notifications i.i-x-slim {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  cursor: pointer;
+  transform: translate(0, -50%);
+  transition: all .2s ease-out;
+  z-index: 2; }
+  #badges-notifications i.i-x-slim:hover {
+    font-size: 119%;
+    right: -2px; }
+
+#badges-notifications div:not([id^="badges-message"]) .title {
+  padding: 0; }
+
+#badges-notifications div[id^="badges-message"] .contain-img {
+  padding-left: 50px; }
+
+#badges-messages {
+  height: auto; }
+  #badges-messages > * {
+    margin-bottom: 5px; }
+  #badges-messages section {
     min-width: 100%;
     display: block;
     position: relative;
     padding-right: 20px; }
-    #badges section a.start.visible {
+    #badges-messages section a.start.visieble {
       background: transparent;
       padding: 5px 22px;
       border: 1px solid #000;
@@ -2992,8 +3085,9 @@ form.loading > * {
       position: absolute;
       right: 0;
       top: 50%;
-      transform: translateY(-50%); }
-    #badges section a.start.invisible {
+      transform: translateY(-50%);
+      transition: all .2s ease-out; }
+    #badges-messages section a.start.invisible {
       display: block;
       position: absolute;
       left: 0;
@@ -3001,38 +3095,40 @@ form.loading > * {
       width: 100%;
       height: 100%;
       z-index: 1; }
-    #badges section a.start:hover {
-      opacity: 0.7; }
-    #badges section a.visible + .title {
+    #badges-messages section a.start:hover {
+      opacity: 0.99;
+      color: #fff;
+      background: #000; }
+    #badges-messages section a.visible + .title {
       display: block;
       padding-right: 110px; }
-  #badges > div[id^="badges-"] {
-    padding: 22px 10px;
+  #badges-messages > div[id^="badges-"] {
+    padding: 22px;
     background: #ffe700;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     cursor: default;
     width: 300px; }
-  #badges > div[id^="badges-message"] {
+  #badges-messages > div[id^="badges-messages"] {
     padding: 10px;
-    background: #000;
+    background: rgba(0, 0, 0, 0.85);
     color: #fff; }
-    #badges > div[id^="badges-message"] section > * {
+    #badges-messages > div[id^="badges-messages"] section > * {
       display: block;
       width: auto; }
-  #badges .title {
+  #badges-messages .title {
     text-transform: uppercase;
     font-size: 16px;
     padding: 0 0 4px 0; }
-  #badges .txt {
+  #badges-messages .txt {
     font-size: 15px; }
-  #badges img {
+  #badges-messages img {
     border-radius: 50em;
     max-width: 40px;
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%); }
-  #badges i.i-x-slim {
+  #badges-messages i.i-x-slim {
     position: absolute;
     top: 50%;
     right: 0;
@@ -3040,20 +3136,33 @@ form.loading > * {
     transform: translate(0, -50%);
     transition: all .2s ease-out;
     z-index: 2; }
-    #badges i.i-x-slim:hover {
+    #badges-messages i.i-x-slim:hover {
       font-size: 119%;
-      right: -1%; }
-  #badges div:not([id^="badges-message"]) .title {
+      right: -2px; }
+  #badges-messages div:not([id^="badges-message"]) .title {
     padding: 0; }
-  #badges div[id^="badges-message"] .contain-img {
+  #badges-messages div[id^="badges-message"] .contain-img {
     padding-left: 50px; }
 
 @media all and (max-width: 768px) {
-  #badges {
+  .badges-container {
     width: 100%;
-    left: 0;
+    height: 100%;
+    right: 0; }
+  #badges-messages {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    height: auto;
+    bottom: initial; }
+    #badges-messages > div[id^="badges-"] {
+      width: 100%; }
+  #badges-notifications {
+    width: 100%;
+    position: absolute;
     bottom: 0; }
-    #badges > div[id^="badges-"] {
+    #badges-notifications > div[id^="badges-"] {
       width: 100%; } }
 
 div > .games-previews {

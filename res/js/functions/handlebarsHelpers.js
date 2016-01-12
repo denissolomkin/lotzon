@@ -106,18 +106,20 @@ $(function () {
             return num1 - num2;
         },
         'badgesCountdown': function () {
-            if (!this.key && !this.timeout && !this.timer)
+//            return;
+            if (!this.timeout || !this.timer){
                 return;
+            }
+            
             var data = this;
 
             setTimeout(function () {
-                var item = document.querySelector('[id$="' + data.key + (data.id?"-"+data.id:"") + '"]');
-
+                var item = document.querySelector('#badges-' + (data.key?"notifications-"+data.key:"messages-"+data.id));
+                console.error('#badges-' + (data.key?"notifications-"+data.key:"messages-"+data.id));
                 if (!item) {
                     return "no item found";
                 }
-
-
+                
                 switch (data.timeout) {
                     case "close":
                         item.parentNode.removeChild(item);
