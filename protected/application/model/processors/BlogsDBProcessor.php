@@ -91,7 +91,7 @@ class BlogsDBProcessor implements IProcessor
         return $blog;
     }
 
-    public function getList($lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1, $offset = NULL)
+    public function getList($lang, $count = NULL, $beforeId = NULL, $afterId = NULL, $enable = 1, $offset = NULL, $modifyDate = NULL)
     {
         $sql = "SELECT
                     *
@@ -102,9 +102,10 @@ class BlogsDBProcessor implements IProcessor
                     `Lang` = :lang"
                 . (($beforeId === NULL) ? "" : " AND (`Id` < $beforeId)")
                 . (($afterId === NULL) ? "" : " AND (`Id` > $afterId)")
+                . (($modifyDate === NULL)  ? "" : " AND (`DateModify` > $modifyDate) ")
                 . "
-                ORDER BY `DateCreated` DESC
-                LIMIT " . (int)$count;
+                ORDER BY `DateCreated` "
+                . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if (!is_null($offset)) {
             $sql .= " OFFSET " . (int)$offset;
         }

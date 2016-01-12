@@ -207,7 +207,21 @@ class PingController extends \AjaxController
                 }
             }
         }
-        $counters['messages']                = \MessagesModel::instance()->getStatusCount($player->getId(), 0);
+        $counters['messages'] = \MessagesModel::instance()->getStatusCount($player->getId(), 0);
+
+        /**
+         * Blog
+         */
+        if (isset($forms['blog-posts'])) {
+            $lang = $this->session->get(Player::IDENTITY)->getLang();
+            $list = \BlogsModel::instance()->getList($lang, NULL, NULL, $forms['blog-posts']['first_id'], 1, NULL, $forms['blog-posts']['timing']);
+            if (count($list) > 0) {
+                $response['res']['blog']['posts'] = array();
+                foreach ($list as $id => $blog) {
+                    $response['res']['blog']['posts'][$id] = $blog->exportTo('list');
+                }
+            }
+        }
 
         $response['badges']          = $badges;
         $response['player']['count'] = $counters;
