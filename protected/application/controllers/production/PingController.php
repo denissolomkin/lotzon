@@ -183,6 +183,7 @@ class PingController extends \AjaxController
 
         $response['badges']          = $badges;
         $response['player']['count'] = $counters;
+        $response['res'] = array('communication'=>array("comments"=>array()));
 
         $this->ajaxResponseCode($response);
     }

@@ -433,9 +433,12 @@
                 if (!key || !object.hasOwnProperty('id')) {
 
                     for (prop in object) {
-                        var keys = key && key.slice() || [];
-                        keys.push(prop);
-                        this.update(object[prop], keys);
+                        if(object.hasOwnProperty(prop)) {
+                            var keys = key && key.slice() || [];
+                            keys.push(prop);
+                            this.validate(keys.join('-'), true);
+                            this.update(object[prop], keys);
+                        }
                     }
 
                 } else if (object.hasOwnProperty('id')) {
