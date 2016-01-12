@@ -7,7 +7,7 @@ $(function () {
 //                "text": "text-moment-will-be-available-for",
 //                "button": "button-games-play",
 //                "action": "/games/moment",
-//                "timer": 5,
+//                "timer": 50,
 //                "timeout": "close"
 //            },
 //            {
@@ -16,12 +16,12 @@ $(function () {
 //                "text": "text-random-will-be-available-in",
 //                "button": "button-games-play",
 //                "action": "/games/random",
-//                "timer": 10,
+//                "timer": 100,
 //                "timeout": "close"
 //            },
 //            {
 //                "key": "message",
-//                "id": 10,
+//                "id": 100,
 //                "image": "/filestorage/users/50/comment_img.jpg",
 //                "title": "title-messages-new-message",
 //                "text": "Привет, как дела?",
@@ -261,7 +261,7 @@ var Games = {
                     return false;
                 var cell = $(this).data('cell'), that = this;
 //                if (fakeRandomData) {
-                    // prize
+//                     
 //                    var data = {json: fakeRandomData[fakeCounter]};
 //                    if (data.json.error)
 //                        return;
@@ -280,7 +280,6 @@ var Games = {
 //                    if (data.json.GameField) {
 //                        console.error("data.json.GameField >>>>>>", data.json);
 //                        if (data.json.Prize) {
-//                            alert(1);
 //                            $(".moment-game-box").addClass('win');
 //                        } else {
 //                            $(".moment-game-box").addClass('lose');
@@ -290,10 +289,10 @@ var Games = {
 //                    $(that).addClass('played');
 //                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
 //                }
-
-
-                // send
-//                return;
+//
+//
+//                // send
+//return;
                 Form.get.call(this,
                         {
                             href: '/games/random/play',
@@ -317,7 +316,6 @@ var Games = {
                                 if (data.json.GameField) {
                                     console.error("data.json.GameField >>>>>>", data.json);
                                     if (data.json.Prize) {
-                                        alert(1);
                                         $(".moment-game-box").addClass('win');
                                     } else {
                                         $(".moment-game-box").addClass('lose');
@@ -357,7 +355,7 @@ var Games = {
                     Games.random.conf.play = !1;
 
                     Games.random.showMessage(data.GamePrizes);
-                    Games.random.destroy(500);
+                    Games.random.destroy(5);
                 }
             }
 

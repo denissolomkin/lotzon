@@ -3629,6 +3629,10 @@ div > .games-previews {
     #games-chance-view .prizes .title {
       text-transform: uppercase;
       margin-bottom: 10px; }
+    #games-chance-view .prizes .ad {
+      text-align: center; }
+      #games-chance-view .prizes .ad > * {
+        display: inline-block; }
     #games-chance-view .prizes [class^="type-"] {
       padding-bottom: 20px;
       opacity: .5; }

@@ -14,425 +14,431 @@ $color_sinbad_approx: #a8d1d5;
 $black_15: rgba(0,0,0,0.15);
 
 .title-wrap {
-	position: relative;
-	width: 100%;
-	padding: 20px;
-	.back-button {
-		position: absolute;
-		left: 0;
-		top: 50%;
-		font-size: 25px;
-		//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: translate(0, -50%);
-		color: $color_cornflower_blue_approx;
-	}
-	.game-title {
-		text-align: center;
-		font-weight: bold;
-		text-transform: uppercase;
-		color: $color_tuatara_approx;
-	}
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    .back-button {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        font-size: 25px;
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: translate(0, -50%);
+        color: $color_cornflower_blue_approx;
+    }
+    .game-title {
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $color_tuatara_approx;
+    }
 }
 #games-chance-view {
-	color: $color_gravel_approx;
-	font-size: 16px;
-	padding: 0 20px 20px;
-	.prizes {
-		display: inline-block;
-		vertical-align: top;
-		text-align: center;
-		width: 40%;
-		min-width: 220px;
-		> div {
-			background: $wild_sand;
-			padding: 20px;
-			min-height: 410px;
-			width: 220px;
-			margin: 0 auto;
-			display: none;
-			> div {
-				min-height: 200px;
-			}
-			&.default {
-				display: block;
-			}
-			> * :first-child:nth-last-child(1) {
-				opacity: 1;
-				span {
-					display: block;
-				}
-				.item {
-					font-size: 105px;
-					letter-spacing: -0.11em;
-					text-indent: -0.11em;
-				}
-			}
-		}
-		button {
-			display: block;
-			width: 100%;
-			//Instead of the line below you could use @include box-sizing($bs)
-			box-sizing: border-box;
-			text-transform: uppercase;
-			background: $color_bright_sun_approx;
-			padding: 16px;
-			margin-top: 20px;
-			max-height: 50px;
-			cursor: pointer;
-			+ p {
-				text-transform: uppercase;
-				background: $color_bright_sun_approx;
-				padding: 16px;
-				margin-top: 20px;
-				max-height: 50px;
-				cursor: pointer;
-				display: none;
-				color: $color_christi_approx;
-				background: none;
-				cursor: default;
-			}
-		}
-		span {
-			display: block;
-			width: 100%;
-			//Instead of the line below you could use @include box-sizing($bs)
-			box-sizing: border-box;
-		}
-		.title {
-			text-transform: uppercase;
-			margin-bottom: 10px;
-		}
-		[class^="type-"] {
-			padding-bottom: 20px;
-			opacity: .5;
-			&.currennt {
-				opacity: 1;
-			}
-			&:not([class^="type-item"]) span {
-				display: inline;
-			}
-		}
-		.win {
-			.item {
-				text-transform: uppercase;
-				font-size: 30px;
-				display: block;
-				position: relative;
-				//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-				transform: translateY(80px);
-			}
-			[class^="type-"]:not(.currennt) {
-				display: none;
-			}
-			.currennt:not(.type-item) {
-				span {
-					display: block;
-				}
-				.item {
-					font-size: 105px;
-					letter-spacing: -0.11em;
-					text-indent: -0.11em;
-					margin-top: 0;
-					padding-top: 20px;
-					//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-					transform: translateY(0);
-				}
-			}
-		}
-		.item {
-			/*text-transform: uppercase;*/
-			font-size: 22px;
-		}
-		.currency {
-			/*text-transform: uppercase;*/
-			font-size: 22px;
-		}
-		.ticket_price {
-			margin-top: 25px;
-		}
-		.lose {
-			background: $color_cloud_approx;
-			i.i-x {
-				font-size: 65px;
-				font-weight: 600;
-				padding: 55px 0;
-				display: block;
-			}
-		}
-		> .win {
-			background: $color_valencia_approx;
-			color: $white;
-			button {
-				background: transparent;
-				border: 1px solid $white;
-				color: $white;
-			}
-		}
-	}
-	.minefield {
-		display: inline-block;
-		vertical-align: top;
-		width: 59%;
-		//Instead of the line below you could use @include box-sizing($bs)
-		box-sizing: border-box;
-		position: relative;
-		&:before {
-			content: '';
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 0;
-			background: $white_50;
-			width: 100%;
-			height: 100%;
-			z-index: 1;
-		}
-	}
-	.description > div {
-	}
-	.game-started .prizes button {
-		display: none;
-		+ p {
-			display: block;
-		}
-	}
-	.lose .prizes > div {
-		&.default {
-			display: none;
-		}
-		&.lose {
-			display: block;
-		}
-	}
-	.win .prizes > div {
-		&.default {
-			display: none;
-		}
-		&.win {
-			display: block;
-		}
-	}
-	#games-chance-view-chance.game-started .minefield:before {
-		display: none;
-		width: 0;
-		height: 0;
-	}
+    color: $color_gravel_approx;
+    font-size: 16px;
+    padding: 0 20px 20px;
+    .prizes {
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        width: 40%;
+        min-width: 220px;
+        > div {
+            background: $wild_sand;
+            padding: 20px;
+            min-height: 410px;
+            width: 220px;
+            margin: 0 auto;
+            display: none;
+            > div {
+                min-height: 200px;
+            }
+            &.default {
+                display: block;
+            }
+            > * :first-child:nth-last-child(1) {
+                opacity: 1;
+                span {
+                    display: block;
+                }
+                .item {
+                    font-size: 105px;
+                    letter-spacing: -0.11em;
+                    text-indent: -0.11em;
+                }
+            }
+        }
+        button {
+            display: block;
+            width: 100%;
+            //Instead of the line below you could use @include box-sizing($bs)
+            box-sizing: border-box;
+            text-transform: uppercase;
+            background: $color_bright_sun_approx;
+            padding: 16px;
+            margin-top: 20px;
+            max-height: 50px;
+            cursor: pointer;
+            + p {
+                text-transform: uppercase;
+                background: $color_bright_sun_approx;
+                padding: 16px;
+                margin-top: 20px;
+                max-height: 50px;
+                cursor: pointer;
+                display: none;
+                color: $color_christi_approx;
+                background: none;
+                cursor: default;
+            }
+        }
+        span {
+            display: block;
+            width: 100%;
+            //Instead of the line below you could use @include box-sizing($bs)
+            box-sizing: border-box;
+        }
+        .title {
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .ad {
+            text-align: center;
+            & > *{
+                display: inline-block;
+            }
+        }
+        [class^="type-"] {
+            padding-bottom: 20px;
+            opacity: .5;
+            &.currennt {
+                opacity: 1;
+            }
+            &:not([class^="type-item"]) span {
+                display: inline;
+            }
+        }
+        .win {
+            .item {
+                text-transform: uppercase;
+                font-size: 30px;
+                display: block;
+                position: relative;
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: translateY(80px);
+            }
+            [class^="type-"]:not(.currennt) {
+                display: none;
+            }
+            .currennt:not(.type-item) {
+                span {
+                    display: block;
+                }
+                .item {
+                    font-size: 105px;
+                    letter-spacing: -0.11em;
+                    text-indent: -0.11em;
+                    margin-top: 0;
+                    padding-top: 20px;
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: translateY(0);
+                }
+            }
+        }
+        .item {
+            /*text-transform: uppercase;*/
+            font-size: 22px;
+        }
+        .currency {
+            /*text-transform: uppercase;*/
+            font-size: 22px;
+        }
+        .ticket_price {
+            margin-top: 25px;
+        }
+        .lose {
+            background: $color_cloud_approx;
+            i.i-x {
+                font-size: 65px;
+                font-weight: 600;
+                padding: 55px 0;
+                display: block;
+            }
+        }
+        > .win {
+            background: $color_valencia_approx;
+            color: $white;
+            button {
+                background: transparent;
+                border: 1px solid $white;
+                color: $white;
+            }
+        }
+    }
+    .minefield {
+        display: inline-block;
+        vertical-align: top;
+        width: 59%;
+        //Instead of the line below you could use @include box-sizing($bs)
+        box-sizing: border-box;
+        position: relative;
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: $white_50;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+    }
+    .description > div {
+    }
+    .game-started .prizes button {
+        display: none;
+        + p {
+            display: block;
+        }
+    }
+    .lose .prizes > div {
+        &.default {
+            display: none;
+        }
+        &.lose {
+            display: block;
+        }
+    }
+    .win .prizes > div {
+        &.default {
+            display: none;
+        }
+        &.win {
+            display: block;
+        }
+    }
+    #games-chance-view-chance.game-started .minefield:before {
+        display: none;
+        width: 0;
+        height: 0;
+    }
 }
 #games-chance-view-cells {
-	* {
-		&:first-child > .inner {
-		}
-		> .inner {
-			background: transparent;
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			top: 0;
-			left: 0;
-			//Instead of the line below you could use @include box-sizing($bs)
-			box-sizing: border-box;
-			padding-left: 10px;
-			padding-bottom: 10px;
-		}
-	}
-	button {
-		font-size: 9em;
-	}
-	.inner button {
-		background: $color_sinbad_approx;
-		width: 100%;
-		height: 100%;
-		cursor: pointer;
-		//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: rotateY(0deg);
-		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
-		transition: all .4s ease-in;
-		&.played {
-			border: 1px solid $black_15;
-			//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-			transform: rotateY(180deg);
-			//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
-			transition: all .4s ease-out;
-		}
-		&.win {
-			background: $color_bright_sun_approx;
-			i {
-				display: block;
-				&:not(.i-o) {
-					display: none;
-				}
-			}
-		}
-		&.lose {
-			background: $white;
-			i:not(.i-x) {
-				display: none;
-			}
-		}
-		&:not([class]) i:not(.i-question) {
-			display: none;
-		}
-	}
+    * {
+        &:first-child > .inner {
+        }
+        > .inner {
+            background: transparent;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            //Instead of the line below you could use @include box-sizing($bs)
+            box-sizing: border-box;
+            padding-left: 10px;
+            padding-bottom: 10px;
+        }
+    }
+    button {
+        font-size: 9em;
+    }
+    .inner button {
+        background: $color_sinbad_approx;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotateY(0deg);
+        //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+        transition: all .4s ease-in;
+        &.played {
+            border: 1px solid $black_15;
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotateY(180deg);
+            //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+            transition: all .4s ease-out;
+        }
+        &.win {
+            background: $color_bright_sun_approx;
+            i {
+                display: block;
+                &:not(.i-o) {
+                    display: none;
+                }
+            }
+        }
+        &.lose {
+            background: $white;
+            i:not(.i-x) {
+                display: none;
+            }
+        }
+        &:not([class]) i:not(.i-question) {
+            display: none;
+        }
+    }
 }
 @media all and(max-width: 768px) {
-	#games-chance-view {
-		.colls-wrapper {
-			position: relative;
-			overflow: hidden;
-			min-height: 430px;
-		}
-		.minefield {
-			min-height: 430px;
-			display: inline-block;
-			vertical-align: top;
-			width: 100%;
-		}
-		.prizes {
-			display: inline-block;
-			vertical-align: top;
-			width: 100%;
-			position: absolute;
-			z-index: 5;
-			min-height: 100%;
-			> div {
-				position: relative;
-				margin-top: 50%;
-				//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-				transform: translateY(-50%);
-				opacity: 0.95;
-				min-width: 60%;
-				min-height: initial;
-				//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
-				box-shadow: 1px 1px 4px $black_35;
-				> div {
-					min-height: initial;
-				}
-			}
-			[class^="type-"] {
-				padding-bottom: 10px;
-			}
-			.win .item {
-				//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-				transform: translateY(0);
-			}
-		}
-		.game-started .prizes {
-			display: none;
-		}
-	}
-	.description.hidden-content {
-		> div {
-			max-height: 0;
-		}
-		label {
-			display: block;
-		}
-		#read-more-description {
-			+ label {
-				display: initial;
-				bottom: 10px;
-				display: inline-block;
-				margin: 0 auto;
-				span {
-					display: initial;
-					&:first-child {
-						display: none;
-					}
-				}
-			}
-			&:checked + label {
-			}
-		}
-	}
-	#games-chance-view-cells button {
-		font-size: 14em;
-	}
+    #games-chance-view {
+        .colls-wrapper {
+            position: relative;
+            overflow: hidden;
+            min-height: 430px;
+        }
+        .minefield {
+            min-height: 430px;
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
+        }
+        .prizes {
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
+            position: absolute;
+            z-index: 5;
+            min-height: 100%;
+            > div {
+                position: relative;
+                margin-top: 50%;
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: translateY(-50%);
+                opacity: 0.95;
+                min-width: 60%;
+                min-height: initial;
+                //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                box-shadow: 1px 1px 4px $black_35;
+                > div {
+                    min-height: initial;
+                }
+            }
+            [class^="type-"] {
+                padding-bottom: 10px;
+            }
+            .win .item {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: translateY(0);
+            }
+        }
+        .game-started .prizes {
+            display: none;
+        }
+    }
+    .description.hidden-content {
+        > div {
+            max-height: 0;
+        }
+        label {
+            display: block;
+        }
+        #read-more-description {
+            + label {
+                display: initial;
+                bottom: 10px;
+                display: inline-block;
+                margin: 0 auto;
+                span {
+                    display: initial;
+                    &:first-child {
+                        display: none;
+                    }
+                }
+            }
+            &:checked + label {
+            }
+        }
+    }
+    #games-chance-view-cells button {
+        font-size: 14em;
+    }
 }
 @media all and(max-width: 525px) {
-	#games-chance-view-cells button {
-		font-size: 10em;
-	}
+    #games-chance-view-cells button {
+        font-size: 10em;
+    }
 }
 @media all and(max-width: 434px) {
-	#games-chance-view {
-		.prizes {
-			> div {
-				min-width: 80%;
-			}
-			[class^="type-"] {
-				padding-bottom: 7px;
-			}
-			.lose i.i-x {
-				padding: 10px 0;
-			}
-		}
-		.minefield {
-			display: block;
-			position: relative;
-			height: auto;
-		}
-	}
-	#games-chance-view-cells button {
-		font-size: 8em;
-	}
+    #games-chance-view {
+        .prizes {
+            > div {
+                min-width: 80%;
+            }
+            [class^="type-"] {
+                padding-bottom: 7px;
+            }
+            .lose i.i-x {
+                padding: 10px 0;
+            }
+        }
+        .minefield {
+            display: block;
+            position: relative;
+            height: auto;
+        }
+    }
+    #games-chance-view-cells button {
+        font-size: 8em;
+    }
 }
 .description.hidden-content {
-	position: relative;
-	padding: 0 0 40px;
-	line-height: 1.3;
-	label {
-		display: none;
-	}
-	> div {
-		overflow: hidden;
-		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
-		transition: 1s max-height ease-in-out;
-		height: auto;
-	}
-	#read-more-description {
-		position: absolute;
-		left: -9999px;
-		&:checked {
-			~ div {
-				max-height: 2000px;
-			}
-			+ label i {
-				&.i-arrow-down {
-					display: none;
-				}
-				&.i-arrow-top {
-					display: initial;
-				}
-			}
-		}
-		+ label {
-			color: $color_cornflower_blue_approx;
-			text-align: left;
-			cursor: pointer;
-			text-transform: uppercase;
-			i {
-				float: right;
-				margin-left: 20px;
-				&.i-arrow-down {
-					display: initial;
-				}
-				&.i-arrow-top {
-					display: none;
-				}
-			}
-			span {
-				display: none;
-				&:first-child {
-					display: initial;
-				}
-			}
-		}
-	}
-	> *:not(div) {
-		position: absolute;
-		bottom: 20px;
-		left: 50%;
-		//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: translateX(-50%);
-	}
+    position: relative;
+    padding: 0 0 40px;
+    line-height: 1.3;
+    label {
+        display: none;
+    }
+    > div {
+        overflow: hidden;
+        //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+        transition: 1s max-height ease-in-out;
+        height: auto;
+    }
+    #read-more-description {
+        position: absolute;
+        left: -9999px;
+        &:checked {
+            ~ div {
+                max-height: 2000px;
+            }
+            + label i {
+                &.i-arrow-down {
+                    display: none;
+                }
+                &.i-arrow-top {
+                    display: initial;
+                }
+            }
+        }
+        + label {
+            color: $color_cornflower_blue_approx;
+            text-align: left;
+            cursor: pointer;
+            text-transform: uppercase;
+            i {
+                float: right;
+                margin-left: 20px;
+                &.i-arrow-down {
+                    display: initial;
+                }
+                &.i-arrow-top {
+                    display: none;
+                }
+            }
+            span {
+                display: none;
+                &:first-child {
+                    display: initial;
+                }
+            }
+        }
+    }
+    > *:not(div) {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: translateX(-50%);
+    }
 }

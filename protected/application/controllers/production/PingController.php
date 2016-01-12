@@ -53,13 +53,14 @@ class PingController extends \AjaxController
         */
 
         $badges['messages'][] = array(
+            "id" => rand(1,100), /* messageId */
             "user" => array(
                 "id" => 1,
                 "name" => "Участник №1",
                 "img" => null
             ),
             "text"    => "Привет, как дела?",
-            'timer'   => 3,
+            'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:3,
             'timeout' => 'close'
         );
 
