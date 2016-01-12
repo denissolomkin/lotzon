@@ -10,7 +10,7 @@ class Currency extends Entity
     private $_coefficient = 0;
     private $_rate        = 0;
 
- 
+
     public function init()
     {
         $this->setModelClass('CurrencyModel');
@@ -87,7 +87,11 @@ class Currency extends Entity
 
     public function getSettings()
     {
-        return ($this->_title + array('coefficient'=>$this->_coefficient) + array('rate'=>$this->_rate));
+        return ($this->_title + array(
+                'coefficient' => $this->getCoefficient(),
+                'rate' => $this->getRate(),
+                'code' => $this->getCode()
+            ));
     }
 
 

@@ -1,11 +1,12 @@
-<div id="games-random" class="pop-box">
+<div id="games-random" class="pop-box moment-game-box">
     <div class="inner">
         <div class="title">
-            <h1>{{i18n "title-games-random"}}</h1>
+            <h1>{{Title}}</h1>
         </div>
         <div class="description">
             {{{Description}}}
         </div>
+        <div class="message"></div>
         <div id="games-random-cells" class="minefield">
             {{#each (for 1 "<=" Field.y) as |value key| }}
             <div class='vw vh vf clearfix'>

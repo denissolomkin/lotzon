@@ -275,7 +275,7 @@ class Index extends \SlimController\SlimController
     protected function landing()
     {
 
-        global $isMobile, $lottery, $error;
+        global $isMobile, $lottery, $player, $error;
 
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
@@ -283,6 +283,21 @@ class Index extends \SlimController\SlimController
         $lottery = array(
             "win"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
             "players" => PlayersModel::instance()->getMaxId()
+        );
+
+        $player = array(
+            "language" => array(
+                "current"   => $this->lang,
+                "available" => array(
+                    "RU" => "Русский",
+                    "EN" => "English",
+                    "UA" => "Украiнська"
+                )
+            ),
+            "location" => array(
+                "country" => $this->country
+            ),
+            "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings()
         );
 
         $session         = new Session();

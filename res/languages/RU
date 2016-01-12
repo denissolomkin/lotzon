@@ -83,6 +83,10 @@
                 "title-of-lotteries": "лотерей",
                 "title-of-money": "денег",
 
+                "title-logout-worning": "Hе упустите шанс сорвать Джекпот!",
+                "button-logout": "Выйти",
+                "button-cancel-logout": "Остаться",
+
                 "title-users-of-friends": "Друзей",
                 "placeholder-search-from-friends": "Поиск среди друзей",
 

@@ -70,24 +70,6 @@
             return this;
         },
 
-        getCurrency: function (currency) {
-
-            switch (currency) {
-                case 'money':
-                default:
-                    currency = Player.currency.iso;
-                    break;
-                case 'points':
-                    currency = Cache.i18n('title-points');
-                    break;
-                case 'lotzon':
-                    currency = Cache.i18n('title-lotzon');
-                    break;
-            }
-
-            return currency;
-        },
-
         "prepareCount": function (key, value, count) {
 
             if (typeof value === 'object') {
@@ -109,6 +91,25 @@
             }
 
             return value;
+        },
+
+
+        getCurrency: function (currency) {
+
+            switch (currency) {
+                case 'money':
+                default:
+                    currency = isNumeric(currency) ? currency * Player.currency.coefficient : Player.currency.iso;
+                    break;
+                case 'points':
+                    currency = Cache.i18n('title-points');
+                    break;
+                case 'lotzon':
+                    currency = Cache.i18n('title-lotzon');
+                    break;
+            }
+
+            return currency;
         },
 
         "formatCurrency": function (value, part) {
@@ -195,7 +196,7 @@
         updatePoints: function (newSum) {
             var balance = {
                 balance: {
-                    points: typeof newSum !== 'undefined' && parseInt(newSum) || this.balance.points
+                    points: typeof newSum !== 'undefined' && parseFloat(newSum).toFixed(2) || this.balance.points
                 }
             };
             return this.init(balance);
