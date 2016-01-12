@@ -240,7 +240,7 @@
 
             switch (true) {
 
-                case typeof storage !== 'undefined':
+                case storage && typeof storage !== 'undefined':
 
                     cache = this.storage[this.storages[storage]];
 
@@ -249,16 +249,34 @@
                     } else {
 
                         path = this.split(path);
-
+                        var list = null;
                         do {
                             needle = path.shift();
-                            cache = needle && cache && cache.hasOwnProperty(needle) && cache[needle];
+                            cache = needle && cache && cache.hasOwnProperty(needle)
+                            && (isNumeric(needle)
+                                ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
+                                : cache[needle]);
+                            list = cache || list;
                         } while (path.length && cache)
+
+                        if (!cache && isNumeric(needle) && list) {
+                            for (var index in list) {
+                                if (list.hasOwnProperty(index) && list[index].hasOwnProperty('id') && list[index]['id'] == needle) {
+                                    cache = list[index];
+                                    needle = index;
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
                     return where && cache
-                        ? {storage: storage, object: cache}
+                        ? {
+                        id     : needle,
+                        storage: storage,
+                        object : cache
+                    }
                         : cache;
                     break;
 
@@ -446,7 +464,7 @@
             return path.filter(Boolean);
         },
 
-        "deleteById": function () {
+        "findById": function (path, id) {
 
         },
 
@@ -474,7 +492,7 @@
                         if (cache) {
                             Object.deepExtend(object, cache.object);
                             this.set(null, {
-                                key  : key,
+                                key  : key.replace(/-\d+$/g, '-' + cache.id),
                                 res  : object,
                                 cache: cache.storage
                             });
