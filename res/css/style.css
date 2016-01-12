@@ -2980,7 +2980,7 @@ form.loading > * {
     display: block;
     position: relative;
     padding-right: 20px; }
-    #badges section a.start.visieble {
+    #badges section a.start.visible {
       background: transparent;
       padding: 5px 22px;
       border: 1px solid #000;
@@ -2993,7 +2993,7 @@ form.loading > * {
       right: 0;
       top: 50%;
       transform: translateY(-50%); }
-    #badges section a.start.invisieble {
+    #badges section a.start.invisible {
       display: block;
       position: absolute;
       left: 0;
@@ -3003,7 +3003,7 @@ form.loading > * {
       z-index: 1; }
     #badges section a.start:hover {
       opacity: 0.7; }
-    #badges section a.visieble + .title {
+    #badges section a.visible + .title {
       display: block;
       padding-right: 110px; }
   #badges > div[id^="badges-"] {
@@ -3948,6 +3948,14 @@ and open the template in the editor.
     margin: 0 20%;
     background: #fff;
     padding: 20px; }
+    .moment-game-box > .inner > i.i-x-slim {
+      position: absolute;
+      right: -30px;
+      top: 0;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); }
   .moment-game-box:not(.game-started) .message {
     position: absolute;
     z-index: 1;

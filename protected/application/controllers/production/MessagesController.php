@@ -49,12 +49,12 @@ class MessagesController extends \AjaxController
         }
 
         $response = array(
+            'cache' => 'session',
             'res' => array(
                 'communication' => array(
                     'messages' => array()
                 ),
-            ),
-            'session' => 'session',
+            )
         );
 
         if (count($list)<=$count) {

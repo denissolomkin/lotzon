@@ -1,3 +1,4 @@
+
 (function () {
 
     Callbacks = {
@@ -26,7 +27,8 @@
                     {".comment-content": Comments.do.mobileForm},
 
                     //
-                    {".back": Navigation.do.backBlock}
+                    {".back": Navigation.do.backBlock},
+                    {".close-pop-box": Content.destroyPopBox}
 
                 ]
             });

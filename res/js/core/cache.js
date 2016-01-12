@@ -11,7 +11,11 @@
             "languages": 'languagesStorage',
             "local"    : 'localStorage',
             "session"  : 'sessionStorage',
-            "validity" : 'cacheValidity'
+            "validity" : {
+                "cache"    : 'cacheValidity',
+                "templates": 'templatesValidity',
+                "languages": 'languagesValidity'
+            }
         },
 
         "isEnabled"       : null,
@@ -29,6 +33,9 @@
 
                 if (init.delete)
                     this.remove(init.delete);
+
+                if (init.update)
+                    this.update(init.update, null, true);
 
                 if (init.callback) {
                     eval(init.callback);
@@ -143,7 +150,9 @@
                 case !this.isEnabled:
                     storage[this.storages.templates]
                         = storage[this.storages.languages]
-                        = storage[this.storages.validity]
+                        = storage[this.storages.validity.cache]
+                        = storage[this.storages.validity.templates]
+                        = storage[this.storages.validity.languages]
                         = storage[this.storages.local]
                         = storage[this.storages.session]
                         = {};
@@ -152,7 +161,9 @@
                 case this.isEnabled:
                     storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.storages.templates)) || {};
                     storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.storages.languages)) || {};
-                    storage[this.storages.validity] = JSON.parse(localStorage.getItem(this.storages.validity)) || {};
+                    storage[this.storages.validity.cache] = JSON.parse(localStorage.getItem(this.storages.validity.cache)) || {};
+                    storage[this.storages.validity.templates] = JSON.parse(localStorage.getItem(this.storages.validity.templates)) || {};
+                    storage[this.storages.validity.languages] = JSON.parse(localStorage.getItem(this.storages.validity.languages)) || {};
                     storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.local)) || {};
                     storage[this.storages.session] = JSON.parse(localStorage.getItem(this.storages.session)) || {};
                     break;
@@ -176,23 +187,31 @@
                         break;
 
                     case cache === this.storages['session']:
-                        localStorage.setItem(this.storages.session, JSON.stringify(this.storage[this.storages.session]));
+                        localStorage.setItem(this.storages['session'], JSON.stringify(this.storage[this.storages['session']]));
                         break;
 
                     case cache === this.storages['local']:
-                        localStorage.setItem(this.storages.local, JSON.stringify(this.storage[this.storages.local]));
+                        localStorage.setItem(this.storages['local'], JSON.stringify(this.storage[this.storages['local']]));
                         break;
 
                     case cache === this.storages['templates']:
-                        localStorage.setItem(this.storages.templates, JSON.stringify(this.storage[this.storages.templates]));
+                        localStorage.setItem(this.storages['templates'], JSON.stringify(this.storage[this.storages['templates']]));
                         break;
 
                     case cache === this.storages['languages']:
-                        localStorage.setItem(this.storages.languages, JSON.stringify(this.storage[this.storages.languages]));
+                        localStorage.setItem(this.storages['languages'], JSON.stringify(this.storage[this.storages['languages']]));
                         break;
 
-                    case cache === this.storages['validity']:
-                        localStorage.setItem(this.storages.validity, JSON.stringify(this.storage[this.storages.validity]));
+                    case cache === this.storages['validity']['cache']:
+                        localStorage.setItem(this.storages['validity']['cache'], JSON.stringify(this.storage[this.storages['validity']['cache']]));
+                        break;
+
+                    case cache === this.storages['validity']['templates']:
+                        localStorage.setItem(this.storages['validity']['templates'], JSON.stringify(this.storage[this.storages['validity']['templates']]));
+                        break;
+
+                    case cache === this.storages['validity']['languages']:
+                        localStorage.setItem(this.storages['validity']['languages'], JSON.stringify(this.storage[this.storages['validity']['languages']]));
                         break;
 
                     case !cache:
@@ -210,8 +229,11 @@
             return this;
         },
 
-        "get": function (path, storage) {
+        "where": function (path) {
+            return this.get(path, null, true);
+        },
 
+        "get": function (path, storage, where) {
 
             var cache,
                 needle;
@@ -235,13 +257,15 @@
                     }
 
                     D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
-                    return cache;
+                    return where && cache
+                        ? {storage: storage, object: cache}
+                        : cache;
                     break;
 
                 default:
 
                     D.log(['Cache.get:', path, storage], 'cache');
-                    return this.get(path, 'local') || this.get(path, 'session');
+                    return this.get(path, 'local', where) || this.get(path, 'session', where);
                     break;
             }
 
@@ -426,24 +450,39 @@
 
         },
 
-        "update": function (object, key) {
+        "update": function (object, key, forUpdate) {
 
             if (object && typeof object === 'object') {
 
                 if (!key || !object.hasOwnProperty('id')) {
 
                     for (prop in object) {
-                        if(object.hasOwnProperty(prop)) {
+                        if (object.hasOwnProperty(prop)) {
                             var keys = key && key.slice() || [];
                             keys.push(prop);
                             this.validate(keys.join('-'), true);
-                            this.update(object[prop], keys);
+                            this.update(object[prop], keys, forUpdate);
                         }
                     }
 
                 } else if (object.hasOwnProperty('id')) {
 
                     key = key.join('-');
+
+                    if (forUpdate) {
+                        var cache = this.where(key);
+                        if (cache) {
+                            Object.deepExtend(object, cache.object);
+                            this.set(null, {
+                                key  : key,
+                                res  : object,
+                                cache: cache.storage
+                            });
+                        } else {
+                            return;
+                        }
+                    }
+
                     if (node = DOM.byId(key, 1)) {
                         R.push({
                             href: key.replace(/-\d+$/g, '-item'),
@@ -451,6 +490,7 @@
                             json: object
                         });
                     }
+
                 }
             }
         },
@@ -481,15 +521,17 @@
 
         },
 
-        "validate": function (key, forUpdate) {
+        "validate": function (key, forUpdateOrStorage, forUpdate) {
 
             if (key) {
-
-                if (forUpdate) {
-                    this.storage[this.storages['validity']][key] = Livedate.fn.now();
-                    return this.save('validity');
+                if (typeof forUpdateOrStorage === 'boolean') {
+                    if (forUpdateOrStorage) {
+                        this.storage[this.storages['validity']['cache']][key] = Livedate.fn.now();
+                        return this.save(this.storages['validity']['cache']);
+                    }
                 } else {
-                    return this.storage[this.storages['validity']][key];
+                    forUpdateOrStorage = forUpdateOrStorage || 'cache';
+                    return this.storage[this.storages['validity'][forUpdateOrStorage]][key];
                 }
             }
 

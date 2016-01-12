@@ -3,15 +3,15 @@
     // Render Handler
     R = {
 
-        "queue": [],
-        "rendering": [],
+        "queue"      : [],
+        "rendering"  : [],
         "isRendering": false,
-        "timeout": {
-            "ajax": 10000,
-            "template": 10000,
-            "delay": 0
+        "timeout"    : {
+            "ajax"    : 30 * 1000,
+            "template": 30 * 1000,
+            "delay"   : 0
         },
-        "animation": {
+        "animation"  : {
             "loading": false
         },
 
@@ -21,23 +21,23 @@
         "stat": function () {
 
             return {
-                total: {
+                total    : {
                     timer: new Date().getTime(),
-                    size: null
+                    size : null
                 },
-                ajax: {
+                ajax     : {
                     timer: null,
-                    size: null
+                    size : null
                 },
                 templates: {
                     count: 0,
                     timer: null,
-                    size: 0
+                    size : 0
                 },
-                render: {
+                render   : {
                     timer: null
                 },
-                after: {
+                after    : {
                     timer: null
                 }
             };
@@ -106,7 +106,7 @@
             }
 
             options.init = Object.deepExtend({}, {
-                href: options.href,
+                href    : options.href,
                 template: options.template
             });
 
@@ -185,7 +185,7 @@
         "json": function (options) {
 
             if (typeof options === 'string') {
-                options = { href: options };
+                options = {href: options};
             }
 
             if (D.isEnable('stat')) {
@@ -208,11 +208,11 @@
             } else {
 
                 var xhr = $.ajax({
-                    url: U.generate(options.href),
-                    data: options.query,
-                    method: 'get',
+                    url     : U.generate(options.href),
+                    data    : options.query,
+                    method  : 'get',
                     dataType: 'json',
-                    success: function (data) {
+                    success : function (data) {
 
                         if ('responseText' in data) {
                             D.error.call(options, 'OBJECT NOT FOUND');
@@ -231,10 +231,10 @@
                         }
 
                     },
-                    error: function (data) {
+                    error   : function (data) {
                         D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'OBJECT NOT FOUND');
                     },
-                    timeout: R.timeout.ajax
+                    timeout : R.timeout.ajax
                 });
             }
 
@@ -296,10 +296,10 @@
             } else {
 
                 var xhr = $.ajax({
-                    url: U.generate(template, 'tmpl'),
-                    method: 'get',
+                    url     : U.generate(template, 'tmpl'),
+                    method  : 'get',
                     dataType: 'text',
-                    success: function (data) {
+                    success : function (data) {
 
                         D.log(['Render.renderTMPL:', template, (!partial ? 'TEMPLATE' : 'PARTIAL') + ' from AJAX:', options.init.template], 'warn');
 
@@ -327,10 +327,10 @@
                         R.partialTMPL(options, partial);
 
                     },
-                    error: function (data) {
+                    error   : function (data) {
                         D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'TEMPLATE NOT FOUND');
                     },
-                    timeout: R.timeout.template
+                    timeout : R.timeout.template
                 });
 
             }
@@ -399,14 +399,14 @@
 
                     if (options.lastItem) {
                         var infiniteScrolling = render.querySelector('button.infinite-scrolling');
-                        if(infiniteScrolling){
+                        if (infiniteScrolling) {
                             infiniteScrolling.parentNode.removeChild(infiniteScrolling);
                         }
                     }
 
                     if (render.id == node.id) {
 
-                        if(!render.classList.contains('pop-box')) {
+                        if (!render.classList.contains('pop-box')) {
                             if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
                                 //such as blog-post-view, games-online & games-chance
                                 DOM.hide(node.parentNode && node.parentNode.children);
@@ -440,7 +440,7 @@
                         if (!node)
                             node = document.getElementById('content');
 
-                        if(!render.classList.contains('pop-box')) {
+                        if (!render.classList.contains('pop-box')) {
                             if (compare(render.classList, ['content-box-item', 'content-main'])) {
                                 //such as games-online & games-chance
                                 DOM.hide(node.children);
@@ -452,9 +452,13 @@
                         }
 
                         if (options.init.template.indexOf('-item') !== -1)
-                            template = Cache.get(
-                                U.parse(options.init.template, 'tmpl')
-                                    .replace('-item', '-list'), 'templates');
+                            template =
+                                Cache.get(
+                                    U.parse(options.init.template, 'tmpl')
+                                        .replace('-item', '-list'), 'templates')
+                                || Cache.get(
+                                    U.parse(options.init.template, 'tmpl')
+                                        .replace('-item', ''), 'templates');
 
                         if (template && template.indexOf('reverse') !== -1) {
 
@@ -489,7 +493,7 @@
         "afterHTML": function (options) {
 
             R.event('complete', options);
-            
+
             if (options.after) {
                 D.log(['Render.after', typeof options.after], 'render');
                 options.after(options);
@@ -567,7 +571,7 @@
                         DOM.remove('.modal-loading', options.node);
                     }
 
-                    console.log('R.rendering:',JSON.stringify(R.rendering));
+                    console.log('R.rendering:', JSON.stringify(R.rendering));
                     R.rendering.splice(R.rendering.indexOf(options.href), 1);
 
                     break;

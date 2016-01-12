@@ -133,6 +133,16 @@ $gray: #808080;
         margin: 0 20%;
         background: $white;
         padding: 20px;
+        > i.i-x-slim{
+            
+            position: absolute;
+            right: -30px;
+            top: 0;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
     }
     &:not(.game-started) .message {
         position: absolute;

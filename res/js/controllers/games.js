@@ -1,39 +1,4 @@
-$(function () {
-//    R.push({
-//        template: 'badges-list',
-//        json: [{
-//                "key": "Moment",
-//                "title": "title-games-moment",
-//                "text": "text-moment-will-be-available-for",
-//                "button": "button-games-play",
-//                "action": "/games/moment",
-//                "timer": 50,
-//                "timeout": "close"
-//            },
-//            {
-//                "key": "Random",
-//                "title": "title-games-random",
-//                "text": "text-random-will-be-available-in",
-//                "button": "button-games-play",
-//                "action": "/games/random",
-//                "timer": 100,
-//                "timeout": "close"
-//            },
-//            {
-//                "key": "message",
-//                "id": 100,
-//                "image": "/filestorage/users/50/comment_img.jpg",
-//                "title": "title-messages-new-message",
-//                "text": "Привет, как дела?",
-//                "action": "/messages/123",
-//                "timer": 3,
-//                "timeout": "close"
-//            }]
-//    });
-})
-
-
-var fakeCounter = 0;
+var fakeCounter = 0, debug = 0;
 var fakeRandomData = [{
         "Uid": "568b9d3875b2b",
         "Prize": {
@@ -206,7 +171,6 @@ var Games = {
             Form.post.call(this, {
                 href: '/games/chance/' + id,
                 after: function (data) {
-//                    alert(JSON.stringify(data.json, null, 2));
                     // update trigger 'game ready'
                     Games.chance.conf.play = !0;
                     // update all cells to default state
@@ -255,79 +219,62 @@ var Games = {
                 Content.banner(data);
         },
         get: function (elements, id) {
-//            console.error("Games.random.get >>>>", elements);
+
             $(elements).click(function () {
                 if (!Games.random.conf.play)
                     return false;
-                var cell = $(this).data('cell'), that = this;
-//                if (fakeRandomData) {
-//                     
-//                    var data = {json: fakeRandomData[fakeCounter]};
-//                    if (data.json.error)
-//                        return;
-//                    if (data.json.Prize) {
-//                        $(that).addClass('win');
-//                        $(that).html(Games.random.makePrizeCell(data.json.Prize));
-//                    } else {
-//                        $(that).addClass('lose');
-//                    }
-//                    // steps
-//                    if (data.json.Moves) {
-//                        console.error("data.json.Moves >>>", data.json.Moves);
-////                        Games.random.prizesMoves(data.json.Moves);
-//                    }
-//                    // Game winner Fields
-//                    if (data.json.GameField) {
-//                        console.error("data.json.GameField >>>>>>", data.json);
-//                        if (data.json.Prize) {
-//                            $(".moment-game-box").addClass('win');
-//                        } else {
-//                            $(".moment-game-box").addClass('lose');
-//                        }
-//                        Games.random.end(data.json);
-//                    }
-//                    $(that).addClass('played');
-//                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-//                }
-//
-//
-//                // send
-//return;
+                var cell = $(this).data('cell'), element = this;
+                
+////////////////////////////////////////////////////////////////
+//                DELETE
+                if (debug === 1) {
+
+                    var data = {json: fakeRandomData[fakeCounter]};
+
+                    Games.random.actions(element,data);
+
+                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
+
+                    return;
+                }
+////////////////////////////////////////////////////////////////
+
                 Form.get.call(this,
                         {
                             href: '/games/random/play',
                             data: {'cell': cell},
                             after: function (data) {
-//                                >>> code from top add here!!!
-                                if (data.json.error)
-                                    return;
-                                if (data.json.Prize) {
-                                    $(that).addClass('win');
-                                    $(that).html(Games.random.makePrizeCell(data.json.Prize));
-                                } else {
-                                    $(that).addClass('lose');
-                                }
-                                // steps
-                                if (data.json.Moves) {
-                                    console.error("data.json.Moves >>>", data.json.Moves);
-//                        Games.random.prizesMoves(data.json.Moves);
-                                }
-                                // Game winner Fields
-                                if (data.json.GameField) {
-                                    console.error("data.json.GameField >>>>>>", data.json);
-                                    if (data.json.Prize) {
-                                        $(".moment-game-box").addClass('win');
-                                    } else {
-                                        $(".moment-game-box").addClass('lose');
-                                    }
-                                    Games.random.end(data.json);
-                                }
-                                $(that).addClass('played');
-//                                >>> code from top add here!!!
-
+                                Games.random.actions(element, data);
                             }
                         });
             });
+        },
+        actions: function (element,data) {
+            if (data.json.error)
+                return;
+            if (data.json.message && data.json.status === 0) {
+                alert(data.json.message);
+                Games.random.destroy(0);
+                return;
+            }
+
+            if (data.json.Prize) {
+                $(element).addClass('win');
+                $(element).html(Games.random.makePrizeCell(data.json.Prize));
+            } else {
+                $(element).addClass('lose');
+            }
+            // Game winner Fields
+            if (data.json.GameField) {
+                console.error("data.json.GameField >>>>>>", data.json);
+                if (data.json.Prize) {
+                    $(".moment-game-box").addClass('win');
+                } else {
+                    $(".moment-game-box").addClass('lose');
+                }
+                Games.random.end(data.json);
+            }
+            $(element).addClass('played');
         },
         makePrizeCell: function (prize) {
             var html = "<div class='flipFix'>"
@@ -345,7 +292,8 @@ var Games = {
                     break;
             }
             return html += "</div>";
-        },
+        }
+        ,
         end: function (data) {
             var fields = data.GameField;
             for (var i in fields) {
@@ -355,14 +303,14 @@ var Games = {
                     Games.random.conf.play = !1;
 
                     Games.random.showMessage(data.GamePrizes);
-                    Games.random.destroy(5);
+                    Games.random.destroy(50);
                 }
             }
 
         },
         showMessage: function (data) {
             var msg = "<p>";
-            if (data) {
+            if (data && data.length !== 0) {
                 msg += Cache.i18n("title-games-chance-card-win") + " ";
                 for (var key in data) {
                     msg += "<span>" + data[key] + " ";

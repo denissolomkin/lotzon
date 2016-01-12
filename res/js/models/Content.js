@@ -271,6 +271,12 @@
             message = '<div class="modal-message"><div class="animated zoomIn"><p>' + Cache.i18n(message) + '</p></div></div>';
             DOM.append(message, this);
 
+        },
+        
+        destroyPopBox: function(){
+   
+            DOM.remove(DOM.up('.pop-box',this));
+    
         }
     };
 
