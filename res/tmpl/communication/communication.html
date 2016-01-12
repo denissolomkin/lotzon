@@ -5,11 +5,15 @@
             <!-- TABS -->
             <div class="content-box-tabs clearfix">
                 <a href="/communication/comments" class="content-box-tab communication-comments-tab">
-                    <span>{{i18n "title-comments"}}</span><i class="i-msg2"></i>
+                    <span>{{i18n "title-comments"}}</span>
+                    {{{countHTML "notifications"}}}
+                    <i class="i-msg2"></i>
+
                 </a>
                 <a href="/communication/messages" class="content-box-tab communication-messages-tab">
                     <span>{{i18n "title-messages"}}</span>
-                    <span class="count-messages count"{{#if (like 0 (count 'messages'))}} style="display:none;"{{/if}}>{{count "messages"}}</span><i class="i-msg"></i>
+                    {{{countHTML "messages"}}}
+                    <i class="i-msg"></i>
                 </a>
             </div>
             <!-- end of TABS -->

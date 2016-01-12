@@ -75,7 +75,7 @@ class PingController extends \AjaxController
                 'key'     => 'notice',
                 'title'   => 'title-notice',
                 'text'    => $notice,
-                'timer'   => 3,
+                'timer'   => 30,
                 'timeout' => 'close',
                 'action'  => '/communication/notices'
             );
