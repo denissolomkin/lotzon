@@ -174,7 +174,7 @@ class MessagesDBProcessor implements IProcessor
         return $messages;
     }
 
-    public function getLastTalks($playerId, $count = NULL, $offset = NULL)
+    public function getLastTalks($playerId, $count = NULL, $offset = NULL, $modifyDate = NULL)
     {
         $sql = "SELECT
                     mes.*,
@@ -198,6 +198,7 @@ class MessagesDBProcessor implements IProcessor
                     `Players`
                   ON
                     `Players`.`Id` = q.pid"
+            . (($modifyDate === NULL)  ? "" : " WHERE mes.`Date` > $modifyDate ")
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {
             $sql .= " OFFSET " . (int)$offset;

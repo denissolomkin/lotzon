@@ -25,9 +25,9 @@ class MessagesModel extends Model
         return $this->getProcessor()->getList($playerFirst, $playerSecond, $count, $beforeId, $afterId, $offset);
     }
 
-    public function getLastTalks($playerId, $count = NULL, $offset = NULL)
+    public function getLastTalks($playerId, $count = NULL, $offset = NULL, $modifyDate = NULL)
     {
-        return $this->getProcessor()->getLastTalks($playerId, $count, $offset);
+        return $this->getProcessor()->getLastTalks($playerId, $count, $offset, $modifyDate);
     }
 
     public function markRead($playerId, $toPlayerId)

@@ -128,7 +128,7 @@ class CommentsDBProcessor implements IProcessor
         return $count;
     }
 
-    public function getList($module, $objectId, $count = NULL, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL)
+    public function getList($module, $objectId, $count = NULL, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL, $modifyDate = NULL)
     {
         $sql = "SELECT
                     `PlayerReviews`.*,
@@ -149,6 +149,17 @@ class CommentsDBProcessor implements IProcessor
                 . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = $parentId)")
                 . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < $beforeId)")
                 . (($afterId === NULL)  ? "" : " AND (`PlayerReviews`.`Id` > $afterId)")
+                . (($modifyDate === NULL)  ? "" : " AND (`PlayerReviews`.`ModifyDate` > $modifyDate)
+                                                    OR (`PlayerReviews`.Id IN
+                                                        (SELECT ParentId FROM PlayerReviews WHERE
+                                                                   `Module` = :module
+                                                                AND
+                                                                    `Status` = :status
+                                                                AND
+                                                                    `ObjectId` = :objectId
+                                                                AND
+                                                                    `ModifyDate` > $modifyDate)
+                                                        )")
                 . "
                 ORDER BY `PlayerReviews`.`Id` DESC"
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);

@@ -47,6 +47,7 @@ class PingController extends \AjaxController
         $player          = $this->session->get(Player::IDENTITY);
         $gameSettings    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
+        $forms           = $this->request()->post('forms', array());
 
         /*
         * New Messages
@@ -64,7 +65,7 @@ class PingController extends \AjaxController
             'timeout' => 'close'
         );
 
-        /* 
+        /*
         * Unread Notices
         */
 
@@ -181,9 +182,35 @@ class PingController extends \AjaxController
             // $badges['game'] = 1;
         }
 
+        /**
+         * Comments
+         */
+        if (isset($forms['communication-comments'])) {
+            $list = \CommentsModel::instance()->getList('comments', 0, NULL, NULL, $forms['communication-comments']['first_id'], 1, NULL, $forms['communication-comments']['timing']);
+            if (count($list) > 0) {
+                $response['res']['communication']['comments'] = $list;
+            }
+        }
+        $counters['notifications']['server'] = \CommentsModel::instance()->getNotificationsCount($player->getId());
+
+        /**
+         * Messages
+         */
+        if (isset($forms['communication-messages'])) {
+            $list = \MessagesModel::instance()->getLastTalks($player->getId(), NULL, NULL, $forms['communication-messages']['timing']);
+            if (count($list) > 0) {
+                $response['res']['communication']['messages']    = array();
+                $response['delete']['communication']['messages'] = array();
+                foreach ($list as $message) {
+                    $response['res']['communication']['messages'][$message->getId()]          = $message->export('talk');
+                    $response['delete']['communication']['messages'][$message->getPlayerId()] = NULL;
+                }
+            }
+        }
+        $counters['messages']                = \MessagesModel::instance()->getStatusCount($player->getId(), 0);
+
         $response['badges']          = $badges;
         $response['player']['count'] = $counters;
-        $response['res'] = array('communication'=>array("comments"=>array()));
 
         $this->ajaxResponseCode($response);
     }

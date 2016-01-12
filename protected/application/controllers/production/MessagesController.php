@@ -54,6 +54,7 @@ class MessagesController extends \AjaxController
                     'messages' => array()
                 ),
             ),
+            'session' => 'session',
         );
 
         if (count($list)<=$count) {
@@ -111,7 +112,22 @@ class MessagesController extends \AjaxController
             $response['res']['users'][$userId]['messages'][$id] = $message->export('list');
         }
 
+        $first = array_shift($list);
+        if (($offset === NULL) && (!is_null($first))) {
+            //if (($first->getStatus() == 0)&&($first->getToPlayerId() == $playerId)) {
+                $response['update'] = array(
+                    "communication" => array(
+                        "messages" => array(
+                            $userId => array(
+                                "isUnread" => false
+                            )
+                        )
+                    )
+                );
+            //}
+        }
         MessagesModel::instance()->markRead($userId,$playerId);
+        $response['player']['count']['messages'] = \MessagesModel::instance()->getStatusCount($playerId, 0);
 
         $this->ajaxResponseCode($response);
         return true;
