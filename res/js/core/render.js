@@ -221,6 +221,7 @@
                             if (D.isEnable('stat'))
                                 options.stat.ajax.size = xhr.responseText.length;
 
+                            options.response = data;
                             options.json = Cache.init(data, options.href);
 
                             if (data.hasOwnProperty('lastItem'))

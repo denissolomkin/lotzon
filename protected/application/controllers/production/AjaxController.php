@@ -1,6 +1,7 @@
 <?php
 
-class AjaxController extends \SlimController\SlimController {
+class AjaxController extends \SlimController\SlimController
+{
 
     public function __construct(\Slim\Slim &$app)
     {
@@ -10,7 +11,6 @@ class AjaxController extends \SlimController\SlimController {
 
     public function init()
     {
-        
     }
 
     public function validRequest()
@@ -21,9 +21,9 @@ class AjaxController extends \SlimController\SlimController {
     public function ajaxResponse(array $data, $status = 1, $message = 'OK')
     {
         $response = array(
-            'status'    => $status,
-            'message'   => \StaticTextsModel::instance()->setLang($this->lang)->getText($message),
-            'res'       => $data,
+            'status'  => $status,
+            'message' => \StaticTextsModel::instance()->setLang($this->lang)->getText($message),
+            'res'     => $data,
         );
 
         die(json_encode($response));
@@ -31,42 +31,53 @@ class AjaxController extends \SlimController\SlimController {
 
     protected function validateRequest()
     {
-        if(!$this->request()->isAjax())
-            die('NONE_AJAX_REQUEST_DENIED');
+        if (!$this->request()->isAjax())
+            die(\StaticTextsModel::instance()->setLang($this->lang)->getText('NONE_AJAX_REQUEST_DENIED'));
         else
             return true;
     }
 
-    public function ajaxResponseCode(array $data, $code = 200) {
+    public function ajaxResponseCode(array $data, $code = 200)
+    {
         http_response_code($code);
         die(json_encode($data));
     }
 
-    public function ajaxResponseUnauthorized() {
-        $this->ajaxResponseCode(array(),401);
+    public function ajaxResponseUnauthorized()
+    {
+        $this->ajaxResponseCode(array(), 401);
     }
 
-    public function ajaxResponseInternalError($message = NULL) {
+    public function ajaxResponseInternalError($message = NULL)
+    {
         if ($message) {
-            $response = array("message"=>$message);
+            $response = array(
+                'message' => $message
+            );
         } else
             $response = array();
-        $this->ajaxResponseCode($response,500);
+        $this->ajaxResponseCode($response, 500);
     }
 
-    public function ajaxResponseBadRequest($message = NULL) {
+    public function ajaxResponseBadRequest($message = NULL)
+    {
         if ($message) {
-            $response = array("message"=>$message);
+            $response = array(
+                'message' => $message
+            );
         } else
             $response = array();
-        $this->ajaxResponseCode($response,400);
+        $this->ajaxResponseCode($response, 400);
     }
 
-    public function ajaxResponseNotFound($message = NULL) {
+    public function ajaxResponseNotFound($message = NULL)
+    {
         if ($message) {
-            $response = array("message"=>$message);
+            $response = array(
+                'message' => $message
+            );
         } else
             $response = array();
-        $this->ajaxResponseCode($response,404);
+        $this->ajaxResponseCode($response, 404);
     }
 }

@@ -35,8 +35,8 @@ class ChanceController extends \AjaxController
 
             return false;
         }
-        $this->session->get(Player::IDENTITY)->markOnline();
 
+        $this->session->get(Player::IDENTITY)->markOnline();
         return true;
     }
 
@@ -187,7 +187,7 @@ class ChanceController extends \AjaxController
 
             if ($game->getOption('p'))
                 if ($player->getBalance()['Points'] < $game->getOption('p'))
-                    $this->ajaxResponse(array(), 0, 'INSUFFICIENT_FUNDS');
+                    $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
                 else
                     $player->addPoints($game->getOption('p') * -1, $game->getTitle($player->getLang()));
 
@@ -227,7 +227,7 @@ class ChanceController extends \AjaxController
         if ($this->session->has($key))
             $this->ajaxResponseCode($response);
         else
-            $this->ajaxResponse(array(), 0, 'GAME_NOT_ENABLED');
+            $this->ajaxResponseBadRequest('GAME_NOT_ENABLED');
     }
 
     public function playAction($key = 'QuickGame', $id = null)
@@ -267,7 +267,7 @@ class ChanceController extends \AjaxController
         }
 
         if ($error)
-            $this->ajaxResponse(array(), 0, $error);
+            $this->ajaxResponseBadRequest($error);
 
         $response = $game->doMove($cell);
 
@@ -296,7 +296,7 @@ class ChanceController extends \AjaxController
 
             } else {
                 $player->writeLog(array('action' => 'CHEAT', 'desc' => $key, 'status' => 'danger'));
-                $this->ajaxResponse(array(), 0, 'CHEAT_GAME');
+                $this->ajaxResponseBadRequest('CHEAT_GAME');
             }
 
         }
