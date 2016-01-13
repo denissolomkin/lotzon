@@ -110,6 +110,10 @@ class LotteryController extends \AjaxController
             $this->ajaxResponseCode(array("message"=>"PRICE_NOT_SAME"),403);
         }
 
+        if ($player->getGoldTicket()>0) {
+            $this->ajaxResponseCode(array("message"=>"ALREADY_BOUGHT"),400);
+        }
+
         try {
             \TicketsModel::instance()->beginTransaction();
             $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
