@@ -138,15 +138,6 @@ class LotteryTicket extends Entity
                         throw new EntityException("INVALID_COMBINATION", 400);       
                     } 
                 }
-                $owner = new Player();
-                $owner->setId($this->getPlayerId());
-                $tiketsAlreadyFilled = TicketsModel::instance()->getPlayerUnplayedTickets($owner);
-                if (count($tiketsAlreadyFilled) >= 5) {
-                    throw new EntityException("LIMIT_EXCEEDED", 400);       
-                }
-                if (!empty($tiketsAlreadyFilled[$this->getTicketNum()])) {
-                    throw new EntityException("ALREADY_FILLED", 400);          
-                }
             break;
             default :
                 throw new EntityException("Object validation failed", 500);

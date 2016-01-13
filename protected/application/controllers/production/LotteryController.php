@@ -44,6 +44,17 @@ class LotteryController extends \AjaxController
             return false;
         }
 
+        if (\TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())[$ticket->getTicketNum()] !== null) {
+            $res = array(
+                "message" => "TICKET_ALREADY_FILLED",
+                "tickets" => array(
+                    "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
+                )
+            );
+            $this->ajaxResponseCode($res, 403);
+            return false;
+        }
+
         if ($ticket->getIsGold()==true) {
             $player = new Player;
             $player->setId($ticket->getPlayerId())->fetch();
