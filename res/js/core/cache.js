@@ -85,8 +85,6 @@
                 } else {
                     localStorage.setItem(this.storages.session, null);
                 }
-
-                sessionStorage.clear();
             }
 
             for (var key in this.storages)
@@ -100,7 +98,7 @@
         "detect": function () {
 
             if (this.isEnabled === null)
-                this.isEnabled = typeof localStorage !== 'undefined' && typeof sessionStorage !== 'undefined';
+                this.isEnabled = typeof localStorage !== 'undefined';
             D.log(['Cache.detect:', this.isEnabled], 'cache');
 
             return this;
@@ -150,22 +148,22 @@
                 case !this.isEnabled:
                     storage[this.storages.templates]
                         = storage[this.storages.languages]
+                        = storage[this.storages.local]
+                        = storage[this.storages.session]
                         = storage[this.storages.validity.cache]
                         = storage[this.storages.validity.templates]
                         = storage[this.storages.validity.languages]
-                        = storage[this.storages.local]
-                        = storage[this.storages.session]
                         = {};
                     break;
 
                 case this.isEnabled:
                     storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.storages.templates)) || {};
                     storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.storages.languages)) || {};
+                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.local)) || {};
+                    storage[this.storages.session] = JSON.parse(localStorage.getItem(this.storages.session)) || {};
                     storage[this.storages.validity.cache] = JSON.parse(localStorage.getItem(this.storages.validity.cache)) || {};
                     storage[this.storages.validity.templates] = JSON.parse(localStorage.getItem(this.storages.validity.templates)) || {};
                     storage[this.storages.validity.languages] = JSON.parse(localStorage.getItem(this.storages.validity.languages)) || {};
-                    storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.local)) || {};
-                    storage[this.storages.session] = JSON.parse(localStorage.getItem(this.storages.session)) || {};
                     break;
 
             }
@@ -275,7 +273,7 @@
                                 }
                             }
 
-                        } else if (cache) {
+                        } else if (cache && !isNumeric(needle)) {
 
                             if (Object.size(list) > offset) {
 
@@ -435,10 +433,11 @@
                 D.log('Cache.remove:' + key.join('-'));
                 DOM.remove(document.getElementById(key.join('-')));
 
-                if (this.delete(this.storages.local, key))
-                    this.save(this.storages.local);
-                else if (this.delete(this.storages.session, key))
-                    this.save(this.storages.session);
+                var find = this.find(key);
+
+                if (find)
+                    if (this.delete(this.storages[find.storage], key))
+                        this.save(this.storages[find.storage]);
 
             }
         },
@@ -497,7 +496,6 @@
         },
 
         "update": function (object) {
-            console.log(object);
             return this.push(object, null, true)
         },
 
@@ -549,7 +547,6 @@
 
         "extend": function (data, storage) {
 
-
             var source = data.res || data;
 
             if (data.key) {
@@ -572,10 +569,6 @@
 
         },
 
-        "isValid": function () {
-
-        },
-
         "validate": function (key, forUpdateOrStorage, forUpdate) {
 
             if (key) {
@@ -594,7 +587,7 @@
 
         "partials": function (template) {
 
-            matches = [];
+            var matches = [];
             template.replace(
                 /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
                 function (m, p) {

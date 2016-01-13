@@ -278,6 +278,14 @@
         },
 
         getAvatar: function (img, id, width) {
+
+            if('nodeType' in this){
+                this.classList.remove('loading');
+                this.style.background = 'none';
+                this.src = '/res/img/default.jpg';
+                return;
+            }
+
             img = typeof img === 'string' ? img : this.img;
             id = typeof id === 'string' ? id : this.id;
             width = typeof width === 'number' ? width : 200;

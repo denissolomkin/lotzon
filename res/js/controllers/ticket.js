@@ -103,9 +103,8 @@
             return Ticket.countBalls() === Tickets.requiredBalls
         },
 
-        update: function (response) {
+        update: function () {
 
-            Object.deepExtend(Tickets, response.json);
             Ticket.render();
             return true;
 

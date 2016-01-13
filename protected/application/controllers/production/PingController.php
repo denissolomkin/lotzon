@@ -61,7 +61,7 @@ class PingController extends \AjaxController
                 "img" => null
             ),
             "text"    => "Привет, как дела?",
-            'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:3,
+            'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:5,
             'timeout' => 'close'
         );
 
@@ -221,7 +221,7 @@ class PingController extends \AjaxController
                             'name' => $message->getPlayerName(),
                         ),
                         "text"    => $message->getText(),
-                        'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:3,
+                        'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:5,
                         'timeout' => 'close'
                     );
                 }

@@ -12,8 +12,6 @@
 
             markRead: function (data) {
 
-                console.log(this.hasOwnProperty('nodeType'), this, typeof this, data);
-
                 var message = {
                     'communication': {
                         'messages': {}
@@ -23,7 +21,6 @@
                         ? DOM.up('.message', this).getAttribute('data-id')
                         : data.json.id;
 
-
                 message.communication.messages[id] = {
                     id: id,
                     isUnread: false
@@ -32,8 +29,6 @@
                 Cache.update(message);
 
             }
-
-
         },
 
         do: {

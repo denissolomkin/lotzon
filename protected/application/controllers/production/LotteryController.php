@@ -1,8 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \LotteriesModel, \TicketsModel, \LotterySettings, \LotterySettingsModel, \QuickGamesModel;
-use \ChanceGamesModel, \GameSettingsModel;
+use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \TicketsModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -18,7 +17,7 @@ class LotteryController extends \AjaxController
         $this->session = new Session();
         parent::init();
         if ($this->validRequest()) {
-            if (!$this->session->get(Player::IDENTITY) instanceof PLayer) {
+            if (!$this->session->get(Player::IDENTITY) instanceof Player) {
                 $this->ajaxResponseUnauthorized();
                 return false;
             }
@@ -37,7 +36,7 @@ class LotteryController extends \AjaxController
         if (! \TicketsModel::instance()->isAvailableTicket($ticket->getPlayerId(), $ticket->getTicketNum())) {
             $res = array(
                 "message" => "TICKET_NOT_AVAILABLE",
-                "res"     => array(
+                "tickets" => array(
                     "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
                 )
             );
@@ -51,7 +50,7 @@ class LotteryController extends \AjaxController
             if ($player->getGoldTicket()<1) {
                 $res = array(
                     "message" => "TICKET_NOT_BOUGHT",
-                    "res"     => array(
+                    "tickets" => array(
                         "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
                     )
                 );
@@ -71,11 +70,11 @@ class LotteryController extends \AjaxController
             \TicketsModel::instance()->commit();
         } catch (EntityException $e) {
             \TicketsModel::instance()->rollBack();
-            $this->ajaxResponseInternalError();
+            $this->ajaxResponseInternalError($e->getMessage());
         }
 
         $res = array(
-            "res"     => array(
+            "tickets" => array(
                 "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
             )
         );
@@ -117,7 +116,7 @@ class LotteryController extends \AjaxController
             \TicketsModel::instance()->rollBack();
             $res = array(
                 "message" => "MONEY_NO_ENOUGH",
-                "res"     => array(
+                "tickets" => array(
                     "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
                 )
             );
@@ -130,7 +129,7 @@ class LotteryController extends \AjaxController
 
         $player->fetch();
         $res = array(
-            "res"    => array(
+            "tickets" => array(
                 "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
             ),
             "player" => array(
