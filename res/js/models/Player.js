@@ -130,7 +130,7 @@
                                 count = this.getCount(object[prop]);
                                 break;
                             } else {
-                                count = parseInt(Player.count[key]);
+                                count = parseInt(object[prop]);
                                 break;
                             }
                         } else if (typeof object[prop] === 'object') {
