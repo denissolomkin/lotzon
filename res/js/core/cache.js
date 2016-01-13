@@ -35,7 +35,7 @@
                     this.remove(init.delete);
 
                 if (init.update)
-                    this.update(init.update, null, true);
+                    this.update(init.update);
 
                 if (init.callback) {
                     eval(init.callback);
@@ -60,7 +60,7 @@
                 if (key) {
                     return this.set(key, init);
                 } else if (init.res) {
-                    this.update(init.res);
+                    this.push(init.res);
                 }
 
             } else {
@@ -230,11 +230,11 @@
             return this;
         },
 
-        "where": function (path) {
+        "find": function (path) {
             return this.get(path, null, true);
         },
 
-        "get": function (path, storage, where) {
+        "get": function (path, storage, isFind) {
 
             var cache,
                 needle;
@@ -277,7 +277,7 @@
 
                         } else if (cache) {
 
-                            if(Object.size(list) > offset) {
+                            if (Object.size(list) > offset) {
 
                                 cache = {};
                                 var i = 0,
@@ -297,13 +297,13 @@
                             } else
                                 cache = false;
 
-                            if(cache && !Object.size(cache))
+                            if (cache && !Object.size(cache))
                                 cache = false;
                         }
                     }
 
                     D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
-                    return where && cache
+                    return isFind && cache
                         ? {
                         id     : needle,
                         storage: storage,
@@ -315,7 +315,7 @@
                 default:
 
                     D.log(['Cache.get:', path, storage], 'cache');
-                    return this.get(path, 'local', where) || this.get(path, 'session', where);
+                    return this.get(path, 'local', isFind) || this.get(path, 'session', isFind);
                     break;
             }
 
@@ -366,7 +366,6 @@
                     this.extend(data, storage)
                         .save(storage);
             }
-
 
 
             return source || data.res || data;
@@ -497,11 +496,12 @@
             return path.filter(Boolean);
         },
 
-        "findById": function (path, id) {
-
+        "update": function (object) {
+            console.log(object);
+            return this.push(object, null, true)
         },
 
-        "update": function (object, key, forUpdate) {
+        "push": function (object, key, forUpdate) {
 
             if (object && typeof object === 'object') {
 
@@ -512,7 +512,7 @@
                             var keys = key && key.slice() || [];
                             keys.push(prop);
                             this.validate(keys.join('-'), true);
-                            this.update(object[prop], keys, forUpdate);
+                            this.push(object[prop], keys, forUpdate);
                         }
                     }
 
@@ -521,9 +521,10 @@
                     key = key.join('-');
 
                     if (forUpdate) {
-                        var cache = this.where(key);
+                        var cache = this.find(key);
                         if (cache) {
-                            Object.deepExtend(object, cache.object);
+                            Object.deepExtend(cache.object, object);
+                            object = cache.object;
                             this.set(null, {
                                 key  : key.replace(/-\d+$/g, '-' + cache.id),
                                 res  : object,

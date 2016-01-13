@@ -34,7 +34,7 @@
 
         error:{
 
-            gold: function(){
+            exchange: function(){
 
                 return true;
 

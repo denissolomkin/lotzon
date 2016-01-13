@@ -214,9 +214,7 @@ var Games = {
             Games.random.conf.play = !0;
             $(".moment-game-box").addClass('game-started');
             Games.random.get(".minefield button:not(.played)", data.json.id); // data.json.id -- не используеться пока
-
-            if (data.json.block)
-                Content.banner(data);
+            Content.banner.moment(data);
         },
         get: function (elements, id) {
 

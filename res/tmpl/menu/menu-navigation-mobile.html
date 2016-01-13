@@ -15,8 +15,7 @@
     <ul class="{{@key}}">
         {{#each this}}
         <li>
-            <a href="/{{.}}">{{i18n "menu" .}}</a>
-            {{{countHTML .}}}
+            <a href="/{{.}}">{{i18n "menu" .}}{{{countHTML .}}}</a>            
         </li>
         {{/each}}
         <hr/>

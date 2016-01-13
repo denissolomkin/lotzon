@@ -35,7 +35,7 @@
 
         after: {
 
-            reply: function (data) {
+            reply: function () {
 
                 var form = this;
 

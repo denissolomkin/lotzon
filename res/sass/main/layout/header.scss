@@ -9,18 +9,15 @@
   z-index: 100;
 }
 
-
-
-
 .header-logo {
   float: left;
   display: block;
   width: 90px;
-  height: 18px;
   position: relative;
-  top: 11px;
   left: 10px;
-  background: url(img/sprite.png) -227px 0;
+  font-size: 85px;
+  line-height: 55px;
+  margin-top: -15px;
 }
 
 @font-face {

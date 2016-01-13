@@ -52,7 +52,7 @@
         <div class="header-left clearfix">
 
             <!-- Logo -->
-            <span class="header-logo"></span>
+            <span class="header-logo i-lotzon"></span>
 
             <!-- MENU -->
             <nav id="menu-navigation" class="menu"></nav>

@@ -105,7 +105,7 @@
 
         update: function (response) {
 
-            Object.deepExtend(Tickets, response);
+            Object.deepExtend(Tickets, response.json);
             Ticket.render();
             return true;
 

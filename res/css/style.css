@@ -1093,11 +1093,11 @@ input.input-radio:checked + label.input-radio:before {
   float: left;
   display: block;
   width: 90px;
-  height: 18px;
   position: relative;
-  top: 11px;
   left: 10px;
-  background: url(img/sprite.png) -227px 0; }
+  font-size: 85px;
+  line-height: 55px;
+  margin-top: -15px; }
 
 @font-face {
   font-family: 'fontello';
@@ -4428,7 +4428,6 @@ and open the template in the editor.
       line-height: 30px;
       border-radius: 3px;
       position: relative;
-      padding-bottom: 20px;
       background: #cdcf9f; }
     .ticket-tabs li.active:last-of-type {
       color: #cdcf9f; }
@@ -6067,7 +6066,7 @@ and open the template in the editor.
 .ae-current-combination {
   margin-left: 20px; }
 
-.ae-current-combination li {
+.ae-current-combination > * {
   float: left;
   width: 35px;
   height: 35px;
@@ -6076,7 +6075,7 @@ and open the template in the editor.
   font-size: 16px;
   text-align: center;
   cursor: pointer; }
-  .ae-current-combination li:last-child {
+  .ae-current-combination > *:last-child {
     margin-right: 0; }
 
 .ae-socials {

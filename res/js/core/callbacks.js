@@ -143,6 +143,8 @@
 
             "communication-messages": Messages.init,
 
+            "users-view-messages": Messages.after.markRead,
+
             "lottery": Lottery.init,
             "lottery-history-view": Lottery.view,
             "lottery-ticket-item": Ticket.activate,

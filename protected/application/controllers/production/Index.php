@@ -102,6 +102,7 @@ class Index extends \SlimController\SlimController
         $isMobile = $detect->isMobile();
 
         $session   = new Session();
+        $session->set('isMobile', $isMobile);
         $playerObj = $session->get(Player::IDENTITY)->fetch();
 
         $gamePlayer = new \GamePlayer();

@@ -3,27 +3,43 @@
     Messages = {
 
         doneTypingInterval: 1000,
-        typingTimer: null,
-        init: function () {
+        typingTimer       : null,
+        init              : function () {
 
         },
 
-        after:{
+        after: {
 
-            markRead: function () {
+            markRead: function (data) {
 
-                var node = DOM.up('message', this);
-                node.classList.remove('message-unread');
-                Player.decrement('messages');
-                DOM.remove(this);
+                console.log(this.hasOwnProperty('nodeType'), this, typeof this, data);
+
+                var message = {
+                    'communication': {
+                        'messages': {}
+                    }},
+
+                    id = ('nodeType' in this)
+                        ? DOM.up('.message', this).getAttribute('data-id')
+                        : data.json.id;
+
+
+                message.communication.messages[id] = {
+                    id: id,
+                    isUnread: false
+                };
+
+                Cache.update(message);
 
             }
+
+
         },
 
         do: {
 
             markRead: function (event) {
-                Form.delete.call(this, '/users/' + DOM.up('message', this).getAttribute('data-id') + '/messages');
+                Form.delete.call(this, '/users/' + DOM.up('.message', this).getAttribute('data-id') + '/messages');
             },
 
             clearUser: function () {
@@ -42,9 +58,9 @@
             setUser: function () {
 
                 var user = {
-                    id: this.getAttribute('data-user-id'),
+                    id  : this.getAttribute('data-user-id'),
                     name: this.getAttribute('data-user-name'),
-                    img: this.getAttribute('data-user-img')
+                    img : this.getAttribute('data-user-img')
                 };
 
                 document.getElementById('communication-messages-new')
@@ -55,7 +71,7 @@
 
                 R.push({
                     template: 'communication-messages-new-user',
-                    json: user
+                    json    : user
                 });
 
             },
@@ -68,8 +84,8 @@
                     Messages.typingTimer = setTimeout(function () {
                         R.push({
                             template: 'communication-messages-new-users',
-                            href: '/users/search',
-                            query: {name: find}
+                            href    : '/users/search',
+                            query   : {name: find}
                         });
                     }, Messages.doneTypingInterval);
 

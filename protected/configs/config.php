@@ -556,7 +556,8 @@ Config::instance()->publicResources = array(
     ),
     '/users/:userid/messages' => array(
         'get'    => 'controllers\production\MessagesController:list',
-        'delete' => 'controllers\production\MessagesController:markRead'
+        'delete' => 'controllers\production\MessagesController:markRead',
+        'post' => 'controllers\production\MessagesController:markRead'
     ),
     /**
      * Blog

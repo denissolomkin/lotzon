@@ -112,6 +112,7 @@ class MessagesController extends \AjaxController
             $response['res']['users'][$userId]['messages'][$id] = $message->export('list');
         }
 
+        /*
         $first = array_shift($list);
         if (($offset === NULL) && (!is_null($first))) {
             //if (($first->getStatus() == 0)&&($first->getToPlayerId() == $playerId)) {
@@ -127,6 +128,8 @@ class MessagesController extends \AjaxController
                 );
             //}
         }
+        */
+
         MessagesModel::instance()->markRead($userId,$playerId);
         $response['player']['count']['messages'] = \MessagesModel::instance()->getStatusCount($playerId, 0);
 
@@ -142,18 +145,19 @@ class MessagesController extends \AjaxController
 
         $this->authorizedOnly();
 
+        $response = array();
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
         try {
             MessagesModel::instance()->markRead($userId, $playerId);
+            $response['player']['count']['messages'] = MessagesModel::instance()->getStatusCount($playerId, 0);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
 
             return false;
         }
 
-        $this->ajaxResponseCode(array());
-
+        $this->ajaxResponseCode($response);
         return true;
     }
 

@@ -42,7 +42,7 @@
                 "stat": false && /192.168.56.101/.test(location.hostname),
                 "alert": false,
                 "render": false,
-                "cache": true,
+                "cache": false,
                 "i18n": false,
                 "func": true,
                 "info": true,
