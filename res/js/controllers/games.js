@@ -96,7 +96,7 @@ var Games = {
         timeouts: function (element, time) {
             Games.online.timeout = setTimeout(function () {
                 if ($(element).is(":visible")) {
-                    console.error("timeout>>>>>>> on:visible ", element);
+//                    console.error("timeout>>>>>>> on:visible ", element);
                     $(element).change();
                 } else {
 //                console.error("else",element);
@@ -118,7 +118,7 @@ var Games = {
             // make config
             Games.chance.conf.data = data.json;
 //            alert('chance get init!!!');
-            console.error(" data.json.id >>>>>>>", data.json.id);
+//            console.error(" data.json.id >>>>>>>", data.json.id);
             Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
             // in multiple prizes set first prize as @current@
             $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
@@ -131,7 +131,7 @@ var Games = {
                 if (!Games.chance.conf.play)
                     return false;
                 var cell = $(this).data('cell'), that = this;
-                console.info('>>>', $(that).attr('class'));
+//                console.info('>>>', $(that).attr('class'));
                 // send 
                 Form.get.call(this,
                         {
@@ -204,7 +204,8 @@ var Games = {
     random: {
         conf: {
             data: {},
-            play: !1
+            play: !1,
+            url: "/games/random/play"
         },
         init: function (data) {
             if (!data.json)
@@ -212,6 +213,10 @@ var Games = {
             // make config
             Games.random.conf.data = data.json;
             Games.random.conf.play = !0;
+            //check type of game: default @random@
+            if(data.json.Key && data.json.Key.toLowerCase() === "moment")
+                Games.random.conf.url = "/games/moment/play";
+            
             $(".moment-game-box").addClass('game-started');
             Games.random.get(".minefield button:not(.played)", data.json.id); // data.json.id -- не используеться пока
             Content.banner.moment(data);
@@ -239,7 +244,7 @@ var Games = {
 
                 Form.get.call(this,
                         {
-                            href: '/games/random/play',
+                            href: Games.random.conf.url,
                             data: {'cell': cell},
                             after: function (data) {
                                 Games.random.actions(element, data);
@@ -264,7 +269,7 @@ var Games = {
             }
             // Game winner Fields
             if (data.json.GameField) {
-                console.error("data.json.GameField >>>>>>", data.json);
+                
                 if (data.json.Prize) {
                     $(".moment-game-box").addClass('win');
                 } else {
