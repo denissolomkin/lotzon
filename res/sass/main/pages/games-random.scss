@@ -179,9 +179,12 @@ $gray: #808080;
 }
 @media all and(max-width: 768px) {
     .moment-game-box {
-        
+        .ad{
+            display: none;
+        }
         &:not(.game-started) .message {
-            top: 50%;
+            top: 55%;
+            
             //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
             transform: translateY(-50%);
             margin: 0;

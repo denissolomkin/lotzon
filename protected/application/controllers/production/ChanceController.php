@@ -178,7 +178,7 @@ class ChanceController extends \AjaxController
         }
 
         if ($error)
-            $this->ajaxResponse(array(), 0, $error);
+            $this->ajaxResponseBadRequest($error);
 
         if ($this->session->has($key) && $game = $this->session->get($key)) {
             $response['res'] = $game->export('stat');

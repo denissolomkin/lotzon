@@ -177,6 +177,7 @@
 
             "lottery-gold": Ticket.error.gold,
             "prizes-exchange-goods": Prize.error.exchange,
+            "lottery-ticket": Ticket.update
 
         },
 

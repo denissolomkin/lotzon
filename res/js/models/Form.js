@@ -210,8 +210,17 @@
                         },
 
                         error: function (data) {
+
+                            form.json = data.responseJSON || data;
+                            Cache.init(form.json);
+
                             Form.stop.call(that);
                             D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
+
+                            if (Callbacks['error'][form.callback]) {
+                                D.log(['C.error.callback']);
+                                Callbacks['error'][form.callback].call(that, form);
+                            }
                         }
                     })
                 }

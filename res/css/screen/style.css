@@ -127,24 +127,43 @@ html {
       background: none; }
 
 .menu-main {
-  display: block !important;
-  float: left;
+  display: table !important;
+  /*float: left;*/
   overflow: hidden;
   position: static;
   background: transparent;
   padding: 0;
-  width: 430px; }
-  .menu-main li:first-child {
-    display: none; }
+  width: 450px !important; }
+  .menu-main li {
+    display: table-cell; }
   .menu-main a {
-    float: left;
+    text-align: center;
+    /*float: left;*/
     height: 55px;
     line-height: 55px;
     text-transform: uppercase;
-    padding: 0 13px;
-    font-weight: normal; }
+    padding: 0 5px;
+    font-weight: normal;
+    position: relative;
+    /*debug*/
+    /*    background: rgba(0,0,0,0.3);
+    border: 1px dashed;*/ }
     .menu-main a:hover, .menu-main a.active {
       background: #ffe700; }
+    .menu-main a span {
+      font-size: 15px;
+      color: #fff;
+      padding: 2px 5.5px;
+      background: #fd2502;
+      line-height: 1;
+      display: inline-block;
+      width: auto;
+      height: auto;
+      border-radius: 50em;
+      text-align: center;
+      position: absolute;
+      top: 5px;
+      right: 5px; }
   .menu-main:after {
     display: none; }
 
@@ -1269,7 +1288,7 @@ div.comment-reply-btn {
   .menu-main {
     width: 540px; }
     .menu-main a {
-      padding: 0 23px; }
+      /*padding: 0 23px;*/ }
   .is-countdown {
     width: 200px; }
   .content-box-item.home-blog {

@@ -43,26 +43,46 @@
 }
 
 .menu-main {
-  display: block !important;
-  float: left;
+  display: table !important;
+  /*float: left;*/
   overflow: hidden;
   position: static;
   background: transparent;
   padding: 0;
-  width: 430px;
-  li:first-child {
-    display: none;
+  width: 450px !important;
+  li{
+      display: table-cell;
   }
   a {
-    float: left;
+    text-align: center;
+    /*float: left;*/
     height: 55px;
     line-height: 55px;
     text-transform: uppercase;
-    padding: 0 13px;
+    padding: 0 5px;
     font-weight: normal;
+    position: relative;
+    /*debug*/
+/*    background: rgba(0,0,0,0.3);
+    border: 1px dashed;*/
     &:hover,
     &.active {
       background: #ffe700;
+    }
+    span{
+        font-size: 15px;
+        color: #fff;
+        padding: 2px 5.5px;
+        background: #fd2502;
+        line-height: 1;
+        display: inline-block;
+        width: auto;
+        height: auto;
+        border-radius: 50em;
+        text-align: center;
+        position: absolute;
+        top:5px;
+        right: 5px;
     }
   }
   &:after {

@@ -523,9 +523,6 @@ Config::instance()->publicResources = array(
     '/games/:key/:id/rating' => array(
         'get'  => 'controllers\production\GamesController:rating',
     ),
-    '/games/:key/:id/connect' => array(
-        'get'  => 'controllers\production\GamesController:now',
-    ),
     '/games/:key/:id/now' => array(
         'get'  => 'controllers\production\GamesController:now',
     ),
