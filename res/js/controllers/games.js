@@ -65,6 +65,7 @@ var fakeRandomData = [{
         "res": []
     }
 ];
+
 var Games = {
     online: {
         init: function () {
@@ -208,15 +209,17 @@ var Games = {
             url: "/games/random/play"
         },
         init: function (data) {
-            if (!data.json)
+            if (!data.json){
                 return false;
+            }
             // make config
             Games.random.conf.data = data.json;
             Games.random.conf.play = !0;
             //check type of game: default @random@
-            if(data.json.Key && data.json.Key.toLowerCase() === "moment")
+            if(data.json.Key && data.json.Key.toLowerCase() == "moment"){
                 Games.random.conf.url = "/games/moment/play";
-            
+            }
+//            alert(Games.random.conf.url);
             $(".moment-game-box").addClass('game-started');
             Games.random.get(".minefield button:not(.played)", data.json.id); // data.json.id -- не используеться пока
             Content.banner.moment(data);
@@ -256,8 +259,11 @@ var Games = {
             if (data.json.error)
                 return;
             if (data.json.message && data.json.status === 0) {
-                alert(data.json.message);
-                Games.random.destroy(0);
+//                Games.random.showMessage(data.json.message, 1);
+            $(".moment-game-box .message").html("<p>"+data.json.message+"</p>");
+//                alert("data.json.message, 1", data.json.message);
+//                alert(data.json.message);
+//                Games.random.destroy(0);
                 return;
             }
 
@@ -306,7 +312,7 @@ var Games = {
                     Games.random.conf.play = !1;
 
                     Games.random.showMessage(data.GamePrizes);
-                    Games.random.destroy(5);
+//                    Games.random.destroy(5);
                 }
             }
 
@@ -323,9 +329,11 @@ var Games = {
                         msg += Player.getCurrency() + " ";
                     msg += "</span>";
                 }
-            } else {
+            } else{
+//                alert("else no error!!");
                 msg += Cache.i18n("title-games-chance-card-lose");
             }
+            
             msg += "</p>";
 
             $(".moment-game-box .message").html(msg);

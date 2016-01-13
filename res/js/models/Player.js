@@ -57,7 +57,7 @@
                                     DOM.fadeOut(holders[i]);
                             }
 
-                            if (key === 'notifications'){
+                            if (key === 'notifications') {
                                 Comments.renderNotifications();
                             }
                         }
@@ -114,17 +114,40 @@
             return this;
         },
 
-        getCount: function (key) {
+        getCount: function (key, object) {
 
             var count = 0;
-            if (typeof key === 'string' && Player.count.hasOwnProperty(key))
-                if (typeof Player.count[key] === 'object') {
-                    for (var prop in Player.count[key]) {
-                        if(Player.count[key].hasOwnProperty(prop))
-                            count += parseInt(Player.count[key][prop]);
+            object = object || Player.count;
+
+            if (!key) {
+                count = this.getCount(object);
+
+            } else if (typeof key === 'string') {
+                for (var prop in object) {
+                    if (object.hasOwnProperty(prop)) {
+                        if (prop === key) {
+                            if (typeof object[prop] === 'object') {
+                                count = this.getCount(object[prop]);
+                                break;
+                            } else {
+                                count = parseInt(Player.count[key]);
+                                break;
+                            }
+                        } else if (typeof object[prop] === 'object') {
+                            count += parseInt(this.getCount(key, object[prop]));
+                        }
                     }
-                } else
-                    count = parseInt(Player.count[key]);
+                }
+
+            } else if (typeof key === 'object') {
+                for (var prop in key) {
+                    if (key.hasOwnProperty(prop)) {
+                        count += (typeof key[prop] === 'object') ? this.getCount(key[prop]) : parseInt(key[prop]);
+                    }
+                }
+            }
+
+            console.log(key, object, count);
             return count;
         },
 
@@ -279,7 +302,7 @@
 
         getAvatar: function (img, id, width) {
 
-            if('nodeType' in this){
+            if ('nodeType' in this) {
                 this.classList.remove('loading');
                 this.style.background = 'none';
                 this.src = '/res/img/default.jpg';

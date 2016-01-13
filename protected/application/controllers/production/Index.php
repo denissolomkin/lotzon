@@ -128,16 +128,18 @@ class Index extends \SlimController\SlimController
             "birthday" => $playerObj->getBirthday(),
             "count"    => array(
                 "lotteries"     => $playerObj->getGamesPlayed(),
-                "notifications" => array(
-                    "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId())
-                ),
                 "blog"          => 4,
-                "communication" => 4,
-                "users"         => 12,
-                "birthdays"     => 0,
-                "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0),
-                "chronicle"     => 2,
-                "requests"      => 11,
+                "communication" => array(
+                    "notifications" => array(
+                        "server" => 2+\CommentsModel::instance()->getNotificationsCount($playerObj->getId())
+                    ),
+                    "messages"      => 1+\MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
+                ),
+                "users"         => array(
+                    "birthdays"     => 0,
+                    "chronicle"     => 2,
+                    "requests"      => 11
+                ),
                 "friends"       => 56
             ),
             "favorite" => $playerObj->getFavoriteCombination(),

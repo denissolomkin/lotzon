@@ -20,17 +20,17 @@
                     <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
                         {{#if n}}
                         <span class="item">{{n}}</span>
-                        <span class="instruction">{{../field.c}} желтых {{reverseNum ../prizes.length-1 @index}} промахов </span>
+                        <span class="instruction">{{../field.c}} {{i18n "title-of-yellow"}} {{reverseNum ../prizes.length-1 @index}} {{i18n "title-of-miss"}} </span>
                         <!--<img src="{{s}}" alt="">-->
                         {{else}}
                         <span class="item">{{v}} </span>
-                        <span class="currency">{{t}} </span>
+                        <span class="currency">{{#if (eq t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}} </span>
                         {{/if}}
                     </div>
                     {{/reverse}}
                 </div>
                 <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play"}}</button>
-                <p>игра началась</p>
+                <p>{{i18n "title-games-chance-game-is-started"}}</p>
                 <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
             </div>
             <div class="win">

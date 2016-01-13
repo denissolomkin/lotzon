@@ -5,7 +5,10 @@
     <a href="/users/{{user.id}}/messages">
         <div class="message-img">
         <div class="service-pop-up">{{i18n "title-mark-online"}}</div>
-            <img src="{{avatar user.img user.id 50}}" alt="">
+            <img src="{{avatar user.img user.id 50}}"
+                 class="loading"
+                 onload="this.style.background = 'none'"
+                 onerror="Player.getAvatar.call(this)">
         </div>
         <div class="message-name">{{user.name}}</div>
         <div class="message-text">
