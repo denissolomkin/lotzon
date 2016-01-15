@@ -46,8 +46,8 @@ class GamePlayersDBProcessor implements IProcessor
                 ':cc'      => $player->getCountry(),
                 ':name'    => $player->getName(),
                 ':avatar'  => $player->getAvatar(),
-                ':admin'   => $player->isAdmin(),
-                ':bot'     => $player->isBot(),
+                ':admin'   => (int)$player->isAdmin(),
+                ':bot'     => (int)$player->isBot(),
                 ':appid'   => $player->getAppId(),
                 ':appuid'  => $player->getAppUid(),
                 ':appname' => $player->getAppName(),
@@ -62,6 +62,29 @@ class GamePlayersDBProcessor implements IProcessor
 
     }
 
+    public function getAvailableBots()
+    {
+        $sql = "SELECT `GamesTmpBots`.id, `GamesTmpBots`.name, `GamesTmpBots`.avatar, `GamesTmpBots`.country, `GamesTmpBots`.lang
+              FROM `GamesTmpBots`
+              LEFT JOIN `GamesTmpPlayers`
+                ON `GamesTmpBots`.id = `GamesTmpPlayers`.PlayerId
+              WHERE `GamesTmpBots`.utc = :utc
+                AND (`GamesTmpPlayers`.PlayerId IS NULL
+                OR (`GamesTmpPlayers`.AppUid IS NULL AND `GamesTmpPlayers`.AppMode IS NULL ))";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':utc' => ceil((date('G') + 1)
+                    / (24 / (\SettingsModel::instance()->getSettings('counters')->getValue('BOT_TIMEZONES')?:1)) )
+            ));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
+        }
+
+        return $res->fetchAll();
+    }
 
     public function create(Entity $player)
     {
@@ -126,6 +149,36 @@ class GamePlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
+    public function hasStack($key = null, $mode = null)
+    {
+        $sql = "SELECT COUNT(*) FROM `GamesTmpPlayers`
+            WHERE `AppMode` IS NOT NULL
+            AND `AppUid` IS NULL";
+
+        if (isset($key)) {
+
+            if (is_numeric($key)) {
+                $sql .= " AND `AppId` = '" . $key . "'";
+            } else {
+                $sql .= " AND `AppName` = '" . $key . "'";
+            }
+
+            if (isset($mode)){
+                $sql .= " AND `AppMode` = '" . $mode . "'";
+            }
+        }
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
+        }
+
+        return $res->fetchColumn(0);
+    }
+
     public function getStack($key = null, $mode = null)
     {
         $sql = "SELECT * FROM `GamesTmpPlayers`
@@ -145,7 +198,7 @@ class GamePlayersDBProcessor implements IProcessor
             }
 
         } else {
-            $sql .= ' AND `Bot` IS NULL';
+            // $sql .= ' AND `Bot` IS NULL';
         }
 
         try {

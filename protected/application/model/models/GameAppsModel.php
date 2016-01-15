@@ -17,6 +17,21 @@ class GameAppsModel extends Model
         return __CLASS__;
     }
 
+    public function countApps($key = null, $status = null)
+    {
+        return $this->getProcessor()->countApps($key, $status);
+    }
+
+    public function countWaitingApps($key = null)
+    {
+        return $this->getProcessor()->countApps($key, 0);
+    }
+
+    public function countRunningApps($key = null)
+    {
+        return $this->getProcessor()->countApps($key, 1);
+    }
+
     public function getList($key = null)
     {
         return $this->getProcessor()->getList($key);

@@ -87,15 +87,17 @@ class GamePlayer extends Entity
                 ->setLang($data->getLang())
                 ->setName($data->getNicname())
                 ->setAvatar($data->getAvatar())
-                ->setAdmin($data->isAdmin());
+                ->setAdmin($data->isAdmin())
+                ->setBot(0);
 
         } else if ($from == 'bot') {
 
             $this->setId($data->id)
-                ->setCountry('RU')
-                ->setLang('RU')
+                ->setCountry($data->country)
+                ->setLang($data->lang)
                 ->setName($data->name)
                 ->setAvatar($data->avatar)
+                ->setAdmin(0)
                 ->setBot(1);
         }
 
@@ -115,7 +117,13 @@ class GamePlayer extends Entity
                     'lang'    => $this->getLang(),
                     'country' => $this->getCountry(),
                     'admin'   => $this->isAdmin(),
-                    'name'    => $this->getName());
+                    'name'    => $this->getName()
+                );
+
+                if($this->isBot()){
+                    $ret->bot = true;
+                }
+
                 break;
         }
 

@@ -22,9 +22,19 @@ class GamePlayersModel extends Model
         return $this->getProcessor()->getList();
     }
 
+    public function getAvailableBots()
+    {
+        return $this->getProcessor()->getAvailableBots();
+    }
+
     public function getOnline($gameId)
     {
         return $this->getProcessor()->getOnline($gameId);
+    }
+
+    public function hasStack($key = null, $mode = null)
+    {
+        return $this->getProcessor()->hasStack($key, $mode);
     }
 
     public function getStack($key = null, $mode = null)
