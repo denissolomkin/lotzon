@@ -106,10 +106,6 @@ html {
   height: 55px;
   float: left; }
 
-.header-logo {
-  width: 100px;
-  margin-right: 22px; }
-
 .menu {
   display: block !important;
   overflow: visible;
@@ -119,7 +115,20 @@ html {
   font-size: 15px;
   width: auto;
   display: block;
-  font: 15px "PT Sans", sans-serif; }
+  font: 15px; }
+  .menu > .menu-item {
+    padding: 10px 0 0 0;
+    min-width: 170px; }
+    .menu > .menu-item > li > a {
+      height: 40px;
+      line-height: 40px;
+      margin: 0;
+      transition: all .2s linear;
+      padding: 0 30px; }
+      .menu > .menu-item > li > a:hover {
+        background: #f4f4f4; }
+    .menu > .menu-item.menu-more li:last-child {
+      border-top: 1px solid #d3d3d3; }
   .menu a {
     text-align: left;
     padding: 0; }
@@ -128,12 +137,12 @@ html {
 
 .menu-main {
   display: table !important;
-  /*float: left;*/
+  float: left;
   overflow: hidden;
   position: static;
   background: transparent;
   padding: 0;
-  width: 450px !important; }
+  width: 405px; }
   .menu-main li {
     display: table-cell; }
   .menu-main a {
@@ -146,14 +155,14 @@ html {
     font-weight: normal;
     position: relative;
     /*debug*/
-    /*    background: rgba(0,0,0,0.3);
-    border: 1px dashed;*/ }
+    /*            background: rgba(0,0,0,0.3);
+            border: 1px dashed;*/ }
     .menu-main a:hover, .menu-main a.active {
       background: #ffe700; }
     .menu-main a span {
-      font-size: 15px;
+      font-size: 12px;
       color: #fff;
-      padding: 2px 5.5px;
+      padding: 2px 5.2px;
       background: #fd2502;
       line-height: 1;
       display: inline-block;
@@ -210,8 +219,18 @@ html {
   .menu-balance-item:last-child {
     margin-bottom: 0; }
 
+.menu-btns > .menu-profile-btn.menu-btn-item,
+.menu-btns > .menu-btn.menu-btn-item {
+  width: 54px; }
+
 .menu-btn-item {
-  padding: 0 20px; }
+  padding: 0;
+  box-sizing: border-box;
+  /*    width: 54px;*/ }
+  .menu-btn-item > i[class^="i-"] {
+    text-align: center;
+    display: block;
+    width: 100%; }
   .menu-btn-item.menu-btn .i-menu:before {
     top: 13px; }
   .menu-btn-item.menu-profile-btn .i-person:before {
@@ -219,9 +238,8 @@ html {
 
 .menu-btns {
   height: 55px;
-  position: absolute;
-  top: 0;
-  right: 0; }
+  position: relative;
+  float: right; }
 
 .cabinet-balance-count:first-child {
   margin-right: 5px; }
@@ -235,9 +253,6 @@ html {
   font-size: 22px; }
 
 .menu-balance-btn {
-  display: none; }
-
-.menu-btn-item.menu-logout-btn {
   display: none; }
 
 .header-right {
@@ -343,18 +358,6 @@ html {
 
 .is-countdown {
   width: 200px; }
-
-.menu-logout {
-  display: none;
-  top: auto;
-  bottom: -160px;
-  z-index: 51;
-  width: 167px;
-  text-align: center;
-  margin: 0 auto;
-  padding: 10px 30px;
-  border-top: 1px solid #CBC7C4;
-  box-shadow: none; }
 
 #lottery-history-view .ghd-game-inf tr th:nth-child(2) {
   padding-left: 90px; }
@@ -1281,12 +1284,12 @@ div.comment-reply-btn {
   .header-left {
     width: 770px; }
   .header-logo {
-    margin-right: 65px; }
+    /*margin-right: 65px;*/ }
   .text-result {
     position: relative;
     float: right; }
   .menu-main {
-    width: 540px; }
+    width: 475px; }
     .menu-main a {
       /*padding: 0 23px;*/ }
   .is-countdown {

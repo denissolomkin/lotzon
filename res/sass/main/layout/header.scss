@@ -1,60 +1,79 @@
 .site-top {
-  display: none;
+    display: none;
 }
 
 .header {
-  background: #f2efed;
-  position: relative;
-  width: 100%;
-  z-index: 100;
+    position: relative;
+    width: 100%;
+    z-index: 100;
+    > .sticky_box{
+        width: 100%;
+        height: 55px;
+        background: #f2efed;
+    }
 }
 
 .header-logo {
-  float: left;
-  display: block;
-  width: 90px;
-  position: relative;
-  left: 10px;
-  font-size: 85px;
-  line-height: 55px;
-  margin-top: -15px;
+    float: left;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 55px;
+    margin-right: 20px;
+    &.i-lotzon:before{
+        font-size: 129px;
+        line-height: 0.22;
+        position: relative;
+        top: 50%;
+        transform: translateY(-53%);
+    }
 }
 
 @font-face {
-  font-family: 'fontello';
-  src: url('fonts/fontello/fontello.eot?59386181');
-  src: url('fonts/fontello/fontello.eot?59386181#iefix') format('embedded-opentype'),
-    url('fonts/fontello/fontello.woff?59386181') format('woff'),
-    url('fonts/fontello/fontello.ttf?59386181') format('truetype'),
-    url('fonts/fontello/fontello.svg?59386181#fontello') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'fontello';
+    src: url('fonts/fontello/fontello.eot?59386181');
+    src: url('fonts/fontello/fontello.eot?59386181#iefix') format('embedded-opentype'),
+        url('fonts/fontello/fontello.woff?59386181') format('woff'),
+        url('fonts/fontello/fontello.ttf?59386181') format('truetype'),
+        url('fonts/fontello/fontello.svg?59386181#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: 'fontello';
+        src: url('fonts/fontello.svg?65723038#fontello') format('svg');
+    }
+}
+
+
+@font-face {
+    font-family: handbookpro-regular;
+    src: url(../css/fonts/pfhandbookpro-regular-webfont.woff) format('woff'), url(../css/fonts/pfhandbookpro-regular-webfont.ttf)  format('truetype'),
+        url(../css/fonts/pfhandbookpro-regular-webfont.eot) format('eot'), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format('svg');
 }
 
 @font-face {
-  font-family: handbookpro-regular;
-  src: url(../css/fonts/pfhandbookpro-regular-webfont.woff) format('woff'), url(../css/fonts/pfhandbookpro-regular-webfont.ttf)  format('truetype'),
-  url(../css/fonts/pfhandbookpro-regular-webfont.eot) format('eot'), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format('svg');
-}
-
-@font-face {
-  font-family: 'Handbook-bold';
-  src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot');
-  src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
-    url('fonts/handbookBold/pfhandbookpro-bold-webfont.woff') format('woff'),
-    url('fonts/handbookBold/pfhandbookpro-bold-webfont.ttf') format('truetype'),
-    url('fonts/handbookBold/pfhandbookpro-bold-webfont.svg#Handbook-bold') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Handbook-bold';
+    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot');
+    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fonts/handbookBold/pfhandbookpro-bold-webfont.woff') format('woff'),
+        url('fonts/handbookBold/pfhandbookpro-bold-webfont.ttf') format('truetype'),
+        url('fonts/handbookBold/pfhandbookpro-bold-webfont.svg#Handbook-bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
     font-family: 'Handbook-medium';
     src: url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot');
     src: url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.eot?#iefix') format('embedded-opentype'),
-      url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.woff') format('woff'),
-      url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.ttf') format('truetype'),
-      url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.svg#Handbook-medium') format('svg');
+        url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.woff') format('woff'),
+        url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.ttf') format('truetype'),
+        url('fonts/PFHandbookPro-Medium/pfhandbookpro-medium-webfont.svg#Handbook-medium') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -63,235 +82,235 @@
     font-family: 'Handbook-italic';
     src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot');
     src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot?#iefix') format('embedded-opentype'),
-      url('fonts/handbookItalic/pfhandbookpro-italic-webfont.woff') format('woff'),
-      url('fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf') format('truetype'),
-      url('fonts/handbookItalic/pfhandbookpro-italic-webfont.svg#Handbook-italic') format('svg');
+        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.woff') format('woff'),
+        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf') format('truetype'),
+        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.svg#Handbook-italic') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 .site-top {
-  width: 100%;
-  height: 135px;
-  position: relative;
-  top: 0;
+    width: 100%;
+    height: 135px;
+    position: relative;
+    top: 0;
 }
 
 .container {
-  height: 100%;
+    height: 100%;
 }
 
 .banner-3 {
-  position: relative;
-  float: left;
-  width: 100%;
+    position: relative;
+    float: left;
+    width: 100%;
 }
 
 .slider-top {
-  position: relative;
-  float: left;
-  top: 0px;
+    position: relative;
+    float: left;
+    top: 0px;
 }
 
 .clearfix:before {
-  clear: none;
+    clear: none;
 }
 
 .menu-main {
-  font: 15px / 45px 'Handbook-bold';
+    font: 15px / 45px 'Handbook-bold';
 }
 
 div {
-  word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .c-notifications-list {
-  width: 100%;
+    width: 100%;
 }
 
 .message-form-wrapper {
-  z-index: 10;
+    z-index: 10;
 }
 
 .cm-top {
-  background-color: white;
-  z-index: 10;
-  top: 0px;
-  height: 50px;
+    background-color: white;
+    z-index: 10;
+    top: 0px;
+    height: 50px;
 }
 
 .new-message,
 .write-admin {
-  top: 10px;
-  position: absolute;
+    top: 10px;
+    position: absolute;
 }
 
 .write-admin {
-  right: 32px;
+    right: 32px;
 }
 
 
 
 .menu {
-  overflow: visible;
+    overflow: visible;
 }
 
 .go-to-top {
-  position: fixed;
-  right: 15px;
-  border-radius: 5px;
-  line-height: 50px;
-  text-align: center;
-  -webkit-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
-  -moz-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
-  box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
-  display: none;
-  background: url(img/sprite.png) -550px -120px no-repeat;
-  background-color: #f2efed;
-  right: 50px;
-  bottom: 50px;
-  width: 50px;
-  height: 50px;
+    position: fixed;
+    right: 15px;
+    border-radius: 5px;
+    line-height: 50px;
+    text-align: center;
+    -webkit-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
+    -moz-box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
+    box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.65);
+    display: none;
+    background: url(img/sprite.png) -550px -120px no-repeat;
+    background-color: #f2efed;
+    right: 50px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
 }
 
 .is-countdown {
-  background-color: #fee518;
-  font-size: 50px;
-  border: none;
-  width: 90px;
-  top: 0;
-  position: absolute;
-  right: 0;
+    background-color: #fee518;
+    font-size: 50px;
+    border: none;
+    width: 90px;
+    top: 0;
+    position: absolute;
+    right: 0;
 }
 
 // MENUS ------------------------- //
 .menu-mobile {
-  display: none;
+    display: none;
 }
 .menu-item,
 .menu {
-  overflow: hidden;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  z-index: 50;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    background: white;
+    z-index: 50;
 }
 
 .menu-item {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .menu {
-  a {
-    display: block;
-    text-decoration: none;
-    text-align: right;
-    color: #4a4a4a;
-    padding-right: 15px;
-    &.active,
-    &:hover {
-      background: #b7ced3;
+    a {
+        display: block;
+        text-decoration: none;
+        text-align: right;
+        color: #4a4a4a;
+        padding-right: 15px;
+        &.active,
+        &:hover {
+            background: #b7ced3;
+        }
     }
-  }
 }
 
 .menu-main {
-  a {
-    text-transform: uppercase;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    transition: all 0.2s linear;
-  }
-  &:after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: #9b9b9b;
-    float: right;
-    width: 80%;
-    position: relative;
-    top: 15px;
-    right: 15px;
-  }
+    a {
+        text-transform: uppercase;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        transition: all 0.2s linear;
+    }
+    &:after {
+        content: "";
+        display: block;
+        height: 1px;
+        background: #9b9b9b;
+        float: right;
+        width: 80%;
+        position: relative;
+        top: 15px;
+        right: 15px;
+    }
 }
 
 .menu-more {
-  a {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-  li:last-child a {
-    margin-top: 25px;
-  }
+    a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    li:last-child a {
+        margin-top: 25px;
+    }
 }
 
 .menu-profile {
-  display: none;
-  min-width: 250px;
-  padding: 20px;
-  right: 69px;
+    display: none;
+    min-width: 250px;
+    padding: 20px;
+    right: 64px;
 }
 
 // BALANCE MENU ----------------------------- //
 
 .menu-balance {
-  display: none;
-  width: 320px;
-  padding: 30px 10px 20px;
-  position: absolute;
-  border-radius: 0 0 2px 2px;
-  text-align: center;
-  text-transform: uppercase;
+    display: none;
+    width: 320px;
+    padding: 30px 10px 20px;
+    position: absolute;
+    border-radius: 0 0 2px 2px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .menu-balance-inf {
-  font-size: 31px;
-  line-height: 0.7;
-  margin-bottom: 15px;
+    font-size: 31px;
+    line-height: 0.7;
+    margin-bottom: 15px;
 }
 
 .menu-balance-inf span {
-  font-size: 13px;
-  font-weight: normal;
+    font-size: 13px;
+    font-weight: normal;
 }
 
 .menu-balance-inf div {
-  width: 130px;
-  &:first-child {
-    float: left;
-  }
-  &:last-child {
-    float: right;
-  }
+    width: 130px;
+    &:first-child {
+        float: left;
+    }
+    &:last-child {
+        float: right;
+    }
 }
 
 .menu-balance-actions {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .menu-balance-actions .menu-balance-item {
-  width: 130px;
-  &:first-child {
-    float: left;
-  }
-  &:last-child {
-    float: right;
-  }
+    width: 130px;
+    &:first-child {
+        float: left;
+    }
+    &:last-child {
+        float: right;
+    }
 }
 
 .menu-balance-item {
-  display: block;
-  border-radius: 2px;
-  text-decoration: none;
-  color: rgba(0,0,0,1);
-  font-size: 13px;
-  line-height: 35px;
-  margin-bottom: 15px;
-  position: relative;
-  &:last-child {
-    margin-bottom: 0;
-  }
+    display: block;
+    border-radius: 2px;
+    text-decoration: none;
+    color: rgba(0,0,0,1);
+    font-size: 13px;
+    line-height: 35px;
+    margin-bottom: 15px;
+    position: relative;
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 // MENU BUTTONS ------------------------- //
@@ -299,65 +318,66 @@ div {
 
 
 .menu-btn-item {
-  float: right;
-  height: 100%;
-  padding: 0 15px;
-  cursor: pointer;
-  transition: all 0.2s linear;
-  &:before {
-    content: "";
-    display: block;
-    background: url(img/sprite.png);
-    position: relative;
-  }
-  &:hover,
-  &.active {
-    background: white;
-  }
-  &.active {
-    box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.3);
-  }
+    float: right;
+    height: 100%;
+    padding: 0 15px;
+    cursor: pointer;
+    transition: all 0.2s linear;
+    &:before {
+        content: "";
+        display: block;
+        background: url(img/sprite.png);
+        position: relative;
+    }
+    &:hover,
+        &.active {
+        background: white;
+    }
+    &.active {
+        box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.3);
+    }
 }
 .menu-btn .i-menu {
-  position: relative;
-  display:inline-block;
+    position: relative;
+    display:inline-block;
 }
-.menu-btn .i-menu:before {
-  background: none;
-  top: 6px;
-  font-size: 29px;
-  position: relative;
+.menu-btn .i-menu {
+    background: none;
+    top: 15px;
+    font-size: 22px;
+    position: relative;
 }
 .menu-profile-btn .i-person {
-  position: relative;
+    position: relative;
 }
-.menu-profile-btn .i-person:before {
-  background:none;
-  top: 10px;
-  font-size: 21px;
-  position: relative;
+.menu-profile-btn .i-person {
+    background:none;
+    top: 19px;
+    font-size: 15px;
+
+    position: relative;
 }
 
 .menu-balance-btn:before {
-  width: 24px;
-  height: 22px;
-  background-position: -516px -54px;
-  top: 9px;
+    width: 24px;
+    height: 22px;
+    background-position: -516px -54px;
+    top: 9px;
 }
 
 // -------------------------------- //
 
 .inf-slider {
-  display: none;
-  overflow: hidden;
+    display: none;
+    overflow: hidden;
 }
 
 .timer {
-  display: none;
+    display: none;
 }
 
 .balance-btn {
-  display: none;
+    display: none;
 }
 
 .ticket-tabs,
@@ -369,202 +389,226 @@ div {
 .cabinet_cashout,
 .raiting-name,
 .c-friend-name {
-  font-family: Handbook-bold;
+    font-family: Handbook-bold;
 }
 
 .lottery-result {
-  font-family: handbookpro-regular;
+    font-family: handbookpro-regular;
 }
 
 .content-box-header {
-  font: 15px / 50px Handbook-bold;
+    font: 15px / 50px Handbook-bold;
 }
 
 .content-box-tab {
-  font: 15px / 55px Handbook-bold;
+    font: 15px / 55px Handbook-bold;
 }
 
 .content-box-cat a {
-  font-size: 15px !important;
-  // SLIDER ------------------------- //
+    font-size: 15px !important;
+    // SLIDER ------------------------- //
 }
 
 header .owl-theme .owl-controls .owl-page span {
-  background: #fee518;
+    background: #fee518;
 }
 
 .header-right .rt-bk {
-  top: 20px;
-  left: 30px;
-  position: absolute;
+    top: 20px;
+    left: 30px;
+    position: absolute;
 }
 
 .timer-text {
-  top: 8px;
-  position: absolute;
-  padding-left: 10px;
-  font-weight: bold;
+    top: 8px;
+    position: absolute;
+    padding-left: 10px;
+    font-weight: bold;
 }
 
 .last-results {
-  position: absolute;
-  top: 0px;
-  left: 30px;
-  font-weight: bold;
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    font-weight: bold;
 }
 
 .header-right .ct .rt-bk .rt-bk_li {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .header-right .slider-top .ct .n {
-  font-size: 15px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 26px;
+    font-size: 15px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 26px;
 }
 
 #countdownHolder-mobile {
-  top: 0;
+    top: 0;
 }
 
 .header-right .slider-top {
-  height: 55px;
-  display: block;
+    height: 55px;
+    display: block;
 }
 
 .header-right .slider-top .ct {
-  padding-left: 0px;
+    padding-left: 0px;
 }
 
 .header-right .slider-top .ct .tl {
-  line-height: 25px;
-  font-size: 14px;
-  margin-left: 10px;
-  // -------------------------------- //
-  // SLIDER ------------------------- //
+    line-height: 25px;
+    font-size: 14px;
+    margin-left: 10px;
+    // -------------------------------- //
+    // SLIDER ------------------------- //
 }
 
 .ct {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 16px 0 15px 15px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 16px 0 15px 15px;
 }
 
 .ct .tl {
-  font-size: 12px;
-  line-height: 14px;
-  color: black;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    color: black;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .pw-gm-rt .ct .rt-bk {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
 }
 
 .ct .rt-bk .rt-bk_li {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: black;
-  font: 17px / 34px Handbook-bold;
-  background-color: black;
-  color: #fee212;
-  text-align: center;
-  margin-right: 8px;
-  display: inline-block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: black;
+    font: 17px / 34px Handbook-bold;
+    background-color: black;
+    color: #fee212;
+    text-align: center;
+    margin-right: 8px;
+    display: inline-block;
 }
 
 .notification-window {
-  width: 270px;
-  height: 140px;
-  position: fixed;
-  background: rgba(255, 228, 0, 0.95);
-  bottom: 40px;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
-  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
-  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
-  z-index: 200;
+    width: 270px;
+    height: 140px;
+    position: fixed;
+    background: rgba(255, 228, 0, 0.95);
+    bottom: 40px;
+    border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
+    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
+    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.5);
+    z-index: 200;
 }
 
 .notification-cross {
-  right: 0;
-  background: url("/res/img/cross-closer.png") no-repeat 0 0;
-  background-size: cover;
-  -o-background-size: cover;
-  -moz-background-size: cover;
-  -webkit-background-size: cover;
-  width: 24px;
-  cursor: pointer;
-  height: 24px;
-  margin: 10px;
-  position: absolute;
+    right: 0;
+    background: url("/res/img/cross-closer.png") no-repeat 0 0;
+    background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    width: 24px;
+    cursor: pointer;
+    height: 24px;
+    margin: 10px;
+    position: absolute;
 }
 
 .notification-cross:hover {
-  height: 26px;
-  width: 26px;
-  right: -1px;
-  top: -1px;
+    height: 26px;
+    width: 26px;
+    right: -1px;
+    top: -1px;
 }
 
 .notification-cross:onclick {
-  display: none;
+    display: none;
 }
 
 .pw-gm-rt .ct {
-  padding: 16px 0 15px 30px;
+    padding: 16px 0 15px 30px;
 }
 
 // -------------------------------- //
 .fixed {
-  & header {
-    position: fixed;
-    top: 0;
-  }
-  // & > .wrapper > .container {
-  //   margin-top: 70px; 
-  // }  
+    *{
+        /*transition: all .2s linear;*/
+    }
+    & header {
+        padding-top: 55px;
+        > .sticky_box {
+            position: fixed;
+            top: 0;
+        }
+    }
+    // & > .wrapper > .container {
+    //   margin-top: 70px; 
+    // }  
 }
 // ------------ICONS----------- //
 [class^="i-"]:before, [class*=" i-"]:before {
-  font-family: "fontello";
-  display: inline-block;
-  text-align: center;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
- 
+    font-family: "fontello";
+    display: inline-block;
+    text-align: center;
+
+    /*opacity: .8;*/ 
+
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    /*margin-left: .2em;*/
+
+    /* you can be more comfortable with increased icons size */
+    /*font-size: 120%;*/ 
+
+    /* Font smoothing. That was taken from TWBS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Uncomment for 3D effect */
+    text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.1); 
 }
 
 .i-purse:before { 
-  content: '\e804';
-  font-size: 20px;
-  margin-right: 10px;
- } /* '' */
+    content: '\e804';
+    font-size: 19px;
+    margin-right: 10px;
+    margin-bottom: 6px;
+} /* '' */
 .i-msg {
-  font-size: 26px;
-  &:before { 
-    content: '\e80f'; font-size: 26px;
-  } /* '' */
+    font-size: 26px;
+    &:before { 
+        content: '\e80f'; font-size: 26px;
+    } /* '' */
 }
 .i-msg2   {
-  font-size: 24px;
-  &:before { 
-    content: '\e811'; font-size: 24px;
-  } /* '' */  
+    font-size: 24px;
+    &:before { 
+        content: '\e811'; font-size: 24px;
+    } /* '' */  
 }
 
 

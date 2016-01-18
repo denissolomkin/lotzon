@@ -1,3 +1,5 @@
+</div>
+<!--END wrapper-->
 <!-- FOOTER -->
 <footer class="footer clearfix">
     <div class="container">
@@ -26,8 +28,9 @@
             navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
                 'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'profile/password', 'reports/referrals', 'profile/bonuses'],
-                'menu-more': ['support/feedback', 'support/rules', 'support/faq', 'support/help'],
-                'menu-logout': ['logout']
+                'menu-more': [
+'support/feedback', 'support/rules', 'support/faq', 'support/help', 'logout'],
+//                'menu-logout': ['logout']
             }
         },
 
@@ -133,6 +136,5 @@ endforeach;
 <button style="position: fixed;bottom:0;left:90px;" onclick="Lottery.prepareData()">Lottery</button>
 <button style="position: fixed;bottom:0;left:140px;" onclick="Player.ping()">Ping</button>
 
-</div>
 </body>
 </html>

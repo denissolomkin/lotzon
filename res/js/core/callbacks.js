@@ -108,7 +108,7 @@
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
 
-            $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
+            // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);

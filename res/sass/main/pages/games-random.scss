@@ -13,7 +13,7 @@ $color_turbo_approx: #ffe700;
 $black: #000;
 $black_35: rgba(0, 0, 0, 0.35);
 $white: #fff;
-$white_90: rgba(255,255,255, 0.95);
+$white_90: #fff;
 $black_10: rgba(0,0,0,0.1);
 $color_ziggurat_approx: #b9dadd;
 $gray: #808080;
@@ -27,25 +27,31 @@ $gray: #808080;
     z-index: 101;
     background: $black_35;
     .title {
-        font-size: 20px;
+        font-family: "Handbook-bold";
+        font-size: 30px;
         text-transform: uppercase;
-        padding: 10px 0;
+        padding: 0 0 10px 0;
+    }
+    .description {
+        font-size: 18px;
     }
     .message {
         //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+        font-family: Handbook-bold;
         transition: all .4s ease-out;
         text-transform: uppercase;
-        /*font-weight: bold;*/
+        text-align: center;
+        padding: 0;
         span {
-            padding: 0 10px;
-            &:before,
-            &:after{
-                content: '"';
-            }
+            display: block;
+            padding: 0 5px;
         }
     }
     .minefield {
-        margin: 20px 0;
+        position: relative;
+        transform: scale(1.01);
+        margin: 20px auto;
+        
         .inner {
             padding: 4%;
         }
@@ -115,7 +121,7 @@ $gray: #808080;
         }
         i {
         }
-        > div > div {
+        vw > div {
         }
         button[class] .flipFix {
             opacity: 1;
@@ -126,154 +132,51 @@ $gray: #808080;
     > .inner {
         position: absolute;
         top: 50%;
+        left: 50%;
         //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-        transform: translateY(-50%);
-        width: 60%;
-        margin: 0 20%;
+        transform: translate(-50.1%,-50.1%);
+        /*width: 570px;*/
+        /*margin: 0 20%;*/
         background: $white;
-        padding: 20px;
+        padding: 20px 40px;
+        
         > i.i-x-slim{
-            
+
             position: absolute;
-            right: -30px;
+            right: -35px;
             top: 0;
             color: #fff;
-            font-size: 20px;
+            font-size: 25px;
             cursor: pointer;
             text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
         }
     }
     &:not(.game-started) .message {
-            position: absolute;
-            z-index: 1;
-            background: $white_90;
-            padding: 20px;
-            top: 50%;
+        background: rgba(255,255,255,0.1);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        z-index: 1;
+        margin: 0;
+        > *{
             border: 1px solid rgba(0, 0, 0, 0.1);
-            margin: 0;
-            width: 500px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-    }
-}
-@media all and(min-width: 1600px) {
-    .moment-game-box .minefield button {
-        font-size: 30em;
-    }
-}
-@media all and(max-width: 1600px) {
-    .moment-game-box .minefield button {
-        font-size: 22em;
-    }
-}
-@media all and(max-width: 1366px) {
-    .moment-game-box .minefield button {
-        font-size: 16em;
-    }
-}
-@media all and(max-width: 1024px) {
-    .moment-game-box > .inner {
-        width: 80%;
-        margin: 0 10%;
-    }
-}
-@media all and(max-width: 768px) {
-    .moment-game-box {
-        .ad{
-            display: none;
-        }
-        &:not(.game-started) .message {
-            top: 55%;
-            
-            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-            transform: translateY(-50%);
-            margin: 0;
-            width: 90%;
-            left: 5%;
-        }       
-        > .inner {
-            width: 100%;
-            min-height: 100%;
-            margin: 0;
-            background: $color_turbo_approx;
-            > i.i-x-slim{
-                
-                position: absolute;
-                right: 0;
-                top: 20px;
-                font-size: 18px;
-                color: #000;
-            }
-        }
-        .minefield div .inner button {
-            font-size: 16em;
-            background: $black;
-            color: $color_turbo_approx;
-        }
-    }
-}
-@media all and(max-width: 525px) {
-    .moment-game-box {
-        > .inner {
-            width: 100%;
-            min-height: 100%;
-            margin: 0;
-            padding: 10px 0;
-            > *:not(.minefield) {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-        }
-        .minefield div .inner button {
-            font-size: 13em;
-            &.win {
-             
-                .flipFix {
-                    * {
-                        font-size: .35em;
-                        line-height: .9;
-                        &:first-child {
-                            font-size: .7em;
-                        }
-                    }
-                    :first-child:nth-last-child(1) {
-                        font-size: .5em;
-                    }
-                }
-            }
-        }
-    }
-}
-@media all and (max-width: 434px) {
-    .moment-game-box {
-        .minefield div .inner button {
-            font-size: 8em;
-            &.win {
-             
-                .flipFix {
-                    * {
-                        font-size: .5em;
-                        line-height: .9;
-                        &:first-child {
-                            font-size: .9em;
-                        }
-                    }
-                    :first-child:nth-last-child(1) {
-                        font-size: .6em;
-                    }
-                }
-            }
-        }
-    }
-}
-@media screen and (orientation:portrait) and (max-width: 768px){
-    .moment-game-box .minefield{
             position: absolute;
-            width: 100%;
             top: 50%;
-            transform: translateY(-50%);
-            margin: 0;
+            left: 50%;
+            transform: translate(-50.1%, -50.1%);
+            padding: 20px;
+            background: $white_90;
+            white-space: nowrap;
+        }
     }
-}
-@media screen and (orientation:landscape) and (max-width: 768px){
+    .ad{
+        border: 1px solid #d6d6d6;
+        background: #f1f1f1;
+        padding: 10px;
+        margin: 0 0.9%;
+        *{
+            vertical-align: top;
+        }
+    }
 }

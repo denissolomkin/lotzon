@@ -1,0 +1,129 @@
+//colors
+$color_turbo_approx: #ffe700;
+$black: #000;
+$black_35: rgba(0, 0, 0, 0.35);
+$white: #fff;
+$white_90: #fff;
+$black_10: rgba(0,0,0,0.1);
+$color_ziggurat_approx: #b9dadd;
+$gray: #808080;
+
+@media all and(max-width: 768px) {
+    .moment-game-box {
+        .ad{
+            display: none;
+        }
+        &:not(.game-started) .message {
+            top: 50%;
+
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: translateY(-50.1%);
+            margin: 0;
+            background: transparent;
+            > *{
+
+            }
+        }       
+        > .inner {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            background: $color_turbo_approx;
+            > i.i-x-slim{
+                padding: 0;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                font-size: 18px;
+                color: #000;
+            }
+        }
+        .minefield {
+            width:100% !important;
+            div .inner button {
+                font-size: 16em;
+                background: $black;
+                color: $color_turbo_approx;
+            }
+        }
+    }
+}
+@media all and(max-width: 525px) {
+    .moment-game-box {
+        > .inner {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 10px 0;
+            > i.i-x-slim{
+
+                position: absolute;
+                right: 10px;
+                top: 20px;
+            }
+            > *:not(.minefield) {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+        .minefield div .inner button {
+            font-size: 13em;
+            &.win {
+
+                .flipFix {
+                    * {
+                        font-size: .35em;
+                        line-height: .9;
+                        &:first-child {
+                            font-size: .7em;
+                        }
+                    }
+                    :first-child:nth-last-child(1) {
+                        font-size: .5em;
+                    }
+                }
+            }
+        }
+    }
+}
+@media all and (max-width: 434px) {
+    .moment-game-box {
+        > .inner{
+            > i.i-x-slim{
+
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+        }
+        .minefield div .inner button {
+            font-size: 8em;
+            &.win {
+
+                .flipFix {
+                    * {
+                        font-size: .5em;
+                        line-height: .9;
+                        &:first-child {
+                            font-size: .9em;
+                        }
+                    }
+                    :first-child:nth-last-child(1) {
+                        font-size: .6em;
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (orientation:portrait) and (max-width: 768px){
+    .moment-game-box .minefield{
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50.1%);
+        margin: 0;
+    }
+}
+@media screen and (orientation:landscape) and (max-width: 768px){
+}

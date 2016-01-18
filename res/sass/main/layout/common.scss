@@ -1,17 +1,37 @@
+/*sticky footer*/
+html, body {
+  height: 100%;
+}
+.wrapper {
+  height: auto !important;
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -50px; 
+}
+.wrapper:after {
+  content: "";
+  display: block;
+}
+.footer, .wrapper:after {
+  height: 50px; 
+}
+.footer{
+    position: static;
+}
+/* END
+sticky footer*/
+
 html {
   overflow-x: hidden;
-  height: 100%;
 }
 
 body {
   font: 15px "PT Sans", sans-serif;
   font: 15px "handbookpro-regular";
   background: #f9f9f9;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
   position: relative;
   -webkit-font-smoothing: antialiased;
-  min-height: 100%;
-
 }
 .uk-float-left {
   float: left;
@@ -296,6 +316,7 @@ button {
 
 .ticket-item {
   padding: 15px 0 !important;
+  overflow: hidden;
 }
 
 .content-box-item-top {

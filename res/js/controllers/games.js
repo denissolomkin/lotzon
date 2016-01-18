@@ -69,7 +69,6 @@ var fakeRandomData = [{
 var Games = {
     online: {
         init: function () {
-//        alert("Online");
             Games.online.tabs();
             if (!Games.online.timeout) {
                 Games.online.timeouts("#games-online-view-now > form", 5000);
@@ -97,10 +96,8 @@ var Games = {
         timeouts: function (element, time) {
             Games.online.timeout = setTimeout(function () {
                 if ($(element).is(":visible")) {
-//                    console.error("timeout>>>>>>> on:visible ", element);
                     $(element).change();
                 } else {
-//                console.error("else",element);
                     clearTimeout(Games.online.timeout);
                 }
                 Games.online.timeouts(element, time);
@@ -117,9 +114,8 @@ var Games = {
             if (!data.json)
                 return false;
             // make config
+            Games.chance.conf.data = {};
             Games.chance.conf.data = data.json;
-//            alert('chance get init!!!');
-//            console.error(" data.json.id >>>>>>>", data.json.id);
             Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
             // in multiple prizes set first prize as @current@
             $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
@@ -132,7 +128,7 @@ var Games = {
                 if (!Games.chance.conf.play)
                     return false;
                 var cell = $(this).data('cell'), that = this;
-//                console.info('>>>', $(that).attr('class'));
+
                 // send 
                 Form.get.call(this,
                         {
@@ -176,7 +172,7 @@ var Games = {
                     Games.chance.conf.play = !0;
                     // update all cells to default state
                     Games.chance.resset();
-//                    add class for css styles
+					// add class for css styles
                     $("#games-chance-view-chance").attr('class', 'game-started');
                 }
             });
@@ -192,7 +188,6 @@ var Games = {
 
         },
         prizesMoves: function (moves) {
-//            console.error(">> moves >",moves);
             var missCounter = Games.chance.conf.data.field.m - moves;
 //            data-current
             $("#games-chance-view-chance [data-current]").removeClass('currennt');
@@ -206,22 +201,43 @@ var Games = {
         conf: {
             data: {},
             play: !1,
-            url: "/games/random/play"
+            url: ""
         },
         init: function (data) {
             if (!data.json){
                 return false;
             }
+
+            //deb
+//            console.error(">>>>",data);
+            
+            //check if error
+            if (data.response.message && data.response.status == 0) {
+	            $(".moment-game-box .message").html("<p style='text-align: center;'>"+data.response.message+"</p>");
+                return;
+            }
+
+            //clear data
+            Games.random.conf.data = {};
             // make config
             Games.random.conf.data = data.json;
             Games.random.conf.play = !0;
+
             //check type of game: default @random@
             if(data.json.Key && data.json.Key.toLowerCase() == "moment"){
                 Games.random.conf.url = "/games/moment/play";
+            }else{
+                Games.random.conf.url = "/games/random/play";
             }
-//            alert(Games.random.conf.url);
+
             $(".moment-game-box").addClass('game-started');
+            
+//            set .minefield size by ( cells * (cell-width + cell-margin) ) - cell-margin
+            var size = data.json.Field;
+            $(".moment-game-box .minefield").css({ 'width': (( parseInt(size.x) * ( parseInt(size.w) + parseInt(size.r) )) - parseInt(size.r))+'px' });
+
             Games.random.get(".minefield button:not(.played)", data.json.id); // data.json.id -- не используеться пока
+            // set ad
             Content.banner.moment(data);
         },
         get: function (elements, id) {
@@ -229,18 +245,15 @@ var Games = {
             $(elements).click(function () {
                 if (!Games.random.conf.play)
                     return false;
+
                 var cell = $(this).data('cell'), element = this;
                 
 ////////////////////////////////////////////////////////////////
 //                DELETE
                 if (debug === 1) {
-
                     var data = {json: fakeRandomData[fakeCounter]};
-
                     Games.random.actions(element,data);
-
                     fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-
                     return;
                 }
 ////////////////////////////////////////////////////////////////
@@ -258,24 +271,17 @@ var Games = {
         actions: function (element,data) {
             if (data.json.error)
                 return;
-            if (data.json.message && data.json.status === 0) {
-//                Games.random.showMessage(data.json.message, 1);
-            $(".moment-game-box .message").html("<p>"+data.json.message+"</p>");
-//                alert("data.json.message, 1", data.json.message);
-//                alert(data.json.message);
-//                Games.random.destroy(0);
-                return;
-            }
 
             if (data.json.Prize) {
                 $(element).addClass('win');
+                // render prize 
                 $(element).html(Games.random.makePrizeCell(data.json.Prize));
             } else {
                 $(element).addClass('lose');
             }
+            
             // Game winner Fields
             if (data.json.GameField) {
-                
                 if (data.json.Prize) {
                     $(".moment-game-box").addClass('win');
                 } else {
@@ -315,7 +321,6 @@ var Games = {
 //                    Games.random.destroy(5);
                 }
             }
-
         },
         showMessage: function (data) {
             var msg = "<p>";
@@ -330,7 +335,6 @@ var Games = {
                     msg += "</span>";
                 }
             } else{
-//                alert("else no error!!");
                 msg += Cache.i18n("title-games-chance-card-lose");
             }
             
@@ -340,7 +344,6 @@ var Games = {
         },
 //        remove block by timeout
         destroy: function (timer) {
-//            console.error(timer);
             setTimeout(function () {
                 $(".moment-game-box").remove();
             }, timer * 1000);

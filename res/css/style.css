@@ -63,18 +63,38 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 input, button, textarea {
   outline: 0; }
 
-html {
-  overflow-x: hidden;
+/*sticky footer*/
+html, body {
   height: 100%; }
+
+.wrapper {
+  height: auto !important;
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -50px; }
+
+.wrapper:after {
+  content: "";
+  display: block; }
+
+.footer, .wrapper:after {
+  height: 50px; }
+
+.footer {
+  position: static; }
+
+/* END
+sticky footer*/
+html {
+  overflow-x: hidden; }
 
 body {
   font: 15px "PT Sans", sans-serif;
   font: 15px "handbookpro-regular";
   background: #f9f9f9;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
   position: relative;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100%; }
+  -webkit-font-smoothing: antialiased; }
 
 .uk-float-left {
   float: left; }
@@ -333,7 +353,8 @@ button {
   min-height: 500px; }
 
 .ticket-item {
-  padding: 15px 0 !important; }
+  padding: 15px 0 !important;
+  overflow: hidden; }
 
 .content-box-item-top {
   position: absolute;
@@ -1017,10 +1038,9 @@ input.input-radio:checked + label.input-radio:before {
     font-size: 5%; }
 
 .footer {
+  /*^ common.scss*/
   background: #ffe700;
-  height: 50px;
   width: 100%;
-  position: absolute;
   bottom: 0; }
 
 .footer .container {
@@ -1084,20 +1104,27 @@ input.input-radio:checked + label.input-radio:before {
   display: none; }
 
 .header {
-  background: #f2efed;
   position: relative;
   width: 100%;
   z-index: 100; }
+  .header > .sticky_box {
+    width: 100%;
+    height: 55px;
+    background: #f2efed; }
 
 .header-logo {
   float: left;
-  display: block;
-  width: 90px;
+  display: inline-block;
   position: relative;
-  left: 10px;
-  font-size: 85px;
-  line-height: 55px;
-  margin-top: -15px; }
+  vertical-align: middle;
+  height: 55px;
+  margin-right: 20px; }
+  .header-logo.i-lotzon:before {
+    font-size: 129px;
+    line-height: 0.22;
+    position: relative;
+    top: 50%;
+    transform: translateY(-53%); }
 
 @font-face {
   font-family: 'fontello';
@@ -1105,6 +1132,13 @@ input.input-radio:checked + label.input-radio:before {
   src: url("fonts/fontello/fontello.eot?59386181#iefix") format("embedded-opentype"), url("fonts/fontello/fontello.woff?59386181") format("woff"), url("fonts/fontello/fontello.ttf?59386181") format("truetype"), url("fonts/fontello/fontello.svg?59386181#fontello") format("svg");
   font-weight: normal;
   font-style: normal; }
+
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url("fonts/fontello.svg?65723038#fontello") format("svg"); } }
 
 @font-face {
   font-family: handbookpro-regular;
@@ -1216,7 +1250,7 @@ div {
   overflow: hidden;
   position: absolute;
   top: 100%;
-  right: 0;
+  right: 10px;
   background: white;
   z-index: 50; }
 
@@ -1260,7 +1294,7 @@ div {
   display: none;
   min-width: 250px;
   padding: 20px;
-  right: 69px; }
+  right: 64px; }
 
 .menu-balance {
   display: none;
@@ -1329,19 +1363,19 @@ div {
   position: relative;
   display: inline-block; }
 
-.menu-btn .i-menu:before {
+.menu-btn .i-menu {
   background: none;
-  top: 6px;
-  font-size: 29px;
+  top: 15px;
+  font-size: 22px;
   position: relative; }
 
 .menu-profile-btn .i-person {
   position: relative; }
 
-.menu-profile-btn .i-person:before {
+.menu-profile-btn .i-person {
   background: none;
-  top: 10px;
-  font-size: 21px;
+  top: 19px;
+  font-size: 15px;
   position: relative; }
 
 .menu-balance-btn:before {
@@ -1499,24 +1533,41 @@ header .owl-theme .owl-controls .owl-page span {
 .pw-gm-rt .ct {
   padding: 16px 0 15px 30px; }
 
+.fixed * {
+  /*transition: all .2s linear;*/ }
+
 .fixed header {
-  position: fixed;
-  top: 0; }
+  padding-top: 55px; }
+  .fixed header > .sticky_box {
+    position: fixed;
+    top: 0; }
 
 [class^="i-"]:before, [class*=" i-"]:before {
   font-family: "fontello";
   display: inline-block;
   text-align: center;
+  /*opacity: .8;*/
+  /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  /*margin-left: .2em;*/
+  /* you can be more comfortable with increased icons size */
+  /*font-size: 120%;*/
+  /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+  -moz-osx-font-smoothing: grayscale;
+  /* Uncomment for 3D effect */
+  text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.1); }
 
 .i-purse:before {
   content: '\e804';
-  font-size: 20px;
-  margin-right: 10px; }
+  font-size: 19px;
+  margin-right: 10px;
+  margin-bottom: 6px; }
 
 /* '' */
 .i-msg {
@@ -3928,19 +3979,25 @@ and open the template in the editor.
   z-index: 101;
   background: rgba(0, 0, 0, 0.35); }
   .moment-game-box .title {
-    font-size: 20px;
+    font-family: "Handbook-bold";
+    font-size: 30px;
     text-transform: uppercase;
-    padding: 10px 0; }
+    padding: 0 0 10px 0; }
+  .moment-game-box .description {
+    font-size: 18px; }
   .moment-game-box .message {
+    font-family: Handbook-bold;
     transition: all .4s ease-out;
     text-transform: uppercase;
-    /*font-weight: bold;*/ }
+    text-align: center;
+    padding: 0; }
     .moment-game-box .message span {
-      padding: 0 10px; }
-      .moment-game-box .message span:before, .moment-game-box .message span:after {
-        content: '"'; }
+      display: block;
+      padding: 0 5px; }
   .moment-game-box .minefield {
-    margin: 20px 0; }
+    position: relative;
+    transform: scale(1.01);
+    margin: 20px auto; }
     .moment-game-box .minefield .inner {
       padding: 4%; }
     .moment-game-box .minefield button {
@@ -3992,110 +4049,44 @@ and open the template in the editor.
   .moment-game-box > .inner {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    width: 60%;
-    margin: 0 20%;
+    left: 50%;
+    transform: translate(-50.1%, -50.1%);
+    /*width: 570px;*/
+    /*margin: 0 20%;*/
     background: #fff;
-    padding: 20px; }
+    padding: 20px 40px; }
     .moment-game-box > .inner > i.i-x-slim {
       position: absolute;
-      right: -30px;
+      right: -35px;
       top: 0;
       color: #fff;
-      font-size: 20px;
+      font-size: 25px;
       cursor: pointer;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); }
   .moment-game-box:not(.game-started) .message {
+    background: rgba(255, 255, 255, 0.1);
     position: absolute;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    top: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 0;
-    width: 500px;
-    left: 50%;
-    transform: translate(-50%, -50%); }
-
-@media all and (min-width: 1600px) {
-  .moment-game-box .minefield button {
-    font-size: 30em; } }
-
-@media all and (max-width: 1600px) {
-  .moment-game-box .minefield button {
-    font-size: 22em; } }
-
-@media all and (max-width: 1366px) {
-  .moment-game-box .minefield button {
-    font-size: 16em; } }
-
-@media all and (max-width: 1024px) {
-  .moment-game-box > .inner {
-    width: 80%;
-    margin: 0 10%; } }
-
-@media all and (max-width: 768px) {
-  .moment-game-box .ad {
-    display: none; }
-  .moment-game-box:not(.game-started) .message {
-    top: 55%;
-    transform: translateY(-50%);
-    margin: 0;
-    width: 90%;
-    left: 5%; }
-  .moment-game-box > .inner {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    background: #ffe700; }
-    .moment-game-box > .inner > i.i-x-slim {
+    margin: 0; }
+    .moment-game-box:not(.game-started) .message > * {
+      border: 1px solid rgba(0, 0, 0, 0.1);
       position: absolute;
-      right: 0;
-      top: 20px;
-      font-size: 18px;
-      color: #000; }
-  .moment-game-box .minefield div .inner button {
-    font-size: 16em;
-    background: #000;
-    color: #ffe700; } }
-
-@media all and (max-width: 525px) {
-  .moment-game-box > .inner {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    padding: 10px 0; }
-    .moment-game-box > .inner > *:not(.minefield) {
-      padding-left: 15px;
-      padding-right: 15px; }
-  .moment-game-box .minefield div .inner button {
-    font-size: 13em; }
-    .moment-game-box .minefield div .inner button.win .flipFix * {
-      font-size: .35em;
-      line-height: .9; }
-      .moment-game-box .minefield div .inner button.win .flipFix *:first-child {
-        font-size: .7em; }
-    .moment-game-box .minefield div .inner button.win .flipFix :first-child:nth-last-child(1) {
-      font-size: .5em; } }
-
-@media all and (max-width: 434px) {
-  .moment-game-box .minefield div .inner button {
-    font-size: 8em; }
-    .moment-game-box .minefield div .inner button.win .flipFix * {
-      font-size: .5em;
-      line-height: .9; }
-      .moment-game-box .minefield div .inner button.win .flipFix *:first-child {
-        font-size: .9em; }
-    .moment-game-box .minefield div .inner button.win .flipFix :first-child:nth-last-child(1) {
-      font-size: .6em; } }
-
-@media screen and (orientation: portrait) and (max-width: 768px) {
-  .moment-game-box .minefield {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0; } }
+      top: 50%;
+      left: 50%;
+      transform: translate(-50.1%, -50.1%);
+      padding: 20px;
+      background: #fff;
+      white-space: nowrap; }
+  .moment-game-box .ad {
+    border: 1px solid #d6d6d6;
+    background: #f1f1f1;
+    padding: 10px;
+    margin: 0 0.9%; }
+    .moment-game-box .ad * {
+      vertical-align: top; }
 
 #lottery {
   -webkit-animation-fill-mode: both;
@@ -4413,6 +4404,8 @@ and open the template in the editor.
       text-align: center;
       top: 5px;
       left: 8px; }
+    .ticket-tabs li:last-of-type.done:after {
+      background-position: -597px -71px; }
     .ticket-tabs li:last-of-type:hover {
       color: #cdcf9f; }
       .ticket-tabs li:last-of-type:hover .ticket-number-sm {

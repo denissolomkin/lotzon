@@ -170,12 +170,12 @@
   box-shadow: none;
   background: none; }
 
-.fixed header {
-  position: fixed;
-  top: 0; }
-
-.fixed > .wrapper > .container {
-  margin-top: 40px; }
+/*sticky header in mobile by default*/
+header {
+  padding-top: 55px; }
+  header > .sticky_box {
+    position: fixed;
+    top: 0; }
 
 @media (max-width: 767px) {
   .i-mobile-pensil:before {
@@ -265,6 +265,79 @@
     padding: 20px 15px; }
     .games-previews .flex-box a {
       margin: 0px auto; } }
+
+@media all and (max-width: 768px) {
+  .moment-game-box .ad {
+    display: none; }
+  .moment-game-box:not(.game-started) .message {
+    top: 50%;
+    transform: translateY(-50.1%);
+    margin: 0;
+    background: transparent; }
+  .moment-game-box > .inner {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    background: #ffe700; }
+    .moment-game-box > .inner > i.i-x-slim {
+      padding: 0;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 18px;
+      color: #000; }
+  .moment-game-box .minefield {
+    width: 100% !important; }
+    .moment-game-box .minefield div .inner button {
+      font-size: 16em;
+      background: #000;
+      color: #ffe700; } }
+
+@media all and (max-width: 525px) {
+  .moment-game-box > .inner {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 10px 0; }
+    .moment-game-box > .inner > i.i-x-slim {
+      position: absolute;
+      right: 10px;
+      top: 20px; }
+    .moment-game-box > .inner > *:not(.minefield) {
+      padding-left: 15px;
+      padding-right: 15px; }
+  .moment-game-box .minefield div .inner button {
+    font-size: 13em; }
+    .moment-game-box .minefield div .inner button.win .flipFix * {
+      font-size: .35em;
+      line-height: .9; }
+      .moment-game-box .minefield div .inner button.win .flipFix *:first-child {
+        font-size: .7em; }
+    .moment-game-box .minefield div .inner button.win .flipFix :first-child:nth-last-child(1) {
+      font-size: .5em; } }
+
+@media all and (max-width: 434px) {
+  .moment-game-box > .inner > i.i-x-slim {
+    position: absolute;
+    right: 20px;
+    top: 20px; }
+  .moment-game-box .minefield div .inner button {
+    font-size: 8em; }
+    .moment-game-box .minefield div .inner button.win .flipFix * {
+      font-size: .5em;
+      line-height: .9; }
+      .moment-game-box .minefield div .inner button.win .flipFix *:first-child {
+        font-size: .9em; }
+    .moment-game-box .minefield div .inner button.win .flipFix :first-child:nth-last-child(1) {
+      font-size: .6em; } }
+
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  .moment-game-box .minefield {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50.1%);
+    margin: 0; } }
 
 #lottery-history-view {
   background: url(../img/bg-win.png); }
@@ -1228,9 +1301,6 @@
   .header-left {
     height: 50px;
     float: left; }
-  .header-logo {
-    top: 19px;
-    left: 0; }
   .menu-btns {
     height: 50px; }
   .menu-btn-item {

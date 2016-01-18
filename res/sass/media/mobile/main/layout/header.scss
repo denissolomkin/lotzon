@@ -192,15 +192,16 @@ padding: 20px 0;
   box-shadow: none;
   background: none;
 }
-.fixed {
-  & header {
-    position: fixed;
-    top: 0;
-  }
-  & > .wrapper > .container {
-    margin-top: 40px; 
-  }  
+
+/*sticky header in mobile by default*/
+header {
+    padding-top: 55px;
+    > .sticky_box {
+        position: fixed;
+        top: 0;
+    }  
 }
+
 @media (max-width: 767px) {
   .i-mobile-pensil {
     &:before {
