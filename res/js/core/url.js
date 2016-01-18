@@ -46,6 +46,9 @@
 
         "parse": function (url, type) {
 
+            if(!url)
+                return;
+
             switch (type) {
 
                 case "url":
