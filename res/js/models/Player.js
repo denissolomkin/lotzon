@@ -251,7 +251,7 @@
                 delete this.pingInterval;
             }
 
-            this.pingInterval = window.setInterval(Player.ping, Config.timeout.ping ? Config.timeout.ping : 1 * 1000);
+            this.pingInterval = window.setInterval(Player.ping, (Config.timeout.ping ? Config.timeout.ping : 1) * 1000);
 
         },
 
