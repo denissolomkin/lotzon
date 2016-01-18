@@ -23,7 +23,12 @@ $(function () {
 
                 D.log('Game.run', 'game');
 
-                var field = document.getElementById("games-online-field").getElementsByClassName('mx')[0];
+                var game = document.getElementById('games-online-field');
+
+                DOM.hide(game.parentNode.children);
+                DOM.show(game);
+
+                var field = game.getElementsByClassName('mx')[0];
 
                 field.classList.add(App.key);
                 field.innerHTML =

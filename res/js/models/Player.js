@@ -134,7 +134,7 @@
                                 break;
                             }
                         } else if (typeof object[prop] === 'object') {
-                            count += parseInt(this.getCount(key, object[prop]));
+                            count += parseInt(Player.getCount(key, object[prop]));
                         }
                     }
                 }
@@ -142,7 +142,7 @@
             } else if (typeof key === 'object') {
                 for (var prop in key) {
                     if (key.hasOwnProperty(prop)) {
-                        count += (typeof key[prop] === 'object') ? this.getCount(key[prop]) : parseInt(key[prop]);
+                        count += (typeof key[prop] === 'object') ? Player.getCount(key[prop]) : parseInt(key[prop]);
                     }
                 }
             }
@@ -251,7 +251,7 @@
                 delete this.pingInterval;
             }
 
-            this.pingInterval = window.setInterval(Player.ping, Config.timeout.ping * 1000);
+            this.pingInterval = window.setInterval(Player.ping, Config.timeout.ping ? Config.timeout.ping : 1 * 1000);
 
         },
 

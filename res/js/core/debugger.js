@@ -12,7 +12,6 @@
 
         "init": function (init) {
 
-            console.log('aaaa',init);
             Object.deepExtend(this, init);
             D.log('Debugger.init', 'func');
 
