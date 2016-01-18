@@ -328,7 +328,6 @@ class Durak extends Game
                 ->setResponse($this->getClient());
         } else {
 
-
             // #print_r($cell);
             // #print_r($table);
 
@@ -470,6 +469,7 @@ class Durak extends Game
 
     public function doMove($card=null,$table=null)
     {
+        echo"Делаем ход $card $table \n";
 
         if($card) {
 
@@ -934,7 +934,7 @@ class Durak extends Game
         $cards = is_array($card) ? array(implode('x',$card)) : (is_numeric($playerId) ? $this->getField()[$playerId] : array());
         $tables = count($this->getField()['table']);
 
-        echo $this->time().' '. "Отбой: ".(count($this->getField()['off']))."\n";
+        #echo $this->time().' '. "Отбой: ".(count($this->getField()['off']))."\n";
 
         if($tables < ((min(self::CARDS_ON_THE_HANDS, floor($this->getVariation('cards') / $this->getNumberPlayers())) ) - (count($this->getField()['off']) ? 0 : 1)) &&
             ((count($this->getField()['table'],COUNT_RECURSIVE) - $tables + count($this->getField()[$this->getBeater()])) / 2 > $tables)) {
@@ -1000,7 +1000,7 @@ class Durak extends Game
             }
         }
 
-        #echo $this->time().' '. "Возможность отбиться: ".(count($check)==count(array_filter($check))?'да':'нет')."\n";
+        echo $this->time().' '. "Возможность отбиться: ".(count($check)==count(array_filter($check))?'да':'нет')."\n";
 
         return (count($check) >= ($card ? 1 : count(array_filter($check)))) ? reset($check) : false;
 

@@ -341,8 +341,10 @@ class WebSocketController implements MessageComponentInterface
                             ->setAppMode($app->getMode())
                             ->update();
 
-                        $bot->time = time();
-                        $app->addClient(array($bot->id => $bot));
+                        // $bot->time = time();
+                        $app->addClient(array(
+                            $gameBot->getId() => $gameBot->export()
+                        ));
 
                         /* todo $app->update() */
                         $this->apps($app->getKey(), $app->getUid(), $app);
@@ -425,59 +427,54 @@ class WebSocketController implements MessageComponentInterface
                 $player = $_client->Session->get(Player::IDENTITY);
             }
 
-
-            try {
-                if (isset($playerId) && $app->getClients($playerId) && !isset($app->getClients($playerId)->bot)
-                    && (in_array($action, array('replayAction', 'startAction', 'readyAction'))
-                        && (!$player->checkBalance($app->getCurrency(), $app->getPrice())))
-                ) {
-                    if ($_client) {
-                        $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
-                        #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                    }
-                } else {
-
-                    #echo $this->time() . " " . "прошли проверку, устанавливаем клиента \n";
-                    if (isset($playerId)) {
-                        $app->setClient($playerId);
-                    }
-
-                    #echo $this->time() . " " . "пробуем вызвать экшн \n";
-                    if ($app->getClient() && ($app->isRun() || $action != 'moveAction')) {
-                        call_user_func(array($app, $action), $data);
-
-                        #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
-                        $this->sendCallback($app->getResponse(), $app->getCallback());
-                    }
-
-
-                    if ($playerId && ($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId, $app->getClients())) {
-
-                        if ($_client) {
-                            $_client->send(json_encode(array('path' => 'quit')));
-                            echo $this->time(1) . " отправляем клиенту quit \n";
-                        }
-
-                        echo $this->time(1) . " " . $appName . ' ' . $appId . " удаление appId у игрока №{$playerId}\n";
-
-                        $gamePlayer = new GamePlayer;
-                        $gamePlayer
-                            ->setId($playerId)
-                            ->fetch();
-
-                        $gamePlayer
-                            ->setAppUid(null)
-                            ->setAppMode(null)
-                            ->update();
-                    }
-
-                    $this->checkGame($app);
-
+            if (isset($playerId) && $app->getClients($playerId) && !isset($app->getClients($playerId)->bot)
+                && (in_array($action, array('replayAction', 'startAction', 'readyAction'))
+                    && (!$player->checkBalance($app->getCurrency(), $app->getPrice())))
+            ) {
+                if ($_client) {
+                    $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                    #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
                 }
-            } catch (\Exception $e){
+            } else {
 
-                die(var_dump(array($e->getMessage(), $playerId, $app->getClients($playerId), $app->getClients($playerId))));
+                #echo $this->time() . " " . "прошли проверку, устанавливаем клиента \n";
+                if (isset($playerId)) {
+                    $app->setClient($playerId);
+                }
+
+                #echo $this->time() . " " . "пробуем вызвать экшн \n";
+                if ($app->getClient() && ($app->isRun() || $action != 'moveAction')) {
+                    call_user_func(array($app, $action), $data);
+
+                    #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
+                    $this->sendCallback($app->getResponse(), $app->getCallback());
+                }
+
+
+                if ($playerId && ($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId, $app->getClients())) {
+
+                    if ($_client) {
+                        $_client->send(json_encode(array('path' => 'quit')));
+                        echo $this->time(1) . " отправляем клиенту quit \n";
+                    }
+
+                    echo $this->time(1) . " " . $appName . ' ' . $appId . " удаление appId у игрока №{$playerId}\n";
+
+                    $gamePlayer = new GamePlayer;
+                    $gamePlayer
+                        ->setId($playerId)
+                        ->fetch();
+
+                    $gamePlayer
+                        ->setAppUid(null)
+                        ->setAppMode(null)
+                        ->update();
+                }
+
+                $this->checkGame($app);
+
             }
+
         } else {
 
             $gamePlayer = new GamePlayer;
@@ -710,7 +707,6 @@ class WebSocketController implements MessageComponentInterface
         if ($player = $from->Session->get(Player::IDENTITY))
             if ($player instanceof Player) {
 
-
                 $gamePlayer = new GamePlayer;
 
                 $gamePlayer
@@ -723,39 +719,44 @@ class WebSocketController implements MessageComponentInterface
                 echo "###################################################\n"
                     . $this->time(0, 'MESSAGE') . " #{$from->resourceId}: " . $data->path . (isset($data->data->action) ? " - " . $data->data->action : '') . " \n";
 
-                $this->_class = $class = '\\' . $appName;
 
                 if (isset($data->data))
                     $data = $data->data;
 
                 if ($appName) {
 
-                    if (!class_exists($class)) {
-                        $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
-
-                        return false;
-                    }
-
                     $game = new GameConstructorOnline;
                     $game
-                        ->setType('online')
-                        ->setKey($appName);
+                        ->setType('online');
+
+                    if(is_numeric($appName)) {
+                        $game->setId($appName);
+                    } else {
+                        $game->setKey($appName);
+                    }
 
                     if ($game->fetch()) {
+
                         $gamePlayer
                             ->setAppId($game->getId())
                             ->setAppName($game->getKey())
                             ->update();
+                        $appName = $game->getKey();
 
                     } else {
                         $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
-
                         return false;
                     }
 
                 } else if (!isset($data->message)) {
                     $from->send(json_encode(array('error' => 'EMPTY_MESSAGE')));
+                    return false;
+                }
 
+                $this->_class = $class = '\\' . $appName;
+
+                if (!class_exists($class)) {
+                    $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
                     return false;
                 }
 
@@ -840,6 +841,9 @@ class WebSocketController implements MessageComponentInterface
                                                     ->update();
                                             }
 
+                                            $clients = array();
+                                            $success = false;
+
                                             if ($game->getOptions('f')) {
 
                                                 $clients[$gamePlayer->getId()] = $gamePlayer->export('player');
@@ -854,8 +858,6 @@ class WebSocketController implements MessageComponentInterface
                                                     ->setAppName($game->getKey())
                                                     ->setAppMode($appMode['mode'])
                                                     ->update();
-
-                                                $success = false;
 
                                                 $stack = GamePlayersModel::instance()->getStack($appName, $appMode['mode']);
                                                 // если насобирали минимальную очередь

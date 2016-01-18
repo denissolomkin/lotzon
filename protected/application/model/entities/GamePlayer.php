@@ -104,11 +104,12 @@ class GamePlayer extends Entity
         return $this;
     }
 
-    public function export($to)
+    public function export($to = 'player')
     {
         $ret = null;
 
         switch ($to) {
+
             case 'player':
                 $ret = (object)array(
                     'time'    => time(),
