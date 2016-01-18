@@ -52,6 +52,8 @@
 .bonus-share-banner-view .close {
   display: none;
   cursor: pointer;
+  font-size: 22px;
+  color: #fd6f6e;
 }
 // ----------------------------------- //
 
@@ -155,6 +157,11 @@
   float: left;
   margin: 0 20px 0 0;
   position: relative;
+  &.active {
+    & > * {
+      color: #9b9b9b;
+    }
+  }
 }
 
 
@@ -242,6 +249,7 @@
   color: black;
   color: #4a90e2;
   font-family: 'Handbook-bold';
+  cursor: pointer;
 }
 
 .banner-copy {
@@ -254,6 +262,7 @@
   }
   & .title {
     font-size: 15px;
+    margin-right: 6px;
   }
 
 }

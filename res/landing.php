@@ -34,7 +34,7 @@
         <div class="lb-tr">
             <div class="lb-td">
                 <div class="lp-b">
-                    <div class="pu-b-c" id="lb-close"></div>
+                    <div class="pu-b-c i-x-slim" id="lb-close"></div>
                     <div class="b-m login" id="cl-check">
                         <div class="rules-bk">
                             <div class="rb-cs-bt"></div>

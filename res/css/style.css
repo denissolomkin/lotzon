@@ -2251,7 +2251,9 @@ div.comment-reply-btn {
 
 .bonus-share-banner-view .close {
   display: none;
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 22px;
+  color: #fd6f6e; }
 
 .bonus-social-item {
   width: 38px;
@@ -2328,6 +2330,8 @@ div.comment-reply-btn {
   float: left;
   margin: 0 20px 0 0;
   position: relative; }
+  .bonus-banner-view-item.active > * {
+    color: #9b9b9b; }
 
 .bonus-banner-view-btn {
   cursor: pointer;
@@ -2395,7 +2399,8 @@ div.comment-reply-btn {
   display: inline-block;
   color: black;
   color: #4a90e2;
-  font-family: 'Handbook-bold'; }
+  font-family: 'Handbook-bold';
+  cursor: pointer; }
 
 .banner-copy {
   position: relative; }
@@ -2405,7 +2410,8 @@ div.comment-reply-btn {
     width: 100%;
     border: none; }
   .banner-copy .title {
-    font-size: 15px; }
+    font-size: 15px;
+    margin-right: 6px; }
 
 .banner-copy-btn {
   display: inline-block;
@@ -3013,6 +3019,9 @@ form.loading > * {
 
 .comment-description, .message-form-area {
   line-height: 22px; }
+
+.message-form-area {
+  cursor: pointer; }
 
 .message-form-area {
   min-height: 22px; }

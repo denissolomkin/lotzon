@@ -328,6 +328,10 @@ form.loading > * {
   line-height: 22px;
   
 }
+.message-form-area {
+  cursor: pointer;
+}
+
 .message-form-area { 
   min-height: 22px;
   & span {
