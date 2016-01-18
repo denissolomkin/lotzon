@@ -79,16 +79,16 @@
                 D.log('Navigation.ready', 'menu');
                 $(I.menuBtnItem).off().on('click', Navigation.menu.click);
 
-                window.location.pathname === '/' && (window.location.pathname = '/blog');
-                var selector = 'a[href="/' + U.parse(window.location.pathname, 'url') + '"]',
+                var pathname = window.location.pathname === '/' ? '/blog' : window.location.pathname;
+                var selector = 'a[href="/' + U.parse(pathname, 'url') + '"]',
                     anchor = document.querySelector(selector);
 
                 if (anchor){
-                    console.info('byClick')
+                    console.info('byClick');
                     DOM.click(anchor);
                 }  else {
-                    console.info('byPush')
-                    R.push(window.location.pathname);
+                    console.info('byPush');
+                    R.push(pathname);
                 }
 
                 Navigation.menu.switch();

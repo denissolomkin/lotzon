@@ -109,7 +109,7 @@
                 href    : options.href,
                 template: options.template
             });
-
+            
             /* substitution JSON with profile if template has "/profile/" */
             if (options.template.search(/profile/) !== -1) {
                 options.json = Player;

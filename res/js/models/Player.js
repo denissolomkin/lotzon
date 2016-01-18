@@ -147,7 +147,7 @@
                 }
             }
 
-            console.log(key, object, count);
+            //console.log(key, object, count);
             return count;
         },
 
