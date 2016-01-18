@@ -1,0 +1,28 @@
+//colors
+$black: #000;
+$white: #fff;
+$color_turbo_approx: rgba(255,230,0,0.97);
+$black_5: rgba(0, 0, 0, 0.05);
+$black_85: rgba(0,0,0,0.82);
+
+
+.badges-container {
+    width: 0;
+    height: 0;
+    position: static;
+    > div {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        > div[id^="badges-"] {
+            width: 100%;
+        }
+    }
+    #badges-messages {
+        top: 0;
+        height: auto;
+        bottom: initial;
+    }
+}

@@ -1,11 +1,11 @@
 <div id="badges-messages-{{id}}" class="badge">
     {{badgesCountdown}}
-    <section class="clearfix {{#if user.img}}{{/if}}contain-img">
-        <a href="/users/{{user.id}}/messages" onclick="DOM.remove(DOM.up('.badge',this))">
-        <div class="title">{{i18n user.name}}</div>
-        <img src="{{avatar user.id user.img 50 }}" alt="" onerror="Player.getAvatar.call(this)">
-        <div class="txt">{{{text}}}</div>
+    <section class="clearfix {{#if user.img}}{{/if}}contain-img" >
+        <a href="/users/{{user.id}}/messages" class="start {{#if button}}visible{{else}}invisible{{/if}}" onclick="DOM.remove(DOM.up('.badge',this));">
         </a>
+        <div class="title">{{i18n user.name}}</div>
+        <img src="{{avatar user.id user.img 40 }}" alt="" onerror="Player.getAvatar.call(this)">
+        <div class="txt">{{{text}}}</div>
         <i class="i-x-slim" onclick="DOM.remove(DOM.up('.badge',this))"></i>
     </section>
 </div>

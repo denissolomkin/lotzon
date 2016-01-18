@@ -124,7 +124,8 @@ $font_1: handbookpro-regular;
         }
     }
     .wrapper {
-        padding: 20px 0 0;
+        margin: 20px 0 0;
+        padding: 0;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;

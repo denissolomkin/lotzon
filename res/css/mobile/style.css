@@ -339,6 +339,23 @@ header {
     transform: translateY(-50.1%);
     margin: 0; } }
 
+.badges-container {
+  width: 0;
+  height: 0;
+  position: static; }
+  .badges-container > div {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100; }
+    .badges-container > div > div[id^="badges-"] {
+      width: 100%; }
+  .badges-container #badges-messages {
+    top: 0;
+    height: auto;
+    bottom: initial; }
+
 #lottery-history-view {
   background: url(../img/bg-win.png); }
   #lottery-history-view .content-box {
