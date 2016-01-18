@@ -164,14 +164,59 @@ class PlayersModel extends Model
         return $this->getProcessor()->reportTrouble($player, $trouble);
     }
 
-    public function ban(Entity $player, $status=0)
+    public function ban(Entity $player)
     {
-        return $this->getProcessor()->ban($player,$status);
+        return $this->getProcessor()->ban($player);
+    }
+
+    public function recacheBots()
+    {
+        return $this->getProcessor()->recacheBots();
+    }
+    
+    public function create(Entity $player)
+    {
+        $player = $this->getProcessor()->create($player);
+        if($player->isBot()){
+            $this->recacheBots();
+        }
+        return $player;
+    }
+
+    public function update(Entity $player)
+    {
+        $player = $this->getProcessor()->update($player);
+        if($player->isBot()){
+            $this->recacheBots();
+        }
+        return $player;
+    }
+
+    public function delete(Entity $player)
+    {
+        $this->getProcessor()->delete($player);
+        if($player->isBot()){
+            $this->recacheBots();
+        }
+        return true;
+    }
+
+    public function bot(Entity $player)
+    {
+        $player = $this->getProcessor()->bot($player);
+        $this->recacheBots();
+        return $player;
     }
 
     public function saveAvatar(Entity $player)
     {
-        return $this->getProcessor()->saveAvatar($player);
+        $player = $this->getProcessor()->saveAvatar($player);
+
+        if($player->isBot()){
+            $this->recacheBots();
+        }
+
+        return $player;
     }
 
     public function changePassword(Entity $player)
