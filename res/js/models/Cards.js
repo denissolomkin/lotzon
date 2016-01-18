@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
     scale = 1;
     scaleO = 0.7;
@@ -434,15 +434,18 @@ $(function () {
                 tableObj = $(".Durak .table").get(0);
             }
 
-            Listeners.options.droppable = '.' + tableObj.className;
+            Listeners.options.droppable = '.mx .' + tableObj.className;
             Listeners.init();
         },
 
         highlight: function () {
 
+
             if (App.beater == Player.id && $('.mx .table .cards').length) {
                 if ($('.ngm-gm').hasClass('Revert') && $('.mx .table .cards').length == $('.mx .table .cards .card').length && !$('.mx .table .revert').length)
                     $('.mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
+
+                return true;
 
                 if ($('.mx .players .m .card.select').length) {
                     $('.mx .table .cards').each(function (index) {
@@ -532,4 +535,4 @@ $(function () {
 
     }
 
-});
+})();

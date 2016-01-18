@@ -1,4 +1,4 @@
-$(function () {
+(function () {
 
     Game = {
 
@@ -270,6 +270,12 @@ $(function () {
 
             },
 
+            error: function (data) {
+
+                alert(data.res.error);
+
+            },
+
             update: function (data) {
 
                 D.log('Game.callback.update', 'game');
@@ -383,4 +389,4 @@ $(function () {
 
     }
 
-});
+})();

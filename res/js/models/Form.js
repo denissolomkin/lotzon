@@ -419,6 +419,11 @@
     };
 
     WebSocketAjaxClient = function (url, data) {
+
+        if(!url){
+            url = 'app/' + App.key + (App.uid ? '/' + App.uid : '');
+        }
+
         Form.send({
             action: url,
             data  : data,

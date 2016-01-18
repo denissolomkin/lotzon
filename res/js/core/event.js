@@ -47,6 +47,9 @@
 
         checkNode: function (str, current, target) {
 
+            if (current.classList && current.classList.contains('skip'))
+                return false;
+
             var check = false,
                 contains = ['[', '(', ':'],
                 isSimple = true;

@@ -1,3 +1,5 @@
+(function () {
+
 /* LISTENERS */
 Listeners = {
 
@@ -7,10 +9,12 @@ Listeners = {
     },
 
     init: function() {
+
+        console.warn('1', this.options.droppable);
+
         var tables = document.querySelectorAll(this.options.droppable);
         for (var i = 0; i < tables.length; i++) {
-            var table = tables[i];
-            table.className += ' droppable';
+            tables[i].classList.add('droppable');
         }
         var cards = document.querySelectorAll(this.options.draggable);
         for (var i = 0; i < cards.length; i++) {
@@ -35,12 +39,11 @@ Listeners = {
             card.removeEventListener('touchstart', Touch.start);
             card.removeEventListener('touchmove', Touch.move);
             card.removeEventListener('touchend', Touch.end);
-            card.className = card.className.replace(' draggable', '');
+            card.classList.remove('draggable');
         }
         var droppableTables = document.getElementsByClassName('droppable');
         for (var i = 0; i < droppableTables.length; i++) {
-            var table = droppableTables[i];
-            table.className = table.className.replace(' droppable', '');
+            droppableTables[i].classList.remove('droppable');
         }
     }
 };
@@ -73,21 +76,32 @@ Drag = {
     drop: function() {
         Drag.status('drop');
 
-        if (!Drag.check()) {
+        var table = Drag.check();
+        if (!table) {
             Drag.rollback();
             Drag.empty();
         } else {
-            WebSocketAjaxClient();
+            console.log(table, Drag.options.target);
+            WebSocketAjaxClient(null, {
+                action: 'move',
+                table: table.getAttribute('data-table'),
+                cell: Drag.options.target.getAttribute('data-card')
+            });
         }
     },
 
     check: function() {
         var droppableTables = document.getElementsByClassName('droppable');
         for (var i = 0; i < droppableTables.length; i++) {
-            var table = droppableTables[i].getBoundingClientRect();
-            var dragEndposition = Drag.options.target.getBoundingClientRect();
-            if (dragEndposition.bottom < table.bottom && dragEndposition.bottom > table.top && dragEndposition.right > table.left && dragEndposition.left < table.right) {
-                return true;
+
+            var table = droppableTables[i].getBoundingClientRect(),
+                dragEndposition = Drag.options.target.getBoundingClientRect();
+
+            if (dragEndposition.bottom < table.bottom
+                && dragEndposition.bottom > table.top
+                && dragEndposition.right > table.left
+                && dragEndposition.left < table.right) {
+                return droppableTables[i];
             }
         }
         return false;
@@ -150,6 +164,7 @@ Mouse = {
         document.removeEventListener('mouseup', Mouse.up);
         document.removeEventListener('mousemove', Mouse.move);
         // add mouseenter/mouseleave events to all cards
+
         var cards = document.querySelectorAll(Listeners.options.draggable);
         for (var i = 0; i < cards.length; i++) {
             var card = cards[i];
@@ -158,7 +173,7 @@ Mouse = {
         }
 
         Drag.options.event = e;
-        Drag.drop();
+        Drag.drop.call(this);
     },
 
     enter: function(e) {
@@ -277,7 +292,7 @@ Touch = {
         if (Touch.moved) {
             Drag.options.event  = e.targetTouches[0];
             Drag.options.target = Touch.moveTarget;
-            Drag.drop();
+            Drag.drop.call(this);
         }
 
         removeClassFromAll('select');
@@ -324,3 +339,5 @@ function eachCardLeft(target) {
         cards[i].style.top = Number(oldTop + newTop) + 'px';
     }
 }
+
+})();
