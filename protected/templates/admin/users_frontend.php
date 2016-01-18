@@ -654,6 +654,7 @@
     </div>
 </div>
 
+<script src="/theme/admin/lib/jquery.damnUploader.min.js"></script>
 <script>
 
 <? $langs=array();
@@ -1185,7 +1186,7 @@ $('.profile-trigger').on('click', function() {
             if (data.status == 1) {
                 user=data.data;
 
-                html='<img src="'+(user.Avatar?'../filestorage/avatars/'+Math.ceil(user.Id / 100) + '/'+user.Avatar:'../tpl/img/but-upload-review.png')+'">' +
+                html='<img class="avatar-trigger" data-id="'+user.Id+'" src="'+(user.Avatar?'../filestorage/avatars/'+Math.ceil(user.Id / 100) + '/'+user.Avatar:'../tpl/img/but-upload-review.png')+'">' +
                 '<div>'+
                 '<div class="input-group"><span class="input-group-addon">Ник</span><input type="text" class="form-control" name="Nicname" placeholder="Ник" value="'+user.Nicname+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Имя</span><input type="text" class="form-control" name="Name" placeholder="Имя" value="'+user.Name+'"></div>' +
@@ -1195,6 +1196,7 @@ $('.profile-trigger').on('click', function() {
                 '<div class="input-group"><span class="input-group-addon">Qiwi</span><input type="text" class="form-control" name="qiwi" placeholder="Qiwi" value="'+user.Qiwi+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">WebMoney</span><input type="text" class="form-control" name="webmoney" placeholder="WebMoney" value="'+user.WebMoney+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">YandexMoney</span><input type="text" class="form-control" name="yandexmoney" placeholder="YandexMoney" value="'+user.YandexMoney+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">UTC</span><input type="text" class="form-control" name="Utc" placeholder="UTC" value="'+user.Utc+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Страна</span>' +
                 '<select class="form-control" name="Country">';
 
@@ -1221,10 +1223,11 @@ $('.profile-trigger').on('click', function() {
                 $("#profile-holder").modal();
                 $("#profile-holder").find('.cls').on('click', function() {
                     $("#profile-holder").modal('hide');
-                })
+                });
                 $("#profile-holder").find('.add').off('click').on('click', function() {
                     updateProfile(plid);
                 });
+                $('.avatar-trigger').off('click').on('click', uploadAvatar);
 
             } else {
                 alert(data.message);
@@ -1323,21 +1326,48 @@ $('.logs-trigger').on('click', function() {
 });
 /* END LOG BLOCK */
 
+/* BOT USER BLOCK */
+$('.bot-trigger').on('click', function() {
+
+    var plid = $(this).data('id');
+    var status = ($("tr#user"+plid).hasClass("info") ? 0 : 1);
+    $.ajax({
+        url: "/private/users/" + plid + "/bot/" + status,
+        method: 'POST',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                if($("tr#user"+plid).hasClass("info") && !data.data.bot)
+                    $("tr#user"+plid).addClass('danger').removeClass('info');
+                else if($("tr#user"+plid).hasClass("danger") && data.data.bot)
+                    $("tr#user"+plid).removeClass('danger').addClass('info');
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+
+});
+
 /* BAN USER BLOCK */
 $('.ban-trigger').on('click', function() {
 
     var plid = $(this).data('id');
     var status = ($("tr#user"+plid).hasClass("danger") ? 0 : 1);
         $.ajax({
-            url: "/private/users/ban/" + plid+"?ban="+status,
+            url: "/private/users/" + plid + "/ban/" + status,
             method: 'POST',
             async: true,
             dataType: 'json',
             success: function(data) {
                 if (data.status == 1) {
-                    if($("tr#user"+plid).hasClass("danger"))
+                    if($("tr#user"+plid).hasClass("danger") && !data.data.ban)
                         $("tr#user"+plid).removeClass('danger');
-                    else
+                    else if (data.data.ban)
                         $("tr#user"+plid).addClass('danger');
                 } else {
                     alert(data.message);
@@ -1348,10 +1378,37 @@ $('.ban-trigger').on('click', function() {
             }
         });
 
-
-
 });
 
+/* UPLOAD AVATAR */
+uploadAvatar = function() {
+
+    // create form
+    var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>'),
+        image = $(this),
+        plid = image.data('id'),
+        input = form.find('input[type="file"]').damnUploader({
+            url      : '/private/users/' + plid + '/avatar',
+            fieldName: 'image',
+            dataType : 'json'
+        });
+
+    input.off('du.add').on('du.add', function (e) {
+
+        e.uploadItem.completeCallback = function (succ, data, status) {
+            console.log(succ, data, status);
+            if(succ && data.status)
+                image.attr('src', '../filestorage/avatars/' + Math.ceil(plid / 100) + '/' + data.data.image);
+            else
+                alert('Error ' + (data.message ? data.message : ''));
+        };
+
+        e.uploadItem.progressCallback = function (perc) {}
+        e.uploadItem.upload();
+    });
+
+    form.find('input[type="file"]').click();
+}
 /* TREE */
 $('.tree-trigger').on('click', function() {
 
