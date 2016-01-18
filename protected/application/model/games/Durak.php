@@ -637,12 +637,15 @@ class Durak extends Game
                 ->shuffleCards() // дорасдали карты на руки
                 ->updatePlayer(array('status'));
 
-            while(!count($this->getField(reset($this->currentPlayers())))) {
+            $currentPlayer = reset($this->currentPlayers());
+
+            while(!count($this->getField($currentPlayer))) {
                 #echo "перебираем, пока на руках не будет карт\n";
                 $this->nextPlayer();
+                $currentPlayer = reset($this->currentPlayers());
             }
 
-            $this->setStarter(reset($this->currentPlayers())) // установили первую руку
+            $this->setStarter($currentPlayer) // установили первую руку
                 ->setBeater($this->nextBeater()); // установили отбивающимся следующего за первым игроком
 
 
