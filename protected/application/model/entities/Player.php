@@ -48,7 +48,9 @@ class Player extends Entity
 
     private $_favoriteCombination = array();
     private $_visible             = false;
-    private $_ban             = false;
+    protected $_ban             = false;
+    protected $_bot             = false;
+    protected $_utc             = null;
 
     private $_dates = array();
     private $_dateAdBlocked  = '';
@@ -1578,6 +1580,8 @@ class Player extends Entity
         if ($from == 'DB') {
             $this->setId($data['Id'])
                  ->setBan($data['Ban'])
+                 ->setBot($data['Bot'])
+                 ->setUtc($data['UTC'])
                  ->setEmail($data['Email'])
                  ->setPassword($data['Password'])
                  ->setSalt($data['Salt'])

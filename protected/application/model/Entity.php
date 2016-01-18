@@ -98,7 +98,7 @@ abstract class Entity
             if (isset($this->_title[$key]) && $this->_title[$key] && $this->_title[$key] != '')
                 return nl2br($this->_title[$key]);
             else
-                return nl2br(reset($this->_title[$key]));
+                return nl2br(reset($this->_title));
         }
 
         return $this->_title;
@@ -111,7 +111,7 @@ abstract class Entity
             if (isset($this->_description[$key]) && $this->_description[$key] && $this->_description[$key] != '')
                 return nl2br($this->_description[$key]);
             else
-                return nl2br(reset($this->_description[$key]));
+                return nl2br(reset($this->_description));
         }
 
         return $this->_description;
