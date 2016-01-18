@@ -171,6 +171,10 @@ class Index extends \SlimController\SlimController
             "game" => array(
                 'key' => $gamePlayer->getApp('Key'),
                 'uid' => $gamePlayer->getApp('Uid')
+            ),
+            "games" => array(
+                'chance'            => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : null,
+                'random'             => $session->has('QuickGame'),
             )
         );
 
@@ -216,6 +220,12 @@ class Index extends \SlimController\SlimController
                 "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country)
             ));
 
+        if (!$session->has('MomentLastDate'))
+            $session->set('MomentLastDate', time());
+
+        if (!$session->has('QuickGameLastDate'))
+            $session->set('QuickGameLastDate', time());
+
         return include("res/index.php");
 
         $session         = new Session();
@@ -224,12 +234,6 @@ class Index extends \SlimController\SlimController
         $player          = $session->get(Player::IDENTITY)->fetch();
         $lotterySettings = LotterySettingsModel::instance()->loadSettings();
         $gameSettings    = GameSettingsModel::instance()->getList();
-
-        if (!$session->has('MomentLastDate'))
-            $session->set('MomentLastDate', time());
-
-        if (!$session->has('QuickGameLastDate'))
-            $session->set('QuickGameLastDate', time());
 
         $gameInfo = array(
             'participants' => PlayersModel::instance()->getMaxId(),
