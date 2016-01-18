@@ -33,6 +33,34 @@ class GameAppsDBProcessor implements IProcessor
 
     }
 
+    public function countApps($key = null, $status = null)
+    {
+        $where = array();
+        $sql = "SELECT COUNT(*) FROM `GamesTmpApps`";
+
+        if(isset($key)){
+            $where[] =  '`'.(is_numeric($key) ? 'Id' : 'Key' ) . "` = '$key'";
+        }
+
+        if(isset($status)){
+            $where[] =  '`isRun` = '.(int)$status;
+            $where[] =  '`isOver` = 0';
+        }
+
+        if(count($where))
+            $sql.=' WHERE ' . implode(' AND ', $where);
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query: ". $e->getMessage() , 500);
+        }
+
+        return $res->fetchColumn(0);
+    }
+
     public function getList($key = null)
     {
         $sql = "SELECT * FROM `GamesTmpApps`";

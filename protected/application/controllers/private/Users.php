@@ -277,6 +277,7 @@ class Users extends PrivateArea
                     'WebMoney' => $player->getWebMoney()?:'',
                     'Country' => $player->getCountry(),
                     'Lang' => $player->getLang(),
+                    'UTC' => $player->getUtc()?:'',
                 );
 
             } catch (ModelException $e) {
@@ -320,6 +321,7 @@ class Users extends PrivateArea
                     ->setSurName($this->request()->post('Surname'))
                     ->setCountry($this->request()->post('Country'))
                     ->setLang($this->request()->post('Lang'))
+                    ->setUtc($this->request()->post('UTC'))
                     ->update();
 
             } catch (EntityException $e){
@@ -623,24 +625,33 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
-    public function banAction($playerId)
+    public function botAction($playerId, $status = 0)
     {
         if ($this->request()->isAjax()) {
+
             $response = array(
                 'status'  => 1,
                 'message' => 'OK',
                 'data'    => array(),
             );
+
             try {
                 $player = new Player;
                 $player->setId($playerId)->fetch();
-                $status = $this->request()->get('ban',0);
 
-                PlayersModel::instance()->writeLog($player,array('action'=>'PLAYER_BAN', 'desc'=>($status?'BLOCKED':'UNBLOCKED'), 'status'=>($status?'danger':'warning')));
+                if($status && !$player->isBan()){
+                    $response['status'] = 0;
+                    $response['message'] = 'FIRST_BAN_PLAYER';
+                } else {
+                    $player->setBot($status);
 
-                $response['data'] = array(
-                    'ban' => PlayersModel::instance()->ban($player,$status),
-                );
+                    PlayersModel::instance()->bot($player);
+                    PlayersModel::instance()->writeLog($player, array('action' => 'PLAYER_BOT', 'desc' => ($status ? 'SET' : 'UNSET'), 'status' => ($status ? 'danger' : 'warning')));
+
+                    $response['data'] = array(
+                        'bot' => $player->isBot(),
+                    );
+                }
 
             } catch (ModelException $e) {
                 $response['status'] = 0;
@@ -650,6 +661,74 @@ class Users extends PrivateArea
             die(json_encode($response));
         }
         $this->redirect('/private');
+    }
+
+    public function banAction($playerId, $status = 0)
+    {
+        if ($this->request()->isAjax()) {
+
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            try {
+                $player = new Player;
+                $player
+                    ->setId($playerId)
+                    ->fetch()
+                    ->setBan($status);
+
+                if(!$status && $player->isBot()){
+                    $response['status'] = 0;
+                    $response['message'] = 'FIRST_UNSET_BOT';
+                } else {
+                    PlayersModel::instance()->ban($player);
+                    PlayersModel::instance()->writeLog($player, array('action' => 'PLAYER_BAN', 'desc' => ($status ? 'BLOCKED' : 'UNBLOCKED'), 'status' => ($status ? 'danger' : 'warning')));
+
+                    $response['data'] = array(
+                        'ban' => $player->isBan(),
+                    );
+                }
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
+    public function avatarAction($id){
+
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            $player   = new \Player();
+
+            try {
+
+                $player
+                    ->setId($id)
+                    ->fetch()
+                    ->uploadAvatar();
+
+                $response['data'] = array(
+                    'image' => $player->getAvatar(),
+                );
+
+            } catch (ModelException $e) {
+                $response['status']  = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
     }
 
     public function deleteAction($playerId)

@@ -192,6 +192,11 @@ line-height: 13px;
 min-height: 17px;
 }
 
+.bot-trigger {display:none;}
+.avatar-trigger {cursor:pointer;}
+.info .bot-trigger , .danger .bot-trigger {display:inline-block;}
+.info .ban-trigger  {display: none;}
+
 .right {float:right;text-align: right;}
 .left {float:left;text-align: left;}
 

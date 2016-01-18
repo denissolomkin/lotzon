@@ -72,7 +72,7 @@ class GamesDBProcessor
                 $app->getCurrency(),
                 $app->getPrice());
 
-            if ($app->getPrice() AND $player['result'] != 0 AND !isset($app->getClients()[$player['pid']]->bot)) {
+            if ($app->getPrice() AND $player['result'] != 0) {
 
                 $currency = $app->getCurrency() == 'MONEY' ? 'Money' : 'Points';
                 $win      = isset($player['win']) ? $player['win'] : $player['result'] * $app->getPrice();

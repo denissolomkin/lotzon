@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 <? foreach ($list as $player) { ?>
-                    <tr id="user<?=$player->getId()?>" class="<?=$player->getBan()?'danger':''?>">
+                    <tr id="user<?=$player->getId()?>" class="<?=$player->isBot()?'info':($player->isBan()?'danger':'')?>">
                         <td>
                             <div data-toggle="tooltip" data-placement="right" title="<?=$player->getAgent()?>" >
                                 <?=$player->getId()?>
@@ -231,6 +231,7 @@
                             </button>
                              <? endif ?>
                                 <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
+                                <button class="btn btn-xs btn-danger bot-trigger" data-id="<?=$player->getId()?>"><span class="fa fa-plug" aria-hidden="true"></button>
                                 <button class="btn btn-xs btn-danger delete-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button>
                             </div>
                         </td>
@@ -276,6 +277,8 @@ $('.search-users').on('click', function() {
         '<option value="ReferalId">Реферал</option>' +
         '<option value="CookieId">Cookie</option>' +
         '<option value="Ping">Online</option>' +
+        '<option value="Ban">Ban</option>' +
+        '<option value="Bot">Bot</option>' +
         '<option value="CONCAT(`Surname`,`Name`)">Фио</option>' +
         '<option value="Email">Email</option></select>');
         var sccButton = $('<button class="btn btn-md btn-success search-form"><i class="glyphicon glyphicon-ok"></i></button>')
@@ -310,7 +313,7 @@ $('.search-users').on('click', function() {
 
 });
 
-<? if(isset($search['query']) and $search['query']){?>
+<? if(isset($search['query'])){?>
 $('.search-users').trigger('click');
 $('#search_where').val('<?=$search['where']?>');
 
