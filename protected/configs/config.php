@@ -651,6 +651,9 @@ Config::instance()->publicResources = array(
     '/users/:userId' => array(
         'get' => 'controllers\production\Players:card'
     ),
+    '/user/:userId' => array(
+        'get' => 'controllers\production\Players:userInfo'
+    ),
     '/(.*)/' => 'controllers\production\Index:index',
 );
 

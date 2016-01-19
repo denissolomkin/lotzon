@@ -493,6 +493,34 @@ class Players extends \AjaxController
     }
 
     /**
+     * Полная информация о пользователе
+     *
+     * @param $playerId
+     *
+     * @throws EntityException
+     */
+    public function userInfoAction($playerId) {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new Player();
+        $player->setId($playerId)->fetch();
+
+        $response = array(
+            'res' => array(
+                'user' => array(
+                    "$playerId" => $player->export('info')
+                )
+            )
+        );
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
+    /**
      * Малая визитка пользователя
      *
      * @param $playerId

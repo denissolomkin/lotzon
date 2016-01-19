@@ -1669,14 +1669,40 @@ class Player extends Entity
 
     public function export($to)
     {
-        if ($to == 'card') {
-            $ret = array(
-                'id'   => $this->getId(),
-                'img'  => $this->getAvatar(),
-                'name' => $this->getNicName()
-            );
-            return $ret;
+        switch ($to) {
+            case 'card':
+                $ret = array(
+                    'id'   => $this->getId(),
+                    'img'  => $this->getAvatar(),
+                    'name' => $this->getNicName()
+                );
+                break;
+            case 'info':
+                $ret = array(
+                    'id'       => $this->getId(),
+                    'img'      => $this->getAvatar(),
+                    'birthday' => $this->getBirthday(),
+                    'title'    => array(
+                        'nickname'   => $this->getNicName(),
+                        'name'       => $this->getName(),
+                        'surname'    => $this->getSurname(),
+                        'patronymic' => $this->getSecondName()
+                    ),
+                    'location' => array(
+                        'country' => $this->getCountry(),
+                        'city'    => $this->getCity()
+                    ),
+                    'social'     => array(
+                    )
+                );
+                foreach (\Config::instance()->hybridAuth['providers'] as $socialName => $value) {
+                    $ret['social'][$socialName] = $this->getAdditionalData()[$socialName]['identifier'];
+                }
+                break;
+            default:
+                throw new EntityException('Export type is not supported', 500);
         }
+        return $ret;
     }
 
 }
