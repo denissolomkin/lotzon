@@ -1,4 +1,4 @@
-var fakeCounter = 0, debug = 0;
+var fakeCounter = 0, debug = 0, disableNow = false;
 var fakeRandomData = [{
         "Uid": "568b9d3875b2b",
         "Prize": {
@@ -71,7 +71,7 @@ var Games = {
         init: function () {
             Games.online.tabs();
             if (!Games.online.timeout) {
-                Games.online.timeouts("#games-online-view-now > form", 5000);
+                Games.online.timeouts('#games-online-view-now .render-list-form');
             }
 
             return;
@@ -94,14 +94,17 @@ var Games = {
             });
         },
         timeouts: function (element, time) {
-            Games.online.timeout = setTimeout(function () {
-                if ($(element).is(":visible")) {
-                    $(element).change();
-                } else {
-                    clearTimeout(Games.online.timeout);
-                }
-                Games.online.timeouts(element, time);
-            }, time);
+
+            if(!disableNow) {
+                Games.online.timeout = setTimeout(function () {
+                    if ($(element).is(':visible')) {
+                        $(element).change();
+                    } else {
+                        clearTimeout(Games.online.timeout);
+                    }
+                    Games.online.timeouts(element, time);
+                }, (time || 5000));
+            }
         }
 
     },

@@ -77,6 +77,7 @@ Drag = {
         Drag.status('drop');
 
         var table = Drag.check();
+
         if (!table) {
             Drag.rollback();
             Drag.empty();
@@ -111,6 +112,7 @@ Drag = {
         if (Drag.options) {
             Drag.status('rollback');
             Drag.options.target.className += ' transition';
+            Drag.options.target.className =  Drag.options.target.className.replace(' small-card', '');
             Drag.options.target.style.zIndex = 0;
             Drag.options.target.style.top = Drag.position.startY;
             Drag.options.target.style.left = Drag.position.startX;
@@ -134,6 +136,7 @@ Mouse = {
     start: function(e) {
         // remove transition for drag quickly
         e.target.className = e.target.className.replace(' transition', '');
+        e.target.className += ' small-card';
         // add listeners for drag logic
         document.addEventListener('mousemove', Mouse.move, false);
         document.addEventListener('mouseup', Mouse.up, false);
@@ -153,12 +156,10 @@ Mouse = {
         };
         Drag.start();
     },
-
     move: function(e) {
         Drag.options.event = e;
         Drag.move();
     },
-
     up: function(e) {
         // remove mouseup/mousemove card
         document.removeEventListener('mouseup', Mouse.up);

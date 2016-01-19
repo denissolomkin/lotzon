@@ -38,7 +38,6 @@ $(function () {
         error: function () {
 
             Cards.premove();
-            Game.callback.error();
             Drag.rollback();
 
         }

@@ -1,9 +1,24 @@
 {{#if mode}}
 <div id="games-online-view-now-{{id}}" data-id="{{id}}" class="game {{#if (gt (getSplittedEl mode "-" "2") players.length )}}available{{/if}}">
 
+<form action="/app/{{key}}/{{id}}" method="ws">
 
-    <div class="bet">{{getSplittedEl mode "-" "1"}} {{#if (eq (getSplittedEl mode "-" "0") "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
+    {{#if (gt (getSplittedEl mode "-" "2") players.length )}}
+    <input type="hidden" name="action" value="start">
+    <input type="hidden" name="mode" value="{{mode}}">
+    <button style="position: absolute; opacity: 0; width: 100%;height: 100%;" type="sumbit" name="sumbit">play</button>
+    {{/if}}
+
+    <div class="bet">{{getSplittedEl mode "-" "1"}}
+        {{#if (eq (getSplittedEl mode "-" "0") "MONEY")}}
+            {{player "getCurrency"}}
+        {{else}}
+            {{i18n "title-of-points"}}
+        {{/if}}
+    </div>
+
     <div class="players-number">{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>
+
     {{#if variation}}
     <div class="game-type">
         {{#each variation}}
@@ -13,9 +28,7 @@
     {{/if}}
 
     <div class="players">{{#each players}} {{this}} {{/each}}</div>
-    {{#if (gt (getSplittedEl mode "-" "2") players.length )}}
-    <i class="i-arrow-right"></i>
-    {{/if}}
+</form>
 
 </div>
 {{/if}}

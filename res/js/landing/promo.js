@@ -1,4 +1,12 @@
 $(function(){
+
+    if (-1 < window.location.href.indexOf('/support/rules')) {
+        $('.login-popup .lp-b').css('transform','translate(-560px, 0)');
+        $('.login-popup, .rules-bk').css('display' , 'block');
+    }
+
+
+
     var dHeight = $(window).height();
     $('.display-slide').height(dHeight);
     $(window).on('resize', function(){
@@ -13,8 +21,6 @@ $(function(){
     $('.go-play').on('click', function(){
         if (!$('#cl-check').hasClass('login')) {
             $('#login-block .tb_a-r').click();
-            //$('#pass-rec-form').show();
-            //$('#pass-rec-txt').hide();
             $('#cl-check').removeAttr('class').addClass('b-m registration');
         }
         

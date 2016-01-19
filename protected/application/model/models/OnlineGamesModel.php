@@ -41,10 +41,6 @@ class OnlineGamesModel extends Model
             $rating = isset($rating[$gameId]) ? $rating[$gameId] : array();
         }
 
-        if ($limit) {
-            $rating = array_slice($rating, $offset, $limit);
-        }
-
         return $rating;
     }
 

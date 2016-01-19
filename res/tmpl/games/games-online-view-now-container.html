@@ -3,8 +3,10 @@
     <div id="games-online-view-now-list" class="render-list">
     </div>
 
-    <div class="container-center">
-        <button name="submit" type="submit" class="once-infinite-scrolling btn-flat">{{i18n "button-load-more"}}</button>
-    </div>
+    <form action="/games/online/{{id}}/now/list" method="get" class="render-list-form track-disabled">
+        <div class="container-center">
+            <button name="submit" type="submit" class="once-infinite-scrolling btn-flat">{{i18n "button-loading"}}</button>
+        </div>
+    </form>
 
 </div>

@@ -270,11 +270,11 @@
 
             },
 
-            error: function (data) {
+            // error: function (data) {
 
-                alert(data.res.error);
+            //     alert(data.res.error);
 
-            },
+            // },
 
             update: function (data) {
 

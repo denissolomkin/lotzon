@@ -164,12 +164,12 @@ class GamesController extends \AjaxController
                 $gamePlayer
                     ->formatFrom('player', $this->session->get(Player::IDENTITY));
 
-                if(!$gamePlayer->getApp('Uid'))
+                if (!$gamePlayer->getApp('Uid'))
                     $gamePlayer
                         ->setAppId($game->getId())
                         ->setAppName($game->getKey())
                         ->setAppMode(null);
-                 else
+                else
                     $response['player']['game'] = array(
                         'key' => $gamePlayer->getApp('Key'),
                         'uid' => $gamePlayer->getApp('Uid'));
@@ -212,6 +212,11 @@ class GamesController extends \AjaxController
         }
 
         try {
+            $gameApp = new \GameConstructor;
+            $gameApp
+                ->setId($id)
+                ->setType('online')
+                ->fetch();
             $gameApps  = \GameAppsModel::instance()->getList($id);
             $gameStack = \GamePlayersModel::instance()->getStack($id);
         } catch (\PDOException $e) {
@@ -237,6 +242,7 @@ class GamesController extends \AjaxController
 
             $games[] = array(
                 'id'        => $uid,
+                'key'       => $game->getApp()->getKey(),
                 'mode'      => $game->getApp()->getCurrency() . '-' . $game->getApp()->getPrice() . '-' . $game->getApp()->getNumberPlayers(),
                 'variation' => $game->getApp()->getVariation(),
                 'players'   => $players
@@ -247,6 +253,7 @@ class GamesController extends \AjaxController
             foreach ($clients as $clientId => $client) {
                 $games[] = array(
                     'id'      => 0,
+                    'key'     => $gameApp->getKey(),
                     'mode'    => $mode,
                     'players' => array($client->getName())
                 );
@@ -270,11 +277,22 @@ class GamesController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
         }
 
-        $count  = $this->request()->get('count', self::$ratingPerPage);
-        $offset = $this->request()->get('offset', NULL);
+        $limit    = self::$ratingPerPage;
+        $currency = $this->request()->get('currency', 'MONEY');
+        $offset   = $this->request()->get('offset', NULL);
 
         try {
-            $rating = \OnlineGamesModel::instance()->getRating($id, $count, $offset);
+
+            $list = \OnlineGamesModel::instance()->getRating($id);
+            if (isset($list[$currency])) {
+                $list = $list[$currency];
+                if ($limit) {
+                    $list = array_slice($list, $offset, $limit + 1);
+                }
+            } else {
+                $list = array();
+            }
+
         } catch (\PDOException $e) {
             $this->ajaxResponse(array(), 0, 'INTERNAL_ERROR');
         }
@@ -285,10 +303,15 @@ class GamesController extends \AjaxController
             )
         );
 
-        $response['res']['games'][$key] = array();
+        if (count($list) <= $limit) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
 
+        $response['res']['games'][$key]      = array();
         $response['res']['games'][$key][$id] = array(
-            'rating' => $rating
+            'rating' => $list
         );
 
         $this->ajaxResponseCode($response);

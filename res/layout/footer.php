@@ -40,22 +40,8 @@
         slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT);?>,
         config = <?php echo json_encode($config, JSON_PRETTY_PRINT);?>,
         timestamp = <?php echo time();?>,
-        debugConf = {
-            "config": {
-                "stat": false && /192.168.56.101/.test(location.hostname),
-                "alert": false,
-                "render": false,
-                "cache": false,
-                "i18n": false,
-                "func": true,
-                "info": true,
-                "warn": true,
-                "error": true,
-                "log": true,
-                "clean": true,
-                'content': true
-            }
-        };
+        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT);?>
+
 </script>
 
 <!-- Yandex.Metrika counter -->

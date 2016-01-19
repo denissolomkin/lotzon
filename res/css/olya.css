@@ -29,8 +29,8 @@ body {
 .cards .players .gm-pr .pr-ph-bk .pr-ph {box-shadow: 0 0 6px 0px rgba(0,0,0,0.5);}
 .cards .players .gm-pr .pr-ph-bk{  width: auto;height: auto;opacity: 1;z-index:2;position:relative;margin: auto;overflow: visible;}
 .cards .players .m .gm-pr .pr-ph-bk{  left: 45%;top: 10px;}
-.cards .players .gm-pr .pr-ph-bk .mt{display: block;background: white;border: 1px solid #ccc;border-radius: 5px;padding: 5px;font-size: 22px;font: 22px/1 Handbook-regular;width: 140%;margin: -20%;box-sizing: border-box;top: 0px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.3);}
-.cards .players .gm-pr .pr-ph-bk .tm{ font: 32px/1 Handbook-regular; padding: 4px; position: absolute; width: 50px; height: 50px; margin: -20px 17px; border-radius: 50px; border: 5px solid rgb(255,228,0); box-sizing: border-box;}
+.cards .players .gm-pr .pr-ph-bk .mt{display: block;background: white;border: 1px solid #ccc;border-radius: 5px;padding: 5px;font-size: 22px;font: 22px/1 "handbookpro-regular";width: 140%;margin: -20%;box-sizing: border-box;top: 0px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.3);}
+.cards .players .gm-pr .pr-ph-bk .tm{ font: 32px/1 "handbookpro-regular"; padding: 4px; position: absolute; width: 50px; height: 50px; margin: -20px 17px; border-radius: 50px; border: 5px solid rgb(255,228,0); box-sizing: border-box;}
 .cards .players .gm-pr .pr-ph-bk .wt{
     display: none;
     top: 0;
@@ -89,9 +89,9 @@ body {
 .cards .players .m .gm-pr .pr-nm { display: none;}
 .cards .players .m .gm-pr .tm {  margin: 5px 0 0 -200px;background: none;color: black;}
 .cards .players .m .gm-pr .pr-cl { margin: 15px 30px;  float: left; width: 20%;}
-.cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
+.cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {width: 100%;display: none;  height: 50px; background: white; border: 1px solid #bababa; border-radius: 5px; color: red; font: 32px/50px "handbookpro-regular"; text-transform: uppercase;}
 .cards .players .m.current:not(.starter) .gm-pr .pr-cl .btn-pass, .cards .players .m.current:not(.starter) .gm-pr .pr-cl .btn-ready{display: block;}
-.cards .players .m .gm-pr .pr-cl .msg-move{width: 100%;display: none;  height: 50px;color: red; font: 32px/50px Handbook-regular; text-transform: uppercase;}
+.cards .players .m .gm-pr .pr-cl .msg-move{width: 100%;display: none;  height: 50px;color: red; font: 32px/50px "handbookpro-regular"; text-transform: uppercase;}
 .cards .players .m.starter .gm-pr .pr-cl .msg-move{display: block;}
 
 .cards .players .o{width: 30%;float: left;margin: 0;}
@@ -105,7 +105,7 @@ body {
 .cards .players .o .card{position: absolute; margin-left: -20px; margin-top: 20px;/*width: 70px; height: 108px;background-position: -1430px 0px;*/ border-radius: 5px; -webkit-transform-origin: 50% 25%; transform-origin: 50% 25%;}
 .cards .players .o .gm-pr { height: auto;  margin: 0 0 0 5px;  }
 .cards .players .o .gm-pr .pr-ph {width: 60px;  height: 60px;  background-repeat: no-repeat;  background: white;  background-size: contain;  position: relative; box-shadow: 0px 0px 10px;  margin: 30px 0 0 0px;border-radius: 50px;}
-.cards .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.6);  color: #ffffff;    top: 60px; padding:2px; position: absolute;border-radius: 3px;font: 15px/1 Handbook-regular;}
+.cards .players .o .gm-pr .pr-nm {width: 100%;  background: rgba(64,64,64,0.6);  color: #ffffff;    top: 60px; padding:2px; position: absolute;border-radius: 3px;font: 14px/1 "handbookpro-regular";}
 .cards .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 5px;}
 
 .cards .deck, .cards .table, .cards .off {float: left;height: 35%;;width: 100px;box-sizing: border-box; z-index: 10;}
@@ -238,6 +238,10 @@ body {
     /*transition: all 0s ease 0s !important;*/
 
 }
+.small-card {
+    trasform: rotate(2deg) scale(0.7,0.7)!important;
+    -webkit-transform: rotate(2deg) scale(0.7,0.7)!important;
+}
 @media  all and ( max-width: 768px) { 
 
     .active_small_devices {
@@ -266,7 +270,7 @@ body {
         width: 14%; 
     }   
     .cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {
-        font: 18px Handbook-regular;
+        font: 18px "handbookpro-regular";
         height: 40px;
         line-height: 40px;
     }
@@ -305,7 +309,7 @@ body {
         padding: 2px;
         position: absolute;
         border-radius: 3px;
-        font: 8px/1 Handbook-regular;
+        font: 8px/1 "handbookpro-regular";
         text-align: center;
         /* white-space: nowrap; */
         /* left: 0; */
@@ -491,7 +495,7 @@ body {
         margin-top: 5px;
     }*/
     .cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {
-        font: 14px Handbook-regular;
+        font: 14px "handbookpro-regular";
         line-height: 40px;
     }
 /*     .cards .players .m .gm-pr .pr-md {
@@ -763,8 +767,8 @@ body {
 .cs {width:30px;height:30px;background:url("../img/bg-but-close-rules.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
 .ws-lt-bk .cs {width:30px;height:30px;background:url("../img/bg-but-close-game.png") no-repeat 0 0;position:absolute;top:0;right:-50px;cursor:pointer;}
 .bl-pp-bk .pr-mg .padd {padding:35px 30px 0 30px;}
-.bl-pp-bk .pr-mg .padd .txt {font:18px/19px Handbook-regular;color:#000;}
-.bl-pp-bk .pr-mg .padd .go-pzs {margin:45px 0 0 123px;height:36px;display:inline-block;font:18px/36px Handbook-regular;color:#000;position:relative;}
+.bl-pp-bk .pr-mg .padd .txt {font:18px/19px "handbookpro-regular";color:#000;}
+.bl-pp-bk .pr-mg .padd .go-pzs {margin:45px 0 0 123px;height:36px;display:inline-block;font:18px/36px "handbookpro-regular";color:#000;position:relative;}
 .bl-pp-bk .pr-mg .padd .go-pzs:before {content:"";width:0;height:0;display:block;border-bottom: 18px solid transparent;border-left: 10px solid #000;border-top: 18px solid transparent;position:absolute;top:0;right:-30px;}
 .bl-pp-bk .pr-mg .padd .go-pzs:after {content:"";width:0;height:0;display:block;border-bottom: 18px solid transparent;border-left: 10px solid #fff;border-top: 18px solid transparent;position:absolute;top:0;right:-29px;}
 
@@ -811,11 +815,11 @@ body {
 .csh-ch-bk {background-color:#ffe400;position:relative;width:460px;margin:50px auto;}
 .csh-ch-bk .cl-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;background:url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
 .csh-ch-bk .padd {padding:0 30px;}
-.csh-ch-bk .padd > p {font:18px/19px Handbook-regular;color:#000;padding:35px 0 0 0;margin:0;}
+.csh-ch-bk .padd > p {font:18px/19px "handbookpro-regular";color:#000;padding:35px 0 0 0;margin:0;}
 .csh-ch-bk .padd .csh-ch-lst {margin:0;padding:35px 0 45px 25px;list-style:none;}
 .csh-ch-bk .padd .csh-ch-lst > li {margin-bottom:20px;height:20px;}
 .csh-ch-bk .padd .csh-ch-lst > li:last-child {margin-bottom:0;}
-.csh-ch-bk .padd .csh-ch-lst > li > label {font:18px/18px Handbook-regular;}
+.csh-ch-bk .padd .csh-ch-lst > li > label {font:18px/18px "handbookpro-regular";}
 .csh-ch-bk .padd .csh-ch-lst > li > label:before {top:0px;}
 .csh-ch-bk .padd .csh-ch-lst > li > label:after {top:2px;}
 .csh-ch-bk .padd .form {overflow:hidden;display:none;}
@@ -829,7 +833,7 @@ body {
 .csh-ch-bk .padd .form .inp-bk.focus .ph {display:block;}
 .csh-ch-bk .padd .form .inp-bk .m_input {border:none;background:none;outline:none;height:31px;font:18px/29px Handbook-italic;width:300px;}
 .csh-ch-bk .padd .form .inp-fl-bk {position:relative;margin-top:40px;}
-.csh-ch-bk .padd .form .inp-fl-bk .inp-fl-txt {font:15px/1 Handbook-regular;color:#000;width:180px;}
+.csh-ch-bk .padd .form .inp-fl-bk .inp-fl-txt {font:15px/1 "handbookpro-regular";color:#000;width:180px;}
 .csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt {width:218px;height:28px;border:1px solid #000;text-align:center;font:12px/28px Handbook-bold;text-transform:uppercase;position:absolute;top:0;right:0;overflow:hidden;}
 .csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt.hover, .csh-ch-bk .padd .form .inp-fl-bk .inp-fl-bt.check {background-color:#000;color:#ffe400;}
 .csh-ch-bk .padd .form .inp-fl-bk .f_input {width:220px;height:30px;position:absolute;top:0;right:0;opacity:0;}
@@ -838,11 +842,11 @@ body {
 .csh-ch-bk .padd .form .s-b .sb_but {box-sizing: border-box;width:100%;background:none;border:1px solid #998900;outline:none;text-align:center;height:50px;font:17px/49px Handbook-bold;text-transform:uppercase;letter-spacing:1px;color:#736600;}
 .csh-ch-bk .padd .form .s-b .sb_but:hover {border-color:#000;color:#000;}
 .csh-ch-bk .padd .form .purse-ch-bk {overflow:hidden;margin-bottom:30px;}
-.csh-ch-bk .padd .form .purse-ch-bk .ps-ch-tl {width:155px;float:left;font:18px/20px Handbook-regular;color:#000;}
+.csh-ch-bk .padd .form .purse-ch-bk .ps-ch-tl {width:155px;float:left;font:18px/20px "handbookpro-regular";color:#000;}
 .csh-ch-bk .padd .form .purse-ch-bk .ps-r {float:left;width:90px;}
 .csh-ch-bk .padd .form .purse-ch-bk .ps-u {float:left;width:90px;}
 .csh-ch-bk .padd .form .purse-ch-bk .ps-b {float:left;width:auto;}
-.csh-ch-bk .padd .form .purse-ch-bk > div > label {font:18px/20px Handbook-regular;color:#000;}
+.csh-ch-bk .padd .form .purse-ch-bk > div > label {font:18px/20px "handbookpro-regular";color:#000;}
 .csh-ch-bk .padd .form .purse-ch-bk > div > label:before {top:0;}
 .csh-ch-bk .padd .form .purse-ch-bk > div > label:after {top:2px;}
 
@@ -901,7 +905,7 @@ position: relative;}
 .quickgame .qg-bk-pg .qg-msg .rld:hover {background-color:#000!important;color:#fff;}
 .quickgame .qg-bk-pg .qg-msg .td {display:table-cell;vertical-align:middle;text-align:center;}
 .quickgame .qg-bk-pg .qg-bk-tl {color:#2f2f2f;font:30px/1 Handbook-bold;margin-bottom:10px;text-transform:uppercase;}
-.quickgame .qg-bk-pg .qg-txt {color:#404040;font:18px/19px Handbook-regular;margin-bottom:30px;}
+.quickgame .qg-bk-pg .qg-txt {color:#404040;font:18px/19px "handbookpro-regular";margin-bottom:30px;}
 .quickgame .qg-bk-pg .qg-tbl {list-style:none;display:inline-block;width:100%;margin:0;padding:0;}
 
 .quickgame .qg-bk-pg .qg-tbl > li {
@@ -976,7 +980,7 @@ position: relative;}
 .momentum .mm-bk-pg .mm-msg .rld:hover {background-color:#000!important;color:#fff;}
 .momentum .mm-bk-pg .mm-msg .td {display:table-cell;vertical-align:middle;text-align:center;}
 .momentum .mm-bk-pg .mm-bk-tl {color:#2f2f2f;font:30px/1 Handbook-bold;margin-bottom:10px;text-transform:uppercase;}
-.momentum .mm-bk-pg .mm-txt {color:#404040;font:18px/19px Handbook-regular;margin-bottom:30px;}
+.momentum .mm-bk-pg .mm-txt {color:#404040;font:18px/19px "handbookpro-regular";margin-bottom:30px;}
 .momentum .mm-bk-pg .mm-tbl {list-style:none;display:table;width:100%;margin:0;padding:0;}
 .momentum .mm-bk-pg .mm-tbl > li {width:148px;height:148px;float:left;margin-right:20px;text-align:center;background-color:#b2d0d4;cursor:pointer;background:url("../img/bg-chanse-game-hz.png") no-repeat 0 0 / 100% 100%;border:1px solid #b2d0d4;color:transparent;}
 .momentum .mm-bk-pg .mm-tbl > li:last-child {margin:0;}
@@ -1011,15 +1015,15 @@ position: relative;}
 .prize-info .pz-ifo-bk .pz-ph {width:210px;height:210px;margin:60px 0 50px 0;float:left;background-color:#b2d0d4;}
 .prize-info .pz-ifo-bk .pz-ph > img {width:210px;height:210px;}
 .prize-info .pz-ifo-bk .pz-tl-bk {width:250px;float:right;margin:56px 0 50px 0;}
-.prize-info .pz-ifo-bk .pz-tl-bk .pz-tl {color:#2f2f2f;font:20px/1 Handbook-regular;}
-.prize-info .pz-ifo-bk .pz-tl-bk .pz-ps {color:#2f2f2f;font:30px/1 Handbook-regular;margin-bottom:15px;}
+.prize-info .pz-ifo-bk .pz-tl-bk .pz-tl {color:#2f2f2f;font:20px/1 "handbookpro-regular";}
+.prize-info .pz-ifo-bk .pz-tl-bk .pz-ps {color:#2f2f2f;font:30px/1 "handbookpro-regular";margin-bottom:15px;}
 .prize-info .pz-ifo-bk .pz-tl-bk .pz-ps > b {font:30px/1 Handbook-bold;}
-.prize-info .pz-ifo-bk .pz-tl-bk .px-des {font:18px/19px Handbook-regular;color:#404040;margin-bottom:25px;}
+.prize-info .pz-ifo-bk .pz-tl-bk .px-des {font:18px/19px "handbookpro-regular";color:#404040;margin-bottom:25px;}
 .prize-info .pz-ifo-bt {border: 1px solid #000;cursor: pointer;font: 15px/48px Handbook-bold;height: 48px;margin: 0 0 0 auto;text-align: center;text-transform: uppercase;width:auto;}
 .font-fix .prize-info .pz-ifo-bt {line-height:52px;}
 
 .prize-info .pz-fm-bk {padding:35px 50px 40px 50px;display:none;}
-.prize-info .pz-fm-bk .fm-txt {font:18px/19px Handbook-regular;color:#404040;margin-bottom:60px;}
+.prize-info .pz-fm-bk .fm-txt {font:18px/19px "handbookpro-regular";color:#404040;margin-bottom:60px;}
 .prize-info .pz-fm-bk .fm-inps-bk {margin-bottom:60px;}
 
 .prize-info .pz-fm-bk .pi-inp-bk {height:29px;border-bottom:1px solid #e3e3e3;margin-bottom:20px;position:relative;}
@@ -1028,7 +1032,7 @@ position: relative;}
 .prize-info .pz-fm-bk .pi-inp-bk.focus {border-bottom:1px solid #000;}
 .prize-info .pz-fm-bk .pi-inp-bk:last-child {margin-bottom:0;}
 
-.prize-info .pz-fm-bk .pi-inp-bk > input {border:none;background:transparent;height:29px;width:350px;font:18px/29px Handbook-regular;color:#000;outline:none;}
+.prize-info .pz-fm-bk .pi-inp-bk > input {border:none;background:transparent;height:29px;width:350px;font:18px/29px "handbookpro-regular";color:#000;outline:none;}
 .prize-info .pz-fm-bk .pi-inp-bk.td > input {width:300px;}
 .prize-info .pz-fm-bk .pi-inp-bk > input::-webkit-input-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
 .prize-info .pz-fm-bk .pi-inp-bk > input:-moz-placeholder {font:18px/29px Handbook-italic;color:#d2d2d2;opacity:1;}
@@ -1045,14 +1049,14 @@ position: relative;}
 .prize-info .pz-fm-bk .pi-inp-bk.focus .ph {color:#000;display:block;}
 
 
-.prize-info .pz-rt-bk {font:18px/19px Handbook-regular;color:#404040;padding:35px 50px 40px 50px;display:none;}
+.prize-info .pz-rt-bk {font:18px/19px "handbookpro-regular";color:#404040;padding:35px 50px 40px 50px;display:none;}
 
 .report-block {width:560px;margin:auto;background-color:#fff;position:relative;z-index:500;}
-.report-block .txt {font:18px/19px Handbook-regular;color:#404040;padding:35px 50px 40px 50px;}
+.report-block .txt {font:18px/19px "handbookpro-regular";color:#404040;padding:35px 50px 40px 50px;}
 
 .notifications .badge .badge-block {width:270px;margin:auto;position:relative;z-index:500;height: 140px;}
 .notifications .badge#notice .badge-block div {cursor:pointer}
-.notifications .badge .badge-block .txt {font:18px/19px Handbook-regular;color:#404040;padding: 15px;}
+.notifications .badge .badge-block .txt {font:18px/19px "handbookpro-regular";color:#404040;padding: 15px;}
 .notifications .badge .badge-block .title {font:19px/20px Handbook-bold;text-transform:uppercase;color:#404040;padding:15px;}
 .notifications .badge .cs {right: 0; background: url("../img/bg-but-close-game.png") no-repeat 0 0;
     background-size: cover;width: 24px;cursor:pointer;
@@ -1111,7 +1115,7 @@ border: 1px solid black;
 #logout-popup .logout-bk {background-color:#ffe400;width:460px;margin:auto;position: relative;}
 #logout-popup .logout-bk .cnt {padding:50px 60px;}
 #logout-popup .logout-bk .cs {background:url("../img/bg-but-close.png") no-repeat 0 0;}
-#logout-popup .logout-bk .cnt .txt {font:18px/19px Handbook-regular;color:#000;}
+#logout-popup .logout-bk .cnt .txt {font:18px/19px "handbookpro-regular";color:#000;}
 #logout-popup .logout-bk .cnt .buts {overflow:hidden;margin-top:30px;}
 #logout-popup .logout-bk .cnt .buts .exit, #logout-popup .logout-bk .cnt .buts .back {width:158px;height:48px;border:1px solid #000;font:17px/48px Handbook-bold;color:#000;text-transform:uppercase;text-align:center;cursor:pointer;}
 #logout-popup .logout-bk .cnt .buts .exit:hover, #logout-popup .logout-bk .cnt .buts .back:hover {background-color:#000;color:#ffe400;}

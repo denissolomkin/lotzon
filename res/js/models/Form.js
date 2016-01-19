@@ -41,12 +41,16 @@
         },
 
         parseForm: function (form) {
-            if (typeof form === 'string')
+            if (typeof form === 'string') {
                 form = {
                     action: form,
                     method: 'get',
                     data  : null
                 };
+            } else if(form.hasOwnProperty('method')) {
+                form.method = form.method.toLowerCase();
+            }
+
             return form;
         },
 
@@ -72,7 +76,7 @@
 
                 console.log(form.data);
 
-                if (form.method.toLowerCase() === 'ws') {
+                if (form.method === 'ws' && !Config.websocketEmulation) {
 
                     var conn = Form.websocketConnection,
                         path = form.url,
@@ -96,73 +100,8 @@
                         };
 
                         conn.onmessage = function (e) {
-
                             data = JSON.parse(e.data);
-
-                            if (data.error) {
-                                Form.stop.call(that)
-                                    .message.call(that, data.error);
-                            } else {
-
-                                sample = null;
-                                path = data.path;
-                                if (data.res) {
-
-                                    if (data.res.app && data.res.app.uid && data.res.app.uid != App.uid) {
-                                        App = {};
-                                    } else if (App.winner) {
-                                        App['winner'] = null;
-                                        App['fields'] = null;
-                                    }
-
-                                    for (var key in data.res) {
-                                        if (key !== 'app') {
-                                            App[key] = data.res[key]
-                                        }
-                                    }
-
-                                    if('app' in data.res){
-                                        for (var key in data.res['app'])
-                                            App[key] = data.res['app'][key]
-                                        data = null;
-                                    }
-
-                                    Apps.playAudio([App.key, App.action]);
-                                }
-
-                                action = data && (data.res && data.res.action || path) || App.action;
-                                console.log(path, action, data);
-
-                                switch ('function') {
-
-                                    /* Common Game Callback Action */
-                                    case data && typeof Game.callback[action]:
-                                        console.log('Game.callback.' + action);
-                                        eval('Game.callback.' + action)(data);
-                                        break;
-
-                                    /* Specific App action */
-                                    case App.key && typeof eval(App.key + '.' + action):
-                                        console.log(App.key + '.' + action);
-                                        eval(App.key + '.' + action)(data);
-                                        break;
-
-                                    /* Common Game Action */
-                                    case !data && typeof Game.action[action]:
-                                        console.log('Game.action.' + action);
-                                        eval('Game.action.' + action)(data);
-                                        break;
-
-                                    /* Default App Action */
-                                    case App.key && typeof eval(App.key + '.action'):
-                                        console.log(App.key + '.action');
-                                        eval(App.key + '.action')(data);
-                                        break;
-                                }
-
-                                Form.stop.call(that)
-                                    .message.call(that, data && data.message);
-                            }
+                            WebSocketAjaxResponse(data);
                         };
 
                     } else {
@@ -174,9 +113,13 @@
 
                 } else {
 
+                    if(form.method === 'ws'){
+                        form.url = '/' + form.url;
+                    }
+
                     $.ajax({
                         url     : form.url,
-                        method  : /192.168.56.101/.test(location.hostname) && (form.method.toLowerCase() === 'delete' || form.method.toLowerCase() === 'put')
+                        method  : form.method === 'ws' || (/192.168.56.101/.test(location.hostname) && (form.method === 'delete' || form.method === 'put'))
                             ? "post"
                             : form.method,
                         data    : form.data,
@@ -189,6 +132,11 @@
                                 D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
 
                             } else {
+
+                                if (form.method === 'ws') {
+                                    WebSocketAjaxResponse.call(that, data);
+                                    return;
+                                }
 
                                 form.json = data;
 
@@ -420,7 +368,7 @@
 
     WebSocketAjaxClient = function (url, data) {
 
-        if(!url){
+        if (!url) {
             url = 'app/' + App.key + (App.uid ? '/' + App.uid : '');
         }
 
@@ -430,5 +378,73 @@
             method: 'ws'
         })
     };
+
+    WebSocketAjaxResponse = function (data) {
+
+        if (data.error) {
+            Form.stop.call(this)
+                .message.call(this, data.error);
+        } else {
+
+            sample = null;
+            path = data.path;
+            if (data.res) {
+
+                if (data.res.app && data.res.app.uid && data.res.app.uid != App.uid) {
+                    App = {};
+                } else if (App.winner) {
+                    App['winner'] = null;
+                    App['fields'] = null;
+                }
+
+                for (var key in data.res) {
+                    if (key !== 'app') {
+                        App[key] = data.res[key]
+                    }
+                }
+
+                if ('app' in data.res) {
+                    for (var key in data.res['app'])
+                        App[key] = data.res['app'][key]
+                    data = null;
+                }
+
+                Apps.playAudio([App.key, App.action]);
+            }
+
+            action = data && (data.res && data.res.action || path) || App.action;
+            console.log(path, action, data);
+
+            switch ('function') {
+
+                /* Common Game Callback Action */
+                case data && typeof Game.callback[action]:
+                    console.log('Game.callback.' + action);
+                    eval('Game.callback.' + action)(data);
+                    break;
+
+                /* Specific App action */
+                case App.key && typeof eval(App.key + '.' + action):
+                    console.log(App.key + '.' + action);
+                    eval(App.key + '.' + action)(data);
+                    break;
+
+                /* Common Game Action */
+                case !data && typeof Game.action[action]:
+                    console.log('Game.action.' + action);
+                    eval('Game.action.' + action)(data);
+                    break;
+
+                /* Default App Action */
+                case App.key && typeof eval(App.key + '.action'):
+                    console.log(App.key + '.action');
+                    eval(App.key + '.action')(data);
+                    break;
+            }
+
+            Form.stop.call(this)
+                .message.call(this, data && data.message);
+        }
+    }
 
 })();

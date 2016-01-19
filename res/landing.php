@@ -37,7 +37,7 @@
                     <div class="pu-b-c i-x-slim" id="lb-close"></div>
                     <div class="b-m login" id="cl-check">
                         <div class="rules-bk">
-                            <div class="rb-cs-bt"></div>
+                            <div class="rb-cs-bt i-x-slim"></div>
                             <div class="rb-pg">
                                 <h2>Условия участия</h2>
                                 <div style="">Соглашение</div><div style=""><br></div>

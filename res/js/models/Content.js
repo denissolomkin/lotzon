@@ -222,15 +222,21 @@
                 D.log('Content.after.changeFilter', 'content');
 
                 var name = null,
-                    className = [];
+                    className = [],
+                    form = null;
 
-                if (options.rendered && typeof options.rendered === 'object' && options.rendered.classList)
+                if (options.rendered && typeof options.rendered === 'object' && options.rendered.classList) {
                     for (name in options.query) {
                         if (options.query.hasOwnProperty(name) && options.query[name] && name.indexOf('date') === -1) { /* skip unimportant filters */
                             className = [name, options.query[name]];
                             options.rendered.classList.add(className.join('-'));
                         }
                     }
+
+                    if (form = options.rendered.getElementsByTagName('FORM')[0]) {
+                        form.action = options.href.replace('container',(form.action.indexOf('list')!== -1 ? 'list' : ''));
+                    }
+                }
 
             },
 
@@ -281,11 +287,11 @@
             DOM.append(message, this);
 
         },
-        
-        destroyPopBox: function(){
-   
-            DOM.remove(DOM.up('.pop-box',this));
-    
+
+        destroyPopBox: function () {
+
+            DOM.remove(DOM.up('.pop-box', this));
+
         }
     };
 

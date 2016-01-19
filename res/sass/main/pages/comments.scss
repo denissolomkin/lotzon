@@ -279,36 +279,25 @@ form.loading > * {
   // ---------------------------- //
 
 
-
-
-
-
-.message-img {
-  position: relative;
-  display: block;
-  width: 50px;
-  height: 50px;
-  float: left;
-  margin-left: -60px;
-  & img {
-    display: block;
-    width: 100%;
+.modal-message {
+    background: #fff;
+    bottom: -5px;
     height: auto;
-    border-radius: 50%;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    & div {
+      margin: 0 auto;
+      text-align: center;
+      @include translate(0, -50%);
+      position: absolute;
+      left: auto;
+      text-transform: uppercase;
+      font-size: 17px;
+      top: 50%;
+    }
   }
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #d2d2d2;
 
-  }
-}
 
 .message-name {
   margin-bottom: 8px;

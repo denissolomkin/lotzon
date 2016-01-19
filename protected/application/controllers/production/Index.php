@@ -96,12 +96,12 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
-        global $isMobile, $player, $config, $slider, $lottery;
+        global $isMobile, $player, $config, $debug, $slider, $lottery;
 
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
 
-        $session   = new Session();
+        $session = new Session();
         $session->set('isMobile', $isMobile);
         $playerObj = $session->get(Player::IDENTITY)->fetch();
 
@@ -131,14 +131,14 @@ class Index extends \SlimController\SlimController
                 "blog"          => 4,
                 "communication" => array(
                     "notifications" => array(
-                        "server" => 2+\CommentsModel::instance()->getNotificationsCount($playerObj->getId())
+                        "server" => 2 + \CommentsModel::instance()->getNotificationsCount($playerObj->getId())
                     ),
-                    "messages"      => 1+\MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
+                    "messages"      => 1 + \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
                 ),
                 "users"         => array(
-                    "birthdays"     => 0,
-                    "chronicle"     => 2,
-                    "requests"      => 11
+                    "birthdays" => 0,
+                    "chronicle" => 2,
+                    "requests"  => 11
                 ),
                 "friends"       => 56
             ),
@@ -168,15 +168,15 @@ class Index extends \SlimController\SlimController
                 "tw" => null
             ),
             "settings" => array(),
-            "game" => array(
+            "game"     => array(
                 'key' => $gamePlayer->getApp('Key'),
                 'uid' => $gamePlayer->getApp('Uid')
             ),
-            "games" => array(
+            "games"    => array(
                 'chance' => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : false,
                 'random' => $session->has('QuickGame'),
                 'moment' => $session->has('Moment'),
-                'online' => $gamePlayer->getApp() ? : array(
+                'online' => $gamePlayer->getApp() ?: array(
                     'key' => $gamePlayer->getApp('Key'),
                     'uid' => $gamePlayer->getApp('Uid')
                 ),
@@ -200,14 +200,32 @@ class Index extends \SlimController\SlimController
         );
 
         $config = array(
-            "timeout"         => array(
+            "timeout"            => array(
                 "ping"   => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT'),
                 "online" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')
             ),
-            "adminId"         => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
-            "tempFilestorage" => '/filestorage/temp',
-            "filestorage"     => '/filestorage',
-            "websocketUrl"    => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
+            "adminId"            => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
+            "tempFilestorage"    => '/filestorage/temp',
+            "filestorage"        => '/filestorage',
+            "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
+            "websocketEmulation" => false
+        );
+
+        $debug = array(
+            "config" => array(
+                "stat"    => false,
+                "alert"   => false,
+                "render"  => false,
+                "cache"   => false,
+                "i18n"    => false,
+                "func"    => true,
+                "info"    => true,
+                "warn"    => true,
+                "error"   => true,
+                "log"     => true,
+                "clean"   => true,
+                'content' => true
+            )
         );
 
         $lottery = array(
@@ -315,7 +333,7 @@ class Index extends \SlimController\SlimController
             "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings()
         );
 
-        $session         = new Session();
+        $session = new Session();
         if ($session->has('ERROR') OR $_SESSION['ERROR']) {
             $error = $session->get('ERROR') ?: $_SESSION['ERROR'];
             $session->remove('ERROR');
