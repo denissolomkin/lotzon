@@ -1135,11 +1135,12 @@ input.input-radio:checked + label.input-radio:before {
 
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  @font-face {
-    font-family: 'fontello';
-    src: url("fonts/fontello.svg?65723038#fontello") format("svg"); } }
-
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: 'fontello';
+        src: url('fonts/fontello.svg?65723038#fontello') format('svg');
+    }
+}*/
 @font-face {
   font-family: handbookpro-regular;
   src: url(../css/fonts/pfhandbookpro-regular-webfont.woff) format("woff"), url(../css/fonts/pfhandbookpro-regular-webfont.ttf) format("truetype"), url(../css/fonts/pfhandbookpro-regular-webfont.eot) format("eot"), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format("svg"); }
@@ -3228,7 +3229,7 @@ div > .games-previews {
     font-size: 24px;
     margin: 20px 0; }
 
-.games-view .game-settings .settings-tabs div.active, .games-view .game-settings .settings-tabs div:hover {
+.games-view .game-settings .settings-tabs div.active {
   background: #474747;
   color: #fff;
   text-align: center;
@@ -3283,9 +3284,9 @@ div > .games-previews {
         display: block;
         float: left; }
       .games-view .info-top .balance i {
-        margin: 0 15px 0 13px; }
+        margin: 5px 15px 0 13px; }
         .games-view .info-top .balance i:before {
-          font-size: 37px;
+          font-size: 30px;
           margin-right: 0;
           color: #474747; }
     .games-view .info-top .points {
@@ -3303,10 +3304,10 @@ div > .games-previews {
     .games-view .info-top .photo img {
       overflow: hidden;
       border-radius: 50%;
-      width: 60px;
-      height: 60px; }
+      width: 52px;
+      height: 52px; }
   .games-view .wrapper {
-    margin: 20px 0 0;
+    margin: 10px 0 0;
     padding: 0;
     display: flex;
     flex-direction: row;
@@ -3417,7 +3418,7 @@ div > .games-previews {
       align-items: stretch;
       height: 65px; }
       .games-view .game-settings .settings-tabs div {
-        transition: all .5s ease;
+        transition: all .2s linear;
         min-height: 40px;
         padding: 10px;
         display: inline-block;
@@ -3436,7 +3437,9 @@ div > .games-previews {
           font-size: 20px;
           margin-right: 6px; }
         .games-view .game-settings .settings-tabs div:hover {
-          opacity: 0.5; }
+          /*opacity: 0.5;*/
+          /*@extend %extend_1;*/
+          /*background: rgba(0,0,0,0.77);*/ }
 
 .game-settings .games-online {
   font-family: handbookpro-regular;
@@ -3453,12 +3456,21 @@ div > .games-previews {
     .game-settings .filter li label {
       padding: 5px 15px; }
 
-.game-settings .games-list {
+.game-settings .render-list-container {
   font-size: 15px;
   width: 100%; }
-  .game-settings .games-list .render-list {
+  .game-settings .render-list-container .render-list {
     margin-bottom: 30px; }
-  .game-settings .games-list .game {
+  .game-settings .render-list-container .game.available {
+    transition: background .5s linear; }
+    .game-settings .render-list-container .game.available * {
+      cursor: pointer; }
+    .game-settings .render-list-container .game.available:hover {
+      background: #f4f4f4; }
+      .game-settings .render-list-container .game.available:hover > form > i {
+        margin-left: 0;
+        font-size: 120%; }
+  .game-settings .render-list-container .game > form {
     border-bottom: 1px solid #e5e5e5;
     padding: 15px 20px 15px 5px;
     position: relative;
@@ -3466,20 +3478,20 @@ div > .games-previews {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center; }
-    .game-settings .games-list .game > div {
+    .game-settings .render-list-container .game > form > div {
       padding-right: 15px;
       min-width: 60px; }
-    .game-settings .games-list .game .bet {
+    .game-settings .render-list-container .game > form .bet {
       min-width: 27%;
       text-transform: uppercase; }
-    .game-settings .games-list .game .players-number {
+    .game-settings .render-list-container .game > form .players-number {
       min-width: 45px; }
-      .game-settings .games-list .game .players-number i {
+      .game-settings .render-list-container .game > form .players-number i {
         font-size: 11px;
         vertical-align: 12%; }
-    .game-settings .games-list .game .game-type {
+    .game-settings .render-list-container .game > form .game-type {
       min-width: 65px; }
-    .game-settings .games-list .game .players {
+    .game-settings .render-list-container .game > form .players {
       text-align: left;
       padding: 0;
       text-overflow: ellipsis;
@@ -3487,19 +3499,14 @@ div > .games-previews {
       overflow: hidden;
       max-height: 20px;
       transition: all 1.9s ease; }
-    .game-settings .games-list .game > i {
+    .game-settings .render-list-container .game > form > i {
       transition: all 0.1s ease-in 0.1s;
       position: absolute;
       left: 100%;
       margin-left: -20px;
       top: 50%;
       transform: translateY(-50%); }
-    .game-settings .games-list .game.available {
-      cursor: pointer; }
-      .game-settings .games-list .game.available:hover > i {
-        margin-left: 0;
-        font-size: 120%; }
-  .game-settings .games-list > div:first-child {
+  .game-settings .render-list-container > div:first-child {
     border-top: 1px solid #e5e5e5; }
 
 .game-settings .players-list {
@@ -3618,12 +3625,13 @@ div > .games-previews {
     border: 1px solid #4a4a4a;
     text-align: center;
     cursor: pointer;
-    padding: 7px;
+    /*padding: 7px;*/
     text-transform: uppercase;
     font-weight: normal;
-    font-family: handbook-bold;
+    font-family: handbookpro-regular;
     width: 100%;
-    background: #fff; }
+    background: #fff;
+    line-height: 31px; }
 
 @media all and (max-width: 768px) {
   .games-view .game-settings {

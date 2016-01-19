@@ -4,7 +4,7 @@
         <a href="/users/{{user.id}}/messages" class="start {{#if button}}visible{{else}}invisible{{/if}}" onclick="DOM.remove(DOM.up('.badge',this));">
         </a>
         <div class="title">{{i18n user.name}}</div>
-        <img src="{{avatar user.id user.img 40 }}" alt="" onerror="Player.getAvatar.call(this)">
+        <img src="{{avatar user.id user.img 40 }}" onerror="Player.getAvatar.call(this)">
         <div class="txt">{{{text}}}</div>
         <i class="i-x-slim" onclick="DOM.remove(DOM.up('.badge',this))"></i>
     </section>
