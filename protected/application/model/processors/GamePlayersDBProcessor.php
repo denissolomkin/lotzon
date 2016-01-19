@@ -136,11 +136,15 @@ class GamePlayersDBProcessor implements IProcessor
     public function getOnline($gameId)
     {
         $sql = "SELECT COUNT(*) FROM `GamesTmpPlayers`
-                WHERE AppId = :id";
+                WHERE AppId = :id
+                AND Ping > :ping";
 
         try {
             $res = DB::Connect()->prepare($sql);
-            $res->execute(array(':id'=>$gameId));
+            $res->execute(array(
+                    ':id' => $gameId,
+                    ':ping' => time() - 600
+                ));
         } catch (PDOException $e) {
             echo $e->getMessage();
             throw new ModelException("Error processing storage query: ". $e->getMessage() , 500);
