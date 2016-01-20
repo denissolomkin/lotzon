@@ -52,7 +52,7 @@
             '' +
             '<div class="flex">' +
             '<button type="button" class="btn btn-danger del-one"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
-            '<input placeholder="Title" class="form-control input-md" name="fgames['+cnt+'][title]" value="Игра №'+cnt+'"</input>' +
+            '<input placeholder="Title" class="form-control input-md" name="fgames['+cnt+'][title]" value=""></input>' +
             '</div>' +
             '<textarea placeholder="Code" class="form-control input-md" name="fgames['+cnt+'][code]"></textarea>' +
             '</div>' +
@@ -70,10 +70,11 @@
     function initUpload() {
 
         // create form
-        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-        var image = $(this);
-        var input = form.find('input[type="file"]').damnUploader({
-            url: '/private/fgames/uploadPhoto',
+        var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>'),
+            image = $(this),
+            path = 'filestorage/',
+            input = form.find('input[type="file"]').damnUploader({
+            url: '/private/images?folder=games',
             fieldName: 'image',
             dataType: 'json'
         });
@@ -84,6 +85,8 @@
             };
             e.uploadItem.progressCallback = function(perc) {}
             e.uploadItem.addPostData('Id', image.attr('data-id'));
+            e.uploadItem.addPostData('name', 'Flash'+image.attr('data-id')+'.png');
+            e.uploadItem.addPostData('path', path);
             e.uploadItem.upload();
         });
         form.find('input[type="file"]').click();

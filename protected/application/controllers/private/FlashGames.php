@@ -38,26 +38,4 @@ class FlashGames extends PrivateArea
         $this->redirect('/private/' . self::$MENU);
     }
 
-    public function uploadPhotoAction()
-    {
-
-        $image     = WideImage::loadFromUpload('image');
-        $id        = $this->request()->post('Id');
-        $imageName = 'Flash' . $id . '.png';
-
-        $saveFolder = PATH_FILESTORAGE . 'games/';
-
-        if (!is_dir($saveFolder)) {
-            mkdir($saveFolder, 0777);
-        }
-
-        $image->saveToFile($saveFolder . $imageName, 100);
-
-        $data = array(
-            'imageName'    => $imageName
-        );
-
-        die(json_encode($data));
-    }
-
 }

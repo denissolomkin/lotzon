@@ -118,9 +118,6 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\FlashGames:index',
         'post' => 'controllers\admin\FlashGames:save',
     ),
-    '/private/fgames/uploadPhoto' => array(
-        'post'    => 'controllers\admin\FlashGames:uploadPhoto',
-    ),
     '/private/qgames' => array(
         'get' => 'controllers\admin\QuickGames:index',
         'post' => 'controllers\admin\QuickGames:save',
