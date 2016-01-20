@@ -50,7 +50,6 @@ class GamesController extends \AjaxController
         switch ($key) {
 
             case "OnlineGame":
-            case "ChanceGame":
 
                 try {
                     if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
@@ -119,25 +118,18 @@ class GamesController extends \AjaxController
             $key = ucfirst($key) . ($key !== 'moment' ? 'Game' : '');
         }
 
+        if (!$id) {
+            $this->ajaxResponseBadRequest('GAME_ID_EMPTY');
+        }
+
         if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
             $this->ajaxResponseNotFound('EMPTY_PUBLISHED_GAMES');
         }
 
         switch ($key) {
-            case 'ChanceGame':
+
             case 'OnlineGame':
-
-                if (!$id) {
-                    $this->ajaxResponseBadRequest('GAME_ID_EMPTY');
-                }
-
                 $game = $publishedGames->getLoadedGames()[array_search($id, $publishedGames->getGames())];
-                break;
-
-            case 'QuickGame':
-            case 'Moment':
-
-                $game = $publishedGames->getLoadedGames(array_rand($publishedGames->getGames()));
                 break;
 
             default:
