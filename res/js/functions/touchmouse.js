@@ -96,12 +96,16 @@ Drag = {
         for (var i = 0; i < droppableTables.length; i++) {
 
             var table = droppableTables[i].getBoundingClientRect(),
-                dragEndposition = Drag.options.target.getBoundingClientRect();
+                dragEndposition = Drag.options.target.getBoundingClientRect(),
+                center = {
+                    x: (dragEndposition.right + dragEndposition.left) / 2,
+                    y: (dragEndposition.top + dragEndposition.bottom) / 2
+                };
 
-            if (dragEndposition.bottom < table.bottom
-                && dragEndposition.bottom > table.top
-                && dragEndposition.right > table.left
-                && dragEndposition.left < table.right) {
+            if (dragEndposition.bottom < center.y
+                && dragEndposition.top > center.y
+                && dragEndposition.right > center.x
+                && dragEndposition.left < center.x) {
                 return droppableTables[i];
             }
         }

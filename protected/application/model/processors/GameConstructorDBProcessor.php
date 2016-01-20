@@ -105,7 +105,7 @@ class GameConstructorDBProcessor
         $sql = "SELECT * FROM `" . $table . "` WHERE Id = :id";
 
         if($game->getType() == 'online' && $game->getKey()){
-            $sql .= " OR (`Key` = '".$game->getKey()."' AND `Key` IS NOT NULL)";
+            $sql .= " OR (`Key` = ".$game->getKey()." AND `Key` IS NOT NULL)";
         }
 
         try {
