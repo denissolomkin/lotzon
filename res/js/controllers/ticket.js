@@ -55,9 +55,10 @@
 
                 var node = document.getElementById('lottery-ticket-item'),
                     tab = $(this).is('li')
-
-                        ? $(this)
-                        : ($(Ticket.tabs).not('.done').not('.unavailable').first() || $(Ticket.tabs).first());
+                        && $(this)
+                        || ($(Ticket.tabs).not('.done').not('.unavailable').length
+                            && $(Ticket.tabs).not('.done').not('.unavailable').first()
+                            || ($(Ticket.tabs).not('.done').length ? $(Ticket.tabs).not('.done').first() : $(Ticket.tabs).first()));
 
                 if (!node || ($(this).is('li') && Ticket.isLoading()))
                     return;
