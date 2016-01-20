@@ -1,0 +1,18 @@
+<div id="games-flash" class="games-previews content-box-item">
+    <div class="carousel-games-preview flex-box">
+        {{#each .}}
+        <a href="/games/flash/{{id}}">
+            <div class="game">
+                <div class="game-img">
+                    <img src="/filestorage/games/Flash{{ id }}.png" alt="">
+                </div>
+                <div class="game-info">
+                    <div class="game-name">{{ title }}</div>
+                </div>
+                <div class="game-button">{{i18n "button-games-details"}}</div>
+            </div>
+        </a>
+        {{/each}}
+        {{^.}}No games :({{/.}}
+    </div>
+</div>

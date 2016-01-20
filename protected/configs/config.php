@@ -114,6 +114,13 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\MomentalChances:index',
         'post' => 'controllers\admin\MomentalChances:save',
     ),
+    '/private/fgames' => array(
+        'get' => 'controllers\admin\FlashGames:index',
+        'post' => 'controllers\admin\FlashGames:save',
+    ),
+    '/private/fgames/uploadPhoto' => array(
+        'post'    => 'controllers\admin\FlashGames:uploadPhoto',
+    ),
     '/private/qgames' => array(
         'get' => 'controllers\admin\QuickGames:index',
         'post' => 'controllers\admin\QuickGames:save',
@@ -384,7 +391,7 @@ Config::instance()->publicResources = array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
     /**
-     * Random games
+     * Moment games
      */
     '/games/moment' => array(
         'get'  => array(
@@ -507,6 +514,15 @@ Config::instance()->publicResources = array(
                 );
             }
         ),
+    ),
+    /**
+     * Flash
+     */
+    '/games/flash/' => array(
+        'get'  => 'controllers\production\FlashController:list'
+    ),
+    '/games/flash/:id' => array(
+        'get'   => 'controllers\production\FlashController:item'
     ),
     /**
      * Games

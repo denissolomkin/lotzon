@@ -112,7 +112,7 @@
         },
 
         isMobile: function () {
-            return this.get() < 0.8;
+            return Device.get() < 0.8;
         },
 
         switchGoTop: function () {

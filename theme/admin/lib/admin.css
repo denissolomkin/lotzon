@@ -133,36 +133,36 @@ vertical-align: middle;}
     float: left;
 }
 
-.bots #bots {
+.fgames #fgames, .bots #bots {
     position: absolute;
     background: #ccc;
     margin-left: -15px;
     padding-right: 5px;
     width: 100%}
 
-.bots #bots > div{
+.fgames #fgames > div, .bots #bots > div{
     margin: 0;
     padding: 0;}
-.bots #bots div > div.holder {
+.fgames #fgames > div > div.holder, .bots #bots div > div.holder {
     border-radius: 10px;
     margin: 5px 0 0 5px;
     padding: 10px;
     background: white;}
 
-#bots .thumbnail{
+#fgames .thumbnail, #bots .thumbnail{
     border: 0;
     margin: 0;
     height: 100px;
 }
-#bots .thumbnail>img{
+#fgames .thumbnail>img, #bots .thumbnail>img{
     max-height: 100%;
 }
-#bots .form-control{
+#fgames .form-control, #bots .form-control{
 padding: 2px;
 font-size: 10px;
     height: auto;
 }
-#bots .btn{padding: 0;
+#fgames .btn, #bots .btn{padding: 0;
     width: 24px;
     font-size: 10px;}
 .ips{

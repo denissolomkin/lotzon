@@ -141,6 +141,7 @@ $(function () {
         'number': Player.fineNumbers,
         'count': Player.getCount,
         'from': Livedate.fn.from,
+        'mobile': Device.isMobile,
         'day': Livedate.fn.day,
         'i18n': function () {
             return Cache.i18n(arguments);
