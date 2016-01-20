@@ -12,16 +12,11 @@ class GamesController extends \AjaxController
 {
     private $session;
 
-    static $ratingPerPage;
-
     public function init()
     {
-        self::$ratingPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('RATING_PER_PAGE') ?: 10;
-
         $this->session = new Session();
         parent::init();
     }
-
 
     private function authorizedOnly()
     {
@@ -41,62 +36,71 @@ class GamesController extends \AjaxController
         $this->authorizedOnly();
 
         if (!$key) {
-            $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
+            $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
         } else {
-            $key = ucfirst($key) . 'Game';
+            $key = ucfirst($key) . ($key !== 'moment' ? 'Game' : '');
         }
 
-        $lang = $this->session->get(Player::IDENTITY)->getLang();
-
-        try {
-
-            if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
-                $this->ajaxResponse(array(), 0, 'NOT_PUBLISHED_GAMES');
-            }
-
-        } catch (\PDOException $e) {
-            $this->ajaxResponse(array(), 0, 'INTERNAL_ERROR');
-        }
-
+        $lang     = $this->session->get(Player::IDENTITY)->getLang();
         $response = array(
             'res' => array(
                 'games' => array()
-            )
-        );
+            ));
 
-        foreach ($publishedGames->getLoadedGames() as $id => $game) {
+        switch ($key) {
 
-            if (!isset($response['games'][$game->getType()]))
-                $response['games'][$game->getType()] = array();
+            case "OnlineGame":
+            case "ChanceGame":
 
-            if (!$game->isEnabled())
-                continue;
-
-            $game->setLang($lang);
-            $stat = $game->export('list');
-
-            if ($key == 'OnlineGame') {
-
-                $fund = \OnlineGamesModel::instance()->getFund($game->getId());
                 try {
-                    $comission = $game->getOptions('r') ? $game->getOptions('r') / 100 : 0;
-                } catch (\EntityException $e) {
-                    echo $e->getMessage();
-                }
-
-                if (!empty($fund)) {
-                    foreach ($fund as $currency => &$total) {
-                        $total = ($currency == 'POINT') ? ceil($total * $comission) : ceil($total * $comission * 100) / 100;
+                    if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
+                        $this->ajaxResponse(array(), 0, 'NOT_PUBLISHED_GAMES');
                     }
+                } catch (\PDOException $e) {
+                    $this->ajaxResponse(array(), 0, 'INTERNAL_ERROR');
                 }
 
-                $stat += array(
-                    'players' => \GamePlayersModel::instance()->getOnline($game->getId()),
-                    'fund'    => $fund
-                );
-            }
+                foreach ($publishedGames->getLoadedGames() as $id => $game) {
 
-            $response['res']['games'][$game->getType()][] = $stat;
+                    if (!isset($response['games'][$game->getType()]))
+                        $response['games'][$game->getType()] = array();
+
+                    if (!$game->isEnabled())
+                        continue;
+
+                    $game->setLang($lang);
+                    $stat = $game->export('list');
+
+                    if ($key == 'OnlineGame') {
+
+                        $fund = \OnlineGamesModel::instance()->getFund($game->getId());
+                        try {
+                            $comission = $game->getOptions('r') ? $game->getOptions('r') / 100 : 0;
+                        } catch (\EntityException $e) {
+                            echo $e->getMessage();
+                        }
+
+                        if (!empty($fund)) {
+                            foreach ($fund as $currency => &$total) {
+                                $total = ($currency == 'POINT') ? ceil($total * $comission) : ceil($total * $comission * 100) / 100;
+                            }
+                        }
+
+                        $stat += array(
+                            'players' => \GamePlayersModel::instance()->getOnline($game->getId()),
+                            'fund'    => $fund
+                        );
+                    }
+
+                    $response['res']['games'][$game->getType()][] = $stat;
+
+                }
+
+                break;
+
+            default:
+                $this->ajaxResponseBadRequest('WRONG_GAME_KEY');
+                break;
 
         }
 
@@ -110,15 +114,13 @@ class GamesController extends \AjaxController
         $this->authorizedOnly();
 
         if (!$key) {
-            $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
+            $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
         } else {
-            $key = ucfirst($key) . 'Game';
+            $key = ucfirst($key) . ($key !== 'moment' ? 'Game' : '');
         }
 
-        $publishedGames = GamesPublishedModel::instance()->getList()[$key];
-
-        if (!$publishedGames) {
-            $this->ajaxResponse(array(), 0, 'NOT_PUBLISHED_GAMES');
+        if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
+            $this->ajaxResponseNotFound('EMPTY_PUBLISHED_GAMES');
         }
 
         switch ($key) {
@@ -126,7 +128,7 @@ class GamesController extends \AjaxController
             case 'OnlineGame':
 
                 if (!$id) {
-                    $this->ajaxResponse(array(), 0, 'GAME_ID_EMPTY');
+                    $this->ajaxResponseBadRequest('GAME_ID_EMPTY');
                 }
 
                 $game = $publishedGames->getLoadedGames()[array_search($id, $publishedGames->getGames())];
@@ -134,7 +136,12 @@ class GamesController extends \AjaxController
 
             case 'QuickGame':
             case 'Moment':
+
                 $game = $publishedGames->getLoadedGames(array_rand($publishedGames->getGames()));
+                break;
+
+            default:
+                $this->ajaxResponseBadRequest('WRONG_GAME_KEY');
                 break;
 
         }
@@ -234,7 +241,7 @@ class GamesController extends \AjaxController
 
         foreach ($gameApps as $uid => $game) {
 
-            if($game->isRun() || $game->isOver())
+            if ($game->isRun() || $game->isOver())
                 continue;
 
             $players = array();
@@ -280,7 +287,7 @@ class GamesController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
         }
 
-        $limit    = self::$ratingPerPage;
+        $limit    = (int)SettingsModel::instance()->getSettings('counters')->getValue('RATING_PER_PAGE') ?: 10;
         $currency = $this->request()->get('currency', 'MONEY');
         $offset   = $this->request()->get('offset', NULL);
 
@@ -297,14 +304,13 @@ class GamesController extends \AjaxController
             }
 
         } catch (\PDOException $e) {
-            $this->ajaxResponse(array(), 0, 'INTERNAL_ERROR');
+            $this->ajaxResponseInternalError('INTERNAL_ERROR');
         }
 
         $response = array(
             'res' => array(
                 'games' => array()
-            )
-        );
+            ));
 
         if (count($list) <= $limit) {
             $response['lastItem'] = true;
@@ -312,10 +318,11 @@ class GamesController extends \AjaxController
             array_pop($list);
         }
 
-        $response['res']['games'][$key]      = array();
-        $response['res']['games'][$key][$id] = array(
-            'rating' => $list
-        );
+        $response['res']['games'] = array(
+            "$key" => array(
+                "$id" => array(
+                    'rating' => $list
+                )));
 
         $this->ajaxResponseCode($response);
     }
