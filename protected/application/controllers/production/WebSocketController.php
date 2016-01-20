@@ -137,7 +137,8 @@ class WebSocketController implements MessageComponentInterface
                                 $bot        = (object)array_pop($availableBots);
                                 $gamePlayer = new GamePlayer();
                                 $gamePlayer
-                                    ->formatFrom('bot', $bot);
+                                    ->formatFrom('bot', $bot)
+                                    ->update();
 
                                 if ($gameConstructor->getOptions('f')) {
 
@@ -447,7 +448,8 @@ class WebSocketController implements MessageComponentInterface
                     call_user_func(array($app, $action), $data);
 
                     #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
-                    $this->sendCallback($app->getResponse(), $app->getCallback());
+                    if(count($app->getResponse()))
+                        $this->sendCallback($app->getResponse(), $app->getCallback());
                 }
 
 

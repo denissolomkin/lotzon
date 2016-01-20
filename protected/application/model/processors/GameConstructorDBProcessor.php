@@ -102,15 +102,18 @@ class GameConstructorDBProcessor
                 break;
         }
 
-        $sql = "SELECT * FROM `" . $table . "` WHERE Id = :id OR (`Key` = :key AND `Key` IS NOT NULL)";
+        $sql = "SELECT * FROM `" . $table . "` WHERE Id = :id";
+
+        if($game->getType() == 'online' && $game->getKey()){
+            $sql .= " OR (`Key` = ".$game->getKey()." AND `Key` IS NOT NULL)";
+        }
 
         try {
 
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(
                 array(
-                    ':id'  => $game->getId(),
-                    ':key' => $game->getKey()
+                    ':id'  => $game->getId()
                 )
             );
 
