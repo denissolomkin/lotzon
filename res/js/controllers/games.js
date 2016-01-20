@@ -1,4 +1,4 @@
-var fakeCounter = 0, debug = 0, disableNow = true;
+var fakeCounter = 0, debug = 0, disableNow = false;
 var fakeRandomData = [{
         "Uid": "568b9d3875b2b",
         "Prize": {

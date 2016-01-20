@@ -247,9 +247,9 @@ Touch = {
 
         var target = e.target;
         var newPosition = e.touches[0];
-        touchTarget = document.elementFromPoint(newPosition.pageX, newPosition.pageY);
+        var touchTarget = document.elementFromPoint(newPosition.pageX, newPosition.pageY);
 
-        if ((Touch.moveTarget!=touchTarget)&&(touchTarget.classList.contains('card'))&&(!(Touch.moved))) {
+        if (touchTarget && (Touch.moveTarget!=touchTarget)&&(touchTarget.classList.contains('card'))&&(!(Touch.moved))) {
             removeClassFromAll('select');
             Cards.marginsDraw();
             removeClassFromAll('transition');
