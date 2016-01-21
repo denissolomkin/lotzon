@@ -6,9 +6,9 @@
     /* ========================================================= */
 
     Ticket = {
-        
-        tabs: '.ticket-items .ticket-tabs li',
-        balls:'.ticket-item .ticket-balls li',
+
+        tabs   : '.ticket-items .ticket-tabs li',
+        balls  : '.ticket-item .ticket-balls li',
         actions: '.ticket-item .ticket-actions li',
 
         activate: function () {
@@ -57,8 +57,8 @@
                     tab = $(this).is('li')
                         && $(this)
                         || ($(Ticket.tabs).not('.done').not('.unavailable').length
-                            && $(Ticket.tabs).not('.done').not('.unavailable').first()
-                            || ($(Ticket.tabs).not('.done').length ? $(Ticket.tabs).not('.done').first() : $(Ticket.tabs).first()));
+                        && $(Ticket.tabs).not('.done').not('.unavailable').first()
+                        || ($(Ticket.tabs).not('.done').length ? $(Ticket.tabs).not('.done').first() : $(Ticket.tabs).first()));
 
                 if (!node || ($(this).is('li') && Ticket.isLoading()))
                     return;
@@ -69,11 +69,10 @@
                 Tickets.selectedTab = 1 + tab.index();
 
                 R.push({
-                    tab: tab,
-                    href: 'lottery-ticket-item',
+                    href    : 'lottery-ticket-item',
                     template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable' + Tickets.selectedTab,
-                    json: Tickets,
-                    after: function () {
+                    json    : Tickets,
+                    after   : function () {
                         Tickets.isGold()
                             ? document.querySelector('.ticket-box').classList.add('gold')
                             : document.querySelector('.ticket-box').classList.remove('gold');
@@ -92,10 +91,8 @@
                 return;
 
             R.push({
-                box: box,
                 template: 'lottery-ticket-complete',
-                json: Tickets,
-                url: false
+                json    : Tickets
             });
 
         },
@@ -121,7 +118,7 @@
                 Ticket.clearBalls();
 
                 if (Player.favorite.length) {
-                   
+
                     for (num in Player.favorite)
 
                         /* increase in performance */
@@ -318,8 +315,9 @@
             }
         },
 
-        error:{
-            gold: function(){}
+        error: {
+            gold: function () {
+            }
         }
 
     }

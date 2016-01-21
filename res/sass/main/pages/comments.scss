@@ -40,15 +40,15 @@
 
 .comment-name a {
   display: inline-block;
-  font-weight: bold;
   margin-right: 13px;
+  font-family: 'Handbook-bold';
 }
 
 .comment-date {
   font-size: 13px;
   color: #5a5a5a;
   & span:first-child {
-    margin-right: 15px;
+    margin-right: 20px;
   }
 }
 

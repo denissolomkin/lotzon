@@ -5,10 +5,10 @@
         <div class="content-box-item">
 
             <form action="/profile/settings" method="post" class="settings clearfix" >
-                <div class="setting-block clearfix container-center">
-                    {{i18n "title-account-settings"}}
+                <div class="option-block clearfix container-center">
+                   <div class="setting-title"> {{i18n "title-account-settings"}}</div>
                 </div>
-                <div class="setting-block clearfix">
+                <div class="option-block clearfix">
                     <div class="s-account_delete clearfix strip">
                         <div class="title">Регистрация</div>
                         <div> {{#if (day registration)}}
@@ -33,7 +33,7 @@
                     </div>    
                     <div class=" s-notice hidden option"><p>{{i18n "text-registration-delete-notice"}}</p></div>
                 </div>    
-                <div class="setting-block clearfix">
+                <div class="option-block clearfix">
                     <div class="s-lang clearfix strip">
                         <div class="title">Язык сайта</div>
                         {{#each language.available}}
@@ -44,12 +44,12 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="setting-block">
+                <div class="option-block">
                     <div class="s-pass clearfix strip">
                         <div class="title">Пароль</div>
 
                          <div class="uk-float-right show-option">
-                            <span class='change mobile-hidden'>Изменить</span> <i class="i-mobile-pensil change"></i>    
+                            <span class='change large-visible'>Изменить</span> <i class="i-pencil change small-visible"></i>    
                         </div> 
                         <div class="uk-float-right delete-reg hidden option">
                              <div class="choice">
@@ -73,7 +73,7 @@
                     </div>
                    <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-unvalid-pass-repeat"}}</p>
                 </div>
-                <div class="setting-block">
+                <div class="option-block">
                     <div class="tie-soc clearfix strip">
                         <div class="title">Привязать соцсети(?)</div>
                         <div class="ae-social uk-float-left">
@@ -110,7 +110,7 @@
                          </div>
                     </div>
                 </div>    
-                <div class="setting-block">
+                <div class="option-block">
                     <div class="s-email clearfix strip">
                         <div class="title">Получать письма</div>
                         <label class="radio-text">
@@ -123,7 +123,7 @@
                         </label>
                     </div>
                 </div>  
-                <div class="setting-block clearfix">  
+                <div class="option-block clearfix">  
                     <div class="ae-combination clearfix strip">
                         <div class="title">{{i18n "title-profile-favorite"}}</div>
                         <div class="ae-current-combination clearfix">
@@ -132,11 +132,11 @@
                             {{/each}}
                         </div>
                         <div class="uk-float-right show-option ">
-                            <span class='change mobile-hidden change-favorite'>Изменить</span> <i class="i-mobile-pensil change change-favorite"></i>    
+                            <span class='change large-visible change-favorite'>Изменить</span> <i class="i-pencil change change-favorite small-visible"></i>    
                         </div>
                         <div class="uk-float-right delete-reg hidden option">
                              <div class="choice danger">
-                                <span class="change">Отмена</span>    
+                                <span class="change large-visible danger">Отмена</span><i class="i-pencil change danger small-visible"></i>    
                             </div>
                         </div>
                     </div>    

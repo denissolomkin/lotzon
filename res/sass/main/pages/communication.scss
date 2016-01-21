@@ -64,6 +64,28 @@
     }
   }
 }
+
+#communication-messages-new {
+  .modal-message {
+    background: #fff;
+    bottom: -5px;
+    height: auto;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    & div {
+      margin: 0 auto;
+      text-align: center;
+      @include translate(0, -50%);
+      position: absolute;
+      left: auto;
+      text-transform: uppercase;
+      font-size: 17px;
+      top: 50%;
+    }
+  }
+}
+
 #users-view-messages {
   .modal-message {
     background: #fff;
@@ -315,6 +337,15 @@
     }
   }
 }
+.message-img {
+  & img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+}
+
 
 #communication-messages-list {
   padding-top: 57px;

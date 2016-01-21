@@ -60,3 +60,10 @@
 #profile-settings .hidden-notice { 
   margin: 0;
 }
+
+.ae-personal-form-values {
+  margin: 0 -20px;
+  & li  {
+    padding: 0 20px;
+  }
+}

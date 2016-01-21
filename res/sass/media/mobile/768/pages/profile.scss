@@ -90,10 +90,6 @@
   margin-bottom: 40px;
 }
 
-.ae-user-img {
-  margin: 0 30px 0 0;
-  float: left;
-}
 
 .ae-inf {
   display: block;
@@ -170,10 +166,6 @@
   margin-right: 20px;
 }
 
-.ae-social {
-  display: inline-block;
-  margin: 0;
-}
 
 .cco-edit {
   width: auto;
@@ -257,4 +249,18 @@ span.input-prefix {
 
 .ae-combination-box {
     margin: 0 -20px;
+}
+
+.ae-name-block.ae-personal-form-values, .ae-personal-form-values {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.ae-name-block.ae-personal-form-values li, .ae-personal-form-values li {
+  padding: 0 10px;
+}
+
+#profile-edit {
+  & .ae-personal-form {
+    border-top: 0;
+  }
 }

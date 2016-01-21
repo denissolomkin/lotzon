@@ -2512,6 +2512,28 @@ div.comment-reply-btn {
       font-size: 17px;
       top: 50%; }
 
+#communication-messages-new .modal-message {
+  background: #fff;
+  bottom: -5px;
+  height: auto;
+  left: -20px;
+  right: -20px;
+  width: auto; }
+  #communication-messages-new .modal-message div {
+    margin: 0 auto;
+    text-align: center;
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    position: absolute;
+    left: auto;
+    text-transform: uppercase;
+    font-size: 17px;
+    top: 50%; }
+
 #users-view-messages .modal-message {
   background: #fff;
   bottom: -5px;
@@ -2731,6 +2753,12 @@ div.comment-reply-btn {
     margin: 0;
     width: 100%; }
 
+.message-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 50%; }
+
 #communication-messages-list {
   padding-top: 57px; }
   #communication-messages-list .message {
@@ -2817,14 +2845,14 @@ div.comment-reply-btn {
 
 .comment-name a {
   display: inline-block;
-  font-weight: bold;
-  margin-right: 13px; }
+  margin-right: 13px;
+  font-family: 'Handbook-bold'; }
 
 .comment-date {
   font-size: 13px;
   color: #5a5a5a; }
   .comment-date span:first-child {
-    margin-right: 15px; }
+    margin-right: 20px; }
 
 .comment-reply {
   display: none;
@@ -3149,6 +3177,38 @@ form.loading > * {
     .badges-container > div div[id^="badges-message"] .contain-img {
       padding-left: 50px; }
 
+/*title of games view*/
+.title-wrap {
+  position: relative;
+  width: 100%;
+  padding: 20px; }
+  .title-wrap .back-button {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    font-size: 35px;
+    transform: translate(0, -50%);
+    color: #6ba4e7;
+    padding: 0;
+    height: auto;
+    vertical-align: middle; }
+    .title-wrap .back-button:hover i {
+      color: #343434; }
+    .title-wrap .back-button i {
+      transition: color .2s ease-in;
+      display: inline;
+      position: relative;
+      left: -10px; }
+  .title-wrap .game-title {
+    text-align: center;
+    /*font-weight: bold;*/
+    text-transform: uppercase;
+    color: #343434;
+    font-size: 20px;
+    font-family: Handbookpro-regular; }
+
+/* END
+title of games view*/
 div > .games-previews {
   padding: 0; }
 
@@ -3244,31 +3304,6 @@ div > .games-previews {
   font-family: handbook-bold; }
   .games-view .info-top {
     width: 100%; }
-    .games-view .info-top .title-wrap {
-      position: relative;
-      padding: 20px; }
-    .games-view .info-top .back-button {
-      text-transform: lowercase;
-      font-weight: 100;
-      font-family: handbookpro-regular;
-      color: #4a4a4a;
-      cursor: pointer;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%); }
-      .games-view .info-top .back-button span {
-        font-size: 15px;
-        vertical-align: 20%;
-        text-transform: uppercase; }
-      .games-view .info-top .back-button i {
-        font-size: 25px;
-        line-height: 1; }
-    .games-view .info-top .game-title {
-      text-align: center;
-      text-transform: uppercase;
-      color: #4a4a4a;
-      font-size: 20px; }
     .games-view .info-top .player-info {
       display: flex;
       flex-direction: row;
@@ -3432,14 +3467,19 @@ div > .games-previews {
           transform: translateY(-50%);
           display: block;
           left: 0;
-          width: 100%; }
+          width: 100%;
+          transition: all .2s linear; }
         .games-view .game-settings .settings-tabs div i {
           font-size: 20px;
-          margin-right: 6px; }
-        .games-view .game-settings .settings-tabs div:hover {
-          /*opacity: 0.5;*/
+          margin-right: 6px;
+          position: relative;
+          top: 1px; }
+        .games-view .game-settings .settings-tabs div:hover:not(.active) {
           /*@extend %extend_1;*/
           /*background: rgba(0,0,0,0.77);*/ }
+          .games-view .game-settings .settings-tabs div:hover:not(.active) span {
+            opacity: 0.9;
+            color: #111; }
 
 .game-settings .games-online {
   font-family: handbookpro-regular;
@@ -3631,7 +3671,10 @@ div > .games-previews {
     font-family: handbookpro-regular;
     width: 100%;
     background: #fff;
+    transition: all .2s ease-in;
     line-height: 31px; }
+    .create-game .start-game:hover {
+      opacity: 0.5; }
 
 @media all and (max-width: 768px) {
   .games-view .game-settings {
@@ -3655,23 +3698,6 @@ div > .games-previews {
           display: none; }
     .games-view .description-block .game-description #read-more-description:checked + label {
       /*     button styles on checked */ } }
-
-.title-wrap {
-  position: relative;
-  width: 100%;
-  padding: 20px; }
-  .title-wrap .back-button {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    font-size: 25px;
-    transform: translate(0, -50%);
-    color: #6ba4e7; }
-  .title-wrap .game-title {
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #343434; }
 
 #games-chance-view {
   color: #4a4a4a;
@@ -5836,16 +5862,8 @@ and open the template in the editor.
   .personal-inf-edit-btn:hover {
     text-decoration: underline; }
 
-.c-play-inf-win {
-  font-size: 17px;
-  background: #fafafa;
-  margin: 0 -10px;
-  line-height: 1.4;
-  padding: 12px 0;
-  text-align: center; }
-
 .c-play-inf-win span {
-  display: block; }
+  margin-left: 10px; }
 
 .c-play-inf table {
   width: 100%;
@@ -5897,6 +5915,8 @@ and open the template in the editor.
 
 .ae-personal-form-values li {
   position: relative; }
+  .ae-personal-form-values li.empty {
+    height: 36px; }
 
 .ae-personal-form .error-msg {
   display: none;
@@ -5958,14 +5978,12 @@ and open the template in the editor.
     border: none; }
   .ae-personal-form-values li {
     border-top: 1px solid #eaeaea;
-    height: 42px;
-    line-height: 42px;
+    height: 45px;
+    line-height: 45px;
     padding-right: 30px;
     padding-left: 30px; }
     .ae-personal-form-values li > * {
-      line-height: 42px; }
-    .ae-personal-form-values li:last-child {
-      border-bottom: 1px solid #eaeaea; }
+      line-height: 45px; }
   .ae-personal-form-values i {
     min-width: 150px;
     color: #afa3a3;
@@ -6055,19 +6073,22 @@ and open the template in the editor.
     border: 1px solid #cccccc; }
   .ae-combination-box li.selected {
     border: 1px solid; }
+  .ae-combination-box li.unavailable:hover {
+    border: 1px solid transparent; }
 
 .ae-current-combination {
   margin-left: 20px; }
 
 .ae-current-combination > * {
   float: left;
-  width: 35px;
+  width: 15px;
   height: 35px;
   border-radius: 50%;
   line-height: 34px;
-  font-size: 16px;
   text-align: center;
-  cursor: pointer; }
+  margin-left: 0 !important;
+  cursor: pointer;
+  margin-right: 15px; }
   .ae-current-combination > *:last-child {
     margin-right: 0; }
 
@@ -6490,17 +6511,6 @@ span.input-prefix {
   margin: auto;
   font-weight: bold; }
 
-.radio-text {
-  margin-right: 15px; }
-  .radio-text input {
-    display: none; }
-    .radio-text input:checked + span {
-      border-bottom: 2px solid #cbe4de; }
-  .radio-text span {
-    display: inline-block;
-    padding: 0 2px 4px;
-    cursor: pointer; }
-
 .settings .option {
   float: none;
   background: #fafafa; }
@@ -6542,9 +6552,6 @@ span.input-prefix {
 .settings .title {
   float: left; }
 
-.settings .hidden {
-  display: none; }
-
 .settings .s-notice {
   float: none;
   border-top: 1px solid #f5f5f5;
@@ -6571,13 +6578,6 @@ span.input-prefix {
   border: none;
   background: transparent; }
 
-.settings .change {
-  cursor: pointer;
-  color: #4990e2; }
-
-.settings .danger {
-  color: #ff4c4b; }
-
 .settings .btn-flat {
   margin-top: 30px; }
 
@@ -6588,6 +6588,16 @@ span.input-prefix {
   height: auto;
   line-height: 45px;
   top: 0; }
+
+.change {
+  cursor: pointer;
+  color: #4990e2; }
+
+.hidden {
+  display: none; }
+
+.danger {
+  color: #ff4c4b; }
 
 #profile-edit .ae-social-item {
   display: inline-block;
@@ -6619,8 +6629,139 @@ span.input-prefix {
     position: relative;
     cursor: pointer; }
 
-#profile-edit .wrapper-calendar:before {
-  right: 5px; }
+#profile-edit .wrapper-calendar {
+  z-index: 10; }
+  #profile-edit .wrapper-calendar:before {
+    right: 5px; }
+  #profile-edit .wrapper-calendar .calendar-range {
+    border: none; }
+
+#profile-edit .ae-personal-form-values li span {
+  color: #a3a5a4; }
+
+#profile-edit .ae-personal-form-values .ae-social {
+  border-bottom: 1px solid #eaeaea; }
+  #profile-edit .ae-personal-form-values .ae-social span {
+    color: #000; }
+
+#profile-edit .daterangepicker.dropdown-menu {
+  left: 20px; }
+
+#user-view .ae-personal-form-values div {
+  padding: 0;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  font: 15px "handbookpro-regular";
+  display: inline-block;
+  width: auto;
+  vertical-align: middle; }
+  #user-view .ae-personal-form-values div.c-play-inf-win {
+    text-align: left;
+    line-height: 1.4;
+    padding: 12px 0;
+    color: #000;
+    font-family: "Handbook-bold"; }
+  #user-view .ae-personal-form-values div:focus {
+    border-width: 0 0 2px;
+    border-color: #bed8d9;
+    padding-bottom: 0; }
+  #user-view .ae-personal-form-values div.error {
+    padding-bottom: 0;
+    color: #ff4242; }
+  #user-view .ae-personal-form-values div.error + .error-msg {
+    display: block; }
+
+#user-view .render-list {
+  margin-top: 0; }
+
+#user-view .ae-social-item {
+  height: 45px; }
+  #user-view .ae-social-item:before {
+    line-height: 45px; }
+
+#user-view .i-arrow-down:before {
+  content: '\e800';
+  color: #4990e2;
+  position: relative;
+  margin-left: 8px;
+  top: 2px; }
+
+#user-view .user-actions, #user-view .user-actions + li {
+  border-top: none; }
+
+#user-view .content-box-item {
+  min-height: 550px; }
+
+#profile-edit .content-box-item, #user-view .content-box-item {
+  padding-top: 20px; }
+
+.c-form-title {
+  height: 45px;
+  line-height: 45px;
+  background: #fafafa;
+  margin: 0 -30px;
+  padding: 0 30px;
+  color: #000;
+  font-family: "Handbook-bold"; }
+
+.c-form-stat .ae-personal-form-values li:last-child {
+  border-bottom: 1px solid #eaeaea; }
+
+.c-form-stat .ae-personal-form-values li:first-child {
+  border-top: none; }
+
+.user-actions {
+  background: #fafafa; }
+
+.user-actions a, .user-actions button {
+  margin-right: 30px;
+  color: #4990e2;
+  background: none;
+  background-color: transparent;
+  font-family: "Handbook-bold";
+  opacity: 1;
+  cursor: pointer; }
+
+.setting-title {
+  height: 60px;
+  line-height: 60px; }
+
+.radio-text {
+  margin-right: 15px; }
+  .radio-text input {
+    display: none; }
+    .radio-text input:checked + span {
+      color: #000;
+      font-family: "Handbook-bold"; }
+  .radio-text span {
+    display: inline-block;
+    padding: 0 2px 4px;
+    cursor: pointer; }
+
+#profile-settings .content-box-item {
+  padding-top: 0;
+  min-height: 550px; }
+
+#profile-settings span {
+  color: #959595; }
+
+#profile-settings .radio-text {
+  margin-right: 15px; }
+  #profile-settings .radio-text input {
+    display: none; }
+    #profile-settings .radio-text input:checked + span {
+      color: #000; }
+  #profile-settings .radio-text span {
+    display: inline-block;
+    padding: 0 2px 4px;
+    cursor: pointer; }
+
+#profile-settings .change {
+  cursor: pointer;
+  color: #4990e2; }
+
+#profile-settings .danger {
+  color: #ff4c4b !important; }
 
 .ph-notice {
   text-align: center;

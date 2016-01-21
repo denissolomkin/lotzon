@@ -40,38 +40,6 @@ $hb_regular: handbookpro-regular;
     font-family: $hb_bold;
     .info-top {
         width: 100%;
-        .title-wrap {
-            position: relative;
-            padding: 20px;
-        }
-        .back-button {
-            text-transform: lowercase;
-
-            font-weight: 100;
-            font-family: $hb_regular;
-            color: $color_fuscous_gray_approx;
-            cursor: pointer;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-            transform: translateY(-50%);
-            span{
-                font-size: 15px;
-                vertical-align: 20%;
-                text-transform: uppercase;
-            }
-            i{
-                font-size: 25px;
-                line-height: 1;
-            }
-        }
-        .game-title {
-            text-align: center;
-            text-transform: uppercase;
-            color: $color_fuscous_gray_approx;
-            font-size: 20px;
-        }
         .player-info {
             display: flex;
             flex-direction: row;
@@ -292,16 +260,23 @@ $hb_regular: handbookpro-regular;
                     display: block;
                     left: 0;
                     width: 100%;
+                    transition: all .2s linear;
                 }
                 i {
                     font-size: 20px;
                     margin-right: 6px;
+                    position: relative;
+                    top: 1px;
+                        
                 }
                 &.active {
                     @extend %extend_1;
                 }
-                &:hover {
-                    /*opacity: 0.5;*/
+                &:hover:not(.active) {
+                    span{
+                        opacity: 0.9;
+                        color: #111;
+                    }
                     /*@extend %extend_1;*/
                     /*background: rgba(0,0,0,0.77);*/
                 }
@@ -558,8 +533,13 @@ $hb_regular: handbookpro-regular;
         font-family: $hb_regular;
         width: 100%;
         background: #fff;
+        transition: all .2s ease-in;
         line-height: 31px;
-
+        
+        &:hover{
+            
+            opacity: 0.5;
+        }
     }
 }
 @media all and(max-width: 768px) {

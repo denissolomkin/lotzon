@@ -1,53 +1,101 @@
 <div id="user-view" class="content-box">
-
     <div class="content-box-header"><span class="back i-arrow-left"></span>{{ title.nickname }}</div>
 
     <div class="content-box-content clearfix">
-        <div class="content-box-item c-friend-detail">
+        <div class="content-box-item">
+            <div class="ae-personal-inf">
+                    <div class="ae-top uk-float-left">
+                        <div class="ae-user-img">
+                            
+                            <img src="{{avatar img id}}" alt="">
+                        </div>
 
-            <div class="c-user-inf-wrapper clearfix">
-                <div class="c-user-inf">
-                    <div class="c-user-img online">
-                        <div class="c-user-delete"></div>
-                        <img src="{{avatar img id}}" alt="">
-                    </div>
-                </div>
-
-                <div class="c-user-personal-inf clearfix">
-                    <table>
-                        <tr>
-                            <td>{{i18n "title-profile-name"}}</td>
-                            <td>{{ title.name }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{i18n "title-profile-surname"}}</td>
-                            <td>{{ title.surname }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{i18n "title-profile-patronymic"}}</td>
-                            <td>{{ title.patronymic }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{i18n "title-profile-country"}}</td>
-                            <td>{{ location.country }}</td>
-                        </tr>
-                    </table>
-
-                    <div class="c-social">
-                        <div class="c-social-inf">{{i18n "title-profile-socials"}}</div>
-                        <div class="c-social-icons clearfix">
-                            {{#each this.social}}
-                            {{#if .}}<a href="{{social @key .}}" class="c-social-item soc-{{@key}}"></a>{{/if}}
-                            {{/each}}
+                        <div class="ae-inf">
+                            {{i18n "message-input-correct-data"}}
                         </div>
                     </div>
-                </div>
+
+                    <div class="uk-float-right">
+                        <ul class="ae-personal-form">
+                            <li class="ae-personal-form-values ae-name-block">
+                                <ul>
+                                    <li class="user-actions">
+                                        <a href="/users/{{id}}/message" class="send-msg uk-float-left">{{i18n "button-users-write-message"}}</a>
+
+                                        <form action="/users/requests/{{id}}" method="post" class="uk-float-left">
+                                            <button type="submit add-friends">{{i18n "button-user-friendship"}}</button>
+                                        </form>
+
+                                    </li>
+                                    <li><i>Имя</i> <div>{{title.name}}</div></li>
+                                    <li><i>Фамилия </i><div>{{title.surname}}</div></li>
+                                    <li class="empty"></li>
+                                </ul>
+                            </li>
+                        </ul>        
+                    </div>
+
+                    <ul class="ae-personal-form">
+                        <li class="ae-personal-form-values">
+                            <ul>
+                                <li>
+                                    <i>Дата рождения</i>
+                                    <div class="wrapper-margin-right ">
+                                            {{day birthday}} 
+                                    </div>
+                                </li>
+                                <li><i>Страна</i>
+                                     <div class="select-wrapper ">
+                                        {{location.country}}
+                                    </div>
+                                </li>
+                                <li><i>Город/Село</i><div>{{location.city}}</div></li>
+
+                                <li class="ae-social">
+                                    <i class="uk-float-left">Соц. сети </i>
+                                    <div class="ae-social uk-float-left">
+                                        <a href="#" class="ae-social-item i-vk-rectangle" title="">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                        </a>
+                                        <a href="#" class="ae-social-item i-fb-rectangle" title="">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                        </a>
+                                        <a href="#" class="ae-social-item i-tw-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                        </a>
+                                        <a href="#" class="ae-social-item i-g_plus-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                        </a>
+                                        <a href="#" class="ae-social-item i-inst-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                        </a>
+                                        <a href="#" class="ae-social-item i-ok-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                        </a>
+                                 </div>
+                                </li>
+                                <li class="empty"></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                {{partial "user-view-statistics" .}}         
             </div>
 
-            {{partial "user-view-statistics" .}}
-
-            <a href="/users/{{id}}/message" class="send-msg">{{i18n "button-users-write-message"}}</a>
-
         </div>
+        <!-- .content-box-item -->
     </div>
+    <!-- .content-box-content -->
 </div><!-- .content-box -->

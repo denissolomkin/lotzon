@@ -1,24 +1,55 @@
 <div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
-    <div class="menu-balance-inf clearfix">
-        <div>
-            <i class="i-purse"></i>
-            <span class="holder-money">{{player "balance.money"}}</span>
-            <span>{{player "getCurrency"}}</span>
-        </div>
-        <div>
-            <span class="holder-points">{{player "balance.points"}}</span>
-            <span>{{i18n "title-of-points"}}</span>
-        </div>
-    </div>
-    <hr>
-    {{#each .}}
     <ul class="{{@key}}">
-        {{#each this}}
         <li>
-            <a href="/{{.}}">{{i18n "menu" .}}{{{countHTML .}}}</a>            
+            <a href="" class="toggle-btn">
+            <div class="menu-balance-inf clearfix">
+                    
+                <div>
+                    <!--<i class="i-purse"></i>-->
+                    <span class="holder-money">{{player "balance.money"}}</span>
+                    <span>{{player "getCurrency"}}</span>
+                </div>
+                <div>
+                    <span class="holder-points">{{player "balance.points"}}</span>
+                    <span>{{i18n "title-of-points"}}</span>
+                </div>
+                {{{countHTML .}}}
+                <div class="btn-arrows"><i class="i-arrow-down"></i><i class="i-arrow-top"></i></div>
+            </div>
+            </a>
+            <ul style="display: block;">
+                <li>
+                    <a href="/profile/cashout" class="menu-balance-item">{{i18n "button-balance-cashout"}}{{{countHTML .}}}</a>
+                </li>
+                <li>
+                    <a href="/profile/convert" class="menu-balance-item">{{i18n "button-balance-convert"}}{{{countHTML .}}}</a>
+                </li>
+                <li>
+                    <a href="/reports/transactions" class="menu-balance-item">{{i18n "button-balance-transactions"}}{{{countHTML .}}}</a>
+                </li>
+                <li>
+                    <a href="/reports/payments" class="menu-balance-item">{{i18n "button-balance-payments"}}{{{countHTML .}}}</a>
+                </li>
+            </ul>
+        </li>
+        {{#each .}}
+        <li>
+            <a href="" class="toggle-btn">
+            {{@key}}{{{countHTML .}}}
+            <div class="btn-arrows"><i class="i-arrow-down"></i><i class="i-arrow-top"></i></div>
+            </a>
+            
+            
+            <ul data-id="{{@key}}">
+            {{#each this}}
+                <li>
+                    <a href="/{{.}}">{{i18n "menu" .}}{{{countHTML .}}}</a>            
+                </li>
+            {{/each}}
+            </ul>
+
         </li>
         {{/each}}
-        <hr/>
     </ul>
-    {{/each}}
+
 </div>

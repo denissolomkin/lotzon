@@ -17,7 +17,7 @@
         menuBalanceBtn: '.menu-balance-btn',
         menuBtnItem: '.menu-btn-item',
         balanceBtn: '.balance-btn',
-
+        
         /* navigation and tabs */
         Tabs: '.content-box-tabs a',
         Cats: '.content-box-cat a'
@@ -70,7 +70,6 @@
                 'json': this.navigation
             });
         },
-
         ready: function () {
 
 
@@ -109,7 +108,6 @@
                 Navigation.menu.hide();
                 // return;
                 if (isActive)
-
                     return false;
                 else
                     $(this).addClass('active');

@@ -1,5 +1,45 @@
 // GAMES <<CHANCE>> -------------------- //
 
+/*title of games view*/
+.title-wrap {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    .back-button {
+        position: absolute;
+        left: 0px;
+        top: 50%;
+        font-size: 35px;
+        transform: translate(0, -50%);
+        color: #6ba4e7;
+        padding: 0;
+        height: auto;
+        vertical-align: middle;
+        &:hover{
+            i{
+                color: #343434;
+            }
+        }
+        i{
+            transition: color .2s ease-in;
+            display: inline;
+            position: relative;
+            left: -10px;
+        }
+    }
+    .game-title {
+        text-align: center;
+        /*font-weight: bold;*/
+        text-transform: uppercase;
+        color: #343434;
+        font-size: 20px;
+        font-family: Handbookpro-regular;
+        
+    }
+}
+/* END
+title of games view*/
+
 div > .games-previews{
     padding: 0;
 }

@@ -13,26 +13,6 @@ $white_50: rgba(255,255,255,0.5);
 $color_sinbad_approx: #a8d1d5;
 $black_15: rgba(0,0,0,0.15);
 
-.title-wrap {
-    position: relative;
-    width: 100%;
-    padding: 20px;
-    .back-button {
-        position: absolute;
-        left: 0;
-        top: 50%;
-        font-size: 25px;
-        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-        transform: translate(0, -50%);
-        color: $color_cornflower_blue_approx;
-    }
-    .game-title {
-        text-align: center;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: $color_tuatara_approx;
-    }
-}
 #games-chance-view {
     color: $color_gravel_approx;
     font-size: 16px;

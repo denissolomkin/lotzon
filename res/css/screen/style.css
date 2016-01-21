@@ -1148,6 +1148,11 @@ div.comment-reply-btn {
 #profile-settings .hidden-notice {
   margin: 0; }
 
+.ae-personal-form-values {
+  margin: 0 -20px; }
+  .ae-personal-form-values li {
+    padding: 0 20px; }
+
 .ph-won,
 .ph-won-text {
   width: 35%;

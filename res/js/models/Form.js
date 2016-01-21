@@ -74,8 +74,6 @@
 
             setTimeout(function () {
 
-                console.log(form.data);
-
                 if (form.method === 'ws' && !Config.websocketEmulation) {
 
                     var conn = Form.websocketConnection,
@@ -162,6 +160,7 @@
                             form.json = data.responseJSON || data;
                             Cache.init(form.json);
 
+                            console.log(data);
                             Form.stop.call(that);
                             D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
 
@@ -413,31 +412,30 @@
             }
 
             action = data && (data.res && data.res.action || path) || App.action;
-            console.log(path, action, data);
 
             switch ('function') {
 
                 /* Common Game Callback Action */
                 case data && typeof Game.callback[action]:
-                    console.log('Game.callback.' + action);
+                    //console.log('Game.callback.' + action);
                     eval('Game.callback.' + action)(data);
                     break;
 
                 /* Specific App action */
                 case App.key && typeof eval(App.key + '.' + action):
-                    console.log(App.key + '.' + action);
+                    //console.log(App.key + '.' + action);
                     eval(App.key + '.' + action)(data);
                     break;
 
                 /* Common Game Action */
                 case !data && typeof Game.action[action]:
-                    console.log('Game.action.' + action);
+                    //console.log('Game.action.' + action);
                     eval('Game.action.' + action)(data);
                     break;
 
                 /* Default App Action */
                 case App.key && typeof eval(App.key + '.action'):
-                    console.log(App.key + '.action');
+                    //console.log(App.key + '.action');
                     eval(App.key + '.action')(data);
                     break;
             }

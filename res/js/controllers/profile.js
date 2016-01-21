@@ -13,16 +13,7 @@
             $('input[type="tel"][name="billing[qiwi]"]').inputmasks(phoneMask);
             $('input[type="text"][name="billing[yandexMoney]"]').inputmask({mask: '410019{7,10}', placeholder: ''});
             $('input[type="text"][name="billing[webMoney]"]').inputmask('a999999999999');
-            $('input.datepicker').daterangepicker({singleDatePicker : true, startDate: '', endDate:'', autoUpdateInput : false});
-            // if ($('.datepicker')
-            //         .filter(':visible')
-            //         .filter(function () {
-            //             return !$(this).data('daterangepicker')
-            //         })
-            //         .daterangepicker({
-            //             singleDatePicker : true
-            //         }).length)
-            //     Content.enableForm();
+            $('input.datepicker').daterangepicker({singleDatePicker : true, startDate: '', endDate:''});
         },
 
 
@@ -57,6 +48,7 @@
                 if ($('.new-pass').val() != $('.repeat-pass').val())   {
                     $('.hidden-notice').css('display', 'block');
                 }
+                else $('.hidden-notice').css('display', 'none');
             }
         },
 
@@ -124,7 +116,8 @@
             },
 
             openOption: function() {
-                $(this).closest('.setting-block').find('.option, .show-option .change').toggleClass('hidden');
+                $(this).closest('.option-block').find('.option, .show-option .change').toggleClass('hidden');
+                $(this).closest('.option-block').find('.hidden-notice').css('display', 'none');
             },
 
             openFavorite: function() {
@@ -159,27 +152,25 @@
                 if (!$(this).hasClass('selected')) {
 
                     if ($('.ae-combination-box li.selected').length < 6) {
-
                         var n = $(this).text();
                         var first = $('.ae-current-combination >*:not(.on):first');
 
                         if (first) {
                             first.addClass('on').val(n);    
                         }
-
                         else {
                             $('.ae-current-combination >*:first-child').addClass('on').text(n);
                         }
 
                         $(this).addClass('selected');
-                    }
 
-                    else {
-                        $('.ae-combination-box li:not(.selected)').addClass('unavailable');
+                        if ($('.ae-combination-box li.selected').length == 6) {
+                            $('.ae-combination-box li:not(.selected)').addClass('unavailable');
+                        }
                     }
                 }
                 else {
-                    
+                     $('.ae-combination-box li:not(.selected)').removeClass('unavailable');
                     var x  =  $(this);
                     $('.ae-current-combination >*').each(function(){
                         if (x.text() == $(this).val()) {
@@ -198,6 +189,12 @@
                 }
                 $('.ae-combination-box li').removeClass('selected');
             }
+        },
+
+        after: function(data){
+
+            this.innerHTML = i18n("button-user-remove-request");
+            this.className = 'uk-float-right danger';
         },
 
         update: {

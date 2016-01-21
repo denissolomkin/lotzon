@@ -56,7 +56,7 @@
 
 .pushy {
     width: 400px;
-    padding-left: 30px;
+    /*padding-left: 30px;*/
 }
 
 .pushy-left {
@@ -69,7 +69,7 @@
 .wrapper-push, .push-push {
     @include translate3d(-400px, 0, 0);
 }
-
+/*
 #menu-navigation-mobile {
     font: 15px / 45px Handbook-bold;
     & .menu-balance-inf  {
@@ -149,7 +149,7 @@
         border-bottom: 1px solid #cbc7c6;
     }
 
-}   
+}   */
 
 .menu-balance-btn {
     display: none;

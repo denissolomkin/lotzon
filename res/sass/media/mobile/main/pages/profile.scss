@@ -75,9 +75,7 @@
 		& .radio-text {
 			margin: 0;
 		}
-		& .s-lang span {
-			margin-left: 5px;
-		}
+
 		& .radio-text:first-child span{
 			margin-left: 20px;
 		}
@@ -85,7 +83,6 @@
 			max-width: 70px;
 		}
 		& .ae-social {
-			margin-left: 5px;
 			height: auto;
 			& a:last-child {
 				margin-right: 0;
@@ -129,7 +126,63 @@
 
 }
 #profile-settings {
+	padding-top: 10px;
 	& .ae-social {
 		height: auto;
+		margin-left: 20px;
 	}
+	& .settings {
+
+		& .title {
+		 	min-width: 80px;
+		}
+	}
+	& .s-lang {
+		& span {
+			margin-left: 5px;
+		}
+		& label {
+			&:first-of-type {
+				& span {
+					margin-left: 20px;
+				}
+			}
+		}
+	}
+	& .i-pencil {
+		font-size: 18px;
+	}
+	& .danger {
+    	color: #ff4c4b!important;
+	}	
 }
+
+
+#profile-edit .content-box-item, #user-view .content-box-item {
+	padding-top: 10px;
+}
+#profile-edit .content-box-item {
+	padding-bottom: 25px;
+}
+#profile-edit .ae-social-item, .ae-social-item  {
+	margin-right: 0;
+}
+
+.ae-personal-inf .text-notice p {
+    margin-bottom: 30px;
+}
+
+#user-view .ae-personal-form-values div {
+	vertical-align: top;
+}
+
+
+.setting-title {
+	height: 60px;
+    line-height: 50px;
+}
+#profile-settings .content-box-item {
+	min-height: 460px;
+}
+
+
