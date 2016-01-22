@@ -41,7 +41,6 @@
                 D.log(["location: " + document.location, "state: " + JSON.stringify(event.state)], 'info');
                 var state = event.state; // || {href: document.location.pathname};
                 if(state && state.hasOwnProperty('href')){
-                    alert(JSON.stringify(state));
                     state.state = true;
                     R.push(state);
                 }

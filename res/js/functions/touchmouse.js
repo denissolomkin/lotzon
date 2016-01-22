@@ -332,6 +332,12 @@
 
         start: function (e) {
 
+            Drag.options = {
+                type  : 'touch'
+            };
+
+            Drag.status('start');
+
             e.preventDefault();
             Cards.removeClassFromAll('transition');
 
@@ -351,6 +357,8 @@
 
         move: function (e) {
 
+            Drag.status('move');
+
             e.preventDefault();
 
             var newPosition = e.touches[0],
@@ -359,7 +367,7 @@
             /* slide right-left */
             if (touchTarget && !Touch.moved && Touch.moveTarget != touchTarget && touchTarget.classList.contains('card')) {
 
-
+                Drag.status('change');
 
                 //Cards.removeClassFromAll('select');
                 Cards.marginsDraw();
@@ -386,6 +394,8 @@
             /* move card */
             if (Touch.moved || Touch.startPosition.pageY > newPosition.pageY + 20) {
 
+                Drag.status('start');
+
                 Drag.options = {
                     type  : 'touch',
                     event : e.targetTouches[0],
@@ -405,6 +415,8 @@
         end: function (e) {
 
             e.preventDefault();
+
+            Drag.status('end');
 
             if (Touch.moved) {
 

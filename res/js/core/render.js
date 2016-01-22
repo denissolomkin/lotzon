@@ -89,6 +89,11 @@
 
             console.log("Start:", options.href, options.template);
 
+            if(!options.template){
+                D.error(options);
+                return;
+            }
+
             if (D.isEnable('stat'))
                 options.stat = R.stat();
 
