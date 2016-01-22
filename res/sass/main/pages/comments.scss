@@ -85,13 +85,13 @@
     top: 2px;
     left: 0; 
   }
-  &.i-hart {
+  &.fa-heart {
     &:before {
       color: #FFEF00;
     }
   }
 
-  &.i-hart2 {
+  &.fa-heart-o {
     &:before {
       color: #000; 
     }
@@ -345,9 +345,7 @@ form.loading > * {
   line-height: 1.27;
 }
 
-#communication-messages-new .content-box-item {
-  padding-top: 40px;
-}
+
 
 .comment-description, .message-form-area {
   line-height: 22px;

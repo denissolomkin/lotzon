@@ -67,9 +67,8 @@
 
         start: function () {
 
-
-
             Drag.options.target.classList.add('small-card');
+            Drag.options.target.classList.remove('transition'); // remove transition for drag quickly
             Drag.options.target.style.top = (Number(parseFloat(Drag.options.target.style.top)) + 20) + 'px';
 
             var cardBounding = Drag.options.target.getBoundingClientRect();
@@ -218,7 +217,6 @@
 
             var target = e.target;
             target.removeEventListener('mouseleave', Mouse.leave); // prevent transition if leave
-            target.classList.remove('transition'); // remove transition for drag quickly
 
             // add listeners for drag logic
             document.addEventListener('mousemove', Mouse.move, false);
@@ -362,9 +360,8 @@
             /* slide right-left */
             if (touchTarget && !Touch.moved && Touch.moveTarget != touchTarget && touchTarget.classList.contains('card')) {
 
-                Cards.removeClassFromAll('select');
+                //Cards.removeClassFromAll('select');
                 Cards.marginsDraw();
-                console.log('Touch.move: removeAll transition');
                 Cards.removeClassFromAll('transition');
 
                 // hack for iOS
@@ -378,36 +375,25 @@
                 Touch.moved = false;
                 Touch.moveTarget = touchTarget;
 
-                touchTarget.classList.add('select');
-
+                //touchTarget.classList.add('select');
                 Cards.eachCardLeft(touchTarget);
-
 
             } else
 
             /* move card */
             if (Touch.moved || Touch.startPosition.pageY > newPosition.pageY + 20) {
 
+                Drag.options = {
+                    type  : 'touch',
+                    event : e.targetTouches[0],
+                    target: Touch.moveTarget
+                };
 
                 if (!Touch.moved) {
-
-                    touchTarget.classList.remove('transition');
-
-                    Drag.options = {
-                        type  : 'touch',
-                        event : e.targetTouches[0],
-                        target: Touch.moveTarget
-                    };
-
                     Drag.start();
                     Touch.moved = true;
-
-                } else {
-
                 }
 
-                Drag.options.event = e.targetTouches[0];
-                Drag.options.target = Touch.moveTarget;
                 Drag.move();
 
             }
@@ -420,12 +406,12 @@
             if (Touch.moved) {
 
                 Drag.options.event = e.changedTouches[0];
-                Drag.options.target = Touch.moveTarget;
+                // Drag.options.target = Touch.moveTarget;
                 Drag.drop.call(this);
 
             }
 
-            Cards.removeClassFromAll('select');
+            //Cards.removeClassFromAll('select');
             // Cards.marginsDraw();
 
         }

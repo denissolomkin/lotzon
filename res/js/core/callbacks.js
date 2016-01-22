@@ -171,7 +171,7 @@
             "blog-post-view-comments": Comments.after.reply,
             "communication-comments": Comments.after.reply,
             "communication-notifications": Comments.renderNotifications,
-            "users-requests-view": Profile.after.request,
+            "users-requests-view": Profile.after.request
 
         },
 

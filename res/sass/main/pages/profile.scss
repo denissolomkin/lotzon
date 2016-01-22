@@ -1131,6 +1131,7 @@ span.input-prefix {
   }
   & .ae-social-item:hover .tooltip {
     line-height: 1.2;
+    color: #fff;
   }
   & .calendar-range {
     width: auto;
@@ -1141,6 +1142,10 @@ span.input-prefix {
       z-index: 1;
       position: relative;
       cursor: pointer;
+    }
+    & .daterangepicker.dropdown-menu.opensright:before {
+      right: auto;
+      left: 2px;
     }
   }
   & .wrapper-calendar {
@@ -1155,9 +1160,9 @@ span.input-prefix {
   & .ae-personal-form-values li span {
     color: #a3a5a4;
   }
-  & .ae-personal-form-values input:not(.input-filled)  {
-    color: #a3a5a4;
-  }
+  // & .ae-personal-form-values input:not(.input-filled)  {
+  //   color: #a3a5a4;
+  // }
 
   & .ae-personal-form-values .ae-social {
     border-bottom: 1px solid #eaeaea;
@@ -1169,7 +1174,10 @@ span.input-prefix {
     left: 20px;
   }
 }
-
+.ae-personal-form-values input::-webkit-input-placeholder {color:#a3a5a4;}
+.ae-personal-form-values input::-moz-placeholder          {color:#a3a5a4;}
+.ae-personal-form-values input:-moz-placeholder           {color:#a3a5a4;}
+.ae-personal-form-values input:-ms-input-placeholder      {color:#a3a5a4;}
 
 #user-view {
   .ae-personal-form-values div {

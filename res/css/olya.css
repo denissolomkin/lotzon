@@ -220,10 +220,10 @@ body {
 }
 
 .transition {
-    transition: all 0.5s linear ;
-    -moz-transition: all 0.5s linear ;
-    -o-transition: all 0.5s linear ;
-    -webkit-transition: all 0.5s linear ;
+    transition: all 0.2s linear ;
+    -moz-transition: all 0.2s linear ;
+    -o-transition: all 0.2s linear ;
+    -webkit-transition: all 0.2s linear ;
 
 /*  -webkit-transition-property: top;
     -moz-transition-property: top;
@@ -371,10 +371,11 @@ body {
     .cards .deck .card {
 
     }
-        .cards .table .cards .card {
+    .small-card, .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
     } 
+
     .cards .table .cards div:first-of-type {
          transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
@@ -461,7 +462,7 @@ body {
         padding: 5px;
 
     }
-    .cards .table .cards .card {
+    .small-card, .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.5,0.5);
         -webkit-transform: rotate(-1deg) scale(0.5,0.5);
     } 
@@ -659,7 +660,7 @@ body {
     .cards .deck .card {
 
     }
-        .cards .table .cards .card {
+    .small-card, .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
     } 

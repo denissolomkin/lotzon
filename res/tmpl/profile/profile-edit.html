@@ -15,10 +15,10 @@
                         <ul class="ae-personal-form">
                             <li class="ae-personal-form-values ae-name-block">
                                 <ul>
-                                    <li><i>{{i18n "title-profile-nickname"}} </i> <input class="{{#if title.nickname}} input-filled {{/if}}"  type="text" value="{{title.nickname}}"> <span class="error-msg">{{i18n "title-profile-nickname-unavalable"}}</span></li>
+                                    <li><i>{{i18n "title-profile-nickname"}} </i> <input placeholder="" type="text" value="{{title.nickname}}"> <span class="error-msg">{{i18n "title-profile-nickname-unavalable"}}</span></li>
 
-                                    <li><i>Имя</i> <input class="{{#if title.name}} input-filled {{/if}}"  type="text" value="{{title.name}}"></li>
-                                    <li><i>Фамилия </i><input class="{{#if title.surname}} input-filled {{/if}}" type="text" value="{{title.surname}}"></li>
+                                    <li><i>Имя</i> <input placeholder=""  type="text" value="{{title.name}}"></li>
+                                    <li><i>Фамилия </i><input placeholder="" type="text" value="{{title.surname}}"></li>
                                     <li class="empty"></li>
                                 </ul>
                             </li>
@@ -59,12 +59,13 @@
                                     </select>
                                     </div>
                                 </li>
-                                <li><i>Город/Село</i><input class="{{#if location.city}}input-filled {{/if}}" type="text" value="{{#if location.city}}{{location.city}}{{else}}{{i18n 'title-profile-write-city'}} {{/if}}"><span class="uk-disabled"></span></li>
-                                <li><i>Индекс</i><input class="{{#if location.zip}}input-filled {{/if}}" type="text" value="{{#if location.zip}}{{location.zip}}{{else}}{{i18n 'title-profile-write-index'}}{{/if}}">  </li>
+                                <li><i>Город/Село</i><input  placeholder="{{i18n 'title-profile-write-city'}}" type="text" value="{{#if location.city}}{{location.city}}{{/if}}"></li>
 
-                                <li><i>Адрес</i><input class="{{#if location.address}}input-filled {{/if}}" type="text" value="{{#if location.address}}{{location.address}}{{else}} {{i18n 'title-profile-write-address'}} {{/if}}"></li>
+                                <li><i>Индекс</i><input placeholder="{{i18n 'title-profile-write-index'}}" type="text" value="{{#if location.zip}}{{location.zip}}{{/if}}">  </li>
 
-                                <li><i>Email</i><input  class="{{#if location.email}}input-filled {{/if}}" type="text" value="{{#if location.email}}{{location.email}}{{else}}{{i18n 'title-profile-write-email'}}{{/if}}"> </li>
+                                <li><i>Адрес</i><input placeholder="{{i18n 'title-profile-write-index'}}" type="text" value="{{#if location.address}}{{location.address}}{{else}} {{i18n 'title-profile-write-address'}} {{/if}}"></li>
+
+                                <li><i>Email</i><input placeholder="{{i18n 'title-profile-write-email'}}" type="text" value="{{#if location.email}}{{location.email}}{{/if}}"> </li>
 
                                 <li class="ae-social">
                                     <i class="uk-float-left">Соц. сети <span>+20 баллов</span></i>

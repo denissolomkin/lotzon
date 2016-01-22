@@ -1130,6 +1130,7 @@ img.mfp-img {
 
     .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {
     	width: auto;
+    	line-height: 1;
     }
     .rules-bk {
 	   width: 340px;

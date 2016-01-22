@@ -193,11 +193,13 @@
 
         },
 
-        after: function(data){
-
-            this.innerHTML = i18n("button-user-remove-request");
-            this.className = 'uk-float-right danger';
-        },
+        after:{
+            
+            request: function(data){
+                this.innerHTML = i18n("button-user-remove-request");
+                this.className = 'uk-float-right danger';
+            }
+        }, 
 
         update: {
 
