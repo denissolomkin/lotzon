@@ -371,11 +371,14 @@ body {
     .cards .deck .card {
 
     }
-    .small-card, .cards .table .cards .card {
+     .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
     } 
-
+    .small-card {
+        transform: rotate(-1deg) scale(0.4,0.4)!important;
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4)!important;
+    } 
     .cards .table .cards div:first-of-type {
          transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
@@ -462,9 +465,13 @@ body {
         padding: 5px;
 
     }
-    .small-card, .cards .table .cards .card {
+    .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.5,0.5);
         -webkit-transform: rotate(-1deg) scale(0.5,0.5);
+    } 
+    .small-card  {
+        transform: rotate(-1deg) scale(0.5,0.5)!important;
+        -webkit-transform: rotate(-1deg) scale(0.5,0.5)!important;
     } 
     .cards .table .cards div:first-of-type {
          transform: rotate(-1deg) scale(0.5,0.5);
@@ -660,10 +667,14 @@ body {
     .cards .deck .card {
 
     }
-    .small-card, .cards .table .cards .card {
+   .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
-    } 
+    }
+    .small-card  {
+        transform: rotate(-1deg) scale(0.4,0.4)!important;
+        -webkit-transform: rotate(-1deg) scale(0.4,0.4)!important;
+    }
     .cards .table .cards div:first-of-type {
          transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
