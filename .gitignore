@@ -7,3 +7,4 @@
 /filestorage/*/**/*
 !/filestorage/*/comments
 !*.gitignore
+/.htaccess
