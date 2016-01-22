@@ -583,7 +583,23 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 
 
 .login-popup .lp-b .s-b {}
-.login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #000;outline:none;text-align:center;height:50px;font-size:17px;text-transform:uppercase;letter-spacing:1px;color:#000;font-family: 'handbookpro-regular';  -webkit-appearance: none; }
+.login-popup .lp-b .s-b .sb_but {
+  width:100%;
+  background:none;
+  border:1px solid #000;
+  outline:none;
+  text-align:center;
+  height:50px;
+  font-size:17px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:#000;
+  font-family: 'handbookpro-regular';
+  -webkit-appearance: none; 
+  -webkit-border-radius:0; 
+  -moz-border-radius: 0; 
+  border-radius: 0; 
+}
 .login-popup .lp-b .s-b .sb_but.disabled {opacity:0.4; cursor: pointer;}
 .login-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}
 .login-popup .lp-b .s-b .sb_but:hover {border-color:#000;background-color:#000;color:#ffe400;}

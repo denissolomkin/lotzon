@@ -303,16 +303,21 @@ header {
     margin: 0 0 0 10px; } }
 
 @media (max-width: 479px) {
-  #communication .comment-content {
+  .comment-content {
     padding-left: 0; }
-  #communication .comment-top {
+  .comment-top {
     position: relative;
     display: block;
     height: 50px;
     margin-bottom: 10px; }
-  #communication .comment-img {
+  .message-top {
+    position: relative;
+    display: block;
+    height: 50px;
+    margin-bottom: 10px; }
+  .comment-img {
     top: 0; }
-  #communication .comment-inf {
+  .comment-inf {
     display: block;
     max-width: 80%;
     padding-left: 70px;
@@ -324,11 +329,11 @@ header {
     -ms-transform: translate(0, -50%);
     -o-transform: translate(0, -50%);
     transform: translate(0, -50%); }
-  #communication .comment-like {
+  .comment-like {
     top: 18px; }
-  #communication .c-notifications-list .c-notification-date {
+  .c-notifications-list .c-notification-date {
     margin-left: 0; }
-  #communication .render-list .message-form-wrapper {
+  .render-list .message-form-wrapper {
     padding-left: 0; } }
 
 .content-box-tab {
@@ -342,6 +347,29 @@ header {
 #communication-messages-list .message .mark-read {
   right: -5px;
   top: 5px; }
+
+@media (max-width: 768px) {
+  #communication-messages-list .message {
+    margin-left: 0; }
+  .message-img {
+    width: 50px;
+    height: 50px;
+    position: absolute; }
+  .message-name {
+    line-height: 1.27;
+    margin-left: 60px;
+    position: relative;
+    top: 18px; }
+  #communication-messages-list .message-text, .message-text {
+    margin-top: 40px; }
+  .message {
+    margin-left: 0; }
+  #communication .render-list .message-form-wrapper {
+    padding-left: 0; }
+  #communication-comments-view .content-box-item {
+    padding: 20px 10px 30px; }
+  #communication-comments-view.content-box {
+    margin: 0px; } }
 
 @media all and (max-width: 660px) {
   .games-previews .flex-box {

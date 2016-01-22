@@ -434,6 +434,9 @@
   &.selected {
     border: 1px solid;
   }
+  &.unavailable {
+    opacity: 0.5;
+  }
   &.unavailable:hover {
       border: 1px solid transparent;
   }
@@ -447,7 +450,6 @@
   float: left;
   width: 15px;
   height: 35px;
-  // border: 1px solid black;
   border-radius: 50%;
   line-height: 34px;
   text-align: center;
@@ -1277,7 +1279,6 @@ span.input-prefix {
   }
   & span {
     display: inline-block;
-    padding: 0 2px 4px;
     cursor: pointer;
   }
 }
@@ -1303,7 +1304,6 @@ span.input-prefix {
     }
     & span {
       display: inline-block;
-      padding: 0 2px 4px;
       cursor: pointer;
     }
   }

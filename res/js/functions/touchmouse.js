@@ -68,12 +68,8 @@
         start: function () {
 
 
-            console.log(Drag.options.target.offsetLeft, Drag.options.event.clientX, Drag.options.target.offsetWidth);
 
             Drag.options.target.classList.add('small-card');
-
-            console.log(Drag.options.target.offsetLeft, Drag.options.event.clientX, Drag.options.target.offsetWidth);
-
             Drag.options.target.style.top = (Number(parseFloat(Drag.options.target.style.top)) + 20) + 'px';
 
             var cardBounding = Drag.options.target.getBoundingClientRect();
@@ -87,12 +83,7 @@
                 startY: Drag.options.target.style.top
             };
 
-
             Drag.status('start');
-
-            console.log(Drag.options.target.style.top);
-
-            Drag.options.target.style.zIndex = 10;
         },
 
         move: function () {
@@ -176,7 +167,6 @@
                 Drag.status('rollback');
                 console.log('Drag.rollback:', Drag.options.target);
                 Drag.options.target.classList.add('transition');
-                Drag.options.target.style.zIndex = 0;
                 Drag.options.target.style.top = Drag.position.startY;
                 Drag.options.target.style.left = Drag.position.startX;
             }

@@ -5,10 +5,7 @@
   font-size: 15px;
 
   
-  & .message-form-smileys {
-    margin-left: 20px;
-    top: -1px;
-  }
+
   & .message-form-wrapper button[type="submit"] {
     float: right;
     border: none;
@@ -41,10 +38,7 @@
       }
     }
   } 
-  .comment-content {
-    margin-bottom: 20px;
-    padding-left: 70px;
-  }
+
   .modal-message {
     background: #fff;
     bottom: -5px;
@@ -64,6 +58,17 @@
     }
   }
 }
+
+.message-form-smileys {
+  margin-left: 20px;
+  top: -1px;
+}
+.comment-content {
+  margin-bottom: 20px;
+  padding-left: 70px;
+}
+
+
 
 #communication-messages-new {
   .modal-message {
@@ -106,26 +111,6 @@
   }
 }
 
-#users-view-messages {
-  .modal-message {
-    background: #fff;
-    bottom: -5px;
-    height: auto;
-    left: -20px;
-    right: -20px;
-    width: auto;
-    & div {
-      margin: 0 auto;
-      text-align: center;
-      @include translate(0, -50%);
-      position: absolute;
-      left: auto;
-      text-transform: uppercase;
-      font-size: 17px;
-      top: 50%;
-    }
-  }
-}
 & .content-box-tab {
   padding: 0 20px;
   position: relative;
@@ -329,7 +314,8 @@
       @include translate(0, -52%);
       top: 50%;
       font-size: 13px;
-    }
+      padding: 5px 30px;
+   }
     & .write-admin {
       float: right;
       border: none;
@@ -372,9 +358,9 @@
 #communication-messages-list {
   padding-top: 57px;
   & .message {
-      padding: 15px 10px 0 0;
+      padding: 15px 0 0 0;
     & hr {
-      margin: 15px -30px 0 -90px;
+      margin: 15px -20px 0 -90px;
       border: none;
       border-bottom: 1px solid #c3c3c3;
     }
@@ -435,4 +421,68 @@
 
 .message-unread .message-text{
   color: #000;
+}
+
+.message-top {
+  display: table;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#users-view-messages {
+  & .message {
+    margin-left: 0;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  & .message-img {
+    margin-left: 0;
+    position: absolute;
+  }
+  .message-text {
+    width: auto;
+    display: block;
+    margin-left: 70px;
+  }
+  & .message-name {
+    padding-left: 70px;
+    display: table-cell;
+    vertical-align: middle;
+    width: auto;
+    margin-right: 0;
+  }
+  & .message-form-actions {
+    padding-top:  0;
+  }
+  &.message-form-wrapper {
+    padding-top: 0;
+  }
+  & .content-box-item {
+    padding-top: 0;
+  }
+  & .message-form > hr {
+    display: none;
+  }
+  .modal-message {
+    background: #fff;
+    bottom: -5px;
+    height: auto;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    & div {
+      margin: 0 auto;
+      text-align: center;
+      @include translate(0, -50%);
+      position: absolute;
+      left: auto;
+      text-transform: uppercase;
+      font-size: 17px;
+      top: 50%;
+    }
+  }
+}
+
+#communication-messages-new .content-box-item, #users-view-message .content-box-item  {
+  padding-top: 40px;
 }

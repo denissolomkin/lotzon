@@ -1205,14 +1205,6 @@ div {
   top: 0px;
   height: 50px; }
 
-.new-message,
-.write-admin {
-  top: 10px;
-  position: absolute; }
-
-.write-admin {
-  right: 32px; }
-
 .menu {
   overflow: visible; }
 
@@ -2460,9 +2452,6 @@ div.comment-reply-btn {
 #communication {
   font-family: 'handbookpro-regular';
   font-size: 15px; }
-  #communication .message-form-smileys {
-    margin-left: 20px;
-    top: -1px; }
   #communication .message-form-wrapper button[type="submit"] {
     float: right;
     border: none;
@@ -2486,9 +2475,6 @@ div.comment-reply-btn {
       padding: 10px 20px 0; }
     #communication .render-list .message-form-wrapper hr {
       display: none; }
-  #communication .comment-content {
-    margin-bottom: 20px;
-    padding-left: 70px; }
   #communication .modal-message {
     background: #fff;
     bottom: -5px;
@@ -2510,6 +2496,14 @@ div.comment-reply-btn {
       text-transform: uppercase;
       font-size: 17px;
       top: 50%; }
+
+.message-form-smileys {
+  margin-left: 20px;
+  top: -1px; }
+
+.comment-content {
+  margin-bottom: 20px;
+  padding-left: 70px; }
 
 #communication-messages-new .modal-message {
   background: #fff;
@@ -2541,28 +2535,6 @@ div.comment-reply-btn {
   right: -20px;
   width: auto; }
   #users-view-message .modal-message div {
-    margin: 0 auto;
-    text-align: center;
-    -webkit-transform: translate(0, -50%);
-    -khtml-transform: translate(0, -50%);
-    -moz-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    -o-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-    position: absolute;
-    left: auto;
-    text-transform: uppercase;
-    font-size: 17px;
-    top: 50%; }
-
-#users-view-messages .modal-message {
-  background: #fff;
-  bottom: -5px;
-  height: auto;
-  left: -20px;
-  right: -20px;
-  width: auto; }
-  #users-view-messages .modal-message div {
     margin: 0 auto;
     text-align: center;
     -webkit-transform: translate(0, -50%);
@@ -2745,7 +2717,8 @@ div.comment-reply-btn {
     -o-transform: translate(0, -52%);
     transform: translate(0, -52%);
     top: 50%;
-    font-size: 13px; }
+    font-size: 13px;
+    padding: 5px 30px; }
   #communication-messages .cm-top .write-admin {
     float: right;
     border: none;
@@ -2786,9 +2759,9 @@ div.comment-reply-btn {
 #communication-messages-list {
   padding-top: 57px; }
   #communication-messages-list .message {
-    padding: 15px 10px 0 0; }
+    padding: 15px 0 0 0; }
     #communication-messages-list .message hr {
-      margin: 15px -30px 0 -90px;
+      margin: 15px -20px 0 -90px;
       border: none;
       border-bottom: 1px solid #c3c3c3; }
     #communication-messages-list .message .mark-read {
@@ -2837,6 +2810,69 @@ div.comment-reply-btn {
 .message-unread .message-text {
   color: #000; }
 
+.message-top {
+  display: table;
+  width: 100%;
+  margin-bottom: 10px; }
+
+#users-view-messages .message {
+  margin-left: 0;
+  padding: 0;
+  margin-bottom: 20px; }
+
+#users-view-messages .message-img {
+  margin-left: 0;
+  position: absolute; }
+
+#users-view-messages .message-text {
+  width: auto;
+  display: block;
+  margin-left: 70px; }
+
+#users-view-messages .message-name {
+  padding-left: 70px;
+  display: table-cell;
+  vertical-align: middle;
+  width: auto;
+  margin-right: 0; }
+
+#users-view-messages .message-form-actions {
+  padding-top: 0; }
+
+#users-view-messages.message-form-wrapper {
+  padding-top: 0; }
+
+#users-view-messages .content-box-item {
+  padding-top: 0; }
+
+#users-view-messages .message-form > hr {
+  display: none; }
+
+#users-view-messages .modal-message {
+  background: #fff;
+  bottom: -5px;
+  height: auto;
+  left: -20px;
+  right: -20px;
+  width: auto; }
+  #users-view-messages .modal-message div {
+    margin: 0 auto;
+    text-align: center;
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    position: absolute;
+    left: auto;
+    text-transform: uppercase;
+    font-size: 17px;
+    top: 50%; }
+
+#communication-messages-new .content-box-item, #users-view-message .content-box-item {
+  padding-top: 40px; }
+
 .communication-comments {
   padding-bottom: 100px; }
 
@@ -2874,7 +2910,8 @@ div.comment-reply-btn {
 
 .comment-date {
   font-size: 13px;
-  color: #5a5a5a; }
+  color: #5a5a5a;
+  white-space: nowrap; }
   .comment-date span:first-child {
     margin-right: 20px; }
 
@@ -2893,7 +2930,7 @@ div.comment-reply-btn {
   position: absolute;
   top: 0;
   right: 0;
-  padding-left: 30px;
+  padding-left: 20px;
   font-size: 14px;
   background: none; }
   .comment-like:hover {
@@ -2909,6 +2946,31 @@ div.comment-reply-btn {
     color: #FFEF00; }
   .comment-like.i-hart2:before {
     color: #000; }
+
+#communication-comments-view.content-box-item {
+  padding: 20px 20px 30px; }
+
+#communication-comments-view .modal-message {
+  background: #fff;
+  bottom: -5px;
+  height: auto;
+  left: -20px;
+  right: -20px;
+  width: auto; }
+  #communication-comments-view .modal-message div {
+    margin: 0 auto;
+    text-align: center;
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    position: absolute;
+    left: auto;
+    text-transform: uppercase;
+    font-size: 17px;
+    top: 50%; }
 
 form.loading > * {
   opacity: 0.5; }
@@ -3088,9 +3150,6 @@ form.loading > * {
 .message-text {
   color: #8b8d8c;
   line-height: 1.27; }
-
-#communication-messages-new .content-box-item {
-  padding-top: 40px; }
 
 .comment-description, .message-form-area {
   line-height: 22px; }
@@ -6104,6 +6163,8 @@ and open the template in the editor.
     border: 1px solid #cccccc; }
   .ae-combination-box li.selected {
     border: 1px solid; }
+  .ae-combination-box li.unavailable {
+    opacity: 0.5; }
   .ae-combination-box li.unavailable:hover {
     border: 1px solid transparent; }
 
@@ -6773,7 +6834,6 @@ span.input-prefix {
       font-family: "Handbook-bold"; }
   .radio-text span {
     display: inline-block;
-    padding: 0 2px 4px;
     cursor: pointer; }
 
 #profile-settings .content-box-item {
@@ -6793,7 +6853,6 @@ span.input-prefix {
       color: #000; }
   #profile-settings .radio-text span {
     display: inline-block;
-    padding: 0 2px 4px;
     cursor: pointer; }
 
 #profile-settings .change {

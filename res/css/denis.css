@@ -15,6 +15,10 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
 .cards .players .m .card.small-card:hover {
     cursor: none;
 }
+.cards .players .m .card.small-card{
+    zIndex: 10;
+}
+
 .transition{
     transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;

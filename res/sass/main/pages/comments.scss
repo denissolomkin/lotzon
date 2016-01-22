@@ -47,6 +47,7 @@
 .comment-date {
   font-size: 13px;
   color: #5a5a5a;
+  white-space: nowrap;
   & span:first-child {
     margin-right: 20px;
   }
@@ -69,7 +70,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  padding-left: 30px;
+  padding-left: 20px;
   font-size: 14px;
   background: none;
   
@@ -93,6 +94,29 @@
   &.i-hart2 {
     &:before {
       color: #000; 
+    }
+  }
+}
+#communication-comments-view {
+  &.content-box-item {
+    padding: 20px 20px 30px;
+  }
+  & .modal-message {
+    background: #fff;
+    bottom: -5px;
+    height: auto;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    & div {
+      margin: 0 auto;
+      text-align: center;
+      @include translate(0, -50%);
+      position: absolute;
+      left: auto;
+      text-transform: uppercase;
+      font-size: 17px;
+      top: 50%;
     }
   }
 }

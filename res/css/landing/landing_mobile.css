@@ -580,20 +580,28 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .login-popup .registration .t-b .tb_a-r {opacity:1;cursor:text;}
 .login-popup .login .t-b .tb_a-l {opacity:1;cursor:text; font-weight: bold;}
 .login-popup .login .t-b .tb_a-r:hover {text-decoration:underline;}
-.login-popup .lp-b .ib-l {height:31px;position:relative;border-bottom:1px solid #b29f00;color:#000;}
+.login-popup .lp-b .ib-l {
+	height:32px;
+	position:relative;border-bottom:1px solid #b29f00;color:#000;}
 .login-popup .lp-b .registration .ib-l {margin-bottom:28px;}
 .login-popup .lp-b .ib-l.focus {border-bottom:1px solid #000;}
 #login-form {padding-top:43px;}
 #pass-rec-form .ib-l {margin-bottom:60px;}
-.login-popup .lp-b .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font-size:18px;display:none;}
+.login-popup .lp-b .ph {height:30px;text-align:right;position:absolute;top:0;right:0;font-size:18px;display:none;line-height: 30px;}
 .font-fix .login-popup .lp-b .ph {line-height:32px;}
 .login-popup .lp-b .focus .ph {display:block;}
-.login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
+.login-popup .lp-b .ib-p {
+	height:31px;
+	position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
-.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;width:250px;}
+.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;
+	height:30px;
+	width:250px;
+	line-height: 1;
+}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */
-    height:28px;
+    /*height:28px;*/
 }
 .login-popup .lp-b .ch-b-bk {overflow:hidden;padding:34px 0 25px 0;position:relative;}
 .login-popup .registration .e-t {font-size:13px;color:#c51e1e;position:absolute;bottom:-20px;left:0;display:none;}
@@ -627,7 +635,23 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 
 
 .login-popup .lp-b .s-b {}
-.login-popup .lp-b .s-b .sb_but {width:100%;background:none;border:1px solid #000;outline:none;text-align:center;height:50px;font-size:17px;text-transform:uppercase;letter-spacing:1px;color:#000; font-family: 'handbookpro-regular';  -webkit-appearance: none;}
+.login-popup .lp-b .s-b .sb_but {
+	width:100%;
+	background:none;
+	border:1px solid #000;
+	outline:none;
+	text-align:center;
+	height:50px;
+	font-size:17px;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	color:#000; 
+	font-family: 'handbookpro-regular';  
+	-webkit-appearance: none;
+	-webkit-border-radius:0; 
+ 	-moz-border-radius: 0; 
+  	border-radius: 0; 
+}
 .login-popup .lp-b .s-b .sb_but.disabled {opacity:0.4;}
 .login-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}
 .login-popup .lp-b .s-b .sb_but:hover {border-color:#000;background-color:#000;color:#ffe400;}
