@@ -173,6 +173,9 @@
         },
 
         updateTimeOut: function (time, format) {
+
+            return false;
+
             if (time) {
                 console.log('обновление таймаута');
                 format = format || '{mnn}<span>:</span>{snn}';

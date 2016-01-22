@@ -21,7 +21,7 @@
                         return;
                     newLen = (field.length ? field.length : Object.size(field));
                     oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
-                    console.log(oldLen, 'oldLen');
+                    //console.log(oldLen, 'oldLen');
 
                     if (key == 'deck') {
                         if (field.length) {
@@ -164,10 +164,10 @@
                     if (!field)
                         return;
 
-                    console.log($.inArray(App.action, ['move']) != -1 || App.fields, 'first');
+                    //console.log($.inArray(App.action, ['move']) != -1 || App.fields, 'first');
                     newLen = (field.length ? field.length : Object.size(field));
                     oldLen = (fields && fields[key] ? (fields[key].length ? fields[key].length : Object.size(fields[key])) : 0);
-                    console.log(oldLen, 'oldLen2');
+                    //console.log(oldLen, 'oldLen2');
 
                     if (isNumeric(key) && newLen == oldLen && fields && fields.key && (fields.key.length == App.fields.key.length)) {
 
@@ -182,7 +182,7 @@
                             } else if (fields && fields[key] && fields[key] != undefined) {
 
                                 if (fields[key][index] != App.fields[key][index]) {
-                                    console.log(key, 'key');
+                                    //console.log(key, 'key');
 
                                     if (fields.table[index] != App.fields.table[index])
                                         $('.card' + fields[key][index]).addClass('animatedCard');
@@ -221,7 +221,7 @@
                     var j = index;
 
                     setTimeout(function () {
-                        console.log('timeout');
+                        //console.log('timeout');
 
                         $(newElem[j]).addClass('transition');
                         $(newElem[j]).css({
@@ -244,23 +244,68 @@
 
         },
 
+        removeClassFromAll : function (classname) {
+
+            var classList = document.getElementsByClassName(classname);
+            for (i = 0; i < classList.length; i++) {
+                classList[i].classList.remove(classname);
+            }
+
+        },
+
+        eachCardLeft : function (target) {
+
+            var next = target.nextElementSibling,
+                selectedIndex = $('.players .m .card').index(target),
+                nextIndex = $('.players .m .card').index(next),
+                cards = document.querySelectorAll('.players .m .card');
+
+            for (i = 0; i < cards.length; i++) {
+                if (i < selectedIndex) {
+                    showedCardsWidth = 0;
+                    newTop = 0;
+                } else if (i == selectedIndex) {
+                    showedCardsWidth = 0;
+                    newTop = -20;
+                } else if (nextIndex > 0 && i == nextIndex) {
+                    showedCardsWidth = cardWidth * scale * 0.5;
+                    newTop = 0;
+                } else if (nextIndex > 0 && i > nextIndex) {
+                    showedCardsWidth = cardWidth * 2 * scale * 0.5;
+                    newTop = 0;
+                }
+
+                newLeft = cards[i].style.left;
+                oldTop = cards[i].style.top;
+                oldTop = Number(oldTop.replace("px", ""));
+                if (myCount > 6) {
+                    var newLeft = (parseInt(newLeft.slice(0, newLeft.length - 2), 10) + showedCardsWidth).toFixed();
+                } else {
+                    var newLeft = parseInt(newLeft.slice(0, newLeft.length - 2), 10).toFixed();
+                }
+                cards[i].style.left = newLeft + 'px';
+                cards[i].style.top = Number(oldTop + newTop) + 'px';
+            }
+        },
+
         marginsDraw: function () {
 
-            marginLeftValue =
-                (myCount > 6 ? (deltaWidth > 0 ? (0) : (durakSpaceWidth - newAllwidth) / 2) : (durakSpaceWidth - allCardWidth + myCount * cardsLess6) / 2)
+            var marginLeftValue =
+                (myCount > 6 ? (deltaWidth > 0 ? (0) : (durakSpaceWidth - newAllwidth) / 2) : (durakSpaceWidth - allCardWidth + myCount * cardsLess6) / 2);
 
             $(cardsBlock).each(function (indx) {
-                a = (myCount > 6 ? marginLeftValue + indx * (newWidth - ((newAllwidth - durakSpaceWidth) / myCount)) * 0.9 : marginLeftValue + indx * indexLess6);
+                var a = (myCount > 6 ? marginLeftValue + indx * (newWidth - ((newAllwidth - durakSpaceWidth) / myCount)) * 0.9 : marginLeftValue + indx * indexLess6),
+                    rotatedHeight = Cards.getRotateSize(indx),
+                    newIdxrotatedHeight = Cards.getRotateSize(indx - 1),
+                    topFordeg = (
+                    ((newIdxrotatedHeight.Height - rotatedHeight.Height) > 0
+                        ? (newIdxrotatedHeight.Height - rotatedHeight.Height)
+                        : (rotatedHeight.Height - newIdxrotatedHeight.Height )) +
+                    (newIdxrotatedHeight.Deg > 0
+                        ? newIdxrotatedHeight.Deg
+                        : (-newIdxrotatedHeight.Deg))
+                    );
 
-                var rotatedHeight = Cards.getRotateSize(indx);
-                var newIdxrotatedHeight = Cards.getRotateSize(indx - 1);
-
-                topFordeg = (((newIdxrotatedHeight.Height - rotatedHeight.Height) > 0
-                    ? ((newIdxrotatedHeight.Height - rotatedHeight.Height) )
-                    : (rotatedHeight.Height - newIdxrotatedHeight.Height )) +
-                (newIdxrotatedHeight.Deg > 0
-                    ? newIdxrotatedHeight.Deg
-                    : (-newIdxrotatedHeight.Deg)));
                 $(this).css({
                     'left': a + 'px',
                     'top': topFordeg + 'px'

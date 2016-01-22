@@ -12,6 +12,16 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
     display: block !important;
 }
 
+.cards .players .m .card.small-card:hover {
+    cursor: none;
+}
+.transition{
+    transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+}
+
 /* already exist, just adding */
 .modal-error, .modal-loading, .modal-message {
     position: absolute;

@@ -37,8 +37,8 @@ $(function () {
 
         error: function () {
 
-            Cards.premove();
             Drag.rollback();
+            Cards.premove();
 
         }
 
