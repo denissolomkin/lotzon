@@ -357,12 +357,13 @@
 
         move: function (e) {
 
-            Drag.status('move');
 
             e.preventDefault();
 
             var newPosition = e.touches[0],
                 touchTarget = document.elementFromPoint(newPosition.pageX, newPosition.pageY);
+
+            Drag.status(JSON.stringify([!(!touchTarget),!Touch.moved, Touch.moveTarget != touchTarget, touchTarget.classList.contains('card')]));
 
             /* slide right-left */
             if (touchTarget && !Touch.moved && Touch.moveTarget != touchTarget && touchTarget.classList.contains('card')) {
