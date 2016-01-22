@@ -5,3 +5,7 @@
 /protected/configs/_mail.local.php
 /res/.sass-cache
 /lastLottery
+/filestorage/*/*
+/filestorage/*/**/*
+!/filestorage/*/comments
+!*.gitignore
