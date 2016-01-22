@@ -78,16 +78,16 @@
 
                     var conn = Form.websocketConnection,
                         path = form.url,
-                        data = form.data;
+                        data = form.data,
+                        json = JSON.stringify({'path': path, 'data': data});
 
                     if (!conn || conn.readyState !== 1) {
 
                         conn = new WebSocket(Config.websocketUrl);
-
                         conn.onopen = function (e) {
                             console.info('Socket open');
                             Form.websocketConnection = conn;
-                            conn.send(JSON.stringify({'path': path, 'data': data}));
+                            conn.send(json);
                         };
 
                         conn.onerror = function (e) {
@@ -103,10 +103,7 @@
                         };
 
                     } else {
-                        conn.send(JSON.stringify({
-                            'path': path,
-                            'data': data
-                        }));
+                        conn.send(json);
                     }
 
                 } else {
@@ -245,7 +242,7 @@
                     },
                     formContenteditable = form.querySelectorAll("div[contenteditable='true']");
 
-                D.log(['Form.submit.', form.action]);
+                D.log(['Form.submit.', ajax.action]);
 
                 for (var i = 0; i < formContenteditable.length; i++) {
                     ajax.data[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;

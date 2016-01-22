@@ -346,7 +346,6 @@
             Touch.moveTarget = e.target;
 
             e.target.classList.add('select');
-
             Cards.eachCardLeft(e.target);
         },
 

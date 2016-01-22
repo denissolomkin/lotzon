@@ -89,18 +89,6 @@
 
             console.log("Start:", options.href, options.template);
 
-            if(!options.template){
-
-                var output = '';
-                $.each(options, function (index, obj) {
-                    if (obj)
-                        output += index + ': ' + (obj && JSON.stringify(obj) && JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 400)) + ' ';
-                });
-
-                D.error(output);
-                return;
-            }
-
             if (D.isEnable('stat'))
                 options.stat = R.stat();
 

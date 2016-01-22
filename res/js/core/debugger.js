@@ -29,6 +29,7 @@
              */
             /**/
             window.onerror = function (message, url, line, col, error) {
+
                 D.error([message, url, line]);
                 return true;
             }
@@ -48,10 +49,9 @@
                     type = 'log';
 
                 if (log && typeof log == 'object' && log.length) {
-
-                    $.each(log, function (index, obj) {
+                   $.each(log, function (index, obj) {
                         if (obj)
-                            output += obj && JSON.stringify(obj) && JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40) + ' ';
+                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40) + ' ';
                     });
 
                 } else {
