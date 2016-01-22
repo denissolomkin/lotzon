@@ -360,6 +360,8 @@
             /* slide right-left */
             if (touchTarget && !Touch.moved && Touch.moveTarget != touchTarget && touchTarget.classList.contains('card')) {
 
+
+
                 //Cards.removeClassFromAll('select');
                 Cards.marginsDraw();
                 Cards.removeClassFromAll('transition');
@@ -370,12 +372,14 @@
                     pageY: newPosition.pageY
                 };
 
+
                 // set new target for drag
                 Touch.startPosition = newPos;
                 Touch.moved = false;
                 Touch.moveTarget = touchTarget;
 
-                //touchTarget.classList.add('select');
+                Cards.removeClassFromAll('select');
+                touchTarget.classList.add('select');
                 Cards.eachCardLeft(touchTarget);
 
             } else
@@ -409,10 +413,12 @@
                 // Drag.options.target = Touch.moveTarget;
                 Drag.drop.call(this);
 
+            } else {
+                Cards.marginsDraw();
             }
 
-            //Cards.removeClassFromAll('select');
-            // Cards.marginsDraw();
+            Cards.removeClassFromAll('select');
+            //
 
         }
 
