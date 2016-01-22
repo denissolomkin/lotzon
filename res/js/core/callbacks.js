@@ -172,6 +172,7 @@
             "communication-comments": Comments.after.reply,
             "communication-notifications": Comments.renderNotifications,
             "users-requests-view": Profile.after.request,
+
         },
 
         "error": {

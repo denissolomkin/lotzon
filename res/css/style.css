@@ -367,7 +367,6 @@ button {
 
 .content-box-cat {
   float: left;
-  letter-spacing: 0.7px;
   font-family: 'handbookpro-regular';
   font-size: 15px;
   color: #4D4D4D; }
@@ -1810,7 +1809,7 @@ header .owl-theme .owl-controls .owl-page span {
   font-family: handbookpro-regular;
   font-size: 15px; }
   #blog-post-view .social-likes {
-    margin: 0 0 20px -6px; }
+    margin: 0 0 10px -6px; }
   #blog-post-view .post .title {
     font-family: Handbook-bold;
     font-size: 20px;
@@ -2534,6 +2533,28 @@ div.comment-reply-btn {
     font-size: 17px;
     top: 50%; }
 
+#users-view-message .modal-message {
+  background: #fff;
+  bottom: -5px;
+  height: auto;
+  left: -20px;
+  right: -20px;
+  width: auto; }
+  #users-view-message .modal-message div {
+    margin: 0 auto;
+    text-align: center;
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    position: absolute;
+    left: auto;
+    text-transform: uppercase;
+    font-size: 17px;
+    top: 50%; }
+
 #users-view-messages .modal-message {
   background: #fff;
   bottom: -5px;
@@ -2753,11 +2774,14 @@ div.comment-reply-btn {
     margin: 0;
     width: 100%; }
 
-.message-img img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 50%; }
+.message-img {
+  width: 50px;
+  height: 50px; }
+  .message-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%; }
 
 #communication-messages-list {
   padding-top: 57px; }
@@ -2876,14 +2900,15 @@ div.comment-reply-btn {
     background: none;
     color: #000; }
   .comment-like:before {
-    content: "";
-    display: block;
     width: 18px;
     height: 15px;
-    background: url(img/sprite.png) -364px -54px;
     position: absolute;
     top: 2px;
     left: 0; }
+  .comment-like.i-hart:before {
+    color: #FFEF00; }
+  .comment-like.i-hart2:before {
+    color: #000; }
 
 form.loading > * {
   opacity: 0.5; }
@@ -4351,7 +4376,7 @@ and open the template in the editor.
   position: relative;
   background: #A9D0D5;
   padding-left: 10px;
-  min-height: 300px; }
+  min-height: 730px; }
 
 .ticket-numbers-wrapper {
   overflow: hidden; }
@@ -5441,7 +5466,13 @@ and open the template in the editor.
   .ticket-box .ticket-btn {
     margin-right: 10px; }
   .ticket-done {
-    margin-right: 10px; } }
+    margin-right: 10px; }
+  .ticket-items {
+    min-height: 680px; } }
+
+@media (min-width: 420px) {
+  .ticket-items {
+    min-height: 560px; } }
 
 @media (max-width: 767px) {
   .balls-count {
@@ -6373,20 +6404,24 @@ and open the template in the editor.
   position: relative; }
 
 .ci-personal-form-values input {
-  border-width: 0 0 1px;
-  border-style: solid;
-  border-color: #b4aeae;
   display: block;
   width: 100%;
   line-height: inherit;
   padding: 0;
   padding-left: 150px;
   padding-bottom: 1px;
-  font-size: 15px; }
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px solid #b4aeae;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-appearance: none; }
   .ci-personal-form-values input:focus {
-    border-width: 0 0 2px;
-    border-color: #bed8d9;
-    padding-bottom: 0; }
+    border-bottom: 2px solid #bed8d9;
+    border-width: 0 0 2px; }
   .ci-personal-form-values input.input-prefix {
     padding-left: 165px; }
 
@@ -6639,6 +6674,9 @@ span.input-prefix {
 #profile-edit .ae-personal-form-values li span {
   color: #a3a5a4; }
 
+#profile-edit .ae-personal-form-values input:not(.input-filled) {
+  color: #a3a5a4; }
+
 #profile-edit .ae-personal-form-values .ae-social {
   border-bottom: 1px solid #eaeaea; }
   #profile-edit .ae-personal-form-values .ae-social span {
@@ -6744,6 +6782,8 @@ span.input-prefix {
 
 #profile-settings span {
   color: #959595; }
+  #profile-settings span.tooltip {
+    color: #fff; }
 
 #profile-settings .radio-text {
   margin-right: 15px; }
@@ -6762,6 +6802,11 @@ span.input-prefix {
 
 #profile-settings .danger {
   color: #ff4c4b !important; }
+
+.settings .question {
+  display: inline-block;
+  color: #4990e2;
+  position: relative; }
 
 .ph-notice {
   text-align: center;

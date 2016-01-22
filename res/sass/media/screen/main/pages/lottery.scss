@@ -494,6 +494,7 @@
 #lottery-ticket-item {
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
   height: inherit;
+
 }
 
   #lottery-process.lottery-won {
@@ -605,4 +606,11 @@
 .cabinet-game-history .content-box-item-content {
   min-height: 310px;
 }
-
+@media (max-width: 1200px) {
+  #lottery-ticket-item {
+    padding: 25px 26px 8px !important;
+  }
+  .ticket-item .ticket-numbers li {
+    margin: 0 23px 21px 0 !important;
+  }
+}

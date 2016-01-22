@@ -27,7 +27,9 @@
 
                 {{#if (eq type 'item')}}
 
-                {{#if (player "location")}}
+
+                {{#if (checkAll (player "location.country") (player "location.city"))}}
+
                 <!-- Данные заполнены -->
                 <div class="personal-data-inf-header clearfix">
                     <div class="personal-data-inf-title">{{i18n "title-prize-goods-delivery"}}</div>

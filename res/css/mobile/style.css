@@ -1305,6 +1305,14 @@ header {
   .prize:nth-child(2n+2) {
     float: left; } }
 
+@media (min-width: 480px) and (min-width: 520px) {
+  .ticket-items {
+    min-height: 500px; } }
+
+@media (min-width: 480px) and (min-width: 600px) {
+  .ticket-items {
+    min-height: 440px; } }
+
 @media (min-width: 480px) and (min-width: 530px) {
   .r-header,
   .r-item {
@@ -2009,6 +2017,10 @@ header {
     margin: 0 -20px 20px; }
   #profile-settings .mobile-notice {
     display: none !important; }
+  #prizes-exchange .content-box-item-top {
+    left: 0; }
+  .content-box-cat {
+    margin-left: -10px; }
   .cabinet .content-box-tab span {
     display: inline; }
   .cabinet .content-box-tab {

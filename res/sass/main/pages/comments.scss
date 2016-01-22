@@ -72,21 +72,33 @@
   padding-left: 30px;
   font-size: 14px;
   background: none;
+  
   &:hover {
     background: none;
     color: #000;
   }
   &:before {
-    content: "";
-    display: block;
     width: 18px;
     height: 15px;
-    background: url(img/sprite.png) -364px -54px;
     position: absolute;
     top: 2px;
-    left: 0;
+    left: 0; 
+  }
+  &.i-hart {
+    &:before {
+      color: #FFEF00;
+    }
+  }
+
+  &.i-hart2 {
+    &:before {
+      color: #000; 
+    }
   }
 }
+
+
+
 form.loading > * {
   opacity: 0.5;
 }

@@ -40,10 +40,7 @@
   }
 }
 @media (min-width: 740px) and (max-width: 768px) {
-  // .prizes-for-points .content-box-item-content {
-  //   width: 92%;
-  //   max-width: 625px;
-  // }
+
  	.prize {
     width: 235px;
     padding-right: 15px;
@@ -60,4 +57,16 @@
   .prize:nth-child(2n+2) {
     float: left;
 	}
+}
+
+@media (min-width: 520px)  {
+  .ticket-items {
+    min-height: 500px;
+  }
+}
+
+@media (min-width: 600px)  {
+  .ticket-items {
+    min-height: 440px;
+  }
 }

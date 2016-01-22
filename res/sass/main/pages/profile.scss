@@ -834,9 +834,6 @@
 }
 
 .ci-personal-form-values input {
-  border-width: 0 0 1px;
-  border-style: solid;
-  border-color: #b4aeae;
   display: block;
   width: 100%;
   line-height: inherit;
@@ -844,10 +841,17 @@
   padding-left: 150px;
   padding-bottom: 1px;
   font-size: 15px;
+  border: none;
+  border-bottom: 1px solid #b4aeae;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-appearance: none;
   &:focus {
+    border-bottom: 2px solid #bed8d9;
     border-width: 0 0 2px;
-    border-color: #bed8d9;
-    padding-bottom: 0;
   }
   &.input-prefix {
     padding-left: 165px;
@@ -1149,6 +1153,10 @@ span.input-prefix {
   & .ae-personal-form-values li span {
     color: #a3a5a4;
   }
+  & .ae-personal-form-values input:not(.input-filled)  {
+    color: #a3a5a4;
+  }
+
   & .ae-personal-form-values .ae-social {
     border-bottom: 1px solid #eaeaea;
     & span {
@@ -1280,6 +1288,9 @@ span.input-prefix {
   }
   & span {
     color: #959595;
+    &.tooltip {
+      color: #fff;
+    }
   }
   & .radio-text {
     margin-right: 15px;
@@ -1303,4 +1314,10 @@ span.input-prefix {
   & .danger {
     color: #ff4c4b!important;
   } 
+}
+
+.settings .question {
+  display: inline-block;
+  color: #4990e2;
+  position: relative;
 }

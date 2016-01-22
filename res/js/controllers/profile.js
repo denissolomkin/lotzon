@@ -13,7 +13,8 @@
             $('input[type="tel"][name="billing[qiwi]"]').inputmasks(phoneMask);
             $('input[type="text"][name="billing[yandexMoney]"]').inputmask({mask: '410019{7,10}', placeholder: ''});
             $('input[type="text"][name="billing[webMoney]"]').inputmask('a999999999999');
-            $('input.datepicker').daterangepicker({singleDatePicker : true, startDate: '', endDate:''});
+            $('input.datepicker').daterangepicker({singleDatePicker : true,  startDate :  new Date(Player.birthday*1000), endDate:''});
+
         },
 
 
@@ -147,7 +148,6 @@
                 
             },
 
-
             selectFavorite: function () {
                 if (!$(this).hasClass('selected')) {
 
@@ -181,6 +181,7 @@
                     x.removeClass('selected');
                 }
             },
+
             cancelFavorite: function () {
                  $('.ae-current-combination >*').val('');
                 for (var i=0; i<Profile.arrFavorite.length; i++) {
@@ -189,6 +190,7 @@
                 }
                 $('.ae-combination-box li').removeClass('selected');
             }
+
         },
 
         after: function(data){

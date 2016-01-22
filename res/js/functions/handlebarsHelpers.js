@@ -244,6 +244,13 @@ $(function () {
         'cache': function () {
 
         },
+        'checkAll': function () {
+            for (var i = 0; i <= arguments.length; i++)
+                if(!arguments[i] || (typeof arguments[i] === 'string' && arguments[i] == ''))
+                    return true;
+
+            return false;
+        },
         'false': function (v1) {
             return v1 === false;
         },

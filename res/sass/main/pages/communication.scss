@@ -85,6 +85,26 @@
     }
   }
 }
+#users-view-message {
+  .modal-message {
+    background: #fff;
+    bottom: -5px;
+    height: auto;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    & div {
+      margin: 0 auto;
+      text-align: center;
+      @include translate(0, -50%);
+      position: absolute;
+      left: auto;
+      text-transform: uppercase;
+      font-size: 17px;
+      top: 50%;
+    }
+  }
+}
 
 #users-view-messages {
   .modal-message {
@@ -338,6 +358,8 @@
   }
 }
 .message-img {
+  width: 50px;
+  height: 50px;
   & img {
     display: block;
     width: 100%;
