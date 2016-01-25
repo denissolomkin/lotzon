@@ -161,10 +161,11 @@
             D.log('Game.setFullScreenHeigth', 'game');
             var singleGame = $('.single-game');
             if (singleGame.length > 0) {
-
-                $("meta[name='mobile-web-app-capable']").attr('content', 'yes');
-                $('main, .content-top').addClass('active_small_devices');
-                $('footer').addClass('unvisible');
+                if(Device.isMobile()) {
+                    $("meta[name='mobile-web-app-capable']").attr('content', 'yes');
+                    $('main, .content-top').addClass('active_small_devices');
+                    $('footer').addClass('unvisible');
+                }
             }
         },
 

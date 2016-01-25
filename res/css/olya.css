@@ -50,7 +50,8 @@ body {
 .cards .players .m .card{transform-origin: 50% 100%; -ms-transform-origin: 50% 100%; -webkit-transform-origin: 50% 100%;
     /*margin-right: -40px;*/
 }
-.cards .players .m .card:hover, .cards .players .m .gm-pr .pr-cl .btn-ready:hover, .cards .players .m .gm-pr .pr-cl .btn-pass:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
+.cards .players .m .gm-pr .pr-cl .btn-pass:hover , .cards .players .m .gm-pr .pr-cl .btn-ready:hover {box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
+.cards:not(.active_small_devices) .players .m .card:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
 .cards .players .m .gm-pr {z-index: 12; background: rgba(178,208,212,0.95); position: absolute; bottom: 0; width: 100%; height: 80px;margin: 0; }
 .cards .players .m .gm-pr .pr-ph {width: 60px;height: 60px;background-repeat: no-repeat;background-size: contain;position: absolute;border-radius: 70px;margin: 0px;}
 .cards .players .m .gm-pr .pr-pr{  background: #a8c4c8;  position: relative;height: 65px;width: 65px;margin: 8px;float:right;border-radius: 80px;padding: 7px 10px;box-sizing: border-box;bottom:0;}
@@ -242,18 +243,24 @@ body {
     trasform: rotate(2deg) scale(0.7,0.7)!important;
     -webkit-transform: rotate(2deg) scale(0.7,0.7)!important;
 }
+
+.active_small_devices {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    margin: 0;
+}
+
+footer.unvisible {
+    display: none;
+}
+
 @media  all and ( max-width: 768px) { 
 
-    .active_small_devices {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        margin: 0;
-    }
     .content-box-content {
         min-height: 0;
     }
@@ -274,10 +281,6 @@ body {
     .cards .players .m .gm-pr .pr-cl {
         margin: 20px 15px;
         width: 15%;
-    }
-
-    footer.unvisible {
-        display: none;
     }
     .cards .players .m {
         height: auto;

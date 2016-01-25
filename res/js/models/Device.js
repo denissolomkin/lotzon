@@ -90,6 +90,10 @@
                     return 'mobile';
                 case '0.6':
                     return 'tablet';
+                /* todo add
+                case '0.7':
+                    return 'tablet-landscape';
+                 */
                 case '0.8':
                     return 'desktop';
                 case '1.0':

@@ -505,8 +505,14 @@
 
         setupForDevices: function () {
 
-            var gameHeight = $(window).height();
-            var orientation = ($(window).width() > $(window).height());
+            var gameHeight = $(window).height(),
+                orientation = ($(window).width() > $(window).height());
+
+            if(Device.isMobile()){
+                $('.game > .cards').css({
+                    'height': gameHeight + 'px'
+                });
+            }
 
             if (Device.get() > 0.6) {
                 scale = 1;
@@ -521,11 +527,6 @@
                 marginRightSelect = '-10px';
 
             } else if (Device.get() <= 0.6) {
-
-                $('.game > .cards').css({
-                    'height': gameHeight + 'px'
-                });
-
 
                 if (Device.detect() == 'mobile') {
 

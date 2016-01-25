@@ -19,7 +19,6 @@ $(function () {
                 });
 
             } else {
-
                 Game.run() && WhoMore.run();
                 Game.updateTimeOut(App.timeout);
                 Game.end();
