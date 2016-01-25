@@ -83,6 +83,7 @@
             };
 
             Drag.status('start');
+            Drag.move();
         },
 
         move: function () {

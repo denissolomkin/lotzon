@@ -1,6 +1,5 @@
 body {
     box-sizing: border-box;
-
 }
 
 .game * {
@@ -244,6 +243,141 @@ body {
     -webkit-transform: rotate(2deg) scale(0.7,0.7)!important;
 }
 
+
+
+/* ==========================================================================
+                            time_circles styles
+   ========================================================================== */
+
+.circle-timer, .circle{
+    width: 74px;
+    height: 74px;
+    left: -7px;
+    top: -7px;
+    position: absolute;
+    display: inline-block;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+}
+
+.circle {background: #FF4242;}
+.beater .circle{background: #7ED321;}
+
+@-webkit-keyframes timer-slide {
+    0%   { -webkit-transform: rotate(-225deg);
+        border-top-color: transparent; }
+    50%  { -webkit-transform: rotate(-45deg);
+        border-top-color: transparent;}
+    100% { -webkit-transform: rotate(-45deg);
+        border-top-color: transparent;}
+}
+
+@-webkit-keyframes timer-toggle {
+    0%  { opacity: 0;}
+    50% { opacity: 0;}
+    51% {
+        -webkit-transform: rotate(-45deg);
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(137deg);
+        opacity: 1;
+    }
+}
+
+@keyframes timer-slide {
+    0%   { transform: rotate(-225deg);
+        border-top-color: transparent; }
+    50%  { transform: rotate(-45deg);
+        border-top-color: transparent;}
+    100% { transform: rotate(-45deg);
+        border-top-color: transparent;}
+}
+
+@keyframes timer-toggle {
+    0%  { opacity: 0;}
+    50% { opacity: 0;}
+    51% {
+        transform: rotate(-45deg);
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        transform: rotate(137deg);
+        opacity: 1;
+    }
+}
+
+.timer-l, .timer-r {
+    border-radius: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    width: 74px;
+    height: 74px;
+    margin-left: -37px;
+    margin-top: -37px;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: reverse;
+}
+
+
+
+.timer-l, .timer-r {
+    /* border: 7px solid #48f; blue */
+    border: 7px solid #FF4242;
+    border-left-color: transparent;
+    border-top-color: #FF4242;
+}
+
+.beater .timer-l, .beater .timer-r {
+    border: 7px solid #7ED321;
+    border-left-color: transparent;
+    border-top-color: #7ED321;
+}
+
+.timer-l {
+    animation-name: timer-slide;
+    animation-timing-function: ease-in;
+    -webkit-animation-name: timer-slide;
+    -webkit-animation-timing-function: ease-in;
+    z-index: 5;
+    left: 0;
+}
+
+.timer-r {
+    animation-name: timer-toggle;
+    animation-timing-function: ease-out;
+    -webkit-animation-name: timer-toggle;
+    -webkit-animation-timing-function: ease-out;
+}
+
+.timer-slot {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    overflow: hidden;
+}
+
+
 .active_small_devices {
     position: absolute;
     top: 0;
@@ -258,6 +392,7 @@ body {
 footer.unvisible {
     display: none;
 }
+
 
 @media  all and ( max-width: 768px) { 
 
@@ -1182,3 +1317,160 @@ border: 1px solid black;
 #debug-stat-box {
     display: none;
 }
+
+
+
+form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner-5{
+    position: relative;
+}
+.comment-content form{
+    position: initial;
+}
+.comment, .answers {
+    position: relative;
+}
+.modal-message {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block !important;
+}
+
+/* already exist, just adding */
+.modal-error, .modal-loading, .modal-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+}
+.modal-error div {
+    border: lightgray 1px solid;
+}
+.content {
+    overflow: hidden;
+}
+
+/* already exist, just adding */
+.modal-message div {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    margin-left: -50%;
+    top: 20%;
+    left: 50%;
+    background-color: white;
+    border-radius: 3px;
+    padding: 0px;
+}
+
+@-webkit-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@-moz-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@-ms-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+.highlight {
+    -webkit-animation: highlight-fade 2s ease-out;
+    -moz-animation: highlight-fade 2s ease-out;
+    -o-animation: highlight-fade 2s ease-out;
+    animation: highlight-fade 2s ease-out;
+}
+
+#debug-stat-box {
+    position: fixed;
+    height: 300px;
+    width: 20%;
+    min-width: 200px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+}
+#debug-stat-box div{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(243,243,243,1) 50%, rgba(237,237,237,1) 51%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    border: 1px solid gray;
+    padding: 5px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+#debug-stat-box h2{
+    font-weight: bold;
+}
+#debug-stat-box h2 span{
+    display: inline !important;;
+    font-weight: normal;
+}
+
+#debug-stat-box span{
+    display: block;
+}
+
+#debug-stat-box b{
+    color: red;
+    font-weight: bold;
+}
+
+img.loading {
+    background: url('/res/css/img/preloader.gif');
+    background-size: 50px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    -webkit-animation: fadein 1s;
+    animation: fadein 1s;
+    min-height: 50px;
+    min-width: 50px;
+}
+
+@-webkit-keyframes fadein {
+    0%   { opacity: 0.0; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes fadein {
+    0%   { opacity: 0.0; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+pre {    font-family: monospace;
+    padding: 20px;
+    background: aliceblue;
+    margin: 20px;
+    border-radius: 10px;
+    border: 1px solid black;}
+
+

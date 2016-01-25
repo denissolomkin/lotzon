@@ -9,6 +9,9 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
 .comment-content form {
     position: initial;
 }
+.small-card{
+    cursor: none;
+}
 .comment, .answers {
     position: relative;
 }

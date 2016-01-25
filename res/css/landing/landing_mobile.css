@@ -182,26 +182,29 @@ body.landing  {
 }
 .header-right {
 	float: right;
+	margin-top: -2px;
 
 }
 .header-left:before {
 	display: inline-block;
-	font-size: 146px;
+	font-size: 180px;
 	background-size: contain;
-	line-height: 34px;
-    height: 34px; 	
+	line-height: 40px;
+    height: 40px; 	
 }
 
 
 .header-right:before {
 	border: 1px solid;
 	border-radius: 50%;
-	height: 52px;
-	width: 52px;
-	line-height: 52px;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
 	font-size: 23px;
 	margin-right: 10px;
 	padding-left: 2px;
+	position: relative;
+    top: 2px;
 }
 
 h1 {
@@ -395,10 +398,10 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
                             Promo-article styles
    ========================================================================== */
 
-input::-webkit-input-placeholder {color:#000; opacity: 0.3; font-style: italic; font-size: 15px;}
-input::-moz-placeholder          {color:#000; opacity: 0.3; font-style: italic;}
-input:-moz-placeholder           {color:#000; opacity: 0.3; font-style: italic;}
-input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
+input::-webkit-input-placeholder {color:#000; opacity: 0.3; font-style: italic; font-size: 16px; line-height: 29px;}
+input::-moz-placeholder          {color:#000; opacity: 0.3; font-style: italic;font-size: 16px; line-height: 29px;}
+input:-moz-placeholder           {color:#000; opacity: 0.3; font-style: italic;font-size: 16px; line-height: 29px;}
+input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;font-size: 16px; line-height: 29px;}
 /* ==========================================================================
                             Promo-mail-popup styles
    ========================================================================== */
@@ -592,7 +595,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;
 	height:29px;
 	width:250px;
-	line-height: 1;
+	line-height: 29px;
 }
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */
@@ -646,6 +649,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 	-webkit-border-radius:0; 
  	-moz-border-radius: 0; 
   	border-radius: 0; 
+  	cursor: pointer;
 }
 .login-popup .lp-b .s-b .sb_but.disabled {opacity:0.4;}
 .login-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}
@@ -661,11 +665,11 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .login-popup .lp-b .sl-bk.disabled {opacity:0.4;}
 .login-popup .lp-b .sl-bk a {display:block;float:left;width:50px;height:38px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social-new.png");background-repeat:no-repeat;margin-right:5px;}
 .login-popup .lp-b .sl-bk a:last-child {margin:0;}
-.login-popup .lp-b .sl-bk a.fb {border-color:#3b5998;background-position:-5px 0;}
-.login-popup .lp-b .sl-bk a.vk {border-color:#45668e;background-position:-76px 0;}
-.login-popup .lp-b .sl-bk a.gp {border-color:#d83b2a;background-position:-8px -50px;}
-.login-popup .lp-b .sl-bk a.tw {border-color:#4c97d0;background-position:-76px -50px;}
-.login-popup .lp-b .sl-bk a.ok {border-color:#ed812b;background-position:-146px 0px;}
+.login-popup .lp-b .sl-bk a.fb {border-color:#3b5998;background-position:-10px 0;}
+.login-popup .lp-b .sl-bk a.vk {border-color:#45668e;background-position:-81px 0;}
+.login-popup .lp-b .sl-bk a.gp {border-color:#d83b2a;background-position:-13px -50px;}
+.login-popup .lp-b .sl-bk a.tw {border-color:#4c97d0;background-position:-81px -50px;}
+.login-popup .lp-b .sl-bk a.ok {border-color:#ed812b;background-position:-151px 0px;}
 
 
 .error .ib-l, .error .ib-p {color:#c51e1e!important;border-color:#c51e1e!important;}

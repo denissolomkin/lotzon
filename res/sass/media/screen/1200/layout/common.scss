@@ -3,8 +3,9 @@
 }
 
 .content {
-  width: 750px;
+  width: 765px;
   margin-top: 0;
+
 }
 
 .content-box-tab {
@@ -17,6 +18,13 @@
 
 .content-box-item-top {
   padding: 20px 30px 0;
+}
+
+.sidebar {
+  display: block;
+  float: right;
+  width: 315px;
+  padding-left: 15px;
 }
 
 // BANNERS ------------------------------ //

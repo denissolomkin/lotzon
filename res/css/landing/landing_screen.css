@@ -195,26 +195,29 @@ body.landing  {
   margin-top: 10px;
 }
 .header-right {
-	float: right;
+  float: right;
   height: 52px;
   padding-left: 62px;
   position: relative;
-  line-height: 80px;
+  line-height: 52px;
   font-size: 16px;
   font-family: 'Handbook-bold';
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .header-right:before {
-	border: 1px solid;
-	border-radius: 50%;
-	height: 52px;
-	width: 52px;
-	line-height: 52px;
-	font-size: 23px;
-	margin-right: 10px;
+  border: 1px solid;
+  border-radius: 50%;
+  height: 52px;
+  width: 52px;
+  line-height: 52px;
+  font-size: 23px;
+  margin-right: 10px;
   padding-left: 2px;
-  margin-top: 14px;
+  margin-top: 0;
+  position: relative;
+  top: 4px;
 }
 
 h1 {
@@ -229,6 +232,7 @@ h1 {
 h1 span, h1 strong {
 	display: block;
 	text-align: center;
+  white-space: nowrap;
 }
 h1 strong  {
 	font-size: 59px;
@@ -376,7 +380,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .mail-popup .mb-tr {display:table-row;}
 .mail-popup .mb-tr .mb-td {display:table-cell;vertical-align:middle;overflow:auto;}
 .rules-bk {width:620px;position:absolute;background-color:#fff;top:0;right:-640px;display:none;}
-.rules-bk .rb-cs-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;cursor:pointer;font-size: 25px;color: #fff;}
+.rules-bk .rb-cs-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;cursor:pointer;font-size: 25px;color: #fff; z-index: 100}
 .rules-bk .rb-pg {padding:35px 60px;color:#000;}
 .rules-bk .rb-pg > h2 {margin:0 0 60px 0;padding:0;font-size:19px;text-transform:uppercase;}
 .rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font-size:15px;text-transform:uppercase;}
@@ -493,7 +497,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .login-popup {width:100%;height:100%;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.8);overflow:auto; z-index: 2;text-transform: none;}
 .login-popup .lb-table {display:table;width:100%;height:100%;}
 .login-popup .lb-tr {display:table-row;}
-.login-popup .lb-tr .lb-td {vertical-align:middle;}
+.login-popup .lb-tr .lb-td {vertical-align:middle; display: table-cell;}
 .rules-bk {width:620px;position:absolute;background-color:#fff;top:0;right:-640px;display:none;}
 .rules-bk .rb-cs-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;cursor:pointer;}
 .rules-bk .rb-pg {padding:35px 60px;color:#000;}
@@ -543,12 +547,12 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .login-popup .lp-b .ib-l.focus {border-bottom:1px solid #000;}
 #login-form {padding-top:43px;}
 #pass-rec-form .ib-l {margin-bottom:60px;}
-.login-popup .lp-b .ph {height:32px;text-align:right;position:absolute;top:0;right:0;font-size:18px;display:none;}
+.login-popup .lp-b .ph {height:30px;text-align:right;position:absolute;top:0;right:0;font-size:18px;display:none; line-height: 30px;}
 .font-fix .login-popup .lp-b .ph {line-height:32px;}
 .login-popup .lp-b .focus .ph {display:block;}
 .login-popup .lp-b .ib-p {height:31px;position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
-.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:31px;width:250px; line-height: 1;}
+.login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;height:30px;width:250px; line-height: 30px;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px #FFE400 !important; /* Цвет фона */
     height:28px;
@@ -601,6 +605,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
   -webkit-border-radius:0; 
   -moz-border-radius: 0; 
   border-radius: 0; 
+  cursor: pointer;
 }
 .login-popup .lp-b .s-b .sb_but.disabled {opacity:0.4; cursor: pointer;}
 .login-popup .lp-b .s-b .sb_but.disabled:hover {background-color:transparent;color:#000;}

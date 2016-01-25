@@ -469,7 +469,7 @@ class Durak extends Game
 
     public function doMove($card=null,$table=null)
     {
-        echo"Делаем ход $card $table \n";
+        #echo"Делаем ход $card $table \n";
 
         if($card) {
 

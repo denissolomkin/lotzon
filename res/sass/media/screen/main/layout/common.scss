@@ -10,8 +10,9 @@ html {
 
 .content {
   float: left;
-  width: 660px;
+  width: 670px;
   margin-bottom: 30px;
+   padding: 0 10px 0 0;
 }
 
 .content-box-item {
@@ -25,7 +26,8 @@ html {
 .sidebar {
   display: block;
   float: right;
-  width: 300px;
+  width: 310px;
+  padding-left: 10px;
 }
 
 // BANNERS ------------------------------ //
