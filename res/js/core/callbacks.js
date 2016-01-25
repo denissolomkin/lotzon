@@ -50,6 +50,9 @@
             $(document).on('click', Device.do.hide);
             // $(document).on('change', '.input-file-wrapper', function(){alert('aupdlfjsl');});
             $(document).on('change', '.input-file', Comments.showPreviewImage);
+             /*smiles*/
+            $(document).on('click', ".message-form-smileys", Comments.showSmiles);
+            $(document).on('click', ".smiles span", Comments.chooseSmiles);
             // $(document).on('click', '.prize a', Prize.validate.balance);
 
             /* navigation */
@@ -73,6 +76,8 @@
             /* new message*/
             $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
             $(document).on('click', ".nm-change", Messages.do.clearUser);
+
+           
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -133,6 +138,7 @@
 
             "games-online": Carousel.initOwl,
             "games-online-view": Games.online.init,
+            "games-online-view-now-list": Games.online.timeout,
             "games-chance-view": Games.chance.init,
             "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,

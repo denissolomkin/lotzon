@@ -17,9 +17,9 @@
   display: block;
 }
 
-#communication .content-box-tab .count {
-  margin-left: 6px;
-}
+// #communication .content-box-tab .count {
+//   margin-left: 6px;
+// }
 
 // COMMENTS//
 
@@ -200,8 +200,5 @@ div.comment-reply-btn {
     }
     & [class*=" i-"] {
       display: none;
-    }
-    & .count {
-      position: static;
     }
   }

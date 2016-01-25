@@ -222,7 +222,19 @@
                 }
             });
 
+        },
+
+        showSmiles: function () {
+            $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
+        }, 
+
+        chooseSmiles: function () {
+            console.log($(this).attr('class'));
+            console.log($(this).closest('.message-form').find('.message-form-area').text());
+            $(this).closest('.message-form').find('.message-form-area').text() += "f" ;
+
         }
+
 
 
 

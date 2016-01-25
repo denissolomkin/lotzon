@@ -10,23 +10,23 @@
                 </div>
                 <div class="option-block clearfix">
                     <div class="s-account_delete clearfix strip">
-                        <div class="title">Регистрация</div>
+                        <div class="title">{{i18n "title-profile-setting"}}</div>
                         <div> {{#if (day registration)}}
                             <span> {{day registration}} </span> {{else}} 
                             <span class="uk-disabled">день</span> {{/if}}
                         </div>
                         <div class="uk-float-right delete-reg show-option">
-                            <span class='change'>удалить аккаунт</span>     
+                            <span class='change'>{{i18n "title-profile-account-delete"}}</span>     
                         </div> 
                         <div class="uk-float-right delete-reg hidden option">
                              <div class="choice">
                                  <label class="radio-text">
                                     <input type="radio" name="email" value="1" checked>
-                                    <span class="danger">ДА</span>
+                                    <span class="danger">{{i18n "title-profile-delete-yes"}}</span>
                                 </label>
                                 <label class="radio-text">
                                     <input type="radio" name="email" value="2">
-                                    <span class="change">НЕТ</span>
+                                    <span class="change">{{i18n "title-profile-delete-no"}}</span>
                                 </label>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                 </div>    
                 <div class="option-block clearfix">
                     <div class="s-lang clearfix strip">
-                        <div class="title">Язык сайта</div>
+                        <div class="title">{{i18n "title-profile-site-lenguage"}}</div>
                         {{#each language.available}}
                         <label class="radio-text">
                             <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
@@ -46,28 +46,28 @@
                 </div>
                 <div class="option-block">
                     <div class="s-pass clearfix strip">
-                        <div class="title">Пароль</div>
+                        <div class="title">{{i18n "title-profile-password"}}</div>
 
                          <div class="uk-float-right show-option">
-                            <span class='change large-visible'>изменить</span> <i class="i-pencil change small-visible"></i>    
+                            <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>    
                         </div> 
                         <div class="uk-float-right delete-reg hidden option">
                              <div class="choice">
-                                <span class="change danger">отмена</span>    
+                                <span class="change danger">{{i18n "title-profile-change-cancel"}}</span>    
                             </div>
                         </div>
                     </div>
                 
                     <div class="option clearfix strip hidden">
-                        <div class="title">Старый пароль</div>
+                        <div class="title">{{i18n "title-profile-old-password"}}</div>
                         <input type="text" name="old-pass" value="">
                     </div>
                     <div class="option clearfix strip hidden">
-                        <div class="title">Новый пароль</div>
+                        <div class="title">{{i18n "title-profile-new-password"}}</div>
                         <input type="text" name="newPass" class="new-pass" value="">
                     </div>
                     <div class="option clearfix strip hidden">
-                        <div class="title">Повтор пароля</div>
+                        <div class="title">{{i18n "title-profile-password-repeat"}}</div>
                         <input type="text" name="repeatPass" class="repeat-pass" value="">
                          <p class="s-notice option hidden-notice screen-notice">{{i18n "text-unvalid-pass-repeat"}}</p>
                     </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="option-block">
                     <div class="tie-soc clearfix strip">
-                        <div class="title">Привязать соцсети <a class="question" href="#"> (?) <span class="tooltip">
+                        <div class="title">{{i18n "title-profile-socnetworks-link"}}<a class="question" href="#"> (?) <span class="tooltip">
                                     {{i18n 'text-soc-net-tie'}}
                                 </span></a></div>
                         <div class="ae-social uk-float-left">
@@ -114,7 +114,7 @@
                 </div>    
                 <div class="option-block">
                     <div class="s-email clearfix strip">
-                        <div class="title">Получать письма</div>
+                        <div class="title">{{i18n "title-profile-get-email"}}</div>
                         <label class="radio-text">
                             <input type="radio" name="email" value="1" checked>
                             <span>Да</span>
@@ -134,11 +134,11 @@
                             {{/each}}
                         </div>
                         <div class="uk-float-right show-option ">
-                            <span class='change large-visible change-favorite'>изменить</span> <i class="i-pencil change change-favorite small-visible"></i>    
+                            <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>    
                         </div>
                         <div class="uk-float-right delete-reg hidden option">
                              <div class="choice danger">
-                                <span class="change large-visible danger">отмена</span><i class="i-pencil change danger small-visible"></i>    
+                                <span class="change large-visible danger">{{i18n "title-profile-delete-no"}}</span><i class="i-pencil change danger small-visible"></i>    
                             </div>
                         </div>
                     </div>    

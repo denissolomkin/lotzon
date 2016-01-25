@@ -40,10 +40,13 @@
 
 .comment-name a {
   display: inline-block;
-  margin-right: 13px;
+  // margin-right: 13px;
   font-family: 'Handbook-bold';
+  color: #4A4A4A;
 }
-
+.comment-description {
+  color:: #4A4A4A;
+}
 .comment-date {
   font-size: 13px;
   color: #5a5a5a;
@@ -209,9 +212,9 @@ form.loading > * {
   display: block;
   width: 15px;
   height: 15px;
-  background: url(img/sprite.png) -156px -55px;
+  // background: url(img/sprite.png) -156px -55px;
   position: absolute;
-  top: 8px;
+  top: 6px;
   right: 10px;
   cursor: pointer;
 }
@@ -336,7 +339,6 @@ form.loading > * {
 
 
 .message-name {
-  margin-bottom: 8px;
   line-height: 1.27;
 }
 
@@ -348,11 +350,11 @@ form.loading > * {
 
 
 .comment-description, .message-form-area {
-  line-height: 22px;
+  line-height: 20px;
   
 }
 .message-form-area {
-  cursor: pointer;
+  cursor: text;
 }
 
 .message-form-area { 

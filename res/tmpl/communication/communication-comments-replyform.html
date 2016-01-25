@@ -5,7 +5,9 @@
             <input type="hidden" name="user_id" value="{{user.id}}">
             <input type="hidden" name="comment_id" value="{{or comment_id id}}">
 
-            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">{{#if user.name}}<span>{{user.name}}</span>,&nbsp;{{/if}}</div>
+            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">
+                {{#if user.name}}<span>{{user.name}}</span>,&nbsp;{{/if}}
+            </div>
 
             <div class="message-form-actions clearfix">
                  <label class="input-file-wrapper  fa fa-file-image-o">
@@ -14,6 +16,39 @@
             <div class="clearfix">  
                 <button name="submit" type="submit">{{i18n "button-send"}}</button>
                 <div class="message-form-smileys i-smile"></div>
+            </div>
+            <div class="smiles clearfix hidden">
+                <span class="angry"></span>
+                <span class="clown"></span>
+                <span class="confused"></span>
+                <span class="cool"></span>
+                <span class="crying"></span>
+                <span class="dislike"></span>
+                <span class="gay"></span>
+                <span class="geek"></span>
+                <span class="happy"></span>
+                <span class="kiss"></span>
+                <span class="laughing"></span>
+                <span class="like"></span>
+                <span class="money"></span>
+                <span class="robot"></span>
+                <span class="security"></span>
+                <span class="sleepi"></span>
+                <span class="smile"></span>
+                <span class="surprise"></span>
+                <span class="tongue"></span>
+                <span class="wink"></span>
+
+                <span class="laughing"></span>
+                <span class="like"></span>
+                <span class="money"></span>
+                <span class="robot"></span>
+                <span class="security"></span>
+                <span class="sleepi"></span>
+                <span class="smile"></span>
+                <span class="surprise"></span>
+                <span class="tongue"></span>
+                <span class="wink"></span>
             </div>      
             <hr>
             </div>

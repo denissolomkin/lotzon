@@ -216,11 +216,11 @@ h1 span, h1 strong {
 }
 h1 strong  {
 	font-size: 32px;
-	letter-spacing: 1.1px
 }
 h1 span {
 	font-size: 13px;
-    letter-spacing: 2.3px;
+    letter-spacing: 1px;
+    font-weight: normal;
 
 }
 
@@ -267,14 +267,8 @@ h1 {
 }
 h1 strong  {
 	font-size: 27px;
-	letter-spacing: 1.1px
 }
-h1 span  {
-	font-size: 13px;
-	letter-spacing: 1px;
-	font-weight: normal;
 
-}
 .landing_button {
 	height: 55px;
 	font-size: 20px

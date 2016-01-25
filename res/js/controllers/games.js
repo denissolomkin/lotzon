@@ -1,4 +1,4 @@
-var fakeCounter = 0, debug = 0, disableNow = false;
+var fakeCounter = 0, debug = 0;
 var fakeRandomData = [{
         "Uid": "568b9d3875b2b",
         "Prize": {
@@ -67,15 +67,16 @@ var fakeRandomData = [{
 ];
 
 var Games = {
+
+    disableNow: false,
+    timer: null,
+
     online: {
+
         init: function () {
             Games.online.tabs();
-            if (!Games.online.timeout) {
-                Games.online.timeouts('#games-online-view-now .render-list-form');
-            }
-
-            return;
         },
+
         //online view
         tabs: function () {
             var tabs = $('#games-online-view-tabs > div'),
@@ -93,18 +94,15 @@ var Games = {
                 $($(this).data("to")).show().find('form.render-list-form').change(); // плюшка для обновления данных при клике
             });
         },
-        timeouts: function (element, time) {
 
-            if(!disableNow) {
-                Games.online.timeout = setTimeout(function () {
-                    if ($(element).is(':visible')) {
-                        $(element).change();
-                    } else {
-                        clearTimeout(Games.online.timeout);
-                    }
-                    Games.online.timeouts(element, time);
-                }, (time || 5000));
-            }
+        timeout: function () {
+            Games.timer && clearInterval(Games.timer);
+            Games.timer = setTimeout(Games.online.now, 5000);
+        },
+
+        now: function(){
+            var element = '#games-online-view-now .render-list-form';
+            !Games.disableNow && $(element).is(':visible') && $(element).change();
         }
 
     },

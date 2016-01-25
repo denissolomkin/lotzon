@@ -432,9 +432,6 @@ html {
 .communication .content-box-tab.back-tab:before {
   display: block; }
 
-#communication .content-box-tab .count {
-  margin-left: 6px; }
-
 .comment-content {
   padding-left: 70px;
   font-family: 'handbookpro-regular';
@@ -564,8 +561,6 @@ div.comment-reply-btn {
     display: none; }
   .content-box-tab [class*=" i-"] {
     display: none; }
-  .content-box-tab .count {
-    position: static; }
 
 @media all and (max-width: 1024px) {
   .games-previews {

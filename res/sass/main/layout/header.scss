@@ -288,6 +288,7 @@ div {
 }
 
 .menu-balance-actions .menu-balance-item {
+    font-family: "handbookpro-regular";
     width: 130px;
     &:first-child {
         float: left;
@@ -2736,3 +2737,87 @@ header .owl-theme .owl-controls .owl-page span {
 .fa-percent:before {
   content: "\f295";
 }
+
+/////////////////////////////////////SMILES/////////////////////////////////////////////////////////////
+
+.smiles {
+  margin-left: -10px;
+  & span {
+    display: block;
+    float: left;
+    height: 25px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+
+    &:before {
+      display: inline-block;
+      content: "";
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
+    &.angry:before {
+      background: url(img/smiles.png) -4px -4px;
+    } 
+    &.clown:before {
+      background: url(img/smiles.png) -32px -4px;
+    }
+    &.confused:before {
+      background: url(img/smiles.png) -60px -4px;
+    }
+    &.cool:before {
+      background: url(img/smiles.png) -88px -4px;
+    }
+    &.crying:before {
+      background: url(img/smiles.png) -116px -4px;
+    }
+    &.dislike:before {
+      background: url(img/smiles.png) -144px -4px;
+    }
+    &.gay:before {
+      background: url(img/smiles.png) -172px -4px;
+    }
+    &.geek:before {
+      background: url(img/smiles.png) -200px -4px;
+    }
+    &.happy:before {
+      background: url(img/smiles.png) -228px -4px;
+    }
+    &.kiss:before {
+      background: url(img/smiles.png) -256px -4px;
+    }
+    &.laughing:before {
+      background: url(img/smiles.png) -284px -4px;
+    }
+    &.like:before {
+      background: url(img/smiles.png) -312px -4px;
+    }
+    &.money:before {
+      background: url(img/smiles.png) -340px -4px;
+    }
+    &.robot:before {
+      background: url(img/smiles.png) -368px -4px;
+    }
+    &.security:before {
+      background: url(img/smiles.png) -4px -33px;
+    }
+    &.sleepi:before {
+      background: url(img/smiles.png) -32px -33px;
+    }
+    &.smile:before {
+      background: url(img/smiles.png) -60px -33px;
+    }
+    &.surprise:before {
+      background: url(img/smiles.png) -88px -33px;
+    }
+    &.tongue:before {
+      background: url(img/smiles.png) -116px -33px;
+    }
+    &.wink:before {
+      background: url(img/smiles.png) -144px -33px;
+    }
+  }
+}
+
+

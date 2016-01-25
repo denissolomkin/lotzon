@@ -266,10 +266,11 @@
             quit: function () {
 
                 D.log('Game.action.quit', 'game');
-                R.push('/games/online/'+App.id );
-                App.uid  = 0;
-                WebSocketAjaxClient('update/' + App.key);
+                R.push('/games/online/'+App.id);
+                App.uid = 0;
+                // WebSocketAjaxClient('update/' + App.key);
                 Game.destroyTimeOut();
+                Games.online.now();
 
             },
 

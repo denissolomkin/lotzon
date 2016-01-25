@@ -369,7 +369,8 @@ button {
   float: left;
   font-family: 'handbookpro-regular';
   font-size: 15px;
-  color: #4D4D4D; }
+  color: #4D4D4D;
+  margin-top: 14px; }
 
 .content-box-cat a {
   display: block;
@@ -469,7 +470,7 @@ input.input-radio:checked + label.input-radio:before {
   display: block;
   float: left;
   width: 20px;
-  height: 24px;
+  height: 18px;
   cursor: pointer;
   font-family: "fontello";
   display: inline-block;
@@ -512,7 +513,8 @@ input.input-radio:checked + label.input-radio:before {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 19px;
-  font-weight: normal; }
+  font-weight: normal;
+  margin-bottom: 10px; }
 
 .modal-error,
 .modal-loading {
@@ -1324,6 +1326,7 @@ div {
   margin-bottom: 10px; }
 
 .menu-balance-actions .menu-balance-item {
+  font-family: "handbookpro-regular";
   width: 130px; }
   .menu-balance-actions .menu-balance-item:first-child {
     float: left; }
@@ -3848,6 +3851,62 @@ header .owl-theme .owl-controls .owl-page span {
 .fa-percent:before {
   content: "\f295"; }
 
+.smiles {
+  margin-left: -10px; }
+  .smiles span {
+    display: block;
+    float: left;
+    height: 25px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    text-align: right; }
+    .smiles span:before {
+      display: inline-block;
+      content: "";
+      width: 25px;
+      height: 25px;
+      cursor: pointer; }
+    .smiles span.angry:before {
+      background: url(img/smiles.png) -4px -4px; }
+    .smiles span.clown:before {
+      background: url(img/smiles.png) -32px -4px; }
+    .smiles span.confused:before {
+      background: url(img/smiles.png) -60px -4px; }
+    .smiles span.cool:before {
+      background: url(img/smiles.png) -88px -4px; }
+    .smiles span.crying:before {
+      background: url(img/smiles.png) -116px -4px; }
+    .smiles span.dislike:before {
+      background: url(img/smiles.png) -144px -4px; }
+    .smiles span.gay:before {
+      background: url(img/smiles.png) -172px -4px; }
+    .smiles span.geek:before {
+      background: url(img/smiles.png) -200px -4px; }
+    .smiles span.happy:before {
+      background: url(img/smiles.png) -228px -4px; }
+    .smiles span.kiss:before {
+      background: url(img/smiles.png) -256px -4px; }
+    .smiles span.laughing:before {
+      background: url(img/smiles.png) -284px -4px; }
+    .smiles span.like:before {
+      background: url(img/smiles.png) -312px -4px; }
+    .smiles span.money:before {
+      background: url(img/smiles.png) -340px -4px; }
+    .smiles span.robot:before {
+      background: url(img/smiles.png) -368px -4px; }
+    .smiles span.security:before {
+      background: url(img/smiles.png) -4px -33px; }
+    .smiles span.sleepi:before {
+      background: url(img/smiles.png) -32px -33px; }
+    .smiles span.smile:before {
+      background: url(img/smiles.png) -60px -33px; }
+    .smiles span.surprise:before {
+      background: url(img/smiles.png) -88px -33px; }
+    .smiles span.tongue:before {
+      background: url(img/smiles.png) -116px -33px; }
+    .smiles span.wink:before {
+      background: url(img/smiles.png) -144px -33px; }
+
 .content-box-scroll-top {
   float: right;
   position: relative;
@@ -3911,6 +3970,7 @@ header .owl-theme .owl-controls .owl-page span {
     background: #fafafa;
     text-align: left; }
   #blog-post-view .message-form-smileys {
+    margin: 0 0 5px;
     float: left;
     top: -1px; }
   #blog-post-view hr {
@@ -4298,7 +4358,8 @@ div.comment-reply-btn {
     width: auto; }
 
 .bonus-form .title {
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  font-size: 18px; }
 
 .bonus-form input {
   border-width: 0 0 1px 0;
@@ -4528,6 +4589,8 @@ div.comment-reply-btn {
 #communication {
   font-family: 'handbookpro-regular';
   font-size: 15px; }
+  #communication .message-form hr {
+    margin-top: 0; }
   #communication .message-form-wrapper button[type="submit"] {
     float: right;
     border: none;
@@ -4603,6 +4666,9 @@ div.comment-reply-btn {
     font-size: 17px;
     top: 50%; }
 
+#communication-messages-new .content-box-item {
+  padding: 20px; }
+
 #users-view-message .modal-message {
   background: #fff;
   bottom: -5px;
@@ -4636,23 +4702,21 @@ div.comment-reply-btn {
   background: #a8d1d5; }
 
 .content-box-tab .count {
+  font-size: 12px;
+  color: #fff;
+  padding: 2px 5.2px;
+  background: #fd2502;
+  line-height: 1;
   display: inline-block;
+  width: auto;
+  height: auto;
+  border-radius: 50em;
   text-align: center;
-  color: #e6faff;
-  background: #ff2a46;
-  border-radius: 0;
-  height: 18px;
-  line-height: 18px;
-  padding: 0 4px;
-  font-weight: normal;
-  text-shadow: none;
-  font-size: 14px;
-  margin-left: 17px;
-  vertical-align: baseline;
   position: absolute;
-  top: 3px;
-  border-radius: 3px;
-  text-shadow: 0 1px 0 #FF2A46; }
+  top: 5px;
+  right: 10px; }
+  .content-box-tab .count:hover {
+    opacity: 0.5; }
   .content-box-tab .count:empty {
     display: none; }
 
@@ -4795,6 +4859,9 @@ div.comment-reply-btn {
     top: 50%;
     font-size: 13px;
     padding: 5px 30px; }
+    #communication-messages .cm-top .new-message:hover {
+      background: #000;
+      color: #fff; }
   #communication-messages .cm-top .write-admin {
     float: right;
     border: none;
@@ -4981,8 +5048,11 @@ div.comment-reply-btn {
 
 .comment-name a {
   display: inline-block;
-  margin-right: 13px;
-  font-family: 'Handbook-bold'; }
+  font-family: 'Handbook-bold';
+  color: #4A4A4A; }
+
+.comment-description {
+  color: #4A4A4A; }
 
 .comment-date {
   font-size: 13px;
@@ -5110,9 +5180,8 @@ form.loading > * {
   display: block;
   width: 15px;
   height: 15px;
-  background: url(img/sprite.png) -156px -55px;
   position: absolute;
-  top: 8px;
+  top: 6px;
   right: 10px;
   cursor: pointer; }
 
@@ -5220,7 +5289,6 @@ form.loading > * {
     top: 50%; }
 
 .message-name {
-  margin-bottom: 8px;
   line-height: 1.27; }
 
 .message-text {
@@ -5228,10 +5296,10 @@ form.loading > * {
   line-height: 1.27; }
 
 .comment-description, .message-form-area {
-  line-height: 22px; }
+  line-height: 20px; }
 
 .message-form-area {
-  cursor: pointer; }
+  cursor: text; }
 
 .message-form-area {
   min-height: 22px; }
@@ -7677,7 +7745,8 @@ and open the template in the editor.
   font-weight: bold;
   background: #ffe700;
   color: #2b2b2b;
-  padding-left: 15px; }
+  padding-left: 15px;
+  margin: -1px; }
 
 .prize-price span {
   font-size: 13px;
@@ -8520,7 +8589,7 @@ and open the template in the editor.
 .ci-personal-form {
   position: relative;
   line-height: 50px;
-  margin: 0 -10px 30px;
+  margin: 0 -20px 30px;
   font-size: 16px;
   border-top: 1px solid #b4aeae; }
 
@@ -8532,7 +8601,7 @@ and open the template in the editor.
   color: #b4aeae;
   font-size: 14px;
   z-index: 1;
-  padding-left: 10px; }
+  padding-left: 20px; }
 
 .ci-personal-form-names li {
   margin-bottom: 2px; }
@@ -8881,14 +8950,14 @@ span.input-prefix {
   min-height: 550px; }
 
 #profile-edit .content-box-item, #user-view .content-box-item {
-  padding-top: 20px; }
+  padding: 20px; }
 
 .c-form-title {
   height: 45px;
   line-height: 45px;
   background: #fafafa;
-  margin: 0 -30px;
-  padding: 0 30px;
+  margin: 0 -20px;
+  padding: 0 20px;
   color: #000;
   font-family: "Handbook-bold"; }
 
@@ -8955,6 +9024,9 @@ span.input-prefix {
   display: inline-block;
   color: #4990e2;
   position: relative; }
+
+#profile-billing .content-box-item {
+  padding: 20px; }
 
 .ph-notice {
   text-align: center;

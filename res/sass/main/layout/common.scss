@@ -334,6 +334,7 @@ button {
   font-family: 'handbookpro-regular';
   font-size: 15px;
   color: #4D4D4D;
+  margin-top: 14px;
 
 }
 
@@ -456,7 +457,7 @@ input.input-radio:checked + label.input-radio:before {
     display: block;
     float: left;
     width: 20px;
-    height: 24px;
+    height: 18px;
     cursor: pointer;
     font-family: "fontello";
     display: inline-block;
@@ -504,7 +505,8 @@ input.input-radio:checked + label.input-radio:before {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 19px;
-  font-weight: normal
+  font-weight: normal;
+  margin-bottom: 10px;
 
 }
 

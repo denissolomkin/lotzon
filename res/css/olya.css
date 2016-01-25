@@ -266,9 +266,6 @@ body {
          transform: rotate(100deg) scale(0.7, 0.7);
     -webkit-transform: rotate(100deg) scale(0.7, 0.7); 
     }
-    .cards .table .cards {
-        width: 14%; 
-    }   
     .cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {
         font: 18px "handbookpro-regular";
         height: 40px;
@@ -318,6 +315,7 @@ body {
         text-align: center;
     }
 
+
 }
 
 
@@ -362,15 +360,13 @@ body {
     .cards .players .o .gm-pr .pr-ph {
         width: 40px;
         height: 40px;
-        margin: 5px 0 0;
+        margin: 0;
     }
     .cards .players .o .card {
         margin-left: -28px;
         margin-top: -15px;
     }
-    .cards .deck .card {
 
-    }
      .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
@@ -451,10 +447,34 @@ body {
     font-size: 14px;
     line-height: 1.5;
     }
+    .circle-timer, .circle {
+        width: 64px;
+        height: 64px;
+    }
+    .timer-l, .timer-r {
+        width: 64px;
+        height: 64px;
+        margin-left: -32px;
+        margin-top: -32px;  
+    }
+    .o .circle-timer, .circle {
+        width: 54px;
+        height: 54px;
+    }
+    .o .timer-l, .timer-r {
+        width: 54px;
+        height: 54px;
+        margin-left: -27px;
+        margin-top: -27px;  
+    }
+    .o .cards .players .o .gm-pr .pr-ph {
+        margin: 0px;
+    }
+
 } 
 
 
-@media (max-width: 480px) {
+@media (max-width: 479px) {
     .js-detect {
         opacity: 0.2;
     }
@@ -520,7 +540,9 @@ body {
     .cards .deck .lear {
         top: 85px;
     }
-
+    .cards .deck { width: 20%; }
+    .cards .table .cards { width: 33%; }
+    .cards .table { width: 60%; }
 }
 
 /*@media (max-height: 550px) {
@@ -658,15 +680,13 @@ body {
     .cards .players .o .gm-pr .pr-ph {
         width: 40px;
         height: 40px;
-        margin: 5px 0 0;
+
     }
     .cards .players .o .card {
         margin-left: -28px;
         margin-top: -15px;
     }
-    .cards .deck .card {
 
-    }
    .cards .table .cards .card {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
@@ -678,6 +698,10 @@ body {
     .cards .table .cards div:first-of-type {
          transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
+        
+    }
+    .cards .table .cards div {
+        margin-left: -30px;
     }
     .cards .deck .card {
         transform: rotate(10deg) scale(0.4, 0.4);
@@ -749,8 +773,12 @@ body {
     .cards .players .m .gm-pr .pr-cl .btn-pass, .cards .players .m .gm-pr .pr-cl .btn-ready {
         line-height: 40px;
     }
-
-
+    .cards .deck {
+        width: 18%;
+    }
+    .cards .table {
+        width: 75%;
+    }
 }
 
 

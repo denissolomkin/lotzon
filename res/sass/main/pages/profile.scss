@@ -811,7 +811,7 @@
 .ci-personal-form {
   position: relative;
   line-height: 50px;
-  margin: 0 -10px 30px;
+  margin: 0 -20px 30px;
   font-size: 16px;
   border-top: 1px solid #b4aeae;
 }
@@ -824,7 +824,7 @@
   color: #b4aeae;
   font-size: 14px;
   z-index: 1;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .ci-personal-form-names li {
@@ -1235,15 +1235,15 @@ span.input-prefix {
 }
 
 #profile-edit .content-box-item, #user-view .content-box-item {
-  padding-top: 20px;
+  padding: 20px;
 }
 
 .c-form-title {
   height: 45px;
   line-height: 45px;
   background: #fafafa;
-  margin: 0 -30px;
-  padding: 0 30px;
+  margin: 0 -20px;
+  padding: 0 20px;
   color: #000;
   font-family: "Handbook-bold";
 }
@@ -1328,4 +1328,9 @@ span.input-prefix {
   display: inline-block;
   color: #4990e2;
   position: relative;
+}
+
+
+#profile-billing  .content-box-item {
+  padding: 20px;
 }

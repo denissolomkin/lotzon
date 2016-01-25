@@ -17,8 +17,8 @@
                                 <ul>
                                     <li><i>{{i18n "title-profile-nickname"}} </i> <input placeholder="" type="text" value="{{title.nickname}}"> <span class="error-msg">{{i18n "title-profile-nickname-unavalable"}}</span></li>
 
-                                    <li><i>Имя</i> <input placeholder=""  type="text" value="{{title.name}}"></li>
-                                    <li><i>Фамилия </i><input placeholder="" type="text" value="{{title.surname}}"></li>
+                                    <li><i>{{i18n "title-profile-name"}}</i> <input placeholder=""  type="text" value="{{title.name}}"></li>
+                                    <li><i>{{i18n "title-profile-surname"}}</i><input placeholder="" type="text" value="{{title.surname}}"></li>
                                     <li class="empty"></li>
                                 </ul>
                             </li>
@@ -41,7 +41,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <i>Дата рождения</i>
+                                    <i>{{i18n "title-profile-birthday"}}</i>
                                     <div class="wrapper-margin-right i-arrow-down wrapper-calendar">
                                         <div class="calendar-range">
                                           <label for="datepicker"></label> 
@@ -50,7 +50,7 @@
 
                                     </div>
                                 </li>
-                                <li><i>Страна</i>
+                                <li><i>{{i18n "title-profile-country"}}</i>
                                      <div class="select-wrapper i-arrow-down">
                                     <select>
                                         <option>{{#if location.country}}{{location.country}}{{else}}<span class="uk-disabled">выбрать</span> {{/if}}</option>
