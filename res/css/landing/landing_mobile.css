@@ -267,6 +267,7 @@ h1 {
 }
 h1 strong  {
 	font-size: 27px;
+	white-space: nowrap;
 }
 
 .landing_button {
@@ -589,7 +590,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 	position:relative;border-bottom:1px solid #b29f00;margin-top:18px;}
 .login-popup .lp-b .ib-p.focus {border-bottom:1px solid #000;}
 .login-popup .lp-b .ib-l .m_input, .login-popup .lp-b .ib-p .m_input {border:none;background:none;outline:none;
-	height:30px;
+	height:29px;
 	width:250px;
 	line-height: 1;
 }

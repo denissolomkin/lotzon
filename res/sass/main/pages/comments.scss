@@ -355,6 +355,11 @@ form.loading > * {
 }
 .message-form-area {
   cursor: text;
+  & .i-smilyk {
+    &:first-child {
+      padding-left: 0;
+    }
+  }
 }
 
 .message-form-area { 

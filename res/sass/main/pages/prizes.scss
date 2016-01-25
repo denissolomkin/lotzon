@@ -71,7 +71,6 @@
   padding: 0 10px;
   font-family: 'handbookpro-regular';
   text-shadow: none;
-  font-weight: bold;
 }
 
 .prize-price {
@@ -142,6 +141,9 @@
   }
   & .render-list-container {
     padding-top: 70px;
+  }
+  & .content-box-cat {
+    margin-top: 14px;
   }
 }
 
@@ -297,7 +299,7 @@
   }
 }
 .prize-delivery-inf tr {
-  height: 30px;
+  height: 40px;
   border-bottom: 1px solid #ededed;
 }
 .prize-delivery-inf td:first-child {
@@ -305,10 +307,11 @@
   font-size: 15px;
   line-height: 1.27;
   padding-left: 30px;
+  width: 115px;
 }
 
 .prize-delivery-inf td:last-child {
-  padding-left: 50px;
+  padding-left: 0;
   line-height: 1.28;
   font-family: 'Handbook-bold';
 }

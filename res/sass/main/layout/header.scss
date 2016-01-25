@@ -402,7 +402,9 @@ div {
 .content-box-tab {
     font: 15px / 55px Handbook-bold;
 }
-
+.content-box-cat {
+  margin-top: 14px;
+}
 .content-box-cat a {
     font-size: 15px !important;
     // SLIDER ------------------------- //
@@ -2742,7 +2744,8 @@ header .owl-theme .owl-controls .owl-page span {
 
 .smiles {
   margin-left: -10px;
-  & span {
+}  
+span.i-smilyk {
     display: block;
     float: left;
     height: 25px;
@@ -2817,7 +2820,7 @@ header .owl-theme .owl-controls .owl-page span {
     &.wink:before {
       background: url(img/smiles.png) -144px -33px;
     }
-  }
 }
+
 
 

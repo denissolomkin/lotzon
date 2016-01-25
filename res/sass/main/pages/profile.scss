@@ -254,7 +254,7 @@
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
-  padding-left: 5px;
+  padding-left: 7px;
   font: 15px "handbookpro-regular";
   &:focus {
     border-width: 0 0 2px;
@@ -1142,6 +1142,7 @@ span.input-prefix {
       z-index: 1;
       position: relative;
       cursor: pointer;
+      padding-left: 2px;
     }
     & .daterangepicker.dropdown-menu.opensright:before {
       right: auto;

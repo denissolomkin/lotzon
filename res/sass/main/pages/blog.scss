@@ -164,6 +164,9 @@
       display: inline-block;
     }
   }  
+  & .input-file-wrapper {
+    display: none;
+  }
 }
 div.comment-reply-btn {
   position: absolute;

@@ -81,7 +81,7 @@
 </noscript>
 <!-- /Yandex.Metrika counter -->
 
-<?php $dirs = array('libs', 'plugins', 'functions', 'controllers', 'models', 'core');
+<?php $dirs = array('libs', 'plugins', 'functions', 'controllers', 'games',  'models', 'core');
 foreach ($dirs as $dir):
     if (!is_dir('./res/js/' . $dir . '/'))
         continue; ?>

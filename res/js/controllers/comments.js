@@ -51,8 +51,9 @@
 
                 if (!DOM.onScreen(options.rendered))
                     DOM.scroll(options.rendered);
+
                 options.rendered.firstElementChild.classList.add('animated');
-                options.rendered.firstElementChild.classList.add('zoomInDown');
+                options.rendered.firstElementChild.classList.add('zoomIn');
 
                 DOM.cursor('.message-form-area', options.rendered);
             },
@@ -229,9 +230,20 @@
         }, 
 
         chooseSmiles: function () {
-            console.log($(this).attr('class'));
-            console.log($(this).closest('.message-form').find('.message-form-area').text());
-            $(this).closest('.message-form').find('.message-form-area').text() += "f" ;
+
+            div =  document.querySelector('.message-form-area');
+            console.log(div);
+            smile = this.cloneNode(true);
+            console.log(smile);
+            div.appendChild(smile);
+
+            // console.log($(this).attr('class'));
+            // console.log($(this).closest('.message-form').find('.message-form-area').html());
+            // text =  $(this).closest('.message-form').find('.message-form-area').html();
+            // div = $(this).closest('.message-form').find('.message-form-area');
+            // element =  $(this);
+            // div.appendChild(element);
+            // $(this).closest('.message-form').find('.message-form-area').html(text + this);
 
         }
 

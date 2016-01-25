@@ -188,10 +188,11 @@ body.landing  {
 }
 .header-left:before {
 	display: inline-block;
-	font-size: 260px;
+	font-size: 284px;
 	background-size: contain;
-	line-height: 80px;
-    height: 80px; 	
+	line-height: 62px;
+  height: 62px; 	
+  margin-top: 10px;
 }
 .header-right {
 	float: right;
@@ -213,6 +214,7 @@ body.landing  {
 	font-size: 23px;
 	margin-right: 10px;
   padding-left: 2px;
+  margin-top: 14px;
 }
 
 h1 {
