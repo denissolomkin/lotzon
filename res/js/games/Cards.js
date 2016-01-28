@@ -13,6 +13,8 @@
 
     Cards = {
 
+        index: null,
+
         drawFields: function () {
 
             if ($.inArray(App.action, ['ready', 'wait']) == -1 || App.fields) {
@@ -370,20 +372,17 @@
         },
 
         createCardsWrapper: function () {
-
             $('.game > div ').addClass('cards');
-            $.each(players, function (index, value) {
-                if (index == Player.id) {
-                    $('.mx .players .player' + index).append('<div class="game-cards"></div>');
-
-                }
-            });
+            $('.mx .players .player' + Player.id).append('<div class="game-cards"></div>');
         },
 
         initStatuses: function () {
 
             if (App.action == 'ready') {
-                $('.mx .players .player' + Player.id + ' .gm-pr .btn-pass').addClass('btn-ready').removeClass('btn-pass').text('готов');
+                $('.mx .players .player' + Player.id + ' .gm-pr .btn-pass')
+                    .addClass('btn-ready')
+                    .removeClass('btn-pass')
+                    .text('готов');
             }
 
             if (App.action == 'ready' || App.action == 'wait') {
@@ -421,26 +420,26 @@
                     if ($.inArray(parseInt(App.beater), App.current) == -1 ||
                         ($.inArray(parseInt(App.beater), App.current) != -1 && App.beater == index)) {
 
-                        // D.log($($('#tm').countdown('getTimes')).get(-1),App.timeout);
-                        if (App.timestamp && timestamp != App.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-App.timeout) > 2
-                            || !$('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length) {
-                            D.log('remove');
-                            $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
-                            $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>').find('.timer-r,.timer-l').css('animation-duration', App.timeout + 's');
-                        }
+                        Game.playerTimer
+                            .add(index);
 
                     } else {
 
-                        $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
-                        $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle"></div>');
-
+                        Game.playerTimer
+                            .remove(index)
+                            .circle();
                     }
 
                 } else {
+
+                    Game.playerTimer
+                        .remove(index);
+
                     $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
 
                     if (index == App.beater)
-                        $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk').prepend('<div class="circle"></div>');
+                        Game.playerTimer
+                            .circle(index);
 
                     if (player.status || player.ready || App.winner) {
 
@@ -456,7 +455,9 @@
                         else if (player.ready == 1)
                             status = 'Готов';
 
-                        $('.mx .players .player' + index + ' .mt').show().text(status);
+                        $('.mx .players .player' + index + ' .mt')
+                            .show()
+                            .text(status);
                     }
                 }
 
@@ -575,7 +576,6 @@
                 }
 
             }
-
 
         }
 

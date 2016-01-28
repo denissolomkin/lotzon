@@ -31,7 +31,7 @@
 								</li>
 							</ul>
 
-							<button type="submit" class="ci-save-btn">Сохранить</button>
+							<button type="submit" class="btn-flat">Сохранить</button>
 						</form>
 					</div>
 

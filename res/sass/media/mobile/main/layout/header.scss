@@ -13,7 +13,11 @@
 .menu-profile-btn{
     display: none;
 }
-.menu-btn-item:hover, .menu-btn-item.active{
+.menu-btn-item:hover{
+    background: transparent;
+    
+}
+.menu-btn-item.active{
     color: rgba(0,0,0,0.5);
     background: transparent;
 }
@@ -57,7 +61,7 @@ body #menu-navigation-mobile .menu-balance-inf {
     overflow: scroll;
     /*padding-left: 20px;*/
     -webkit-overflow-scrolling: touch;
-    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
 
     li{
@@ -77,11 +81,14 @@ body #menu-navigation-mobile .menu-balance-inf {
             right: 20px;
         }
         .toggle-btn{
+            /*&.active{*/
             &.active{
 
                 /*color: red !important;*/
                 + ul{
-                    display: block !important;
+                    transition: all 1s linear 0s;
+                    /*display: block !important;*/
+                    max-height: 1000px;
                 }
                 .btn-arrows{
                     .i-arrow-top{
@@ -93,26 +100,21 @@ body #menu-navigation-mobile .menu-balance-inf {
                 }
             }
         }
-
         >*:not(ul){
             height: 50px !important;
-            font-size: 15px;
+            font-size: 15.5px;
             line-height: 50px;
             padding-left: 30px;
             padding-right: 30px;
             position: relative;
-            &.active,
-            &:hover{
-            color: rgba(0,0,0,0.5);
-            }
         }
         .btn-arrows{
             padding: 0;
             margin: 0 !important;
             position: absolute !important;
-            right: 20px;
+            right: 0px;
             top: 0;
-            font-size: 15px;
+            font-size: 15.5px;
             line-height: 50px;
             .i-arrow-top{
                 display: none;
@@ -122,12 +124,38 @@ body #menu-navigation-mobile .menu-balance-inf {
     >ul{
         >li{
             >*:not(ul){
-                background:#f2efed;
+                background:rgb(242, 239, 237);
+                i[class^="i-"]:before{
+                    margin-right: 10px;
+                }
             }
             >ul{
-                display: none !important;
+                transition: all 0s linear 0s;
+                overflow: hidden;
+                max-height: 0;
                 >li{
-                    border-bottom: 1px solid #f2efed;
+                    
+                    border-bottom: 1px solid rgba(203, 199, 199, 0.5);
+                    /*padding-left: 20px;*/
+                    background: rgba(242, 239, 237, 0.6);
+                    &:last-child{
+                        /*border-bottom: 10px solid #f2efed;*/
+                    }
+                    .active{
+                        color: rgba(0,0,0,0.5);
+                    }
+                }
+                &.open{
+                    max-height: 1000px;
+                    display: block !important;
+                    >li{
+                        background: transparent;
+                        padding-left: 0;
+
+                        &:last-child{
+                            border-bottom: 0;
+                        }
+                    }
                 }
             }
         }
@@ -172,7 +200,7 @@ body #menu-navigation-mobile .menu-balance-inf {
 }
 .menu {
     padding: 20px 0;
-    font-size: 15px;
+    font-size: 15.5px;
     width: 250px;
     display: none;  
 }
@@ -192,7 +220,7 @@ body #menu-navigation-mobile .menu-balance-inf {
 }
 
 #menu-navigation-mobile {
-    font: 15px / 45px 'handbookpro-regular';
+    font: 15.5px / 45px 'handbookpro-regular';
     & .menu-balance-inf  {
         font-size: 17px;
         height: 40px;
@@ -205,7 +233,7 @@ body #menu-navigation-mobile .menu-balance-inf {
             height: 40px;
             position: relative;
             & > span {
-                font-size:  15px;
+                font-size:  15.5px;
                 font-weight: bold;
             }
 
@@ -314,12 +342,12 @@ header {
 }
 
 .header-logo.i-lotzon:before {
-    font-size: 92px;
+    font-size: 114px;
     line-height: 0.22;
     position: relative;
     /* top: 50%; */
     /* transform: translateY(-50%); */
     /* height: 55px; */
-    line-height: 55px;
+    /*line-height: 55px;*/
     max-height: 55px;
 }

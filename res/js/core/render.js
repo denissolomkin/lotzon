@@ -86,7 +86,7 @@
 
             options.template = U.parse(options.template || U.parse(this.href || options.href), 'tmpl');
             options.href = U.parse(options.href || this.href || options.template, 'url');
-
+            
             console.log("Start:", options.href, options.template);
 
             if(!options.template){

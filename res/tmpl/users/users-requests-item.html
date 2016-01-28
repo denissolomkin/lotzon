@@ -9,21 +9,16 @@
         <div class="c-friend-name">{{ user.name }}</div>
         <div class="c-friend-date">{{from date }}</div>
         <div class="c-friend-news">{{i18n "title-users-requests-suggested"}}</div>
-        {{#if (like status 0)}}
+        
         <div class="c-friend-actions">
             <form action="/users/requests/{{id}}" method="put">
                 <input type="hidden" name="status" value="">
-                <button type="submit" onclick="this.form.elements['status'].value=1;" class="yes">{{i18n "button-users-requests-approve"}}
+                <button type="submit" onclick="this.form.elements['status'].value=1;" class="yes btn-flat">{{i18n "button-users-requests-approve"}}
                 </button>
-                <button type="submit" onclick="this.form.elements['status'].value=2;" class="no">{{i18n "button-users-requests-approve"}}
+                <button type="submit" onclick="this.form.elements['status'].value=2;" class="no">{{i18n "button-users-requests-deny"}}
                 </button>
             </form>
         </div>
-        {{else if (like status 1)}}
-        {{i18n "title-users-requests-approved"}}
-        {{else if (like status 2)}}
-        {{i18n "title-users-requests-denied"}}
-        {{/if}}
     </div>
 
 </div>

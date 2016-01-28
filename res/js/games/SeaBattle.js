@@ -15,12 +15,12 @@ $(function () {
                     'template': 'games-online-field',
                     'json'    : {},
                     'url'     : false,
-                    'after'   : this.action
+                    'after'   : SeaBattle.action
                 });
 
             } else {
 
-                Game.run() && this.run();
+                Game.run() && SeaBattle.run();
                 Game.updateTimeOut(App.timeout);
                 Game.end();
             }

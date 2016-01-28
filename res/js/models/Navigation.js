@@ -1,4 +1,14 @@
 (function () {
+    
+//    var it = document.createElement('span');
+//    it.setAttribute('class','count');
+//    it.innerHTML = Player.getCount('menu');
+//    document.querySelector('.menu-btn').appendChild(it);
+    
+//    var count = Player.getCount(key);
+//            return '<span class="count count-' + key + '"'
+//            + (count ? '' : ' style="display:none;"')
+//            + '>' + count + '</span>';
 
     typeof I === 'undefined' && (I = {});
     Object.deepExtend(I, {
@@ -79,7 +89,7 @@
 
                 D.log('Navigation.ready', 'menu');
                 $(I.menuBtnItem).off().on('click', Navigation.menu.click);
-
+                
                 var pathname = window.location.pathname === '/' ? '/blog' : window.location.pathname;
                 var selector = 'a[href="/' + U.parse(pathname, 'url') + '"]',
                     anchor = document.querySelector(selector);
@@ -100,7 +110,6 @@
         menu: {
 
             click: function (event) {
-
                 D.log(['Navigation.menu.click'], 'menu');
                 event.stopPropagation();
                 var isActive = $(this).hasClass('active'),
@@ -108,7 +117,7 @@
                     menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
 
                 Navigation.menu.hide();
-                // return;
+
                 if (isActive)
                     return false;
                 else
@@ -155,6 +164,7 @@
                     default:
                         break;
                 }
+                
 
             },
 
@@ -172,7 +182,7 @@
                     $(I.menuLogout).addClass('menu-item');
                     $(I.balanceBtn).show();
                 }
-
+//                console.error(this);
                 Navigation.menu.hide();
 
             },

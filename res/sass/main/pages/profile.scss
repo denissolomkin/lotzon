@@ -185,17 +185,30 @@
 
 .ae-top {
   margin-bottom: 0;
+  position: relative;
+  margin: 0 -20px;
+  overflow: hidden;
+  height: 180px;
 }
 
 .ae-user-img {
   width: 150px;
   height: 150px;
-  float: left;
-  margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
+  position: relative;
+  top: -2px;
+  margin-left: 15px;
 }
-
+.img-avatar-name {
+  position: absolute;
+  left: 185px;
+  top: 20px;
+  font-size: 25px;
+  color: #fff;
+  font-family:  "handbookpro-regular";
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
 .ae-user-img img {
   display: block;
   width: 100%;
@@ -205,7 +218,15 @@
 .ae-inf {
   display: none;
 }
-
+.avatar-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom:0;
+  z-index: 0;
+  -webkit-filter: blur(8px);
+}
 // --------------------------- //
 
 .ae-personal-form {
@@ -221,7 +242,7 @@
   left: 0;
   text-align: right;
   color: #b4aeae;
-  font-size: 15px;
+  font-size: 15.5px;
   z-index: 1;
 }
 
@@ -239,7 +260,7 @@
 .ae-personal-form .error-msg {
   display: none;
   color: #ff4242;
-  font-size: 15px;
+  font-size: 15.5px;
   position: absolute;
   top: 0;
   right: 30px;
@@ -255,7 +276,7 @@
   padding: 0;
   padding-bottom: 1px;
   padding-left: 7px;
-  font: 15px "handbookpro-regular";
+  font: 15.5px "handbookpro-regular";
   &:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -280,7 +301,7 @@
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
-  font: 15px "handbookpro-regular";
+  font: 15.5px "handbookpro-regular";
   &:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -345,7 +366,7 @@
     position: relative;
     background: transparent;
     outline: none;
-    font: 15px "handbookpro-regular";
+    font: 15.5px "handbookpro-regular";
     &:focus {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -378,9 +399,7 @@
   }  
 }
 .ae-name-block {
-  width: 540px;
   & i {
-    min-width: 80px;
     display: inline-block;
   }
   & li {
@@ -389,9 +408,6 @@
       border-bottom: none;
       
     }
-  }
-  &.ae-personal-form-values {
-    margin-left: 0;
   }
 }
 // --------------------------- //
@@ -425,7 +441,7 @@
   width: 32px;
   height: 32px;
   line-height: 32px;
-  font-size: 15px;
+  font-size: 15.5px;
   text-align: center;
   cursor: pointer;
   &:hover {
@@ -476,6 +492,7 @@
   & span {
     color: #000;
     font-family: "Handbook-bold";
+    font-size: 15px;
 
   }
 }
@@ -813,7 +830,7 @@
   line-height: 50px;
   margin: 0 -20px 30px;
   font-size: 16px;
-  border-top: 1px solid #b4aeae;
+  border-top: 1px solid #eaeaea;
 }
 
 .ci-personal-form-names {
@@ -842,15 +859,16 @@
   padding: 0;
   padding-left: 150px;
   padding-bottom: 1px;
-  font-size: 15px;
+  font-size: 15.5px;
   border: none;
-  border-bottom: 1px solid #b4aeae;
+  border-bottom: 1px solid #eaeaea;
   border-radius: 0;
   -webkit-box-shadow: none;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
   -webkit-appearance: none;
+  font-family: "handbookpro-regular";
   &:focus {
     border-bottom: 2px solid #bed8d9;
     border-width: 0 0 2px;
@@ -867,21 +885,21 @@ span.input-prefix {
   left: 150px;
 }
 
-.ci-save-btn {
-  display: block;
-  margin: auto;
-  width: 200px;
-  border: 1px solid #e6e6e6;
-  border-radius: 2px;
-  color: #b4aeae;
-  text-transform: uppercase;
-  text-align: center;
-  background: transparent;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 7px 0;
-  margin-bottom: 20px;
-}
+// .btn-flat {
+//   display: block;
+//   margin: auto;
+//   width: 200px;
+//   border: 1px solid #e6e6e6;
+//   border-radius: 2px;
+//   color: #b4aeae;
+//   text-transform: uppercase;
+//   text-align: center;
+//   background: transparent;
+//   font-weight: bold;
+//   cursor: pointer;
+//   padding: 7px 0;
+//   margin-bottom: 20px;
+// }
 
 // --------------------------- //
 
@@ -1185,7 +1203,7 @@ span.input-prefix {
     padding: 0;
     padding-bottom: 1px;
     padding-left: 5px;
-    font: 15px "handbookpro-regular";
+    font: 15.5px "handbookpro-regular";
     display: inline-block;
     width: auto;
     vertical-align: middle;
@@ -1236,7 +1254,7 @@ span.input-prefix {
 }
 
 #profile-edit .content-box-item, #user-view .content-box-item {
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 
 .c-form-title {
@@ -1247,6 +1265,7 @@ span.input-prefix {
   padding: 0 20px;
   color: #000;
   font-family: "Handbook-bold";
+  font-size: 15px;
 }
 
 .c-form-stat {
@@ -1269,6 +1288,7 @@ span.input-prefix {
   background: none;
   background-color: transparent;
   font-family: "Handbook-bold";
+  font-size: 15px;
   opacity: 1;
   cursor: pointer;
 }
@@ -1284,6 +1304,7 @@ span.input-prefix {
     &:checked + span {
       color: #000;
       font-family: "Handbook-bold";
+      font-size: 15px;
     }
   }
   & span {

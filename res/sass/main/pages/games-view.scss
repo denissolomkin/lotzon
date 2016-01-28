@@ -48,11 +48,15 @@ $hb_regular: handbookpro-regular;
             align-items: center;
         }
         .balance {
+            transition: all 0.2s linear;
             text-transform: uppercase;
             height: auto;
             top: initial;
             //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
             transform: translate(0,0);
+            &:hover{
+                background: white;
+            }
             > * {
                 display: block;
                 float: left;
@@ -101,7 +105,7 @@ $hb_regular: handbookpro-regular;
         justify-content: space-between;
         align-items: stretch;
         color: $color_fuscous_gray_approx;
-        font-size: 15px;
+        font-size: 15.5px;
     }
     .description-block {
         //Instead of the line below you could use @include box-sizing($bs)
@@ -135,7 +139,7 @@ $hb_regular: handbookpro-regular;
             }
             .title {
                 border-right: 1px solid $white;
-                font-size: 15px;
+                font-size: 15.5px;
                 padding-top: 15px;
                 width: calc(25% - 1px);
             }
@@ -145,13 +149,11 @@ $hb_regular: handbookpro-regular;
             .points {
                 width: 40%;
             }
-            .balance {
-            }
         }
         .game-description {
             position: relative;
             padding: 20px 0 40px;
-            font-size: 15px;
+            font-size: 15.5px;
             line-height: 1.3;
             color: $color_fuscous_gray_approx;
             font-family: $hb_regular;
@@ -303,7 +305,7 @@ $hb_regular: handbookpro-regular;
         }
     }
     .render-list-container {
-        font-size: 15px;
+        font-size: 15.5px;
         width: 100%;
         .render-list {
             margin-bottom: 30px;
@@ -398,7 +400,7 @@ $hb_regular: handbookpro-regular;
             transition: background .5s linear;
             .name {
                 flex-grow: 1;
-                font-size: 15px;
+                font-size: 15.5px;
                 &:before {
                     content: counter(my-awesome-counter);
                     display: block;
@@ -424,7 +426,7 @@ $hb_regular: handbookpro-regular;
                 }
             }
             .rating i {
-                font-size: 15px;
+                font-size: 15.5px;
                 margin-left: 5px;
                 color: $color_bright_sun_approx;
             }

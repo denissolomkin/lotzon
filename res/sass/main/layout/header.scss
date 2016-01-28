@@ -25,7 +25,9 @@
         line-height: 0.22;
         position: relative;
         top: 50%;
-        transform: translateY(-53%);
+        @include translate(0, -53%);
+        // -khtml-transform: translate(0, -70%);
+        // transform: translateY(-53%);
     }
 }
 
@@ -352,7 +354,7 @@ div {
 .menu-profile-btn .i-person {
     background:none;
     top: 19px;
-    font-size: 15px;
+    font-size: 15.5px;
 
     position: relative;
 }
@@ -402,11 +404,14 @@ div {
 .content-box-tab {
     font: 15px / 55px Handbook-bold;
 }
+.content-box-tab > div {
+    position: relative;
+}
 .content-box-cat {
   margin-top: 14px;
 }
 .content-box-cat a {
-    font-size: 15px !important;
+    font-size: 15.5px !important;
     // SLIDER ------------------------- //
 }
 
@@ -441,7 +446,7 @@ header .owl-theme .owl-controls .owl-page span {
 }
 
 .header-right .slider-top .ct .n {
-    font-size: 15px;
+    font-size: 15.5px;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -2745,7 +2750,7 @@ header .owl-theme .owl-controls .owl-page span {
 .smiles {
   margin-left: -10px;
 }  
-span.i-smilyk {
+span[class^="i-smile"] {
     display: block;
     float: left;
     height: 25px;
@@ -2760,64 +2765,64 @@ span.i-smilyk {
       height: 25px;
       cursor: pointer;
     }
-    &.angry:before {
+    &.i-smile-angry:before {
       background: url(img/smiles.png) -4px -4px;
     } 
-    &.clown:before {
+    &.i-smile-clown:before {
       background: url(img/smiles.png) -32px -4px;
     }
-    &.confused:before {
+    &.i-smile-confused:before {
       background: url(img/smiles.png) -60px -4px;
     }
-    &.cool:before {
+    &.i-smile-cool:before {
       background: url(img/smiles.png) -88px -4px;
     }
-    &.crying:before {
+    &.i-smile-crying:before {
       background: url(img/smiles.png) -116px -4px;
     }
-    &.dislike:before {
+    &.i-smile-dislike:before {
       background: url(img/smiles.png) -144px -4px;
     }
-    &.gay:before {
+    &.i-smile-gay:before {
       background: url(img/smiles.png) -172px -4px;
     }
-    &.geek:before {
+    &.i-smile-geek:before {
       background: url(img/smiles.png) -200px -4px;
     }
-    &.happy:before {
+    &.i-smile-happy:before {
       background: url(img/smiles.png) -228px -4px;
     }
-    &.kiss:before {
+    &.i-smile-kiss:before {
       background: url(img/smiles.png) -256px -4px;
     }
-    &.laughing:before {
+    &.i-smile-laughing:before {
       background: url(img/smiles.png) -284px -4px;
     }
-    &.like:before {
+    &.i-smile-like:before {
       background: url(img/smiles.png) -312px -4px;
     }
-    &.money:before {
+    &.i-smile-money:before {
       background: url(img/smiles.png) -340px -4px;
     }
-    &.robot:before {
+    &.i-smile-robot:before {
       background: url(img/smiles.png) -368px -4px;
     }
-    &.security:before {
+    &.i-smile-security:before {
       background: url(img/smiles.png) -4px -33px;
     }
-    &.sleepi:before {
+    &.i-smile-sleepi:before {
       background: url(img/smiles.png) -32px -33px;
     }
-    &.smile:before {
+    &.i-smile-smile:before {
       background: url(img/smiles.png) -60px -33px;
     }
-    &.surprise:before {
+    &.i-smile-surprise:before {
       background: url(img/smiles.png) -88px -33px;
     }
-    &.tongue:before {
+    &.i-smile-tongue:before {
       background: url(img/smiles.png) -116px -33px;
     }
-    &.wink:before {
+    &.i-smile-wink:before {
       background: url(img/smiles.png) -144px -33px;
     }
 }

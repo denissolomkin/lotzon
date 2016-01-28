@@ -1,5 +1,5 @@
 .cabinet-bonuses p {
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 20px;
 }
 
@@ -29,7 +29,7 @@
 
 .bonus-form .title {
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 19px;
 }
 
 .bonus-form input {
@@ -172,6 +172,7 @@
   cursor: pointer;
   color: #4a90e2;
   font-family: 'Handbook-bold';
+  font-size: 15px;
   &:hover {
     text-decoration: none;
   }
@@ -263,7 +264,7 @@
     border: none;
   }
   & .title {
-    font-size: 15px;
+    font-size: 15.5px;
     margin-right: 6px;
   }
 
@@ -308,6 +309,7 @@
   }
   & .bold {
     font-family: 'Handbook-bold';
+    font-size: 15px;
   }
   & .info_block {
     & p {

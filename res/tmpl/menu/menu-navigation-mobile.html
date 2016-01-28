@@ -5,7 +5,7 @@
             <div class="menu-balance-inf clearfix">
                     
                 <div>
-                    <!--<i class="i-purse"></i>-->
+                    <i class="i-purse"></i>
                     <span class="holder-money">{{player "balance.money"}}</span>
                     <span>{{player "getCurrency"}}</span>
                 </div>
@@ -34,13 +34,17 @@
         </li>
         {{#each .}}
         <li>
+            
+            {{#if (eq @key "menu-profile") }}
             <a href="" class="toggle-btn">
-            {{@key}}{{{countHTML .}}}
+            <i class="i-person"></i>
+            {{i18n @key}}{{{countHTML .}}}
             <div class="btn-arrows"><i class="i-arrow-down"></i><i class="i-arrow-top"></i></div>
             </a>
+            {{/if}}
             
             
-            <ul data-id="{{@key}}">
+            <ul data-id="{{@key}}" {{#if (ne @key "menu-profile") }}class="open"{{/if}}>
             {{#each this}}
                 <li>
                     <a href="/{{.}}">{{i18n "menu" .}}{{{countHTML .}}}</a>            

@@ -42,7 +42,11 @@
   display: inline-block;
   // margin-right: 13px;
   font-family: 'Handbook-bold';
-  color: #4A4A4A;
+  color: #000;
+  font-size: 15px;
+  &:hover {
+    opacity: 0.85;
+  }
 }
 .comment-description {
   color:: #4A4A4A;
@@ -71,21 +75,22 @@
 .comment-like {
   opacity: 1;
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 0;
   padding-left: 20px;
   font-size: 14px;
   background: none;
-  
+  font-family: "handbookpro-regular";
   &:hover {
     background: none;
     color: #000;
   }
   &:before {
+    font: normal normal normal 14px/1 FontAwesome;
     width: 18px;
     height: 15px;
     position: absolute;
-    top: 2px;
+    top: 0;
     left: 0; 
   }
   &.fa-heart {
@@ -163,7 +168,7 @@ form.loading > * {
 }
 .message-form-wrapper {
   font-family: handbookpro-regular;
-  font-size: 15px;
+  font-size: 15.5px;
 
   & button[type="submit"] {
     float: right;
@@ -173,6 +178,9 @@ form.loading > * {
     color: #4a90e2;
     cursor: pointer;
     font-family: Handbook-bold;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   & .message-form-smileys {
     top: -1px;
@@ -201,10 +209,11 @@ form.loading > * {
 .c-show-notifications {
   margin-left: 15px;
   color: #4a90e2;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
   &:hover {
-    text-decoration: none;
+    text-decoration: underline;
+    
   }
 }
 
@@ -235,6 +244,7 @@ form.loading > * {
     top: 8px;
     right: 10px;
     font-family: 'Handbook-bold';
+    font-size: 15px;
 
   }
   & .c-notification-date {
@@ -244,7 +254,7 @@ form.loading > * {
 
 .c-notification {
   position: relative;
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 5px;
   padding: 5px 10px;
   &:hover {
@@ -288,7 +298,8 @@ form.loading > * {
 }
 
 .c-notification-name {
-  font-weight: bold;
+  font-family: 'Handbook-bold';
+  font-size: 15px;
 }
 
 .c-notification-date {
@@ -339,7 +350,13 @@ form.loading > * {
 
 
 .message-name {
-  line-height: 1.27;
+  font-family: 'Handbook-bold';
+  color: #000;
+  font-size: 15px;
+  &:hover {
+    opacity: 0.85;
+  }
+
 }
 
 .message-text {
@@ -355,9 +372,18 @@ form.loading > * {
 }
 .message-form-area {
   cursor: text;
-  & .i-smilyk {
-    &:first-child {
-      padding-left: 0;
+  & img[class^="i-smile"] {
+    padding-left: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    cursor: text;
+    max-width: 18px;
+    position: relative;
+    &:first-of-type{
+      margin-left: 0;
+
     }
   }
 }

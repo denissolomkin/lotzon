@@ -24,3 +24,19 @@
 .message-text {
   width: 80%;
 }
+#users-view-messages {
+  & .message-form {
+    & hr {
+      margin: 5px -30px 5px; 
+    }
+  }
+} 
+
+
+#users-view-message {
+  & .message-form {
+    & hr {
+      margin: 5px -30px 5px; 
+    }
+  }
+} 

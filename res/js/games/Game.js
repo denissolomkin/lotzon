@@ -2,6 +2,8 @@
 
     Game = {
 
+        index: null,
+
         init: function (init) {
         },
 
@@ -45,6 +47,43 @@
             } else
                 return false;
 
+        },
+
+        playerTimer: {
+
+            add: function(index){
+                this.index = (index = index || this.index);
+                if (App.timestamp && timestamp != App.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-App.timeout) > 2
+                    || !$('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length) {
+
+                    $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer')
+                        .remove();
+                    $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk')
+                        .prepend('<div class="circle-timer"><div class="timer-r"></div><div class="timer-slot"><div class="timer-l"></div></div></div>')
+                        .find('.timer-r,.timer-l')
+                        .css('animation-duration', App.timeout + 's');
+                }
+                return this;
+            },
+
+            remove: function(index){
+                this.index = (index = index || this.index);
+                $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer')
+                    .remove();
+                return this;
+            },
+
+            circle: function(index){
+                this.index = (index = index || this.index);
+                $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk')
+                    .prepend('<div class="circle"></div>');
+                return this;
+            },
+
+            removeAll: function(){
+                $('.mx .players .gm-pr .pr-ph-bk .circle-timer')
+                    .remove();
+            }
         },
 
         seatPlayers: function () {
@@ -126,33 +165,14 @@
 
             D.log('Game.end', 'game');
             if (!App.winner) {
-
                 sample && Apps.playAudio([App.key, sample]);
-
+                Game.updateTimeOut(App.timeout);
+                return false;
             } else {
-
-                if (!$('.mx .players .wt').is(":visible")) {
-
-                    Apps.playAudio([App.key, ($.inArray(Player.id, App.winner) != -1 ? 'Win' : 'Lose')]);
-
-                    $.each(App.players, function (index, value) {
-                        $('.mx .players .player' + index + ' .wt').removeClass('loser').html(
-                            (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                            (App.currency == 'MONEY' ? Player.formatCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
-                            (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов')
-                        ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
-                    });
-
-                    setTimeout(function () {
-
-                        if ($('.mx .players .exit').is(":visible")) {
-                            $('.mx .card, .mx .deck').fadeOut();
-                            $('.mx .players .wt').fadeOut();
-                        }
-
-                    }, 5000);
-                }
-
+                sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
+                Apps.playAudio([App.key, sample]);
+                Game.destroyTimeOut();
+                return true;
             }
         },
 
@@ -161,7 +181,7 @@
             D.log('Game.setFullScreenHeigth', 'game');
             var singleGame = $('.single-game');
             if (singleGame.length > 0) {
-                if(Device.isMobile()) {
+                if (Device.isMobile()) {
                     $("meta[name='mobile-web-app-capable']").attr('content', 'yes');
                     $('main, .content-top').addClass('active_small_devices');
                     $('footer').addClass('unvisible');
@@ -205,10 +225,12 @@
         },
 
         onTimeOut: function () {
+
             console.info('тайм-аут');
-            $('.mx .players .gm-pr .pr-ph-bk .circle-timer').remove();
-            var path = 'app/' + App.key + '/' + App.uid;
-            var data = {'action': 'timeout'};
+            Games.timer.removeAll();
+
+            var path = 'app/' + App.key + '/' + App.uid,
+                data = {'action': 'timeout'};
             WebSocketAjaxClient(path, data);
         },
 
@@ -225,7 +247,7 @@
 
                 } else {
 
-                    var path = 'app/' + App.key + '/' + App.uid ;
+                    var path = 'app/' + App.key + '/' + App.uid;
                     var data = {'action': 'ready'}
                     WebSocketAjaxClient(path, data);
                 }
@@ -239,7 +261,7 @@
                     this.classList.add('button-disabled');
 
                 var that = this,
-                    path = 'app/' + App.key + '/' + App.uid ,
+                    path = 'app/' + App.key + '/' + App.uid,
                     data = {
                         'action': 'quit'
                     };
@@ -254,11 +276,41 @@
             pass: function (e) {
 
                 D.log('Game.action.pass', 'game');
-                var path = 'app/' + App.key + '/' + App.uid ;
+                var path = 'app/' + App.key + '/' + App.uid;
                 var data = {
                     'action': 'pass'
                 };
                 WebSocketAjaxClient(path, data);
+            },
+
+            move: function (e) {
+
+                var cell = this;
+
+                if (App.players[Player.id].moves <= 0) {
+                    //    $("#report-popup").find(".txt").text(getText('ENOUGH_MOVES'));
+                    //    $("#report-popup").show().fadeIn(200);
+                } else if (Player.id != App.current) {
+                    //    $("#report-popup").find(".txt").text(getText('NOT_YOUR_MOVE'));
+                    //    $("#report-popup").show().fadeIn(200);
+                } else if (compare(cell.classList, ['m', 'o', 'b'])) {
+                    //    $("#report-popup").find(".txt").text(getText('CELL_IS_PLAYED'));
+                    //    $("#report-popup").show().fadeIn(200);
+                } else {
+
+                    cell.classList.add('b');
+                    window.setTimeout(function () {
+                        cell.classList.remove('b');
+                    }, 1000);
+
+                    var path = 'app/' + App.key + '/' + App.uid,
+                        data = {
+                            'action': 'move',
+                            'cell'  : cell.getAttribute('data-cell')
+                        };
+
+                    WebSocketAjaxClient(path, data);
+                }
             }
         },
 
@@ -267,7 +319,7 @@
             quit: function () {
 
                 D.log('Game.action.quit', 'game');
-                R.push('/games/online/'+App.id);
+                R.push('/games/online/' + App.id);
                 App.uid = 0;
                 // WebSocketAjaxClient('update/' + App.key);
                 Game.destroyTimeOut();
@@ -374,7 +426,7 @@
             error: function () {
                 /* ошибка */
                 D.log('Game.callback.error', 'game');
-                if (App.uid  == 0) {
+                if (App.uid == 0) {
                     $('.mx .tm').countdown('pause');
                     $('.mx .prc-but-cover').hide();
                     $('.ngm-rls').fadeIn(200);
@@ -388,7 +440,7 @@
                     $('.re').hide();
                     $('.ot-exit').html('Соперник вышел').show();
                 } else
-                    App.uid  = 0;
+                    App.uid = 0;
             }
         }
 

@@ -66,7 +66,7 @@
 
 .prize-name {
   height: 47px;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.27;
   padding: 0 10px;
   font-family: 'handbookpro-regular';
@@ -77,11 +77,12 @@
   height: 40px;
   line-height: 40px;
   font-size: 21px;
-  font-weight: bold;
   background: #ffe700;
   color: #2b2b2b;
   padding-left: 15px;
   margin: -1px;
+  font-family: Handbook-bold;
+  font-size: 15px; 
 }
 
 .prize-price span {
@@ -94,7 +95,7 @@
   width: 220px;
   height: 50px;
   line-height: 50px;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: bold;
   color: white;
   text-transform: uppercase;
@@ -190,7 +191,7 @@
   // ------------------------------- //
 }
 #prizes-exchange-goods-view {
-  font: 15px "handbookpro-regular";
+  font: 15.5px "handbookpro-regular";
 }
 .exchange-prize .content-box-item {
   text-align: center;
@@ -237,7 +238,7 @@
 }
 
 .ex-prize-details {
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 30px;
   letter-spacing: 0.3px;
 }
@@ -285,6 +286,7 @@
   color: #4a90e2;
   cursor: pointer;
   font-family: Handbook-bold;
+  font-size: 15px;
 }
 
 
@@ -304,7 +306,7 @@
 }
 .prize-delivery-inf td:first-child {
   opacity: 0.5;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.27;
   padding-left: 30px;
   width: 115px;
@@ -314,11 +316,12 @@
   padding-left: 0;
   line-height: 1.28;
   font-family: 'Handbook-bold';
+  font-size: 15px;
 }
 
 .personal-data-attention {
   margin-bottom: 20px;
-  font-size: 15px;
+  font-size: 15.5px;
   text-align: center;
 }
 

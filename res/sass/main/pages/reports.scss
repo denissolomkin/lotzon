@@ -1,15 +1,10 @@
 .ph-notice {
   text-align: center;
   margin-bottom: 20px;
+
   & span {
     color: #ff4242;
   }
-}
-
-// ----------------------------- //
-
-.ph-header {
-  display: none;
 }
 
 // ----------------------------- //
@@ -19,19 +14,15 @@
   padding: 20px 10px;
   cursor: pointer;
   position: relative;
-  border-top: 1px solid #fafafa;
-  & > div {
-    display: table-row;
-  }
+  border-top: 1px solid #eaeaea;
   &:last-child {
     
-    border-bottom: 1px solid #fafafa;
+    border-bottom: 1px solid #eaeaea;
   }
 }
 
 .ph-inf-name,
 .ph-inf-value {
-  display: table-cell;
   padding: 2px 0;
 }
 
@@ -66,6 +57,7 @@
 .ph-header {
   margin: 0 -10px 20px;
   padding: 0 10px;
+  font-size: 15px;
   font-family:  'Handbook-bold'
 }
 .ph-header-item {
@@ -159,7 +151,7 @@ border: none;
       margin-top: 20px;
       letter-spacing: 0.7px;
       font-family: 'handbookpro-regular';
-      font-size: 15px;
+      font-size: 15.5px;
       color: #4D4D4D;
       & > div {
         position: relative;
@@ -172,6 +164,7 @@ border: none;
     }
   }
   & .r-header-item {
+    font-size: 15px;
     & .tooltip-block{
       position: relative;
       color: #4990e2;
@@ -286,17 +279,6 @@ border: none;
   cursor: pointer;
   position: relative;
   line-height: 1.4;
-  &:hover:before {
-    content: "";
-    clear: none;
-    display: block;
-    position: absolute;
-    width: 17px;
-    height: 30px;
-    background: url(img/sprite.png) -214px -187px;
-    top: 10px;
-    right: 10px;
-  }
   &:nth-child(odd) {
     background: #fafafa;
   }
@@ -337,7 +319,12 @@ border: none;
 
 .th-item-right div {
   float: left;
-  margin-right: 35px;
+  margin-right: 0;
+  min-width: 50px;
+  &.th-item-sum {
+    margin-right: 35px;
+    text-align: right
+  }
 }
 
 // ----------------------------- //
@@ -347,6 +334,12 @@ border: none;
 }
 
 // ----------------------------- //
+
+
+
+#reports-payments-list .ph-item:first-child {
+  border-top: none;
+}
 
 @media (min-width: 530px) {
   .content-box-item.cabinet-transaction-history {
@@ -361,5 +354,23 @@ border: none;
     float: right;
     padding-top: 8px;
     margin-right: 30px;
+  }
+}
+#reports-transactions {
+  & .daterangepicker.dropdown-menu {
+    right: auto;
+    left: 5px;
+    top: 35px;
+  }
+  & .daterangepicker .calendar th, .daterangepicker .calendar td {
+    font-size: 15px;
+  }
+  & .daterangepicker.dropdown-menu.opensright:before {
+    right: auto;
+    left: 5px;
+    top: 35px;
+  }
+  & .daterangepicker.opensright:after  {
+    display: none;
   }
 }

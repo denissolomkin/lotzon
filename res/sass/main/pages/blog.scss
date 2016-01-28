@@ -34,7 +34,7 @@
  
 #blog-post-view {
   font-family: handbookpro-regular;
-  font-size: 15px;
+  font-size: 15.5px;
   & .social-likes {
     margin: 0 0 10px -6px;
   }
@@ -80,7 +80,7 @@
     text-align: left;
     }
   & .message-form-smileys {
-    margin: 0 0 5px;
+    margin-left: 0;
     float: left;
     top: -1px;
   }
@@ -97,9 +97,6 @@
       background: none;
       color: #4a90e2;
       cursor: pointer;
-      &:hover {
-        color: #000;
-      }
     }
     hr {
       margin: 5px -20px 5px;
@@ -192,10 +189,20 @@ div.comment-reply-btn {
   display: block;
   color: #9c9c9a;
 }
-
+[contenteditable=true] {
+ & > div+div{
+    display: inline;
+  }
+  & > div+div hr{
+    display: none;
+  }
+    & > div+div br{
+    display: none;
+  }
+}
 #blog-posts {
   font-family: 'handbookpro-regular';
-  font-size: 15px;
+  font-size: 15.5px;
   & .post-item-date {
     display: inline-block!important;
     margin-right: 40px;
@@ -290,7 +297,7 @@ div.comment-reply-btn {
 
 .post-more-btn {
   float: right;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 21px;
   color: #4a90e2;
   display: block;

@@ -68,10 +68,8 @@
             /* ticket */
             $(document).on('click', Ticket.tabs, Ticket.switch);
 
-            $(document).on('load', 'img', function(){
-                alert(1);
-            });
-
+            /* click cell online game*/
+            $(document).on('click', '.mx ul li', Game.do.move);
 
             /* new message*/
             $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
@@ -130,7 +128,7 @@
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
             "menu-navigation-mobile": Navigation.ready,
-
+            "prizes": Prize.init,
             "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,
             "communication-comments-replyform": Comments.after.replyForm,

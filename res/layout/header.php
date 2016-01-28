@@ -7,10 +7,8 @@
 
         <title>Lotzon</title>
 
-        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic'
-              rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/res/css/style.css">
-
         <?php if (isset($isMobile)) {
             if ($isMobile) {
                 ?>
@@ -20,15 +18,13 @@
             <?php }
         }
         ?>
-
         <link rel="stylesheet" href="/res/css/animate.css">
-        <link rel="stylesheet" href="/res/css/denis.css">
-
         <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
         <link rel="stylesheet" href="/res/css/social-likes_birman.css">
-
+        <link rel="stylesheet" href="/res/css/denis.css">
         <link rel="stylesheet" href="/res/css/olya.css">
         <link rel="stylesheet" href="/res/css/zerg.css">
+        <link rel="stylesheet" href="/res/css/game.css">
     </head>
 
     <body>
@@ -65,7 +61,6 @@
 
                             <div class="menu-btns">
                                 <!-- Menu Button -->
-
                                 <div class="menu-btn menu-btn-item"><i class="i-menu"></i></div>
                                 <!-- Profile Menu Button -->
                                 <div class="menu-profile-btn menu-btn-item"><i class="i-person"></i></div>

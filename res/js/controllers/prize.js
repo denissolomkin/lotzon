@@ -3,6 +3,7 @@
     Prize = {
 
         init: function () {
+        R.push("prizes/exchange");
         },
 
         update: {

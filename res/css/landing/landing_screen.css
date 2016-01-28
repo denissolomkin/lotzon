@@ -367,7 +367,7 @@ header .h-dt-b .b-tr .b-tr_td {display:table-cell;height:240px;width:100%;}
                             Promo-article styles
    ========================================================================== */
 
-input::-webkit-input-placeholder {color:#000; opacity: 0.3; font-style: italic; font-size: 15px;}
+input::-webkit-input-placeholder {color:#000; opacity: 0.3; font-style: italic; font-size: 15.5px;}
 input::-moz-placeholder          {color:#000; opacity: 0.3; font-style: italic;}
 input:-moz-placeholder           {color:#000; opacity: 0.3; font-style: italic;}
 input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
@@ -383,8 +383,8 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .rules-bk .rb-cs-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;cursor:pointer;font-size: 25px;color: #fff; z-index: 100}
 .rules-bk .rb-pg {padding:35px 60px;color:#000;}
 .rules-bk .rb-pg > h2 {margin:0 0 60px 0;padding:0;font-size:19px;text-transform:uppercase;}
-.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font-size:15px;text-transform:uppercase;}
-.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font-size:15px;}
+.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font-size:15.5px;text-transform:uppercase;}
+.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font-size:15.5px;}
 .rules-bk .rb-pg > p:last-child {margin:0;}
 
 .mail-popup.active-block {opacity:1;display:block;}
@@ -397,7 +397,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 }
 .mail-popup .lp-b .pu-b-c {width:30px;height:30px;position:absolute;top:0px;right:-50px;background:transparent url("../img/bg-but-close.png") no-repeat 0 0;cursor:pointer;}
 .mail-popup .lp-b .b-m {padding:40px 60px 60px 60px;position:relative;}
-.mail-popup .rf-txt {font-size:14px;color:#000;margin:50px 0 15px 0;}
+.mail-popup .rf-txt {font-size:14px;color:#000;margin:50px 0 15.5px 0;}
 .mail-popup .rf-txt > b {color:#c51e1e;font-weight:normal;}
 #reg-form .ch-b {padding:24px 0 0 0;text-align:center;font-size:16px;color:#000;margin-bottom:-35px;}
 #reg-form .ch-b .rs-sw {font-size:16px;text-decoration:none;color:#000; cursor: pointer;}
@@ -468,7 +468,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
     -o-transition: all 400ms ease;
     transition: all 400ms ease;
 }
-.mail-popup .lp-b .sl-bk .sl-bk-tl {font-size:15px;color:#000;text-align:center;margin-bottom:20px;}
+.mail-popup .lp-b .sl-bk .sl-bk-tl {font-size:15.5px;color:#000;text-align:center;margin-bottom:20px;}
 .mail-popup .lp-b .sl-bk.disabled {opacity:0.4;}
 .mail-popup .lp-b .sl-bk a {display:block;float:left;width:68px;height:48px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social-new.png");background-repeat:no-repeat;margin-right:20px;}
 .mail-popup .lp-b .sl-bk a:last-child {margin:0;}
@@ -502,8 +502,8 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .rules-bk .rb-cs-bt {width:30px;height:30px;position:absolute;top:0;right:-50px;cursor:pointer;}
 .rules-bk .rb-pg {padding:35px 60px;color:#000;}
 .rules-bk .rb-pg > h2 {margin:0 0 60px 0;padding:0;font-size:19px;text-transform:uppercase;}
-.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font-size:15px;text-transform:uppercase;}
-.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font-size:15px;}
+.rules-bk .rb-pg > h3 {margin:0 0 20px 0;padding:0;font-size:15.5px;text-transform:uppercase;}
+.rules-bk .rb-pg > p {margin:0 0 20px 0;padding:0;font-size:15.5px;}
 .rules-bk .rb-pg > p:last-child {margin:0;}
 
 .login-popup.active-block {opacity:1;display:block;}
@@ -617,7 +617,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
     -o-transition: all 400ms ease;
     transition: all 400ms ease;
 }
-.login-popup .lp-b .sl-bk .sl-bk-tl {font-size:15px;color:#000;text-align:center;margin-bottom:20px;}
+.login-popup .lp-b .sl-bk .sl-bk-tl {font-size:15.5px;color:#000;text-align:center;margin-bottom:20px;}
 .login-popup .lp-b .sl-bk.disabled {opacity:0.4;}
 .login-popup .lp-b .sl-bk a {display:block;float:left;width:58px;height:48px;border-width:1px;border-style:solid;background-image:url("../img/bg-promo-registration-social-new.png");background-repeat:no-repeat;margin-right:10px;}
 .login-popup .lp-b .sl-bk a:last-child {margin:0;}
@@ -661,7 +661,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 #game-won .gw-c-b .yr-b {float:left;width:620px;}
 #game-end .gw-c-b .yr-b {float:left;width:560px;}
 .yr-tb {list-style:none;margin:0;padding:0;}
-.yr-tb .yr-tt {margin-bottom:28px;overflow:hidden;zoom:1;font-size:15px;text-transform:uppercase;padding-bottom:2px;}
+.yr-tb .yr-tt {margin-bottom:28px;overflow:hidden;zoom:1;font-size:15.5px;text-transform:uppercase;padding-bottom:2px;}
 .yr-tb .yr-tt:last-child {margin-bottom:0;}
 .yr-tb .yr-tt .yr-tt-tn {color:#4c4c4c;float:left;width:90px;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);padding:13px 0 0 0;}
 .yr-tb .yr-tt .yr-tt-tr {list-style:none;margin:0;padding:0;float:left;}
@@ -690,9 +690,9 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;}
 .yr-yw-b {}
 .yr-yw-b .cb {width:100px;float:left;text-align:center;}
 .yr-yw-b .mb {width:100px;float:right;text-align:center;}
-.yr-yw-b .yw-t {font-size:15px;color:#000;text-transform:uppercase;text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);margin-bottom:11px;}
+.yr-yw-b .yw-t {font-size:15.5px;color:#000;text-transform:uppercase;text-shadow: 0 1px 0px rgba(255, 255, 255, 0.4);margin-bottom:11px;}
 .yr-yw-b .yw-t > b {display:block;font-size:45px;}
-.yr-yw-b  .yw-b {display:block;border:1px solid #000;font-size:15px;text-align:center;text-transform:uppercase;color:#000;text-decoration:none;}
+.yr-yw-b  .yw-b {display:block;border:1px solid #000;font-size:15.5px;text-align:center;text-transform:uppercase;color:#000;text-decoration:none;}
 
 #game-end {background-color:#b2d0d4;width:100%;height:100%;display:none;}
 #game-process {background-color:#b2d0d4;width:100%;height:100%;position:relative;display:none;}

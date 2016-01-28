@@ -14,12 +14,15 @@
 // MENUS ------------------------- //
 
 .menu-main {
-  width: 475px;
   a {
-    /*padding: 0 23px;*/
+    padding: 0 19px;
   }
 }
 
 .is-countdown {
   width: 200px;
 }
+.menu-main a span {
+	right: 10px;
+}
+

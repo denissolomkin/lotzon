@@ -89,8 +89,8 @@ html {
   overflow-x: hidden; }
 
 body {
-  font: 15px "PT Sans", sans-serif;
-  font: 15px "handbookpro-regular";
+  font: 15.5px "PT Sans", sans-serif;
+  font: 15.5px "handbookpro-regular";
   background: #f9f9f9;
   /*overflow-x: hidden;*/
   position: relative;
@@ -229,8 +229,8 @@ button {
   background: none;
   transition: all 0.2s linear; }
   .btn-flat:hover {
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    color: rgba(0, 0, 0, 0.5); }
+    color: #fff;
+    background: #000; }
   .btn-flat.active {
     border: 1px solid rgba(0, 0, 0, 0.3);
     color: rgba(0, 0, 0, 0.3); }
@@ -285,7 +285,7 @@ button {
 
 .content-box {
   margin: 0 -10px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   background: white; }
 
 .content-box-header {
@@ -335,7 +335,9 @@ button {
   text-transform: uppercase;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.49); }
   .content-box-tab:hover {
-    background: #d1e3e5; }
+    background: #d1e3e5;
+    background: rgba(74, 74, 74, 0.1);
+    text-shadow: none; }
   .content-box-tab.active {
     background: white;
     cursor: default; }
@@ -368,7 +370,7 @@ button {
 .content-box-cat {
   float: left;
   font-family: 'handbookpro-regular';
-  font-size: 15px;
+  font-size: 15.5px;
   color: #4D4D4D;
   margin-top: 14px; }
 
@@ -450,7 +452,7 @@ input.input-radio:checked + label.input-radio:before {
   background: white; }
 
 .message-form textarea {
-  font: 15px "PT Sans";
+  font: 15.5px "PT Sans";
   display: block;
   width: 100%;
   resize: none;
@@ -484,7 +486,7 @@ input.input-radio:checked + label.input-radio:before {
     font-size: 18px; }
 
 .input-file {
-  opacity: 0; }
+  display: none; }
 
 .message-form-btn {
   float: right;
@@ -515,6 +517,8 @@ input.input-radio:checked + label.input-radio:before {
   font-size: 19px;
   font-weight: normal;
   margin-bottom: 10px; }
+  .message-form-smileys.active {
+    opacity: 0.5; }
 
 .modal-error,
 .modal-loading {
@@ -1125,7 +1129,12 @@ input.input-radio:checked + label.input-radio:before {
     line-height: 0.22;
     position: relative;
     top: 50%;
-    transform: translateY(-53%); }
+    -webkit-transform: translate(0, -53%);
+    -khtml-transform: translate(0, -53%);
+    -moz-transform: translate(0, -53%);
+    -ms-transform: translate(0, -53%);
+    -o-transform: translate(0, -53%);
+    transform: translate(0, -53%); }
 
 @font-face {
   font-family: 'fontello';
@@ -1377,7 +1386,7 @@ div {
 .menu-profile-btn .i-person {
   background: none;
   top: 19px;
-  font-size: 15px;
+  font-size: 15.5px;
   position: relative; }
 
 .menu-balance-btn:before {
@@ -1416,11 +1425,14 @@ div {
 .content-box-tab {
   font: 15px / 55px Handbook-bold; }
 
+.content-box-tab > div {
+  position: relative; }
+
 .content-box-cat {
   margin-top: 14px; }
 
 .content-box-cat a {
-  font-size: 15px !important; }
+  font-size: 15.5px !important; }
 
 header .owl-theme .owl-controls .owl-page span {
   background: #fee518; }
@@ -1448,7 +1460,7 @@ header .owl-theme .owl-controls .owl-page span {
   line-height: 30px; }
 
 .header-right .slider-top .ct .n {
-  font-size: 15px;
+  font-size: 15.5px;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -3857,58 +3869,58 @@ header .owl-theme .owl-controls .owl-page span {
 .smiles {
   margin-left: -10px; }
 
-span.i-smilyk {
+span[class^="i-smile"] {
   display: block;
   float: left;
   height: 25px;
   padding-left: 10px;
   margin-bottom: 10px;
   text-align: right; }
-  span.i-smilyk:before {
+  span[class^="i-smile"]:before {
     display: inline-block;
     content: "";
     width: 25px;
     height: 25px;
     cursor: pointer; }
-  span.i-smilyk.angry:before {
+  span[class^="i-smile"].i-smile-angry:before {
     background: url(img/smiles.png) -4px -4px; }
-  span.i-smilyk.clown:before {
+  span[class^="i-smile"].i-smile-clown:before {
     background: url(img/smiles.png) -32px -4px; }
-  span.i-smilyk.confused:before {
+  span[class^="i-smile"].i-smile-confused:before {
     background: url(img/smiles.png) -60px -4px; }
-  span.i-smilyk.cool:before {
+  span[class^="i-smile"].i-smile-cool:before {
     background: url(img/smiles.png) -88px -4px; }
-  span.i-smilyk.crying:before {
+  span[class^="i-smile"].i-smile-crying:before {
     background: url(img/smiles.png) -116px -4px; }
-  span.i-smilyk.dislike:before {
+  span[class^="i-smile"].i-smile-dislike:before {
     background: url(img/smiles.png) -144px -4px; }
-  span.i-smilyk.gay:before {
+  span[class^="i-smile"].i-smile-gay:before {
     background: url(img/smiles.png) -172px -4px; }
-  span.i-smilyk.geek:before {
+  span[class^="i-smile"].i-smile-geek:before {
     background: url(img/smiles.png) -200px -4px; }
-  span.i-smilyk.happy:before {
+  span[class^="i-smile"].i-smile-happy:before {
     background: url(img/smiles.png) -228px -4px; }
-  span.i-smilyk.kiss:before {
+  span[class^="i-smile"].i-smile-kiss:before {
     background: url(img/smiles.png) -256px -4px; }
-  span.i-smilyk.laughing:before {
+  span[class^="i-smile"].i-smile-laughing:before {
     background: url(img/smiles.png) -284px -4px; }
-  span.i-smilyk.like:before {
+  span[class^="i-smile"].i-smile-like:before {
     background: url(img/smiles.png) -312px -4px; }
-  span.i-smilyk.money:before {
+  span[class^="i-smile"].i-smile-money:before {
     background: url(img/smiles.png) -340px -4px; }
-  span.i-smilyk.robot:before {
+  span[class^="i-smile"].i-smile-robot:before {
     background: url(img/smiles.png) -368px -4px; }
-  span.i-smilyk.security:before {
+  span[class^="i-smile"].i-smile-security:before {
     background: url(img/smiles.png) -4px -33px; }
-  span.i-smilyk.sleepi:before {
+  span[class^="i-smile"].i-smile-sleepi:before {
     background: url(img/smiles.png) -32px -33px; }
-  span.i-smilyk.smile:before {
+  span[class^="i-smile"].i-smile-smile:before {
     background: url(img/smiles.png) -60px -33px; }
-  span.i-smilyk.surprise:before {
+  span[class^="i-smile"].i-smile-surprise:before {
     background: url(img/smiles.png) -88px -33px; }
-  span.i-smilyk.tongue:before {
+  span[class^="i-smile"].i-smile-tongue:before {
     background: url(img/smiles.png) -116px -33px; }
-  span.i-smilyk.wink:before {
+  span[class^="i-smile"].i-smile-wink:before {
     background: url(img/smiles.png) -144px -33px; }
 
 .content-box-scroll-top {
@@ -3938,7 +3950,7 @@ span.i-smilyk {
 
 #blog-post-view {
   font-family: handbookpro-regular;
-  font-size: 15px; }
+  font-size: 15.5px; }
   #blog-post-view .social-likes {
     margin: 0 0 10px -6px; }
   #blog-post-view .post .title {
@@ -3974,7 +3986,7 @@ span.i-smilyk {
     background: #fafafa;
     text-align: left; }
   #blog-post-view .message-form-smileys {
-    margin: 0 0 5px;
+    margin-left: 0;
     float: left;
     top: -1px; }
   #blog-post-view hr {
@@ -3988,8 +4000,6 @@ span.i-smilyk {
     background: none;
     color: #4a90e2;
     cursor: pointer; }
-    #blog-post-view .message-form-wrapper button[type="submit"]:hover {
-      color: #000; }
   #blog-post-view .message-form-wrapper hr {
     margin: 5px -20px 5px; }
   #blog-post-view .message-form-wrapper:hover hr {
@@ -4062,9 +4072,18 @@ div.comment-reply-btn {
   display: block;
   color: #9c9c9a; }
 
+[contenteditable=true] > div + div {
+  display: inline; }
+
+[contenteditable=true] > div + div hr {
+  display: none; }
+
+[contenteditable=true] > div + div br {
+  display: none; }
+
 #blog-posts {
   font-family: 'handbookpro-regular';
-  font-size: 15px; }
+  font-size: 15.5px; }
   #blog-posts .post-item-date {
     display: inline-block !important;
     margin-right: 40px; }
@@ -4139,7 +4158,7 @@ div.comment-reply-btn {
 
 .post-more-btn {
   float: right;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 21px;
   color: #4a90e2;
   display: block;
@@ -4343,7 +4362,7 @@ div.comment-reply-btn {
     margin: 0 15px 15px 0; } }
 
 .cabinet-bonuses p {
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 20px; }
 
 .cabinet-bonuses .title {
@@ -4365,7 +4384,7 @@ div.comment-reply-btn {
 
 .bonus-form .title {
   margin-bottom: 10px;
-  font-size: 18px; }
+  font-size: 19px; }
 
 .bonus-form input {
   border-width: 0 0 1px 0;
@@ -4472,7 +4491,8 @@ div.comment-reply-btn {
 .bonus-banner-view-btn {
   cursor: pointer;
   color: #4a90e2;
-  font-family: 'Handbook-bold'; }
+  font-family: 'Handbook-bold';
+  font-size: 15px; }
   .bonus-banner-view-btn:hover {
     text-decoration: none; }
 
@@ -4546,7 +4566,7 @@ div.comment-reply-btn {
     width: 100%;
     border: none; }
   .banner-copy .title {
-    font-size: 15px;
+    font-size: 15.5px;
     margin-right: 6px; }
 
 .banner-copy-btn {
@@ -4581,7 +4601,8 @@ div.comment-reply-btn {
   margin-bottom: 15px; }
 
 #profile-bonuses .bold {
-  font-family: 'Handbook-bold'; }
+  font-family: 'Handbook-bold';
+  font-size: 15px; }
 
 #profile-bonuses .info_block p {
   margin-bottom: 30px; }
@@ -4595,7 +4616,7 @@ div.comment-reply-btn {
 
 #communication {
   font-family: 'handbookpro-regular';
-  font-size: 15px; }
+  font-size: 15.5px; }
   #communication .message-form hr {
     margin-top: 0; }
   #communication .message-form-wrapper button[type="submit"] {
@@ -4606,6 +4627,8 @@ div.comment-reply-btn {
     color: #4a90e2;
     cursor: pointer;
     font-family: Handbook-bold; }
+    #communication .message-form-wrapper button[type="submit"]:hover {
+      text-decoration: underline; }
   #communication hr {
     margin: 5px -20px 5px;
     border: none;
@@ -4721,7 +4744,7 @@ div.comment-reply-btn {
   text-align: center;
   position: absolute;
   top: 5px;
-  right: 10px; }
+  right: -9px; }
   .content-box-tab .count:hover {
     opacity: 0.5; }
   .content-box-tab .count:empty {
@@ -4755,7 +4778,7 @@ div.comment-reply-btn {
   padding: 0 3px 1px;
   line-height: 1;
   font-family: 'handbookpro-regular';
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 20px; }
   .enter-friend-name.error {
     border-color: #ff4343; }
@@ -4779,7 +4802,7 @@ div.comment-reply-btn {
   padding: 20px 0;
   border-radius: 2px;
   background: white;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   z-index: 100; }
 
 .nm-friend {
@@ -4820,10 +4843,12 @@ div.comment-reply-btn {
   .nm-selected .nm-friend-name {
     display: inline-block;
     text-align: center;
-    font-weight: bold;
+    font-family: 'Handbook-bold';
+    color: #000;
+    font-size: 15px;
     margin-left: 20px; }
   .nm-selected .nm-change {
-    font-size: 15px;
+    font-size: 15.5px;
     color: #ff4343;
     cursor: pointer;
     position: absolute;
@@ -4857,15 +4882,15 @@ div.comment-reply-btn {
     text-align: center;
     text-transform: uppercase;
     position: relative;
-    -webkit-transform: translate(0, -52%);
-    -khtml-transform: translate(0, -52%);
-    -moz-transform: translate(0, -52%);
-    -ms-transform: translate(0, -52%);
-    -o-transform: translate(0, -52%);
-    transform: translate(0, -52%);
+    -webkit-transform: translate(0, -50%);
+    -khtml-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
     top: 50%;
     font-size: 13px;
-    padding: 5px 30px; }
+    padding: 0 30px; }
     #communication-messages .cm-top .new-message:hover {
       background: #000;
       color: #fff; }
@@ -4888,7 +4913,7 @@ div.comment-reply-btn {
     top: 50%;
     letter-spacing: 0.3px; }
     #communication-messages .cm-top .write-admin:hover {
-      text-decoration: none; }
+      text-decoration: underline; }
   #communication-messages .cm-top hr {
     clear: both;
     position: absolute;
@@ -4923,7 +4948,7 @@ div.comment-reply-btn {
 
 #communication-messages-new {
   font-family: 'handbookpro-regular';
-  font-size: 15px; }
+  font-size: 15.5px; }
 
 .message {
   padding: 15px 10px 5px 0;
@@ -4937,7 +4962,11 @@ div.comment-reply-btn {
   .message.admin .message-img:before {
     display: none; }
   .message.admin .message-name {
-    font-weight: bold; }
+    font-family: 'Handbook-bold';
+    color: #000;
+    font-size: 15px; }
+    .message.admin .message-name:hover {
+      opacity: 0.85; }
   .message hr {
     margin: 15px -40px 5px -90px;
     border: none;
@@ -4984,7 +5013,12 @@ div.comment-reply-btn {
   display: table-cell;
   vertical-align: middle;
   width: auto;
-  margin-right: 0; }
+  margin-right: 0;
+  font-family: 'Handbook-bold';
+  color: #000;
+  font-size: 15px; }
+  #users-view-messages .message-name:hover {
+    opacity: 0.85; }
 
 #users-view-messages .message-form-actions {
   padding-top: 0; }
@@ -5023,6 +5057,9 @@ div.comment-reply-btn {
 #communication-messages-new .content-box-item, #users-view-message .content-box-item {
   padding-top: 40px; }
 
+#users-view-messages .message-text {
+  cursor: default; }
+
 .communication-comments {
   padding-bottom: 100px; }
 
@@ -5056,7 +5093,10 @@ div.comment-reply-btn {
 .comment-name a {
   display: inline-block;
   font-family: 'Handbook-bold';
-  color: #4A4A4A; }
+  color: #000;
+  font-size: 15px; }
+  .comment-name a:hover {
+    opacity: 0.85; }
 
 .comment-description {
   color: #4A4A4A; }
@@ -5081,19 +5121,21 @@ div.comment-reply-btn {
 .comment-like {
   opacity: 1;
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 0;
   padding-left: 20px;
   font-size: 14px;
-  background: none; }
+  background: none;
+  font-family: "handbookpro-regular"; }
   .comment-like:hover {
     background: none;
     color: #000; }
   .comment-like:before {
+    font: normal normal normal 14px/1 FontAwesome;
     width: 18px;
     height: 15px;
     position: absolute;
-    top: 2px;
+    top: 0;
     left: 0; }
   .comment-like.fa-heart:before {
     color: #FFEF00; }
@@ -5151,7 +5193,7 @@ form.loading > * {
 
 .message-form-wrapper {
   font-family: handbookpro-regular;
-  font-size: 15px; }
+  font-size: 15.5px; }
   .message-form-wrapper button[type="submit"] {
     float: right;
     border: none;
@@ -5160,6 +5202,8 @@ form.loading > * {
     color: #4a90e2;
     cursor: pointer;
     font-family: Handbook-bold; }
+    .message-form-wrapper button[type="submit"]:hover {
+      text-decoration: underline; }
   .message-form-wrapper .message-form-smileys {
     top: -1px; }
   .message-form-wrapper hr {
@@ -5178,10 +5222,10 @@ form.loading > * {
 .c-show-notifications {
   margin-left: 15px;
   color: #4a90e2;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer; }
   .c-show-notifications:hover {
-    text-decoration: none; }
+    text-decoration: underline; }
 
 .c-hide-notifications {
   display: block;
@@ -5205,13 +5249,14 @@ form.loading > * {
     position: absolute;
     top: 8px;
     right: 10px;
-    font-family: 'Handbook-bold'; }
+    font-family: 'Handbook-bold';
+    font-size: 15px; }
   .c-notifications-list .c-notification-date {
     margin-left: 20px; }
 
 .c-notification {
   position: relative;
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 5px;
   padding: 5px 10px; }
   .c-notification:hover {
@@ -5253,7 +5298,8 @@ form.loading > * {
     border-radius: 50%; }
 
 .c-notification-name {
-  font-weight: bold; }
+  font-family: 'Handbook-bold';
+  font-size: 15px; }
 
 .c-notification-date {
   white-space: nowrap; }
@@ -5296,7 +5342,11 @@ form.loading > * {
     top: 50%; }
 
 .message-name {
-  line-height: 1.27; }
+  font-family: 'Handbook-bold';
+  color: #000;
+  font-size: 15px; }
+  .message-name:hover {
+    opacity: 0.85; }
 
 .message-text {
   color: #8b8d8c;
@@ -5307,8 +5357,17 @@ form.loading > * {
 
 .message-form-area {
   cursor: text; }
-  .message-form-area .i-smilyk:first-child {
-    padding-left: 0; }
+  .message-form-area img[class^="i-smile"] {
+    padding-left: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    cursor: text;
+    max-width: 18px;
+    position: relative; }
+    .message-form-area img[class^="i-smile"]:first-of-type {
+      margin-left: 0; }
 
 .message-form-area {
   min-height: 22px; }
@@ -5382,11 +5441,11 @@ form.loading > * {
         width: auto; }
     .badges-container > div .title {
       font-family: 'Handbook-medium';
-      font-size: 15px;
+      font-size: 15.5px;
       line-height: 14px;
       padding: 0 0 4px 0; }
     .badges-container > div .txt {
-      font-size: 15px;
+      font-size: 15.5px;
       line-height: 18px; }
     .badges-container > div img {
       border-radius: 50em;
@@ -5488,7 +5547,7 @@ div > .games-previews {
     text-align: center; }
   .games-previews .flex-box .game-name {
     font-family: Handbook-bold;
-    font-size: 15px;
+    font-size: 15.5px;
     text-transform: uppercase;
     line-height: 1;
     margin: 5px 0; }
@@ -5520,7 +5579,7 @@ div > .games-previews {
   background: transparent; }
 
 #games-chance .game-fund > div {
-  font-size: 15px;
+  font-size: 15.5px;
   margin: 10px 0; }
   #games-chance .game-fund > div:first-child:nth-last-child(1) {
     font-size: 24px;
@@ -5548,10 +5607,13 @@ div > .games-previews {
       justify-content: center;
       align-items: center; }
     .games-view .info-top .balance {
+      transition: all 0.2s linear;
       text-transform: uppercase;
       height: auto;
       top: initial;
       transform: translate(0, 0); }
+      .games-view .info-top .balance:hover {
+        background: white; }
       .games-view .info-top .balance > * {
         display: block;
         float: left; }
@@ -5587,7 +5649,7 @@ div > .games-previews {
     justify-content: space-between;
     align-items: stretch;
     color: #4a4a4a;
-    font-size: 15px; }
+    font-size: 15.5px; }
   .games-view .description-block {
     box-sizing: border-box;
     width: 50%;
@@ -5614,7 +5676,7 @@ div > .games-previews {
           font-size: 32px; }
       .games-view .description-block .game-fund .title {
         border-right: 1px solid #fff;
-        font-size: 15px;
+        font-size: 15.5px;
         padding-top: 15px;
         width: calc(25% - 1px); }
       .games-view .description-block .game-fund .money {
@@ -5624,7 +5686,7 @@ div > .games-previews {
     .games-view .description-block .game-description {
       position: relative;
       padding: 20px 0 40px;
-      font-size: 15px;
+      font-size: 15.5px;
       line-height: 1.3;
       color: #4a4a4a;
       font-family: handbookpro-regular; }
@@ -5734,7 +5796,7 @@ div > .games-previews {
       padding: 5px 15px; }
 
 .game-settings .render-list-container {
-  font-size: 15px;
+  font-size: 15.5px;
   width: 100%; }
   .game-settings .render-list-container .render-list {
     margin-bottom: 30px; }
@@ -5804,7 +5866,7 @@ div > .games-previews {
     transition: background .5s linear; }
     .game-settings .players-list .player .name {
       flex-grow: 1;
-      font-size: 15px; }
+      font-size: 15.5px; }
       .game-settings .players-list .player .name:before {
         content: counter(my-awesome-counter);
         display: block;
@@ -5823,7 +5885,7 @@ div > .games-previews {
         max-width: 50px;
         max-height: 50px; }
     .game-settings .players-list .player .rating i {
-      font-size: 15px;
+      font-size: 15.5px;
       margin-left: 5px;
       color: #ffe634; }
 
@@ -6462,7 +6524,7 @@ and open the template in the editor.
   width: 30px;
   height: 30px;
   line-height: 29px;
-  font-size: 15px; }
+  font-size: 15.5px; }
   .ghd-ticket-number.false {
     background: white;
     border: 1px solid #535353; }
@@ -6490,7 +6552,7 @@ and open the template in the editor.
   text-align: center; }
 
 .ghd-game-inf table {
-  font-size: 15px;
+  font-size: 15.5px;
   width: 100%;
   margin-bottom: 10px; }
 
@@ -6601,7 +6663,7 @@ and open the template in the editor.
   .ticket-tabs li {
     width: 1000px;
     height: 40px;
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: bold;
     line-height: 26px;
     color: #4c4c4c;
@@ -6765,7 +6827,7 @@ and open the template in the editor.
   height: 41px;
   margin-right: 10px;
   float: left;
-  font: 15px  Handbook-bold;
+  font: 15.5px  Handbook-bold;
   line-height: 40px;
   color: #000;
   text-align: center;
@@ -6848,7 +6910,7 @@ and open the template in the editor.
   .ticket-fc-btn:before {
     content: "";
     position: absolute;
-    top: 13px;
+    top: 14px;
     left: 11px;
     width: 19px;
     height: 17px;
@@ -6856,7 +6918,8 @@ and open the template in the editor.
 
 .gold .add-ticket.ticket-btn {
   background: #ebdb9c;
-  color: #8f8e8e; }
+  color: #8f8e8e;
+  font-weight: normal; }
   .gold .add-ticket.ticket-btn:hover {
     background: #ebdb9c;
     color: #8f8e8e; }
@@ -7034,7 +7097,7 @@ and open the template in the editor.
   margin-bottom: 20px;
   background: white; }
   .matches-inf-wrapper.carousel {
-    box-shadow: 2px 2px 4px transparent;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     padding-bottom: 5px; }
 
 .matches-inf {
@@ -7071,7 +7134,7 @@ and open the template in the editor.
   padding-bottom: 20px; }
 
 .matches-inf td {
-  font-size: 15px;
+  font-size: 15.5px;
   color: #2b2b2b;
   padding-bottom: 15px; }
 
@@ -7093,7 +7156,7 @@ and open the template in the editor.
     margin-right: 0; }
 
 .ghd-tickets li {
-  font: 15px / 1 handbookpro-regular;
+  font: 15.5px / 1 handbookpro-regular;
   text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
   line-height: 38px;
   margin-bottom: 1px;
@@ -7136,7 +7199,7 @@ and open the template in the editor.
 
 .lottery-amimation-box {
   margin-top: 30px;
-  font: 15px / 1 handbookpro-regular;
+  font: 15.5px / 1 handbookpro-regular;
   text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4); }
 
 @media (min-width: 321px) {
@@ -7159,7 +7222,7 @@ and open the template in the editor.
       box-shadow: none; }
   .matches-inf {
     width: 48%;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5); }
     .matches-inf:first-child {
       float: left; }
     .matches-inf:last-child {
@@ -7257,7 +7320,7 @@ and open the template in the editor.
 
 .balls-count b {
   color: #4c4c4c;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: bold; }
 
 .after {
@@ -7286,7 +7349,7 @@ and open the template in the editor.
   cursor: pointer; }
 
 .tickets-number-result {
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 45px;
   color: #4c4c4c;
   font-weight: bold;
@@ -7339,7 +7402,7 @@ and open the template in the editor.
   .text-result p.text-result-top {
     color: #e7f6f7;
     margin-bottom: 20px;
-    font-size: 15px; }
+    font-size: 15.5px; }
 
 .tickets-number-result p {
   margin: 0; }
@@ -7396,7 +7459,7 @@ and open the template in the editor.
     margin-left: 0;
     padding: 0 15px; }
     .lottery-grid.timer-box .title {
-      font-size: 12px;
+      font-size: 13px;
       line-height: 14px;
       padding: 16px 0;
       max-width: 130px; }
@@ -7406,7 +7469,7 @@ and open the template in the editor.
     padding-left: 16px; }
   .lottery-grid .title {
     padding: 16px 16px 16px 22px;
-    font-size: 15px;
+    font-size: 15.5px;
     color: #4A4A4A;
     text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.5);
     text-transform: uppercase; }
@@ -7486,7 +7549,7 @@ and open the template in the editor.
   padding: 20px 10px 30px;
   font-family: handbookpro-regular;
   min-height: 0;
-  font-size: 15px;
+  font-size: 15.5px;
   color: #4D4D4D; }
   .cabinet-game-history.with-cat {
     padding-top: 0; }
@@ -7502,7 +7565,7 @@ and open the template in the editor.
     margin-right: 0; }
   .cabinet-game-history .gh-date {
     margin-bottom: 10px;
-    font-size: 15px; }
+    font-size: 15.5px; }
 
 .content-box-cat {
   margin-top: 10px;
@@ -7574,7 +7637,7 @@ and open the template in the editor.
       position: relative;
       left: 15px;
       top: 2px;
-      font-size: 15px;
+      font-size: 15.5px;
       font-weight: normal; }
       #lottery-history-view .content-box-header span.back {
         left: 10px; }
@@ -7599,14 +7662,14 @@ and open the template in the editor.
           line-height: 70px;
           left: 0; }
   #lottery-history-view .ghd-tickets li {
-    font-size: 15px;
+    font-size: 15.5px;
     margin-bottom: 0; }
     #lottery-history-view .ghd-tickets li ul li.filled-ball {
       margin-right: 17px; }
   #lottery-history-view .ghd-tickets li span {
     margin-right: 25px; }
   #lottery-history-view .ghd-won {
-    font: 15px / 1 'handbookpro-regular'; }
+    font: 15.5px / 1 'handbookpro-regular'; }
   #lottery-history-view .ghd-game-inf {
     font-family: 'handbookpro-regular';
     margin-top: 30px;
@@ -7618,7 +7681,7 @@ and open the template in the editor.
       height: 40px;
       line-height: 40px;
       text-transform: uppercase;
-      margin-bottom: 15px;
+      margin-bottom: 15.5px;
       text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4); }
     #lottery-history-view .ghd-game-inf .ghd-all-won {
       border: 0;
@@ -7660,7 +7723,8 @@ and open the template in the editor.
   .ticket-done b {
     text-shadow: 0 1px 0 #A9C4C7;
     padding: 20px 0;
-    color: #000; }
+    color: #000;
+    font-size: 15px; }
 
 @media (min-width: 360px) {
   .ticket-items {
@@ -7740,7 +7804,7 @@ and open the template in the editor.
 
 .prize-name {
   height: 47px;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.27;
   padding: 0 10px;
   font-family: 'handbookpro-regular';
@@ -7750,11 +7814,12 @@ and open the template in the editor.
   height: 40px;
   line-height: 40px;
   font-size: 21px;
-  font-weight: bold;
   background: #ffe700;
   color: #2b2b2b;
   padding-left: 15px;
-  margin: -1px; }
+  margin: -1px;
+  font-family: Handbook-bold;
+  font-size: 15px; }
 
 .prize-price span {
   font-size: 13px;
@@ -7765,7 +7830,7 @@ and open the template in the editor.
   width: 220px;
   height: 50px;
   line-height: 50px;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: bold;
   color: white;
   text-transform: uppercase;
@@ -7839,7 +7904,7 @@ and open the template in the editor.
     width: 100px; } }
 
 #prizes-exchange-goods-view {
-  font: 15px "handbookpro-regular"; }
+  font: 15.5px "handbookpro-regular"; }
 
 .exchange-prize .content-box-item {
   text-align: center; }
@@ -7878,7 +7943,7 @@ and open the template in the editor.
   letter-spacing: 0.3px; }
 
 .ex-prize-details {
-  font-size: 15px;
+  font-size: 15.5px;
   margin-bottom: 30px;
   letter-spacing: 0.3px; }
 
@@ -7918,7 +7983,8 @@ and open the template in the editor.
   background: none;
   color: #4a90e2;
   cursor: pointer;
-  font-family: Handbook-bold; }
+  font-family: Handbook-bold;
+  font-size: 15px; }
 
 .prize-delivery-inf table {
   width: 100%; }
@@ -7934,7 +8000,7 @@ and open the template in the editor.
 
 .prize-delivery-inf td:first-child {
   opacity: 0.5;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.27;
   padding-left: 30px;
   width: 115px; }
@@ -7942,11 +8008,12 @@ and open the template in the editor.
 .prize-delivery-inf td:last-child {
   padding-left: 0;
   line-height: 1.28;
-  font-family: 'Handbook-bold'; }
+  font-family: 'Handbook-bold';
+  font-size: 15px; }
 
 .personal-data-attention {
   margin-bottom: 20px;
-  font-size: 15px;
+  font-size: 15.5px;
   text-align: center; }
 
 .personal-data-attention span {
@@ -8124,15 +8191,29 @@ and open the template in the editor.
     padding-left: 0; }
 
 .ae-top {
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  position: relative;
+  margin: 0 -20px;
+  overflow: hidden;
+  height: 180px; }
 
 .ae-user-img {
   width: 150px;
   height: 150px;
-  float: left;
-  margin: 0 auto;
   border-radius: 50%;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative;
+  top: -2px;
+  margin-left: 15px; }
+
+.img-avatar-name {
+  position: absolute;
+  left: 185px;
+  top: 20px;
+  font-size: 25px;
+  color: #fff;
+  font-family: "handbookpro-regular";
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); }
 
 .ae-user-img img {
   display: block;
@@ -8141,6 +8222,15 @@ and open the template in the editor.
 
 .ae-inf {
   display: none; }
+
+.avatar-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  -webkit-filter: blur(8px); }
 
 .ae-personal-form {
   position: relative;
@@ -8153,7 +8243,7 @@ and open the template in the editor.
   left: 0;
   text-align: right;
   color: #b4aeae;
-  font-size: 15px;
+  font-size: 15.5px;
   z-index: 1; }
 
 .ae-personal-form-names li {
@@ -8167,7 +8257,7 @@ and open the template in the editor.
 .ae-personal-form .error-msg {
   display: none;
   color: #ff4242;
-  font-size: 15px;
+  font-size: 15.5px;
   position: absolute;
   top: 0;
   right: 30px; }
@@ -8182,7 +8272,7 @@ and open the template in the editor.
   padding: 0;
   padding-bottom: 1px;
   padding-left: 7px;
-  font: 15px "handbookpro-regular"; }
+  font: 15.5px "handbookpro-regular"; }
   .ae-personal-form-values input:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -8202,7 +8292,7 @@ and open the template in the editor.
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
-  font: 15px "handbookpro-regular"; }
+  font: 15.5px "handbookpro-regular"; }
   .ae-personal-form-names input:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -8254,7 +8344,7 @@ and open the template in the editor.
     position: relative;
     background: transparent;
     outline: none;
-    font: 15px "handbookpro-regular"; }
+    font: 15.5px "handbookpro-regular"; }
     .ae-personal-form-values select:focus {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -8280,17 +8370,13 @@ and open the template in the editor.
     top: 15px;
     z-index: 0; }
 
-.ae-name-block {
-  width: 540px; }
-  .ae-name-block i {
-    min-width: 80px;
-    display: inline-block; }
-  .ae-name-block li {
-    padding-left: 20px; }
-    .ae-name-block li:last-child {
-      border-bottom: none; }
-  .ae-name-block.ae-personal-form-values {
-    margin-left: 0; }
+.ae-name-block i {
+  display: inline-block; }
+
+.ae-name-block li {
+  padding-left: 20px; }
+  .ae-name-block li:last-child {
+    border-bottom: none; }
 
 .ae-personal-inf .title {
   text-align: center;
@@ -8312,7 +8398,7 @@ and open the template in the editor.
   width: 32px;
   height: 32px;
   line-height: 32px;
-  font-size: 15px;
+  font-size: 15.5px;
   text-align: center;
   cursor: pointer; }
   .ae-combination-box li:hover {
@@ -8350,7 +8436,8 @@ and open the template in the editor.
   margin: auto; }
   .ae-social span {
     color: #000;
-    font-family: "Handbook-bold"; }
+    font-family: "Handbook-bold";
+    font-size: 15px; }
 
 .ae-social-item {
   display: inline-block;
@@ -8602,7 +8689,7 @@ and open the template in the editor.
   line-height: 50px;
   margin: 0 -20px 30px;
   font-size: 16px;
-  border-top: 1px solid #b4aeae; }
+  border-top: 1px solid #eaeaea; }
 
 .ci-personal-form-names {
   position: absolute;
@@ -8627,15 +8714,16 @@ and open the template in the editor.
   padding: 0;
   padding-left: 150px;
   padding-bottom: 1px;
-  font-size: 15px;
+  font-size: 15.5px;
   border: none;
-  border-bottom: 1px solid #b4aeae;
+  border-bottom: 1px solid #eaeaea;
   border-radius: 0;
   -webkit-box-shadow: none;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+  font-family: "handbookpro-regular"; }
   .ci-personal-form-values input:focus {
     border-bottom: 2px solid #bed8d9;
     border-width: 0 0 2px; }
@@ -8647,21 +8735,6 @@ span.input-prefix {
   position: absolute;
   top: -1px;
   left: 150px; }
-
-.ci-save-btn {
-  display: block;
-  margin: auto;
-  width: 200px;
-  border: 1px solid #e6e6e6;
-  border-radius: 2px;
-  color: #b4aeae;
-  text-transform: uppercase;
-  text-align: center;
-  background: transparent;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 7px 0;
-  margin-bottom: 20px; }
 
 .cc-title {
   margin-bottom: 30px; }
@@ -8920,7 +8993,7 @@ span.input-prefix {
   padding: 0;
   padding-bottom: 1px;
   padding-left: 5px;
-  font: 15px "handbookpro-regular";
+  font: 15.5px "handbookpro-regular";
   display: inline-block;
   width: auto;
   vertical-align: middle; }
@@ -8962,7 +9035,7 @@ span.input-prefix {
   min-height: 550px; }
 
 #profile-edit .content-box-item, #user-view .content-box-item {
-  padding: 20px; }
+  padding: 0 20px 20px; }
 
 .c-form-title {
   height: 45px;
@@ -8971,7 +9044,8 @@ span.input-prefix {
   margin: 0 -20px;
   padding: 0 20px;
   color: #000;
-  font-family: "Handbook-bold"; }
+  font-family: "Handbook-bold";
+  font-size: 15px; }
 
 .c-form-stat .ae-personal-form-values li:last-child {
   border-bottom: 1px solid #eaeaea; }
@@ -8988,6 +9062,7 @@ span.input-prefix {
   background: none;
   background-color: transparent;
   font-family: "Handbook-bold";
+  font-size: 15px;
   opacity: 1;
   cursor: pointer; }
 
@@ -9001,7 +9076,8 @@ span.input-prefix {
     display: none; }
     .radio-text input:checked + span {
       color: #000;
-      font-family: "Handbook-bold"; }
+      font-family: "Handbook-bold";
+      font-size: 15px; }
   .radio-text span {
     display: inline-block;
     cursor: pointer; }
@@ -9046,23 +9122,17 @@ span.input-prefix {
   .ph-notice span {
     color: #ff4242; }
 
-.ph-header {
-  display: none; }
-
 .ph-item {
   margin: 0 -10px;
   padding: 20px 10px;
   cursor: pointer;
   position: relative;
-  border-top: 1px solid #fafafa; }
-  .ph-item > div {
-    display: table-row; }
+  border-top: 1px solid #eaeaea; }
   .ph-item:last-child {
-    border-bottom: 1px solid #fafafa; }
+    border-bottom: 1px solid #eaeaea; }
 
 .ph-inf-name,
 .ph-inf-value {
-  display: table-cell;
   padding: 2px 0; }
 
 .ph-inf-name {
@@ -9087,6 +9157,7 @@ span.input-prefix {
 .ph-header {
   margin: 0 -10px 20px;
   padding: 0 10px;
+  font-size: 15px;
   font-family: 'Handbook-bold'; }
 
 .ph-header-item {
@@ -9163,7 +9234,7 @@ span.input-prefix {
     margin-top: 20px;
     letter-spacing: 0.7px;
     font-family: 'handbookpro-regular';
-    font-size: 15px;
+    font-size: 15.5px;
     color: #4D4D4D; }
     #reports-referrals .content-box-item-top .report-top-wrapper > div {
       position: relative;
@@ -9173,12 +9244,14 @@ span.input-prefix {
       text-transform: uppercase;
       cursor: pointer; }
 
-#reports-referrals .r-header-item .tooltip-block {
-  position: relative;
-  color: #4990e2;
-  display: inline-block; }
-  #reports-referrals .r-header-item .tooltip-block .tooltip {
-    top: -60px; }
+#reports-referrals .r-header-item {
+  font-size: 15px; }
+  #reports-referrals .r-header-item .tooltip-block {
+    position: relative;
+    color: #4990e2;
+    display: inline-block; }
+    #reports-referrals .r-header-item .tooltip-block .tooltip {
+      top: -60px; }
 
 .r-item {
   line-height: 1.7;
@@ -9251,16 +9324,6 @@ span.input-prefix {
   cursor: pointer;
   position: relative;
   line-height: 1.4; }
-  .th-item:hover:before {
-    content: "";
-    clear: none;
-    display: block;
-    position: absolute;
-    width: 17px;
-    height: 30px;
-    background: url(img/sprite.png) -214px -187px;
-    top: 10px;
-    right: 10px; }
   .th-item:nth-child(odd) {
     background: #fafafa; }
 
@@ -9287,10 +9350,17 @@ span.input-prefix {
 
 .th-item-right div {
   float: left;
-  margin-right: 35px; }
+  margin-right: 0;
+  min-width: 50px; }
+  .th-item-right div.th-item-sum {
+    margin-right: 35px;
+    text-align: right; }
 
 .th-item.th-minus .th-item-sum {
   color: #ff466d; }
+
+#reports-payments-list .ph-item:first-child {
+  border-top: none; }
 
 @media (min-width: 530px) {
   .content-box-item.cabinet-transaction-history {
@@ -9302,6 +9372,22 @@ span.input-prefix {
     float: right;
     padding-top: 8px;
     margin-right: 30px; } }
+
+#reports-transactions .daterangepicker.dropdown-menu {
+  right: auto;
+  left: 5px;
+  top: 35px; }
+
+#reports-transactions .daterangepicker .calendar th, #reports-transactions .daterangepicker .calendar td {
+  font-size: 15px; }
+
+#reports-transactions .daterangepicker.dropdown-menu.opensright:before {
+  right: auto;
+  left: 5px;
+  top: 35px; }
+
+#reports-transactions .daterangepicker.opensright:after {
+  display: none; }
 
 #users .c-friend-date {
   color: #9b9b9b;
@@ -9318,13 +9404,8 @@ span.input-prefix {
   text-decoration: none;
   color: #4c4c4c; }
 
-#users .c-chronicle .c-friend {
-  opacity: 0.6; }
-  #users .c-chronicle .c-friend.new {
-    opacity: 1; }
-
 #users .c-friend-news {
-  font-size: 14px;
+  font-size: 15.5px;
   line-height: 1.2; }
   #users .c-friend-news a {
     color: #4a90e2;
@@ -9390,9 +9471,6 @@ span.input-prefix {
   font-size: 22px;
   margin-bottom: 15px; }
 
-#users .friends-count span {
-  margin-left: 20px; }
-
 #users .friends-search-input {
   display: block;
   width: 212px;
@@ -9400,8 +9478,15 @@ span.input-prefix {
   border-width: 0 0 1px;
   border-style: solid;
   border-color: #9b9b9b;
-  font-size: 15px;
-  background: transparent; }
+  font-size: 15.5px;
+  background: transparent;
+  font: 15.5px "handbookpro-regular"; }
+  #users .friends-search-input::-webkit-input-placeholder {
+    font: 15.5px "handbookpro-regular"; }
+  #users .friends-search-input:-ms-input-placeholder {
+    font: 15.5px "handbookpro-regular"; }
+  #users .friends-search-input::placeholder {
+    font: 15.5px "handbookpro-regular"; }
 
 #users .c-friend {
   float: left;
@@ -9442,16 +9527,18 @@ span.input-prefix {
 #users .c-friend-name {
   font-size: 15px;
   margin-bottom: 5px; }
+  #users .c-friend-name:hover {
+    opacity: 0.85; }
 
 #users .c-friend-inf {
-  font-size: 13px;
+  font-size: 15.5px;
   margin-bottom: 9px; }
 
 #users .c-friend-inf div {
   text-transform: capitalize; }
 
 #users .c-friend-msg {
-  font-size: 14px;
+  font-size: 15.5px;
   color: #4a90e2;
   text-decoration: none;
   position: absolute;
@@ -9467,7 +9554,7 @@ span.input-prefix {
     margin-bottom: 0; }
   #users .friends-search {
     position: absolute;
-    top: 23px;
+    top: 15px;
     left: 330px; } }
 
 #users .cg-balance {
@@ -9531,7 +9618,7 @@ span.input-prefix {
   margin: 0 10px 0 20px; }
 
 #users .cg-sum-currency {
-  font-size: 15px;
+  font-size: 15.5px;
   text-transform: uppercase;
   font-weight: bold; }
 
@@ -9540,7 +9627,7 @@ span.input-prefix {
   text-transform: uppercase;
   text-align: center;
   color: black;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: bold;
   display: block;
   width: 100%;
@@ -9597,14 +9684,20 @@ span.input-prefix {
     line-height: 23px;
     text-align: center;
     text-decoration: none; }
-  #users .c-friend-actions .yes {
+  #users .c-friend-actions .yes.btn-flat {
     border: 1px solid black;
-    border-radius: 2px;
+    border-radius: 0;
     color: black;
     margin-right: 15px;
-    padding: 0 15px; }
+    padding: 0 15px;
+    height: 25px;
+    line-height: 22px;
+    text-transform: none; }
+    #users .c-friend-actions .yes.btn-flat:hover {
+      color: #fff; }
   #users .c-friend-actions .no {
-    color: #ff4242; }
+    color: #ff4242;
+    background: none; }
     #users .c-friend-actions .no:hover {
       text-decoration: underline; }
 

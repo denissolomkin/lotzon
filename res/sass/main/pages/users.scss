@@ -39,15 +39,9 @@
     color: #4c4c4c;
   }
 
-  .c-chronicle .c-friend {
-    opacity: 0.6;
-    &.new {
-      opacity: 1;
-    }
-  }
 
   .c-friend-news {
-    font-size: 14px;
+    font-size: 15.5px;
     line-height: 1.2;
     & a {
       color: #4a90e2;
@@ -127,10 +121,6 @@
     margin-bottom: 15px;
   }
 
-  .friends-count span {
-    margin-left: 20px;
-  }
-
   .friends-search-input {
     display: block;
     width: 212px;
@@ -138,8 +128,18 @@
     border-width: 0 0 1px;
     border-style: solid;
     border-color: #9b9b9b;
-    font-size: 15px;
+    font-size: 15.5px;
     background: transparent;
+    font: 15.5px "handbookpro-regular";
+    &::-webkit-input-placeholder {
+      font: 15.5px "handbookpro-regular";
+    }
+    &:-ms-input-placeholder {
+      font: 15.5px "handbookpro-regular";
+    }
+    &::placeholder {
+      font: 15.5px "handbookpro-regular";
+    }
   }
 
   // ------------------------------ //
@@ -190,17 +190,20 @@
   .c-friend-name {
     font-size: 15px;
     margin-bottom: 5px;
+    &:hover{
+      opacity: 0.85;
+    }
   }
 
   .c-friend-inf {
-    font-size: 13px;
+    font-size: 15.5px;
     margin-bottom: 9px;
   }
   .c-friend-inf div {
       text-transform: capitalize;
   }
   .c-friend-msg {
-    font-size: 14px;
+    font-size: 15.5px;
     color: #4a90e2;
     text-decoration: none;
     position: absolute;
@@ -222,7 +225,7 @@
     }
     .friends-search {
       position: absolute;
-      top: 23px;
+      top: 15px;
       left: 330px;
     }
   }
@@ -302,7 +305,7 @@
   }
 
   .cg-sum-currency {
-    font-size: 15px;
+    font-size: 15.5px;
     text-transform: uppercase;
     font-weight: bold;
   }
@@ -312,7 +315,7 @@
     text-transform: uppercase;
     text-align: center;
     color: black;
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: bold;
     display: block;
     width: 100%;
@@ -381,15 +384,22 @@
       text-align: center;
       text-decoration: none;
     }
-    & .yes {
+    & .yes.btn-flat {
       border: 1px solid black;
-      border-radius: 2px;
+      border-radius: 0;
       color: black;
       margin-right: 15px;
       padding: 0 15px;
+      height: 25px;
+      line-height: 22px;
+      text-transform: none;
+      &:hover {
+        color:#fff;
+      }
     }
     & .no {
       color: #ff4242;
+      background: none;
       &:hover {
         text-decoration: underline;
       }

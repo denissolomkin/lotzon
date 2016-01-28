@@ -154,7 +154,7 @@
     width: 30px;
     height: 30px;
     line-height: 29px;
-    font-size: 15px;
+    font-size: 15.5px;
     &.false {
         background: white;
         border: 1px solid #535353;
@@ -191,7 +191,7 @@
 }
 
 .ghd-game-inf table {
-    font-size: 15px;
+    font-size: 15.5px;
     width: 100%;
     margin-bottom: 10px;
 }
@@ -332,7 +332,7 @@
     & li {
         width: 1000px;
         height: 40px;
-        font-size: 15px;
+        font-size: 15.5px;
         font-weight: bold;
         line-height: 26px;
         color: #4c4c4c;
@@ -552,7 +552,7 @@
         height: 41px;
         margin-right: 10px;
         float: left;
-        font: 15px  Handbook-bold;
+        font: 15.5px  Handbook-bold;
         line-height: 40px;
         color: #000;
         text-align: center;
@@ -669,7 +669,7 @@
     &:before {
         content: "";
         position: absolute;
-        top: 13px;
+        top: 14px;
         left: 11px;
         width: 19px;
         height: 17px;
@@ -681,6 +681,7 @@
         &.ticket-btn {
             background: #ebdb9c;
             color: #8f8e8e;
+            font-weight: normal;
             &:hover {
                 background: #ebdb9c;
                 color: #8f8e8e;
@@ -879,7 +880,7 @@
     margin-bottom: 20px;
     background: white;
     &.carousel {
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0);
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
         padding-bottom: 5px;
     }
 }
@@ -920,7 +921,7 @@
         padding-bottom: 20px;
     }
     & td {
-        font-size: 15px;
+        font-size: 15.5px;
         color: #2b2b2b;
         padding-bottom: 15px;
     }
@@ -952,7 +953,7 @@
 
 .ghd-tickets {
     & li {
-        font: 15px / 1 handbookpro-regular;
+        font: 15.5px / 1 handbookpro-regular;
         text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
         line-height: 38px;
         margin-bottom: 1px;
@@ -1009,7 +1010,7 @@
 .lottery-amimation-box {
     // float: left;
     margin-top: 30px;
-    font: 15px / 1 handbookpro-regular;
+    font: 15.5px / 1 handbookpro-regular;
     text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
 }
 
@@ -1043,7 +1044,7 @@
     }
     .matches-inf {
         width: 48%;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
         &:first-child {
             float: left;
         }
@@ -1157,7 +1158,7 @@
 
 .balls-count b {
     color: #4c4c4c;
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: bold;
 }
 
@@ -1195,7 +1196,7 @@
 }
 
 .tickets-number-result {
-    font-size: 15px;
+    font-size: 15.5px;
     line-height: 45px;
     color: #4c4c4c;
     font-weight: bold;
@@ -1259,7 +1260,7 @@
     &.text-result-top {
         color: #e7f6f7;
         margin-bottom: 20px;
-        font-size: 15px;
+        font-size: 15.5px;
     }
 }
 
@@ -1338,7 +1339,7 @@
         padding: 0 15px;
 
         & .title {
-            font-size: 12px;
+            font-size: 13px;
             line-height: 14px;
             padding: 16px 0;
             max-width: 130px;
@@ -1355,7 +1356,7 @@
 
     & .title {
         padding: 16px 16px 16px 22px;
-        font-size: 15px;
+        font-size: 15.5px;
         color: #4A4A4A;
         text-shadow: 0.2px 0.6px 1px rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
@@ -1466,7 +1467,7 @@
     padding: 20px 10px 30px;
     font-family: handbookpro-regular;
     min-height: 0;
-    font-size: 15px;
+    font-size: 15.5px;
     color: #4D4D4D;
     &.with-cat {
         padding-top: 0;
@@ -1488,7 +1489,7 @@
     }
     & .gh-date {
         margin-bottom: 10px;
-        font-size: 15px;
+        font-size: 15.5px;
     }
 
 
@@ -1592,7 +1593,7 @@
             position: relative;
             left: 15px;
             top: 2px;
-            font-size: 15px;
+            font-size: 15.5px;
             font-weight: normal;
             &.back {
                 left: 10px;
@@ -1628,7 +1629,7 @@
     }			
     & .ghd-tickets {
         & li {
-            font-size: 15px;
+            font-size: 15.5px;
             margin-bottom: 0;
             & ul {
                 & li {
@@ -1645,7 +1646,7 @@
         }
     }
     & .ghd-won {
-        font: 15px / 1 'handbookpro-regular';
+        font: 15.5px / 1 'handbookpro-regular';
     }
     & .ghd-game-inf {
         font-family:'handbookpro-regular';
@@ -1658,7 +1659,7 @@
             height: 40px;
             line-height: 40px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 15.5px;
             text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
         }
         & .ghd-all-won {
@@ -1716,6 +1717,7 @@
         text-shadow: 0 1px 0 #A9C4C7;
         padding: 20px 0;
         color: #000;
+        font-size: 15px;
     }
 
 }

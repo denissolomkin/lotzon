@@ -5,13 +5,27 @@
         <div class="content-box-item">
             <div class="ae-personal-inf">
                 <form action="/profile/edit" method="put" class="clearfix">
-                    <div class="ae-top uk-float-left">
-                        <div class="ae-user-img">
-                            <img src="{{ img }}" alt="">
+
+
+
+
+                    <div class="ae-top" >
+                    <div class="avatar-bg" style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover; filter: url(#Blur);" filter="url(/res/filter.svg#blur)">
+                    </div>
+
+                       <svg xmlns="http://www.w3.org/2000/svg" height="0">
+                            <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
+                                <feGaussianBlur stdDeviation="8" in="SourceGraphic"/>
+                            </filter>
+                        </svg>
+                     <div class="img-avatar-name">{{title.nickname}}</div>
+                     <div class="ae-user-img">
+                    
+                            <img src="{{avatar img id}}" alt="">
                         </div>
                     </div>
 
-                    <div class="uk-float-right">
+                    <div>
                         <ul class="ae-personal-form">
                             <li class="ae-personal-form-values ae-name-block">
                                 <ul>
@@ -19,7 +33,6 @@
 
                                     <li><i>{{i18n "title-profile-name"}}</i> <input placeholder=""  type="text" value="{{title.name}}"></li>
                                     <li><i>{{i18n "title-profile-surname"}}</i><input placeholder="" type="text" value="{{title.surname}}"></li>
-                                    <li class="empty"></li>
                                 </ul>
                             </li>
                         </ul>        

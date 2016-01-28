@@ -23,7 +23,7 @@ html {
   float: left;
   width: 670px;
   margin-bottom: 30px;
-  padding: 0 10px 0 0; }
+  padding: 0 10px 10px 0; }
 
 .content-box-item {
   padding: 20px; }
@@ -114,10 +114,9 @@ html {
   position: static;
   background: transparent;
   padding: 0;
-  font-size: 15px;
+  font-size: 15.5px;
   width: auto;
-  display: block;
-  font: 15px; }
+  display: block; }
   .menu > .menu-item {
     padding: 10px 0 0 0;
     min-width: 170px; }
@@ -143,17 +142,12 @@ html {
   overflow: hidden;
   position: static;
   background: transparent;
-  padding: 0;
-  width: 405px; }
-  .menu-main li {
-    display: table-cell; }
+  padding: 0; }
   .menu-main a {
     text-align: center;
-    /*float: left;*/
     height: 55px;
     line-height: 55px;
     text-transform: uppercase;
-    padding: 0 5px;
     font-weight: normal;
     position: relative;
     /*debug*/
@@ -209,7 +203,7 @@ html {
   border: none;
   line-height: 40px;
   font-weight: normal;
-  font-size: 15px;
+  font-size: 15.5px;
   transition: all 0.4s;
   opacity: 1; }
   .menu-balance-item.active {
@@ -247,7 +241,7 @@ html {
   margin-right: 5px; }
 
 .cabinet-balance-count span {
-  font-size: 15px; }
+  font-size: 15.5px; }
 
 .cabinet-balance-count .holder-money, .cabinet-balance-count .holder-points {
   font-family: handbookpro-regular;
@@ -272,8 +266,7 @@ html {
   -moz-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
   -o-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-  -khtml-transform: translate(0, -70%); }
+  transform: translate(0, -50%); }
 
 .balance-btn {
   float: none;
@@ -381,6 +374,19 @@ html {
   #lottery-history-view .ghd-game-inf .ghd-all-won .points {
     margin-left: 15px; }
 
+.menu-main li {
+  display: block;
+  float: left; }
+
+.menu-main a {
+  padding: 0 10px; }
+
+.is-countdown {
+  width: 200px; }
+
+.menu-main a span {
+  right: 2px; }
+
 #blog-posts .post-item-title {
   font-size: 25px;
   line-height: 30px;
@@ -437,7 +443,7 @@ html {
 .comment-content {
   padding-left: 70px;
   font-family: 'handbookpro-regular';
-  font-size: 15px; }
+  font-size: 15.5px; }
 
 .comment-img {
   display: block;
@@ -447,7 +453,9 @@ html {
 
 .comment-inf {
   padding-left: 0;
-  padding-right: 60px; }
+  padding-right: 60px;
+  position: relative;
+  top: 2px; }
 
 .comment-name {
   margin-right: 20px; }
@@ -469,7 +477,6 @@ html {
     text-decoration: underline; }
 
 .comment-like {
-  top: 0;
   cursor: pointer; }
 
 .comment-reply .comment-reply-btn {
@@ -516,7 +523,7 @@ div.comment-reply-btn {
 .cm-top {
   padding: 0 20px; }
   .cm-top .new-message {
-    padding: 5px 30px; }
+    padding: 0 30px; }
 
 .message {
   padding-right: 20px;
@@ -563,6 +570,9 @@ div.comment-reply-btn {
     display: none; }
   .content-box-tab [class*=" i-"] {
     display: none; }
+
+#users-view-messages .message-form hr {
+  margin: 5px -20px 5px; }
 
 @media all and (max-width: 1024px) {
   .games-previews {
@@ -635,7 +645,7 @@ div.comment-reply-btn {
       line-height: 40px;
       color: #464444;
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
       background: #a7d1d5; }
       .ticket-tabs li.active .ticket-number-sm {
         background: transparent; }
@@ -743,7 +753,8 @@ div.comment-reply-btn {
 
 .ticket-tabs li {
   width: 62px;
-  margin-right: 8px; }
+  margin-right: 8px;
+  line-height: 32px; }
 
 .ticket-item {
   padding: 25px 23px 8px !important; }
@@ -789,7 +800,7 @@ div.comment-reply-btn {
   width: 200px; }
 
 .ticket-items {
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   margin: 5px 0 7px;
   padding-left: 10px;
   display: table-header-group; }
@@ -830,7 +841,7 @@ div.comment-reply-btn {
   left: -20px; }
 
 .lottery-grid.timer-box {
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   margin-top: 5px; }
 
 .ticket-box {
@@ -945,7 +956,7 @@ div.comment-reply-btn {
   float: left; }
 
 #lottery .content-box-content .gh-inf {
-  font-size: 15px; }
+  font-size: 15.5px; }
 
 #lottery-process.lottery-won {
   min-width: 1024px; }
@@ -958,7 +969,7 @@ div.comment-reply-btn {
     max-width: 360px; }
 
 #lottery-ticket-item {
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   height: inherit; }
 
 #lottery-process.lottery-won {
@@ -1133,8 +1144,6 @@ div.comment-reply-btn {
   padding: 30px 20px; }
 
 @media (max-width: 1366px) {
-  .ae-name-block {
-    width: 470px; }
   .settings .strip {
     border-top: 1px solid #f5f5f5;
     margin-right: -20px;
@@ -1257,8 +1266,7 @@ div.comment-reply-btn {
   width: 15%; }
 
 .cabinet-transaction-history .content-box-cat {
-  float: none;
-  display: table;
+  float: right;
   margin: auto; }
 
 .cabinet-transaction-history .content-box-cat a {
@@ -1271,6 +1279,13 @@ div.comment-reply-btn {
 
 .cabinet-referrals .content-box-item-top {
   padding: 0 10px 0; }
+
+.th-item {
+  margin: 0 -20px;
+  padding: 13px 20px 0;
+  cursor: pointer;
+  position: relative;
+  line-height: 1.4; }
 
 .c-friend {
   width: 297px;
@@ -1308,12 +1323,12 @@ div.comment-reply-btn {
   .text-result {
     position: relative;
     float: right; }
-  .menu-main {
-    width: 475px; }
-    .menu-main a {
-      /*padding: 0 23px;*/ }
+  .menu-main a {
+    padding: 0 19px; }
   .is-countdown {
     width: 200px; }
+  .menu-main a span {
+    right: 10px; }
   .content-box-item.home-blog {
     padding: 20px; }
   .post-item-title {
@@ -1331,6 +1346,10 @@ div.comment-reply-btn {
     margin-right: 1%; }
   .message-text {
     width: 80%; }
+  #users-view-messages .message-form hr {
+    margin: 5px -30px 5px; }
+  #users-view-message .message-form hr {
+    margin: 5px -30px 5px; }
   /*.games-chance {
   padding: 30px 30px 0;
 }
@@ -1514,8 +1533,8 @@ div.comment-reply-btn {
   .ph-status-text {
     width: 15%; }
   .ph-header {
-    margin: 0 -20px 0;
-    padding: 0 20px;
+    margin: 0 -30px 0;
+    padding: 0 30px;
     height: 45px;
     line-height: 45px;
     background: #FAFAFA; }
@@ -1534,6 +1553,12 @@ div.comment-reply-btn {
     width: 15%; }
   .cabinet-referrals .content-box-item-top {
     padding: 0 10px 0; }
+  .th-item {
+    margin: 0 -30px;
+    padding: 13px 30px 0;
+    cursor: pointer;
+    position: relative;
+    line-height: 1.4; }
   .c-friend {
     width: 350px;
     margin: 0 40px 30px 0; }

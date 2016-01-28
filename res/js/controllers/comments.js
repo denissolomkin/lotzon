@@ -203,103 +203,145 @@
             }
         },
 
+
+         // showPreviewImage: function () {
+
+         //    var formData = new FormData;
+
+         //    $.each(this.files, function (i, file){
+         //       formData.append('files[0]', file);
+         //    });
+
+         //    fileInputResult = function(result) {
+         //       var span = document.createElement('span');
+         //        span.innerHTML = ['<img class="thumb" src="', result,
+         //                '" title="', escape(theFile.name), '"/>'].join('');
+         //        document.querySelector('.message-form-actions').insertBefore(span, null);  
+         //    }
+
+         //    xhrRequest('post', url, formData, fileInputResult, error);
+
+            
+         //    var i = 0,
+         //    files = this.files,
+         //    len = files.length;
+ 
+         //    for (; i < len; i++) {
+         //        console.log("Filename: " + files[i].name);
+         //        console.log("Type: " + files[i].type);
+         //        console.log("Size: " + files[i].size + " bytes");
+         //    }
+         // },
+
         showPreviewImage: function () {
+            var currentReview = {
+                image: '',
+                text: '',
+                id: 0,
+            };
 
-            var img = $(".image-container");
-            var $that = $(this),
-                formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму
-            formData.append('date_upl', new Date()); // добавляем данные, не относящиеся к форме
-            $.ajax({
-                url        : $that.attr('action'),
-                type       : $that.attr('method'),
-                contentType: false, // важно - убираем форматирование данных по умолчанию
-                processData: false, // важно - убираем преобразование строк по умолчанию
-                data       : formData,
-                dataType   : 'json',
-                success    : function (json) {
-                    if (json) {
-                        img.attr("src", json);
+            var answerReview = {
+                image: '',
+                text: '',
+                id: 0,
+                reviewId: null,
+            };
+            var span = document.createElement('span');
+                span.innerHTML = '<img class="thumb" src="">';
+            document.querySelector('.message-form-actions').insertBefore(span, null);  
+
+            var image = $('.thumb');
+            if(!currentReview.image)
+            {
+                // create form
+                var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
+                //$(button).parents('.photoalbum-box').prepend(form);
+
+                var input = form.find('input[type="file"]').damnUploader({
+                    url: '/review/uploadImage',
+                    fieldName: 'image',
+                    data: currentReview,
+                    dataType: 'json',
+                });
+
+
+
+                input.off('du.add').on('du.add', function(e) {
+
+                    e.uploadItem.completeCallback = function(succ, data, status) {
+                        // image.attr('src', data.res.imageWebPath).show();
+                        image.attr('src', data.res.imageWebPath);
+                        
+                        // $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-delete-review.png');
+                        currentReview.image = data.res.imageName;
+                    };
+
+                    e.uploadItem.progressCallback = function(perc) {
+                        console.log(perc)
                     }
-                }
-            });
 
+                    e.uploadItem.addPostData('Id', currentReview.id);
+                    e.uploadItem.addPostData('Image', currentReview.image);
+                    e.uploadItem.upload();
+                });
+
+                form.find('input[type="file"]').click();
+            } else {
+
+
+                $.ajax({
+                    url: "/review/removeImage/",
+                    method: 'POST',
+                    async: true,
+                    data: {image:currentReview.image},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 1) {
+
+                            span.remove();
+                            currentReview.image = null;
+
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Unexpected server error');
+                    }
+                });
+
+
+            }
         },
+
 
         showSmiles: function () {
             $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
+            $('.message-form-smileys').toggleClass('active');
         }, 
 
         chooseSmiles: function () {
+            
 
             div =  document.querySelector('.message-form-area');
             console.log(div);
-            smile = this.cloneNode(true);
-            console.log(smile);
-            div.appendChild(smile);
+            smile = this;
 
-            // console.log($(this).attr('class'));
-            // console.log($(this).closest('.message-form').find('.message-form-area').html());
-            // text =  $(this).closest('.message-form').find('.message-form-area').html();
-            // div = $(this).closest('.message-form').find('.message-form-area');
-            // element =  $(this);
-            // div.appendChild(element);
-            // $(this).closest('.message-form').find('.message-form-area').html(text + this);
+            console.log(smile);
+            div =  document.querySelector('.message-form-area');
+            console.log(div);
+            smile = this.cloneNode(true);
+
+
+            smile_data = this.className;
+            var img = document.createElement('img');
+            img.src = '/res/img/smiles_png/'+ smile_data + '.png';
+            img.className = smile_data;
+
+
+            div.appendChild(img);
 
         }
-
-
-
-
-
-        // $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
-        //     e.stopPropagation();
-
-        //     removePlayerAvatar(function(data) {
-        //         $('form[name="profile"]').find('.image-container').find('img').remove();
-        //         $('form[name="profile"]').find('.image-container').removeClass('true');
-        //     }, function() {}, function() {});
-        // });
-        // $('form[name="profile"]').find('.pi-ph').on('click', function(){
-        //     // create form
-        //     form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-
-        //     var input = form.find('input[type="file"]').damnUploader({
-        //         url: '/players/updateAvatar',
-        //         fieldName: 'image',
-        //         dataType: 'json',
-        //     });
-
-        //     var image = $('<img></img>');
-        //     var holder = $(this);
-        //     if (holder.find('img').length) {
-        //         image = holder.find('img');
-        //     }
-
-        //     input.off('du.add').on('du.add', function(e) {
-
-        //         e.uploadItem.completeCallback = function(succ, data, status) {
-        //             image.attr('src', data.res.imageWebPath);
-
-        //             holder.addClass('true');
-        //             holder.append(image);
-
-        //             $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
-        //                 e.stopPropagation();
-
-        //                 removePlayerAvatar(function(data) {
-        //                     $('form[name="profile"]').find('.pi-ph').find('img').remove();
-        //                     $('form[name="profile"]').find('.pi-ph').removeClass('true');
-        //                 }, function() {}, function() {});
-        //             });
-        //         };
-
-        //         e.uploadItem.progressCallback = function(perc) {}
-        //         e.uploadItem.upload();
-        //     });
-
-        //     form.find('input[type="file"]').click();
-        // })
-
 
     }
 

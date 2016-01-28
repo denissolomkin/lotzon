@@ -74,7 +74,7 @@
       line-height: 40px;
       color: #464444;
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
       background: #a7d1d5;
       & .ticket-number-sm {
         background: transparent;
@@ -211,6 +211,7 @@
 .ticket-tabs li {
   width: 62px;
   margin-right: 8px;
+  line-height: 32px;
 }
 
 .ticket-item {
@@ -280,7 +281,7 @@
 }
 
 .ticket-items {
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   margin: 5px 0 7px;
   padding-left: 10px;
   display: table-header-group;
@@ -338,7 +339,7 @@
 }
 
 .lottery-grid.timer-box {
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   margin-top: 5px;
 }
 
@@ -477,7 +478,7 @@
     float: left;
 }
 #lottery .content-box-content .gh-inf {
-    font-size: 15px;
+    font-size: 15.5px;
 }
 #lottery-process.lottery-won {
   min-width: 1024px;
@@ -492,7 +493,7 @@
   }
 }
 #lottery-ticket-item {
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   height: inherit;
 
 }

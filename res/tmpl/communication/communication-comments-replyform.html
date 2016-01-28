@@ -5,39 +5,37 @@
             <input type="hidden" name="user_id" value="{{user.id}}">
             <input type="hidden" name="comment_id" value="{{or comment_id id}}">
 
-            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">
-                {{#if user.name}}<span>{{user.name}}</span>,&nbsp;{{/if}}
-            </div>
+            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">{{#if user.name}}{{user.name}},&nbsp;{{/if}}</div>
 
             <div class="message-form-actions clearfix">
                  <label class="input-file-wrapper  fa fa-file-image-o">
-                    <input type="file" class="input-file">
+                    <input type="file" class="input-file" name="input-file">
                 </label>
             <div class="clearfix">  
                 <button name="submit" type="submit">{{i18n "button-send"}}</button>
                 <div class="message-form-smileys i-smile"></div>
             </div>
             <div class="smiles clearfix hidden">
-                <span class="angry i-smilyk"></span>
-                <span class="clown i-smilyk"></span>
-                <span class="confused i-smilyk"></span>
-                <span class="cool i-smilyk"></span>
-                <span class="crying i-smilyk"></span>
-                <span class="dislike i-smilyk"></span>
-                <span class="gay i-smilyk"></span>
-                <span class="geek i-smilyk"></span>
-                <span class="happy i-smilyk"></span>
-                <span class="kiss i-smilyk"></span>
-                <span class="laughing i-smilyk"></span>
-                <span class="like i-smilyk"></span>
-                <span class="money i-smilyk"></span>
-                <span class="robot i-smilyk"></span>
-                <span class="security i-smilyk"></span>
-                <span class="sleepi i-smilyk"></span>
-                <span class="smile i-smilyk"></span>
-                <span class="surprise i-smilyk"></span>
-                <span class="tongue i-smilyk"></span>
-                <span class="wink i-smilyk"></span>
+                <span class="i-smile-angry"></span>
+                <span class="i-smile-clown"></span>
+                <span class="i-smile-confused"></span>
+                <span class="i-smile-cool"></span>
+                <span class="i-smile-crying"></span>
+                <span class="i-smile-dislike"></span>
+                <span class="i-smile-gay"></span>
+                <span class="i-smile-geek"></span>
+                <span class="i-smile-happy"></span>
+                <span class="i-smile-kiss"></span>
+                <span class="i-smile-laughing"></span>
+                <span class="i-smile-like"></span>
+                <span class="i-smile-money"></span>
+                <span class="i-smile-robot"></span>
+                <span class="i-smile-security"></span>
+                <span class="i-smile-sleepi"></span>
+                <span class="i-smile-smile"></span>
+                <span class="i-smile-surprise"></span>
+                <span class="i-smile-tongue"></span>
+                <span class="i-smile-wink"></span>
 
                 <span class="laughing i-smilyk"></span>
                 <span class="like i-smilyk"></span>

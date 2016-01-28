@@ -26,7 +26,7 @@
 .comment-content {
   padding-left: 70px;
   font-family: 'handbookpro-regular';
-  font-size: 15px;
+  font-size: 15.5px;
 }
 
 .comment-img {
@@ -39,6 +39,8 @@
 .comment-inf {
   padding-left: 0;
   padding-right: 60px;
+  position: relative;
+  top: 2px;
 }
 
 .comment-name {
@@ -66,7 +68,6 @@
 }
 
 .comment-like {
-  top: 0;
   cursor: pointer;
 }
 .comment-reply .comment-reply-btn {
@@ -132,7 +133,7 @@ div.comment-reply-btn {
 .cm-top {
   padding: 0 20px;
   & .new-message {
-    padding: 5px 30px;
+    padding: 0 30px;
   }
 }
 
@@ -202,3 +203,11 @@ div.comment-reply-btn {
       display: none;
     }
   }
+  
+#users-view-messages {
+    & .message-form {
+    hr {
+      margin: 5px -20px 5px; 
+    }
+  }
+ } 

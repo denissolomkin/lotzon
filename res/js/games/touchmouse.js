@@ -177,12 +177,10 @@
 
         status: function (status) {
 
-
+            return;
             if (typeof statusDiv === 'undefined') {
-
                 DOM.insert('<div id="statusDiv" style="z-index:10000;position: fixed;bottom:0;right:50%;background: white;"></div>', document.getElementsByTagName('body')[0]);
                 statusDiv = document.getElementById('statusDiv');
-
             } else {
                 // console.log('Type: ' + Drag.options.type + ' Status: ' + status);
             }

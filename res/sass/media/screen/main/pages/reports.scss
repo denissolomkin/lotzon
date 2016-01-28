@@ -114,8 +114,7 @@
 
 
 .cabinet-transaction-history .content-box-cat {
-  float: none;
-  display: table;
+  float: right;
   margin: auto;
 }
 
@@ -132,4 +131,12 @@
 }
 .cabinet-referrals .content-box-item-top {
     padding: 0 10px 0;
+}
+
+.th-item {
+    margin: 0 -20px;
+    padding: 13px 20px 0;
+    cursor: pointer;
+    position: relative;
+    line-height: 1.4;
 }
