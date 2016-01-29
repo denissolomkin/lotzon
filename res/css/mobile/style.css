@@ -184,6 +184,10 @@ body #menu-navigation-mobile .menu-balance-inf > div {
 .site-overlay {
   display: none; }
 
+.pushy-active {
+  height: 100%;
+  overflow: hidden; }
+
 .pushy-active .site-overlay {
   display: block;
   position: fixed;

@@ -203,7 +203,8 @@ body #menu-navigation-mobile .menu-balance-inf {
     display: none;
 }
 .pushy-active {
-    // position: fixed;
+    height:100%;
+    overflow: hidden;
 }
 .pushy-active .site-overlay {
     display: block;
