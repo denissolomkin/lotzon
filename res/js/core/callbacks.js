@@ -2,37 +2,30 @@
 (function () {
 
     Callbacks = {
-
         "init": function () {
 
             EventListener.on({
-
                 'click': [
-
                     /* global */
                     ['a', R.push],
-
                     /* messages */
                     {".mark-read": Messages.do.markRead},
-
                     /* notifications */
                     {".close-notification": Comments.do.closeNotification},
                     {".c-show-notifications": Comments.do.showNotifications},
                     [".c-hide-notifications", Comments.do.deleteNotifications],
                     [".close-list", Comments.do.closeNotifications],
                     [".view-comment", Comments.do.viewComment, 1],
-
                     /* new reply */
                     {".comment-reply-btn": Comments.do.replyForm},
                     {".comment-content": Comments.do.mobileForm},
-
                     //
                     {".back": Navigation.do.backBlock},
                     {".close-pop-box": Content.destroyPopBox}
 
                 ]
             });
-            
+
             /* todo
              Event.window([
              {'resize': Device.do.resize},
@@ -48,12 +41,14 @@
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
 
             $(document).on('click', Device.do.hide);
-            // $(document).on('change', '.input-file-wrapper', function(){alert('aupdlfjsl');});
+
             $(document).on('change', '.input-file', Comments.showPreviewImage);
-             /*smiles*/
+            /*smiles*/
             $(document).on('click', ".message-form-smileys", Comments.showSmiles);
             $(document).on('click', ".smiles span", Comments.chooseSmiles);
-            // $(document).on('click', '.prize a', Prize.validate.balance);
+
+            $(document).on("paste", '[contenteditable]', Comments.pasteText);
+            $(document).on("blur keyup paste input", '[contenteditable]', Comments.checkInput);
 
             /* navigation */
             $(document).on('touchstart', '.site-overlay', function () {
@@ -62,7 +57,22 @@
             $(document).on('touchmove', '.site-overlay', function () {
                 return false
             });
-            $(document).on('touchend', '.site-overlay', Device.do.hide);
+
+            // stop "Device.do.hide" on .toggle-btn click | add toggle-slide
+            $(document).on('touchend click', '.toggle-btn', function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                $('.toggle-btn').not($(this)).removeClass('active').next('ul').slideUp("fast");
+                $(this).toggleClass('active').next('ul').slideToggle("fast");
+            });
+
+            $(document).on('touchend click', '.site-overlay', Device.do.hide);
+
+
+            $(document).on('touchend', function (event) {
+                event.stopPropagation();
+            });
             $('.go-to-top').on('click', Device.do.goTop);
 
             /* ticket */
@@ -75,7 +85,7 @@
             $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
             $(document).on('click', ".nm-change", Messages.do.clearUser);
 
-           
+
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -98,7 +108,7 @@
 
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
 
-            
+
 
 
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
@@ -121,9 +131,7 @@
             $(document).on('click', '.support h1', Support.do.collapse);
 
         },
-
         "get": {
-
             "menu-slider": Slider.after,
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
@@ -133,7 +141,6 @@
             "blog-post-view-comments-replyform": Comments.after.replyForm,
             "communication-comments-replyform": Comments.after.replyForm,
             "communication-comments-view": Comments.after.showComment,
-
             "games-online": Carousel.initOwl,
             "games-online-view": Games.online.init,
             "games-online-view-now-list": Games.online.timeout,
@@ -141,30 +148,24 @@
             "games-chance": Carousel.initOwl,
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
-
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
-
             "communication-messages": Messages.init,
-
             "users-view-messages": Messages.after.markRead,
-
             "lottery": Lottery.init,
             "lottery-history-view": Lottery.view,
             "lottery-ticket-item": Ticket.activate,
             "lottery-ticket-tabs": Ticket.switch,
-
             "reports-transactions": Content.initDaterange,
             "reports-referrals": Content.initDaterange,
-            
             "support-rules": Support.init,
             "support-faq": Support.init,
             "games-random": Games.random.init,
-            "games-moment": Games.random.init
+            "games-moment": Games.random.init,
+            "logout": Navigation.menu.hide
 
 
         },
-
         "post": { // new
 
             "profile-convert": Player.updateBalance,
@@ -178,38 +179,28 @@
             "users-requests-view": Profile.after.request
 
         },
-
         "error": {
-
             "lottery-gold": Ticket.error.gold,
             "prizes-exchange-goods": Prize.error.exchange,
             "lottery-ticket": Ticket.update
 
         },
-
         "put": { // update
 
             "profile-edit": Profile.update.details,
             "profile-settings": Profile.update.settings,
             "profile-billing": Profile.update.billing,
-
         },
-
         "delete": {
-
             "communication-notifications": Comments.renderNotifications,
             "users-view-messages": Messages.after.markRead,
-
         },
-
         "validate": {
-
             "lottery-ticket": Ticket.validate,
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
-
         }
 
     };

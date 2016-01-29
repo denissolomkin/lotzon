@@ -1,14 +1,4 @@
 (function () {
-    
-//    var it = document.createElement('span');
-//    it.setAttribute('class','count');
-//    it.innerHTML = Player.getCount('menu');
-//    document.querySelector('.menu-btn').appendChild(it);
-    
-//    var count = Player.getCount(key);
-//            return '<span class="count count-' + key + '"'
-//            + (count ? '' : ' style="display:none;"')
-//            + '>' + count + '</span>';
 
     typeof I === 'undefined' && (I = {});
     Object.deepExtend(I, {
@@ -41,7 +31,6 @@
         body: null,
 
         init: function (init) {
-
             D.log('Navigation.init', 'menu');
             Object.deepExtend(this, init);
 
@@ -64,6 +53,12 @@
 
             this.loadedBlocks = 0;
 
+            // menu buttons
+            R.push({
+                'template': 'menu-buttons',
+                'json': Player
+            });
+            
             // Balance menu
             R.push({
                 'template': 'menu-balance',
@@ -122,7 +117,6 @@
                     return false;
                 else
                     $(this).addClass('active');
-
                 switch (menuClass) {
                     case I.menuBtn:
                         if (isMobile) {
@@ -164,12 +158,10 @@
                     default:
                         break;
                 }
-                
-
             },
 
             switch: function () {
-
+                
                 D.log('Navigation.menu.switch', 'menu');
                 if (Device.isMobile()) {
                     $(I.menuMore).removeClass('menu-item');
@@ -188,7 +180,6 @@
             },
 
             hide: function () {
-
                 D.log('Navigation.menu.hide', 'menu');
                 $(I.menuProfile + ":visible").fadeOut(200);
                 $(I.menuBalance + ":visible").fadeOut(200);

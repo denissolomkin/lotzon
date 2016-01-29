@@ -59,16 +59,9 @@
                             <nav id="menu-navigation" class="menu"></nav>
                             <!-- end of MENU -->
 
-                            <div class="menu-btns">
-                                <!-- Menu Button -->
-                                <div class="menu-btn menu-btn-item"><i class="i-menu"></i></div>
-                                <!-- Profile Menu Button -->
-                                <div class="menu-profile-btn menu-btn-item"><i class="i-person"></i></div>
-
-                                <!-- Balance Menu Button -->
-                                <div class="menu-balance-btn menu-btn-item"></div>
-                                <div class="menu-logout-btn menu-btn-item"></div>
-                            </div>
+                            <!-- MENU buttons -->
+                            <div id="menu-buttons" class="menu-btns"></div>
+                            <!-- end of MENU buttons -->
 
 
                         </div>

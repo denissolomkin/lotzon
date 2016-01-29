@@ -33,6 +33,21 @@
     height: 50px; }
   .header .header-logo {
     margin-left: 10px; }
+  .header span.count {
+    font-size: 16px;
+    color: #fff;
+    padding: 1px 5px;
+    background: #fd2502;
+    line-height: 1;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    border-radius: 50em;
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 1px solid #fff; }
 
 .menu-profile-btn {
   display: none; }
@@ -82,10 +97,10 @@ body #menu-navigation-mobile .menu-balance-inf > div {
   -webkit-overflow-scrolling: touch;
   box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.5);
   text-transform: uppercase; }
-  .pushy li .count {
+  .pushy li span.count {
     font-size: 16px;
     color: #fff;
-    padding: 2px 6px;
+    padding: 1px 5px;
     background: #979797;
     line-height: 1;
     display: inline-block;
@@ -95,24 +110,19 @@ body #menu-navigation-mobile .menu-balance-inf > div {
     text-align: center;
     position: absolute;
     top: 15px;
-    right: 20px; }
+    right: 20px;
+    border: 1px solid #fff; }
   .pushy li .toggle-btn {
-    /*&.active{*/ }
-    .pushy li .toggle-btn.active {
-      /*color: red !important;*/ }
-      .pushy li .toggle-btn.active + ul {
-        transition: all 1s linear 0s;
-        /*display: block !important;*/
-        max-height: 1000px; }
-      .pushy li .toggle-btn.active .btn-arrows .i-arrow-top {
-        display: block; }
-      .pushy li .toggle-btn.active .btn-arrows .i-arrow-down {
-        display: none; }
+    cursor: pointer; }
+    .pushy li .toggle-btn.active .btn-arrows .i-arrow-top {
+      display: block; }
+    .pushy li .toggle-btn.active .btn-arrows .i-arrow-down {
+      display: none; }
   .pushy li > *:not(ul) {
     height: 50px !important;
     font-size: 15.5px;
     line-height: 50px;
-    padding-left: 30px;
+    padding-left: 15px;
     padding-right: 30px;
     position: relative; }
   .pushy li .btn-arrows {
@@ -130,9 +140,11 @@ body #menu-navigation-mobile .menu-balance-inf > div {
     .pushy > ul > li > *:not(ul) i[class^="i-"]:before {
       margin-right: 10px; }
   .pushy > ul > li > ul {
-    transition: all 0s linear 0s;
+    /*                transition: max-height 1s linear;
+                transition-delay: 0s;*/
     overflow: hidden;
-    max-height: 0; }
+    /*max-height: 0;*/
+    display: none; }
     .pushy > ul > li > ul > li {
       border-bottom: 1px solid rgba(203, 199, 199, 0.5);
       /*padding-left: 20px;*/
@@ -263,11 +275,14 @@ body #menu-navigation-mobile .menu-balance-inf > div {
     line-height: 40px;
     margin-bottom: 0; }
     #menu-navigation-mobile .menu-balance-inf > div {
-      float: left;
+      /*float: left;*/
+      /*margin-right: 20px;*/
+      float: right;
       width: auto;
-      margin-right: 20px;
       height: 40px;
       position: relative; }
+      #menu-navigation-mobile .menu-balance-inf > div:first-child {
+        float: left; }
       #menu-navigation-mobile .menu-balance-inf > div > span {
         font-size: 15.5px;
         font-weight: bold; }

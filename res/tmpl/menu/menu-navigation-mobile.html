@@ -1,9 +1,8 @@
 <div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
     <ul class="{{@key}}">
         <li>
-            <a href="" class="toggle-btn">
+            <div  class="toggle-btn">
             <div class="menu-balance-inf clearfix">
-                    
                 <div>
                     <i class="i-purse"></i>
                     <span class="holder-money">{{player "balance.money"}}</span>
@@ -16,8 +15,8 @@
                 {{{countHTML .}}}
                 <div class="btn-arrows"><i class="i-arrow-down"></i><i class="i-arrow-top"></i></div>
             </div>
-            </a>
-            <ul style="display: block;">
+            </div>
+            <ul>
                 <li>
                     <a href="/profile/cashout" class="menu-balance-item">{{i18n "button-balance-cashout"}}{{{countHTML .}}}</a>
                 </li>
@@ -36,11 +35,11 @@
         <li>
             
             {{#if (eq @key "menu-profile") }}
-            <a href="" class="toggle-btn">
+            <div  class="toggle-btn">
             <i class="i-person"></i>
             {{i18n @key}}{{{countHTML .}}}
             <div class="btn-arrows"><i class="i-arrow-down"></i><i class="i-arrow-top"></i></div>
-            </a>
+            </div>
             {{/if}}
             
             
