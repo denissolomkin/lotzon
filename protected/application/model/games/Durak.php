@@ -469,12 +469,13 @@ class Durak extends Game
 
     public function doMove($card=null,$table=null)
     {
-        #echo"Делаем ход $card $table \n";
 
         if($card) {
 
             list($x, $y) = $card;
             $playerId = $this->getClient()->id;
+
+            echo "Делаем ход $x x $y $table \n";
 
             if($table && $table=='revert'){
                 $this->revertMove();
