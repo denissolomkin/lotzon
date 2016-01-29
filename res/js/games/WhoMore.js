@@ -47,7 +47,7 @@
 
             if (App.players)
                 $.each(App.players, function (index, value) {
-                    var class_player = value.pid == Player.Id ? 'l' : 'r';
+                    var class_player = value.pid == Player.id ? 'l' : 'r';
                     $('.gm-pr.' + class_player + ' .pr-cl b').html(value.moves).hide().fadeIn(200);
                     $('.gm-pr.' + class_player + ' .pr-pt b').html(value.points).hide().fadeIn(200);
                 });
@@ -110,7 +110,7 @@
             cell = cell || App.cell;
 
             if(cell) {
-                var class_cell = (cell.player == Player.Id ? 'm' : 'o'),
+                var class_cell = (cell.player == Player.id ? 'm' : 'o'),
                     $cell = $('.mx li[data-cell="' + cell.coord + '"]');
 
                 $('.mx .table ul li.' + class_cell + '.last')

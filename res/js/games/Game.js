@@ -3,6 +3,7 @@
     Game = {
 
         index: null,
+        players: null,
 
         init: function (init) {
         },
@@ -39,8 +40,7 @@
                     '<div class="table"></div>' +
                     '<div class="off"></div>';
 
-                Game.seatPlayers();
-                Game.setPlayersDetailes();
+                Game.setPlayersDetailes(Game.seatPlayers());
                 Game.setFullScreenHeigth();
                 return true;
 
@@ -88,10 +88,14 @@
 
         seatPlayers: function () {
 
+            var players = App.players;
+
             D.log('Game.seatPlayers', 'game');
-            if (players = App.players) {
+            if (players) {
+
                 D.log('рассадили игроков');
-                if (App.action == 'wait') {
+
+                if (['wait', 'stack'].indexOf(App.action) !== -1) {
 
                     var player = {
                         "avatar": "",
@@ -129,14 +133,22 @@
                 })
 
             }
+            
+            return players;
 
         },
 
-        setPlayersDetailes: function () {
+        setPlayersDetailes: function (players) {
 
             D.log('Game.setPlayersDetailes', 'game');
             $.each(players, function (index, value) {
-                value.avatar = index < 0 ? "url(../tpl/img/preloader.gif)" : (value.avatar ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('/res/img/default.jpg')");
+
+                value.avatar = index < 0
+                    ? "url(../tpl/img/preloader.gif)"
+                    : (value.avatar
+                        ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')"
+                        : "url('/res/img/default.jpg')");
+
                 $('.mx .players .player' + index).append(
                     '<div class="gm-pr">' +
                     '<div class="pr-ph-bk">' +
@@ -146,17 +158,18 @@
                     '<div class="pr-nm">' + value.name + '</div></div></div></div>');
 
                 if (index == Player.id) {
+
                     bet = price = App.mode.split('-');
-                    $('.mx .players .player' + index + ' .gm-pr').prepend(
-                        '<div class="pr-cl">' +
-                        '<div class="btn-pass">пас</div>' +
-                        '<div class="msg-move">ваш ход</div>' +
-                        '</div>'
-                    ).append(
-                        '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>' +
-                        '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
-                        '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div><div><span class="plPointHolder">' + Player.balance.points + '</span> баллов</div></div>'
-                    );
+                    $('.mx .players .player' + index + ' .gm-pr')
+                        .prepend(
+                            '<div class="pr-cl">' +
+                            '<div class="btn-pass">пас</div>' +
+                            '<div class="msg-move">ваш ход</div>' +
+                            '</div>')
+                        .append(
+                            '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>' +
+                            '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
+                            '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div><div><span class="plPointHolder">' + Player.balance.points + '</span> баллов</div></div>');
                 }
             });
         },
@@ -171,6 +184,7 @@
             } else {
                 sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
                 Apps.playAudio([App.key, sample]);
+                Game.timer.removeAll();
                 Game.destroyTimeOut();
                 return true;
             }
@@ -371,30 +385,16 @@
 
             stack: function () {
 
-                D.log('Game.callback.stack', 'game');
-                if ($('.rls-r-t').is(':visible')) {
-                    /*
-                     * постановка в стек
-                     * */
-                    $('.rls-r-ts').show();
-                    $('.rls-r-t').hide();
-                    $('.prc-but-cover').show();
-                } else {
-                    /*
-                     * выход из игры при другом сопернике
-                     * */
-                    $('.ngm-gm .gm-mx .msg.winner .re').hide();
-                    $('.ngm-gm .gm-mx .msg.winner .ch-ot').hide();
-                    $('.ot-exit').html('Ожидаем соперника').show();
-                }
+                /* записались в стек - отрисовали поле */
+                return Game.run();
+
             },
 
             cancel: function () {
+
                 /* отказ от ожидания в стеке */
-                D.log('Game.callback.cancel', 'game');
-                $('.rls-r-ts').hide();
-                $('.rls-r-t').show();
-                $('.prc-but-cover').hide();
+                return Game.callback.quit();
+
             },
 
 
