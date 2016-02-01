@@ -33,13 +33,15 @@
                 }, 2000);
             }
 
-            if (App.players)
-                $.each(App.players, function (index, value) {
-                    var class_player = value.pid == Player.id ? 'l' : 'r';
-                    $('.gm-pr.' + class_player + ' .pr-cl b').html(value.moves).hide().fadeIn(200);
-                    $('.gm-pr.' + class_player + ' .pr-pt b').html(value.points).hide().fadeIn(200);
-                });
-            else
+            if (App.players) {
+                for (var index in App.players) {
+                    if (App.players.hasOwnProperty(index)) {
+                        $('.mx .players .player' + index + ' .wt')
+                            .show()
+                            .text('Ходов: ' + App.players[index].moves + '<br>Очков: ' + App.players[index].points);
+                    }
+                }
+            } else
                 alert('Empty players in drawStatuses');
 
 
@@ -47,16 +49,19 @@
 
         'drawTimer': function () {
 
-            if (App.players)
-                $.each(App.players, function (index, value) {
-                    Game.playerTimer
-                        .remove(index);
+            if (App.players) {
+                for (var index in App.players) {
+                    if (App.players.hasOwnProperty(index)) {
 
-                    if(value.pid == App.current)
                         Game.playerTimer
-                            .add();
-                });
-            else
+                            .remove(index);
+
+                        if (App.current && index == App.current)
+                            Game.playerTimer
+                                .add();
+                    }
+                }
+            } else
                 alert('Empty players in drawTimer');
 
         },
