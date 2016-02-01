@@ -344,7 +344,7 @@ class PlayersDBProcessor implements IProcessor
             $sql_params = array(
                 ':id' => $player->getId(),
             );
-        } elseif ($player->getEmail() != '') {
+        } elseif ($player->getSocialName() == '') {
             $sql = "SELECT p.*, d.* FROM `Players` p
                 LEFT JOIN `PlayerSocials` s
                   ON s.`PlayerId`=p.`Id`
