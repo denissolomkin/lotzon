@@ -5,7 +5,7 @@
 //            console.error("call");
             // OWL CAROUSEL =========================== //
             if ($('.carousel-games-preview').is(':visible')) {
-                if ($(document).width() <= 420) {
+                if ($(document).width() <= 430) {
                     if (Carousel.Owl !== null) {
                         Carousel.Owl.destroy();
                     }

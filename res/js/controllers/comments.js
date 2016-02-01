@@ -2,8 +2,36 @@
 
     if (typeof I === 'undefined') I = {};
     Object.deepExtend(I, {notificationsList: '.c-notifications-list'});
+   
 
     Comments = {
+      emotionsToServer : {
+
+
+                '<img src="/res/img/smiles_png/i-smile-angry.png" class="i-smile-angry">' : '*ANGRY*' ,
+                '<img src="/res/img/smiles_png/i-smile-clown.png" class="i-smile-clown">' :'*CLOWN*' ,
+                '<img src="/res/img/smiles_png/i-smile-confused.png" class="i-smile-confused">' :'*CONFUSED*'  ,
+                '<img src="/res/img/smiles_png/i-smile-cool.png" class="i-smile-cool">' : '*COOL*'  ,
+                '<img src="/res/img/smiles_png/i-smile-crying.png" class="i-smile-crying">' : ';('  ,
+                '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">' : ':(' ,
+                '<img src="/res/img/smiles_png/i-smile-gay.png" class="i-smile-gay">' : '*GAY*'  ,
+                '<img src="/res/img/smiles_png/i-smile-geek.png" class="i-smile-geek">' : '*GEEK*' ,
+                '<img src="/res/img/smiles_png/i-smile-happy.png" class="i-smile-happy">' : '*HAPPY*',
+                '<img src="/res/img/smiles_png/i-smile-kiss.png" class="i-smile-kiss">' :  '*KISS*',
+                '<img src="/res/img/smiles_png/i-smile-laughing.png" class="i-smile-laughing">' : ':D',
+                '<img src="/res/img/smiles_png/i-smile-like.png" class="i-smile-like">' : '*LIKE*',
+                '<img src="/res/img/smiles_png/i-smile-money.png" class="i-smile-money">' : '*MONEY*',
+                '<img src="/res/img/smiles_png/i-smile-robot.png" class="i-smile-robot">' : '*ROBOT*',
+                '<img src="/res/img/smiles_png/i-smile-security.png" class="i-smile-security">' : '*SECURITY*',
+                '<img src="/res/img/smiles_png/i-smile-sleepi.png" class="i-smile-sleepi">' : '*SLEEPI*',
+                '<img src="/res/img/smiles_png/i-smile-smile.png" class="i-smile-smile">' : ':)',
+                '<img src="/res/img/smiles_png/i-smile-surprise.png" class="i-smile-surprise">' : ':O',
+                '<img src="/res/img/smiles_png/i-smile-tongue.png" class="i-smile-tongue">' : ':P',
+                '<img src="/res/img/smiles_png/i-smile-wink.png" class="i-smile-wink">'  : ';)' 
+
+
+
+        },
 
         hide: function (event) {
 
@@ -45,6 +73,9 @@
                             form.parentNode.removeChild(form);
                     }, form.getElementsByClassName('modal-message').length ? Form.getTimeout() : 0);
                 }
+                if ($('.thumb') !=undefined) {
+                    $('.thumb').remove();
+                } 
             },
 
             replyForm: function (options) {
@@ -62,7 +93,9 @@
                 var commentReply = options.rendered.querySelector('.comment-content .comment-reply-btn');
                 if (commentReply)
                     commentReply.click();
-            }
+            },
+
+            
         },
 
         validate: {
@@ -204,36 +237,11 @@
         },
 
 
-         // showPreviewImage: function () {
+    
 
-         //    var formData = new FormData;
-
-         //    $.each(this.files, function (i, file){
-         //       formData.append('files[0]', file);
-         //    });
-
-         //    fileInputResult = function(result) {
-         //       var span = document.createElement('span');
-         //        span.innerHTML = ['<img class="thumb" src="', result,
-         //                '" title="', escape(theFile.name), '"/>'].join('');
-         //        document.querySelector('.message-form-actions').insertBefore(span, null);  
-         //    }
-
-         //    xhrRequest('post', url, formData, fileInputResult, error);
-
-            
-         //    var i = 0,
-         //    files = this.files,
-         //    len = files.length;
- 
-         //    for (; i < len; i++) {
-         //        console.log("Filename: " + files[i].name);
-         //        console.log("Type: " + files[i].type);
-         //        console.log("Size: " + files[i].size + " bytes");
-         //    }
-         // },
-
-        showPreviewImage: function () {
+        showPreviewImage: function (e) {
+            e.preventDefault();
+            console.log(e);
             var currentReview = {
                 image: '',
                 text: '',
@@ -247,33 +255,32 @@
                 reviewId: null,
             };
             var span = document.createElement('span');
-                span.innerHTML = '<img class="thumb" src="">';
+                span.className = 'thumb';
+                span.innerHTML = '<img src="">';
             document.querySelector('.message-form-actions').insertBefore(span, null);  
 
-            var image = $('.thumb');
+            var image = $('.thumb img');
             if(!currentReview.image)
             {
                 // create form
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
                 //$(button).parents('.photoalbum-box').prepend(form);
 
-                var input = form.find('input[type="file"]').damnUploader({
-                    url: '/review/uploadImage',
+                 $input = form.find('input[type="file"]').damnUploader({
+                    url: '/res/POST/image',
                     fieldName: 'image',
                     data: currentReview,
                     dataType: 'json',
                 });
 
-
-
-                input.off('du.add').on('du.add', function(e) {
+                $input.off('du.add').on('du.add', function(e) {
 
                     e.uploadItem.completeCallback = function(succ, data, status) {
                         // image.attr('src', data.res.imageWebPath).show();
-                        image.attr('src', data.res.imageWebPath);
+                        image.attr('src',   Config.tempFilestorage + '/' + data.imageName);
                         
                         // $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-delete-review.png');
-                        currentReview.image = data.res.imageName;
+                        currentReview.image = data.imageName;
                     };
 
                     e.uploadItem.progressCallback = function(perc) {
@@ -286,6 +293,7 @@
                 });
 
                 form.find('input[type="file"]').click();
+
             } else {
 
 
@@ -341,10 +349,87 @@
 
             div.appendChild(img);
 
+        },
+        pasteText: function (e) {
+            
+
+            var text = '';
+            var that = $(this);
+
+            if (e.clipboardData)
+                text = e.clipboardData.getData('text/plain');
+            else if (window.clipboardData)
+                text = window.clipboardData.getData('Text');
+            else if (e.originalEvent.clipboardData)
+            text = $('<div></div>').text(e.originalEvent.clipboardData.getData('text'));
+
+            if (document.queryCommandSupported('insertText')) {
+                document.execCommand('insertHTML', false, $(text).html());
+                return false;
+            }
+            else { // IE > 7
+                that.find('*').each(function () {
+                     $(this).addClass('within');
+                });
+
+                setTimeout(function () {
+                      that.find('*').each(function () {
+                           $(this).not('.within').contents().unwrap();
+                      });
+                }, 1);
+            }
+
+        },
+        checkInput: function() {
+            var empty, text, div, el;
+            $('.message-form-area > div').each(function(){
+                div = $(this);
+                console.log($(this), '$(this)');
+                el = div.text();
+
+                    console.log(div.children().length, 'div.children()[0].tagName');
+
+                    if (((el == '')&& div.children().length == 0) || (div.children().length > 0  && (div.children() && (div.children()[0].tagName == "BR" || div.children()[0].tagName == "HR") ))) {
+                        console.log(div.children()[0]);
+                         console.log(div,'div')
+                        var emptyDiv = div;
+                        emptyDiv.addClass('emptyDiv');
+                    }
+                
+                if (emptyDiv != undefined && emptyDiv.next(emptyDiv) != undefined) {
+                   emptyDiv.next(emptyDiv).css("display", "none"); 
+                   console.log(' emptyDiv.next(emptyDiv)', emptyDiv.next(emptyDiv));
+                }
+                
+            });
+        },
+        smilePost: function(text) {
+
+            while (text.match('img') != undefined) {
+
+            for (var val in Comments.emotionsToServer) {
+                console.log(val)
+              // return text.replace(val, emotions[val]);
+              text = text.replace(val, Comments.emotionsToServer[val]);
+               console.log(Comments.emotionsToServer[val]);
+
+            }
+
+           }
+           
+            return text;
+
         }
 
+
+
+
+
+      
     }
 
 })();
+
+
 
 

@@ -1,11 +1,15 @@
 // GAMES <<CHANCE>> -------------------- //
 // size - ? screen/middle //
-
-@media  all and ( max-width: 1024px) {
+@media  all and ( max-width: 1199px) {
     .games-previews{
-        padding: 5px 20px;
-        a{
-            margin: 15px 0;
+        .flex-box{
+            padding: 5px 20px;
+            .fixr{
+                margin-left: -5px;
+                a{
+                    margin: 15px 0 0 5px;
+                }
+            }
         }
     }
 }

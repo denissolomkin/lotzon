@@ -4072,15 +4072,6 @@ div.comment-reply-btn {
   display: block;
   color: #9c9c9a; }
 
-[contenteditable=true] > div + div {
-  display: inline; }
-
-[contenteditable=true] > div + div hr {
-  display: none; }
-
-[contenteditable=true] > div + div br {
-  display: none; }
-
 #blog-posts {
   font-family: 'handbookpro-regular';
   font-size: 15.5px; }
@@ -5508,72 +5499,81 @@ title of games view*/
 div > .games-previews {
   padding: 0; }
 
-.games-previews .flex-box {
-  font-family: handbookpro-regular;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: stretch;
-  padding: 0 20px; }
-  .games-previews .flex-box a {
-    height: 320px;
-    width: 200px;
-    background: #c0c0c0;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    margin: 20px 0; }
-  .games-previews .flex-box a:active,
-  .games-previews .flex-box a:hover {
-    /*need animation*/ }
-  .games-previews .flex-box .game-img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    overflow: hidden; }
-    .games-previews .flex-box .game-img img {
-      width: 100%; }
-  .games-previews .flex-box .game-info {
-    background: #fff;
-    width: 100%;
-    position: relative;
-    margin: 100px 0 0 0;
-    min-height: 180px;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    text-align: center; }
-  .games-previews .flex-box .game-name {
-    font-family: Handbook-bold;
-    font-size: 15.5px;
-    text-transform: uppercase;
-    line-height: 1;
-    margin: 5px 0; }
-  .games-previews .flex-box .fund_title {
-    font-family: Handbook-bold;
-    color: #605b5c;
-    font-size: 14px;
-    line-height: 2; }
-  .games-previews .flex-box .game-fund > div {
-    font-family: Handbook-bold;
-    text-transform: uppercase;
-    font-size: 24px; }
-  .games-previews .flex-box .game-fund > div > span {
-    font-size: 14px;
-    color: #2f2f2f; }
-  .games-previews .flex-box .players {
-    font-family: Handbook-bold;
-    padding-top: 20px;
-    font-size: 14px; }
-  .games-previews .flex-box .game-button {
-    position: relative;
-    text-align: center;
-    line-height: 2;
-    min-height: 40px;
-    font-size: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.3); }
+.games-previews {
+  overflow-y: hidden; }
+  .games-previews .flex-box {
+    font-family: handbookpro-regular;
+    /*        display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: stretch;*/
+    padding: 0 20px; }
+    .games-previews .flex-box .fixr {
+      margin-left: -55px;
+      position: relative; }
+    .games-previews .flex-box a {
+      display: inline-block;
+      height: 320px;
+      width: 200px;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+      margin: 20px 0;
+      margin-left: 54px; }
+    .games-previews .flex-box a:active,
+    .games-previews .flex-box a:hover {
+      /*need animation*/ }
+    .games-previews .flex-box .game-img {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden; }
+      .games-previews .flex-box .game-img img {
+        width: 100%; }
+    .games-previews .flex-box .game-info {
+      background: #f8f8f8;
+      width: 100%;
+      position: relative;
+      margin: 100px 0 0 0;
+      min-height: 180px;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      text-align: center;
+      overflow: hidden; }
+    .games-previews .flex-box .game-name {
+      font-family: Handbook-bold;
+      font-size: 15.5px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 5px 0; }
+    .games-previews .flex-box .fund_title {
+      font-family: Handbook-bold;
+      color: #605b5c;
+      font-size: 14px;
+      line-height: 2; }
+    .games-previews .flex-box .game-fund > div {
+      font-family: Handbook-bold;
+      text-transform: uppercase;
+      font-size: 24px; }
+    .games-previews .flex-box .game-fund > div > span {
+      font-size: 14px;
+      color: #2f2f2f; }
+    .games-previews .flex-box .players {
+      font-family: Handbook-bold;
+      padding-top: 20px;
+      font-size: 14px; }
+    .games-previews .flex-box .game-button {
+      position: relative;
+      text-align: center;
+      line-height: 40px;
+      height: 40px;
+      font-size: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+      text-transform: uppercase; }
 
 #games-chance .game-info {
   background: transparent; }
@@ -8230,7 +8230,20 @@ and open the template in the editor.
   left: 0;
   bottom: 0;
   z-index: 0;
-  -webkit-filter: blur(8px); }
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  -moz-filter: filter(8px);
+  -o-filter: filter(8px);
+  -ms-filter: filter(8px);
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='8'); }
+  .avatar-bg > div {
+    background: rgba(131, 128, 128, 0.3);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 0; }
 
 .ae-personal-form {
   position: relative;

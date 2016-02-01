@@ -413,29 +413,66 @@ header {
   #communication-comments-view.content-box {
     margin: 0px; } }
 
-@media all and (max-width: 660px) {
-  .games-previews .flex-box {
-    padding: 5px 80px; } }
+.games-previews .flex-box .fixr {
+  margin-left: -61px; }
 
-@media all and (max-width: 600px) {
-  .games-previews .flex-box {
-    padding: 5px 50px; } }
+.games-previews .flex-box a {
+  margin: 15px 0 0 60px; }
 
-@media all and (max-width: 500px) {
-  .games-previews .flex-box {
-    padding: 5px 30px; } }
+@media all and (max-width: 768px) {
+  .games-previews .flex-box .fixr {
+    width: 700px;
+    margin: 0px auto;
+    left: -15px; }
+  .games-previews .flex-box a {
+    margin: 15px 0 0 30px; } }
+
+@media all and (max-width: 710px) {
+  .games-previews .flex-box .fixr {
+    width: 630px;
+    margin: 0px auto;
+    left: 0px; }
+  .games-previews .flex-box a {
+    margin: 15px 0 0 5px; } }
+
+@media all and (max-width: 640px) {
+  .games-previews .flex-box .fixr {
+    width: 500px;
+    margin: 0px auto;
+    left: -22px; }
+  .games-previews .flex-box a {
+    margin: 15px 0 0 47px; } }
+
+@media all and (max-width: 520px) {
+  .games-previews .flex-box .fixr {
+    width: 450px;
+    margin: 0px auto;
+    left: -10px; }
+  .games-previews .flex-box a {
+    margin: 15px 0 0 20px; } }
 
 @media all and (max-width: 450px) {
-  .games-previews .flex-box {
-    padding: 5px 10px; }
-    .games-previews .flex-box a {
-      margin: 15px 0; } }
+  .games-previews .flex-box .fixr {
+    width: 430px;
+    margin: 0px auto;
+    left: -8px; }
+  .games-previews .flex-box a {
+    margin: 15px 0 0 15px; } }
 
 @media all and (max-width: 430px) {
-  .games-previews .flex-box {
-    padding: 20px 15px; }
-    .games-previews .flex-box a {
-      margin: 0px auto; } }
+  .games-previews .flex-box .fixr {
+    width: auto;
+    padding-top: 20px;
+    left: 0;
+    display: block;
+    position: static; }
+  .games-previews .flex-box .owl-item {
+    text-align: center; }
+  .games-previews .flex-box a {
+    /*display: block;*/
+    /*margin: 0px auto;*/
+    /*float: none;*/
+    /*padding-top: 1px;*/ } }
 
 @media all and (max-width: 768px) {
   .moment-game-box .ad {
@@ -1026,10 +1063,6 @@ header {
     text-align: left; } }
 
 @media (min-width: 480px) {
-  .games-previews {
-    padding: 5px 30px; }
-    .games-previews a {
-      margin: 15px 0; }
   .lottery-grid {
     padding: 0; }
     .lottery-grid > * {
@@ -1810,10 +1843,6 @@ header {
   #communication-messages-list .message .mark-read {
     right: -15px;
     top: 5px; }
-  .games-previews {
-    padding: 5px 35px; }
-    .games-previews a {
-      margin: 15px 0; }
   .ticket-items {
     padding-left: 13px; }
     .ticket-items .ticket-numbers li {

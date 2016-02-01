@@ -34,7 +34,7 @@
         color: #343434;
         font-size: 20px;
         font-family: Handbookpro-regular;
-        
+
     }
 }
 /* END
@@ -44,23 +44,29 @@ div > .games-previews{
     padding: 0;
 }
 .games-previews{
+    overflow-y: hidden;
+
     .flex-box{
         font-family: handbookpro-regular;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: stretch;
+        /*        display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: stretch;*/
         padding: 0 20px;
-
+        .fixr{   
+            margin-left: -55px;
+            position: relative;
+        }
         a{
+            display: inline-block;
             height: 320px;
             width: 200px;
-            background: #c0c0c0;
             border-radius: 5px;
             overflow: hidden;
             position: relative;
             margin: 20px 0;
+            margin-left: 54px;
         }
         a:active,
             a:hover{
@@ -80,7 +86,7 @@ div > .games-previews{
         }
 
         .game-info{
-            background: #fff;
+            background: #f8f8f8;
             width: 100%;
             position: relative;
             margin: 100px 0 0 0;
@@ -88,6 +94,7 @@ div > .games-previews{
             padding: 10px 20px;
             box-sizing: border-box;
             text-align: center;
+            overflow: hidden;
         }
         .game-name{
             font-family: Handbook-bold;
@@ -95,7 +102,7 @@ div > .games-previews{
             text-transform: uppercase;
             line-height: 1;
             margin: 5px 0;
-            
+
         }
         .fund_title{
             font-family: Handbook-bold;
@@ -117,13 +124,16 @@ div > .games-previews{
             padding-top: 20px;
             font-size: 14px;
         }
+        
         .game-button{
             position: relative;
             text-align: center;
-            line-height: 2;
-            min-height: 40px;
-            font-size: 18px;
+            line-height: 40px;
+            height: 40px;
+            font-size: 15px;
             border-top: 1px solid rgba(255,255,255,0.3);
+            text-shadow:0px 1px 0px rgba(255,255,255,0.3);
+            text-transform: uppercase;
         }
     }
 }
@@ -140,5 +150,5 @@ div > .games-previews{
             margin: 20px 0;
         }
     }
-    
+
 }

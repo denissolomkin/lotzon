@@ -189,6 +189,7 @@
   margin: 0 -20px;
   overflow: hidden;
   height: 180px;
+  background: #AFABAB;
 }
 
 .ae-user-img {
@@ -225,7 +226,22 @@
   left: 0;
   bottom:0;
   z-index: 0;
+  filter: blur(8px);
   -webkit-filter: blur(8px);
+  -moz-filter: filter(8px);
+  -o-filter: filter(8px);
+  -ms-filter: filter(8px);
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='8');
+  & > div {
+    background: rgba(131, 128, 128, 0.3);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+
 }
 // --------------------------- //
 

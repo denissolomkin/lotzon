@@ -1,24 +1,26 @@
 <div id="games-online" class="games-previews content-box-item">
-    <div class="carousel-games-preview flex-box">
-        {{#each .}}
-        <a href="/games/online/{{id}}">
-            <div class="game">
-                <div class="game-img">
-                    <img src="/filestorage/games/Online{{ id }}.png" alt="">
-                </div>
-                <div class="game-info">
-                    <div class="game-name">{{ title }}</div>
-                    <div class="game-fund">
-                        <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
-                        <div class="fund_points">{{ number (or fund.POINT 0) }} <span>{{i18n "title-of-points"}}</span></div>
-                        <div class="fund_money">{{ number (or fund.MONEY 0) }} <span>{{player "getCurrency"}}</span></div>
+    <div class="flex-box">
+        <div class="carousel-games-preview fixr">
+            {{#each .}}
+            <a href="/games/online/{{id}}">
+                <div class="game">
+                    <div class="game-img">
+                        <img src="/filestorage/games/Online{{ id }}.png" alt="">
                     </div>
-                    <div class="players">{{ players }} {{i18n "title-games-players"}}</div>
+                    <div class="game-info">
+                        <div class="game-name">{{ title }}</div>
+                        <div class="game-fund">
+                            <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
+                            <div class="fund_points">{{ number (or fund.POINT 0) }} <span>{{i18n "title-of-points"}}</span></div>
+                            <div class="fund_money">{{ number (or fund.MONEY 0) }} <span>{{player "getCurrency"}}</span></div>
+                        </div>
+                        <div class="players">{{ players }} {{i18n "title-games-players"}}</div>
+                    </div>
+                    <div class="game-button">{{i18n "button-games-details"}}</div>
                 </div>
-                <div class="game-button">{{i18n "button-games-details"}}</div>
-            </div>
-        </a>
-        {{/each}}
-        {{^.}}No games :({{/.}}
+            </a>
+            {{/each}}
+            {{^.}}No games :({{/.}}
+        </div>
     </div>
 </div>

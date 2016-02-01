@@ -577,11 +577,13 @@ div.comment-reply-btn {
 #users-view-messages .message-form hr {
   margin: 5px -20px 5px; }
 
-@media all and (max-width: 1024px) {
-  .games-previews {
+@media all and (max-width: 1199px) {
+  .games-previews .flex-box {
     padding: 5px 20px; }
-    .games-previews a {
-      margin: 15px 0; } }
+    .games-previews .flex-box .fixr {
+      margin-left: -5px; }
+      .games-previews .flex-box .fixr a {
+        margin: 15px 0 0 5px; } }
 
 .ticket-items {
   margin: 70px 0 30px;

@@ -245,9 +245,11 @@
                 D.log(['Form.submit.', ajax.action]);
 
                 for (var i = 0; i < formContenteditable.length; i++) {
-                    ajax.data[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
+                    ajax.data[formContenteditable[i].getAttribute('name')] = Comments.smilePost(formContenteditable[i].innerHTML);
                 }
 
+
+                url = "http://www.domain.com/";
                 if (event) {
                     event.preventDefault();
                     event.stopPropagation();
@@ -259,6 +261,8 @@
                     D.log('button.submit', 'info');
                     Form.send.call(form, ajax);
                 }
+
+
             }
         },
 

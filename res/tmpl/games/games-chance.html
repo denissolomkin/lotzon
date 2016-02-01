@@ -1,33 +1,35 @@
 <div id="games-chance" class="games-previews content-box-item">
-    <div class="carousel-games-preview flex-box">
-        {{#each .}}
-        <a href="/games/chance/{{id}}">
-            <div class="game">
-                <div class="game-img">
-                    <img src="/filestorage/games/Chance{{ id }}.png" alt="">
-                </div>
-                <div class="game-info">
-                    <div class="game-name">{{ title }}</div>
-                    {{#if prizes}}
-                    <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
-                    <div class="game-fund">
-                        {{#each prizes as |prize pkey|}}
-                        {{#if (eq prize.t "item")}}
-                        <div class="">{{ prize.n }}</div>
-                        {{else}}
-                        <div class="">{{ prize.v }} <span>{{#if (eq prize.t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}}</span></div>
-                        {{/if}}
-                        {{/each}}
+    <div class="flex-box">
+        <div class="fixr carousel-games-preview">
+            {{#each .}}
+            <a href="/games/chance/{{id}}">
+                <div class="game">
+                    <div class="game-img">
+                        <img src="/filestorage/games/Chance{{ id }}.png" alt="">
                     </div>
-                    {{/if}}
-                    {{#if winners}}
+                    <div class="game-info">
+                        <div class="game-name">{{ title }}</div>
+                        {{#if prizes}}
+                        <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
+                        <div class="game-fund">
+                            {{#each prizes as |prize pkey|}}
+                            {{#if (eq prize.t "item")}}
+                            <div class="">{{ prize.n }}</div>
+                            {{else}}
+                            <div class="">{{ prize.v }} <span>{{#if (eq prize.t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}}</span></div>
+                            {{/if}}
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                        {{#if winners}}
                         <div class="">{{ number (or winners 0) }} {{i18n "title-games-winners"}}</div>
-                    {{/if}}
+                        {{/if}}
+                    </div>
+                    <div class="game-button">{{i18n "button-games-details"}}</div>
                 </div>
-                <div class="game-button">{{i18n "button-games-details"}}</div>
-            </div>
-        </a>
-        {{/each}}
-        {{^.}}No games :({{/.}}
+            </a>
+            {{/each}}
+            {{^.}}No games :({{/.}}
+        </div>
     </div>
 </div>
