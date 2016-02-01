@@ -418,26 +418,26 @@
 
                 /* Common Game Callback Action */
                 case data && typeof Game.callback[action]:
-                    //console.log('Game.callback.' + action);
-                    eval('Game.callback.' + action)(data);
+                    console.log('Game.callback.' + action);
+                    Game.callback[action](data);
                     break;
 
                 /* Specific App action */
-                case App.key && typeof eval(App.key + '.' + action):
-                    //console.log(App.key + '.' + action);
-                    eval(App.key + '.' + action)(data);
+                case App.key && typeof Apps[App.key][action]:
+                    console.log(App.key + '.' + action);
+                    Apps[App.key][action](data);
                     break;
 
                 /* Common Game Action */
                 case !data && typeof Game.action[action]:
-                    //console.log('Game.action.' + action);
-                    eval('Game.action.' + action)(data);
+                    console.log('Game.action.' + action);
+                    Game.action[action](data);
                     break;
 
                 /* Default App Action */
-                case App.key && typeof eval(App.key + '.action'):
-                    //console.log(App.key + '.action');
-                    eval(App.key + '.action')(data);
+                case App.key && typeof Apps[App.key].action:
+                    console.log(App.key + '.action');
+                    Apps[App.key].action(data);
                     break;
             }
 

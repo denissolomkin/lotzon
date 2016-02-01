@@ -1,10 +1,10 @@
 (function () {
 
-    WhoMore = {
+    Apps.WhoMore = {
 
         'run': function () {
 
-            WhoMore.drawField();
+            Apps.WhoMore.drawField();
 
         },
 
@@ -14,25 +14,13 @@
 
         'action': function () {
 
-            if (!document.getElementById('games-online-field')) {
-
-                R.push({
-                    'template': 'games-online-field',
-                    'json'    : {},
-                    'url'     : false,
-                    'after'   : WhoMore.action
-                });
-
-            } else {
-
-                Game.run() && WhoMore.run();
-                WhoMore.drawStatuses();
-                WhoMore.drawTimer();
-                WhoMore.paintCell();
-                Game.end() && Durak.end();
-
+            if (Game.field()) {
+                Game.run() && Apps.WhoMore.run();
+                Apps.WhoMore.drawStatuses();
+                Apps.WhoMore.drawTimer();
+                Apps.WhoMore.paintCell();
+                Game.end() && Apps.Durak.end();
             }
-
         },
 
         'drawStatuses': function () {
@@ -52,7 +40,7 @@
                     $('.gm-pr.' + class_player + ' .pr-pt b').html(value.points).hide().fadeIn(200);
                 });
             else
-                alert('Empty players');
+                alert('Empty players in drawStatuses');
 
 
         },
@@ -69,15 +57,15 @@
                             .add();
                 });
             else
-                alert('Empty players');
+                alert('Empty players in drawTimer');
 
         },
 
         'drawField': function () {
 
-            $('.mx .table').html('<ul></ul>');
-
             if (App.variation && App.variation.field) {
+
+                $('.mx .table').html('<ul></ul>');
 
                 var size = parseInt(App.variation.field),
                     width = Math.floor((480 - (size - 1) * 5) / size) + 'px;',
@@ -92,16 +80,16 @@
                 $('.mx .table ul').html(html);
 
             } else
-                alert('Empty variation field');
+                console.error('Empty variation field');
 
             if(App.field)
                 $.each(App.field, function (x, cells) {
                     $.each(cells, function (y, cell) {
-                        WhoMore.paintCell(cell);
+                        Apps.WhoMore.paintCell(cell);
                     });
                 });
             else
-                alert('Empty field');
+                console.error('Empty field');
 
         },
 
@@ -131,7 +119,7 @@
                 return true;
 
             } else
-                alert('Empty cell');
+                console.error('Empty cell');
 
             return false;
         }

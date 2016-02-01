@@ -1,6 +1,6 @@
 $(function () {
 
-    SeaBattle = {
+    Apps.SeaBattle = {
 
         run: function () {
 
@@ -9,18 +9,8 @@ $(function () {
 
         action: function () {
 
-            if (!document.getElementById('games-online-field')) {
-
-                R.push({
-                    'template': 'games-online-field',
-                    'json'    : {},
-                    'url'     : false,
-                    'after'   : SeaBattle.action
-                });
-
-            } else {
-
-                Game.run() && SeaBattle.run();
+            if (Game.field()) {
+                Game.run() && Apps.SeaBattle.run();
                 Game.updateTimeOut(App.timeout);
                 Game.end();
             }

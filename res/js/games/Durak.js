@@ -1,6 +1,6 @@
 $(function () {
 
-    Durak = {
+    Apps.Durak = {
 
         run: function () {
 
@@ -13,25 +13,14 @@ $(function () {
 
         action: function () {
 
-            if (!document.getElementById('games-online-field')) {
-
-                R.push({
-                    'template': 'games-online-field',
-                    'json'    : {},
-                    'url'     : false,
-                    'after'   : Durak.action
-                });
-
-            } else {
-
-                Game.run() && Durak.run();
+            if (Game.field()) {
+                Game.run() && Apps.Durak.run();
                 Cards.setupForDevices();
                 Cards.drawFields();
                 Cards.premove();
                 Cards.initStatuses();
-                Game.end() && Durak.end();
+                Game.end() && Apps.Durak.end();
             }
-
         },
 
         end: function(){

@@ -49,6 +49,21 @@
 
         },
 
+        field: function () {
+
+            if (!document.getElementById('games-online-field')) {
+                R.push({
+                    'template': 'games-online-field',
+                    'json': {},
+                    'url': false,
+                    'after': Apps[App.key].action
+                });
+                return false;
+
+            } else
+                return true;
+        },
+
         playerTimer: {
 
             add: function(index){
@@ -109,6 +124,7 @@
                 }
 
                 var orders = players;
+                console.error(players);
 
                 if (players[Player.id].order && App.action == 'start') {
 
@@ -335,7 +351,6 @@
                 D.log('Game.action.quit', 'game');
                 R.push('/games/online/' + App.id);
                 App.uid = 0;
-                // WebSocketAjaxClient('update/' + App.key);
                 Game.destroyTimeOut();
                 Games.online.now();
 
@@ -385,8 +400,8 @@
 
             stack: function () {
 
-                /* записались в стек - отрисовали поле */
-                return Game.run();
+                /* записались в стек - запустили игру */
+                return Apps[App.key].action();
 
             },
 
