@@ -1,0 +1,11 @@
+order allow,deny
+allow from all
+
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} www.(.*)$      [NC,OR]
+RewriteCond %{HTTP_HOST} lotozon.(.*)$  [NC]
+RewriteRule ^(.*)$ http://lotzon.com/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
