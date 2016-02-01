@@ -333,24 +333,48 @@ class PlayersDBProcessor implements IProcessor
 
     public function fetch(Entity $player)
     {
-        $sql = "SELECT p.*, d.* FROM `Players` p
+        if ($player->getId() > 0) {
+            $sql = "SELECT p.*, d.* FROM `Players` p
                 LEFT JOIN `PlayerSocials` s
                   ON s.`PlayerId`=p.`Id`
                 LEFT JOIN `PlayerDates` d
                   ON d.`PlayerId`=p.`Id`
-                WHERE p.`Id` = :id OR p.`Email` = :email
-                  OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
+                WHERE p.`Id` = :id";
+
+            $sql_params = array(
+                ':id' => $player->getId(),
+            );
+        } elseif ($player->getEmail() != '') {
+            $sql = "SELECT p.*, d.* FROM `Players` p
+                LEFT JOIN `PlayerSocials` s
+                  ON s.`PlayerId`=p.`Id`
+                LEFT JOIN `PlayerDates` d
+                  ON d.`PlayerId`=p.`Id`
+                WHERE p.`Email` = :email";
+
+            $sql_params = array(
+                ':email' => $player->getEmail(),
+            );
+        } else {
+            $sql = "SELECT p.*, d.* FROM `Players` p
+                LEFT JOIN `PlayerSocials` s
+                  ON s.`PlayerId`=p.`Id`
+                LEFT JOIN `PlayerDates` d
+                  ON d.`PlayerId`=p.`Id`
+                WHERE (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
                   OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` !='' AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
                 GROUP BY p.Id";
+
+            $sql_params = array(
+                ':socialid'    => $player->getSocialId(),
+                ':socialname'  => $player->getSocialName(),
+                ':socialemail' => $player->getSocialEmail(),
+            );
+        }
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':id'    => $player->getId(),
-                ':email' => $player->getEmail(),
-                ':socialid'    => $player->getSocialId(),
-                ':socialname'    => $player->getSocialName(),
-                ':socialemail'    => $player->getSocialEmail()
-            ));
+            $sth->execute($sql_params);
+
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
