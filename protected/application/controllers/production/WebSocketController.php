@@ -942,6 +942,9 @@ class WebSocketController implements MessageComponentInterface
 
                                             } else {
 
+                                                foreach($clients as &$client)
+                                                    unset($client->bot, $client->admin);
+
                                                 $from->send(json_encode(
                                                     array('path' => 'stack',
                                                           'res'  => array(
