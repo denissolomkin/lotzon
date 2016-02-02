@@ -320,8 +320,7 @@ $('#search_where').val('<?=$search['where']?>');
 <? } ?>
 /* END SEARCH BLOCK */
 
-
-var url = 'ws://<?=$_SERVER['SERVER_NAME'];?>:8080';
+var url = 'ws<?=\Config::instance()->SSLEnabled?'s':'';?>://<?=$_SERVER['SERVER_NAME'];?>:<?=\Config::instance()->wsPort?>';
 var conn;
 function WebSocketAjaxClient(data) {
     if(!conn || conn.readyState !== 1)
