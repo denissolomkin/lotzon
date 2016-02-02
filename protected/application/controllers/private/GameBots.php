@@ -21,6 +21,10 @@ class GameBots extends PrivateArea
     public function indexAction()
     {
 
+        $bots = \GamePlayersModel::instance()->getAvailableBots();
+        $bot = (object)$bots[array_rand($bots)];
+        echo count($bots);
+        var_dump($bot->id);
         $ids = PlayersModel::instance()->getAvailableIds();
         if(is_array($list = SettingsModel::instance()->getSettings('gameBots')->getValue()))
             $ids = array_diff($ids,array_keys($list));
