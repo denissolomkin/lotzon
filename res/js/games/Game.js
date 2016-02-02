@@ -188,6 +188,8 @@
                         .prepend(
                             '<div class="pr-cl">' +
                             '<div class="btn-pass">пас</div>' +
+                            '<button class="btn-primary hidden">повторить игру</button>' +
+                            '<button class="btn-secondary hidden">другой соперник</button>' +
                             '<div class="msg-move">ваш ход</div>' +
                             '</div>')
                         .append(
@@ -210,8 +212,27 @@
                 Apps.playAudio([App.key, sample]);
                 Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
+                $.each(App.players, function (index, value) {
+                    $('.mx .players .player' + index + ' .wt').removeClass('loser').html(
+                        (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
+                        (App.currency == 'MONEY' ? Player.formatCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
+                        (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов')
+                    ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
+                });
                 return true;
             }
+        },
+
+        drawButtons: function(buttons){
+
+            var placeholder = document.querySelectorAll('.mx .pr-cl'),
+                html = '';
+
+            for(var index in buttons){
+                html+='<button class="' + buttons[index].class + '" data-action="' + buttons[index].action + '">' + buttons[index].title + '</button>';
+            }
+
+            placeholder.innerHTML = html;
         },
 
         setFullScreenHeigth: function () {
@@ -349,9 +370,35 @@
 
                     WebSocketAjaxClient(path, data);
                 }
-            }
+            },
+
+            button: function() {
+
+                var path = 'app/' + App.key + '/' + App.uid,
+                    data = {
+                        'action': this.getAttribute('data-action')
+                    };
+
+                WebSocketAjaxClient(path, data);
+
+            },
+
+            start: function() {
+
+                App.uid = 0;
+
+                var path = 'app/' + App.key + '/' + App.uid,
+                    data = {
+                    'action': 'start',
+                    'mode': App.mode
+                };
+
+                WebSocketAjaxClient(path, data);
+            },
+
         },
 
+        /* common callbacks without Apps */
         callback: {
 
             quit: function () {
@@ -363,12 +410,6 @@
                 Games.online.now();
 
             },
-
-            // error: function (data) {
-
-            //     alert(data.res.error);
-
-            // },
 
             update: function (data) {
 
@@ -437,31 +478,66 @@
         action: {
 
             reply: function () {
-                /* повтор игры
-                 * */
-                D.log('Game.callback.reply', 'game');
-                $('.re').hide();
-                $('.ot-exit').html('Ожидаем соперника').show();
+
+                /* повтор игры */
+
+                $('.mx .btn-secondary')
+                    .addClass('hidden')
+                    .attr('data-action',null)
+                    .text('');
+
+                $('.mx .btn-primary')
+                    .addClass('hidden')
+                    .removeClass('btn-start')
+                    .attr('data-action',null)
+                    .text('');
+
+                $('.mx .msg-move')
+                    .text(i18n('title-game-waiting-player'))
+                    .removeClass('hidden')
+                    .show();
+
+                $('.mx .players .m .mt')
+                    .text(i18n('title-game-ready'))
+                    .removeClass('hidden')
+                    .show();
+
+                $('.mx .wt')
+                    .hide();
+
                 return;
             },
 
 
             error: function () {
+
                 /* ошибка */
+
                 D.log('Game.callback.error', 'game');
+
                 if (App.uid == 0) {
-                    $('.mx .tm').countdown('pause');
-                    $('.mx .prc-but-cover').hide();
-                    $('.ngm-rls').fadeIn(200);
+                    Game.callback.quit();
                 }
             },
 
             quit: function () {
+
                 /* выход из игры */
+
                 D.log('Game.callback.quit', 'game');
                 if (App.quit != Player.id) {
-                    $('.re').hide();
-                    $('.ot-exit').html('Соперник вышел').show();
+
+                    $('.btn-primary')
+                        .removeClass('hidden')
+                        .addClass('btn-start')
+                        .attr('data-action','start')
+                        .text('button-game-new');
+
+                    $('.msg-move')
+                        .text(i18n('text-player-quit'))
+                        .removeClass('hidden')
+                        .show();
+
                 } else
                     App.uid = 0;
             }

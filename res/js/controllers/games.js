@@ -68,7 +68,7 @@ var fakeRandomData = [{
 
 var Games = {
 
-    disableNow: false,
+    disableNow: true,
     timer: null,
 
     online: {

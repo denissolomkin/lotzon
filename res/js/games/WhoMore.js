@@ -20,11 +20,13 @@
                 Apps.WhoMore.drawStatuses();
                 Apps.WhoMore.drawTimer();
                 Apps.WhoMore.paintCell();
-                Game.end() && Apps.Durak.end();
+                Game.end() && Apps.WhoMore.end();
             }
         },
 
         'drawStatuses': function() {
+
+            $('.mx .players .mt').hide();
 
             if (App.extra) {
                 var equal = $('.ngm-bk .msg.equal');
@@ -37,9 +39,11 @@
             if (App.players) {
                 for (var index in App.players) {
                     if (App.players.hasOwnProperty(index)) {
-                        $('.mx .players .player' + index + ' .wt')
-                            .show()
-                            .html('Ходов: ' + App.players[index].moves + '<br>Очков: ' + App.players[index].points);
+                        if(App.players[index].moves || App.players[index].points)
+                            $('.mx .players .player' + index + ' .wt')
+                                .show()
+                                .html('Ходов: ' + App.players[index].moves +
+                                    '<br>Очков: ' + App.players[index].points);
                     }
                 }
             } else
@@ -137,6 +141,20 @@
                 console.error('Empty cell');
 
             return false;
+        },
+
+        'end': function(){
+
+            $('.btn-secondary')
+                .removeClass('hidden')
+                .attr('data-action','replay')
+                .text(i18n('button-game-replay'));
+
+            $('.btn-primary')
+                .removeClass('hidden')
+                .addClass('btn-start')
+                .attr('data-action','quit')
+                .text(i18n('button-game-new'));
         }
 
     }

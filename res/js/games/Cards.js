@@ -385,10 +385,6 @@
                     .text('готов');
             }
 
-            if (App.action == 'ready' || App.action == 'wait') {
-                $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
-            }
-
             $('.mx .players .mt').hide();
             $('.mx .players > div').removeClass('current beater starter');
 

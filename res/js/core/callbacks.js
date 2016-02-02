@@ -44,19 +44,16 @@
             // handlers
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);
-
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
-
             $(document).on('click', Device.do.hide);
-
             $(document).on('click', '.input-file, .thumb', Comments.showPreviewImage);
 
-             /*smiles*/
+
+            /*smiles*/
             $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
             $(document).on('click touchend', ".smiles span", Comments.chooseSmiles);
-
             $(document).on("paste", '[contenteditable]', Comments.pasteText);
-             $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
+            $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
 
 
            
@@ -90,19 +87,15 @@
             $(document).on('touchend', '.site-overlay', Device.do.hide);
             $('.go-to-top').on('click', Device.do.goTop);
 
+
             /* ticket */
             $(document).on('click', Ticket.tabs, Ticket.switch);
-
-            $(document).on('load', 'img', function(){
-                alert(1);
-            });
 
 
             /* new message*/
             $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
             $(document).on('click', ".nm-change", Messages.do.clearUser);
 
-           
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -122,25 +115,26 @@
             /* profile*/
             $(document).on('click', '.pi-ph.true i', Profile.do.removeAvatar);
             $(document).on('click', '.pi-ph.true i', Profile.do.updateAvatar);
-
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
-
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
             $(document).on('click', '.change-favorite', Profile.do.openFavorite);
             $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
-
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
-
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
+
+
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
             $(document).on('click', '.mx .exit', Game.do.exit);
             $(document).on('click', '.mx .table .cell', Game.do.move);
+            $(document).on('click', '.mx .players .m button', Game.do.button); /* !!! keep order of handlers*/
+            $(document).on('click', '.mx .players .m button.btn-start', Game.do.start);
+
 
             /* support */
             $(document).on('click', '.support h1', Support.do.collapse);
@@ -153,25 +147,28 @@
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
             "menu-navigation-mobile": Navigation.ready,
+
             "prizes": Prize.init,
+
             "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,
+
+            "communication-messages": Messages.init,
             "communication-comments-replyform": Comments.after.replyForm,
             "communication-comments-view": Comments.after.showComment,
-            // "communication-comments-view": Comments.after.smileGet,
 
             "games-online": Carousel.initOwl,
             "games-online-view": Games.online.init,
             "games-online-view-now-list": Games.online.timeout,
-            "games-chance-view": Games.chance.init,
             "games-chance": Carousel.initOwl,
+            "games-chance-view": Games.chance.init,
+            "games-random": Games.random.init,
+            "games-moment": Games.random.init,
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
 
             "profile-edit": Profile.init,
             "profile-billing": Profile.init,
-
-            "communication-messages": Messages.init,
 
             "users-view-messages": Messages.after.markRead,
 
@@ -185,8 +182,6 @@
             
             "support-rules": Support.init,
             "support-faq": Support.init,
-            "games-random": Games.random.init,
-            "games-moment": Games.random.init
 
 
         },

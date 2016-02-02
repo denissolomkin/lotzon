@@ -390,7 +390,7 @@
             path = data.path;
             if (data.res) {
 
-                if (data.res.app && data.res.app.uid && data.res.app.uid != App.uid) {
+                if ( path == 'stack' || (data.res.app && data.res.app.hasOwnProperty('uid') && data.res.app.uid != App.uid)) {
                     App = {};
                 } else if (App.winner) {
                     App['winner'] = null;
@@ -417,7 +417,7 @@
             switch ('function') {
 
                 /* Common Game Callback Action */
-                case data && typeof Game.callback[action]:
+                case data && !Apps[path] && typeof Game.callback[action]:
                     console.log('Game.callback.' + action);
                     Game.callback[action](data);
                     break;
@@ -429,7 +429,7 @@
                     break;
 
                 /* Common Game Action */
-                case !data && typeof Game.action[action]:
+                case (!data || App.action) && typeof Game.action[action]:
                     console.log('Game.action.' + action);
                     Game.action[action](data);
                     break;

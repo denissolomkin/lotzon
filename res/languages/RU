@@ -123,6 +123,11 @@
                 "title-games-ticketprice": "Cтоимость",
                 "title-games-winners": "победителей",
 
+                "title-game-ready": "Готов",
+                "title-game-waiting-player": "Ожидаем соперника",
+                "button-game-replay": "Повторить игру",
+                "button-game-new": "Другой соперник",
+
                 "title-slider-jackpot": "Джекпот",
                 "title-slider-players": "Участников",
                 "title-slider-winners": "Победителей",
