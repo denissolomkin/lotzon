@@ -2,7 +2,18 @@
 
     if (typeof I === 'undefined') I = {};
     Object.deepExtend(I, {notificationsList: '.c-notifications-list'});
-   
+                   var currentReview = {
+                image: '',
+                text: '',
+                id: 0,
+            };
+
+            var answerReview = {
+                image: '',
+                text: '',
+                id: 0,
+                reviewId: null,
+            };
 
     Comments = {
       emotionsToServer : {
@@ -237,31 +248,23 @@
         },
 
 
-    
+
 
         showPreviewImage: function (e) {
             e.preventDefault();
             console.log(e);
-            var currentReview = {
-                image: '',
-                text: '',
-                id: 0,
-            };
 
-            var answerReview = {
-                image: '',
-                text: '',
-                id: 0,
-                reviewId: null,
-            };
+
             var span = document.createElement('span');
                 span.className = 'thumb';
-                span.innerHTML = '<img src="">';
+                span.innerHTML = '<i class="i-x-slim"></i>';
             document.querySelector('.message-form-actions').insertBefore(span, null);  
 
-            var image = $('.thumb img');
+            var image = $('.thumb ');
             if(!currentReview.image)
+
             {
+
                 // create form
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
                 //$(button).parents('.photoalbum-box').prepend(form);
@@ -276,11 +279,9 @@
                 $input.off('du.add').on('du.add', function(e) {
 
                     e.uploadItem.completeCallback = function(succ, data, status) {
-                        // image.attr('src', data.res.imageWebPath).show();
-                        image.attr('src',   Config.tempFilestorage + '/' + data.imageName);
-                        
-                        // $('.reviews .rv-upld-img img').attr('src','/tpl/img/but-delete-review.png');
+                        image.css({'background': 'url(' + Config.tempFilestorage + '/' + data.imageName + ') center', 'height':'55px'});
                         currentReview.image = data.imageName;
+                        console.log(currentReview.image, 'currentReview.image')
                     };
 
                     e.uploadItem.progressCallback = function(perc) {
@@ -290,27 +291,28 @@
                     e.uploadItem.addPostData('Id', currentReview.id);
                     e.uploadItem.addPostData('Image', currentReview.image);
                     e.uploadItem.upload();
+                    console.log(currentReview.image, 'currentReview.image')
                 });
 
                 form.find('input[type="file"]').click();
 
             } else {
 
-
                 $.ajax({
-                    url: "/review/removeImage/",
+                    url: '/res/POST/removeImage',
                     method: 'POST',
                     async: true,
                     data: {image:currentReview.image},
                     dataType: 'json',
                     success: function(data) {
                         if (data.status == 1) {
-
-                            span.remove();
+                            image.remove();
                             currentReview.image = null;
 
                         } else {
+                            console.log(data.status, "data");
                             alert(data.message);
+
                         }
                     },
                     error: function() {
@@ -328,26 +330,13 @@
             $('.message-form-smileys').toggleClass('active');
         }, 
 
+
+
         chooseSmiles: function () {
-            
+            div = $(this).closest('.message-form-actions').prev();
+            smile_data = $(this).attr('class');       
+            div.append('<img class=' + smile_data + ' src="/res/img/smiles_png/' + smile_data + '.png">');
 
-            div =  document.querySelector('.message-form-area');
-            console.log(div);
-            smile = this;
-
-            console.log(smile);
-            div =  document.querySelector('.message-form-area');
-            console.log(div);
-            smile = this.cloneNode(true);
-
-
-            smile_data = this.className;
-            var img = document.createElement('img');
-            img.src = '/res/img/smiles_png/'+ smile_data + '.png';
-            img.className = smile_data;
-
-
-            div.appendChild(img);
 
         },
         pasteText: function (e) {

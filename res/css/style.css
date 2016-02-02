@@ -4051,13 +4051,39 @@ span[class^="i-smile"] {
   #blog-post-view .input-file-wrapper {
     display: none; }
 
-div.comment-reply-btn {
+input.comment-reply-btn {
+  border: none;
+  background: transparent;
+  box-shadow: none;
   position: absolute;
   right: 0;
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 10; }
+  z-index: 10;
+  width: 100%;
+  cursor: pointer; }
+
+.thumb {
+  width: 70px;
+  display: block;
+  position: relative;
+  cursor: pointer; }
+  .thumb i {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%; }
+    .thumb i:before {
+      content: '\e81b';
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      color: #fff;
+      display: inline-block;
+      z-index: 11; }
 
 .comment-reply .comment-reply-btn {
   display: none; }
@@ -5360,6 +5386,9 @@ form.loading > * {
     .message-form-area img[class^="i-smile"]:first-of-type {
       margin-left: 0; }
 
+.message-form-area div + img[class^="i-smile"] {
+  margin-left: 0; }
+
 .message-form-area {
   min-height: 22px; }
   .message-form-area span {
@@ -5504,10 +5533,10 @@ div > .games-previews {
   .games-previews .flex-box {
     font-family: handbookpro-regular;
     /*        display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                align-items: stretch;*/
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: stretch;*/
     padding: 0 20px; }
     .games-previews .flex-box .fixr {
       margin-left: -55px;
@@ -5584,6 +5613,33 @@ div > .games-previews {
   #games-chance .game-fund > div:first-child:nth-last-child(1) {
     font-size: 24px;
     margin: 20px 0; }
+
+#games-online-field .mx {
+  background: url(../img/games/lotzonBg.png); }
+  #games-online-field .mx .m .gm-pr {
+    background: #4a4a4a; }
+  #games-online-field .mx .table {
+    width: 319px;
+    margin: 0px auto; }
+    #games-online-field .mx .table .inner {
+      padding: 1px 1px 0 0; }
+      #games-online-field .mx .table .inner div {
+        width: 100%;
+        height: 100%;
+        background: #d3eaec;
+        font-size: 10em;
+        color: #000;
+        vertical-align: center;
+        text-align: center;
+        cursor: default; }
+        #games-online-field .mx .table .inner div:not([class]) {
+          cursor: pointer; }
+        #games-online-field .mx .table .inner div.m {
+          background: #f8e71c; }
+        #games-online-field .mx .table .inner div.o {
+          background: #f78e51; }
+        #games-online-field .mx .table .inner div span {
+          display: inline; }
 
 .games-view .game-settings .settings-tabs div.active {
   background: #474747;
@@ -6677,6 +6733,24 @@ and open the template in the editor.
       color: #808080; }
       .ticket-tabs li.unavailable:hover .ticket-number-sm {
         background: #8f8e8e; }
+    .ticket-tabs li:last-of-type:hover {
+      color: #cdcf9f; }
+      .ticket-tabs li:last-of-type:hover .ticket-number-sm {
+        display: inline-block;
+        width: 30px;
+        height: 40px;
+        line-height: 50px;
+        border-radius: 3px;
+        position: relative;
+        background: #4c4c4c; }
+    .ticket-tabs li:last-of-type .ticket-number-sm {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 3px;
+      position: relative;
+      background: #cdcf9f; }
     .ticket-tabs li.done .ticket-number-sm:before {
       content: "";
       display: block;
@@ -6700,12 +6774,10 @@ and open the template in the editor.
       top: 5px;
       left: 8px; }
     .ticket-tabs li.done:last-of-type .ticket-number-sm {
-      background: #f8e71d; }
-      .ticket-tabs li.done:last-of-type .ticket-number-sm:before {
-        display: none; }
+      background: #f8e71d;
+      height: 40px;
+      line-height: 50px; }
     .ticket-tabs li.done:last-of-type:hover .ticket-number-sm:before {
-      display: none; }
-    .ticket-tabs li.done:last-of-type.active .ticket-number-sm:before {
       display: none; }
     .ticket-tabs li.active {
       top: 0;
@@ -6727,26 +6799,6 @@ and open the template in the editor.
       text-align: center;
       top: 5px;
       left: 8px; }
-    .ticket-tabs li:last-of-type.done:after {
-      background-position: -597px -71px; }
-    .ticket-tabs li:last-of-type:hover {
-      color: #cdcf9f; }
-      .ticket-tabs li:last-of-type:hover .ticket-number-sm {
-        display: inline-block;
-        width: 30px;
-        height: 40px;
-        line-height: 50px;
-        border-radius: 3px;
-        position: relative;
-        background: #4c4c4c; }
-    .ticket-tabs li:last-of-type .ticket-number-sm {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 3px;
-      position: relative;
-      background: #cdcf9f; }
     .ticket-tabs li.active:last-of-type {
       color: #cdcf9f; }
       .ticket-tabs li.active:last-of-type .ticket-number-sm {
@@ -7292,7 +7344,6 @@ and open the template in the editor.
 
 .condition {
   font-size: 19px;
-  font-weight: bold;
   text-transform: uppercase;
   padding: 15px 40px 63px;
   max-width: 320px;
@@ -8195,7 +8246,8 @@ and open the template in the editor.
   position: relative;
   margin: 0 -20px;
   overflow: hidden;
-  height: 180px; }
+  height: 180px;
+  background: #AFABAB; }
 
 .ae-user-img {
   width: 150px;

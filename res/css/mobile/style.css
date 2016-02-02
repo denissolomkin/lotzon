@@ -474,32 +474,35 @@ header {
     /*float: none;*/
     /*padding-top: 1px;*/ } }
 
-@media all and (max-width: 768px) {
-  .moment-game-box .ad {
-    display: none; }
-  .moment-game-box:not(.game-started) .message {
-    top: 50%;
-    transform: translateY(-50.1%);
-    margin: 0;
-    background: transparent; }
-  .moment-game-box > .inner {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    background: #ffe700; }
-    .moment-game-box > .inner > i.i-x-slim {
-      padding: 0;
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      font-size: 18px;
-      color: #000; }
-  .moment-game-box .minefield {
-    width: 100% !important; }
-    .moment-game-box .minefield div .inner button {
-      font-size: 16em;
-      background: #000;
-      color: #ffe700; } }
+.moment-game-box .ad {
+  display: none; }
+
+.moment-game-box:not(.game-started) .message {
+  top: 50%;
+  transform: translateY(-50.1%);
+  margin: 0;
+  background: transparent; }
+
+.moment-game-box > .inner {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: #ffe700; }
+  .moment-game-box > .inner > i.i-x-slim {
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 18px;
+    color: #000; }
+
+.moment-game-box .minefield {
+  width: 100% !important;
+  left: 0; }
+  .moment-game-box .minefield div .inner button {
+    font-size: 16em;
+    background: #000;
+    color: #ffe700; }
 
 @media all and (max-width: 525px) {
   .moment-game-box > .inner {
@@ -689,6 +692,10 @@ header {
   transform: translate(0, -10%);
   top: 0; }
 
+.ticket-tabs li:last-of-type.active.done .ticket-number-sm:before {
+  background: url(../img/sprite.png) center center no-repeat;
+  background-position: -597px -61px; }
+
 #prizes-exchange .content-box-item-content {
   margin-right: 0; }
 
@@ -716,7 +723,6 @@ header {
 
 .ae-top {
   float: none;
-  margin-bottom: 20px;
   text-align: center; }
   .ae-top .ae-user-img {
     text-align: center;
@@ -754,6 +760,11 @@ header {
 .ae-personal-form-values li > * {
   position: relative;
   top: 50%;
+  -webkit-transform: translate(0, -50%);
+  -khtml-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
   transform: translate(0, -50%);
   line-height: 1;
   display: inline-block;
@@ -827,9 +838,6 @@ header {
     font-size: 18px; }
   #profile-settings .danger {
     color: #ff4c4b !important; }
-
-#profile-edit .content-box-item, #user-view .content-box-item {
-  padding-top: 10px; }
 
 #profile-edit .content-box-item {
   padding-bottom: 25px; }
@@ -1864,10 +1872,10 @@ header {
         height: 30px;
         line-height: 30px;
         margin-top: 10px; }
+      .ticket-tabs li:last-of-type.done .ticket-number-sm {
+        margin-top: 0; }
       .ticket-tabs li:last-of-type:hover .ticket-number-sm {
         margin-top: 0px; }
-      .ticket-tabs li:last-of-type.active .ticket-number-sm {
-        margin-top: 0; }
   .lottery-grid .title {
     padding: 16px 23px; }
   .ticket-done {
@@ -2300,6 +2308,8 @@ header {
     padding: 0 10px; }
   #profile-edit .ae-personal-form {
     border-top: 0; }
+  .ae-personal-form-values i {
+    min-width: 150px; }
   .ph-header {
     margin: 0 -20px 20px;
     padding: 0 20px; }

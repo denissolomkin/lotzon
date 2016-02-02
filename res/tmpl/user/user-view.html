@@ -4,7 +4,7 @@
     <div class="content-box-content clearfix">
         <div class="content-box-item">
             <div class="ae-personal-inf">
-                    <div class="ae-top uk-float-left">
+<!--                     <div class="ae-top">
                         <div class="ae-user-img">
                             
                             <img src="{{avatar img id}}" alt="">
@@ -13,9 +13,29 @@
                         <div class="ae-inf">
                             {{i18n "message-input-correct-data"}}
                         </div>
+                    </div> -->
+
+
+                    
+                    <div class="ae-top">
+                        <div class="avatar-bg"  style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover; filter: url(#Blur);" filter="url(/res/filter.svg#blur)" >
+                            <div></div>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" height="0">
+                            <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
+                                <feGaussianBlur stdDeviation="8" in="SourceGraphic"/>
+                            </filter>
+                        </svg>
+                        <div class="img-avatar-name">{{title.nickname}}</div>
+                        <div class="ae-user-img">
+
+                            <img src="{{avatar img id}}" alt="">
+                        </div>
                     </div>
 
-                    <div class="uk-float-right">
+                    
+                    <div>
                         <ul class="ae-personal-form">
                             <li class="ae-personal-form-values ae-name-block">
                                 <ul>
@@ -29,7 +49,6 @@
                                     </li>
                                     <li><i>Имя</i> <div>{{title.name}}</div></li>
                                     <li><i>Фамилия </i><div>{{title.surname}}</div></li>
-                                    <li class="empty"></li>
                                 </ul>
                             </li>
                         </ul>        
@@ -91,7 +110,7 @@
                         </li>
 
                     </ul>
-                {{partial "user-view-statistics" .}}         
+       
             </div>
 
         </div>

@@ -1,6 +1,7 @@
 // GAMES <<CHANCE>> -------------------- //
 
 /*title of games view*/
+
 .title-wrap {
     position: relative;
     width: 100%;
@@ -15,12 +16,12 @@
         padding: 0;
         height: auto;
         vertical-align: middle;
-        &:hover{
-            i{
+        &:hover {
+            i {
                 color: #343434;
             }
         }
-        i{
+        i {
             transition: color .2s ease-in;
             display: inline;
             position: relative;
@@ -34,31 +35,32 @@
         color: #343434;
         font-size: 20px;
         font-family: Handbookpro-regular;
-
     }
 }
+
+
 /* END
 title of games view*/
 
-div > .games-previews{
+div > .games-previews {
     padding: 0;
 }
-.games-previews{
-    overflow-y: hidden;
 
-    .flex-box{
+.games-previews {
+    overflow-y: hidden;
+    .flex-box {
         font-family: handbookpro-regular;
         /*        display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                align-items: stretch;*/
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: stretch;*/
         padding: 0 20px;
-        .fixr{   
+        .fixr {
             margin-left: -55px;
             position: relative;
         }
-        a{
+        a {
             display: inline-block;
             height: 320px;
             width: 200px;
@@ -69,23 +71,21 @@ div > .games-previews{
             margin-left: 54px;
         }
         a:active,
-            a:hover{
-            /*need animation*/   
+        a:hover {
+            /*need animation*/
         }
-
-        .game-img{
+        .game-img {
             position: absolute;
             height: 100%;
             width: 100%;
             top: 0;
             left: 0;
             overflow: hidden;
-            img{
+            img {
                 width: 100%;
             }
         }
-
-        .game-info{
+        .game-info {
             background: #f8f8f8;
             width: 100%;
             position: relative;
@@ -96,59 +96,109 @@ div > .games-previews{
             text-align: center;
             overflow: hidden;
         }
-        .game-name{
+        .game-name {
             font-family: Handbook-bold;
             font-size: 15.5px;
             text-transform: uppercase;
             line-height: 1;
             margin: 5px 0;
-
         }
-        .fund_title{
+        .fund_title {
             font-family: Handbook-bold;
             color: #605b5c;
             font-size: 14px;
             line-height: 2;
         }
-        .game-fund>div{
+        .game-fund>div {
             font-family: Handbook-bold;
             text-transform: uppercase;
             font-size: 24px;
         }
-        .game-fund>div>span{
+        .game-fund>div>span {
             font-size: 14px;
             color: #2f2f2f;
         }
-        .players{
+        .players {
             font-family: Handbook-bold;
             padding-top: 20px;
             font-size: 14px;
         }
-        
-        .game-button{
+        .game-button {
             position: relative;
             text-align: center;
             line-height: 40px;
             height: 40px;
             font-size: 15px;
-            border-top: 1px solid rgba(255,255,255,0.3);
-            text-shadow:0px 1px 0px rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
         }
     }
 }
 
-#games-chance{
-    .game-info{
+#games-chance {
+    .game-info {
         background: transparent;
     }
-    .game-fund > div{
+    .game-fund > div {
         font-size: 15.5px;
         margin: 10px 0;
-        &:first-child:nth-last-child(1){
+        &:first-child:nth-last-child(1) {
             font-size: 24px;
             margin: 20px 0;
         }
     }
+}
 
+#games-online-field {
+    .mx {
+        // kill
+        background: url(../img/games/lotzonBg.png);
+
+
+        // border: 1px solid red;
+        &.SeaBattle,
+        &.WhoMore,
+        &.SeaBattle {}
+
+        .o {
+            .gm-pr {
+                // background: red;
+            }
+        }
+        .m {
+            .gm-pr {
+                background: #4a4a4a;
+            }
+        }
+        .table {
+            width: 319px;
+            margin: 0px auto;
+            .inner {
+                padding: 1px 1px 0 0;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    background: #d3eaec;
+                    font-size: 10em;
+                    color: #000;
+                    vertical-align: center;
+                    text-align: center;
+                    cursor: default;
+                    &:not([class]){
+                        cursor: pointer;
+                    }
+                    &.m{
+                        background: #f8e71c;
+                    }
+                    &.o{
+                        background: #f78e51;
+                    }
+                    span{
+                        display: inline;
+                    }
+                }
+            }
+        }
+    }
 }

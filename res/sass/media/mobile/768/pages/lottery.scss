@@ -32,15 +32,16 @@
         height: 30px;
         line-height: 30px;
         margin-top: 10px;
-      }
+      }  
+      &.done {
+         & .ticket-number-sm {
+            margin-top: 0;
+          }
+      } 
+
       &:hover  {
         & .ticket-number-sm {
           margin-top: 0px;
-        }
-      }
-      &.active {
-        & .ticket-number-sm {
-          margin-top: 0;
         }
       }
     }
@@ -351,3 +352,5 @@
 .cabinet-game-history .content-box-item-content {
   min-height: 310px;
 }
+
+

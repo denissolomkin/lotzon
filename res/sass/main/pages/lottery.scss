@@ -351,6 +351,42 @@
                 }
             }
         }
+        &:last-of-type {
+            // &.done:before {
+            //     content: "";
+            //     display: block;
+            //     background: url(img/sprite.png) center center no-repeat;
+            //     background-position: -597px -53px;
+            //     position: absolute;
+            //     width: 11px;
+            //     height: 8px;
+            //     text-align: center;
+            //     top: 5px;
+            //     left: 8px;
+            // }
+            &:hover {
+                color: #cdcf9f;
+                & .ticket-number-sm {
+                    display: inline-block;
+                    width: 30px;
+                    height: 40px;
+                    line-height: 50px;
+                    border-radius: 3px;
+                    position: relative;
+                    background: #4c4c4c;
+                }
+            }
+            & .ticket-number-sm {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 3px;
+                position: relative;
+                // padding-bottom: 20px;
+                background: #cdcf9f;
+            }
+        }
         &.done {
             & .ticket-number-sm:before {
                 content: "";
@@ -379,9 +415,8 @@
             &:last-of-type {
                 & .ticket-number-sm {
                     background: #f8e71d;
-                    &:before {
-                        display: none;
-                    }
+                    height: 40px;
+                    line-height: 50px;
                 }
                 &:hover {
                     & .ticket-number-sm {
@@ -390,13 +425,13 @@
                         }
                     }
                 }
-                &.active {
-                    & .ticket-number-sm {
-                        &:before {
-                            display: none;
-                        }
-                    }
-                }
+                // &.active {
+                //     & .ticket-number-sm {
+                //         &:before {
+                //             display: none;
+                //         }
+                //     }
+                // }
             }
         }
         &.active {
@@ -423,33 +458,7 @@
             top: 5px;
             left: 8px;
         }
-        &:last-of-type {
-            &.done:after{
-                background-position: -597px -71px;
-            }
-            &:hover {
-                color: #cdcf9f;
-                & .ticket-number-sm {
-                    display: inline-block;
-                    width: 30px;
-                    height: 40px;
-                    line-height: 50px;
-                    border-radius: 3px;
-                    position: relative;
-                    background: #4c4c4c;
-                }
-            }
-            & .ticket-number-sm {
-                display: inline-block;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-                border-radius: 3px;
-                position: relative;
-                // padding-bottom: 20px;
-                background: #cdcf9f;
-            }
-        }
+      
         &.active:last-of-type {
             color: #cdcf9f;
             & .ticket-number-sm {
@@ -1132,7 +1141,6 @@
 
 .condition {
     font-size: 19px;
-    font-weight: bold;
     text-transform: uppercase;
     padding: 15px 40px 63px;
     max-width: 320px;

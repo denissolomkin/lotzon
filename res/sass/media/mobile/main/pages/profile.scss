@@ -1,6 +1,6 @@
 .ae-top {
 	float: none;
-	margin-bottom: 20px;
+	// margin-bottom: 20px;
 	text-align: center;
 	.ae-user-img {
 		text-align: center;
@@ -44,7 +44,7 @@
 .ae-personal-form-values li > * {
 	position: relative;
 	top: 50%;
-	transform: translate(0, -50%);
+	@include translate(0, -50%);
 	line-height: 1;
 	display: inline-block;
 	vertical-align: top;
@@ -158,9 +158,9 @@
 }
 
 
-#profile-edit .content-box-item, #user-view .content-box-item {
-	padding-top: 10px;
-}
+// #profile-edit .content-box-item, #user-view .content-box-item {
+// 	padding-top: 10px;
+// }
 #profile-edit .content-box-item {
 	padding-bottom: 25px;
 }

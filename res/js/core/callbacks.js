@@ -49,24 +49,41 @@
 
             $(document).on('click', Device.do.hide);
 
-            $(document).on('click', '.input-file', Comments.showPreviewImage);
+            $(document).on('click', '.input-file, .thumb', Comments.showPreviewImage);
 
              /*smiles*/
-            $(document).on('click', ".message-form-smileys", Comments.showSmiles);
-            $(document).on('click', ".smiles span", Comments.chooseSmiles);
+            $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
+            $(document).on('click touchend', ".smiles span", Comments.chooseSmiles);
 
             $(document).on("paste", '[contenteditable]', Comments.pasteText);
-             $(document).on("blur paste input", '[contenteditable]', Comments.checkInput);
+             $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
 
 
-             $(document).on('touchstart', '.comment-reply-btn', Comments.do.replyForm);
+           
 
+            // $(document).on('touchmove', '.comment-reply-btn', function (e) {
+                
+                // return false
+            // });
+            // $(document).on('touchstart', '.comment-reply-btn', function () {
+            //     // alert('works');
+            //     return false
+            // });
+             // $(document).on('touchend', '.comment-reply-btn', Comments.do.replyForm);
             /* navigation */
             $(document).on('touchstart', '.site-overlay', function () {
                 return false
             });
             
-
+            // stop "Device.do.hide" on .toggle-btn click | add toggle-slide
+            $(document).on('touchend click', '.toggle-btn', function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+                
+                $('.toggle-btn').not($(this)).removeClass('active').next('ul').slideUp("fast");
+                $(this).toggleClass('active').next('ul').slideToggle("fast");
+            });
+            
             $(document).on('touchmove', '.site-overlay', function () {
                 return false
             });
@@ -108,9 +125,6 @@
 
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
 
-            
-
-
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
@@ -126,6 +140,7 @@
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
             $(document).on('click', '.mx .exit', Game.do.exit);
+            $(document).on('click', '.mx .table .cell', Game.do.move);
 
             /* support */
             $(document).on('click', '.support h1', Support.do.collapse);

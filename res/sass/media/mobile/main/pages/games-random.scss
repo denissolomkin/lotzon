@@ -8,7 +8,8 @@ $black_10: rgba(0,0,0,0.1);
 $color_ziggurat_approx: #b9dadd;
 $gray: #808080;
 
-@media all and(max-width: 768px) {
+
+// @media all and(max-width: 768px) {
     .moment-game-box {
         .ad{
             display: none;
@@ -40,6 +41,8 @@ $gray: #808080;
         }
         .minefield {
             width:100% !important;
+            left: 0;
+
             div .inner button {
                 font-size: 16em;
                 background: $black;
@@ -47,7 +50,7 @@ $gray: #808080;
             }
         }
     }
-}
+// }
 @media all and(max-width: 525px) {
     .moment-game-box {
         > .inner {

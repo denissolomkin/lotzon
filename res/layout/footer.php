@@ -24,22 +24,21 @@
 <script>
 
     var
-        menu = {
-            navigation: {
-                'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
-                'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
-                'menu-more': [
-'support/feedback', 'support/rules', 'support/faq', 'support/help', 'logout']
-            }
-        },
-
-        device = {mobile: <?php echo json_encode($isMobile);?>},
-        lottery = <?php echo json_encode($lottery, JSON_PRETTY_PRINT);?>,
-        player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>,
-        slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT);?>,
-        config = <?php echo json_encode($config, JSON_PRETTY_PRINT);?>,
-        timestamp = <?php echo time();?>,
-        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT);?>
+            menu = {
+                navigation: {
+                    'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
+                    'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
+                    'menu-more': [
+                        'support/feedback', 'support/rules', 'support/faq', 'support/help', 'logout']
+                }
+            },
+    device = {mobile: <?php echo json_encode($isMobile); ?>},
+    lottery = <?php echo json_encode($lottery, JSON_PRETTY_PRINT); ?>,
+            player = <?php echo json_encode($player, JSON_PRETTY_PRINT); ?>,
+            slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT); ?>,
+            config = <?php echo json_encode($config, JSON_PRETTY_PRINT); ?>,
+            timestamp = <?php echo time(); ?>,
+            debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
 
 </script>
 
@@ -61,10 +60,10 @@
         });
 
         var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () {
-                n.parentNode.insertBefore(s, n);
-            };
+                s = d.createElement("script"),
+                f = function () {
+                    n.parentNode.insertBefore(s, n);
+                };
         s.type = "text/javascript";
         s.async = true;
         s.src = "https://mc.yandex.ru/metrika/watch.js";
@@ -77,20 +76,25 @@
     })(document, window, "yandex_metrika_callbacks");
 </script>
 <noscript>
-    <div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt=""/></div>
+<div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt=""/></div>
 </noscript>
 <!-- /Yandex.Metrika counter -->
 
-<?php $dirs = array('libs', 'plugins', 'functions', 'controllers', 'games',  'models', 'core');
+<?php
+$dirs = array('libs', 'plugins', 'functions', 'controllers', 'games', 'models', 'core');
 foreach ($dirs as $dir):
     if (!is_dir('./res/js/' . $dir . '/'))
-        continue; ?>
+        continue;
+    ?>
     <!-- <?php echo $dir; ?> -->
-    <?php $files = scandir('./res/js/' . $dir . '/');
+    <?php
+    $files = scandir('./res/js/' . $dir . '/');
     foreach ($files as $file):
-        if ($file != "." && $file != ".." && strstr($file, '.js')): ?>
+        if ($file != "." && $file != ".." && strstr($file, '.js')):
+            ?>
             <script src="/res/js/<?php echo $dir . '/' . $file; ?>"></script>
-        <?php endif;
+        <?php
+        endif;
     endforeach;
 endforeach;
 ?>
@@ -117,9 +121,37 @@ endforeach;
 
 </script>
 
-<button style="position: fixed;bottom:0;left:0" onclick="Content.style()">Desktop/Mobile</button>
-<button style="position: fixed;bottom:0;left:90px;" onclick="Lottery.prepareData()">Lottery</button>
-<button style="position: fixed;bottom:0;left:140px;" onclick="Player.ping()">Ping</button>
+<style>
+    #R2D2{
+        position: relative; 
+        z-index: 999999999; 
+        font-size: 16px;
+        position: fixed;bottom:0;
+    }
+    #R2D2 button{
+        padding: 2px 5px;
+        cursor: pointer;
+        border-left: 2px dashed #0088cc;
+        border-right: 2px dashed #0088cc;
+        background: #094984;
+        color: #fff;
+        transition: all .4s ease;
+        margin-right: 10px;
+    }
+    #R2D2 button:hover{
+        border-left: 2px dashed #00b7ec;
+        border-right: 2px dashed #00b7ec;
+        background: tomato;
+        color: #000;
+        
+    }
+</style>
+<div id="R2D2">
+    <button onclick="Content.style()">Desktop/Mobile</button>
+    <button onclick="Lottery.prepareData()">Lottery</button>
+    <button onclick="Player.ping()">Ping</button>
+    <button onclick="WebSocketAjaxClient()">WebSocket</button>
+</div>
 
 </body>
 </html>

@@ -13,7 +13,7 @@
          * @returns {Boolean}
          */
         isRun: function () {
-            return document.getElementsByClassName('games-online-game').length;
+            return App.uid;
         },
 
         run: function () {
@@ -40,8 +40,10 @@
                     '<div class="table"></div>' +
                     '<div class="off"></div>';
 
+                Game.drawExit();
                 Game.setPlayersDetailes(Game.seatPlayers());
                 Game.setFullScreenHeigth();
+
                 return true;
 
             } else
@@ -62,6 +64,12 @@
 
             } else
                 return true;
+        },
+
+        drawExit: function () {
+            if (App.action == 'ready' || App.action == 'wait' || App.action == 'stack') {
+                $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
+            }
         },
 
         playerTimer: {
@@ -200,7 +208,7 @@
             } else {
                 sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
                 Apps.playAudio([App.key, sample]);
-                Game.timer.removeAll();
+                Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
                 return true;
             }

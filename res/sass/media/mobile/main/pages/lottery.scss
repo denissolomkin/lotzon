@@ -160,3 +160,8 @@
     @include translate(0, -10%);
     top: 0;
 }
+
+.ticket-tabs li:last-of-type.active.done .ticket-number-sm:before {
+    background: url(../img/sprite.png) center center no-repeat;
+    background-position: -597px -61px;
+}

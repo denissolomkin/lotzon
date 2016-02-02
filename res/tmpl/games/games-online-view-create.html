@@ -37,7 +37,7 @@
             <div class="title">Игроков</div>
             {{#forMaxToMin maxPlayers 2}}
             <div class="button">
-                <input {{#if (eq this 2)}}checked{{/if}} type="radio" name="players" id="players-{{this}}" value="{{this}}" />
+                <input {{#if (eq this "2") }} checked {{/if}} type="radio" name="players" id="players-{{this}}" value="{{this}}" />
                 <label for="players-{{this}}">{{this}}</label>
             </div>
             {{/forMaxToMin}}
