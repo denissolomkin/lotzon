@@ -8,3 +8,5 @@
 !/filestorage/*/comments
 !*.gitignore
 /.htaccess
+/res/.gitignore
+/res/.gitattributes
