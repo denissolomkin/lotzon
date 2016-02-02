@@ -337,8 +337,6 @@ class PlayersDBProcessor implements IProcessor
     {
         if ($player->getId() > 0) {
             $sql = "SELECT p.*, d.* FROM `Players` p
-                LEFT JOIN `PlayerSocials` s
-                  ON s.`PlayerId`=p.`Id`
                 LEFT JOIN `PlayerDates` d
                   ON d.`PlayerId`=p.`Id`
                 WHERE p.`Id` = :id";
@@ -348,8 +346,6 @@ class PlayersDBProcessor implements IProcessor
             );
         } elseif ($player->getSocialName() == '') {
             $sql = "SELECT p.*, d.* FROM `Players` p
-                LEFT JOIN `PlayerSocials` s
-                  ON s.`PlayerId`=p.`Id`
                 LEFT JOIN `PlayerDates` d
                   ON d.`PlayerId`=p.`Id`
                 WHERE p.`Email` = :email";
