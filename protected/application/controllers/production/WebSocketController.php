@@ -1036,6 +1036,7 @@ class WebSocketController implements MessageComponentInterface {
                         echo $this->time(1) . " " . "$appName $appId Игра активная - сдаемся\n";
                         $app->surrenderAction();
                         $this->sendCallback($app->getResponse(), $app->getCallback());
+                        $this->checkGame($app);
                     }
 
                     $this->runGame($appName,$appId,'quitAction',$playerId);
@@ -1201,7 +1202,7 @@ class WebSocketController implements MessageComponentInterface {
             if ($first == 'set')
                 Cache::init()->set('websocket::' . $key, $second);
             else {
-                $array = Cache::init()->get('websocket::' . $key);
+                $array = Cache::init()->get('websocket::' . $key)?:array();
                 if ($first) {
                     if ($first == 'unset') {
                         unset($array[$second]);
@@ -1297,7 +1298,7 @@ class WebSocketController implements MessageComponentInterface {
             if ($first == 'set')
                 Cache::init()->set('websocket::' . $key, $second);
             else {
-                $array = Cache::init()->get('websocket::' . $key);
+                $array = Cache::init()->get('websocket::' . $key)?:array();
                 if ($first) {
                     if ($first == 'unset') {
 
