@@ -147,7 +147,7 @@ class WebSocketController implements MessageComponentInterface
                                     ->formatFrom('bot', $bot)
                                     ->update();
 
-                                if ($gameConstructor->getOptions('f')) {
+                                if (0 && $gameConstructor->getOptions('f')) {
 
                                     $appMode = array(
                                         'currency' => 'POINT',
@@ -603,10 +603,12 @@ class WebSocketController implements MessageComponentInterface
                     $app->setClient($playerId);
 
                     if (!$app->isOver() && $app->isRun()) {
+
                         echo $this->time(1) . " " . "$appName $appUid Игра активная - сдаемся\n";
                         $app->surrenderAction();
                         if(count($app->getResponse()))
                             $this->sendCallback($app->getResponse(), $app->getCallback());
+                        $this->checkGame($app);
                     }
 
                     $this->runGame($appName, $appUid, 'quitAction', $playerId);
@@ -916,7 +918,6 @@ class WebSocketController implements MessageComponentInterface
 
                                                 $stack = GamePlayersModel::instance()->getStack($appName, $appMode['mode']);
 
-
                                                 // если насобирали минимальную очередь
                                                 if (1 || (count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
 
@@ -945,6 +946,8 @@ class WebSocketController implements MessageComponentInterface
                                                 foreach($clients as &$client)
                                                     unset($client->bot, $client->admin);
 
+                                                /* todo $this->sendCallback(array_keys($clients), $response) */
+
                                                 $from->send(json_encode(
                                                     array('path' => 'stack',
                                                           'res'  => array(
@@ -952,6 +955,7 @@ class WebSocketController implements MessageComponentInterface
                                                               'mode'  => $appMode['mode'],
                                                               'action' => 'stack',
                                                               'app'   => array(
+                                                                  'uid' => 0,
                                                                   'key' => $appName,
                                                                   'id'  => $appId
                                                               ),
@@ -960,6 +964,7 @@ class WebSocketController implements MessageComponentInterface
                                                           ))));
 
                                             }
+
                                         } else {
 
                                             echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} недостаточно денег {$gamePlayer->getApp('Mode')}\n";
@@ -969,6 +974,7 @@ class WebSocketController implements MessageComponentInterface
                                         }
 
                                     } else {
+                                        echo "выходим\r\n";
                                         $from->send(json_encode(array('path' => 'quit')));
                                     }
 
