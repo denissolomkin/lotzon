@@ -65,6 +65,11 @@
             form.callback = U.parse(U.parse(form.action), 'tmpl');
             form.url = U.generate(form.action, form.method);
 
+            if (Callbacks.submit[form.callback]) {
+                D.log(['C.submit.callback']);
+                form = Callbacks.submit[form.callback].call(that, form);
+                console.log(form.data.text)
+            }
             /* FORM
              * method: GET | POST | PUT | DELETE | WS
              * url: ACTION | HREF
@@ -245,11 +250,10 @@
                 D.log(['Form.submit.', ajax.action]);
 
                 for (var i = 0; i < formContenteditable.length; i++) {
-                    ajax.data[formContenteditable[i].getAttribute('name')] = Comments.smilePost(formContenteditable[i].innerHTML);
+                    ajax.data[formContenteditable[i].getAttribute('name')] = formContenteditable[i].innerHTML;
                 }
 
 
-                url = "http://www.domain.com/";
                 if (event) {
                     event.preventDefault();
                     event.stopPropagation();

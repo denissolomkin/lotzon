@@ -88,7 +88,7 @@
                     for (j = 1; j <= size; j++) {
                         html += '<div>' +
                             '<div class = "inner" >' +
-                            '<div class="cell" data-cell="' + j + "x" + i + '"></div>' +
+                            '<div class="cell" data-cell="' + j + "x" + i + '"><i class="i-question"></i></div>' +
                             '</div>' +
                             '</div>';
                     }

@@ -118,7 +118,10 @@
 
             openOption: function() {
                 $(this).closest('.option-block').find('.option, .show-option .change').toggleClass('hidden');
-                $(this).closest('.option-block').find('.hidden-notice').css('display', 'none');
+                if ( $('.hidden-notice')!=undefined ) {
+                    $(this).closest('.option-block').find('.hidden-notice').css('display', 'none');  
+                }
+                
             },
 
             openFavorite: function() {

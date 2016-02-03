@@ -4,9 +4,20 @@
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-cashout">
 
-            <div class="cco-title clearfix">
-                <div>Выберите способ вывода денег</div>
-                <a href="/profile/billing" class="cco-edit"><span>редактировать</span></a>
+            <div class="cco-title clearfix option-block">
+                <div>{{i18n "title-profile-cashout-choose"}}</div>
+                <a href="/profile/billing" class="cco-edit"><span> {{i18n "title-profile-cashout-edit"}}</span></a>
+                <a class="rules show-option ">{{i18n "title-profile-cashout-rules"}}
+                    <div class="btn-arrows">
+                    <i class="i-arrow-down change"></i>
+                    <i class="i-arrow-top change hidden"></i>
+                    </div>
+                </a>
+                <div class="clearfix option hidden">
+                    <p>{{i18n "text-cashout-rules-time"}}</p>
+                    <p>{{i18n "text-cashout-see-info"}}<a href="/reports/payments" class="">{{i18n "title-profile-payments-history"}}</a></p>
+                    <p>{{i18n "text-cashout-write-us"}} <a href="/users/{{player "getAdmin"}}/message" class="write-admin">{{i18n "title-profile-message-admin"}}</a></p>
+                </div>
             </div>
 
             <div class="cco-choose-method">

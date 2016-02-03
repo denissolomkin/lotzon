@@ -261,82 +261,19 @@ body #menu-navigation-mobile .menu-balance-inf {
             &:first-of-type {
                 padding-left: 40px;
                 padding-left: 30px;
-                // &:before {
-                //     content: "";
-                //     display: block;
-                //     background: url(../img/sprite.png);
-                //     position: absolute;
-                //     width: 24px;
-                //     height: 22px;
-                //     background-position: -516px -54px;
-                //     top: 9px;
-                //     left: 0px;
-                // }
             } 
         }   
     }
-    /*    & .menu-main {
-            padding-bottom: 0;
-            &:after {
-                display: none;
-            } 
-            & li {
-                padding: 0;
-                line-height: 1;  
-                margin: 15px 0 10px;   
-                & a {
-                    text-transform: none;
-                    padding: 0;
-                }    
-            }
-    
-        }
-        & .menu-more  {
-            // padding-bottom: 10px;
-            padding-top: 0;
-            & li {
-                padding: 0;
-                line-height: 1;   
-                margin: 15px 0 10px;   
-                & a {
-                    padding: 0;
-                }
-                &:last-child {
-                    & a {
-                        margin-top: 0;       
-                    }
-                }
-            }
-        }
-        & .menu-profile  {
-            // padding: 0 0 10px;
-            min-width: 0;
-            padding: 0;
-            & li {
-                padding: 0;
-                line-height: 1;   
-                margin: 15px 0 10px; 
-                & a {
-                    padding: 0;
-                }
-                &:last-child {
-                    & a {
-                        margin-top: 0;       
-                    }
-                }
-            }
-        }
-        & hr {
-            margin: 0 0 0 -20px;
-            border: none;
-            border-bottom: 1px solid #cbc7c6;
-        }*/
+
     & li a.active {
         /*text-decoration: underline;*/
     }
 
 }   
-
+.header .header-logo {
+    height: 50px;
+    overflow: hidden;
+}
 .menu-balance-btn {
     display: none;
 }

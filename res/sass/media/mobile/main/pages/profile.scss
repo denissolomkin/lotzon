@@ -62,7 +62,10 @@
 }
 
 .ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
-	top: 0;
+	top: 4px;
+}
+.calendar-range {
+	height: auto;
 }
 .ae-social {
 	height: 45px;
@@ -124,7 +127,30 @@
 		float: none;
 	}
 
+	#profile-convert {
+		& .content-box-header {
+			background: none;	
+		}
+		& .cc-title {
+			text-align: center;
+			& span {
+				display: block;
+			}
+		}
+		& .cc-out input, .cc-income span.cc-sum {
+			width: 111px;
+		}
+		.cc-form-top {
+		    margin: 0 -10px 25px;
+		    padding: 0 20px;
+		    height: 100px;
+		}
+		.cc-out {
+			margin-bottom: 10px;
+		}
+	}
 }
+
 #profile-settings {
 	padding-top: 10px;
 	& .ae-social {
@@ -185,4 +211,15 @@
 	min-height: 460px;
 }
 
-
+.cco-edit {
+    float: right;
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: url(img/sprite.png) -332px -54px;
+    position: relative;
+    top: 4px;
+		& span {
+		display: none;
+	}
+}

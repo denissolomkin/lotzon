@@ -150,55 +150,1521 @@ align-items: stretch;*/
     }
 }
 
+
+// Durak SeaBattle WhoMore ....... styles
+
+// #games-online-field {
+//     .mx {
+//         padding-bottom: 80px;
+//         height: auto;
+
+//         &:not(.Durak){
+//             background: url(../img/games/lotzonBg.png);
+//         }
+        
+//         .players{
+//             position: static;
+//             height: 80px;
+//             padding: 20px 0;
+//         }
+
+//         .o {
+//             .gm-pr {
+//                 // background: red;
+//             }
+//         }
+//         .m {
+//             height: 80px;
+//             position: absolute;
+
+//             .gm-pr {
+//                 background: #4a4a4a;
+//             }
+//         }
+//         .table {
+
+//             width: 319px;
+//             margin: 0px auto;
+//             padding: 20px 0;
+            
+//             .inner {
+//                 padding: 1px 1px 0 0;
+//                 .cell {
+//                     width: 100%;
+//                     height: 100%;
+//                     background: #d3eaec;
+//                     font-size: 10em;
+//                     color: #4a4a4a;
+//                     text-align: center;
+//                     position: relative;
+//                     cursor: default;
+//                     &:before {
+//                         content: "";
+//                         display: inline-block;
+//                         height: 100%;
+//                         width: 0;
+//                         vertical-align: middle;
+//                     }
+//                     &[class='cell'] {
+//                         cursor: pointer;
+//                     }
+//                     &.m {
+//                         background: #f8e71c;
+//                     }
+//                     &.o {
+//                         background: #f78e51;
+//                     }
+//                     > * {
+//                         display: inline-block;
+//                         vertical-align: middle;
+//                     }
+//                 }
+//             }
+//         }
+//         // for specific games
+//         &.Durak,
+//         &.WhoMore,
+//         &.SeaBattle {
+
+//         }
+//         &.WhoMore {
+//             .table {
+//                 width: 380px;
+//                 .inner {
+//                     padding: 2px;
+//                     .cell {
+//                         color: #4a4a4a;
+//                         i[class^="i-"] {
+//                             font-size: 0.9em;
+//                         }
+//                         span {
+//                             font-family: 'Handbook-bold';
+//                             font-size: 1.1em;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// END Durak SeaBattle WhoMore ....... styles
+
+//colors
+$web_orange: orange;
+$white: white;
+$color_cape_cod_60_approx: rgba(64,64,64,0.6);
+$black_50: rgba(0, 0, 0, 0.5);
+$color_gray_chateau_approx: #a5adb0;
+$white_60: rgba(255, 255, 255, 0.6);
+$color_celeste_approx: #ccc;
+$black_30: rgba(0,0,0,0.3);
+$color_turbo_approx: rgb(255,228,0);
+$color_geyser_95_approx: rgba(216,227,231,0.95);
+$mine_shaft_50: rgba(50,50,50,.5);
+$red: red;
+$color_rio_grande_approx: rgba(200,200,0,1);
+$color_jungle_mist_95_approx: rgba(178,208,212,0.95);
+$color_opal_approx: #a8c4c8;
+$color_suva_gray_approx: #888;
+$black: black;
+$color_pink_swan_approx: #bababa;
+$white_30: rgba(255,255,255,0.3);
+$white_50: rgba(255,255,255,0.5);
+$color_jungle_mist_approx: #b2d0d4;
+$color_gravel_approx: #4c4c4c;
+$color_tan_hide_approx: #f68e56;
+$color_guardsman_red_approx: rgba(200,0,0,1);
+$gray:  gray;
+$black_20: rgba(0,0,0,0.2);
+$color_coral_red_approx: #ff4242;
+$color_lima_approx: #7ed321;
+
+//fonts
+$font_0: handbookpro-regular;
+$font_1: Handbook-bold;
+$font_2: Simple-Line-Icons;
+
+//urls
+$url_0: url(../img/games/card-table-bg.jpg);
+$url_1: url(../img/games/bg-question.png);
+$url_2: url(../img/games/card-deck.png);
+
 #games-online-field {
-    .mx {
-        // kill
-        background: url(../img/games/lotzonBg.png);
-
-
-        // border: 1px solid red;
-        &.SeaBattle,
-        &.WhoMore,
-        &.SeaBattle {}
-
-        .o {
-            .gm-pr {
-                // background: red;
-            }
-        }
+    width: 100%;
+    padding: 0;
+    //Instead of the line below you could use @include box-sizing($bs)
+    box-sizing: border-box;
+    margin: 0;
+    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: 2px 2px 4px $black_50;
+    height: 550px;
+    * {
+    }
+    > div {
+        top: 0;
+        width: 100%;
+        height: 550px;
+        position: absolute;
+        z-index: 10;
+        background: $url_0 $color_gray_chateau_approx no-repeat center center;
+        overflow: hidden;
+        background-size: cover;
+    }
+}
+#gameTimer {
+    display: none;
+}
+.mx {
+    height: 100%;
+    .players {
+        width: 40%;
+        height: 25%;
+        margin: 0 30%;
+        text-align: center;
         .m {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            margin-left: -30%;
+            z-index: 1;
             .gm-pr {
-                background: #4a4a4a;
+                z-index: 12;
+                background: $color_jungle_mist_95_approx;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 80px;
+                margin: 0;
+                .pr-ph-bk {
+                    left: 45%;
+                    top: 10px;
+                    .wt {
+                        margin-top: -100px;
+                    }
+                }
+                .pr-cl {
+                    margin: 15px 30px;
+                    float: left;
+                    width: 20%;
+                    .btn-pass {
+                        width: 100%;
+                        display: none;
+                        height: 50px;
+                        background: $white;
+                        border: 1px solid $color_pink_swan_approx;
+                        //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                        border-radius: 5px;
+                        color: $red;
+                        font: 32px/50px $font_0;
+                        text-transform: uppercase;
+                        &:hover {
+                            //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                            box-shadow: 0 0 10px 1px $color_rio_grande_approx;
+                            cursor: pointer;
+                        }
+                    }
+                    .btn-ready {
+                        width: 100%;
+                        display: none;
+                        height: 50px;
+                        background: $white;
+                        border: 1px solid $color_pink_swan_approx;
+                        //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                        border-radius: 5px;
+                        color: $red;
+                        font: 32px/50px $font_0;
+                        text-transform: uppercase;
+                        &:hover {
+                            //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                            box-shadow: 0 0 10px 1px $color_rio_grande_approx;
+                            cursor: pointer;
+                        }
+                    }
+                    .msg-move {
+                        width: 100%;
+                        display: none;
+                        height: 50px;
+                        color: $red;
+                        font: 32px/50px $font_0;
+                        text-transform: uppercase;
+                    }
+                }
+                .pr-ph {
+                    width: 60px;
+                    height: 60px;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    position: absolute;
+                    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                    border-radius: 70px;
+                    margin: 0;
+                }
+                .pr-pr {
+                    background: $color_opal_approx;
+                    position: relative;
+                    height: 65px;
+                    width: 65px;
+                    margin: 8px;
+                    float: right;
+                    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                    border-radius: 80px;
+                    padding: 7px 10px;
+                    //Instead of the line below you could use @include box-sizing($bs)
+                    box-sizing: border-box;
+                    bottom: 0;
+                    b {
+                        font: 36px/1 Handbook-bold;
+                        letter-spacing: -3px;
+                        margin-left: -3px;
+                        display: block;
+                        text-transform: uppercase;
+                    }
+                    span {
+                        font: 13px/5px $font_1;
+                        text-transform: uppercase;
+                        color: $black_50;
+                        display: block;
+                    }
+                }
+                .pr-md {
+                    margin: 10px 25px;
+                    float: right;
+                    width: 35px;
+                    height: 60px;
+                    border: 2px solid $color_suva_gray_approx;
+                    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                    border-radius: 5px;
+                    color: $color_suva_gray_approx;
+                    font: 18px/1 Handbook-bold;
+                    position: relative;
+                    span {
+                        font: 18px/1 Handbook-bold;
+                        line-height: 60px;
+                    }
+                }
+                .pr-nm {
+                    display: none;
+                }
+                .tm {
+                    margin: 5px 0 0 -200px;
+                    background: none;
+                    color: $black;
+                }
+            }
+            .pr-pt {
+                position: relative;
+                float: right;
+                height: 100%;
+                width: 20%;
+                padding: 23px 0;
+                //Instead of the line below you could use @include box-sizing($bs)
+                box-sizing: border-box;
+                color: $black;
+                text-align: left;
+                margin: 0 0 0 40px;
+                .wallet {
+                    font-size: 36px;
+                    color: $black;
+                    float: left;
+                    margin-right: 20px;
+                }
+            }
+            &.current:not(.starter) .gm-pr .pr-cl {
+                .btn-pass {
+                    display: block;
+                }
+                .btn-ready {
+                    display: block;
+                }
+            }
+            &.starter .gm-pr .pr-cl .msg-move {
+                display: block;
             }
         }
-        .table {
-            width: 319px;
-            margin: 0px auto;
-            .inner {
-                padding: 1px 1px 0 0;
-                div {
+        .o {
+            width: 30%;
+            float: left;
+            margin: 0;
+            .gm-pr {
+                height: auto;
+                margin: 0 0 0 5px;
+                .pr-ph {
+                    width: 60px;
+                    height: 60px;
+                    background-repeat: no-repeat;
+                    background: $white;
+                    background-size: contain;
+                    position: relative;
+                    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                    box-shadow: 0 0 10px;
+                    margin: 30px 0 0;
+                    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                    border-radius: 50px;
+                }
+                .pr-nm {
                     width: 100%;
-                    height: 100%;
-                    background: #d3eaec;
-                    font-size: 10em;
-                    color: #000;
-                    vertical-align: center;
-                    text-align: center;
-                    cursor: default;
-                    &:not([class]){
-                        cursor: pointer;
+                    background: $color_cape_cod_60_approx;
+                    color: $white;
+                    top: 60px;
+                    padding: 2px;
+                    position: absolute;
+                    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                    border-radius: 3px;
+                    font: 14px/1 "handbookpro-regular";
+                }
+                .tm {
+                    color: $white;
+                    background: $black_50;
+                    margin: 5px;
+                }
+            }
+        }
+        .col1 {
+            padding-left: 42%;
+        }
+        .col2 {
+            padding-left: 25%;
+        }
+        .col3 {
+            padding-left: 10%;
+        }
+        .exit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 15px;
+            //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+            border-radius: 10px;
+            padding: 10px;
+            width: 50px;
+            height: 30px;
+            background-color: $white_30;
+            cursor: pointer;
+            &:hover {
+                background-color: $white_50;
+            }
+            span {
+                color: $white;
+                font-size: 30px;
+            }
+        }
+        .gm-pr .pr-ph-bk {
+            width: auto;
+            height: auto;
+            opacity: 1;
+            z-index: 2;
+            position: relative;
+            margin: auto;
+            overflow: visible;
+            .pr-ph {
+                //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                box-shadow: 0 0 6px 0 $black_50;
+            }
+            .mt {
+                display: block;
+                background: $white;
+                border: 1px solid $color_celeste_approx;
+                //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                border-radius: 5px;
+                padding: 5px;
+                font-size: 22px;
+                font: 22px/1 "handbookpro-regular";
+                width: 140%;
+                margin: -20%;
+                //Instead of the line below you could use @include box-sizing($bs)
+                box-sizing: border-box;
+                top: 0;
+                //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                box-shadow: 3px 3px 3px 0 $black_30;
+            }
+            .tm {
+                font: 32px/1 "handbookpro-regular";
+                padding: 4px;
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                margin: -20px 17px;
+                //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                border-radius: 50px;
+                border: 5px solid $color_turbo_approx;
+                //Instead of the line below you could use @include box-sizing($bs)
+                box-sizing: border-box;
+            }
+            .wt {
+                display: none;
+                top: 0;
+                width: 130px;
+                background: $color_geyser_95_approx;
+                height: 50px;
+                margin-left: -40px;
+                //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+                border-radius: 5px;
+                padding: 5px;
+                //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                box-shadow: 0 0 5px 1px $mine_shaft_50;
+                font-size: 24px;
+                &.loser {
+                    color: $red;
+                }
+            }
+        }
+    }
+    .gm-pr {
+        width: 172px;
+        float: left;
+        text-align: center;
+        height: 480px;
+        margin: 0 19px;
+        position: relative;
+    }
+    &.WhoMore {
+        .table {
+            width: 480px;
+            margin: 0 auto;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            > li {
+                background: $url_1 $color_jungle_mist_approx no-repeat 0 0 / 100% 100%;
+                margin: 0 5px 5px 0;
+                float: left;
+                cursor: pointer;
+                text-align: center;
+                color: $color_gravel_approx;
+                letter-spacing: -2px;
+                &.m {
+                    background: $color_turbo_approx;
+                    opacity: 0.6;
+                    &.last {
+                        opacity: 1;
                     }
-                    &.m{
-                        background: #f8e71c;
-                    }
-                    &.o{
-                        background: #f78e51;
-                    }
-                    span{
-                        display: inline;
+                }
+                &.o {
+                    background: $color_tan_hide_approx;
+                    opacity: 0.6;
+                    &.last {
+                        opacity: 1;
                     }
                 }
             }
         }
     }
+    .msg.winner {
+        width: 100%;
+        height: 100%;
+        background-color: $white_60;
+        .re {
+            margin-top: 160px;
+        }
+        .ot-exit {
+            margin-top: 160px;
+        }
+        .ch-ot {
+            margin-bottom: 30px;
+        }
+    }
+}
+.cards {
+    .players {
+        .m {
+            .card {
+                //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+                transform-origin: 50% 100%;
+            }
+            .gm-pr .pr-md .icon-reload {
+                display: none;
+            }
+        }
+        .o .card {
+            position: absolute;
+            margin-left: -20px;
+            margin-top: 20px;
+            //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+            border-radius: 5px;
+            //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+            transform-origin: 50% 25%;
+        }
+    }
+    .deck {
+        float: left;
+        height: 35%;
+        width: 100px;
+        //Instead of the line below you could use @include box-sizing($bs)
+        box-sizing: border-box;
+        z-index: 10;
+        position: relative;
+        width: 15%;
+        .card {
+            position: absolute;
+            left: -80px;
+            top: 20px;
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(10deg);
+            &.trump {
+                left: 0;
+                top: 80px;
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(100deg);
+                //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+                transform-origin: 50% 25%;
+            }
+        }
+        .last {
+            position: absolute;
+            top: 0;
+            left: 10px;
+            color: $white;
+        }
+        .lear {
+            position: absolute;
+            top: 75px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            background: $url_2 no-repeat;
+            background-position: -138px -227px;
+            //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+            border-radius: 50px;
+            &.card1 {
+                background-position: -1491px -531px;
+            }
+            &.card2 {
+                background-position: -1438px -480px;
+            }
+            &.card3 {
+                background-position: -1438px -531px;
+            }
+            &.card4 {
+                background-position: -1491px -480px;
+            }
+        }
+    }
+    .table {
+        float: left;
+        height: 35%;
+        width: 100px;
+        //Instead of the line below you could use @include box-sizing($bs)
+        box-sizing: border-box;
+        z-index: 10;
+        width: 78%;
+        .cards {
+            float: left;
+            width: 16.6%;
+            height: 120px;
+            position: relative;
+            .card {
+                float: left;
+                position: absolute;
+                left: 25px;
+                margin-top: 5px;
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(2deg) scale(0.7,0.7);
+            }
+            &.highlight {
+                div:first-of-type {
+                    animation: pulsate 1s linear infinite;
+                    &:hover {
+                        animation: none;
+                        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                        box-shadow: 0 0 2px 2px $color_guardsman_red_approx;
+                        cursor: pointer;
+                    }
+                }
+                &.hover div:first-of-type {
+                    animation: none;
+                    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                    box-shadow: 0 0 2px 2px $color_guardsman_red_approx;
+                    cursor: pointer;
+                }
+            }
+            &.revert {
+                .card {
+                    background: none;
+                    border: 3px dashed $gray;
+                    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+                    box-shadow: none !important;
+                }
+                .card::before {
+                    font-family: $font_2;
+                    font-size: 72px;
+                    content: "\e099";
+                    position: absolute;
+                    left: 16px;
+                    top: 46px;
+                    color: $gray;
+                }
+                &.highlight .card {
+                    border-color: $color_guardsman_red_approx;
+                }
+            }
+            div:first-of-type {
+                left: 0;
+                margin-top: 0;
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(-1deg) scale(0.7,0.7);
+            }
+        }
+        > div:nth-of-type(even) {
+            padding-top: 30px;
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(-4deg);
+        }
+    }
+    .off {
+        float: left;
+        height: 35%;
+        width: 100px;
+        //Instead of the line below you could use @include box-sizing($bs)
+        box-sizing: border-box;
+        z-index: 10;
+        width: 3%;
+        float: right;
+        .card {
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(-4deg) scale(0.7,0.7);
+            //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+            transform-origin: 50% 25%;
+            position: absolute;
+            margin-left: -40px;
+        }
+    }
+    &.Revert .players .m .gm-pr .pr-md .icon-reload {
+        display: block;
+        position: absolute;
+        top: 14px;
+        font-size: 29px;
+        left: 1px;
+    }
+    &:not(.active_small_devices) .players .m .card:hover {
+        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        box-shadow: 0 0 10px 1px $color_rio_grande_approx;
+        cursor: pointer;
+    }
+}
+.card {
+    position: absolute!important;
+    width: 106px;
+    height: 162px;
+    text-align: center;
+    background: $url_2 no-repeat;
+    background-position: -1430px 0;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 20%;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 10px;
+    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: 2px 0 10px 0 $black_20;
+    &.select {
+        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        box-shadow: 0 0 10px 1px $color_rio_grande_approx;
+    }
+}
+.card1x2 {
+    background-position: 0 -170px;
+}
+.card1x3 {
+    background-position: -110px -170px;
+}
+.card1x4 {
+    background-position: -220px -170px;
+}
+.card1x5 {
+    background-position: -330px -170px;
+}
+.card1x6 {
+    background-position: -440px -170px;
+}
+.card1x7 {
+    background-position: -550px -170px;
+}
+.card1x8 {
+    background-position: -660px -170px;
+}
+.card1x9 {
+    background-position: -770px -170px;
+}
+.card1x10 {
+    background-position: -880px -170px;
+}
+.card1x11 {
+    background-position: -990px -170px;
+}
+.card1x12 {
+    background-position: -1100px -170px;
+}
+.card1x13 {
+    background-position: -1210px -170px;
+}
+.card1x14 {
+    background-position: -1320px -170px;
+}
+.card2x2 {
+    background-position: 0 0;
+}
+.card2x3 {
+    background-position: -110px 0;
+}
+.card2x4 {
+    background-position: -220px 0;
+}
+.card2x5 {
+    background-position: -330px 0;
+}
+.card2x6 {
+    background-position: -440px 0;
+}
+.card2x7 {
+    background-position: -550px 0;
+}
+.card2x8 {
+    background-position: -660px 0;
+}
+.card2x9 {
+    background-position: -770px 0;
+}
+.card2x10 {
+    background-position: -880px 0;
+}
+.card2x11 {
+    background-position: -990px 0;
+}
+.card2x12 {
+    background-position: -1100px 0;
+}
+.card2x13 {
+    background-position: -1210px 0;
+}
+.card2x14 {
+    background-position: -1320px 0;
+}
+.card3x2 {
+    background-position: 0 -510px;
+}
+.card3x3 {
+    background-position: -110px -510px;
+}
+.card3x4 {
+    background-position: -220px -510px;
+}
+.card3x5 {
+    background-position: -330px -510px;
+}
+.card3x6 {
+    background-position: -440px -510px;
+}
+.card3x7 {
+    background-position: -550px -510px;
+}
+.card3x8 {
+    background-position: -660px -510px;
+}
+.card3x9 {
+    background-position: -770px -510px;
+}
+.card3x10 {
+    background-position: -880px -510px;
+}
+.card3x11 {
+    background-position: -990px -510px;
+}
+.card3x12 {
+    background-position: -1100px -510px;
+}
+.card3x13 {
+    background-position: -1210px -510px;
+}
+.card3x14 {
+    background-position: -1320px -510px;
+}
+.card4x2 {
+    background-position: 0 -340px;
+}
+.card4x3 {
+    background-position: -110px -340px;
+}
+.card4x4 {
+    background-position: -220px -340px;
+}
+.card4x5 {
+    background-position: -330px -340px;
+}
+.card4x6 {
+    background-position: -440px -340px;
+}
+.card4x7 {
+    background-position: -550px -340px;
+}
+.card4x8 {
+    background-position: -660px -340px;
+}
+.card4x9 {
+    background-position: -770px -340px;
+}
+.card4x10 {
+    background-position: -880px -340px;
+}
+.card4x11 {
+    background-position: -990px -340px;
+}
+.card4x12 {
+    background-position: -1100px -340px;
+}
+.card4x13 {
+    background-position: -1210px -340px;
+}
+.card4x14 {
+    background-position: -1320px -340px;
+}
+.game-cards {
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+    div:not(.animatedCard) {
+    }
+}
+.small-card {
+    cursor: none;
+    trasform: rotate(2deg) scale(0.7,0.7)!important;
+}
+.transition {
+    //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+    transition: all 0.2s linear;
+}
+.highlight {
+    animation: highlight-fade 2s ease-out;
+}
+@-webkit-keyframes highlight-fade {
+    0% {
+        background: $web_orange;
+    }
+    100% {
+        background: $white;
+    }
+}
+@-moz-keyframes highlight-fade {
+    0% {
+        background: $web_orange;
+    }
+    100% {
+        background: $white;
+    }
+}
+@-ms-keyframes highlight-fade {
+    0% {
+        background: $web_orange;
+    }
+    100% {
+        background: $white;
+    }
+}
+@keyframes highlight-fade {
+    0% {
+        background: $web_orange;
+    }
+    100% {
+        background: $white;
+    }
+}
+.circle-timer {
+    width: 74px;
+    height: 74px;
+    left: -7px;
+    top: -7px;
+    position: absolute;
+    display: inline-block;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scaleX(-1);
+}
+.circle {
+    width: 74px;
+    height: 74px;
+    left: -7px;
+    top: -7px;
+    position: absolute;
+    display: inline-block;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scaleX(-1);
+    background: $color_coral_red_approx;
+}
+.beater {
+    .circle {
+        background: $color_lima_approx;
+    }
+    .timer-l {
+        border: 7px solid $color_lima_approx;
+        border-left-color: transparent;
+        border-top-color: $color_lima_approx;
+    }
+    .timer-r {
+        border: 7px solid $color_lima_approx;
+        border-left-color: transparent;
+        border-top-color: $color_lima_approx;
+    }
+}
+@-webkit-keyframes timer-slide {
+    0% {
+        border-top-color: transparent;
+    }
+    50% {
+        border-top-color: transparent;
+    }
+    100% {
+        border-top-color: transparent;
+    }
+}
+@-webkit-keyframes timer-toggle {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    51% {
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes timer-slide {
+    0% {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(-225deg);
+        border-top-color: transparent;
+    }
+    50% {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(-45deg);
+        border-top-color: transparent;
+    }
+    100% {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(-45deg);
+        border-top-color: transparent;
+    }
+}
+@keyframes timer-toggle {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    51% {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(-45deg);
+        opacity: 1;
+        border-top-color: transparent;
+    }
+    75% {
+    }
+    76% {
+        border-top-color: transparent;
+    }
+    100% {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(137deg);
+        opacity: 1;
+    }
+}
+.timer-l {
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    width: 74px;
+    height: 74px;
+    margin-left: -37px;
+    margin-top: -37px;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    border: 7px solid $color_coral_red_approx;
+    border-left-color: transparent;
+    border-top-color: $color_coral_red_approx;
+    animation-name: timer-slide;
+    animation-timing-function: ease-in;
+    z-index: 5;
+    left: 0;
+}
+.timer-r {
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    width: 74px;
+    height: 74px;
+    margin-left: -37px;
+    margin-top: -37px;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    border: 7px solid $color_coral_red_approx;
+    border-left-color: transparent;
+    border-top-color: $color_coral_red_approx;
+    animation-name: timer-toggle;
+    animation-timing-function: ease-out;
+}
+.timer-slot {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    overflow: hidden;
+}
+.active_small_devices {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    margin: 0;
+}
+@media all and(max-width: 768px) {
+    .content-box-content {
+        min-height: 0;
+    }
+    .mx .players {
+        .m {
+            height: auto;
+            min-height: 220px;
+            .gm-pr {
+                .pr-cl {
+                    margin: 20px 15px;
+                    width: 15%;
+                    .btn-pass {
+                        font: 18px $font_0;
+                        height: 40px;
+                        line-height: 40px;
+                    }
+                    .btn-ready {
+                        font: 18px $font_0;
+                        height: 40px;
+                        line-height: 40px;
+                    }
+                    .msg-move {
+                        font-size: 14px;
+                    }
+                }
+                .pr-pr {
+                    margin: 7px 0;
+                }
+                .pr-ph-bk {
+                    left: 30%;
+                }
+            }
+        }
+        .o .gm-pr .pr-nm {
+            width: 100%;
+            background: $color_cape_cod_60_approx;
+            color: $white;
+            top: 40px;
+            padding: 2px;
+            position: absolute;
+            //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+            border-radius: 3px;
+            font: 8px/1 "handbookpro-regular";
+            margin: 0 auto;
+            text-align: center;
+        }
+    }
+    .cards .deck .card {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(10deg) scale(0.7, 0.7);
+        left: -60px;
+        &.trump {
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(100deg) scale(0.7, 0.7);
+        }
+    }
+}
+@media(max-width: 650px) {
+    .mx .players .m .gm-pr .pr-ph-bk {
+        left: 25%;
+    }
+}
+@media(max-width: 550px) {
+    .mx {
+        .players {
+            height: 20%;
+            .m {
+                height: auto;
+                min-height: 200px;
+                .gm-pr {
+                    height: 60px;
+                    margin: 0;
+                    .pr-ph-bk {
+                        top: 6px;
+                    }
+                    .pr-pr {
+                        width: 50px;
+                        height: 50px;
+                        margin: 0;
+                        margin: 5px 0;
+                        padding: 8px 0;
+                        b {
+                            font: 26px/1 Handbook-bold;
+                            letter-spacing: -3px;
+                            margin-left: -3px;
+                            display: block;
+                            text-transform: uppercase;
+                            margin-top: 0;
+                        }
+                        span {
+                            font: 9px/5px $font_1;
+                            text-transform: uppercase;
+                            color: $black_50;
+                            display: block;
+                        }
+                    }
+                    .pr-ph {
+                        width: 50px;
+                        height: 50px;
+                        margin: 0;
+                    }
+                    .pr-cl {
+                        margin: 12px 15px;
+                        .msg-move {
+                            font-size: 14px;
+                            line-height: 1.5;
+                        }
+                    }
+                    .pr-md {
+                        height: 45px;
+                        span {
+                            line-height: 45px;
+                        }
+                    }
+                }
+                .pr-pt {
+                    margin: 5px 0;
+                    padding: 0 10px;
+                }
+            }
+            .o .gm-pr {
+                width: auto;
+                height: 30px;
+                .pr-ph {
+                    width: 40px;
+                    height: 40px;
+                    margin: 0;
+                }
+            }
+            .gm-pr .pr-ph-bk {
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                .mt {
+                    font-size: 14px;
+                    width: auto;
+                }
+            }
+        }
+        .o .players .o .gm-pr .pr-ph {
+            margin: 0;
+        }
+    }
+    .cards {
+        .players {
+            .o .card {
+                margin-left: -28px;
+                margin-top: -15px;
+            }
+            .m .small-card {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(-1deg) scale(0.4,0.4)!important;
+            }
+        }
+        .table {
+            .cards {
+                .card {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(-1deg) scale(0.4,0.4);
+                }
+                div:first-of-type {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(-1deg) scale(0.4,0.4);
+                }
+            }
+            > div:nth-of-type(even) {
+                margin-top: -10px;
+                padding-top: 0;
+            }
+        }
+        .deck {
+            .card {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(10deg) scale(0.4, 0.4);
+                left: -40px;
+                &.trump {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(100deg) scale(0.4, 0.4);
+                    top: 50px;
+                }
+            }
+            .lear {
+                top: 60px;
+            }
+        }
+    }
+    .circle-timer {
+        width: 64px;
+        height: 64px;
+    }
+    .circle {
+        width: 64px;
+        height: 64px;
+        width: 54px;
+        height: 54px;
+    }
+    .timer-l {
+        width: 64px;
+        height: 64px;
+        margin-left: -32px;
+        margin-top: -32px;
+    }
+    .timer-r {
+        width: 64px;
+        height: 64px;
+        margin-left: -32px;
+        margin-top: -32px;
+        width: 54px;
+        height: 54px;
+        margin-left: -27px;
+        margin-top: -27px;
+    }
+    .o {
+        .circle-timer {
+            width: 54px;
+            height: 54px;
+        }
+        .timer-l {
+            width: 54px;
+            height: 54px;
+            margin-left: -27px;
+            margin-top: -27px;
+        }
+    }
+}
+@media(max-width: 479px) {
+    .js-detect {
+        opacity: 0.2;
+    }
+    .cards {
+        .table {
+            width: 60%;
+            .cards {
+                width: 33%;
+                .card {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(-1deg) scale(0.5,0.5);
+                    left: 15px;
+                }
+                div:first-of-type {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(-1deg) scale(0.5,0.5);
+                }
+            }
+        }
+        .deck {
+            width: 20%;
+            .lear {
+                top: 85px;
+            }
+            .card {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(10deg) scale(0.6, 0.6);
+                &.trump {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(100deg) scale(0.6, 0.6);
+                }
+            }
+        }
+        .players .m .small-card {
+            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(-1deg) scale(0.5,0.5)!important;
+        }
+    }
+    .mx .players {
+        .m {
+            .pr-pt {
+                font-size: 9px;
+                line-height: 1;
+                margin: 17px 0;
+                padding: 5px;
+            }
+            .gm-pr .pr-cl {
+                .msg-move {
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+                .btn-pass {
+                    font: 14px $font_0;
+                    line-height: 40px;
+                }
+                .btn-ready {
+                    font: 14px $font_0;
+                    line-height: 40px;
+                }
+            }
+        }
+        .gm-pr .pr-ph-bk .mt {
+            font-size: 16px;
+        }
+    }
+}
+@media(max-height: 550px) and(max-width: 1010px) and(orientation: landscape) {
+    .js-detect {
+        opacity: 0.3;
+    }
+    .cards {
+        .players {
+            .o .card {
+                margin-left: -28px;
+                margin-top: -15px;
+            }
+            .m .small-card {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(-1deg) scale(0.4,0.4)!important;
+            }
+        }
+        .deck {
+            width: 18%;
+            .lear {
+                top: 60px;
+            }
+            .card {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(10deg) scale(0.4, 0.4);
+                left: -40px;
+                &.trump {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(100deg) scale(0.4, 0.4);
+                    top: 50px;
+                }
+            }
+        }
+        .table {
+            width: 75%;
+            .cards {
+                div {
+                    margin-left: -30px;
+                    &:first-of-type {
+                        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                        transform: rotate(-1deg) scale(0.4,0.4);
+                    }
+                }
+                .card {
+                    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                    transform: rotate(-1deg) scale(0.4,0.4);
+                }
+            }
+            > div:nth-of-type(even) {
+                margin-top: -10px;
+                padding-top: 0;
+            }
+        }
+    }
+    .mx .players {
+        height: 20%;
+        .m {
+            height: auto;
+            min-height: 200px;
+            .gm-pr {
+                height: 60px;
+                margin: 0;
+                .pr-ph-bk {
+                    top: 6px;
+                    left: 35%;
+                }
+                .pr-pr {
+                    width: 50px;
+                    height: 50px;
+                    margin: 0;
+                    margin: 5px 0;
+                    padding: 8px 0;
+                    b {
+                        font: 26px/1 Handbook-bold;
+                        letter-spacing: -3px;
+                        margin-left: -3px;
+                        display: block;
+                        text-transform: uppercase;
+                        margin-top: 0;
+                    }
+                    span {
+                        font: 9px/5px $font_1;
+                        text-transform: uppercase;
+                        color: $black_50;
+                        display: block;
+                    }
+                }
+                .pr-ph {
+                    width: 50px;
+                    height: 50px;
+                    margin: 0;
+                }
+                .pr-cl {
+                    margin: 12px 15px;
+                    .btn-pass {
+                        line-height: 40px;
+                    }
+                    .btn-ready {
+                        line-height: 40px;
+                    }
+                }
+                .pr-md {
+                    height: 45px;
+                    span {
+                        line-height: 45px;
+                    }
+                }
+            }
+            .pr-pt {
+                padding: 0 10px;
+                font-size: 12px;
+                margin: 20px 0;
+            }
+        }
+        .o .gm-pr {
+            width: auto;
+            height: 30px;
+            .pr-ph {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        .gm-pr .pr-ph-bk {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            .mt {
+                font-size: 14px;
+                width: auto;
+            }
+        }
+    }
+}
+footer.unvisible {
+    display: none;
 }

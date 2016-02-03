@@ -143,6 +143,7 @@ $(function () {
         'from': Livedate.fn.from,
         'mobile': Device.isMobile,
         'day': Livedate.fn.day,
+        'emotions': Comments.getEmotionsHTML,
         'i18n': function () {
             return Cache.i18n(arguments);
         },

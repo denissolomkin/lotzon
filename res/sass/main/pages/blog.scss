@@ -218,17 +218,15 @@ input.comment-reply-btn {
   display: block;
   color: #9c9c9a;
 }
-// [contenteditable=true] {
-//  & > div+div{
-//     display: inline;
-//   }
-//   & > div+div hr{
-//     display: none;
-//   }
-//     & > div+div br{
-//     display: none;
-//   }
-// }
+[contenteditable=true] {
+  & > br {
+    display: block;
+    &:nth-child(3){
+      display: none;
+    }
+  }
+}
+
 #blog-posts {
   font-family: 'handbookpro-regular';
   font-size: 15.5px;

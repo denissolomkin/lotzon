@@ -2749,15 +2749,17 @@ header .owl-theme .owl-controls .owl-page span {
 
 .smiles {
   margin-left: -10px;
-}  
-span[class^="i-smile"] {
-    display: block;
+  & > *   {
+     display: block;
     float: left;
     height: 25px;
     padding-left: 10px;
     margin-bottom: 10px;
-    text-align: right;
-
+    text-align: right; 
+    cursor: pointer;
+  }
+}  
+span[class^="i-smile"] {
     &:before {
       display: inline-block;
       content: "";

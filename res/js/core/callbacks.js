@@ -43,9 +43,21 @@
 
             // handlers
             $(window).on('resize', Device.do.resize);
-            $(window).on('scroll', Device.do.scroll);
+            $(window).on('scroll', Device.do.scroll);     
+            
+
+                 
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
             $(document).on('click', Device.do.hide);
+
+            $(document).on('click', '.input-file', Comments.showPreviewImage);
+            $(document).on('click', '.thumb', Comments.deletePreviewImage);
+             /*smiles*/
+            $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
+            $(document).on('click', ".smiles img", Comments.chooseSmiles);
+
+            $(document).on("paste", '[contenteditable]', Comments.pasteText);
+             $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
             $(document).on('click', '.input-file, .thumb', Comments.showPreviewImage);
 
 
@@ -56,18 +68,6 @@
             $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
 
 
-           
-
-            // $(document).on('touchmove', '.comment-reply-btn', function (e) {
-                
-                // return false
-            // });
-            // $(document).on('touchstart', '.comment-reply-btn', function () {
-            //     // alert('works');
-            //     return false
-            // });
-             // $(document).on('touchend', '.comment-reply-btn', Comments.do.replyForm);
-            /* navigation */
             $(document).on('touchstart', '.site-overlay', function () {
                 return false
             });
@@ -99,7 +99,7 @@
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
-            $(document).on('input', 'form input[type="text"].required', Form.do.validate);
+            $(document).on('change', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
             $(document).on('change', 'form textarea.required', Form.do.validate);
@@ -116,6 +116,10 @@
             $(document).on('click', '.pi-ph.true i', Profile.do.removeAvatar);
             $(document).on('click', '.pi-ph.true i', Profile.do.updateAvatar);
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
+            $(document).on('change', 'cc-sum', Profile.validate.convert);
+
+
+
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
@@ -231,6 +235,10 @@
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
 
+        },
+
+        "submit": {
+            "communication-comments":  Comments.smilePost
         }
 
     };

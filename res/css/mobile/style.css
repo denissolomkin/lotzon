@@ -216,63 +216,7 @@ body #menu-navigation-mobile .menu-balance-inf > div {
   height: 40px; }
 
 #menu-navigation-mobile {
-  font: 15.5px / 45px 'handbookpro-regular';
-  /*    & .menu-main {
-            padding-bottom: 0;
-            &:after {
-                display: none;
-            } 
-            & li {
-                padding: 0;
-                line-height: 1;  
-                margin: 15px 0 10px;   
-                & a {
-                    text-transform: none;
-                    padding: 0;
-                }    
-            }
-    
-        }
-        & .menu-more  {
-            // padding-bottom: 10px;
-            padding-top: 0;
-            & li {
-                padding: 0;
-                line-height: 1;   
-                margin: 15px 0 10px;   
-                & a {
-                    padding: 0;
-                }
-                &:last-child {
-                    & a {
-                        margin-top: 0;       
-                    }
-                }
-            }
-        }
-        & .menu-profile  {
-            // padding: 0 0 10px;
-            min-width: 0;
-            padding: 0;
-            & li {
-                padding: 0;
-                line-height: 1;   
-                margin: 15px 0 10px; 
-                & a {
-                    padding: 0;
-                }
-                &:last-child {
-                    & a {
-                        margin-top: 0;       
-                    }
-                }
-            }
-        }
-        & hr {
-            margin: 0 0 0 -20px;
-            border: none;
-            border-bottom: 1px solid #cbc7c6;
-        }*/ }
+  font: 15.5px / 45px 'handbookpro-regular'; }
   #menu-navigation-mobile .menu-balance-inf {
     font-size: 17px;
     height: 40px;
@@ -295,6 +239,10 @@ body #menu-navigation-mobile .menu-balance-inf > div {
         padding-left: 30px; }
   #menu-navigation-mobile li a.active {
     /*text-decoration: underline;*/ }
+
+.header .header-logo {
+  height: 50px;
+  overflow: hidden; }
 
 .menu-balance-btn {
   display: none; }
@@ -780,7 +728,10 @@ header {
   right: 10px; }
 
 .ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
-  top: 0; }
+  top: 4px; }
+
+.calendar-range {
+  height: auto; }
 
 .ae-social {
   height: 45px; }
@@ -821,7 +772,21 @@ header {
   #profile-settings .screen-notice {
     display: none !important; }
   .settings .hidden-notice {
-    float: none; } }
+    float: none; }
+  #profile-convert .content-box-header {
+    background: none; }
+  #profile-convert .cc-title {
+    text-align: center; }
+    #profile-convert .cc-title span {
+      display: block; }
+  #profile-convert .cc-out input, #profile-convert .cc-income span.cc-sum {
+    width: 111px; }
+  #profile-convert .cc-form-top {
+    margin: 0 -10px 25px;
+    padding: 0 20px;
+    height: 100px; }
+  #profile-convert .cc-out {
+    margin-bottom: 10px; } }
 
 #profile-settings {
   padding-top: 10px; }
@@ -857,6 +822,17 @@ header {
 
 #profile-settings .content-box-item {
   min-height: 460px; }
+
+.cco-edit {
+  float: right;
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url(img/sprite.png) -332px -54px;
+  position: relative;
+  top: 4px; }
+  .cco-edit span {
+    display: none; }
 
 @media (max-width: 500px) {
   .content-box-item.cabinet-referrals {

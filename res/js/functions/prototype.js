@@ -52,6 +52,11 @@
         return replaceString;
     };
 
+    String.prototype.replaceAll = function (find, replacement) {
+        var target = this;
+    return target.replace(new RegExp(find, 'g'), replacement);
+    };
+
     Storage.prototype.setObj = function (key, obj) {
         return this.setItem(key, JSON.stringify(obj))
     };

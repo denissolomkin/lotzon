@@ -201,6 +201,18 @@
                 "title-profile-write-address" : "напишите aдрес",
                 "title-profile-write-email" : "напишите email",
                 "title-profile-statistics-total-win": "Всего выиграно",
+                "title-profile-convert": "Конвертация денег в баллы.",
+                "title-profile-convert-rate": "Курс конвертации 1",
+                "title-profile-put-currency": "Отдам",
+                "title-profile-get-points": "Получу",
+                "title-profile-cashout-choose": "Выберите способ вывода денег",
+                "title-profile-cashout-edit": "редактировать",
+                "title-profile-cashout-rules": "Правила вывода денег",
+                "title-profile-message-admin": "напишите нам",
+                "title-profile-payments-history": "истории выплат",
+
+
+                "button-profile-get-points": "Конвертировать",
                 "button-profile-show-more": "подробно",
 
                 "message-input-correct-data": "<p>Вводите только свои актуальные данные.<br>Неправильные или неполные данные могут негативно отразится при обработке запроса на выводвыигрыша.</p><p>Привязывайте только реальные страницы соцсетей, это даст Вам ряд дополнительных возможностей.</p>",
@@ -247,6 +259,7 @@
                 "title-messages-new-message": "Новое сообщение",
                 "title-messages-enter-name": "Введите имя друга",
                 "title-messages-change-user": "изменить",
+
 
                 "button-mark-all-as-read":"Пометить всё как прочитанное",
                 "title-mark-as-read":"Отметить как прочитанное",
@@ -295,6 +308,10 @@
                 "title-bonuses-unique-link": "Ваша уникальная ссылка:",
                 "title-bonuses-share-post": "Сделайте пост в соц.сетях и получайте дополнительные баллы",
 
+
+                "text-cashout-rules-time": "Все заявки на вывод денег обрабатываются в течении 7-ми рабочих дней.",
+                "text-cashout-see-info": "Информацию о состоянии заявки можно посмотреть в",
+                "text-cashout-write-us": "Если вы не получили выплату в течении 7-ми рабочих дней,",
                 "text-profile-notice":"Убедитесь в точности введенных данных. Неправильные или неполные данные могут негативно отразиться при обработке запроса на вывод выигрыша.",
                 "text-registration-delete-notice":"Вы уверены? Вся информация будет удалена и востановить ее будет невозможно!",
                 "text-support-rules":"<h1>Правило №1</h1><p>Кто чаще билеты заполняет, тот больше шансов получает</p><h1>Правило №2</h1><p>Кто по рекламе нажимает, тот в лотерее побеждает</p>",

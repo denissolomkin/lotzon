@@ -2,18 +2,7 @@
 
     if (typeof I === 'undefined') I = {};
     Object.deepExtend(I, {notificationsList: '.c-notifications-list'});
-                   var currentReview = {
-                image: '',
-                text: '',
-                id: 0,
-            };
 
-            var answerReview = {
-                image: '',
-                text: '',
-                id: 0,
-                reviewId: null,
-            };
 
     Comments = {
       emotionsToServer : {
@@ -42,6 +31,23 @@
 
 
 
+        },
+
+        // Text2Emotions : {
+
+        //         '*ANGRY*' : '<img src="/res/img/smiles_png/i-smile-angry.png" class="i-smile-angry">',
+        //         '*CLOWN*' : '<img src="/res/img/smiles_png/i-smile-clown.png" class="i-smile-clown">',
+        //         '*CONFUSED*' : '<img src="/res/img/smiles_png/i-smile-confused.png" class="i-smile-confused">'
+
+
+
+        // },
+
+        getEmotionsHTML : function () {
+            var html = '';
+            for(var emotion in Comments.emotionsToServer)
+                html+=emotion;
+            return html;
         },
 
         hide: function (event) {
@@ -87,6 +93,8 @@
                 if ($('.thumb') !=undefined) {
                     $('.thumb').remove();
                 } 
+
+
             },
 
             replyForm: function (options) {
@@ -251,7 +259,21 @@
 
 
         showPreviewImage: function (e) {
+            var currentReview = {
+                image: '',
+                text: '',
+                id: 0,
+            };
+
+            var answerReview = {
+                image: '',
+                text: '',
+                id: 0,
+                reviewId: null,
+            };
+
             e.preventDefault();
+
             console.log(e);
 
 
@@ -319,11 +341,36 @@
                         alert('Unexpected server error');
                     }
                 });
-
-
             }
         },
+        deletePreviewImage: function (e) {
+            var currentReview = {
+                image: '',
+                text: '',
+                id: 0,
+            }, image = this;
+            $.ajax({
+                url: '/res/POST/removeImage',
+                method: 'POST',
+                async: true,
+                data: {image:currentReview.image},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 1) {
+                        image.remove();
+                        currentReview.image = null;
 
+                    } else {
+                        console.log(data.status, "data");
+                        alert(data.message);
+
+                    }
+                },
+                error: function() {
+                    alert('Unexpected server error');
+                }
+            });
+        },
 
         showSmiles: function () {
             $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
@@ -332,12 +379,34 @@
 
 
 
-        chooseSmiles: function () {
+        chooseSmiles: function (e) {
+            console.log(e)  ;
             div = $(this).closest('.message-form-actions').prev();
-            smile_data = $(this).attr('class');       
-            div.append('<img class=' + smile_data + ' src="/res/img/smiles_png/' + smile_data + '.png">');
+            console.log($(this).clone())  ;
+            div.append($(this).clone());
 
-
+           var result = $('div[contenteditable="true"]')[0];
+               
+                result.focus();
+                placeCaretAtEnd(result);
+          
+            function placeCaretAtEnd(el) {
+                el.focus();
+                if (typeof window.getSelection != "undefined"
+                        && typeof document.createRange != "undefined") {
+                    var range = document.createRange();
+                    range.selectNodeContents(el);
+                    range.collapse(false);
+                    var sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                } else if (typeof document.body.createTextRange != "undefined") {
+                    var textRange = document.body.createTextRange();
+                    textRange.moveToElementText(el);
+                    textRange.collapse(false);
+                    textRange.select();
+                }
+            }
         },
         pasteText: function (e) {
             
@@ -367,8 +436,8 @@
                       });
                 }, 1);
             }
-
         },
+
         checkInput: function() {
             var empty, text, div, el;
             $('.message-form-area > div').each(function(){
@@ -391,30 +460,27 @@
                 }
                 
             });
+
         },
-        smilePost: function(text) {
 
-            while (text.match('img') != undefined) {
-
-            for (var val in Comments.emotionsToServer) {
-                console.log(val)
-              // return text.replace(val, emotions[val]);
-              text = text.replace(val, Comments.emotionsToServer[val]);
-               console.log(Comments.emotionsToServer[val]);
-
+        smilePost: function(form) {
+            if ($('.smiles').hasClass('hidden')) {
+                
             }
-
-           }
-           
-            return text;
+            else {
+                console.log('VISIBLE');
+              $('.smiles').addClass('hidden');  
+            }
+                
+             
+            
+            for (var emotion in Comments.emotionsToServer) {
+                form.data.text = form.data.text.replaceAll(emotion, Comments.emotionsToServer[emotion]);
+            }
+            return form;
 
         }
 
-
-
-
-
-      
     }
 
 })();

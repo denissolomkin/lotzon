@@ -1,8 +1,6 @@
-
 /* ==========================================================================
                             GAME styles
-   ========================================================================== */
-
+   ==========================================================================
 #games-online-field * {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -25,7 +23,7 @@
 .mx .msg.winner .ch-ot {margin-bottom: 30px;}
 
 .mx .players { width: 40%; height:25%;margin: 0 30%;text-align: center;}
-/*.mx .players .card{float: left; margin-right: -20px;}*/
+.mx .players .card{float: left; margin-right: -20px;}
 
 .mx .players .gm-pr .pr-ph-bk .pr-ph {box-shadow: 0 0 6px 0px rgba(0,0,0,0.5);}
 .mx .players .gm-pr .pr-ph-bk{  width: auto;height: auto;opacity: 1;z-index:2;position:relative;margin: auto;overflow: visible;}
@@ -57,7 +55,7 @@
     width: 35px;
     height: 60px;
     border: 2px solid #888;
-    /* padding: 17px 3px; */
+    padding: 17px 3px;
     border-radius: 5px;
     color: #888;
     font: 18px/1 Handbook-bold;
@@ -101,7 +99,7 @@
 .mx .players .o .gm-pr .tm{ color: white; background: rgba(0,0,0,0.5); margin: 5px;}
 
 
-/* ================  WhoMore ================= */
+================  WhoMore =================
 
 .mx.WhoMore .table {
     width:480px;
@@ -122,22 +120,22 @@
 .mx.WhoMore ul > li.m.last {opacity:1;}
 .mx.WhoMore ul > li.o.last {opacity:1;}
 
-/* ==========================================================================
+==========================================================================
                             GAME styles
-   ========================================================================== */
+   ==========================================================================
 
 
 
 
-/* ==========================================================================
+==========================================================================
                             CARDS styles
-   ========================================================================== */
+   ==========================================================================
 
 .cards .players .m .card{ transform-origin: 50% 100%; -ms-transform-origin: 50% 100%; -webkit-transform-origin: 50% 100%; }
 .cards .players .m .gm-pr .pr-md .icon-reload{ display: none;}
 .cards.Revert .players .m .gm-pr .pr-md .icon-reload{display: block; position: absolute; top: 14px; font-size: 29px; left: 1px;}
 .cards:not(.active_small_devices) .players .m .card:hover{box-shadow: 0px 0px 10px 1px rgba(200,200,0,1);cursor: pointer;}
-.cards .players .o .card{position: absolute; margin-left: -20px; margin-top: 20px;/*width: 70px; height: 108px;background-position: -1430px 0px;*/ border-radius: 5px; -webkit-transform-origin: 50% 25%; transform-origin: 50% 25%;}
+.cards .players .o .card{position: absolute; margin-left: -20px; margin-top: 20px;width: 70px; height: 108px;background-position: -1430px 0px; border-radius: 5px; -webkit-transform-origin: 50% 25%; transform-origin: 50% 25%;}
 .cards .deck, .cards .table, .cards .off {float: left;height: 35%;;width: 100px;box-sizing: border-box; z-index: 10;}
 .cards .table > div:nth-of-type(even) {   padding-top: 30px;  transform: rotate(-4deg);-webkit-transform: rotate(-4deg); }
 .cards .table .cards { float: left; width: 16.6%; height: 120px;  position: relative;}
@@ -145,7 +143,7 @@
 .cards .table .cards div:first-of-type {  left: 0px;  margin-top: 0px;  transform: rotate(-1deg) scale(0.7,0.7);-webkit-transform: rotate(-1deg) scale(0.7,0.7);}
 .cards .table .cards.highlight div:first-of-type { -webkit-animation: pulsate 1s linear infinite; animation: pulsate 1s linear infinite; }
 .cards .table .cards.highlight.hover div:first-of-type, .cards .table .cards.highlight div:first-of-type:hover { -webkit-animation: none; animation: none; box-shadow: 0px 0px 2px 2px rgba(200,0,0,1); cursor: pointer; }
-.cards .table .cards.revert {/*float: right;margin-right: 50px;*/}
+.cards .table .cards.revert {float: right;margin-right: 50px;}
 .cards .table .cards.revert .card {  background: none;border: 3px dashed gray;box-shadow: none !important;}
 .cards .table .cards.revert .card::before{  font-family: 'Simple-Line-Icons';font-size: 72px;content: "\e099";position: absolute;left: 16px;top: 46px;color: gray;}
 .cards .table .cards.revert.highlight .card {border-color:rgb(200,0,0);}
@@ -220,21 +218,21 @@
 .card4x14 {background-position: -1320px -340px;}
 
 .game-cards { width: 80%; margin: 0 auto; height: 100%; position: relative; }
-.game-cards div:not(.animatedCard)   { /*transition: all 0s ease 0s !important;*/ }
+.game-cards div:not(.animatedCard)   { transition: all 0s ease 0s !important; }
 .small-card { cursor: none; trasform: rotate(2deg) scale(0.7,0.7)!important; -webkit-transform: rotate(2deg) scale(0.7,0.7)!important; }
 
-/* ==========================================================================
+==========================================================================
                             CARDS styles
-   ========================================================================== */
+   ==========================================================================
 
 
 
 
 
 
-/* ==========================================================================
+==========================================================================
                             time_circles styles
-   ========================================================================== */
+   ==========================================================================
 
 .transition {
     transition: all 0.2s linear ;
@@ -242,14 +240,14 @@
     -o-transition: all 0.2s linear ;
     -webkit-transition: all 0.2s linear ;
 
-    /*  -webkit-transition-property: top;
+    -webkit-transition-property: top;
         -moz-transition-property: top;
         -o-transition-property: top;
         transition-property: top;
         -webkit-transition-duration: 2s;
         -moz-transition-duration: 2s;
         -o-transition-duration: 2s;
-        transition-duration: 2s;*/
+        transition-duration: 2s;
 }
 
 
@@ -384,7 +382,7 @@
 
 
 .timer-l, .timer-r {
-    /* border: 7px solid #48f; blue */
+    border: 7px solid #48f; blue
     border: 7px solid #FF4242;
     border-left-color: transparent;
     border-top-color: #FF4242;
@@ -699,7 +697,7 @@ footer.unvisible {
     }
 }
 
-/*@media (max-height: 550px) {
+@media (max-height: 550px) {
     .mx .players .m .gm-pr .pr-ph-bk {
         top: 6px;
     }
@@ -805,7 +803,7 @@ footer.unvisible {
         top: 60px;
     }
 
-}*/
+}
 
 @media (max-height: 550px) and (max-width: 1010px) and (orientation: landscape) {
     .js-detect {
@@ -929,6 +927,4 @@ footer.unvisible {
         transform: rotate(-1deg) scale(0.4,0.4);
         -webkit-transform: rotate(-1deg) scale(0.4,0.4);
     }
-}
-
-
+} */

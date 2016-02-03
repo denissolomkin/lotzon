@@ -342,6 +342,12 @@
     width: auto;
     border: none;
   }
+  & .i-arrow-down {
+    &:before {
+      color:#4a90e2;
+    } 
+  }
+
   & li {
     border-top: 1px solid #eaeaea;
     height: 45px;
@@ -363,6 +369,7 @@
     display: inline-block;
     position: relative;
     &:before {
+
       position: absolute;
       right: 0;
       top: 15px;
@@ -441,8 +448,6 @@
 // --------------------------- //
 
 .ae-combination-box {
-  // display: none;
-
   margin: 0 -30px;
   padding: 20px 16px 16px 20px;
   background: #fafafa;
@@ -624,18 +629,20 @@
 }
 
 .cco-edit {
+  margin-left: 18px;
+  display: inline-block;
+}
+.rules {
   float: right;
-  display: block;
-  width: 15px;
-  height: 15px;
-  background: url(img/sprite.png) -332px -54px;
-  position: relative;
-  top: 4px;
+  & .btn-arrows {
+    float: none;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    left: 5px;
+  }
 }
 
-.cco-edit span {
-  display: none;
-}
 
 // -------------------------- //
 
@@ -920,44 +927,60 @@ span.input-prefix {
 // --------------------------- //
 
 .cc-title {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  font: 15.5px/18px "handbookpro-regular";
+  color: #4a4a4a;
 }
 
 .cc-form-top {
-  margin-bottom: 20px;
+  margin: 0 -20px 25px;
+  padding: 0 20px;
+  background:#fafafa;
+  height:45px;
 }
 
-.cc-form-top .title {
-  font-size: 22px;
-  margin-right: 20px;
-}
 
 .cc-out {
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
 }
 
 .cc-out .title {
   display: inline-block;
+  font: 15.5px/18px "handbookpro-regular";
+  color:#000000;
 }
-
 .cc-out input {
   display: inline-block;
   width: 170px;
-  height: 52px;
+  height: 30px;
   border-width: 0 0 1px;
   border-style: solid;
   border-color: #cbc7c4;
-  padding: 0 35px 0 5px;
+  margin-top: 5px;
+  background: none;
 }
-
+.cc-income {
+  & span {
+    display: inline-block;
+    line-height: 18px;
+    font-size: 15.5px;
+    padding-top: 5px;
+    &.cc-sum{
+      border: 1px solid;
+      display: inline-block;
+      width: 170px;
+      height: 30px;
+      border-width: 0 0 1px;
+      border-style: solid;
+      border-color: #cbc7c4;
+      margin-top: 5px;
+      background: none;
+    }
+  }
+}
 .cc-out .cc-currency {
   position: relative;
-  left: -30px;
-}
-
-.cc-sum {
-  font-size: 50px;
-  font-weight: bold;
+  text-transform: lowercase;
 }
 
 .cc-currency {
@@ -986,10 +1009,6 @@ span.input-prefix {
   }
   .cc-income {
     float: right;
-  }
-  .cc-title {
-    margin-bottom: 30px;
-    font-size: 21px;
   }
 }
 
