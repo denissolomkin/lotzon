@@ -210,13 +210,11 @@ class PlayersModel extends Model
 
     public function saveAvatar(Entity $player)
     {
-        $player = $this->getProcessor()->saveAvatar($player);
-
         if($player->isBot()){
             $this->recacheBots();
         }
 
-        return $player;
+        return $this->getProcessor()->saveAvatar($player);
     }
 
     public function changePassword(Entity $player)
