@@ -39,7 +39,7 @@ class WebSocketController implements MessageComponentInterface {
 
         $this->_loop = $loop;
         $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->periodicTimer();});
-        $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
+//        $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
 
         $this->memcache = new \Memcache;
         $this->memcache->connect('localhost', 11211);
