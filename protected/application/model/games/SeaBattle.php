@@ -215,9 +215,11 @@ class SeaBattle extends Game
                 #echo $this->time().' '. 'разница времени после перехода '.$this->currentPlayer()['pid'].' - '.time().' - '.$this->currentPlayer()['timeout']."\n";
 
             }
+
         }
 
         #echo $this->time().' '. "Не переход хода \n";
+
         if ($winner = $this->checkWinner())
             $this->setCallback(array(
                 'winner' => $winner['pid'],
@@ -235,8 +237,7 @@ class SeaBattle extends Game
         ));
 
         $this->setResponse($this->getClients());
-
-        #echo $this->time().' '. "Конец тайм-аута \n";
+        return false;
 
     }
 
