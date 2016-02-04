@@ -16,15 +16,11 @@
                 title: 'button-game-replay'
             }
         },
-
+        gameClass: "",
 
         init: function (init) {
         },
 
-        /**
-         * @description проверяет класс ".single-game"
-         * @returns {Boolean}
-         */
         isRun: function () {
             return App.uid;
         },
@@ -40,13 +36,18 @@
                 D.log('Game.run', 'game');
 
                 var game = document.getElementById('games-online-field');
+                
+                // запоминает классы при ините
+                if(!Game.gameClass){
+                    Game.gameClass = game.className;
+                }
+                game.className = (Game.gameClass+" "+App.key);
 
                 DOM.hide(game.parentNode.children);
                 DOM.show(game);
 
                 var field = game.getElementsByClassName('mx')[0];
 
-                field.classList.add(App.key);
                 field.innerHTML =
                     '<div class="players"></div>' +
                     '<div class="deck"></div>' +
@@ -81,7 +82,9 @@
 
         drawExit: function () {
             if (App.action == 'ready' || App.action == 'wait' || App.action == 'stack') {
-                $('.mx .players').append('<div class="exit"><span class="icon-arrow-left"></span></div>');
+                
+                $('.mx .players').append('<div class="back-button exit"><i class="i-arrow-slim-left"></i> <span>'+Cache.i18n('button-games-exit')+'</span> </div>');
+                
             }
         },
 

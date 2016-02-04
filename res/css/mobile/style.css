@@ -2403,3 +2403,11 @@ header {
     left: 384px; }
   .c-search .friends-search input:first-child {
     margin-right: 100px; } }
+
+@media (max-width: 479px) {
+  .js-detect {
+    opacity: 0.2; } }
+
+@media (max-height: 550px) and (max-width: 1010px) and (orientation: landscape) {
+  .js-detect {
+    opacity: 0.3; } }
