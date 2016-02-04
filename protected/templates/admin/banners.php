@@ -22,6 +22,26 @@
             <input type="checkbox" name='banners[settings][enabled]' <?=$list['settings']['enabled']?'checked ':'';?>data-toggle="toggle">
         </h2>
     </div>
+
+        <? $requiredBanners = array(
+            'DesktopRight',
+            'DesktopTop',
+            'Header',
+            'Video',
+            'TicketsLeft',
+            'TicketsRight',
+            'TicketLast',
+            'Profile',
+            'Banner100',
+            'HeaderScripts',
+            'Games',
+            'BodyScripts'
+        );
+
+        foreach($requiredBanners as $banner)
+            if(!isset($list[$banner]))
+                $list = array($banner=>'') + $list; ?>
+
         <? foreach($games as $id=>$game)
             if(!isset($list['game'.$id]))
                 $list['game'.$id]='';?>
