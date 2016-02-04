@@ -43,6 +43,16 @@ class AjaxController extends \SlimController\SlimController
         die(json_encode($data));
     }
 
+    public function ajaxResponseNoCache(array $data, $code = 200)
+    {
+
+        header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        header("Pragma: no-cache"); // HTTP 1.0.
+        header("Expires: -1"); // Proxies.
+        http_response_code($code);
+        die(json_encode($data));
+    }
+
     public function ajaxResponseUnauthorized()
     {
         $this->ajaxResponseCode(array(), 401);
