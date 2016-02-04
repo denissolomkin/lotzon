@@ -4,6 +4,19 @@
 
         index: null,
         players: null,
+        buttons: {
+            start: {
+                class: 'btn-primary btn-start',
+                action: 'start',
+                title: 'button-game-new'
+            },
+            replay: {
+                class: 'btn-secondary',
+                action: 'replay',
+                title: 'button-game-replay'
+            }
+        },
+
 
         init: function (init) {
         },
@@ -132,7 +145,6 @@
                 }
 
                 var orders = players;
-                console.error(players);
 
                 if (players[Player.id].order && App.action == 'start') {
 
@@ -168,9 +180,9 @@
             $.each(players, function (index, value) {
 
                 value.avatar = index < 0
-                    ? "url(../tpl/img/preloader.gif)"
+                    ? "url(/res/css/img/preloader.gif)"
                     : (value.avatar
-                        ? "url('../filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')"
+                        ? "url('/filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')"
                         : "url('/res/img/default.jpg')");
 
                 $('.mx .players .player' + index).append(
@@ -188,8 +200,6 @@
                         .prepend(
                             '<div class="pr-cl">' +
                             '<div class="btn-pass">пас</div>' +
-                            '<button class="btn-primary hidden">повторить игру</button>' +
-                            '<button class="btn-secondary hidden">другой соперник</button>' +
                             '<div class="msg-move">ваш ход</div>' +
                             '</div>')
                         .append(
@@ -212,27 +222,67 @@
                 Apps.playAudio([App.key, sample]);
                 Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
-                $.each(App.players, function (index, value) {
-                    $('.mx .players .player' + index + ' .wt').removeClass('loser').html(
-                        (value.result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                        (App.currency == 'MONEY' ? Player.formatCurrency(value.win, 1) : parseInt(value.win)) + ' ' +
-                        (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов')
-                    ).addClass(value.result < 0 ? 'loser' : '').fadeIn();
-                });
+                
+                var messages = {};
+                for(var index in App.players) {
+                    messages[index] =
+                        (App.players[index].result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
+                        (App.currency == 'MONEY' ? Player.formatCurrency(App.players[index].win, 1) : parseInt(App.players[index].win)) + ' ' +
+                        (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов');
+                }
+                Game.drawMessages(messages);
                 return true;
             }
         },
 
-        drawButtons: function(buttons){
+        drawButtons: function(buttons) {
 
-            var placeholder = document.querySelectorAll('.mx .pr-cl'),
+            var playerButtons = document.querySelector('.mx .players .pr-cl'),
                 html = '';
 
             for(var index in buttons){
-                html+='<button class="' + buttons[index].class + '" data-action="' + buttons[index].action + '">' + buttons[index].title + '</button>';
+                if(typeof  buttons[index] == 'object') {
+                    html += '<button class="' + buttons[index].class + '" data-action="' + buttons[index].action + '">' + i18n(buttons[index].title) + '</button>';
+                } else if(typeof buttons[index] == 'string') {
+                    html += '<div>' + i18n(buttons[index]) + '</div>';
+                }
+            }
+            playerButtons.innerHTML = html;
+        },
+
+        drawStatuses: function(statuses) {
+
+            var playerStatuses = document.querySelectorAll('.mx .players .mt'),
+                playerStatus = null,
+                index = 0;
+
+            for (; index < playerStatuses.length; index++) {
+                playerStatuses[index].style.display = 'none';
             }
 
-            placeholder.innerHTML = html;
+            for ( index in statuses ) {
+                playerStatus = document.querySelector('.mx .players .player' + index + ' .mt');
+                playerStatus.style.display = '';
+                playerStatus.innerHTML = i18n(statuses[index]);
+            }
+        },
+
+        drawMessages: function(messages) {
+
+            var playerMessages = document.querySelectorAll('.mx .players .wt'),
+                playerMessage = null,
+                index = 0;
+
+            for (; index < playerMessages.length; index++) {
+                playerMessages[index].style.display = 'none';
+            }
+
+            for ( index in messages ) {
+                playerMessage = document.querySelector('.mx .players .player' + index + ' .wt');
+                playerMessage.style.display = '';
+                playerMessage.innerHTML = i18n(messages[index]);
+                console.error(playerMessage, messages[index]);
+            }
         },
 
         setFullScreenHeigth: function () {
@@ -480,30 +530,15 @@
             reply: function () {
 
                 /* повтор игры */
+                var statuses = {};
+                statuses[Player.id] = 'title-game-ready';
 
-                $('.mx .btn-secondary')
-                    .addClass('hidden')
-                    .attr('data-action',null)
-                    .text('');
-
-                $('.mx .btn-primary')
-                    .addClass('hidden')
-                    .removeClass('btn-start')
-                    .attr('data-action',null)
-                    .text('');
-
-                $('.mx .msg-move')
-                    .text(i18n('title-game-waiting-player'))
-                    .removeClass('hidden')
-                    .show();
-
-                $('.mx .players .m .mt')
-                    .text(i18n('title-game-ready'))
-                    .removeClass('hidden')
-                    .show();
-
-                $('.mx .wt')
-                    .hide();
+                Game.drawStatuses(statuses);
+                Game.drawButtons([
+                    Game.buttons.start,
+                    'title-game-waiting-player'
+                ]);
+                Game.drawMessages();
 
                 return;
             },
@@ -527,16 +562,10 @@
                 D.log('Game.callback.quit', 'game');
                 if (App.quit != Player.id) {
 
-                    $('.btn-primary')
-                        .removeClass('hidden')
-                        .addClass('btn-start')
-                        .attr('data-action','start')
-                        .text('button-game-new');
-
-                    $('.msg-move')
-                        .text(i18n('text-player-quit'))
-                        .removeClass('hidden')
-                        .show();
+                    Game.drawButtons([
+                        Game.buttons.start,
+                        'title-player-quit'
+                    ]);
 
                 } else
                     App.uid = 0;

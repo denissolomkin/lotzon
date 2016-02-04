@@ -431,8 +431,6 @@
                     Game.playerTimer
                         .remove(index);
 
-                    $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').remove();
-
                     if (index == App.beater)
                         Game.playerTimer
                             .circle(index);

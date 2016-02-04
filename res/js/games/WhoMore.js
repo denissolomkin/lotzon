@@ -17,16 +17,14 @@
 
             if (Game.field()) {
                 Game.run() && Apps.WhoMore.run();
-                Apps.WhoMore.drawStatuses();
+                Apps.WhoMore.initStatuses();
                 Apps.WhoMore.drawTimer();
                 Apps.WhoMore.paintCell();
                 Game.end() && Apps.WhoMore.end();
             }
         },
 
-        'drawStatuses': function() {
-
-            $('.mx .players .mt').hide();
+        'initStatuses': function() {
 
             if (App.extra) {
                 var equal = $('.ngm-bk .msg.equal');
@@ -36,18 +34,23 @@
                 }, 2000);
             }
 
+            Game.drawStatuses();
+
             if (App.players) {
+
+                var messages = {};
+
                 for (var index in App.players) {
                     if (App.players.hasOwnProperty(index)) {
                         if(App.players[index].moves || App.players[index].points)
-                            $('.mx .players .player' + index + ' .wt')
-                                .show()
-                                .html('Ходов: ' + App.players[index].moves +
-                                    '<br>Очков: ' + App.players[index].points);
+                            messages[index] = 'Ходов: ' + App.players[index].moves + '<br>Очков: ' + App.players[index].points;
                     }
                 }
+
+                Game.drawMessages(messages);
+
             } else
-                alert('Empty players in drawStatuses');
+                alert('Empty players in initStatuses');
 
 
         },
@@ -145,16 +148,11 @@
 
         'end': function(){
 
-            $('.btn-secondary')
-                .removeClass('hidden')
-                .attr('data-action','replay')
-                .text(i18n('button-game-replay'));
+            Game.drawButtons([
+                Game.buttons.start,
+                Game.buttons.replay
+            ]);
 
-            $('.btn-primary')
-                .removeClass('hidden')
-                .addClass('btn-start')
-                .attr('data-action','quit')
-                .text(i18n('button-game-new'));
         }
 
     }
