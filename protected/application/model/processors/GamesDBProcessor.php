@@ -53,7 +53,6 @@ class GamesDBProcessor
         $sql_results = $sql_transactions = $sql_transactions_players = array();
         $players     = $app->getPlayers();
         $month       = mktime(0, 0, 0, date("n"), 1);
-print_r($players);
         foreach ($players as $player) {
 
             /* prepare results */
