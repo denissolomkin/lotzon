@@ -16,6 +16,7 @@
                 title: 'button-game-replay'
             }
         },
+        field: null,
         gameClass: "",
 
         init: function (init) {
@@ -35,24 +36,20 @@
 
                 D.log('Game.run', 'game');
 
-                var game = document.getElementById('games-online-field');
+                Game.field = document.getElementById('games-online-field');
                 
                 // запоминает классы при ините
                 if(!Game.gameClass){
-                    Game.gameClass = game.className;
+                    Game.gameClass = Game.field.className;
                 }
-                game.className = (Game.gameClass+" "+App.key);
+                Game.field.className = (Game.gameClass+" "+App.key);
 
-                DOM.hide(game.parentNode.children);
-                DOM.show(game);
+                DOM.hide(Game.field.parentNode.children);
+                DOM.show(Game.field);
 
-                var field = game.getElementsByClassName('mx')[0];
+                var field = Game.field.getElementsByClassName('mx')[0];
 
-                field.innerHTML =
-                    '<div class="players"></div>' +
-                    '<div class="deck"></div>' +
-                    '<div class="table"></div>' +
-                    '<div class="off"></div>';
+                field.innerHTML = '<div class="players"></div>';
 
                 Game.drawExit();
                 Game.setPlayersDetailes(Game.seatPlayers());
@@ -65,7 +62,7 @@
 
         },
 
-        field: function () {
+        hasField: function () {
 
             if (!document.getElementById('games-online-field')) {
                 R.push({
@@ -291,7 +288,7 @@
         setFullScreenHeigth: function () {
 
             D.log('Game.setFullScreenHeigth', 'game');
-            var singleGame = $('.single-game');
+            var singleGame = $('#games-online-field');
             if (singleGame.length > 0) {
                 if (Device.isMobile()) {
                     $("meta[name='mobile-web-app-capable']").attr('content', 'yes');

@@ -15,7 +15,7 @@
 
         'action': function() {
 
-            if (Game.field()) {
+            if (Game.hasField()) {
                 Game.run() && Apps.WhoMore.run();
                 Apps.WhoMore.initStatuses();
                 Apps.WhoMore.drawTimer();
@@ -77,6 +77,13 @@
         },
 
         'drawField': function() {
+
+            var field = Game.field.getElementsByClassName('mx')[0];
+
+            field.innerHTML +=
+                '<div class="moves"></div>' +
+                '<div class="table"></div>' +
+                '<div class="moves"></div>';
 
             if (App.variation && App.variation.field) {
 

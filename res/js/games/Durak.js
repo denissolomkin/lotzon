@@ -13,7 +13,7 @@ $(function () {
 
         action: function () {
 
-            if (Game.field()) {
+            if (Game.hasField()) {
                 Game.run() && Apps.Durak.run();
                 Cards.setupForDevices();
                 Cards.drawFields();

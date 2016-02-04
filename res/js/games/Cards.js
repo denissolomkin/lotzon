@@ -372,6 +372,14 @@
         },
 
         createCardsWrapper: function () {
+
+            var field = Game.field.getElementsByClassName('mx')[0];
+
+            field.innerHTML +=
+                '<div class="deck"></div>' +
+                '<div class="table"></div>' +
+                '<div class="off"></div>';
+
             $('.game > div ').addClass('cards');
             $('.mx .players .player' + Player.id).append('<div class="game-cards"></div>');
         },
@@ -535,7 +543,6 @@
                     cardsLess6 = 60;
                     indexLess6 = 40;
                     marginRightSelect = 0;
-                    // $('.game.single-game, .game > .cards').height(gameHeight);
 
                 } else if (Device.detect() == 'mobile-small') {
 
@@ -548,7 +555,6 @@
                     cardsLess6 = 60;
                     indexLess6 = 40;
                     marginRightSelect = -20 + 'px';
-                    // $('.game.single-game, .game > .cards').height(gameHeight);
 
 
                 } else if (Device.detect() == 'mobile-landscape') {
@@ -562,11 +568,8 @@
                     cardsLess6 = 70;
                     gameHeight += 50;
                     indexLess6 = 30;
-                    // $('.game.single-game, .game > .cards').height(gameHeight);
                     marginRightSelect = -40 + 'px';
-                    // $('.content-box-header').css({
-                    //     display: 'none'
-                    // });
+
                 }
 
             }
