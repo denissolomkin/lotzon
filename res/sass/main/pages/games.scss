@@ -335,13 +335,23 @@ footer.unvisible {
             height: auto;
             .players {
                 position: static;
-                // height: 80px;
-                padding: 0 50px;
+                height: 80px;
+                padding: 20px 50px;
                 text-align: center;
                 .gm-pr {
                     width: 100px;
                     height: 100px;
                     position: relative;
+                }
+                // player name
+                .pr-nm{
+                    position: relative;
+                    top: 100%;
+                    padding: 6px 0 0 0;
+
+                    font-family:$hbRegular;
+                    font-size:15px;
+                    line-height:18px;
                 }
             }
             .o {
@@ -379,7 +389,7 @@ footer.unvisible {
                 padding: 20px;
                 box-sizing: border-box;
                 position: absolute;
-                top: 0;
+                top: -20px;
                 left: 0;
             }
             .pr-ph{
@@ -429,22 +439,66 @@ footer.unvisible {
                 }
             }
         }
+
+        // >>>> DEBUG !!!!!!
+        .pr-cl{
+            position: absolute;
+            left: -250px;
+            cursor: pointer;
+            > *{
+                color: #000;
+                padding: 5px 10px;
+                border: 1px dashed red;
+                margin-top: 7px;
+                background: #f0f0f0;
+            }
+        }
+        .pr-pr{
+            position: absolute;
+            left: 320px;
+        }
+        .pr-pt{
+            position: absolute;
+            left: 250px;
+        }
         // for specific games
         &.WhoMore {
-            .table {
-                width: 380px;
-                .inner {
-                    padding: 2px;
-                    .cell {
-                        color: #4a4a4a;
-                        padding: 0;
-                        margin: 0;
-                        i[class^="i-"] {
-                            font-size: 0.9em;
+            .mx{
+                .wt{
+                    span{
+                        position:absolute;
+                        display: block;
+                        left: 150px;
+                        top: 0;
+                        
+                        &:first-child{
+                            left: -150px;
                         }
-                        span {
-                            font-family: $hbBold;
-                            font-size: 1.1em;
+                    }
+                }   
+                .m{
+                    color: #fff;
+                    .wt{
+                        span{
+                            top: 30px !important;
+                        }
+                    }
+                }
+                .table {
+                    width: 380px;
+                    .inner {
+                        padding: 2px;
+                        .cell {
+                            color: #4a4a4a;
+                            padding: 0;
+                            margin: 0;
+                            i[class^="i-"] {
+                                font-size: 0.9em;
+                            }
+                            span {
+                                font-family: $hbBold;
+                                font-size: 1.1em;
+                            }
                         }
                     }
                 }

@@ -248,7 +248,7 @@
 
         "sortJSON": function (options) {
 
-            if (typeof options.json === 'object' && isNumeric(Object.keys(options.json)[0])) {
+            if (options.json && typeof options.json === 'object' && isNumeric(Object.keys(options.json)[0])) {
                 options.json = (function (s) {
                     var t = {};
                     Object.keys(s).sort().forEach(function (k) {

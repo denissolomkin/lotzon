@@ -43,8 +43,10 @@
                 for (var index in App.players) {
                     if (App.players.hasOwnProperty(index)) {
                         if(App.players[index].moves || App.players[index].points)
-                            messages[index] = 'Ходов: ' + App.players[index].moves + '<br>Очков: ' + App.players[index].points;
-                    }
+                            messages[index] =
+                                '<span>Ходов осталось ' + App.players[index].moves + '</span>' +
+                                '<span>Очков набрано ' + App.players[index].points + '</span>';
+                        }
                 }
 
                 Game.drawMessages(messages);

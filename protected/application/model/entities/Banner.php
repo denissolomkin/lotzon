@@ -57,7 +57,6 @@ class Banner extends Entity
             $response = ob_get_contents();
             ob_end_clean();
         }
-
         return $response;
     }
 }

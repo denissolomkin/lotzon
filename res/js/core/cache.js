@@ -324,7 +324,7 @@
             var path = data.key ? this.split(data.key) : this.split(key),
                 needle = path.last(),
                 storage = data.cache || false,
-                source = data.res || data;
+                source = (data.hasOwnProperty('res') ? data.res : data);
 
             this.validate(path.join('-'), true);
 
@@ -365,8 +365,7 @@
                         .save(storage);
             }
 
-
-            return source || data.res || data;
+            return source || (data.hasOwnProperty('res') ? data.res : data);
 
         },
 

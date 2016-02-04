@@ -387,6 +387,7 @@ Config::instance()->publicResources = array(
     '/lnk/:uin' => array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
+    '/banner/:device/:location' => 'controllers\production\BannersController:index',
     /**
      * Moment games
      */

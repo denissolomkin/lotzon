@@ -203,13 +203,19 @@
 
         updateBanners: function () {
 
-            if (/new.lotzon.com/.test(location.hostname)) {
+            if (1 || /new.lotzon.com/.test(location.hostname)) {
                 if (Device.mobile) {
                     R.push('/banner/tablet/top');
                     R.push('/banner/tablet/bottom');
                 } else {
                     // R.push('/banner/desktop/fixed');
-                    R.push('/banner/desktop/top');
+                    R.push({
+                        href: '/banner/desktop/top',
+                        after: function(options){
+                            $(options.rendered).html(options.json);
+                            console.error(options);
+                        }
+                    });
                     R.push('/banner/desktop/right');
                 }
             }
