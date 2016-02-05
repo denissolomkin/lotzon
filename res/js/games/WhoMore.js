@@ -3,22 +3,12 @@
 
     Apps.WhoMore = {
 
-        'run': function() {
-
-            Apps.WhoMore.drawField();
-
-        },
-
-        'error': function() {
-
-        },
-
         'action': function() {
 
             if (Game.hasField()) {
-                Game.run() && Apps.WhoMore.run();
+                Game.run() && Apps.WhoMore.drawField();
                 Apps.WhoMore.initStatuses();
-                Apps.WhoMore.drawTimer();
+                Apps.WhoMore.initTimers();
                 Apps.WhoMore.paintCell();
                 Game.end() && Apps.WhoMore.end();
             }
@@ -57,7 +47,7 @@
 
         },
 
-        'drawTimer': function() {
+        'initTimers': function() {
 
             if (App.players) {
                 for (var index in App.players) {

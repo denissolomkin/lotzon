@@ -168,10 +168,6 @@ class Index extends \SlimController\SlimController
                 "tw" => null
             ),
             "settings" => array(),
-            "game"     => array(
-                'key' => $gamePlayer->getApp('Key'),
-                'uid' => $gamePlayer->getApp('Uid')
-            ),
             "games"    => array(
                 'chance' => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : false,
                 'random' => $session->has('QuickGame'),

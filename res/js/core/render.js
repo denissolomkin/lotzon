@@ -395,7 +395,8 @@
 
             var render = options.rendered = DOM.create(options.rendered),
                 node = options.node,
-                template = false;
+                template = false,
+                onTop = DOM.visible('.on-top').length;
 
             D.log(['Render.inputHTML into:', node.id], 'render');
 
@@ -415,7 +416,7 @@
                         if (!render.classList.contains('pop-box')) {
                             if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
                                 //such as blog-post-view, games-online & games-chance
-                                DOM.hide(node.parentNode && node.parentNode.children);
+                                !onTop && DOM.hide(node.parentNode && node.parentNode.children);
                             }
                         } else {
                             options.url = false;
@@ -423,7 +424,7 @@
 
                         if (node.parentNode) {
                             node.parentNode.replaceChild(render, node);
-                            DOM.show(node);
+                            !onTop && DOM.show(node);
                             console.log('replaceChild');
                         }
 
@@ -449,13 +450,15 @@
                         if (!render.classList.contains('pop-box')) {
                             if (compare(render.classList, ['content-box-item', 'content-main'])) {
                                 //such as games-online & games-chance
-                                DOM.hide(node.children);
+                                !onTop && DOM.hide(node.children);
                             } else if (node.id == 'content') {
-                                DOM.hide(node.children);
+                                !onTop && DOM.hide(node.children);
                             }
                         } else {
                             options.url = false;
                         }
+
+                        onTop && DOM.hide(render);
 
                         if (options.init.template.indexOf('-item') !== -1)
                             template =

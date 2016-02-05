@@ -35,9 +35,9 @@
                     }
                 }
 
-                if (init.hasOwnProperty('game') && init.game.uid) {
-                    WebSocketAjaxClient('app/' + init.game.key + '/' + init.game.uid, {action: 'start'});
-                    delete init.game;
+                if (init.hasOwnProperty('games') && init.games.online && init.games.online.uid) {
+                    WebSocketAjaxClient('app/' + init.games.online.key + '/' + init.games.online.uid, {action: 'start'});
+                    delete init.games.online;
                 }
 
                 Object.deepExtend(this, init);
