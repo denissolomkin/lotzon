@@ -1244,7 +1244,7 @@ class PlayersDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':date'  => time(),
-                ':min'  => time() - GameSettingsModel::instance()->getSettings($key)->getOption('min')*60,
+                ':min'  => time() - \GamesPublishedModel::instance()->getList()[$key]->getOptions('min')*60,
                 ':id'  => $player->getId(),
             ));
         } catch (PDOException $e) {

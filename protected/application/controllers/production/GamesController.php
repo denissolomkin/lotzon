@@ -72,7 +72,7 @@ class GamesController extends \AjaxController
 
                     if ($key == 'OnlineGame') {
 
-                        $fund = \OnlineGamesModel::instance()->getFund($game->getId());
+                        $fund = \GameAppsModel::instance()->getFund($game->getId());
                         try {
                             $comission = $game->getOptions('r') ? $game->getOptions('r') / 100 : 0;
                         } catch (\EntityException $e) {
@@ -169,13 +169,13 @@ class GamesController extends \AjaxController
                         ->setAppName($game->getKey())
                         ->setAppMode(null);
                 else
-                    $response['player']['game'] = array(
+                    $response['player']['games']['online'] = array(
                         'key' => $gamePlayer->getApp('Key'),
                         'uid' => $gamePlayer->getApp('Uid'));
 
                 $gamePlayer->update();
 
-                $fund = \OnlineGamesModel::instance()->getFund($game->getId());
+                $fund = \GameAppsModel::instance()->getFund($game->getId());
                 try {
                     $comission = $game->getOptions('r') ? $game->getOptions('r') / 100 : 0;
                 } catch (\EntityException $e) {
@@ -285,7 +285,7 @@ class GamesController extends \AjaxController
 
         try {
 
-            $list = \OnlineGamesModel::instance()->getRating($id);
+            $list = \GameAppsModel::instance()->getRating($id);
             if (isset($list[$currency])) {
                 $list = $list[$currency];
                 if ($limit) {

@@ -45,7 +45,7 @@ class PingController extends \AjaxController
         $response        = array();
         $counters        = array();
         $player          = $this->session->get(Player::IDENTITY);
-        $gameSettings    = \GamesPublishedModel::instance()->getList();
+        $gamesPublished    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
         $forms           = $this->request()->post('forms', array());
 
@@ -121,7 +121,7 @@ class PingController extends \AjaxController
         */
 
         $key   = 'QuickGame';
-        $timer = $gameSettings[$key]->getOption('min');
+        $timer = $gamesPublished[$key]->getOptions('min');
 
         if (!$this->session->has($key . 'LastDate'))
             $this->session->set($key . 'LastDate', time());
@@ -151,27 +151,27 @@ class PingController extends \AjaxController
         // check for moment chance
         // if not already played chance game
 
-        if ((!$this->session->has($key) && time() - $this->session->get($key . 'LastDate') > $gameSettings[$key]->getOption('max') * 60) ||
+        if ((!$this->session->has($key) && time() - $this->session->get($key . 'LastDate') > $gamesPublished[$key]->getOptions('max') * 60) ||
             ($this->session->has($key) && $this->session->get($key)->getTime() + $this->session->get($key)->getTimeout() * 60 < time() && $this->session->remove($key))
         ) {
             $this->session->set($key . 'LastDate', time());
         }
 
-        if ($this->session->get($key . 'LastDate') && !$this->session->has($key) && isset($gameSettings[$key])) {
+        if ($this->session->get($key . 'LastDate') && !$this->session->has($key) && isset($gamesPublished[$key])) {
 
-            if ($this->session->get($key . 'LastDate') + $gameSettings[$key]->getOption('min') * 60 <= time() &&
-                $this->session->get($key . 'LastDate') + $gameSettings[$key]->getOption('max') * 60 >= time()
+            if ($this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('min') * 60 <= time() &&
+                $this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('max') * 60 >= time()
             ) {
                 switch (true) {
 
-                    case (($rnd = mt_rand(0, 100)) <= 100 / (($gameSettings[$key]->getOption('max') - $gameSettings[$key]->getOption('min')) ?: 1)):
-                    case ($this->session->get($key . 'LastDate') + $gameSettings[$key]->getOption('max') * 60 - time()):
+                    case (($rnd = mt_rand(0, 100)) <= 100 / (($gamesPublished[$key]->getOptions('max') - $gamesPublished[$key]->getOptions('min')) ?: 1)):
+                    case ($this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('max') * 60 - time()):
                         $badges['notifications'][] = array(
                             'key'     => $key,
                             'title'   => 'title-games-moment',
                             'button'  => 'button-games-play',
                             'action'  => '/games/moment',
-                            'timer'   => $gameSettings[$key]->getOption('timeout') * 60,
+                            'timer'   => $gamesPublished[$key]->getOptions('timeout') * 60,
                             'timeout' => 'close'
                         );
                         break;
