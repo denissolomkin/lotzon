@@ -1,6 +1,7 @@
 <?php
+Application::import(PATH_APPLICATION . 'model/Entity.php');
 
-class Game
+class Game extends Entity
 {
     protected $_gameId        = 0;
     protected $_gameKey       = '';
@@ -47,46 +48,36 @@ class Game
             ->setIdentifier(uniqid())
             ->setTime(time())
             ->init();
+
+        $this->setModelClass('GameAppsModel');
     }
 
-    public function __call($method, $params = null)
+    public function saveResults()
     {
+        $model = $this->getModelClass();
 
-        $methodPrefix = substr($method, 0, 3);
-        $key          = lcfirst(substr($method, 3));
-        $property     = '_' . $key;
+        echo $this->time(1) . " " . $this->getKey() . ' ' . $this->getUid() . " - Сохраняем игру: \n";
+        print_r($this->getPlayers());
 
-        if (property_exists($this, $property)) {
-            if (($methodPrefix == 'set') && (count($params) == 1)) {
-                $value           = $params[0];
-                $this->$property = $value;
-
-                return $this;
-
-            } elseif ($methodPrefix == 'get') {
-                if (isset($this->$property)) {
-
-                    if ((count($params) == 1 && ($value = $params[0]) && is_array($this->$property))) {
-                        $property = $this->$property;
-
-                        return isset($property[$value]) ? $property[$value] : null;
-                    }
-
-                    return $this->$property;
-
-                } else {
-
-                    return NULL;
-                }
-            }
+        try {
+            $model::instance()->saveResults($this);
+        } catch (ModelException $e) {
+            echo '[ERROR] ' . $e->getMessage();
         }
 
-        throw new Exception("Method $method is not defined in " . get_class($this) . "!");
+        $this->_isSaved = 1;
+
+        return $this;
     }
 
     public function init()
     {
         $this->setField($this->generateField());
+    }
+
+    public function validate()
+    {
+        return true;
     }
 
     public function quitAction($data = null)

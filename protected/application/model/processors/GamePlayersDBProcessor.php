@@ -111,9 +111,12 @@ class GamePlayersDBProcessor implements IProcessor
         return true;
     }
 
-    public function getList()
+    public function getList($ping)
     {
         $sql = "SELECT * FROM `GamesTmpPlayers`";
+
+        if($ping)
+            $sql.='WHERE Ping < ' . $ping;
 
         try {
             $res = DB::Connect()->prepare($sql);

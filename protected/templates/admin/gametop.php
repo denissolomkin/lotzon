@@ -132,13 +132,13 @@
     $(gameTop).each(function(id, player) {
 
         form = template.clone();
-        $('img',                form).attr('src','../filestorage/avatars/'+Math.ceil(player.Id/100)+'/'+player.Avatar);
+        $('img',                form).attr('src','../filestorage/avatars/'+Math.ceil(player.PlayerId/100)+'/'+player.Avatar);
         $('.name',              form).text(player.Nicname);
         $('[name="Id"]',        form).val(player.Id);
         $('[name="PlayerId"]',  form).val(player.PlayerId);
         $('[name="Period"]',    form).val(player.Period);
         $('[name="GameId"]',    form).val(player.GameId).change();
-        $('[name="Currency"]',    form).val(player.Currency).change();
+        $('[name="Currency"]',  form).val(player.Currency).change();
         $('[name="Rating"]',    form).val(player.Rating);
         $('[name="Increment"]', form).val(player.Increment);
         $('[name="Start"]',     form).val(player.Start);

@@ -17,9 +17,9 @@ class GamePlayersModel extends Model
         return __CLASS__;
     }
 
-    public function getList()
+    public function getList($ping)
     {
-        return $this->getProcessor()->getList();
+        return $this->getProcessor()->getList($ping);
     }
 
     public function getAvailableBots()
