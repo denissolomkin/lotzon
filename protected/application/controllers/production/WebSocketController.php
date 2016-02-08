@@ -39,7 +39,7 @@ class WebSocketController implements MessageComponentInterface {
 
         $this->_loop = $loop;
         $this->_loop->addPeriodicTimer(self::PERIODIC_TIMER, function () { $this->periodicTimer();});
-//        $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
+        $this->_loop->addPeriodicTimer(self::CONNECTION_TIMER, function () { $this->checkConnections();});
 
         $this->memcache = new \Memcache;
         $this->memcache->connect('localhost', 11211);
@@ -1197,7 +1197,7 @@ class WebSocketController implements MessageComponentInterface {
         $key='_players';
         $array=$second;
 
-        if (Config::instance()->cacheEnabled) {
+        if (Config::instance()->cacheEnabled AND 0) {
 
             if ($first == 'set')
                 Cache::init()->set('websocket::' . $key, $second);
@@ -1293,7 +1293,7 @@ class WebSocketController implements MessageComponentInterface {
         $key='_stack';
         $array=$fourth;
 
-        if (Config::instance()->cacheEnabled) {
+        if (Config::instance()->cacheEnabled AND 0) {
 
             if ($first == 'set')
                 Cache::init()->set('websocket::' . $key, $second);
