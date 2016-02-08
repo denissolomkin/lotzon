@@ -3,7 +3,7 @@
 namespace controllers\production;
 
 use \Application, \Player, \Banner, \LotterySettings;
-use \GamesPublishedModel, \GameConstructorChance;
+use \GamesPublishedModel, \GameConstructorChance, \CountriesModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
