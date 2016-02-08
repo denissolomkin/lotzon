@@ -1,8 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \LotteriesModel, \TicketsModel, \LotterySettings, \LotterySettingsModel, \QuickGamesModel;
-use \ChanceGamesModel, \GameSettingsModel;
+use \Application, \SettingsModel, \Player, \EntityException;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');

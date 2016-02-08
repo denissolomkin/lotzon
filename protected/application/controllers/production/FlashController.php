@@ -2,8 +2,8 @@
 
 namespace controllers\production;
 
-use \Application, \Player, \EntityException, \Banner, \CountriesModel, \LotterySettings, \QuickGamesModel;
-use \ChanceGamesModel, \GamesPublishedModel, \SettingsModel;
+use \Application, \Player;
+use \ChanceGamesModel, \SettingsModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -58,7 +58,6 @@ class FlashController extends \AjaxController
             $this->ajaxResponseBadRequest('GAME_ID_EMPTY');
         }
 
-        $lang = $this->session->get(Player::IDENTITY)->getLang();
         $game = SettingsModel::instance()->getSettings('flashGames')->getValue()[$id];
 
         if(!$game)

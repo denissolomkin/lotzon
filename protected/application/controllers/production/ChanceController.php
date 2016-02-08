@@ -270,7 +270,7 @@ class ChanceController extends \AjaxController
             ->setGroup('game' . $game->getId())
             ->setCountry($player->getCountry())
             ->setTemplate('chance')
-            ->setKey($key)
+            ->setKey($key=='Moment'?'moment':'random')
             ->random()
             ->render();
 

@@ -72,7 +72,7 @@
             <div class="sector" /*style="background-color: rgba(<?=rand(0,255).','.rand(0,255).','.rand(0,255)?>,0.2);"*/>
                 <div>
                     <button type="button" data-sector="<?=$sid?>" class="btn btn-success btn-xs add-group"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> <small><?=(strstr($sid,'game')?$games[(str_replace('game','',$sid))]['Title']['RU']:$sid);?></small><input type="hidden" name="banners[<?=$sid?>]" value="">
+                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> <small><?=(strstr($sid,'game')?$games[(str_replace('game','',$sid))]->getTitle('RU'):$sid);?></small><input type="hidden" name="banners[<?=$sid?>]" value="">
                 </div>
                 <div id="<?=$sid?>">
                 <? $gid=0;

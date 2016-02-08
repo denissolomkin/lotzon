@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \SettingsModel, \Admin,  \CountriesModel, \QuickGamesModel, \Session2;
+use \Application, \PrivateArea, \SettingsModel, \Admin,  \CountriesModel, \GameConstructorModel, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -21,7 +21,7 @@ class Banners extends PrivateArea
     public function indexAction()
     {
         $list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
-        $games = QuickGamesModel::instance()->getGamesSettings();
+        $games = GameConstructorModel::instance()->getChanceGames();
         $supportedCountries = CountriesModel::instance()->getCountries();
 
         $this->render('admin/banners', array(
