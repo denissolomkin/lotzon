@@ -43,8 +43,11 @@
                                     po.innerHTML = div.children[0].innerHTML;
                                 }
 
+
+
                                 div.removeChild(div.children[0]);
-                                s.parentNode.insertBefore(po, s);
+                                node.appendChild(po);
+                                //s.parentNode.insertBefore(po, s);
 
                             } else {
                                 node.appendChild(div.children[0]);
