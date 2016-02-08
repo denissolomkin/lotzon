@@ -114,7 +114,6 @@
 
 .ae-personal-form {
   margin-bottom: 0;
-  border-top: 1px solid #b4aeae;
 }
 
 // --------------------------- //
@@ -136,8 +135,19 @@
 
 .ae-current-combination {
   display: inline-block;
-  margin: 0;
   vertical-align: middle;
+  margin-left: 20px;
+  & > * {
+    float: left;
+    width: 25px;
+    height: auto;
+    border-radius: 50%;
+    line-height: 34px;
+    text-align: center;
+    /* margin-left: 0 !important; */
+    cursor: pointer;
+    margin-left: 20px;
+  }
 }
 
 .ae-combination,
@@ -172,7 +182,6 @@
   height: auto;
   background: none;
   top: 0;
-  font-size: 14px;
 }
 
 .cco-edit span {
@@ -219,7 +228,7 @@
 }
 
 .ci-personal-form-values input {
-  padding-left: 190px;
+  // padding-left: 190px;
   &.input-prefix {
     padding-left: 205px;
   }
@@ -230,9 +239,6 @@ span.input-prefix {
   left: 190px;
 }
 
-.content-box-item.cabinet-convert {
-  padding: 30px 58px;
-}
 
 #profile-settings .hidden-notice { 
   margin: 0;
@@ -242,8 +248,7 @@ span.input-prefix {
   border-top: 1px solid #f5f5f5;
   margin-right: -20px;
   margin-left: -20px;
-  padding-right: 30px;
-  padding-left: 30px;
+  padding: 0 30px;
   height: 45px;
 }
 

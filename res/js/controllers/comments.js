@@ -3,6 +3,18 @@
     if (typeof I === 'undefined') I = {};
     Object.deepExtend(I, {notificationsList: '.c-notifications-list'});
 
+            var currentReview = {
+                image: '',
+                text: '',
+                id: 0,
+            };
+
+            var answerReview = {
+                image: '',
+                text: '',
+                id: 0,
+                reviewId: null,
+            };
 
     Comments = {
       emotionsToServer : {
@@ -259,22 +271,7 @@
 
 
         showPreviewImage: function (e) {
-            var currentReview = {
-                image: '',
-                text: '',
-                id: 0,
-            };
-
-            var answerReview = {
-                image: '',
-                text: '',
-                id: 0,
-                reviewId: null,
-            };
-
             e.preventDefault();
-
-            console.log(e);
 
 
             var span = document.createElement('span');
@@ -289,7 +286,6 @@
 
                 // create form
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-                //$(button).parents('.photoalbum-box').prepend(form);
 
                  $input = form.find('input[type="file"]').damnUploader({
                     url: '/res/POST/image',
@@ -303,7 +299,7 @@
                     e.uploadItem.completeCallback = function(succ, data, status) {
                         image.css({'background': 'url(' + Config.tempFilestorage + '/' + data.imageName + ') center', 'height':'55px'});
                         currentReview.image = data.imageName;
-                        console.log(currentReview.image, 'currentReview.image')
+
                     };
 
                     e.uploadItem.progressCallback = function(perc) {
@@ -313,10 +309,14 @@
                     e.uploadItem.addPostData('Id', currentReview.id);
                     e.uploadItem.addPostData('Image', currentReview.image);
                     e.uploadItem.upload();
-                    console.log(currentReview.image, 'currentReview.image')
-                });
 
+                });
+                
                 form.find('input[type="file"]').click();
+                console.log($(this).closest('.message-form').find('.input-file')[0], "form.find('input[type='file']')");
+                $(this).closest('.message-form').find('.no-image').removeClass('no-image');
+                $(this).closest('.message-form').find('.input-file').attr('disabled','disabled');
+
 
             } else {
 
@@ -330,6 +330,7 @@
                         if (data.status == 1) {
                             image.remove();
                             currentReview.image = null;
+                            
 
                         } else {
                             console.log(data.status, "data");
@@ -340,9 +341,15 @@
                     error: function() {
                         alert('Unexpected server error');
                     }
+
                 });
+                $(this).closest('.message-form').find('.fa-file-image-o').addClass('no-image');
+                $(this).closest('.message-form').find('.input-file').attr('disabled','false');
             }
         },
+
+
+
         deletePreviewImage: function (e) {
             var currentReview = {
                 image: '',
@@ -359,7 +366,8 @@
                     if (data.status == 1) {
                         image.remove();
                         currentReview.image = null;
-
+                        $(this).closest('.message-form').find('.is-image').removeClass('no-image');
+                        $(this).closest('.message-form').find('.input-file').attr('disabled','disabled');
                     } else {
                         console.log(data.status, "data");
                         alert(data.message);
@@ -373,8 +381,10 @@
         },
 
         showSmiles: function () {
+            console.log('works');
             $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
-            $('.message-form-smileys').toggleClass('active');
+             console.log( $(this).closest('.message-form').find('.smiles'), ' $(this).closest(".message-form").find(".smiles")');
+            $(this).toggleClass('active');
         }, 
 
 
@@ -385,8 +395,10 @@
             console.log($(this).clone())  ;
             div.append($(this).clone());
 
-           var result = $('div[contenteditable="true"]')[0];
-               
+            // var result = $('div[contenteditable="true"]')[0];
+
+           var result = $(this).closest('.message-form').find('div[contenteditable="true"]')[0];
+                console.log(result, 'result')
                 result.focus();
                 placeCaretAtEnd(result);
           

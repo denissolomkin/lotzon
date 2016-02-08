@@ -37,7 +37,7 @@
                 "menu-prizes": "Витрина",
 
                 "menu-profile": "Мои данные",
-                "menu-profile-edit": "Контактные данные",
+                "menu-profile-edit": "Личные данные",
                 "menu-profile-billing": "Платежные данные",
                 "menu-profile-settings": "Настройки",
                 "menu-profile-password": "Сменить пароль",
@@ -192,7 +192,7 @@
                 "title-profile-settings-change" :"изменить",
                 "title-profile-change-cancel":"отмена",
                 "title-profile-favorite":"Любимая комбинация",
-                "title-profile-billing": "Платежная информация",
+                "title-profile-billing": "ИЗМЕНЕНИЕ РЕКВИЗИТОВ",
                 "title-profile-details": "Контактные данные",
                 "title-profile-edit": "Редактирование профиля",
                 "title-profile-choose": "выбрать",
@@ -208,15 +208,18 @@
                 "title-profile-cashout-choose": "Выберите способ вывода денег",
                 "title-profile-cashout-edit": "редактировать",
                 "title-profile-cashout-rules": "Правила вывода денег",
+                "title-profile-cashout-balance": "Ваш счет",
                 "title-profile-message-admin": "напишите нам",
                 "title-profile-payments-history": "истории выплат",
+                "title-profile-cashout-summ": "Введите сумму",
 
 
                 "button-profile-get-points": "Конвертировать",
                 "button-profile-show-more": "подробно",
-
+                "button-profile-cashout-request": "Ваш запрос отправлен на модерацию",
+            
                 "message-input-correct-data": "<p>Вводите только свои актуальные данные.<br>Неправильные или неполные данные могут негативно отразится при обработке запроса на выводвыигрыша.</p><p>Привязывайте только реальные страницы соцсетей, это даст Вам ряд дополнительных возможностей.</p>",
-                "message-input-billing-information": "Введите Ваши платежные данные:",
+                "message-input-billing-information": "Введите данные для вывода денег и нажмите кнопку сохранить:",
 
                 "button-profile-edit": "Изменить данные",
 
@@ -244,10 +247,10 @@
                 "title-users-referrals-profit": "Доход (баллов)",
 
 
-                "title-billing-phone": "Телефон",
-                "title-billing-yandexmoney": "Yandex.Деньги",
-                "title-billing-webmoney": "Webmoney",
-                "title-billing-qiwi": "QIWI кошелек",
+                "title-billing-phone": "Мобильный телефон",
+                "title-billing-yandexmoney": "Яндекс Деньги",
+                "title-billing-webmoney": "WebMoney",
+                "title-billing-qiwi": "QIWI",
 
                 "title-users-friends": "Друзья",
                 "title-users-chronicle": "Хроника",

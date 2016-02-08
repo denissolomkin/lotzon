@@ -116,7 +116,7 @@
             });
 
             /* substitution JSON with profile if template has "/profile/" */
-            if (options.template.search(/profile/) !== -1) {
+            if (options.template.search(/profile/) !== -1 && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
                 options.json = Player;
             }
 

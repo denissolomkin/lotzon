@@ -211,3 +211,22 @@
   font-size: 15px;
   font-family: 'Handbook-bold';
 }
+@media (max-width: 767px){
+  #reports-transactions .content-box-item-content {
+    margin-top: 90px;
+  }
+
+  .th-item-left div {
+      margin-right: 10px;
+  }
+
+  .th-item-right div.th-item-sum {
+    margin-right: 10px;
+  }
+  .th-item-right div {
+      min-width: 40px;
+  }
+  .calendar-range input.daterange {
+    padding-left: 0;
+  }
+}

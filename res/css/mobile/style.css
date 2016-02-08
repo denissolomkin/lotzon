@@ -24,6 +24,29 @@
 .pop-box {
   overflow: scroll; }
 
+*:hover > .tooltip {
+  display: block;
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  -khtml-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  background: #4a4a4a;
+  color: #fff;
+  font-size: 11px;
+  min-width: 240px;
+  z-index: 10;
+  /* padding: 5px 10px; */
+  text-align: center;
+  margin: 0;
+  line-height: 1.2;
+  height: 45px;
+  padding: 7px; }
+
 .header-left {
   height: 40px; }
 
@@ -271,6 +294,43 @@ header {
   /* height: 55px; */
   /*line-height: 55px;*/
   max-height: 55px; }
+
+@media (max-width: 767px) {
+  .content-box-header .back {
+    color: #6ba4e7; }
+  #blog-post-view .content-box-header,
+  #communication-messages-new .content-box-header,
+  #users-view-message .content-box-header, #user-view .content-box-header,
+  #prizes-exchange-goods-view .content-box-header,
+  #profile-cachout .content-box-header,
+  #profile-convert .content-box-header,
+  #reports-transactions .content-box-header,
+  #reports-payments .content-box-header,
+  #users-view-messages .content-box-header,
+  #profile-billing .content-box-header,
+  #profile-settings .content-box-header,
+  #reports-referrals .content-box-header,
+  #profile-bonuses .content-box-header {
+    background: none;
+    padding-top: 10px; }
+    #blog-post-view .content-box-header .back,
+    #communication-messages-new .content-box-header .back,
+    #users-view-message .content-box-header .back, #user-view .content-box-header .back,
+    #prizes-exchange-goods-view .content-box-header .back,
+    #profile-cachout .content-box-header .back,
+    #profile-convert .content-box-header .back,
+    #reports-transactions .content-box-header .back,
+    #reports-payments .content-box-header .back,
+    #users-view-messages .content-box-header .back,
+    #profile-billing .content-box-header .back,
+    #profile-settings .content-box-header .back,
+    #reports-referrals .content-box-header .back,
+    #profile-bonuses .content-box-header .back {
+      top: 10px; }
+  #user-view .content-box-header {
+    margin-bottom: 20px; }
+  #profile-settings {
+    padding-top: 0 !important; } }
 
 #blog-post-view .post-comments .render-list .message-form-wrapper {
   padding-left: 0; }
@@ -682,6 +742,9 @@ header {
 #profile-edit .content-box-header {
   background: none; }
 
+#profile-edit .daterangepicker.dropdown-menu {
+  left: -50px; }
+
 .ae-personal-inf .uk-float-right {
   float: none; }
 
@@ -781,12 +844,33 @@ header {
       display: block; }
   #profile-convert .cc-out input, #profile-convert .cc-income span.cc-sum {
     width: 111px; }
+  #profile-convert .cc-income span.cc-sum {
+    width: 105px; }
   #profile-convert .cc-form-top {
     margin: 0 -10px 25px;
     padding: 0 20px;
     height: 100px; }
   #profile-convert .cc-out {
-    margin-bottom: 10px; } }
+    margin-bottom: 20px; }
+  .rules {
+    float: none;
+    display: block;
+    clear: both; }
+  div.rules-text p {
+    line-height: 20px;
+    margin-bottom: 5px; }
+  .cco-title > * {
+    margin-bottom: 15px; }
+  div.rules-text {
+    padding: 10px 20px; }
+  .cco-enter-sum > div:first-of-type {
+    height: 90px; }
+  .cco-enter-sum > div:first-of-type > * {
+    float: none; }
+  .cco-enter-sum-box {
+    margin-bottom: 30px; }
+  #profile-settings {
+    padding-top: 0; } }
 
 #profile-settings {
   padding-top: 10px; }
@@ -833,6 +917,17 @@ header {
   top: 4px; }
   .cco-edit span {
     display: none; }
+
+#profile-cachout .cco-edit {
+  float: left;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  background: none;
+  position: static;
+  margin-left: 10px; }
+  #profile-cachout .cco-edit span {
+    display: inline-block; }
 
 @media (max-width: 500px) {
   .content-box-item.cabinet-referrals {
@@ -994,6 +1089,18 @@ header {
 .ph-inf-name {
   font-size: 15px;
   font-family: 'Handbook-bold'; }
+
+@media (max-width: 767px) {
+  #reports-transactions .content-box-item-content {
+    margin-top: 90px; }
+  .th-item-left div {
+    margin-right: 10px; }
+  .th-item-right div.th-item-sum {
+    margin-right: 10px; }
+  .th-item-right div {
+    min-width: 40px; }
+  .calendar-range input.daterange {
+    padding-left: 0; } }
 
 .c-friends .content-box-item-top {
   left: 10px; }
@@ -1467,8 +1574,6 @@ header {
 
 @media (min-width: 480px) and (min-width: 580px) {
   .cabinet-transaction-history .content-box-cat {
-    float: none;
-    display: table;
     margin: auto; }
   .cabinet-transaction-history .content-box-cat a {
     display: table-cell;
@@ -1792,7 +1897,7 @@ header {
     margin-right: 1%;
     margin-bottom: 0; }
   .message-text {
-    width: 79%; }
+    width: 100%; }
   .nm-selected.nm-change {
     position: absolute;
     top: 0;
@@ -2199,8 +2304,7 @@ header {
     .ae-inf p:last-child {
       margin-bottom: 0; }
   .ae-personal-form {
-    margin-bottom: 0;
-    border-top: 1px solid #b4aeae; }
+    margin-bottom: 0; }
   .ae-personal-inf .title {
     display: inline-block;
     text-align: left;
@@ -2212,8 +2316,18 @@ header {
     display: inline-block; }
   .ae-current-combination {
     display: inline-block;
-    margin: 0;
-    vertical-align: middle; }
+    vertical-align: middle;
+    margin-left: 20px; }
+    .ae-current-combination > * {
+      float: left;
+      width: 25px;
+      height: auto;
+      border-radius: 50%;
+      line-height: 34px;
+      text-align: center;
+      /* margin-left: 0 !important; */
+      cursor: pointer;
+      margin-left: 20px; }
   .ae-combination,
   .ae-socials {
     padding: 13px 0 13px 5px; }
@@ -2232,8 +2346,7 @@ header {
     width: auto;
     height: auto;
     background: none;
-    top: 0;
-    font-size: 14px; }
+    top: 0; }
   .cco-edit span {
     display: inline; }
   .cco-inf {
@@ -2257,23 +2370,18 @@ header {
     padding-left: 10px; }
   .ci-personal-form {
     margin: 0 0 40px; }
-  .ci-personal-form-values input {
-    padding-left: 190px; }
-    .ci-personal-form-values input.input-prefix {
-      padding-left: 205px; }
+  .ci-personal-form-values input.input-prefix {
+    padding-left: 205px; }
   span.input-prefix {
     top: -1px;
     left: 190px; }
-  .content-box-item.cabinet-convert {
-    padding: 30px 58px; }
   #profile-settings .hidden-notice {
     margin: 0; }
   #profile-settings .settings .strip {
     border-top: 1px solid #f5f5f5;
     margin-right: -20px;
     margin-left: -20px;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding: 0 30px;
     height: 45px; }
   .ae-combination-box {
     margin: 0 -20px; }

@@ -434,7 +434,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;f
 .mail-popup .rf-txt {font-size:14px;color:#000;margin:50px 0 15px 0;}
 .mail-popup .rf-txt > b {color:#c51e1e;font-weight:normal;}
 #reg-form .ch-b {padding:24px 0 0 0;text-align:center;font-size:16px;color:#000;margin-bottom:-35px; cursor: pointer;}
-#reg-form .ch-b .rs-sw {font-size:16px;text-decoration:none;color:#000;}
+#reg-form .ch-b .rs-sw {font-size:16px;color:#000;text-decoration: underline;}
 #reg-form .ch-b .rs-sw:hover {text-decoration: underline;}
 
 
@@ -558,7 +558,7 @@ input:-ms-input-placeholder      {color:#000; opacity: 0.3; font-style: italic;f
 .login-popup .rf-txt {font-size:14px;color:#000;margin:50px 0 15px 0;}
 .login-popup .rf-txt > b {color:#c51e1e;font-weight:normal;}
 #reg-form .ch-b {padding:24px 0 0 0;text-align:center;font-size:16px;color:#000;margin-bottom:-35px;}
-#reg-form .ch-b .rs-sw {font-size:16px;text-decoration:none;color:#000;}
+#reg-form .ch-b .rs-sw {font-size:16px;color:#000;}
 #reg-form .ch-b .rs-sw:hover {text-decoration: underline;}
 
 

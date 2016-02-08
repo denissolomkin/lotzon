@@ -309,3 +309,37 @@ header {
     /*line-height: 55px;*/
     max-height: 55px;
 }
+@media (max-width: 767px) {
+ .content-box-header {
+    & .back {
+        color: #6ba4e7;
+    }
+}   
+#blog-post-view .content-box-header, 
+#communication-messages-new .content-box-header, 
+#users-view-message .content-box-header, #user-view .content-box-header, 
+#prizes-exchange-goods-view .content-box-header,
+#profile-cachout .content-box-header,
+#profile-convert .content-box-header,
+#reports-transactions .content-box-header,
+#reports-payments .content-box-header,
+#users-view-messages .content-box-header,
+#profile-billing .content-box-header,
+#profile-settings .content-box-header,
+#reports-referrals .content-box-header,
+#profile-bonuses .content-box-header,
+{
+    background: none;
+    padding-top: 10px;
+        & .back {
+            top: 10px;
+        }
+    }
+
+    #user-view .content-box-header,  {
+        margin-bottom: 20px;
+    }
+        #profile-settings {
+    padding-top: 0!important;
+}
+}

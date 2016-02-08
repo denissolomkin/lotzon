@@ -1595,7 +1595,6 @@
         background: none;
         padding-left: 0;
         font-size: 20px;
-        font-weight: bold;
         & span {
             float: left;
             position: relative;
@@ -1660,6 +1659,7 @@
         font-family:'handbookpro-regular';
         margin-top: 30px;
         padding: 0;
+        font-size: 15px;
         & .title {
             background: #8ac7cc;
             margin: 0 -20px;
@@ -1679,6 +1679,7 @@
         & tr {
             & th {
                 text-align: center;
+                font-size: 15px;
                 padding: 0 0 20px;	
                 &:nth-child(2) {
                     padding-left: 40px;

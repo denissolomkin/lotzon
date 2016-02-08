@@ -280,7 +280,7 @@
             for ( index in messages ) {
                 playerMessage = document.querySelector('.mx .players .player' + index + ' .wt');
                 playerMessage.style.display = '';
-                playerMessage.innerHTML = i18n(messages[index]);
+                playerMessage.innerHTML = messages[index];
                 console.error(playerMessage, messages[index]);
             }
         },

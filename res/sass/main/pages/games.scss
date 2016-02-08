@@ -335,7 +335,7 @@ footer.unvisible {
             height: auto;
             .players {
                 position: static;
-                height: 80px;
+                height: 100px;
                 padding: 20px 50px;
                 text-align: center;
                 .gm-pr {
@@ -372,6 +372,8 @@ footer.unvisible {
                 text-align: center;
                 .gm-pr {
                     display: inline-block;
+                    position: relative;
+                    top: 10px;
                 }
             }
             // timer
@@ -445,6 +447,7 @@ footer.unvisible {
             position: absolute;
             left: -250px;
             cursor: pointer;
+
             > *{
                 color: #000;
                 padding: 5px 10px;
@@ -456,6 +459,7 @@ footer.unvisible {
         .pr-pr{
             position: absolute;
             left: 320px;
+            width: auto;
         }
         .pr-pt{
             position: absolute;
@@ -465,22 +469,47 @@ footer.unvisible {
         &.WhoMore {
             .mx{
                 .wt{
-                    span{
+                    div{
                         position:absolute;
-                        display: block;
-                        left: 150px;
-                        top: 0;
+                        left: 120px;
+                        top: 32px;
+                        width: 60px;
+                        text-align: left;
                         
                         &:first-child{
-                            left: -150px;
+                            left: -120px;
+                        }
+                        &:after{
+                            content: '';
+                            display: block;
+                            clear: both;
+                        }
+                        span{
+                            font-size:15px;
+                            line-height:18px;
+                            word-spacing: 300em;
+
+                        }
+                        i{
+                            font-size:37px;
+                            line-height:38px;
+                            position: absolute;
+                            left: 100%;  
+                            top: 0;
                         }
                     }
                 }   
                 .m{
                     color: #fff;
+
+                    // player avatar
+                    .pr-nm{
+                        display: none;
+                    }
+                    
                     .wt{
                         span{
-                            top: 30px !important;
+                            // top: 30px !important;
                         }
                     }
                 }

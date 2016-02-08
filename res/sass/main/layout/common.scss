@@ -144,8 +144,8 @@ a {
   width: 20px;
   height: 20px;
   margin-top: -10px;
-  background: url(img/sprite.png) -80px -50px;
-  content: "";
+  // background: url(img/sprite.png) -80px -50px;
+  // content: "";
   z-index: 1;
 }
 input {
@@ -304,6 +304,11 @@ button {
 
 .content-box-content {
   position: relative;
+}
+
+.overflow-hid {
+  position: relative;
+  overflow: hidden;
 }
 
 @media (min-width: 120px) {

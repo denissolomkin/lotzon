@@ -1,0 +1,10 @@
+ <div class="select-wrapper i-arrow-down" id="profile-edit-countries">
+	<select>
+	<option>
+		{{#if (player "location.country")}}{{player "location.country"}}{{else}}<span class="uk-disabled">выбрать</span> {{/if}}
+	</option>
+			{{#each this}}  
+	    <option value="">{{ .}}</option>
+	{{/each}}    
+	</select>
+</div>`

@@ -228,7 +228,7 @@
                 json: json,
                 format: format
             });
-
+        console.log(Tickets.filledTickets);
 
         },
 

@@ -14,6 +14,9 @@
 	& .content-box-header {
 		background: none;
 	}
+	& .daterangepicker.dropdown-menu {
+		left: -50px;
+	}
 }
 .ae-personal-inf .uk-float-right {
 	float:none;
@@ -140,16 +143,48 @@
 		& .cc-out input, .cc-income span.cc-sum {
 			width: 111px;
 		}
+		.cc-income span.cc-sum {
+			width: 105px;
+		}
 		.cc-form-top {
 		    margin: 0 -10px 25px;
 		    padding: 0 20px;
 		    height: 100px;
 		}
 		.cc-out {
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 		}
 	}
+	.rules {
+		float: none;
+	  	display: block;
+	  	clear: both;
+	}
+
+	div.rules-text p {
+	    line-height: 20px;
+	    margin-bottom: 5px;
+	}
+	.cco-title > * {
+		margin-bottom: 15px;
+	}
+	div.rules-text {
+		padding: 10px 20px;
+	}
+	.cco-enter-sum > div:first-of-type {
+		height: 90px;
+	}
+	.cco-enter-sum > div:first-of-type > * {
+		float: none;
+	}
+	.cco-enter-sum-box {
+    	margin-bottom: 30px;
+	}
+	#profile-settings {
+	padding-top: 0;
 }
+}
+
 
 #profile-settings {
 	padding-top: 10px;
@@ -181,6 +216,7 @@
 	& .danger {
     	color: #ff4c4b!important;
 	}	
+
 }
 
 
@@ -221,5 +257,19 @@
     top: 4px;
 		& span {
 		display: none;
+	}
+}
+
+
+#profile-cachout .cco-edit {
+    float: left;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    background: none;
+    position: static;
+    margin-left: 10px;
+		& span {
+		display: inline-block;
 	}
 }

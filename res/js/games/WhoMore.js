@@ -34,8 +34,8 @@
                     if (App.players.hasOwnProperty(index)) {
                         if(App.players[index].moves || App.players[index].points)
                             messages[index] =
-                                '<span>Ходов осталось ' + App.players[index].moves + '</span>' +
-                                '<span>Очков набрано ' + App.players[index].points + '</span>';
+                                '<div><span>' + i18n('Ходов осталось ') + '</span><i>' + App.players[index].moves + '</i></div>' +
+                                '<div><span>' + i18n('Очков набрано ') + '</span><i>' + App.players[index].points + '</i></div>';
                         }
                 }
 

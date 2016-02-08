@@ -65,7 +65,7 @@
                 }
 
             }
-
+            
             this.initPing();
 
             return this;

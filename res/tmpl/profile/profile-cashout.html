@@ -1,24 +1,25 @@
 <div id="profile-cachout" class="content-box cashout">
-    <div class="content-box-header"><span class="back i-arrow-left"></span>Вывод денег</div>
+    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>Вывод денег</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-cashout">
 
             <div class="cco-title clearfix option-block">
                 <div>{{i18n "title-profile-cashout-choose"}}</div>
-                <a href="/profile/billing" class="cco-edit"><span> {{i18n "title-profile-cashout-edit"}}</span></a>
-                <a class="rules show-option ">{{i18n "title-profile-cashout-rules"}}
+                <a href="/profile/billing" class="cco-edit"><span> {{i18n "title-messages-change-user"}}</span></a>
+                <span class="rules show-option ">{{i18n "title-profile-cashout-rules"}}
                     <div class="btn-arrows">
                     <i class="i-arrow-down change"></i>
                     <i class="i-arrow-top change hidden"></i>
                     </div>
-                </a>
-                <div class="clearfix option hidden">
+                </span>
+                <div class="clearfix option hidden rules-text">
                     <p>{{i18n "text-cashout-rules-time"}}</p>
-                    <p>{{i18n "text-cashout-see-info"}}<a href="/reports/payments" class="">{{i18n "title-profile-payments-history"}}</a></p>
+                    <p>{{i18n "text-cashout-see-info"}} <a href="/reports/payments" class="">{{i18n "title-profile-payments-history"}}</a></p>
                     <p>{{i18n "text-cashout-write-us"}} <a href="/users/{{player "getAdmin"}}/message" class="write-admin">{{i18n "title-profile-message-admin"}}</a></p>
                 </div>
             </div>
+
 
             <div class="cco-choose-method">
                 <form  action="/profile/cashout" method="post">
@@ -26,20 +27,20 @@
                         <div class="cco-method clearfix">
                             <label>
                                 <input id="cco-mb" class="input-radio required" name="method" type="radio" value="phone"
-                                {{^billing.phone}} disabled{{/billing.phone}}>
+                                {{#if (checkAll billing.phone)}} disabled{{/if}}>
                                 <label for="cco-mb" class="input-radio"></label>
 
-                                <div class="cco-method-name">Мобильный телефон</div>
+                                <div class="cco-method-name">{{i18n "title-billing-phone"}}</div>
                                 <div class="cco-method-value">{{billing.phone}}</div>
                             </label>
                         </div>
                         <div class="cco-method clearfix">
                             <label>
                                 <input id="cco-ym" class="input-radio required" name="method" type="radio" value="yandexMoney"
-                                {{^billing.yandexMoney}} disabled{{/billing.yandexMoney}}>
+                                 {{#if (checkAll billing.yandexMoney)}} disabled{{/if}}>
                                 <label for="cco-ym" class="input-radio"></label>
 
-                                <div class="cco-method-name">Яндекс Деньги</div>
+                                <div class="cco-method-name">{{i18n "title-billing-yandexmoney"}}</div>
                                 <div class="cco-method-value">{{billing.yandexMoney}}</div>
                             </label>
                         </div>
@@ -49,7 +50,7 @@
                                 {{^billing.webMoney}} disabled{{/billing.webMoney}}>
                                 <label for="cco-wm" class="input-radio"></label>
 
-                                <div class="cco-method-name">WebMoney</div>
+                                <div class="cco-method-name">{{i18n "title-billing-webmoney"}}</div>
                                 <div class="cco-method-value">{{billing.webMoney}}</div>
                             </label>
                         </div>
@@ -59,30 +60,29 @@
                                 {{^billing.qiwi}} disabled{{/billing.qiwi}}>
                                 <label for="cco-qw" class="input-radio"></label>
 
-                                <div class="cco-method-name">QIWI</div>
+                                <div class="cco-method-name">{{i18n "title-billing-qiwi"}}</div>
                                 <div class="cco-method-value">{{billing.qiwi}}</div>
                             </label>
                         </div>
                     </div>
 
                     <div class="cco-enter-sum clearfix">
-                        <div class="cco-enter-sum-box clearfix">
-                            <div class="title">Введите сумму</div>
-                            <input type="text" name="sum" class="cco-sum float required" value=""><span class="cco-currency">грн</span>
+                    <div class="clearfix">
+                         <div class="cco-enter-sum-box clearfix uk-float-left">
+                            <div class="title">{{i18n "title-profile-cashout-summ"}}</div>
+                            <input type="text" name="sum" class="cco-sum float required" value="" autocomplete="off"><span class="cco-currency">{{currency.iso}}</span>
                         </div>
-                        <button name="submit" type="submit" class="cco-cashout-btn">Вывести</button>
+                        <div class="uk-float-right current-ballance">
+                          {{i18n "title-profile-cashout-balance"}} <span class="holder-money">  {{balance.money}}</span> {{currency.iso}}
+                        </div>
+                    </div>
+                       
+                        <div class="container-center"><button name="submit" type="submit" class="cco-cashout-btn btn-flat">Вывести</button></div>
                     </div>
                 </form>
             </div>
 
-            <div class="cco-inf">
-                <p>Все заявки на вывод денег обрабатываются в течении 7-ми рабочих дней.</p>
-
-                <p>Информация о состоянии заявки можно посмотреть в <a href="/reports/payments">истории выплат</a></p>
-
-                <p>Если Вы не получили выигрыш в указанный срок напишите нам используя <a href="/support/feedback">эту
-                    форму</a></p>
-            </div>
+            
 
         </div>
     </div>

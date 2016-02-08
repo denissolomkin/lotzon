@@ -50,20 +50,21 @@
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
             $(document).on('click', Device.do.hide);
 
-            $(document).on('click', '.input-file', Comments.showPreviewImage);
-            $(document).on('click', '.thumb', Comments.deletePreviewImage);
+            // $(document).on('click', '.fa-file-image-o', Comments.showPreviewImage);
+            // $(document).on('click', '.thumb', Comments.deletePreviewImage);
              /*smiles*/
             $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
             $(document).on('click', ".smiles img", Comments.chooseSmiles);
 
             $(document).on("paste", '[contenteditable]', Comments.pasteText);
              $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
-            $(document).on('click', '.input-file, .thumb', Comments.showPreviewImage);
+             
+
+            $(document).on('click', '.no-image, .thumb', Comments.showPreviewImage);
 
 
             /*smiles*/
-            $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
-            $(document).on('click touchend', ".smiles span", Comments.chooseSmiles);
+
             $(document).on("paste", '[contenteditable]', Comments.pasteText);
             $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
 
@@ -171,8 +172,8 @@
             "games-game": WebSocketAjaxClient,
             "games-spin": slotMachine.init,
 
-            "profile-edit": Profile.init,
-            "profile-billing": Profile.init,
+            "profile-edit": Profile.init.edit,
+            "profile-billing": Profile.init.billing,
 
             "users-view-messages": Messages.after.markRead,
 
@@ -193,7 +194,7 @@
         "post": { // new
 
             "profile-convert": Player.updateBalance,
-            "profile-cashout": Player.updateBalance,
+            "profile-cashout": Profile.after.cashout,
             "lottery-ticket": Ticket.update,
             "lottery-gold": Ticket.update,
             "prizes-exchange-goods": Prize.update.exchange,
@@ -238,7 +239,8 @@
         },
 
         "submit": {
-            "communication-comments":  Comments.smilePost
+            "communication-comments":  Comments.smilePost,
+            "communication-messages":  Comments.smilePost
         }
 
     };

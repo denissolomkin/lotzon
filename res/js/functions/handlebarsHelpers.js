@@ -12,8 +12,12 @@ $(function () {
 
         var response = eval(model + "." + fn.toString());
         D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
+
         return typeof response === 'function' ? eval(model + "." + fn + "(" + (options ? options : '') + ")") : response;
-    };
+        },
+        isEmpty = function(element) {
+            return (!element || (typeof element === 'string' && element == ''));
+        };
 
     Handlebars.registerHelper({
         /**
@@ -246,11 +250,19 @@ $(function () {
 
         },
         'checkAll': function () {
-            for (var i = 0; i <= arguments.length; i++)
-                if(!arguments[i] || (typeof arguments[i] === 'string' && arguments[i] == ''))
+            console.log(arguments);
+            for (var i = 0; i < arguments.length; i++)
+                if(isEmpty(arguments[i]))
                     return true;
 
             return false;
+        },
+        'isFill' : function () {
+            for (var i = 0; i < arguments.length; i++)
+                if(isEmpty(arguments[i]))
+                    return false;
+
+            return true;
         },
         'false': function (v1) {
             return v1 === false;

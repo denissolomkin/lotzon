@@ -1,5 +1,5 @@
 <div id="profile-billing" class="content-box">
-    <div class="content-box-header"><span class="back i-arrow-left"></span>{{i18n "title-profile-billing"}}</div>
+    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-billing"}}</div>
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cashout-inf">
@@ -11,23 +11,36 @@
                     <ul class="ci-personal-form">
                         <li class="ci-personal-form-names">
                             <ul>
-                                <li>{{i18n "title-billing-phone"}}</li>
-                                <li>{{i18n "title-billing-yandexmoney"}}</li>
-                                <li>{{i18n "title-billing-webmoney"}}</li>
-                                <li>{{i18n "title-billing-qiwi"}}</li>
+                                <li class="clearfix">
+                                    <div>{{i18n "title-billing-phone"}}</div> 
+                                    <div class="ci-personal-form-values"> 
+                                        <input class="inputmask" type="tel" name="billing[phone]" value="{{billing.phone}}">
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div>{{i18n "title-billing-yandexmoney"}}</div>
+                                    <div class="ci-personal-form-values">
+                                        <input class="inputmask" type="text" name="billing[yandexMoney]" value="{{billing.yandexMoney}}">
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div>{{i18n "title-billing-webmoney"}}</div>
+                                    <div class="ci-personal-form-values">
+                                        <input class="inputmask" type="text" name="billing[webMoney]" value="{{billing.webMoney}}">
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div>{{i18n "title-billing-qiwi"}}</div>
+                                    <div class="ci-personal-form-values"> 
+                                        <input class="inputmask" type="tel" name="billing[qiwi]" value="{{billing.qiwi}}">
+                                    </div>
+                                </li>
                             </ul>
                         </li>
-                        <li class="ci-personal-form-values">
-                            <ul>
-                                <li><input class="inputmask" type="tel" name="billing[phone]" value="{{billing.phone}}"></li>
-                                <li><input class="inputmask" type="text" name="billing[yandexMoney]" value="{{billing.yandexMoney}}"></li>
-                                <li><input class="inputmask" type="text" name="billing[webMoney]" value="{{billing.webMoney}}"></li>
-                                <li><input class="inputmask" type="tel" name="billing[qiwi]" value="{{billing.qiwi}}"></li>
-                            </ul>
-                        </li>
+                        
                     </ul>
 
-                    <div class="container-center"><button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button></div>
+                    <div class="container-center"><button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button><span class="back danger">Отмена</span></div></div>
                 </form>
             </div>
 

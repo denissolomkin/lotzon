@@ -190,6 +190,9 @@
   overflow: hidden;
   height: 180px;
   background: #AFABAB;
+  & > .overflow-hid {
+    height: 180px;
+  }
 }
 
 .ae-user-img {
@@ -221,10 +224,10 @@
 }
 .avatar-bg {
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom:0;
+  top: -7px;
+  right: -7px;
+  left: -7px;
+  bottom: -7px;
   z-index: 0;
   filter: blur(8px);
   -webkit-filter: blur(8px);
@@ -232,6 +235,7 @@
   -o-filter: filter(8px);
   -ms-filter: filter(8px);
   filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='8');
+
   & > div {
     background: rgba(131, 128, 128, 0.3);
     position: absolute;
@@ -390,6 +394,7 @@
     background: transparent;
     outline: none;
     font: 15.5px "handbookpro-regular";
+    max-width: 100px;
     &:focus {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -620,29 +625,53 @@
   }
 }
 
-.cco-title {
-  margin-bottom: 30px;
+.cco-title div:first-of-type{
+  color:#4a4a4a;
 }
 
 .cco-title div {
   float: left;
 }
 
+.cco-title > * {
+    margin-bottom: 20px;
+}
 .cco-edit {
   margin-left: 18px;
   display: inline-block;
 }
 .rules {
   float: right;
+  color:#4a90e2;
   & .btn-arrows {
     float: none;
     display: inline-block;
     position: relative;
     top: 2px;
     left: 5px;
+    color:#4a90e2;
+    & > *:before {
+      color:#4a90e2;
+    }
   }
 }
 
+div.rules-text {
+  color:#000000;
+  background:#fafafa;
+  margin: 0 -20px;
+  padding: 13px 20px;
+  float: none;
+  & p {
+    line-height: 20px;
+    a {
+      display: inline-block;
+    }
+  }
+}
+#profile-cachout .content-box-item {
+  padding: 20px;
+}
 
 // -------------------------- //
 
@@ -651,37 +680,78 @@
 }
 
 .cco-methods {
-  margin-bottom: 40px;
+  margin-bottom: 0;
+
 }
 
 .cco-method {
-  margin-bottom: 20px;
+    margin: 0 -20px;
+    padding: 0 20px;
+    border-top: 1px solid #eaeaea;
+    height: 45px;
+  & > * {
+    position: relative;
+    top: -50%;
+    @include translate(0, 50%);
+  }
   &:last-child {
-    margin-bottom: 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  label.input-radio {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    top:3px;
+
+  }
+  & input.input-radio:checked + label.input-radio:before {
+    content: "";
+    display: block;
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    background: black;
+    border-radius: 50%;
   }
 }
 
 .cco-method > label {
   cursor: pointer;
   display: inline-block;
-  padding-left: 40px;
 }
 
 .cco-methods label.input-radio {
-  float: left;
-  margin-left: -40px;
-  top: 13px;
   cursor: pointer;
 }
 
 .cco-method-name {
-  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-bottom: 0;
+  margin-right: 10px;
 }
-
+  .cco-method-name,
+  .cco-method-value {
+    display: inline-block;
+  }
 // -------------------------- //
 
 .cco-enter-sum {
   margin-bottom: 40px;
+  & > div:first-of-type {
+      height: 45px;
+      background:#fafafa;
+      margin: 0 -20px 25px;
+      padding: 0 20px;
+    & > * {
+      @include translate(0, 60%);
+      top: -50%;
+    }
+  }
+  & .cco-currency {
+    text-transform: lowercase;
+  }
 }
 
 .cco-enter-sum-box {
@@ -691,23 +761,18 @@
 .cco-enter-sum .title {
   display: block;
   float: left;
-  font-size: 20px;
   margin-right: 20px;
 }
 
 .cco-enter-sum input {
   display: block;
-  width: 140px;
+  width: 110px;
   float: left;
-  font-size: 28px;
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: #cbc7c6;
-  padding: 0 40px 0 5px;
-  margin-right: -30px;
-  position: relative;
-  top: -10px;
-  font-weight: bold;
+  background: transparent;
+  border-radius: 0;
 }
 
 .cco-currency {
@@ -717,21 +782,7 @@
   position: relative;
 }
 
-.cco-cashout-btn {
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  background: transparent;
-  border: 1px solid #4a4a4a;
-  border-radius: 2px;
-  padding: 6px 0;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: bold;
-  color: #4a4a4a;
-  cursor: pointer;
-}
+
 
 // -------------------------- //
 
@@ -749,18 +800,13 @@
     margin-bottom: 0;
   }
 }
-
+.cco-method-value {
+  color: rgba(0,0,0, 0.5);
+}
 // -------------------------- //
 
 @media (min-width: 600px) {
-  .cco-methods label.input-radio {
-    top: 0;
-  }
-  .cco-method-name {
-    margin-bottom: 0;
-    margin-right: 20px;
-    min-width: 200px;
-  }
+
   .cco-method-name,
   .cco-method-value {
     display: inline-block;
@@ -770,11 +816,6 @@
     margin-bottom: 0;
     float: left;
     margin-right: 30px;
-  }
-  .cco-cashout-btn {
-    width: 150px;
-    position: relative;
-    top: -6px;
   }
 }
 
@@ -843,7 +884,8 @@
 
 .ci-title {
   font-size: 16px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  color:#4a4a4a;
 }
 
 // --------------------------- //
@@ -857,34 +899,49 @@
 }
 
 .ci-personal-form-names {
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-align: left;
   color: #b4aeae;
   font-size: 14px;
   z-index: 1;
   padding-left: 20px;
+  & ul li > * {
+    float: left;
+  }
 }
 
 .ci-personal-form-names li {
-  margin-bottom: 2px;
+  height: 45px;
+  line-height: 45px;
+  margin: 0 -20px;
+  padding: 0 20px;
+  border-bottom: 1px solid #eaeaea;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 15.5px;
+
 }
 
 .ci-personal-form-values li {
   position: relative;
 }
 
+.ci-personal-form-values {
+  input.error {
+  border-top: 1px solid #FF2619;
+  border-bottom: 1px solid #FF2619;
+  color: #FF2619;
+    &:focus {
+      border-bottom: 1px solid #eaeaea;
+      border-top: none;
+      color: #000;
+    }
+  }
+}
 .ci-personal-form-values input {
   display: block;
   width: 100%;
   line-height: inherit;
-  padding: 0;
-  padding-left: 150px;
-  padding-bottom: 1px;
   font-size: 15.5px;
   border: none;
-  border-bottom: 1px solid #eaeaea;
   border-radius: 0;
   -webkit-box-shadow: none;
   -webkit-border-radius: 0px;
@@ -892,10 +949,9 @@
   border-radius: 0px;
   -webkit-appearance: none;
   font-family: "handbookpro-regular";
-  &:focus {
-    border-bottom: 2px solid #bed8d9;
-    border-width: 0 0 2px;
-  }
+  height: 45px;
+  line-height: 45px;
+  margin-left: 18px;
   &.input-prefix {
     padding-left: 165px;
   }
@@ -941,46 +997,72 @@ span.input-prefix {
 
 
 .cc-out {
-  // margin-bottom: 30px;
+  & > * {
+    position: relative;
+    @include translate(0, 50%);
+    top: -50%;
+    display: inline-block;
+    position: relative;
+    bottom: 3px;
+  } 
 }
 
 .cc-out .title {
   display: inline-block;
-  font: 15.5px/18px "handbookpro-regular";
   color:#000000;
+  font-size: 15.5px;
+  line-height: 25px;
 }
 .cc-out input {
   display: inline-block;
   width: 170px;
-  height: 30px;
   border-width: 0 0 1px;
   border-style: solid;
   border-color: #cbc7c4;
   margin-top: 5px;
   background: none;
+  position: static;
+  border-radius: 0;
+  & span {
+     line-height: 25px;
+  }
 }
 .cc-income {
+  & > * {
+    position: relative;
+    @include translate(0, 50%);
+    top: -50%;
+    display: inline-block;
+    line-height: 25px;
+    position: relative;
+    bottom: 3px;
+  }
   & span {
     display: inline-block;
     line-height: 18px;
     font-size: 15.5px;
-    padding-top: 5px;
     &.cc-sum{
       border: 1px solid;
       display: inline-block;
       width: 170px;
-      height: 30px;
       border-width: 0 0 1px;
       border-style: solid;
       border-color: #cbc7c4;
       margin-top: 5px;
       background: none;
+      min-height: 18px;
+      position: static;
     }
   }
+  .cc-currency {
+    text-transform: lowercase;
+    line-height: 25px;
+  }
+
 }
 .cc-out .cc-currency {
-  position: relative;
   text-transform: lowercase;
+  line-height: 25px;
 }
 
 .cc-currency {
@@ -1389,5 +1471,9 @@ span.input-prefix {
 
 
 #profile-billing  .content-box-item {
-  padding: 20px;
+  padding: 16px 20px 20px;
+  & .back.danger {
+    position: static;
+    margin-left: 30px;
+  }
 }
