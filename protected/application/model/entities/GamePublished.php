@@ -15,12 +15,6 @@ class GamePublished extends Entity
         $this->setModelClass('GamesPublishedModel');
     }
 
-    /* todo delete after merge LOT-22 */
-    public function getOption($key)
-    {
-        return $this->getOptions($key);
-    }
-
     public function loadGames()
     {
         $games = array();

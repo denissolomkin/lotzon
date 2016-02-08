@@ -23,9 +23,19 @@ class GameConstructorModel extends Model
         return $this->getProcessor()->getList();
     }
 
-    public function getGame($key)
+    public function getOnlineGame($key)
     {
         return $this->getProcessor()->getList()['online'][$key];
+    }
+
+    public function getOnlineGames()
+    {
+        return $this->getProcessor()->getList()['online'];
+    }
+
+    public function getChanceGames()
+    {
+        return $this->getProcessor()->getList()['chance'];
     }
 
     public function recache()

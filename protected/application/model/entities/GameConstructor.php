@@ -3,7 +3,7 @@ use \ShopItem;
 
 class GameConstructor extends Entity
 {
-    protected $_id           = '';
+    protected $_id           = null;
     protected $_uid          = '';
     protected $_key          = '';
     protected $_lang         = '';

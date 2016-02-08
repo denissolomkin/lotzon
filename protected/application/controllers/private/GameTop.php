@@ -1,6 +1,6 @@
 <?php
 namespace controllers\admin;
-use \Session2, \Application, \OnlineGamesModel, \SettingsModel, \Player, \Admin;
+use \Session2, \Application, \GameAppsModel, \SettingsModel, \Player, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -20,10 +20,10 @@ class GameTop extends \PrivateArea
     public function indexAction()
     {
         $month = (strtotime($this->request()->get('month', null))?:mktime(0, 0, 0, date("n"), 1));
-        $gameTop = OnlineGamesModel::instance()->getGameTop($month);
+        $gameTop = GameAppsModel::instance()->getGameTop($month);
         $onlineGames = array();
 
-        foreach(OnlineGamesModel::instance()->getList() as $onlineGame)
+        foreach(\GameConstructorModel::instance()->getList()['online'] as $onlineGame)
             $onlineGames[$onlineGame->getId()]=$onlineGame->getTitle('default');
 
         $this->render('admin/gametop', array(
@@ -72,13 +72,13 @@ class GameTop extends \PrivateArea
     {
         if ($this->request()->isAjax()) {
             $response = array(
-                'status'  => 1, 
+                'status'  => 1,
                 'message' => 'OK',
                 'data'    => array(),
             );
 
             try {
-                $response['data'] = OnlineGamesModel::instance()->saveGameTop($this->request()->post());
+                $response['data'] = GameAppsModel::instance()->saveGameTop($this->request()->post());
             } catch (LotterySettingsException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
@@ -102,7 +102,7 @@ class GameTop extends \PrivateArea
             );
 
             try {
-                $response['data'] = OnlineGamesModel::instance()->deleteGameTop($id);
+                $response['data'] = GameAppsModel::instance()->deleteGameTop($id);
             } catch (LotterySettingsException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();

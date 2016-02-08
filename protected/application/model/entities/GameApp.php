@@ -10,7 +10,7 @@ class GameApp extends Entity
     protected $_requiredPlayers = null;
     protected $_variation       = null;
     protected $_over            = null;
-    protected $_app            = null;
+    protected $_app             = null;
     protected $_saved           = null;
     protected $_run             = null;
     protected $_ping            = 0;
