@@ -26,6 +26,14 @@ $gray: #808080;
     left: 0;
     z-index: 101;
     background: $black_35;
+    text-align: center;
+    &:before{
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 0;
+        vertical-align: middle;
+    }
     .title {
         font-family: "Handbook-bold";
         font-size: 30px;
@@ -130,13 +138,10 @@ $gray: #808080;
         }
     }
     > .inner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-        transform: translate(-50.1%,-50.1%);
-        /*width: 570px;*/
-        /*margin: 0 20%;*/
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: left;
         background: $white;
         padding: 20px 40px;
         

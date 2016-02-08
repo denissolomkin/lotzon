@@ -292,7 +292,7 @@ button {
   font-size: 21px;
   line-height: 50px;
   color: #2b2b2b;
-  text-shadow: 0.5px 0.5px 0.5px rgba(255, 255, 255, 0.5);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
   text-align: center;
   text-transform: uppercase;
   position: relative; }
@@ -1253,6 +1253,17 @@ div {
   top: 0;
   position: absolute;
   right: 0; }
+
+.ad .is-countdown {
+  box-sizing: content-box;
+  color: #4f4f4f;
+  display: block;
+  font-size: 15px;
+  line-height: 16px;
+  text-align: center;
+  background: transparent;
+  position: static;
+  width: 100%; }
 
 .menu-mobile {
   display: none; }
@@ -9234,10 +9245,81 @@ footer.unvisible {
   left: 50%;
   overflow: hidden; }
 
+#games-online-field .players .m .gm-pr {
+  width: 100%;
+  height: 80px;
+  padding: 0 20px;
+  box-sizing: border-box; }
+  #games-online-field .players .m .gm-pr:after {
+    content: "";
+    display: block;
+    clear: both; }
+  #games-online-field .players .m .gm-pr > * {
+    display: inline-block;
+    vertical-align: middle; }
+  #games-online-field .players .m .gm-pr .pr-ph-bk {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px; }
+  #games-online-field .players .m .gm-pr .pr-cl {
+    float: left;
+    height: 100%;
+    position: relative;
+    text-align: left; }
+    #games-online-field .players .m .gm-pr .pr-cl:before {
+      content: " ";
+      display: inline-block;
+      height: 100%;
+      width: 0%;
+      vertical-align: middle; }
+    #games-online-field .players .m .gm-pr .pr-cl > * {
+      display: inline-block;
+      vertical-align: middle;
+      box-sizing: border-box;
+      padding: 7px 10px;
+      min-width: 100px;
+      margin-left: 20px;
+      font-size: 14px;
+      text-transform: uppercase;
+      text-align: center;
+      color: #fff;
+      background: transparent;
+      border: 1px solid #ffffff;
+      cursor: pointer;
+      transition: all .2s ease; }
+      #games-online-field .players .m .gm-pr .pr-cl > *:hover {
+        box-shadow: 0 0 10px 1px #c8c800; }
+      #games-online-field .players .m .gm-pr .pr-cl > *:first-child {
+        margin-left: 0; }
+      #games-online-field .players .m .gm-pr .pr-cl > *.btn-primary {
+        color: #000000;
+        background: #f8e71c;
+        border: 1px solid #f8e71c; }
+    #games-online-field .players .m .gm-pr .pr-cl [class^="msg-"] {
+      cursor: default;
+      border: none; }
+      #games-online-field .players .m .gm-pr .pr-cl [class^="msg-"]:hover {
+        box-shadow: none; }
+  #games-online-field .players .m .gm-pr .pr-pr {
+    float: right;
+    padding-top: 30px; }
+    #games-online-field .players .m .gm-pr .pr-pr b {
+      padding-right: 5px; }
+  #games-online-field .players .m .gm-pr .pr-pt {
+    padding-left: 45px;
+    padding-top: 20px;
+    text-align: left;
+    position: absolute;
+    left: 50%; }
+
 #games-online-field:not(.Durak) {
   padding-bottom: 80px;
   height: auto;
   background: url(../img/games/lotzonBg.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
   #games-online-field:not(.Durak) .mx {
     height: auto; }
@@ -9246,14 +9328,21 @@ footer.unvisible {
       height: 100px;
       padding: 20px 50px;
       text-align: center; }
-      #games-online-field:not(.Durak) .mx .players .gm-pr {
+      #games-online-field:not(.Durak) .mx .players .o .gm-pr {
         width: 100px;
         height: 100px;
         position: relative; }
+      #games-online-field:not(.Durak) .mx .players .o .wt {
+        display: none; }
+      #games-online-field:not(.Durak) .mx .players .m .wt {
+        position: absolute;
+        top: 0;
+        border: 1px solid red; }
       #games-online-field:not(.Durak) .mx .players .pr-nm {
         position: relative;
-        top: 100%;
-        padding: 6px 0 0 0;
+        left: 100%;
+        text-align: left;
+        padding: 20px 0 0 20px;
         font-family: handbookpro-regular;
         font-size: 15px;
         line-height: 18px; }
@@ -9269,10 +9358,6 @@ footer.unvisible {
       overflow: hidden;
       background: #4a4a4a;
       text-align: center; }
-      #games-online-field:not(.Durak) .mx .m .gm-pr {
-        display: inline-block;
-        position: relative;
-        top: 10px; }
     #games-online-field:not(.Durak) .mx .circle,
     #games-online-field:not(.Durak) .mx .circle-timer {
       width: 100%;
@@ -9285,12 +9370,13 @@ footer.unvisible {
       padding: 20px;
       box-sizing: border-box;
       position: absolute;
-      top: -20px;
+      top: -10px;
       left: 0; }
     #games-online-field:not(.Durak) .mx .pr-ph {
       width: 100%;
       height: 100%;
-      background-size: 100%; }
+      background-size: 100%;
+      border-radius: 50em; }
     #games-online-field:not(.Durak) .mx .table {
       width: 319px;
       min-height: 319px;
@@ -9324,45 +9410,36 @@ footer.unvisible {
           #games-online-field:not(.Durak) .mx .table .inner .cell > * {
             display: inline-block;
             vertical-align: middle; }
-  #games-online-field:not(.Durak) .pr-cl {
-    position: absolute;
-    left: -250px;
-    cursor: pointer; }
-    #games-online-field:not(.Durak) .pr-cl > * {
-      color: #000;
-      padding: 5px 10px;
-      border: 1px dashed red;
-      margin-top: 7px;
-      background: #f0f0f0; }
-  #games-online-field:not(.Durak) .pr-pr {
-    position: absolute;
-    left: 320px;
-    width: auto; }
-  #games-online-field:not(.Durak) .pr-pt {
-    position: absolute;
-    left: 250px; }
-  #games-online-field:not(.Durak).WhoMore .mx .wt div {
-    position: absolute;
-    left: 120px;
-    top: 32px;
-    width: 60px;
-    text-align: left; }
-    #games-online-field:not(.Durak).WhoMore .mx .wt div:first-child {
-      left: -120px; }
-    #games-online-field:not(.Durak).WhoMore .mx .wt div:after {
+  #games-online-field:not(.Durak).WhoMore .moves {
+    width: 380px;
+    margin: 0px auto; }
+    #games-online-field:not(.Durak).WhoMore .moves:last-child {
+      padding-bottom: 20px; }
+    #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"]:after {
       content: '';
       display: block;
       clear: both; }
-    #games-online-field:not(.Durak).WhoMore .mx .wt div span {
-      font-size: 15px;
-      line-height: 18px;
-      word-spacing: 300em; }
-    #games-online-field:not(.Durak).WhoMore .mx .wt div i {
-      font-size: 37px;
-      line-height: 38px;
-      position: absolute;
-      left: 100%;
-      top: 0; }
+    #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"] div {
+      position: relative;
+      width: 120px;
+      float: right;
+      padding: 0 10px 0 0;
+      box-sizing: initial; }
+      #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"] div:first-child {
+        padding: 0 0 0 10px;
+        float: left; }
+        #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"] div:first-child span, #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"] div:first-child i {
+          float: left; }
+      #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"] div span {
+        width: 60px;
+        float: right;
+        font-size: 15px;
+        line-height: 18px;
+        word-spacing: 300em; }
+      #games-online-field:not(.Durak).WhoMore .moves [class^="mv-"] div i {
+        float: right;
+        font-size: 37px;
+        line-height: 38px; }
   #games-online-field:not(.Durak).WhoMore .mx .m {
     color: #fff; }
     #games-online-field:not(.Durak).WhoMore .mx .m .pr-nm {
@@ -9421,48 +9498,17 @@ footer.unvisible {
           width: 100%;
           height: 80px;
           margin: 0; }
+          #games-online-field.Durak .mx .players .m .gm-pr > * {
+            display: initial; }
           #games-online-field.Durak .mx .players .m .gm-pr .pr-ph-bk {
             left: 45%;
             top: 10px; }
             #games-online-field.Durak .mx .players .m .gm-pr .pr-ph-bk .wt {
               margin-top: -100px; }
-          #games-online-field.Durak .mx .players .m .gm-pr .pr-cl {
-            margin: 15px 30px;
-            float: left;
-            width: 20%; }
-            #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .btn-pass {
-              width: 100%;
-              display: none;
-              height: 50px;
-              background: white;
-              border: 1px solid #bababa;
-              border-radius: 5px;
-              color: red;
-              font: 32px/50px handbookpro-regular;
-              text-transform: uppercase; }
-              #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .btn-pass:hover {
-                box-shadow: 0 0 10px 1px #c8c800;
-                cursor: pointer; }
-            #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .btn-ready {
-              width: 100%;
-              display: none;
-              height: 50px;
-              background: white;
-              border: 1px solid #bababa;
-              border-radius: 5px;
-              color: red;
-              font: 32px/50px handbookpro-regular;
-              text-transform: uppercase; }
-              #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .btn-ready:hover {
-                box-shadow: 0 0 10px 1px #c8c800;
-                cursor: pointer; }
-            #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .msg-move {
-              width: 100%;
-              display: none;
-              height: 50px;
-              color: red;
-              font: 32px/50px handbookpro-regular;
-              text-transform: uppercase; }
+          #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .btn-pass,
+          #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .btn-ready,
+          #games-online-field.Durak .mx .players .m .gm-pr .pr-cl .msg-move {
+            display: none; }
           #games-online-field.Durak .mx .players .m .gm-pr .pr-ph {
             width: 60px;
             height: 60px;
@@ -9527,12 +9573,11 @@ footer.unvisible {
             color: black;
             float: left;
             margin-right: 20px; }
-        #games-online-field.Durak .mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-pass {
-          display: block; }
+        #games-online-field.Durak .mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-pass,
         #games-online-field.Durak .mx .players .m.current:not(.starter) .gm-pr .pr-cl .btn-ready {
-          display: block; }
+          display: inline-block; }
         #games-online-field.Durak .mx .players .m.starter .gm-pr .pr-cl .msg-move {
-          display: block; }
+          display: inline-block; }
       #games-online-field.Durak .mx .players .o {
         width: 30%;
         float: left;
@@ -10911,7 +10956,14 @@ and open the template in the editor.
   top: 0;
   left: 0;
   z-index: 101;
-  background: rgba(0, 0, 0, 0.35); }
+  background: rgba(0, 0, 0, 0.35);
+  text-align: center; }
+  .moment-game-box:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle; }
   .moment-game-box .title {
     font-family: "Handbook-bold";
     font-size: 30px;
@@ -10981,12 +11033,10 @@ and open the template in the editor.
       opacity: 1;
       transition: all 1.4s ease-out; }
   .moment-game-box > .inner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50.1%, -50.1%);
-    /*width: 570px;*/
-    /*margin: 0 20%;*/
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
     background: #fff;
     padding: 20px 40px; }
     .moment-game-box > .inner > i.i-x-slim {

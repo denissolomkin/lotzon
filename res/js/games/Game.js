@@ -269,6 +269,22 @@
 
         drawMessages: function(messages) {
 
+            // if !Durak replace msg to other block
+            if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
+                var el = document.querySelector('.mx > .msg ') || document.createElement('div');
+                el.setAttribute('class', 'msg');
+
+                for(index in messages){
+                    if(index == Player.id){
+                        el.innerHTML = messages[index];
+                    }
+                }
+
+                notDurak.appendChild(el);
+                // alert(123);
+                return;
+            }
+
             var playerMessages = document.querySelectorAll('.mx .players .wt'),
                 playerMessage = null,
                 index = 0;

@@ -25,21 +25,32 @@
             }
 
             Game.drawStatuses();
-
+            Game.drawButtons();
+            
             if (App.players) {
-
-                var messages = {};
+                            
+                var el = document.querySelectorAll('#games-online-field .mx .moves');
+                if(el && el.length !== 2) return;
 
                 for (var index in App.players) {
                     if (App.players.hasOwnProperty(index)) {
-                        if(App.players[index].moves || App.players[index].points)
-                            messages[index] =
-                                '<div><span>' + i18n('Ходов осталось ') + '</span><i>' + App.players[index].moves + '</i></div>' +
-                                '<div><span>' + i18n('Очков набрано ') + '</span><i>' + App.players[index].points + '</i></div>';
+                        if(App.players[index].moves || App.players[index].points){
+                            var html = 
+                                '<div class="mv-'+index+'">' +
+                                    '<div><span>' + i18n('Ходов осталось ') + '</span><i>' + App.players[index].moves + '</i></div>' +
+                                    '<div><i>' + App.players[index].points + '</i><span>' + i18n('Очков набрано ') + '</span></div>' +
+                                '</div>';
+                                
+                                if(index == Player.id){
+                                    el[1].innerHTML = html;
+                                }else{
+                                    el[0].innerHTML = html;
+                                }
                         }
+                    }
                 }
 
-                Game.drawMessages(messages);
+                // Game.drawMessages(messages);
 
             } else
                 alert('Empty players in initStatuses');

@@ -147,10 +147,10 @@ endforeach;
     }
 </style>
 <div id="R2D2">
-    <button onclick="Content.style()">Desktop/Mobile</button>
+    <button accesskey="d" onclick="Content.style()">Desktop/Mobile</button>
     <button onclick="Lottery.prepareData()">Lottery</button>
-    <button onclick="Player.ping()">Ping</button>
-    <button onclick="WebSocketAjaxClient()">WebSocket</button>
+    <button accesskey="p" onclick="Player.ping()">Ping</button>
+    <button accesskey="s" onclick="WebSocketAjaxClient()">WebSocket</button>
 </div>
 
 </body>
