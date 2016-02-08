@@ -112,6 +112,23 @@ class Game extends \AjaxController
                         if (is_array($banner['countries']) and !in_array($player->getCountry(), $banner['countries']))
                             continue;
 
+                        $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
+                            str_replace('document.write', "$('#{$key}-holder .block').append", $banner['div']) .
+                            str_replace('document.write', "$('#{$key}-holder .block').append", $banner['script']).
+                        "<script>
+                            $('#{$key}-holder .block')
+                                .css('position','relative')
+                                .append(
+                                    \"<div style='z-index: 5;bottom: 0px;width: 100%;text-align: center;position: absolute;'><div class='timer' id='timer_chance".($id=time())."'> загрузка...</div></div>\"
+                                ).prev().hide();
+                            $('#timer_chance{$id}').countdown({
+                                until: ".($timer=is_numeric($banner['title'])?$banner['title']:10).",
+                                layout: 'осталось {snn} сек'
+                            });
+                            setTimeout(function(){ $('#{$key}-holder .block').hide().prev().show();}, ({$timer}+1)*1000);
+                        </script>";
+                        /*
+                        # OLD LOGIC OF BANNER
                         if ($banner['chance'] AND !rand(0, $banner['chance'] - 1) AND $banners['settings']['enabled'])
                             $resp['block'] = '<!-- ' . $banner['title'] . ' -->' .
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['div']) .
@@ -137,6 +154,7 @@ class Game extends \AjaxController
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['div']) .
                                 str_replace('document.write', "$('#{$key}-popup .block').append", $banner['script']);
                         }
+                        */
                         break;
                     }
                 }
