@@ -1026,7 +1026,7 @@ $("#add-notice select#notice-type").on('change', function() {
         },
 
         'Success': {
-            'text': 'Поздравляем!<br><br>Ваш счет успешно пополнен.<br>Играйте и рассказывайте о своем выигрыше в наших группах <a href="https://vk.com/lotzon" target="_blank">ВКонтакте</a>,&nbsp;<a href="https://www.facebook.com/pages/Lotzon/714221388659166?ref=hl" target="_blank">Facebook</a>,&nbsp;<a href="http://ok.ru/lotzon" target="_blank">Одноклассники</a>.<br><br>Желаем удачи!',
+            'text': 'Поздравляем!<br><br>Ваш счет успешно пополнен.<br>Напишите пожалуйста о своем выигрыше в нашей группе <a href="http://vk.com/topic-78075693_33621597" target="_blank">ВКонтакте</a><br>Скриншот приветствуется.<br><br> Будем очень благодарны!',
             'title': "Вывод денежных средств"
         },
 
