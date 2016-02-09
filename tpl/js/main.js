@@ -97,6 +97,9 @@ $(function(){
                 $(this).addClass('now').find('span').show();
                 $('.tb-slides .tb-slide').fadeOut(300);
 
+                if(!$('.tb-tabs_li[data-ticket="'+st.attr('data-ticket')+'"]').hasClass('done'))
+                    st.find('li.select').removeClass('select');
+
                 setTimeout(function () {
                     st.fadeIn(300);
                 }, 300);
@@ -1709,6 +1712,8 @@ function proccessResult()
         var tickets=[];
         if($('.tb-slide').length>0)
             $('.tb-slide').each(function( index, el ) {
+                if(!$('.tb-tabs_li [data-ticket="'+$(el).attr('data-ticket')+'"]').hasClass('done'))
+                    return true;
                 var ticket=[];
                 $(el).find('.loto-tl_li.select').each(function( i, val ) {
                     ticket.push($(val).text());
