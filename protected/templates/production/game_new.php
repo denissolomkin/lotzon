@@ -1486,6 +1486,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
             'ERROR_COORDINATES' : 'Неверные координаты',
             'CHOICE_BET'                : 'Выберите ставку',
             'PLAY_ONE_MORE_TIME'        : 'Играть еще раз за {0} баллов',
+            'CHECK_INTERNET_CONNECTION' : 'Проверьте соединение с интернетом и повторите попытку',
             'button-answer'             : '<?=$MUI->getText('button-answer')?>',
             'message-review-approved'   : '<?=$MUI->getText('message-review-approved')?>',
         };
