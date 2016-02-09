@@ -1079,8 +1079,6 @@ div.comment-reply-btn {
   width: 245px;
   padding-right: 25px;
   float: left; }
-  .prize:nth-child(2n+2) {
-    float: right; }
 
 .ex-prize-description {
   width: 274px; }

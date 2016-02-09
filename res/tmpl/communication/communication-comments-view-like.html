@@ -1,5 +1,7 @@
 <form id="communication-comments-{{id}}-like"
       method="{{#if is_liked}}delete{{else}}post{{/if}}"
       action="/communication/comments/{{id}}/like">
-    <button type="submit" class="{{#if is_liked}}is-liked{{/if}}  comment-like  {{#if (gt likes 0) }} fa fa-heart{{else}} fa fa-heart-o{{/if}}">  {{#if (ne likes 0) }} {{likes}} {{else}}   {{/if}}</button>
+    <button type="submit" class="{{#if is_liked}}is-liked{{/if}}  comment-like  {{#if (gt likes 0) }} fa fa-heart{{else}} fa fa-heart-o{{/if}}">  
+    		{{#if (gt likes 0) }} {{likes}} {{/if}} 
+    </button>
 </form>

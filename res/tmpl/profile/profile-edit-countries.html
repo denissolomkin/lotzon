@@ -1,5 +1,5 @@
  <div class="select-wrapper i-arrow-down" id="profile-edit-countries">
-	<select>
+	<select class="{{#if location.country}} input-filled {{/if}}">
 	<option>
 		{{#if (player "location.country")}}{{player "location.country"}}{{else}}<span class="uk-disabled">выбрать</span> {{/if}}
 	</option>

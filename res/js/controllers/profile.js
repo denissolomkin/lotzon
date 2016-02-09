@@ -11,7 +11,7 @@
 
                 $('input.datepicker').daterangepicker({
                     singleDatePicker: true,
-                    startDate: new Date(Player.birthday * 1000),
+                    startDate: Player.birthday ? new Date(Player.birthday * 1000) : 'выбрать дату',
                     endDate: ''
                 });
                 R.push({template:'profile-edit-countries', href: 'profile-edit-countries-'  + Player.language.current});
@@ -87,7 +87,7 @@
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
 
                 var input = form.find('input[type="file"]').damnUploader({
-                    url: '/profile/avatar',
+                    url: '/res/POST/profile/avatar',
                     fieldName: 'image',
                     dataType: 'json',
                 });
@@ -105,7 +105,7 @@
                         holder.addClass('true');
                         holder.append(image);
 
-                        $('form[name="profile"]').find('.pi-ph.true i').off('click').on('click', function(e) {
+                        $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
                             e.stopPropagation();
 
                             removePlayerAvatar(function(data) {

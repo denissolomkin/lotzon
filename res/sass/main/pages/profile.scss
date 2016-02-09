@@ -295,7 +295,6 @@
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
-  padding-left: 7px;
   font: 15.5px "handbookpro-regular";
   &:focus {
     border-width: 0 0 2px;
@@ -395,6 +394,13 @@
     outline: none;
     font: 15.5px "handbookpro-regular";
     max-width: 100px;
+    color:#a3a5a4;
+    position: relative;
+    left: -4px;
+    &.input-filled {
+      color: #000;
+    }
+    &:invalid { color: gray; }
     &:focus {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -406,12 +412,18 @@
        -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      color: #000;
+    
       &:focus {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         outline: none;
       }
+
+    }
+    & option[velue='']{
+      color:#a3a5a4;
     }
   }
 }
@@ -1277,7 +1289,6 @@ span.input-prefix {
       z-index: 1;
       position: relative;
       cursor: pointer;
-      padding-left: 2px;
     }
     & .daterangepicker.dropdown-menu.opensright:before {
       right: auto;

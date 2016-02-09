@@ -114,8 +114,8 @@
 
 
             /* profile*/
-            $(document).on('click', '.pi-ph.true i', Profile.do.removeAvatar);
-            $(document).on('click', '.pi-ph.true i', Profile.do.updateAvatar);
+            $(document).on('click', '.pi-ph.true', Profile.do.removeAvatar);
+            $(document).on('click', '.pi-ph.true', Profile.do.updateAvatar);
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
             $(document).on('change', 'cc-sum', Profile.validate.convert);
 

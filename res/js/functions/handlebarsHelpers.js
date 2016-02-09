@@ -16,7 +16,7 @@ $(function () {
         return typeof response === 'function' ? eval(model + "." + fn + "(" + (options ? options : '') + ")") : response;
         },
         isEmpty = function(element) {
-            return (!element || (typeof element === 'string' && element == ''));
+            return (!element || (typeof element === 'string' && element == '' ));
         };
 
     Handlebars.registerHelper({
@@ -281,6 +281,9 @@ $(function () {
         },
         'ne': function (v1, v2) {
             return v1 !== v2;
+        },
+        'neNotStrict': function (v1, v2) {
+            return v1 != v2;
         },
         'lt': function (v1, v2) {
             return v1 < v2;

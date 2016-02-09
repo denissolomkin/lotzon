@@ -208,11 +208,6 @@
       color: #ff4343;
     }
   }
-  &:focus {
-    border-width: 0 0 2px;
-    border-color: #98b9be;
-    padding-bottom: 0;
-  }
 }
 
 .nm-search-results {
@@ -271,7 +266,7 @@
   }
   & .nm-friend-img {
     display: inline-block;
-    margin: 0 auto 10px;
+    margin: 0 auto 5px;
   }
   & .nm-friend-name {
     display: inline-block;
@@ -279,7 +274,8 @@
     font-family: 'Handbook-bold';
     color: #000;
     font-size: 15px;
-    margin-left: 20px; 
+    margin-left: 16px;
+    margin-bottom: 7px; 
   }
   & .nm-change {
     font-size: 15.5px;
@@ -287,7 +283,7 @@
     cursor: pointer;
     position: absolute;
     right: 0;
-    top: 21px;
+    top: 15px;
     &:hover {
       text-decoration: underline;
     }
@@ -346,6 +342,7 @@
       @include translate(0%, -50%);
       top: 50%;
       letter-spacing: 0.3px;
+      padding-bottom: 1px;
       &:hover {
         text-decoration: underline;
       }
