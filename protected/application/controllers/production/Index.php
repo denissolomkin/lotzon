@@ -173,8 +173,8 @@ class Index extends \SlimController\SlimController
                 'random' => $session->has('QuickGame'),
                 'moment' => $session->has('Moment'),
                 'online' => $gamePlayer->getApp() ?: array(
-                    'key' => $gamePlayer->getApp('Key'),
-                    'uid' => $gamePlayer->getApp('Uid')
+                    'Key' => $gamePlayer->getApp('Key'),
+                    'Uid' => $gamePlayer->getApp('Uid')
                 ),
             )
         );

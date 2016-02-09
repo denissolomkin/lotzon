@@ -170,8 +170,8 @@ class GamesController extends \AjaxController
                         ->setAppMode(null);
                 else
                     $response['player']['games']['online'] = array(
-                        'key' => $gamePlayer->getApp('Key'),
-                        'uid' => $gamePlayer->getApp('Uid'));
+                        'Key' => $gamePlayer->getApp('Key'),
+                        'Uid' => $gamePlayer->getApp('Uid'));
 
                 $gamePlayer->update();
 
@@ -238,15 +238,15 @@ class GamesController extends \AjaxController
 
             $players = array();
 
-            foreach ($game->getPlayers() as $player) {
+            foreach ($game->getClients() as $player) {
                 $players[] = $player->name;
             }
 
             $games[] = array(
                 'id'        => $uid,
-                'key'       => $game->getApp()->getKey(),
-                'mode'      => $game->getApp()->getCurrency() . '-' . $game->getApp()->getPrice() . '-' . $game->getApp()->getNumberPlayers(),
-                'variation' => $game->getApp()->getVariation(),
+                'key'       => $game->getKey(),
+                'mode'      => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                'variation' => $game->getVariation(),
                 'players'   => $players
             );
         }
