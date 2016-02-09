@@ -137,8 +137,9 @@
             $(document).on('click', '.mx .players .m .btn-pass', Game.do.pass);
             $(document).on('click', '.mx .exit', Game.do.exit);
             $(document).on('click', '.mx .table .cell', Game.do.move);
-            $(document).on('click', '.mx .players .m button', Game.do.button); /* !!! keep order of handlers*/
-            $(document).on('click', '.mx .players .m button.btn-start', Game.do.start);
+            $(document).on('click', '.mx .players .m button, .mx .msg-buttons button', Game.do.button); /* !!! keep order of handlers*/
+            $(document).on('click', '.mx .players .m button.btn-start, .mx .msg-buttons button.btn-start', Game.do.start);
+
 
 
             /* support */

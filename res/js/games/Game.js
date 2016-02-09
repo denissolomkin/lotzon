@@ -14,6 +14,21 @@
                 class: 'btn-secondary',
                 action: 'replay',
                 title: 'button-game-replay'
+            },
+            exit: {
+                class: 'back-button exit',
+                action: '',
+                title: 'button-game-exit'
+            }
+        },
+        messages: {
+            win:{
+                class: 'msg-win',
+                title: 'ПОБЕДА!'
+            },
+            lose:{
+                class: 'msg-win',
+                title: 'ПРОИГРЫШ :('
             }
         },
         field: null,
@@ -224,6 +239,12 @@
                 Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
                 
+                //проверка на игры кроме дурака, вывод нового сообщения о выиграше
+                if( document.querySelector('#games-online-field:not(.Durak) .mx') ){
+                    Game.drawWinMessage(App.players[Player.id]);
+                    return true;   
+                }
+
                 var messages = {};
                 for(var index in App.players) {
                     messages[index] =
@@ -237,7 +258,6 @@
         },
 
         drawButtons: function(buttons) {
-
             var playerButtons = document.querySelector('.mx .players .pr-cl'),
                 html = '';
 
@@ -269,23 +289,6 @@
         },
 
         drawMessages: function(messages) {
-
-            // if !Durak replace msg to other block
-            if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
-                var el = document.querySelector('.mx > .msg ') || document.createElement('div');
-                el.setAttribute('class', 'msg');
-
-                for(index in messages){
-                    if(index == Player.id){
-                        el.innerHTML = messages[index];
-                    }
-                }
-
-                notDurak.appendChild(el);
-                // alert(123);
-                return;
-            }
-
             var playerMessages = document.querySelectorAll('.mx .players .wt'),
                 playerMessage = null,
                 index = 0;
@@ -301,7 +304,51 @@
                 console.error(playerMessage, messages[index]);
             }
         },
+        /**
+         * draw win message by main player
+         * @param  {number} message
+         * @return {}        
+         */
+        drawWinMessage: function(pl){
 
+            // if !Durak replace msg to other block
+            if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
+                var html = '', msg = pl.result > 0 ? Game.messages.win : Game.messages.lose ,
+                el = document.querySelector('.mx > .msg ') || document.createElement('div');
+
+                el.setAttribute('class', 'msg');
+
+                html += '<div class="'+msg.class+'">';
+                    html += '<div class="title">'+ msg.title +'</div>';
+                    html += '<div><span>' + (pl.result > 0 ? 'ваш выигрыш' : 'вы проиграли') + ' </span>'+
+                    (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs( parseInt(pl.win) )) + ' ' +
+                    (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
+                html += '</div>'
+
+
+                el.innerHTML = html;
+
+                notDurak.appendChild(el);
+
+                return;
+            }
+        },
+        drawWinButtons: function(buttons){
+            var playerButtons = document.querySelector('.mx > .msg .msg-win'),
+                html = '',
+                el = document.createElement('div');
+                el.className = 'msg-buttons';
+
+            for(var index in buttons){
+                if(typeof  buttons[index] == 'object') {
+                    html += '<button class="' + buttons[index].class + '" data-action="' + buttons[index].action + '">' + i18n(buttons[index].title) + '</button>';
+                } else if(typeof buttons[index] == 'string') {
+                    html += '<div>' + i18n(buttons[index]) + '</div>';
+                }
+            }
+            el.innerHTML = html;
+            playerButtons.appendChild(el);
+        },
         setFullScreenHeigth: function () {
 
             D.log('Game.setFullScreenHeigth', 'game');

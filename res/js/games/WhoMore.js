@@ -158,10 +158,12 @@
 
         'end': function(){
 
-            Game.drawButtons([
+            Game.drawWinButtons([
                 Game.buttons.start,
-                Game.buttons.replay
+                Game.buttons.exit,
+                // Game.buttons.replay
             ]);
+            
 
         }
 

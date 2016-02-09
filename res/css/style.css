@@ -137,11 +137,12 @@ a {
     height: 48px;
     border: 1px solid #000;
     font: 17px/48px Handbook-bold;
-    color: #000;
     text-transform: uppercase;
     text-align: center;
     margin-top: 30px;
     cursor: pointer; }
+    #logout div button:hover {
+      color: #ffe400; }
   #logout div p {
     font: 18px/19px "handbookpro-regular"; }
   #logout div.i-x-slim {
@@ -691,7 +692,7 @@ input.input-radio:checked + label.input-radio:before {
 *:hover > .tooltip {
   display: block;
   position: absolute;
-  top: -40px;
+  top: -50px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
   -khtml-transform: translate(-50%, 0);
@@ -700,13 +701,14 @@ input.input-radio:checked + label.input-radio:before {
   -o-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
   background: #4a4a4a;
-  color: #fff;
-  font-size: 11px;
-  min-width: 240px;
+  color: #fff !important;
+  font: 15px "handbookpro-regular" !important;
+  min-width: 286px;
   z-index: 10;
-  padding: 5px 10px;
+  padding: 5px 10px 7px;
   text-align: center;
-  margin: 0; }
+  margin: 0;
+  line-height: 1; }
   *:hover > .tooltip:after {
     content: "";
     display: block;
@@ -4596,7 +4598,8 @@ input.comment-reply-btn {
   .banner-slide img {
     display: block;
     height: auto;
-    border: 1px solid #cbc7c6; }
+    border: 1px solid #cbc7c6;
+    max-width: 100%; }
 
 .popup-banner-download {
   display: inline-block;
@@ -4835,10 +4838,6 @@ input.comment-reply-btn {
       color: #ff4343; }
     .enter-friend-name.error::-moz-placeholder {
       color: #ff4343; }
-  .enter-friend-name:focus {
-    border-width: 0 0 2px;
-    border-color: #98b9be;
-    padding-bottom: 0; }
 
 .nm-search-results {
   position: absolute;
@@ -4886,21 +4885,22 @@ input.comment-reply-btn {
       background: none; }
   .nm-selected .nm-friend-img {
     display: inline-block;
-    margin: 0 auto 10px; }
+    margin: 0 auto 5px; }
   .nm-selected .nm-friend-name {
     display: inline-block;
     text-align: center;
     font-family: 'Handbook-bold';
     color: #000;
     font-size: 15px;
-    margin-left: 20px; }
+    margin-left: 16px;
+    margin-bottom: 7px; }
   .nm-selected .nm-change {
     font-size: 15.5px;
     color: #ff4343;
     cursor: pointer;
     position: absolute;
     right: 0;
-    top: 21px; }
+    top: 15px; }
     .nm-selected .nm-change:hover {
       text-decoration: underline; }
 
@@ -4958,7 +4958,8 @@ input.comment-reply-btn {
     -o-transform: translate(0%, -50%);
     transform: translate(0%, -50%);
     top: 50%;
-    letter-spacing: 0.3px; }
+    letter-spacing: 0.3px;
+    padding-bottom: 1px; }
     #communication-messages .cm-top .write-admin:hover {
       text-decoration: underline; }
   #communication-messages .cm-top hr {
@@ -7066,7 +7067,7 @@ form.loading > * {
 
 .personal-data-inf-header {
   padding: 0 30px;
-  margin: 0 -30px 10px;
+  margin: 0 -30px 0;
   border-bottom: 1px solid #fafafa;
   background: #fafafa;
   height: 50px;
@@ -7395,7 +7396,6 @@ form.loading > * {
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
-  padding-left: 7px;
   font: 15.5px "handbookpro-regular"; }
   .ae-personal-form-values input:focus {
     border-width: 0 0 2px;
@@ -7471,7 +7471,14 @@ form.loading > * {
     background: transparent;
     outline: none;
     font: 15.5px "handbookpro-regular";
-    max-width: 100px; }
+    max-width: 100px;
+    color: #a3a5a4;
+    position: relative;
+    left: -4px; }
+    .ae-personal-form-values select.input-filled {
+      color: #000; }
+    .ae-personal-form-values select:invalid {
+      color: gray; }
     .ae-personal-form-values select:focus {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -7481,12 +7488,15 @@ form.loading > * {
       outline: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      appearance: none; }
+      appearance: none;
+      color: #000; }
       .ae-personal-form-values select option:focus {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         outline: none; }
+    .ae-personal-form-values select option[velue=''] {
+      color: #a3a5a4; }
 
 .wrapper-margin-right {
   display: inline-block;
@@ -8175,8 +8185,7 @@ span.input-prefix {
     background: transparent;
     z-index: 1;
     position: relative;
-    cursor: pointer;
-    padding-left: 2px; }
+    cursor: pointer; }
   #profile-edit .calendar-range .daterangepicker.dropdown-menu.opensright:before {
     right: auto;
     left: 2px; }
@@ -9319,7 +9328,7 @@ footer.unvisible {
   height: auto;
   background: url(../img/games/lotzonBg.png);
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
   #games-online-field:not(.Durak) .mx {
     height: auto; }
@@ -9410,6 +9419,68 @@ footer.unvisible {
           #games-online-field:not(.Durak) .mx .table .inner .cell > * {
             display: inline-block;
             vertical-align: middle; }
+    #games-online-field:not(.Durak) .mx .msg {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      text-align: center; }
+      #games-online-field:not(.Durak) .mx .msg:before {
+        content: '';
+        height: 100%;
+        width: 0;
+        display: inline-block;
+        vertical-align: middle; }
+      #games-online-field:not(.Durak) .mx .msg > * {
+        box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+        width: 420px;
+        height: 170px;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 20px 10px;
+        font-size: 15px;
+        color: #4a4a4a;
+        letter-spacing: 0.2px;
+        line-height: 36px; }
+        #games-online-field:not(.Durak) .mx .msg > * .title {
+          font-size: 40px;
+          color: #4a4a4a;
+          letter-spacing: 0.92px;
+          line-height: 36px; }
+        #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > * {
+          display: inline-block;
+          position: static;
+          vertical-align: top;
+          text-transform: uppercase;
+          margin-top: 30px;
+          font-size: 14px;
+          color: #000000;
+          letter-spacing: 0.32px;
+          line-height: 16px;
+          background: transparent;
+          border: 1px solid #000000;
+          min-width: 108px;
+          height: 28px;
+          cursor: pointer;
+          padding: 0 10px;
+          transition: all .2s ease-in; }
+          #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > *:before {
+            content: '';
+            height: 100%;
+            width: 0;
+            display: inline-block;
+            vertical-align: middle; }
+          #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > *:first-child {
+            margin-right: 20px; }
+          #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > *:hover {
+            color: #fff;
+            background: #000; }
+      #games-online-field:not(.Durak) .mx .msg .msg-win {
+        background: #f8e71c; }
+      #games-online-field:not(.Durak) .mx .msg .msg-lose {
+        background: #f0e98f; }
   #games-online-field:not(.Durak).WhoMore .moves {
     width: 380px;
     margin: 0px auto; }
@@ -9929,8 +10000,8 @@ footer.unvisible {
     height: 100%;
     position: relative; }
   #games-online-field.Durak .small-card {
-    cursor: none;
-    trasform: rotate(2deg) scale(0.7, 0.7) !important; }
+    transform: rotate(2deg) scale(0.7, 0.7) !important;
+    cursor: none; }
   #games-online-field.Durak .transition {
     transition: all 0.2s linear; }
   #games-online-field.Durak .highlight {
@@ -10501,8 +10572,6 @@ footer.unvisible {
       margin-left: -20px;
       top: 50%;
       transform: translateY(-50%); }
-  .game-settings .render-list-container > div:first-child {
-    border-top: 1px solid #e5e5e5; }
 
 .game-settings .players-list {
   font-size: 13px;

@@ -482,6 +482,9 @@ header {
     /*float: none;*/
     /*padding-top: 1px;*/ } }
 
+.moment-game-box:before {
+  display: none; }
+
 .moment-game-box .ad {
   display: none; }
 
