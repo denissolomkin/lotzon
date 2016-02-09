@@ -1,7 +1,7 @@
 <?php
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
-Application::import(PATH_APPLICATION . 'model/entities/GameApp.php');
+Application::import(PATH_APPLICATION . 'model/Game.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameAppsCacheProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameAppsDBProcessor.php');
 
@@ -22,8 +22,7 @@ class GameAppsModel extends Model
 
     public function getApp($uid = null)
     {
-        $gameApp = new \GameApp;
-        return ($gameApp->setUid($uid)->fetch() ? $gameApp->getApp() : false);
+        return $this->getProcessor()->getApp($uid)?:false;
     }
 
     public function countApps($key = null, $status = null)

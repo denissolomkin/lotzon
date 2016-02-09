@@ -112,8 +112,10 @@ class Mines extends Game
                     'result' => 2,
                     'win' => $this->getPrice()+$this->getWinCoefficient()),current($winner)['player']['pid']);
                 $this->setTime(time());
-                $this->_isOver = 1;
-                $this->_isRun  = 0;
+
+                $this->setRun(0)
+                    ->setOver(1);
+
                 $this->_botReplay   = array();
                 $this->_botTimer    = array();
                 return current($winner)['player'];

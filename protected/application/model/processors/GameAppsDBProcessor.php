@@ -35,6 +35,32 @@ class GameAppsDBProcessor implements IProcessor
 
     }
 
+    public function getApp($uid)
+    {
+        $sql = "SELECT * FROM `GamesTmpApps`
+                WHERE Uid = :uid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':uid' => $uid,
+            ));
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
+        }
+
+        if (!$sth->rowCount()) {
+            return false;
+        } elseif ($sth->rowCount() > 1) {
+            throw new ModelException("Found more than one app", 400);
+        }
+
+        $app = $sth->fetch();
+        return unserialize($app['AppData']);
+
+    }
+
     public function countApps($key = null, $status = null)
     {
         $where = array();
@@ -81,8 +107,7 @@ class GameAppsDBProcessor implements IProcessor
 
         $apps = array();
         foreach ($res->fetchAll() as $appData) {
-            $app = new GameApp();
-            $app->formatFrom('DB', $appData);
+            $app = unserialize($appData['AppData']);
             if (!isset($apps[$app->getKey()])) {
                 $apps[$app->getKey()] = array();
                 $apps[$app->getId()]  = array();
@@ -112,12 +137,12 @@ class GameAppsDBProcessor implements IProcessor
                 ':id'       => $app->getId(),
                 ':key'      => $app->getKey(),
                 ':mode'     => $app->getMode(),
-                ':data'     => @serialize($app->getApp()),
+                ':data'     => @serialize($app),
                 ':run'      => $app->isRun(),
                 ':over'     => $app->isOver(),
                 ':saved'    => $app->isSaved(),
-                ':players'  => @serialize($app->getPlayers()),
-                ':nplayers' => $app->getRequiredPlayers(),
+                ':players'  => @serialize($app->getClients()),
+                ':nplayers' => $app->getNumberPlayers(),
                 ':ping'     => $app->getPing()
             ));
         } catch (PDOException $e) {

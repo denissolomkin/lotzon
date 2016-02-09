@@ -290,7 +290,6 @@ class WebSocketController implements MessageComponentInterface
             #echo 'periodicAppName: ' . $appName . "\n";
             foreach ($apps as $id => $app) {
 
-                $app = $app->getApp();
                 #echo 'periodicAppUid: ' . $app->getUid() . "\n";
 
                 if ($this->_reload)
@@ -429,7 +428,6 @@ class WebSocketController implements MessageComponentInterface
 
     public function runGame($appName, $appUid, $action, $playerId = null, $data = null)
     {
-
         if ($app = GameAppsModel::instance()->getApp($appUid)) {
             $this->_class = $class = '\\' . $appName;
             echo $this->time() . " " . "$appName $appUid $action " . (empty($app->_bot) || !in_array($playerId, $app->_bot) ? "игрок №" : 'бот №') . $playerId . ($action != 'startAction' ? ' (текущий №' . implode(',', $app->currentPlayers()) . ")" : '') . " \n";
@@ -869,7 +867,7 @@ class WebSocketController implements MessageComponentInterface
                                         if ($player->checkBalance($appMode['currency'], $appMode['price'])) {
 
                                             if ($gamePlayer->getApp('Name') && $gamePlayer->getApp('Uid')
-                                                && ($app = GameAppsModel::instance()->getApp($gamePlayer->getApp('Uid'))) && !$app->_isOver
+                                                && ($app = GameAppsModel::instance()->getApp($gamePlayer->getApp('Uid'))) && !$app->isOver()
                                             ) {
 
                                                 echo $this->time(0, 'ERROR') . " " . "{$gamePlayer->getApp('Name')} Запуск игроком {$from->resourceId} новой игры при незавершенной {$gamePlayer->getApp('Uid')}\n";
@@ -1120,8 +1118,8 @@ class WebSocketController implements MessageComponentInterface
 
                                 $games[] = array(
                                     'id'        => $id,
-                                    'mode'      => $game->getApp()->getCurrency() . '-' . $game->getApp()->getPrice() . '-' . $game->getApp()->getNumberPlayers(),
-                                    'variation' => $game->getApp()->getVariation(),
+                                    'mode'      => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                                    'variation' => $game->getVariation(),
                                     'players'   => $players
                                 );
                             }
