@@ -150,11 +150,13 @@
 
             if (page && page.classList.contains('content-main')) {
 
-                DOM.hide(page.parentNode.children);
-                DOM.show(page);
-                options.url !== false && (options.url = true);
-                R.afterHTML(options);
-                U.update(options);
+                if(!DOM.visible('.on-top').length) {
+                    DOM.hide(page.parentNode.children);
+                    DOM.show(page);
+                    options.url !== false && (options.url = true);
+                    R.afterHTML(options);
+                    U.update(options);
+                }
 
             } else {
 

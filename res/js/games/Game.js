@@ -43,6 +43,7 @@
                     Game.gameClass = Game.field.className;
                 }
                 Game.field.className = (Game.gameClass+" "+App.key);
+                Game.field.classList.add('on-top');
 
                 DOM.hide(Game.field.parentNode.children);
                 DOM.show(Game.field);
@@ -470,6 +471,7 @@
             quit: function () {
 
                 D.log('Game.action.quit', 'game');
+                Game.field.classList.remove('on-top');
                 R.push('/games/online/' + App.id);
                 App.uid = 0;
                 Game.destroyTimeOut();

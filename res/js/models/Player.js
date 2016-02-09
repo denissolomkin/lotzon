@@ -35,8 +35,8 @@
                     }
                 }
 
-                if (init.hasOwnProperty('games') && init.games.online && init.games.online.uid) {
-                    WebSocketAjaxClient('app/' + init.games.online.key + '/' + init.games.online.uid, {action: 'start'});
+                if (init.hasOwnProperty('games') && init.games.online && init.games.online.Uid) {
+                    WebSocketAjaxClient('app/' + init.games.online.Key + '/' + init.games.online.Uid, {action: 'start'});
                     delete init.games.online;
                 }
 
