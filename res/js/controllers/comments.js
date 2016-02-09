@@ -451,27 +451,37 @@
         },
 
         checkInput: function() {
-            var empty, text, div, el;
-            $('.message-form-area > div').each(function(){
-                div = $(this);
-                console.log($(this), '$(this)');
-                el = div.text();
+            // var empty, text, div, el;
+            // $('.message-form-area > div').each(function(){
+            //     div = $(this);
+            //     console.log($(this), '$(this)');
+            //     el = div.text();
 
-                    console.log(div.children().length, 'div.children()[0].tagName');
+            //         console.log(div.children().length, 'div.children()[0].tagName');
 
-                    if (((el == '')&& div.children().length == 0) || (div.children().length > 0  && (div.children() && (div.children()[0].tagName == "BR" || div.children()[0].tagName == "HR") ))) {
-                        console.log(div.children()[0]);
-                         console.log(div,'div')
-                        var emptyDiv = div;
-                        emptyDiv.addClass('emptyDiv');
-                    }
+            //         if (((el == '')&& div.children().length == 0) || (div.children().length > 0  && (div.children() && (div.children()[0].tagName == "BR" || div.children()[0].tagName == "HR") ))) {
+            //             console.log(div.children()[0]);
+            //              console.log(div,'div')
+            //             var emptyDiv = div;
+            //             emptyDiv.addClass('emptyDiv');
+            //         }
                 
-                if (emptyDiv != undefined && emptyDiv.next(emptyDiv) != undefined) {
-                   emptyDiv.next(emptyDiv).css("display", "none"); 
-                   console.log(' emptyDiv.next(emptyDiv)', emptyDiv.next(emptyDiv));
+            //     if (emptyDiv != undefined && emptyDiv.next(emptyDiv) != undefined) {
+            //        emptyDiv.next(emptyDiv).css("display", "none"); 
+            //        console.log(' emptyDiv.next(emptyDiv)', emptyDiv.next(emptyDiv));
+            //     }
+                
+            // });
+
+            $('div[contenteditable=true]').keydown(function(e) {
+                // trap the return key being pressed
+                if (e.keyCode == 13) {
+                  // insert 2 br tags (if only one br tag is inserted the cursor won't go to the second line)
+                  document.execCommand('insertHTML', false, '<br><br>');
+                  // prevent the default behaviour of return key pressed
+                  return false;
                 }
-                
-            });
+              });
 
         },
 

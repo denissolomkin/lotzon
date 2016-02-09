@@ -100,8 +100,11 @@
 
                 input.off('du.add').on('du.add', function(e) {
                     e.uploadItem.completeCallback = function(succ, data, status) {
-                        image.attr('src', data.res.imageWebPath);
-
+                        var url = Player.getAvatar(data.res.imageName);
+                        image.attr('src', url);
+                        
+                        $('.avatar-bg').css({'background' : 'url(' + url + ')  no-repeat 50%', 'background-size' : 'cover'});
+                        console.log($('.avatar-bg').css('background'));
                         holder.addClass('true');
                         holder.append(image);
 
@@ -122,10 +125,10 @@
                 form.find('input[type="file"]').click();
             },
 
-            removeAvatar: function() {
-                $('form[name="profile"]').find('.pi-ph').find('img').remove();
-                $('form[name="profile"]').find('.pi-ph').removeClass('true');
-            },
+            // removeAvatar: function() {
+            //     $('form[name="profile"]').find('.pi-ph').find('img').remove();
+            //     $('form[name="profile"]').find('.pi-ph').removeClass('true');
+            // },
 
             openOption: function() {
                 console.log("first");

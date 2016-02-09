@@ -7308,6 +7308,12 @@ form.loading > * {
   background: #AFABAB; }
   .ae-top > .overflow-hid {
     height: 180px; }
+    .ae-top > .overflow-hid > div:first-child {
+      background: rgba(255, 255, 255, 0.2);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 20; }
 
 .ae-user-img {
   width: 150px;
@@ -7330,7 +7336,9 @@ form.loading > * {
 .ae-user-img img {
   display: block;
   width: 100%;
-  height: auto; }
+  height: auto;
+  position: relative;
+  z-index: 30; }
 
 .ae-inf {
   display: none; }
@@ -7472,11 +7480,11 @@ form.loading > * {
     outline: none;
     font: 15.5px "handbookpro-regular";
     max-width: 100px;
-    color: #a3a5a4;
+    color: #000;
     position: relative;
     left: -4px; }
-    .ae-personal-form-values select.input-filled {
-      color: #000; }
+    .ae-personal-form-values select.default {
+      color: #a3a5a4; }
     .ae-personal-form-values select:invalid {
       color: gray; }
     .ae-personal-form-values select:focus {
@@ -8223,7 +8231,6 @@ span.input-prefix {
 #user-view .ae-personal-form-values div {
   padding: 0;
   padding-bottom: 1px;
-  padding-left: 5px;
   font: 15.5px "handbookpro-regular";
   display: inline-block;
   width: auto;

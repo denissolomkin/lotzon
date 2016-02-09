@@ -370,6 +370,7 @@ form.loading > * {
   line-height: 20px;
   
 }
+
 .message-form-area {
   cursor: text;
   & img[class^="i-smile"] {
@@ -383,10 +384,10 @@ form.loading > * {
     position: relative;
     &:first-of-type{
       margin-left: 0;
-
     }
   }
 }
+
 .message-form-area div + img[class^="i-smile"] {
  margin-left: 0;
 }
