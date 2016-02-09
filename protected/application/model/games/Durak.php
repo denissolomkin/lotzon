@@ -106,9 +106,9 @@ class Durak extends Game
             $this->setPlayers($this->getClients(), false)
                 ->currentPlayers(array());
 
-            $this->_isRun = 0;
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
+            $this->setRun(0)
+                ->setOver(0)
+                ->setSaved(0);
             $this->startAction();
         }
 
@@ -122,7 +122,7 @@ class Durak extends Game
 
         if ($this->getNumberPlayers() != count($this->getClients())) {
 
-            $this->_isRun = 0;
+            $this->setRun(0);
             $this->setLoser(null);
             $this->setPlayers($this->getClients(), false)
                 ->currentPlayers(array());
@@ -209,9 +209,9 @@ class Durak extends Game
                     ->setWinner(array())// обнулили победителя
                     ->setLoser(null)// обнулили победителя
                     ->setTime(time()); // время игры заново
-                $this->_isOver = 0;
-                $this->_isRun = 1;
-                $this->_isSaved = 0;
+                $this->setRun(1)
+                    ->setOver(0)
+                    ->setSaved(0);
             }
 
             $this->setResponse((is_array($data) && isset($data['response'])) ? $data['response'] : $this->getClients());
@@ -687,7 +687,7 @@ class Durak extends Game
     public function shuffleCards()
     {
 
-        $players = $this->getStarter() && $this->_isOver == 0 ? $this->sortPlayers($this->getStarter()) : $this->getPlayers();
+        $players = $this->getStarter() && !$this->isOver() ? $this->sortPlayers($this->getStarter()) : $this->getPlayers();
 
         #echo "расдаем карты на руки игрокам:"; #print_r($players);
 
@@ -903,8 +903,9 @@ class Durak extends Game
 
                 if (count($this->getWinner()) == count($this->getPlayers()) - 1) {
                     $this->setTime(time());
-                    $this->_isOver = 1;
-                    $this->_isRun = 0;
+
+                    $this->setRun(0)
+                        ->setOver(1);
                     $this->_botReplay = array();
                     $this->_botTimer = array();
                     $loser = $loser?:current(array_diff(array_keys($this->getPlayers()),$this->getWinner()));

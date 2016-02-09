@@ -3,34 +3,35 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Game extends Entity
 {
-    protected $_gameId        = 0;
-    protected $_gameKey       = '';
-    protected $_gameModes     = array();
-    protected $_gameTitle     = array();
+    protected $_id        = 0;
+    protected $_key       = '';
+    protected $_title         = array();
     protected $_options       = array();
     protected $_gameVariation = array();
+    protected $_gameModes     = array();
 
-    private $_gameCurrency   = '';
-    private $_gamePrice      = null;
-    private $_numberPlayers  = null;
-    private $_gameTime       = null;
-    private $_gameIdentifier = '';
+    protected $_identifier    = ''; /* todo change to $_uid */
+    protected $_currency      = '';
+    protected $_price         = null;
+    protected $_numberPlayers = null;
+    protected $_time          = null;
+    protected $_ping          = null;
 
     public $_bot       = array();
     public $_botTimer  = array();
     public $_botReplay = array();
 
-    public $_isOver  = 0;
-    public $_isRun   = 0;
-    public $_isSaved = 0;
+    public $_over  = 0;
+    public $_run   = 0;
+    public $_saved = 0;
 
     protected $_players  = array();
     private   $_clients  = array();
     private   $_client   = '';
     private   $_callback = array();
-    private   $_response = '';
-    private   $_winner   = null;
-    private   $_loser    = null;
+    protected   $_response = '';
+    protected   $_winner   = null;
+    protected   $_loser    = null;
     private   $_current  = array();
 
     protected $_field       = array();
@@ -52,6 +53,46 @@ class Game extends Entity
         $this->setModelClass('GameAppsModel');
     }
 
+    public function init()
+    {
+        $this->setField($this->generateField());
+    }
+
+    public function validate()
+    {
+        return true;
+    }
+
+    public function fetch()
+    {
+        try {
+            $model = $this->getModelClass();
+            $model::instance()->fetch($this);
+        } catch (ModelException $e) {
+            if ($e->getCode() == 404) {
+                return false;
+            } else
+                throw new EntityException($e->getMessage(), $e->getCode());
+        }
+
+        return $this;
+    }
+
+    public function update()
+    {
+
+        $this->setPing(time());
+
+        try {
+            $model = $this->getModelClass();
+            $model::instance()->update($this);
+        } catch (ModelException $e) {
+            echo $e->getMessage(). $e->getCode();
+        }
+
+        return $this;
+    }
+
     public function saveResults()
     {
         $model = $this->getModelClass();
@@ -65,26 +106,16 @@ class Game extends Entity
             echo '[ERROR] ' . $e->getMessage();
         }
 
-        $this->_isSaved = 1;
+        $this->setSaved(1);
 
         return $this;
-    }
-
-    public function init()
-    {
-        $this->setField($this->generateField());
-    }
-
-    public function validate()
-    {
-        return true;
     }
 
     public function quitAction($data = null)
     {
         #echo $this->time().' '. "Выход из игры\n";
 
-        if (!$this->_isOver) {
+        if (!$this->isOver()) {
             $this->startAction($data);
         } else {
             $playerId = $this->getClient()->id;
@@ -113,9 +144,10 @@ class Game extends Entity
         $this->updatePlayer(array('result' => 1))
             ->updatePlayer(array('result' => -2), $playerId)
             ->unsetCallback();
-        $this->_isOver  = 1;
-        $this->_isRun   = 0;
-        $this->_isSaved = 0;
+
+        $this->setRun(0)
+            ->setOver(1)
+            ->setSaved(0);
 
         if (count($this->getPlayers()) > 1)
             while ($this->currentPlayer()['pid'] == $playerId)
@@ -141,7 +173,7 @@ class Game extends Entity
         #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
-        if ($this->_isRun == 1) {
+        if ($this->isRun()) {
             $this->startAction();
         } else {
             $playerId = $this->getClient()->id;
@@ -156,14 +188,16 @@ class Game extends Entity
 
             if (count($ready) == count($players)) {
 
-                $this->_isSaved = 0;
-                $this->_isRun   = 1;
+                $this->setRun(1)
+                    ->setSaved(0);
+
                 $this->unsetPlayers()
                     ->startAction();
 
             } else {
 
-                $this->_isOver = 0;
+                $this->setOver(0);
+
                 $this->currentPlayers(array_values(array_diff($this->currentPlayers(), array($playerId))));
                 $this->startAction();
                 /*
@@ -200,9 +234,11 @@ class Game extends Entity
         }
 
         if ($reply == count($players)) {
-            $this->_isSaved = 0;
-            $this->_isOver  = 0;
-            $this->_isRun   = 1;
+
+            $this->setRun(1)
+                ->setOver(0)
+                ->setSaved(0);
+
             #echo $this->time().' '. "Переустановка игроков\n";
 
             $this->unsetFieldPlayed()
@@ -236,9 +272,9 @@ class Game extends Entity
                 ->nextPlayer()
                 ->setWinner(null);
 
-            $this->_isOver  = 0;
-            $this->_isSaved = 0;
-            $this->_isRun   = 1;
+            $this->setRun(1)
+                ->setOver(0)
+                ->setSaved(0);
         }
 
         if ($this->getWinner())
@@ -388,21 +424,6 @@ class Game extends Entity
 
     }
 
-    public function isOver()
-    {
-        return $this->_isOver;
-    }
-
-    public function isRun()
-    {
-        return $this->_isRun;
-    }
-
-    public function isSaved()
-    {
-        return $this->_isSaved;
-    }
-
     public function getCell($cell)
     {
         list($x, $y) = $cell;
@@ -542,8 +563,10 @@ class Game extends Entity
                     'result' => 2,
                     'win'    => $this->getPrice() + $this->getWinCoefficient()), current($winner)['player']['pid']);
                 $this->setTime(time());
-                $this->_isOver    = 1;
-                $this->_isRun     = 0;
+
+                $this->setRun(0)
+                    ->setOver(1);
+
                 $this->_botReplay = array();
                 $this->_botTimer  = array();
 
@@ -698,56 +721,10 @@ class Game extends Entity
         return $this;
     }
 
-    public function setIdentifier($identifier)
-    {
-        $this->_gameIdentifier = $identifier;
-
-        return $this;
-    }
-
     public function getUid()
     {
-        return $this->_gameIdentifier;
+        return $this->getIdentifier();
     }
-
-    public function getIdentifier()
-    {
-        return $this->_gameIdentifier;
-    }
-
-    public function setId($id)
-    {
-        $this->_gameId = $id;
-
-        return $this;
-    }
-
-    public function getId()
-    {
-        return $this->_gameId;
-    }
-
-    public function setTitle($array)
-    {
-        $this->_gameTitle = $array;
-
-        return $this;
-    }
-
-    public function getTitle($lang = null)
-    {
-
-        if (isset($lang)) {
-            if (isset($this->_gameTitle[$lang]) && $this->_gameTitle[$lang] && $this->_gameTitle[$lang] != '')
-                $title = $this->_gameTitle[$lang];
-            else
-                $title = reset($this->_gameTitle);
-        } else
-            $title = $this->_gameTitle;
-
-        return $title;
-    }
-
 
     public function setModes($array)
     {
@@ -768,8 +745,8 @@ class Game extends Entity
 
     public function isSuccessMove()
     {
-        return isset($this->_gameModes[$this->_gameCurrency]) && isset($this->_gameModes[$this->_gameCurrency][$this->_gamePrice])
-            ? $this->_gameModes[$this->_gameCurrency][$this->_gamePrice] : false;
+        return isset($this->_gameModes[$this->getCurrency()]) && isset($this->_gameModes[$this->getCurrency()][$this->getPrice()])
+            ? $this->_gameModes[$this->getCurrency()][$this->getPrice()] : false;
     }
 
     public function setOptions($array)
@@ -801,19 +778,6 @@ class Game extends Entity
     {
         return isset($key) ? (isset($this->_gameVariation[$key]) ? $this->_gameVariation[$key] : false) : $this->_gameVariation;
     }
-
-    public function setKey($key)
-    {
-        $this->_gameKey = $key;
-
-        return $this;
-    }
-
-    public function getKey()
-    {
-        return $this->_gameKey;
-    }
-
 
     public function getWinCoefficient()
     {
@@ -876,76 +840,12 @@ class Game extends Entity
         return $coef;
     }
 
-    public function setWinner($key)
-    {
-        $this->_winner = $key;
-
-        return $this;
-    }
 
     public function addWinner($key)
     {
         $this->_winner[] = $key;
 
         return $this;
-    }
-
-    public function getWinner()
-    {
-        return $this->_winner;
-    }
-
-    public function setLoser($key)
-    {
-        $this->_loser = $key;
-
-        return $this;
-    }
-
-    public function getLoser()
-    {
-        return $this->_loser;
-    }
-
-    public function setNumberPlayers($number)
-    {
-        $this->_numberPlayers = $number;
-
-        return $this;
-    }
-
-    public function getNumberPlayers()
-    {
-        return $this->_numberPlayers;
-    }
-
-    public function setPrice($price)
-    {
-        $this->_gamePrice = $price;
-
-        return $this;
-    }
-
-    public function getPrice()
-    {
-        return $this->_gamePrice;
-    }
-
-    public function getTime()
-    {
-        return $this->_gameTime;
-    }
-
-    public function setTime($time)
-    {
-        $this->_gameTime = $time;
-
-        return $this;
-    }
-
-    public function getCurrency()
-    {
-        return $this->_gameCurrency;
     }
 
     public function unsetCallback()
@@ -974,18 +874,6 @@ class Game extends Entity
     public function setResponse($clients)
     {
         $this->_response = is_array($clients) ? $clients : array($clients);
-
-        return $this;
-    }
-
-    public function getResponse()
-    {
-        return $this->_response;
-    }
-
-    public function setCurrency($currency)
-    {
-        $this->_gameCurrency = $currency;
 
         return $this;
     }

@@ -55,9 +55,10 @@ class SeaBattle extends Game
             ));
             $this->nextPlayer('init');
             $this->setWinner(null);
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
-            $this->_isRun = 1;
+
+            $this->setRun(1)
+                ->setOver(0)
+                ->setSaved(0);
         }
 
         if (count($this->getField()) != count($this->getClients())) {
@@ -244,7 +245,7 @@ class SeaBattle extends Game
     public function moveAction($data = null)
     {
         $this->unsetCallback();
-        if (count($this->getField()) != count($this->getClients()) || $this->_isOver) {
+        if (count($this->getField()) != count($this->getClients()) || $this->isOver()) {
             #echo '' . time() . ' ' . " поля не готовы для хода\n";
             return false;
         }
@@ -312,9 +313,11 @@ class SeaBattle extends Game
         }
 
         if ($ready == count($players)) {
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
-            $this->_isRun = 1;
+
+            $this->setRun(1)
+                ->setOver(0)
+                ->setSaved(0);
+
             #echo $this->time().' '. "Переустановка игроков\n";
 
             $this->unsetFieldPlayed()
@@ -516,8 +519,10 @@ class SeaBattle extends Game
                     'result' => 2,
                     'win' => $this->getPrice()+$this->getWinCoefficient()),current($winner)['player']['pid']);
                 $this->setTime(time());
-                $this->_isOver      = 1;
-                $this->_isRun = 0;
+
+                $this->setRun(0)
+                    ->setOver(1);
+
                 $this->_botReplay   = array();
                 $this->_botTimer    = array();
                 return current($winner)['player'];
