@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class AjaxController extends \SlimController\SlimController
 {
 
@@ -31,9 +33,11 @@ class AjaxController extends \SlimController\SlimController
 
     protected function validateRequest()
     {
-        if (!$this->request()->isAjax())
-            die(\StaticTextsModel::instance()->setLang($this->lang)->getText('NONE_AJAX_REQUEST_DENIED'));
-        else
+        if (!$this->request()->isAjax()) {
+            $session = new Session();
+            $session->set('page', $this->request()->getResourceUri());
+            $this->redirect('/');
+        } else
             return true;
     }
 

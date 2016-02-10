@@ -206,7 +206,8 @@ a {
   z-index: 1; }
 
 input {
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+  border-radius: none; }
 
 button {
   opacity: 0.8;
@@ -4614,7 +4615,8 @@ input.comment-reply-btn {
     padding: 7px 10px 7px 0;
     margin-bottom: 5px;
     width: 100%;
-    border: none; }
+    border: none;
+    background: none; }
   .banner-copy .title {
     font-size: 15.5px;
     margin-right: 6px; }
@@ -4794,7 +4796,8 @@ input.comment-reply-btn {
   text-align: center;
   position: absolute;
   top: 5px;
-  right: -9px; }
+  right: -9px;
+  z-index: 100; }
   .content-box-tab .count:hover {
     opacity: 0.5; }
   .content-box-tab .count:empty {
@@ -7501,8 +7504,7 @@ form.loading > * {
     font: 15.5px "handbookpro-regular";
     max-width: 100px;
     color: #000;
-    position: relative;
-    left: -4px; }
+    position: relative; }
     .ae-personal-form-values select.default {
       color: #a3a5a4; }
     .ae-personal-form-values select:invalid {
@@ -7593,6 +7595,9 @@ form.loading > * {
 
 .ae-socials {
   margin-bottom: 30px; }
+
+.ae-socials {
+  background: #fff; }
 
 .ae-binded {
   margin-bottom: 25px; }
@@ -8098,7 +8103,8 @@ span.input-prefix {
 
 .settings .option {
   float: none;
-  background: #fafafa; }
+  background: #fafafa;
+  font: 15.5px "handbookpro-regular"; }
 
 .settings .strip {
   border-top: 1px solid #f5f5f5;
@@ -8109,7 +8115,8 @@ span.input-prefix {
   height: 45px; }
   .settings .strip .option {
     float: none;
-    background: #fafafa; }
+    background: #fafafa;
+    font: 15.5px "handbookpro-regular"; }
   .settings .strip > * {
     float: left;
     position: relative;
@@ -8157,7 +8164,8 @@ span.input-prefix {
     transform: translate(0, -50%); }
 
 .settings input, .settings input + span, .settings .ae-social, .settings span {
-  margin-left: 20px; }
+  margin-left: 20px;
+  font: 15.5px "handbookpro-regular"; }
 
 .settings input {
   border: none;
@@ -8247,6 +8255,22 @@ span.input-prefix {
 
 .ae-personal-form-values input:-ms-input-placeholder {
   color: #a3a5a4; }
+
+.settings input::-webkit-input-placeholder {
+  color: #a3a5a4;
+  font: 15.5px "handbookpro-regular"; }
+
+.settings input::-moz-placeholder {
+  color: #a3a5a4;
+  font: 15.5px "handbookpro-regular"; }
+
+.settings input:-moz-placeholder {
+  color: #a3a5a4;
+  font: 15.5px "handbookpro-regular"; }
+
+.settings input:-ms-input-placeholder {
+  color: #a3a5a4;
+  font: 15.5px "handbookpro-regular"; }
 
 #user-view .ae-personal-form-values div {
   padding: 0;

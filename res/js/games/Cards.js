@@ -43,18 +43,18 @@
                     } else {
                         if (isNumeric(key)) {
                             $('.mx .players .player' + key + ' .card').remove();
-                            if (typeof sample == 'undefined' && !sample) {
+                            if (typeof Apps.sample == 'undefined' && !Apps.sample) {
                                 if (newLen < oldLen) // походил
-                                    sample = (key == Player.id ? 'Move-m-1' : 'Move-m-2'); // я | противник
+                                    Apps.sample = (key == Player.id ? 'Move-m-1' : 'Move-m-2'); // я | противник
                                 else // взял
-                                    sample = 'Move-o-2';
+                                    Apps.sample = 'Move-o-2';
                             }
 
                         } else if (key != 'off' || newLen == 0) {
                             $('.mx .' + key).html('');
 
                         } else if (key == 'off') {
-                            sample = 'Move-o-3'; // отбой
+                            Apps.sample = 'Move-o-3'; // отбой
                         }
 
                         var idx = 0;
@@ -413,8 +413,8 @@
                     $('.mx .players .player' + index).addClass('beater');
                 else if (index == App.starter && !$('.mx .table .cards').length)
                     $('.mx .players .player' + index).addClass('starter');
-                if (!sample && (!statuses[index] || statuses[index] != player.status) && player.status)
-                    sample = (index == App.beater) ? 'Move-o-1' : 'Move-m-3';
+                if (!Apps.sample && (!statuses[index] || statuses[index] != player.status) && player.status)
+                    Apps.sample = (index == App.beater) ? 'Move-o-1' : 'Move-m-3';
                 statuses[index] = player.status ? player.status : null;
 
                 if ($.inArray(parseInt(index), App.current) != -1) {

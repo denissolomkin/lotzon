@@ -470,7 +470,7 @@
 
                 
             }
-            form.data.text = form.data.text.replace(/[<br\/*>\s*]+/ig, '\n');
+            form.data.text = form.data.text.replace(/(<br\/*>(\s*))+/ig, '\n');
             return form;
 
         }

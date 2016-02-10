@@ -11,16 +11,26 @@ $(function () {
 
         },
 
-        action: function () {
+        action: {
 
-            if (Game.hasField()) {
-                Game.run() && Apps.Durak.run();
-                Cards.setupForDevices();
-                Cards.drawFields();
+            default: function () {
+
+                if (Game.hasField()) {
+                    Game.run() && Apps.Durak.run();
+                    Cards.setupForDevices();
+                    Cards.drawFields();
+                    Cards.premove();
+                    Cards.initStatuses();
+                    Game.drawExit();
+                    Game.end() && Apps.Durak.end();
+                }
+            },
+
+            error: function () {
+
+                Drag.rollback();
                 Cards.premove();
-                Cards.initStatuses();
-                Game.drawExit();
-                Game.end() && Apps.Durak.end();
+
             }
         },
 
@@ -37,13 +47,6 @@ $(function () {
 
                 }, 5000);
             }
-        },
-
-        error: function () {
-
-            Drag.rollback();
-            Cards.premove();
-
         }
 
     }

@@ -232,7 +232,7 @@
             "profile-cashout": Profile.validate.cashout,
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
-            "app-view": function(){alert(1);return true;},
+            "app-view": function(){return true;},
 
         },
 

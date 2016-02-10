@@ -704,8 +704,16 @@ header {
   top: 0; }
 
 .ticket-tabs li:last-of-type.active.done .ticket-number-sm:before {
+  content: "";
+  display: block;
   background: url(../img/sprite.png) center center no-repeat;
-  background-position: -597px -61px; }
+  background-position: -597px -61px;
+  position: absolute;
+  width: 11px;
+  height: 8px;
+  text-align: center;
+  top: 5px;
+  left: 8px; }
 
 #prizes-exchange .content-box-item-content {
   margin-right: 0; }
@@ -1956,6 +1964,8 @@ header {
         height: 30px;
         line-height: 30px;
         margin-top: 10px; }
+      .ticket-tabs li:last-of-type.active .ticket-number-sm {
+        margin-top: 0; }
       .ticket-tabs li:last-of-type.done .ticket-number-sm {
         margin-top: 0; }
       .ticket-tabs li:last-of-type:hover .ticket-number-sm {

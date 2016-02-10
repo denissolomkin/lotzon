@@ -204,7 +204,8 @@ class Index extends \SlimController\SlimController
             "tempFilestorage"    => '/filestorage/temp',
             "filestorage"        => '/filestorage',
             "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
-            "websocketEmulation" => false
+            "websocketEmulation" => false,
+            "page"               => $session->get('page')
         );
 
         $debug = array(

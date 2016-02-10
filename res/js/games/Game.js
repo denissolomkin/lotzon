@@ -21,6 +21,7 @@
                 title: 'button-game-exit'
             }
         },
+
         messages: {
             win:{
                 class: 'msg-win',
@@ -31,6 +32,7 @@
                 title: 'ПРОИГРЫШ :('
             }
         },
+
         field: null,
         gameClass: "",
 
@@ -85,7 +87,7 @@
                     'template': 'games-online-field',
                     'json': {},
                     'url': false,
-                    'after': Apps[App.key].action
+                    'after': Apps[App.key].action.default
                 });
                 return false;
 
@@ -230,12 +232,12 @@
 
             D.log('Game.end', 'game');
             if (!App.winner) {
-                sample && Apps.playAudio([App.key, sample]);
+                Apps.sample && Apps.playAudio([App.key, Apps.sample]);
                 Game.updateTimeOut(App.timeout);
                 return false;
             } else {
-                sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
-                Apps.playAudio([App.key, sample]);
+                Apps.sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
+                Apps.playAudio([App.key, Apps.sample]);
                 Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
                 
@@ -304,6 +306,7 @@
                 console.error(playerMessage, messages[index]);
             }
         },
+
         /**
          * draw win message by main player
          * @param  {number} message
@@ -333,6 +336,7 @@
                 return;
             }
         },
+
         drawWinButtons: function(buttons){
             var playerButtons = document.querySelector('.mx > .msg .msg-win'),
                 html = '',
@@ -349,6 +353,7 @@
             el.innerHTML = html;
             playerButtons.appendChild(el);
         },
+
         setFullScreenHeigth: function () {
 
             D.log('Game.setFullScreenHeigth', 'game');

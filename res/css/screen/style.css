@@ -669,6 +669,9 @@ div.comment-reply-btn {
       color: #4c4c4c;
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
       width: 120px; }
+      .ticket-tabs li:last-of-type.done:after {
+        background: url(../img/sprite.png) center center no-repeat;
+        background-position: -597px -70px; }
       .ticket-tabs li:last-of-type.active {
         color: #4c4c4c; }
       .ticket-tabs li:last-of-type:hover {
@@ -1175,6 +1178,9 @@ div.comment-reply-btn {
 .settings .title {
   min-width: 150px; }
 
+.ae-social i {
+  min-width: 154px; }
+
 .ph-won,
 .ph-won-text {
   width: 35%;
@@ -1350,9 +1356,11 @@ div.comment-reply-btn {
   .message-text {
     width: 80%; }
   #users-view-messages .message-form hr {
-    margin: 5px -30px 5px; }
+    margin: 5px -20px 5px; }
   #users-view-message .message-form hr {
-    margin: 5px -30px 5px; }
+    margin: 5px -20px 5px; }
+  #users-view-message .content-box-item {
+    padding: 20px; }
   /*.games-chance {
   padding: 30px 30px 0;
 }

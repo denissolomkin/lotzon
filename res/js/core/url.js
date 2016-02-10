@@ -82,12 +82,9 @@
             var url = null;
 
             if (options.url === true) {
-                url = typeof options.init.href != 'object' ? U.parse(options.init.href) : options.init.template
+                url = typeof options.init.href != 'object' ? U.parse(options.init.href) : options.init.template;
 
-                if (url) {
-
-
-                    url = '/' + U.parse(url,'url');
+                if (url && (url = '/' + U.parse(url,'url'))) {
                     this.href = url;
 
                     if (url !== window.location.pathname) {

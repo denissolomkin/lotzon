@@ -84,9 +84,9 @@
 
                 D.log('Navigation.ready', 'menu');
                 $(I.menuBtnItem).off().on('click', Navigation.menu.click);
-                
-                var pathname = window.location.pathname === '/' ? '/blog' : window.location.pathname;
-                var selector = 'a[href="/' + U.parse(pathname, 'url') + '"]',
+
+                var pathname = window.location.pathname === '/' ? (Config.page || '/blog') : window.location.pathname,
+                    selector = 'a[href="/' + U.parse(pathname, 'url') + '"]',
                     anchor = document.querySelector(selector);
 
                 if (anchor){

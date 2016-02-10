@@ -388,9 +388,10 @@
         if (data.error) {
             Form.stop.call(this)
                 .message.call(this, data.error);
+
         } else {
 
-            sample = null;
+            Apps.sample = null;
             path = data.path;
             if (data.res) {
 
@@ -427,9 +428,9 @@
                     break;
 
                 /* Specific App action */
-                case App.key && typeof Apps[App.key][action]:
-                    console.log(App.key + '.' + action);
-                    Apps[App.key][action](data);
+                case App.key && typeof Apps[App.key]['action'][action]:
+                    console.log(App.key + '.action.' + action);
+                    Apps[App.key]['action'][action](data);
                     break;
 
                 /* Common Game Action */
@@ -439,9 +440,9 @@
                     break;
 
                 /* Default App Action */
-                case App.key && typeof Apps[App.key].action:
-                    console.log(App.key + '.action');
-                    Apps[App.key].action(data);
+                case App.key && typeof Apps[App.key].action.default:
+                    console.log(App.key + '.action.default');
+                    Apps[App.key].action.default(data);
                     break;
             }
 

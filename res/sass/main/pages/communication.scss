@@ -151,6 +151,7 @@
   position: absolute;
   top: 5px;
   right: -9px;
+  z-index: 100;
   &:hover {
     opacity: 0.5;
   }
@@ -516,3 +517,4 @@
 #users-view-messages .message-text {
   cursor: default;
 } 
+

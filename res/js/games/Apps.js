@@ -5,6 +5,7 @@
         audio: [],
         modes: [],
         variations: [],
+        sample: null,
 
         playAudio: function (key) {
             if (!$.cookie("audio-off")) {

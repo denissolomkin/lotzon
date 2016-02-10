@@ -27,7 +27,7 @@
 #users-view-messages {
   & .message-form {
     & hr {
-      margin: 5px -30px 5px; 
+      margin: 5px -20px 5px; 
     }
   }
 } 
@@ -36,7 +36,13 @@
 #users-view-message {
   & .message-form {
     & hr {
-      margin: 5px -30px 5px; 
+      margin: 5px -20px 5px; 
     }
   }
 } 
+
+
+
+#users-view-message .content-box-item{
+  padding: 20px;
+}

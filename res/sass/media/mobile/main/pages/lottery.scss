@@ -162,6 +162,14 @@
 }
 
 .ticket-tabs li:last-of-type.active.done .ticket-number-sm:before {
+	content: "";
+	display: block;
     background: url(../img/sprite.png) center center no-repeat;
     background-position: -597px -61px;
+    position: absolute;
+    width: 11px;
+    height: 8px;
+    text-align: center;
+    top: 5px;
+    left: 8px;
 }

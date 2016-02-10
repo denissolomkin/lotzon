@@ -74,6 +74,9 @@ class PrizesController extends \AjaxController
     }
 
     public function goodAction($itemId) {
+
+        $this->validateRequest();
+
         $player = new Player;
         $player_countries = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
 

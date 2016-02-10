@@ -3,14 +3,17 @@
 
     Apps.WhoMore = {
 
-        'action': function() {
+        'action': {
 
-            if (Game.hasField()) {
-                Game.run() && Apps.WhoMore.drawField();
-                Apps.WhoMore.initStatuses();
-                Apps.WhoMore.initTimers();
-                Apps.WhoMore.paintCell();
-                Game.end() && Apps.WhoMore.end();
+            default: function() {
+
+                if (Game.hasField()) {
+                    Game.run() && Apps.WhoMore.drawField();
+                    Apps.WhoMore.initStatuses();
+                    Apps.WhoMore.initTimers();
+                    Apps.WhoMore.paintCell();
+                    Game.end() && Apps.WhoMore.end();
+                }
             }
         },
 
