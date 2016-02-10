@@ -207,7 +207,7 @@ a {
 
 input {
   -webkit-appearance: none;
-  border-radius: none; }
+  border-radius: 0; }
 
 button {
   opacity: 0.8;
@@ -7339,6 +7339,7 @@ form.loading > * {
   cursor: pointer; }
   .ae-user-img:after {
     top: 0;
+    left: 0;
     content: "";
     display: inline-block;
     position: absolute;

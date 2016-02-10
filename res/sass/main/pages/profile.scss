@@ -213,6 +213,7 @@
   cursor: pointer;
   &:after {
     top: 0;
+    left:0;
     content: "";
     display: inline-block;
     position: absolute;
