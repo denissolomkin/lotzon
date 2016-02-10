@@ -5414,8 +5414,18 @@ form.loading > * {
     cursor: text;
     max-width: 18px;
     position: relative; }
-    .message-form-area img[class^="i-smile"]:first-of-type {
-      margin-left: 0; }
+
+.comment-description {
+  cursor: text; }
+  .comment-description img[class^="i-smile"] {
+    padding-left: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    cursor: text;
+    max-width: 18px;
+    position: relative; }
 
 .message-form-area div + img[class^="i-smile"] {
   margin-left: 0; }
