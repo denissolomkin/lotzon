@@ -308,7 +308,9 @@ $(function () {
 
         for (var val in Comments.emotionsToServer) {
             text = text.replace(Comments.emotionsToServer[val], val );
-        }     
+
+        }   
+            text =   text.replace(/\n/ig, '<br>');
             return text;
         }
 

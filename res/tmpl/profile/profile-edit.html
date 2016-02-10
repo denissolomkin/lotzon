@@ -56,9 +56,10 @@
                                 <li>
                                     <i>{{i18n "title-profile-birthday"}} </i>
                                     <div class="wrapper-margin-right i-arrow-down wrapper-calendar">
+                                        {{#if birthday}}{{else}}  <div class="placeholder">{{i18n "title-profile-choose"}}</div> {{/if}}
                                         <div class="calendar-range">
                                             <label for="datepicker"></label>
-                                            <input type="text" name="datepicker" class="datepicker" placeholder="{{i18n 'title-profile-write-birthday'}}" value="">
+                                            <input type="text" name="datepicker" class="datepicker"  value="{{#if birthday}}{{birthday}}{{/if}}">
                                         </div>
                                     </div>
                                 </li>

@@ -49,25 +49,18 @@
                  
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
             $(document).on('click', Device.do.hide);
-
-            // $(document).on('click', '.fa-file-image-o', Comments.showPreviewImage);
-            // $(document).on('click', '.thumb', Comments.deletePreviewImage);
              /*smiles*/
             $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
             $(document).on('click', ".smiles img", Comments.chooseSmiles);
+            
+            
 
             $(document).on("paste", '[contenteditable]', Comments.pasteText);
-             $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
-             
+            $(document).on("keydown", '[contenteditable]', Comments.checkInput);
+
 
             $(document).on('click', '.no-image, .thumb', Comments.showPreviewImage);
-
-
-            /*smiles*/
-
-            $(document).on("paste", '[contenteditable]', Comments.pasteText);
-            $(document).on("blur paste input touchend", '[contenteditable]', Comments.checkInput);
-
+      
 
             $(document).on('touchstart', '.site-overlay', function () {
                 return false
@@ -139,6 +132,9 @@
             $(document).on('click', '.mx .table .cell', Game.do.move);
             $(document).on('click', '.mx .players .m button, .mx .msg-buttons button', Game.do.button); /* !!! keep order of handlers*/
             $(document).on('click', '.mx .players .m button.btn-start, .mx .msg-buttons button.btn-start', Game.do.start);
+            $(document).on('click', '.mx .players .m .btn-sb-random', Apps.SeaBattle.genFieldSeaBattle);
+            $(document).on('click', '.mx .players .m .btn-sb-ready', function(e){
+            });
 
 
 

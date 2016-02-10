@@ -210,6 +210,17 @@
   position: relative;
   top: -2px;
   margin-left: 15px;
+  cursor: pointer;
+  &:after {
+    top: 0;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 40;
+    height: 150px;
+    width: 150px;
+    background: url(img/photo.png) center;
+  }
 }
 .img-avatar-name {
   position: absolute;
@@ -1496,4 +1507,20 @@ span.input-prefix {
     position: static;
     margin-left: 30px;
   }
+}
+
+.placeholder {
+  position: absolute;
+  background: #fff;
+  z-index: 10;
+  width: 80px;
+  color: #a3a5a4;
+  bottom: 1px;
+  top: 1px;
+}
+
+
+
+#profile-edit .daterangepicker.opensright:after {
+  display: none;
 }

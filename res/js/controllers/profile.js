@@ -8,12 +8,25 @@
 
         init: {
             edit: function() {
+                $(document).off('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
 
-                $('input.datepicker').daterangepicker({
-                    singleDatePicker: true,
-                    startDate: Player.birthday ? new Date(Player.birthday * 1000) : 'выбрать дату',
-                    endDate: ''
-                });
+                if (Player.birthday) {
+                 $('input.datepicker').daterangepicker({
+                        singleDatePicker: true,
+                        startDate: new Date(Player.birthday * 1000),
+                        autoUpdateInput: true
+                        });
+                }
+                else {
+                    $('input.datepicker').daterangepicker({
+                        singleDatePicker: true,
+                        autoUpdateInput: true
+                    });
+                   $('input.datepicker').val('') ; 
+                }
+                
+                $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
+        
                 R.push({template:'profile-edit-countries', href: 'profile-edit-countries-'  + Player.language.current});
 
             },
@@ -206,6 +219,21 @@
 
                 }
                 $('.ae-combination-box li').removeClass('selected');
+            },
+
+            checkCalendar : function(e) {
+
+                console.log(e);
+
+                var placeholder = $('div.placeholder');
+
+                if ($(this).val() != "") {
+                    placeholder.css('display','none');
+                      console.log(placeholder.css('display'));
+                }
+                else {
+                    placeholder.css('display','block');
+                }
             }
 
         },

@@ -214,6 +214,16 @@
                 "title-profile-payments-history": "истории выплат",
                 "title-profile-cashout-summ": "Введите сумму",
 
+                "title-enter-old-password": "введите старый пароль",
+                "title-enter-new-password": "введите новый пароль",
+                "title-enter-repeat-password": "повторите пароль",
+
+
+                "title-enter-billing-phone": "введите мобильный телефон",
+                "title-enter-billing-yandexMoney": "введите Яндекс Деньги",
+                "title-enter-billing-webMoney": "введите WebMoney",
+                "title-enter-billing-qiwi": "введите QIWI",
+
 
                 "button-profile-get-points": "Конвертировать",
                 "button-profile-show-more": "подробно",
