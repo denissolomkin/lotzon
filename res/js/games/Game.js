@@ -402,7 +402,7 @@
             console.info('тайм-аут');
             Games.timer.removeAll();
 
-            var path = 'app/' + App.key + '/' + App.uid,
+            var path = 'app/' + App.id + '/' + App.uid,
                 data = {'action': 'timeout'};
             WebSocketAjaxClient(path, data);
         },
@@ -420,7 +420,7 @@
 
                 } else {
 
-                    var path = 'app/' + App.key + '/' + App.uid;
+                    var path = 'app/' + App.id + '/' + App.uid;
                     var data = {'action': 'ready'}
                     WebSocketAjaxClient(path, data);
                 }
@@ -434,7 +434,7 @@
                     this.classList.add('button-disabled');
 
                 var that = this,
-                    path = 'app/' + App.key + '/' + App.uid,
+                    path = 'app/' + App.id + '/' + App.uid,
                     data = {
                         'action': 'quit'
                     };
@@ -449,7 +449,7 @@
             pass: function (e) {
 
                 D.log('Game.action.pass', 'game');
-                var path = 'app/' + App.key + '/' + App.uid;
+                var path = 'app/' + App.id + '/' + App.uid;
                 var data = {
                     'action': 'pass'
                 };
@@ -476,7 +476,7 @@
                         cell.classList.remove('b');
                     }, 1000);
 
-                    var path = 'app/' + App.key + '/' + App.uid,
+                    var path = 'app/' + App.id + '/' + App.uid,
                         data = {
                             'action': 'move',
                             'cell'  : cell.getAttribute('data-cell')
@@ -488,7 +488,7 @@
 
             button: function() {
 
-                var path = 'app/' + App.key + '/' + App.uid,
+                var path = 'app/' + App.id + '/' + App.uid,
                     data = {
                         'action': this.getAttribute('data-action')
                     };
@@ -501,7 +501,7 @@
 
                 App.uid = 0;
 
-                var path = 'app/' + App.key + '/' + App.uid,
+                var path = 'app/' + App.id + '/' + App.uid,
                     data = {
                     'action': 'start',
                     'mode': App.mode

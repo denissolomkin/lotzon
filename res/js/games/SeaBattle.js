@@ -47,7 +47,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                var path = 'app/' + App.key + '/' + App.Uid,
+                var path = 'app/' + App.id + '/' + App.uid,
                     data = {
                         'action': 'field', 
                         'field': Apps.SeaBattle.ships
