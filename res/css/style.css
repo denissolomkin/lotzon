@@ -10301,19 +10301,21 @@ footer.unvisible {
       min-height: 0; }
     #games-online-field:not(.Durak) .mx .players {
       padding: 5px 0 0 0;
-      height: 50px; }
+      height: 45px; }
+      #games-online-field:not(.Durak) .mx .players.canExit .o .pr-ph-bk {
+        left: 30%; }
       #games-online-field:not(.Durak) .mx .players .circle-timer,
       #games-online-field:not(.Durak) .mx .players .circle {
         width: 36px;
         height: 36px;
-        left: -3;
-        top: -3; }
+        left: -3px;
+        top: -3px; }
       #games-online-field:not(.Durak) .mx .players .timer-l,
       #games-online-field:not(.Durak) .mx .players .timer-r {
         width: 36px;
         height: 36px;
-        margin-left: -22px;
-        margin-top: -22px;
+        margin-left: -18px;
+        margin-top: -18px;
         border-width: 3px; }
       #games-online-field:not(.Durak) .mx .players .gm-pr .pr-ph {
         width: 30px;
@@ -10327,6 +10329,7 @@ footer.unvisible {
       #games-online-field:not(.Durak) .mx .players .m .gm-pr {
         height: 50px; }
         #games-online-field:not(.Durak) .mx .players .m .gm-pr .pr-ph-bk {
+          transition: all .4s linear;
           left: 0 !important;
           margin-left: 20px;
           margin-top: 5px; }
@@ -10338,11 +10341,16 @@ footer.unvisible {
       #games-online-field:not(.Durak) .mx .players .m .pr-pr {
         padding-top: 7px; }
       #games-online-field:not(.Durak) .mx .players .o {
-        float: left;
+        min-width: 100%;
+        float: none;
         margin: 0; }
+        #games-online-field:not(.Durak) .mx .players .o:after {
+          content: '';
+          display: block;
+          clear: both; }
         #games-online-field:not(.Durak) .mx .players .o .gm-pr {
           height: auto;
-          min-height: 0;
+          min-height: 30px;
           width: auto; }
         #games-online-field:not(.Durak) .mx .players .o .pr-nm {
           padding: 7px 0 0 15px; } }

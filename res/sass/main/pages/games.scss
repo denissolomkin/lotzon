@@ -2,6 +2,7 @@
     display: none;
     // 
 }
+
 // GAMES <<CHANCE>> -------------------- //
 
 /*title of games view*/
@@ -1819,24 +1820,33 @@ footer.unvisible {
                 }
                 .players{
                     padding: 5px 0 0 0;
-                    height: 50px;
+                    height: 45px;
 
+                    // move oponent before game start
+                    &.canExit{
+                        .o{
+                            .pr-ph-bk{
+                                left: 30%;
+                            }
+                        }
+                    }
                     .circle-timer,
                     .circle {
                         width: 36px;
                         height: 36px;
-                        left:-3;
-                        top:-3;
+                        left:-3px;
+                        top:-3px;
                     }
                     .timer-l,
                     .timer-r {
                         width: 36px;
                         height: 36px;
-                        margin-left: -22px;
-                        margin-top: -22px;
+                        margin-left: -18px;
+                        margin-top: -18px;
                         border-width: 3px;
                     }
                     .gm-pr {
+                        // min-width: 100%;
                         .pr-ph {
                             width: 30px;
                             height: 30px;
@@ -1856,6 +1866,7 @@ footer.unvisible {
                             height: 50px;
                             // player
                             .pr-ph-bk{
+                                transition: all .4s linear;
                                 left: 0 !important;
                                 margin-left: 20px;
                                 margin-top: 5px;
@@ -1881,11 +1892,18 @@ footer.unvisible {
 
                     }
                     .o{
-                        float: left;
+                        // float: left;
+                        min-width: 100%;
+                        float: none;
                         margin: 0;
+                        &:after{
+                            content: '';
+                            display: block;
+                            clear: both;
+                        }
                         .gm-pr{
                             height: auto;
-                            min-height: 0;
+                            min-height: 30px;
                             width: auto;
                         }
                         // player

@@ -78,9 +78,6 @@
                 $('.mx .table').html('<div></div>');
 
                 var size = parseInt(App.variation.field),
-                    //                        width = Math.floor((480 - (size - 1) * 5) / size) + 'px;',
-                    //                        height = Math.floor((480 - size * 5) / size) + 'px;',
-                    //                        font = ((480 - size * 5) / 1.6 / size) + 'px/' + ((480 - (size * 5)) / size) + 'px Handbook-bold;',
                     html = '';
 
                 for (i = 1; i <= size; i++) {
@@ -95,7 +92,6 @@
                     html += '</div>';
                 }
                 $('.mx .table div').html(html);
-
             } else
                 console.error('Empty variation field');
 

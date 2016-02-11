@@ -68,7 +68,6 @@
                 var field = Game.field.getElementsByClassName('mx')[0];
 
                 field.innerHTML = '<div class="players"></div>';
-
                 Game.drawExit();
                 Game.setPlayersDetailes(Game.seatPlayers());
                 Game.setFullScreenHeigth();
@@ -98,7 +97,7 @@
         drawExit: function () {
             if (App.action == 'ready' || App.action == 'wait' || App.action == 'stack') {
                 
-                $('.mx .players').append('<div class="back-button exit"><i class="i-arrow-slim-left"></i> <span>'+Cache.i18n('button-games-exit')+'</span> </div>');
+                $('.mx .players').addClass('canExit').append('<div class="back-button exit"><i class="i-arrow-slim-left"></i> <span>'+Cache.i18n('button-games-exit')+'</span> </div>');
                 
             }
         },
